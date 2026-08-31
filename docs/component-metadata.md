@@ -33,7 +33,7 @@ must run first — the metadata generator's preview URLs point at its output
       "isNew": false,
       "properties": {
         "ButtonVariant": ["Default", "Outline", "Secondary", "Ghost", "Destructive", "Link"],
-        "ButtonSize": ["Xs", "Sm", "Md", "Lg", "Icon"]
+        "ButtonSize": ["Xs", "Sm", "Md", "Lg", "Icon", "IconXs", "IconSm", "IconLg"]
       },
       "previews": [
         { "state": "variants", "theme": "light", "url": "https://raw.githubusercontent.com/.../button_variants_light.png" },
@@ -52,10 +52,10 @@ must run first — the metadata generator's preview URLs point at its output
 | `stylePreset` | The one style preset (of 8 this library ships) every preview image below was captured under. Read `stylePresetNote` before assuming these previews represent "the" look of a component — swapping presets changes shape/spacing/animation. |
 | `components` | Array described below. |
 
-Beyond `stylePreset`, `ShadcnTheme` has two more independent theming axes, neither varied here:
-every preview also used `baseColor = ShadcnBaseColor.Neutral` (of 7: Neutral, Stone, Zinc, Mauve,
-Olive, Mist, Taupe) and `accent = ShadcnAccent.Base` (of 18: Base + 17 named colors, e.g. Blue,
-Emerald, Rose, Violet — `accent` only overrides `primary`/`onPrimary` on top of whichever
+Beyond `stylePreset`, `Theme` has two more independent theming axes, neither varied here:
+every preview also used `baseColor = BaseColor.Neutral` (of 7: Neutral, Stone, Zinc, Mauve,
+Olive, Mist, Taupe) and `accent = Accent.Base` (of 18: Base + 17 named colors, e.g. Blue,
+Emerald, Rose, Violet — `accent` only overrides `primary`/`primaryForeground` on top of whichever
 `baseColor` is active). Unlike `stylePreset`, the screenshot-test harness (`ShadcnScreenshotTest`)
 doesn't even expose these as parameters, so there's no per-color variant set to link to yet.
 
@@ -84,7 +84,7 @@ actual UX for that pattern, regardless of which of those three specific componen
 | Family | Components |
 |---|---|
 | `action` | button, button-group |
-| `field` | text-field, textarea, select, dropdown-menu, popover, input-group, input-otp, combobox, date-picker, slider, field |
+| `field` | input, textarea, select, dropdown-menu, popover, input-group, input-otp, combobox, date-picker, slider, field, questionnaire |
 | `overlay` | dialog, tooltip, sheet, sidebar, context-menu, drawer, alert-dialog, hover-card |
 | `selection` | tabs, radio-group, switch, command, menubar, navigation-menu, toggle, toggle-group, checkbox, stepper |
 | `feedback` | alert, progress, skeleton, spinner, toast |

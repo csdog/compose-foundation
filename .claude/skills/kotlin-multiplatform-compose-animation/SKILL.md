@@ -74,7 +74,7 @@ fun ExpandableCard(title: String, body: String) {
             .fillMaxWidth()
             .animateContentSize()                  // smooth height change
             .clip(RoundedCornerShape(AppTheme.spacing.sm))
-            .background(AppTheme.colors.surface)
+            .background(AppTheme.colors.background)
             .clickable { expanded = !expanded }
             .padding(AppTheme.spacing.md),
     ) {
@@ -152,7 +152,7 @@ fun StepCounter(step: Int) {
 @Composable
 fun SelectableChip(selected: Boolean, label: String, onClick: () -> Unit) {
     val backgroundColor by animateColorAsState(
-        targetValue = if (selected) AppTheme.colors.primary else AppTheme.colors.surface,
+        targetValue = if (selected) AppTheme.colors.primary else AppTheme.colors.background,
         animationSpec = tween(durationMillis = 200),
         label = "chip_bg",
     )
@@ -170,7 +170,7 @@ fun SelectableChip(selected: Boolean, label: String, onClick: () -> Unit) {
             .clickable(onClick = onClick)
             .padding(horizontal = AppTheme.spacing.md, vertical = AppTheme.spacing.sm),
     ) {
-        Text(label, color = if (selected) AppTheme.colors.onPrimary else AppTheme.colors.onSurface)
+        Text(label, color = if (selected) AppTheme.colors.primaryForeground else AppTheme.colors.foreground)
     }
 }
 ```

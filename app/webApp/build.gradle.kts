@@ -21,8 +21,11 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(projects.app.shared)
-
             implementation(libs.compose.ui)
+            implementation(libs.compose.runtime)
+            implementation(libs.jetbrains.navigation3.ui)
+            implementation(libs.androidx.navigation3.runtime)
+            implementation(libs.kotlinx.browser)
         }
     }
 }

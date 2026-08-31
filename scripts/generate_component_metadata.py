@@ -16,10 +16,10 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-CATALOG_REGISTRY = ROOT / "app/shared/src/commonMain/kotlin/io/github/ronjunevaldoz/shadcncompose/catalog/CatalogRegistry.kt"
-DOCS_DIR = ROOT / "app/shared/src/commonMain/kotlin/io/github/ronjunevaldoz/shadcncompose/catalog/docs"
-STYLES_DIR = ROOT / "shadcn/core/src/commonMain/kotlin/io/github/ronjunevaldoz/shadcncompose/styles"
-COMPONENTS_DIR = ROOT / "shadcn/core/src/commonMain/kotlin/io/github/ronjunevaldoz/shadcncompose/components"
+CATALOG_REGISTRY = ROOT / "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/CatalogRegistry.kt"
+DOCS_DIR = ROOT / "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs"
+STYLES_DIR = ROOT / "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/styles"
+COMPONENTS_DIR = ROOT / "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components"
 SNAPSHOTS_DIR = ROOT / "shadcn/core/src/jvmTest/snapshots"
 OUTPUT = ROOT / "docs/component-metadata.json"
 
@@ -50,9 +50,9 @@ FAMILY_BY_ID = {
     # action-family -- triggers a one-shot action
     "button": "action", "button-group": "action",
     # field-family -- lets the user pick or enter a value
-    "text-field": "field", "textarea": "field", "select": "field", "dropdown-menu": "field",
+    "text-field": "field", "input": "field", "textarea": "field", "select": "field", "dropdown-menu": "field",
     "popover": "field", "input-group": "field", "input-otp": "field", "combobox": "field",
-    "date-picker": "field", "slider": "field", "field": "field",
+    "date-picker": "field", "slider": "field", "field": "field", "questionnaire": "field",
     # overlay-family -- blocking/anchored surface layered over the page
     "dialog": "overlay", "tooltip": "overlay", "sheet": "overlay", "sidebar": "overlay",
     "context-menu": "overlay", "drawer": "overlay", "alert-dialog": "overlay", "hover-card": "overlay",
@@ -89,7 +89,7 @@ PROPERTY_TYPES_BY_ID = {
     "button": ["ButtonVariant", "ButtonSize"],
     "card": ["CardVariant", "CardSize"],
     "chip": ["ChipVariant"],
-    "select": ["SelectVariant"],
+    "select": ["SelectVariant", "SelectContentPosition"],
     "text-field": ["TextFieldVariant"],
     "toggle": ["ToggleVariant"],
     "accordion": ["ShadcnAccordionType"],
@@ -99,7 +99,8 @@ PROPERTY_TYPES_BY_ID = {
     "bubble": ["ShadcnBubbleVariant"],
     "drawer": ["ShadcnDrawerDirection"],
     "field": ["ShadcnFieldOrientation"],
-    "item": ["ShadcnItemVariant", "ShadcnItemMediaVariant"],
+    "item": ["ItemVariant", "ItemSize", "ItemMediaVariant"],
+    "empty": ["EmptyVariant", "EmptyMediaVariant"],
     "marker": ["ShadcnMarkerVariant"],
     "message": ["ShadcnMessageAlign"],
     "message-scroller": ["ShadcnMessageScrollerDirection"],
@@ -107,6 +108,7 @@ PROPERTY_TYPES_BY_ID = {
     "sheet": ["ShadcnSheetSide"],
     "separator": ["ShadcnSeparatorOrientation"],
     "stepper": ["ShadcnStepperOrientation"],
+    "questionnaire": ["QuestionnaireShortcuts"],
     "toast": ["ShadcnToastVariant"],
     "text": ["ShadcnTextStyle"],
 }
@@ -232,7 +234,7 @@ def build_metadata():
 
 
 # Every ShadcnScreenshotTest.snapshot() call across the whole suite uses the default
-# `stylePreset` param (ShadcnStylePreset.Vega) -- confirmed by grepping every test file
+# `stylePreset` param (StylePreset.Vega) -- confirmed by grepping every test file
 # for an explicit override; zero exist outside the separate style_matrix_* comparison
 # test, which isn't part of this per-component preview set. So every preview image here
 # is Vega specifically, not a "the theme" in the abstract -- shadcn-compose ships 7 more

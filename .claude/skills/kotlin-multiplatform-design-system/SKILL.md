@@ -7,8 +7,8 @@ description: >
   color/typography/shape/spacing
   tokens, AppTheme with light/dark support, StyleScope extensions for token access,
   shadcn-inspired sealed variant systems (ButtonVariant, CardVariant, BadgeVariant,
-  ChipVariant, TextFieldVariant), AppTextStyle enum (no Compose TextStyle collision),
-  and 6 core components (AppButton, AppCard, AppTextField, AppChip, AppBadge, AppText)
+  ChipVariant, InputVariant), AppTextStyle enum (no Compose TextStyle collision),
+  and 6 core components (AppButton, AppCard, AppInput, AppChip, AppBadge, AppText)
   built on BasicXxx CMP primitives. "App" is a placeholder prefix derived from the
   project's actual name (scripts/derive_component_prefix.py), not a hardcoded literal.
   No Material dependency — fully custom, fully owned.
@@ -115,7 +115,7 @@ Use the smallest API that still preserves the product’s structure.
 Concrete KMM design-system mapping:
 - `AppScaffold`, `AppTopAppBar`, `AppCard`, `AppDialog`, `AppBottomSheet` -> slot API
 - `CardHeader`, `ToolbarRow`, `SectionHeader`, `ActionRow` -> restricted scope template when the region needs guardrails
-- `AppButton`, `AppBadge`, `AppTextField`, `AppText`, `AppChip` -> data/variant APIs first; add slots only if callers truly need custom body content
+- `AppButton`, `AppBadge`, `AppInput`, `AppText`, `AppChip` -> data/variant APIs first; add slots only if callers truly need custom body content
 
 ---
 
@@ -212,7 +212,7 @@ Design system layers (top-down):
       ↓ consumed via StyleScope extensions
   Styles (sealed variant objects with Style values)
       ↓ merged via `then`
-  Components (AppButton, AppCard, AppTextField, AppChip, AppBadge, AppText)
+  Components (AppButton, AppCard, AppInput, AppChip, AppBadge, AppText)
       ↓ composed
   Screens (feature UIs consume AppTheme.provide { } at the top)
 ```
@@ -355,7 +355,7 @@ ID's last segment → the project directory name — strips generic noise words 
 `android`, `ios`, `kmp`, `shared`, `compose`, `project`, `multiplatform`, `mobile`,
 `client`, `core`, `main`), PascalCases what remains, and prints the result plus which
 source it came from. Example: `rootProject.name = "GuildBase"` → prefix `GuildBase` →
-`GuildBaseButton`, `GuildBaseCard`, `GuildBaseTextField`.
+`GuildBaseButton`, `GuildBaseCard`, `GuildBaseInput`.
 
 **Confirm before generating.** Show the derived prefix and its source, then ask the user
 to confirm or override — a wrong prefix means regenerating every file, not a quick rename.
@@ -784,7 +784,7 @@ internal val buttonInteractionStyle = Style {
     hovered  { animate { alpha(0.90f) } }
     pressed  { animate { alpha(0.80f) } }
     disabled { animate { alpha(0.38f) } }
-    focused  { animate { borderWidth(2.dp); borderColor(colors.borderFocus) } }
+    focused  { animate { borderWidth(2.dp); borderColor(colors.ring) } }
 }
 
 // ── Variant styles ─────────────────────────────────────────────────────────────
@@ -795,7 +795,7 @@ sealed interface ButtonVariant {
     data object Default : ButtonVariant {
         override val style = Style {
             background(colors.primary)
-            contentColor(colors.onPrimary)
+            contentColor(colors.primaryForeground)
             shape(RoundedCornerShape(shapes.md))
         } then buttonInteractionStyle
     }
@@ -803,7 +803,7 @@ sealed interface ButtonVariant {
     data object Outline : ButtonVariant {
         override val style = Style {
             background(colors.background)
-            contentColor(colors.onSurface)
+            contentColor(colors.foreground)
             borderWidth(1.dp)
             borderColor(colors.border)
             shape(RoundedCornerShape(shapes.md))
@@ -815,7 +815,7 @@ sealed interface ButtonVariant {
     data object Secondary : ButtonVariant {
         override val style = Style {
             background(colors.secondary)
-            contentColor(colors.onSecondary)
+            contentColor(colors.secondaryForeground)
             shape(RoundedCornerShape(shapes.md))
             hovered { animate { background(colors.secondaryHover) } }
         } then buttonInteractionStyle
@@ -823,7 +823,7 @@ sealed interface ButtonVariant {
 
     data object Ghost : ButtonVariant {
         override val style = Style {
-            contentColor(colors.onSurface)
+            contentColor(colors.foreground)
             shape(RoundedCornerShape(shapes.md))
             hovered { animate { background(colors.secondary) } }
             pressed { animate { background(colors.secondary) } }
@@ -833,7 +833,7 @@ sealed interface ButtonVariant {
     data object Destructive : ButtonVariant {
         override val style = Style {
             background(colors.destructive)
-            contentColor(colors.onDestructive)
+            contentColor(colors.destructiveForeground)
             shape(RoundedCornerShape(shapes.md))
             hovered { animate { background(colors.destructiveHover) } }
         } then buttonInteractionStyle
@@ -916,7 +916,7 @@ sealed interface BadgeVariant {
     data object Default : BadgeVariant {
         override val style = Style {
             background(colors.primary)
-            contentColor(colors.onPrimary)
+            contentColor(colors.primaryForeground)
             shape(RoundedCornerShape(shapes.full))
             padding(horizontal = spacing.sm, vertical = spacing.xxs)
             fontSize(12.sp)
@@ -927,7 +927,7 @@ sealed interface BadgeVariant {
     data object Secondary : BadgeVariant {
         override val style = Style {
             background(colors.secondary)
-            contentColor(colors.onSecondary)
+            contentColor(colors.secondaryForeground)
             shape(RoundedCornerShape(shapes.full))
             padding(horizontal = spacing.sm, vertical = spacing.xxs)
             fontSize(12.sp)
@@ -938,7 +938,7 @@ sealed interface BadgeVariant {
     data object Destructive : BadgeVariant {
         override val style = Style {
             background(colors.destructive)
-            contentColor(colors.onDestructive)
+            contentColor(colors.destructiveForeground)
             shape(RoundedCornerShape(shapes.full))
             padding(horizontal = spacing.sm, vertical = spacing.xxs)
             fontSize(12.sp)
@@ -948,7 +948,7 @@ sealed interface BadgeVariant {
 
     data object Outline : BadgeVariant {
         override val style = Style {
-            contentColor(colors.onSurface)
+            contentColor(colors.foreground)
             borderWidth(1.dp)
             borderColor(colors.border)
             shape(RoundedCornerShape(shapes.full))
@@ -961,7 +961,7 @@ sealed interface BadgeVariant {
     data object Ghost : BadgeVariant {
         override val style = Style {
             background(colors.muted)
-            contentColor(colors.onMuted)
+            contentColor(colors.mutedForeground)
             shape(RoundedCornerShape(shapes.full))
             padding(horizontal = spacing.sm, vertical = spacing.xxs)
             fontSize(12.sp)
@@ -988,8 +988,8 @@ sealed interface CardVariant {
 
     data object Default : CardVariant {
         override val style = Style {
-            background(colors.surface)
-            contentColor(colors.onSurface)
+            background(colors.background)
+            contentColor(colors.foreground)
             borderWidth(1.dp)
             borderColor(colors.border)
             shape(RoundedCornerShape(shapes.xxl))
@@ -999,8 +999,8 @@ sealed interface CardVariant {
 
     data object Elevated : CardVariant {
         override val style = Style {
-            background(colors.surface)
-            contentColor(colors.onSurface)
+            background(colors.background)
+            contentColor(colors.foreground)
             shape(RoundedCornerShape(shapes.xxl))
             padding(all = spacing.lg)
             // elevation via shadow — add Modifier.shadow in component
@@ -1009,8 +1009,8 @@ sealed interface CardVariant {
 
     data object Filled : CardVariant {
         override val style = Style {
-            background(colors.surfaceVariant)
-            contentColor(colors.onSurface)
+            background(colors.muted)
+            contentColor(colors.foreground)
             shape(RoundedCornerShape(shapes.xxl))
             padding(all = spacing.lg)
         }
@@ -1051,7 +1051,7 @@ sealed interface ChipVariant {
     data object Default : ChipVariant {
         override val style = Style {
             background(colors.secondary)
-            contentColor(colors.onSecondary)
+            contentColor(colors.secondaryForeground)
             borderWidth(1.dp)
             borderColor(colors.border)
             shape(RoundedCornerShape(shapes.full))
@@ -1065,7 +1065,7 @@ sealed interface ChipVariant {
     data object Selected : ChipVariant {
         override val style = Style {
             background(colors.primary)
-            contentColor(colors.onPrimary)
+            contentColor(colors.primaryForeground)
             shape(RoundedCornerShape(shapes.full))
             padding(horizontal = spacing.md, vertical = spacing.xs)
             fontSize(13.sp)
@@ -1076,7 +1076,7 @@ sealed interface ChipVariant {
         override val style = Style {
             borderWidth(1.dp)
             borderColor(colors.border)
-            contentColor(colors.onSurface)
+            contentColor(colors.foreground)
             shape(RoundedCornerShape(shapes.full))
             padding(horizontal = spacing.md, vertical = spacing.xs)
             fontSize(13.sp)
@@ -1086,7 +1086,7 @@ sealed interface ChipVariant {
 }
 ```
 
-### `styles/TextFieldStyles.kt`
+### `styles/InputStyles.kt`
 
 ```kotlin
 package GROUP_ID.core.designsystem.styles
@@ -1099,40 +1099,40 @@ import GROUP_ID.core.designsystem.theme.colors
 import GROUP_ID.core.designsystem.theme.shapes
 import GROUP_ID.core.designsystem.theme.spacing
 
-sealed interface TextFieldVariant {
+sealed interface InputVariant {
     val style: Style
 
-    data object Default : TextFieldVariant {
+    data object Default : InputVariant {
         override val style = Style {
             background(colors.background)
-            contentColor(colors.onSurface)
+            contentColor(colors.foreground)
             borderWidth(1.dp)
             borderColor(colors.border)
             shape(RoundedCornerShape(shapes.md))
             padding(horizontal = spacing.md, vertical = spacing.sm)
             fontSize(14.sp)
-            focused { animate { borderWidth(2.dp); borderColor(colors.borderFocus) } }
+            focused { animate { borderWidth(2.dp); borderColor(colors.ring) } }
             disabled { animate { alpha(0.38f) } }
         }
     }
 
-    data object Filled : TextFieldVariant {
+    data object Filled : InputVariant {
         override val style = Style {
-            background(colors.surfaceVariant)
-            contentColor(colors.onSurface)
+            background(colors.muted)
+            contentColor(colors.foreground)
             shape(RoundedCornerShape(topStart = shapes.md, topEnd = shapes.md, bottomStart = 0.dp, bottomEnd = 0.dp))
             padding(horizontal = spacing.md, vertical = spacing.sm)
             fontSize(14.sp)
-            focused { animate { borderWidth(2.dp); borderColor(colors.borderFocus) } }
+            focused { animate { borderWidth(2.dp); borderColor(colors.ring) } }
         }
     }
 
-    data object Ghost : TextFieldVariant {
+    data object Ghost : InputVariant {
         override val style = Style {
-            contentColor(colors.onSurface)
+            contentColor(colors.foreground)
             padding(horizontal = spacing.xs, vertical = spacing.xs)
             fontSize(14.sp)
-            focused { animate { borderBottomWidth(1.dp); borderColor(colors.borderFocus) } }
+            focused { animate { borderBottomWidth(1.dp); borderColor(colors.ring) } }
         }
     }
 }
@@ -1152,7 +1152,7 @@ sealed interface TextFieldVariant {
 | `AppBadge` | **Stable** | 5 variants |
 | `AppCard` | **Stable** | 3 variants, 2 sizes |
 | `AppChip` | **Stable** | 3 variants, selected state |
-| `AppTextField` | **Stable** | label, placeholder, leading/trailing icon, error state |
+| `AppInput` | **Stable** | label, placeholder, leading/trailing icon, error state |
 | `AppText` | **Stable** | `AppTextStyle` enum, muted mode |
 
 ### `components/AppButton.kt`
@@ -1424,7 +1424,7 @@ fun AppChip(
 }
 ```
 
-### `components/AppTextField.kt`
+### `components/AppInput.kt`
 
 ```kotlin
 package GROUP_ID.core.designsystem.components
@@ -1449,22 +1449,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.VisualTransformation
-import GROUP_ID.core.designsystem.styles.TextFieldVariant
+import GROUP_ID.core.designsystem.styles.InputVariant
 import GROUP_ID.core.designsystem.theme.appTheme
 import GROUP_ID.core.designsystem.theme.colors
 
 /**
  * Usage:
  * ```
- * AppTextField(value = email, onValueChange = { email = it }, label = "Email", placeholder = "you@example.com")
- * AppTextField(value = pwd, onValueChange = { pwd = it }, label = "Password", visualTransformation = PasswordVisualTransformation())
- * AppTextField(value = q, onValueChange = { q = it }, variant = TextFieldVariant.Ghost, placeholder = "Search…")
- * AppTextField(value = bio, onValueChange = { bio = it }, singleLine = false, label = "Bio")
+ * AppInput(value = email, onValueChange = { email = it }, label = "Email", placeholder = "you@example.com")
+ * AppInput(value = pwd, onValueChange = { pwd = it }, label = "Password", visualTransformation = PasswordVisualTransformation())
+ * AppInput(value = q, onValueChange = { q = it }, variant = InputVariant.Ghost, placeholder = "Search…")
+ * AppInput(value = bio, onValueChange = { bio = it }, singleLine = false, label = "Bio")
  * ```
  */
 @OptIn(ExperimentalStylesApi::class)
 @Composable
-fun AppTextField(
+fun AppInput(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -1475,7 +1475,7 @@ fun AppTextField(
     trailingIcon: (@Composable () -> Unit)? = null,
     isError: Boolean = false,
     supportingText: String? = null,
-    variant: TextFieldVariant = TextFieldVariant.Default,
+    variant: InputVariant = InputVariant.Default,
     style: Style = Style,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
@@ -1487,7 +1487,7 @@ fun AppTextField(
         it.isEnabled = enabled
     }
 
-    val errorStyle = if (isError) Style { borderColor(colors.error) } else Style
+    val errorStyle = if (isError) Style { borderColor(colors.destructive) } else Style
 
     Column(modifier = modifier) {
         if (label != null) {
@@ -1530,7 +1530,7 @@ fun AppTextField(
             AppText(
                 text = supportingText,
                 style = AppTextStyle.BodySmall,
-                color = if (isError) appTheme.colors.error else appTheme.colors.onSurfaceVariant,
+                color = if (isError) appTheme.colors.destructive else appTheme.colors.mutedForeground,
             )
         }
     }
@@ -1593,8 +1593,8 @@ fun AppText(
 
     val textColor = when {
         color != Color.Unspecified -> color
-        muted                       -> theme.colors.onSurfaceVariant
-        else                        -> theme.colors.onSurface
+        muted                       -> theme.colors.mutedForeground
+        else                        -> theme.colors.foreground
     }
 
     BasicText(
@@ -1884,7 +1884,7 @@ fun AppChipDarkPreview() {
 
 ---
 
-### `previews/AppTextFieldPreview.kt`
+### `previews/AppInputPreview.kt`
 
 ```kotlin
 @file:OptIn(ExperimentalStylesApi::class)
@@ -1898,14 +1898,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import GROUP_ID.core.designsystem.components.AppTextField
-import GROUP_ID.core.designsystem.styles.TextFieldVariant
+import GROUP_ID.core.designsystem.components.AppInput
+import GROUP_ID.core.designsystem.styles.InputVariant
 
 @Preview
 @Composable
-fun AppTextFieldEmptyPreview() {
+fun AppInputEmptyPreview() {
     AppThemePreviewWrapper {
-        AppTextField(
+        AppInput(
             value = "",
             onValueChange = {},
             modifier = Modifier.fillMaxWidth(),
@@ -1916,9 +1916,9 @@ fun AppTextFieldEmptyPreview() {
 
 @MultiDevicePreview
 @Composable
-fun AppTextFieldWithLabelAndValuePreview() {
+fun AppInputWithLabelAndValuePreview() {
     AppThemePreviewWrapper {
-        AppTextField(
+        AppInput(
             value = "hello@example.com",
             onValueChange = {},
             modifier = Modifier.fillMaxWidth(),
@@ -1930,9 +1930,9 @@ fun AppTextFieldWithLabelAndValuePreview() {
 
 @Preview
 @Composable
-fun AppTextFieldErrorPreview() {
+fun AppInputErrorPreview() {
     AppThemePreviewWrapper {
-        AppTextField(
+        AppInput(
             value = "bad-email",
             onValueChange = {},
             modifier = Modifier.fillMaxWidth(),
@@ -1945,9 +1945,9 @@ fun AppTextFieldErrorPreview() {
 
 @Preview
 @Composable
-fun AppTextFieldDisabledPreview() {
+fun AppInputDisabledPreview() {
     AppThemePreviewWrapper {
-        AppTextField(
+        AppInput(
             value = "readonly@example.com",
             onValueChange = {},
             modifier = Modifier.fillMaxWidth(),
@@ -1959,31 +1959,31 @@ fun AppTextFieldDisabledPreview() {
 
 @Preview
 @Composable
-fun AppTextFieldGhostPreview() {
+fun AppInputGhostPreview() {
     AppThemePreviewWrapper {
-        AppTextField(
+        AppInput(
             value = "",
             onValueChange = {},
             modifier = Modifier.fillMaxWidth(),
             placeholder = "Search…",
-            variant = TextFieldVariant.Ghost,
+            variant = InputVariant.Ghost,
         )
     }
 }
 
 @MultiDevicePreview
 @Composable
-fun AppTextFieldDarkPreview() {
+fun AppInputDarkPreview() {
     AppThemePreviewWrapper(darkTheme = true) {
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            AppTextField(
+            AppInput(
                 value = "",
                 onValueChange = {},
                 modifier = Modifier.fillMaxWidth(),
                 label = "Email",
                 placeholder = "you@example.com",
             )
-            AppTextField(
+            AppInput(
                 value = "bad",
                 onValueChange = {},
                 modifier = Modifier.fillMaxWidth(),
@@ -2263,8 +2263,8 @@ All of these are already in `compose-multiplatform`. No new catalog entries requ
             Column(modifier = Modifier.padding(t.spacing.lg)) {
                 Box(Modifier.size(48.dp).background(t.colors.primary))
                 Box(Modifier.size(48.dp).background(t.colors.secondary))
-                Box(Modifier.size(48.dp).background(t.colors.surface))
-                Box(Modifier.size(48.dp).background(t.colors.error))
+                Box(Modifier.size(48.dp).background(t.colors.background))
+                Box(Modifier.size(48.dp).background(t.colors.destructive))
             }
         }
     }
@@ -2277,8 +2277,8 @@ All of these are already in `compose-multiplatform`. No new catalog entries requ
             Column(modifier = Modifier.padding(t.spacing.lg)) {
                 Box(Modifier.size(48.dp).background(t.colors.primary))
                 Box(Modifier.size(48.dp).background(t.colors.secondary))
-                Box(Modifier.size(48.dp).background(t.colors.surface))
-                Box(Modifier.size(48.dp).background(t.colors.error))
+                Box(Modifier.size(48.dp).background(t.colors.background))
+                Box(Modifier.size(48.dp).background(t.colors.destructive))
             }
         }
     }
@@ -2496,7 +2496,7 @@ Keep snippets small. Use the user's package name and token names when provided.
 | 2026-07-05 | Hardened Step 0 into a non-negotiable rule: `App` must never be written to disk literally for a real project — generate directly with the resolved prefix in the same pass, no "rename later" step. New audit detector `design system prefix mismatch [HIGH]` catches the case where `docs/design-system.md` records a resolved `COMPONENT_PREFIX` but `App*`-named declarations still exist under `core/designsystem` — verified against 5 scenarios (mismatch, consistent, genuinely-App, no-doc, unfilled-template). |
 | 2026-07-05 | Auditing complete for Style API compliance: `audit_project.py` now has 5 dedicated detectors (`style default with body`, `style state wrong enabled property`, `style param on screen composable`, `stale compositionlocal in style function`, `missing indication null with style state`) enforcing the Do's/Don'ts/Limitations in `references/compose-styles-api-reference.md`. All verified with positive + negative test cases. `design-system-extended` audited component-by-component for actual Style API wiring — see its new "Style API coverage" table; `AppAvatar` fixed (had dead unused Style imports from an unfinished wiring attempt). |
 | 2026-07-05 | Added new Step 0 — "App" is now formalized as a placeholder token (like `GROUP_ID`), resolved via precedence: `docs/design-system.md` COMPONENT_PREFIX -> user-stated -> derived from the project name -> `App` fallback. New `scripts/derive_component_prefix.py` deterministically derives a PascalCase prefix from `settings.gradle.kts` rootProject.name, the Gradle group ID, or the directory name, stripping generic noise words (app, android, ios, kmp, shared, compose, ...). Updated the Naming Rule, `docs/design-system.md` guidance, and the detekt `componentPrefix` example to stop treating `'App'` as a hardcoded literal. |
-| 2026-07-05 | Audited against the 9 official Compose Styles API doc pages; added `references/compose-styles-api-reference.md` as ground truth for future audits. Fixed a real bug found across `AppButton`/`AppChip`/`AppTextField`/Guidelines: `styleState.enabled = enabled` used the wrong property name and a non-idiomatic construction pattern — corrected to `rememberUpdatedStyleState(interactionSource) { it.isEnabled = enabled }` per the official examples. Added Style inheritance priority order, built-in/custom state facts, and 6 new anti-patterns backed by official Don'ts and Limitations (stale CompositionLocal capture in a `@Composable fun …Style()`, default-with-body style params, business logic in Styles, Style params on layout/screen composables, missing `indication = null` double-ripple, unsupported infinite/shape animation). Expanded Freshness rule with direct links to all 9 pages and the CMP-may-lag-Android caveat. |
+| 2026-07-05 | Audited against the 9 official Compose Styles API doc pages; added `references/compose-styles-api-reference.md` as ground truth for future audits. Fixed a real bug found across `AppButton`/`AppChip`/`AppInput`/Guidelines: `styleState.enabled = enabled` used the wrong property name and a non-idiomatic construction pattern — corrected to `rememberUpdatedStyleState(interactionSource) { it.isEnabled = enabled }` per the official examples. Added Style inheritance priority order, built-in/custom state facts, and 6 new anti-patterns backed by official Don'ts and Limitations (stale CompositionLocal capture in a `@Composable fun …Style()`, default-with-body style params, business logic in Styles, Style params on layout/screen composables, missing `indication = null` double-ripple, unsupported infinite/shape animation). Expanded Freshness rule with direct links to all 9 pages and the CMP-may-lag-Android caveat. |
 | 2026-06-29 | `AppTheme` default changed from `darkTheme = false` to `isSystemInDarkTheme()` — all platforms now follow system dark mode automatically. Added `LocalAppDarkTheme` composition local (`Boolean?`) for in-app theme override. Removed hardcoded `darkTheme = false` from Desktop/iOS Step 7 wiring. |
 | 2026-06-26 | Added component API placement guidance that maps shell components to slots, guarded regions to restricted scope templates, and leaf controls to data/variant APIs. |
 | 2026-06-22 | Added `references/design-system-template.md` — project-facing living document covering tokens, component inventory, detekt overrides, multi-device preview coverage, and audit log. Wired copy instructions into Ownership Model section. |
@@ -2504,5 +2504,5 @@ Keep snippets small. Use the user's package name and token names when provided.
 | 2026-06-22 | Added `detekt-rules/` PSI-based scanner module with 7 rules (HardcodedColor, HardcodedDp, MaterialThemeUsage, DirectTextStyle, NestedContainer, ComponentRegistryViolation, DesignTokenImportBoundary). Added `/record-design-baselines` and `/audit-design-visual` commands. Updated `/fix-design` to use detekt as primary scanner. |
 | 2026-06-22 | Added `scripts/scan_design_violations.py` and `/fix-design` command: scans Compose files for hardcoded colors/dp/MaterialTheme/nested containers, fixes file-by-file, verifies with Roborazzi vision. |
 | 2026-06-22 | Added ownership model section (project-owned tokens vs skill-owned components). Added stability tiers to component overview. Added `scripts/update_design_system.py` reference. |
-| 2026-06-22 | Added `AppTextField` component (was missing from Step 6). Renamed `TextStyle` enum → `AppTextStyle` to avoid Compose collision. Fixed test code: `AppTheme.spacing.*` → `appTheme.*`, `Text()` → `AppText()`. Added `@OptIn` note to Steps 5–6. Fixed missing `sp`/`FontWeight` imports in Button/Badge/Chip/TextField style snippets. Fixed `CardSize` hardcoded dp → `AppSpacing()` tokens. Added cross-skill note for `AppScaffold`/`AppTopAppBar`. |
+| 2026-06-22 | Added `AppInput` component (was missing from Step 6). Renamed `TextStyle` enum → `AppTextStyle` to avoid Compose collision. Fixed test code: `AppTheme.spacing.*` → `appTheme.*`, `Text()` → `AppText()`. Added `@OptIn` note to Steps 5–6. Fixed missing `sp`/`FontWeight` imports in Button/Badge/Chip/Input style snippets. Fixed `CardSize` hardcoded dp → `AppSpacing()` tokens. Added cross-skill note for `AppScaffold`/`AppTopAppBar`. |
 | 2026-06-06 | Initial release. |

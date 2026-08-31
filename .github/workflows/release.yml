@@ -14,7 +14,7 @@ jobs:
 
   # ─── Publish to Maven Central ───────────────────────────────────────────────
   publish:
-    name: Publish shadcn-compose
+    name: Publish com.toutiaoyan.compose:ui + :tailwind
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
@@ -30,19 +30,25 @@ jobs:
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
 
-      # macos-latest runner (needed for the iosArm64/iosSimulatorArm64 targets this
-      # module publishes) -- ORG_GRADLE_PROJECT_* env vars are how the vanniktech
-      # maven-publish plugin's mavenPublishing {} block (shadcn/core/build.gradle.kts)
-      # picks up credentials/signing with zero extra Gradle config: mavenCentralUsername/
-      # mavenCentralPassword feed publishToMavenCentral(), and the signingInMemory* trio
-      # feeds signAllPublications() without ever writing a keyring file to disk.
+      # macos-latest runner (needed for the iosArm64/iosSimulatorArm64 targets these
+      # modules publish) -- ORG_GRADLE_PROJECT_* env vars are how the vanniktech
+      # maven-publish plugin's mavenPublishing {} blocks pick up credentials/signing
+      # with zero extra Gradle config: mavenCentralUsername/mavenCentralPassword feed
+      # publishToMavenCentral(), and the signingInMemory* trio feeds
+      # signAllPublications() without ever writing a keyring file to disk.
+      # Publish tailwind first: :shadcn:core's POM declares an api dependency on
+      # com.toutiaoyan.compose:tailwind, so both must land on Central together.
       - name: Publish to Maven Central
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_SIGNING_KEY }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_SIGNING_PASSWORD }}
-        run: ./gradlew :shadcn:core:publishToMavenCentral --no-configuration-cache
+        run: >
+          ./gradlew
+          :tailwind-core:publishToMavenCentral
+          :shadcn:core:publishToMavenCentral
+          --no-configuration-cache
 
       - name: Upload publish logs
         if: always()

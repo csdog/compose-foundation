@@ -1,31 +1,15 @@
 {
   "stylePreset": "Vega",
-  "stylePresetNote": "Every preview image was captured under the 'Vega' style preset (this library's default), not a neutral/preset-agnostic render. shadcn-compose ships 8 presets total (Vega, Nova, Maia, Lyra, Mira, Luma, Sera, Rhea), each changing shape/spacing/animation -- swapping presets would change these components' appearance without changing this file.",
+  "stylePresetNote": "Every preview image was captured under the 'Vega' style preset (this library's default), not a neutral/preset-agnostic render. compose-foundation ships 8 presets total (Vega, Nova, Maia, Lyra, Mira, Luma, Sera, Rhea), each changing shape/spacing/animation -- swapping presets would change these components' appearance without changing this file.",
   "components": [
     {
       "id": "button",
       "title": "Button",
-      "description": "Triggers an action or event. Supports six variants and five sizes.",
+      "description": "Triggers an action or event. Supports six variants and text + icon size scales.",
       "category": "core-primitives",
       "family": "action",
       "isNew": false,
-      "properties": {
-        "ButtonVariant": [
-          "Default",
-          "Outline",
-          "Secondary",
-          "Ghost",
-          "Destructive",
-          "Link"
-        ],
-        "ButtonSize": [
-          "Xs",
-          "Sm",
-          "Md",
-          "Lg",
-          "Icon"
-        ]
-      },
+      "properties": {},
       "previews": [
         {
           "state": "focused",
@@ -66,6 +50,16 @@
           "state": "group_with_label",
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_with_label_light.png"
+        },
+        {
+          "state": "icon_sizes",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_icon_sizes_dark.png"
+        },
+        {
+          "state": "icon_sizes",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_icon_sizes_light.png"
         },
         {
           "state": "icon_variants",
@@ -112,21 +106,11 @@
     {
       "id": "card",
       "title": "Card",
-      "description": "Displays content in a bordered container, with optional header and footer slots.",
+      "description": "Displays content in a bordered container. Compose with CardHeader / CardTitle / CardDescription / CardContent / CardFooter.",
       "category": "core-primitives",
       "family": "layout",
       "isNew": false,
-      "properties": {
-        "CardVariant": [
-          "Default",
-          "Elevated",
-          "Filled"
-        ],
-        "CardSize": [
-          "Default",
-          "Sm"
-        ]
-      },
+      "properties": {},
       "previews": [
         {
           "state": "create_account",
@@ -142,6 +126,16 @@
           "state": "muted_text_isolation",
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/card_muted_text_isolation_light.png"
+        },
+        {
+          "state": "spacing",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/card_spacing_dark.png"
+        },
+        {
+          "state": "spacing",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/card_spacing_light.png"
         },
         {
           "state": "variants",
@@ -162,16 +156,18 @@
       "category": "core-primitives",
       "family": "text",
       "isNew": false,
-      "properties": {
-        "BadgeVariant": [
-          "Default",
-          "Secondary",
-          "Destructive",
-          "Outline",
-          "Ghost"
-        ]
-      },
+      "properties": {},
       "previews": [
+        {
+          "state": "focused",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/badge_focused_dark.png"
+        },
+        {
+          "state": "focused",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/badge_focused_light.png"
+        },
         {
           "state": "variants",
           "theme": "dark",
@@ -191,13 +187,7 @@
       "category": "core-primitives",
       "family": "text",
       "isNew": false,
-      "properties": {
-        "ChipVariant": [
-          "Default",
-          "Selected",
-          "Outline"
-        ]
-      },
+      "properties": {},
       "previews": [
         {
           "state": "focused",
@@ -222,69 +212,135 @@
       ]
     },
     {
-      "id": "text-field",
-      "title": "Text Field",
-      "description": "A single-line or multi-line input with label, placeholder, and error states.",
+      "id": "input",
+      "title": "Input",
+      "description": "A styled text control matching real shadcn input.tsx. Labels and helper/error copy belong on Field / FieldLabel / FieldDescription / FieldError.",
       "category": "core-primitives",
       "family": "field",
       "isNew": false,
-      "properties": {
-        "TextFieldVariant": [
-          "Default",
-          "Filled",
-          "Ghost"
-        ]
-      },
+      "properties": {},
       "previews": [
         {
           "state": "focused",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/textfield_focused_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_focused_dark.png"
         },
         {
           "state": "focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/textfield_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_focused_light.png"
         },
         {
           "state": "focused_with_ring_disabled",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/textfield_focused_with_ring_disabled_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_focused_with_ring_disabled_light.png"
+        },
+        {
+          "state": "group_bottom_bar",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_bottom_bar_dark.png"
+        },
+        {
+          "state": "group_bottom_bar",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_bottom_bar_light.png"
+        },
+        {
+          "state": "group_focused",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_focused_dark.png"
+        },
+        {
+          "state": "group_focused",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_focused_light.png"
+        },
+        {
+          "state": "group_long_value",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_long_value_dark.png"
+        },
+        {
+          "state": "group_long_value",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_long_value_light.png"
+        },
+        {
+          "state": "group_states",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_states_dark.png"
+        },
+        {
+          "state": "group_states",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_states_light.png"
+        },
+        {
+          "state": "otp_focused",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_focused_dark.png"
+        },
+        {
+          "state": "otp_focused",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_focused_light.png"
+        },
+        {
+          "state": "otp_focused_with_ring_disabled",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_focused_with_ring_disabled_light.png"
+        },
+        {
+          "state": "otp_states",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_states_dark.png"
+        },
+        {
+          "state": "otp_states",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_states_light.png"
+        },
+        {
+          "state": "otp_verify_email",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_verify_email_dark.png"
+        },
+        {
+          "state": "otp_verify_email",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_verify_email_light.png"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/textfield_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_states_dark.png"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/textfield_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_states_light.png"
         }
       ]
     },
     {
       "id": "text",
       "title": "Text",
-      "description": "Renders text using the design system's type scale, with an optional muted tone.",
+      "description": "Renders text using the design system's type scale, with optional TextStyles.Muted preset.",
       "category": "core-primitives",
       "family": "text",
       "isNew": false,
-      "properties": {
-        "ShadcnTextStyle": [
-          "DisplayLarge",
-          "DisplayMedium",
-          "TitleLarge",
-          "TitleMedium",
-          "TitleSmall",
-          "BodyLarge",
-          "BodyMedium",
-          "BodySmall",
-          "LabelLarge",
-          "LabelSmall"
-        ]
-      },
+      "properties": {},
       "previews": [
+        {
+          "state": "color_inheritance",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/text_color_inheritance_dark.png"
+        },
+        {
+          "state": "color_inheritance",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/text_color_inheritance_light.png"
+        },
         {
           "state": "styles",
           "theme": "dark",
@@ -352,7 +408,7 @@
     {
       "id": "radio-group",
       "title": "Radio Group",
-      "description": "A set of mutually exclusive options. Combine ShadcnRadioButton items inside ShadcnRadioGroup.",
+      "description": "A set of mutually exclusive options. Combine RadioGroupItem inside RadioGroup.",
       "category": "forms-and-inputs",
       "family": "selection",
       "isNew": false,
@@ -400,6 +456,16 @@
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/switch_focused_light.png"
         },
         {
+          "state": "sizes",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/switch_sizes_dark.png"
+        },
+        {
+          "state": "sizes",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/switch_sizes_light.png"
+        },
+        {
           "state": "states",
           "theme": "dark",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/switch_states_dark.png"
@@ -418,12 +484,7 @@
       "category": "forms-and-inputs",
       "family": "selection",
       "isNew": false,
-      "properties": {
-        "ToggleVariant": [
-          "Default",
-          "Outline"
-        ]
-      },
+      "properties": {},
       "previews": [
         {
           "state": "focused",
@@ -444,6 +505,16 @@
           "state": "group_states",
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_group_states_light.png"
+        },
+        {
+          "state": "sizes",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_sizes_dark.png"
+        },
+        {
+          "state": "sizes",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_sizes_light.png"
         },
         {
           "state": "states",
@@ -516,12 +587,7 @@
       "category": "forms-and-inputs",
       "family": "selection",
       "isNew": true,
-      "properties": {
-        "ShadcnStepperOrientation": [
-          "Horizontal",
-          "Vertical"
-        ]
-      },
+      "properties": {},
       "previews": [
         {
           "state": "compact",
@@ -558,7 +624,7 @@
     {
       "id": "input-group",
       "title": "Input Group",
-      "description": "Groups a text field with leading or trailing addons -- icons, static text, or buttons.",
+      "description": "Addons, buttons, and helper content around an Input/Textarea \u2014 matching shadcn input-group.tsx (InputGroup / InputGroupAddon / InputGroupButton / InputGroupText).",
       "category": "forms-and-inputs",
       "family": "field",
       "isNew": false,
@@ -613,12 +679,7 @@
       "category": "forms-and-inputs",
       "family": "action",
       "isNew": false,
-      "properties": {
-        "ButtonGroupOrientation": [
-          "Horizontal",
-          "Vertical"
-        ]
-      },
+      "properties": {},
       "previews": [
         {
           "state": "states",
@@ -655,7 +716,7 @@
     {
       "id": "textarea",
       "title": "Textarea",
-      "description": "A multi-line text input, sharing the same border/focus spec as Text Field.",
+      "description": "A multi-line text input, sharing the same border/focus spec as Input.",
       "category": "forms-and-inputs",
       "family": "field",
       "isNew": false,
@@ -686,16 +747,11 @@
     {
       "id": "field",
       "title": "Field",
-      "description": "A labeled control + description layout for building forms. Real shadcn/ui's form.tsx is a thin wrapper of these same primitives around react-hook-form; this library has no form-state dependency, so compose Field directly with your own hoisted state.",
+      "description": "Combine labels, controls, and help text \u2014 matching real shadcn field.tsx (FieldSet / FieldLegend / FieldGroup / Field / FieldContent / FieldLabel / FieldTitle / FieldDescription / FieldError / FieldSeparator). No Form wrapper; compose with your own hoisted state.",
       "category": "forms-and-inputs",
       "family": "field",
       "isNew": false,
-      "properties": {
-        "ShadcnFieldOrientation": [
-          "Vertical",
-          "Horizontal"
-        ]
-      },
+      "properties": {},
       "previews": [
         {
           "state": "profile_form",
@@ -716,6 +772,167 @@
           "state": "states",
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/field_states_light.png"
+        }
+      ]
+    },
+    {
+      "id": "questionnaire",
+      "title": "Questionnaire",
+      "description": "Choose a direction or write your own.",
+      "category": "forms-and-inputs",
+      "family": "field",
+      "isNew": true,
+      "properties": {},
+      "previews": [
+        {
+          "state": "animate",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_animate_dark.png"
+        },
+        {
+          "state": "animate",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_animate_light.png"
+        },
+        {
+          "state": "card",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_card_dark.png"
+        },
+        {
+          "state": "card",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_card_light.png"
+        },
+        {
+          "state": "choice_parts",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_choice_parts_dark.png"
+        },
+        {
+          "state": "choice_parts",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_choice_parts_light.png"
+        },
+        {
+          "state": "custom_progress",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_custom_progress_dark.png"
+        },
+        {
+          "state": "custom_progress",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_custom_progress_light.png"
+        },
+        {
+          "state": "custom_validation",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_custom_validation_dark.png"
+        },
+        {
+          "state": "custom_validation",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_custom_validation_light.png"
+        },
+        {
+          "state": "default",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_default_dark.png"
+        },
+        {
+          "state": "default",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_default_light.png"
+        },
+        {
+          "state": "dialog",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_dialog_dark.png"
+        },
+        {
+          "state": "dialog",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_dialog_light.png"
+        },
+        {
+          "state": "disabled",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_disabled_dark.png"
+        },
+        {
+          "state": "disabled",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_disabled_light.png"
+        },
+        {
+          "state": "items",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_items_dark.png"
+        },
+        {
+          "state": "items",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_items_light.png"
+        },
+        {
+          "state": "navigation_state",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_navigation_state_dark.png"
+        },
+        {
+          "state": "navigation_state",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_navigation_state_light.png"
+        },
+        {
+          "state": "reset",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_reset_dark.png"
+        },
+        {
+          "state": "reset",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_reset_light.png"
+        },
+        {
+          "state": "resume",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_resume_dark.png"
+        },
+        {
+          "state": "resume",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_resume_light.png"
+        },
+        {
+          "state": "shortcuts",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_shortcuts_dark.png"
+        },
+        {
+          "state": "shortcuts",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_shortcuts_light.png"
+        },
+        {
+          "state": "status",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_status_dark.png"
+        },
+        {
+          "state": "status",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_status_light.png"
+        },
+        {
+          "state": "without_actions",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_without_actions_dark.png"
+        },
+        {
+          "state": "without_actions",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_without_actions_light.png"
         }
       ]
     },
@@ -772,17 +989,28 @@
       "category": "data-display",
       "family": "text",
       "isNew": false,
-      "properties": {
-        "ShadcnAvatarSize": [
-          "Sm",
-          "ShadcnTextStyle.LabelSmall)",
-          "Default",
-          "ShadcnTextStyle.LabelSmall)",
-          "Lg",
-          "ShadcnTextStyle.LabelLarge)"
-        ]
-      },
+      "properties": {},
       "previews": [
+        {
+          "state": "group_count",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/avatar_group_count_dark.png"
+        },
+        {
+          "state": "group_count",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/avatar_group_count_light.png"
+        },
+        {
+          "state": "group_overlap",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/avatar_group_overlap_dark.png"
+        },
+        {
+          "state": "group_overlap",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/avatar_group_overlap_light.png"
+        },
         {
           "state": "states",
           "theme": "dark",
@@ -823,12 +1051,7 @@
       "category": "data-display",
       "family": "layout",
       "isNew": false,
-      "properties": {
-        "ShadcnSeparatorOrientation": [
-          "Horizontal",
-          "Vertical"
-        ]
-      },
+      "properties": {},
       "previews": [
         {
           "state": "states",
@@ -870,17 +1093,7 @@
       "category": "data-display",
       "family": "text",
       "isNew": false,
-      "properties": {
-        "ShadcnItemVariant": [
-          "Default",
-          "Outline",
-          "Muted"
-        ],
-        "ShadcnItemMediaVariant": [
-          "Default",
-          "Icon"
-        ]
-      },
+      "properties": {},
       "previews": [
         {
           "state": "states",
@@ -891,6 +1104,16 @@
           "state": "states",
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/item_states_light.png"
+        },
+        {
+          "state": "xs",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/item_xs_dark.png"
+        },
+        {
+          "state": "xs",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/item_xs_light.png"
         }
       ]
     },
@@ -904,6 +1127,66 @@
       "properties": {},
       "previews": [
         {
+          "state": "content_spacing",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_content_spacing_dark.png"
+        },
+        {
+          "state": "content_spacing",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_content_spacing_light.png"
+        },
+        {
+          "state": "md_padding",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_md_padding_dark.png"
+        },
+        {
+          "state": "md_padding",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_md_padding_light.png"
+        },
+        {
+          "state": "media_default",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_media_default_dark.png"
+        },
+        {
+          "state": "media_default",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_media_default_light.png"
+        },
+        {
+          "state": "outline",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_outline_dark.png"
+        },
+        {
+          "state": "outline",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_outline_light.png"
+        },
+        {
+          "state": "rounded_lg",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_rounded_lg_dark.png"
+        },
+        {
+          "state": "rounded_lg",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_rounded_lg_light.png"
+        },
+        {
+          "state": "spacing",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_spacing_dark.png"
+        },
+        {
+          "state": "spacing",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_spacing_light.png"
+        },
+        {
           "state": "states",
           "theme": "dark",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_states_dark.png"
@@ -912,6 +1195,16 @@
           "state": "states",
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_states_light.png"
+        },
+        {
+          "state": "title_lg",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_title_lg_dark.png"
+        },
+        {
+          "state": "title_lg",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_title_lg_light.png"
         }
       ]
     },
@@ -922,13 +1215,28 @@
       "category": "feedback",
       "family": "feedback",
       "isNew": false,
-      "properties": {
-        "AlertVariant": [
-          "Default",
-          "Destructive"
-        ]
-      },
+      "properties": {},
       "previews": [
+        {
+          "state": "action",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_action_dark.png"
+        },
+        {
+          "state": "action",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_action_light.png"
+        },
+        {
+          "state": "dialog_close_button",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_close_button_dark.png"
+        },
+        {
+          "state": "dialog_close_button",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_close_button_light.png"
+        },
         {
           "state": "dialog_states",
           "theme": "dark",
@@ -961,6 +1269,16 @@
       "properties": {},
       "previews": [
         {
+          "state": "label",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/progress_label_dark.png"
+        },
+        {
+          "state": "label",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/progress_label_light.png"
+        },
+        {
           "state": "states",
           "theme": "dark",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/progress_states_dark.png"
@@ -975,7 +1293,7 @@
     {
       "id": "skeleton",
       "title": "Skeleton",
-      "description": "A pulsing placeholder block shown while content is loading.",
+      "description": "A placeholder block shown while content is loading (pulse by default; shimmer via Modifier).",
       "category": "feedback",
       "family": "feedback",
       "isNew": false,
@@ -1017,19 +1335,11 @@
     {
       "id": "toast",
       "title": "Toast",
-      "description": "A stackable, auto-dismissing notification queue. Real shadcn/ui's sonner.tsx wraps the separate `sonner` npm library; since there's no Compose Multiplatform equivalent, ShadcnToastState + ShadcnToaster reimplement that queue directly.",
+      "description": "A stackable, auto-dismissing notification queue. Real shadcn/ui's sonner.tsx wraps the separate `sonner` npm library; since there's no Compose Multiplatform equivalent, ToastState + Toaster reimplement that queue directly.",
       "category": "feedback",
       "family": "feedback",
       "isNew": false,
-      "properties": {
-        "ShadcnToastVariant": [
-          "Default",
-          "Success",
-          "Error",
-          "Warning",
-          "Info"
-        ]
-      },
+      "properties": {},
       "previews": [
         {
           "state": "states",
@@ -1046,7 +1356,7 @@
     {
       "id": "collapsible",
       "title": "Collapsible",
-      "description": "An expand/collapse container for showing or hiding content.",
+      "description": "An interactive component which expands/collapses a panel.",
       "category": "disclosure-and-navigation",
       "family": "disclosure",
       "isNew": false,
@@ -1081,12 +1391,7 @@
       "category": "disclosure-and-navigation",
       "family": "disclosure",
       "isNew": false,
-      "properties": {
-        "ShadcnAccordionType": [
-          "Single",
-          "Multiple"
-        ]
-      },
+      "properties": {},
       "previews": [
         {
           "state": "collapsed",
@@ -1123,7 +1428,7 @@
     {
       "id": "tabs",
       "title": "Tabs",
-      "description": "A segmented control for switching between related views.",
+      "description": "A segmented control with a sliding indicator for switching between related views.",
       "category": "disclosure-and-navigation",
       "family": "selection",
       "isNew": false,
@@ -1133,6 +1438,16 @@
           "state": "item_focused",
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tabs_item_focused_light.png"
+        },
+        {
+          "state": "line",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tabs_line_dark.png"
+        },
+        {
+          "state": "line",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tabs_line_light.png"
         },
         {
           "state": "states",
@@ -1181,6 +1496,26 @@
       "isNew": false,
       "properties": {},
       "previews": [
+        {
+          "state": "arrow",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tooltip_arrow_dark.png"
+        },
+        {
+          "state": "arrow",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tooltip_arrow_light.png"
+        },
+        {
+          "state": "side_offset_0",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tooltip_side_offset_0_dark.png"
+        },
+        {
+          "state": "side_offset_0",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tooltip_side_offset_0_light.png"
+        },
         {
           "state": "trigger",
           "theme": "dark",
@@ -1323,6 +1658,16 @@
       "properties": {},
       "previews": [
         {
+          "state": "close_button",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_close_button_dark.png"
+        },
+        {
+          "state": "close_button",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_close_button_light.png"
+        },
+        {
           "state": "states",
           "theme": "dark",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_states_dark.png"
@@ -1341,15 +1686,18 @@
       "category": "overlays-and-navigation",
       "family": "overlay",
       "isNew": false,
-      "properties": {
-        "ShadcnSheetSide": [
-          "Top",
-          "Bottom",
-          "Start",
-          "End"
-        ]
-      },
+      "properties": {},
       "previews": [
+        {
+          "state": "close_button",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sheet_close_button_dark.png"
+        },
+        {
+          "state": "close_button",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sheet_close_button_light.png"
+        },
         {
           "state": "edit_profile",
           "theme": "dark",
@@ -1379,14 +1727,7 @@
       "category": "overlays-and-navigation",
       "family": "overlay",
       "isNew": false,
-      "properties": {
-        "ShadcnDrawerDirection": [
-          "Top",
-          "Bottom",
-          "Start",
-          "End"
-        ]
-      },
+      "properties": {},
       "previews": [
         {
           "state": "bottom",
@@ -1397,6 +1738,16 @@
           "state": "bottom",
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_bottom_light.png"
+        },
+        {
+          "state": "close_button",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_close_button_dark.png"
+        },
+        {
+          "state": "close_button",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_close_button_light.png"
         },
         {
           "state": "edit_profile",
@@ -1417,6 +1768,16 @@
           "state": "top",
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_top_light.png"
+        },
+        {
+          "state": "without_handle",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_without_handle_dark.png"
+        },
+        {
+          "state": "without_handle",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_without_handle_light.png"
         }
       ]
     },
@@ -1430,6 +1791,36 @@
       "properties": {},
       "previews": [
         {
+          "state": "auto_highlight",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_auto_highlight_dark.png"
+        },
+        {
+          "state": "auto_highlight",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_auto_highlight_light.png"
+        },
+        {
+          "state": "chips",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_chips_dark.png"
+        },
+        {
+          "state": "chips",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_chips_light.png"
+        },
+        {
+          "state": "clear",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_clear_dark.png"
+        },
+        {
+          "state": "clear",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_clear_light.png"
+        },
+        {
           "state": "idle",
           "theme": "dark",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_idle_dark.png"
@@ -1438,6 +1829,16 @@
           "state": "idle",
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_idle_light.png"
+        },
+        {
+          "state": "no_trigger",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_no_trigger_dark.png"
+        },
+        {
+          "state": "no_trigger",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_no_trigger_light.png"
         }
       ]
     },
@@ -1448,11 +1849,7 @@
       "category": "overlays-and-navigation",
       "family": "field",
       "isNew": false,
-      "properties": {
-        "SelectVariant": [
-          "Default"
-        ]
-      },
+      "properties": {},
       "previews": [
         {
           "state": "closed",
@@ -1463,6 +1860,16 @@
           "state": "closed",
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/select_closed_light.png"
+        },
+        {
+          "state": "item_aligned",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/select_item_aligned_dark.png"
+        },
+        {
+          "state": "item_aligned",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/select_item_aligned_light.png"
         },
         {
           "state": "placeholder",
@@ -1511,6 +1918,16 @@
       "isNew": false,
       "properties": {},
       "previews": [
+        {
+          "state": "dialog_close_button",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/command_dialog_close_button_dark.png"
+        },
+        {
+          "state": "dialog_close_button",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/command_dialog_close_button_light.png"
+        },
         {
           "state": "states",
           "theme": "dark",
@@ -1615,17 +2032,11 @@
     {
       "id": "scroll-area",
       "title": "Scroll Area",
-      "description": "A scrollable region with a slim custom scrollbar thumb instead of the native one.",
+      "description": "A scrollable region with a slim custom scrollbar thumb instead of the native one. Use ScrollArea for short Column content; use LazyScrollArea for LazyColumn / LazyRow. Scrollbar visibility follows Radix ScrollType (Auto / Always / Scroll / Hover).",
       "category": "data-and-layout",
       "family": "layout",
       "isNew": false,
-      "properties": {
-        "ShadcnScrollAreaOrientation": [
-          "Vertical",
-          "Horizontal",
-          "Both"
-        ]
-      },
+      "properties": {},
       "previews": [
         {
           "state": "states",
@@ -1659,6 +2070,26 @@
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chart_bar_states_light.png"
         },
         {
+          "state": "initial_dimension",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chart_initial_dimension_dark.png"
+        },
+        {
+          "state": "initial_dimension",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chart_initial_dimension_light.png"
+        },
+        {
+          "state": "legend_bottom",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chart_legend_bottom_dark.png"
+        },
+        {
+          "state": "legend_bottom",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chart_legend_bottom_light.png"
+        },
+        {
           "state": "line_states",
           "theme": "dark",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chart_line_states_dark.png"
@@ -1679,6 +2110,16 @@
       "isNew": false,
       "properties": {},
       "previews": [
+        {
+          "state": "caption_dropdown",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/calendar_caption_dropdown_dark.png"
+        },
+        {
+          "state": "caption_dropdown",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/calendar_caption_dropdown_light.png"
+        },
         {
           "state": "states",
           "theme": "dark",
@@ -1760,6 +2201,16 @@
           "state": "wide_first",
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_wide_first_light.png"
+        },
+        {
+          "state": "without_handle",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_without_handle_dark.png"
+        },
+        {
+          "state": "without_handle",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_without_handle_light.png"
         }
       ]
     },
@@ -1803,6 +2254,56 @@
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_expanded_light.png"
         },
         {
+          "state": "floating",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_floating_dark.png"
+        },
+        {
+          "state": "floating",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_floating_light.png"
+        },
+        {
+          "state": "icon_collapsed",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_icon_collapsed_dark.png"
+        },
+        {
+          "state": "icon_collapsed",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_icon_collapsed_light.png"
+        },
+        {
+          "state": "inset",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_inset_dark.png"
+        },
+        {
+          "state": "inset",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_inset_light.png"
+        },
+        {
+          "state": "mobile",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_mobile_dark.png"
+        },
+        {
+          "state": "mobile",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_mobile_light.png"
+        },
+        {
+          "state": "official_width",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_official_width_dark.png"
+        },
+        {
+          "state": "official_width",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_official_width_light.png"
+        },
+        {
           "state": "trigger_focused",
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_trigger_focused_light.png"
@@ -1816,12 +2317,7 @@
       "category": "ai-elements",
       "family": "ai",
       "isNew": false,
-      "properties": {
-        "ShadcnMessageAlign": [
-          "Start",
-          "End"
-        ]
-      },
+      "properties": {},
       "previews": [
         {
           "state": "conversation_with_bubbles",
@@ -1849,6 +2345,16 @@
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_group_light.png"
         },
         {
+          "state": "scroller_button_start",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_button_start_dark.png"
+        },
+        {
+          "state": "scroller_button_start",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_button_start_light.png"
+        },
+        {
           "state": "scroller_button_visible",
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_button_visible_light.png"
@@ -1862,6 +2368,16 @@
           "state": "scroller_chat_panel",
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_chat_panel_light.png"
+        },
+        {
+          "state": "scroller_content_items",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_content_items_dark.png"
+        },
+        {
+          "state": "scroller_content_items",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_content_items_light.png"
         },
         {
           "state": "scroller_icon_override",
@@ -1889,6 +2405,16 @@
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_short_content_light.png"
         },
         {
+          "state": "scroller_viewport",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_viewport_dark.png"
+        },
+        {
+          "state": "scroller_viewport",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_viewport_light.png"
+        },
+        {
           "state": "start_aligned",
           "theme": "dark",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_start_aligned_dark.png"
@@ -1907,16 +2433,7 @@
       "category": "ai-elements",
       "family": "ai",
       "isNew": false,
-      "properties": {
-        "ShadcnBubbleVariant": [
-          "Default",
-          "Secondary",
-          "Muted",
-          "Outline",
-          "Ghost",
-          "Destructive"
-        ]
-      },
+      "properties": {},
       "previews": [
         {
           "state": "alignment",
@@ -1939,6 +2456,26 @@
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_conversation_with_reactions_light.png"
         },
         {
+          "state": "reactions_top",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_reactions_top_dark.png"
+        },
+        {
+          "state": "reactions_top",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_reactions_top_light.png"
+        },
+        {
+          "state": "tinted",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_tinted_dark.png"
+        },
+        {
+          "state": "tinted",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_tinted_light.png"
+        },
+        {
           "state": "variants",
           "theme": "dark",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_variants_dark.png"
@@ -1957,24 +2494,7 @@
       "category": "ai-elements",
       "family": "ai",
       "isNew": false,
-      "properties": {
-        "ShadcnAttachmentState": [
-          "Idle",
-          "Uploading",
-          "Processing",
-          "Error",
-          "Done"
-        ],
-        "ShadcnAttachmentSize": [
-          "Default",
-          "Sm",
-          "Xs"
-        ],
-        "ShadcnAttachmentOrientation": [
-          "Horizontal",
-          "Vertical"
-        ]
-      },
+      "properties": {},
       "previews": [
         {
           "state": "composer_upload_tray",
@@ -2015,13 +2535,7 @@
       "category": "ai-elements",
       "family": "ai",
       "isNew": false,
-      "properties": {
-        "ShadcnMarkerVariant": [
-          "Default",
-          "Separator",
-          "Border"
-        ]
-      },
+      "properties": {},
       "previews": [
         {
           "state": "border",
@@ -2057,13 +2571,18 @@
       "category": "ai-elements",
       "family": "ai",
       "isNew": false,
-      "properties": {
-        "ShadcnMessageScrollerDirection": [
-          "Start",
-          "End"
-        ]
-      },
+      "properties": {},
       "previews": [
+        {
+          "state": "button_start",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_button_start_dark.png"
+        },
+        {
+          "state": "button_start",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_button_start_light.png"
+        },
         {
           "state": "button_visible",
           "theme": "light",
@@ -2078,6 +2597,16 @@
           "state": "chat_panel",
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_chat_panel_light.png"
+        },
+        {
+          "state": "content_items",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_content_items_dark.png"
+        },
+        {
+          "state": "content_items",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_content_items_light.png"
         },
         {
           "state": "icon_override",
@@ -2103,13 +2632,23 @@
           "state": "short_content",
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_short_content_light.png"
+        },
+        {
+          "state": "viewport",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_viewport_dark.png"
+        },
+        {
+          "state": "viewport",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_viewport_light.png"
         }
       ]
     },
     {
       "id": "shimmer",
       "title": "Shimmer",
-      "description": "A sweeping highlight animation for \"generating response\"/\"thinking\" text states -- a modifier, not a standalone component.",
+      "description": "A sweeping highlight for \"generating response\"/\"thinking\" text (and solid blocks) \u2014 Modifier.shimmer (SrcAtop overlay) or rememberShimmerStyle (contentBrush / background-clip:text), matching ui.shadcn.com/docs/utils/shimmer.",
       "category": "utils",
       "family": "utils",
       "isNew": false,

@@ -1,4 +1,4 @@
-rootProject.name = "shadcn-compose"
+rootProject.name = "compose-foundation"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
@@ -38,3 +38,7 @@ include(":app:shared")
 include(":app:webApp")
 include(":core")
 include(":shadcn:core")
+// Unique Gradle project name (not ":tailwind:core") — two leaf projects both named
+// "core" make KMP/Gradle substitute one for the other and create a self-cycle.
+include(":tailwind-core")
+project(":tailwind-core").projectDir = file("tailwind/core")

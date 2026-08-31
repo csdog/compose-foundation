@@ -10,6 +10,12 @@ plugins {
 }
 
 kotlin {
+    compilerOptions {
+        freeCompilerArgs.add(
+            "-opt-in=androidx.compose.foundation.style.ExperimentalFoundationStyleApi",
+        )
+    }
+
     listOf(
         iosArm64(),
         iosSimulatorArm64(),
@@ -31,8 +37,8 @@ kotlin {
         browser()
     }
 
-    androidLibrary {
-        namespace = "io.github.ronjunevaldoz.shadcncompose.app.shared"
+    android {
+        namespace = "com.toutiaoyan.compose.ui.app.shared"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
 
@@ -45,11 +51,17 @@ kotlin {
         withHostTest {
             isIncludeAndroidResources = true
         }
+        withDeviceTestBuilder {
+            sourceSetTreeName = "test"
+        }.configure {
+            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        }
     }
 
     sourceSets {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
+            implementation(libs.androidx.navigationevent.compose)
         }
         commonMain.dependencies {
             api(projects.core)
@@ -62,17 +74,26 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.kotlinx.serialization.core)
-            implementation(libs.navigation.compose)
+            implementation(libs.jetbrains.navigation3.ui)
+            implementation(libs.androidx.navigation3.runtime)
+            implementation(libs.androidx.navigationevent)
             // Catalog *examples* only (e.g. Date Picker's trigger icon) -- :shadcn:core
             // itself takes no icon-set dependency, matching every other icon spot
             // there (plain text glyphs). Never add this to :shadcn:core's dependencies.
-            // heroicons-compose (github.com/ronjunevaldoz/heroicons-compose), split out
-            // of tailwind-compose since Heroicons is a separate upstream product from
-            // Tailwind CSS itself -- was tailwind-icons-outline before the split.
-            implementation(libs.heroicons.outline)
+            // Composables Lucide (com.composables:icons-lucide-cmp).
+            implementation(libs.composables.icons.lucide)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+        }
+        jvmTest.dependencies {
+            implementation(compose.desktop.currentOs)
+            implementation(libs.compose.uiTestJunit4)
+        }
+        getByName("androidDeviceTest").dependencies {
+            implementation(libs.kotlin.test)
+            implementation(libs.androidx.testExt.junit)
+            implementation(libs.androidx.espresso.core)
         }
         jsMain.dependencies {
             implementation(libs.wrappers.browser)

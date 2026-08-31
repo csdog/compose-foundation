@@ -1,21 +1,28 @@
-# shadcn-compose vs. real shadcn/ui — parity matrix
+# compose-foundation vs. real shadcn/ui — parity matrix
 
-This document tracks how closely `shadcn-compose`'s tokens and components match the
+This document tracks how closely `compose-foundation`'s tokens and components match the
 real [shadcn/ui](https://ui.shadcn.com) they're modeled after. It exists so token and
 component drift is a deliberate, tracked decision rather than something that quietly
-accumulates.
+accumulates. Task-level alignment progress (what's landed each loop tick, remaining
+gaps) lives in [`shadcn-align-progress.md`](shadcn-align-progress.md).
 
-**Sources of truth used for this pass:**
+**Alignment target (since 2026-08-21): Base UI** — not legacy Radix `new-york-v4`.
+
+**Sources of truth:**
 - Token values: [ui.shadcn.com/docs/theming](https://ui.shadcn.com/docs/theming) (the
   officially published default theme — light/dark oklch values and `--radius`).
-- Component markup/classes: `shadcn-ui/ui` repo, `apps/v4/registry/new-york-v4/ui/*.tsx`,
-  commit [`d8ace42`](https://github.com/shadcn-ui/ui/commit/d8ace420baa5c8a1abccd75e52570f2a232f193d)
-  (2026-07-06).
+  Style preset default combo: **base-nova** (`apps/v4/registry/styles/style-nova.css`).
+- Component markup/classes / public API: `shadcn-ui/ui` repo,
+  **`apps/v4/registry/bases/base/ui/*.tsx`** (docs:
+  [ui.shadcn.com/docs/components/base](https://ui.shadcn.com/docs/components/base)).
+  Local vendor: see `vendor/README.md`.
+- Legacy reference only: `apps/v4/registry/new-york-v4/ui/*.tsx` (Radix/Vaul) — do not
+  treat as the alignment target when Base and Radix diverge.
 - oklch → sRGB hex conversion done via the standard OKLab matrices (D65, no gamut
   mapping beyond clamping to `[0, 1]`); shown so the comparison is against an actual
   color, not an abstract oklch triple.
 
-Real shadcn's default base color family is **neutral**; shadcn-compose's tokens were
+Real shadcn's default base color family is **neutral**; compose-foundation's tokens were
 originally picked against **zinc**. The two are close in lightness but not hue-identical
 — treat "match" below as "same visual weight," not "identical hex."
 
@@ -28,61 +35,98 @@ originally picked against **zinc**. The two are close in lightness but not hue-i
 | Token | shadcn oklch (official) | shadcn hex (computed) | Ours | Match |
 |---|---|---|---|---|
 | `background` | `oklch(1 0 0)` | `#FFFFFF` | `#FFFFFF` | ✅ |
-| `foreground` → `onSurface` | `oklch(0.145 0 0)` | `#0A0A0A` | `#09090B` | ✅ (~1 step) |
+| `foreground` | `oklch(0.145 0 0)` | `#0A0A0A` | `#09090B` | ✅ (~1 step) |
 | `primary` | `oklch(0.205 0 0)` | `#171717` | `#171717` | ✅ **fixed** (was `#09090B`) |
-| `primary-foreground` → `onPrimary` | `oklch(0.985 0 0)` | `#FAFAFA` | `#FAFAFA` | ✅ |
+| `primary-foreground` | `oklch(0.985 0 0)` | `#FAFAFA` | `#FAFAFA` | ✅ |
 | `secondary` / `muted` / `accent` | `oklch(0.97 0 0)` | `#F5F5F5` | `#F4F4F5` | ✅ |
-| `secondary-foreground` → `onSecondary` | `oklch(0.205 0 0)` | `#171717` | `#171717` | ✅ **fixed** (same root cause as `primary`) |
-| `muted-foreground` → `onSurfaceVariant`/`onMuted` | `oklch(0.556 0 0)` | `#737373` | `#71717A` | ✅ (neutral vs. zinc hue) |
+| `secondary-foreground` | `oklch(0.205 0 0)` | `#171717` | `#171717` | ✅ **fixed** (same root cause as `primary`) |
+| `muted-foreground` | `oklch(0.556 0 0)` | `#737373` | `#71717A` | ✅ (neutral vs. zinc hue) |
 | `destructive` | `oklch(0.577 0.245 27.325)` | `#E7000B` | `#E7000B` | ✅ **fixed** (was `#DC2626`) |
 | `border` / `input` | `oklch(0.922 0 0)` | `#E5E5E5` | `#E4E4E7` | ✅ |
-| `ring` → `borderFocus` | `oklch(0.708 0 0)` | `#A1A1A1` | `#A1A1AA` | ✅ |
+| `ring` | `oklch(0.708 0 0)` | `#A1A1A1` | `#A1A1AA` | ✅ |
+| `card` | `oklch(1 0 0)` (zinc.json) | `#FFFFFF` | `TwColors.white` | ✅ |
+| `card-foreground` | `oklch(0.141 0.005 285.823)` | ≈`#09090B` | `TwColors.zinc950` | ✅ |
+| `popover` / `popover-foreground` | same as `card` / `card-foreground` | — | same as `card` / `cardForeground` | ✅ |
+| `sidebar` | `oklch(0.985 0 0)` | `#FAFAFA` | `TwColors.zinc50` | ✅ |
+| `sidebar-foreground` | same as `card-foreground` | — | `TwColors.zinc950` | ✅ |
+| `sidebar-primary` | `oklch(0.21 0.006 285.885)` (zinc900) | — | `TwColors.neutral900` (== our `primary`) | ✅ (~family; see note) |
+| `sidebar-accent` / `-border` / `-ring` | zinc100 / zinc200 / zinc400 triples | — | `TwColors.zinc100` / `zinc200` / `zinc400` | ✅ |
+
 
 ### Dark theme
 
 | Token | shadcn oklch (official) | shadcn hex (computed) | Ours | Match |
 |---|---|---|---|---|
 | `background` | `oklch(0.145 0 0)` | `#0A0A0A` | `#09090B` | ✅ |
-| `foreground` → `onSurface` | `oklch(0.985 0 0)` | `#FAFAFA` | `#FAFAFA` | ✅ |
+| `foreground` | `oklch(0.985 0 0)` | `#FAFAFA` | `#FAFAFA` | ✅ |
 | `primary` | `oklch(0.922 0 0)` | `#E5E5E5` | `#E5E5E5` | ✅ **fixed** (was near-white `#FAFAFA`) |
-| `primary-foreground` → `onPrimary` | `oklch(0.205 0 0)` | `#171717` | `#171717` | ✅ **fixed** |
+| `primary-foreground` | `oklch(0.205 0 0)` | `#171717` | `#171717` | ✅ **fixed** |
 | `secondary` / `muted` / `accent` | `oklch(0.269 0 0)` | `#262626` | `#27272A` | ✅ |
-| `muted-foreground` → `onSurfaceVariant`/`onMuted` | `oklch(0.708 0 0)` | `#A1A1A1` | `#A1A1AA` | ✅ |
+| `muted-foreground` | `oklch(0.708 0 0)` | `#A1A1A1` | `#A1A1AA` | ✅ |
 | `destructive` | `oklch(0.704 0.191 22.216)` | `#FF6467` | `#FF6467` | ✅ **fixed** (was a dark maroon `#7F1D1D` — the opposite direction from real) |
 | `border` (10%) / `input` (15%) | `oklch(1 0 0 / 10–15%)` translucent white over `background` | `#222222` / `#2F2F2F` effective (composited over `#0A0A0A`) | `#27272A` | ✅ close enough (ours is an opaque token vs. real's translucent overlay — different mechanism, similar result) |
-| `ring` → `borderFocus` | `oklch(0.556 0 0)` | `#737373` | `#71717A` | ✅ |
+| `ring` | `oklch(0.556 0 0)` | `#737373` | `#71717A` | ✅ |
+| `card` / `popover` / `sidebar` | `oklch(0.21 0.006 285.885)` | ≈`#18181B` | `TwColors.zinc900` | ✅ (raised above `background`/`zinc950`) |
+| `card-foreground` / `popover-foreground` / `sidebar-foreground` | `oklch(0.985 0 0)` | `#FAFAFA` | `TwColors.zinc50` | ✅ |
+| `sidebar-primary` | `oklch(0.488 0.243 264.376)` (hardcoded blue) | `#1447E6` | `BaseColor.Zinc.dark` → `Oklch(0.488, 0.243, 264.376).toColor()` | ✅ |
+| `sidebar-accent` / `-border` / `-ring` | zinc800 / translucent / zinc500 | — | `TwColors.zinc800` / `zinc800` / `zinc500` | ✅ close (`sidebar-border` opaque vs real translucent, same as `border` row) |
 
-**Update (2026-07-07):** all the `primary`/`onPrimary`/`onSecondary`/`destructive`
-mismatches flagged in the original pass have since been fixed in `ShadcnColors.kt` —
+**Update (2026-07-07):** all the `primary`/`primaryForeground`/`secondaryForeground`/`destructive`
+mismatches flagged in the original pass have since been fixed in `Colors.kt` —
 verified directly against the hex values above. Everything in this table is now within
 rounding/hue-family tolerance.
+
+**Update (2026-08-03):** per-container-role tokens (`card`/`popover`/`sidebar*`) — already
+present in `Colors.kt` and wired into Card/Popover/Sidebar — are now documented here.
+They map **byte-identical** to named `TwColors` zinc shades (same oklch triples as
+[`ui.shadcn.com/r/colors/zinc.json`](https://ui.shadcn.com/r/colors/zinc.json)); the
+previous `Oklch(...).toColor()` literals were swapped for `TwColors.white` /
+`zinc50` / `zinc900` / `zinc950` with no color change.
+
+**Update (2026-08-03):** `Colors` field names now match shadcn CSS variable names
+(`foreground`, `primaryForeground`, `ring`, …). Legacy `success` / `warning` / `error`
+palette fields were removed from `Colors`; Toast success/warning accents use local
+`TwColors` shades instead.
 
 ---
 
 ## 2. Radius tokens
 
 Real shadcn derives its radius scale from a single `--radius: 0.625rem` (10px):
-`sm = radius*0.6`, `md = radius*0.8`, `lg = radius` itself, `xl = radius*1.4`, etc.
+`sm = radius*0.6`, `md = radius*0.8`, `lg = radius` itself, `xl = radius*1.4`,
+`2xl = radius*1.8` (verified against `apps/v4/app/globals.css`).
 
-| Scale step | shadcn (computed) | Ours (`ShadcnShapes`) | Match |
+Default **Vega** / **Nova** use the same formula via
+`Shapes.fromBaseRadius(baseRadius = 10.dp)` — same anchor as real `--radius`.
+Controls that use Tailwind `rounded-md` (8px) read `shapes.md`; `rounded-lg` (10px)
+reads `shapes.lg`.
+
+| Scale step | shadcn @ `--radius` 10px | Ours Vega/Nova (`fromBaseRadius(10.dp)`) | Match |
 |---|---|---|---|
-| `sm` | 6px | `sm` = 4dp | ❌ off by 2 (unchanged — named scale itself wasn't remapped, only component *usage* was) |
-| `md` | 8px | `md` = 6dp | ❌ off by 2 |
-| `lg` (= `--radius`) | 10px | `lg` = 8dp | ❌ off by 2 |
-| `xl` | 14px | `xl` = 12dp | ❌ off by 2 |
-| `2xl` | 18px | `xxl` = 16dp | ❌ off by 2 |
-| `full` | 9999px | `full` = 9999dp | ✅ |
+| `xs` | *(not on `--radius-*`; we use `base*0.4`)* | 4dp | ✅ for hardcoded `rounded-[4px]` (Checkbox) |
+| `sm` | 6px | 6dp | ✅ |
+| `md` | 8px | 8dp | ✅ |
+| `lg` (= `--radius`) | 10px | 10dp | ✅ |
+| `xl` | 14px | 14dp | ✅ |
+| `2xl` → `xxl` | 18px | 18dp | ✅ |
+| `full` | 9999px | 9999dp | ✅ |
 
-Our whole named scale is still shifted down by roughly one step versus shadcn's
-computed scale (the step values themselves haven't been remapped) — but every
-component below was moved onto the step that produces the visually-closest actual
-radius, which is what "match" means in the table below:
+`Shapes()` constructor defaults match this same 10px-derived ladder.
+Other presets (Maia/Lyra/Mira/…) keep explicit `Shapes(...)` personalities.
 
-| Component | shadcn radius class | shadcn px | We use | Ours (dp) | Match |
+| Component | shadcn radius class | shadcn px | We use | Ours (Vega dp) | Match |
 |---|---|---|---|---|---|
-| Button / Input / Toggle / ToggleGroup / ButtonGroup | `rounded-md` | 8px | `shapes.lg` | 8dp | ✅ **fixed** (was `shapes.md`/6dp) |
-| Checkbox | `rounded-[4px]` (hardcoded, not on the scale) | 4px | `shapes.sm` | 4dp | ✅ **fixed** (was `shapes.xs`/2dp) |
+| Button / Input / Toggle / ToggleGroup / ButtonGroup | `rounded-lg` (nova) | — | `radius.lg` | theme lg | ✅ base-nova |
+| Dialog / Alert (panel) | `rounded-xl` (nova) | 12px | `radius.xl` | 12dp | ✅ base-nova |
+| Card | `rounded-xl` | 14px | `shapes.xl` | 14dp | ✅ |
+| Checkbox | `rounded-[4px]` | 4px | `shapes.xs` | 4dp | ✅ |
 | Badge / Chip / Switch track / Radio / Slider thumb | `rounded-full` | 9999px | `shapes.full` | 9999dp | ✅ |
+
+**Update (2026-08-03):** Vega/Nova moved from historical `baseRadius = 8.dp` (kept so
+legacy `shapes.lg` call sites still painted 8dp) to real `--radius` **10.dp**, and
+`rounded-md` call sites were remapped `shapes.lg` → `shapes.md`. Card remapped
+`shapes.xxl` → `shapes.xl` to match real `rounded-xl` (was incorrectly on the
+`2xl` step, which jumped 14.4→18 when the base changed).
 
 ---
 
@@ -90,7 +134,7 @@ radius, which is what "match" means in the table below:
 
 Real shadcn uses Tailwind's default spacing scale unmodified (`0.25rem` = 4px per step).
 
-| Ours (`ShadcnSpacing`) | Value | Tailwind equivalent | Match |
+| Ours (`Spacing`) | Value | Tailwind equivalent | Match |
 |---|---|---|---|
 | `xxs` | 2dp | `0.5` (2px) | ✅ |
 | `xs` | 4dp | `1` (4px) | ✅ |
@@ -112,20 +156,54 @@ approximated from memory.
 
 | Component | Real shadcn surface | Ours | States implemented | Sizing vs. real | Notes |
 |---|---|---|---|---|---|
-| **Button** | `default/destructive/outline/secondary/ghost/link` × `default/xs/sm/lg/icon/icon-xs/icon-sm/icon-lg` | `Default/Destructive/Outline/Secondary/Ghost/Link` × `Xs/Sm/Md/Lg/Icon` | hover, focus (crisp ring as of this session), disabled | ❌ `Sm`=32dp matches real `sm`(32px); `Md`=40dp doesn't match real `default`(36px) — it coincides with real `lg`(40px) instead; `Lg`=48dp has no real counterpart; our `Xs`=28dp has no real counterpart; no `icon-xs`/`icon-sm`/`icon-lg` | radius should be `shapes.lg`, not `shapes.md` (see §2) |
-| **Badge** | `default/secondary/destructive/outline/ghost/link`, always reserves a 1px `border-transparent`, has `focus-visible:ring` (for `asChild` link usage) | `Default/Secondary/Destructive/Outline/Ghost` | none — fully static | radius (`full`) ✅ | ⚠️ non-`Outline` variants don't reserve a border like real shadcn does; no focus ring support at all (real Badge supports it for the link use case) |
+| **Button** | base-nova sizes: default/xs/sm/lg/icon* → `h-8`/`h-6`/`h-7`/`h-9`/`size-8`…; `rounded-lg` | Same ladder: Md/Xs/Sm/Lg/Icon* = 32/24/28/36/32…; focus ring `lg` | hover, focus, disabled | ✅ 24/28/32/36 | ✅ base-nova sizes + radius |
+| **Badge** | `default/secondary/destructive/outline/ghost/link`, always reserves a 1px `border-transparent`, has `focus-visible:ring` (for `asChild` link usage) | `Default/Secondary/Destructive/Outline/Ghost` / **Link** (2026-08-20). Ghost stays muted fill (official ghost is transparent until hover on `<a>`). | focus ring when `onClick` set (asChild/link path), link idle | radius (`full`) ✅ | ✅ Link is the official `link` variant; default remains Default |
+| **Alert** | `default`/`destructive`; Title / Description / **Action** (top-right); `role="alert"` | same variants + **AlertAction** (2026-08-20). Omit Action to keep Default/Destructive pixels | default, destructive, action | — | ✅ Action is opt-in overlay (`TopEnd`). Official new-york registry JSON still omits AlertAction; radix/docs already have it |
+| **Avatar** | `size` default/sm/lg; Image / Fallback / Badge / Group (`-space-x-2` + `ring-2 ring-background`) / **GroupCount** | same sizes + Badge + Group; **AvatarGroupCount**; `spacing` defaults `AvatarGroupDefaults.Overlap` (`-8.dp` + member ring) | fallback, badge, group count, overlap | ✅ 24/32/40dp = `size-6`/`size-8`/`size-10` | ✅ Group overlap is the official default |
+| **Card** | `size` `"default" \| "sm"`; `--card-spacing` default `--spacing(4)` / sm `--spacing(3)` for both gap and inset; Header / Title / Description / Action / Content / Footer | same slots; `CardSize.Default/Sm`; gap+inset use `CardDefaults.Spacing` 16.dp / `SmSpacing` 12.dp | — | root padding 16dp ✅ (`spacing.lg`); Sm inset 12dp ✅ | ✅ Default/Sm share one `--card-spacing` token for gap and inset |
 | **Chip** | *(not a real shadcn/ui component — shadcn only ships static Badge)* | `Default/Selected/Outline` | hover, pressed, focus (crisp ring), disabled | n/a | documented as our own addition, not a shadcn port |
-| **TextField / Input** | single style, no variant prop, `h-9` (36px) | `Default/Filled/Ghost` | focus (crisp ring), disabled | no fixed height reserved (real is 36px) | radius should be `shapes.lg`, not `shapes.md` |
-| **Checkbox** | single style, `size-4` (16px) | single style | checked, indeterminate, focus (crisp ring), disabled | ❌ 20dp vs. real 16px | radius should be `shapes.sm` (4dp), not `shapes.xs` (2dp) |
-| **RadioButton** | single style, `size-4` (16px) | single style | selected, focus (crisp ring), disabled | ❌ 20dp vs. real 16px | radius (`full`) ✅ |
-| **Switch** | `default/sm` sizes; track 32×18.4px (default) / 24×14px (sm); thumb 16px/12px | single size only | checked, focus (crisp ring), disabled | ❌ no size variant; track 40×24dp vs. real 32×18.4px; thumb 18dp vs. real 16px | radius (`full`) ✅ |
-| **Toggle** | `default/outline` × `default/sm/lg` (heights 36/32/40px) | `Default/Outline`, single size | hover, checked, focus (crisp ring), disabled | ❌ no size variants at all | radius should be `shapes.lg`, not `shapes.md` |
-| **Slider** | single style, thumb `size-4` (16px), track `h-1.5` (6px), ring on both hover and focus | single style | hover + focus ring (crisp, matches real `hover:ring-4`/`focus-visible:ring-4`), disabled | ✅ thumb 16dp = real 16px; ✅ track height 6dp = real 6px | thumb background is intentionally theme-aware (`colors.background`) vs. real's hardcoded `bg-white`, which is arguably a real shadcn quirk we improved on rather than a gap |
-| **ToggleGroup** | Radix `ToggleGroup` primitive; real CSS strips per-item corners/borders (`first:rounded-l-md`, `last:rounded-r-md`, middle items get none) and raises the focused item's `z-index` (`focus-visible:z-10`) so its ring isn't clipped by a neighbor | `ShadcnToggleGroup` computes per-item asymmetric `ToggleCorners` (first/middle/last) and passes them to both the item's own shape *and* its ring corners | inherits Toggle's states | ✅ **re-verified 2026-07-07** against `toggle-group.tsx` — our per-corner logic matches real shadcn's corner-stripping intent | z-index/ring-clipping-by-sibling on focus not verified live (couldn't reliably force a keyboard-focus repro in this pass) — worth a follow-up check |
-| **ButtonGroup** | Now an official shadcn/ui registry component (`button-group.tsx`), not a bespoke pattern. Real CSS strips *each child's own* corners/left-border per position (`[&>*:not(:first-child)]:rounded-l-none`, `[&>*:not(:last-child)]:rounded-r-none`, `:not(:first-child)]:border-l-0`) — the container itself has **no** border or radius of its own; `[&>*]:focus-visible:z-10` for the same ring-clipping reason as ToggleGroup | New `ShadcnButtonGroup(items: List<ButtonGroupItem>)` overload computes per-position `ButtonGroupCorners` (first/middle/last, orientation-aware) and passes them to both the button's own `style { shape(...) }` *and* its new `ring*Corner` params (mirroring `ShadcnButton`'s existing pattern from `ShadcnToggle`). The original flexible-children overload (mixed Input/separator compositions) is kept as-is, still drawing one shared border | inherits Button's states | ✅ **fixed 2026-07-07** for the `items` overload — verified live: two `Secondary` items render as one seamless pill with a flat inner seam, not two overlapping rounded corners. The flexible-children overload still has the original limitation (documented in its own doc comment) since arbitrary child content can't be corner-stripped generically. Per-side border stripping (only `Ghost` has no border to strip) and `focus-visible:z-10` ring-clipping-by-sibling are still not implemented — same caveats as ToggleGroup |
-| **InputGroup** | Now an official shadcn/ui registry component. Real CSS: the container owns the single border (`InputGroupInput` is `border-0 focus-visible:ring-0 flex-1`), and a `has-[:focus-visible]` selector swaps the *container's* border color and draws the ring around the whole group when the inner input is focused | `ShadcnInputGroup` owns the single border/shape (its own container style, no contentPadding — the field keeps its variant padding); tracks focus-within via `onFocusEvent { it.hasFocus }` to swap border color and draw a ring (`dropShadow(theme.focusRingShadow())`) on the container; sets an internal `LocalInsideInputGroup` so a nested `ShadcnTextField`/`ShadcnTextarea` automatically drops its own border/background/ring (no more `variant = Ghost` juggling); field slot wrapped in `weight(1f)` so trailing addons keep intrinsic width | focus-within on container ✅ | ✅ **fixed 2026-07-07** — three real bugs found via catalog screenshots and fixed: (1) inner field drew its own border+ring on focus (double border), (2) trailing addon got squeezed into one-character-per-line vertical text because the field's hardcoded `fillMaxWidth()` ate the row, (3) `BasicTextField` value text/cursor weren't themed (near-invisible in dark mode) — now passed explicitly via `textStyle`/`cursorBrush`, same lesson as `ChipVariant.contentColor`. Verified via `input_group_*` goldens | remaining gap: no `variant` parameter (container hardcoded to the Default look) — not yet requested |
-| **Textarea** | Not a distinct shadcn/ui primitive — a plain `<textarea>` sharing Input's classes | composition wrapper around `ShadcnTextField`-equivalent styling | inherits TextField's states | — | not re-verified against real source this pass |
-| **InputOTP** | Active slot is `data-[active=true]:border-ring data-[active=true]:ring-[3px] data-[active=true]:ring-ring/50` (verified against real `input-otp.tsx`) — border *color* swaps to `--ring`, width stays 1px, plus the same shared `ring-[3px] ring-ring/50` every other focusable component draws | `ShadcnInputOTP`'s active `OtpSlot` | idle, active (crisp shared ring via `dropShadow`) | 36dp slot size, no real counterpart found (real registry doesn't fix a slot size) | ✅ **fixed 2026-07-09** — the active slot previously grew its own border to a hardcoded 2dp and skipped `shadcnFocusRing` entirely: a real parity gap (real shadcn keeps border width at 1px and layers the shared offset ring on top) *and* a real inconsistency (the only component with its own bespoke ring value instead of the shared one). Border width now stays 1dp; `dropShadow(theme.focusRingShadow())` added to a plain conditional in its Style block (no real per-slot focus event to hook a `focused { }` predicate to). Zero screenshot coverage of the active state before this fix (`focused_light`/`focused_dark` added, verified pixel-level: 3px ring at `(208,208,208)` outside a solid `borderFocus`-colored 1dp border, matching every other component) |
+| **Skeleton** | base-nova `cn-skeleton` + `animate-pulse` → `rounded-md bg-muted` | same (`bg-muted` + pulse) | pulse | — | ✅ base-nova fill |
+| **Item** | `variant` default/outline/muted; `size` default/sm/**xs**; Media default/icon/image; Group / Separator / Header / Footer / Actions | same + `ItemSize.Xs` (2026-08-20). Default/Sm padding unchanged. Xs is `12×8` dp inset and `8` dp gap | — | Default `p-4` ✅ | ✅ xs is opt-in. Official registry `item.tsx` still only lists default/sm; docs already advertise xs |
+| **Empty** | base-nova `.cn-empty`: Root `gap-4 rounded-xl border-dashed p-6`; Header `gap-2`; Media default transparent / icon `size-8`; Title `text-sm`; Content `gap-2.5`; docs Outline solid `border` | Same; Default draws dashed via `PathEffect`; Outline solid 1dp; `EmptyDefaults.Spacing` 16.dp; radius `xl`; Media Icon 32.dp; Title `BodySmall`; Content 10.dp; `md:p-12` opt-in | outline, spacing, content spacing, title, md padding, rounded-xl, media default, dashed | — | ✅ base-nova + dashed border |
+| **Bubble** | `variant` default/secondary/muted/**tinted**/outline/ghost/destructive; `align` start/end; Content / Group / Reactions (`side` top/bottom, `align` start/end) | same slots; variants Default–Destructive + **Tinted**. Reactions **side** / **align** (2026-08-20); default Bottom+End. Tinted is primary wash (`alpha` 0.12 light / 0.3 dark) + foreground text — not a full `oklch(from --primary)` rewrite | variants, alignment, reactions, tinted, reactions top | `max-w-[80%]` ✅ | ✅ Tinted and Reactions `side=Top` are opt-in. Existing `bubble_variants` / conversation goldens omit both |
+| **MessageScroller** | Provider / Root / Viewport / Content (`gap-8`) / Item (`scrollAnchor`) / Button (`direction` end/start) | Root still owns scroll + jump button. **Provider** / **Viewport** / **Content** / **Item**; Content `spacing` default 32.dp (`gap-8`); Viewport `aria-label` default `"Messages"`; `preserveScrollOnPrepend` accepted, not ported. Item `scrollAnchor` accepted, not ported. Button **Start** direction rotates the arrow; default End | short, overflow-at-bottom, button, content items, start button, viewport | — | ✅ Viewport is a landmark wrapper, not the scroll container. Turn anchoring / prepend-stability not ported. Start visibility is still the caller’s `visible` |
+| **Input / Input** | base-nova `.cn-input`: `h-8` `rounded-lg` `px-2.5 py-1` | `Default/Filled/Ghost`; `InputDefaults.Height` 32.dp; radius `lg` | focus (crisp ring), disabled | ✅ **32dp** = `h-8` | ✅ base-nova height + radius |
+| **Checkbox** | single `Checkbox` export; Indicator not exported | Same; `CheckboxIndicator` internal | checked, indeterminate, focus (crisp ring), disabled | ✅ **16dp** = real 16px (`size-4`); outer `minTouchTarget` is hit area only | ✅ Base export; radius `shapes.xs` (4dp) |
+| **RadioButton** | `RadioGroup` / `RadioGroupItem` only; Indicator not exported; `size-4` | Same; `RadioGroupIndicator` internal | selected, focus (crisp ring), disabled | ✅ **16dp** = real 16px (`size-4`); outer `minTouchTarget` is hit area only | ✅ Base export; radius `full` |
+| **Switch** | single `Switch` export (Thumb inside); `default/sm`; track 32×18.4 / 24×14; thumb 16/12 | Same; `SwitchThumb` internal; `Default`/`Sm` | checked, focus (crisp ring), disabled | ✅ track **32×18dp** / **24×14dp**; ✅ thumb **16dp** / **12dp** | ✅ Base export; radius `full` |
+| **Toggle** | base-nova `default/sm/lg` → `h-8`/`h-7`/`h-9` | `Default`/`Outline` × `Sm`/`Md`/`Lg` = 28/32/36 | hover, checked, focus, disabled | ✅ 28/32/36 | ✅ base-nova sizes |
+| **Slider** | single `Slider` export; Track/Range/Thumb inside; thumb `size-3`, track `h-1`, thumb `border-ring` | Same; slots internal; `SliderDefaults.ThumbSize` 12.dp / `TrackHeight` 4.dp; thumb border `ring` | hover + focus ring, disabled | ✅ thumb 12dp; ✅ track 4dp | ✅ base-nova sizes; thumb fill `colors.background` (web `bg-white`) |
+| **Progress** | base-nova: Track `h-1` `bg-muted`; Indicator `bg-primary`; Label/Value/Track/Indicator exported | Same; `ProgressDefaults.TrackHeight` 4.dp; track `bg-muted`; Label `font-medium` | determinate, indeterminate, label+value | track `h-1` ✅ | ✅ base-nova height + muted track |
+| **ToggleGroup** | Radix `ToggleGroup`; 2026-05-17 default `spacing` **2** (8px); strips per-item corners; `focus-visible:z-10` | per-item corners; focused `zIndex(10f)`; composable `spacing` default **8.dp**; `contentDescription` = official `aria-label` | inherits Toggle's states | ✅ corners | ✅ spacing default matches official 8dp |
+| **Tabs** | List / Trigger / Content (+ list variants); **no** TabsIndicator export | Same; TabsIndicator internal (List still paints default pill/line) | states, line | — | ✅ Base export; indicator helper internal |
+| **Combobox** | Content `sideOffset` **6**, `align` start, `alignOffset` 0; Clear/Icon/Portal/ItemIndicator **not exported** | Same + `alignOffset` 0.dp; slots internal | idle, chips, clear | — | ✅ Base + alignOffset |
+| **ButtonGroup** | Official `button-group.tsx`: strips each child's corners/left-border per position; container has **no** own border; `[&>*]:focus-visible:z-10` | `ButtonGroupItem` per-position corners + 1dp Outline overlap; focused Button children `zIndex(10)` (2026-08-20). Mixed non-Item children still skip auto-corners | inherits Button's states | ✅ joined Ghost items | ✅ `focus-visible:z-10` on group Buttons. Flexible mixed children still need caller-supplied outer corners |
+| **InputGroup** | Now an official shadcn/ui registry component. Real CSS: the container owns the single border (`InputGroupInput` is `border-0 focus-visible:ring-0 flex-1`), and a `has-[:focus-visible]` selector swaps the *container's* border color and draws the ring around the whole group when the inner input is focused | `InputGroup` owns the single border/shape (its own container style, no contentPadding — the field keeps its variant padding); tracks focus-within via `onFocusEvent { it.hasFocus }` to swap border color and draw a ring (`dropShadow(theme.focusRingShadow())`) on the container; sets an internal `LocalInsideInputGroup` so a nested `Input`/`Textarea` automatically drops its own border/background/ring (no more `variant = Ghost` juggling); field slot wrapped in `weight(1f)` so trailing addons keep intrinsic width | focus-within on container ✅ | ✅ **fixed 2026-07-07** — three real bugs found via catalog screenshots and fixed: (1) inner field drew its own border+ring on focus (double border), (2) trailing addon got squeezed into one-character-per-line vertical text because the field's hardcoded `fillMaxWidth()` ate the row, (3) `BasicTextField` value text/cursor weren't themed (near-invisible in dark mode) — now passed explicitly via `textStyle`/`cursorBrush`, same lesson as `ChipVariant.contentColor`. Verified via `input_group_*` goldens | official InputGroup also has no `variant`. `contentDescription` (aria-label) added 2026-08-20; default null so goldens stay |
+| **Textarea** | Not a distinct shadcn/ui primitive — a plain `<textarea>` sharing Input's classes | composition wrapper around `Input`-equivalent styling | inherits Input's states | — | not re-verified against real source this pass |
+| **InputOTP** | Active slot is `data-[active=true]:border-ring data-[active=true]:ring-[3px] data-[active=true]:ring-ring/50` (verified against real `input-otp.tsx`) — border *color* swaps to `--ring`, width stays 1px, plus the same shared `ring-[3px] ring-ring/50` every other focusable component draws | `InputOTP`'s active `OtpSlot` | idle, active (crisp shared ring via `dropShadow`) | 36dp slot size, no real counterpart found (real registry doesn't fix a slot size) | ✅ **fixed 2026-07-09** — the active slot previously grew its own border to a hardcoded 2dp and skipped `shadcnFocusRing` entirely: a real parity gap (real shadcn keeps border width at 1px and layers the shared offset ring on top) *and* a real inconsistency (the only component with its own bespoke ring value instead of the shared one). Border width now stays 1dp; `dropShadow(theme.focusRingShadow())` added to a plain conditional in its Style block (no real per-slot focus event to hook a `focused { }` predicate to). Zero screenshot coverage of the active state before this fix (`focused_light`/`focused_dark` added, verified pixel-level: 3px ring at `(208,208,208)` outside a solid `borderFocus`-colored 1dp border, matching every other component) |
+| **Questionnaire** | Compound `questionnaire.tsx`: Root `items` collection; Choice `checked`/`onChange`; Progress custom `render`; Error children; Item `invalid` / `onStatusChange` / `status`; Root `item` / `onItemChange`; `shortcuts`; `defaultItem`; opt-in fade+slide; Next may disable via render state; Card / Dialog composition | same + Root `items` (`QuestionnaireItemDefinition`, default empty); Choice `checked`/`onCheckedChange`; ChoiceInput/ChoiceLabel slots (string Choice still has no native radio); `questionnaireState().reset` / `QuestionnaireReset` (Compose helper — Base 未 export Reset; form `type="reset"`); `questionnaireState().status` for Next `enabled`; Progress `text` formatter; Error `text` override; Card slots; QuestionnaireActions is layout-only; Previous/Skip/Next/Submit also work on Root | selected, required error, skip→Skipped, letter/number shortcuts, resume, custom invalid, enter animation, custom progress, Next disabled while unanswered, card shell, dialog overlay, items collection | choice `min-h-11` ✅ | ✅ **added 2026-08-20**. `onStatusChange` skips the initial Unanswered emit (matches official) |
+| **Separator** | `h-px w-full` / `h-full w-px`, `bg-border`, `orientation` default horizontal, `decorative` default true | same | — | 1dp ✅ | ✅ re-verified 2026-08-20 against current `separator.tsx` |
+| **Dialog** | `showCloseButton` default **true** on Content; Footer `showCloseButton` default **false**; panel base-nova `rounded-xl` `p-4` `bg-popover` `sm:max-w-sm`; overlay `bg-black/50`; zoom-95 | Content close default true; Footer close default false; `radius.xl` + `p-4` + popover; Default width 384dp; fade+zoom-95 | open/close | Sm/Default/Lg | ✅ base-nova panel chrome. Overlay is 50% black, not a token |
+| **AlertDialog** | No close X; Action + Cancel; Media slot; Content `size` default/sm; not dismissible on outside click | Same + **AlertDialogMedia**; `size` via DialogSize; opt-in **`AlertDialogDefaults.ShowCloseButton`**; default close false | states, close button | — | ✅ Base Media exported. Overlay capture is full-window |
+| **Command** | Dialog/Input/List/Empty/Group/Item/Shortcut/Separator; Dialog `showCloseButton` false; **no** Footer/Loading export | Same core slots; Footer/Loading/GroupHeading kept as Compose helpers; Dialog close default false | states | — | ✅ Base core; helpers extra |
+| **Sheet** | Trigger/Close/Content/Header/Footer/Title/Description; **no** Portal/Overlay export; Content `side` right + `showCloseButton` true | Same; Portal/Overlay internal; `showCloseButton` default true | open/close, official close | — | ✅ Base export surface |
+| **Drawer** | Base UI / base-nova: `swipeDirection` up/right/down/left (default down); `showSwipeHandle` default **false** + `DrawerSwipeHandle`; `snapPoints` / `snapPoint` / `onSnapPointChange` / `snapToSequentialPoints`; `disablePointerDismissal`; nested stack; Portal/Overlay exported; web Trigger/Close use `render={<Button/>}`; Popup `bg-popover` `rounded-*-xl`; Header `p-4 pb-0`; Footer `p-4 pt-0`; Content unpadded (body uses caller `p-4`) | Same Root params; Content paints handle when `showSwipeHandle`; snap sheet for vertical; nested parent scale/peek; side `min(75%, 384.dp)` / vertical `maxH − 96.dp`; Compose Trigger/Close are **passthrough children** (caller wires `toggle`/`close` on Button — no outer clickable); panel `radius.xl` + popover; Header/Footer inset match official | bottom (+handle), top, end, edit profile, snap, nested | — | ✅ base-nova surface (not Vaul). Indent / Provider / SwipeArea / VirtualKeyboardProvider not exported (not in base-nova exports). `snapToSequentialPoints` accepted; settle still uses anchored nearest by default |
+| **Popover** | Trigger / Content / Header / Title / Description; Content `align` center, `sideOffset` 4, `alignOffset` **0** | Same; `alignOffset` 0.dp; Portal/Anchor internal | dimensions form, states | — | ✅ Base + alignOffset |
+| **Menubar** | Content `sideOffset` **8**, `alignOffset` **-4**; ItemIndicator not exported | Same; `alignOffset` (-4).dp; ItemIndicator internal | states | — | ✅ Base alignOffset |
+| **ContextMenu** | Content `sideOffset` 0, `alignOffset` **4** (cursor); SubContent wraps Content (`alignOffset` 4); ItemIndicator not exported | Same; cursor nudge `alignOffset` 4.dp; SubContent `alignOffset` 4.dp (not Dropdown’s -3); ItemIndicator internal | states | — | ✅ Base alignOffset |
+| **DropdownMenu** | Content `sideOffset` 4, `alignOffset` 0; SubContent `sideOffset` **0**, `alignOffset` **-3**; ItemIndicator not exported | Same; SubContent `alignOffset` (-3).dp | states | — | ✅ Base SubContent alignOffset |
+| **Select** | Portal/Viewport/Icon/ItemText/ItemIndicator **not exported**; Trigger always chevron; Trigger `h-8` / sm `h-7` `rounded-lg`; Content `alignItemWithTrigger` + `sideOffset` 4 + `alignOffset` 0 | Same; `SelectDefaults.TriggerHeight` 32.dp / Sm 28.dp; radius `lg`; `alignOffset` 0.dp | closed, placeholder, align-item-with-trigger (open) | ✅ trigger h-8 | ✅ base-nova trigger size |
+| **HoverCard** | Root / Trigger / Content only; Content `sideOffset` 4, `align` center, `alignOffset` **4** | Same; Portal internal; Header/Title/Description Compose helpers; `alignOffset` default 4.dp | states | — | ✅ Base Core + alignOffset |
+| **NavigationMenu** | Positioner; Content `sideOffset` **8**, `alignOffset` 0 | `NavigationMenuPositioner`; Content `sideOffset` 8.dp + `alignOffset` 0.dp; Viewport deprecated | states | — | ✅ Base Positioner + alignOffset |
+| **Accordion** | Item / Trigger / Content; Header inside Trigger; ChevronDown/Up show-hide (not exported) | Same public set; Header/ItemIndicator internal; default icon **ChevronDown ↔ ChevronUp** (Base) | states | — | ✅ Base export + dual chevron |
+| **Collapsible** | Trigger / Content only | Same; Header internal | states | — | ✅ Base export surface |
+| **Tooltip** | Content `sideOffset` **4**, `align` center, `alignOffset` **0**; Arrow inside; Provider delay 0 | Same; `align` Center + `alignOffset` 0.dp; Portal/Arrow internal | trigger, arrow, side offset 4 | — | ✅ Base align + alignOffset |
+| **ScrollArea** | Export `ScrollArea` + `ScrollBar` only; Viewport/Corner/Thumb inside Root | Same public set; Viewport/Corner internal (Root still paints focus ring + bars) | hover/scroll/always/auto hide | thumb 10dp track (= `w-2.5`) | ✅ Base export; type/scrollHideDelay match |
+| **Calendar** | Export `Calendar` + `CalendarDayButton`; react-day-picker slots otherwise internal | Same core exports + compose Header/Grid/… helpers; **`CalendarDayButton` + `CalendarCell` public** | selected, range, today, outside, disabled, dropdown caption (closed) | — | ✅ DayButton public (Base `components.DayButton` surface). Caption/range ✅ |
+| **Carousel** | embla: `orientation` default horizontal; root ArrowLeft/ArrowRight; Previous/Next `variant=outline` `size=icon` `rounded-full`; `useCarousel()`; no dots | HorizontalPager/VerticalPager; same key + button defaults; `carouselApi()`; **CarouselDots is extra** | swipe, prev/next disabled at ends, keyboard | Previous/Next 32dp circle (`size-8`) vs official `size-8` ✅ | ✅ re-verified 2026-08-20. Official `opts`/`plugins`/`setApi` are embla-only — not ported |
+| **Sidebar** | Provider `defaultOpen=true`; `collapsible` offcanvas/icon/none; width `16rem` (256px); icon rail `3rem` (48px); Cmd/Ctrl+B; cookie; mobile Sheet; `variant` sidebar/floating/inset | `defaultOpen=true`; `collapsible` Offcanvas/Icon/None; `width` 256.dp; `iconWidth` 48.dp; `sidebarState().iconCollapsed`; `variant` Sidebar/Floating/Inset; Provider `shortcutEnabled`/`shortcutKey`; `mobile` opt-in Sheet at `MobileWidth` 288.dp (`18rem`); `onPersistOpen` cookie hook — no `document.cookie` | open/close, icon rail, menu active, tooltip when icon-collapsed, Cmd/Ctrl+B, floating card, inset shell, mobile Sheet, 16rem width | ✅ default width 256 = `16rem` | Mobile Sheet uses 18rem. Persistence is a callback |
+| **Chart** | Recharts wrappers: `ChartContainer`+`config`, `ChartStyle` CSS vars, `ChartTooltip`/`ChartTooltipContent` (`indicator` dot/line/dashed, `hideLabel`/`hideIndicator`), `ChartLegend`/`ChartLegendContent` (`hideIcon`, `verticalAlign` default bottom); `useChart()`; no Bar/Line primitives; Container `initialDimension` `{ width: 320, height: 200 }` | `ChartContainer` (aspect 16:9), `ChartStyle`, `chartConfig()`, Legend(+Content), Tooltip(+Content) `indicator` Dot/Line/Dashed; **Canvas `BarChart`/`LineChart` are ours** (no Recharts). Legend `verticalAlign` default Bottom; Container `initialDimension` opt-in 320×200 (Recharts measure hint, not a layout token) | legend, tooltip host, legend bottom (`pt-3`), official size | Container `aspect-video` ✅ | ⚠️ drawing backend is Canvas, not Recharts. Tooltip overlay is a slot, not Recharts hover. `initialDimension` stays opt-in fixed size |
+| **Resizable** | `ResizablePanelGroup` / Panel / Handle; Handle `withHandle` omitted (false); `orientation` | Two-pane fraction split (no react-resizable-panels). Handle `withHandle` default false (hairline) | even split, sidebar, without handle | — | ✅ grip is opt-in via `withHandle = true`. Drag math is unit-tested; screenshots use fixed `initialFraction` |
 
 ---
 
@@ -145,10 +223,24 @@ approximated from memory.
   against real source; ButtonGroup and InputGroup re-verified and found to have real,
   unaddressed gaps (see §4). Confirmed ButtonGroup and InputGroup are now official
   shadcn/ui registry components, not "not distinct primitives" as originally noted here.
+- Updated 2026-08-03: §1 now includes `card`/`popover`/`sidebar*` rows from zinc.json;
+  default palette's container-role fields are named `TwColors` shades (not raw
+  `Oklch(...).toColor()`). Prefer `TwColors.*` when the shade is byte-identical; keep
+  hex only when a scratch ARGB compare against the full TwColors table fails (current
+  exceptions: `success`, `warning`, `destructiveHover`, and all of `Accent.kt`).
+  §2: Vega/Nova now use `Shapes.fromBaseRadius(10.dp)` (real `--radius`);
+  `rounded-md` call sites use `shapes.md`. Earlier the same day this section still
+  documented the historical `baseRadius = 8.dp` workaround.
+- Updated 2026-08-04: Switch gained `SwitchSize.Sm` (24×14 / thumb 12); Toggle gained
+  `ToggleSize.Sm`/`Md`/`Lg` (32/36/40) matching real toggle.tsx; ToggleGroup forwards size.
+- Updated 2026-08-04: Button `Xs` → 24dp (= real `h-6`); Badge reserves transparent
+  1dp border + focus ring via optional `onClick`; dark zinc `sidebarPrimary` =
+  `Oklch(0.488, 0.243, 264.376).toColor()` on `BaseColor.Zinc.dark` only
+  (`DarkColors` stays aliased to primary).
 
 ---
 
-## 6. `ShadcnStylePreset` (Vega/Nova/...) vs. the old Default/New York split
+## 6. `StylePreset` (Vega/Nova/...) vs. the old Default/New York split
 
 Real shadcn/ui's `npx shadcn create` replaced the old two-style choice (`default` /
 `new-york`) with a larger named set. Researched 2026-07-07:
@@ -169,14 +261,14 @@ Real shadcn/ui's `npx shadcn create` replaced the old two-style choice (`default
 - Legacy `default`/`new-york`/`new-york-v4` values now resolve to `radix-vega` in real
   shadcn for backward compatibility.
 
-**`ShadcnRing` genuinely does vary per preset -- two separate findings, two corrections.**
+**`Ring` genuinely does vary per preset -- two separate findings, two corrections.**
 
-*Finding 1 (2026-07-08):* an earlier session wired `Vega -> ShadcnRing.Default` and
-`Nova -> ShadcnRing.NewYork`, analogized from real shadcn's *retired* two-style
+*Finding 1 (2026-07-08):* an earlier session wired `Vega -> Ring.Default` and
+`Nova -> Ring.NewYork`, analogized from real shadcn's *retired* two-style
 `shadcn init` picker (`Default`/`New York`), which real shadcn now collapses to
 `radix-vega` for back-compat -- not something the current 8-style system exposes at
 all, and only applied to 2 of 8 presets besides. Reverted: `ring` became a flat,
-preset-independent `ShadcnTheme(ring = ...)` parameter, and `ShadcnRing.Default`/
+preset-independent `Theme(ring = ...)` parameter, and `Ring.Default`/
 `.NewYork` were deleted outright (zero real callers anywhere in the codebase, no
 catalog UI path to reach them either).
 
@@ -198,9 +290,9 @@ axis, not an analogy -- each style's own `.cn-button` rule, checked file by file
 | Rhea | 3px | 30% |
 
 `ring-offset-*` appears in none of the 8 files -- offset stays 0 for every style, real
-and ours. `ShadcnStylePreset` now carries these real per-style values via a `ring:
-ShadcnRing` field again (same shape as the Finding-1 revert undid, but populated from
-verified source this time, not a cross-axis analogy). `ShadcnTheme(ring = preset.ring)`
+and ours. `StylePreset` now carries these real per-style values via a `ring:
+Ring` field again (same shape as the Finding-1 revert undid, but populated from
+verified source this time, not a cross-axis analogy). `Theme(ring = preset.ring)`
 by default -- still independently overridable, same pattern as `baseRadius`.
 **Lesson generalized:** "we checked and it doesn't vary" is only trustworthy if the
 check was against the *actual axis in question* -- Finding 1's revert checked the
@@ -222,25 +314,25 @@ measured layout size, exactly matching real CSS `box-shadow`. The custom modifie
 solving a problem that didn't exist.
 
 Every focusable component now calls `dropShadow(theme.focusRingShadow())` directly
-inside its own `focused { }` block (`ShadcnThemeData.focusRingShadow()` in
+inside its own `focused { }` block (`ThemeData.focusRingShadow()` in
 `styles/FocusRing.kt` builds the `Shadow` value: `radius = 0.dp`,
-`spread = ring.width + ring.offset`, color = `colors.borderFocus` at `ring.opacity`).
+`spread = ring.width + ring.offset`, color = `colors.ring` at `ring.opacity`).
 Components whose "active" state is a *computed* boolean rather than a real per-node
-focus event (`ShadcnInputOTP`'s `OtpSlot`, `ShadcnInputGroup`'s `hasFocusWithin`,
+focus event (`InputOTP`'s `OtpSlot`, `InputGroup`'s `hasFocusWithin`,
 `StylePresetMatrixTest`'s ring swatch) use a plain `if (isActive) dropShadow(...)`
 inside the `Style { }` body instead, since there's no real `InteractionSource` to drive
 a `focused { }` predicate.
 
 `dropShadow` always follows the Style's own **final resolved** `shape()` — including a
-later `style`-parameter override from `ShadcnButtonGroup`/`ShadcnToggleGroup` (their
+later `style`-parameter override from `ButtonGroup`/`ToggleGroup` (their
 per-position corner-stripped shape, merged in via `.styleable(...)`'s
-override-not-additive cascade) — so `ShadcnButton`/`ShadcnToggle` need no special-case
+override-not-additive cascade) — so `Button`/`Toggle` need no special-case
 shape handling at all; the group's own corner-stripping "just works" for the ring too.
 Verified via `ButtonGroupScreenshotTest.with_label_focused`: the ring appears only at
 the outer rounded ends, never at the internal flush seam between grouped items —
 pixel-checked directly (`(229,229,229)` ring band at the outer edge, no separate band at
 the seam). This also means `LocalGroupCorners` (still provided by
-`ShadcnButtonGroup`/`ShadcnToggleGroup`) has **no remaining reader** — only the old ring
+`ButtonGroup`/`ToggleGroup`) has **no remaining reader** — only the old ring
 modifier ever consumed it. Candidate for a follow-up cleanup, not yet done.
 
 **Lesson generalized:** the same failure mode as §6 — a specific, falsifiable technical

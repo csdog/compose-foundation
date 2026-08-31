@@ -57,7 +57,7 @@ If raster tracing is unavailable, the script prints install hints
 ```kotlin
 Icon(imageVector = BrandLogo, contentDescription = "Logo")                       // literal
 Icon(imageVector = Search, contentDescription = null,
-     tint = AppTheme.colors.onSurfaceVariant)                                    // semantic
+     tint = AppTheme.colors.mutedForeground)                                    // semantic
 ```
 
 If the project has an `AppIcons` object, register it there so call sites use `AppIcons.Search`.

@@ -143,7 +143,7 @@ Font family: _fill in_ (e.g. `Inter`, `Roboto`, system default)
 |---|---|---|---|---|
 | `COMPONENT_PREFIXButton` | `components/AppButton.kt` | `Default`, `Outline`, `Ghost`, `Destructive` | _Stable / In progress / Planned_ | _fill in_ |
 | `COMPONENT_PREFIXCard` | `components/AppCard.kt` | `Default`, `Elevated`, `Outlined` | _Stable / In progress / Planned_ | _fill in_ |
-| `COMPONENT_PREFIXTextField` | `components/AppTextField.kt` | `Default`, `WithLabel`, `Error` | _Stable / In progress / Planned_ | _fill in_ |
+| `COMPONENT_PREFIXInput` | `components/AppInput.kt` | `Default`, `WithLabel`, `Error` | _Stable / In progress / Planned_ | _fill in_ |
 | `COMPONENT_PREFIXChip` | `components/AppChip.kt` | `Filter`, `Input`, `Suggestion` | _Stable / In progress / Planned_ | _fill in_ |
 | `COMPONENT_PREFIXBadge` | `components/AppBadge.kt` | `Default`, `Success`, `Warning`, `Error` | _Stable / In progress / Planned_ | _fill in_ |
 | `COMPONENT_PREFIXText` | `components/AppText.kt` | `(type scale)` | _Stable / In progress / Planned_ | _fill in_ |
@@ -209,7 +209,7 @@ State variants (Disabled, Error, Ghost, Outline) use plain `@Preview`.
 |---|---|---|---|---|
 | `COMPONENT_PREFIXButton` | ✅ | ✅ | ✅ | ✅ |
 | `COMPONENT_PREFIXCard` | ✅ | ✅ | ✅ | ✅ |
-| `COMPONENT_PREFIXTextField` | ✅ | ✅ | ✅ | ✅ |
+| `COMPONENT_PREFIXInput` | ✅ | ✅ | ✅ | ✅ |
 | `COMPONENT_PREFIXChip` | ✅ | ✅ | ✅ | ✅ |
 | `COMPONENT_PREFIXBadge` | ✅ | ✅ | ✅ | ✅ |
 | `COMPONENT_PREFIXText` | ✅ | ✅ | ✅ | ✅ |

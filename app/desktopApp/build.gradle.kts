@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinJvm)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.composeHotReload)
 }
 
 dependencies {
@@ -17,12 +18,33 @@ dependencies {
 
 compose.desktop {
     application {
-        mainClass = "io.github.ronjunevaldoz.shadcncompose.MainKt"
+        mainClass = "com.toutiaoyan.compose.ui.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "io.github.ronjunevaldoz.shadcncompose"
+            packageName = "com.toutiaoyan.compose.ui"
             packageVersion = "1.0.0"
+            macOS {
+                bundleID = "com.toutiaoyan.compose.ui"
+                infoPlist {
+                    extraKeysRawXml =
+                        """
+                        <key>CFBundleURLTypes</key>
+                        <array>
+                            <dict>
+                                <key>CFBundleTypeRole</key>
+                                <string>Editor</string>
+                                <key>CFBundleURLName</key>
+                                <string>com.toutiaoyan.compose.ui</string>
+                                <key>CFBundleURLSchemes</key>
+                                <array>
+                                    <string>shadcncompose</string>
+                                </array>
+                            </dict>
+                        </array>
+                        """.trimIndent()
+                }
+            }
         }
     }
 }

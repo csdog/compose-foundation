@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
-# Fails if any `Style { ... }` block reads `shadcnTheme` directly inside its own
+# Fails if any `Style { ... }` block reads `currentTheme` directly inside its own
 # lambda body -- a real, previously-shipped bug class (see .claude/AGENTS.md's
 # "Style blocks can resolve outside normal composition" note and
 # docs/visual-testing.md's blind-spot writeup for the incident this codified).
 #
 # `Style { }` blocks are not guaranteed to run in a normal composition position, so
-# reading a CompositionLocal-backed @Composable getter (shadcnTheme) from inside one
+# reading a CompositionLocal-backed @Composable getter (currentTheme) from inside one
 # can capture a stale snapshot instead of the live value -- symptom: the property
 # renders correctly once, then never updates on a live theme change (e.g. dark-mode
-# toggle), even though every sibling that reads shadcnTheme from a real composable
+# toggle), even though every sibling that reads currentTheme from a real composable
 # position updates correctly. Confirmed live in ShadcnInputGroup/ShadcnTextField.
 #
-# The fix is always the same: read `shadcnTheme.colors`/`.shapes`/etc. once into a
+# The fix is always the same: read `currentTheme.colors`/`.shapes`/etc. once into a
 # plain `val` in the enclosing @Composable *before* the Style{} block, then reference
-# that captured val -- not `shadcnTheme` again -- from inside the block.
+# that captured val -- not `currentTheme` again -- from inside the block.
 #
 # Usage: scripts/check_style_block_theme_reads.sh
 # Exit 0: clean. Exit 1: violations found, printed as file:line.
@@ -26,9 +26,9 @@ violations=0
 
 # Scans every Style { ... } block (brace-depth matched, so it correctly spans
 # multi-line blocks) in every .kt file under shadcn/core/src and app/shared/src, and
-# flags any block whose body contains a `shadcnTheme.` read. Comments (both // and
+# flags any block whose body contains a `currentTheme.` read. Comments (both // and
 # /* */, including multi-line KDoc) are blanked out first, line-for-line, so a
-# comment merely *mentioning* Style{} or shadcnTheme.-- like this script's own
+# comment merely *mentioning* Style{} or currentTheme.-- like this script's own
 # module doc, or .claude/AGENTS.md's prose quoted in a code comment -- can never
 # produce a false positive or mask a real one.
 while IFS= read -r -d '' file; do
@@ -75,7 +75,7 @@ while IFS= read -r -d '' file; do
           closes = gsub(/\}/, "}", line)
           depth += opens - closes - 1
           if (depth <= 0) {
-            if (buf ~ /shadcnTheme\./) print FILENAME ":" start
+            if (buf ~ /currentTheme\./) print FILENAME ":" start
             depth = 0
           }
           continue
@@ -86,7 +86,7 @@ while IFS= read -r -d '' file; do
           closes = gsub(/\}/, "}", line)
           depth += opens - closes
           if (depth <= 0) {
-            if (buf ~ /shadcnTheme\./) print FILENAME ":" start
+            if (buf ~ /currentTheme\./) print FILENAME ":" start
             depth = 0
           }
         }
@@ -102,9 +102,9 @@ done < <(find shadcn/core/src app/shared/src -name "*.kt" -print0)
 
 if [ "$violations" -gt 0 ]; then
   echo
-  echo "Found $violations Style { } block(s) reading shadcnTheme directly inside their own body."
+  echo "Found $violations Style { } block(s) reading currentTheme directly inside their own body."
   echo "Fix: capture the needed theme sub-object as a plain val before the Style { } block instead."
   exit 1
 fi
 
-echo "OK: no Style { } block reads shadcnTheme directly inside its own body."
+echo "OK: no Style { } block reads currentTheme directly inside its own body."

@@ -18,12 +18,12 @@ suite makes every component's visual states a committed, diffable artifact.
   both light and dark, plus a real keyboard-`requestFocus()` capture for interactive
   leaf controls (proves the focus ring actually renders, not just that the modifier
   compiles).
-- **Style preset matrix** (`StylePresetMatrixTest.kt`): all 8 `ShadcnStylePreset` values
+- **Style preset matrix** (`StylePresetMatrixTest.kt`): all 8 `StylePreset` values
   (Vega/Nova/Maia/Lyra/Mira/Luma/Sera/Rhea) side by side in one composite image
-  (`style_matrix_ring_swatch_<light|dark>.png`), plus a real focused `ShadcnButton` per
+  (`style_matrix_ring_swatch_<light|dark>.png`), plus a real focused `Button` per
   preset (`style_matrix_button_focused_<preset>_<light|dark>.png`) -- this is the
   durable proof that picking a style preset actually changes the ring/shape tokens end
-  to end (`ShadcnStylePreset` -> `ShadcnTheme.light/dark(ring = ...)` -> `ShadcnButton`
+  to end (`StylePreset` -> `Theme.light/dark(ring = ...)` -> `Button`
   -> `shadcnFocusRing`), not just in the two presets that happened to get eyeballed live.
 
 Not covered yet: hover state (no reliable hover-simulation API is used here -- only
@@ -34,12 +34,12 @@ inside `ToggleGroup`/`ButtonGroup` (see `docs/shadcn-parity.md`).
 fixed theme, and never recomposes -- so a `Style { }` block that captures a stale
 CompositionLocal snapshot (see `.claude/AGENTS.md`'s notes on this anti-pattern) renders
 *correctly* in a static test, because the one theme it was composed under happens to be
-the one it's frozen at. This exact bug shipped undetected in `ShadcnInputGroup`/
-`ShadcnTextField`'s error state until a live dark-mode toggle in the running catalog app
+the one it's frozen at. This exact bug shipped undetected in `InputGroup`/
+`Input`'s error state until a live dark-mode toggle in the running catalog app
 revealed it. This suite catches wrong colors; it cannot catch colors that are right once
 and then never update. Since a screenshot diff structurally can't catch this, the fix
 was to prevent the anti-pattern instead: `scripts/check_style_block_theme_reads.sh`
-statically checks every `Style { }` block for a direct `shadcnTheme.` read and is wired
+statically checks every `Style { }` block for a direct `currentTheme.` read and is wired
 into CI, so this bug class can no longer land silently the way it did here.
 
 ## Running it

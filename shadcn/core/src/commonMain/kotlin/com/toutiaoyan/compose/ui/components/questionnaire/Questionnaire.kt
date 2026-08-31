@@ -1,0 +1,1558 @@
+@file:OptIn(ExperimentalFoundationStyleApi::class, ExperimentalTypeInference::class)
+
+package com.toutiaoyan.compose.ui.components.questionnaire
+
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
+import androidx.compose.foundation.style.MutableStyleState
+import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.styleable
+import androidx.compose.foundation.style.then
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEvent
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.isCtrlPressed
+import androidx.compose.ui.input.key.isMetaPressed
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.ProgressBarRangeInfo
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.disabled
+import androidx.compose.ui.semantics.error
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.progressBarRangeInfo
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.tailwind.core.twSpacing
+import com.toutiaoyan.compose.ui.components.button.Button
+import com.toutiaoyan.compose.ui.components.button.ButtonSize
+import com.toutiaoyan.compose.ui.components.button.ButtonVariant
+import com.toutiaoyan.compose.ui.components.field.LocalFieldSetDisabled
+import com.toutiaoyan.compose.ui.components.input.Input
+import com.toutiaoyan.compose.ui.components.input.InputType
+import com.toutiaoyan.compose.ui.components.kbd.Kbd
+import com.toutiaoyan.compose.ui.components.text.Text
+import com.toutiaoyan.compose.ui.components.text.TextColors
+import com.toutiaoyan.compose.ui.components.text.TextVariant
+import com.toutiaoyan.compose.ui.theme.currentTheme
+import kotlin.experimental.ExperimentalTypeInference
+import kotlin.jvm.JvmName
+
+/**
+ * Multi-step questionnaire matching real shadcn/ui's `questionnaire.tsx`:
+ *
+ * ```
+ * Questionnaire
+ * ├── QuestionnaireProgress
+ * ├── QuestionnaireItem
+ * │   ├── QuestionnaireTitle
+ * │   ├── QuestionnaireDescription
+ * │   ├── QuestionnaireChoices
+ * │   │   ├── QuestionnaireChoice
+ * │   │   │   ├── QuestionnaireChoiceInput
+ * │   │   │   ├── QuestionnaireChoiceLabel
+ * │   │   │   ├── QuestionnaireChoiceDescription
+ * │   │   │   └── QuestionnaireChoiceShortcut
+ * │   │   └── QuestionnaireInput
+ * │   └── QuestionnaireError
+ * └── QuestionnairePrevious / Skip / Next / Submit / Reset
+ *     (QuestionnaireActions is layout-only; nav also works on Root)
+ * ```
+ *
+ * One item is visible at a time. [value] / [onValueChange] / [defaultValue] control
+ * the active item name (Radix-style). [defaultItem] is the official alias of [defaultValue].
+ * [shortcuts] assigns A–Z or 1–9 to enabled
+ * choices (does not auto-advance). [items] seeds order, progress, and shortcut
+ * order (official Root `items`). [onSubmit] receives each item's answers
+ * (selected choice values plus a non-blank freeform input, if any).
+ * [disabled] is the official Root `disabled`: choices, freeform input, and
+ * navigation are inert; shortcuts are ignored. ArrowLeft / ArrowRight move
+ * between items when focus is outside a choice or text field; Ctrl/Cmd+Enter
+ * validates and continues from anywhere. ArrowUp / ArrowDown move between
+ * answers (radios also select).
+ *
+ * Usage:
+ * ```
+ * Questionnaire(onSubmit = { answers -> }) {
+ *     QuestionnaireProgress()
+ *     QuestionnaireItem("direction", required = true) {
+ *         QuestionnaireTitle("What should we prototype next?")
+ *         QuestionnaireChoices {
+ *             QuestionnaireChoice("delegation", "Delegation")
+ *             QuestionnaireChoice("questions", "Question prompts")
+ *         }
+ *         QuestionnaireError()
+ *     }
+ *     QuestionnaireActions {
+ *         QuestionnairePrevious()
+ *         QuestionnaireNext()
+ *         QuestionnaireSubmit()
+ *     }
+ * }
+ * ```
+ */
+@Composable
+fun Questionnaire(
+    modifier: Modifier = Modifier,
+    value: String? = null,
+    onValueChange: ((String) -> Unit)? = null,
+    defaultValue: String? = null,
+    defaultItem: String? = null,
+    item: String? = null,
+    onItemChange: ((String) -> Unit)? = null,
+    onSubmit: (Map<String, List<String>>) -> Unit = {},
+    items: List<QuestionnaireItemDefinition> = emptyList(),
+    shortcuts: QuestionnaireShortcuts = QuestionnaireShortcuts.None,
+    animate: Boolean = false,
+    disabled: Boolean = false,
+    style: Style = Style,
+    content: @Composable QuestionnaireScope.() -> Unit,
+) {
+    val ctrl =
+        remember {
+            QuestionnaireController(
+                initialValue = defaultItem ?: defaultValue,
+                onValueChange = onValueChange,
+                onSubmit = onSubmit,
+            ).also { it.applyItems(items) }
+        }
+    SideEffect {
+        ctrl.applyItems(items)
+        ctrl.externalValue = value ?: item
+        ctrl.onValueChange = onValueChange ?: onItemChange
+        ctrl.onSubmit = onSubmit
+        ctrl.shortcuts = shortcuts
+        ctrl.animate = animate
+        ctrl.disabled = disabled
+        val active = ctrl.activeName
+        if (active != null && ctrl.disabledByName[active] == true && value == null) {
+            ctrl.enabledNames().firstOrNull()?.let(ctrl::goTo)
+        }
+    }
+    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val resolvedDisabled = disabled || LocalFieldSetDisabled.current
+    CompositionLocalProvider(
+        LocalQuestionnaireController provides ctrl,
+        LocalFieldSetDisabled provides resolvedDisabled,
+    ) {
+        Column(
+            modifier =
+                modifier
+                    .fillMaxWidth()
+                    .focusable()
+                    .onPreviewKeyEvent { handleQuestionnaireKey(ctrl, it) }
+                    .semantics { if (resolvedDisabled) this.disabled() }
+                    .styleable(styleState, style),
+            verticalArrangement = Arrangement.spacedBy(twSpacing.lg),
+        ) {
+            QuestionnaireScope().content()
+        }
+    }
+}
+
+/** Official `shortcuts` — letters are A–Z, numbers are 1–9, in choice order (disabled skipped). */
+enum class QuestionnaireShortcuts { None, Letters, Numbers }
+
+/** Official Root `items` choice row. */
+class QuestionnaireChoiceDefinition(
+    val value: String,
+    val label: String = value,
+    val description: String? = null,
+    val disabled: Boolean = false,
+)
+
+/** Official Root `items` freeform field. */
+class QuestionnaireInputDefinition(
+    val label: String? = null,
+    val placeholder: String? = null,
+)
+
+/** Official Root `items` collection entry — order, progress, shortcuts. */
+class QuestionnaireItemDefinition(
+    val name: String,
+    val required: Boolean = false,
+    val multiple: Boolean = false,
+    val disabled: Boolean = false,
+    val prompt: String = "",
+    val description: String? = null,
+    val choices: List<QuestionnaireChoiceDefinition> = emptyList(),
+    val input: QuestionnaireInputDefinition? = null,
+)
+
+/** Official Questionnaire.Item `status`. */
+enum class QuestionnaireItemStatus { Unanswered, Answered, Skipped }
+
+/** Official Progress render state — [current] is 1-based. */
+class QuestionnaireProgressState(
+    val current: Int,
+    val total: Int,
+    val first: Boolean,
+    val last: Boolean,
+)
+
+/** Active item / answers of the nearest [Questionnaire]. */
+class QuestionnaireState(
+    val value: String?,
+    val answers: Map<String, List<String>>,
+    val index: Int,
+    val count: Int,
+    val error: String?,
+    val isLast: Boolean,
+    val canPrevious: Boolean,
+    val canSkip: Boolean,
+    val status: QuestionnaireItemStatus,
+    val reset: () -> Unit,
+)
+
+private val LocalQuestionnaireController =
+    staticCompositionLocalOf<QuestionnaireController?> { null }
+
+internal class QuestionnaireController(
+    private val initialValue: String?,
+    var onValueChange: ((String) -> Unit)?,
+    var onSubmit: (Map<String, List<String>>) -> Unit,
+) {
+    var externalValue: String? = null
+    private var uncontrolled by mutableStateOf(initialValue)
+    val names = mutableStateListOf<String>()
+    val requiredByName = mutableStateMapOf<String, Boolean>()
+    val multipleByName = mutableStateMapOf<String, Boolean>()
+    val requiredMessageByName = mutableStateMapOf<String, String>()
+    val disabledByName = mutableStateMapOf<String, Boolean>()
+    val choices = mutableStateMapOf<String, MutableList<String>>()
+    val choiceOrder = mutableStateMapOf<String, MutableList<String>>()
+    val choiceEnabled = mutableStateMapOf<String, Boolean>()
+    val inputs = mutableStateMapOf<String, String>()
+    val errors = mutableStateMapOf<String, String>()
+    val invalidByName = mutableStateMapOf<String, Boolean>()
+    val validators = mutableStateMapOf<String, (List<String>) -> String?>()
+    val skippedByName = mutableStateMapOf<String, Boolean>()
+    var shortcuts: QuestionnaireShortcuts = QuestionnaireShortcuts.None
+    var animate: Boolean = false
+    var disabled: Boolean = false
+    var inputFocused by mutableStateOf(false)
+    var choiceFocused by mutableStateOf(false)
+    var focusedChoiceValue by mutableStateOf<String?>(null)
+    var pendingAnswerFocus by mutableStateOf<String?>(null)
+    private val inputPresentByName = mutableStateMapOf<String, Boolean>()
+    private var itemsLocked = false
+    private val itemsNames = mutableSetOf<String>()
+    private val itemsChoiceKeys = mutableSetOf<String>()
+
+    val activeName: String?
+        get() = externalValue ?: uncontrolled ?: enabledNames().firstOrNull()
+
+    fun enabledNames(): List<String> = names.filter { disabledByName[it] != true }
+
+    val index: Int
+        get() = enabledNames().indexOf(activeName).coerceAtLeast(0)
+
+    val isLast: Boolean
+        get() {
+            val enabled = enabledNames()
+            return enabled.isNotEmpty() && index >= enabled.lastIndex
+        }
+
+    val canPrevious: Boolean
+        get() = index > 0
+
+    val canSkip: Boolean
+        get() {
+            val name = activeName ?: return false
+            return requiredByName[name] != true && !isLast
+        }
+
+    fun answers(): Map<String, List<String>> =
+        names.associateWith { name ->
+            val selected = choices[name].orEmpty().toList()
+            val typed = inputs[name]?.trim().orEmpty()
+            if (typed.isNotEmpty()) selected + typed else selected
+        }
+
+    fun hasAnswer(name: String): Boolean {
+        if (choices[name].orEmpty().isNotEmpty()) return true
+        return !inputs[name].orEmpty().trim().isEmpty()
+    }
+
+    fun applyItems(defs: List<QuestionnaireItemDefinition>) {
+        if (defs.isEmpty()) {
+            itemsLocked = false
+            itemsNames.clear()
+            itemsChoiceKeys.clear()
+            return
+        }
+        itemsLocked = true
+        itemsNames.clear()
+        itemsNames.addAll(defs.map { it.name })
+        itemsChoiceKeys.clear()
+        val desiredNames = defs.map { it.name }
+        val extras = names.filter { it !in itemsNames }
+        if (names.toList() != desiredNames + extras) {
+            names.clear()
+            names.addAll(desiredNames)
+            names.addAll(extras)
+        }
+        defs.forEach { def ->
+            requiredByName[def.name] = def.required
+            multipleByName[def.name] = def.multiple
+            disabledByName[def.name] = def.disabled
+            def.choices.forEach { ch ->
+                itemsChoiceKeys.add("${def.name}/${ch.value}")
+                choiceEnabled["${def.name}/${ch.value}"] = !ch.disabled
+            }
+            if (def.choices.isNotEmpty()) {
+                val desired = def.choices.map { it.value }
+                val order = choiceOrder.getOrPut(def.name) { mutableStateListOf() }
+                val extraChoices = order.filter { it !in desired }
+                if (order.toList() != desired + extraChoices) {
+                    order.clear()
+                    order.addAll(desired)
+                    order.addAll(extraChoices)
+                }
+            }
+        }
+        if (uncontrolled == null && externalValue == null) {
+            uncontrolled = enabledNames().firstOrNull()
+        }
+    }
+
+    fun register(
+        name: String,
+        required: Boolean,
+        multiple: Boolean,
+        requiredMessage: String,
+        disabled: Boolean,
+        invalid: Boolean = false,
+        validator: ((List<String>) -> String?)? = null,
+    ) {
+        if (name !in names) names.add(name)
+        requiredByName[name] = required
+        multipleByName[name] = multiple
+        requiredMessageByName[name] = requiredMessage
+        disabledByName[name] = disabled
+        invalidByName[name] = invalid
+        if (validator != null) {
+            validators[name] = validator
+        } else {
+            validators.remove(name)
+        }
+        if (uncontrolled == null && externalValue == null) {
+            uncontrolled = enabledNames().firstOrNull()
+        }
+    }
+
+    fun unregister(name: String) {
+        if (itemsLocked && name in itemsNames) return
+        names.remove(name)
+        requiredByName.remove(name)
+        multipleByName.remove(name)
+        requiredMessageByName.remove(name)
+        disabledByName.remove(name)
+        invalidByName.remove(name)
+        validators.remove(name)
+        skippedByName.remove(name)
+        choices.remove(name)
+        choiceOrder.remove(name)
+        inputs.remove(name)
+        errors.remove(name)
+        inputPresentByName.remove(name)
+    }
+
+    fun registerChoice(
+        item: String,
+        value: String,
+        enabled: Boolean,
+        defaultChecked: Boolean = false,
+    ) {
+        val order = choiceOrder.getOrPut(item) { mutableStateListOf() }
+        if (value !in order) order.add(value)
+        choiceEnabled["$item/$value"] = enabled
+        applyChoiceDefault(item, value, defaultChecked)
+    }
+
+    private val choiceDefaultApplied = mutableStateMapOf<String, Boolean>()
+
+    private fun applyChoiceDefault(
+        item: String,
+        value: String,
+        defaultChecked: Boolean,
+    ) {
+        val key = "$item/$value"
+        if (choiceDefaultApplied[key] == true) return
+        choiceDefaultApplied[key] = true
+        if (!defaultChecked) return
+        val already = choices[item].orEmpty()
+        if (multipleByName[item] != true && already.isNotEmpty()) return
+        selectChoice(item, value)
+    }
+
+    private val inputDefaultApplied = mutableStateMapOf<String, Boolean>()
+
+    fun applyInputDefault(
+        name: String,
+        defaultValue: String,
+    ) {
+        if (inputDefaultApplied[name] == true) return
+        inputDefaultApplied[name] = true
+        if (defaultValue.isNotEmpty() && inputs[name].isNullOrEmpty()) {
+            inputs[name] = defaultValue
+        }
+    }
+
+    fun unregisterChoice(
+        item: String,
+        value: String,
+    ) {
+        if (itemsLocked && "$item/$value" in itemsChoiceKeys) return
+        choiceOrder[item]?.remove(value)
+        choiceEnabled.remove("$item/$value")
+    }
+
+    fun shortcutFor(
+        item: String,
+        value: String,
+    ): String? {
+        if (shortcuts == QuestionnaireShortcuts.None) return null
+        if (choiceEnabled["$item/$value"] == false) return null
+        val ordered =
+            choiceOrder[item].orEmpty().filter { choiceEnabled["$item/$it"] != false }
+        val i = ordered.indexOf(value)
+        if (i < 0) return null
+        return when (shortcuts) {
+            QuestionnaireShortcuts.Letters -> if (i < 26) ('A' + i).toString() else null
+            QuestionnaireShortcuts.Numbers -> if (i < 9) (i + 1).toString() else null
+            QuestionnaireShortcuts.None -> null
+        }
+    }
+
+    fun selectByShortcut(label: String): Boolean {
+        if (disabled) return false
+        val name = activeName ?: return false
+        val ordered =
+            choiceOrder[name].orEmpty().filter { choiceEnabled["$name/$it"] != false }
+        val value =
+            when (shortcuts) {
+                QuestionnaireShortcuts.Letters ->
+                    ordered.getOrNull(label.uppercase().first() - 'A')
+                QuestionnaireShortcuts.Numbers ->
+                    ordered.getOrNull(label.toIntOrNull()?.minus(1) ?: -1)
+                QuestionnaireShortcuts.None -> null
+            } ?: return false
+        selectChoice(name, value)
+        return true
+    }
+
+    fun goTo(name: String) {
+        onValueChange?.invoke(name)
+        if (externalValue == null) uncontrolled = name
+        choiceFocused = false
+        focusedChoiceValue = null
+        pendingAnswerFocus = null
+    }
+
+    fun registerInput(name: String) {
+        inputPresentByName[name] = true
+    }
+
+    fun unregisterInput(name: String) {
+        inputPresentByName.remove(name)
+        if (inputFocused) inputFocused = false
+    }
+
+    fun moveAnswer(delta: Int): Boolean {
+        val name = activeName ?: return false
+        val keys =
+            buildList {
+                addAll(
+                    choiceOrder[name].orEmpty().filter { choiceEnabled["$name/$it"] != false },
+                )
+                if (inputPresentByName[name] == true) add(InputAnswerKey)
+            }
+        if (keys.isEmpty()) return false
+        val focused = focusedChoiceValue
+        val current =
+            when {
+                inputFocused -> InputAnswerKey
+                focused != null && focused in keys -> focused
+                else -> null
+            }
+        val nextIdx =
+            if (current == null) {
+                if (delta > 0) 0 else keys.lastIndex
+            } else {
+                val i = keys.indexOf(current)
+                if (i < 0) {
+                    if (delta > 0) 0 else keys.lastIndex
+                } else {
+                    (i + delta).mod(keys.size)
+                }
+            }
+        val next = keys[nextIdx]
+        pendingAnswerFocus = next
+        if (next != InputAnswerKey && multipleByName[name] != true && !isSelected(name, next)) {
+            selectChoice(name, next)
+        }
+        return true
+    }
+
+    fun selectChoice(
+        name: String,
+        value: String,
+    ) {
+        val current = choices.getOrPut(name) { mutableStateListOf() }
+        if (multipleByName[name] == true) {
+            if (value in current) current.remove(value) else current.add(value)
+        } else {
+            current.clear()
+            current.add(value)
+        }
+        skippedByName[name] = false
+        errors.remove(name)
+    }
+
+    fun setChoice(
+        name: String,
+        value: String,
+        selected: Boolean,
+    ) {
+        val current = choices.getOrPut(name) { mutableStateListOf() }
+        val isOn = value in current
+        if (selected == isOn) return
+        if (multipleByName[name] == true) {
+            if (selected) current.add(value) else current.remove(value)
+        } else if (selected) {
+            current.clear()
+            current.add(value)
+        } else {
+            current.remove(value)
+        }
+        if (selected) {
+            skippedByName[name] = false
+            errors.remove(name)
+        }
+    }
+
+    fun isSelected(
+        name: String,
+        value: String,
+    ): Boolean = value in choices[name].orEmpty()
+
+    fun setInput(
+        name: String,
+        text: String,
+    ) {
+        inputs[name] = text
+        if (text.isNotBlank()) {
+            skippedByName[name] = false
+            errors.remove(name)
+        }
+    }
+
+    fun previous() {
+        val enabled = enabledNames()
+        val i = enabled.indexOf(activeName)
+        if (i > 0) goTo(enabled[i - 1])
+    }
+
+    fun skip() {
+        if (!canSkip) return
+        val name = activeName ?: return
+        skippedByName[name] = true
+        choices[name]?.clear()
+        inputs.remove(name)
+        errors.remove(name)
+        val enabled = enabledNames()
+        val i = enabled.indexOf(name)
+        if (i >= 0 && i < enabled.lastIndex) goTo(enabled[i + 1])
+    }
+
+    fun next() {
+        val name = activeName ?: return
+        if (!validate(name)) return
+        if (isLast) return
+        val enabled = enabledNames()
+        val i = enabled.indexOf(name)
+        if (i >= 0 && i < enabled.lastIndex) goTo(enabled[i + 1])
+    }
+
+    fun submit() {
+        val name = activeName ?: return
+        if (!validate(name)) return
+        onSubmit(answers())
+    }
+
+    fun continueOrSubmit() {
+        if (isLast) submit() else next()
+    }
+
+    private fun validate(name: String): Boolean {
+        if (invalidByName[name] == true) {
+            errors[name] = requiredMessageByName[name] ?: "This question is required."
+            return false
+        }
+        if (requiredByName[name] == true && !hasAnswer(name)) {
+            errors[name] = requiredMessageByName[name] ?: "This question is required."
+            return false
+        }
+        val custom = validators[name]?.invoke(answers()[name].orEmpty())
+        if (custom != null) {
+            errors[name] = custom
+            return false
+        }
+        errors.remove(name)
+        return true
+    }
+
+    fun errorMessage(name: String): String? {
+        if (invalidByName[name] == true) {
+            return requiredMessageByName[name] ?: "This question is required."
+        }
+        return errors[name]
+    }
+
+    fun itemStatus(name: String): QuestionnaireItemStatus =
+        when {
+            skippedByName[name] == true -> QuestionnaireItemStatus.Skipped
+            hasAnswer(name) -> QuestionnaireItemStatus.Answered
+            else -> QuestionnaireItemStatus.Unanswered
+        }
+
+    /** Official form `type="reset"` — restores `defaultItem` / `defaultChecked` / `defaultValue`. */
+    fun reset() {
+        choices.values.forEach { it.clear() }
+        inputs.clear()
+        errors.clear()
+        skippedByName.clear()
+        choiceDefaultApplied.clear()
+        inputDefaultApplied.clear()
+        if (externalValue == null) {
+            uncontrolled = initialValue ?: enabledNames().firstOrNull()
+            uncontrolled?.let { onValueChange?.invoke(it) }
+        }
+    }
+}
+
+@Composable
+private fun questionnaireController(): QuestionnaireController =
+    checkNotNull(LocalQuestionnaireController.current) {
+        "Questionnaire slots must be used inside Questionnaire { … }"
+    }
+
+/** Reads the nearest [Questionnaire]. */
+@Composable
+fun questionnaireState(): QuestionnaireState {
+    val ctrl = questionnaireController()
+    val name = ctrl.activeName
+    return QuestionnaireState(
+        value = name,
+        answers = ctrl.answers(),
+        index = ctrl.index,
+        count = ctrl.enabledNames().size,
+        error = name?.let { ctrl.errorMessage(it) },
+        isLast = ctrl.isLast,
+        canPrevious = ctrl.canPrevious,
+        canSkip = ctrl.canSkip,
+        status = name?.let { ctrl.itemStatus(it) } ?: QuestionnaireItemStatus.Unanswered,
+        reset = ctrl::reset,
+    )
+}
+
+class QuestionnaireScope internal constructor()
+
+private val LocalQuestionnaireItemName = staticCompositionLocalOf<String?> { null }
+
+private val LocalQuestionnaireChoiceValue = staticCompositionLocalOf<String?> { null }
+
+private val LocalQuestionnaireChoiceSelected = staticCompositionLocalOf { false }
+
+private val LocalQuestionnaireChoiceMultiple = staticCompositionLocalOf { false }
+
+private const val InputAnswerKey = "\u0000input"
+
+private val LetterKeys =
+    listOf(
+        Key.A, Key.B, Key.C, Key.D, Key.E, Key.F, Key.G, Key.H, Key.I, Key.J,
+        Key.K, Key.L, Key.M, Key.N, Key.O, Key.P, Key.Q, Key.R, Key.S, Key.T,
+        Key.U, Key.V, Key.W, Key.X, Key.Y, Key.Z,
+    )
+
+private val NumberKeys =
+    listOf(
+        Key.One, Key.Two, Key.Three, Key.Four, Key.Five,
+        Key.Six, Key.Seven, Key.Eight, Key.Nine,
+    )
+
+private val NumPadKeys =
+    listOf(
+        Key.NumPad1, Key.NumPad2, Key.NumPad3, Key.NumPad4, Key.NumPad5,
+        Key.NumPad6, Key.NumPad7, Key.NumPad8, Key.NumPad9,
+    )
+
+private fun handleQuestionnaireKey(
+    ctrl: QuestionnaireController,
+    event: KeyEvent,
+): Boolean {
+    if (event.type != KeyEventType.KeyDown) return false
+    if (ctrl.disabled) return false
+    val enter = event.key == Key.Enter || event.key == Key.NumPadEnter
+    if (enter && (event.isCtrlPressed || event.isMetaPressed)) {
+        ctrl.continueOrSubmit()
+        return true
+    }
+    if (ctrl.inputFocused) {
+        val name = ctrl.activeName
+        if (enter && name != null && ctrl.hasAnswer(name)) {
+            ctrl.continueOrSubmit()
+            return true
+        }
+        val empty = name == null || ctrl.inputs[name].isNullOrBlank()
+        if (empty) {
+            when (event.key) {
+                Key.DirectionUp -> return ctrl.moveAnswer(-1)
+                Key.DirectionDown -> return ctrl.moveAnswer(1)
+                else -> Unit
+            }
+        }
+        return false
+    }
+    when (event.key) {
+        Key.DirectionUp -> return ctrl.moveAnswer(-1)
+        Key.DirectionDown -> return ctrl.moveAnswer(1)
+        Key.DirectionLeft -> {
+            if (ctrl.choiceFocused) return false
+            ctrl.previous()
+            return true
+        }
+        Key.DirectionRight -> {
+            if (ctrl.choiceFocused) return false
+            val name = ctrl.activeName ?: return false
+            if (ctrl.itemStatus(name) != QuestionnaireItemStatus.Unanswered) {
+                ctrl.continueOrSubmit()
+            }
+            return true
+        }
+        else -> Unit
+    }
+    val label =
+        when (ctrl.shortcuts) {
+            QuestionnaireShortcuts.Letters -> {
+                val i = LetterKeys.indexOf(event.key)
+                if (i >= 0) ('A' + i).toString() else null
+            }
+            QuestionnaireShortcuts.Numbers -> {
+                val i = NumberKeys.indexOf(event.key).takeIf { it >= 0 } ?: NumPadKeys.indexOf(event.key)
+                if (i >= 0) (i + 1).toString() else null
+            }
+            QuestionnaireShortcuts.None -> null
+        } ?: return false
+    return ctrl.selectByShortcut(label)
+}
+
+/** "Question X of Y" — shadcn `QuestionnaireProgress` (`text-muted-foreground tabular-nums`). */
+@Composable
+fun QuestionnaireScope.QuestionnaireProgress(
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+    /** Official Progress `aria-label`. */
+    contentDescription: String = "Questionnaire progress",
+    text: (QuestionnaireProgressState) -> String = { "Question ${it.current} of ${it.total}" },
+) {
+    val ctrl = questionnaireController()
+    val total = ctrl.enabledNames().size.coerceAtLeast(1)
+    val current = ctrl.index + 1
+    val state =
+        QuestionnaireProgressState(
+            current = current,
+            total = total,
+            first = ctrl.index == 0,
+            last = ctrl.isLast,
+        )
+    val label = text(state)
+    val progressName = contentDescription
+    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    Text(
+        modifier =
+            modifier
+                .semantics {
+                    progressBarRangeInfo =
+                        ProgressBarRangeInfo(
+                            current = current.toFloat(),
+                            range = 0f..total.toFloat(),
+                            steps = (total - 1).coerceAtLeast(0),
+                        )
+                    this.contentDescription = progressName
+                }
+                .styleable(styleState, style),
+        variant = TextVariant.BodySmall,
+        textStyle = TextColors.Muted.merge(TextStyle(fontWeight = FontWeight.Medium)),
+    ) { label }
+}
+
+@Composable
+fun QuestionnaireScope.QuestionnaireItem(
+    name: String,
+    modifier: Modifier = Modifier,
+    required: Boolean = false,
+    multiple: Boolean = false,
+    requiredMessage: String = "This question is required.",
+    disabled: Boolean = false,
+    invalid: Boolean = false,
+    validate: ((List<String>) -> String?)? = null,
+    onStatusChange: ((QuestionnaireItemStatus) -> Unit)? = null,
+    animate: Boolean? = null,
+    style: Style = Style,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    val ctrl = questionnaireController()
+    val status = ctrl.itemStatus(name)
+    var previousStatus by remember(name) { mutableStateOf<QuestionnaireItemStatus?>(null) }
+    SideEffect {
+        ctrl.register(name, required, multiple, requiredMessage, disabled, invalid, validate)
+        val previous = previousStatus
+        if (previous != null && previous != status) {
+            onStatusChange?.invoke(status)
+        }
+        previousStatus = status
+    }
+    DisposableEffect(name) {
+        onDispose { ctrl.unregister(name) }
+    }
+    if (disabled || ctrl.activeName != name) return
+    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val shouldAnimate = animate ?: ctrl.animate
+    val itemError = ctrl.errorMessage(name)
+    val itemModifier =
+        modifier
+            .fillMaxWidth()
+            .semantics { if (itemError != null) error(itemError) }
+            .styleable(styleState, style)
+    CompositionLocalProvider(LocalQuestionnaireItemName provides name) {
+        if (shouldAnimate) {
+            val slidePx = with(LocalDensity.current) { 8.dp.roundToPx() }
+            AnimatedVisibility(
+                visible = true,
+                enter = fadeIn(tween(300)) + slideInVertically(tween(300)) { slidePx },
+            ) {
+                Column(
+                    modifier = itemModifier,
+                    verticalArrangement = Arrangement.spacedBy(twSpacing.md),
+                    content = content,
+                )
+            }
+        } else {
+            Column(
+                modifier = itemModifier,
+                verticalArrangement = Arrangement.spacedBy(twSpacing.md),
+                content = content,
+            )
+        }
+    }
+}
+
+@Composable
+fun QuestionnaireScope.QuestionnaireTitle(
+    text: String,
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+) {
+    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    Text(
+        modifier = modifier.semantics { heading() }.styleable(styleState, style),
+        variant = TextVariant.TitleMedium,
+        textStyle = TextStyle(fontWeight = FontWeight.Medium),
+    ) { text }
+}
+
+@Composable
+@JvmName("QuestionnaireTitleLambda")
+@OverloadResolutionByLambdaReturnType
+fun QuestionnaireScope.QuestionnaireTitle(
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+    text: () -> String,
+) {
+    QuestionnaireTitle(text = text(), modifier = modifier, style = style)
+}
+
+@Composable
+fun QuestionnaireScope.QuestionnaireDescription(
+    text: String,
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+) {
+    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    Text(
+        modifier = modifier.styleable(styleState, style),
+        variant = TextVariant.BodySmall,
+        textStyle = TextColors.Muted,
+    ) { text }
+}
+
+@Composable
+@JvmName("QuestionnaireDescriptionLambda")
+@OverloadResolutionByLambdaReturnType
+fun QuestionnaireScope.QuestionnaireDescription(
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+    text: () -> String,
+) {
+    QuestionnaireDescription(text = text(), modifier = modifier, style = style)
+}
+
+@Composable
+fun QuestionnaireScope.QuestionnaireChoices(
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    val ctrl = questionnaireController()
+    val name = LocalQuestionnaireItemName.current
+    val multiple = name != null && ctrl.multipleByName[name] == true
+    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    Column(
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .then(if (!multiple) Modifier.selectableGroup() else Modifier)
+                .styleable(styleState, style),
+        verticalArrangement = Arrangement.spacedBy(twSpacing.sm),
+        content = content,
+    )
+}
+
+@Composable
+fun QuestionnaireScope.QuestionnaireChoice(
+    value: String,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    defaultChecked: Boolean = false,
+    checked: Boolean? = null,
+    onCheckedChange: ((Boolean) -> Unit)? = null,
+    style: Style = Style,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    val ctrl = questionnaireController()
+    val name =
+        checkNotNull(LocalQuestionnaireItemName.current) {
+            "QuestionnaireChoice must be used inside QuestionnaireItem { … }"
+        }
+    val resolvedEnabled = enabled && !disabled && !LocalFieldSetDisabled.current
+    val selected = checked ?: ctrl.isSelected(name, value)
+    val multiple = ctrl.multipleByName[name] == true
+    SideEffect {
+        ctrl.registerChoice(
+            name,
+            value,
+            resolvedEnabled,
+            defaultChecked = checked == null && defaultChecked,
+        )
+        if (checked != null) ctrl.setChoice(name, value, checked)
+    }
+    DisposableEffect(name, value) {
+        onDispose { ctrl.unregisterChoice(name, value) }
+    }
+    val interactionSource = remember { MutableInteractionSource() }
+    val styleState = remember { MutableStyleState(interactionSource) }
+    val itemError = ctrl.errorMessage(name)
+    val focusRequester = remember { FocusRequester() }
+    val choiceSelected = selected
+    LaunchedEffect(ctrl.pendingAnswerFocus, value) {
+        if (ctrl.pendingAnswerFocus == value) {
+            runCatching { focusRequester.requestFocus() }
+            if (ctrl.pendingAnswerFocus == value) ctrl.pendingAnswerFocus = null
+        }
+    }
+    CompositionLocalProvider(
+        LocalQuestionnaireChoiceValue provides value,
+        LocalQuestionnaireChoiceSelected provides selected,
+        LocalQuestionnaireChoiceMultiple provides multiple,
+    ) {
+        Row(
+            modifier =
+                modifier
+                    .heightIn(min = 44.dp)
+                    .then(if (resolvedEnabled) Modifier else Modifier.alpha(0.5f))
+                    .focusRequester(focusRequester)
+                    .onFocusChanged {
+                        if (it.isFocused) {
+                            ctrl.choiceFocused = true
+                            ctrl.focusedChoiceValue = value
+                        } else if (ctrl.focusedChoiceValue == value) {
+                            ctrl.choiceFocused = false
+                            ctrl.focusedChoiceValue = null
+                        }
+                    }
+                    .semantics {
+                        role = if (multiple) Role.Checkbox else Role.RadioButton
+                        this.selected = choiceSelected
+                        if (!resolvedEnabled) disabled()
+                        if (itemError != null) error(itemError)
+                    }
+                    .clickable(
+                        interactionSource = interactionSource,
+                        indication = null,
+                        enabled = resolvedEnabled,
+                        role = if (multiple) Role.Checkbox else Role.RadioButton,
+                        onClick = {
+                            val next = if (multiple) !selected else true
+                            if (checked != null) {
+                                onCheckedChange?.invoke(next)
+                            } else {
+                                ctrl.selectChoice(name, value)
+                                onCheckedChange?.invoke(ctrl.isSelected(name, value))
+                            }
+                        },
+                    )
+                    .then(if (resolvedEnabled) Modifier.pointerHoverIcon(PointerIcon.Hand) else Modifier)
+                    .styleable(styleState, rememberQuestionnaireChoiceStyle(selected) then style),
+            verticalAlignment = Alignment.Top,
+        ) {
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(twSpacing.xs2),
+                content = content,
+            )
+            QuestionnaireChoiceShortcut()
+        }
+    }
+}
+
+/** Official `QuestionnaireChoiceShortcut` — hidden unless [Questionnaire.shortcuts] assigned a key. */
+@Composable
+fun QuestionnaireScope.QuestionnaireChoiceShortcut(
+    modifier: Modifier = Modifier,
+) {
+    val ctrl = questionnaireController()
+    val name = LocalQuestionnaireItemName.current ?: return
+    val value = LocalQuestionnaireChoiceValue.current ?: return
+    val label = ctrl.shortcutFor(name, value) ?: return
+    Kbd(label, modifier = modifier)
+}
+
+/** Official `QuestionnaireChoiceInput` — native radio/checkbox stand-in (16dp, not separately clickable). */
+@Composable
+fun QuestionnaireScope.QuestionnaireChoiceInput(
+    modifier: Modifier = Modifier,
+) {
+    val selected = LocalQuestionnaireChoiceSelected.current
+    val multiple = LocalQuestionnaireChoiceMultiple.current
+    val colors = currentTheme.colors
+    val shape = if (multiple) RoundedCornerShape(2.dp) else CircleShape
+    val stroke = if (selected) colors.primary else colors.border
+    Box(
+        modifier =
+            modifier
+                .size(16.dp)
+                .background(if (multiple && selected) colors.primary else Color.Transparent, shape)
+                .border(1.dp, stroke, shape),
+        contentAlignment = Alignment.Center,
+    ) {
+        if (!multiple && selected) {
+            Box(Modifier.size(8.dp).background(colors.primary, CircleShape))
+        }
+    }
+}
+
+/** Official `QuestionnaireChoiceLabel` — medium-weight choice title. */
+@Composable
+fun QuestionnaireScope.QuestionnaireChoiceLabel(
+    text: String,
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+) {
+    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    Text(
+        modifier = modifier.styleable(styleState, style),
+        variant = TextVariant.BodySmall,
+        textStyle = TextStyle(fontWeight = FontWeight.Medium),
+    ) { text }
+}
+
+@Composable
+fun QuestionnaireScope.QuestionnaireChoice(
+    value: String,
+    text: String,
+    modifier: Modifier = Modifier,
+    description: String? = null,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    defaultChecked: Boolean = false,
+    checked: Boolean? = null,
+    onCheckedChange: ((Boolean) -> Unit)? = null,
+    style: Style = Style,
+) {
+    QuestionnaireChoice(
+        value = value,
+        modifier = modifier,
+        enabled = enabled,
+        disabled = disabled,
+        defaultChecked = defaultChecked,
+        checked = checked,
+        onCheckedChange = onCheckedChange,
+        style = style,
+    ) {
+        QuestionnaireChoiceLabel(text)
+        if (description != null) {
+            QuestionnaireChoiceDescription(description)
+        }
+    }
+}
+
+/** Official `QuestionnaireChoiceDescription` — muted supporting text under a choice label. */
+@Composable
+fun QuestionnaireScope.QuestionnaireChoiceDescription(
+    text: String,
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+) {
+    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    Text(
+        modifier = modifier.styleable(styleState, style),
+        variant = TextVariant.BodySmall,
+        textStyle = TextColors.Muted,
+    ) { text }
+}
+
+@Composable
+fun QuestionnaireScope.QuestionnaireInput(
+    modifier: Modifier = Modifier,
+    placeholder: String? = null,
+    /** Official `aria-label`. Placeholders are not an accessible name. */
+    contentDescription: String? = null,
+    defaultValue: String = "",
+    type: InputType = InputType.Text,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    style: Style = Style,
+) {
+    val ctrl = questionnaireController()
+    val name =
+        checkNotNull(LocalQuestionnaireItemName.current) {
+            "QuestionnaireInput must be used inside QuestionnaireItem { … }"
+        }
+    val focusRequester = remember { FocusRequester() }
+    SideEffect { ctrl.applyInputDefault(name, defaultValue) }
+    DisposableEffect(name) {
+        ctrl.registerInput(name)
+        onDispose { ctrl.unregisterInput(name) }
+    }
+    LaunchedEffect(ctrl.pendingAnswerFocus) {
+        if (ctrl.pendingAnswerFocus == InputAnswerKey) {
+            runCatching { focusRequester.requestFocus() }
+            if (ctrl.pendingAnswerFocus == InputAnswerKey) ctrl.pendingAnswerFocus = null
+        }
+    }
+    Input(
+        value = ctrl.inputs[name].orEmpty(),
+        onValueChange = { ctrl.setInput(name, it) },
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .focusRequester(focusRequester)
+                .then(
+                    if (contentDescription != null) {
+                        Modifier.semantics { this.contentDescription = contentDescription }
+                    } else {
+                        Modifier
+                    },
+                )
+                .onFocusChanged { ctrl.inputFocused = it.isFocused },
+        enabled = enabled,
+        disabled = disabled,
+        type = type,
+        placeholder = placeholder,
+        style = style,
+    )
+}
+
+@Composable
+fun QuestionnaireScope.QuestionnaireError(
+    modifier: Modifier = Modifier,
+    text: String? = null,
+    style: Style = Style,
+) {
+    val ctrl = questionnaireController()
+    val name = LocalQuestionnaireItemName.current ?: return
+    val fallback = ctrl.errorMessage(name) ?: return
+    val message = text ?: fallback
+    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val destructive = currentTheme.colors.destructive
+    Text(
+        modifier =
+            modifier
+                .semantics { liveRegion = LiveRegionMode.Assertive }
+                .styleable(styleState, style),
+        variant = TextVariant.BodySmall,
+        textStyle = TextStyle(color = destructive),
+    ) { message }
+}
+
+@Composable
+fun QuestionnaireScope.QuestionnaireActions(
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+    content: @Composable RowScope.() -> Unit,
+) {
+    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    Row(
+        modifier = modifier.fillMaxWidth().styleable(styleState, style),
+        horizontalArrangement = Arrangement.spacedBy(twSpacing.sm),
+        verticalAlignment = Alignment.CenterVertically,
+        content = content,
+    )
+}
+
+@Composable
+private fun QuestionnairePreviousButton(
+    text: String,
+    modifier: Modifier,
+    enabled: Boolean,
+    disabled: Boolean,
+    variant: ButtonVariant,
+    size: ButtonSize,
+    style: Style,
+) {
+    val ctrl = questionnaireController()
+    Button(
+        text = text,
+        onClick = ctrl::previous,
+        modifier = modifier,
+        enabled = enabled && ctrl.canPrevious,
+        disabled = disabled,
+        variant = variant,
+        size = size,
+        style = style,
+    )
+}
+
+@Composable
+fun RowScope.QuestionnairePrevious(
+    text: String = "Previous",
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    variant: ButtonVariant = ButtonVariant.Outline,
+    size: ButtonSize = ButtonSize.Md,
+    style: Style = Style,
+) {
+    Box(modifier = modifier.weight(1f), contentAlignment = Alignment.CenterStart) {
+        QuestionnairePreviousButton(
+            text = text,
+            modifier = Modifier,
+            enabled = enabled,
+            disabled = disabled,
+            variant = variant,
+            size = size,
+            style = style,
+        )
+    }
+}
+
+/** Official anatomy: Previous/Skip/Next/Submit may sit on Root, not only in [QuestionnaireActions]. */
+@Composable
+fun QuestionnairePrevious(
+    text: String = "Previous",
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    variant: ButtonVariant = ButtonVariant.Outline,
+    size: ButtonSize = ButtonSize.Md,
+    style: Style = Style,
+) {
+    QuestionnairePreviousButton(
+        text = text,
+        modifier = modifier,
+        enabled = enabled,
+        disabled = disabled,
+        variant = variant,
+        size = size,
+        style = style,
+    )
+}
+
+@Composable
+fun RowScope.QuestionnaireSkip(
+    text: String = "Skip",
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    variant: ButtonVariant = ButtonVariant.Outline,
+    size: ButtonSize = ButtonSize.Md,
+    style: Style = Style,
+) {
+    val ctrl = questionnaireController()
+    Button(
+        text = text,
+        onClick = ctrl::skip,
+        modifier = modifier,
+        enabled = enabled && ctrl.canSkip,
+        disabled = disabled,
+        variant = variant,
+        size = size,
+        style = style,
+    )
+}
+
+@Composable
+fun QuestionnaireSkip(
+    text: String = "Skip",
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    variant: ButtonVariant = ButtonVariant.Outline,
+    size: ButtonSize = ButtonSize.Md,
+    style: Style = Style,
+) {
+    val ctrl = questionnaireController()
+    Button(
+        text = text,
+        onClick = ctrl::skip,
+        modifier = modifier,
+        enabled = enabled && ctrl.canSkip,
+        disabled = disabled,
+        variant = variant,
+        size = size,
+        style = style,
+    )
+}
+
+@Composable
+private fun QuestionnaireNextButton(
+    text: String,
+    modifier: Modifier,
+    enabled: Boolean,
+    disabled: Boolean,
+    variant: ButtonVariant,
+    size: ButtonSize,
+    style: Style,
+) {
+    val ctrl = questionnaireController()
+    if (ctrl.isLast) return
+    Button(
+        text = text,
+        onClick = ctrl::next,
+        modifier = modifier,
+        enabled = enabled,
+        disabled = disabled,
+        variant = variant,
+        size = size,
+        style = style,
+    )
+}
+
+@Composable
+fun RowScope.QuestionnaireNext(
+    text: String = "Next",
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    variant: ButtonVariant = ButtonVariant.Default,
+    size: ButtonSize = ButtonSize.Md,
+    style: Style = Style,
+) {
+    val ctrl = questionnaireController()
+    if (ctrl.isLast) return
+    Box(modifier = modifier, contentAlignment = Alignment.CenterEnd) {
+        QuestionnaireNextButton(
+            text = text,
+            modifier = Modifier,
+            enabled = enabled,
+            disabled = disabled,
+            variant = variant,
+            size = size,
+            style = style,
+        )
+    }
+}
+
+@Composable
+fun QuestionnaireNext(
+    text: String = "Next",
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    variant: ButtonVariant = ButtonVariant.Default,
+    size: ButtonSize = ButtonSize.Md,
+    style: Style = Style,
+) {
+    QuestionnaireNextButton(
+        text = text,
+        modifier = modifier,
+        enabled = enabled,
+        disabled = disabled,
+        variant = variant,
+        size = size,
+        style = style,
+    )
+}
+
+@Composable
+private fun QuestionnaireSubmitButton(
+    text: String,
+    modifier: Modifier,
+    enabled: Boolean,
+    disabled: Boolean,
+    variant: ButtonVariant,
+    size: ButtonSize,
+    style: Style,
+) {
+    val ctrl = questionnaireController()
+    if (!ctrl.isLast) return
+    Button(
+        text = text,
+        onClick = ctrl::submit,
+        modifier = modifier,
+        enabled = enabled,
+        disabled = disabled,
+        variant = variant,
+        size = size,
+        style = style,
+    )
+}
+
+@Composable
+fun RowScope.QuestionnaireSubmit(
+    text: String = "Submit",
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    variant: ButtonVariant = ButtonVariant.Default,
+    size: ButtonSize = ButtonSize.Md,
+    style: Style = Style,
+) {
+    val ctrl = questionnaireController()
+    if (!ctrl.isLast) return
+    Box(modifier = modifier, contentAlignment = Alignment.CenterEnd) {
+        QuestionnaireSubmitButton(
+            text = text,
+            modifier = Modifier,
+            enabled = enabled,
+            disabled = disabled,
+            variant = variant,
+            size = size,
+            style = style,
+        )
+    }
+}
+
+@Composable
+fun QuestionnaireSubmit(
+    text: String = "Submit",
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    variant: ButtonVariant = ButtonVariant.Default,
+    size: ButtonSize = ButtonSize.Md,
+    style: Style = Style,
+) {
+    QuestionnaireSubmitButton(
+        text = text,
+        modifier = modifier,
+        enabled = enabled,
+        disabled = disabled,
+        variant = variant,
+        size = size,
+        style = style,
+    )
+}
+
+@Composable
+fun RowScope.QuestionnaireReset(
+    text: String = "Reset changes",
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    variant: ButtonVariant = ButtonVariant.Outline,
+    size: ButtonSize = ButtonSize.Md,
+    style: Style = Style,
+) {
+    val ctrl = questionnaireController()
+    Button(
+        text = text,
+        onClick = ctrl::reset,
+        modifier = modifier,
+        enabled = enabled,
+        disabled = disabled,
+        variant = variant,
+        size = size,
+        style = style,
+    )
+}
+
+/**
+ * Form `type="reset"` — restores `defaultItem` / `defaultChecked` / `defaultValue`.
+ * Compose helper: Base `questionnaire.tsx` does not export Reset.
+ */
+@Composable
+fun QuestionnaireReset(
+    text: String = "Reset changes",
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    variant: ButtonVariant = ButtonVariant.Outline,
+    size: ButtonSize = ButtonSize.Md,
+    style: Style = Style,
+) {
+    val ctrl = questionnaireController()
+    Button(
+        text = text,
+        onClick = ctrl::reset,
+        modifier = modifier,
+        enabled = enabled,
+        disabled = disabled,
+        variant = variant,
+        size = size,
+        style = style,
+    )
+}

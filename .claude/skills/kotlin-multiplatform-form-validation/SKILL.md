@@ -219,9 +219,9 @@ private var usernameCheckJob: Job? = null
 ## UI — validated field composable
 
 ```kotlin
-// :ui — ValidatedTextField.kt
+// :ui — ValidatedInput.kt
 @Composable
-fun ValidatedTextField(
+fun ValidatedInput(
     field: FieldState,
     label: String,
     onValueChange: (String) -> Unit,
@@ -230,7 +230,7 @@ fun ValidatedTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
 ) {
     Column(modifier = modifier) {
-        AppTextField(
+        AppInput(
             value            = field.value,
             onValueChange    = onValueChange,
             label            = label,
@@ -241,7 +241,7 @@ fun ValidatedTextField(
         if (field.isTouched && field.error != null) {
             Text(
                 text  = field.error,
-                color = AppTheme.colors.error,
+                color = AppTheme.colors.destructive,
                 style = AppTheme.typography.labelSmall,
                 modifier = Modifier.padding(start = AppTheme.spacing.sm, top = AppTheme.spacing.xxs),
             )
@@ -264,19 +264,19 @@ fun RegistrationContent(
                 .padding(horizontal = AppTheme.spacing.lg),
             verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
         ) {
-            ValidatedTextField(
+            ValidatedInput(
                 field         = state.email,
                 label         = "Email",
                 onValueChange = { onIntent(RegistrationContract.Intent.EmailChanged(it)) },
                 keyboardType  = KeyboardType.Email,
             )
-            ValidatedTextField(
+            ValidatedInput(
                 field               = state.password,
                 label               = "Password",
                 onValueChange       = { onIntent(RegistrationContract.Intent.PasswordChanged(it)) },
                 visualTransformation = PasswordVisualTransformation(),
             )
-            ValidatedTextField(
+            ValidatedInput(
                 field               = state.confirm,
                 label               = "Confirm password",
                 onValueChange       = { onIntent(RegistrationContract.Intent.ConfirmChanged(it)) },
@@ -334,7 +334,7 @@ class ValidatorsTest {
 ## Related Skills
 
 - `kotlin-multiplatform-mvi` — `FieldState` lives inside `UiState`; validation intent handling follows the standard MVI pattern
-- `kotlin-multiplatform-design-system` — `AppTextField` and error text styling come from the design system; use `AppTheme.colors.error` not hardcoded red
+- `kotlin-multiplatform-design-system` — `AppInput` and error text styling come from the design system; use `AppTheme.colors.destructive` not hardcoded red
 - `kotlin-multiplatform-unit-testing` — `Validators` functions are pure; test them directly with `runTest` or plain `@Test`
 
 ---
@@ -346,7 +346,7 @@ When implementing form validation, respond in this order:
 2. **FieldState and UiState** — `isFormValid` computed property
 3. **ViewModel intents** — one intent per field change + Submit
 4. **Async validators** — if any field needs a network check, add debounce pattern
-5. **ValidatedTextField** — reusable composable with inline error display
+5. **ValidatedInput** — reusable composable with inline error display
 6. **Tests** — validator unit tests and a ViewModel submit test
 
 ---

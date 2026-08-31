@@ -102,7 +102,7 @@ fun ProductCard(product: Product, onClick: () -> Unit) {
             .clickable(onClick = onClick)
             .fillMaxWidth()
             .clip(RoundedCornerShape(AppTheme.spacing.sm))
-            .background(AppTheme.colors.surface)
+            .background(AppTheme.colors.background)
             .padding(AppTheme.spacing.md),
     ) {
         // child elements don't need individual descriptions —

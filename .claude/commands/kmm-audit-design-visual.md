@@ -105,7 +105,7 @@ After reviewing all PNGs, print a structured report:
 Component level:
   ✅ AppButton (4 variants) — consistent color, clear hover/disabled states
   ✅ AppCard — no double shadow, correct dark background
-  ⚠️  AppTextField — dark mode: placeholder text barely visible against surface
+  ⚠️  AppInput — dark mode: placeholder text barely visible against surface
         → consider increasing `placeholderAlpha` from 0.38 to 0.50 in dark mode
 
 Screen level:

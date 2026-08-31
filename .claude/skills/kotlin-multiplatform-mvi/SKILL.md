@@ -516,7 +516,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import GROUP_ID.core.designsystem.components.AppButton
 import GROUP_ID.core.designsystem.components.AppText
-import GROUP_ID.core.designsystem.components.AppTextField
+import GROUP_ID.core.designsystem.components.AppInput
 import GROUP_ID.core.designsystem.components.AppSpinner
 import GROUP_ID.core.designsystem.styles.ButtonVariant
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -536,7 +536,7 @@ fun AuthContent(
             .padding(horizontal = 24.dp),
         verticalArrangement = Arrangement.Center,
     ) {
-        AppTextField(
+        AppInput(
             value = state.email,
             onValueChange = { onIntent(AuthContract.Intent.EmailChanged(it)) },
             placeholder = "Email",
@@ -545,7 +545,7 @@ fun AuthContent(
 
         Spacer(Modifier.height(12.dp))
 
-        AppTextField(
+        AppInput(
             value = state.password,
             onValueChange = { onIntent(AuthContract.Intent.PasswordChanged(it)) },
             placeholder = "Password",
@@ -565,7 +565,7 @@ fun AuthContent(
             enabled = !state.isLoading,
             modifier = Modifier.fillMaxWidth(),
         ) {
-            if (state.isLoading) AppSpinner(color = colors.onPrimary)
+            if (state.isLoading) AppSpinner(color = colors.primaryForeground)
             else AppText("Sign in")
         }
 
@@ -1367,7 +1367,7 @@ fun SearchBar(
             }
     }
 
-    AppTextField(value = localQuery, onValueChange = { localQuery = it })
+    AppInput(value = localQuery, onValueChange = { localQuery = it })
 }
 ```
 

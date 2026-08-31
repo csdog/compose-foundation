@@ -167,7 +167,7 @@ For each WARNING or FAIL, give a concrete fix tied to the design-system skill:
 |---|---|---|
 | Missing TopAppBar | Wrap content in `AppScaffold { AppTopAppBar(...) }` | `kotlin-multiplatform-design-system` |
 | Dark mode identical to light | Check `AppTheme.colors.background` is not hardcoded; use semantic tokens | `kotlin-multiplatform-design-system` |
-| Low-contrast text | Replace `Color(0xFFAAAAAA)` with `AppTheme.colors.onSurfaceVariant` | `kotlin-multiplatform-design-system` |
+| Low-contrast text | Replace `Color(0xFFAAAAAA)` with `AppTheme.colors.mutedForeground` | `kotlin-multiplatform-design-system` |
 | Inconsistent spacing | Replace `padding(16.dp)` with `AppTheme.spacing.lg` | `kotlin-multiplatform-design-system` |
 | Title duplicated in content | Remove `Text(title)` from content; move to `AppTopAppBar(title = "...")` | `kotlin-multiplatform-design-system` |
 

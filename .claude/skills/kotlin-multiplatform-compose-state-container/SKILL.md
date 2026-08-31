@@ -172,7 +172,7 @@ fun SearchScreen() {
     var query by rememberSaveable { mutableStateOf("") }   // survives rotation
 
     Column {
-        AppTextField(value = query, onValueChange = { query = it })
+        AppInput(value = query, onValueChange = { query = it })
         AppButton(onClick = { performSearch(query) }) { AppText("Search") }
     }
 }
@@ -411,7 +411,7 @@ fun SearchBar(onIntent: (SearchContract.Intent) -> Unit) {
             .collect { q -> onIntent(SearchContract.Intent.Search(q)) }
     }
 
-    AppTextField(value = query, onValueChange = { query = it })
+    AppInput(value = query, onValueChange = { query = it })
 }
 ```
 

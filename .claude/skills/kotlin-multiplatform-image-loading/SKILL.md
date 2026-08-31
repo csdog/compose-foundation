@@ -165,7 +165,7 @@ fun HeroImage(url: String, modifier: Modifier = Modifier) {
         when (painter.state) {
             is AsyncImagePainter.State.Loading -> {
                 Box(
-                    Modifier.fillMaxSize().background(AppTheme.colors.surfaceVariant),
+                    Modifier.fillMaxSize().background(AppTheme.colors.muted),
                     contentAlignment = Alignment.Center,
                 ) {
                     CircularProgressIndicator(color = AppTheme.colors.primary)
@@ -173,7 +173,7 @@ fun HeroImage(url: String, modifier: Modifier = Modifier) {
             }
             is AsyncImagePainter.State.Error -> {
                 Box(
-                    Modifier.fillMaxSize().background(AppTheme.colors.errorContainer),
+                    Modifier.fillMaxSize().background(AppTheme.colors.destructiveContainer),
                     contentAlignment = Alignment.Center,
                 ) {
                     AppIcon(Icons.Default.BrokenImage, contentDescription = "Failed to load")

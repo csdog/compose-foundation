@@ -231,7 +231,7 @@ versions when the local repo can be checked directly.
 | `kotlin-multiplatform-mvi` | MVI architecture, Contract pattern, `MviViewModel`, State/Intent/Effect, one-shot effects |
 | `kotlin-multiplatform-paging` | Paging 3 — `PagingSource`, `Pager`, `PagingData`, cursor vs offset, `RemoteMediator`, load-state handling |
 | `kotlin-multiplatform-analytics` | Sealed `AnalyticsEvent`, `Analytics` interface, Firebase/Amplitude impls, screen tracking, `FakeAnalytics` |
-| `kotlin-multiplatform-form-validation` | `ValidationResult`, `FieldState`, synchronous + async validators, submit gating, `ValidatedTextField` |
+| `kotlin-multiplatform-form-validation` | `ValidationResult`, `FieldState`, synchronous + async validators, submit gating, `ValidatedInput` |
 | `kotlin-multiplatform-image-loading` | Coil 3 — `AsyncImage`, `AvatarImage`, `HeroImage`, single `ImageLoader`, memory/disk cache |
 | `kotlin-multiplatform-permissions` | `PermissionState` sealed type, `expect/actual PermissionController`, Android launcher, iOS Info.plist |
 | `kotlin-multiplatform-deep-linking` | App Links + Universal Links, `DeepLinkParser`, NavHost `navDeepLink`, intent handling, AASA |

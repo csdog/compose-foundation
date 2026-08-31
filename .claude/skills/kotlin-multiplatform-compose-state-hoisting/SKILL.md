@@ -122,7 +122,7 @@ current value and a callback to request a change, but never owns the state.
 ```kotlin
 // ✓ Controlled — standard pattern for form inputs
 @Composable
-fun AppTextField(
+fun AppInput(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -145,8 +145,8 @@ fun LoginForm() {
     var password by remember { mutableStateOf("") }
 
     Column {
-        AppTextField(value = email, onValueChange = { email = it })
-        AppTextField(value = password, onValueChange = { password = it })
+        AppInput(value = email, onValueChange = { email = it })
+        AppInput(value = password, onValueChange = { password = it })
         AppButton(onClick = { submit(email, password) }) { AppText("Login") }
     }
 }
@@ -500,7 +500,7 @@ class SearchViewModel : ViewModel() {
 @Composable
 fun SearchBar(viewModel: SearchViewModel) {
     var localQuery by remember { mutableStateOf(viewModel.query) }   // copy!
-    TextField(value = localQuery, onValueChange = {
+    Input(value = localQuery, onValueChange = {
         localQuery = it           // updates local copy
         viewModel.query = it      // also updates ViewModel — duplication
     })
@@ -509,7 +509,7 @@ fun SearchBar(viewModel: SearchViewModel) {
 // ✓ Single source of truth — ViewModel owns it
 @Composable
 fun SearchBar(query: String, onQueryChanged: (String) -> Unit) {
-    TextField(value = query, onValueChange = onQueryChanged)
+    Input(value = query, onValueChange = onQueryChanged)
 }
 ```
 

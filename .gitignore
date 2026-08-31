@@ -17,3 +17,8 @@ captures
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
 node_modules/
+app/desktopApp/bin/
+
+# Local reference checkout of https://github.com/shadcn-ui/ui (see vendor/README.md)
+vendor/**
+!vendor/README.md

@@ -1,4 +1,4 @@
-# AGENTS.md — shadcn-compose
+# AGENTS.md — compose-foundation
 
 This project uses [kmm-agent-skills](https://github.com/ronjunevaldoz/kmm-agent-skills).
 Skills are installed in `.claude/skills/`.
@@ -10,87 +10,76 @@ Styles API (`@ExperimentalFoundationStyleApi`) -- token-based theming, sealed va
 systems, zero Material dependency. Targets Android, iOS (arm64 + simulator), Desktop
 (JVM), and Web (JS + WasmJS).
 
-Group ID: `io.github.ronjunevaldoz`   Artifact: `shadcn-compose`   Published to: Maven Central (dry-run wired, not yet released)
+**Alignment target (since 2026-08-21): Base UI** — primary source of truth is
+`apps/v4/registry/bases/base/ui/*.tsx` (docs: `ui.shadcn.com/docs/components/base/*`),
+with default style combo **base-nova**. Legacy `new-york-v4` (Radix/Vaul) is historical
+diff only; see `vendor/README.md` and `docs/shadcn-parity.md`.
+
+Group ID: `com.toutiaoyan.compose`   Artifacts: `ui`, `tailwind`   Published to: Maven Central (
+dry-run wired, not yet released)
 
 ## Dependencies
 
-- **tailwind-compose** (sibling project at `/Users/ronvaldoz/StudioProjects/tailwind-compose`,
-  group `io.github.ronjunevaldoz`) — a real Gradle `implementation` dependency in
-  `:shadcn:core`'s `commonMain`, resolved from **Maven Central** (verified directly against
-  `repo1.maven.org`'s `maven-metadata.xml`, not the search index, which lags actual
-  publishes by a while) at version `0.1.0`, matching `gradle/libs.versions.toml`.
-  `settings.gradle.kts` no longer needs a `mavenLocal()` fallback for it. It's a
-  utility-class/atomic styling layer (Tailwind-style `Modifier`/`TextStyle` extensions
-  for spacing, color, shadow, filters, etc.) sitting *underneath*/*alongside*
-  shadcn-compose's component-level Style API variants — not a replacement for the sealed
-  variant system. Same relationship as Tailwind CSS + shadcn/ui on the web: utilities
-  handle one-off layout/spacing, the component library handles semantic variants
-  (`ButtonVariant`, `CardVariant`, etc.).
-  - `implementation`, not `api` — no `Shadcn*` function signature should ever require a
-    caller to import `io.github.ronjunevaldoz.tailwind.*`.
-  - Bumped to `0.1.1` — also live on Maven Central, verified the same way. `Oklch(l, c,
-    h).toColor()` in its `tailwind-core` module is the preferred way to add any *new*
-    color token going forward (traces 1:1 to shadcn's real `oklch(...)` CSS source,
-    no separate hand-verified hex step) — see `ShadcnColors.kt`'s `card`/`popover`/
-    `sidebar` fields for the reference example.
-- **heroicons-outline** (`io.github.ronjunevaldoz:heroicons-outline`, `0.1.0`) — a full
-  Heroicons-Outline set compiled to Compose `ImageVector`, published from its own repo,
-  [github.com/ronjunevaldoz/heroicons-compose](https://github.com/ronjunevaldoz/heroicons-compose)
-  -- split out of `tailwind-compose` (was `tailwind-icons-outline` before the split)
-  since Heroicons is a separate upstream product from Tailwind CSS itself, confirmed
-  live on Maven Central the same way as every other dependency here (not from the repo's
-  README alone). Kotlin package is `io.github.ronjunevaldoz.heroicons.outline`, not
-  `io.github.ronjunevaldoz.tailwind.icons.outline` -- update both the Gradle coordinate
-  and every import if you see the old path anywhere. **`:app:shared`-only, never
+- **`:tailwind-core`** (`com.toutiaoyan.compose:tailwind`, packages
+  `com.toutiaoyan.compose.tailwind.{core,modifiers,style}`) — vendored Tailwind-style
+  utilities (from upstream `tailwind-compose` 0.1.4: core / effects / style / layout).
+  Sibling of `:shadcn:core` under `tailwind/core`. Utility-class/atomic styling (`TwColors`,
+  `Oklch.toColor()`, `Modifier.shadowMd`, `ringShadow`, Flex/Grid/Spacing, …) sits
+  *underneath*/*alongside* compose-foundation's component-level Style API variants — same
+  relationship as Tailwind CSS + shadcn/ui on the web.
+    - Prefer named `TwColors` shades when byte-identical to the source oklch; otherwise
+      `Oklch(l, c, h).toColor()` for new tokens — see `docs/shadcn-parity.md` §1 / §5.
+    - Only reach for a vendored utility where compose-foundation's own `Style`/`StyleScope`
+      DSL has **no equivalent property at all** — don't duplicate something the Style
+      block already handles. Confirmed example: `StyleScope` has no shadow/elevation, so
+      `Card`'s `CardVariant.Elevated` applies `Modifier.shadowMd(shape)` on the outer
+      modifier chain *before* `.styleable(...)` — see `Card.kt`.
+    - `:shadcn:core` depends via `api(projects.tailwindCore)` so consumers can import
+      `com.toutiaoyan.compose.tailwind.core.TwColors` without an extra dependency.
+- **icons-lucide-cmp** (`com.composables:icons-lucide-cmp`, `2.2.1`) — Lucide icons as
+  Compose `ImageVector`
+  via [composablehorizons/compose-icons](https://github.com/composablehorizons/compose-icons).
+  Kotlin API is `Lucide.<Name>` under `com.composables.icons.lucide`. **`:app:shared`-only, never
   `:shadcn:core`** — the catalog app's examples (e.g. Date Picker's trigger icon) may use
   it, but every `:shadcn:core` component still uses plain text glyphs for icons (`"☰"`,
   `"✕"`, `"↓"`, ...), matching this library's zero-icon-set-dependency stance. Render an
   `ImageVector` with `androidx.compose.foundation.Image(imageVector = ...,
   colorFilter = ColorFilter.tint(...))` — not `androidx.compose.material.Icon`, which
   would pull in a Material dependency this project deliberately avoids.
-  - Only reach for a `tailwind-compose` utility where shadcn-compose's own `Style`/
-    `StyleScope` DSL has **no equivalent property at all** — don't use it to duplicate
-    something the Style block already handles (e.g. its `twCard()` combinator does its
-    own `.shadow().clip().background()`, which would double-paint on top of a
-    `Style{}` block that already sets `background()`/`shape()`). Confirmed example:
-    `StyleScope` has no shadow/elevation property, so `ShadcnCard`'s `CardVariant.Elevated`
-    applies `Modifier.shadowMd(shape)` on the outer modifier chain, *before*
-    `.styleable(...)` (shadow draws behind the Style block's own background/border, not
-    instead of them) — see `ShadcnCard.kt`'s comment for the full reasoning, including why
-    the same `Shape` must be passed to both to keep the shadow and the card's rounded
-    corners concentric.
 
 ## Skill routing
 
-| Topic | Skill |
-|---|---|
-| New design system component | `kotlin-multiplatform-design-system` / `kotlin-multiplatform-design-system-extended` |
-| Publishing to Maven Central | `kotlin-multiplatform-library-publishing` |
-| iOS / SPM distribution | `kotlin-multiplatform-xcframework-spm` |
-| API surface management | `kotlin-multiplatform-library-publishing` (apiCheck / apiDump — not yet wired, see Notes) |
-| Platform-specific implementations | `kotlin-multiplatform-expect-actual` |
-| Catalog app navigation | `kotlin-multiplatform-navigation` |
-| Unit / integration tests | `kotlin-multiplatform-unit-testing` (not yet wired, see Notes) |
-| Code quality (detekt, ktlint) | `kotlin-multiplatform-code-quality` |
-| CI automation | `kotlin-multiplatform-ci-github-actions` |
-| Architecture audit | `kotlin-multiplatform-audit` |
-| Harvest consumer lessons | `kotlin-multiplatform-audit` (`--harvest` mode via `/kmm-harvest-lessons`) |
+| Topic                             | Skill                                                                                     |
+|-----------------------------------|-------------------------------------------------------------------------------------------|
+| New design system component       | `kotlin-multiplatform-design-system` / `kotlin-multiplatform-design-system-extended`      |
+| Publishing to Maven Central       | `kotlin-multiplatform-library-publishing`                                                 |
+| iOS / SPM distribution            | `kotlin-multiplatform-xcframework-spm`                                                    |
+| API surface management            | `kotlin-multiplatform-library-publishing` (apiCheck / apiDump — not yet wired, see Notes) |
+| Platform-specific implementations | `kotlin-multiplatform-expect-actual`                                                      |
+| Catalog app navigation            | `kotlin-multiplatform-navigation`                                                         |
+| Unit / integration tests          | `kotlin-multiplatform-unit-testing` (not yet wired, see Notes)                            |
+| Code quality (detekt, ktlint)     | `kotlin-multiplatform-code-quality`                                                       |
+| CI automation                     | `kotlin-multiplatform-ci-github-actions`                                                  |
+| Architecture audit                | `kotlin-multiplatform-audit`                                                              |
+| Harvest consumer lessons          | `kotlin-multiplatform-audit` (`--harvest` mode via `/kmm-harvest-lessons`)                |
 
 ## Module graph
 
-| Module | Purpose |
-|---|---|
-| `:shadcn:core` | Published artifact (`io.github.ronjunevaldoz:shadcn-compose`) -- tokens, `ShadcnTheme`, every component (including the AI Elements family: Message/Bubble/Attachment/Marker/MessageScroller), styles |
-| `:core` | Small shared utility module (currently minimal, stock demo code) |
-| `:app:shared` | Catalog/docs app shared code -- navigation, sidebar, per-component doc pages (not published) |
-| `:app:androidApp` / `:app:desktopApp` / `:app:webApp` | Catalog app platform entry points (not published) |
-| `:app:iosApp` | Xcode project for the catalog app on iOS (not published) |
+| Module                                                | Purpose                                                                                                                                                                               |
+|-------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `:shadcn:core`                                        | Published artifact (`com.toutiaoyan.compose:ui`) -- tokens, `Theme`, every component (including the AI Elements family: Message/Bubble/Attachment/Marker/MessageScroller), styles |
+| `:tailwind-core`                                      | Published artifact (`com.toutiaoyan.compose:tailwind`, dir `tailwind/core`) -- `TwColors`/`Oklch`, Modifier + Style utilities                                                         |
+| `:core`                                               | Small shared utility module (currently minimal, stock demo code)                                                                                                                      |
+| `:app:shared`                                         | Catalog/docs app shared code -- navigation, sidebar, per-component doc pages (not published)                                                                                          |
+| `:app:androidApp` / `:app:desktopApp` / `:app:webApp` | Catalog app platform entry points (not published)                                                                                                                                     |
+| `:app:iosApp`                                         | Xcode project for the catalog app on iOS (not published)                                                                                                                              |
 
 ## Published artifacts
 
-| Artifact | Module |
-|---|---|
-| `io.github.ronjunevaldoz:shadcn-compose` | `:shadcn:core` |
+| Artifact                          | Module           |
+|-----------------------------------|------------------|
+| `com.toutiaoyan.compose:ui`       | `:shadcn:core`   |
+| `com.toutiaoyan.compose:tailwind` | `:tailwind-core` |
 
 ## API surface rules
 
@@ -121,7 +110,7 @@ Group ID: `io.github.ronjunevaldoz`   Artifact: `shadcn-compose`   Published to:
    `ButtonVariant`, `ChipVariant`) -- no hardcoded theme values baked into the object.
 2. **Variant -> `Style` mapping is a `@Composable fun <Variant>.rememberStyle(): Style`**
    (see `styles/ButtonStyles.kt`, `styles/ChipStyles.kt`), not a plain non-composable
-   `val style: Style get() = ...` property. Read the theme via `ShadcnTheme.current`,
+   `val style: Style get() = ...` property. Read the theme via `Theme.current`,
    then `remember(this, <every theme sub-object the block reads>) { Style { ... } }`.
    **The remember keys must list every theme field the block actually reads** (`colors`,
    `shapes`, `spacing`, ...) -- switching a `ShadcnStylePreset` changes `shapes`/`spacing`
@@ -133,19 +122,20 @@ Group ID: `io.github.ronjunevaldoz`   Artifact: `shadcn-compose`   Published to:
 3. Inside a `Style { }` block passed to `Modifier.styleable`, use the
    `StyleScope.colors/shapes/spacing/typography` extensions
    (`theme/StyleScopeExtensions.kt`, backed by `StyleScope.currentValue`), not the
-   `@Composable shadcnTheme` getter -- `Style` blocks can resolve outside normal
+   `@Composable currentTheme` getter -- `Style` blocks can resolve outside normal
    composition, and `currentValue` is the only read guaranteed fresh there. In
    practice, every `*Styles.kt` file in this project uses a *third*, equally-correct
-   option instead: read `shadcnTheme.colors`/`.shapes`/etc. once into a plain `val` in
+   option instead: read `currentTheme.colors`/`.shapes`/etc. once into a plain `val` in
    the enclosing `@Composable` (a real composition position, properly subscribed to
-   `LocalShadcnTheme`), then reference *that captured val* -- not `shadcnTheme.colors.X`
+   `LocalTheme`), then reference *that captured val* -- not `currentTheme.colors.X`
    again -- from inside the `Style { }` body. Either fix works; what's never safe is
-   calling the `shadcnTheme` getter directly from inside the `Style { }` lambda itself.
-   **Known bug, fixed:** `ShadcnInputGroup.kt`'s `containerStyle` and
-   `ShadcnTextField.kt`'s `errorStyle` both did exactly that (`Style { background(shadcnTheme.colors.background) }` inline in the component body, not in a
+   calling the `currentTheme` getter directly from inside the `Style { }` lambda itself.
+   **Known bug, fixed:** `InputGroup.kt`'s `containerStyle` and
+   `Input.kt`'s `errorStyle` both did exactly that (
+   `Style { background(currentTheme.colors.background) }` inline in the component body, not in a
    dedicated `*Styles.kt` factory) -- confirmed live via a real dark-mode toggle
    screenshot: the input group's background froze at light-mode white forever after
-   toggling dark, while every sibling element (which read `shadcnTheme` from normal
+   toggling dark, while every sibling element (which read `currentTheme` from normal
    composable-property-getter positions, not from inside a `Style{}` closure) correctly
    re-themed. Existing static single-theme Roborazzi goldens never caught this --
    they only ever compose once, under one theme, so a stale-frozen-at-first-theme
@@ -156,21 +146,21 @@ Group ID: `io.github.ronjunevaldoz`   Artifact: `shadcn-compose`   Published to:
    `scripts/check_style_block_theme_reads.sh` scans every `Style { }` block under
    `library/src`/`app/shared/src` (brace-matched, comment-aware -- won't false-positive
    on a doc comment or a tutorial page's illustrative code string) and fails if any of
-   them read `shadcnTheme.` directly inside their own body. Wired into CI's `lint` job.
+   them read `currentTheme.` directly inside their own body. Wired into CI's `lint` job.
    Run it locally with `./scripts/check_style_block_theme_reads.sh` before adding any
    new `Style { }` block.
 4. **`contentColor()` set inside a `Style` block is not reliable for text painted by a
-   *nested* `ShadcnText`/`BasicText`/`BasicTextField`** on a live dark-mode toggle, for
+   *nested* `Text`/`BasicText`/`BasicTextField`** on a live dark-mode toggle, for
    variants with no explicit `background()` (confirmed live: `ChipVariant.Outline`).
    Fix: read the resolved color via a plain (non-memoized) `@Composable get()` and pass
-   it explicitly into `ShadcnText(color = ...)` / `BasicTextField(textStyle = ...,
+   it explicitly into `Text(color = ...)` / `BasicTextField(textStyle = ...,
    cursorBrush = ...)` -- never rely on ambient Style-color inheritance for text.
-   **Known regression:** `ShadcnChip.kt` dropped its `color = variant.contentColor`
+   **Known regression:** `Chip.kt` dropped its `color = variant.contentColor`
    pass-through when `ChipVariant.rememberStyle()` was introduced -- needs re-adding.
 5. **The focus ring is drawn via the Style API's own `dropShadow()`, called directly
    inside each component's `focused { }` block** (`styles/FocusRing.kt`'s
-   `ShadcnThemeData.focusRingShadow()` builds the `Shadow` value: `radius = 0.dp`,
-   `spread = ring.width + ring.offset`, color from `colors.borderFocus` at
+   `ThemeData.focusRingShadow()` builds the `Shadow` value: `radius = 0.dp`,
+   `spread = ring.width + ring.offset`, color from `colors.ring` at
    `ring.opacity`) -- **not** a separate `Modifier`. A prior version used a hand-rolled
    `Modifier.drawWithContent` + manual per-corner `RoundRect` reimplementation (~90
    lines), justified by an unverified claim that `dropShadow` "blurs at `radius = 0.dp`."
@@ -180,17 +170,17 @@ Group ID: `io.github.ronjunevaldoz`   Artifact: `shadcn-compose`   Published to:
    `box-shadow`. Removed entirely (2026-07-09); see `docs/shadcn-parity.md` §6 for the
    full writeup.
    `dropShadow` always follows the **final resolved** `shape()` -- including a later
-   `style`-parameter override from `ShadcnButtonGroup`/`ShadcnToggleGroup` (their own
-   per-position corner-stripped shape, passed as the `style` param to `ShadcnButton`/
-   `ShadcnToggle` and merged in via `.styleable(...)`'s override-not-additive cascade) --
+   `style`-parameter override from `ButtonGroup`/`ToggleGroup` (their own
+   per-position corner-stripped shape, passed as the `style` param to `Button`/
+   `Toggle` and merged in via `.styleable(...)`'s override-not-additive cascade) --
    not just whatever `shape()` the *same* `Style{}` block itself declares. Verified via
    `ButtonGroupScreenshotTest.with_label_focused`: the ring correctly appears only at the
    outer rounded ends, never at the internal flush seam between grouped items. This means
-   `LocalGroupCorners` (still provided by `ShadcnButtonGroup`/`ShadcnToggleGroup` via
+   `LocalGroupCorners` (still provided by `ButtonGroup`/`ToggleGroup` via
    `CompositionLocalProvider`) has **no remaining reader** -- only the old ring modifier
    ever consumed it. Candidate for a follow-up cleanup pass, not yet done.
    A component whose "active"/"focused" state is a *computed* boolean rather than a real
-   per-node focus event (`ShadcnInputOTP`'s `OtpSlot`, `ShadcnInputGroup`'s
+   per-node focus event (`InputOTP`'s `OtpSlot`, `InputGroup`'s
    `hasFocusWithin`, `StylePresetMatrixTest`'s ring swatch) can't use the `focused { }`
    state predicate at all (there's no real `InteractionSource` driving it) -- call
    `dropShadow(theme.focusRingShadow())` inside a plain `if (isActive) { ... }` in the
@@ -206,7 +196,7 @@ Group ID: `io.github.ronjunevaldoz`   Artifact: `shadcn-compose`   Published to:
    Real shadcn's `data-slot="..."` is inert HTML markup that exists only for CSS
    attribute selectors (`[data-slot=button-group]:gap-2`) -- it carries no spacing logic
    of its own, and Compose has no CSS-selector equivalent to translate it into. A
-   `LocalShadcnDataSlots`-style CompositionLocal is a plausible-sounding but non-
+   `LocalDataSlots`-style CompositionLocal is a plausible-sounding but non-
    equivalent reimplementation; only introduce one once a *second* real component needs
    the exact same slot values -- don't add it speculatively.
 8. `ShadcnStylePreset` bundling `shapes`/`spacing`/`typography`/`ring`/`animations`/
@@ -223,28 +213,28 @@ Group ID: `io.github.ronjunevaldoz`   Artifact: `shadcn-compose`   Published to:
    perceptual gamut mapping applied**. Don't introduce a second "wide-gamut
    approximation" path for the same tokens -- one checked-against-real-source conversion
    method per color, not two competing ones.
-   **`tailwind-compose`'s `tailwind-core` module has a real, tested `Oklch(lightness,
-   chroma, hue).toColor()` utility** (`io.github.ronjunevaldoz.tailwind.core.Oklch`,
-   exported transitively through the `tailwind-compose` facade this project already
-   depends on) implementing this exact same conversion -- prefer it over a fresh
-   hand-verified hex literal for any *new* token going forward: it traces 1:1 to
-   shadcn's real `oklch(L C H)` CSS source values with no separate "trust this hex"
-   step. `ShadcnColors.kt`'s `card`/`onCard`/`popover`/`onPopover`/`sidebar`/`onSidebar`
-   fields use it already.
-   **Migrated (2026-07-08):** the rest of `ShadcnColors.kt`'s default palette and all 7
+   **Vendored `Oklch(lightness, chroma, hue).toColor()`**
+   (`com.toutiaoyan.compose.tailwind.core.Oklch`) implements this exact same
+   conversion — use it when a value has **no** named `TwColors` shade that is
+   byte-identical. Prefer **`TwColors.*`** when it is (e.g. `Colors.kt`'s
+   `card`/`onCard`/`popover`/`onPopover`/`sidebar`/`onSidebar` are now
+   `TwColors.white` / `zinc950` / `zinc50` / `zinc900`, same oklch triples as zinc.json).
+   **Migrated (2026-07-08):** the rest of `Colors.kt`'s default palette and all 7
    `ShadcnBaseColor` families now reference **named `TwColors` shades**
-   (`io.github.ronjunevaldoz.tailwind.core.TwColors`, e.g. `TwColors.zinc900`) instead of
+   (`com.toutiaoyan.compose.tailwind.core.TwColors`, e.g. `TwColors.zinc900`) instead of
    hex literals, verified field-by-field via a scratch JVM test comparing every value
    against the full 26-hue/11-shade `TwColors` table before switching (exact match for
    ~90% of fields, 1-9-unit rounding snaps for a handful explicitly documented as
    "~zinc-400"-style approximations already) -- confirmed zero Roborazzi diffs after.
+   **Follow-up (2026-08-03):** the remaining container-role `Oklch(...).toColor()`
+   literals were also replaced with the matching `TwColors` shades (no ARGB change).
    A few fields (`success`/`warning`/`destructiveHover` in both files) are **intentionally
    still hex literals**: the same scratch test found they're hand-tuned, not exact/near
    matches to any named shade -- snapping them would silently shift the actual color, not
-   just rename it. Same reasoning applies to **all of `ShadcnAccent.kt`**, left entirely
+   just rename it. Same reasoning applies to **all of `Accent.kt`**, left entirely
    unmigrated -- none of its 17 colors match any named shade (its own doc comment already
    says "corrected for ideal dark background contrast").
-10. **`ShadcnColors` has per-container-role tokens** (`card`/`onCard`, `popover`/
+10. **`Colors` has per-container-role tokens** (`card`/`onCard`, `popover`/
     `onPopover`, `sidebar`/`onSidebar`, `sidebarPrimary`/`onSidebarPrimary`,
     `sidebarAccent`/`onSidebarAccent`, `sidebarBorder`, `sidebarRing`), matching real
     shadcn's `--card`/`--popover`/`--sidebar*` CSS variable families (verified against
@@ -252,15 +242,15 @@ Group ID: `io.github.ronjunevaldoz`   Artifact: `shadcn-compose`   Published to:
     generic `surface`/`background`/`muted` tokens, not aliases of them, even though the
     default light palette's hex values happen to coincide (real shadcn's own light theme
     does too; only dark mode raises card/popover/sidebar to a distinct panel tone).
-    **Use `card`/`popover` correctly, don't default back to `surface`:** `ShadcnCard` →
-    `card`/`onCard`; floating anchored panels (`ShadcnPopover`, `ShadcnDropdownMenu`,
-    `ShadcnContextMenu`, `ShadcnCommand`, `ShadcnCombobox`, `ShadcnHoverCard`,
-    `ShadcnNavigationMenu`'s panel) → `popover`/`onPopover`; `ShadcnSidebar` → `sidebar`/
+    **Use `card`/`popover` correctly, don't default back to `surface`:** `Card` →
+    `card`/`onCard`; floating anchored panels (`Popover`, `DropdownMenu`,
+    `ContextMenu`, `Command`, `Combobox`, `HoverCard`,
+    `NavigationMenu`'s panel) → `popover`/`onPopover`; `Sidebar` → `sidebar`/
     `onSidebar` for the rail, `sidebarAccent`/`onSidebarAccent` for the active menu item,
-    `sidebarBorder` for its edge divider. **`ShadcnDialog`/`ShadcnSheet`/`ShadcnDrawer`
+    `sidebarBorder` for its edge divider. **`Dialog`/`Sheet`/`Drawer`
     stay on plain `background`** -- confirmed against real dialog.tsx/sheet.tsx source,
     they use `bg-background`, not `bg-popover`, unlike every anchored-popup component.
-    `ShadcnTooltip` stays on `onSurface`/`background` (inverted) -- confirmed against
+    `Tooltip` stays on `onSurface`/`background` (inverted) -- confirmed against
     real tooltip.tsx's `bg-foreground text-background`, a genuinely different pattern
     from the popover family, not a card/popover role at all.
     For `ShadcnBaseColor`'s 7 base families: light-mode card/popover/sidebar are set
@@ -290,22 +280,22 @@ caused by one of these being silently skipped, not by a typo:
 2. **List every animation/transition** (expand/collapse, fade, slide) and check it at a
    **mid-transition frame**, not just the two settled endpoints. `mainClock.autoAdvance =
    false` + `mainClock.advanceTimeBy(...)` is the safe, gesture-free way to do this (see
-   `ShadcnCollapsible`'s doc comment) -- freezing the animation clock is not a gesture
+   `Collapsible`'s doc comment) -- freezing the animation clock is not a gesture
    simulation and has never caused the hangs `performMouseInput`/`performTouchInput` drag
    simulation has (see point 4). The Collapsible overlap bug only showed up mid-fade;
    both settled states looked completely correct.
 3. **Positive scenario:** does the component render/behave correctly with realistic
    content at its intended size? **Negative scenario:** what happens with zero items, an
    empty string, content wider than the container, or a size the caller forgot to
-   constrain (see `ShadcnCarousel`'s doc comment -- an unconstrained `HorizontalPager`
+   constrain (see `Carousel`'s doc comment -- an unconstrained `HorizontalPager`
    silently expands to fill the ambient width instead of failing loudly). Prefer a
    component that documents a hard requirement (`modifier` must set a main-axis size) or
    handles the empty case explicitly over one that silently does something ambient/
    unpredictable.
 4. **Any pointer-driven interaction** (drag-to-resize, drag-to-scroll, hover-to-open)
    needs its *math* extracted into a plain, non-Composable function and unit tested
-   directly (see `resizablePanelFraction` for `ShadcnResizablePanelGroup`,
-   `scrollDragDeltaToContentDelta` for `ShadcnScrollArea`) -- never write the positioning
+   directly (see `resizablePanelFraction` for `ResizablePanelGroup`,
+   `scrollDragDeltaToContentDelta` for `ScrollArea`) -- never write the positioning
    math inline inside a `rememberDraggableState { }` lambda where it can only be
    exercised by actually dragging. Simulating a real drag/hover gesture via
    `performMouseInput`/`performTouchInput` has hung this project's JVM test worker
@@ -314,7 +304,7 @@ caused by one of these being silently skipped, not by a typo:
    `initialFraction`s, a few different scroll positions) rather than by reaching those
    values through a live gesture.
 5. **Any `Popup`-backed hover-triggered overlay** (`Tooltip`, `HoverCard`) must pass
-   `focusable = false` to `ShadcnAnchoredPopup` -- a focusable popup competes with the
+   `focusable = false` to `AnchoredPopup` -- a focusable popup competes with the
    trigger's own `hoverable()` for focus the instant it opens, which flickers the popup
    open/closed in a loop on desktop. Click-triggered overlays (`Popover`, `DropdownMenu`,
    `Dialog`) keep the `focusable = true` default; their content genuinely needs keyboard
@@ -327,13 +317,21 @@ caused by one of these being silently skipped, not by a typo:
 
 ## Registry parity status
 
-Every real shadcn/ui component (`shadcn-ui/ui`, `apps/v4/registry/new-york-v4/ui`,
-fetched fresh, not from memory) is implemented **except one, by deliberate scope
-decision**:
+Every real shadcn/ui **Base** component (`apps/v4/registry/bases/base/ui`,
+fetched fresh, not from memory) is implemented **except those below, by deliberate
+scope decision**:
 
+- **`questionnaire`** -- **was a real gap**, fixed. Official lives under
+  `apps/v4/registry/bases/base/ui/questionnaire.tsx` (also Aria / Radix trees).
+  Earlier sweeps that only listed legacy `new-york-v4/ui/` missed it.
+  Implemented as `Questionnaire` + Progress / Item / Title / Description /
+  Choices / Choice / ChoiceDescription / Input / Error / Actions / Previous /
+  Skip / Next / Submit (`questionnaireState()`). Resume: Root `defaultItem`
+  (alias of `defaultValue`), Choice `defaultChecked`, Input `defaultValue` —
+  each applied once.
 - **`native-select`** -- skipped. Real shadcn's version renders an actual HTML
   `<select>`, so on the web it triggers the *browser's own OS-level* native dropdown --
-  not custom-drawn JS. Every component in this library, `ShadcnSelect` included, is
+  not custom-drawn JS. Every component in this library, `Select` included, is
   100% pure Compose drawing with zero platform-widget interop. Matching `native-select`'s
   real behavior would mean embedding actual native pickers per platform (`UIPickerView`
   on iOS, Android `Spinner`, no equivalent on Desktop, and Compose-for-Web doesn't render
@@ -344,11 +342,11 @@ decision**:
   `DirectionProvider`/`useDirection` exists because the web has no built-in RTL/LTR
   concept. Compose already has one natively (`LocalLayoutDirection`) -- there's nothing
   to port.
-- **`form`** -- consolidated into `ShadcnField`. Real shadcn's `form.tsx` is itself a thin
+- **`form`** -- consolidated into `Field`. Real shadcn's `form.tsx` is itself a thin
   wrapper of the same `Field` primitives around `react-hook-form`; this library has no
   form-state-management dependency (every component here is already caller-hoisted
-  state), so there's no separate `ShadcnForm`.
-- **`input`**/**`sonner`** -- implemented as `ShadcnTextField`/`ShadcnToast` (naming
+  state), so there's no separate `Form`.
+- **`input`**/**`sonner`** -- implemented as `Input`/`ShadcnToast` (naming
   choices, not gaps).
 - **`data-table`** -- N/A, not a gap: real shadcn's own docs say *"instead of a
   data-table component ... a guide on how to build your own"* on top of `Table` +
@@ -360,8 +358,8 @@ decision**:
 - **`date-picker`** -- N/A as a standalone component in real shadcn either (their docs:
   *"built using a composition of the `<Popover />` and the `<Calendar />`
   components"*) -- added as a catalog doc example (`DatePickerDoc.kt`) composing this
-  library's own `ShadcnPopover` + `ShadcnCalendar`, not a new `:shadcn:core` component.
-- **`select`** -- **was a real gap**, fixed. `ShadcnSelect` previously existed only as
+  library's own `Popover` + `Calendar`, not a new `:shadcn:core` component.
+- **`select`** -- **was a real gap**, fixed. `Select` previously existed only as
   an internal utility (this catalog app's own theme/base-color/accent pickers in
   `CatalogTopBar`), never exposed as a documented public component, and its trigger
   used `ButtonVariant.Outline` (a filled-button look) rather than real shadcn's actual
@@ -373,15 +371,15 @@ decision**:
   Popover/DropdownMenu/ContextMenu/Command/Combobox/HoverCard/NavigationMenu pass
   earlier), and gave it a proper `SelectDoc.kt` catalog page.
 - **`dropdown-menu`/`command`/`menubar`/`context-menu`** -- **was a real gap**, fixed.
-  All four previously took a flat `items: List<ShadcnDropdownMenuItem>` (or
-  `ShadcnCommandItem`), with no way to reproduce real shadcn's default demos --
+  All four previously took a flat `items: List<DropdownMenuItem>` (or
+  `CommandItem`), with no way to reproduce real shadcn's default demos --
   a "My Account" label, a grouped set of items, a separator, then a destructive item.
-  `ShadcnDropdownMenu`/`ShadcnContextMenu`/`ShadcnMenubarMenu` were redesigned from a
-  data-list API to a slot-based `content: @Composable ShadcnDropdownMenuScope.() -> Unit`
-  (`ShadcnDropdownMenuItem`/`ShadcnDropdownMenuLabel` are now composables in that scope,
-  freely mixed with the existing `ShadcnDropdownMenuSeparator`; `ShadcnContextMenu` and
-  `ShadcnMenubarMenu` reuse the same scope since they already shared the row rendering).
-  `ShadcnCommand` kept a data model instead (`groups: List<ShadcnCommandGroup>`, each
+  `DropdownMenu`/`ContextMenu`/`MenubarMenu` were redesigned from a
+  data-list API to a slot-based `content: @Composable DropdownMenuScope.() -> Unit`
+  (`DropdownMenuItem`/`DropdownMenuLabel` are now composables in that scope,
+  freely mixed with the existing `DropdownMenuSeparator`; `ContextMenu` and
+  `MenubarMenu` reuse the same scope since they already shared the row rendering).
+  `Command` kept a data model instead (`groups: List<CommandGroup>`, each
   with an optional `heading`) rather than going full slot-based, because its live
   search-filtering needs to inspect every item's label up front -- a freely-composed
   slot API would need extra machinery to hide non-matching children mid-composition.
@@ -397,9 +395,9 @@ decision**:
   composition; `toggle`'s icon-only `aria-label` pattern vs this library's text-glyph
   icons is the same icon exemption documented throughout this file.
 
-**shadcn's "AI Elements" family is implemented**, not out of scope: `ShadcnMarker`,
-`ShadcnMessage`/`ShadcnMessageGroup`, `ShadcnBubble`/`ShadcnBubbleGroup`,
-`ShadcnAttachment`/`ShadcnAttachmentGroup`, `ShadcnMessageScroller` (`attachment.tsx`,
+**shadcn's "AI Elements" family is implemented**, not out of scope: `Marker`,
+`Message`/`MessageGroup`, `Bubble`/`BubbleGroup`,
+`Attachment`/`AttachmentGroup`, `MessageScroller` (`attachment.tsx`,
 `bubble.tsx`, `marker.tsx`, `message.tsx`, `message-scroller.tsx` in the real registry).
 An earlier pass in this project excluded them by guessing their purpose from the
 filename alone, without fetching real source -- fetching and reading the actual `.tsx`
@@ -407,7 +405,7 @@ confirmed they're general chat/AI-assistant UI primitives, not narrowly AI-chat-
 in a way that would exclude them from a general-purpose component library, and the user
 explicitly asked for them to be added. **Lesson generalized**: never classify a shadcn
 component as out-of-scope from its filename -- always fetch
-`raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/registry/new-york-v4/ui/<name>.tsx`
+`raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/registry/bases/base/ui/<name>.tsx`
 and read it first.
 
 If a new component lands in the real registry, re-check this list before assuming it's
@@ -418,9 +416,9 @@ these are CSS/Tailwind utilities (modifiers, in Compose terms), not components, 
 don't show up when only checking the components registry. `shimmer` and `scroll-fade`
 were missed for exactly this reason (only found once the user pointed at
 `ui.shadcn.com/docs/utils/shimmer` and `.../scroll-fade` directly) -- implemented as
-`Modifier.shadcnShimmer()`/`Modifier.shadcnScrollFade()` in
+`Modifier.shimmer()`/`Modifier.shadcnScrollFade()` in
 `library/src/commonMain/kotlin/.../styles/`, cataloged under a new `UTILS`
-`CatalogCategory`. `shadcnScrollFade` is wired directly into `ShadcnMessageScroller`'s
+`CatalogCategory`. `shadcnScrollFade` is wired directly into `MessageScroller`'s
 internal scroll container (real shadcn's own message-scroller demo uses it), and
 `shadcnShimmer` powers a "Thinking…" placeholder in the message-scroller catalog demo
 while a reply is queued but hasn't started streaming yet. **Lesson generalized**: when
@@ -448,13 +446,13 @@ real site and easy to miss entirely.
   perfectly crisp, only ordinary single-pixel anti-aliasing, zero layout-size effect,
   exactly matching real CSS `box-shadow`. Every component now calls
   `dropShadow(theme.focusRingShadow())` directly inside its own `focused { }` block (see
-  `styles/FocusRing.kt`'s `ShadcnThemeData.focusRingShadow()`). Do not resurrect the
+  `styles/FocusRing.kt`'s `ThemeData.focusRingShadow()`). Do not resurrect the
   custom modifier or re-add this blur claim without re-testing it first.
 - **Colors and hover semantics are checked against real shadcn/ui source**, not memory --
   see `ui.shadcn.com/docs/theming` for token values and
-  `github.com/shadcn-ui/ui/blob/main/apps/v4/registry/new-york-v4/ui/*.tsx` for exact
+  `github.com/shadcn-ui/ui/blob/main/apps/v4/registry/bases/base/ui/*.tsx` for exact
   per-variant Tailwind classes (hover treatment, border presence, disabled opacity).
-  When adding a new component, fetch its real source first rather than approximating.
+  When adding a new component, fetch its real Base source first rather than approximating.
   The same rule applies to `components.json` fields (`tailwind.baseColor`, `style`) --
   see item 8 above for a case where this was skipped and a fabricated-sounding but
   actually-real set of custom base colors got documented as "official" when it isn't.
@@ -471,6 +469,7 @@ real site and easy to miss entirely.
 
 See `.claude/commands/kmm-*.md` for available slash commands.
 Key commands:
+
 - `/kmm-run-audit` — architecture audit with per-finding remediation
 - `/kmm-harvest-lessons` — collect patterns to upstream to skills
 - `/kmm-verify` — full validation pipeline (build + test + apiCheck)

@@ -48,7 +48,7 @@ Show the script output verbatim. Then for each status category:
 Offer to generate them now using the design-system skill:
 ```
 The following components are missing from your project:
-  AppTextField.kt
+  AppInput.kt
 
 Generate them now? [yes / no / select]
 ```

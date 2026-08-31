@@ -1,5 +1,9 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
+// Keep in sync with DeepLinks.SCHEME / NATIVE_HOST
+private val catalogDeepLinkScheme = "shadcncompose"
+private val catalogDeepLinkNativeHost = "app"
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
@@ -21,11 +25,13 @@ dependencies {
 }
 
 android {
-    namespace = "io.github.ronjunevaldoz.shadcncompose.catalog"
+    namespace = "com.toutiaoyan.compose.ui.catalog"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "io.github.ronjunevaldoz.shadcncompose"
+        applicationId = "com.toutiaoyan.compose.ui"
+        manifestPlaceholders["deepLinkScheme"] = catalogDeepLinkScheme
+        manifestPlaceholders["deepLinkNativeHost"] = catalogDeepLinkNativeHost
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1

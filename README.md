@@ -1,4 +1,4 @@
-# shadcn-compose
+# compose-foundation
 
 [![CI](https://github.com/ronjunevaldoz/shadcn-compose/actions/workflows/ci.yml/badge.svg)](https://github.com/ronjunevaldoz/shadcn-compose/actions/workflows/ci.yml)
 [![Kotlin](https://img.shields.io/badge/kotlin-2.4.0-blue.svg?logo=kotlin)](https://kotlinlang.org)
@@ -22,10 +22,10 @@ Published to Maven Central.
 ```toml
 # gradle/libs.versions.toml
 [versions]
-shadcn-compose = "0.2.4"
+ty-compose-ui = "0.2.4"
 
 [libraries]
-shadcn-compose = { module = "io.github.ronjunevaldoz:shadcn-compose", version.ref = "shadcn-compose" }
+ty-compose-ui = { module = "com.toutiaoyan.compose:ui", version.ref = "ty-compose-ui" }
 ```
 
 ```kotlin
@@ -33,13 +33,18 @@ shadcn-compose = { module = "io.github.ronjunevaldoz:shadcn-compose", version.re
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.shadcn.compose)
+            implementation(libs.ty.compose.ui)
+            // TwColors / Modifier utilities arrive transitively via
+            // com.toutiaoyan.compose:tailwind (api dependency of :ui).
         }
     }
 }
 ```
 
-Every file that references a component's `style` parameter needs an opt-in:
+Library and catalog modules (`:shadcn:core`, `:tailwind-core`, `:app:shared`) opt in
+at the Gradle module level via `-opt-in=…ExperimentalFoundationStyleApi`, so source
+files there do not need `@file:OptIn`. Downstream apps that call Style APIs still
+need either the same compiler flag or:
 
 ```kotlin
 @file:OptIn(ExperimentalFoundationStyleApi::class)
@@ -52,13 +57,19 @@ deliberate, documented exceptions — `native-select`, `direction`, `data-table`
 (deprecated upstream in favor of `sonner`, implemented here as `ShadcnToast`). Full reasoning in
 [`.claude/AGENTS.md`](.claude/AGENTS.md#registry-parity-status); token/component-level verification
 against real source in [`docs/shadcn-parity.md`](docs/shadcn-parity.md).
+Ongoing alignment work is logged in [
+`docs/shadcn-align-progress.md`](docs/shadcn-align-progress.md).
 
 ## Project structure
 
-- [`/shadcn/core`](./shadcn/core/src) — the published library (`commonMain` has every `Shadcn*` component).
+- [`/shadcn/core`](./shadcn/core/src) — the published library (`commonMain` has every `Shadcn*`
+  component).
+- [`/tailwind/core`](./tailwind/core/src) — `TwColors` / Modifier utilities (
+  `com.toutiaoyan.compose:tailwind`).
 - [`/core`](./core/src) — shared utilities used across the catalog app's targets.
 - [`/app/shared`](./app/shared/src) — the catalog/documentation app's shared UI.
-- [`/app/androidApp`](./app/androidApp), [`/app/desktopApp`](./app/desktopApp), [`/app/webApp`](./app/webApp) — catalog app platform entry points.
+- [`/app/androidApp`](./app/androidApp), [`/app/desktopApp`](./app/desktopApp), [
+  `/app/webApp`](./app/webApp) — catalog app platform entry points.
 - [`/app/iosApp`](./app/iosApp/iosApp) — the iOS entry point; open in Xcode.
 
 ## Development
@@ -68,11 +79,17 @@ Requires JDK 21 (matches CI). Android SDK and Xcode only needed for those specif
 ```bash
 ./gradlew build                          # build everything
 ./gradlew :app:desktopApp:run            # run the catalog app (desktop)
+./gradlew :app:desktopApp:hotRun --autoReload --args="shadcncompose://app/drawer"  # desktop with Compose Hot Reload and navigate to drawer
 ./gradlew :shadcn:core:jvmTest           # library tests + Roborazzi screenshots (JVM)
 ./gradlew :shadcn:core:allTests          # library tests, all platforms
 ./gradlew ktlintCheck detekt lint        # code quality (also run in CI)
 ./scripts/check_style_block_theme_reads.sh
 ```
+
+Hot Reload uses
+the [Compose Hot Reload](https://kotlinlang.org/docs/multiplatform/compose-hot-reload.html)
+plugin (`org.jetbrains.compose.hot-reload`). Cursor MCP is wired in `.cursor/mcp.json`
+(`:app:desktopApp:hotMcpServer`).
 
 See [`docs/visual-testing.md`](docs/visual-testing.md) for the screenshot-testing workflow
 (`recordRoborazziJvm`/`verifyRoborazziJvm`) and [`docs/shadcn-parity.md`](docs/shadcn-parity.md) for
@@ -82,7 +99,7 @@ how components are checked against real shadcn/ui source.
 
 [Apache License 2.0](LICENSE).
 
-The curated emoji reaction set used by `ShadcnEmojiText`
+The curated emoji reaction set used by `EmojiText`
 (`shadcn/core/src/commonMain/.../icons/emoji/`) is derived from
 [Twemoji](https://github.com/jdecked/twemoji), licensed under
 [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/). Copyright 2020 Twitter, Inc and other
@@ -90,6 +107,7 @@ contributors, graphics licensed under CC-BY 4.0.
 
 ---
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
+Learn more
+about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
 [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
 and the source of design truth, [shadcn/ui](https://ui.shadcn.com).

@@ -18,7 +18,7 @@ class HardcodedDpRule(config: Config) : Rule(config) {
         debt = Debt.FIVE_MINS,
     )
 
-    private val skipSuffixes = setOf("Spacing.kt", "Tokens.kt", "Theme.kt", "Styles.kt")
+    private val skipSuffixes = setOf("TwSpacing.kt", "Tokens.kt", "Theme.kt", "Styles.kt")
 
     // Modifier calls that should reference spacing tokens
     private val layoutCalls = setOf(

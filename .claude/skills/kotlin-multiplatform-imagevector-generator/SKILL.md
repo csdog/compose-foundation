@@ -118,7 +118,7 @@ arcs in the authoring tool first.
    ```kotlin
    Icon(imageVector = BrandLogo, contentDescription = "Logo")                    // literal
    Icon(imageVector = SearchIcon, contentDescription = null,
-        tint = AppTheme.colors.onSurfaceVariant)                                 // semantic
+        tint = AppTheme.colors.mutedForeground)                                 // semantic
    ```
 5. Optionally register in a project `AppIcons` object so call sites use `AppIcons.Search`.
 

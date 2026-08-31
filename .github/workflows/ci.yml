@@ -36,7 +36,7 @@ jobs:
       - name: Detekt
         run: ./gradlew detekt --continue
 
-      - name: Check for Style{} blocks reading shadcnTheme directly (stale CompositionLocal bug)
+      - name: Check for Style{} blocks reading currentTheme directly (stale CompositionLocal bug)
         run: ./scripts/check_style_block_theme_reads.sh
 
       - name: Android Lint

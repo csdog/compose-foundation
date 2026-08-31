@@ -19,7 +19,7 @@ class HardcodedColorRule(config: Config) : Rule(config) {
 
     private val skipSuffixes = setOf(
         "Colors.kt", "Tokens.kt", "Theme.kt", "Styles.kt",
-        "Typography.kt", "Spacing.kt", "Shapes.kt",
+        "Typography.kt", "TwSpacing.kt", "TwRadiusScale.kt",
     )
 
     override fun visitCallExpression(expression: KtCallExpression) {

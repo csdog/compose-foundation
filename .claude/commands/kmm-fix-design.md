@@ -95,7 +95,7 @@ Read the full file. For each violation, determine the correct replacement:
 
 | Violation | Replacement rule |
 |---|---|
-| `Color(0xFF...)` | Map to nearest semantic token: brand blue → `appTheme.colors.primary`, red → `appTheme.colors.error`, grey → `appTheme.colors.onSurface`, etc. If ambiguous, choose the closest semantic meaning and note the assumption. |
+| `Color(0xFF...)` | Map to nearest semantic token: brand blue → `appTheme.colors.primary`, red → `appTheme.colors.destructive`, grey → `appTheme.colors.foreground`, etc. If ambiguous, choose the closest semantic meaning and note the assumption. |
 | `MaterialTheme.colors.X` | Replace with `appTheme.colors.X` (same property name, different accessor) |
 | `MaterialTheme.typography.X` | Replace with `appTheme.typography.X` |
 | `MaterialTheme.shapes.X` | Replace with `appTheme.shapes.X` |

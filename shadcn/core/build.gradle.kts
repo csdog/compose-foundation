@@ -18,6 +18,12 @@ group = project.property("GROUP") as String
 version = project.property("VERSION_NAME") as String
 
 kotlin {
+    compilerOptions {
+        freeCompilerArgs.add(
+            "-opt-in=androidx.compose.foundation.style.ExperimentalFoundationStyleApi",
+        )
+    }
+
     listOf(
         iosArm64(),
         iosSimulatorArm64(),
@@ -39,8 +45,8 @@ kotlin {
         browser()
     }
 
-    androidLibrary {
-        namespace = "io.github.ronjunevaldoz.shadcncompose"
+    android {
+        namespace = "com.toutiaoyan.compose.ui"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
 
@@ -53,11 +59,17 @@ kotlin {
         withHostTest {
             isIncludeAndroidResources = true
         }
+        withDeviceTestBuilder {
+            sourceSetTreeName = "test"
+        }.configure {
+            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        }
     }
 
     sourceSets {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
+            implementation(libs.ktor.client.okhttp)
         }
         commonMain.dependencies {
             // No Material dependency: this library is fully custom, built on
@@ -67,28 +79,34 @@ kotlin {
             implementation(libs.compose.ui)
             implementation(libs.compose.components.resources)
             implementation(libs.compose.uiToolingPreview)
-            // Real Maven Central release (verified against repo1.maven.org's own
-            // maven-metadata.xml, not the search index, which lags actual publishes) --
-            // see .claude/AGENTS.md "Planned dependencies". `implementation`, not `api`,
-            // since we're not exposing any tailwind-compose type in our own public API
-            // surface -- component internals may call its Modifier utilities, but no
-            // Shadcn* function signature should ever require a caller to import
-            // `io.github.ronjunevaldoz.tailwind.*`.
-            // Depend on the specific modules actually used (core: TwColors/Oklch,
-            // effects: shadowMd) rather than the tailwind-compose facade, which also
-            // pulls in layout/color/typography -- none of which this module calls.
-            implementation(libs.tailwind.core)
-            implementation(libs.tailwind.effects)
-            // tailwind-style: Ring/Border/Shadow/Color/Opacity/Sizing/Transform/Transition/
-            // Typography/ZIndex ported onto the real Compose Styles API -- same Compose
-            // Multiplatform version this module already targets (1.11.1), so no version
-            // isolation needed (unlike tailwind-style-experimental, which is pinned to
-            // 1.12.0-beta01 and can't be depended on here). Not re-exported via
-            // tailwind-compose's facade yet, so pulled in directly.
-            implementation(libs.tailwind.style)
+            implementation(libs.composables.compose.interaction.capabilities)
+            // Tailwind utilities live in :tailwind-core (api so callers can use TwColors etc.)
+            api(projects.tailwindCore)
+            // AvatarImage: Coil3 (raster + SVG) over Ktor on all targets.
+            api(libs.coil.compose)
+            api(libs.coil.svg)
+            implementation(libs.coil.network.ktor3)
+            implementation(libs.ktor.client.core)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+        }
+        getByName("androidDeviceTest").dependencies {
+            implementation(libs.kotlin.test)
+            implementation(libs.androidx.testExt.junit)
+            implementation(libs.androidx.espresso.core)
+        }
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+        }
+        jvmMain.dependencies {
+            implementation(libs.ktor.client.cio)
+        }
+        jsMain.dependencies {
+            implementation(libs.ktor.client.js)
+        }
+        wasmJsMain.dependencies {
+            implementation(libs.ktor.client.js.wasm.js)
         }
         jvmTest.dependencies {
             // Robolectric-less JVM/Desktop screenshot testing: `roborazzi` and
@@ -96,7 +114,7 @@ kotlin {
             // which doesn't resolve for this module's plain jvm() target -- only
             // `roborazzi-compose-desktop` publishes a real desktop/jvm artifact.
             implementation(compose.desktop.currentOs)
-            implementation(compose.desktop.uiTestJUnit4)
+            implementation(libs.compose.uiTestJunit4)
             implementation(libs.roborazzi.compose.desktop)
         }
     }
@@ -117,21 +135,24 @@ mavenPublishing {
     publishToMavenCentral(automaticRelease = true)
 
     // Maven Central rejects unsigned artifacts. Resolves a signing key the same way
-    // tailwind-compose/heroicons-compose do -- either the standard `signing.keyId` /
+    // icons-lucide-cmp do -- either the standard `signing.keyId` /
     // `signing.password` / `signing.secretKeyRingFile` Gradle properties (keyring
     // file) or the in-memory equivalents (ORG_GRADLE_PROJECT_signingInMemoryKey /
     // signingInMemoryKeyPassword / signingInMemoryKeyId, preferred for CI since no
     // keyring file needs to exist on disk). No key material lives in this repo.
-    signAllPublications()
+    // Skip signing for publishToMavenLocal so local POM/artifact checks work without GPG.
+    if (!gradle.startParameter.taskNames.any { it.contains("ToMavenLocal", ignoreCase = true) }) {
+        signAllPublications()
+    }
 
-    coordinates(artifactId = "shadcn-compose")
+    coordinates(artifactId = "ui")
 
     pom {
-        name = "shadcn-compose"
+        name = "compose-ui"
         description = "A shadcn/ui-inspired component library for Compose Multiplatform -- " +
-            "token-based theming and sealed variant systems built on the Compose Styles API, " +
-            "no Material dependency."
-        url = "https://github.com/ronjunevaldoz/shadcn-compose"
+                "token-based theming and sealed variant systems built on the Compose Styles API, " +
+                "no Material dependency."
+        url = "https://gitlab.devops.toutiaoyan.com/web-foundation/compose-foundation"
         inceptionYear = "2026"
 
         licenses {
@@ -143,16 +164,17 @@ mavenPublishing {
 
         developers {
             developer {
-                id = "ronjunevaldoz"
-                name = "Ron June Valdoz"
-                url = "https://github.com/ronjunevaldoz"
+                id = "toutiaoyan"
+                name = "Toutiaoyan"
+                url = "https://gitlab.devops.toutiaoyan.com/web-foundation"
             }
         }
 
         scm {
-            url = "https://github.com/ronjunevaldoz/shadcn-compose"
-            connection = "scm:git:git://github.com/ronjunevaldoz/shadcn-compose.git"
-            developerConnection = "scm:git:ssh://git@github.com/ronjunevaldoz/shadcn-compose.git"
+            url = "https://gitlab.devops.toutiaoyan.com/web-foundation/compose-foundation"
+            connection = "scm:git:git://gitlab.devops.toutiaoyan.com/web-foundation/compose-foundation.git"
+            developerConnection =
+                "scm:git:ssh://git@gitlab.devops.toutiaoyan.com:2222/web-foundation/compose-foundation.git"
         }
     }
 }

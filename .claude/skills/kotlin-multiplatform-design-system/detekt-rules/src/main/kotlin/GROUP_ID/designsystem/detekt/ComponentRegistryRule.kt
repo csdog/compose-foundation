@@ -32,7 +32,7 @@ class ComponentRegistryRule(config: Config) : Rule(config) {
     private val componentPrefix: String by config.valueOrDefault("componentPrefix", "App")
 
     private val dsComponentSuffixes = setOf(
-        "Button", "Card", "Text", "Badge", "Chip", "TextField",
+        "Button", "Card", "Text", "Badge", "Chip", "Input",
         "Dialog", "Sheet", "Toast", "TopAppBar", "NavigationBar",
         "Checkbox", "RadioButton", "Switch", "Slider", "Tabs",
         "Icon", "IconButton", "Spinner", "Skeleton", "Progress",

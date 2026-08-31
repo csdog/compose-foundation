@@ -185,6 +185,6 @@ fun AppTheme(
 - Brand color names are **yours to define** — `primary`, `accent`, `guild`, `premium`, anything
 - Each brand entry gets a full `BrandColorFamily`: color, onColor, container, onContainer, hover, pressed, disabled — derived automatically
 - Neutrals (background, surface, text, outline) are **always fixed** — they never inherit brand color
-- Text color is always `AppTheme.colors.onSurface` or `AppTheme.colors.onSurfaceVariant` — never a brand color directly
+- Text color is always `AppTheme.colors.foreground` or `AppTheme.colors.mutedForeground` — never a brand color directly
 - Re-run any time you change brand colors — the script is idempotent
 - `BrandExtensions.kt` gives you autocomplete: `AppTheme.colors.primary.color`, `AppTheme.colors.primary.onColor`, etc.

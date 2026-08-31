@@ -168,13 +168,13 @@ sealed interface CheckboxVariant {
             background(colors.primary)
             borderWidth(0.dp)
             shape(RoundedCornerShape(shapes.sm))
-            contentColor(colors.onPrimary)
+            contentColor(colors.primaryForeground)
         }
         override val uncheckedStyle = Style {
             borderWidth(1.dp)
             borderColor(colors.border)
             shape(RoundedCornerShape(shapes.sm))
-            hovered { animate { borderColor(colors.onSurface) } }
+            hovered { animate { borderColor(colors.foreground) } }
         }
     }
 
@@ -183,7 +183,7 @@ sealed interface CheckboxVariant {
             background(colors.destructive)
             borderWidth(0.dp)
             shape(RoundedCornerShape(shapes.sm))
-            contentColor(colors.onDestructive)
+            contentColor(colors.destructiveForeground)
         }
         override val uncheckedStyle = Default.uncheckedStyle
     }
@@ -235,8 +235,8 @@ object TabDefaults {
     @Composable
     fun colors() = TabColors(
         indicator  = AppTheme.LocalAppTheme.current.colors.primary,
-        selected   = AppTheme.LocalAppTheme.current.colors.onSurface,
-        unselected = AppTheme.LocalAppTheme.current.colors.onSurfaceVariant,
+        selected   = AppTheme.LocalAppTheme.current.colors.foreground,
+        unselected = AppTheme.LocalAppTheme.current.colors.mutedForeground,
         background = AppTheme.LocalAppTheme.current.colors.background,
     )
 }
@@ -265,8 +265,8 @@ sealed interface AlertVariant {
 
     data object Default : AlertVariant {
         override val style = Style {
-            background(colors.surface)
-            contentColor(colors.onSurface)
+            background(colors.background)
+            contentColor(colors.foreground)
             borderWidth(1.dp)
             borderColor(colors.border)
             shape(RoundedCornerShape(shapes.lg))
@@ -277,7 +277,7 @@ sealed interface AlertVariant {
     data object Destructive : AlertVariant {
         override val style = Style {
             background(colors.destructive)
-            contentColor(colors.onDestructive)
+            contentColor(colors.destructiveForeground)
             borderWidth(0.dp)
             shape(RoundedCornerShape(shapes.lg))
             padding(all = spacing.lg)
@@ -354,7 +354,7 @@ fun AppIcon(
     size: IconSize = IconSize.Md,
     tint: Color = Color.Unspecified,
 ) {
-    val resolvedTint = if (tint == Color.Unspecified) appTheme.colors.onSurface else tint
+    val resolvedTint = if (tint == Color.Unspecified) appTheme.colors.foreground else tint
     androidx.compose.foundation.Image(
         painter = rememberVectorPainter(imageVector),
         contentDescription = contentDescription,
@@ -598,7 +598,7 @@ fun AppAvatar(
             AppText(
                 text = initials.take(2).uppercase(),
                 style = if (size.dp >= 56.dp) AppTextStyle.TitleSmall else AppTextStyle.LabelLarge,
-                color = theme.colors.onSecondary,
+                color = theme.colors.secondaryForeground,
             )
         }
     }
@@ -647,7 +647,7 @@ sealed interface SpinnerSize {
  * Usage:
  * ```
  * AppSpinner()
- * AppSpinner(size = SpinnerSize.Sm, color = colors.onPrimary)
+ * AppSpinner(size = SpinnerSize.Sm, color = colors.primaryForeground)
  * ```
  */
 @Composable
@@ -922,7 +922,7 @@ import GROUP_ID.core.designsystem.theme.appTheme
 fun AppSkeleton(
     modifier: Modifier = Modifier,
     baseColor: Color = appTheme.colors.secondary,
-    highlightColor: Color = appTheme.colors.surfaceVariant,
+    highlightColor: Color = appTheme.colors.muted,
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "skeleton")
     val alpha by infiniteTransition.animateFloat(
@@ -991,7 +991,7 @@ fun AppTopAppBar(
     navigationIcon: (@Composable () -> Unit)? = null,
     actions: (@Composable () -> Unit)? = null,
     backgroundColor: Color = appTheme.colors.background,
-    contentColor: Color = appTheme.colors.onSurface,
+    contentColor: Color = appTheme.colors.foreground,
 ) {
     Row(
         modifier = modifier
@@ -1109,13 +1109,13 @@ fun AppNavigationBar(
                         imageVector = if (selected) item.selectedIcon else item.icon,
                         contentDescription = item.contentDescription ?: item.label,
                         size = IconSize.Md,
-                        tint = if (selected) theme.colors.primary else theme.colors.onSurfaceVariant,
+                        tint = if (selected) theme.colors.primary else theme.colors.mutedForeground,
                     )
                     Spacer(Modifier.height(2.dp))
                     AppText(
                         text = item.label,
                         style = AppTextStyle.LabelSmall,
-                        color = if (selected) theme.colors.primary else theme.colors.onSurfaceVariant,
+                        color = if (selected) theme.colors.primary else theme.colors.mutedForeground,
                     )
                 }
             }
@@ -1266,7 +1266,7 @@ fun AppTabs(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(theme.colors.surfaceVariant)
+                        .background(theme.colors.muted)
                         .padding(horizontal = 16.dp),
                 ) {
                     tabs.forEachIndexed { index, title ->
@@ -1403,7 +1403,7 @@ fun AppCheckbox(
                 }
                 drawPath(
                     path = path,
-                    color = theme.colors.onPrimary.copy(alpha = checkAlpha),
+                    color = theme.colors.primaryForeground.copy(alpha = checkAlpha),
                     style = Stroke(width = 2.dp.toPx(), cap = StrokeCap.Round, join = StrokeJoin.Round),
                 )
             } else {
@@ -1776,7 +1776,7 @@ fun AppSelect(
                 .background(theme.colors.background)
                 .border(
                     width = if (expanded) 2.dp else 1.dp,
-                    color = if (expanded) theme.colors.borderFocus else theme.colors.border,
+                    color = if (expanded) theme.colors.ring else theme.colors.border,
                     shape = shape,
                 )
                 .clickable(
@@ -1792,7 +1792,7 @@ fun AppSelect(
             AppText(
                 text = selected ?: placeholder,
                 style = AppTextStyle.BodyMedium,
-                color = if (selected != null) theme.colors.onSurface else theme.colors.onSurfaceVariant,
+                color = if (selected != null) theme.colors.foreground else theme.colors.mutedForeground,
                 modifier = Modifier.weight(1f),
             )
             // Chevron
@@ -2019,8 +2019,8 @@ fun AppToastHost(
                     exit = fadeOut(tween(200)) + slideOutVertically(tween(200)) { it },
                 ) {
                     val (bg, border, content) = when (toast.variant) {
-                        AppToastVariant.Default     -> Triple(theme.colors.surface, theme.colors.border, theme.colors.onSurface)
-                        AppToastVariant.Destructive -> Triple(theme.colors.destructive, theme.colors.destructive, theme.colors.onDestructive)
+                        AppToastVariant.Default     -> Triple(theme.colors.background, theme.colors.border, theme.colors.foreground)
+                        AppToastVariant.Destructive -> Triple(theme.colors.destructive, theme.colors.destructive, theme.colors.destructiveForeground)
                         AppToastVariant.Success     -> Triple(theme.colors.success, theme.colors.success, theme.colors.onStatus)
                         AppToastVariant.Warning     -> Triple(theme.colors.warning, theme.colors.warning, theme.colors.onStatus)
                     }
@@ -2155,7 +2155,7 @@ import GROUP_ID.core.designsystem.theme.appTheme
  *         confirmButton = { AppButton(onClick = { save(); showDialog = false }) { AppText("Save") } },
  *         dismissButton = { AppButton(onClick = { showDialog = false }, variant = ButtonVariant.Ghost) { AppText("Cancel") } },
  *     ) {
- *         AppTextField(value = name, onValueChange = { name = it }, placeholder = "Name")
+ *         AppInput(value = name, onValueChange = { name = it }, placeholder = "Name")
  *     }
  * }
  * ```
@@ -2179,7 +2179,7 @@ fun AppDialog(
             modifier = modifier
                 .widthIn(min = 280.dp, max = 480.dp)
                 .shadow(16.dp, shape)
-                .background(theme.colors.surface, shape)
+                .background(theme.colors.background, shape)
                 .padding(24.dp),
         ) {
             if (title != null) {
@@ -2310,7 +2310,7 @@ fun AppSheet(
                 modifier = modifier
                     .fillMaxWidth()
                     .background(
-                        color = theme.colors.surface,
+                        color = theme.colors.background,
                         shape = RoundedCornerShape(topStart = theme.shapes.xxl, topEnd = theme.shapes.xxl),
                     )
                     .navigationBarsPadding()
@@ -2417,7 +2417,7 @@ fun AppTooltip(
                 Box(
                     modifier = Modifier
                         .background(
-                            color = theme.colors.onSurface.copy(alpha = 0.9f),
+                            color = theme.colors.foreground.copy(alpha = 0.9f),
                             shape = RoundedCornerShape(theme.shapes.sm),
                         )
                         .padding(horizontal = 8.dp, vertical = 4.dp),
@@ -2495,7 +2495,7 @@ fun AppPopover(
                 Box(
                     modifier = Modifier
                         .shadow(8.dp, shape)
-                        .background(theme.colors.surface, shape)
+                        .background(theme.colors.background, shape)
                         .border(1.dp, theme.colors.border, shape)
                         .padding(16.dp),
                 ) {
@@ -2672,11 +2672,11 @@ fun ProfileForm() {
     Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
             AppLabel(text = "Name", required = true)
-            AppTextField(value = name, onValueChange = { name = it }, placeholder = "Your name")
+            AppInput(value = name, onValueChange = { name = it }, placeholder = "Your name")
         }
         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
             AppLabel(text = "Email")
-            AppTextField(value = email, onValueChange = { email = it }, placeholder = "you@example.com")
+            AppInput(value = email, onValueChange = { email = it }, placeholder = "you@example.com")
         }
         AppSwitch(checked = notifications, onCheckedChange = { notifications = it }, label = "Email notifications")
         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -2803,17 +2803,17 @@ fun SettingsPage() {
     assertTrue(clicked)
 }
 
-// --- AppTextField ---
+// --- AppInput ---
 @Test fun `app_text_field_default screenshot`() {
     captureRoboImage("dsx_text_field_default.png") {
-        AppTheme { var t by remember { mutableStateOf("") }; AppTextField(value = t, onValueChange = {}, label = "Email") }
+        AppTheme { var t by remember { mutableStateOf("") }; AppInput(value = t, onValueChange = {}, label = "Email") }
     }
 }
 
 @Test fun `app_text_field_onValueChange fires on input`() {
     var value = ""
     composeRule.setContent {
-        AppTheme { AppTextField(value = value, onValueChange = { value = it }, label = "Name") }
+        AppTheme { AppInput(value = value, onValueChange = { value = it }, label = "Name") }
     }
     composeRule.onNodeWithText("Name").performTextInput("Alice")
     assertEquals("Alice", value)
