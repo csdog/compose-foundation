@@ -1070,9 +1070,7 @@ fun QuestionnaireScope.QuestionnaireChoice(
 
 /** Official `QuestionnaireChoiceShortcut` — hidden unless [Questionnaire.shortcuts] assigned a key. */
 @Composable
-fun QuestionnaireScope.QuestionnaireChoiceShortcut(
-    modifier: Modifier = Modifier,
-) {
+fun QuestionnaireScope.QuestionnaireChoiceShortcut(modifier: Modifier = Modifier) {
     val ctrl = questionnaireController()
     val name = LocalQuestionnaireItemName.current ?: return
     val value = LocalQuestionnaireChoiceValue.current ?: return
@@ -1082,9 +1080,7 @@ fun QuestionnaireScope.QuestionnaireChoiceShortcut(
 
 /** Official `QuestionnaireChoiceInput` — native radio/checkbox stand-in (16dp, not separately clickable). */
 @Composable
-fun QuestionnaireScope.QuestionnaireChoiceInput(
-    modifier: Modifier = Modifier,
-) {
+fun QuestionnaireScope.QuestionnaireChoiceInput(modifier: Modifier = Modifier) {
     val selected = LocalQuestionnaireChoiceSelected.current
     val multiple = LocalQuestionnaireChoiceMultiple.current
     val colors = currentTheme.colors

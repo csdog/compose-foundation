@@ -173,11 +173,12 @@ fun InputGroup(
             CompositionLocalProvider(
                 LocalInsideInputGroup provides true,
                 LocalInputGroupDisabled provides disabled,
-                LocalInputGroup provides InputGroupState(
-                    invalid = invalid,
-                    focused = hasFocusWithin,
-                    disabled = disabled,
-                ),
+                LocalInputGroup provides
+                    InputGroupState(
+                        invalid = invalid,
+                        focused = hasFocusWithin,
+                        disabled = disabled,
+                    ),
             ) {
                 content()
             }
@@ -185,8 +186,7 @@ fun InputGroup(
     ) { measurables, constraints ->
         val maxW = constraints.maxWidth
 
-        fun Measurable.addonAlign(): InputGroupAddonAlign? =
-            (parentData as? InputGroupAddonParentData)?.align
+        fun Measurable.addonAlign(): InputGroupAddonAlign? = (parentData as? InputGroupAddonParentData)?.align
 
         val blockStarts = measurables.filter { it.addonAlign() == InputGroupAddonAlign.BlockStart }
         val blockEnds = measurables.filter { it.addonAlign() == InputGroupAddonAlign.BlockEnd }
@@ -447,6 +447,7 @@ fun InputGroupButton(
         Text { text }
     }
 }
+
 @Composable
 fun InputGroupText(
     text: String,

@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalFoundationStyleApi::class)
+
 package com.toutiaoyan.compose.ui.components.resizable
 
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -38,4 +39,3 @@ fun rememberResizableGripStyle(horizontal: Boolean): Style =
             background(colors.border)
         }
     }
-

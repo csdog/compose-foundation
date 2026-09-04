@@ -106,7 +106,7 @@ fun DrawerCloseIcon(
                     contentDescription = ariaLabel
                     if (!resolvedEnabled) disabled()
                 }
-                .styleable(styleState, touchTargetStyle then closeButtonStyle )
+                .styleable(styleState, touchTargetStyle then closeButtonStyle)
                 .clickable(
                     interactionSource = interactionSource,
                     indication = LocalIndication.current,

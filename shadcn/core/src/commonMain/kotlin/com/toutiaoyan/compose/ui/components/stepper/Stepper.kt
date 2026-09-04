@@ -147,9 +147,10 @@ private val StepCircleSize = 32.dp
 @Composable
 fun StepperIndicator(
     index: Int,
-    currentStep: Int = LocalStepperState.current?.currentStep ?: error(
-        "StepperIndicator must be used inside Stepper, or pass currentStep=",
-    ),
+    currentStep: Int =
+        LocalStepperState.current?.currentStep ?: error(
+            "StepperIndicator must be used inside Stepper, or pass currentStep=",
+        ),
     circleStyle: Style = Style,
 ) {
     StepCircle(index = index, currentStep = currentStep, circleStyle = circleStyle)

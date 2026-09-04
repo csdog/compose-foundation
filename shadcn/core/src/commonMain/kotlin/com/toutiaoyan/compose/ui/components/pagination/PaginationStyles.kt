@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalFoundationStyleApi::class)
+
 package com.toutiaoyan.compose.ui.components.pagination
 
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,4 +28,3 @@ fun rememberPaginationLabeledButtonStyle(): Style =
             shape(RoundedCornerShape(radius.md))
         }
     }
-

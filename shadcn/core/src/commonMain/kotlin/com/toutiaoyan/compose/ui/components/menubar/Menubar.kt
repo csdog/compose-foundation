@@ -233,7 +233,10 @@ fun MenubarMenuScope.MenubarTrigger(
                         controller.onOpenChange(if (isOpen) null else value)
                     },
                 )
-                .styleable(styleState, touchTargetStyle then pressStyle then rememberMenubarTriggerStyle(isOpen) then style),
+                .styleable(
+                    styleState,
+                    touchTargetStyle then pressStyle then rememberMenubarTriggerStyle(isOpen) then style,
+                ),
     ) {
         content()
     }
@@ -519,9 +522,10 @@ fun MenubarShortcut(
 /** Alias for [DropdownMenuItemIndicator]. Base UI does not export MenubarItemIndicator. */
 @Composable
 internal fun MenubarItemIndicator(
-    checked: Boolean = checkNotNull(LocalDropdownMenuItemChecked.current) {
-        "MenubarItemIndicator must be used inside MenubarCheckboxItem, or pass checked="
-    },
+    checked: Boolean =
+        checkNotNull(LocalDropdownMenuItemChecked.current) {
+            "MenubarItemIndicator must be used inside MenubarCheckboxItem, or pass checked="
+        },
     modifier: Modifier = Modifier,
 ) {
     DropdownMenuItemIndicator(checked = checked, modifier = modifier)

@@ -90,7 +90,7 @@ mavenPublishing {
     pom {
         name = "compose-tailwind"
         description = "Vendored Tailwind-style Compose Multiplatform utilities " +
-                "(TwColors, Oklch, Modifier/Style helpers) used by compose-foundation."
+            "(TwColors, Oklch, Modifier/Style helpers) used by compose-foundation."
         url = "https://gitlab.devops.toutiaoyan.com/web-foundation/compose-foundation"
         inceptionYear = "2026"
 

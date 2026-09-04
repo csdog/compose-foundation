@@ -58,7 +58,8 @@ val alertDialogDoc =
                             AlertDialogTrigger("Show Dialog", variant = ButtonVariant.Outline)
                             AlertDialogContent(
                                 "Are you absolutely sure?",
-                                description = "This action cannot be undone. This will permanently delete your account.",
+                                description =
+                                    "This action cannot be undone. This will permanently delete your account.",
                             ) {
                                 AlertDialogFooter {
                                     AlertDialogCancel("Cancel")
@@ -73,7 +74,8 @@ val alertDialogDoc =
                             AlertDialogTrigger("Show Dialog", variant = ButtonVariant.Outline)
                             AlertDialogContent(
                                 "Are you absolutely sure?",
-                                description = "This action cannot be undone. This will permanently delete your account.",
+                                description =
+                                    "This action cannot be undone. This will permanently delete your account.",
                             ) {
                                 AlertDialogFooter {
                                     AlertDialogCancel("Cancel")
@@ -745,7 +747,9 @@ val alertDialogDoc =
                             AlertDialogContent {
                                 AlertDialogHeader {
                                     AlertDialogTitle("Are you absolutely sure?")
-                                    AlertDialogDescription("Footer holds Action and Cancel, matching shadcn AlertDialogFooter.")
+                                    AlertDialogDescription(
+                                        "Footer holds Action and Cancel, matching shadcn AlertDialogFooter.",
+                                    )
                                 }
                                 AlertDialogFooter {
                                     AlertDialogCancel("Cancel")
@@ -1045,7 +1049,9 @@ val alertDialogDoc =
                             AlertDialogContent {
                                 AlertDialogHeader {
                                     AlertDialogTitle("Are you absolutely sure?")
-                                    AlertDialogDescription("AlertDialogPortal is the teleport host composed by Content.")
+                                    AlertDialogDescription(
+                                        "AlertDialogPortal is the teleport host composed by Content.",
+                                    )
                                 }
                                 AlertDialogFooter {
                                     AlertDialogCancel("Cancel")

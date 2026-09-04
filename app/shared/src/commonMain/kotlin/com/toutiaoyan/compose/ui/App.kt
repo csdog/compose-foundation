@@ -48,7 +48,7 @@ fun App(
     @Suppress("UNCHECKED_CAST")
     val backStack =
         rememberNavBackStack(AppNavSavedStateConfiguration, RouteKey.Introduction)
-                as NavBackStack<RouteKey>
+            as NavBackStack<RouteKey>
     val appRouter = remember { AppRouterImpl(RouteKey.Introduction) }
 
     DisposableEffect(backStack) {

@@ -34,7 +34,6 @@ data object ScaleIndication : IndicationNodeFactory {
 fun Modifier.scaleIndication(interactionSource: InteractionSource): Modifier =
     this.indication(interactionSource, ScaleIndication)
 
-
 internal class ScaleIndicationNode(
     interactionSource: InteractionSource,
     private val scale: Float,

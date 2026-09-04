@@ -122,9 +122,7 @@ class AlertScope internal constructor()
 
 /** Matches shadcn's `AlertTitle`. */
 @Composable
-fun AlertScope.AlertTitle(
-    text: String,
-) {
+fun AlertScope.AlertTitle(text: String) {
     AlertTitle { text }
 }
 
@@ -146,9 +144,7 @@ fun AlertScope.AlertTitle(
 
 /** Matches shadcn's `AlertDescription`. */
 @Composable
-fun AlertScope.AlertDescription(
-    text: String,
-) {
+fun AlertScope.AlertDescription(text: String) {
     Text(variant = TextVariant.BodySmall, textStyle = TextColors.Muted) { text }
 }
 

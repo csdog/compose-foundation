@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalFoundationStyleApi::class)
+
 package com.toutiaoyan.compose.ui.components.skeleton
 
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,8 +18,6 @@ import com.toutiaoyan.compose.ui.utils.rememberTheme
  * Drop pulse the CSS way — omit that utility:
  * `rememberSkeletonChrome()` ≈ `rounded-md bg-muted`.
  */
-
-/** `rounded-md` + fill, no motion. */
 @Composable
 fun rememberSkeletonChrome(): Style =
     rememberTheme {
@@ -39,5 +38,4 @@ fun rememberSkeletonPulse(): Style {
 
 /** `rounded-md` + fill + `animate-pulse` — full default class set. */
 @Composable
-fun rememberSkeletonStyle(): Style =
-    rememberSkeletonChrome() then rememberSkeletonPulse()
+fun rememberSkeletonStyle(): Style = rememberSkeletonChrome() then rememberSkeletonPulse()

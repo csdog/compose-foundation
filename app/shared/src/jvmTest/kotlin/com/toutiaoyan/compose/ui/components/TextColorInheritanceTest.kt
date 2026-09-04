@@ -45,7 +45,7 @@ class TextColorInheritanceTest {
             TextColorTags.Ancestor,
             expected = AncestorStyleColor,
             rival = LocalContentColorValue,
-            background
+            background,
         )
         assertTaggedColor(
             TextColorTags.AncestorBeatsLocal,
@@ -63,7 +63,7 @@ class TextColorInheritanceTest {
             TextColorTags.Fallback,
             expected = colors.foreground,
             rival = LocalContentColorValue,
-            background
+            background,
         )
         assertTaggedColor(
             TextColorTags.CardBody,
@@ -81,13 +81,13 @@ class TextColorInheritanceTest {
             TextColorTags.CardTextStyle,
             expected = TextStyleColor,
             rival = colors.cardForeground,
-            background
+            background,
         )
         assertTaggedColor(
             TextColorTags.CardOwnStyle,
             expected = OwnStyleColor,
             rival = colors.cardForeground,
-            background
+            background,
         )
         assertTaggedColor(
             TextColorTags.ButtonBody,

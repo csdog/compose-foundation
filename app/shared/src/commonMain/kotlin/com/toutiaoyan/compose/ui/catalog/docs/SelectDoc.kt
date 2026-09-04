@@ -2,8 +2,6 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
-import com.composables.icons.lucide.Lucide
-import com.composables.icons.lucide.ChevronDown
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember

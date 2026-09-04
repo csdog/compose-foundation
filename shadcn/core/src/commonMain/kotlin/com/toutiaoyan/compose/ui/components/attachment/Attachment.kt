@@ -304,7 +304,7 @@ fun AttachmentTitle(
         variant = TextVariant.LabelLarge,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
-        modifier = modifier.then(alphaModifier).styleable(styleState, style)
+        modifier = modifier.then(alphaModifier).styleable(styleState, style),
     ) { text }
 }
 

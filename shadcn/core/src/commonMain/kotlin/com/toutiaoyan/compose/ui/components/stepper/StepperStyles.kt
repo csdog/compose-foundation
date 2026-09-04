@@ -1,8 +1,8 @@
 @file:OptIn(ExperimentalFoundationStyleApi::class)
+
 package com.toutiaoyan.compose.ui.components.stepper
 
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
 import androidx.compose.runtime.Composable
@@ -22,7 +22,10 @@ fun rememberStepCircleStyle(reached: Boolean): Style =
     }
 
 @Composable
-fun rememberStepConnectorStyle(active: Boolean, horizontal: Boolean): Style =
+fun rememberStepConnectorStyle(
+    active: Boolean,
+    horizontal: Boolean,
+): Style =
     rememberTheme(active, horizontal) {
         Style {
             if (horizontal) {

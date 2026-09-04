@@ -32,7 +32,6 @@ enum class TextVariant {
     LabelSmall,
 }
 
-
 /**
  * Resolves the same [TextVariant] -> [TextStyle] mapping [Text] uses, factored out so
  * [com.toutiaoyan.compose.ui.components.emojitext.EmojiText] can match it exactly

@@ -1,7 +1,6 @@
 package com.toutiaoyan.compose.tailwind.style
 
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.StyleScope
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
@@ -27,21 +26,17 @@ fun StyleScope.border(
     borderColor(color)
 }
 
-
 fun StyleScope.border0(color: Color) {
     border(color, 0.dp)
 }
-
 
 fun StyleScope.border2(color: Color) {
     border(color, 2.dp)
 }
 
-
 fun StyleScope.border4(color: Color) {
     border(color, 4.dp)
 }
-
 
 fun StyleScope.border8(color: Color) {
     border(color, 8.dp)
@@ -60,51 +55,41 @@ fun StyleScope.rounded(radius: Dp) {
     shape(RoundedCornerShape(radius))
 }
 
-
 fun StyleScope.roundedNone() {
     shape(RoundedCornerShape(LocalTwRadius.currentValue.none))
 }
-
 
 fun StyleScope.roundedXs() {
     shape(RoundedCornerShape(LocalTwRadius.currentValue.xs))
 }
 
-
 fun StyleScope.roundedSm() {
     shape(RoundedCornerShape(LocalTwRadius.currentValue.sm))
 }
-
 
 fun StyleScope.roundedMd() {
     shape(RoundedCornerShape(LocalTwRadius.currentValue.md))
 }
 
-
 fun StyleScope.roundedLg() {
     shape(RoundedCornerShape(LocalTwRadius.currentValue.lg))
 }
-
 
 fun StyleScope.roundedXl() {
     shape(RoundedCornerShape(LocalTwRadius.currentValue.xl))
 }
 
-
 fun StyleScope.roundedXl2() {
     shape(RoundedCornerShape(LocalTwRadius.currentValue.xl2))
 }
-
 
 fun StyleScope.roundedXl3() {
     shape(RoundedCornerShape(LocalTwRadius.currentValue.xl3))
 }
 
-
 fun StyleScope.roundedXl4() {
     shape(RoundedCornerShape(LocalTwRadius.currentValue.xl4))
 }
-
 
 fun StyleScope.roundedFull() {
     shape(RoundedCornerShape(LocalTwRadius.currentValue.full))

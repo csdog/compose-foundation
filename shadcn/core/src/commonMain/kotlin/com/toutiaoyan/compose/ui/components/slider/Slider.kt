@@ -86,8 +86,7 @@ class SliderState(
     val onValueChange: (Float) -> Unit,
     val onValuesChange: (List<Float>) -> Unit,
 ) {
-    fun visualFraction(valueFraction: Float): Float =
-        if (inverted) 1f - valueFraction else valueFraction
+    fun visualFraction(valueFraction: Float): Float = if (inverted) 1f - valueFraction else valueFraction
 }
 
 internal class SliderController(
@@ -107,7 +106,10 @@ internal class SliderController(
         onValuesCommit?.invoke(currentValues())
     }
 
-    fun updateThumb(index: Int, raw: Float) {
+    fun updateThumb(
+        index: Int,
+        raw: Float,
+    ) {
         val current = currentValues()
         if (index !in current.indices) return
         val range = state.valueRange
@@ -421,7 +423,9 @@ private fun SliderImpl(
                                         if (minBound > maxBound) {
                                             values
                                         } else {
-                                            values.toMutableList().also { it[index] = snapped.coerceIn(minBound, maxBound) }
+                                            values.toMutableList().also {
+                                                it[index] = snapped.coerceIn(minBound, maxBound)
+                                            }
                                         }
                                     }
                                 if (values.size <= 1 || committed !== values) {
@@ -491,6 +495,7 @@ private fun Modifier.sliderPointerInput(controller: SliderController): Modifier 
             val down = awaitFirstDown()
             down.consume()
             val vertical = slider.state.orientation == SliderOrientation.Vertical
+
             fun valueAt(position: Offset): Float {
                 val visual =
                     sliderVisualFractionAlongTrack(
@@ -519,9 +524,7 @@ private fun Modifier.sliderPointerInput(controller: SliderController): Modifier 
 
 /** Unfilled track of a [Slider]. Base UI does not export SliderTrack. */
 @Composable
-internal fun SliderTrack(
-    modifier: Modifier = Modifier,
-) {
+internal fun SliderTrack(modifier: Modifier = Modifier) {
     val slider = LocalSlider.current
     val resolved =
         if (slider != null) {
@@ -542,9 +545,7 @@ internal fun SliderTrack(
 
 /** Filled range of a [Slider]. Base UI does not export SliderRange. */
 @Composable
-internal fun SliderRange(
-    modifier: Modifier = Modifier,
-) {
+internal fun SliderRange(modifier: Modifier = Modifier) {
     val slider = LocalSlider.current
     val resolved =
         if (slider != null) {

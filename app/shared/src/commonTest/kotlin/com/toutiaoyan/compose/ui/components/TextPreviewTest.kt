@@ -28,6 +28,7 @@ import com.toutiaoyan.compose.ui.theme.LocalContentColor
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.tokens.BaseColor
 
+@Suppress("ktlint:standard:property-naming")
 internal object TextColorTags {
     const val TextStyle = "text_color_1_textStyle"
     const val OwnStyle = "text_color_2_ownStyle"

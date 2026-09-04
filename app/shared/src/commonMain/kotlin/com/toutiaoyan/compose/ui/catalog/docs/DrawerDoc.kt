@@ -500,7 +500,9 @@ val drawerDoc =
                             DrawerContent {
                                 DrawerHeader(
                                     "Notice",
-                                    description = "Outside presses do not close (Base disablePointerDismissal). Swipe still works.",
+                                    description =
+                                        "Outside presses do not close (Base disablePointerDismissal). " +
+                                            "Swipe still works.",
                                 )
                             }
                         }
@@ -516,7 +518,9 @@ val drawerDoc =
                             DrawerContent {
                                 DrawerHeader(
                                     "Notice",
-                                    description = "Outside presses do not close (Base disablePointerDismissal). Swipe still works.",
+                                    description =
+                                        "Outside presses do not close (Base disablePointerDismissal). " +
+                                            "Swipe still works.",
                                 )
                             }
                         }
@@ -544,7 +548,8 @@ val drawerDoc =
                             DrawerContent {
                                 DrawerHeader(
                                     "Snap points",
-                                    description = "Drag between 148.dp and full height; past the lowest snap dismisses.",
+                                    description =
+                                        "Drag between 148.dp and full height; past the lowest snap dismisses.",
                                 )
                             }
                         }
@@ -569,7 +574,8 @@ val drawerDoc =
                             DrawerContent {
                                 DrawerHeader(
                                     "Snap points",
-                                    description = "Drag between 148.dp and full height; past the lowest snap dismisses.",
+                                    description =
+                                        "Drag between 148.dp and full height; past the lowest snap dismisses.",
                                 )
                             }
                         }

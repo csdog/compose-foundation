@@ -206,9 +206,10 @@ fun Checkbox(
 /** Check / dash mark inside a [Checkbox]. Base UI does not export CheckboxIndicator. */
 @Composable
 internal fun CheckboxIndicator(
-    state: ToggleableState = checkNotNull(LocalCheckboxState.current) {
-        "CheckboxIndicator must be used inside Checkbox, or pass state="
-    },
+    state: ToggleableState =
+        checkNotNull(LocalCheckboxState.current) {
+            "CheckboxIndicator must be used inside Checkbox, or pass state="
+        },
     modifier: Modifier = Modifier,
 ) {
     val markColor = currentTheme.colors.primaryForeground

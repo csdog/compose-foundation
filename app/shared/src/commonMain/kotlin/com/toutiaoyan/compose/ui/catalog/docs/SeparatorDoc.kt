@@ -22,9 +22,9 @@ val separatorDoc =
         title = "Separator",
         description =
             "A thin line for visually or semantically separating content. Matches real " +
-                    "shadcn/ui: it has no built-in margin, so surrounding spacing is always the " +
-                    "caller's responsibility -- via Arrangement.spacedBy or explicit padding, as " +
-                    "shown in the examples below.",
+                "shadcn/ui: it has no built-in margin, so surrounding spacing is always the " +
+                "caller's responsibility -- via Arrangement.spacedBy or explicit padding, as " +
+                "shown in the examples below.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.separator.Separator

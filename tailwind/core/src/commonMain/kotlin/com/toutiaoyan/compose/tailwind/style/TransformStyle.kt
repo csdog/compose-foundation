@@ -1,6 +1,5 @@
 package com.toutiaoyan.compose.tailwind.style
 
-import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.StyleScope
 import androidx.compose.ui.unit.Dp
 import com.toutiaoyan.compose.tailwind.core.twSpacing
@@ -15,11 +14,9 @@ fun StyleScope.scale50() {
     scale(0.50f)
 }
 
-
 fun StyleScope.scale100() {
     scale(1.00f)
 }
-
 
 fun StyleScope.scale150() {
     scale(1.50f)
@@ -36,11 +33,9 @@ fun StyleScope.rotateX(degrees: Float) {
     rotationX(degrees)
 }
 
-
 fun StyleScope.rotateY(degrees: Float) {
     rotationY(degrees)
 }
-
 
 fun StyleScope.rotateZ(degrees: Float) {
     rotationZ(degrees)
@@ -59,16 +54,13 @@ fun StyleScope.translateX(value: Dp) {
     translationX(value.value)
 }
 
-
 fun StyleScope.translateY(value: Dp) {
     translationY(value.value)
 }
 
-
 fun StyleScope.translateX4() {
     translationX(twSpacing.scale4.value)
 }
-
 
 fun StyleScope.translateY4() {
     translationY(twSpacing.scale4.value)

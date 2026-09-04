@@ -150,8 +150,8 @@ mavenPublishing {
     pom {
         name = "compose-ui"
         description = "A shadcn/ui-inspired component library for Compose Multiplatform -- " +
-                "token-based theming and sealed variant systems built on the Compose Styles API, " +
-                "no Material dependency."
+            "token-based theming and sealed variant systems built on the Compose Styles API, " +
+            "no Material dependency."
         url = "https://gitlab.devops.toutiaoyan.com/web-foundation/compose-foundation"
         inceptionYear = "2026"
 

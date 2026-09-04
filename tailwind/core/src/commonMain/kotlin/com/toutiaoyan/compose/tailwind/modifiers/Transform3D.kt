@@ -135,13 +135,11 @@ fun Modifier.translateX1(): Modifier =
         graphicsLayer { translationX = step.toPx() }
     }
 
-
 fun Modifier.translateX2(): Modifier =
     composed {
         val step = twSpacing.scale2
         graphicsLayer { translationX = step.toPx() }
     }
-
 
 fun Modifier.translateX4(): Modifier =
     composed {
@@ -149,13 +147,11 @@ fun Modifier.translateX4(): Modifier =
         graphicsLayer { translationX = step.toPx() }
     }
 
-
 fun Modifier.translateX8(): Modifier =
     composed {
         val step = twSpacing.scale8
         graphicsLayer { translationX = step.toPx() }
     }
-
 
 fun Modifier.translateXNeg1(): Modifier =
     composed {
@@ -163,13 +159,11 @@ fun Modifier.translateXNeg1(): Modifier =
         graphicsLayer { translationX = -step.toPx() }
     }
 
-
 fun Modifier.translateXNeg2(): Modifier =
     composed {
         val step = twSpacing.scale2
         graphicsLayer { translationX = -step.toPx() }
     }
-
 
 fun Modifier.translateXNeg4(): Modifier =
     composed {
@@ -177,13 +171,11 @@ fun Modifier.translateXNeg4(): Modifier =
         graphicsLayer { translationX = -step.toPx() }
     }
 
-
 fun Modifier.translateXNeg8(): Modifier =
     composed {
         val step = twSpacing.scale8
         graphicsLayer { translationX = -step.toPx() }
     }
-
 
 fun Modifier.translateY1(): Modifier =
     composed {
@@ -191,13 +183,11 @@ fun Modifier.translateY1(): Modifier =
         graphicsLayer { translationY = step.toPx() }
     }
 
-
 fun Modifier.translateY2(): Modifier =
     composed {
         val step = twSpacing.scale2
         graphicsLayer { translationY = step.toPx() }
     }
-
 
 fun Modifier.translateY4(): Modifier =
     composed {
@@ -205,13 +195,11 @@ fun Modifier.translateY4(): Modifier =
         graphicsLayer { translationY = step.toPx() }
     }
 
-
 fun Modifier.translateY8(): Modifier =
     composed {
         val step = twSpacing.scale8
         graphicsLayer { translationY = step.toPx() }
     }
-
 
 fun Modifier.translateYNeg1(): Modifier =
     composed {
@@ -219,13 +207,11 @@ fun Modifier.translateYNeg1(): Modifier =
         graphicsLayer { translationY = -step.toPx() }
     }
 
-
 fun Modifier.translateYNeg2(): Modifier =
     composed {
         val step = twSpacing.scale2
         graphicsLayer { translationY = -step.toPx() }
     }
-
 
 fun Modifier.translateYNeg4(): Modifier =
     composed {
@@ -233,10 +219,8 @@ fun Modifier.translateYNeg4(): Modifier =
         graphicsLayer { translationY = -step.toPx() }
     }
 
-
 fun Modifier.translateYNeg8(): Modifier =
     composed {
         val step = twSpacing.scale8
         graphicsLayer { translationY = -step.toPx() }
     }
-

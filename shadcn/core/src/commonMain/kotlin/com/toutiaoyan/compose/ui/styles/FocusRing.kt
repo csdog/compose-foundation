@@ -37,8 +37,7 @@ import com.toutiaoyan.compose.tailwind.style.ringShadow
 fun ThemeData.focusRingShadow(color: Color = colors.ring): Shadow =
     ringShadow(color = color.copy(alpha = ring.opacity), width = ring.width + ring.offset)
 
-fun RememberThemeScope.focusRingShadow(color: Color = colors.ring): Shadow =
-    theme.focusRingShadow(color)
+fun RememberThemeScope.focusRingShadow(color: Color = colors.ring): Shadow = theme.focusRingShadow(color)
 
 /**
  * Sets [shape] unconditionally *and* rings it on focus, in one call -- the fix for a real bug

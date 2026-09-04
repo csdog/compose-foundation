@@ -23,7 +23,6 @@ import com.toutiaoyan.compose.ui.theme.LocalTextDecoration
 import com.toutiaoyan.compose.ui.theme.Theme
 import kotlin.jvm.JvmName
 
-
 /**
  * Usage:
  * ```
@@ -184,4 +183,3 @@ private fun TextImpl(
         )
     }
 }
-

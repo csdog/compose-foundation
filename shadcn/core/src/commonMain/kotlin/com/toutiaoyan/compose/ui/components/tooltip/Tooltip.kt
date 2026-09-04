@@ -189,7 +189,10 @@ fun Tooltip(
     val resolvedSkip = skipDelayDuration ?: skipDelayMillis ?: provider?.skipDelayMillis ?: 0
     val skipDelay =
         resolvedSkip > 0 &&
-            (provider?.lastCloseMark ?: lastCloseMark)?.elapsedNow()?.inWholeMilliseconds?.let { it < resolvedSkip } == true
+            (provider?.lastCloseMark ?: lastCloseMark)
+                ?.elapsedNow()
+                ?.inWholeMilliseconds
+                ?.let { it < resolvedSkip } == true
     val effectiveDelay = if (skipDelay) 0 else resolvedDelay
     var delayedOpen by remember { mutableStateOf(false) }
     if (effectiveDelay > 0) {

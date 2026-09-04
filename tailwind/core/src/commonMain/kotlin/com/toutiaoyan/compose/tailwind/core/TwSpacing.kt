@@ -65,11 +65,9 @@ inline val Int.spacing: SpacingUnit
     get() = SpacingUnit(this.toFloat())
 
 /** Convert with an explicit step (defaults / object init / tests). */
-fun SpacingUnit.toDp(unitSpacing: Float = DefaultUnitSpacing): Dp =
-    (value * unitSpacing).dp
+fun SpacingUnit.toDp(unitSpacing: Float = DefaultUnitSpacing): Dp = (value * unitSpacing).dp
 
-fun SpacingUnit.toSp(unitSpacing: Float = DefaultUnitSpacing): TextUnit =
-    (value * unitSpacing).sp
+fun SpacingUnit.toSp(unitSpacing: Float = DefaultUnitSpacing): TextUnit = (value * unitSpacing).sp
 
 /** Theme-aware dp (`LocalUnitSpacing`). Prefer this in `@Composable` call sites. */
 val SpacingUnit.dp: Dp
@@ -85,7 +83,6 @@ fun StyleScope.dp(unit: SpacingUnit): Dp = unit.toDp(LocalUnitSpacing.currentVal
 
 @OptIn(ExperimentalFoundationStyleApi::class)
 fun StyleScope.sp(unit: SpacingUnit): TextUnit = unit.toSp(LocalUnitSpacing.currentValue)
-
 
 /**
  * Tailwind spacing scale (`scale4` == Tailwind `4` == `1rem` at default unit) plus optional
@@ -225,7 +222,6 @@ data class TwSpacingScale(
                 xl3 = xl3,
             )
 
-
         /** Default Tailwind-aligned scale (no theme override). */
         val Default: TwSpacingScale = fromUnit()
     }
@@ -245,4 +241,3 @@ val twSpacing: TwSpacingScale
 @OptIn(ExperimentalFoundationStyleApi::class)
 val StyleScope.twSpacing: TwSpacingScale
     get() = LocalTwSpacing.currentValue
-

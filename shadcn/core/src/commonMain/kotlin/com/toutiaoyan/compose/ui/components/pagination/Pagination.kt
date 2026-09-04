@@ -157,6 +157,7 @@ fun Pagination(
 
 private sealed interface PaginationToken {
     data class Page(val page: Int) : PaginationToken
+
     data object Ellipsis : PaginationToken
 }
 
@@ -265,7 +266,12 @@ fun PaginationLink(
     val styleState = rememberUpdatedStyleState(interactionSource)
     val pressStyle = rememberPressMotionStyle()
     val touchTargetStyle = rememberMinTouchTargetStyle()
-    val variantStyle = if (resolvedActive) ButtonVariant.Outline.rememberStyle() else ButtonVariant.Ghost.rememberStyle()
+    val variantStyle =
+        if (resolvedActive) {
+            ButtonVariant.Outline.rememberStyle()
+        } else {
+            ButtonVariant.Ghost.rememberStyle()
+        }
     Box(
         modifier =
             modifier
@@ -400,9 +406,7 @@ fun PaginationNext(
 
 /** Ellipsis gap between page ranges. Matches shadcn's `PaginationEllipsis`. */
 @Composable
-fun PaginationEllipsis(
-    modifier: Modifier = Modifier,
-) {
+fun PaginationEllipsis(modifier: Modifier = Modifier) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Box(
         modifier =

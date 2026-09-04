@@ -1,8 +1,7 @@
 @file:OptIn(ExperimentalFoundationStyleApi::class)
+
 package com.toutiaoyan.compose.ui.components.field
 
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
 import androidx.compose.runtime.Composable

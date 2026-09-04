@@ -528,7 +528,10 @@ val sheetDoc =
                                 showCloseButton = true,
                                 closeAriaLabel = "Dismiss sheet",
                             ) {
-                                SheetHeader("Notice", description = "The built-in close button has a custom accessible name.")
+                                SheetHeader(
+                                    "Notice",
+                                    description = "The built-in close button has a custom accessible name.",
+                                )
                             }
                         }
                     },
@@ -556,7 +559,10 @@ val sheetDoc =
                                 showCloseButton = true,
                                 closeAriaLabel = "Close",
                             ) {
-                                SheetHeader("Notice", description = "The built-in close button uses the default accessible name.")
+                                SheetHeader(
+                                    "Notice",
+                                    description = "The built-in close button uses the default accessible name.",
+                                )
                             }
                         }
                     },

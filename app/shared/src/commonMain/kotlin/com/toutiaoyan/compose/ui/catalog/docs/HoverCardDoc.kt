@@ -740,22 +740,27 @@ val hoverCardDoc =
 private fun HoverCardPreview() {
     HoverCardProvider {
         HoverCard {
-                            HoverCardTrigger("@shadcn")
-        HoverCardContent {
-            Row(modifier = Modifier.width(240.dp)) {
-                Avatar("SC")
-                Column(
-                    modifier = Modifier.padding(start = twSpacing.sm),
-                    verticalArrangement = Arrangement.spacedBy(twSpacing.xs),
-                ) {
-                    Text(variant = TextVariant.LabelSmall) { "@shadcn" }
-                    Text(variant = TextVariant.BodySmall) { "The React Framework – created and maintained by @vercel." }
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(variant = TextVariant.BodySmall, textStyle = TextColors.Muted) { "Joined December 2021" }
+            HoverCardTrigger("@shadcn")
+            HoverCardContent {
+                Row(modifier = Modifier.width(240.dp)) {
+                    Avatar("SC")
+                    Column(
+                        modifier = Modifier.padding(start = twSpacing.sm),
+                        verticalArrangement = Arrangement.spacedBy(twSpacing.xs),
+                    ) {
+                        Text(variant = TextVariant.LabelSmall) { "@shadcn" }
+                        Text(
+                            variant = TextVariant.BodySmall,
+                        ) { "The React Framework – created and maintained by @vercel." }
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                variant = TextVariant.BodySmall,
+                                textStyle = TextColors.Muted,
+                            ) { "Joined December 2021" }
+                        }
                     }
                 }
             }
-        }
         }
     }
 }

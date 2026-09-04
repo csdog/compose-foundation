@@ -269,9 +269,7 @@ fun CollapsibleScope.CollapsibleTrigger(
  * `CollapsibleHeader`. Layout-passthrough so existing screenshots stay unchanged.
  */
 @Composable
-internal fun CollapsibleScope.CollapsibleHeader(
-    content: @Composable CollapsibleScope.() -> Unit,
-) {
+internal fun CollapsibleScope.CollapsibleHeader(content: @Composable CollapsibleScope.() -> Unit) {
     content()
 }
 

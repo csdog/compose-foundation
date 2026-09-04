@@ -263,7 +263,7 @@ fun ItemDescription(
         textStyle = TextColors.Muted,
         style = style,
         maxLines = 2,
-        modifier = modifier.styleable(styleState, style)
+        modifier = modifier.styleable(styleState, style),
     ) { text }
 }
 

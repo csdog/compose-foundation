@@ -1,8 +1,8 @@
 @file:OptIn(ExperimentalFoundationStyleApi::class)
+
 package com.toutiaoyan.compose.ui.components.carousel
 
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
 import androidx.compose.runtime.Composable
@@ -20,4 +20,3 @@ fun rememberCarouselDotStyle(active: Boolean): Style =
             background(if (active) colors.primary else colors.border)
         }
     }
-

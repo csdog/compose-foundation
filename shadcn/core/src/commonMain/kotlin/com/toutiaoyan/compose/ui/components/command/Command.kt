@@ -78,7 +78,10 @@ internal class CommandController(
     var onValueChange: ((String) -> Unit)? = null
     val items = mutableStateListOf<CommandNavItem>()
 
-    fun matches(value: String, keywords: List<String> = emptyList()): Boolean {
+    fun matches(
+        value: String,
+        keywords: List<String> = emptyList(),
+    ): Boolean {
         if (!shouldFilter || query.isBlank()) return true
         if (filter(query, value)) return true
         return keywords.any { filter(query, it) }
@@ -116,7 +119,10 @@ internal class CommandController(
     }
 }
 
-private fun handleCommandKey(ctrl: CommandController, event: KeyEvent): Boolean {
+private fun handleCommandKey(
+    ctrl: CommandController,
+    event: KeyEvent,
+): Boolean {
     if (event.type != KeyEventType.KeyDown) return false
     return when (event.key) {
         Key.DirectionDown -> {
@@ -490,7 +496,7 @@ fun CommandItem(
     val itemId = remember { Any() }
     DisposableEffect(matches, resolvedEnabled, onSelect) {
         if (matches) ctrl.visibleCount++
-            val nav =
+        val nav =
             if (matches) {
                 CommandNavItem(itemId, resolvedValue, resolvedEnabled, onSelect).also { ctrl.items.add(it) }
             } else {

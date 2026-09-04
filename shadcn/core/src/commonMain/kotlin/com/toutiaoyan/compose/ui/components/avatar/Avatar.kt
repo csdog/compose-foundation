@@ -168,7 +168,9 @@ fun AvatarFallback(
     val resolvedDelay = delayMs ?: delayMillis
     val loadState = LocalAvatarImageLoadState.current?.state ?: AvatarImageLoadState.Idle
     if (loadState == AvatarImageLoadState.Success) return
-    var delayElapsed by remember(resolvedDelay, loadState) { mutableStateOf(resolvedDelay <= 0 || loadState != AvatarImageLoadState.Loading) }
+    var delayElapsed by remember(resolvedDelay, loadState) {
+        mutableStateOf(resolvedDelay <= 0 || loadState != AvatarImageLoadState.Loading)
+    }
     LaunchedEffect(loadState, resolvedDelay) {
         if (resolvedDelay <= 0 || loadState != AvatarImageLoadState.Loading) {
             delayElapsed = true

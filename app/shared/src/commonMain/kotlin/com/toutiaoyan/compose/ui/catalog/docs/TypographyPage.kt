@@ -35,7 +35,7 @@ private fun TypographyContent() {
         Text(variant = TextVariant.TitleLarge) { "Typography" }
         GuideParagraph(
             "Text renders the TextTypography type scale. Every style below maps to a " +
-                    "Typography token, so changing the token updates every screen at once.",
+                "Typography token, so changing the token updates every screen at once.",
         )
         Column(verticalArrangement = Arrangement.spacedBy(twSpacing.sm)) {
             Text(variant = TextVariant.DisplayLarge) { "Display Large" }
@@ -51,7 +51,8 @@ private fun TypographyContent() {
         }
         GuideHeading("Muted text")
         GuideParagraph(
-            "Use textStyle = TextStyles.Muted for secondary/supporting text -- it reads mutedForeground instead of foreground:",
+            "Use textStyle = TextStyles.Muted for secondary/supporting text -- it reads " +
+                "mutedForeground instead of foreground:",
         )
         Text(variant = TextVariant.BodyMedium, textStyle = TextColors.Muted) { "This is muted body text" }
     }

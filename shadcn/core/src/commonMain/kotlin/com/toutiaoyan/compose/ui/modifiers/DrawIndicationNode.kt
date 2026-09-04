@@ -8,8 +8,6 @@ import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.drawscope.ContentDrawScope
-import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.node.DrawModifierNode
 import androidx.compose.ui.node.invalidateDraw
 import kotlinx.coroutines.launch
@@ -40,7 +38,7 @@ internal abstract class DrawIndicationNode(
 
                     is PressInteraction.Release,
                     is PressInteraction.Cancel,
-                        ->
+                    ->
                         launch {
                             progress.animateTo(0f, releaseSpec)
                         }
@@ -52,4 +50,3 @@ internal abstract class DrawIndicationNode(
         }
     }
 }
-

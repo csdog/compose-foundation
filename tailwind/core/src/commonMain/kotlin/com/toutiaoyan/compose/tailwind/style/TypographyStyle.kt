@@ -1,6 +1,5 @@
 package com.toutiaoyan.compose.tailwind.style
 
-import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.StyleScope
 import com.toutiaoyan.compose.tailwind.core.TwFontFamily
 import com.toutiaoyan.compose.tailwind.core.TwFontSize
@@ -19,12 +18,10 @@ fun StyleScope.textXs() {
     lineHeight(TwLineHeight.xs)
 }
 
-
 fun StyleScope.textSm() {
     fontSize(TwFontSize.sm)
     lineHeight(TwLineHeight.sm)
 }
-
 
 fun StyleScope.textBase() {
     fontSize(TwFontSize.base)
@@ -37,60 +34,50 @@ fun StyleScope.textMd() {
     textBase()
 }
 
-
 fun StyleScope.textLg() {
     fontSize(TwFontSize.lg)
     lineHeight(TwLineHeight.lg)
 }
-
 
 fun StyleScope.textXl() {
     fontSize(TwFontSize.xl)
     lineHeight(TwLineHeight.xl)
 }
 
-
 fun StyleScope.textXl2() {
     fontSize(TwFontSize.xl2)
     lineHeight(TwLineHeight.xl2)
 }
-
 
 fun StyleScope.textXl3() {
     fontSize(TwFontSize.xl3)
     lineHeight(TwLineHeight.xl3)
 }
 
-
 fun StyleScope.textXl4() {
     fontSize(TwFontSize.xl4)
     lineHeight(TwLineHeight.xl4)
 }
-
 
 fun StyleScope.textXl5() {
     fontSize(TwFontSize.xl5)
     lineHeight(TwLineHeight.xl5)
 }
 
-
 fun StyleScope.textXl6() {
     fontSize(TwFontSize.xl6)
     lineHeight(TwLineHeight.xl6)
 }
-
 
 fun StyleScope.textXl7() {
     fontSize(TwFontSize.xl7)
     lineHeight(TwLineHeight.xl7)
 }
 
-
 fun StyleScope.textXl8() {
     fontSize(TwFontSize.xl8)
     lineHeight(TwLineHeight.xl8)
 }
-
 
 fun StyleScope.textXl9() {
     fontSize(TwFontSize.xl9)
@@ -106,11 +93,9 @@ fun StyleScope.fontSizeXs() {
     fontSize(TwFontSize.xs)
 }
 
-
 fun StyleScope.fontSizeSm() {
     fontSize(TwFontSize.sm)
 }
-
 
 fun StyleScope.fontSizeBase() {
     fontSize(TwFontSize.base)
@@ -122,51 +107,41 @@ fun StyleScope.fontSizeMd() {
     fontSizeBase()
 }
 
-
 fun StyleScope.fontSizeLg() {
     fontSize(TwFontSize.lg)
 }
-
 
 fun StyleScope.fontSizeXl() {
     fontSize(TwFontSize.xl)
 }
 
-
 fun StyleScope.fontSizeXl2() {
     fontSize(TwFontSize.xl2)
 }
-
 
 fun StyleScope.fontSizeXl3() {
     fontSize(TwFontSize.xl3)
 }
 
-
 fun StyleScope.fontSizeXl4() {
     fontSize(TwFontSize.xl4)
 }
-
 
 fun StyleScope.fontSizeXl5() {
     fontSize(TwFontSize.xl5)
 }
 
-
 fun StyleScope.fontSizeXl6() {
     fontSize(TwFontSize.xl6)
 }
-
 
 fun StyleScope.fontSizeXl7() {
     fontSize(TwFontSize.xl7)
 }
 
-
 fun StyleScope.fontSizeXl8() {
     fontSize(TwFontSize.xl8)
 }
-
 
 fun StyleScope.fontSizeXl9() {
     fontSize(TwFontSize.xl9)
@@ -178,61 +153,49 @@ fun StyleScope.lineHeightXs() {
     lineHeight(TwLineHeight.xs)
 }
 
-
 fun StyleScope.lineHeightSm() {
     lineHeight(TwLineHeight.sm)
 }
-
 
 fun StyleScope.lineHeightBase() {
     lineHeight(TwLineHeight.base)
 }
 
-
 fun StyleScope.lineHeightLg() {
     lineHeight(TwLineHeight.lg)
 }
-
 
 fun StyleScope.lineHeightXl() {
     lineHeight(TwLineHeight.xl)
 }
 
-
 fun StyleScope.lineHeightXl2() {
     lineHeight(TwLineHeight.xl2)
 }
-
 
 fun StyleScope.lineHeightXl3() {
     lineHeight(TwLineHeight.xl3)
 }
 
-
 fun StyleScope.lineHeightXl4() {
     lineHeight(TwLineHeight.xl4)
 }
-
 
 fun StyleScope.lineHeightXl5() {
     lineHeight(TwLineHeight.xl5)
 }
 
-
 fun StyleScope.lineHeightXl6() {
     lineHeight(TwLineHeight.xl6)
 }
-
 
 fun StyleScope.lineHeightXl7() {
     lineHeight(TwLineHeight.xl7)
 }
 
-
 fun StyleScope.lineHeightXl8() {
     lineHeight(TwLineHeight.xl8)
 }
-
 
 fun StyleScope.lineHeightXl9() {
     lineHeight(TwLineHeight.xl9)
@@ -244,11 +207,9 @@ fun StyleScope.fontWeightNormal() {
     fontWeight(TwFontWeight.normal)
 }
 
-
 fun StyleScope.fontWeightMedium() {
     fontWeight(TwFontWeight.medium)
 }
-
 
 fun StyleScope.fontWeightBold() {
     fontWeight(TwFontWeight.bold)
@@ -260,7 +221,6 @@ fun StyleScope.letterSpacingTight() {
     letterSpacing(TwTracking.tight)
 }
 
-
 fun StyleScope.letterSpacingWide() {
     letterSpacing(TwTracking.wide)
 }
@@ -271,11 +231,9 @@ fun StyleScope.fontFamilySans() {
     fontFamily(TwFontFamily.sans)
 }
 
-
 fun StyleScope.fontFamilySerif() {
     fontFamily(TwFontFamily.serif)
 }
-
 
 fun StyleScope.fontFamilyMono() {
     fontFamily(TwFontFamily.mono)

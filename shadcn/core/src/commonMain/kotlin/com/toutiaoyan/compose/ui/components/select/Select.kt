@@ -171,7 +171,7 @@ fun <T> Select(
             invalid,
             required,
             resolvedDisabled,
-            modal
+            modal,
         ) {
             SelectController(
                 displayText = value?.let(label),
@@ -255,9 +255,7 @@ fun SelectScope.SelectTrigger(
 
 /** Chevron inside [SelectTrigger]. Official does not export SelectIcon. */
 @Composable
-internal fun SelectIcon(
-    modifier: Modifier = Modifier,
-) {
+internal fun SelectIcon(modifier: Modifier = Modifier) {
     Icon(
         ChevronRight,
         tint = currentTheme.colors.mutedForeground,
@@ -335,11 +333,14 @@ fun SelectScope.SelectContent(
 ) {
     val ctrl = selectController()
     val scrollState = rememberScrollState()
+
     @Suppress("DEPRECATION")
     val itemAligned =
         alignItemWithTrigger
-            ?: (position == SelectContentPosition.AlignItemWithTrigger ||
-                position == SelectContentPosition.ItemAligned)
+            ?: (
+                position == SelectContentPosition.AlignItemWithTrigger ||
+                    position == SelectContentPosition.ItemAligned
+            )
     // Base keeps sideOffset=4 even when alignItemWithTrigger is true.
     val resolvedEnter = if (itemAligned) EnterTransition.None else enter
     val resolvedExit = if (itemAligned) ExitTransition.None else exit
@@ -398,9 +399,7 @@ internal fun SelectViewport(
  * `SelectScrollUpButton`. Always composed by [SelectContent].
  */
 @Composable
-fun SelectContentScope.SelectScrollUpButton(
-    modifier: Modifier = Modifier,
-) {
+fun SelectContentScope.SelectScrollUpButton(modifier: Modifier = Modifier) {
     val scrollState = LocalSelectScroll.current
     val scope = rememberCoroutineScope()
     Box(
@@ -426,9 +425,7 @@ fun SelectContentScope.SelectScrollUpButton(
  * `SelectScrollDownButton`. Always composed by [SelectContent].
  */
 @Composable
-fun SelectContentScope.SelectScrollDownButton(
-    modifier: Modifier = Modifier,
-) {
+fun SelectContentScope.SelectScrollDownButton(modifier: Modifier = Modifier) {
     val scrollState = LocalSelectScroll.current
     val scope = rememberCoroutineScope()
     Box(
@@ -550,9 +547,10 @@ internal fun RowScope.SelectItemText(
 /** Check mark slot of a [SelectItem]. Official does not export SelectItemIndicator. */
 @Composable
 internal fun SelectItemIndicator(
-    selected: Boolean = checkNotNull(LocalSelectItemSelected.current) {
-        "SelectItemIndicator must be used inside SelectItem, or pass selected="
-    },
+    selected: Boolean =
+        checkNotNull(LocalSelectItemSelected.current) {
+            "SelectItemIndicator must be used inside SelectItem, or pass selected="
+        },
     modifier: Modifier = Modifier,
     tint: Color = LocalContentColor.current,
 ) {

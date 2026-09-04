@@ -363,7 +363,11 @@ val inputGroupDoc =
                     preview = {
                         var note by remember { mutableStateOf("") }
                         InputGroup {
-                            InputGroupTextarea(value = note, onValueChange = { note = it }, placeholder = "Write a note...")
+                            InputGroupTextarea(
+                                value = note,
+                                onValueChange = { note = it },
+                                placeholder = "Write a note...",
+                            )
                         }
                     },
                 ),

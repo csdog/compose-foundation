@@ -52,7 +52,11 @@ val accordionDoc =
                     preview = {
                         var value by remember { mutableStateOf(setOf("item-1")) }
                         Accordion(type = AccordionType.Single, value = value, onValueChange = { value = it }) {
-                            AccordionItem("item-1", "Is it accessible?", "Yes. It adheres to the WAI-ARIA design pattern.")
+                            AccordionItem(
+                                "item-1",
+                                "Is it accessible?",
+                                "Yes. It adheres to the WAI-ARIA design pattern.",
+                            )
                             AccordionItem("item-2", "Is it styled?", "Yes. It comes with default styles.")
                             AccordionItem("item-3", "Is it animated?", "Yes. It's animated by default.")
                         }
@@ -89,7 +93,11 @@ val accordionDoc =
                                 DocIcon(Lucide.ChevronDown, modifier = Modifier.rotate(rotation))
                             },
                         ) {
-                            AccordionItem("item-1", "Is it accessible?", "Yes. It adheres to the WAI-ARIA design pattern.")
+                            AccordionItem(
+                                "item-1",
+                                "Is it accessible?",
+                                "Yes. It adheres to the WAI-ARIA design pattern.",
+                            )
                             AccordionItem("item-2", "Is it styled?", "Yes. It comes with default styles.")
                         }
                     },
@@ -108,7 +116,11 @@ val accordionDoc =
                     preview = {
                         var value by remember { mutableStateOf(setOf("item-1", "item-2")) }
                         Accordion(type = AccordionType.Multiple, value = value, onValueChange = { value = it }) {
-                            AccordionItem("item-1", "Is it accessible?", "Yes. It adheres to the WAI-ARIA design pattern.")
+                            AccordionItem(
+                                "item-1",
+                                "Is it accessible?",
+                                "Yes. It adheres to the WAI-ARIA design pattern.",
+                            )
                             AccordionItem("item-2", "Is it styled?", "Yes. It comes with default styles.")
                             AccordionItem("item-3", "Is it animated?", "Yes. It's animated by default.")
                         }
@@ -127,7 +139,11 @@ val accordionDoc =
                     preview = {
                         var value by remember { mutableStateOf(setOf("item-1")) }
                         Accordion(type = AccordionType.Single, value = value, onValueChange = { value = it }) {
-                            AccordionItem("item-1", "Is it accessible?", "Yes. It adheres to the WAI-ARIA design pattern.")
+                            AccordionItem(
+                                "item-1",
+                                "Is it accessible?",
+                                "Yes. It adheres to the WAI-ARIA design pattern.",
+                            )
                             AccordionItem("item-2", "Is it styled?", "Yes. It comes with default styles.")
                         }
                     },
@@ -145,7 +161,11 @@ val accordionDoc =
                     preview = {
                         var value by remember { mutableStateOf(setOf("item-1")) }
                         Accordion(type = AccordionType.Single, value = value, onValueChange = { value = it }) {
-                            AccordionItem("item-1", "Is it accessible?", "Yes. It adheres to the WAI-ARIA design pattern.")
+                            AccordionItem(
+                                "item-1",
+                                "Is it accessible?",
+                                "Yes. It adheres to the WAI-ARIA design pattern.",
+                            )
                             AccordionItem("item-2", "Is it styled?", "Yes. It comes with default styles.")
                         }
                     },
@@ -173,7 +193,11 @@ val accordionDoc =
                             value = value,
                             onValueChange = { value = it },
                         ) {
-                            AccordionItem("item-1", "Is it accessible?", "Yes. It adheres to the WAI-ARIA design pattern.")
+                            AccordionItem(
+                                "item-1",
+                                "Is it accessible?",
+                                "Yes. It adheres to the WAI-ARIA design pattern.",
+                            )
                             AccordionItem("item-2", "Is it styled?", "Yes. It comes with default styles.")
                         }
                     },
@@ -201,7 +225,11 @@ val accordionDoc =
                             value = value,
                             onValueChange = { value = it },
                         ) {
-                            AccordionItem("item-1", "Is it accessible?", "Yes. It adheres to the WAI-ARIA design pattern.")
+                            AccordionItem(
+                                "item-1",
+                                "Is it accessible?",
+                                "Yes. It adheres to the WAI-ARIA design pattern.",
+                            )
                             AccordionItem("item-2", "Is it styled?", "Yes. It comes with default styles.")
                         }
                     },
@@ -229,7 +257,11 @@ val accordionDoc =
                             value = value,
                             onValueChange = { value = it },
                         ) {
-                            AccordionItem("item-1", "Is it accessible?", "Yes. It adheres to the WAI-ARIA design pattern.")
+                            AccordionItem(
+                                "item-1",
+                                "Is it accessible?",
+                                "Yes. It adheres to the WAI-ARIA design pattern.",
+                            )
                             AccordionItem("item-2", "Is it styled?", "Yes. It comes with default styles.")
                         }
                     },
@@ -257,7 +289,11 @@ val accordionDoc =
                             value = value,
                             onValueChange = { value = it },
                         ) {
-                            AccordionItem("item-1", "Is it accessible?", "Yes. It adheres to the WAI-ARIA design pattern.")
+                            AccordionItem(
+                                "item-1",
+                                "Is it accessible?",
+                                "Yes. It adheres to the WAI-ARIA design pattern.",
+                            )
                             AccordionItem("item-2", "Is it styled?", "Yes. It comes with default styles.")
                         }
                     },
@@ -280,7 +316,11 @@ val accordionDoc =
                     preview = {
                         var value by remember { mutableStateOf(setOf("item-1")) }
                         Accordion(type = AccordionType.Single, value = value, onValueChange = { value = it }) {
-                            AccordionItem("item-1", "Is it accessible?", "Yes. It adheres to the WAI-ARIA design pattern.")
+                            AccordionItem(
+                                "item-1",
+                                "Is it accessible?",
+                                "Yes. It adheres to the WAI-ARIA design pattern.",
+                            )
                             AccordionItem(
                                 "item-2",
                                 "Is it disabled?",
@@ -306,7 +346,11 @@ val accordionDoc =
                         """.trimIndent(),
                     preview = {
                         Accordion(defaultValue = "item-1") {
-                            AccordionItem("item-1", "Is it accessible?", "Yes. It adheres to the WAI-ARIA design pattern.")
+                            AccordionItem(
+                                "item-1",
+                                "Is it accessible?",
+                                "Yes. It adheres to the WAI-ARIA design pattern.",
+                            )
                             AccordionItem(
                                 "item-2",
                                 "Is it styled?",
@@ -327,7 +371,11 @@ val accordionDoc =
                         """.trimIndent(),
                     preview = {
                         Accordion(defaultValue = "item-1") {
-                            AccordionItem("item-1", "Is it accessible?", "Yes. It adheres to the WAI-ARIA design pattern.")
+                            AccordionItem(
+                                "item-1",
+                                "Is it accessible?",
+                                "Yes. It adheres to the WAI-ARIA design pattern.",
+                            )
                             AccordionItem("item-2", "Is it styled?", "Yes. It comes with default styles.")
                         }
                     },
@@ -561,7 +609,11 @@ val accordionDoc =
                     preview = {
                         var value by remember { mutableStateOf("item-1") }
                         Accordion(value = value, onValueChange = { value = it }) {
-                            AccordionItem("item-1", "Is it accessible?", "Yes. It adheres to the WAI-ARIA design pattern.")
+                            AccordionItem(
+                                "item-1",
+                                "Is it accessible?",
+                                "Yes. It adheres to the WAI-ARIA design pattern.",
+                            )
                             AccordionItem("item-2", "Is it styled?", "Yes. It comes with default styles.")
                         }
                     },
@@ -580,7 +632,11 @@ val accordionDoc =
                     preview = {
                         var value by remember { mutableStateOf(setOf("item-1", "item-2")) }
                         Accordion(multiple = true, value = value, onValueChange = { value = it }) {
-                            AccordionItem("item-1", "Is it accessible?", "Yes. It adheres to the WAI-ARIA design pattern.")
+                            AccordionItem(
+                                "item-1",
+                                "Is it accessible?",
+                                "Yes. It adheres to the WAI-ARIA design pattern.",
+                            )
                             AccordionItem("item-2", "Is it styled?", "Yes. It comes with default styles.")
                             AccordionItem("item-3", "Is it animated?", "Yes. It's animated by default.")
                         }
@@ -718,7 +774,11 @@ val accordionDoc =
                         """.trimIndent(),
                     preview = {
                         Accordion {
-                            AccordionItem("item-1", "Is it accessible?", "Yes. It adheres to the WAI-ARIA design pattern.")
+                            AccordionItem(
+                                "item-1",
+                                "Is it accessible?",
+                                "Yes. It adheres to the WAI-ARIA design pattern.",
+                            )
                             AccordionItem("item-2", "Is it styled?", "Yes. It comes with default styles.")
                             AccordionItem("item-3", "Is it animated?", "Yes. It's animated by default.")
                         }
@@ -754,7 +814,11 @@ val accordionDoc =
                         """.trimIndent(),
                     preview = {
                         Accordion {
-                            AccordionItem("item-1", "Is it accessible?", "Yes. It adheres to the WAI-ARIA design pattern.")
+                            AccordionItem(
+                                "item-1",
+                                "Is it accessible?",
+                                "Yes. It adheres to the WAI-ARIA design pattern.",
+                            )
                         }
                     },
                 ),

@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalFoundationStyleApi::class)
+
 package com.toutiaoyan.compose.ui.components.chart
 
 import androidx.compose.foundation.shape.CircleShape
@@ -15,8 +16,7 @@ import com.toutiaoyan.compose.ui.utils.rememberTheme
 enum class ChartIndicator { Dot, Line, Dashed }
 
 @Composable
-fun rememberChartLegendSwatchStyle(color: Color): Style =
-    rememberChartIndicatorStyle(color, ChartIndicator.Dot)
+fun rememberChartLegendSwatchStyle(color: Color): Style = rememberChartIndicatorStyle(color, ChartIndicator.Dot)
 
 @Composable
 fun rememberChartIndicatorStyle(

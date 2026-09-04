@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextVariant
-import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.tailwind.core.twSpacing
 
 val themingPage =

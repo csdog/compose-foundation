@@ -78,9 +78,7 @@ fun Breadcrumb(
  * row (no extra spacing) so existing flat call sites keep the same layout.
  */
 @Composable
-fun RowScope.BreadcrumbList(
-    content: @Composable RowScope.() -> Unit,
-) {
+fun RowScope.BreadcrumbList(content: @Composable RowScope.() -> Unit) {
     content()
 }
 
@@ -89,9 +87,7 @@ fun RowScope.BreadcrumbList(
  * [Breadcrumb], not on each item.
  */
 @Composable
-fun RowScope.BreadcrumbItem(
-    content: @Composable RowScope.() -> Unit,
-) {
+fun RowScope.BreadcrumbItem(content: @Composable RowScope.() -> Unit) {
     content()
 }
 
@@ -186,13 +182,15 @@ fun BreadcrumbPage(
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Text(
-        variant = TextVariant.BodyMedium, modifier =
-        modifier
-            .semantics {
-                contentDescription = text
-                selected = true
-            }
-            .styleable(styleState, style)) { text }
+        variant = TextVariant.BodyMedium,
+        modifier =
+            modifier
+                .semantics {
+                    contentDescription = text
+                    selected = true
+                }
+                .styleable(styleState, style),
+    ) { text }
 }
 
 @Composable

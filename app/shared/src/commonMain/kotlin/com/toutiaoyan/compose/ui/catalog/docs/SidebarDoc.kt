@@ -644,7 +644,11 @@ val sidebarDoc =
                         """
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -662,7 +666,11 @@ val sidebarDoc =
                     preview = {
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -684,7 +692,11 @@ val sidebarDoc =
                         """
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -702,7 +714,11 @@ val sidebarDoc =
                     preview = {
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -831,8 +847,16 @@ val sidebarDoc =
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
                                         SidebarMenuItem("projects", "Projects")
                                         SidebarMenuSub {
-                                            SidebarMenuSubButton("Overview", onClick = { active = "overview" }, isActive = active == "overview")
-                                            SidebarMenuSubButton("Settings", onClick = { active = "settings" }, isActive = active == "settings")
+                                            SidebarMenuSubButton(
+                                                "Overview",
+                                                onClick = { active = "overview" },
+                                                isActive = active == "overview",
+                                            )
+                                            SidebarMenuSubButton(
+                                                "Settings",
+                                                onClick = { active = "settings" },
+                                                isActive = active == "settings",
+                                            )
                                         }
                                     }
                                 }
@@ -885,7 +909,11 @@ val sidebarDoc =
                         """
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar(ariaLabel = "Application") {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -902,7 +930,11 @@ val sidebarDoc =
                     preview = {
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar(ariaLabel = "Application") {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -923,7 +955,11 @@ val sidebarDoc =
                         """
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar(ariaLabel = null) {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -940,7 +976,11 @@ val sidebarDoc =
                     preview = {
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar(ariaLabel = null) {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -961,7 +1001,11 @@ val sidebarDoc =
                         """
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -979,7 +1023,11 @@ val sidebarDoc =
                     preview = {
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -1001,7 +1049,11 @@ val sidebarDoc =
                         """
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarHeader {
                                     Text { "Acme Inc" }
@@ -1020,7 +1072,11 @@ val sidebarDoc =
                     preview = {
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarHeader {
                                     Text { "Acme Inc" }
@@ -1043,7 +1099,11 @@ val sidebarDoc =
                         """
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -1062,7 +1122,11 @@ val sidebarDoc =
                     preview = {
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -1085,7 +1149,11 @@ val sidebarDoc =
                         """
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -1107,7 +1175,11 @@ val sidebarDoc =
                     preview = {
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -1133,7 +1205,11 @@ val sidebarDoc =
                         """
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup {
                                     SidebarGroupLabel("Application")
@@ -1151,7 +1227,11 @@ val sidebarDoc =
                     preview = {
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup {
                                     SidebarGroupLabel("Application")
@@ -1172,7 +1252,11 @@ val sidebarDoc =
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "home", onItemClick = {}) {
@@ -1187,7 +1271,11 @@ val sidebarDoc =
                         """.trimIndent(),
                     preview = {
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "home", onItemClick = {}) {
@@ -1207,7 +1295,11 @@ val sidebarDoc =
                         """
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -1224,7 +1316,11 @@ val sidebarDoc =
                     preview = {
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -1244,7 +1340,11 @@ val sidebarDoc =
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "home", onItemClick = {}) {
@@ -1259,7 +1359,11 @@ val sidebarDoc =
                         """.trimIndent(),
                     preview = {
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "home", onItemClick = {}) {
@@ -1278,7 +1382,11 @@ val sidebarDoc =
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "inbox", onItemClick = {}) {
@@ -1293,7 +1401,11 @@ val sidebarDoc =
                         """.trimIndent(),
                     preview = {
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "inbox", onItemClick = {}) {
@@ -1313,7 +1425,11 @@ val sidebarDoc =
                         """
                         var open by remember { mutableStateOf(true) }
                         var query by remember { mutableStateOf("") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarHeader {
                                     SidebarInput(value = query, onValueChange = { query = it }, placeholder = "Search")
@@ -1332,7 +1448,11 @@ val sidebarDoc =
                     preview = {
                         var open by remember { mutableStateOf(true) }
                         var query by remember { mutableStateOf("") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarHeader {
                                     SidebarInput(value = query, onValueChange = { query = it }, placeholder = "Search")
@@ -1354,7 +1474,11 @@ val sidebarDoc =
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = null, onItemClick = {}) {
@@ -1370,7 +1494,11 @@ val sidebarDoc =
                         """.trimIndent(),
                     preview = {
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = null, onItemClick = {}) {
@@ -1390,7 +1518,11 @@ val sidebarDoc =
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = null, onItemClick = {}) {
@@ -1405,7 +1537,11 @@ val sidebarDoc =
                         """.trimIndent(),
                     preview = {
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = null, onItemClick = {}) {
@@ -1424,7 +1560,11 @@ val sidebarDoc =
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup {
                                     SidebarGroupLabel("Application")
@@ -1442,7 +1582,11 @@ val sidebarDoc =
                         """.trimIndent(),
                     preview = {
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup {
                                     SidebarGroupLabel("Application")
@@ -1464,7 +1608,11 @@ val sidebarDoc =
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "home", onItemClick = {}) {
@@ -1479,7 +1627,11 @@ val sidebarDoc =
                         """.trimIndent(),
                     preview = {
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "home", onItemClick = {}) {
@@ -1498,7 +1650,11 @@ val sidebarDoc =
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "home", onItemClick = {}) {
@@ -1517,7 +1673,11 @@ val sidebarDoc =
                         """.trimIndent(),
                     preview = {
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "home", onItemClick = {}) {
@@ -1540,7 +1700,11 @@ val sidebarDoc =
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "home", onItemClick = {}) {
@@ -1559,7 +1723,11 @@ val sidebarDoc =
                         """.trimIndent(),
                     preview = {
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "home", onItemClick = {}) {
@@ -1582,7 +1750,11 @@ val sidebarDoc =
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "home", onItemClick = {}) {
@@ -1597,7 +1769,11 @@ val sidebarDoc =
                         """.trimIndent(),
                     preview = {
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "home", onItemClick = {}) {
@@ -1616,7 +1792,11 @@ val sidebarDoc =
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "home", onItemClick = {}) {
@@ -1631,7 +1811,11 @@ val sidebarDoc =
                         """.trimIndent(),
                     preview = {
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "home", onItemClick = {}) {
@@ -1650,7 +1834,11 @@ val sidebarDoc =
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "home", onItemClick = {}) {
@@ -1665,7 +1853,11 @@ val sidebarDoc =
                         """.trimIndent(),
                     preview = {
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "home", onItemClick = {}) {
@@ -1684,7 +1876,11 @@ val sidebarDoc =
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "overview", onItemClick = {}) {
@@ -1703,7 +1899,11 @@ val sidebarDoc =
                         """.trimIndent(),
                     preview = {
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "overview", onItemClick = {}) {
@@ -1726,7 +1926,11 @@ val sidebarDoc =
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "home", onItemClick = {}) {
@@ -1744,7 +1948,11 @@ val sidebarDoc =
                         """.trimIndent(),
                     preview = {
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "home", onItemClick = {}) {
@@ -1766,7 +1974,11 @@ val sidebarDoc =
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup {
                                     Row(
@@ -1791,7 +2003,11 @@ val sidebarDoc =
                         """.trimIndent(),
                     preview = {
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup {
                                     Row(
@@ -1821,7 +2037,11 @@ val sidebarDoc =
                         """
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -1838,7 +2058,11 @@ val sidebarDoc =
                     preview = {
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -1859,7 +2083,11 @@ val sidebarDoc =
                         """
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -1875,7 +2103,11 @@ val sidebarDoc =
                     preview = {
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -1895,7 +2127,11 @@ val sidebarDoc =
                         """
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("overview") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -1915,14 +2151,26 @@ val sidebarDoc =
                     preview = {
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("overview") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
                                         SidebarMenuItem("projects", "Projects")
                                         SidebarMenuSub {
-                                            SidebarMenuSubButton("Overview", onClick = { active = "overview" }, isActive = active == "overview")
-                                            SidebarMenuSubButton("Settings", onClick = { active = "settings" }, isActive = active == "settings")
+                                            SidebarMenuSubButton(
+                                                "Overview",
+                                                onClick = { active = "overview" },
+                                                isActive = active == "overview",
+                                            )
+                                            SidebarMenuSubButton(
+                                                "Settings",
+                                                onClick = { active = "settings" },
+                                                isActive = active == "settings",
+                                            )
                                         }
                                     }
                                 }
@@ -1939,7 +2187,11 @@ val sidebarDoc =
                         """
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("overview") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -1969,7 +2221,11 @@ val sidebarDoc =
                     preview = {
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("overview") }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = active, onItemClick = { active = it }) {
@@ -2002,7 +2258,11 @@ val sidebarDoc =
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "projects", onItemClick = {}) {
@@ -2020,7 +2280,11 @@ val sidebarDoc =
                         """.trimIndent(),
                     preview = {
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "projects", onItemClick = {}) {
@@ -2042,7 +2306,11 @@ val sidebarDoc =
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "overview", onItemClick = {}) {
@@ -2061,7 +2329,11 @@ val sidebarDoc =
                         """.trimIndent(),
                     preview = {
                         var open by remember { mutableStateOf(true) }
-                        SidebarProvider(open = open, onOpenChange = { open = it }, modifier = Modifier.height(260.dp)) {
+                        SidebarProvider(
+                            open = open,
+                            onOpenChange = { open = it },
+                            modifier = Modifier.height(260.dp),
+                        ) {
                             Sidebar {
                                 SidebarGroup(label = "Application") {
                                     SidebarMenu(activeId = "overview", onItemClick = {}) {

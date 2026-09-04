@@ -1,6 +1,5 @@
 package com.toutiaoyan.compose.tailwind.style
 
-import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.StyleScope
 
 /**
@@ -21,11 +20,9 @@ fun StyleScope.animateSpin(degrees: Float) {
     rotationZ(degrees)
 }
 
-
 fun StyleScope.animatePulse(pulseAlpha: Float) {
     alpha(pulseAlpha)
 }
-
 
 fun StyleScope.animatePing(
     scale: Float,
@@ -35,7 +32,6 @@ fun StyleScope.animatePing(
     scaleY(scale)
     alpha(alpha)
 }
-
 
 fun StyleScope.animateBounce(
     fraction: Float,

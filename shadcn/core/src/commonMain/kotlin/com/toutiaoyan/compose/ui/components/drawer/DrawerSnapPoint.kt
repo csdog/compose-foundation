@@ -27,8 +27,7 @@ sealed class DrawerSnapPoint {
 
     companion object {
         /** Base UI number rule: `<= 1` → fraction of viewport; `> 1` → CSS px. */
-        fun fromNumber(value: Float): DrawerSnapPoint =
-            if (value <= 1f) Fraction(value) else Absolute(value.dp)
+        fun fromNumber(value: Float): DrawerSnapPoint = if (value <= 1f) Fraction(value) else Absolute(value.dp)
     }
 }
 

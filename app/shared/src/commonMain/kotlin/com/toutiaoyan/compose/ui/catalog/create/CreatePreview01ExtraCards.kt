@@ -97,7 +97,8 @@ fun CreateIndexInvestingCard(modifier: Modifier = Modifier) {
             CardDescription { "A strategy for building wealth over time." }
         }
         Text(modifier = extraCardContent.padding(bottom = twSpacing.lg), textStyle = TextColors.Muted) {
-            "Over time, this smooths out the average cost of your investments. When prices drop, your fixed amount buys more shares. When prices rise, you buy fewer."
+            "Over time, this smooths out the average cost of your investments. " +
+                "When prices drop, your fixed amount buys more shares. When prices rise, you buy fewer."
         }
     }
 }
@@ -145,31 +146,32 @@ fun CreatePreferencesCard(modifier: Modifier = Modifier) {
         }
         FieldGroup(extraCardContent) {
             Field {
-                FieldLabel("Default Currency"); Select(
-                value = "USD — United States Dollar",
-                onValueChange = {},
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                SelectTrigger()
-                SelectContent {
-                    SelectItem("USD — United States Dollar")
-                    SelectItem("EUR — Euro")
-                    SelectItem("GBP — British Pound")
-                    SelectItem("JPY — Japanese Yen")
+                FieldLabel("Default Currency")
+                Select(
+                    value = "USD — United States Dollar",
+                    onValueChange = {},
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    SelectTrigger()
+                    SelectContent {
+                        SelectItem("USD — United States Dollar")
+                        SelectItem("EUR — Euro")
+                        SelectItem("GBP — British Pound")
+                        SelectItem("JPY — Japanese Yen")
+                    }
                 }
-            }
             }
             Separator()
             SettingSwitch(
                 "Public Statistics",
                 "Allow others to see your total stream count and listening activity",
-                publicStatistics
+                publicStatistics,
             ) { publicStatistics = it }
             Separator()
             SettingSwitch(
                 "Email Notifications",
                 "Monthly royalty reports and distribution updates",
-                emailNotifications
+                emailNotifications,
             ) { emailNotifications = it }
         }
         Row(extraCardContent, horizontalArrangement = Arrangement.SpaceBetween) {
@@ -184,11 +186,12 @@ fun CreateSavingsProgressCard(modifier: Modifier = Modifier) {
     Card(modifier) {
         Column(
             extraCardContent.padding(vertical = twSpacing.lg),
-            verticalArrangement = Arrangement.spacedBy(twSpacing.md)
+            verticalArrangement = Arrangement.spacedBy(twSpacing.md),
         ) {
             Column(
-                modifier = Modifier.fillMaxWidth()
-                    .background(currentTheme.colors.muted, RoundedCornerShape(twRadius.lg)).padding(twSpacing.xl),
+                modifier =
+                    Modifier.fillMaxWidth()
+                        .background(currentTheme.colors.muted, RoundedCornerShape(twRadius.lg)).padding(twSpacing.xl),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(twSpacing.sm),
             ) {
@@ -241,7 +244,7 @@ fun CreateKitchenIslandCard(modifier: Modifier = Modifier) {
         }
         Column(
             extraCardContent.padding(bottom = twSpacing.lg),
-            verticalArrangement = Arrangement.spacedBy(twSpacing.md)
+            verticalArrangement = Arrangement.spacedBy(twSpacing.md),
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(twSpacing.xs)) {
                 scenes.keys.forEach { name ->
@@ -287,13 +290,14 @@ private fun KitchenSliderRow(
 
 @Composable
 fun CreateRecentTransactionsCard(modifier: Modifier = Modifier) {
-    val transactions = listOf(
-        Triple("Blue Bottle Coffee", "Food & Drink · Today, 10:24 AM", "-$6.50"),
-        Triple("Whole Foods Market", "Groceries · Yesterday", "-$142.30"),
-        Triple("Stripe Payout", "Income · Oct 12", "+$4,200.00"),
-        Triple("Uber Technologies", "Transport · Oct 11", "-$24.10"),
-        Triple("Netflix Subscription", "Entertainment · Oct 10", "-$19.99"),
-    )
+    val transactions =
+        listOf(
+            Triple("Blue Bottle Coffee", "Food & Drink · Today, 10:24 AM", "-$6.50"),
+            Triple("Whole Foods Market", "Groceries · Yesterday", "-$142.30"),
+            Triple("Stripe Payout", "Income · Oct 12", "+$4,200.00"),
+            Triple("Uber Technologies", "Transport · Oct 11", "-$24.10"),
+            Triple("Netflix Subscription", "Entertainment · Oct 10", "-$19.99"),
+        )
     Card(modifier) {
         CardHeader {
             Box(Modifier.fillMaxWidth()) {
@@ -305,7 +309,7 @@ fun CreateRecentTransactionsCard(modifier: Modifier = Modifier) {
                     Button(
                         onClick = {},
                         size = ButtonSize.Sm,
-                        variant = ButtonVariant.Outline
+                        variant = ButtonVariant.Outline,
                     ) { Text { "View All" } }
                 }
             }
@@ -314,7 +318,10 @@ fun CreateRecentTransactionsCard(modifier: Modifier = Modifier) {
             transactions.forEach { (title, description, amount) ->
                 Item(variant = ItemVariant.Muted) {
                     ItemMedia(variant = ItemMediaVariant.Icon) { Icon(Lucide.ArrowRight, variant = IconVariant.Small) }
-                    ItemContent { ItemTitle(title); ItemDescription(description) }
+                    ItemContent {
+                        ItemTitle(title)
+                        ItemDescription(description)
+                    }
                     Text(variant = TextVariant.LabelLarge) { amount }
                 }
             }
@@ -328,7 +335,7 @@ fun CreateFaqCard(modifier: Modifier = Modifier) {
     Card(modifier) {
         Column(
             extraCardContent.padding(vertical = twSpacing.lg),
-            verticalArrangement = Arrangement.spacedBy(twSpacing.md)
+            verticalArrangement = Arrangement.spacedBy(twSpacing.md),
         ) {
             Row {
                 listOf("General", "Billing", "Goals").forEachIndexed { index, label ->
@@ -337,19 +344,26 @@ fun CreateFaqCard(modifier: Modifier = Modifier) {
                         onClick = {},
                         modifier = Modifier.weight(1f),
                         size = ButtonSize.Sm,
-                        variant = if (index == 0) ButtonVariant.Secondary else ButtonVariant.Outline
+                        variant = if (index == 0) ButtonVariant.Secondary else ButtonVariant.Outline,
                     )
                 }
             }
             Accordion(value = expanded, onValueChange = { expanded = it }) {
                 AccordionItem("security", "How secure is my financial data with Ledger?") {
-                    Text(textStyle = TextColors.Muted) { "We use bank-level AES-256 encryption, SOC 2 Type II certified infrastructure, and read-only access tokens." }
+                    Text(textStyle = TextColors.Muted) {
+                        "We use bank-level AES-256 encryption, SOC 2 Type II certified " +
+                            "infrastructure, and read-only access tokens."
+                    }
                 }
                 AccordionItem("accounts", "How do I connect my bank or investment accounts?") {
-                    Text(textStyle = TextColors.Muted) { "Go to Settings > Linked Accounts and search for your institution." }
+                    Text(
+                        textStyle = TextColors.Muted,
+                    ) { "Go to Settings > Linked Accounts and search for your institution." }
                 }
                 AccordionItem("tax", "Can I export my data for tax purposes?") {
-                    Text(textStyle = TextColors.Muted) { "Navigate to Reports > Tax Export to download a CSV or PDF summary." }
+                    Text(
+                        textStyle = TextColors.Muted,
+                    ) { "Navigate to Reports > Tax Export to download a CSV or PDF summary." }
                 }
             }
         }
@@ -357,12 +371,12 @@ fun CreateFaqCard(modifier: Modifier = Modifier) {
             Button(
                 onClick = {},
                 modifier = Modifier.fillMaxWidth(),
-                variant = ButtonVariant.Outline
+                variant = ButtonVariant.Outline,
             ) { Text { "Contact Support" } }
             Button(
                 onClick = {},
                 modifier = Modifier.fillMaxWidth(),
-                variant = ButtonVariant.Ghost
+                variant = ButtonVariant.Ghost,
             ) { Text { "Learn More" } }
         }
     }
@@ -379,17 +393,19 @@ fun CreateFrontDoorCard(modifier: Modifier = Modifier) {
                 }
                 CardAction(modifier = Modifier.align(Alignment.TopEnd)) {
                     Row {
-                        Text(textStyle = TextColors.Muted) { "Locked" }; Icon(
-                        Lucide.Lock,
-                        variant = IconVariant.Small
-                    )
+                        Text(textStyle = TextColors.Muted) { "Locked" }
+                        Icon(
+                            Lucide.Lock,
+                            variant = IconVariant.Small,
+                        )
                     }
                 }
             }
         }
         Box(
-            modifier = extraCardContent.padding(bottom = twSpacing.lg).fillMaxWidth().height(150.dp)
-                .background(currentTheme.colors.muted, RoundedCornerShape(twRadius.lg)),
+            modifier =
+                extraCardContent.padding(bottom = twSpacing.lg).fillMaxWidth().height(150.dp)
+                    .background(currentTheme.colors.muted, RoundedCornerShape(twRadius.lg)),
             contentAlignment = Alignment.TopEnd,
         ) {
             Badge(modifier = Modifier.padding(twSpacing.sm), variant = BadgeVariant.Destructive) { Text { "Live" } }
@@ -399,16 +415,17 @@ fun CreateFrontDoorCard(modifier: Modifier = Modifier) {
 
 @Composable
 fun CreateReleaseCatalogCard(modifier: Modifier = Modifier) {
-    val holdings = listOf(
-        "VOO" to "Vanguard S&P 500 ETF · 112 Shares · Jan 2021",
-        "VIG" to "Vanguard Dividend Appreciation · 450 Shares · Mar 2022",
-        "AAPL" to "Apple Inc. · 85 Shares · Nov 2020",
-        "O" to "Realty Income Corp · 320 Shares · Jun 2023"
-    )
+    val holdings =
+        listOf(
+            "VOO" to "Vanguard S&P 500 ETF · 112 Shares · Jan 2021",
+            "VIG" to "Vanguard Dividend Appreciation · 450 Shares · Mar 2022",
+            "AAPL" to "Apple Inc. · 85 Shares · Nov 2020",
+            "O" to "Realty Income Corp · 320 Shares · Jun 2023",
+        )
     Card(modifier) {
         Column(
             extraCardContent.padding(vertical = twSpacing.lg),
-            verticalArrangement = Arrangement.spacedBy(twSpacing.md)
+            verticalArrangement = Arrangement.spacedBy(twSpacing.md),
         ) {
             InputGroup {
                 InputGroupAddon(InputGroupAddonAlign.InlineStart) {
@@ -421,7 +438,7 @@ fun CreateReleaseCatalogCard(modifier: Modifier = Modifier) {
                     Button(
                         onClick = {},
                         size = ButtonSize.Sm,
-                        variant = if (it == "ETFs") ButtonVariant.Secondary else ButtonVariant.Outline
+                        variant = if (it == "ETFs") ButtonVariant.Secondary else ButtonVariant.Outline,
                     ) { Text { it } }
                 }
             }
@@ -429,8 +446,21 @@ fun CreateReleaseCatalogCard(modifier: Modifier = Modifier) {
                 holdings.forEachIndexed { index, (ticker, name) ->
                     Item(variant = ItemVariant.Muted) {
                         ItemMedia { Text(variant = TextVariant.LabelLarge) { ticker } }
-                        ItemContent { ItemTitle(name.substringBefore(" · ")); ItemDescription(name.substringAfter(" · ")) }
-                        Badge(variant = BadgeVariant.Outline) { Text { if (index == 2) "Stock" else if (index == 3) "REIT" else "ETF" } }
+                        ItemContent {
+                            ItemTitle(name.substringBefore(" · "))
+                            ItemDescription(name.substringAfter(" · "))
+                        }
+                        Badge(variant = BadgeVariant.Outline) {
+                            Text {
+                                if (index == 2) {
+                                    "Stock"
+                                } else if (index == 3) {
+                                    "REIT"
+                                } else {
+                                    "ETF"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -446,14 +476,15 @@ fun CreateCardOverviewCard(modifier: Modifier = Modifier) {
             Card(Modifier.weight(1f)) {
                 Column(
                     extraCardContent.padding(vertical = twSpacing.lg),
-                    verticalArrangement = Arrangement.spacedBy(twSpacing.md)
+                    verticalArrangement = Arrangement.spacedBy(twSpacing.md),
                 ) {
-                    Text(textStyle = TextColors.Muted) { "Payment Due" }; Text(variant = TextVariant.TitleLarge) { "1 Apr" }
+                    Text(textStyle = TextColors.Muted) { "Payment Due" }
+                    Text(variant = TextVariant.TitleLarge) { "1 Apr" }
                     Button(
                         onClick = {},
                         modifier = Modifier.fillMaxWidth(),
                         size = ButtonSize.Sm,
-                        variant = ButtonVariant.Outline
+                        variant = ButtonVariant.Outline,
                     ) { Text { "Pay Early" } }
                 }
             }
@@ -461,16 +492,19 @@ fun CreateCardOverviewCard(modifier: Modifier = Modifier) {
         Card {
             Column(
                 extraCardContent.padding(vertical = twSpacing.lg),
-                verticalArrangement = Arrangement.spacedBy(twSpacing.sm)
+                verticalArrangement = Arrangement.spacedBy(twSpacing.sm),
             ) {
                 Row(
                     Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) { Text(textStyle = TextColors.Muted) { "Yearly Activity" }; Badge(variant = BadgeVariant.Secondary) { Text { "+US$0.25 Daily Cash" } } }
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    Text(textStyle = TextColors.Muted) { "Yearly Activity" }
+                    Badge(variant = BadgeVariant.Secondary) { Text { "+US$0.25 Daily Cash" } }
+                }
                 Progress(.68f, modifier = Modifier.fillMaxWidth())
                 Text(
                     variant = TextVariant.LabelSmall,
-                    textStyle = TextColors.Muted
+                    textStyle = TextColors.Muted,
                 ) { "J  F  M  A  M  J  J  A  S  O  N  D" }
             }
         }
@@ -483,24 +517,25 @@ fun CreateCoverArtCard(modifier: Modifier = Modifier) {
         Column(
             extraCardContent.padding(vertical = twSpacing.lg),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(twSpacing.md)
+            verticalArrangement = Arrangement.spacedBy(twSpacing.md),
         ) {
             Text(variant = TextVariant.LabelSmall, textStyle = TextColors.Muted) { "COVER ART" }
             Box(
                 Modifier.fillMaxWidth().height(220.dp)
                     .background(currentTheme.colors.muted, RoundedCornerShape(twRadius.lg)),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) { Icon(Lucide.Plus) }
         }
         Column(extraCardContent, horizontalAlignment = Alignment.CenterHorizontally) {
             Button(
                 onClick = {},
                 modifier = Modifier.fillMaxWidth(),
-                variant = ButtonVariant.Secondary
-            ) { Text { "Upload Artwork" } }; Text(
-            variant = TextVariant.LabelSmall,
-            textStyle = TextColors.Muted
-        ) { "Minimum 3000 × 3000px\nJPEG or PNG only" }
+                variant = ButtonVariant.Secondary,
+            ) { Text { "Upload Artwork" } }
+            Text(
+                variant = TextVariant.LabelSmall,
+                textStyle = TextColors.Muted,
+            ) { "Minimum 3000 × 3000px\nJPEG or PNG only" }
         }
     }
 }
@@ -510,15 +545,16 @@ fun CreateLoadingCard(modifier: Modifier = Modifier) {
     Card(modifier) {
         Column(
             extraCardContent.padding(vertical = twSpacing.lg),
-            verticalArrangement = Arrangement.spacedBy(twSpacing.md)
+            verticalArrangement = Arrangement.spacedBy(twSpacing.md),
         ) {
-            Skeleton(Modifier.width(128.dp).height(20.dp)); Skeleton(Modifier.width(192.dp).height(16.dp))
+            Skeleton(Modifier.width(128.dp).height(20.dp))
+            Skeleton(Modifier.width(192.dp).height(16.dp))
             Skeleton(Modifier.fillMaxWidth().height(128.dp))
             repeat(3) { Skeleton(Modifier.fillMaxWidth(if (it == 2) .5f else 1f).height(16.dp)) }
             Row(horizontalArrangement = Arrangement.spacedBy(twSpacing.sm)) {
                 repeat(2) {
                     Skeleton(
-                        Modifier.weight(1f).height(36.dp)
+                        Modifier.weight(1f).height(36.dp),
                     )
                 }
             }
@@ -540,7 +576,10 @@ fun CreateReceivingMethodCard(modifier: Modifier = Modifier) {
             }
         }
         FieldGroup(extraCardContent) {
-            Field { FieldLabel("Account Holder Name"); Input("Synthetic Horizons Music LLC", {}) }
+            Field {
+                FieldLabel("Account Holder Name")
+                Input("Synthetic Horizons Music LLC", {})
+            }
             Field {
                 FieldLabel("Receiving Method")
                 RadioGroup {
@@ -548,19 +587,23 @@ fun CreateReceivingMethodCard(modifier: Modifier = Modifier) {
                     RadioButton(method == "paypal", { method = "paypal" }, label = "PayPal — Instant Payout")
                 }
             }
-            Field { FieldLabel("IBAN / Account Number"); Input("", {}, placeholder = "DE89 3704 0044 ....") }
+            Field {
+                FieldLabel("IBAN / Account Number")
+                Input("", {}, placeholder = "DE89 3704 0044 ....")
+            }
         }
         Button(onClick = {}, modifier = extraCardContent, enabled = false) { Text { "Save Payout Settings" } }
     }
 }
 
 @Composable
-fun CreateEmptyConnectBankCard(modifier: Modifier = Modifier) = PreviewEmptyCard(
-    modifier,
-    "Connect Bank",
-    "Link your payout method to receive monthly royalty distributions automatically.",
-    "Set Up Payouts"
-)
+fun CreateEmptyConnectBankCard(modifier: Modifier = Modifier) =
+    PreviewEmptyCard(
+        modifier,
+        "Connect Bank",
+        "Link your payout method to receive monthly royalty distributions automatically.",
+        "Set Up Payouts",
+    )
 
 @Composable
 fun CreateUpcomingPaymentsCard(modifier: Modifier = Modifier) {
@@ -571,30 +614,36 @@ fun CreateUpcomingPaymentsCard(modifier: Modifier = Modifier) {
         }
         Column(
             extraCardContent.padding(bottom = twSpacing.lg),
-            verticalArrangement = Arrangement.spacedBy(twSpacing.md)
+            verticalArrangement = Arrangement.spacedBy(twSpacing.md),
         ) {
             Box(
                 Modifier.fillMaxWidth().height(190.dp)
                     .background(currentTheme.colors.muted, RoundedCornerShape(twRadius.lg)),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Icon(Lucide.Calendar); Text { "April 2024" }; Text(
-                    textStyle = TextColors.Muted
-                ) { "Select a date" }
+                    Icon(Lucide.Calendar)
+                    Text { "April 2024" }
+                    Text(
+                        textStyle = TextColors.Muted,
+                    ) { "Select a date" }
                 }
             }
             ItemGroup {
                 listOf(
                     "Netflix Subscription" to "Apr 15, 2024 · $19.99",
                     "Rent Payment" to "Apr 1, 2024 · $2,400.00",
-                    "Auto Insurance" to "Apr 22, 2024 · $186.00"
+                    "Auto Insurance" to "Apr 22, 2024 · $186.00",
                 ).forEach { (title, detail) ->
                     Item(variant = ItemVariant.Muted) {
-                        ItemContent { ItemTitle(title); ItemDescription(detail) }; Icon(
-                        Lucide.ArrowRight,
-                        variant = IconVariant.Small
-                    )
+                        ItemContent {
+                            ItemTitle(title)
+                            ItemDescription(detail)
+                        }
+                        Icon(
+                            Lucide.ArrowRight,
+                            variant = IconVariant.Small,
+                        )
                     }
                 }
             }
@@ -612,11 +661,11 @@ fun CreateRollerShadesCard(modifier: Modifier = Modifier) {
         }
         Column(
             extraCardContent.padding(bottom = twSpacing.lg),
-            verticalArrangement = Arrangement.spacedBy(twSpacing.md)
+            verticalArrangement = Arrangement.spacedBy(twSpacing.md),
         ) {
             Box(
                 Modifier.fillMaxWidth().height(128.dp)
-                    .background(currentTheme.colors.muted, RoundedCornerShape(twRadius.lg))
+                    .background(currentTheme.colors.muted, RoundedCornerShape(twRadius.lg)),
             ) {
                 Box(
                     Modifier
@@ -643,13 +692,13 @@ fun CreateRollerShadesCard(modifier: Modifier = Modifier) {
             listOf(
                 "Open" to 0f,
                 "Half" to 50f,
-                "Closed" to 100f
+                "Closed" to 100f,
             ).forEach { (label, value) ->
                 Button(
                     onClick = { position = value },
                     modifier = Modifier.weight(1f),
                     size = ButtonSize.Sm,
-                    variant = if (position == value) ButtonVariant.Secondary else ButtonVariant.Outline
+                    variant = if (position == value) ButtonVariant.Secondary else ButtonVariant.Outline,
                 ) { Text { label } }
             }
         }
@@ -666,44 +715,46 @@ fun CreateStockPerformanceCard(modifier: Modifier = Modifier) {
         }
         Column(
             extraCardContent.padding(bottom = twSpacing.lg),
-            verticalArrangement = Arrangement.spacedBy(twSpacing.md)
+            verticalArrangement = Arrangement.spacedBy(twSpacing.md),
         ) {
             Field {
-                FieldLabel("Ticker"); Select(
-                value = ticker,
-                onValueChange = { ticker = it },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                SelectTrigger()
-                SelectContent {
-                    SelectItem("VOO")
-                    SelectItem("VIG")
-                    SelectItem("AAPL")
-                    SelectItem("MSFT")
-                    SelectItem("GOOGL")
-                    SelectItem("AMZN")
-                    SelectItem("TSLA")
+                FieldLabel("Ticker")
+                Select(
+                    value = ticker,
+                    onValueChange = { ticker = it },
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    SelectTrigger()
+                    SelectContent {
+                        SelectItem("VOO")
+                        SelectItem("VIG")
+                        SelectItem("AAPL")
+                        SelectItem("MSFT")
+                        SelectItem("GOOGL")
+                        SelectItem("AMZN")
+                        SelectItem("TSLA")
+                    }
                 }
-            }
             }
             Separator()
             Text(textStyle = TextColors.Muted) { "$ticker price history" }
             Box(
                 Modifier.fillMaxWidth().height(180.dp)
                     .background(currentTheme.colors.muted, RoundedCornerShape(twRadius.lg)),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) { Text { "Jan  ·  Feb  ·  Mar  ·  Apr  ·  May  ·  Jun" } }
         }
     }
 }
 
 @Composable
-fun CreateEmptyExploreCatalogCard(modifier: Modifier = Modifier) = PreviewEmptyCard(
-    modifier,
-    "Explore Catalog",
-    "Check your ISRC codes, metadata, and visual assets before going live.",
-    "View Catalog"
-)
+fun CreateEmptyExploreCatalogCard(modifier: Modifier = Modifier) =
+    PreviewEmptyCard(
+        modifier,
+        "Explore Catalog",
+        "Check your ISRC codes, metadata, and visual assets before going live.",
+        "View Catalog",
+    )
 
 @Composable
 fun CreateSocialLinksCard(modifier: Modifier = Modifier) {
@@ -717,74 +768,110 @@ fun CreateSocialLinksCard(modifier: Modifier = Modifier) {
         }
         FieldGroup(extraCardContent) {
             Field {
-                FieldLabel("Spotify Artist URL"); InputGroup {
-                InputGroupAddon(InputGroupAddonAlign.InlineStart) {
-                    Icon(Lucide.Plus, variant = IconVariant.Small)
+                FieldLabel("Spotify Artist URL")
+                InputGroup {
+                    InputGroupAddon(InputGroupAddonAlign.InlineStart) {
+                        Icon(Lucide.Plus, variant = IconVariant.Small)
+                    }
+                    Input(spotify, { spotify = it })
                 }
-                Input(spotify, { spotify = it })
             }
-            }
-            Field { FieldLabel("Instagram Handle"); Input(instagram, { instagram = it }) }
             Field {
-                FieldLabel("SoundCloud URL"); Input(
-                soundcloud,
-                { soundcloud = it },
-                placeholder = "soundcloud.com/username"
-            )
+                FieldLabel("Instagram Handle")
+                Input(instagram, { instagram = it })
             }
-            Field { FieldLabel("Website"); Input(website, { website = it }, placeholder = "https://yoursite.com") }
+            Field {
+                FieldLabel("SoundCloud URL")
+                Input(
+                    soundcloud,
+                    { soundcloud = it },
+                    placeholder = "soundcloud.com/username",
+                )
+            }
+            Field {
+                FieldLabel("Website")
+                Input(website, { website = it }, placeholder = "https://yoursite.com")
+            }
         }
         Row(extraCardContent, horizontalArrangement = Arrangement.spacedBy(twSpacing.sm)) {
             Button(
                 onClick = {},
                 modifier = Modifier.weight(1f),
-                variant = ButtonVariant.Secondary
-            ) { Text { "Discard" } }; Button(onClick = {}, modifier = Modifier.weight(1f)) { Text { "Save Changes" } }
+                variant = ButtonVariant.Secondary,
+            ) { Text { "Discard" } }
+            Button(onClick = {}, modifier = Modifier.weight(1f)) { Text { "Save Changes" } }
         }
     }
 }
 
 @Composable
-private fun SettingSwitch(title: String, description: String, checked: Boolean, onCheckedChange: (Boolean) -> Unit) {
+private fun SettingSwitch(
+    title: String,
+    description: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(twSpacing.md)
+        horizontalArrangement = Arrangement.spacedBy(twSpacing.md),
     ) {
         Column(modifier = Modifier.weight(1f)) {
-            Text(variant = TextVariant.LabelLarge) { title }; FieldDescription(
-            description
-        )
+            Text(variant = TextVariant.LabelLarge) { title }
+            FieldDescription(
+                description,
+            )
         }
         Switch(checked, onCheckedChange)
     }
 }
 
 @Composable
-private fun MetricRow(label: String, value: String) {
+private fun MetricRow(
+    label: String,
+    value: String,
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) { Text(textStyle = TextColors.Muted) { label }; Text(variant = TextVariant.LabelLarge) { value } }
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
+        Text(textStyle = TextColors.Muted) { label }
+        Text(variant = TextVariant.LabelLarge) { value }
+    }
 }
 
 @Composable
-private fun OverviewMetric(title: String, value: String, description: String, modifier: Modifier) {
+private fun OverviewMetric(
+    title: String,
+    value: String,
+    description: String,
+    modifier: Modifier,
+) {
     Card(modifier) {
         Column(extraCardContent.padding(vertical = twSpacing.lg)) {
-            Text(textStyle = TextColors.Muted) { title }; Text(
-            variant = TextVariant.TitleLarge
-        ) { value }; Text(textStyle = TextColors.Muted) { description }
+            Text(textStyle = TextColors.Muted) { title }
+            Text(
+                variant = TextVariant.TitleLarge,
+            ) { value }
+            Text(textStyle = TextColors.Muted) { description }
         }
     }
 }
 
 @Composable
-private fun PreviewEmptyCard(modifier: Modifier, title: String, description: String, action: String) {
+private fun PreviewEmptyCard(
+    modifier: Modifier,
+    title: String,
+    description: String,
+    action: String,
+) {
     Card(modifier) {
         Empty(extraCardContent.padding(vertical = twSpacing.xl)) {
             EmptyMedia { Icon(Lucide.Plus) }
-            EmptyHeader { EmptyTitle(title); EmptyDescription(description) }
+            EmptyHeader {
+                EmptyTitle(title)
+                EmptyDescription(description)
+            }
             EmptyContent { Button(onClick = {}) { Text { action } } }
         }
     }

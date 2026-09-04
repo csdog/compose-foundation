@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalFoundationStyleApi::class)
+
 package com.toutiaoyan.compose.ui.components.attachment
 
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,4 +19,3 @@ fun rememberAttachmentMediaStyle(): Style =
             background(colors.muted)
         }
     }
-

@@ -19,8 +19,8 @@ val shimmerDoc =
         title = "Shimmer",
         description =
             "A sweeping highlight for \"generating response\"/\"thinking\" text (and solid " +
-                    "blocks) — Modifier.shimmer (SrcAtop overlay) or rememberShimmerStyle " +
-                    "(contentBrush / background-clip:text), matching ui.shadcn.com/docs/utils/shimmer.",
+                "blocks) — Modifier.shimmer (SrcAtop overlay) or rememberShimmerStyle " +
+                "(contentBrush / background-clip:text), matching ui.shadcn.com/docs/utils/shimmer.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.styles.rememberShimmerStyle
@@ -33,7 +33,10 @@ val shimmerDoc =
             listOf(
                 ComponentExample(
                     title = "Default (Modifier)",
-                    code = """Text(textStyle = TextStyles.Muted, modifier = Modifier.shimmer()) { "Generating response…" }""",
+                    code =
+                        """
+                        Text(textStyle = TextStyles.Muted, modifier = Modifier.shimmer()) { "Generating response…" }
+                        """.trimIndent(),
                     preview = {
                         Text(textStyle = TextColors.Muted, modifier = Modifier.shimmer()) {
                             "Generating response…"
@@ -42,7 +45,10 @@ val shimmerDoc =
                 ),
                 ComponentExample(
                     title = "Style (contentBrush)",
-                    code = """Text(textStyle = TextStyles.Muted, style = rememberShimmerStyle()) { "Generating response…" }""",
+                    code =
+                        """
+                        Text(textStyle = TextStyles.Muted, style = rememberShimmerStyle()) { "Generating response…" }
+                        """.trimIndent(),
                     preview = {
                         Text(textStyle = TextColors.Muted, style = rememberShimmerStyle()) {
                             "Generating response…"

@@ -333,15 +333,16 @@ private fun <T> ComboboxRoot(
         if (!controlled) internalOpen = next
         onOpenChange?.invoke(next)
     }
-    val filtered = remember(options, query, label, shouldFilter, filter, keywords) {
-        if (!shouldFilter || query.isBlank()) {
-            options
-        } else {
-            options.filter { option ->
-                filter(query, label(option)) || keywords(option).any { filter(query, it) }
+    val filtered =
+        remember(options, query, label, shouldFilter, filter, keywords) {
+            if (!shouldFilter || query.isBlank()) {
+                options
+            } else {
+                options.filter { option ->
+                    filter(query, label(option)) || keywords(option).any { filter(query, it) }
+                }
             }
         }
-    }
     val displayText =
         when {
             selected.isEmpty() -> null
@@ -469,9 +470,7 @@ fun ComboboxScope.ComboboxTrigger(
 
 /** Chevron inside [ComboboxTrigger]. Base UI does not export ComboboxIcon (always in Trigger). */
 @Composable
-internal fun ComboboxIcon(
-    modifier: Modifier = Modifier,
-) {
+internal fun ComboboxIcon(modifier: Modifier = Modifier) {
     Icon(
         ChevronRight,
         tint = currentTheme.colors.mutedForeground,
@@ -594,9 +593,7 @@ private fun ComboboxDefaultList() {
 
 /** Option list inside [ComboboxContent]. Matches shadcn CommandList in the combobox recipe. */
 @Composable
-fun ComboboxList(
-    content: @Composable () -> Unit,
-) {
+fun ComboboxList(content: @Composable () -> Unit) {
     content()
 }
 
@@ -710,9 +707,10 @@ fun ComboboxItem(
 /** Check mark on a selected [ComboboxItem]. Base UI does not export ItemIndicator. */
 @Composable
 internal fun ComboboxItemIndicator(
-    selected: Boolean = checkNotNull(LocalComboboxItemSelected.current) {
-        "ComboboxItemIndicator must be used inside ComboboxItem, or pass selected="
-    },
+    selected: Boolean =
+        checkNotNull(LocalComboboxItemSelected.current) {
+            "ComboboxItemIndicator must be used inside ComboboxItem, or pass selected="
+        },
     modifier: Modifier = Modifier,
 ) {
     Box(modifier = modifier.size(currentTheme.icons.smallSize)) {

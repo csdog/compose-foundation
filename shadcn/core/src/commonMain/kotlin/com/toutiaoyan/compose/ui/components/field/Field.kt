@@ -59,9 +59,9 @@ import kotlin.jvm.JvmName
  *     }
  * }
  * ```
+ *
+ * [LocalFieldSetDisabled] matches HTML `fieldset disabled` for nested controls.
  */
-
-/** HTML `fieldset disabled` — nested form controls AND this when true. */
 internal val LocalFieldSetDisabled = staticCompositionLocalOf { false }
 
 /** Real shadcn `FieldSet` — `flex flex-col gap-6`. [disabled] matches HTML `fieldset disabled`. */
@@ -398,8 +398,9 @@ fun FieldError(
     errors: List<String> = emptyList(),
     style: Style = Style,
 ) {
-    val unique = (listOfNotNull(text?.takeIf { it.isNotBlank() }) + errors.map { it.trim() }.filter { it.isNotEmpty() })
-        .distinct()
+    val unique =
+        (listOfNotNull(text?.takeIf { it.isNotBlank() }) + errors.map { it.trim() }.filter { it.isNotEmpty() })
+            .distinct()
     if (unique.isEmpty()) return
 
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }

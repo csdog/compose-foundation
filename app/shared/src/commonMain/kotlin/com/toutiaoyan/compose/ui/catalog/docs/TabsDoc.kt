@@ -567,7 +567,7 @@ val tabsDoc =
                         """.trimIndent(),
                     preview = {
                         Tabs(defaultValue = "account") {
-                            TabsList() {
+                            TabsList {
                                 TabsTrigger(value = "account", label = "Account")
                                 TabsTrigger(value = "password", label = "Password")
                             }

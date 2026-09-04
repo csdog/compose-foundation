@@ -33,38 +33,39 @@ fun CreateWelcomeDialog(
 ) {
     Dialog(open = visible, onOpenChange = { if (!it) onDismissRequest() }) {
         DialogContent(showCloseButton = false) {
-        // Official: aspect-[2/1.2] rounded-t-xl bg-neutral-950 text-neutral-100
-        Box(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(2f / 1.2f)
-                    .background(
-                        Color(0xFF0A0A0A),
-                        RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
-                    ),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(
-                variant = TextVariant.TitleLarge,
-                textStyle = TextStyle(color = Color(0xFFF5F5F5)),
-            ) { "shadcn/ui" }
-        }
-        DialogHeader {
-            DialogTitle("Build your own shadcn/ui")
-            DialogDescription(
-                "Customize everything from the ground up. Pick your component library, font, color scheme, and more.",
-            )
-            // Official second line: font-medium text-foreground
-            DialogDescription(
-                "Available for all major Compose Multiplatform targets.",
-            )
-        }
-        DialogFooter {
-            Button(onClick = onDismissRequest, modifier = Modifier.fillMaxWidth()) {
-                Text { "Get Started" }
+            // Official: aspect-[2/1.2] rounded-t-xl bg-neutral-950 text-neutral-100
+            Box(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(2f / 1.2f)
+                        .background(
+                            Color(0xFF0A0A0A),
+                            RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
+                        ),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    variant = TextVariant.TitleLarge,
+                    textStyle = TextStyle(color = Color(0xFFF5F5F5)),
+                ) { "shadcn/ui" }
             }
-        }
+            DialogHeader {
+                DialogTitle("Build your own shadcn/ui")
+                DialogDescription(
+                    "Customize everything from the ground up. Pick your component library, " +
+                        "font, color scheme, and more.",
+                )
+                // Official second line: font-medium text-foreground
+                DialogDescription(
+                    "Available for all major Compose Multiplatform targets.",
+                )
+            }
+            DialogFooter {
+                Button(onClick = onDismissRequest, modifier = Modifier.fillMaxWidth()) {
+                    Text { "Get Started" }
+                }
+            }
         }
     }
 }

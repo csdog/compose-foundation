@@ -22,1470 +22,1225 @@ fun Modifier.p0(): Modifier =
         padding(twSpacing.scale0)
     }
 
-
 fun Modifier.pPx(): Modifier =
     composed {
         padding(twSpacing.scalePx)
     }
-
 
 fun Modifier.p0p5(): Modifier =
     composed {
         padding(twSpacing.scale0p5)
     }
 
-
 fun Modifier.p1(): Modifier =
     composed {
         padding(twSpacing.scale1)
     }
-
 
 fun Modifier.p1p5(): Modifier =
     composed {
         padding(twSpacing.scale1p5)
     }
 
-
 fun Modifier.p2(): Modifier =
     composed {
         padding(twSpacing.scale2)
     }
-
 
 fun Modifier.p2p5(): Modifier =
     composed {
         padding(twSpacing.scale2p5)
     }
 
-
 fun Modifier.p3(): Modifier =
     composed {
         padding(twSpacing.scale3)
     }
-
 
 fun Modifier.p3p5(): Modifier =
     composed {
         padding(twSpacing.scale3p5)
     }
 
-
 fun Modifier.p4(): Modifier =
     composed {
         padding(twSpacing.scale4)
     }
-
 
 fun Modifier.p5(): Modifier =
     composed {
         padding(twSpacing.scale5)
     }
 
-
 fun Modifier.p6(): Modifier =
     composed {
         padding(twSpacing.scale6)
     }
-
 
 fun Modifier.p7(): Modifier =
     composed {
         padding(twSpacing.scale7)
     }
 
-
 fun Modifier.p8(): Modifier =
     composed {
         padding(twSpacing.scale8)
     }
-
 
 fun Modifier.p9(): Modifier =
     composed {
         padding(twSpacing.scale9)
     }
 
-
 fun Modifier.p10(): Modifier =
     composed {
         padding(twSpacing.scale10)
     }
-
 
 fun Modifier.p11(): Modifier =
     composed {
         padding(twSpacing.scale11)
     }
 
-
 fun Modifier.p12(): Modifier =
     composed {
         padding(twSpacing.scale12)
     }
-
 
 fun Modifier.p14(): Modifier =
     composed {
         padding(twSpacing.scale14)
     }
 
-
 fun Modifier.p16(): Modifier =
     composed {
         padding(twSpacing.scale16)
     }
-
 
 fun Modifier.p20(): Modifier =
     composed {
         padding(twSpacing.scale20)
     }
 
-
 fun Modifier.p24(): Modifier =
     composed {
         padding(twSpacing.scale24)
     }
-
 
 fun Modifier.p28(): Modifier =
     composed {
         padding(twSpacing.scale28)
     }
 
-
 fun Modifier.p32(): Modifier =
     composed {
         padding(twSpacing.scale32)
     }
-
 
 fun Modifier.p36(): Modifier =
     composed {
         padding(twSpacing.scale36)
     }
 
-
 fun Modifier.p40(): Modifier =
     composed {
         padding(twSpacing.scale40)
     }
-
 
 fun Modifier.p44(): Modifier =
     composed {
         padding(twSpacing.scale44)
     }
 
-
 fun Modifier.p48(): Modifier =
     composed {
         padding(twSpacing.scale48)
     }
-
 
 fun Modifier.p52(): Modifier =
     composed {
         padding(twSpacing.scale52)
     }
 
-
 fun Modifier.p56(): Modifier =
     composed {
         padding(twSpacing.scale56)
     }
-
 
 fun Modifier.p60(): Modifier =
     composed {
         padding(twSpacing.scale60)
     }
 
-
 fun Modifier.p64(): Modifier =
     composed {
         padding(twSpacing.scale64)
     }
-
 
 fun Modifier.p72(): Modifier =
     composed {
         padding(twSpacing.scale72)
     }
 
-
 fun Modifier.p80(): Modifier =
     composed {
         padding(twSpacing.scale80)
     }
-
 
 fun Modifier.p96(): Modifier =
     composed {
         padding(twSpacing.scale96)
     }
 
-
 fun Modifier.pt0(): Modifier =
     composed {
         padding(top = twSpacing.scale0)
     }
-
 
 fun Modifier.ptPx(): Modifier =
     composed {
         padding(top = twSpacing.scalePx)
     }
 
-
 fun Modifier.pt0p5(): Modifier =
     composed {
         padding(top = twSpacing.scale0p5)
     }
-
 
 fun Modifier.pt1(): Modifier =
     composed {
         padding(top = twSpacing.scale1)
     }
 
-
 fun Modifier.pt1p5(): Modifier =
     composed {
         padding(top = twSpacing.scale1p5)
     }
-
 
 fun Modifier.pt2(): Modifier =
     composed {
         padding(top = twSpacing.scale2)
     }
 
-
 fun Modifier.pt2p5(): Modifier =
     composed {
         padding(top = twSpacing.scale2p5)
     }
-
 
 fun Modifier.pt3(): Modifier =
     composed {
         padding(top = twSpacing.scale3)
     }
 
-
 fun Modifier.pt3p5(): Modifier =
     composed {
         padding(top = twSpacing.scale3p5)
     }
-
 
 fun Modifier.pt4(): Modifier =
     composed {
         padding(top = twSpacing.scale4)
     }
 
-
 fun Modifier.pt5(): Modifier =
     composed {
         padding(top = twSpacing.scale5)
     }
-
 
 fun Modifier.pt6(): Modifier =
     composed {
         padding(top = twSpacing.scale6)
     }
 
-
 fun Modifier.pt7(): Modifier =
     composed {
         padding(top = twSpacing.scale7)
     }
-
 
 fun Modifier.pt8(): Modifier =
     composed {
         padding(top = twSpacing.scale8)
     }
 
-
 fun Modifier.pt9(): Modifier =
     composed {
         padding(top = twSpacing.scale9)
     }
-
 
 fun Modifier.pt10(): Modifier =
     composed {
         padding(top = twSpacing.scale10)
     }
 
-
 fun Modifier.pt11(): Modifier =
     composed {
         padding(top = twSpacing.scale11)
     }
-
 
 fun Modifier.pt12(): Modifier =
     composed {
         padding(top = twSpacing.scale12)
     }
 
-
 fun Modifier.pt14(): Modifier =
     composed {
         padding(top = twSpacing.scale14)
     }
-
 
 fun Modifier.pt16(): Modifier =
     composed {
         padding(top = twSpacing.scale16)
     }
 
-
 fun Modifier.pt20(): Modifier =
     composed {
         padding(top = twSpacing.scale20)
     }
-
 
 fun Modifier.pt24(): Modifier =
     composed {
         padding(top = twSpacing.scale24)
     }
 
-
 fun Modifier.pt28(): Modifier =
     composed {
         padding(top = twSpacing.scale28)
     }
-
 
 fun Modifier.pt32(): Modifier =
     composed {
         padding(top = twSpacing.scale32)
     }
 
-
 fun Modifier.pt36(): Modifier =
     composed {
         padding(top = twSpacing.scale36)
     }
-
 
 fun Modifier.pt40(): Modifier =
     composed {
         padding(top = twSpacing.scale40)
     }
 
-
 fun Modifier.pt44(): Modifier =
     composed {
         padding(top = twSpacing.scale44)
     }
-
 
 fun Modifier.pt48(): Modifier =
     composed {
         padding(top = twSpacing.scale48)
     }
 
-
 fun Modifier.pt52(): Modifier =
     composed {
         padding(top = twSpacing.scale52)
     }
-
 
 fun Modifier.pt56(): Modifier =
     composed {
         padding(top = twSpacing.scale56)
     }
 
-
 fun Modifier.pt60(): Modifier =
     composed {
         padding(top = twSpacing.scale60)
     }
-
 
 fun Modifier.pt64(): Modifier =
     composed {
         padding(top = twSpacing.scale64)
     }
 
-
 fun Modifier.pt72(): Modifier =
     composed {
         padding(top = twSpacing.scale72)
     }
-
 
 fun Modifier.pt80(): Modifier =
     composed {
         padding(top = twSpacing.scale80)
     }
 
-
 fun Modifier.pt96(): Modifier =
     composed {
         padding(top = twSpacing.scale96)
     }
-
 
 fun Modifier.pr0(): Modifier =
     composed {
         padding(end = twSpacing.scale0)
     }
 
-
 fun Modifier.prPx(): Modifier =
     composed {
         padding(end = twSpacing.scalePx)
     }
-
 
 fun Modifier.pr0p5(): Modifier =
     composed {
         padding(end = twSpacing.scale0p5)
     }
 
-
 fun Modifier.pr1(): Modifier =
     composed {
         padding(end = twSpacing.scale1)
     }
-
 
 fun Modifier.pr1p5(): Modifier =
     composed {
         padding(end = twSpacing.scale1p5)
     }
 
-
 fun Modifier.pr2(): Modifier =
     composed {
         padding(end = twSpacing.scale2)
     }
-
 
 fun Modifier.pr2p5(): Modifier =
     composed {
         padding(end = twSpacing.scale2p5)
     }
 
-
 fun Modifier.pr3(): Modifier =
     composed {
         padding(end = twSpacing.scale3)
     }
-
 
 fun Modifier.pr3p5(): Modifier =
     composed {
         padding(end = twSpacing.scale3p5)
     }
 
-
 fun Modifier.pr4(): Modifier =
     composed {
         padding(end = twSpacing.scale4)
     }
-
 
 fun Modifier.pr5(): Modifier =
     composed {
         padding(end = twSpacing.scale5)
     }
 
-
 fun Modifier.pr6(): Modifier =
     composed {
         padding(end = twSpacing.scale6)
     }
-
 
 fun Modifier.pr7(): Modifier =
     composed {
         padding(end = twSpacing.scale7)
     }
 
-
 fun Modifier.pr8(): Modifier =
     composed {
         padding(end = twSpacing.scale8)
     }
-
 
 fun Modifier.pr9(): Modifier =
     composed {
         padding(end = twSpacing.scale9)
     }
 
-
 fun Modifier.pr10(): Modifier =
     composed {
         padding(end = twSpacing.scale10)
     }
-
 
 fun Modifier.pr11(): Modifier =
     composed {
         padding(end = twSpacing.scale11)
     }
 
-
 fun Modifier.pr12(): Modifier =
     composed {
         padding(end = twSpacing.scale12)
     }
-
 
 fun Modifier.pr14(): Modifier =
     composed {
         padding(end = twSpacing.scale14)
     }
 
-
 fun Modifier.pr16(): Modifier =
     composed {
         padding(end = twSpacing.scale16)
     }
-
 
 fun Modifier.pr20(): Modifier =
     composed {
         padding(end = twSpacing.scale20)
     }
 
-
 fun Modifier.pr24(): Modifier =
     composed {
         padding(end = twSpacing.scale24)
     }
-
 
 fun Modifier.pr28(): Modifier =
     composed {
         padding(end = twSpacing.scale28)
     }
 
-
 fun Modifier.pr32(): Modifier =
     composed {
         padding(end = twSpacing.scale32)
     }
-
 
 fun Modifier.pr36(): Modifier =
     composed {
         padding(end = twSpacing.scale36)
     }
 
-
 fun Modifier.pr40(): Modifier =
     composed {
         padding(end = twSpacing.scale40)
     }
-
 
 fun Modifier.pr44(): Modifier =
     composed {
         padding(end = twSpacing.scale44)
     }
 
-
 fun Modifier.pr48(): Modifier =
     composed {
         padding(end = twSpacing.scale48)
     }
-
 
 fun Modifier.pr52(): Modifier =
     composed {
         padding(end = twSpacing.scale52)
     }
 
-
 fun Modifier.pr56(): Modifier =
     composed {
         padding(end = twSpacing.scale56)
     }
-
 
 fun Modifier.pr60(): Modifier =
     composed {
         padding(end = twSpacing.scale60)
     }
 
-
 fun Modifier.pr64(): Modifier =
     composed {
         padding(end = twSpacing.scale64)
     }
-
 
 fun Modifier.pr72(): Modifier =
     composed {
         padding(end = twSpacing.scale72)
     }
 
-
 fun Modifier.pr80(): Modifier =
     composed {
         padding(end = twSpacing.scale80)
     }
-
 
 fun Modifier.pr96(): Modifier =
     composed {
         padding(end = twSpacing.scale96)
     }
 
-
 fun Modifier.pb0(): Modifier =
     composed {
         padding(bottom = twSpacing.scale0)
     }
-
 
 fun Modifier.pbPx(): Modifier =
     composed {
         padding(bottom = twSpacing.scalePx)
     }
 
-
 fun Modifier.pb0p5(): Modifier =
     composed {
         padding(bottom = twSpacing.scale0p5)
     }
-
 
 fun Modifier.pb1(): Modifier =
     composed {
         padding(bottom = twSpacing.scale1)
     }
 
-
 fun Modifier.pb1p5(): Modifier =
     composed {
         padding(bottom = twSpacing.scale1p5)
     }
-
 
 fun Modifier.pb2(): Modifier =
     composed {
         padding(bottom = twSpacing.scale2)
     }
 
-
 fun Modifier.pb2p5(): Modifier =
     composed {
         padding(bottom = twSpacing.scale2p5)
     }
-
 
 fun Modifier.pb3(): Modifier =
     composed {
         padding(bottom = twSpacing.scale3)
     }
 
-
 fun Modifier.pb3p5(): Modifier =
     composed {
         padding(bottom = twSpacing.scale3p5)
     }
-
 
 fun Modifier.pb4(): Modifier =
     composed {
         padding(bottom = twSpacing.scale4)
     }
 
-
 fun Modifier.pb5(): Modifier =
     composed {
         padding(bottom = twSpacing.scale5)
     }
-
 
 fun Modifier.pb6(): Modifier =
     composed {
         padding(bottom = twSpacing.scale6)
     }
 
-
 fun Modifier.pb7(): Modifier =
     composed {
         padding(bottom = twSpacing.scale7)
     }
-
 
 fun Modifier.pb8(): Modifier =
     composed {
         padding(bottom = twSpacing.scale8)
     }
 
-
 fun Modifier.pb9(): Modifier =
     composed {
         padding(bottom = twSpacing.scale9)
     }
-
 
 fun Modifier.pb10(): Modifier =
     composed {
         padding(bottom = twSpacing.scale10)
     }
 
-
 fun Modifier.pb11(): Modifier =
     composed {
         padding(bottom = twSpacing.scale11)
     }
-
 
 fun Modifier.pb12(): Modifier =
     composed {
         padding(bottom = twSpacing.scale12)
     }
 
-
 fun Modifier.pb14(): Modifier =
     composed {
         padding(bottom = twSpacing.scale14)
     }
-
 
 fun Modifier.pb16(): Modifier =
     composed {
         padding(bottom = twSpacing.scale16)
     }
 
-
 fun Modifier.pb20(): Modifier =
     composed {
         padding(bottom = twSpacing.scale20)
     }
-
 
 fun Modifier.pb24(): Modifier =
     composed {
         padding(bottom = twSpacing.scale24)
     }
 
-
 fun Modifier.pb28(): Modifier =
     composed {
         padding(bottom = twSpacing.scale28)
     }
-
 
 fun Modifier.pb32(): Modifier =
     composed {
         padding(bottom = twSpacing.scale32)
     }
 
-
 fun Modifier.pb36(): Modifier =
     composed {
         padding(bottom = twSpacing.scale36)
     }
-
 
 fun Modifier.pb40(): Modifier =
     composed {
         padding(bottom = twSpacing.scale40)
     }
 
-
 fun Modifier.pb44(): Modifier =
     composed {
         padding(bottom = twSpacing.scale44)
     }
-
 
 fun Modifier.pb48(): Modifier =
     composed {
         padding(bottom = twSpacing.scale48)
     }
 
-
 fun Modifier.pb52(): Modifier =
     composed {
         padding(bottom = twSpacing.scale52)
     }
-
 
 fun Modifier.pb56(): Modifier =
     composed {
         padding(bottom = twSpacing.scale56)
     }
 
-
 fun Modifier.pb60(): Modifier =
     composed {
         padding(bottom = twSpacing.scale60)
     }
-
 
 fun Modifier.pb64(): Modifier =
     composed {
         padding(bottom = twSpacing.scale64)
     }
 
-
 fun Modifier.pb72(): Modifier =
     composed {
         padding(bottom = twSpacing.scale72)
     }
-
 
 fun Modifier.pb80(): Modifier =
     composed {
         padding(bottom = twSpacing.scale80)
     }
 
-
 fun Modifier.pb96(): Modifier =
     composed {
         padding(bottom = twSpacing.scale96)
     }
-
 
 fun Modifier.pl0(): Modifier =
     composed {
         padding(start = twSpacing.scale0)
     }
 
-
 fun Modifier.plPx(): Modifier =
     composed {
         padding(start = twSpacing.scalePx)
     }
-
 
 fun Modifier.pl0p5(): Modifier =
     composed {
         padding(start = twSpacing.scale0p5)
     }
 
-
 fun Modifier.pl1(): Modifier =
     composed {
         padding(start = twSpacing.scale1)
     }
-
 
 fun Modifier.pl1p5(): Modifier =
     composed {
         padding(start = twSpacing.scale1p5)
     }
 
-
 fun Modifier.pl2(): Modifier =
     composed {
         padding(start = twSpacing.scale2)
     }
-
 
 fun Modifier.pl2p5(): Modifier =
     composed {
         padding(start = twSpacing.scale2p5)
     }
 
-
 fun Modifier.pl3(): Modifier =
     composed {
         padding(start = twSpacing.scale3)
     }
-
 
 fun Modifier.pl3p5(): Modifier =
     composed {
         padding(start = twSpacing.scale3p5)
     }
 
-
 fun Modifier.pl4(): Modifier =
     composed {
         padding(start = twSpacing.scale4)
     }
-
 
 fun Modifier.pl5(): Modifier =
     composed {
         padding(start = twSpacing.scale5)
     }
 
-
 fun Modifier.pl6(): Modifier =
     composed {
         padding(start = twSpacing.scale6)
     }
-
 
 fun Modifier.pl7(): Modifier =
     composed {
         padding(start = twSpacing.scale7)
     }
 
-
 fun Modifier.pl8(): Modifier =
     composed {
         padding(start = twSpacing.scale8)
     }
-
 
 fun Modifier.pl9(): Modifier =
     composed {
         padding(start = twSpacing.scale9)
     }
 
-
 fun Modifier.pl10(): Modifier =
     composed {
         padding(start = twSpacing.scale10)
     }
-
 
 fun Modifier.pl11(): Modifier =
     composed {
         padding(start = twSpacing.scale11)
     }
 
-
 fun Modifier.pl12(): Modifier =
     composed {
         padding(start = twSpacing.scale12)
     }
-
 
 fun Modifier.pl14(): Modifier =
     composed {
         padding(start = twSpacing.scale14)
     }
 
-
 fun Modifier.pl16(): Modifier =
     composed {
         padding(start = twSpacing.scale16)
     }
-
 
 fun Modifier.pl20(): Modifier =
     composed {
         padding(start = twSpacing.scale20)
     }
 
-
 fun Modifier.pl24(): Modifier =
     composed {
         padding(start = twSpacing.scale24)
     }
-
 
 fun Modifier.pl28(): Modifier =
     composed {
         padding(start = twSpacing.scale28)
     }
 
-
 fun Modifier.pl32(): Modifier =
     composed {
         padding(start = twSpacing.scale32)
     }
-
 
 fun Modifier.pl36(): Modifier =
     composed {
         padding(start = twSpacing.scale36)
     }
 
-
 fun Modifier.pl40(): Modifier =
     composed {
         padding(start = twSpacing.scale40)
     }
-
 
 fun Modifier.pl44(): Modifier =
     composed {
         padding(start = twSpacing.scale44)
     }
 
-
 fun Modifier.pl48(): Modifier =
     composed {
         padding(start = twSpacing.scale48)
     }
-
 
 fun Modifier.pl52(): Modifier =
     composed {
         padding(start = twSpacing.scale52)
     }
 
-
 fun Modifier.pl56(): Modifier =
     composed {
         padding(start = twSpacing.scale56)
     }
-
 
 fun Modifier.pl60(): Modifier =
     composed {
         padding(start = twSpacing.scale60)
     }
 
-
 fun Modifier.pl64(): Modifier =
     composed {
         padding(start = twSpacing.scale64)
     }
-
 
 fun Modifier.pl72(): Modifier =
     composed {
         padding(start = twSpacing.scale72)
     }
 
-
 fun Modifier.pl80(): Modifier =
     composed {
         padding(start = twSpacing.scale80)
     }
-
 
 fun Modifier.pl96(): Modifier =
     composed {
         padding(start = twSpacing.scale96)
     }
 
-
 fun Modifier.px0(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale0)
     }
-
 
 fun Modifier.pxPx(): Modifier =
     composed {
         padding(horizontal = twSpacing.scalePx)
     }
 
-
 fun Modifier.px0p5(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale0p5)
     }
-
 
 fun Modifier.px1(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale1)
     }
 
-
 fun Modifier.px1p5(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale1p5)
     }
-
 
 fun Modifier.px2(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale2)
     }
 
-
 fun Modifier.px2p5(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale2p5)
     }
-
 
 fun Modifier.px3(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale3)
     }
 
-
 fun Modifier.px3p5(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale3p5)
     }
-
 
 fun Modifier.px4(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale4)
     }
 
-
 fun Modifier.px5(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale5)
     }
-
 
 fun Modifier.px6(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale6)
     }
 
-
 fun Modifier.px7(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale7)
     }
-
 
 fun Modifier.px8(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale8)
     }
 
-
 fun Modifier.px9(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale9)
     }
-
 
 fun Modifier.px10(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale10)
     }
 
-
 fun Modifier.px11(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale11)
     }
-
 
 fun Modifier.px12(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale12)
     }
 
-
 fun Modifier.px14(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale14)
     }
-
 
 fun Modifier.px16(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale16)
     }
 
-
 fun Modifier.px20(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale20)
     }
-
 
 fun Modifier.px24(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale24)
     }
 
-
 fun Modifier.px28(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale28)
     }
-
 
 fun Modifier.px32(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale32)
     }
 
-
 fun Modifier.px36(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale36)
     }
-
 
 fun Modifier.px40(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale40)
     }
 
-
 fun Modifier.px44(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale44)
     }
-
 
 fun Modifier.px48(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale48)
     }
 
-
 fun Modifier.px52(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale52)
     }
-
 
 fun Modifier.px56(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale56)
     }
 
-
 fun Modifier.px60(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale60)
     }
-
 
 fun Modifier.px64(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale64)
     }
 
-
 fun Modifier.px72(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale72)
     }
-
 
 fun Modifier.px80(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale80)
     }
 
-
 fun Modifier.px96(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale96)
     }
-
 
 fun Modifier.py0(): Modifier =
     composed {
         padding(vertical = twSpacing.scale0)
     }
 
-
 fun Modifier.pyPx(): Modifier =
     composed {
         padding(vertical = twSpacing.scalePx)
     }
-
 
 fun Modifier.py0p5(): Modifier =
     composed {
         padding(vertical = twSpacing.scale0p5)
     }
 
-
 fun Modifier.py1(): Modifier =
     composed {
         padding(vertical = twSpacing.scale1)
     }
-
 
 fun Modifier.py1p5(): Modifier =
     composed {
         padding(vertical = twSpacing.scale1p5)
     }
 
-
 fun Modifier.py2(): Modifier =
     composed {
         padding(vertical = twSpacing.scale2)
     }
-
 
 fun Modifier.py2p5(): Modifier =
     composed {
         padding(vertical = twSpacing.scale2p5)
     }
 
-
 fun Modifier.py3(): Modifier =
     composed {
         padding(vertical = twSpacing.scale3)
     }
-
 
 fun Modifier.py3p5(): Modifier =
     composed {
         padding(vertical = twSpacing.scale3p5)
     }
 
-
 fun Modifier.py4(): Modifier =
     composed {
         padding(vertical = twSpacing.scale4)
     }
-
 
 fun Modifier.py5(): Modifier =
     composed {
         padding(vertical = twSpacing.scale5)
     }
 
-
 fun Modifier.py6(): Modifier =
     composed {
         padding(vertical = twSpacing.scale6)
     }
-
 
 fun Modifier.py7(): Modifier =
     composed {
         padding(vertical = twSpacing.scale7)
     }
 
-
 fun Modifier.py8(): Modifier =
     composed {
         padding(vertical = twSpacing.scale8)
     }
-
 
 fun Modifier.py9(): Modifier =
     composed {
         padding(vertical = twSpacing.scale9)
     }
 
-
 fun Modifier.py10(): Modifier =
     composed {
         padding(vertical = twSpacing.scale10)
     }
-
 
 fun Modifier.py11(): Modifier =
     composed {
         padding(vertical = twSpacing.scale11)
     }
 
-
 fun Modifier.py12(): Modifier =
     composed {
         padding(vertical = twSpacing.scale12)
     }
-
 
 fun Modifier.py14(): Modifier =
     composed {
         padding(vertical = twSpacing.scale14)
     }
 
-
 fun Modifier.py16(): Modifier =
     composed {
         padding(vertical = twSpacing.scale16)
     }
-
 
 fun Modifier.py20(): Modifier =
     composed {
         padding(vertical = twSpacing.scale20)
     }
 
-
 fun Modifier.py24(): Modifier =
     composed {
         padding(vertical = twSpacing.scale24)
     }
-
 
 fun Modifier.py28(): Modifier =
     composed {
         padding(vertical = twSpacing.scale28)
     }
 
-
 fun Modifier.py32(): Modifier =
     composed {
         padding(vertical = twSpacing.scale32)
     }
-
 
 fun Modifier.py36(): Modifier =
     composed {
         padding(vertical = twSpacing.scale36)
     }
 
-
 fun Modifier.py40(): Modifier =
     composed {
         padding(vertical = twSpacing.scale40)
     }
-
 
 fun Modifier.py44(): Modifier =
     composed {
         padding(vertical = twSpacing.scale44)
     }
 
-
 fun Modifier.py48(): Modifier =
     composed {
         padding(vertical = twSpacing.scale48)
     }
-
 
 fun Modifier.py52(): Modifier =
     composed {
         padding(vertical = twSpacing.scale52)
     }
 
-
 fun Modifier.py56(): Modifier =
     composed {
         padding(vertical = twSpacing.scale56)
     }
-
 
 fun Modifier.py60(): Modifier =
     composed {
         padding(vertical = twSpacing.scale60)
     }
 
-
 fun Modifier.py64(): Modifier =
     composed {
         padding(vertical = twSpacing.scale64)
     }
-
 
 fun Modifier.py72(): Modifier =
     composed {
         padding(vertical = twSpacing.scale72)
     }
 
-
 fun Modifier.py80(): Modifier =
     composed {
         padding(vertical = twSpacing.scale80)
     }
 
-
 fun Modifier.py96(): Modifier =
     composed {
         padding(vertical = twSpacing.scale96)
     }
-
 
 /**
  * Compose has no distinct margin primitive — [Modifier.padding] applied as the
@@ -1498,1470 +1253,1225 @@ fun Modifier.m0(): Modifier =
         padding(twSpacing.scale0)
     }
 
-
 fun Modifier.mPx(): Modifier =
     composed {
         padding(twSpacing.scalePx)
     }
-
 
 fun Modifier.m0p5(): Modifier =
     composed {
         padding(twSpacing.scale0p5)
     }
 
-
 fun Modifier.m1(): Modifier =
     composed {
         padding(twSpacing.scale1)
     }
-
 
 fun Modifier.m1p5(): Modifier =
     composed {
         padding(twSpacing.scale1p5)
     }
 
-
 fun Modifier.m2(): Modifier =
     composed {
         padding(twSpacing.scale2)
     }
-
 
 fun Modifier.m2p5(): Modifier =
     composed {
         padding(twSpacing.scale2p5)
     }
 
-
 fun Modifier.m3(): Modifier =
     composed {
         padding(twSpacing.scale3)
     }
-
 
 fun Modifier.m3p5(): Modifier =
     composed {
         padding(twSpacing.scale3p5)
     }
 
-
 fun Modifier.m4(): Modifier =
     composed {
         padding(twSpacing.scale4)
     }
-
 
 fun Modifier.m5(): Modifier =
     composed {
         padding(twSpacing.scale5)
     }
 
-
 fun Modifier.m6(): Modifier =
     composed {
         padding(twSpacing.scale6)
     }
-
 
 fun Modifier.m7(): Modifier =
     composed {
         padding(twSpacing.scale7)
     }
 
-
 fun Modifier.m8(): Modifier =
     composed {
         padding(twSpacing.scale8)
     }
-
 
 fun Modifier.m9(): Modifier =
     composed {
         padding(twSpacing.scale9)
     }
 
-
 fun Modifier.m10(): Modifier =
     composed {
         padding(twSpacing.scale10)
     }
-
 
 fun Modifier.m11(): Modifier =
     composed {
         padding(twSpacing.scale11)
     }
 
-
 fun Modifier.m12(): Modifier =
     composed {
         padding(twSpacing.scale12)
     }
-
 
 fun Modifier.m14(): Modifier =
     composed {
         padding(twSpacing.scale14)
     }
 
-
 fun Modifier.m16(): Modifier =
     composed {
         padding(twSpacing.scale16)
     }
-
 
 fun Modifier.m20(): Modifier =
     composed {
         padding(twSpacing.scale20)
     }
 
-
 fun Modifier.m24(): Modifier =
     composed {
         padding(twSpacing.scale24)
     }
-
 
 fun Modifier.m28(): Modifier =
     composed {
         padding(twSpacing.scale28)
     }
 
-
 fun Modifier.m32(): Modifier =
     composed {
         padding(twSpacing.scale32)
     }
-
 
 fun Modifier.m36(): Modifier =
     composed {
         padding(twSpacing.scale36)
     }
 
-
 fun Modifier.m40(): Modifier =
     composed {
         padding(twSpacing.scale40)
     }
-
 
 fun Modifier.m44(): Modifier =
     composed {
         padding(twSpacing.scale44)
     }
 
-
 fun Modifier.m48(): Modifier =
     composed {
         padding(twSpacing.scale48)
     }
-
 
 fun Modifier.m52(): Modifier =
     composed {
         padding(twSpacing.scale52)
     }
 
-
 fun Modifier.m56(): Modifier =
     composed {
         padding(twSpacing.scale56)
     }
-
 
 fun Modifier.m60(): Modifier =
     composed {
         padding(twSpacing.scale60)
     }
 
-
 fun Modifier.m64(): Modifier =
     composed {
         padding(twSpacing.scale64)
     }
-
 
 fun Modifier.m72(): Modifier =
     composed {
         padding(twSpacing.scale72)
     }
 
-
 fun Modifier.m80(): Modifier =
     composed {
         padding(twSpacing.scale80)
     }
-
 
 fun Modifier.m96(): Modifier =
     composed {
         padding(twSpacing.scale96)
     }
 
-
 fun Modifier.mt0(): Modifier =
     composed {
         padding(top = twSpacing.scale0)
     }
-
 
 fun Modifier.mtPx(): Modifier =
     composed {
         padding(top = twSpacing.scalePx)
     }
 
-
 fun Modifier.mt0p5(): Modifier =
     composed {
         padding(top = twSpacing.scale0p5)
     }
-
 
 fun Modifier.mt1(): Modifier =
     composed {
         padding(top = twSpacing.scale1)
     }
 
-
 fun Modifier.mt1p5(): Modifier =
     composed {
         padding(top = twSpacing.scale1p5)
     }
-
 
 fun Modifier.mt2(): Modifier =
     composed {
         padding(top = twSpacing.scale2)
     }
 
-
 fun Modifier.mt2p5(): Modifier =
     composed {
         padding(top = twSpacing.scale2p5)
     }
-
 
 fun Modifier.mt3(): Modifier =
     composed {
         padding(top = twSpacing.scale3)
     }
 
-
 fun Modifier.mt3p5(): Modifier =
     composed {
         padding(top = twSpacing.scale3p5)
     }
-
 
 fun Modifier.mt4(): Modifier =
     composed {
         padding(top = twSpacing.scale4)
     }
 
-
 fun Modifier.mt5(): Modifier =
     composed {
         padding(top = twSpacing.scale5)
     }
-
 
 fun Modifier.mt6(): Modifier =
     composed {
         padding(top = twSpacing.scale6)
     }
 
-
 fun Modifier.mt7(): Modifier =
     composed {
         padding(top = twSpacing.scale7)
     }
-
 
 fun Modifier.mt8(): Modifier =
     composed {
         padding(top = twSpacing.scale8)
     }
 
-
 fun Modifier.mt9(): Modifier =
     composed {
         padding(top = twSpacing.scale9)
     }
-
 
 fun Modifier.mt10(): Modifier =
     composed {
         padding(top = twSpacing.scale10)
     }
 
-
 fun Modifier.mt11(): Modifier =
     composed {
         padding(top = twSpacing.scale11)
     }
-
 
 fun Modifier.mt12(): Modifier =
     composed {
         padding(top = twSpacing.scale12)
     }
 
-
 fun Modifier.mt14(): Modifier =
     composed {
         padding(top = twSpacing.scale14)
     }
-
 
 fun Modifier.mt16(): Modifier =
     composed {
         padding(top = twSpacing.scale16)
     }
 
-
 fun Modifier.mt20(): Modifier =
     composed {
         padding(top = twSpacing.scale20)
     }
-
 
 fun Modifier.mt24(): Modifier =
     composed {
         padding(top = twSpacing.scale24)
     }
 
-
 fun Modifier.mt28(): Modifier =
     composed {
         padding(top = twSpacing.scale28)
     }
-
 
 fun Modifier.mt32(): Modifier =
     composed {
         padding(top = twSpacing.scale32)
     }
 
-
 fun Modifier.mt36(): Modifier =
     composed {
         padding(top = twSpacing.scale36)
     }
-
 
 fun Modifier.mt40(): Modifier =
     composed {
         padding(top = twSpacing.scale40)
     }
 
-
 fun Modifier.mt44(): Modifier =
     composed {
         padding(top = twSpacing.scale44)
     }
-
 
 fun Modifier.mt48(): Modifier =
     composed {
         padding(top = twSpacing.scale48)
     }
 
-
 fun Modifier.mt52(): Modifier =
     composed {
         padding(top = twSpacing.scale52)
     }
-
 
 fun Modifier.mt56(): Modifier =
     composed {
         padding(top = twSpacing.scale56)
     }
 
-
 fun Modifier.mt60(): Modifier =
     composed {
         padding(top = twSpacing.scale60)
     }
-
 
 fun Modifier.mt64(): Modifier =
     composed {
         padding(top = twSpacing.scale64)
     }
 
-
 fun Modifier.mt72(): Modifier =
     composed {
         padding(top = twSpacing.scale72)
     }
-
 
 fun Modifier.mt80(): Modifier =
     composed {
         padding(top = twSpacing.scale80)
     }
 
-
 fun Modifier.mt96(): Modifier =
     composed {
         padding(top = twSpacing.scale96)
     }
-
 
 fun Modifier.mr0(): Modifier =
     composed {
         padding(end = twSpacing.scale0)
     }
 
-
 fun Modifier.mrPx(): Modifier =
     composed {
         padding(end = twSpacing.scalePx)
     }
-
 
 fun Modifier.mr0p5(): Modifier =
     composed {
         padding(end = twSpacing.scale0p5)
     }
 
-
 fun Modifier.mr1(): Modifier =
     composed {
         padding(end = twSpacing.scale1)
     }
-
 
 fun Modifier.mr1p5(): Modifier =
     composed {
         padding(end = twSpacing.scale1p5)
     }
 
-
 fun Modifier.mr2(): Modifier =
     composed {
         padding(end = twSpacing.scale2)
     }
-
 
 fun Modifier.mr2p5(): Modifier =
     composed {
         padding(end = twSpacing.scale2p5)
     }
 
-
 fun Modifier.mr3(): Modifier =
     composed {
         padding(end = twSpacing.scale3)
     }
-
 
 fun Modifier.mr3p5(): Modifier =
     composed {
         padding(end = twSpacing.scale3p5)
     }
 
-
 fun Modifier.mr4(): Modifier =
     composed {
         padding(end = twSpacing.scale4)
     }
-
 
 fun Modifier.mr5(): Modifier =
     composed {
         padding(end = twSpacing.scale5)
     }
 
-
 fun Modifier.mr6(): Modifier =
     composed {
         padding(end = twSpacing.scale6)
     }
-
 
 fun Modifier.mr7(): Modifier =
     composed {
         padding(end = twSpacing.scale7)
     }
 
-
 fun Modifier.mr8(): Modifier =
     composed {
         padding(end = twSpacing.scale8)
     }
-
 
 fun Modifier.mr9(): Modifier =
     composed {
         padding(end = twSpacing.scale9)
     }
 
-
 fun Modifier.mr10(): Modifier =
     composed {
         padding(end = twSpacing.scale10)
     }
-
 
 fun Modifier.mr11(): Modifier =
     composed {
         padding(end = twSpacing.scale11)
     }
 
-
 fun Modifier.mr12(): Modifier =
     composed {
         padding(end = twSpacing.scale12)
     }
-
 
 fun Modifier.mr14(): Modifier =
     composed {
         padding(end = twSpacing.scale14)
     }
 
-
 fun Modifier.mr16(): Modifier =
     composed {
         padding(end = twSpacing.scale16)
     }
-
 
 fun Modifier.mr20(): Modifier =
     composed {
         padding(end = twSpacing.scale20)
     }
 
-
 fun Modifier.mr24(): Modifier =
     composed {
         padding(end = twSpacing.scale24)
     }
-
 
 fun Modifier.mr28(): Modifier =
     composed {
         padding(end = twSpacing.scale28)
     }
 
-
 fun Modifier.mr32(): Modifier =
     composed {
         padding(end = twSpacing.scale32)
     }
-
 
 fun Modifier.mr36(): Modifier =
     composed {
         padding(end = twSpacing.scale36)
     }
 
-
 fun Modifier.mr40(): Modifier =
     composed {
         padding(end = twSpacing.scale40)
     }
-
 
 fun Modifier.mr44(): Modifier =
     composed {
         padding(end = twSpacing.scale44)
     }
 
-
 fun Modifier.mr48(): Modifier =
     composed {
         padding(end = twSpacing.scale48)
     }
-
 
 fun Modifier.mr52(): Modifier =
     composed {
         padding(end = twSpacing.scale52)
     }
 
-
 fun Modifier.mr56(): Modifier =
     composed {
         padding(end = twSpacing.scale56)
     }
-
 
 fun Modifier.mr60(): Modifier =
     composed {
         padding(end = twSpacing.scale60)
     }
 
-
 fun Modifier.mr64(): Modifier =
     composed {
         padding(end = twSpacing.scale64)
     }
-
 
 fun Modifier.mr72(): Modifier =
     composed {
         padding(end = twSpacing.scale72)
     }
 
-
 fun Modifier.mr80(): Modifier =
     composed {
         padding(end = twSpacing.scale80)
     }
-
 
 fun Modifier.mr96(): Modifier =
     composed {
         padding(end = twSpacing.scale96)
     }
 
-
 fun Modifier.mb0(): Modifier =
     composed {
         padding(bottom = twSpacing.scale0)
     }
-
 
 fun Modifier.mbPx(): Modifier =
     composed {
         padding(bottom = twSpacing.scalePx)
     }
 
-
 fun Modifier.mb0p5(): Modifier =
     composed {
         padding(bottom = twSpacing.scale0p5)
     }
-
 
 fun Modifier.mb1(): Modifier =
     composed {
         padding(bottom = twSpacing.scale1)
     }
 
-
 fun Modifier.mb1p5(): Modifier =
     composed {
         padding(bottom = twSpacing.scale1p5)
     }
-
 
 fun Modifier.mb2(): Modifier =
     composed {
         padding(bottom = twSpacing.scale2)
     }
 
-
 fun Modifier.mb2p5(): Modifier =
     composed {
         padding(bottom = twSpacing.scale2p5)
     }
-
 
 fun Modifier.mb3(): Modifier =
     composed {
         padding(bottom = twSpacing.scale3)
     }
 
-
 fun Modifier.mb3p5(): Modifier =
     composed {
         padding(bottom = twSpacing.scale3p5)
     }
-
 
 fun Modifier.mb4(): Modifier =
     composed {
         padding(bottom = twSpacing.scale4)
     }
 
-
 fun Modifier.mb5(): Modifier =
     composed {
         padding(bottom = twSpacing.scale5)
     }
-
 
 fun Modifier.mb6(): Modifier =
     composed {
         padding(bottom = twSpacing.scale6)
     }
 
-
 fun Modifier.mb7(): Modifier =
     composed {
         padding(bottom = twSpacing.scale7)
     }
-
 
 fun Modifier.mb8(): Modifier =
     composed {
         padding(bottom = twSpacing.scale8)
     }
 
-
 fun Modifier.mb9(): Modifier =
     composed {
         padding(bottom = twSpacing.scale9)
     }
-
 
 fun Modifier.mb10(): Modifier =
     composed {
         padding(bottom = twSpacing.scale10)
     }
 
-
 fun Modifier.mb11(): Modifier =
     composed {
         padding(bottom = twSpacing.scale11)
     }
-
 
 fun Modifier.mb12(): Modifier =
     composed {
         padding(bottom = twSpacing.scale12)
     }
 
-
 fun Modifier.mb14(): Modifier =
     composed {
         padding(bottom = twSpacing.scale14)
     }
-
 
 fun Modifier.mb16(): Modifier =
     composed {
         padding(bottom = twSpacing.scale16)
     }
 
-
 fun Modifier.mb20(): Modifier =
     composed {
         padding(bottom = twSpacing.scale20)
     }
-
 
 fun Modifier.mb24(): Modifier =
     composed {
         padding(bottom = twSpacing.scale24)
     }
 
-
 fun Modifier.mb28(): Modifier =
     composed {
         padding(bottom = twSpacing.scale28)
     }
-
 
 fun Modifier.mb32(): Modifier =
     composed {
         padding(bottom = twSpacing.scale32)
     }
 
-
 fun Modifier.mb36(): Modifier =
     composed {
         padding(bottom = twSpacing.scale36)
     }
-
 
 fun Modifier.mb40(): Modifier =
     composed {
         padding(bottom = twSpacing.scale40)
     }
 
-
 fun Modifier.mb44(): Modifier =
     composed {
         padding(bottom = twSpacing.scale44)
     }
-
 
 fun Modifier.mb48(): Modifier =
     composed {
         padding(bottom = twSpacing.scale48)
     }
 
-
 fun Modifier.mb52(): Modifier =
     composed {
         padding(bottom = twSpacing.scale52)
     }
-
 
 fun Modifier.mb56(): Modifier =
     composed {
         padding(bottom = twSpacing.scale56)
     }
 
-
 fun Modifier.mb60(): Modifier =
     composed {
         padding(bottom = twSpacing.scale60)
     }
-
 
 fun Modifier.mb64(): Modifier =
     composed {
         padding(bottom = twSpacing.scale64)
     }
 
-
 fun Modifier.mb72(): Modifier =
     composed {
         padding(bottom = twSpacing.scale72)
     }
-
 
 fun Modifier.mb80(): Modifier =
     composed {
         padding(bottom = twSpacing.scale80)
     }
 
-
 fun Modifier.mb96(): Modifier =
     composed {
         padding(bottom = twSpacing.scale96)
     }
-
 
 fun Modifier.ml0(): Modifier =
     composed {
         padding(start = twSpacing.scale0)
     }
 
-
 fun Modifier.mlPx(): Modifier =
     composed {
         padding(start = twSpacing.scalePx)
     }
-
 
 fun Modifier.ml0p5(): Modifier =
     composed {
         padding(start = twSpacing.scale0p5)
     }
 
-
 fun Modifier.ml1(): Modifier =
     composed {
         padding(start = twSpacing.scale1)
     }
-
 
 fun Modifier.ml1p5(): Modifier =
     composed {
         padding(start = twSpacing.scale1p5)
     }
 
-
 fun Modifier.ml2(): Modifier =
     composed {
         padding(start = twSpacing.scale2)
     }
-
 
 fun Modifier.ml2p5(): Modifier =
     composed {
         padding(start = twSpacing.scale2p5)
     }
 
-
 fun Modifier.ml3(): Modifier =
     composed {
         padding(start = twSpacing.scale3)
     }
-
 
 fun Modifier.ml3p5(): Modifier =
     composed {
         padding(start = twSpacing.scale3p5)
     }
 
-
 fun Modifier.ml4(): Modifier =
     composed {
         padding(start = twSpacing.scale4)
     }
-
 
 fun Modifier.ml5(): Modifier =
     composed {
         padding(start = twSpacing.scale5)
     }
 
-
 fun Modifier.ml6(): Modifier =
     composed {
         padding(start = twSpacing.scale6)
     }
-
 
 fun Modifier.ml7(): Modifier =
     composed {
         padding(start = twSpacing.scale7)
     }
 
-
 fun Modifier.ml8(): Modifier =
     composed {
         padding(start = twSpacing.scale8)
     }
-
 
 fun Modifier.ml9(): Modifier =
     composed {
         padding(start = twSpacing.scale9)
     }
 
-
 fun Modifier.ml10(): Modifier =
     composed {
         padding(start = twSpacing.scale10)
     }
-
 
 fun Modifier.ml11(): Modifier =
     composed {
         padding(start = twSpacing.scale11)
     }
 
-
 fun Modifier.ml12(): Modifier =
     composed {
         padding(start = twSpacing.scale12)
     }
-
 
 fun Modifier.ml14(): Modifier =
     composed {
         padding(start = twSpacing.scale14)
     }
 
-
 fun Modifier.ml16(): Modifier =
     composed {
         padding(start = twSpacing.scale16)
     }
-
 
 fun Modifier.ml20(): Modifier =
     composed {
         padding(start = twSpacing.scale20)
     }
 
-
 fun Modifier.ml24(): Modifier =
     composed {
         padding(start = twSpacing.scale24)
     }
-
 
 fun Modifier.ml28(): Modifier =
     composed {
         padding(start = twSpacing.scale28)
     }
 
-
 fun Modifier.ml32(): Modifier =
     composed {
         padding(start = twSpacing.scale32)
     }
-
 
 fun Modifier.ml36(): Modifier =
     composed {
         padding(start = twSpacing.scale36)
     }
 
-
 fun Modifier.ml40(): Modifier =
     composed {
         padding(start = twSpacing.scale40)
     }
-
 
 fun Modifier.ml44(): Modifier =
     composed {
         padding(start = twSpacing.scale44)
     }
 
-
 fun Modifier.ml48(): Modifier =
     composed {
         padding(start = twSpacing.scale48)
     }
-
 
 fun Modifier.ml52(): Modifier =
     composed {
         padding(start = twSpacing.scale52)
     }
 
-
 fun Modifier.ml56(): Modifier =
     composed {
         padding(start = twSpacing.scale56)
     }
-
 
 fun Modifier.ml60(): Modifier =
     composed {
         padding(start = twSpacing.scale60)
     }
 
-
 fun Modifier.ml64(): Modifier =
     composed {
         padding(start = twSpacing.scale64)
     }
-
 
 fun Modifier.ml72(): Modifier =
     composed {
         padding(start = twSpacing.scale72)
     }
 
-
 fun Modifier.ml80(): Modifier =
     composed {
         padding(start = twSpacing.scale80)
     }
-
 
 fun Modifier.ml96(): Modifier =
     composed {
         padding(start = twSpacing.scale96)
     }
 
-
 fun Modifier.mx0(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale0)
     }
-
 
 fun Modifier.mxPx(): Modifier =
     composed {
         padding(horizontal = twSpacing.scalePx)
     }
 
-
 fun Modifier.mx0p5(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale0p5)
     }
-
 
 fun Modifier.mx1(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale1)
     }
 
-
 fun Modifier.mx1p5(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale1p5)
     }
-
 
 fun Modifier.mx2(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale2)
     }
 
-
 fun Modifier.mx2p5(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale2p5)
     }
-
 
 fun Modifier.mx3(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale3)
     }
 
-
 fun Modifier.mx3p5(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale3p5)
     }
-
 
 fun Modifier.mx4(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale4)
     }
 
-
 fun Modifier.mx5(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale5)
     }
-
 
 fun Modifier.mx6(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale6)
     }
 
-
 fun Modifier.mx7(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale7)
     }
-
 
 fun Modifier.mx8(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale8)
     }
 
-
 fun Modifier.mx9(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale9)
     }
-
 
 fun Modifier.mx10(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale10)
     }
 
-
 fun Modifier.mx11(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale11)
     }
-
 
 fun Modifier.mx12(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale12)
     }
 
-
 fun Modifier.mx14(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale14)
     }
-
 
 fun Modifier.mx16(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale16)
     }
 
-
 fun Modifier.mx20(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale20)
     }
-
 
 fun Modifier.mx24(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale24)
     }
 
-
 fun Modifier.mx28(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale28)
     }
-
 
 fun Modifier.mx32(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale32)
     }
 
-
 fun Modifier.mx36(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale36)
     }
-
 
 fun Modifier.mx40(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale40)
     }
 
-
 fun Modifier.mx44(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale44)
     }
-
 
 fun Modifier.mx48(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale48)
     }
 
-
 fun Modifier.mx52(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale52)
     }
-
 
 fun Modifier.mx56(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale56)
     }
 
-
 fun Modifier.mx60(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale60)
     }
-
 
 fun Modifier.mx64(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale64)
     }
 
-
 fun Modifier.mx72(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale72)
     }
-
 
 fun Modifier.mx80(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale80)
     }
 
-
 fun Modifier.mx96(): Modifier =
     composed {
         padding(horizontal = twSpacing.scale96)
     }
-
 
 fun Modifier.my0(): Modifier =
     composed {
         padding(vertical = twSpacing.scale0)
     }
 
-
 fun Modifier.myPx(): Modifier =
     composed {
         padding(vertical = twSpacing.scalePx)
     }
-
 
 fun Modifier.my0p5(): Modifier =
     composed {
         padding(vertical = twSpacing.scale0p5)
     }
 
-
 fun Modifier.my1(): Modifier =
     composed {
         padding(vertical = twSpacing.scale1)
     }
-
 
 fun Modifier.my1p5(): Modifier =
     composed {
         padding(vertical = twSpacing.scale1p5)
     }
 
-
 fun Modifier.my2(): Modifier =
     composed {
         padding(vertical = twSpacing.scale2)
     }
-
 
 fun Modifier.my2p5(): Modifier =
     composed {
         padding(vertical = twSpacing.scale2p5)
     }
 
-
 fun Modifier.my3(): Modifier =
     composed {
         padding(vertical = twSpacing.scale3)
     }
-
 
 fun Modifier.my3p5(): Modifier =
     composed {
         padding(vertical = twSpacing.scale3p5)
     }
 
-
 fun Modifier.my4(): Modifier =
     composed {
         padding(vertical = twSpacing.scale4)
     }
-
 
 fun Modifier.my5(): Modifier =
     composed {
         padding(vertical = twSpacing.scale5)
     }
 
-
 fun Modifier.my6(): Modifier =
     composed {
         padding(vertical = twSpacing.scale6)
     }
-
 
 fun Modifier.my7(): Modifier =
     composed {
         padding(vertical = twSpacing.scale7)
     }
 
-
 fun Modifier.my8(): Modifier =
     composed {
         padding(vertical = twSpacing.scale8)
     }
-
 
 fun Modifier.my9(): Modifier =
     composed {
         padding(vertical = twSpacing.scale9)
     }
 
-
 fun Modifier.my10(): Modifier =
     composed {
         padding(vertical = twSpacing.scale10)
     }
-
 
 fun Modifier.my11(): Modifier =
     composed {
         padding(vertical = twSpacing.scale11)
     }
 
-
 fun Modifier.my12(): Modifier =
     composed {
         padding(vertical = twSpacing.scale12)
     }
-
 
 fun Modifier.my14(): Modifier =
     composed {
         padding(vertical = twSpacing.scale14)
     }
 
-
 fun Modifier.my16(): Modifier =
     composed {
         padding(vertical = twSpacing.scale16)
     }
-
 
 fun Modifier.my20(): Modifier =
     composed {
         padding(vertical = twSpacing.scale20)
     }
 
-
 fun Modifier.my24(): Modifier =
     composed {
         padding(vertical = twSpacing.scale24)
     }
-
 
 fun Modifier.my28(): Modifier =
     composed {
         padding(vertical = twSpacing.scale28)
     }
 
-
 fun Modifier.my32(): Modifier =
     composed {
         padding(vertical = twSpacing.scale32)
     }
-
 
 fun Modifier.my36(): Modifier =
     composed {
         padding(vertical = twSpacing.scale36)
     }
 
-
 fun Modifier.my40(): Modifier =
     composed {
         padding(vertical = twSpacing.scale40)
     }
-
 
 fun Modifier.my44(): Modifier =
     composed {
         padding(vertical = twSpacing.scale44)
     }
 
-
 fun Modifier.my48(): Modifier =
     composed {
         padding(vertical = twSpacing.scale48)
     }
-
 
 fun Modifier.my52(): Modifier =
     composed {
         padding(vertical = twSpacing.scale52)
     }
 
-
 fun Modifier.my56(): Modifier =
     composed {
         padding(vertical = twSpacing.scale56)
     }
-
 
 fun Modifier.my60(): Modifier =
     composed {
         padding(vertical = twSpacing.scale60)
     }
 
-
 fun Modifier.my64(): Modifier =
     composed {
         padding(vertical = twSpacing.scale64)
     }
-
 
 fun Modifier.my72(): Modifier =
     composed {
         padding(vertical = twSpacing.scale72)
     }
 
-
 fun Modifier.my80(): Modifier =
     composed {
         padding(vertical = twSpacing.scale80)
     }
 
-
 fun Modifier.my96(): Modifier =
     composed {
         padding(vertical = twSpacing.scale96)
     }
-
 
 /**
  * Negative margin emulation via [Modifier.offset]. This shifts the *visual*
@@ -2975,1224 +2485,1020 @@ fun Modifier.mtNegPx(): Modifier =
         offset(y = -twSpacing.scalePx)
     }
 
-
 fun Modifier.mtNeg0p5(): Modifier =
     composed {
         offset(y = -twSpacing.scale0p5)
     }
-
 
 fun Modifier.mtNeg1(): Modifier =
     composed {
         offset(y = -twSpacing.scale1)
     }
 
-
 fun Modifier.mtNeg1p5(): Modifier =
     composed {
         offset(y = -twSpacing.scale1p5)
     }
-
 
 fun Modifier.mtNeg2(): Modifier =
     composed {
         offset(y = -twSpacing.scale2)
     }
 
-
 fun Modifier.mtNeg2p5(): Modifier =
     composed {
         offset(y = -twSpacing.scale2p5)
     }
-
 
 fun Modifier.mtNeg3(): Modifier =
     composed {
         offset(y = -twSpacing.scale3)
     }
 
-
 fun Modifier.mtNeg3p5(): Modifier =
     composed {
         offset(y = -twSpacing.scale3p5)
     }
-
 
 fun Modifier.mtNeg4(): Modifier =
     composed {
         offset(y = -twSpacing.scale4)
     }
 
-
 fun Modifier.mtNeg5(): Modifier =
     composed {
         offset(y = -twSpacing.scale5)
     }
-
 
 fun Modifier.mtNeg6(): Modifier =
     composed {
         offset(y = -twSpacing.scale6)
     }
 
-
 fun Modifier.mtNeg7(): Modifier =
     composed {
         offset(y = -twSpacing.scale7)
     }
-
 
 fun Modifier.mtNeg8(): Modifier =
     composed {
         offset(y = -twSpacing.scale8)
     }
 
-
 fun Modifier.mtNeg9(): Modifier =
     composed {
         offset(y = -twSpacing.scale9)
     }
-
 
 fun Modifier.mtNeg10(): Modifier =
     composed {
         offset(y = -twSpacing.scale10)
     }
 
-
 fun Modifier.mtNeg11(): Modifier =
     composed {
         offset(y = -twSpacing.scale11)
     }
-
 
 fun Modifier.mtNeg12(): Modifier =
     composed {
         offset(y = -twSpacing.scale12)
     }
 
-
 fun Modifier.mtNeg14(): Modifier =
     composed {
         offset(y = -twSpacing.scale14)
     }
-
 
 fun Modifier.mtNeg16(): Modifier =
     composed {
         offset(y = -twSpacing.scale16)
     }
 
-
 fun Modifier.mtNeg20(): Modifier =
     composed {
         offset(y = -twSpacing.scale20)
     }
-
 
 fun Modifier.mtNeg24(): Modifier =
     composed {
         offset(y = -twSpacing.scale24)
     }
 
-
 fun Modifier.mtNeg28(): Modifier =
     composed {
         offset(y = -twSpacing.scale28)
     }
-
 
 fun Modifier.mtNeg32(): Modifier =
     composed {
         offset(y = -twSpacing.scale32)
     }
 
-
 fun Modifier.mtNeg36(): Modifier =
     composed {
         offset(y = -twSpacing.scale36)
     }
-
 
 fun Modifier.mtNeg40(): Modifier =
     composed {
         offset(y = -twSpacing.scale40)
     }
 
-
 fun Modifier.mtNeg44(): Modifier =
     composed {
         offset(y = -twSpacing.scale44)
     }
-
 
 fun Modifier.mtNeg48(): Modifier =
     composed {
         offset(y = -twSpacing.scale48)
     }
 
-
 fun Modifier.mtNeg52(): Modifier =
     composed {
         offset(y = -twSpacing.scale52)
     }
-
 
 fun Modifier.mtNeg56(): Modifier =
     composed {
         offset(y = -twSpacing.scale56)
     }
 
-
 fun Modifier.mtNeg60(): Modifier =
     composed {
         offset(y = -twSpacing.scale60)
     }
-
 
 fun Modifier.mtNeg64(): Modifier =
     composed {
         offset(y = -twSpacing.scale64)
     }
 
-
 fun Modifier.mtNeg72(): Modifier =
     composed {
         offset(y = -twSpacing.scale72)
     }
-
 
 fun Modifier.mtNeg80(): Modifier =
     composed {
         offset(y = -twSpacing.scale80)
     }
 
-
 fun Modifier.mtNeg96(): Modifier =
     composed {
         offset(y = -twSpacing.scale96)
     }
-
 
 fun Modifier.mbNegPx(): Modifier =
     composed {
         offset(y = twSpacing.scalePx)
     }
 
-
 fun Modifier.mbNeg0p5(): Modifier =
     composed {
         offset(y = twSpacing.scale0p5)
     }
-
 
 fun Modifier.mbNeg1(): Modifier =
     composed {
         offset(y = twSpacing.scale1)
     }
 
-
 fun Modifier.mbNeg1p5(): Modifier =
     composed {
         offset(y = twSpacing.scale1p5)
     }
-
 
 fun Modifier.mbNeg2(): Modifier =
     composed {
         offset(y = twSpacing.scale2)
     }
 
-
 fun Modifier.mbNeg2p5(): Modifier =
     composed {
         offset(y = twSpacing.scale2p5)
     }
-
 
 fun Modifier.mbNeg3(): Modifier =
     composed {
         offset(y = twSpacing.scale3)
     }
 
-
 fun Modifier.mbNeg3p5(): Modifier =
     composed {
         offset(y = twSpacing.scale3p5)
     }
-
 
 fun Modifier.mbNeg4(): Modifier =
     composed {
         offset(y = twSpacing.scale4)
     }
 
-
 fun Modifier.mbNeg5(): Modifier =
     composed {
         offset(y = twSpacing.scale5)
     }
-
 
 fun Modifier.mbNeg6(): Modifier =
     composed {
         offset(y = twSpacing.scale6)
     }
 
-
 fun Modifier.mbNeg7(): Modifier =
     composed {
         offset(y = twSpacing.scale7)
     }
-
 
 fun Modifier.mbNeg8(): Modifier =
     composed {
         offset(y = twSpacing.scale8)
     }
 
-
 fun Modifier.mbNeg9(): Modifier =
     composed {
         offset(y = twSpacing.scale9)
     }
-
 
 fun Modifier.mbNeg10(): Modifier =
     composed {
         offset(y = twSpacing.scale10)
     }
 
-
 fun Modifier.mbNeg11(): Modifier =
     composed {
         offset(y = twSpacing.scale11)
     }
-
 
 fun Modifier.mbNeg12(): Modifier =
     composed {
         offset(y = twSpacing.scale12)
     }
 
-
 fun Modifier.mbNeg14(): Modifier =
     composed {
         offset(y = twSpacing.scale14)
     }
-
 
 fun Modifier.mbNeg16(): Modifier =
     composed {
         offset(y = twSpacing.scale16)
     }
 
-
 fun Modifier.mbNeg20(): Modifier =
     composed {
         offset(y = twSpacing.scale20)
     }
-
 
 fun Modifier.mbNeg24(): Modifier =
     composed {
         offset(y = twSpacing.scale24)
     }
 
-
 fun Modifier.mbNeg28(): Modifier =
     composed {
         offset(y = twSpacing.scale28)
     }
-
 
 fun Modifier.mbNeg32(): Modifier =
     composed {
         offset(y = twSpacing.scale32)
     }
 
-
 fun Modifier.mbNeg36(): Modifier =
     composed {
         offset(y = twSpacing.scale36)
     }
-
 
 fun Modifier.mbNeg40(): Modifier =
     composed {
         offset(y = twSpacing.scale40)
     }
 
-
 fun Modifier.mbNeg44(): Modifier =
     composed {
         offset(y = twSpacing.scale44)
     }
-
 
 fun Modifier.mbNeg48(): Modifier =
     composed {
         offset(y = twSpacing.scale48)
     }
 
-
 fun Modifier.mbNeg52(): Modifier =
     composed {
         offset(y = twSpacing.scale52)
     }
-
 
 fun Modifier.mbNeg56(): Modifier =
     composed {
         offset(y = twSpacing.scale56)
     }
 
-
 fun Modifier.mbNeg60(): Modifier =
     composed {
         offset(y = twSpacing.scale60)
     }
-
 
 fun Modifier.mbNeg64(): Modifier =
     composed {
         offset(y = twSpacing.scale64)
     }
 
-
 fun Modifier.mbNeg72(): Modifier =
     composed {
         offset(y = twSpacing.scale72)
     }
-
 
 fun Modifier.mbNeg80(): Modifier =
     composed {
         offset(y = twSpacing.scale80)
     }
 
-
 fun Modifier.mbNeg96(): Modifier =
     composed {
         offset(y = twSpacing.scale96)
     }
-
 
 fun Modifier.mlNegPx(): Modifier =
     composed {
         offset(x = -twSpacing.scalePx)
     }
 
-
 fun Modifier.mlNeg0p5(): Modifier =
     composed {
         offset(x = -twSpacing.scale0p5)
     }
-
 
 fun Modifier.mlNeg1(): Modifier =
     composed {
         offset(x = -twSpacing.scale1)
     }
 
-
 fun Modifier.mlNeg1p5(): Modifier =
     composed {
         offset(x = -twSpacing.scale1p5)
     }
-
 
 fun Modifier.mlNeg2(): Modifier =
     composed {
         offset(x = -twSpacing.scale2)
     }
 
-
 fun Modifier.mlNeg2p5(): Modifier =
     composed {
         offset(x = -twSpacing.scale2p5)
     }
-
 
 fun Modifier.mlNeg3(): Modifier =
     composed {
         offset(x = -twSpacing.scale3)
     }
 
-
 fun Modifier.mlNeg3p5(): Modifier =
     composed {
         offset(x = -twSpacing.scale3p5)
     }
-
 
 fun Modifier.mlNeg4(): Modifier =
     composed {
         offset(x = -twSpacing.scale4)
     }
 
-
 fun Modifier.mlNeg5(): Modifier =
     composed {
         offset(x = -twSpacing.scale5)
     }
-
 
 fun Modifier.mlNeg6(): Modifier =
     composed {
         offset(x = -twSpacing.scale6)
     }
 
-
 fun Modifier.mlNeg7(): Modifier =
     composed {
         offset(x = -twSpacing.scale7)
     }
-
 
 fun Modifier.mlNeg8(): Modifier =
     composed {
         offset(x = -twSpacing.scale8)
     }
 
-
 fun Modifier.mlNeg9(): Modifier =
     composed {
         offset(x = -twSpacing.scale9)
     }
-
 
 fun Modifier.mlNeg10(): Modifier =
     composed {
         offset(x = -twSpacing.scale10)
     }
 
-
 fun Modifier.mlNeg11(): Modifier =
     composed {
         offset(x = -twSpacing.scale11)
     }
-
 
 fun Modifier.mlNeg12(): Modifier =
     composed {
         offset(x = -twSpacing.scale12)
     }
 
-
 fun Modifier.mlNeg14(): Modifier =
     composed {
         offset(x = -twSpacing.scale14)
     }
-
 
 fun Modifier.mlNeg16(): Modifier =
     composed {
         offset(x = -twSpacing.scale16)
     }
 
-
 fun Modifier.mlNeg20(): Modifier =
     composed {
         offset(x = -twSpacing.scale20)
     }
-
 
 fun Modifier.mlNeg24(): Modifier =
     composed {
         offset(x = -twSpacing.scale24)
     }
 
-
 fun Modifier.mlNeg28(): Modifier =
     composed {
         offset(x = -twSpacing.scale28)
     }
-
 
 fun Modifier.mlNeg32(): Modifier =
     composed {
         offset(x = -twSpacing.scale32)
     }
 
-
 fun Modifier.mlNeg36(): Modifier =
     composed {
         offset(x = -twSpacing.scale36)
     }
-
 
 fun Modifier.mlNeg40(): Modifier =
     composed {
         offset(x = -twSpacing.scale40)
     }
 
-
 fun Modifier.mlNeg44(): Modifier =
     composed {
         offset(x = -twSpacing.scale44)
     }
-
 
 fun Modifier.mlNeg48(): Modifier =
     composed {
         offset(x = -twSpacing.scale48)
     }
 
-
 fun Modifier.mlNeg52(): Modifier =
     composed {
         offset(x = -twSpacing.scale52)
     }
-
 
 fun Modifier.mlNeg56(): Modifier =
     composed {
         offset(x = -twSpacing.scale56)
     }
 
-
 fun Modifier.mlNeg60(): Modifier =
     composed {
         offset(x = -twSpacing.scale60)
     }
-
 
 fun Modifier.mlNeg64(): Modifier =
     composed {
         offset(x = -twSpacing.scale64)
     }
 
-
 fun Modifier.mlNeg72(): Modifier =
     composed {
         offset(x = -twSpacing.scale72)
     }
-
 
 fun Modifier.mlNeg80(): Modifier =
     composed {
         offset(x = -twSpacing.scale80)
     }
 
-
 fun Modifier.mlNeg96(): Modifier =
     composed {
         offset(x = -twSpacing.scale96)
     }
-
 
 fun Modifier.mrNegPx(): Modifier =
     composed {
         offset(x = twSpacing.scalePx)
     }
 
-
 fun Modifier.mrNeg0p5(): Modifier =
     composed {
         offset(x = twSpacing.scale0p5)
     }
-
 
 fun Modifier.mrNeg1(): Modifier =
     composed {
         offset(x = twSpacing.scale1)
     }
 
-
 fun Modifier.mrNeg1p5(): Modifier =
     composed {
         offset(x = twSpacing.scale1p5)
     }
-
 
 fun Modifier.mrNeg2(): Modifier =
     composed {
         offset(x = twSpacing.scale2)
     }
 
-
 fun Modifier.mrNeg2p5(): Modifier =
     composed {
         offset(x = twSpacing.scale2p5)
     }
-
 
 fun Modifier.mrNeg3(): Modifier =
     composed {
         offset(x = twSpacing.scale3)
     }
 
-
 fun Modifier.mrNeg3p5(): Modifier =
     composed {
         offset(x = twSpacing.scale3p5)
     }
-
 
 fun Modifier.mrNeg4(): Modifier =
     composed {
         offset(x = twSpacing.scale4)
     }
 
-
 fun Modifier.mrNeg5(): Modifier =
     composed {
         offset(x = twSpacing.scale5)
     }
-
 
 fun Modifier.mrNeg6(): Modifier =
     composed {
         offset(x = twSpacing.scale6)
     }
 
-
 fun Modifier.mrNeg7(): Modifier =
     composed {
         offset(x = twSpacing.scale7)
     }
-
 
 fun Modifier.mrNeg8(): Modifier =
     composed {
         offset(x = twSpacing.scale8)
     }
 
-
 fun Modifier.mrNeg9(): Modifier =
     composed {
         offset(x = twSpacing.scale9)
     }
-
 
 fun Modifier.mrNeg10(): Modifier =
     composed {
         offset(x = twSpacing.scale10)
     }
 
-
 fun Modifier.mrNeg11(): Modifier =
     composed {
         offset(x = twSpacing.scale11)
     }
-
 
 fun Modifier.mrNeg12(): Modifier =
     composed {
         offset(x = twSpacing.scale12)
     }
 
-
 fun Modifier.mrNeg14(): Modifier =
     composed {
         offset(x = twSpacing.scale14)
     }
-
 
 fun Modifier.mrNeg16(): Modifier =
     composed {
         offset(x = twSpacing.scale16)
     }
 
-
 fun Modifier.mrNeg20(): Modifier =
     composed {
         offset(x = twSpacing.scale20)
     }
-
 
 fun Modifier.mrNeg24(): Modifier =
     composed {
         offset(x = twSpacing.scale24)
     }
 
-
 fun Modifier.mrNeg28(): Modifier =
     composed {
         offset(x = twSpacing.scale28)
     }
-
 
 fun Modifier.mrNeg32(): Modifier =
     composed {
         offset(x = twSpacing.scale32)
     }
 
-
 fun Modifier.mrNeg36(): Modifier =
     composed {
         offset(x = twSpacing.scale36)
     }
-
 
 fun Modifier.mrNeg40(): Modifier =
     composed {
         offset(x = twSpacing.scale40)
     }
 
-
 fun Modifier.mrNeg44(): Modifier =
     composed {
         offset(x = twSpacing.scale44)
     }
-
 
 fun Modifier.mrNeg48(): Modifier =
     composed {
         offset(x = twSpacing.scale48)
     }
 
-
 fun Modifier.mrNeg52(): Modifier =
     composed {
         offset(x = twSpacing.scale52)
     }
-
 
 fun Modifier.mrNeg56(): Modifier =
     composed {
         offset(x = twSpacing.scale56)
     }
 
-
 fun Modifier.mrNeg60(): Modifier =
     composed {
         offset(x = twSpacing.scale60)
     }
-
 
 fun Modifier.mrNeg64(): Modifier =
     composed {
         offset(x = twSpacing.scale64)
     }
 
-
 fun Modifier.mrNeg72(): Modifier =
     composed {
         offset(x = twSpacing.scale72)
     }
-
 
 fun Modifier.mrNeg80(): Modifier =
     composed {
         offset(x = twSpacing.scale80)
     }
 
-
 fun Modifier.mrNeg96(): Modifier =
     composed {
         offset(x = twSpacing.scale96)
     }
-
 
 fun Modifier.mxNegPx(): Modifier =
     composed {
         offset(x = -twSpacing.scalePx)
     }
 
-
 fun Modifier.mxNeg0p5(): Modifier =
     composed {
         offset(x = -twSpacing.scale0p5)
     }
-
 
 fun Modifier.mxNeg1(): Modifier =
     composed {
         offset(x = -twSpacing.scale1)
     }
 
-
 fun Modifier.mxNeg1p5(): Modifier =
     composed {
         offset(x = -twSpacing.scale1p5)
     }
-
 
 fun Modifier.mxNeg2(): Modifier =
     composed {
         offset(x = -twSpacing.scale2)
     }
 
-
 fun Modifier.mxNeg2p5(): Modifier =
     composed {
         offset(x = -twSpacing.scale2p5)
     }
-
 
 fun Modifier.mxNeg3(): Modifier =
     composed {
         offset(x = -twSpacing.scale3)
     }
 
-
 fun Modifier.mxNeg3p5(): Modifier =
     composed {
         offset(x = -twSpacing.scale3p5)
     }
-
 
 fun Modifier.mxNeg4(): Modifier =
     composed {
         offset(x = -twSpacing.scale4)
     }
 
-
 fun Modifier.mxNeg5(): Modifier =
     composed {
         offset(x = -twSpacing.scale5)
     }
-
 
 fun Modifier.mxNeg6(): Modifier =
     composed {
         offset(x = -twSpacing.scale6)
     }
 
-
 fun Modifier.mxNeg7(): Modifier =
     composed {
         offset(x = -twSpacing.scale7)
     }
-
 
 fun Modifier.mxNeg8(): Modifier =
     composed {
         offset(x = -twSpacing.scale8)
     }
 
-
 fun Modifier.mxNeg9(): Modifier =
     composed {
         offset(x = -twSpacing.scale9)
     }
-
 
 fun Modifier.mxNeg10(): Modifier =
     composed {
         offset(x = -twSpacing.scale10)
     }
 
-
 fun Modifier.mxNeg11(): Modifier =
     composed {
         offset(x = -twSpacing.scale11)
     }
-
 
 fun Modifier.mxNeg12(): Modifier =
     composed {
         offset(x = -twSpacing.scale12)
     }
 
-
 fun Modifier.mxNeg14(): Modifier =
     composed {
         offset(x = -twSpacing.scale14)
     }
-
 
 fun Modifier.mxNeg16(): Modifier =
     composed {
         offset(x = -twSpacing.scale16)
     }
 
-
 fun Modifier.mxNeg20(): Modifier =
     composed {
         offset(x = -twSpacing.scale20)
     }
-
 
 fun Modifier.mxNeg24(): Modifier =
     composed {
         offset(x = -twSpacing.scale24)
     }
 
-
 fun Modifier.mxNeg28(): Modifier =
     composed {
         offset(x = -twSpacing.scale28)
     }
-
 
 fun Modifier.mxNeg32(): Modifier =
     composed {
         offset(x = -twSpacing.scale32)
     }
 
-
 fun Modifier.mxNeg36(): Modifier =
     composed {
         offset(x = -twSpacing.scale36)
     }
-
 
 fun Modifier.mxNeg40(): Modifier =
     composed {
         offset(x = -twSpacing.scale40)
     }
 
-
 fun Modifier.mxNeg44(): Modifier =
     composed {
         offset(x = -twSpacing.scale44)
     }
-
 
 fun Modifier.mxNeg48(): Modifier =
     composed {
         offset(x = -twSpacing.scale48)
     }
 
-
 fun Modifier.mxNeg52(): Modifier =
     composed {
         offset(x = -twSpacing.scale52)
     }
-
 
 fun Modifier.mxNeg56(): Modifier =
     composed {
         offset(x = -twSpacing.scale56)
     }
 
-
 fun Modifier.mxNeg60(): Modifier =
     composed {
         offset(x = -twSpacing.scale60)
     }
-
 
 fun Modifier.mxNeg64(): Modifier =
     composed {
         offset(x = -twSpacing.scale64)
     }
 
-
 fun Modifier.mxNeg72(): Modifier =
     composed {
         offset(x = -twSpacing.scale72)
     }
-
 
 fun Modifier.mxNeg80(): Modifier =
     composed {
         offset(x = -twSpacing.scale80)
     }
 
-
 fun Modifier.mxNeg96(): Modifier =
     composed {
         offset(x = -twSpacing.scale96)
     }
-
 
 fun Modifier.myNegPx(): Modifier =
     composed {
         offset(y = -twSpacing.scalePx)
     }
 
-
 fun Modifier.myNeg0p5(): Modifier =
     composed {
         offset(y = -twSpacing.scale0p5)
     }
-
 
 fun Modifier.myNeg1(): Modifier =
     composed {
         offset(y = -twSpacing.scale1)
     }
 
-
 fun Modifier.myNeg1p5(): Modifier =
     composed {
         offset(y = -twSpacing.scale1p5)
     }
-
 
 fun Modifier.myNeg2(): Modifier =
     composed {
         offset(y = -twSpacing.scale2)
     }
 
-
 fun Modifier.myNeg2p5(): Modifier =
     composed {
         offset(y = -twSpacing.scale2p5)
     }
-
 
 fun Modifier.myNeg3(): Modifier =
     composed {
         offset(y = -twSpacing.scale3)
     }
 
-
 fun Modifier.myNeg3p5(): Modifier =
     composed {
         offset(y = -twSpacing.scale3p5)
     }
-
 
 fun Modifier.myNeg4(): Modifier =
     composed {
         offset(y = -twSpacing.scale4)
     }
 
-
 fun Modifier.myNeg5(): Modifier =
     composed {
         offset(y = -twSpacing.scale5)
     }
-
 
 fun Modifier.myNeg6(): Modifier =
     composed {
         offset(y = -twSpacing.scale6)
     }
 
-
 fun Modifier.myNeg7(): Modifier =
     composed {
         offset(y = -twSpacing.scale7)
     }
-
 
 fun Modifier.myNeg8(): Modifier =
     composed {
         offset(y = -twSpacing.scale8)
     }
 
-
 fun Modifier.myNeg9(): Modifier =
     composed {
         offset(y = -twSpacing.scale9)
     }
-
 
 fun Modifier.myNeg10(): Modifier =
     composed {
         offset(y = -twSpacing.scale10)
     }
 
-
 fun Modifier.myNeg11(): Modifier =
     composed {
         offset(y = -twSpacing.scale11)
     }
-
 
 fun Modifier.myNeg12(): Modifier =
     composed {
         offset(y = -twSpacing.scale12)
     }
 
-
 fun Modifier.myNeg14(): Modifier =
     composed {
         offset(y = -twSpacing.scale14)
     }
-
 
 fun Modifier.myNeg16(): Modifier =
     composed {
         offset(y = -twSpacing.scale16)
     }
 
-
 fun Modifier.myNeg20(): Modifier =
     composed {
         offset(y = -twSpacing.scale20)
     }
-
 
 fun Modifier.myNeg24(): Modifier =
     composed {
         offset(y = -twSpacing.scale24)
     }
 
-
 fun Modifier.myNeg28(): Modifier =
     composed {
         offset(y = -twSpacing.scale28)
     }
-
 
 fun Modifier.myNeg32(): Modifier =
     composed {
         offset(y = -twSpacing.scale32)
     }
 
-
 fun Modifier.myNeg36(): Modifier =
     composed {
         offset(y = -twSpacing.scale36)
     }
-
 
 fun Modifier.myNeg40(): Modifier =
     composed {
         offset(y = -twSpacing.scale40)
     }
 
-
 fun Modifier.myNeg44(): Modifier =
     composed {
         offset(y = -twSpacing.scale44)
     }
-
 
 fun Modifier.myNeg48(): Modifier =
     composed {
         offset(y = -twSpacing.scale48)
     }
 
-
 fun Modifier.myNeg52(): Modifier =
     composed {
         offset(y = -twSpacing.scale52)
     }
-
 
 fun Modifier.myNeg56(): Modifier =
     composed {
         offset(y = -twSpacing.scale56)
     }
 
-
 fun Modifier.myNeg60(): Modifier =
     composed {
         offset(y = -twSpacing.scale60)
     }
-
 
 fun Modifier.myNeg64(): Modifier =
     composed {
         offset(y = -twSpacing.scale64)
     }
 
-
 fun Modifier.myNeg72(): Modifier =
     composed {
         offset(y = -twSpacing.scale72)
     }
-
 
 fun Modifier.myNeg80(): Modifier =
     composed {
         offset(y = -twSpacing.scale80)
     }
 
-
 fun Modifier.myNeg96(): Modifier =
     composed {
         offset(y = -twSpacing.scale96)
     }
-
 
 /** Scale-named wrappers over [Arrangement.spacedBy] for use as Row/Column arrangement. */
 @Composable

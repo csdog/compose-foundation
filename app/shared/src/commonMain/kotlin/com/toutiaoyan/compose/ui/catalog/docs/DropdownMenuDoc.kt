@@ -350,7 +350,7 @@ val dropdownMenuDoc =
                             DropdownMenuTrigger("Open")
                             DropdownMenuContent {
                                 DropdownMenuItem("Profile", onClick = {})
-                                    DropdownMenuItem("Billing", onClick = {}, disabled = true)
+                                DropdownMenuItem("Billing", onClick = {}, disabled = true)
                                 DropdownMenuItem("Team", onClick = {})
                             }
                         }

@@ -254,7 +254,11 @@ fun CarouselNext(
     val canScrollNext = resolved.currentPage < resolved.pageCount - 1
     Button(
         onClick = {
-            scope.launch { resolved.animateScrollToPage((resolved.currentPage + 1).coerceAtMost(resolved.pageCount - 1)) }
+            scope.launch {
+                resolved.animateScrollToPage(
+                    (resolved.currentPage + 1).coerceAtMost(resolved.pageCount - 1),
+                )
+            }
         },
         modifier = modifier,
         enabled = canScrollNext && !disabled,

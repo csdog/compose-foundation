@@ -79,6 +79,7 @@ private val MONTH_NAMES =
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December",
     )
+
 /** react-day-picker `formatMonthDropdown`: `month: "short"`. */
 private val SHORT_MONTH_NAMES =
     listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
@@ -120,7 +121,10 @@ class CalendarState(
 ) {
     val caption: String get() = captionFor(year, month)
 
-    fun captionFor(year: Int, month: Int) = "${MONTH_NAMES[month - 1]} $year"
+    fun captionFor(
+        year: Int,
+        month: Int,
+    ) = "${MONTH_NAMES[month - 1]} $year"
 
     fun isSelectedDay(date: CalendarDate) =
         date == selected || date == rangeFrom || date == rangeTo || date in selectedDates
@@ -602,7 +606,10 @@ private fun CalendarImpl(
     }
 }
 
-private fun handleCalendarKey(state: CalendarState, event: KeyEvent): Boolean {
+private fun handleCalendarKey(
+    state: CalendarState,
+    event: KeyEvent,
+): Boolean {
     if (event.type != KeyEventType.KeyDown) return false
     when (event.key) {
         Key.DirectionLeft -> state.moveFocusByDays(-1)
@@ -753,9 +760,10 @@ fun CalendarGrid(
     val state = calendarState()
     val y = year ?: state.year
     val m = month ?: state.month
-    val weeks = remember(y, m, state.weekStartsOn, state.fixedWeeks) {
-        buildMonthGrid(y, m, state.weekStartsOn, state.fixedWeeks)
-    }
+    val weeks =
+        remember(y, m, state.weekStartsOn, state.fixedWeeks) {
+            buildMonthGrid(y, m, state.weekStartsOn, state.fixedWeeks)
+        }
     weeks.forEach { week ->
         Row {
             week.forEach { cell ->

@@ -52,7 +52,10 @@ val collapsibleDoc =
                     preview = {
                         var open by remember { mutableStateOf(false) }
                         Collapsible(open = open, onOpenChange = { open = it }) {
-                            CollapsibleTrigger(if (open) "Hide details" else "Show details", variant = ButtonVariant.Outline)
+                            CollapsibleTrigger(
+                                if (open) "Hide details" else "Show details",
+                                variant = ButtonVariant.Outline,
+                            )
                             CollapsibleContent("@peduarte starred 3 repositories")
                         }
                     },

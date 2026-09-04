@@ -100,8 +100,7 @@ private class TabsListState {
     val tabEnabled = mutableStateMapOf<String, Boolean>()
     private val focusRequesters = mutableMapOf<String, FocusRequester>()
 
-    fun requester(value: String): FocusRequester =
-        focusRequesters.getOrPut(value) { FocusRequester() }
+    fun requester(value: String): FocusRequester = focusRequesters.getOrPut(value) { FocusRequester() }
 
     fun unregister(value: String) {
         tabOrder.remove(value)
@@ -110,7 +109,10 @@ private class TabsListState {
         focusRequesters.remove(value)
     }
 
-    fun updateTabBounds(value: String, tabCoordinates: LayoutCoordinates) {
+    fun updateTabBounds(
+        value: String,
+        tabCoordinates: LayoutCoordinates,
+    ) {
         val list = listCoordinates ?: return
         if (!list.isAttached || !tabCoordinates.isAttached) return
         val topLeft = list.localPositionOf(tabCoordinates, Offset.Zero)
@@ -424,7 +426,7 @@ fun TabsListScope.TabsTrigger(
     TabsTrigger(value = value, modifier = modifier, enabled = enabled, disabled = disabled, style = style) {
         Text(
             variant = TextVariant.LabelLarge,
-            textStyle = if (!isSelected) TextColors.Muted else TextStyle.Default
+            textStyle = if (!isSelected) TextColors.Muted else TextStyle.Default,
         ) { label }
     }
 }
@@ -557,4 +559,3 @@ private fun stepTab(
         else -> null
     }
 }
-

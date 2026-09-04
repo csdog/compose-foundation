@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalFoundationStyleApi::class)
+
 package com.toutiaoyan.compose.ui.components.combobox
 
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -33,7 +34,10 @@ fun rememberComboboxTriggerStyle(): Style =
     }
 
 @Composable
-fun rememberComboboxChipsStyle(focused: Boolean, invalid: Boolean): Style =
+fun rememberComboboxChipsStyle(
+    focused: Boolean,
+    invalid: Boolean,
+): Style =
     rememberTheme(focused, invalid) {
         val stroke =
             when {

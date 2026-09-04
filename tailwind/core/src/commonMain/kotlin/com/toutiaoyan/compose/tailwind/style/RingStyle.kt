@@ -1,6 +1,5 @@
 package com.toutiaoyan.compose.tailwind.style
 
-import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.StyleScope
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.shadow.Shadow
@@ -39,21 +38,17 @@ fun ringShadow(
     width: Dp = 1.dp,
 ): Shadow = Shadow(radius = 0.dp, spread = width, color = color)
 
-
 fun StyleScope.ring0(color: Color) {
     ring(color, 0.dp)
 }
-
 
 fun StyleScope.ring2(color: Color) {
     ring(color, 2.dp)
 }
 
-
 fun StyleScope.ring4(color: Color) {
     ring(color, 4.dp)
 }
-
 
 fun StyleScope.ring8(color: Color) {
     ring(color, 8.dp)

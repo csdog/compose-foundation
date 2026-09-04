@@ -59,7 +59,13 @@ class SizingStylePerfTest {
         val styleWidth = bench(iterations) { Style { width(w) } }
         val modifierWidth = bench(iterations) { Modifier.width(w) }
 
-        val styleBlock2 = bench(iterations) { Style { width(w); height(h) } }
+        val styleBlock2 =
+            bench(iterations) {
+                Style {
+                    width(w)
+                    height(h)
+                }
+            }
         val modifierChain2 = bench(iterations) { Modifier.width(w).height(h) }
 
         val styleBlock4 =
@@ -119,7 +125,10 @@ class SizingStylePerfTest {
         check(sink != Int.MIN_VALUE)
     }
 
-    private fun bench(iterations: Int, factory: () -> Any): Bench {
+    private fun bench(
+        iterations: Int,
+        factory: () -> Any,
+    ): Bench {
         var sink = 0
         val bean = ManagementFactory.getThreadMXBean() as ThreadMXBean
         System.gc()
@@ -145,7 +154,10 @@ class SizingStylePerfTest {
         val sampleClass: String,
     )
 
-    private fun row(name: String, bench: Bench): String =
+    private fun row(
+        name: String,
+        bench: Bench,
+    ): String =
         row(
             name,
             "%.1f".format(bench.nanosPerOp),
@@ -153,6 +165,10 @@ class SizingStylePerfTest {
             bench.sampleClass.substringAfterLast('.'),
         )
 
-    private fun row(a: String, b: String, c: String, d: String): String =
-        "%-32s %10s %10s  %s".format(a, b, c, d)
+    private fun row(
+        a: String,
+        b: String,
+        c: String,
+        d: String,
+    ): String = "%-32s %10s %10s  %s".format(a, b, c, d)
 }

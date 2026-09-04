@@ -64,7 +64,7 @@ val datePickerDoc =
         title = "Date Picker",
         description =
             "A date picker built by composing Popover and Calendar -- not a standalone component in real " +
-                    "shadcn/ui either.",
+                "shadcn/ui either.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.*
@@ -141,7 +141,7 @@ val datePickerDoc =
                                     )
                                     Text(textStyle = if (selected == null) TextColors.Muted else TextStyle.Default) {
                                         selected?.let(
-                                            ::formatDate
+                                            ::formatDate,
                                         ) ?: "Pick a date"
                                     }
                                 }

@@ -1,7 +1,6 @@
 package com.toutiaoyan.compose.tailwind.style
 
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.StyleScope
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape

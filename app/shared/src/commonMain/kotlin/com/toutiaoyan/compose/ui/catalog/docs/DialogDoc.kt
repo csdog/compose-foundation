@@ -270,7 +270,10 @@ val dialogDoc =
                         var open by remember { mutableStateOf(false) }
                         Dialog(open = open, onOpenChange = { open = it }) {
                             DialogTrigger("Open dialog")
-                            DialogContent("Notice", description = "Header and footer stay put while the list scrolls.") {
+                            DialogContent(
+                                "Notice",
+                                description = "Header and footer stay put while the list scrolls.",
+                            ) {
                                 ScrollArea(modifier = Modifier.height(160.dp)) {
                                     Column {
                                         repeat(12) { index ->

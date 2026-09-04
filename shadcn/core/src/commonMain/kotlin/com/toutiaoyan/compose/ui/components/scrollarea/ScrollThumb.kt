@@ -57,8 +57,7 @@ internal fun scrollDragDeltaToContentDelta(
  * [forceShowWhenEmpty] keeps a full-length thumb when content does not overflow
  * ([ScrollType.Always]). [visible] drives fade show/hide for scroll/hover policies.
  * [interactionSource] is shared so parents can treat thumb drag as "scrolling".
- */
-/**
+ *
  * Public scrollbar matching shadcn's `ScrollBar`. Delegates to the shared thumb.
  */
 @Composable

@@ -255,7 +255,7 @@ val stepperDoc =
                             ) {
                                 Text(
                                     variant = TextVariant.BodySmall,
-                                    textStyle = TextColors.Muted
+                                    textStyle = TextColors.Muted,
                                 ) { "${titles[step]} content" }
                             }
                             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {

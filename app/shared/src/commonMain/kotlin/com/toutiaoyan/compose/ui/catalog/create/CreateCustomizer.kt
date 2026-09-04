@@ -487,59 +487,59 @@ fun CreateCustomizer(
 
     Dialog(open = openPresetVisible, onOpenChange = { openPresetVisible = it }) {
         DialogContent {
-        DialogHeader {
-            DialogTitle("Open Preset")
-            DialogDescription("Paste a preset code to load a saved configuration.")
-        }
-        FieldGroup(modifier = Modifier.padding(top = twSpacing.md)) {
-            Field {
-                FieldLabel("Preset")
-                Input(
-                    value = presetInput,
-                    onValueChange = { presetInput = it },
-                    placeholder = "e.g. b2D0wqNxT",
-                    modifier = Modifier.fillMaxWidth(),
-                )
+            DialogHeader {
+                DialogTitle("Open Preset")
+                DialogDescription("Paste a preset code to load a saved configuration.")
             }
-        }
-        DialogFooter(modifier = Modifier.padding(top = twSpacing.md)) {
-            Button(onClick = { openPresetVisible = false }, variant = ButtonVariant.Outline) {
-                Text { "Cancel" }
+            FieldGroup(modifier = Modifier.padding(top = twSpacing.md)) {
+                Field {
+                    FieldLabel("Preset")
+                    Input(
+                        value = presetInput,
+                        onValueChange = { presetInput = it },
+                        placeholder = "e.g. b2D0wqNxT",
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
             }
-            Button(
-                onClick = {
-                    // Accept any non-empty code as a no-op apply for catalog demo purposes.
-                    if (presetInput.isNotBlank()) {
-                        openPresetVisible = false
-                        presetInput = ""
-                    }
-                },
-            ) {
-                Text { "Open" }
+            DialogFooter(modifier = Modifier.padding(top = twSpacing.md)) {
+                Button(onClick = { openPresetVisible = false }, variant = ButtonVariant.Outline) {
+                    Text { "Cancel" }
+                }
+                Button(
+                    onClick = {
+                        // Accept any non-empty code as a no-op apply for catalog demo purposes.
+                        if (presetInput.isNotBlank()) {
+                            openPresetVisible = false
+                            presetInput = ""
+                        }
+                    },
+                ) {
+                    Text { "Open" }
+                }
             }
-        }
         }
     }
 
     Dialog(open = getCodeVisible, onOpenChange = { getCodeVisible = it }) {
         DialogContent {
-        DialogHeader {
-            DialogTitle("Get Code")
-            DialogDescription("Copy the Theme() setup for your current Style, Base Color, and Accent.")
-        }
-        Text(
-            variant = TextVariant.BodySmall,
-            textStyle = TextColors.Muted,
-            modifier = Modifier.padding(top = twSpacing.md),
-        ) { snippet }
-        DialogFooter(modifier = Modifier.padding(top = twSpacing.md)) {
-            Button(onClick = { getCodeVisible = false }, variant = ButtonVariant.Outline) {
-                Text { "Close" }
+            DialogHeader {
+                DialogTitle("Get Code")
+                DialogDescription("Copy the Theme() setup for your current Style, Base Color, and Accent.")
             }
-            Button(onClick = codeCopy.copy) {
-                CopyLabel(codeCopy.justCopied, "Copy")
+            Text(
+                variant = TextVariant.BodySmall,
+                textStyle = TextColors.Muted,
+                modifier = Modifier.padding(top = twSpacing.md),
+            ) { snippet }
+            DialogFooter(modifier = Modifier.padding(top = twSpacing.md)) {
+                Button(onClick = { getCodeVisible = false }, variant = ButtonVariant.Outline) {
+                    Text { "Close" }
+                }
+                Button(onClick = codeCopy.copy) {
+                    CopyLabel(codeCopy.justCopied, "Copy")
+                }
             }
-        }
         }
     }
 }

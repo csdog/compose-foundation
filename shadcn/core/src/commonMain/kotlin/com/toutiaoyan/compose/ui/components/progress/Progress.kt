@@ -180,9 +180,10 @@ fun ProgressValue(
 /** Filled portion of a [Progress] track. Matches shadcn's `ProgressIndicator`. */
 @Composable
 fun BoxScope.ProgressIndicator(
-    value: Float = checkNotNull(LocalProgressValue.current) {
-        "ProgressIndicator must be used inside Progress, or pass value="
-    },
+    value: Float =
+        checkNotNull(LocalProgressValue.current) {
+            "ProgressIndicator must be used inside Progress, or pass value="
+        },
     modifier: Modifier = Modifier,
     indeterminate: Boolean = LocalProgressIndeterminate.current,
 ) {

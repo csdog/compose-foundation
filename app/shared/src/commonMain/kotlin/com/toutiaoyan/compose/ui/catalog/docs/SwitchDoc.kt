@@ -195,7 +195,6 @@ val switchDoc =
                     preview = {
                         var enabled by remember { mutableStateOf(true) }
                         Switch(checked = enabled, onCheckedChange = { enabled = it }) {
-                            
                         }
                     },
                 ),

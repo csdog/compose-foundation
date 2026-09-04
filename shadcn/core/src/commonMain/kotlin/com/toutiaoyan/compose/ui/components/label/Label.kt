@@ -42,7 +42,7 @@ fun Label(
     Row(modifier = modifier.styleable(styleState, style)) {
         Text(
             variant = TextVariant.LabelLarge,
-            textStyle = if (disabled) TextColors.Muted else TextStyle.Default
+            textStyle = if (disabled) TextColors.Muted else TextStyle.Default,
         ) { text }
         if (required) {
             Text(

@@ -124,17 +124,13 @@ fun ColumnScope.TableHeader(
 
 /** Matches shadcn's `TableBody`. Children stay in the parent [Table] column. */
 @Composable
-fun ColumnScope.TableBody(
-    content: @Composable ColumnScope.() -> Unit,
-) {
+fun ColumnScope.TableBody(content: @Composable ColumnScope.() -> Unit) {
     content()
 }
 
 /** Matches shadcn's `TableFooter` (`bg-muted/50`). Children stay in the parent [Table] column. */
 @Composable
-fun ColumnScope.TableFooter(
-    content: @Composable ColumnScope.() -> Unit,
-) {
+fun ColumnScope.TableFooter(content: @Composable ColumnScope.() -> Unit) {
     CompositionLocalProvider(LocalTableFooter provides true) {
         content()
     }
@@ -169,11 +165,12 @@ fun RowScope.TableHeadCell(
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Text(
-        variant = TextVariant.LabelLarge, modifier =
+        variant = TextVariant.LabelLarge,
+        modifier =
             modifier
                 .padding(horizontal = twSpacing.sm)
                 .padding(end = 4.dp)
-                .styleable(styleState, style)
+                .styleable(styleState, style),
     ) { text }
 }
 
@@ -193,7 +190,7 @@ fun RowScope.TableCell(
             modifier
                 .padding(horizontal = twSpacing.sm)
                 .padding(end = 4.dp)
-                .styleable(styleState, style)
+                .styleable(styleState, style),
     ) { text }
 }
 
@@ -218,11 +215,14 @@ fun ColumnScope.TableCaption(
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Text(
-        variant = TextVariant.BodySmall, textStyle = TextColors.Muted, style = style, modifier =
+        variant = TextVariant.BodySmall,
+        textStyle = TextColors.Muted,
+        style = style,
+        modifier =
             modifier
                 .fillMaxWidth()
                 .padding(top = twSpacing.md)
-                .styleable(styleState, style)
+                .styleable(styleState, style),
     ) { text }
 }
 

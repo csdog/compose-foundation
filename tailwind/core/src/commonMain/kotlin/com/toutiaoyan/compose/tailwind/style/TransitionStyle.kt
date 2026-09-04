@@ -2,7 +2,6 @@ package com.toutiaoyan.compose.tailwind.style
 
 import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.StyleScope
 import com.toutiaoyan.compose.tailwind.core.TwDuration
 import com.toutiaoyan.compose.tailwind.core.TwEasing

@@ -487,9 +487,10 @@ fun ContextMenuShortcut(
 /** Alias for [DropdownMenuItemIndicator]. Base UI does not export ContextMenuItemIndicator. */
 @Composable
 internal fun ContextMenuItemIndicator(
-    checked: Boolean = checkNotNull(LocalDropdownMenuItemChecked.current) {
-        "ContextMenuItemIndicator must be used inside ContextMenuCheckboxItem, or pass checked="
-    },
+    checked: Boolean =
+        checkNotNull(LocalDropdownMenuItemChecked.current) {
+            "ContextMenuItemIndicator must be used inside ContextMenuCheckboxItem, or pass checked="
+        },
     modifier: Modifier = Modifier,
 ) {
     DropdownMenuItemIndicator(checked = checked, modifier = modifier)

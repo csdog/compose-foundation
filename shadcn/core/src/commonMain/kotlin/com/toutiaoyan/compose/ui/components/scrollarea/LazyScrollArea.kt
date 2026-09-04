@@ -76,6 +76,7 @@ private fun LazyScrollAreaContent(
     // Observe scroll position so the thumb recomposes while the list moves.
     @Suppress("UNUSED_VARIABLE")
     val firstVisibleItemIndex = state.firstVisibleItemIndex
+
     @Suppress("UNUSED_VARIABLE")
     val firstVisibleItemScrollOffset = state.firstVisibleItemScrollOffset
 

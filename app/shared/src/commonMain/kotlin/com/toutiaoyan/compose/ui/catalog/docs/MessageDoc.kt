@@ -28,7 +28,7 @@ val messageDoc =
         title = "Message",
         description =
             "One chat-transcript row: avatar and content laid out side by side, mirrored for the sender's own " +
-                    "messages.",
+                "messages.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.*

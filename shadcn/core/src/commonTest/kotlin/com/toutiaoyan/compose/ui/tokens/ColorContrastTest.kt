@@ -82,7 +82,11 @@ private fun assertPalette(
     assertContrast(colors.card, colors.cardForeground, "$label card/cardForeground")
     assertContrast(colors.popover, colors.popoverForeground, "$label popover/popoverForeground")
     assertContrast(colors.sidebar, colors.sidebarForeground, "$label sidebar/sidebarForeground")
-    assertContrast(colors.sidebarPrimary, colors.sidebarPrimaryForeground, "$label sidebarPrimary/sidebarPrimaryForeground")
+    assertContrast(
+        colors.sidebarPrimary,
+        colors.sidebarPrimaryForeground,
+        "$label sidebarPrimary/sidebarPrimaryForeground",
+    )
     assertContrast(colors.sidebarAccent, colors.sidebarAccentForeground, "$label sidebarAccent/sidebarAccentForeground")
 }
 

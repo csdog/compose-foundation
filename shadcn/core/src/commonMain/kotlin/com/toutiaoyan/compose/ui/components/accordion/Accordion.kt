@@ -110,8 +110,7 @@ private class AccordionNavState {
     val itemEnabled = mutableStateMapOf<String, Boolean>()
     private val focusRequesters = mutableMapOf<String, FocusRequester>()
 
-    fun requester(value: String): FocusRequester =
-        focusRequesters.getOrPut(value) { FocusRequester() }
+    fun requester(value: String): FocusRequester = focusRequesters.getOrPut(value) { FocusRequester() }
 
     fun unregister(value: String) {
         itemOrder.remove(value)
@@ -416,9 +415,7 @@ fun AccordionScope.AccordionItem(
  * Layout-passthrough so existing [AccordionItem] screenshots stay unchanged.
  */
 @Composable
-internal fun AccordionItemScope.AccordionHeader(
-    content: @Composable AccordionItemScope.() -> Unit,
-) {
+internal fun AccordionItemScope.AccordionHeader(content: @Composable AccordionItemScope.() -> Unit) {
     content()
 }
 
@@ -498,9 +495,10 @@ fun AccordionItemScope.AccordionTrigger(
  */
 @Composable
 internal fun AccordionItemIndicator(
-    isOpen: Boolean = LocalAccordionItem.current?.open ?: error(
-        "AccordionItemIndicator must be used inside AccordionItem, or pass isOpen=",
-    ),
+    isOpen: Boolean =
+        LocalAccordionItem.current?.open ?: error(
+            "AccordionItemIndicator must be used inside AccordionItem, or pass isOpen=",
+        ),
     modifier: Modifier = Modifier,
 ) {
     val tint = currentTheme.colors.mutedForeground

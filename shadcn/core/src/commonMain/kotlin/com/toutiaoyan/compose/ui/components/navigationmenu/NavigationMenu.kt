@@ -335,6 +335,7 @@ fun NavigationMenuItemScope.NavigationMenuTrigger(
         Text(variant = TextVariant.BodySmall) { text }
     }
 }
+
 @Composable
 fun NavigationMenuItemScope.NavigationMenuContent(
     modifier: Modifier = Modifier,

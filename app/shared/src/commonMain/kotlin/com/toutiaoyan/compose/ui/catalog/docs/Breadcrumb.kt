@@ -28,7 +28,7 @@ fun Breadcrumb(
             val isLast = index == segments.lastIndex
             Text(
                 variant = TextVariant.LabelSmall,
-                textStyle = if (!isLast) TextColors.Muted else TextStyle.Default
+                textStyle = if (!isLast) TextColors.Muted else TextStyle.Default,
             ) { segment }
             if (!isLast) {
                 Text(variant = TextVariant.LabelSmall, textStyle = TextColors.Muted) { "/" }

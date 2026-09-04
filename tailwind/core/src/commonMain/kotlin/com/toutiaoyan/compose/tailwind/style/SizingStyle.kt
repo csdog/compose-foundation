@@ -1,10 +1,6 @@
 package com.toutiaoyan.compose.tailwind.style
 
-import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
-import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.StyleScope
-import androidx.compose.foundation.style.then
-import androidx.compose.ui.unit.Dp
 import androidx.compose.foundation.style.fillWidth as foundationFillWidth
 import com.toutiaoyan.compose.tailwind.core.twSpacing
 

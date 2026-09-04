@@ -1,6 +1,5 @@
 package com.toutiaoyan.compose.tailwind.style
 
-import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.StyleScope
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.shadow.Shadow
@@ -24,21 +23,17 @@ fun StyleScope.shadow(
     dropShadow(Shadow(radius = radius, color = color))
 }
 
-
 fun StyleScope.shadowXs() {
     shadow(TwShadow.xs)
 }
-
 
 fun StyleScope.shadowMd() {
     shadow(TwShadow.md)
 }
 
-
 fun StyleScope.shadowLg() {
     shadow(TwShadow.lg)
 }
-
 
 fun StyleScope.shadowXl() {
     shadow(TwShadow.xl)

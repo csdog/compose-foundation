@@ -20,7 +20,6 @@ import com.toutiaoyan.compose.ui.components.chart.ChartStyle
 import com.toutiaoyan.compose.ui.components.chart.ChartTooltip
 import com.toutiaoyan.compose.ui.components.chart.ChartTooltipContent
 import com.toutiaoyan.compose.ui.components.chart.LineChart
-import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.tailwind.core.twSpacing
 
 private val chartConfig =

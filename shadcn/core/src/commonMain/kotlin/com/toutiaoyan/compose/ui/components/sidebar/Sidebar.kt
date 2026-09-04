@@ -576,9 +576,7 @@ fun SidebarGroupAction(
 
 /** Body slot of a [SidebarGroup]. Matches shadcn's `SidebarGroupContent`. */
 @Composable
-fun ColumnScope.SidebarGroupContent(
-    content: @Composable ColumnScope.() -> Unit,
-) {
+fun ColumnScope.SidebarGroupContent(content: @Composable ColumnScope.() -> Unit) {
     content()
 }
 

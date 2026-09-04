@@ -30,7 +30,6 @@ import com.toutiaoyan.compose.ui.components.command.CommandList
 import com.toutiaoyan.compose.ui.components.command.CommandSeparator
 import com.toutiaoyan.compose.ui.components.dialog.Dialog
 import com.toutiaoyan.compose.ui.components.dialog.DialogContent
-import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.tokens.Accent
 import com.toutiaoyan.compose.ui.tokens.BaseColor
 import com.toutiaoyan.compose.ui.tokens.StylePreset
@@ -131,28 +130,28 @@ fun CreatePage(
 
         Dialog(open = commandOpen, onOpenChange = { commandOpen = it }) {
             DialogContent(showCloseButton = false) {
-            Command(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .widthIn(max = 480.dp),
-            ) {
-                // action-menu.tsx CommandInput placeholder
-                CommandInput(placeholder = "Search")
-                CommandList {
-                    CommandGroup(heading = "Previews") {
-                        CommandItem("Preview 01", onSelect = { commandOpen = false })
-                        CommandItem("Preview 02", onSelect = { commandOpen = false })
-                    }
-                    CommandSeparator()
-                    CommandGroup(heading = "Actions") {
-                        CommandItem("Shuffle", onSelect = { commandOpen = false })
-                        CommandItem("Reset", onSelect = { commandOpen = false })
-                        CommandItem("Open Preset", onSelect = { commandOpen = false })
-                        CommandItem("Get Code", onSelect = { commandOpen = false })
+                Command(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .widthIn(max = 480.dp),
+                ) {
+                    // action-menu.tsx CommandInput placeholder
+                    CommandInput(placeholder = "Search")
+                    CommandList {
+                        CommandGroup(heading = "Previews") {
+                            CommandItem("Preview 01", onSelect = { commandOpen = false })
+                            CommandItem("Preview 02", onSelect = { commandOpen = false })
+                        }
+                        CommandSeparator()
+                        CommandGroup(heading = "Actions") {
+                            CommandItem("Shuffle", onSelect = { commandOpen = false })
+                            CommandItem("Reset", onSelect = { commandOpen = false })
+                            CommandItem("Open Preset", onSelect = { commandOpen = false })
+                            CommandItem("Get Code", onSelect = { commandOpen = false })
+                        }
                     }
                 }
-            }
             }
         }
     }

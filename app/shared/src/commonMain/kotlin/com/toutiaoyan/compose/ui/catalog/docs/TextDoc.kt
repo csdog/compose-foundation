@@ -36,7 +36,8 @@ val textDoc =
     ComponentDoc(
         id = "text",
         title = "Text",
-        description = "Renders text using the design system's type scale, with optional TextStyles.Muted preset.",
+        description =
+            "Renders text using the design system's type scale, with optional TextStyles.Muted preset.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.text.Text
@@ -69,17 +70,22 @@ val textDoc =
                 ),
                 ComponentExample(
                     title = "Muted",
-                    code = """Text(typography = TextTypography.BodyMedium, textStyle = TextStyles.Muted) { "Muted body" }""",
-                    preview = { Text(variant = TextVariant.BodyMedium, textStyle = TextColors.Muted) { "Muted body" } },
+                    code =
+                        """
+                        Text(typography = TextTypography.BodyMedium, textStyle = TextStyles.Muted) { "Muted body" }
+                        """.trimIndent(),
+                    preview = {
+                        Text(variant = TextVariant.BodyMedium, textStyle = TextColors.Muted) { "Muted body" }
+                    },
                 ),
             ),
-    );
+    )
 
-private const val PreviewBg = 0xFFFFFFFF
+private const val PREVIEW_BG = 0xFFFFFFFF
 
 @Preview(
     showBackground = true,
-    backgroundColor = PreviewBg,
+    backgroundColor = PREVIEW_BG,
     widthDp = 360,
     heightDp = 120,
     name = "Smoke / BasicText",
@@ -99,7 +105,7 @@ private fun TextSmokePreview() {
 
 @Preview(
     showBackground = true,
-    backgroundColor = PreviewBg,
+    backgroundColor = PREVIEW_BG,
     widthDp = 360,
     heightDp = 420,
     name = "Text / variants",
@@ -125,7 +131,7 @@ private fun TextVariantsPreview() {
 
 @Preview(
     showBackground = true,
-    backgroundColor = PreviewBg,
+    backgroundColor = PREVIEW_BG,
     widthDp = 360,
     heightDp = 320,
     name = "Text / Style { fontSize }",
@@ -156,7 +162,7 @@ private fun TextFontSizeStylePreview() {
 
 @Preview(
     showBackground = true,
-    backgroundColor = PreviewBg,
+    backgroundColor = PREVIEW_BG,
     widthDp = 360,
     heightDp = 200,
     name = "Text / Style.text*",
@@ -174,7 +180,14 @@ private fun TextTextStylePreview() {
         ) {
             Text(style = Style { textSm() }) { "Style { textSm() } (size + leading)" }
             Text(style = Style { textLg() }) { "Style { textLg() } (size + leading)" }
-            Text(style = Style { textXl2(); fontWeightBold() }, textStyle = TextColors.Muted) {
+            Text(
+                style =
+                    Style {
+                        textXl2()
+                        fontWeightBold()
+                    },
+                textStyle = TextColors.Muted,
+            ) {
                 "textXl2 + bold + muted"
             }
         }

@@ -1,6 +1,5 @@
 package com.toutiaoyan.compose.tailwind.style
 
-import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.StyleScope
 
 /**
@@ -14,11 +13,9 @@ fun StyleScope.zIndex0() {
     zIndex(0f)
 }
 
-
 fun StyleScope.zIndex10() {
     zIndex(10f)
 }
-
 
 fun StyleScope.zIndex50() {
     zIndex(50f)

@@ -256,9 +256,10 @@ fun DropdownMenuScope.DropdownMenuContent(
 ) {
     val controller = dropdownMenuController()
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    val scope = remember(controller.onOpenChange, controller.open) {
-        DropdownMenuScope(onOpenChange = controller.onOpenChange, open = controller.open)
-    }
+    val scope =
+        remember(controller.onOpenChange, controller.open) {
+            DropdownMenuScope(onOpenChange = controller.onOpenChange, open = controller.open)
+        }
     DropdownMenuPortal {
         AnchoredPopup(
             open = controller.open,
@@ -472,9 +473,10 @@ fun DropdownMenuScope.DropdownMenuCheckboxItem(
 /** Check-mark slot for a [DropdownMenuCheckboxItem]. Inlined by official; not exported. */
 @Composable
 internal fun DropdownMenuItemIndicator(
-    checked: Boolean = checkNotNull(LocalDropdownMenuItemChecked.current) {
-        "DropdownMenuItemIndicator must be used inside DropdownMenuCheckboxItem, or pass checked="
-    },
+    checked: Boolean =
+        checkNotNull(LocalDropdownMenuItemChecked.current) {
+            "DropdownMenuItemIndicator must be used inside DropdownMenuCheckboxItem, or pass checked="
+        },
     modifier: Modifier = Modifier,
     indeterminate: Boolean = LocalDropdownMenuItemIndeterminate.current,
 ) {

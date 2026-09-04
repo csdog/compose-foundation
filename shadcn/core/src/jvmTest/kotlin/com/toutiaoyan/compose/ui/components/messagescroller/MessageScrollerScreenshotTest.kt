@@ -122,7 +122,7 @@ class MessageScrollerScreenshotTest : ScreenshotTest() {
                                 BubbleContent(variant = BubbleVariant.Muted) {
                                     Text {
                                         "Nope -- only when you're already near the bottom. " +
-                                                "Scroll up and it leaves you alone."
+                                            "Scroll up and it leaves you alone."
                                     }
                                 }
                             }
@@ -159,7 +159,7 @@ class MessageScrollerScreenshotTest : ScreenshotTest() {
                             variant = TextVariant.BodySmall,
                             textStyle = TextColors.Muted,
                             maxLines = 2,
-                            overflow = TextOverflow.Ellipsis
+                            overflow = TextOverflow.Ellipsis,
                         ) { "Okay, but when someone sends a new message the view still feels jarring…" }
                         Button(onClick = {}, variant = ButtonVariant.Default, size = ButtonSize.Icon) {
                             Text { "↑" }

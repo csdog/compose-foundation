@@ -184,18 +184,18 @@ fun CreateUiElementsCard(modifier: Modifier = Modifier) {
     }
     AlertDialog(open = alertOpen, onOpenChange = { alertOpen = it }) {
         AlertDialogContent {
-        DialogHeader {
-            DialogTitle("Allow accessory to connect?")
-            DialogDescription(
-                "Do you want to allow the USB accessory to connect to this device and your data?",
-            )
-        }
-        DialogFooter {
-            Button(onClick = { alertOpen = false }, variant = ButtonVariant.Outline) {
-                Text { "Don't allow" }
+            DialogHeader {
+                DialogTitle("Allow accessory to connect?")
+                DialogDescription(
+                    "Do you want to allow the USB accessory to connect to this device and your data?",
+                )
             }
-            Button(onClick = { alertOpen = false }) { Text { "Allow" } }
-        }
+            DialogFooter {
+                Button(onClick = { alertOpen = false }, variant = ButtonVariant.Outline) {
+                    Text { "Don't allow" }
+                }
+                Button(onClick = { alertOpen = false }) { Text { "Allow" } }
+            }
         }
     }
 }
@@ -254,7 +254,9 @@ fun CreateSavingsTargetsCard(modifier: Modifier = Modifier) {
     Card(modifier = modifier) {
         CardHeader {
             CardTitle { "Savings Targets" }
-            CardDescription { "Active milestones for 2024 across your portfolio. Monitor how close you are to each savings goal." }
+            CardDescription {
+                "Active milestones for 2024 across your portfolio. Monitor how close you are to each savings goal."
+            }
         }
         Column(modifier = cardContentModifier, verticalArrangement = Arrangement.spacedBy(twSpacing.md)) {
             SavingsTarget("Retirement", "$420,000", .65f, "65% achieved", "$273,000")
@@ -262,17 +264,24 @@ fun CreateSavingsTargetsCard(modifier: Modifier = Modifier) {
             Text(
                 variant = TextVariant.BodySmall,
                 textStyle = TextColors.Muted,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             ) { "You have not met your targets for this year." }
         }
     }
 }
 
 @Composable
-private fun SavingsTarget(name: String, amount: String, progress: Float, achievement: String, saved: String) {
+private fun SavingsTarget(
+    name: String,
+    amount: String,
+    progress: Float,
+    achievement: String,
+    saved: String,
+) {
     Column(
-        modifier = Modifier.fillMaxWidth().background(currentTheme.colors.muted, RoundedCornerShape(twRadius.md))
-            .padding(twSpacing.md),
+        modifier =
+            Modifier.fillMaxWidth().background(currentTheme.colors.muted, RoundedCornerShape(twRadius.md))
+                .padding(twSpacing.md),
         verticalArrangement = Arrangement.spacedBy(twSpacing.sm),
     ) {
         Text(variant = TextVariant.LabelSmall, textStyle = TextColors.Muted) { name }
@@ -336,7 +345,8 @@ fun CreateClaimableBalanceCard(modifier: Modifier = Modifier) {
                 }
             }
             Text(variant = TextVariant.BodySmall, textStyle = TextColors.Muted) {
-                "Once your bank is connected, balances over $10.00 are automatically eligible for monthly distribution on the 15th of each month."
+                "Once your bank is connected, balances over $10.00 are automatically eligible " +
+                    "for monthly distribution on the 15th of each month."
             }
         }
     }
@@ -344,12 +354,13 @@ fun CreateClaimableBalanceCard(modifier: Modifier = Modifier) {
 
 @Composable
 fun CreateDividendIncomeCard(modifier: Modifier = Modifier) {
-    val holdings = listOf(
-        "Vanguard" to "450 Shares",
-        "S&P 500 VOO" to "112 Shares",
-        "Apple AAPL" to "85 Shares",
-        "Realty Income" to "320 Shares"
-    )
+    val holdings =
+        listOf(
+            "Vanguard" to "450 Shares",
+            "S&P 500 VOO" to "112 Shares",
+            "Apple AAPL" to "85 Shares",
+            "Realty Income" to "320 Shares",
+        )
     Card(modifier = modifier) {
         CardHeader {
             Box(Modifier.fillMaxWidth()) {
@@ -363,7 +374,10 @@ fun CreateDividendIncomeCard(modifier: Modifier = Modifier) {
         ItemGroup(modifier = cardContentModifier) {
             holdings.forEachIndexed { index, (name, shares) ->
                 Item(variant = ItemVariant.Muted) {
-                    ItemContent { ItemTitle(name); ItemDescription(shares) }
+                    ItemContent {
+                        ItemTitle(name)
+                        ItemDescription(shares)
+                    }
                     MiniBars(listOf(.45f, .65f, .5f, if (index == 0) 1f else .7f))
                 }
             }
@@ -381,15 +395,22 @@ fun CreateNewMilestoneCard(modifier: Modifier = Modifier) {
         }
         FieldGroup(modifier = cardContentModifier) {
             Field {
-                FieldLabel("Goal Name"); Input(
-                goal,
-                { goal = it },
-                placeholder = "e.g. New Car, Home Downpayment"
-            )
+                FieldLabel("Goal Name")
+                Input(
+                    goal,
+                    { goal = it },
+                    placeholder = "e.g. New Car, Home Downpayment",
+                )
             }
             Row(horizontalArrangement = Arrangement.spacedBy(twSpacing.sm)) {
-                Field(modifier = Modifier.weight(1f)) { FieldLabel("Target Amount"); Input("$15,000", {}) }
-                Field(modifier = Modifier.weight(1f)) { FieldLabel("Target Date"); Input("Dec 2025", {}) }
+                Field(modifier = Modifier.weight(1f)) {
+                    FieldLabel("Target Amount")
+                    Input("$15,000", {})
+                }
+                Field(modifier = Modifier.weight(1f)) {
+                    FieldLabel("Target Date")
+                    Input("Dec 2025", {})
+                }
             }
         }
         Column(modifier = cardContentModifier, verticalArrangement = Arrangement.spacedBy(twSpacing.sm)) {
@@ -397,7 +418,7 @@ fun CreateNewMilestoneCard(modifier: Modifier = Modifier) {
             Button(
                 onClick = {},
                 modifier = Modifier.fillMaxWidth(),
-                variant = ButtonVariant.Outline
+                variant = ButtonVariant.Outline,
             ) { Text { "Cancel" } }
         }
     }
@@ -419,34 +440,42 @@ fun CreatePayoutThresholdCard(modifier: Modifier = Modifier) {
         }
         FieldGroup(modifier = cardContentModifier) {
             Field {
-                FieldLabel("Preferred Currency"); Select(
-                value = currencies.first(),
-                onValueChange = {},
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                SelectTrigger()
-                SelectContent {
-                    currencies.forEach { SelectItem(it) }
+                FieldLabel("Preferred Currency")
+                Select(
+                    value = currencies.first(),
+                    onValueChange = {},
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    SelectTrigger()
+                    SelectContent {
+                        currencies.forEach { SelectItem(it) }
+                    }
                 }
-            }
             }
             Field {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) { FieldLabel("Minimum Payout Amount"); Text(variant = TextVariant.TitleMedium) { "$2500.00" } }
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    FieldLabel("Minimum Payout Amount")
+                    Text(variant = TextVariant.TitleMedium) { "$2500.00" }
+                }
                 Progress(.25f)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) { FieldDescription("$50 (MIN)"); FieldDescription("$10,000 (MAX)") }
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    FieldDescription("$50 (MIN)")
+                    FieldDescription("$10,000 (MAX)")
+                }
             }
             Field {
-                FieldLabel("Notes"); Textarea(
-                notes,
-                { notes = it },
-                placeholder = "Add any notes for this payout configuration..."
-            )
+                FieldLabel("Notes")
+                Textarea(
+                    notes,
+                    { notes = it },
+                    placeholder = "Add any notes for this payout configuration...",
+                )
             }
         }
         Button(onClick = {}, modifier = cardContentModifier) { Text { "Save Threshold" } }
@@ -463,34 +492,45 @@ fun CreateAccountAccessCard(modifier: Modifier = Modifier) {
             CardDescription { "Update your credentials or re-authenticate." }
         }
         FieldGroup(modifier = cardContentModifier) {
-            Field { FieldLabel("Email Address"); Input(email, { email = it }, placeholder = "artist@studio.inc") }
             Field {
-                FieldLabel("Current Password"); Input(
-                password,
-                { password = it },
-                placeholder = "••••••••••••••••••••••••"
-            )
+                FieldLabel("Email Address")
+                Input(email, { email = it }, placeholder = "artist@studio.inc")
+            }
+            Field {
+                FieldLabel("Current Password")
+                Input(
+                    password,
+                    { password = it },
+                    placeholder = "••••••••••••••••••••••••",
+                )
             }
         }
         Column(modifier = cardContentModifier, verticalArrangement = Arrangement.spacedBy(twSpacing.md)) {
-            Button(onClick = {}, modifier = Modifier.fillMaxWidth()) { Icon(Lucide.Lock); Text { "Update Security" } }
+            Button(onClick = {}, modifier = Modifier.fillMaxWidth()) {
+                Icon(Lucide.Lock)
+                Text { "Update Security" }
+            }
             Item(variant = ItemVariant.Muted) {
                 ItemMedia(variant = ItemMediaVariant.Icon) { Icon(Lucide.X) }
-                ItemContent { ItemTitle("Danger Zone"); ItemDescription("Archive account and remove catalog") }
+                ItemContent {
+                    ItemTitle("Danger Zone")
+                    ItemDescription("Archive account and remove catalog")
+                }
                 Icon(Lucide.ArrowRight, variant = IconVariant.Small)
             }
         }
     }
 }
 
-private val qrCells = listOf(
-    "111111100101101111111", "100000101001001000001", "101110101111101011101", "101110100100001011101",
-    "101110101010101011101", "100000100111001000001", "111111101010101111111", "000000001101000000000",
-    "101011111001111010110", "010100001110010101001", "111010111011101111010", "001101000101000010101",
-    "110111101111010111011", "000000001001010001010", "111111101101111101001", "100000100010001001111",
-    "101110101011101110100", "101110100110100010011", "101110101000111101110", "100000101101000011001",
-    "111111101011101101111",
-)
+private val qrCells =
+    listOf(
+        "111111100101101111111", "100000101001001000001", "101110101111101011101", "101110100100001011101",
+        "101110101010101011101", "100000100111001000001", "111111101010101111111", "000000001101000000000",
+        "101011111001111010110", "010100001110010101001", "111010111011101111010", "001101000101000010101",
+        "110111101111010111011", "000000001001010001010", "111111101101111101001", "100000100010001001111",
+        "101110101011101110100", "101110100110100010011", "101110101000111101110", "100000101101000011001",
+        "111111101011101101111",
+    )
 
 @Composable
 fun CreateQrConnectCard(modifier: Modifier = Modifier) {
@@ -502,17 +542,20 @@ fun CreateQrConnectCard(modifier: Modifier = Modifier) {
         }
         Box(modifier = cardContentModifier.padding(bottom = twSpacing.lg), contentAlignment = Alignment.Center) {
             Canvas(
-                modifier = Modifier.size(168.dp)
-                    .background(currentTheme.colors.background, RoundedCornerShape(twRadius.md)).padding(16.dp)
+                modifier =
+                    Modifier.size(168.dp)
+                        .background(currentTheme.colors.background, RoundedCornerShape(twRadius.md)).padding(16.dp),
             ) {
                 val cell = size.width / 21f
                 qrCells.forEachIndexed { y, row ->
                     row.forEachIndexed { x, value ->
-                        if (value == '1') drawRect(
-                            foreground,
-                            androidx.compose.ui.geometry.Offset(x * cell, y * cell),
-                            androidx.compose.ui.geometry.Size(cell, cell)
-                        )
+                        if (value == '1') {
+                            drawRect(
+                                foreground,
+                                androidx.compose.ui.geometry.Offset(x * cell, y * cell),
+                                androidx.compose.ui.geometry.Size(cell, cell),
+                            )
+                        }
                     }
                 }
             }
@@ -561,7 +604,12 @@ fun CreateEmptyDistributeTrackCard(modifier: Modifier = Modifier) {
     Card(modifier = modifier) {
         Empty(modifier = cardContentModifier.padding(vertical = twSpacing.xl)) {
             EmptyMedia { Icon(Lucide.Plus) }
-            EmptyHeader { EmptyTitle("Distribute Track"); EmptyDescription("Upload your first master to start reaching listeners on Spotify, Apple Music, and more.") }
+            EmptyHeader {
+                EmptyTitle("Distribute Track")
+                EmptyDescription(
+                    "Upload your first master to start reaching listeners on Spotify, Apple Music, and more.",
+                )
+            }
             EmptyContent { Button(onClick = {}) { Text { "Create Release" } } }
         }
     }
@@ -580,7 +628,7 @@ fun CreateAnalyticsCard(modifier: Modifier = Modifier) {
                     Button(
                         onClick = {},
                         variant = ButtonVariant.Outline,
-                        size = ButtonSize.Sm
+                        size = ButtonSize.Sm,
                     ) { Text { "View Analytics" } }
                 }
             }
@@ -588,22 +636,27 @@ fun CreateAnalyticsCard(modifier: Modifier = Modifier) {
         Column(modifier = cardContentModifier.padding(bottom = twSpacing.lg)) {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(twSpacing.sm),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(variant = TextVariant.BodySmall, textStyle = TextColors.Muted) { "418.2K Visitors" }
                 Badge { Text { "+10%" } }
             }
             Canvas(modifier = Modifier.fillMaxWidth().height(100.dp)) {
-                val path = Path().apply {
-                    moveTo(0f, size.height * .62f); lineTo(
-                    size.width * .18f,
-                    size.height * .45f
-                ); lineTo(size.width * .36f, size.height * .54f)
-                    lineTo(size.width * .54f, size.height * .8f); lineTo(size.width * .72f, size.height * .55f); lineTo(
-                    size.width,
-                    size.height * .53f
-                )
-                }
+                val path =
+                    Path().apply {
+                        moveTo(0f, size.height * .62f)
+                        lineTo(
+                            size.width * .18f,
+                            size.height * .45f,
+                        )
+                        lineTo(size.width * .36f, size.height * .54f)
+                        lineTo(size.width * .54f, size.height * .8f)
+                        lineTo(size.width * .72f, size.height * .55f)
+                        lineTo(
+                            size.width,
+                            size.height * .53f,
+                        )
+                    }
                 drawPath(path, primary, style = Stroke(width = 3f))
             }
         }
@@ -612,12 +665,13 @@ fun CreateAnalyticsCard(modifier: Modifier = Modifier) {
 
 @Composable
 fun CreateNotificationSettingsCard(modifier: Modifier = Modifier) {
-    val notifications = listOf(
-        Triple("Transaction alerts", "Deposits, withdrawals, and transfers.", true),
-        Triple("Security alerts", "Login attempts and account changes.", true),
-        Triple("Goal milestones", "Updates at 25%, 50%, 75%, and 100%.", false),
-        Triple("Market updates", "Daily portfolio summary and price alerts.", false),
-    )
+    val notifications =
+        listOf(
+            Triple("Transaction alerts", "Deposits, withdrawals, and transfers.", true),
+            Triple("Security alerts", "Login attempts and account changes.", true),
+            Triple("Goal milestones", "Updates at 25%, 50%, 75%, and 100%.", false),
+            Triple("Market updates", "Daily portfolio summary and price alerts.", false),
+        )
     Card(modifier = modifier) {
         CardHeader {
             CardTitle { "Notifications" }
@@ -628,14 +682,15 @@ fun CreateNotificationSettingsCard(modifier: Modifier = Modifier) {
                 Field {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(twSpacing.md)
+                        horizontalArrangement = Arrangement.spacedBy(twSpacing.md),
                     ) {
                         Checkbox(checked, {}, label = title)
                         Column {
-                            Text(variant = TextVariant.LabelLarge) { title }; Text(
-                            variant = TextVariant.BodySmall,
-                            textStyle = TextColors.Muted
-                        ) { description }
+                            Text(variant = TextVariant.LabelLarge) { title }
+                            Text(
+                                variant = TextVariant.BodySmall,
+                                textStyle = TextColors.Muted,
+                            ) { description }
                         }
                     }
                 }
@@ -654,24 +709,26 @@ fun CreatePowerUsageCard(modifier: Modifier = Modifier) {
         }
         Column(
             modifier = cardContentModifier.padding(bottom = twSpacing.lg),
-            verticalArrangement = Arrangement.spacedBy(twSpacing.md)
+            verticalArrangement = Arrangement.spacedBy(twSpacing.md),
         ) {
             BarChart(
                 listOf(.32f, .74f, .82f, .63f, .9f, .76f, 1f, .84f),
                 listOf("6a", "8a", "10a", "12p", "2p", "4p", "6p", "8p"),
-                140.dp
+                140.dp,
             )
             Separator()
             Row(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(textStyle = TextColors.Muted) { "Currently Using" }; Text(
-                    variant = TextVariant.TitleMedium
-                ) { "3.4 kW" }
+                    Text(textStyle = TextColors.Muted) { "Currently Using" }
+                    Text(
+                        variant = TextVariant.TitleMedium,
+                    ) { "3.4 kW" }
                 }
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(textStyle = TextColors.Muted) { "Solar Gen" }; Text(
-                    variant = TextVariant.TitleMedium
-                ) { "+1.2 kW" }
+                    Text(textStyle = TextColors.Muted) { "Solar Gen" }
+                    Text(
+                        variant = TextVariant.TitleMedium,
+                    ) { "+1.2 kW" }
                 }
             }
         }
@@ -694,40 +751,43 @@ fun CreateTransferFundsCard(modifier: Modifier = Modifier) {
         }
         FieldGroup(modifier = cardContentModifier) {
             Field {
-                FieldLabel("Amount to Transfer"); InputGroup {
-                InputGroupAddon(InputGroupAddonAlign.InlineStart) { InputGroupText("$") }
-                Input("1,200.00", {})
-            }
-            }
-            Field {
-                FieldLabel("From Account"); Select(
-                value = from.first(),
-                onValueChange = {},
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                SelectTrigger()
-                SelectContent {
-                    from.forEach { SelectItem(it) }
+                FieldLabel("Amount to Transfer")
+                InputGroup {
+                    InputGroupAddon(InputGroupAddonAlign.InlineStart) { InputGroupText("$") }
+                    Input("1,200.00", {})
                 }
             }
-            }
             Field {
-                FieldLabel("To Account"); Select(
-                value = to.first(),
-                onValueChange = {},
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                SelectTrigger()
-                SelectContent {
-                    to.forEach { SelectItem(it) }
+                FieldLabel("From Account")
+                Select(
+                    value = from.first(),
+                    onValueChange = {},
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    SelectTrigger()
+                    SelectContent {
+                        from.forEach { SelectItem(it) }
+                    }
                 }
             }
+            Field {
+                FieldLabel("To Account")
+                Select(
+                    value = to.first(),
+                    onValueChange = {},
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    SelectTrigger()
+                    SelectContent {
+                        to.forEach { SelectItem(it) }
+                    }
+                }
             }
             SummaryBlock(
                 "Estimated arrival",
                 "Today, Apr 14",
                 "Transaction fee   $0.00\nTotal amount   $1,200.00",
-                Modifier.fillMaxWidth()
+                Modifier.fillMaxWidth(),
             )
         }
         Button(onClick = {}, modifier = cardContentModifier) { Text { "Confirm Transfer" } }
@@ -746,7 +806,7 @@ fun CreateMessageScrollerCard(modifier: Modifier = Modifier) {
                 CardAction(modifier = Modifier.align(Alignment.TopEnd)) {
                     Icon(
                         Lucide.RefreshCw,
-                        variant = IconVariant.Small
+                        variant = IconVariant.Small,
                     )
                 }
             }
@@ -769,7 +829,11 @@ fun CreateMessageScrollerCard(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun ChatMessage(name: String, message: String, mine: Boolean) {
+private fun ChatMessage(
+    name: String,
+    message: String,
+    mine: Boolean,
+) {
     val align = if (mine) MessageAlign.End else MessageAlign.Start
     Message(align = align, avatar = { MessageAvatar { Text { name } } }) {
         Bubble(align = align) {
@@ -779,10 +843,16 @@ private fun ChatMessage(name: String, message: String, mine: Boolean) {
 }
 
 @Composable
-private fun SummaryBlock(label: String, value: String, description: String, modifier: Modifier = Modifier) {
+private fun SummaryBlock(
+    label: String,
+    value: String,
+    description: String,
+    modifier: Modifier = Modifier,
+) {
     Column(
-        modifier = modifier.background(currentTheme.colors.muted, RoundedCornerShape(twRadius.md))
-            .padding(twSpacing.md),
+        modifier =
+            modifier.background(currentTheme.colors.muted, RoundedCornerShape(twRadius.md))
+                .padding(twSpacing.md),
         verticalArrangement = Arrangement.spacedBy(twSpacing.xs2),
     ) {
         Text(variant = TextVariant.LabelSmall, textStyle = TextColors.Muted) { label }
@@ -792,23 +862,28 @@ private fun SummaryBlock(label: String, value: String, description: String, modi
 }
 
 @Composable
-private fun BarChart(values: List<Float>, labels: List<String>, height: androidx.compose.ui.unit.Dp) {
+private fun BarChart(
+    values: List<Float>,
+    labels: List<String>,
+    height: androidx.compose.ui.unit.Dp,
+) {
     Row(
         modifier = Modifier.fillMaxWidth().height(height),
         horizontalArrangement = Arrangement.spacedBy(twSpacing.xs),
-        verticalAlignment = Alignment.Bottom
+        verticalAlignment = Alignment.Bottom,
     ) {
         values.forEachIndexed { index, value ->
             Column(
                 modifier = Modifier.weight(1f).fillMaxHeight(),
                 verticalArrangement = Arrangement.Bottom,
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Box(
-                    modifier = Modifier.weight(value).fillMaxWidth().background(
-                        currentTheme.colors.primary,
-                        RoundedCornerShape(topStart = twRadius.sm, topEnd = twRadius.sm)
-                    )
+                    modifier =
+                        Modifier.weight(value).fillMaxWidth().background(
+                            currentTheme.colors.primary,
+                            RoundedCornerShape(topStart = twRadius.sm, topEnd = twRadius.sm),
+                        ),
                 )
                 Text(variant = TextVariant.LabelSmall, textStyle = TextColors.Muted) { labels[index] }
             }
@@ -821,12 +896,13 @@ private fun MiniBars(values: List<Float>) {
     Row(
         modifier = Modifier.width(56.dp).height(28.dp),
         horizontalArrangement = Arrangement.spacedBy(2.dp),
-        verticalAlignment = Alignment.Bottom
+        verticalAlignment = Alignment.Bottom,
     ) {
         values.forEach { value ->
             Box(
-                modifier = Modifier.weight(1f).fillMaxHeight(value)
-                    .background(currentTheme.colors.primary, RoundedCornerShape(topStart = 2.dp, topEnd = 2.dp))
+                modifier =
+                    Modifier.weight(1f).fillMaxHeight(value)
+                        .background(currentTheme.colors.primary, RoundedCornerShape(topStart = 2.dp, topEnd = 2.dp)),
             )
         }
     }

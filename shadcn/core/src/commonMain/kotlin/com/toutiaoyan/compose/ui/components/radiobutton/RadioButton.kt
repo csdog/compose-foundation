@@ -127,9 +127,10 @@ fun RadioButton(
 /** Inner filled dot of a radio control. Base UI does not export RadioGroupIndicator. */
 @Composable
 internal fun RadioGroupIndicator(
-    selected: Boolean = checkNotNull(LocalRadioSelected.current) {
-        "RadioGroupIndicator must be used inside RadioButton, or pass selected="
-    },
+    selected: Boolean =
+        checkNotNull(LocalRadioSelected.current) {
+            "RadioGroupIndicator must be used inside RadioButton, or pass selected="
+        },
     modifier: Modifier = Modifier,
 ) {
     if (!selected) return

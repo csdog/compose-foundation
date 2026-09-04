@@ -70,7 +70,13 @@ class DrawerTest {
     @Test
     fun nearest_snap_without_sequential_picks_closest_offset() {
         val offsets = listOf(600f, 0f, 800f)
-        assertEquals(1, nearestDrawerSnapIndex(50f, offsets, snapToSequentialPoints = false, fromIndex = 0, velocityClosing = 0f))
-        assertEquals(2, nearestDrawerSnapIndex(750f, offsets, snapToSequentialPoints = false, fromIndex = 1, velocityClosing = 0f))
+        assertEquals(
+            1,
+            nearestDrawerSnapIndex(50f, offsets, snapToSequentialPoints = false, fromIndex = 0, velocityClosing = 0f),
+        )
+        assertEquals(
+            2,
+            nearestDrawerSnapIndex(750f, offsets, snapToSequentialPoints = false, fromIndex = 1, velocityClosing = 0f),
+        )
     }
 }

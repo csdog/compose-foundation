@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalFoundationStyleApi::class)
+
 package com.toutiaoyan.compose.ui.components.tabs
 
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -63,4 +64,3 @@ fun rememberTabsIndicatorStyle(variant: TabsListVariant = TabsListVariant.Defaul
             }
         }
     }
-
