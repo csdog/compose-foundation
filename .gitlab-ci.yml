@@ -1,0 +1,69 @@
+# 有本文件后 GitLab 不再走 Auto DevOps / Heroku buildpack。
+# Linux runner：不做 iOS；不做 Android lint/单测（GitHub ubuntu-latest 自带 SDK，这里没有）。
+
+image: eclipse-temurin:21-jdk
+
+stages:
+  - lint
+  - test
+  - deploy
+
+variables:
+  GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+default:
+  interruptible: true
+  before_script:
+    - chmod +x gradlew scripts/check_style_block_theme_reads.sh
+    - echo "kotlin.native.ignoreDisabledTargets=true" >> gradle.properties
+
+cache:
+  key:
+    files:
+      - gradle/wrapper/gradle-wrapper.properties
+      - gradle/libs.versions.toml
+  paths:
+    - .gradle/wrapper/
+    - .gradle/caches/
+
+lint:
+  stage: lint
+  script:
+    - ./gradlew ktlintCheck detekt --continue
+    - ./scripts/check_style_block_theme_reads.sh
+  artifacts:
+    when: always
+    paths:
+      - "**/build/reports/detekt/"
+      - "**/build/reports/ktlint/"
+    expire_in: 14 days
+
+test-desktop:
+  stage: test
+  script:
+    - ./gradlew jvmTest --continue
+  artifacts:
+    when: always
+    paths:
+      - "**/build/reports/tests/"
+      - "**/src/jvmTest/snapshots/**/*_compare.png"
+    expire_in: 14 days
+
+# 与 .github/workflows/pages.yml 相同：wasm + JS fallback 的 catalog。
+pages:
+  stage: deploy
+  needs:
+    - lint
+    - test-desktop
+  timeout: 60m
+  resource_group: pages
+  script:
+    - ./gradlew :app:webApp:composeCompatibilityBrowserDistribution
+    - mkdir -p public
+    - cp -a app/webApp/build/dist/composeWebCompatibility/productionExecutable/. public/
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
