@@ -1,12 +1,14 @@
 package com.toutiaoyan.compose.ui.components.slider
 import androidx.compose.foundation.focusable
-import androidx.compose.foundation.gestures.detectDragGestures
-import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.drag
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -26,6 +28,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.semantics.Role
@@ -47,8 +50,8 @@ private val TRACK_HEIGHT = SliderDefaults.TrackHeight
 
 /** base-nova Slider tokens (`.cn-slider-track` / `.cn-slider-thumb`). */
 object SliderDefaults {
-    /** Official thumb `size-3`. */
-    val ThumbSize = 12.dp
+    /** Official thumb `size-4`. */
+    val ThumbSize = 16.dp
 
     /** Official horizontal track `h-1` (vertical uses same as thickness). */
     val TrackHeight = 4.dp
@@ -125,14 +128,36 @@ internal class SliderController(
     fun setFromFraction(fraction: Float) {
         val range = state.valueRange
         val raw = range.start + fraction.coerceIn(0f, 1f) * rangeSpan
-        val current = currentValues()
-        if (current.size <= 1) {
-            state.onValuesChange(listOf(snapSliderValue(raw, range, state.step)))
-        } else {
-            val index = current.indices.minBy { abs(current[it] - raw) }
-            updateThumb(index, raw)
-        }
+        updateThumb(thumbIndexFor(raw), raw)
     }
+
+    fun thumbIndexFor(raw: Float): Int {
+        val current = currentValues()
+        if (current.size <= 1) return 0
+        return current.indices.minBy { abs(current[it] - raw) }
+    }
+}
+
+/**
+ * Visual 0..1 along the track, with 0 at the start edge (left / bottom) measured at the
+ * thumb *center*. Matches thumb placement `offset = usableWidth * visualFraction`.
+ */
+internal fun sliderVisualFractionAlongTrack(
+    position: Offset,
+    widthPx: Float,
+    heightPx: Float,
+    thumbSizePx: Float,
+    vertical: Boolean,
+): Float {
+    val usable = if (vertical) heightPx - thumbSizePx else widthPx - thumbSizePx
+    if (usable <= 0f) return 0f
+    val visual =
+        if (vertical) {
+            1f - ((position.y - thumbSizePx / 2f) / usable)
+        } else {
+            (position.x - thumbSizePx / 2f) / usable
+        }
+    return visual
 }
 
 private val LocalSlider = staticCompositionLocalOf<SliderController?> { null }
@@ -341,6 +366,7 @@ private fun SliderImpl(
         BoxWithConstraints(
             modifier =
                 Modifier
+                    .matchParentSize()
                     .semantics(mergeDescendants = true) {
                         role = Role.ValuePicker
                         val valueText = getValueLabel?.invoke(first)
@@ -406,13 +432,6 @@ private fun SliderImpl(
                             }
                         }
                     }
-                    .then(
-                        if (vertical) {
-                            Modifier.fillMaxHeight().width(THUMB_SIZE)
-                        } else {
-                            Modifier.fillMaxWidth().height(THUMB_SIZE)
-                        },
-                    )
                     .alpha(if (enabled) 1f else 0.5f),
             contentAlignment = if (vertical) Alignment.BottomCenter else Alignment.CenterStart,
         ) {
@@ -441,8 +460,59 @@ private fun SliderImpl(
                     onValuesCommit = { currentCommit.value?.invoke(it) },
                 )
             CompositionLocalProvider(LocalSlider provides controller) {
-                content()
+                Box(
+                    modifier =
+                        Modifier
+                            .matchParentSize()
+                            .sliderPointerInput(controller),
+                    contentAlignment = if (vertical) Alignment.BottomCenter else Alignment.CenterStart,
+                ) {
+                    content()
+                }
             }
+        }
+    }
+}
+
+@Composable
+private fun Modifier.sliderPointerInput(controller: SliderController): Modifier {
+    val latest = rememberUpdatedState(controller)
+    return pointerInput(
+        controller.state.enabled,
+        controller.state.orientation,
+        controller.state.inverted,
+        controller.rangeSpan,
+        controller.state.values.size,
+    ) {
+        val thumbSizePx = THUMB_SIZE.toPx()
+        awaitEachGesture {
+            val slider = latest.value
+            if (!slider.state.enabled) return@awaitEachGesture
+            val down = awaitFirstDown()
+            down.consume()
+            val vertical = slider.state.orientation == SliderOrientation.Vertical
+            fun valueAt(position: Offset): Float {
+                val visual =
+                    sliderVisualFractionAlongTrack(
+                        position = position,
+                        widthPx = size.width.toFloat(),
+                        heightPx = size.height.toFloat(),
+                        thumbSizePx = thumbSizePx,
+                        vertical = vertical,
+                    )
+                val valueFraction =
+                    if (slider.state.inverted) 1f - visual else visual
+                return slider.state.valueRange.start +
+                    valueFraction.coerceIn(0f, 1f) * slider.rangeSpan
+            }
+            val raw = valueAt(down.position)
+            val index = slider.thumbIndexFor(raw)
+            slider.updateThumb(index, raw)
+            drag(down.id) { change ->
+                change.consume()
+                slider.updateThumb(index, valueAt(change.position))
+            }
+            slider.commit()
         }
     }
 }
@@ -462,29 +532,7 @@ internal fun SliderTrack(
                 } else {
                     Modifier.fillMaxWidth().height(TRACK_HEIGHT)
                 }
-            sized
-                .pointerInput(
-                    slider.state.enabled,
-                    slider.state.valueRange,
-                    slider.state.values.size,
-                    slider.state.orientation,
-                    slider.state.inverted,
-                ) {
-                    if (!slider.state.enabled) return@pointerInput
-                    detectTapGestures { offset ->
-                        val visual =
-                            if (vertical) {
-                                1f - (offset.y / size.height.toFloat())
-                            } else {
-                                offset.x / size.width.toFloat()
-                            }
-                        val raw =
-                            if (slider.state.inverted) 1f - visual else visual
-                        slider.setFromFraction(raw.coerceIn(0f, 1f))
-                        slider.commit()
-                    }
-                }
-                .then(modifier)
+            sized.then(modifier)
         } else {
             modifier
         }
@@ -563,37 +611,17 @@ internal fun SliderThumb(
             offset
                 .size(THUMB_SIZE)
                 .focusable(enabled = slider.state.enabled, interactionSource = interactionSource)
-                .pointerInput(
-                    slider.state.enabled,
-                    slider.rangeSpan,
-                    index,
-                    slider.state.orientation,
-                    slider.state.inverted,
-                ) {
-                    if (!slider.state.enabled) return@pointerInput
-                    detectDragGestures(
-                        onDragEnd = { slider.commit() },
-                        onDragCancel = { slider.commit() },
-                    ) { change, dragAmount ->
-                        change.consume()
-                        val usableWidthPx = slider.state.usableWidth.toPx()
-                        if (usableWidthPx <= 0f) return@detectDragGestures
-                        val deltaVisual =
-                            if (vertical) {
-                                -dragAmount.y / usableWidthPx
-                            } else {
-                                dragAmount.x / usableWidthPx
-                            }
-                        val deltaFraction =
-                            if (slider.state.inverted) -deltaVisual else deltaVisual
-                        val current = slider.currentValues().getOrElse(index) { slider.state.value }
-                        slider.updateThumb(index, current + deltaFraction * slider.rangeSpan)
-                    }
-                }
                 .then(modifier)
         } else {
             modifier
         }
     val styleState = rememberUpdatedStyleState(interactionSource)
-    Box(modifier = resolved.styleable(styleState, rememberSliderThumbStyle(), style))
+    Box(modifier = resolved) {
+        Box(
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .styleable(styleState, rememberSliderThumbStyle(), style),
+        )
+    }
 }

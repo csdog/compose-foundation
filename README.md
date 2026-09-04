@@ -76,15 +76,15 @@ Ongoing alignment work is logged in [
 
 Requires JDK 21 (matches CI). Android SDK and Xcode only needed for those specific targets.
 
-```bash
-./gradlew build                          # build everything
-./gradlew :app:desktopApp:run            # run the catalog app (desktop)
-./gradlew :app:desktopApp:hotRun --autoReload --args="shadcncompose://app/drawer"  # desktop with Compose Hot Reload and navigate to drawer
-./gradlew :shadcn:core:jvmTest           # library tests + Roborazzi screenshots (JVM)
-./gradlew :shadcn:core:allTests          # library tests, all platforms
-./gradlew ktlintCheck detekt lint        # code quality (also run in CI)
-./scripts/check_style_block_theme_reads.sh
-```
+## Running the apps
+
+- build everything `./gradlew build  `                        
+- run the catalog app (desktop) `./gradlew :app:desktopApp:run`            #
+- desktop with Compose Hot Reload and navigate to drawer `./gradlew :app:desktopApp:hotRun --autoReload --args="shadcncompose://app/drawer"`  
+- library tests + Roborazzi screenshots (JVM)`./gradlew :shadcn:core:jvmTest`           
+- library tests, all platforms`./gradlew :shadcn:core:allTests  `        
+- code quality (also run in CI)`./gradlew ktlintCheck detekt lint `       
+- `./scripts/check_style_block_theme_reads.sh`
 
 Hot Reload uses
 the [Compose Hot Reload](https://kotlinlang.org/docs/multiplatform/compose-hot-reload.html)

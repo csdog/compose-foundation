@@ -12,7 +12,7 @@ import com.toutiaoyan.compose.ui.styles.focusRing
 import com.toutiaoyan.compose.ui.styles.focusRingShadow
 
 // Matches base-nova slider: track bg-muted h-1, range bg-primary, thumb
-// size-3 border-ring bg-background, ring on hover and focus.
+// size-4 border-ring bg-background, ring on hover and focus.
 // disabled dimming is a single Modifier.alpha() on the whole slider in Slider.kt,
 // not a per-style disabledDim() here -- the track/range/thumb must stay fully opaque
 // relative to *each other* (so the thumb still cleanly occludes the fill beneath it)
@@ -40,6 +40,7 @@ fun rememberSliderRangeStyle(): Style =
 fun rememberSliderThumbStyle(): Style =
     rememberTheme {
         Style {
+            shape(RoundedCornerShape(radius.full))
             background(colors.background)
             border(colors.ring)
             hovered { dropShadow(focusRingShadow()) }
