@@ -1,5 +1,8 @@
 # 有本文件后 GitLab 不再走 Auto DevOps / Heroku buildpack。
 # Linux runner：不做 iOS；不做 Android lint/单测（GitHub ubuntu-latest 自带 SDK，这里没有）。
+#
+# 不上传 artifacts：当前 runner 的 coordinator URL 是 http://gitlab，
+# job 里 DNS 解析不到这个主机名，上传会把已经成功的 job 判失败。
 
 image: eclipse-temurin:21-jdk
 
@@ -32,38 +35,21 @@ lint:
   script:
     - ./gradlew ktlintCheck detekt --continue
     - ./scripts/check_style_block_theme_reads.sh
-  artifacts:
-    when: always
-    paths:
-      - "**/build/reports/detekt/"
-      - "**/build/reports/ktlint/"
-    expire_in: 14 days
 
 test-desktop:
   stage: test
   script:
     - ./gradlew jvmTest --continue
-  artifacts:
-    when: always
-    paths:
-      - "**/build/reports/tests/"
-      - "**/src/jvmTest/snapshots/**/*_compare.png"
-    expire_in: 14 days
 
-# 与 .github/workflows/pages.yml 相同：wasm + JS fallback 的 catalog。
-pages:
+# 编 catalog 作为编译检查。GitLab Pages 也依赖 artifacts 上传，
+# runner URL 修好之前先不发布站点。
+build-web:
   stage: deploy
   needs:
     - lint
     - test-desktop
   timeout: 60m
-  resource_group: pages
   script:
     - ./gradlew :app:webApp:composeCompatibilityBrowserDistribution
-    - mkdir -p public
-    - cp -a app/webApp/build/dist/composeWebCompatibility/productionExecutable/. public/
-  artifacts:
-    paths:
-      - public
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
