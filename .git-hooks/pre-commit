@@ -1,0 +1,12 @@
+#!/bin/sh
+# Source: .git-hooks/pre-commit — copied to .git/hooks/ by scripts/install-git-hooks.sh or ./gradlew installGitHooks
+set -e
+PROJECT_DIR="$(cd "$(dirname "$0")/../.." && pwd -P)"
+
+if [ ! -x "$PROJECT_DIR/gradlew" ]; then
+  exit 0
+fi
+
+(cd "$PROJECT_DIR" && ./gradlew ktlintFormat ktlintCheck detekt --quiet)
+
+git add -u

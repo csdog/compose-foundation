@@ -51,4 +51,19 @@ subprojects {
             showStandardStreams = false
         }
     }
+
+    if (System.getenv("CI") != "true") {
+        listOf("ktlintCheck", "ktlintFormat").forEach { name ->
+            tasks.named(name).configure { dependsOn(rootProject.tasks.named("installGitHooks")) }
+        }
+    }
+}
+
+/** Copy all hooks from .git-hooks/ to .git/hooks/ (idempotent; ktlint tasks depend on this locally). */
+tasks.register<Exec>("installGitHooks") {
+    group = "setup"
+    description = "Install all hooks from .git-hooks/ into .git/hooks/"
+    workingDir = layout.projectDirectory.asFile
+    commandLine("sh", file("scripts/install-git-hooks.sh").absolutePath)
+    isIgnoreExitValue = false
 }
