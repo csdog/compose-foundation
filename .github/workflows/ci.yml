@@ -36,9 +36,6 @@ jobs:
       - name: Detekt
         run: ./gradlew detekt --continue
 
-      - name: Check for Style{} blocks reading currentTheme directly (stale CompositionLocal bug)
-        run: ./scripts/check_style_block_theme_reads.sh
-
       - name: Android Lint
         run: ./gradlew lint --continue
 

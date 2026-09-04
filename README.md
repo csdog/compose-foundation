@@ -83,8 +83,7 @@ Requires JDK 21 (matches CI). Android SDK and Xcode only needed for those specif
 - desktop with Compose Hot Reload and navigate to drawer `./gradlew :app:desktopApp:hotRun --autoReload --args="shadcncompose://app/drawer"`  
 - library tests + Roborazzi screenshots (JVM)`./gradlew :shadcn:core:jvmTest`           
 - library tests, all platforms`./gradlew :shadcn:core:allTests  `        
-- code quality (also run in CI)`./gradlew ktlintCheck detekt lint `       
-- `./scripts/check_style_block_theme_reads.sh`
+- code quality (also run in CI)`./gradlew ktlintCheck detekt lint `
 
 Hot Reload uses
 the [Compose Hot Reload](https://kotlinlang.org/docs/multiplatform/compose-hot-reload.html)

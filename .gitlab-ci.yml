@@ -18,7 +18,7 @@ variables:
 default:
   interruptible: true
   before_script:
-    - chmod +x gradlew scripts/check_style_block_theme_reads.sh
+    - chmod +x gradlew
     - echo "kotlin.native.ignoreDisabledTargets=true" >> gradle.properties
 
 cache:
@@ -34,7 +34,6 @@ lint:
   stage: lint
   script:
     - ./gradlew ktlintCheck detekt --continue
-    - ./scripts/check_style_block_theme_reads.sh
 
 test-desktop:
   stage: test

@@ -22,7 +22,6 @@ plugins {
 // and Detekt are wired here uniformly instead of per-module convention plugins.
 subprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
-    apply(plugin = "io.gitlab.arturbosch.detekt")
 
     extensions.configure<KtlintExtension> {
         android.set(false)
@@ -34,6 +33,8 @@ subprojects {
             exclude("**/*BuildKonfig.kt")
         }
     }
+
+    apply(plugin = "io.gitlab.arturbosch.detekt")
 
     extensions.configure<DetektExtension> {
         config.setFrom(rootProject.file("detekt.yml"))

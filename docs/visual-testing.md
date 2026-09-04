@@ -38,9 +38,10 @@ the one it's frozen at. This exact bug shipped undetected in `InputGroup`/
 `Input`'s error state until a live dark-mode toggle in the running catalog app
 revealed it. This suite catches wrong colors; it cannot catch colors that are right once
 and then never update. Since a screenshot diff structurally can't catch this, the fix
-was to prevent the anti-pattern instead: `scripts/check_style_block_theme_reads.sh`
-statically checks every `Style { }` block for a direct `currentTheme.` read and is wired
-into CI, so this bug class can no longer land silently the way it did here.
+does not replace it. `currentTheme` inside `Style { }` is a compiler error
+(`@Composable` getter). The remaining risk is capturing a theme color in
+composition and stuffing it into Style -- that compiles and a static screenshot
+will not catch a live theme change.
 
 ## Running it
 

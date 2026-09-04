@@ -142,13 +142,10 @@ dry-run wired, not yet released)
    value is indistinguishable from a correct one in a screenshot that never
    recomposes. This class of bug only shows up on a live in-place theme *change*, not a
    fresh render under either theme alone.
-   **This is now an enforced rule, not just documentation:**
-   `scripts/check_style_block_theme_reads.sh` scans every `Style { }` block under
-   `library/src`/`app/shared/src` (brace-matched, comment-aware -- won't false-positive
-   on a doc comment or a tutorial page's illustrative code string) and fails if any of
-   them read `currentTheme.` directly inside their own body. Wired into CI's `lint` job.
-   Run it locally with `./scripts/check_style_block_theme_reads.sh` before adding any
-   new `Style { }` block.
+   `currentTheme` is `@Composable` (`Local.current`), so `Style { currentTheme… }`
+   is already a compiler error. Inside `Style { }` use StyleScope `colors` /
+   `theme` (`currentValue`). Do not capture theme colors in composition and stuff
+   them into a Style lambda -- that compiles but can freeze across theme changes.
 4. **`contentColor()` set inside a `Style` block is not reliable for text painted by a
    *nested* `Text`/`BasicText`/`BasicTextField`** on a live dark-mode toggle, for
    variants with no explicit `background()` (confirmed live: `ChipVariant.Outline`).
