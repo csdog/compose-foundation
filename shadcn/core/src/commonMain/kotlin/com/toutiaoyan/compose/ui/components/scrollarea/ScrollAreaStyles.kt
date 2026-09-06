@@ -33,13 +33,18 @@ sealed interface ScrollType {
 
     data object Always : ScrollType
 
+    /** Variants that hide the scrollbar after [hideDelayMs] of inactivity. */
+    sealed interface AutoHide : ScrollType {
+        val hideDelayMs: Int
+    }
+
     data class Scroll(
-        val hideDelayMs: Int = DEFAULT_HIDE_DELAY_MS,
-    ) : ScrollType
+        override val hideDelayMs: Int = DEFAULT_HIDE_DELAY_MS,
+    ) : AutoHide
 
     data class Hover(
-        val hideDelayMs: Int = DEFAULT_HIDE_DELAY_MS,
-    ) : ScrollType
+        override val hideDelayMs: Int = DEFAULT_HIDE_DELAY_MS,
+    ) : AutoHide
 
     companion object {
         /** Radix `scrollHideDelay` default. */
@@ -116,20 +121,12 @@ internal fun rememberScrollbarVisible(
     when (type) {
         ScrollType.Auto -> return overflowing
         ScrollType.Always -> return true
-        is ScrollType.Scroll,
-        is ScrollType.Hover,
-        -> {
-            val hideDelayMs =
-                when (type) {
-                    is ScrollType.Scroll -> type.hideDelayMs
-                    is ScrollType.Hover -> type.hideDelayMs
-                    else -> ScrollType.DEFAULT_HIDE_DELAY_MS
-                }
+        is ScrollType.AutoHide -> {
+            val hideDelayMs = type.hideDelayMs
             val active =
                 when (type) {
                     is ScrollType.Scroll -> scrolling
                     is ScrollType.Hover -> scrolling || hovering
-                    else -> false
                 }
             var visible by remember(type) { mutableStateOf(false) }
             LaunchedEffect(active, overflowing, hideDelayMs) {

@@ -1,0 +1,42 @@
+# GitLab Desktop / Roborazzi 测试镜像。
+# 对齐 JetBrains compose-multiplatform ci/docker/linux-tests：Ubuntu 24.04
+# + OpenJDK 21 + xvfb + libgl。不装 Android SDK / 浏览器（本仓库 GitLab 不跑那些）。
+#
+# 构建并推送（在能访问 GitLab Registry 的机器上）：
+#   docker build -t "$CI_REGISTRY_IMAGE/ci-linux-desktop:24.04" ci/docker/linux-desktop
+#   docker push "$CI_REGISTRY_IMAGE/ci-linux-desktop:24.04"
+
+FROM ubuntu:24.04
+
+ARG DEBIAN_FRONTEND=noninteractive
+ARG JAVA_VERSION=21
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        openjdk-${JAVA_VERSION}-jdk \
+        xvfb \
+        libgl-dev \
+        libx11-6 \
+        libxext6 \
+        libxrender1 \
+        libxtst6 \
+        libxi6 \
+        libfontconfig1 \
+        fontconfig \
+        fonts-dejavu-core \
+        fonts-liberation \
+        locales \
+        ca-certificates \
+        unzip \
+    && locale-gen en_US.UTF-8 \
+    && JAVA_HOME="$(dirname "$(dirname "$(readlink -f "$(command -v java)")")")" \
+    && ln -sfn "$JAVA_HOME" /usr/lib/jvm/default-java \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV LANG=en_US.UTF-8 \
+    LANGUAGE=en_US:en \
+    LC_ALL=en_US.UTF-8 \
+    JAVA_HOME=/usr/lib/jvm/default-java \
+    PATH="/usr/lib/jvm/default-java/bin:${PATH}" \
+    JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8 \
+    DISPLAY=:1.0

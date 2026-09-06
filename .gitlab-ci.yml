@@ -4,9 +4,8 @@
 # 不上传 artifacts：当前 runner 的 coordinator URL 是 http://gitlab，
 # job 里 DNS 解析不到这个主机名，上传会把已经成功的 job 判失败。
 
-image: eclipse-temurin:21-jdk
-
 stages:
+  - image
   - lint
   - test
   - deploy
@@ -14,8 +13,11 @@ stages:
 variables:
   GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  # 预装 JDK 21 + Xvfb/GL/字体，见 ci/docker/linux-desktop/Dockerfile
+  CI_DESKTOP_IMAGE: "$CI_REGISTRY_IMAGE/ci-linux-desktop:24.04"
 
 default:
+  image: $CI_DESKTOP_IMAGE
   interruptible: true
   before_script:
     - chmod +x gradlew
@@ -30,13 +32,39 @@ cache:
     - .gradle/wrapper/
     - .gradle/caches/
 
+# Dockerfile 变更时重建并推到 GitLab Container Registry。
+# runner 需要能 docker build（挂载 docker.sock，或启用 privileged + dind）。
+build-ci-image:
+  stage: image
+  image: docker:24
+  interruptible: true
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - docker build -t "$CI_DESKTOP_IMAGE" ci/docker/linux-desktop
+    - docker push "$CI_DESKTOP_IMAGE"
+  rules:
+    - if: $FORCE_BUILD_CI_IMAGE == "true"
+    - changes:
+        - ci/docker/linux-desktop/**/*
+
 lint:
   stage: lint
+  needs:
+    - job: build-ci-image
+      optional: true
   script:
     - ./gradlew ktlintCheck detekt --continue
 
+# 虚拟屏起法和 JetBrains compose-multiplatform-core Desktop 测试一致。
 test-desktop:
   stage: test
+  needs:
+    - job: build-ci-image
+      optional: true
+  before_script:
+    - chmod +x gradlew
+    - echo "kotlin.native.ignoreDisabledTargets=true" >> gradle.properties
+    - Xvfb :1 -screen 0 1920x1080x24 -extension RANDR +extension GLX &
   script:
     - ./gradlew jvmTest --continue
 
