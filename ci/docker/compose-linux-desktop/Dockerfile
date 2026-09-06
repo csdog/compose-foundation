@@ -1,10 +1,8 @@
-# GitLab Desktop / Roborazzi 测试镜像。
+# Compose Foundation Desktop / Roborazzi 测试镜像。
 # 对齐 JetBrains compose-multiplatform ci/docker/linux-tests：Ubuntu 24.04
 # + OpenJDK 21 + xvfb + libgl。不装 Android SDK / 浏览器（本仓库 GitLab 不跑那些）。
 #
-# 构建并推送（在能访问 GitLab Registry 的机器上）：
-#   docker build -t "$CI_REGISTRY_IMAGE/ci-linux-desktop:24.04" ci/docker/linux-desktop
-#   docker push "$CI_REGISTRY_IMAGE/ci-linux-desktop:24.04"
+# Harbor：harbor.devops.toutiaoyan.com/web-foundation/compose-linux-desktop:24.04
 
 FROM ubuntu:24.04
 

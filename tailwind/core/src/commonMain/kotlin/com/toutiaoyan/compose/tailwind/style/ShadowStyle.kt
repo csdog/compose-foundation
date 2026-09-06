@@ -23,8 +23,16 @@ fun StyleScope.shadow(
     dropShadow(Shadow(radius = radius, color = color))
 }
 
+fun StyleScope.shadowXs2() {
+    shadow(TwShadow.xs2)
+}
+
 fun StyleScope.shadowXs() {
     shadow(TwShadow.xs)
+}
+
+fun StyleScope.shadowSm() {
+    shadow(TwShadow.sm)
 }
 
 fun StyleScope.shadowMd() {
@@ -37,4 +45,8 @@ fun StyleScope.shadowLg() {
 
 fun StyleScope.shadowXl() {
     shadow(TwShadow.xl)
+}
+
+fun StyleScope.shadowXl2() {
+    shadow(TwShadow.xl2)
 }
