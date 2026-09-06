@@ -21,6 +21,8 @@ variables:
   DEBIAN_FRONTEND: noninteractive
   HARBOR_REGISTRY: harbor.devops.toutiaoyan.com
   COMPOSE_CI_IMAGE: harbor.devops.toutiaoyan.com/web-foundation/compose-linux-desktop:24.04
+  # GitLab runner 是 linux/amd64；本机 OrbStack 默认会打出 arm64。
+  COMPOSE_CI_PLATFORM: linux/amd64
 
 default:
   interruptible: true
@@ -51,7 +53,7 @@ build-compose-image:
         exit 1
       fi
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin "$HARBOR_REGISTRY"
-    - docker build -t "$COMPOSE_CI_IMAGE" ci/docker/compose-linux-desktop
+    - docker build --platform "$COMPOSE_CI_PLATFORM" -t "$COMPOSE_CI_IMAGE" ci/docker/compose-linux-desktop
     - docker push "$COMPOSE_CI_IMAGE"
   rules:
     - if: $FORCE_BUILD_CI_IMAGE == "true"

@@ -3,6 +3,7 @@
 # + OpenJDK 21 + xvfb + libgl。不装 Android SDK / 浏览器（本仓库 GitLab 不跑那些）。
 #
 # Harbor：harbor.devops.toutiaoyan.com/web-foundation/compose-linux-desktop:24.04
+# 必须打 linux/amd64（GitLab runner），不要用本机默认的 arm64。
 
 FROM ubuntu:24.04
 
