@@ -5,7 +5,7 @@
 # job 里 DNS 解析不到这个主机名，上传会把已经成功的 job 判失败。
 #
 # 镜像推 Harbor，不走 GitLab Container Registry（CI_REGISTRY 为空会落到 Docker Hub）。
-# 密码用 CI/CD Variables：HARBOR_PASSWORD（masked），不要写进本文件。
+# 账号用 CI/CD Variables：DOCKER_USER / DOCKER_PASSWORD（masked），不要写进本文件。
 
 image: eclipse-temurin:21-jdk
 
@@ -20,7 +20,6 @@ variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
   DEBIAN_FRONTEND: noninteractive
   HARBOR_REGISTRY: harbor.devops.toutiaoyan.com
-  HARBOR_USER: web-foundation
   COMPOSE_CI_IMAGE: harbor.devops.toutiaoyan.com/web-foundation/compose-linux-desktop:24.04
 
 default:
@@ -47,11 +46,11 @@ build-compose-image:
   before_script: []
   script:
     - |
-      if [ -z "$HARBOR_PASSWORD" ]; then
-        echo "缺少 CI/CD 变量 HARBOR_PASSWORD（masked）。Settings → CI/CD → Variables。"
+      if [ -z "$DOCKER_USER" ] || [ -z "$DOCKER_PASSWORD" ]; then
+        echo "缺少 CI/CD 变量 DOCKER_USER / DOCKER_PASSWORD（masked）。Settings → CI/CD → Variables。"
         exit 1
       fi
-    - echo "$HARBOR_PASSWORD" | docker login -u "$HARBOR_USER" --password-stdin "$HARBOR_REGISTRY"
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin "$HARBOR_REGISTRY"
     - docker build -t "$COMPOSE_CI_IMAGE" ci/docker/compose-linux-desktop
     - docker push "$COMPOSE_CI_IMAGE"
   rules:
