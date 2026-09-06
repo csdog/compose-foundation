@@ -104,6 +104,11 @@ build-web:
     - lint
     - test-desktop
   timeout: 60m
+  before_script:
+    # Gradle 自带的 Node 25 需要 libatomic.so.1，temurin 瘦镜像没有。
+    - apt-get update && apt-get install -y --no-install-recommends libatomic1
+    - chmod +x gradlew
+    - echo "kotlin.native.ignoreDisabledTargets=true" >> gradle.properties
   script:
     - ./gradlew :app:webApp:composeCompatibilityBrowserDistribution
   rules:
