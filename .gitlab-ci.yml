@@ -93,6 +93,7 @@ test-desktop:
         bash -lc 'chmod +x gradlew
           echo "kotlin.native.ignoreDisabledTargets=true" >> gradle.properties
           Xvfb :1 -screen 0 1920x1080x24 -extension RANDR +extension GLX &
+          export DISPLAY=:1.0
           exec ./gradlew jvmTest --continue'
 
 # 编 catalog 作为编译检查。GitLab Pages 也依赖 artifacts 上传，

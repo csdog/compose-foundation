@@ -1,6 +1,7 @@
 # Compose Foundation Desktop / Roborazzi 测试镜像。
 # 对齐 JetBrains compose-multiplatform ci/docker/linux-tests：Ubuntu 24.04
-# + OpenJDK 21 + xvfb + libgl。不装 Android SDK / 浏览器（本仓库 GitLab 不跑那些）。
+# + OpenJDK 21 + xvfb + libgl/libEGL。不装 Android SDK / 浏览器（本仓库 GitLab 不跑那些）。
+# Skiko 的 libskiko-linux-*.so 会 dlopen libEGL.so.1；只装 libgl-dev 不够。
 #
 # Harbor：harbor.devops.toutiaoyan.com/web-foundation/compose-linux-desktop:24.04
 # 必须打 linux/amd64（GitLab runner），不要用本机默认的 arm64。
@@ -15,6 +16,8 @@ RUN apt-get update \
         openjdk-${JAVA_VERSION}-jdk \
         xvfb \
         libgl-dev \
+        libegl1 \
+        libgles2 \
         libx11-6 \
         libxext6 \
         libxrender1 \

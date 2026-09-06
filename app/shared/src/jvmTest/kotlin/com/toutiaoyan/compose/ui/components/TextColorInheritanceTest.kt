@@ -163,24 +163,38 @@ class TextColorInheritanceTest {
                 .onNodeWithTag(tag, useUnmergedTree = true)
                 .captureToImage()
                 .toPixelMap()
-        var nearExpected = 0
-        var nearRival = 0
+        val ink = ArrayList<Color>()
         for (x in 0 until map.width) {
             for (y in 0 until map.height) {
                 val pixel = map[x, y]
                 if (pixel.alpha < 0.85f) continue
-                if (colorDistance(pixel, background) < 0.2f) continue
-                if (colorDistance(pixel, expected) < 0.25f) nearExpected++
-                if (colorDistance(pixel, rival) < 0.25f) nearRival++
+                if (colorDistance(pixel, background) < 0.15f) continue
+                ink += pixel
             }
         }
         assertTrue(
-            nearExpected > 0,
-            "$tag: no glyph pixels near expected $expected (${map.width}x${map.height})",
+            ink.isNotEmpty(),
+            "$tag: no ink pixels for $expected (${map.width}x${map.height})",
         )
+        // Linux grayscale AA turns dark-on-light stems into mid-gray fringes that sit
+        // nearer mutedForeground than cardForeground. Score the third of pixels
+        // farthest from the background (glyph cores), not every fringe.
+        val coreCount = (ink.size / 3).coerceAtLeast(1)
+        val core =
+            ink.sortedByDescending { colorDistance(it, background) }
+                .take(coreCount)
+        val mean =
+            Color(
+                red = core.map { it.red }.average().toFloat(),
+                green = core.map { it.green }.average().toFloat(),
+                blue = core.map { it.blue }.average().toFloat(),
+                alpha = 1f,
+            )
+        val distExpected = colorDistance(mean, expected)
+        val distRival = colorDistance(mean, rival)
         assertTrue(
-            nearExpected > nearRival,
-            "$tag: more pixels near rival $rival ($nearRival) than expected $expected ($nearExpected)",
+            distExpected < distRival,
+            "$tag: core mean $mean closer to rival $rival ($distRival) than expected $expected ($distExpected)",
         )
     }
 }
