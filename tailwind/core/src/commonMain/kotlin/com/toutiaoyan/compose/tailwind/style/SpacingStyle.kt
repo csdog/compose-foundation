@@ -1,6 +1,12 @@
 package com.toutiaoyan.compose.tailwind.style
 
 import androidx.compose.foundation.style.StyleScope
+import androidx.compose.foundation.style.contentPadding
+import androidx.compose.foundation.style.contentPaddingHorizontal
+import androidx.compose.foundation.style.contentPaddingVertical
+import androidx.compose.foundation.style.externalPadding
+import androidx.compose.foundation.style.externalPaddingHorizontal
+import androidx.compose.foundation.style.externalPaddingVertical
 import androidx.compose.ui.unit.Dp
 import com.toutiaoyan.compose.tailwind.core.twSpacing
 

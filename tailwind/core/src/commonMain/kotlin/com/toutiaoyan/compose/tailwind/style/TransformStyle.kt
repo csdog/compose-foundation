@@ -1,6 +1,7 @@
 package com.toutiaoyan.compose.tailwind.style
 
 import androidx.compose.foundation.style.StyleScope
+import androidx.compose.foundation.style.scale
 import androidx.compose.ui.unit.Dp
 import com.toutiaoyan.compose.tailwind.core.twSpacing
 

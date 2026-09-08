@@ -4,6 +4,7 @@ package com.toutiaoyan.compose.ui.components.icon
 
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.size
 import androidx.compose.runtime.Composable
 import com.toutiaoyan.compose.ui.utils.rememberTheme
 

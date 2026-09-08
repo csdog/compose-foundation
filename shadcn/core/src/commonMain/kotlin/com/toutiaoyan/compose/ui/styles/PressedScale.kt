@@ -3,7 +3,9 @@ package com.toutiaoyan.compose.ui.styles
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.StyleScope
+import androidx.compose.foundation.style.animate
 import androidx.compose.foundation.style.pressed
+import androidx.compose.foundation.style.scale
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.toutiaoyan.compose.ui.components.button.ButtonAnimation

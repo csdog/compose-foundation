@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: compose-foundation-web
+  namespace: compose-foundation
+  labels:
+    app: compose-foundation-web
+spec:
+  selector:
+    app: compose-foundation-web
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

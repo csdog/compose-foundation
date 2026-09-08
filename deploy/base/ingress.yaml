@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: compose-foundation-web
+  namespace: compose-foundation
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-alidns-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - compose-foundation.devops.toutiaoyan.com
+      secretName: compose-foundation-web-tls
+  rules:
+    - host: compose-foundation.devops.toutiaoyan.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: compose-foundation-web
+                port:
+                  number: 80

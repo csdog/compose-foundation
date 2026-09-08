@@ -4,6 +4,7 @@ package com.toutiaoyan.compose.ui.components.sheet
 
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.contentPadding
 import androidx.compose.runtime.Composable
 import com.toutiaoyan.compose.ui.utils.rememberTheme
 import com.toutiaoyan.compose.ui.styles.border
