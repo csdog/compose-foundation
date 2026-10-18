@@ -1,5 +1,5 @@
 # Compose Foundation Desktop / Roborazzi 测试镜像。
-# 对齐 JetBrains compose-multiplatform ci/docker/linux-tests：Ubuntu 24.04
+# 对齐 [JetBrains compose-multiplatform ci/docker/linux-tests：Ubuntu 24.04](https://github.com/JetBrains/compose-multiplatform/tree/master/ci/docker/linux-tests)
 # + OpenJDK 21 + xvfb + libgl/libEGL。不装 Android SDK / 浏览器（本仓库 GitLab 不跑那些）。
 # Skiko 的 libskiko-linux-*.so 会 dlopen libEGL.so.1；只装 libgl-dev 不够。
 #

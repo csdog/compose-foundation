@@ -16,6 +16,7 @@ stages:
   - image
   - lint
   - test
+  - package
   - deploy
 
 variables:
@@ -60,12 +61,12 @@ build-compose-image:
         exit 1
       fi
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin "$HARBOR_REGISTRY"
-    - docker build --platform "$COMPOSE_CI_PLATFORM" -t "$COMPOSE_CI_IMAGE" ci/docker/compose-linux-desktop
+    - docker build --platform "$COMPOSE_CI_PLATFORM" -t "$COMPOSE_CI_IMAGE" ci/docker/linux-tests
     - docker push "$COMPOSE_CI_IMAGE"
   rules:
     - if: $FORCE_BUILD_CI_IMAGE == "true"
     - changes:
-        - ci/docker/compose-linux-desktop/**/*
+        - ci/docker/linux-tests/**/*
 
 lint:
   stage: lint
@@ -105,7 +106,7 @@ test-desktop:
 
 # 多阶段镜像里编 catalog，避开 artifact 上传。Node 25 的 libatomic 在 Dockerfile 里装。
 package-web:
-  stage: deploy
+  stage: package
   image: docker:24
   needs:
     - lint
