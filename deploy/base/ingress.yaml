@@ -10,10 +10,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - compose-foundation.devops.toutiaoyan.com
+        - compose-foundation.devops.cn.toutiaoyan.com
       secretName: compose-foundation-web-tls
   rules:
-    - host: compose-foundation.devops.toutiaoyan.com
+    - host: compose-foundation.devops.cn.toutiaoyan.com
       http:
         paths:
           - path: /
