@@ -28,7 +28,7 @@ variables:
   COMPOSE_WEB_IMAGE: harbor.devops.toutiaoyan.com/web-foundation/compose-foundation-web
   # GitLab runner 是 linux/amd64；本机 OrbStack 默认会打出 arm64。
   COMPOSE_CI_PLATFORM: linux/amd64
-  K8S_NAMESPACE: compose-foundation
+  K8S_NAMESPACE: web-foundation
   K8S_DEPLOYMENT: compose-foundation-web
   K8S_CONTAINER: web
 

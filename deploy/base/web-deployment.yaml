@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: compose-foundation-web
-  namespace: compose-foundation
+  namespace: web-foundation
   labels:
     app: compose-foundation-web
 spec:

@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: compose-foundation-web
-  namespace: compose-foundation
+  namespace: web-foundation
   labels:
     app: compose-foundation-web
 spec:
