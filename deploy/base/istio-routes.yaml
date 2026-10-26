@@ -1,0 +1,31 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: migration-compose-foundation-web
+  namespace: web-foundation
+  labels:
+    devops.toutiaoyan.com/config-owner: compose-foundation-web
+spec:
+  gateways:
+  - istio-ingress/compose-foundation-web-gateway
+  hosts:
+  - compose-foundation.devops.cn.toutiaoyan.com
+  http:
+  - match:
+    - port: 80
+    name: migration-web-foundation-compose-foundation-web-https-redirect
+    redirect:
+      redirectCode: 308
+      scheme: https
+  - match:
+    - port: 443
+      uri:
+        prefix: /
+    name: migration-web-foundation-compose-foundation-web
+    retries:
+      attempts: 0
+    route:
+    - destination:
+        host: compose-foundation-web.web-foundation.svc.cluster.local
+        port:
+          number: 80

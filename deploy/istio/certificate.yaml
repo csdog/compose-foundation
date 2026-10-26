@@ -1,0 +1,16 @@
+# 本项目入口配置；gateway.yaml 是安全合并分片，不会覆盖其他项目的共享 Gateway。
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: web-foundation-compose-foundation-web-tls
+  namespace: istio-ingress
+  labels:
+    devops.toutiaoyan.com/config-owner: compose-foundation-web
+spec:
+  dnsNames:
+  - compose-foundation.devops.cn.toutiaoyan.com
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: letsencrypt-alidns-prod
+  secretName: web-foundation-compose-foundation-web-tls

@@ -137,7 +137,7 @@ package-web:
 deploy-web:
   stage: deploy
   image:
-    name: alpine/k8s:1.31.4
+    name: alpine/k8s:1.35.9
     entrypoint: [""]
   needs:
     - package-web

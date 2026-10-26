@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gateway-config-compose-foundation-web
+  namespace: web-foundation
+data:
+  gateway.json: "{\n  \"name\": \"all-domains\",\n  \"namespace\": \"istio-ingress\"\
+    ,\n  \"owner\": \"compose-foundation-web\",\n  \"selector\": {\n    \"istio\"\
+    : \"gateway-only\"\n  },\n  \"servers\": [\n    {\n      \"hosts\": [\n      \
+    \  \"compose-foundation.devops.cn.toutiaoyan.com\"\n      ],\n      \"port\":\
+    \ {\n        \"name\": \"http-redirect\",\n        \"number\": 80,\n        \"\
+    protocol\": \"HTTP\"\n      }\n    },\n    {\n      \"hosts\": [\n        \"compose-foundation.devops.cn.toutiaoyan.com\"\
+    \n      ],\n      \"port\": {\n        \"name\": \"https-web-foundation-compose-foundation-web-tls\"\
+    ,\n        \"number\": 443,\n        \"protocol\": \"HTTPS\"\n      },\n     \
+    \ \"tls\": {\n        \"credentialName\": \"web-foundation-compose-foundation-web-tls\"\
+    ,\n        \"mode\": \"SIMPLE\"\n      }\n    }\n  ]\n}"

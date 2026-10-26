@@ -1,0 +1,179 @@
+#!/usr/bin/env python3
+"""Merge one project's Gateway fragment without overwriting other projects.
+
+The shared Gateway identity, server names and TLS secrets remain stable. Kubernetes
+resourceVersion is tested atomically on each patch, then conflicts are re-read.
+No Python packages beyond the standard library are required.
+"""
+import argparse
+import copy
+import json
+import subprocess
+import sys
+import time
+
+OWNERS_KEY = 'devops.toutiaoyan.com/gateway-owners'
+KUBECTL_FLAGS = []
+
+def compose(current, fragment):
+    data = json.loads(fragment['data']['gateway.json'])
+    owner = data['owner']
+    if not isinstance(owner, str) or not owner:
+        raise ValueError('Gateway fragment needs an explicit owner')
+    servers = data['servers']
+    http = [s for s in servers if s['port']['number'] == 80]
+    secure = [s for s in servers if s['port']['number'] == 443]
+    if len(http) != 1 or not secure or len(http) + len(secure) != len(servers):
+        raise ValueError('Only one HTTP:80 server and owned HTTPS/TLS:443 servers are supported')
+    wanted = {s['port']['name']: copy.deepcopy(s) for s in secure}
+    if len(wanted) != len(secure):
+        raise ValueError('Duplicate server names in project fragment')
+    hosts = set(http[0]['hosts'])
+    if hosts != {h for s in secure for h in s['hosts']} or not hosts:
+        raise ValueError('HTTP and TLS hosts must match')
+    if '*' in hosts or any('*' in h or '/' in h for h in hosts):
+        raise ValueError('Project ownership requires explicit domain names')
+    if current is None:
+        current = {'apiVersion': 'networking.istio.io/v1', 'kind': 'Gateway',
+                   'metadata': {'name': data['name'], 'namespace': data['namespace']},
+                   'spec': {'selector': data['selector'], 'servers': []}}
+    result = copy.deepcopy(current)
+    if (result['metadata']['name'], result['metadata']['namespace']) != (data['name'], data['namespace']):
+        raise ValueError('Gateway identity does not match fragment')
+    if result['spec']['selector'] != data['selector']:
+        raise ValueError('A project cannot change the shared workload selector')
+    annotations = result['metadata'].setdefault('annotations', {})
+    owners = json.loads(annotations.get(OWNERS_KEY, '{}'))
+    for other, entry in owners.items():
+        if other != owner and (hosts & set(entry['hosts']) or set(wanted) & set(entry['serverNames'])):
+            raise ValueError('Domain or server name is already owned by another project: ' + other)
+    existing = result['spec']['servers']
+    if len([s for s in existing if s['port']['number'] == 80]) > 1:
+        raise ValueError('Shared Gateway must have one HTTP:80 server')
+    previous = owners.get(owner)
+    if previous:
+        if (previous['configMapNamespace'], previous['configMapName']) != (fragment['metadata']['namespace'], fragment['metadata']['name']):
+            raise ValueError('Owner is already associated with a different project ConfigMap')
+        old_names, old_hosts = set(previous['serverNames']), set(previous['hosts'])
+    else:
+        claimed = [s for s in existing if s['port']['name'] in wanted and s['port']['number'] == 443]
+        if any(not set(s['hosts']) <= hosts for s in claimed):
+            raise ValueError('Initial ownership would replace unrelated domains')
+        old_names = {s['port']['name'] for s in claimed}
+        old_hosts = {h for s in claimed for h in s['hosts']}
+    for s in existing:
+        if s['port']['number'] == 443 and s['port']['name'] not in old_names:
+            if hosts & set(s['hosts']) or s['port']['name'] in wanted:
+                raise ValueError('Domain or server name overlaps an unowned TLS server')
+    new_servers = []
+    http_seen = False
+    for s in existing:
+        if s['port']['number'] == 80:
+            http_seen = True
+            if {k: v for k, v in s.items() if k != 'hosts'} != {k: v for k, v in http[0].items() if k != 'hosts'}:
+                raise ValueError('Common HTTP listener options cannot be changed by a project')
+            value = copy.deepcopy(s)
+            # Preserve order and bytes when claiming the current configuration.
+            value['hosts'] = [h for h in s['hosts'] if h not in old_hosts or h in hosts]
+            value['hosts'] += sorted(hosts - set(value['hosts']))
+            new_servers.append(value)
+        elif s['port']['name'] in old_names:
+            if s['port']['name'] in wanted:
+                new_servers.append(wanted.pop(s['port']['name']))
+        else:
+            new_servers.append(copy.deepcopy(s))
+    if not http_seen:
+        new_servers.insert(0, copy.deepcopy(http[0]))
+    new_servers.extend(wanted.values())
+    result['spec']['servers'] = new_servers
+    owners[owner] = {'configMapNamespace': fragment['metadata']['namespace'],
+                     'configMapName': fragment['metadata']['name'],
+                     'hosts': sorted(hosts), 'serverNames': sorted(s['port']['name'] for s in secure)}
+    annotations[OWNERS_KEY] = json.dumps(owners, sort_keys=True, separators=(',', ':'))
+    result.pop('status', None)
+    result['metadata'].pop('managedFields', None)
+    return result
+
+def kubectl(args, body=None, check=True):
+    p = subprocess.run(['kubectl', *KUBECTL_FLAGS, *args], input=json.dumps(body).encode() if body is not None else None,
+                       stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    if check and p.returncode:
+        raise RuntimeError(p.stderr.decode().strip())
+    return p
+
+def reconcile(fragment, check_only=False):
+    data = json.loads(fragment['data']['gateway.json'])
+    target = ['gateway.networking.istio.io', data['name'], '-n', data['namespace']]
+    for attempt in range(8):
+        p = kubectl(['get', *target, '-o', 'json', '--ignore-not-found'])
+        current = json.loads(p.stdout) if p.stdout.strip() else None
+        result = compose(current, fragment)
+        if check_only:
+            kubectl(['replace' if current else 'create', '--dry-run=server', '-f', '-'], result)
+            print('Gateway merge validated: ' + data['owner'])
+            return
+        if current and current['spec'] == result['spec'] and current['metadata'].get('annotations', {}).get(OWNERS_KEY) == result['metadata']['annotations'][OWNERS_KEY]:
+            print('Gateway ownership unchanged: ' + data['owner'])
+            return
+        if current:
+            patch = [{'op': 'test', 'path': '/metadata/resourceVersion', 'value': current['metadata']['resourceVersion']}]
+            if current['spec']['servers'] != result['spec']['servers']:
+                patch.append({'op': 'replace', 'path': '/spec/servers', 'value': result['spec']['servers']})
+            if 'annotations' not in current['metadata']:
+                patch.append({'op': 'add', 'path': '/metadata/annotations', 'value': {}})
+            patch.append({'op': 'add', 'path': '/metadata/annotations/' + OWNERS_KEY.replace('~', '~0').replace('/', '~1'),
+                          'value': result['metadata']['annotations'][OWNERS_KEY]})
+            p = kubectl(['patch', *target, '--type=json', '-p', json.dumps(patch)], check=False)
+        else:
+            p = kubectl(['create', '-f', '-'], result, check=False)
+        if p.returncode == 0:
+            print('Gateway fragment merged: ' + data['owner'])
+            return
+        error = p.stderr.decode()
+        # A concurrent writer cannot be overwritten: re-read, merge again and CAS.
+        changed = False
+        if current:
+            fresh = kubectl(['get', *target, '-o', 'json', '--ignore-not-found'])
+            latest = json.loads(fresh.stdout) if fresh.stdout.strip() else None
+            changed = latest is None or latest['metadata']['resourceVersion'] != current['metadata']['resourceVersion']
+        if not changed and not any(v in error.lower() for v in ['conflict', 'test failed', 'test operation', 'testing value', 'alreadyexists', 'already exists', 'test does not apply', 'does not apply']):
+            raise RuntimeError(error.strip())
+        time.sleep(min(0.15 * (2 ** attempt), 2))
+    raise RuntimeError('Concurrent Gateway changes did not settle; retry this release')
+
+def decode_fragment(payload):
+    # kubectl can print one List or multiple JSON documents for a multi-object YAML.
+    decoder = json.JSONDecoder()
+    remaining = payload.decode() if isinstance(payload, bytes) else payload
+    resources = []
+    while remaining.strip():
+        remaining = remaining.lstrip()
+        value, end = decoder.raw_decode(remaining)
+        resources.extend(value.get('items', []) if value.get('kind') == 'List' else [value])
+        remaining = remaining[end:]
+    fragments = [x for x in resources if x.get('kind') == 'ConfigMap' and 'gateway.json' in x.get('data', {})]
+    if len(fragments) != 1:
+        raise ValueError('Input must contain exactly one Gateway ConfigMap fragment, not a shared Gateway')
+    return fragments[0]
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('fragment', help='project ConfigMap manifest with data.gateway.json')
+    parser.add_argument('--check', action='store_true', help='server dry-run only')
+    parser.add_argument('--context', help='explicit kubectl context (otherwise uses the CI kubeconfig current context)')
+    parser.add_argument('--kubeconfig', help='explicit kubeconfig file')
+    args = parser.parse_args()
+    if args.context:
+        KUBECTL_FLAGS.extend(['--context', args.context])
+    if args.kubeconfig:
+        KUBECTL_FLAGS.extend(['--kubeconfig', args.kubeconfig])
+    fragment = decode_fragment(kubectl(['create', '--dry-run=client', '-f', args.fragment, '-o', 'json']).stdout)
+    reconcile(fragment, args.check)
+
+if __name__ == '__main__':
+    try:
+        main()
+    except (ValueError, KeyError, RuntimeError, json.JSONDecodeError) as error:
+        print('Gateway merge failed: ' + str(error), file=sys.stderr)
+        sys.exit(1)

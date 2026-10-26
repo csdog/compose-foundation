@@ -1,0 +1,26 @@
+# 仅用于独立 Gateway 已切换后的手动回退；正常发布不引用。
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: compose-foundation-web-gateway
+  namespace: istio-ingress
+  labels:
+    devops.toutiaoyan.com/config-owner: compose-foundation-web
+spec:
+  selector:
+    istio: gateway-only
+  servers:
+  - hosts:
+    - compose-foundation.devops.cn.toutiaoyan.com
+    port:
+      name: http-redirect
+      number: 80
+      protocol: HTTP
+  - hosts:
+    - compose-foundation.devops.cn.toutiaoyan.com
+    port:
+      name: https-web-foundation-compose-foundation-web-tls
+      number: 443
+      protocol: TLS
+    tls:
+      mode: PASSTHROUGH

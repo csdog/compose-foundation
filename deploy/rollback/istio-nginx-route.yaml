@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: project-compose-foundation-web-nginx-rollback
+  namespace: web-foundation
+spec:
+  hosts:
+  - compose-foundation.devops.cn.toutiaoyan.com
+  gateways:
+  - istio-ingress/compose-foundation-web-gateway
+  tls:
+  - match:
+    - port: 443
+      sniHosts:
+      - compose-foundation.devops.cn.toutiaoyan.com
+    route:
+    - destination:
+        host: nginx-rollback.kube-system.svc.cluster.local
+        port:
+          number: 443

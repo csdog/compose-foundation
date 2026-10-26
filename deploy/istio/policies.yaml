@@ -1,0 +1,41 @@
+# 本项目入口配置；gateway.yaml 是安全合并分片，不会覆盖其他项目的共享 Gateway。
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: project-compose-foundation-web-policies
+  namespace: istio-ingress
+  labels:
+    devops.toutiaoyan.com/config-owner: compose-foundation-web
+spec:
+  priority: 25
+  workloadSelector:
+    labels:
+      istio: gateway-only
+  configPatches:
+  - applyTo: HTTP_ROUTE
+    match:
+      context: GATEWAY
+      routeConfiguration:
+        vhost:
+          route:
+            name: migration-web-foundation-compose-foundation-web
+    patch:
+      operation: MERGE
+      value:
+        typed_per_filter_config:
+          envoy.filters.http.compressor:
+            '@type': type.googleapis.com/envoy.extensions.filters.http.compressor.v3.CompressorPerRoute
+            overrides:
+              response_direction_config: {}
+  - applyTo: HTTP_ROUTE
+    match:
+      context: GATEWAY
+      routeConfiguration:
+        vhost:
+          route:
+            name: migration-web-foundation-compose-foundation-web
+    patch:
+      operation: MERGE
+      value:
+        route:
+          idle_timeout: 60s

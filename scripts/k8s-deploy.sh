@@ -12,6 +12,10 @@ if [[ -z "${FULL_IMAGE:-}" ]]; then
 fi
 
 kubectl apply -f "${ROOT}/deploy/base/namespace.yaml"
+kubectl apply -f "${ROOT}/deploy/istio/certificate.yaml"
+kubectl wait --for=condition=Ready certificate/web-foundation-compose-foundation-web-tls -n istio-ingress --timeout=600s
+kubectl apply -f "${ROOT}/deploy/istio/policies.yaml" -f "${ROOT}/deploy/istio/gateway.yaml"
+
 
 if [[ -n "${DOCKER_USER:-}" && -n "${DOCKER_PASSWORD:-}" ]]; then
   kubectl create secret docker-registry harbor-registry-secret \
@@ -27,7 +31,7 @@ fi
 
 kubectl apply -f "${ROOT}/deploy/base/web-service.yaml"
 kubectl apply -f "${ROOT}/deploy/base/web-deployment.yaml"
-kubectl apply -f "${ROOT}/deploy/base/ingress.yaml"
+kubectl apply -f "${ROOT}/deploy/base/istio-routes.yaml"
 
 echo "Rolling image to ${FULL_IMAGE}"
 kubectl set image "deployment/${K8S_DEPLOYMENT}" \
