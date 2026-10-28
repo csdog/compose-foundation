@@ -1,5 +1,5 @@
 [versions]
-agp = "9.1.1"
+agp = "9.5.0-rc02"
 android-compileSdk = "37"
 android-minSdk = "24"
 android-targetSdk = "37"
@@ -29,8 +29,10 @@ composeInteractionCapabilities = "1.1.0"
 coil3 = "3.6.3"
 ktor = "3.5.2"
 buildkonfig = "0.22.0"
+compose-screenshot = "0.0.1-alpha16"
 
 [libraries]
+compose-screenshot-validation = { module = "com.android.tools.screenshot:screenshot-validation-api", version.ref = "compose-screenshot" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { module = "junit:junit", version.ref = "junit" }

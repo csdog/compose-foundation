@@ -37,6 +37,21 @@ android {
         versionCode = 1
         versionName = "1.0"
     }
+    buildFeatures {
+        compose = true
+    }
+    testOptions {
+        screenshotTests.create("screenshotTest") {
+            engineVersion = libs.versions.compose.screenshot.get()
+            targetVariants.add("debug")
+            dependencies {
+                implementation(projects.shadcn.core)
+                implementation(libs.compose.foundation)
+                implementation(libs.compose.uiTooling)
+                implementation(libs.compose.screenshot.validation)
+            }
+        }
+    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"

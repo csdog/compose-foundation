@@ -94,6 +94,30 @@ See [`docs/visual-testing.md`](docs/visual-testing.md) for the screenshot-testin
 (`recordRoborazziJvm`/`verifyRoborazziJvm`) and [`docs/shadcn-parity.md`](docs/shadcn-parity.md) for
 how components are checked against real shadcn/ui source.
 
+### Android Preview 截图测试
+
+使用 AGP 原生测试套件，通过 Layoutlib 在本机渲染，无需模拟器或真机。
+在仓库根目录运行：
+
+```bash
+# 校验当前 UI 与已提交的基准图是否一致
+./gradlew :app:androidApp:testDebugScreenshotTestDefaultTestSuite
+
+# 首次生成或确认外观变化符合预期后更新基准；检查 PNG 差异后提交
+./gradlew :app:androidApp:updateDebugScreenshotTestDefaultTestSuite
+```
+
+- 测试源码：`app/androidApp/src/screenshotTest/kotlin/`
+- 基准图片：`app/androidApp/src/screenshotTestDefaultDebug/reference/`
+- 差异报告：`app/androidApp/build/reports/tests/testDebugScreenshotTestDefaultTestSuite/index.html`
+
+当前使用 AGP `9.5.0-rc02`、Gradle `9.6.0` 和截图引擎 `0.0.1-alpha16`，
+测试套件仍为实验功能。上述任务名按当前 AGP 实际生成的名称填写，顺序与官方文档示例不同。
+覆盖浅色、深色、平板宽度和大字体；交互行为继续由 JVM 测试验证。
+
+详见 [项目截图测试说明](docs/visual-testing.md) 和
+[Android 官方：使用测试套件进行截图测试](https://developer.android.com/studio/preview/compose-screenshot-testing-with-testsuites?hl=zh-cn)。
+
 ## License
 
 [Apache License 2.0](LICENSE).

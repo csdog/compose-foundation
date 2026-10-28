@@ -57,3 +57,36 @@ Goldens live in `shadcn/core/src/jvmTest/snapshots/` and are committed to git. O
 mismatch, Roborazzi writes a `*_compare.png` beside the golden with
 expected/actual/diff side by side; CI uploads these as the `screenshot-diffs` artifact
 on failure.
+
+## Android Preview 截图（Layoutlib）
+
+Android Preview 截图与 JVM 交互测试互补：前者检查 Android 渲染、宽度、主题和字体缩放，
+后者继续验证点击、焦点和动画过程。两套基准分开维护，不能互相替代或证明其他平台像素一致。
+
+- 工具链：AGP `9.5.0-rc02`、Gradle `9.6.0`、截图引擎 `0.0.1-alpha16`。
+  AGP 9.5 当前仍是预发布版本，截图测试套件也是实验性 API；升级时需重新核对 DSL。
+- 测试宿主：`:app:androidApp`，套件名 `screenshotTest`，目标变体 `debug`。
+- 用例目录：`app/androidApp/src/screenshotTest/kotlin/`。
+- 基准目录：`app/androidApp/src/screenshotTestDefaultDebug/reference/`，生成后需随代码提交。
+- 报告目录：`app/androidApp/build/reports/tests/testDebugScreenshotTestDefaultTestSuite/index.html`。
+- 每个用例包含 360dp 浅色、360dp 深色、600dp 浅色、360dp / 1.5 倍字体四种配置，
+  固定 API 37；使用固定数据，不访问网络、系统时间或登录状态。
+
+在仓库根目录运行：
+
+```bash
+# 首次生成或有意修改外观时更新；必须检查 PNG 差异。
+./gradlew :app:androidApp:updateDebugScreenshotTestDefaultTestSuite
+
+# 日常验证与 CI：只比较，不更新基准。
+./gradlew :app:androidApp:testDebugScreenshotTestDefaultTestSuite
+```
+
+以上直接使用 AGP 原生任务。当前 AGP `9.5.0-rc02` 生成的任务名顺序与官方文档示例不同，
+请以当前版本实际生成的任务为准。验证任务只比较图片，不更新基准。需要 JDK 17+、Android SDK platform 37 和 Build Tools 36.0.0；
+无需模拟器或真机。基准更新与验证应使用一致的渲染环境。
+
+官方说明：[使用 AGP 测试套件进行 Compose 预览截图测试](https://developer.android.com/studio/preview/compose-screenshot-testing-with-testsuites)。
+
+首批 Android 用例：`ButtonShapesPreview` 和 `FormStatesPreview`，覆盖按钮变体、禁用状态、
+圆形/非对称 shape、输入框与复选框。JVM 的按压中间态截图仍由 Roborazzi 负责。
