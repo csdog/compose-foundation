@@ -2,17 +2,15 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
-import com.composables.icons.lucide.Lucide
-import com.composables.icons.lucide.Calendar as LucideCalendar
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.size
+import androidx.compose.runtime.CompositionLocalProvider
+import com.toutiaoyan.compose.ui.theme.Theme
+import com.toutiaoyan.compose.ui.catalog.catalogCalendarCjkFontFamily
+import com.toutiaoyan.compose.ui.components.calendar.LocalCalendarLocale
+import com.toutiaoyan.compose.ui.components.calendar.CalendarLocale
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.components.button.Button
 import com.toutiaoyan.compose.ui.components.button.ButtonVariant
 import com.toutiaoyan.compose.ui.components.calendar.Calendar
@@ -62,9 +60,7 @@ val datePickerDoc =
     ComponentDoc(
         id = "date-picker",
         title = "Date Picker",
-        description =
-            "A date picker built by composing Popover and Calendar -- not a standalone component in real " +
-                "shadcn/ui either.",
+        description = "A date picker component with range and presets.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.*
@@ -93,74 +89,72 @@ val datePickerDoc =
                     title = "Default",
                     code =
                         """
-                        var open by remember { mutableStateOf(false) }
-                        var year by remember { mutableStateOf(2026) }
-                        var month by remember { mutableStateOf(1) }
-                        var selected by remember { mutableStateOf<CalendarDate?>(null) }
-                        Popover(open = open, onOpenChange = { open = it }) {
-                            PopoverTrigger {
-                                Button(onClick = toggle, variant = ButtonVariant.Outline) {
-                                    Image(
-                                        imageVector = Lucide.LucideCalendar,
-                                        contentDescription = null,
-                                        modifier = Modifier.size(16.dp),
-                                        colorFilter = ColorFilter.tint(currentTheme.colors.foreground),
-                                    )
-                                    Text(textStyle = if (selected == null) TextStyles.Muted else TextStyle.Default) {
-                                        selected?.let(::formatDate) ?: "Pick a date"
+                        @Composable
+                        fun DatePickerParityExample() {
+                            var open by remember { mutableStateOf(false) }
+                            val locale = LocalCalendarLocale.current
+                            val today = remember {
+                                currentCalendarDate()
+                            }
+                            var year by remember { mutableStateOf(today.year) }
+                            var month by remember { mutableStateOf(today.month) }
+                            var selected by remember { mutableStateOf<CalendarDate?>(null) }
+                            Popover(open = open, onOpenChange = { open = it }) {
+                                PopoverTrigger {
+                                    Button(onClick = toggle, variant = ButtonVariant.Outline, modifier = Modifier.width(212.dp)) {
+                                        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                                        Text(Modifier.weight(1f), textStyle = if (selected == null) TextColors.Muted else androidx.compose.ui.text.TextStyle.Default) {
+                                            selected?.let(locale.formatDate) ?: locale.pickDate
+                                        }
+                                        Image(Lucide.ChevronDown, null, Modifier.size(16.dp), colorFilter = ColorFilter.tint(currentTheme.colors.mutedForeground))
+                                        }
+                                    }
+                                }
+                                PopoverContent(style = Style { width(214.dp); contentPadding(0.dp) }) {
+                                    CompositionLocalProvider(LocalCalendarAutoFocus provides true) {
+                                    Calendar(year = year, month = month, onMonthChange = { y, m -> year = y; month = m }, selected = selected,
+                                        today = today, fixedWeeks = false, onSelectedChange = { selected = it })
                                     }
                                 }
                             }
-                            PopoverContent {
-                                Calendar(
-                                    year = year,
-                                    month = month,
-                                    onMonthChange = { y, m -> year = y; month = m },
-                                    selected = selected,
-                                    onSelectedChange = {
-                                        selected = it
-                                        open = false
-                                    },
-                                )
-                            }
+                        }
+
+                        fun calendarDateAt(instant: Instant, zone: TimeZone): CalendarDate {
+                            val date = instant.toLocalDateTime(zone).date
+                            return CalendarDate(date.year, date.month.number, date.day)
+                        }
+                        fun currentCalendarDate(): CalendarDate = calendarDateAt(Clock.System.now(), TimeZone.currentSystemDefault())
+
+                        """.trimIndent(),
+                    preview = { DatePickerParityExample() },
+                ),
+                ComponentExample(
+                    title = "Localized date picker",
+                    code =
+                        """
+                        // Wasm requires a bundled CJK-capable font; this catalog uses a small licensed date-glyph subset.
+                        val theme = currentTheme
+                        Theme(preset = theme.activePreset, baseColor = theme.activeBaseColor, accent = theme.activeAccent,
+                            isDark = theme.isDark, baseRadius = theme.baseRadius, ring = theme.ring,
+                            fontFamily = catalogCalendarCjkFontFamily(), minTouchTarget = theme.minTouchTarget) {
+                            CompositionLocalProvider(LocalCalendarLocale provides CalendarLocale.Chinese) { DatePickerParityExample() }
                         }
                         """.trimIndent(),
                     preview = {
-                        var open by remember { mutableStateOf(false) }
-                        var year by remember { mutableStateOf(2026) }
-                        var month by remember { mutableStateOf(1) }
-                        var selected by remember { mutableStateOf<CalendarDate?>(null) }
-                        Popover(open = open, onOpenChange = { open = it }) {
-                            PopoverTrigger {
-                                Button(onClick = toggle, variant = ButtonVariant.Outline) {
-                                    Image(
-                                        imageVector = Lucide.LucideCalendar,
-                                        contentDescription = null,
-                                        modifier = Modifier.size(16.dp),
-                                        colorFilter = ColorFilter.tint(currentTheme.colors.foreground),
-                                    )
-                                    Text(textStyle = if (selected == null) TextColors.Muted else TextStyle.Default) {
-                                        selected?.let(
-                                            ::formatDate,
-                                        ) ?: "Pick a date"
-                                    }
-                                }
-                            }
-                            PopoverContent {
-                                Calendar(
-                                    year = year,
-                                    month = month,
-                                    onMonthChange = { y, m ->
-                                        year = y
-                                        month = m
-                                    },
-                                    selected = selected,
-                                    onSelectedChange = {
-                                        selected = it
-                                        open = false
-                                    },
-                                )
-                            }
+                        val theme = currentTheme
+                        Theme(
+                            preset = theme.activePreset,
+                            baseColor = theme.activeBaseColor,
+                            accent = theme.activeAccent,
+                            isDark = theme.isDark,
+                            baseRadius = theme.baseRadius,
+                            ring = theme.ring,
+                            minTouchTarget = theme.minTouchTarget,
+                            fontFamily = catalogCalendarCjkFontFamily(),
+                        ) {
+                            CompositionLocalProvider(
+                                LocalCalendarLocale provides CalendarLocale.Chinese,
+                            ) { DatePickerParityExample() }
                         }
                     },
                 ),

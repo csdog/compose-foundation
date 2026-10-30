@@ -1,0 +1,27 @@
+{
+  "screenshots": [
+    "web-parity/alert-r7-desktop-copy-feedback.png",
+    "web-parity/alert-r7-desktop-dark-code.png",
+    "web-parity/alert-r7-desktop-dark-composition.png",
+    "web-parity/alert-r7-desktop-light-code.png",
+    "web-parity/alert-r7-desktop-light-composition.png",
+    "web-parity/alert-r7-expanded-before.png",
+    "web-parity/alert-r7-expanded-copy-feedback.png",
+    "web-parity/alert-r7-expanded-scrolled.png",
+    "web-parity/alert-r7-official-phone-inline.png",
+    "web-parity/alert-r7-phone-code-horizontal-scroll.png",
+    "web-parity/alert-r7-phone-copy-feedback.png",
+    "web-parity/alert-r7-phone-dark-code.png",
+    "web-parity/alert-r7-phone-dark-composition.png",
+    "web-parity/alert-r7-phone-light-code.png",
+    "web-parity/alert-r7-phone-light-composition.png"
+  ],
+  "tests": {
+    "DocCodeBlockTest": 4,
+    "ComponentDocumentationTest": 5,
+    "AlertExamplesTest": 4,
+    "CatalogNavigationTest": 6
+  },
+  "pixelBaselineUpdated": false,
+  "fullPixelVerification": false
+}

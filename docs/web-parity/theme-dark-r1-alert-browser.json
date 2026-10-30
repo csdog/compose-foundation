@@ -1,0 +1,26 @@
+[
+  {
+    "device": "desktop",
+    "theme": "light",
+    "kind": "alert-dialog",
+    "shot": "theme-dark-r1-desktop-light-alert-dialog.png"
+  },
+  {
+    "device": "desktop",
+    "theme": "dark",
+    "kind": "alert-dialog",
+    "shot": "theme-dark-r1-desktop-dark-alert-dialog.png"
+  },
+  {
+    "device": "phone",
+    "theme": "light",
+    "kind": "alert-dialog",
+    "shot": "theme-dark-r1-phone-light-alert-dialog.png"
+  },
+  {
+    "device": "phone",
+    "theme": "dark",
+    "kind": "alert-dialog",
+    "shot": "theme-dark-r1-phone-dark-alert-dialog.png"
+  }
+]

@@ -1,0 +1,220 @@
+{
+  "command_fingerprints": {
+    "2ba306526a05dc1944f3a0eab8ca171bf2dfd19de921700eaee2946e95a8dbe7": 1,
+    "2da47578814147ab4f668e0bb9b160f8edfabc6aed4754678fb1a295de6ff469": 2,
+    "4d49deac8bea6715556324c45ca331575cefab2b9727ea0dc84cda24548853a2": 1,
+    "6a8084b07a03b28bd0e8369f488143bc95028c4ab0364b401e16fb111c0da371": 1,
+    "7dcc7e4ff6009a2901c8c9ce56b34f493b591c34ac0ad9f9bd50ee1c872c74d3": 2,
+    "d7bca4f2944405eac64bd45ca698d6e28f3d8fcddba33d444cb18e647f87d190": 1,
+    "fba4b3cd5846e5b2d7bfc5a81db1607c21ccad0616b82ad411b5a4d0c7367824": 1
+  },
+  "failure_fingerprints": {
+    "072408a9924efdce6e4b52559ec2e51fb9ee65231bab2f3a1274ea8796de6f19": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/attachment/AttachmentGroupConstraintsTest.kt:19:102 Unresolved reference 'value' on receiver of type 'Int'.",
+      "occurrences": 1
+    },
+    "2b21d5400ac79a6226ab7769dc9170abc32dc0a1cdf73dd41dbae04ca6b78351": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/attachment/AttachmentGroupConstraintsTest.kt:19:96 Candidate 'val GestureScope.width: Int' is inapplicable because of a r...",
+      "occurrences": 1
+    },
+    "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:jvmTest'. > There were failing tests. See the report at: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/reports/tests/jvmTest/index.html",
+      "occurrences": 2
+    },
+    "861921eb78ae52e8046ec724086831bd805f548ab53a75177d4ae1d05a8577b7": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:compileTestKotlinJvm' (registered in build file 'shadcn/core/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kot...",
+      "occurrences": 1
+    }
+  },
+  "failure_fingerprints_truncated_occurrences": 0,
+  "run_count": 9,
+  "runs": [
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentGroupConstraintsTest --tests *AttachmentGroupSnapTest --console=plain --no-scan",
+      "elapsed_seconds": 8.41,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "2b21d5400ac79a6226ab7769dc9170abc32dc0a1cdf73dd41dbae04ca6b78351",
+        "072408a9924efdce6e4b52559ec2e51fb9ee65231bab2f3a1274ea8796de6f19",
+        "861921eb78ae52e8046ec724086831bd805f548ab53a75177d4ae1d05a8577b7"
+      ],
+      "log": "0001.log",
+      "question": "Do preferred/Style card widths obey the live Group viewport in LTR/RTL, preserve explicit requiredWidth overflow and min-width semantics, isolate nested groups, and keep9 snap contracts passing?",
+      "scope": "targeted",
+      "sequence": 1,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentGroupConstraintsTest --tests *AttachmentGroupSnapTest --console=plain --no-scan",
+      "elapsed_seconds": 3.122,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0002.log",
+      "question": "With bounds measured from DpRect edges, do Group preferred/Style caps react to resize, preserve requiredWidth overflow and maintain snap/keyboard behavior?",
+      "scope": "targeted",
+      "sequence": 2,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentLayoutTest --tests *AttachmentStateTest --tests *AttachmentGroupConstraintsTest --tests *AttachmentGroupSnapTest :app:shared:jvmTest --tests *AttachmentExamplesTest --console=plain --no-scan",
+      "elapsed_seconds": 17.03,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0003.log",
+      "question": "Does the variant-aware AttachmentScope API and hidden binary bridge compile for core/catalog, retain layout/state behavior and preserve Group constraints/snap contracts?",
+      "scope": "targeted",
+      "sequence": 3,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentScopeTest --tests *AttachmentGroupConstraintsTest --tests *AttachmentGroupSnapTest --tests *AttachmentLayoutTest --tests *AttachmentStateTest :app:shared:jvmTest --tests *AttachmentExamplesTest --console=plain --no-scan",
+      "elapsed_seconds": 13.895,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0004.log",
+      "question": "Do actual xs6dp corner pixels, live orientation4dp action gaps, physical-right RTL, nested/extracted scope helpers and legacy/scoped JVM symbols match the new variant-aware API, without regressing Group constraints or snaps?",
+      "scope": "targeted",
+      "sequence": 4,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentScopeTest --console=plain --no-scan",
+      "elapsed_seconds": 2.481,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0005.log",
+      "question": "With the actual default base-radius10 scale (rounded-md8, rounded-lg10), do scoped xs corner pixels, nested/extracted helpers, action spacing and ABI tests pass?",
+      "scope": "targeted",
+      "sequence": 5,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentLayoutTest --tests *AttachmentStateTest --tests *AttachmentScreenshotTest --tests *AttachmentScopeTest --tests *AttachmentGroupConstraintsTest --tests *AttachmentGroupSnapTest --tests *AttachmentGroupFadeTest --tests *ScrollFadeTest --tests *ScrollFadeScreenshotTest --tests *ShimmerScreenshotTest --tests *SpinnerGeometryTest --tests *SpinnerScreenshotTest --tests *ButtonNovaParityTest --tests *BadgeNovaParityTest :app:shared:jvmTest --tests *AttachmentExamplesTest --tests *CatalogPreviewTest --tests *CatalogNavigationTest --tests *ComponentDocumentationTest :app:shared:compileKotlinJs :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 20.893,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0006.log",
+      "question": "Do the final scope API, live width caps,9 snap contracts and existing Attachment/Spinner/catalog consumers pass together, and do0.3.0 JS/Wasm builds compile the migrated slots?",
+      "scope": "targeted",
+      "sequence": 6,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "4f07c8bf4971834aa688e6aec6202d93e92b917c0b8e12fddf3c4a5ff4aaa0dd",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentLayoutTest --tests *AttachmentStateTest --tests *AttachmentScreenshotTest --tests *AttachmentScopeTest --tests *AttachmentGroupConstraintsTest --tests *AttachmentGroupSnapTest --tests *AttachmentGroupFadeTest --tests *ScrollFadeTest --tests *ScrollFadeScreenshotTest --tests *ShimmerScreenshotTest --tests *SpinnerGeometryTest --tests *SpinnerScreenshotTest --tests *ButtonNovaParityTest --tests *BadgeNovaParityTest :app:shared:jvmTest --tests *AttachmentExamplesTest --tests *CatalogPreviewTest --tests *CatalogNavigationTest --tests *ComponentDocumentationTest :app:shared:compileKotlinJs :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 3.729,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0007.log",
+      "question": "Regenerate the complete Attachment round4 XML evidence after the separate Drawer run overwrote core test reports; do all migrated consumers and constraints still pass?",
+      "scope": "targeted",
+      "sequence": 7,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentScreenshotTest --tests *SpinnerScreenshotTest --tests *ScrollFadeScreenshotTest -Proborazzi.test.verify=true --console=plain --no-scan",
+      "elapsed_seconds": 2.898,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0008.log",
+      "question": "Are existing Attachment Nova and legacy, Spinner and shared ScrollFade pixel baselines unchanged after scoped parts and width limits?",
+      "scope": "targeted",
+      "sequence": 8,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentLayoutTest.novaLayout* --tests *SpinnerScreenshotTest --tests *ScrollFadeScreenshotTest -Proborazzi.test.verify=true --console=plain --no-scan",
+      "elapsed_seconds": 2.479,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0009.log",
+      "question": "Do the six actual Nova Attachment, Spinner and shared ScrollFade goldens remain unchanged, independently of newly observed legacy Vega corner diffs?",
+      "scope": "targeted",
+      "sequence": 9,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    }
+  ],
+  "version": 1,
+  "warning_fingerprints": {
+    "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312": {
+      "excerpt": "w: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/text/Text.kt:5:16 Suppression of error 'INVISIBLE_REFERENCE' might compile and work, but the compiler behavior is UNSP...",
+      "occurrences": 6
+    },
+    "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4": {
+      "excerpt": "You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.",
+      "occurrences": 7
+    },
+    "4f07c8bf4971834aa688e6aec6202d93e92b917c0b8e12fddf3c4a5ff4aaa0dd": {
+      "excerpt": "webpack 5.108.1 compiled with 1 warning in 395 ms",
+      "occurrences": 1
+    },
+    "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2": {
+      "excerpt": "Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.",
+      "occurrences": 7
+    },
+    "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a": {
+      "excerpt": "WARNING: The option setting 'android.experimental.enableScreenshotTest=true' is experimental.",
+      "occurrences": 7
+    },
+    "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=UNSUPPORTED_PROJECT_OPTION_USE to the gradle.properties file to suppress this warning.",
+      "occurrences": 14
+    },
+    "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90": {
+      "excerpt": "WARNING: The option setting 'android.experimental.testSuiteSupport=true' is experimental.",
+      "occurrences": 7
+    }
+  },
+  "warning_fingerprints_truncated_occurrences": 0,
+  "workflow": "0f5eb7598671b6f98de97bf2816c6367"
+}

@@ -11,6 +11,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.styles.border
 import com.toutiaoyan.compose.ui.tokens.Colors
+import com.toutiaoyan.compose.ui.tokens.StylePreset
+import androidx.compose.foundation.style.then
+import androidx.compose.ui.graphics.shadow.Shadow
 import com.toutiaoyan.compose.ui.utils.rememberTheme
 
 sealed interface CardVariant {
@@ -29,32 +32,42 @@ fun CardVariant.rememberStyle(): Style {
     val receiver = this
     return rememberTheme(receiver) {
         val foreground = receiver.contentColor(colors)
-        when (receiver) {
-            CardVariant.Default ->
+        val novaRing =
+            if (theme.activePreset == StylePreset.Nova) {
                 Style {
-                    background(colors.card)
-                    contentColor(foreground)
-                    border(colors.border)
-                    shape(RoundedCornerShape(radius.xl))
-                    contentPadding(spacing.lg)
+                    dropShadow(Shadow(radius = 0.dp, spread = 1.dp, color = colors.foreground.copy(alpha = 0.1f)))
                 }
+            } else {
+                Style
+            }
+        val base =
+            when (receiver) {
+                CardVariant.Default ->
+                    Style {
+                        background(colors.card)
+                        contentColor(foreground)
+                        if (theme.activePreset != StylePreset.Nova) border(colors.border)
+                        shape(RoundedCornerShape(radius.xl))
+                        contentPadding(spacing.lg)
+                    }
 
-            CardVariant.Elevated ->
-                Style {
-                    background(colors.card)
-                    contentColor(foreground)
-                    shape(RoundedCornerShape(radius.xl))
-                    contentPadding(spacing.lg)
-                }
+                CardVariant.Elevated ->
+                    Style {
+                        background(colors.card)
+                        contentColor(foreground)
+                        shape(RoundedCornerShape(radius.xl))
+                        contentPadding(spacing.lg)
+                    }
 
-            CardVariant.Filled ->
-                Style {
-                    background(colors.muted)
-                    contentColor(foreground)
-                    shape(RoundedCornerShape(radius.xl))
-                    contentPadding(spacing.lg)
-                }
-        }
+                CardVariant.Filled ->
+                    Style {
+                        background(colors.muted)
+                        contentColor(foreground)
+                        shape(RoundedCornerShape(radius.xl))
+                        contentPadding(spacing.lg)
+                    }
+            }
+        base then novaRing
     }
 }
 

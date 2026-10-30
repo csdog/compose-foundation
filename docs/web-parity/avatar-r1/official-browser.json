@@ -1,0 +1,1630 @@
+[
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "default",
+    "file": "official-desktop-light-default.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "avatars": [
+      {
+        "size": "default",
+        "rect": {
+          "x": 580.5,
+          "y": 395,
+          "width": 32,
+          "height": 32,
+          "top": 395,
+          "right": 612.5,
+          "bottom": 427,
+          "left": 580.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 660.5,
+          "y": 395,
+          "width": 32,
+          "height": 32,
+          "top": 395,
+          "right": 692.5,
+          "bottom": 427,
+          "left": 660.5
+        },
+        "badge": {
+          "x": 682.5,
+          "y": 417,
+          "width": 10,
+          "height": 10,
+          "top": 417,
+          "right": 692.5,
+          "bottom": 427,
+          "left": 682.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 740.5,
+          "y": 395,
+          "width": 32,
+          "height": 32,
+          "top": 395,
+          "right": 772.5,
+          "bottom": 427,
+          "left": 740.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 764.5,
+          "y": 395,
+          "width": 32,
+          "height": 32,
+          "top": 395,
+          "right": 796.5,
+          "bottom": 427,
+          "left": 764.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 788.5,
+          "y": 395,
+          "width": 32,
+          "height": 32,
+          "top": 395,
+          "right": 820.5,
+          "bottom": 427,
+          "left": 788.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "badge-with-icon",
+    "file": "official-desktop-light-badge-with-icon.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "avatars": [
+      {
+        "size": "default",
+        "rect": {
+          "x": 696.5,
+          "y": 302.46875,
+          "width": 32,
+          "height": 32,
+          "top": 302.46875,
+          "right": 728.5,
+          "bottom": 334.46875,
+          "left": 696.5
+        },
+        "badge": {
+          "x": 718.5,
+          "y": 324.46875,
+          "width": 10,
+          "height": 10,
+          "top": 324.46875,
+          "right": 728.5,
+          "bottom": 334.46875,
+          "left": 718.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 672.5,
+          "y": 832.46875,
+          "width": 32,
+          "height": 32,
+          "top": 832.46875,
+          "right": 704.5,
+          "bottom": 864.46875,
+          "left": 672.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 696.5,
+          "y": 832.46875,
+          "width": 32,
+          "height": 32,
+          "top": 832.46875,
+          "right": 728.5,
+          "bottom": 864.46875,
+          "left": 696.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 720.5,
+          "y": 832.46875,
+          "width": 32,
+          "height": 32,
+          "top": 832.46875,
+          "right": 752.5,
+          "bottom": 864.46875,
+          "left": 720.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "avatar-group-with-icon",
+    "file": "official-desktop-light-avatar-group-with-icon.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "avatars": [
+      {
+        "size": "default",
+        "rect": {
+          "x": 660.5,
+          "y": 302.46875,
+          "width": 32,
+          "height": 32,
+          "top": 302.46875,
+          "right": 692.5,
+          "bottom": 334.46875,
+          "left": 660.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 684.5,
+          "y": 302.46875,
+          "width": 32,
+          "height": 32,
+          "top": 302.46875,
+          "right": 716.5,
+          "bottom": 334.46875,
+          "left": 684.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 708.5,
+          "y": 302.46875,
+          "width": 32,
+          "height": 32,
+          "top": 302.46875,
+          "right": 740.5,
+          "bottom": 334.46875,
+          "left": 708.5
+        }
+      },
+      {
+        "size": "sm",
+        "rect": {
+          "x": 656.5,
+          "y": 836.46875,
+          "width": 24,
+          "height": 24,
+          "top": 836.46875,
+          "right": 680.5,
+          "bottom": 860.46875,
+          "left": 656.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 688.5,
+          "y": 832.46875,
+          "width": 32,
+          "height": 32,
+          "top": 832.46875,
+          "right": 720.5,
+          "bottom": 864.46875,
+          "left": 688.5
+        }
+      },
+      {
+        "size": "lg",
+        "rect": {
+          "x": 728.5,
+          "y": 828.46875,
+          "width": 40,
+          "height": 40,
+          "top": 828.46875,
+          "right": 768.5,
+          "bottom": 868.46875,
+          "left": 728.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "sizes",
+    "file": "official-desktop-light-sizes.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "avatars": [
+      {
+        "size": "sm",
+        "rect": {
+          "x": 656.5,
+          "y": 306.46875,
+          "width": 24,
+          "height": 24,
+          "top": 306.46875,
+          "right": 680.5,
+          "bottom": 330.46875,
+          "left": 656.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 688.5,
+          "y": 302.46875,
+          "width": 32,
+          "height": 32,
+          "top": 302.46875,
+          "right": 720.5,
+          "bottom": 334.46875,
+          "left": 688.5
+        }
+      },
+      {
+        "size": "lg",
+        "rect": {
+          "x": 728.5,
+          "y": 298.46875,
+          "width": 40,
+          "height": 40,
+          "top": 298.46875,
+          "right": 768.5,
+          "bottom": 338.46875,
+          "left": 728.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 696.5,
+          "y": 832.46875,
+          "width": 32,
+          "height": 32,
+          "top": 832.46875,
+          "right": 728.5,
+          "bottom": 864.46875,
+          "left": 696.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "dropdown",
+    "file": "official-desktop-light-dropdown.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "avatars": [
+      {
+        "size": "default",
+        "rect": {
+          "x": 696.5,
+          "y": 302.46875,
+          "width": 32,
+          "height": 32,
+          "top": 302.46875,
+          "right": 728.5,
+          "bottom": 334.46875,
+          "left": 696.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 812.5,
+          "y": 896.46875,
+          "width": 32,
+          "height": 32,
+          "top": 896.46875,
+          "right": 844.5,
+          "bottom": 928.46875,
+          "left": 812.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 732.5,
+          "y": 896.46875,
+          "width": 32,
+          "height": 32,
+          "top": 896.46875,
+          "right": 764.5,
+          "bottom": 928.46875,
+          "left": 732.5
+        },
+        "badge": {
+          "x": 732.5,
+          "y": 918.46875,
+          "width": 10,
+          "height": 10,
+          "top": 918.46875,
+          "right": 742.5,
+          "bottom": 928.46875,
+          "left": 732.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 652.5,
+          "y": 896.46875,
+          "width": 32,
+          "height": 32,
+          "top": 896.46875,
+          "right": 684.5,
+          "bottom": 928.46875,
+          "left": 652.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 628.5,
+          "y": 896.46875,
+          "width": 32,
+          "height": 32,
+          "top": 896.46875,
+          "right": 660.5,
+          "bottom": 928.46875,
+          "left": 628.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 604.5,
+          "y": 896.46875,
+          "width": 32,
+          "height": 32,
+          "top": 896.46875,
+          "right": 636.5,
+          "bottom": 928.46875,
+          "left": 604.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "rtl",
+    "file": "official-desktop-light-rtl.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "avatars": [
+      {
+        "size": "default",
+        "rect": {
+          "x": 812.5,
+          "y": 366.46875,
+          "width": 32,
+          "height": 32,
+          "top": 366.46875,
+          "right": 844.5,
+          "bottom": 398.46875,
+          "left": 812.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 732.5,
+          "y": 366.46875,
+          "width": 32,
+          "height": 32,
+          "top": 366.46875,
+          "right": 764.5,
+          "bottom": 398.46875,
+          "left": 732.5
+        },
+        "badge": {
+          "x": 732.5,
+          "y": 388.46875,
+          "width": 10,
+          "height": 10,
+          "top": 388.46875,
+          "right": 742.5,
+          "bottom": 398.46875,
+          "left": 732.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 652.5,
+          "y": 366.46875,
+          "width": 32,
+          "height": 32,
+          "top": 366.46875,
+          "right": 684.5,
+          "bottom": 398.46875,
+          "left": 652.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 628.5,
+          "y": 366.46875,
+          "width": 32,
+          "height": 32,
+          "top": 366.46875,
+          "right": 660.5,
+          "bottom": 398.46875,
+          "left": 628.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 604.5,
+          "y": 366.46875,
+          "width": 32,
+          "height": 32,
+          "top": 366.46875,
+          "right": 636.5,
+          "bottom": 398.46875,
+          "left": 604.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "default",
+    "file": "official-desktop-dark-default.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "avatars": [
+      {
+        "size": "default",
+        "rect": {
+          "x": 580.5,
+          "y": 395,
+          "width": 32,
+          "height": 32,
+          "top": 395,
+          "right": 612.5,
+          "bottom": 427,
+          "left": 580.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 660.5,
+          "y": 395,
+          "width": 32,
+          "height": 32,
+          "top": 395,
+          "right": 692.5,
+          "bottom": 427,
+          "left": 660.5
+        },
+        "badge": {
+          "x": 682.5,
+          "y": 417,
+          "width": 10,
+          "height": 10,
+          "top": 417,
+          "right": 692.5,
+          "bottom": 427,
+          "left": 682.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 740.5,
+          "y": 395,
+          "width": 32,
+          "height": 32,
+          "top": 395,
+          "right": 772.5,
+          "bottom": 427,
+          "left": 740.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 764.5,
+          "y": 395,
+          "width": 32,
+          "height": 32,
+          "top": 395,
+          "right": 796.5,
+          "bottom": 427,
+          "left": 764.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 788.5,
+          "y": 395,
+          "width": 32,
+          "height": 32,
+          "top": 395,
+          "right": 820.5,
+          "bottom": 427,
+          "left": 788.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "badge-with-icon",
+    "file": "official-desktop-dark-badge-with-icon.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "avatars": [
+      {
+        "size": "default",
+        "rect": {
+          "x": 696.5,
+          "y": 302.46875,
+          "width": 32,
+          "height": 32,
+          "top": 302.46875,
+          "right": 728.5,
+          "bottom": 334.46875,
+          "left": 696.5
+        },
+        "badge": {
+          "x": 718.5,
+          "y": 324.46875,
+          "width": 10,
+          "height": 10,
+          "top": 324.46875,
+          "right": 728.5,
+          "bottom": 334.46875,
+          "left": 718.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 672.5,
+          "y": 832.46875,
+          "width": 32,
+          "height": 32,
+          "top": 832.46875,
+          "right": 704.5,
+          "bottom": 864.46875,
+          "left": 672.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 696.5,
+          "y": 832.46875,
+          "width": 32,
+          "height": 32,
+          "top": 832.46875,
+          "right": 728.5,
+          "bottom": 864.46875,
+          "left": 696.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 720.5,
+          "y": 832.46875,
+          "width": 32,
+          "height": 32,
+          "top": 832.46875,
+          "right": 752.5,
+          "bottom": 864.46875,
+          "left": 720.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "avatar-group-with-icon",
+    "file": "official-desktop-dark-avatar-group-with-icon.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "avatars": [
+      {
+        "size": "default",
+        "rect": {
+          "x": 660.5,
+          "y": 302.46875,
+          "width": 32,
+          "height": 32,
+          "top": 302.46875,
+          "right": 692.5,
+          "bottom": 334.46875,
+          "left": 660.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 684.5,
+          "y": 302.46875,
+          "width": 32,
+          "height": 32,
+          "top": 302.46875,
+          "right": 716.5,
+          "bottom": 334.46875,
+          "left": 684.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 708.5,
+          "y": 302.46875,
+          "width": 32,
+          "height": 32,
+          "top": 302.46875,
+          "right": 740.5,
+          "bottom": 334.46875,
+          "left": 708.5
+        }
+      },
+      {
+        "size": "sm",
+        "rect": {
+          "x": 656.5,
+          "y": 836.46875,
+          "width": 24,
+          "height": 24,
+          "top": 836.46875,
+          "right": 680.5,
+          "bottom": 860.46875,
+          "left": 656.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 688.5,
+          "y": 832.46875,
+          "width": 32,
+          "height": 32,
+          "top": 832.46875,
+          "right": 720.5,
+          "bottom": 864.46875,
+          "left": 688.5
+        }
+      },
+      {
+        "size": "lg",
+        "rect": {
+          "x": 728.5,
+          "y": 828.46875,
+          "width": 40,
+          "height": 40,
+          "top": 828.46875,
+          "right": 768.5,
+          "bottom": 868.46875,
+          "left": 728.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "sizes",
+    "file": "official-desktop-dark-sizes.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "avatars": [
+      {
+        "size": "sm",
+        "rect": {
+          "x": 656.5,
+          "y": 306.46875,
+          "width": 24,
+          "height": 24,
+          "top": 306.46875,
+          "right": 680.5,
+          "bottom": 330.46875,
+          "left": 656.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 688.5,
+          "y": 302.46875,
+          "width": 32,
+          "height": 32,
+          "top": 302.46875,
+          "right": 720.5,
+          "bottom": 334.46875,
+          "left": 688.5
+        }
+      },
+      {
+        "size": "lg",
+        "rect": {
+          "x": 728.5,
+          "y": 298.46875,
+          "width": 40,
+          "height": 40,
+          "top": 298.46875,
+          "right": 768.5,
+          "bottom": 338.46875,
+          "left": 728.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 696.5,
+          "y": 832.46875,
+          "width": 32,
+          "height": 32,
+          "top": 832.46875,
+          "right": 728.5,
+          "bottom": 864.46875,
+          "left": 696.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "dropdown",
+    "file": "official-desktop-dark-dropdown.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "avatars": [
+      {
+        "size": "default",
+        "rect": {
+          "x": 696.5,
+          "y": 302.46875,
+          "width": 32,
+          "height": 32,
+          "top": 302.46875,
+          "right": 728.5,
+          "bottom": 334.46875,
+          "left": 696.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 812.5,
+          "y": 896.46875,
+          "width": 32,
+          "height": 32,
+          "top": 896.46875,
+          "right": 844.5,
+          "bottom": 928.46875,
+          "left": 812.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 732.5,
+          "y": 896.46875,
+          "width": 32,
+          "height": 32,
+          "top": 896.46875,
+          "right": 764.5,
+          "bottom": 928.46875,
+          "left": 732.5
+        },
+        "badge": {
+          "x": 732.5,
+          "y": 918.46875,
+          "width": 10,
+          "height": 10,
+          "top": 918.46875,
+          "right": 742.5,
+          "bottom": 928.46875,
+          "left": 732.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 652.5,
+          "y": 896.46875,
+          "width": 32,
+          "height": 32,
+          "top": 896.46875,
+          "right": 684.5,
+          "bottom": 928.46875,
+          "left": 652.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 628.5,
+          "y": 896.46875,
+          "width": 32,
+          "height": 32,
+          "top": 896.46875,
+          "right": 660.5,
+          "bottom": 928.46875,
+          "left": 628.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 604.5,
+          "y": 896.46875,
+          "width": 32,
+          "height": 32,
+          "top": 896.46875,
+          "right": 636.5,
+          "bottom": 928.46875,
+          "left": 604.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "rtl",
+    "file": "official-desktop-dark-rtl.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "avatars": [
+      {
+        "size": "default",
+        "rect": {
+          "x": 812.5,
+          "y": 366.46875,
+          "width": 32,
+          "height": 32,
+          "top": 366.46875,
+          "right": 844.5,
+          "bottom": 398.46875,
+          "left": 812.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 732.5,
+          "y": 366.46875,
+          "width": 32,
+          "height": 32,
+          "top": 366.46875,
+          "right": 764.5,
+          "bottom": 398.46875,
+          "left": 732.5
+        },
+        "badge": {
+          "x": 732.5,
+          "y": 388.46875,
+          "width": 10,
+          "height": 10,
+          "top": 388.46875,
+          "right": 742.5,
+          "bottom": 398.46875,
+          "left": 732.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 652.5,
+          "y": 366.46875,
+          "width": 32,
+          "height": 32,
+          "top": 366.46875,
+          "right": 684.5,
+          "bottom": 398.46875,
+          "left": 652.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 628.5,
+          "y": 366.46875,
+          "width": 32,
+          "height": 32,
+          "top": 366.46875,
+          "right": 660.5,
+          "bottom": 398.46875,
+          "left": 628.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 604.5,
+          "y": 366.46875,
+          "width": 32,
+          "height": 32,
+          "top": 366.46875,
+          "right": 636.5,
+          "bottom": 398.46875,
+          "left": 604.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "default",
+    "file": "official-phone-dark-default.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "avatars": [
+      {
+        "size": "default",
+        "rect": {
+          "x": 79.5,
+          "y": 390.890625,
+          "width": 32,
+          "height": 32,
+          "top": 390.890625,
+          "right": 111.5,
+          "bottom": 422.890625,
+          "left": 79.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 135.5,
+          "y": 390.890625,
+          "width": 32,
+          "height": 32,
+          "top": 390.890625,
+          "right": 167.5,
+          "bottom": 422.890625,
+          "left": 135.5
+        },
+        "badge": {
+          "x": 157.5,
+          "y": 412.890625,
+          "width": 10,
+          "height": 10,
+          "top": 412.890625,
+          "right": 167.5,
+          "bottom": 422.890625,
+          "left": 157.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 191.5,
+          "y": 390.890625,
+          "width": 32,
+          "height": 32,
+          "top": 390.890625,
+          "right": 223.5,
+          "bottom": 422.890625,
+          "left": 191.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 215.5,
+          "y": 390.890625,
+          "width": 32,
+          "height": 32,
+          "top": 390.890625,
+          "right": 247.5,
+          "bottom": 422.890625,
+          "left": 215.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 239.5,
+          "y": 390.890625,
+          "width": 32,
+          "height": 32,
+          "top": 390.890625,
+          "right": 271.5,
+          "bottom": 422.890625,
+          "left": 239.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "badge-with-icon",
+    "file": "official-phone-dark-badge-with-icon.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "avatars": [
+      {
+        "size": "default",
+        "rect": {
+          "x": 171.5,
+          "y": 353.1796875,
+          "width": 32,
+          "height": 32,
+          "top": 353.1796875,
+          "right": 203.5,
+          "bottom": 385.1796875,
+          "left": 171.5
+        },
+        "badge": {
+          "x": 193.5,
+          "y": 375.1796875,
+          "width": 10,
+          "height": 10,
+          "top": 375.1796875,
+          "right": 203.5,
+          "bottom": 385.1796875,
+          "left": 193.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "avatar-group-with-icon",
+    "file": "official-phone-dark-avatar-group-with-icon.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "avatars": [
+      {
+        "size": "default",
+        "rect": {
+          "x": 135.5,
+          "y": 353.0078125,
+          "width": 32,
+          "height": 32,
+          "top": 353.0078125,
+          "right": 167.5,
+          "bottom": 385.0078125,
+          "left": 135.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 159.5,
+          "y": 353.0078125,
+          "width": 32,
+          "height": 32,
+          "top": 353.0078125,
+          "right": 191.5,
+          "bottom": 385.0078125,
+          "left": 159.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 183.5,
+          "y": 353.0078125,
+          "width": 32,
+          "height": 32,
+          "top": 353.0078125,
+          "right": 215.5,
+          "bottom": 385.0078125,
+          "left": 183.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "sizes",
+    "file": "official-phone-dark-sizes.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "avatars": [
+      {
+        "size": "sm",
+        "rect": {
+          "x": 131.5,
+          "y": 357.1171875,
+          "width": 24,
+          "height": 24,
+          "top": 357.1171875,
+          "right": 155.5,
+          "bottom": 381.1171875,
+          "left": 131.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 163.5,
+          "y": 353.1171875,
+          "width": 32,
+          "height": 32,
+          "top": 353.1171875,
+          "right": 195.5,
+          "bottom": 385.1171875,
+          "left": 163.5
+        }
+      },
+      {
+        "size": "lg",
+        "rect": {
+          "x": 203.5,
+          "y": 349.1171875,
+          "width": 40,
+          "height": 40,
+          "top": 349.1171875,
+          "right": 243.5,
+          "bottom": 389.1171875,
+          "left": 203.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "dropdown",
+    "file": "official-phone-dark-dropdown.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "avatars": [
+      {
+        "size": "default",
+        "rect": {
+          "x": 171.5,
+          "y": 353.2265625,
+          "width": 32,
+          "height": 32,
+          "top": 353.2265625,
+          "right": 203.5,
+          "bottom": 385.2265625,
+          "left": 171.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "rtl",
+    "file": "official-phone-dark-rtl.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "avatars": [
+      {
+        "size": "default",
+        "rect": {
+          "x": 263.5,
+          "y": 417.3359375,
+          "width": 32,
+          "height": 32,
+          "top": 417.3359375,
+          "right": 295.5,
+          "bottom": 449.3359375,
+          "left": 263.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 207.5,
+          "y": 417.3359375,
+          "width": 32,
+          "height": 32,
+          "top": 417.3359375,
+          "right": 239.5,
+          "bottom": 449.3359375,
+          "left": 207.5
+        },
+        "badge": {
+          "x": 207.5,
+          "y": 439.3359375,
+          "width": 10,
+          "height": 10,
+          "top": 439.3359375,
+          "right": 217.5,
+          "bottom": 449.3359375,
+          "left": 207.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 151.5,
+          "y": 417.3359375,
+          "width": 32,
+          "height": 32,
+          "top": 417.3359375,
+          "right": 183.5,
+          "bottom": 449.3359375,
+          "left": 151.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 127.5,
+          "y": 417.3359375,
+          "width": 32,
+          "height": 32,
+          "top": 417.3359375,
+          "right": 159.5,
+          "bottom": 449.3359375,
+          "left": 127.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 103.5,
+          "y": 417.3359375,
+          "width": 32,
+          "height": 32,
+          "top": 417.3359375,
+          "right": 135.5,
+          "bottom": 449.3359375,
+          "left": 103.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "default",
+    "file": "official-phone-light-default.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "avatars": [
+      {
+        "size": "default",
+        "rect": {
+          "x": 79.5,
+          "y": 390.890625,
+          "width": 32,
+          "height": 32,
+          "top": 390.890625,
+          "right": 111.5,
+          "bottom": 422.890625,
+          "left": 79.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 135.5,
+          "y": 390.890625,
+          "width": 32,
+          "height": 32,
+          "top": 390.890625,
+          "right": 167.5,
+          "bottom": 422.890625,
+          "left": 135.5
+        },
+        "badge": {
+          "x": 157.5,
+          "y": 412.890625,
+          "width": 10,
+          "height": 10,
+          "top": 412.890625,
+          "right": 167.5,
+          "bottom": 422.890625,
+          "left": 157.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 191.5,
+          "y": 390.890625,
+          "width": 32,
+          "height": 32,
+          "top": 390.890625,
+          "right": 223.5,
+          "bottom": 422.890625,
+          "left": 191.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 215.5,
+          "y": 390.890625,
+          "width": 32,
+          "height": 32,
+          "top": 390.890625,
+          "right": 247.5,
+          "bottom": 422.890625,
+          "left": 215.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 239.5,
+          "y": 390.890625,
+          "width": 32,
+          "height": 32,
+          "top": 390.890625,
+          "right": 271.5,
+          "bottom": 422.890625,
+          "left": 239.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "badge-with-icon",
+    "file": "official-phone-light-badge-with-icon.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "avatars": [
+      {
+        "size": "default",
+        "rect": {
+          "x": 171.5,
+          "y": 353.1796875,
+          "width": 32,
+          "height": 32,
+          "top": 353.1796875,
+          "right": 203.5,
+          "bottom": 385.1796875,
+          "left": 171.5
+        },
+        "badge": {
+          "x": 193.5,
+          "y": 375.1796875,
+          "width": 10,
+          "height": 10,
+          "top": 375.1796875,
+          "right": 203.5,
+          "bottom": 385.1796875,
+          "left": 193.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "avatar-group-with-icon",
+    "file": "official-phone-light-avatar-group-with-icon.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "avatars": [
+      {
+        "size": "default",
+        "rect": {
+          "x": 135.5,
+          "y": 353.0078125,
+          "width": 32,
+          "height": 32,
+          "top": 353.0078125,
+          "right": 167.5,
+          "bottom": 385.0078125,
+          "left": 135.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 159.5,
+          "y": 353.0078125,
+          "width": 32,
+          "height": 32,
+          "top": 353.0078125,
+          "right": 191.5,
+          "bottom": 385.0078125,
+          "left": 159.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 183.5,
+          "y": 353.0078125,
+          "width": 32,
+          "height": 32,
+          "top": 353.0078125,
+          "right": 215.5,
+          "bottom": 385.0078125,
+          "left": 183.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "sizes",
+    "file": "official-phone-light-sizes.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "avatars": [
+      {
+        "size": "sm",
+        "rect": {
+          "x": 131.5,
+          "y": 357.1171875,
+          "width": 24,
+          "height": 24,
+          "top": 357.1171875,
+          "right": 155.5,
+          "bottom": 381.1171875,
+          "left": 131.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 163.5,
+          "y": 353.1171875,
+          "width": 32,
+          "height": 32,
+          "top": 353.1171875,
+          "right": 195.5,
+          "bottom": 385.1171875,
+          "left": 163.5
+        }
+      },
+      {
+        "size": "lg",
+        "rect": {
+          "x": 203.5,
+          "y": 349.1171875,
+          "width": 40,
+          "height": 40,
+          "top": 349.1171875,
+          "right": 243.5,
+          "bottom": 389.1171875,
+          "left": 203.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "dropdown",
+    "file": "official-phone-light-dropdown.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "avatars": [
+      {
+        "size": "default",
+        "rect": {
+          "x": 171.5,
+          "y": 353.2265625,
+          "width": 32,
+          "height": 32,
+          "top": 353.2265625,
+          "right": 203.5,
+          "bottom": 385.2265625,
+          "left": 171.5
+        }
+      }
+    ]
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "rtl",
+    "file": "official-phone-light-rtl.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "avatars": [
+      {
+        "size": "default",
+        "rect": {
+          "x": 263.5,
+          "y": 417.3359375,
+          "width": 32,
+          "height": 32,
+          "top": 417.3359375,
+          "right": 295.5,
+          "bottom": 449.3359375,
+          "left": 263.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 207.5,
+          "y": 417.3359375,
+          "width": 32,
+          "height": 32,
+          "top": 417.3359375,
+          "right": 239.5,
+          "bottom": 449.3359375,
+          "left": 207.5
+        },
+        "badge": {
+          "x": 207.5,
+          "y": 439.3359375,
+          "width": 10,
+          "height": 10,
+          "top": 439.3359375,
+          "right": 217.5,
+          "bottom": 449.3359375,
+          "left": 207.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 151.5,
+          "y": 417.3359375,
+          "width": 32,
+          "height": 32,
+          "top": 417.3359375,
+          "right": 183.5,
+          "bottom": 449.3359375,
+          "left": 151.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 127.5,
+          "y": 417.3359375,
+          "width": 32,
+          "height": 32,
+          "top": 417.3359375,
+          "right": 159.5,
+          "bottom": 449.3359375,
+          "left": 127.5
+        }
+      },
+      {
+        "size": "default",
+        "rect": {
+          "x": 103.5,
+          "y": 417.3359375,
+          "width": 32,
+          "height": 32,
+          "top": 417.3359375,
+          "right": 135.5,
+          "bottom": 449.3359375,
+          "left": 103.5
+        }
+      }
+    ]
+  }
+]

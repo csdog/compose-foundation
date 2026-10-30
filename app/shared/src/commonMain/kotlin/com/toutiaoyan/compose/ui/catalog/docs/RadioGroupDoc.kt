@@ -25,31 +25,33 @@ val radioGroupDoc =
                 RadioGroupItem("a", "Option A")
             }
             """.trimIndent(),
+        apiProperties =
+            listOf(
+                ApiProperty("value", "String?", "null"),
+                ApiProperty("defaultValue", "String", "\"\""),
+                ApiProperty("orientation", "RadioGroupOrientation", "Vertical"),
+                ApiProperty("disabled", "Boolean", "false"),
+                ApiProperty("required", "Boolean", "false"),
+            ),
         examples =
             listOf(
                 ComponentExample(
                     title = "Default",
                     code =
                         """
-                        var choice by remember { mutableStateOf("a") }
-                        RadioGroup(
-                            value = choice,
-                            onValueChange = { choice = it },
-                            contentDescription = "Plan",
-                        ) {
-                            RadioGroupItem("a", "Option A")
-                            RadioGroupItem("b", "Option B")
+                        var choice by remember { mutableStateOf("comfortable") }
+                        RadioGroup(value = choice, onValueChange = { choice = it }, contentDescription = "Density") {
+                            RadioGroupItem("default", "Default")
+                            RadioGroupItem("comfortable", "Comfortable")
+                            RadioGroupItem("compact", "Compact")
                         }
                         """.trimIndent(),
                     preview = {
-                        var choice by remember { mutableStateOf("a") }
-                        RadioGroup(
-                            value = choice,
-                            onValueChange = { choice = it },
-                            contentDescription = "Plan",
-                        ) {
-                            RadioGroupItem("a", "Option A")
-                            RadioGroupItem("b", "Option B")
+                        var choice by remember { mutableStateOf("comfortable") }
+                        RadioGroup(value = choice, onValueChange = { choice = it }, contentDescription = "Density") {
+                            RadioGroupItem("default", "Default")
+                            RadioGroupItem("comfortable", "Comfortable")
+                            RadioGroupItem("compact", "Compact")
                         }
                     },
                 ),

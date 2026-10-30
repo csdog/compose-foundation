@@ -3,6 +3,16 @@
 package com.toutiaoyan.compose.ui.components.togglegroup
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.style.contentPadding
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.key.*
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
+import com.toutiaoyan.compose.ui.components.field.LocalFieldSetDisabled
+import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -64,7 +74,7 @@ internal class ToggleGroupController(
         val pressed = isPressed(itemValue)
         val next =
             when {
-                type == ToggleGroupType.Single && pressed -> value
+                type == ToggleGroupType.Single && pressed -> emptySet()
                 type == ToggleGroupType.Single -> setOf(itemValue)
                 pressed -> value - itemValue
                 else -> value + itemValue
@@ -73,6 +83,12 @@ internal class ToggleGroupController(
     }
 }
 
+private class ToggleGroupNavigation {
+    val items = mutableMapOf<String, Pair<FocusRequester, Boolean>>()
+    val order = androidx.compose.runtime.mutableStateListOf<String>()
+}
+
+private val LocalToggleGroupNavigation = staticCompositionLocalOf<ToggleGroupNavigation?> { null }
 private val LocalToggleGroup = staticCompositionLocalOf<ToggleGroupController?> { null }
 
 @Composable
@@ -81,7 +97,7 @@ private fun toggleGroupController(): ToggleGroupController =
         "ToggleGroupItem must be used inside ToggleGroup { … }"
     }
 
-/** Selection of the nearest [ToggleGroup]. Matches Radix toggle-group context. */
+/** Selection of the nearest [ToggleGroup]. Matches Base UI toggle-group context. */
 class ToggleGroupState(
     val type: ToggleGroupType,
     val value: Set<String>,
@@ -111,7 +127,7 @@ class ToggleGroupScope internal constructor()
  * single shared border ([ToggleVariant.Outline] only) and each item is
  * borderless. Focused items raise `zIndex(10)` so the ring isn't clipped by a
  * neighbor (`focus-visible:z-10`). [type] is [ToggleGroupType.Multiple] (toggle membership) or
- * [ToggleGroupType.Single] (exactly one selected).
+ * [ToggleGroupType.Single] (at most one selected).
  *
  * Usage:
  * ```
@@ -147,6 +163,8 @@ fun ToggleGroup(
         onValueChange?.invoke(next)
     }
     val registry = remember { GroupChildRegistry() }
+    val navigation = remember { ToggleGroupNavigation() }
+    val nova = currentTheme.activePreset == StylePreset.Nova
     val controller =
         ToggleGroupController(
             type = type,
@@ -156,19 +174,19 @@ fun ToggleGroup(
             size = size,
             orientation = orientation,
             spacing = spacing,
-            disabled = disabled,
+            disabled = disabled || LocalFieldSetDisabled.current,
             registry = registry,
         )
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val spaced = spacing > 0.dp
     val outerModifier =
-        if (variant == ToggleVariant.Outline && !spaced) {
+        if (variant == ToggleVariant.Outline && !spaced && !nova) {
             modifier.styleable(
                 styleState,
                 rememberToggleGroupOutlineStyle() then style,
             )
         } else {
-            modifier
+            modifier.styleable(styleState, style)
         }
     val groupedModifier =
         if (type == ToggleGroupType.Single) outerModifier.selectableGroup() else outerModifier
@@ -183,6 +201,7 @@ fun ToggleGroup(
 
     CompositionLocalProvider(
         LocalToggleGroup provides controller,
+        LocalToggleGroupNavigation provides navigation,
         LocalRaiseFocusZIndex provides true,
     ) {
         val scope = ToggleGroupScope()
@@ -190,12 +209,18 @@ fun ToggleGroup(
             ToggleGroupOrientation.Horizontal ->
                 Row(
                     modifier = labelledModifier,
-                    horizontalArrangement = Arrangement.spacedBy(spacing),
+                    horizontalArrangement =
+                        Arrangement.spacedBy(
+                            if (nova && !spaced && variant == ToggleVariant.Outline) (-1).dp else spacing,
+                        ),
                 ) { scope.content() }
             ToggleGroupOrientation.Vertical ->
                 Column(
                     modifier = labelledModifier,
-                    verticalArrangement = Arrangement.spacedBy(spacing),
+                    verticalArrangement =
+                        Arrangement.spacedBy(
+                            if (nova && !spaced && variant == ToggleVariant.Outline) (-1).dp else spacing,
+                        ),
                 ) { scope.content() }
         }
     }
@@ -282,7 +307,8 @@ fun ToggleGroupScope.ToggleGroupItem(
 ) {
     val controller = toggleGroupController()
     val (index, count) = controller.registry.register()
-    val rounded = twRadius.md
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    val rounded = if (nova) twRadius.lg else twRadius.md
     val spaced = controller.spacing > 0.dp
     val corners =
         if (spaced) {
@@ -299,18 +325,61 @@ fun ToggleGroupScope.ToggleGroupItem(
             )
         }
     val itemShape = RoundedCornerShape(corners.topStart, corners.topEnd, corners.bottomEnd, corners.bottomStart)
+    val navigation = checkNotNull(LocalToggleGroupNavigation.current)
+    val requester = remember { FocusRequester() }
+    val resolvedEnabled = enabled && !disabled && !controller.disabled && !LocalFieldSetDisabled.current
+    DisposableEffect(navigation, value) {
+        navigation.order.add(value)
+        onDispose {
+            navigation.order.remove(value)
+            navigation.items.remove(value)
+        }
+    }
+    androidx.compose.runtime.SideEffect { navigation.items[value] = requester to resolvedEnabled }
+    val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+    val navigationModifier =
+        Modifier.focusRequester(requester).onPreviewKeyEvent { event ->
+            if (event.type != KeyEventType.KeyDown || !resolvedEnabled) return@onPreviewKeyEvent false
+            val horizontal = controller.orientation == ToggleGroupOrientation.Horizontal
+            val forward =
+                if (horizontal) {
+                    if (rtl) Key.DirectionLeft else Key.DirectionRight
+                } else {
+                    Key.DirectionDown
+                }
+            val backward =
+                if (horizontal) {
+                    if (rtl) Key.DirectionRight else Key.DirectionLeft
+                } else {
+                    Key.DirectionUp
+                }
+            val available = navigation.order.filter { navigation.items[it]?.second == true }
+            if (available.isEmpty()) return@onPreviewKeyEvent false
+            val current = available.indexOf(value).coerceAtLeast(0)
+            val target =
+                when (event.key) {
+                    forward -> (current + 1) % available.size
+                    backward -> (current - 1 + available.size) % available.size
+                    Key.MoveHome -> 0
+                    Key.MoveEnd -> available.lastIndex
+                    else -> return@onPreviewKeyEvent false
+                }
+            navigation.items[available[target]]?.first?.requestFocus()
+            true
+        }
     Toggle(
         pressed = controller.isPressed(value),
         onPressedChange = { controller.toggle(value) },
-        modifier = modifier,
-        enabled = enabled && !disabled && !controller.disabled,
+        modifier = modifier.then(navigationModifier),
+        enabled = resolvedEnabled,
         variant = controller.variant,
         size = controller.size,
         label = label,
         style =
             Style {
                 shape(itemShape)
-                if (controller.variant == ToggleVariant.Outline && !spaced) borderWidth(0.dp)
+                if (controller.variant == ToggleVariant.Outline && !spaced && !nova) borderWidth(0.dp)
+                if (nova && !spaced) contentPadding(horizontal = 8.dp, vertical = 0.dp)
             } then style,
         content = content,
     )

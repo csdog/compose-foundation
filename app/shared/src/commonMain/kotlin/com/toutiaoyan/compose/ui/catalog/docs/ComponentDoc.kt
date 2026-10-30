@@ -1,10 +1,18 @@
 package com.toutiaoyan.compose.ui.catalog.docs
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 
 data class ComponentExample(
     val title: String,
     val code: String,
+    val minPreviewHeight: Dp = 288.dp,
+    val mobileMinPreviewHeight: Dp? = null,
+    val previewPadding: Dp = 40.dp,
+    val descriptionMarkdown: String? = null,
+    val previewBackground: (@Composable () -> Color)? = null,
     val preview: @Composable () -> Unit,
 )
 
@@ -14,4 +22,32 @@ data class ComponentDoc(
     val description: String,
     val usageCode: String,
     val examples: List<ComponentExample>,
+    val apiProperties: List<ApiProperty> = emptyList(),
+    val compositionCode: String? = null,
+    val examplesHeading: String? = "Examples",
+    val apiSections: List<ComponentApiSection> = emptyList(),
+    val usageImportsCode: String? = null,
+    val beforeExamples: List<ComponentGuideSection> = emptyList(),
+    val afterExamples: List<ComponentGuideSection> = emptyList(),
+)
+
+/** Prose between the component's recipes, with the same content used by Copy Page. */
+data class ComponentGuideSection(
+    val title: String,
+    val blocks: List<ComponentGuideBlock>,
+    val level: Int = 2,
+)
+
+sealed interface ComponentGuideBlock {
+    data class Paragraph(val markdown: String) : ComponentGuideBlock
+
+    data class Bullets(val items: List<String>) : ComponentGuideBlock
+
+    data class Code(val code: String, val language: String? = "kotlin") : ComponentGuideBlock
+}
+
+data class ComponentApiSection(
+    val title: String,
+    val descriptionMarkdown: String,
+    val properties: List<ApiProperty>,
 )

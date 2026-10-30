@@ -46,7 +46,8 @@ data class Ring(
     // so the shape-pairing fix (see FocusRing.kt's doc comment) stays intact either way --
     // only the ring itself is skipped. Defaults to off: the ring reads as visual noise on
     // most non-input controls (buttons, switches, tabs, ...) outside of active keyboard
-    // navigation, and a consumer can opt back in with `ring = theme.ring.copy(enabled =
+    // navigation. Nova opts in by default to match shadcn. Other presets can opt in with
+    // `ring = theme.ring.copy(enabled =
     // true)`. Text inputs are unaffected either way -- `focusRingAlways()`
     // (`Input`/`InputGroup`/`InputOTP`) never reads this flag, since
     // the ring is the primary cue that a field is receiving keystrokes.

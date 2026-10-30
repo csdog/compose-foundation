@@ -6,19 +6,45 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.style.contentPadding
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.styleable
+import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.shadow.Shadow
+import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.layout
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.unit.offset
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextAlign
+import com.toutiaoyan.compose.ui.tokens.StylePreset
+import com.toutiaoyan.compose.ui.components.overlay.overlayTypography
+import com.toutiaoyan.compose.ui.components.text.TextColors
+import androidx.compose.ui.unit.constrainWidth
+import androidx.compose.ui.unit.constrainHeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
@@ -39,9 +65,20 @@ import com.toutiaoyan.compose.ui.components.dialog.DialogSize
 import com.toutiaoyan.compose.ui.components.dialog.DialogTransitions
 import com.toutiaoyan.compose.ui.components.dialog.dialogController
 import com.toutiaoyan.compose.ui.components.dialog.dialogState
+import com.toutiaoyan.compose.ui.components.icon.LocalInlineIconSize
 import com.toutiaoyan.compose.ui.components.overlay.OverlayTransitions
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.theme.currentTheme
+
+private enum class AlertDialogHeaderPart { Media }
+
+private val LocalAlertDialogStretchActions = staticCompositionLocalOf { false }
+private val LocalAlertDialogSize = staticCompositionLocalOf { DialogSize.Default }
+
+@Composable
+private fun centeredAlertHeader(): Boolean =
+    LocalAlertDialogSize.current == DialogSize.Sm ||
+        LocalWindowInfo.current.containerSize.width < with(LocalDensity.current) { 640.dp.roundToPx() }
 
 object AlertDialogDefaults {
     /**
@@ -176,6 +213,19 @@ fun DialogScope.AlertDialogContent(
     scrimExit: ExitTransition = OverlayTransitions.ScrimExit,
     content: @Composable ColumnScope.() -> Unit,
 ) {
+    val mobile = LocalWindowInfo.current.containerSize.width < with(LocalDensity.current) { 640.dp.roundToPx() }
+    val ringColor = currentTheme.colors.foreground.copy(alpha = 0.1f)
+    val alertChrome =
+        if (currentTheme.activePreset == StylePreset.Nova) {
+            Style {
+                // Nova uses an outer ring, which must not consume the 16dp padding.
+                borderWidth(Dp.Unspecified)
+                dropShadow(Shadow(radius = 0.dp, spread = 1.dp, color = ringColor))
+                if (mobile && size == DialogSize.Default) width(320.dp)
+            }
+        } else {
+            Style
+        }
     DialogContent(
         modifier = modifier,
         showCloseButton = showCloseButton,
@@ -184,12 +234,14 @@ fun DialogScope.AlertDialogContent(
         size = size,
         onPointerDownOutside = onPointerDownOutside,
         onInteractOutside = onInteractOutside,
-        style = style,
+        style = alertChrome then style,
         enter = enter,
         exit = exit,
         scrimEnter = scrimEnter,
         scrimExit = scrimExit,
-        content = content,
+        content = {
+            CompositionLocalProvider(LocalAlertDialogSize provides size) { content() }
+        },
     )
 }
 
@@ -233,14 +285,62 @@ fun DialogScope.AlertDialogContent(
     }
 }
 
-/** Alias for [DialogHeader] matching shadcn's `AlertDialogHeader`. */
+/** Title/description group: Nova uses a 6dp gap and centers compact headers. */
 @Composable
 fun AlertDialogHeader(
     modifier: Modifier = Modifier,
     style: Style = Style,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    DialogHeader(modifier = modifier, style = style, content = content)
+    if (currentTheme.activePreset != StylePreset.Nova) {
+        DialogHeader(modifier = modifier, style = style, content = content)
+        return
+    }
+    val state = remember { MutableStyleState(MutableInteractionSource()) }
+    val centered = centeredAlertHeader()
+    Column(modifier = modifier.fillMaxWidth().styleable(state, style)) {
+        Layout(content = { content() }) { measurables, constraints ->
+            val loose = constraints.copy(minWidth = 0, minHeight = 0)
+            val mediaNode = measurables.firstOrNull { it.layoutId == AlertDialogHeaderPart.Media }
+            val media = mediaNode?.measure(loose)
+            val gap = 6.dp.roundToPx()
+            val mediaBottomMargin = 8.dp.roundToPx()
+            val mediaColumn = if (media != null && !centered) media.width + 16.dp.roundToPx() else 0
+            val bodyWidth =
+                if (constraints.hasBoundedWidth) {
+                    (constraints.maxWidth - mediaColumn).coerceAtLeast(
+                        0,
+                    )
+                } else {
+                    constraints.maxWidth
+                }
+            val body = measurables.filter { it !== mediaNode }.map { it.measure(loose.copy(maxWidth = bodyWidth)) }
+            val width =
+                constraints.constrainWidth(
+                    if (constraints.hasBoundedWidth) {
+                        constraints.maxWidth
+                    } else {
+                        maxOf((body.maxOfOrNull { it.width } ?: 0) + mediaColumn, media?.width ?: 0)
+                    },
+                )
+            val bodyHeight = body.sumOf { it.height } + gap * (body.size - 1).coerceAtLeast(0)
+            val mediaHeight = if (media == null) 0 else media.height + mediaBottomMargin
+            val height =
+                if (centered && media != null) {
+                    mediaHeight + (if (body.isNotEmpty()) gap else 0) + bodyHeight
+                } else {
+                    maxOf(bodyHeight, mediaHeight)
+                }
+            layout(width, constraints.constrainHeight(height)) {
+                media?.placeRelative(if (centered) (width - media.width) / 2 else 0, 0)
+                var y = if (centered && media != null) mediaHeight + (if (body.isNotEmpty()) gap else 0) else 0
+                body.forEach { child ->
+                    child.placeRelative(if (centered) (width - child.width) / 2 else mediaColumn, y)
+                    y += child.height + gap
+                }
+            }
+        }
+    }
 }
 
 /**
@@ -254,15 +354,22 @@ fun AlertDialogMedia(
     content: @Composable () -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    val muted = currentTheme.colors.muted
+    val chrome =
+        Style {
+            width(40.dp)
+            height(40.dp)
+            background(muted)
+            shape(RoundedCornerShape(6.dp))
+        }
     Box(
-        modifier =
-            modifier
-                .size(40.dp)
-                .background(currentTheme.colors.muted, RoundedCornerShape(6.dp))
-                .styleable(styleState, style),
+        modifier = modifier.layoutId(AlertDialogHeaderPart.Media).styleable(styleState, chrome, style),
         contentAlignment = Alignment.Center,
     ) {
-        content()
+        CompositionLocalProvider(LocalInlineIconSize provides if (nova) 24.dp else LocalInlineIconSize.current) {
+            content()
+        }
     }
 }
 
@@ -282,10 +389,10 @@ fun AlertDialogHeader(
     }
 }
 
-/** Alias for [DialogTitle] matching shadcn's `AlertDialogTitle`. */
+/** Alert heading; Nova uses a 16sp font with a 24sp line height. */
 @Composable
 fun AlertDialogTitle(text: String) {
-    DialogTitle(text)
+    AlertDialogTitle { text }
 }
 
 @Composable
@@ -296,13 +403,25 @@ fun AlertDialogTitle(
     style: Style = Style,
     text: () -> String,
 ) {
-    DialogTitle(modifier = modifier, style = style, text = text)
+    if (currentTheme.activePreset != StylePreset.Nova) {
+        DialogTitle(modifier = modifier, style = style, text = text)
+        return
+    }
+    Text(
+        modifier = modifier.semantics { heading() },
+        textStyle =
+            overlayTypography(16, 24, medium = true).copy(
+                textAlign = if (centeredAlertHeader()) TextAlign.Center else TextAlign.Start,
+            ),
+        style = style,
+        text = text,
+    )
 }
 
-/** Alias for [DialogDescription] matching shadcn's `AlertDialogDescription`. */
+/** Alert description, centered alongside compact Nova headings. */
 @Composable
 fun AlertDialogDescription(text: String) {
-    DialogDescription(text)
+    AlertDialogDescription { text }
 }
 
 @Composable
@@ -313,17 +432,92 @@ fun AlertDialogDescription(
     style: Style = Style,
     text: () -> String,
 ) {
-    DialogDescription(modifier = modifier, style = style, text = text)
+    if (currentTheme.activePreset != StylePreset.Nova) {
+        DialogDescription(modifier = modifier, style = style, text = text)
+        return
+    }
+    Text(
+        modifier = modifier,
+        textStyle =
+            overlayTypography(muted = true, fallback = TextColors.Muted).copy(
+                textAlign = if (centeredAlertHeader()) TextAlign.Center else TextAlign.Start,
+            ),
+        style = style,
+        text = text,
+    )
 }
 
-/** Alias for [DialogFooter] matching shadcn's `AlertDialogFooter`. */
+/** Nova: reversed full-width phone actions; equal columns for small panels. */
 @Composable
 fun AlertDialogFooter(
     modifier: Modifier = Modifier,
     style: Style = Style,
     content: @Composable RowScope.() -> Unit,
 ) {
-    DialogFooter(modifier = modifier, style = style, content = content)
+    val small = LocalAlertDialogSize.current == DialogSize.Sm
+    if (currentTheme.activePreset != StylePreset.Nova || !centeredAlertHeader()) {
+        DialogFooter(modifier = modifier, style = style, content = content)
+        return
+    }
+    val state = remember { MutableStyleState(MutableInteractionSource()) }
+    val colors = currentTheme.colors
+    val radius = com.toutiaoyan.compose.tailwind.core.twRadius.xl
+    val chrome =
+        Style {
+            background(colors.muted.copy(alpha = 0.5f))
+            shape(RoundedCornerShape(bottomStart = radius, bottomEnd = radius))
+            contentPadding(16.dp)
+        }
+    val bleed =
+        Modifier.layout { measurable, constraints ->
+            val inset = 16.dp.roundToPx()
+            val child = measurable.measure(constraints.offset(horizontal = inset * 2))
+            layout((child.width - inset * 2).coerceAtLeast(0), (child.height - inset).coerceAtLeast(0)) {
+                child.placeRelative(-inset, 0)
+            }
+        }
+    Row(
+        bleed.then(modifier).fillMaxWidth().drawWithContent {
+            drawContent()
+            drawLine(colors.border, Offset(0f, 0.5.dp.toPx()), Offset(size.width, 0.5.dp.toPx()), 1.dp.toPx())
+        }.padding(top = 1.dp).styleable(state, chrome, style),
+    ) {
+        // Keep the public RowScope slot; only compact Nova changes placement.
+        Layout(content = {
+            CompositionLocalProvider(LocalAlertDialogStretchActions provides true) { content() }
+        }) { measurables, constraints ->
+            val gap = 8.dp.roundToPx()
+            val count = measurables.size
+            val width = constraints.maxWidth
+            val cellWidth = if (small) ((width - gap) / 2).coerceAtLeast(0) else width
+            val children =
+                measurables.map {
+                    it.measure(constraints.copy(minWidth = cellWidth, maxWidth = cellWidth, minHeight = 0))
+                }
+            val rows = if (small) children.chunked(2) else emptyList()
+            val height =
+                if (small) {
+                    rows.sumOf { row -> row.maxOf { it.height } } + gap * (rows.size - 1).coerceAtLeast(0)
+                } else {
+                    children.sumOf { it.height } + gap * (count - 1).coerceAtLeast(0)
+                }
+            layout(width, constraints.constrainHeight(height)) {
+                if (small) {
+                    var y = 0
+                    rows.forEach { row ->
+                        row.forEachIndexed { column, child -> child.placeRelative(column * (cellWidth + gap), y) }
+                        y += row.maxOf { it.height } + gap
+                    }
+                } else {
+                    var y = 0
+                    children.asReversed().forEach { child ->
+                        child.placeRelative(0, y)
+                        y += child.height + gap
+                    }
+                }
+            }
+        }
+    }
 }
 
 /** Alias for [DialogPortal] matching shadcn's `AlertDialogPortal`. */
@@ -376,7 +570,7 @@ fun AlertDialogAction(
         disabled = disabled,
         variant = variant,
         size = size,
-        style = style,
+        style = (if (LocalAlertDialogStretchActions.current) Style { width(1f) } else Style) then style,
         content = content,
     )
 }
@@ -431,7 +625,7 @@ fun AlertDialogCancel(
         disabled = disabled,
         variant = variant,
         size = size,
-        style = style,
+        style = (if (LocalAlertDialogStretchActions.current) Style { width(1f) } else Style) then style,
         content = content,
     )
 }

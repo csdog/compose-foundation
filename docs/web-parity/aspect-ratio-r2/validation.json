@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-30",
+  "functional_run": "0010",
+  "functional_tests": 53,
+  "functional_details": "test-results.json",
+  "pixel_run": "0011",
+  "pixels": {
+    "total": 4,
+    "recorded": 0,
+    "added": 0,
+    "changed": 0,
+    "unchanged": 4
+  },
+  "goldens": [
+    {
+      "file": "shadcn/core/src/jvmTest/snapshots/aspect_ratio_states_dark.png",
+      "sha256": "a589769069bd9b0dd836428fe04dfe0a2d839edec2950b46534836ea6d574be5"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/snapshots/aspect_ratio_states_light.png",
+      "sha256": "85abd4cbabf744fd67bd50d536b69fc8d1d6ef7463e844ce18a1fecd4c737297"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/snapshots/select_nova_arabic_options_dark.png",
+      "sha256": "03133287c9dd5ff5b2f0763bfa9b87df8d0885087c0f5aa6191fea49e5992a0c"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/snapshots/select_nova_arabic_options_light.png",
+      "sha256": "231147f235fa35651afefcddd0df6d801c0dc14ea68ee8da9037bdfe0da3422f"
+    }
+  ],
+  "runtime_and_test_sources": [
+    {
+      "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/AspectRatioDoc.kt",
+      "sha256": "80d9c6126a32dade21f348bcebd53529bd45611b6bc30598148b7d0a079cdf52"
+    },
+    {
+      "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/PreviewCodeSection.kt",
+      "sha256": "373e32d3e15453c5b90c174d473d82d54b8084f872843eeda9176d05a64e8df4"
+    },
+    {
+      "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/aspectratio/AspectRatio.kt",
+      "sha256": "f6c5ebc454f3999b4cb1863c217ad164adcd70d619ed25d3db7749b501361b79"
+    },
+    {
+      "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/select/Select.kt",
+      "sha256": "8583f72122101134adebb43dfdd2e0816c1127ebc9c6f5f16325a2d1592d3643"
+    },
+    {
+      "file": "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/AspectRatioExamplesTest.kt",
+      "sha256": "898d08da2852e16a94e0b8e7b4a2e59a97392395988bc5b6de23a5fd482d717c"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/select/SelectLabelLayoutTest.kt",
+      "sha256": "0ee0b6217448d6af8e55b4419f26c2c6475ec377271ded954f60e03a2d635ce8"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/resources/fonts/noto_sans_arabic.ttf",
+      "sha256": "63111b5b2e074dd48cc67692e0a2726d86ee94c1c37fe8598257b7b4e87e869e"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/resources/fonts/noto_sans_arabic_OFL.txt",
+      "sha256": "07fc70bfeb985cc1a87a8587d0a0c80bab11c86c9dc3fd95b6f0cb332f983e96"
+    }
+  ],
+  "js_compile_and_wasm_distribution": "passed in run 0010; latest distribution also rebuilt during Drawer validation, no Aspect/Select runtime changes since 0010",
+  "existing_goldens_rerecorded": false,
+  "only_new_goldens_recorded": [
+    "select_nova_arabic_options_light.png",
+    "select_nova_arabic_options_dark.png"
+  ],
+  "full_project_pixel_verification": false
+}

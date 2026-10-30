@@ -71,4 +71,29 @@ class AvatarScreenshotTest : ScreenshotTest() {
 
     @Test
     fun group_overlap_dark() = overlap(darkTheme = true)
+
+    private fun nova(dark: Boolean) =
+        snapshot(
+            "avatar_nova",
+            darkTheme = dark,
+            stylePreset = com.toutiaoyan.compose.ui.tokens.StylePreset.Nova,
+        ) {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                AvatarSize.entries.forEach { size ->
+                    Avatar(size = size) {
+                        AvatarFallback("CN")
+                        AvatarBadge()
+                    }
+                }
+                AvatarGroup {
+                    Avatar("CN")
+                    Avatar("LR")
+                    AvatarGroupCount("+3")
+                }
+            }
+        }
+
+    @Test fun nova_light() = nova(false)
+
+    @Test fun nova_dark() = nova(true)
 }

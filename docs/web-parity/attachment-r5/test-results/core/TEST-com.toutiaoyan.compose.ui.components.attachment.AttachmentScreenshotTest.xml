@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AttachmentScreenshotTest[jvm]" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-30T06:21:51.115Z" hostname="Apples-MacBook-Pro.local" time="0.139">
+  <properties/>
+  <testcase name="vertical_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentScreenshotTest" time="0.037"/>
+  <testcase name="vertical_light[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentScreenshotTest" time="0.017"/>
+  <testcase name="states_light[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentScreenshotTest" time="0.019"/>
+  <testcase name="composer_upload_tray_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentScreenshotTest" time="0.025"/>
+  <testcase name="composer_upload_tray_light[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentScreenshotTest" time="0.021"/>
+  <testcase name="states_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentScreenshotTest" time="0.019"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,115 @@
+{
+  "note": "Legacy goldens retained. Common focus repair intentionally changes focused modal states; historical failures are not overwritten.",
+  "historicalActualComparisons": [
+    {
+      "file": "collapsible_collapsed_dark_actual.png",
+      "phase8": "aa833e36e414fa53c8785c597630be0da977a61adc62a394fffc5587158d8d7d",
+      "phase9": "aa833e36e414fa53c8785c597630be0da977a61adc62a394fffc5587158d8d7d",
+      "unchanged": true
+    },
+    {
+      "file": "command_dialog_close_button_dark_actual.png",
+      "phase8": "ea4d78bead74f159a96860caa4487288a6a9c2e7bc698f78782c49066f61ee15",
+      "phase9": "9b9f2825e07abc9445a90aabf87fb5d90634cf115482b53c96dfd73813985da6",
+      "unchanged": false
+    },
+    {
+      "file": "date_picker_states_dark_actual.png",
+      "phase8": "5139ba5490d26b842fcc14cdfd79a7cbaef76090f290ee173b49a1881b46dc27",
+      "phase9": "5139ba5490d26b842fcc14cdfd79a7cbaef76090f290ee173b49a1881b46dc27",
+      "unchanged": true
+    },
+    {
+      "file": "collapsible_expanded_dark_actual.png",
+      "phase8": "ec10473189bca61e3be682aef940de2fd8ca374cca997aef79c9c336b8061a35",
+      "phase9": "ec10473189bca61e3be682aef940de2fd8ca374cca997aef79c9c336b8061a35",
+      "unchanged": true
+    },
+    {
+      "file": "command_dialog_close_button_light_actual.png",
+      "phase8": "f96efaee02f9395c9bf42a41a980d663630c335e595ced4614da83bdae28f8d6",
+      "phase9": "879743ab01896d7f3f5f6782e2959885ccc2325a886e2268e84c599b63e1e5af",
+      "unchanged": false
+    },
+    {
+      "file": "dialog_states_light_actual.png",
+      "phase8": "14a7c23a39c9bea12049d11cbd6ce9ae61a805bc77f866459d714158a6aebbff",
+      "phase9": "14a7c23a39c9bea12049d11cbd6ce9ae61a805bc77f866459d714158a6aebbff",
+      "unchanged": true
+    },
+    {
+      "file": "collapsible_expanded_light_actual.png",
+      "phase8": "758216193fbb68a01f3f5d2951ed045309b6292ba0919d5a26cbc585dc89fac6",
+      "phase9": "758216193fbb68a01f3f5d2951ed045309b6292ba0919d5a26cbc585dc89fac6",
+      "unchanged": true
+    },
+    {
+      "file": "date_picker_states_light_actual.png",
+      "phase8": "220dd44bcc647ad5e5d9fa6e5bcf9b0c6f2f05c9f35bac90e25a0478c12648d1",
+      "phase9": "220dd44bcc647ad5e5d9fa6e5bcf9b0c6f2f05c9f35bac90e25a0478c12648d1",
+      "unchanged": true
+    },
+    {
+      "file": "command_states_dark_actual.png",
+      "phase8": "8a665cf256347e11fd90408cbf2d8e6cb775afc46f09b00d51918e87571e29ad",
+      "phase9": "8a665cf256347e11fd90408cbf2d8e6cb775afc46f09b00d51918e87571e29ad",
+      "unchanged": true
+    },
+    {
+      "file": "command_states_light_actual.png",
+      "phase8": "089b24b82d6950184c02da5e446ec29eebbff3e65eaa570f6e9a0e8aaf022c7c",
+      "phase9": "089b24b82d6950184c02da5e446ec29eebbff3e65eaa570f6e9a0e8aaf022c7c",
+      "unchanged": true
+    },
+    {
+      "file": "collapsible_collapsed_light_actual.png",
+      "phase8": "265058a05359cdfa27f53329b7f4c55f41773b85d1887505c391e0199faa0134",
+      "phase9": "265058a05359cdfa27f53329b7f4c55f41773b85d1887505c391e0199faa0134",
+      "unchanged": true
+    },
+    {
+      "file": "dialog_close_button_focused_light_actual.png",
+      "phase8": "5e7eaad1576c88c23d306f14aa37114aa7eaee261a123810468ca9577b1c2654",
+      "phase9": "5e7eaad1576c88c23d306f14aa37114aa7eaee261a123810468ca9577b1c2654",
+      "unchanged": true
+    },
+    {
+      "file": "dialog_states_dark_actual.png",
+      "phase8": "18f60cabf44f07376e7a3cf915ac7daffc51cbe1c4bc0f0053e27b579b10b637",
+      "phase9": "18f60cabf44f07376e7a3cf915ac7daffc51cbe1c4bc0f0053e27b579b10b637",
+      "unchanged": true
+    }
+  ],
+  "legacyRun": [
+    {
+      "suite": "CommandScreenshotTest[jvm]",
+      "tests": 4,
+      "failures": 4
+    },
+    {
+      "suite": "DialogScreenshotTest[jvm]",
+      "tests": 3,
+      "failures": 3
+    },
+    {
+      "suite": "ContextMenuScreenshotTest[jvm]",
+      "tests": 2,
+      "failures": 0
+    },
+    {
+      "suite": "DrawerScreenshotTest[jvm]",
+      "tests": 6,
+      "failures": 2
+    },
+    {
+      "suite": "CollapsibleScreenshotTest[jvm]",
+      "tests": 4,
+      "failures": 4
+    },
+    {
+      "suite": "DatePickerScreenshotTest[jvm]",
+      "tests": 2,
+      "failures": 2
+    }
+  ]
+}

@@ -29,7 +29,7 @@ val comboboxDoc =
     ComponentDoc(
         id = "combobox",
         title = "Combobox",
-        description = "A select with a filterable/searchable option list.",
+        description = "Autocomplete input with a list of suggestions.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.combobox.Combobox
@@ -49,6 +49,15 @@ val comboboxDoc =
                 ComboboxContent()
             }
             """.trimIndent(),
+        apiProperties =
+            listOf(
+                ApiProperty("value / values", "T? / List<T>", "required"),
+                ApiProperty("options", "List<T>", "required"),
+                ApiProperty("ComboboxInput.editable", "Boolean", "explicit editable overload"),
+                ApiProperty("autoHighlight", "Boolean", "false"),
+                ApiProperty("invalid", "Boolean", "false"),
+                ApiProperty("onClear", "callback?", "null"),
+            ),
         examples =
             listOf(
                 ComponentExample(
@@ -56,12 +65,8 @@ val comboboxDoc =
                     code =
                         """
                         var framework by remember { mutableStateOf<String?>(null) }
-                        Combobox(
-                            value = framework,
-                            options = listOf("Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"),
-                            onValueChange = { framework = it },
-                        ) {
-                            ComboboxTrigger()
+                        Combobox(value = framework, options = listOf("Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"), onValueChange = { framework = it }, placeholder = "Select a framework") {
+                            ComboboxInput(editable = true)
                             ComboboxContent()
                         }
                         """.trimIndent(),
@@ -69,10 +74,20 @@ val comboboxDoc =
                         var framework by remember { mutableStateOf<String?>(null) }
                         Combobox(
                             value = framework,
-                            options = listOf("Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"),
-                            onValueChange = { framework = it },
+                            options =
+                                listOf(
+                                    "Next.js",
+                                    "SvelteKit",
+                                    "Nuxt.js",
+                                    "Remix",
+                                    "Astro",
+                                ),
+                            onValueChange = {
+                                framework = it
+                            },
+                            placeholder = "Select a framework",
                         ) {
-                            ComboboxTrigger()
+                            ComboboxInput(editable = true)
                             ComboboxContent()
                         }
                     },

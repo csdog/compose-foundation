@@ -5,6 +5,11 @@ package com.toutiaoyan.compose.ui.catalog
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.Github
 import com.composables.icons.lucide.Plus
+import com.composables.icons.lucide.Menu
+import com.composables.icons.lucide.Search
+import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.fillWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -32,9 +37,6 @@ import com.toutiaoyan.compose.tailwind.core.twSpacing
 
 private const val GITHUB_URL = "https://github.com/ronjunevaldoz/shadcn-compose"
 
-/** Display-only star count — mirrors [GitHubLink](https://github.com/shadcn-ui/ui/blob/main/apps/v4/components/github-link.tsx). */
-private const val GITHUB_STARS = "1.2k"
-
 /**
  * App chrome matching [site-header.tsx](https://github.com/shadcn-ui/ui/blob/main/apps/v4/components/site-header.tsx).
  *
@@ -50,6 +52,10 @@ fun CatalogTopBar(
     onNavigateToComponents: () -> Unit = {},
     onNavigateToCreate: () -> Unit = {},
     onGetCode: () -> Unit = {},
+    isCompact: Boolean = false,
+    onOpenNavigation: () -> Unit = {},
+    onSearch: () -> Unit = {},
+    searchButtonModifier: Modifier = Modifier,
 ) {
     val uriHandler = LocalUriHandler.current
 
@@ -57,7 +63,7 @@ fun CatalogTopBar(
         modifier =
             Modifier
                 .fillMaxWidth()
-                .height(56.dp)
+                .height(64.dp)
                 .background(currentTheme.colors.background)
                 .padding(horizontal = twSpacing.lg),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -67,6 +73,16 @@ fun CatalogTopBar(
             horizontalArrangement = Arrangement.spacedBy(twSpacing.sm),
             verticalAlignment = Alignment.CenterVertically,
         ) {
+            if (isCompact && !isOnCreateRoute) {
+                Button(
+                    onClick = onOpenNavigation,
+                    variant = ButtonVariant.Ghost,
+                    size = ButtonSize.IconSm,
+                    label = "Open navigation",
+                ) {
+                    DocIcon(Lucide.Menu)
+                }
+            }
             Button(
                 onClick = onNavigateHome,
                 variant = ButtonVariant.Ghost,
@@ -74,19 +90,21 @@ fun CatalogTopBar(
             ) {
                 Text { "Home" }
             }
-            Button(
-                onClick = onNavigateToComponents,
-                variant = ButtonVariant.Ghost,
-                size = ButtonSize.Sm,
-            ) {
-                Text { "Components" }
-            }
-            Button(
-                onClick = onNavigateToCreate,
-                variant = ButtonVariant.Ghost,
-                size = ButtonSize.Sm,
-            ) {
-                Text { "Create" }
+            if (!isCompact) {
+                Button(
+                    onClick = onNavigateToComponents,
+                    variant = ButtonVariant.Ghost,
+                    size = ButtonSize.Sm,
+                ) {
+                    Text { "Components" }
+                }
+                Button(
+                    onClick = onNavigateToCreate,
+                    variant = ButtonVariant.Ghost,
+                    size = ButtonSize.Sm,
+                ) {
+                    Text { "Create" }
+                }
             }
         }
 
@@ -95,17 +113,33 @@ fun CatalogTopBar(
             horizontalArrangement = Arrangement.spacedBy(twSpacing.sm),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            // GitHubLink: icon + muted tabular stars.
+            Button(
+                onClick = onSearch,
+                modifier = searchButtonModifier.then(if (isCompact) Modifier else Modifier.width(160.dp)),
+                variant = if (isCompact) ButtonVariant.Ghost else ButtonVariant.Secondary,
+                size = if (isCompact) ButtonSize.IconSm else ButtonSize.Md,
+                label = "Search documentation",
+                style =
+                    Style {
+                        shape(RoundedCornerShape(8.dp))
+                        if (!isCompact) fillWidth()
+                    },
+            ) {
+                if (isCompact) DocIcon(Lucide.Search) else Text { "Search..." }
+            }
+            // Link to the actual project; do not invent a star count.
             Button(
                 onClick = { uriHandler.openUri(GITHUB_URL) },
                 variant = ButtonVariant.Ghost,
                 size = ButtonSize.Sm,
             ) {
                 DocIcon(Lucide.Github)
-                Text(
-                    variant = TextVariant.BodySmall,
-                    textStyle = TextColors.Muted,
-                ) { GITHUB_STARS }
+                if (!isCompact) {
+                    Text(
+                        variant = TextVariant.BodySmall,
+                        textStyle = TextColors.Muted,
+                    ) { "GitHub" }
+                }
             }
 
             HeaderSeparator()
@@ -115,6 +149,7 @@ fun CatalogTopBar(
                 onClick = { onToggleDarkMode(!isDarkMode) },
                 variant = ButtonVariant.Ghost,
                 size = ButtonSize.IconSm,
+                label = "Toggle theme",
             ) {
                 ModeSwitcherIcon()
             }

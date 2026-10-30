@@ -23,6 +23,11 @@ components against this one) — see [`component-metadata.json`](component-metad
 | `Text`    | Themed text with the design system's typography scale (`variant` defaults BodyMedium)                                                                                                                    | text, label, typography, heading, body copy               |
 | `Icon`    | Renders any `ImageVector` (Lucide, custom vectors, ...), auto-tinted to match its surroundings the same way `Text` does -- no icon-library dependency itself, BYO vector | icon, icon button, vector icon, tinted icon, icon color   |
 
+### Code and execution steps
+
+- `CodeBlock` (+ Header / Title / Actions / CopyButton / Content / Line / Footer): selectable code, horizontal scroll or wrapping, line numbers with a start offset, diff/highlight lines, two sizes and a destructive variant. Rich lines supply `lineNumber` explicitly. Copy uses the exact supplied value and confirms successful writes for two seconds.
+- `Trace` (+ Line / Icon / Title / Description / Collapsible / CollapsibleTrigger / CollapsibleContent): reasoning and tool steps with running/error/pending states, optional durations and controlled or local expansion.
+
 ### Forms & inputs
 
 | Component           | Use case                                                                                                                         | Keywords                                                                      |
@@ -126,3 +131,48 @@ Modifiers, not standalone components (mirrors real shadcn's `docs/utils/*` pages
 |-------------------------------|---------------------------------------------------------------------------------|--------------------------------------------------------------------------|
 | `Modifier.shimmer()`          | Sweeping highlight over text for "generating response"/"thinking" states        | shimmer, loading text animation, generating response, thinking indicator |
 | `Modifier.shadcnScrollFade()` | Fades a scrollable container's edges based on scroll position, hinting overflow | scroll fade, edge fade, overflow hint, fade mask, scroll shadow          |
+
+
+Nova form parity (2026-10-29): Input is 32dp tall; Textarea starts at 64dp with 10dp horizontal / 8dp vertical insets and grows with multiline content. Input text is 14sp on desktop and 16sp below a 768dp window width. FieldGroup / Field / FieldContent gaps are 20 / 8 / 2dp. Responsive Field uses a 448dp container breakpoint. FieldLabel uses 14sp Medium with a 19.25sp line height, while standalone Label uses a 14sp line height. The controls expose invalid semantics and preserve disabled inheritance through nested FieldSets. Legacy presets retain their original dimensions and alignment. Full remaining differences and screenshot evidence are tracked in [Web progress](shadcn-web-progress.md).
+
+
+Nova selection parity (2026-10-29): Checkbox and radio indicators are 16dp with input borders; checked states use primary and invalid states show a 3dp destructive ring. Switch resolves to 32×18.4dp (small 24×14dp), with 16/12dp thumbs and 150ms travel. Toggle uses 14sp Medium (small 12.8sp), inline icon sizes 16/14dp and 4dp gaps. `Toggle(invalid = true) { … }` is an additive overload; existing signatures and positional `Toggle(true)` calls remain intact. Label convenience overloads toggle and focus the actual control. Radio Group supports arrows, wrapping, disabled skipping, Home/End and RTL; single-entry Tab and dynamic reordering remain tracked in [Web progress](shadcn-web-progress.md). Nova enables focus rings by default; explicit `Ring(enabled = false)` still disables them.
+
+
+### Nova group / slider alignment (2026-10-29)
+
+`ToggleGroup` supports clearing Single selection and focus-only arrow/Home/End navigation (RTL and disabled-item skipping). `Slider` uses a 12dp white Nova thumb and supports keyboard stepping/commit; original `SliderDefaults.ThumbSize` remains 16dp, with `NovaThumbSize` added for the Nova token. `InputGroup` owns descendant error/focus chrome, 32dp inline height and addon focus forwarding. Nova `ButtonGroup` measures actual children before stretching separators so nested icon buttons keep their intended height. Full state matrices and remaining mixed-child limitations are tracked in [Web progress](shadcn-web-progress.md).
+
+
+### Nova OTP / choices alignment (2026-10-29)
+
+`InputOTP` renders 32dp connected Nova slots and records selection for paste/replace/backspace, with a root-scope `InputOTPSeparator` for separate groups. `Select` supports arrow/Home/End navigation, selection cancellation, focus restoration and measured selected-row alignment; its nullable placeholder action is explicit in the catalog. `ComboboxInput(editable = true)` adds an inline autocomplete input without changing the existing popup-search overload. It retains text focus while filtering and supports keyboard commit, Escape, clear and auto-highlight. Remaining state/accessibility/positioning work is tracked in [Web progress](shadcn-web-progress.md).
+
+### Nova surface alignment (2026-10-29)
+
+Collapsible, Command, Context Menu, the Date Picker recipe, Dialog and Drawer have current Base UI / Nova default catalog examples.
+Command preserves custom item values, keeps highlight across callback recomposition, auto-highlights the first enabled match, supports Home/End and filters empty groups.
+Context Menu supports right click, long press and Shift+F10, disabled-item skipping and independent submenu arrow navigation; Nova checks/radio indicators sit at the trailing edge.
+Dialog uses 16px medium titles, 14px descriptions, a 28px close button, black/10 scrim, viewport margins and an inset-spanning muted footer; its default recipe stacks actions in reverse order on phones.
+Drawer uses desktop 384px side panels and phone bottom panels, directional 96×4 swipe affordances and the additive `DrawerFooterColumn` for full-width stacked actions. The original `DrawerFooter` RowScope API is retained.
+Date Picker remains Popover + Calendar: 212px trigger, padding-free popup, 28px Nova day cells; the default example initializes from the current UTC date. Locale/time-zone selection is still outside this recipe.
+See [Web progress](shadcn-web-progress.md) for checked evidence and remaining interaction/visual matrices, including backdrop blur and full focus restoration.
+
+
+### Remaining Web surface gaps closed (2026-10-29)
+
+Wrap the window root in `OverlayHost` inside `Theme`, with the application's painted background inside the host. This enables the 4dp Nova backdrop, nested backdrop capture, and non-modal portals whose outside presses still reach the application.
+Dialog/Drawer initialize focus in tab order, retain modal Tab traversal, and restore the trigger after exit. Non-modal focus/outside dismissal respects prevention callbacks. `snapToSequentialPoints` is now connected to the actual Drawer fling, and uses physical offsets rather than list order.
+Command scrolls highlighted rows only following navigation, preserves controlled values until accepted, and avoids committing during IME composition. Context Menu uses window-relative trigger coordinates, edge flipping, RTL submenu arrows, typeahead, touch cancellation and trigger restoration.
+Calendar's `LocalCalendarLocale` accepts label/date/accessible-date formatters and week start; `LocalCalendarAutoFocus` opts popup calendars into initial day focus without making inline previews steal focus. System-zone clock conversion stays in the app recipe; core remains free of datetime dependencies. The Chinese catalog example ships only a licensed date-glyph subset, not a general CJK font.
+Detailed Web checks, historical screenshot failures, and remaining native-device validation are in [Web progress](shadcn-web-progress.md).
+
+Nova snap drawers share the vertical viewport-minus-96dp cap. Absolute snap heights and fractional heights resolve against the original viewport, then clamp to the panel maximum; a full (`1f`) snap keeps the top inset. The catalog Snap points example uses 496dp (`31rem`) and full height, matching the upstream example.
+
+Nova horizontal drawers follow the current shadcn preview: 8dp exterior spacing on the attached edge, top and bottom, with 24dp rounding on all four corners. The side panel retains its own 384dp desktop / 75%-of-window narrow-screen width; spacing is outside the panel. Nova vertical drawers also use 8dp exterior spacing at both sides and their attached edge; legacy presets retain their existing geometry.
+
+Nested Drawer opening/closing uses a continuous 450ms stack transform with edge-based origins and a 16dp peek per ancestor level. Covered content fades out/in; same-direction vertical parents follow the frontmost drawer height and restore their natural height on close. The catalog includes four levels (desktop right / mobile down).
+
+Nova bottom/top panels are viewport-width minus 16dp with full 24dp corner rounding. Their height cap remains viewport-height minus 96dp; the bottom full snap therefore starts at 88dp because its bottom edge is inset 8dp. Absolute and fractional snap heights remain viewport-based. `DrawerDefaults.WindowInset` / `CornerRadius` describe all directions; the earlier side-specific constants remain aliases.
+
+Nested Drawer outside-dismiss requests continue through exiting Drawers to the nearest open ancestor, so rapid clicks close one layer each without waiting for animation completion. Ancestor outside-dismiss flags and prevention callbacks remain authoritative; ordinary Dialog portals do not inherit this Drawer-only handoff. A reversed enter/exit remains mounted until its transition is idle.

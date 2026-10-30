@@ -1,0 +1,72 @@
+[
+  {
+    "file": "analytics-card.tsx",
+    "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/registry/bases/base/blocks/preview/cards/analytics-card.tsx",
+    "sha256": "d871c9f5a8910f467fea3613a0b1a6f6972f015f7418467a1db8dbc6ccb64be8"
+  },
+  {
+    "file": "base-color-picker.tsx",
+    "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/app/(app)/(create)/components/base-color-picker.tsx",
+    "sha256": "8bf52ce8b3a7ed125b85d256a95da0893f3407135ceee71e5ff2b9955b3cdbec"
+  },
+  {
+    "file": "chart-color-picker.tsx",
+    "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/app/(app)/(create)/components/chart-color-picker.tsx",
+    "sha256": "2b4b7fa2081abe67615a16ca78c576fbe5a762d9b9721e7627af98027b6c62d4"
+  },
+  {
+    "file": "config.ts",
+    "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/registry/config.ts",
+    "sha256": "4b93e49cdb39c146a548396511da2c493fcd322acb63140b2f3fe34e27fd0c43"
+  },
+  {
+    "file": "contribution-history.tsx",
+    "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/registry/bases/base/blocks/preview-02/cards/contribution-history.tsx",
+    "sha256": "94e777c23412ab79a88327d451fab2857d97f8e1eacad473a7d48ba0baf33024"
+  },
+  {
+    "file": "design-system-provider.tsx",
+    "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/app/(app)/(create)/components/design-system-provider.tsx",
+    "sha256": "2a9fcce4704ac4854a64fa1aa2c81b89cb355af3c5aec5c5cfd4dff0c9496a3a"
+  },
+  {
+    "file": "dividend-income.tsx",
+    "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/registry/bases/base/blocks/preview-02/cards/dividend-income.tsx",
+    "sha256": "eb70bbee0133aed413ebc6ad267b6036fef749fd9e7f5c65c9bb17bbec2de6a4"
+  },
+  {
+    "file": "payout-threshold.tsx",
+    "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/registry/bases/base/blocks/preview-02/cards/payout-threshold.tsx",
+    "sha256": "f951b2e70f8a28b6492ac589eb950cbe673188b679df8421669cc33198c9debf"
+  },
+  {
+    "file": "picker.tsx",
+    "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/app/(app)/(create)/components/picker.tsx",
+    "sha256": "19fbe4aa31075ae367f4fc610385c67691b0945fd071b35b8103e207accab7ea"
+  },
+  {
+    "file": "preview-override.tsx",
+    "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/app/(app)/(create)/components/preview-override.tsx",
+    "sha256": "8672c67c4ca021e6e9641d7bd22dc97d2b3f703c2bb6fdb868b9d42a0894d36f"
+  },
+  {
+    "file": "preview-style.tsx",
+    "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/app/(app)/(create)/components/preview-style.tsx",
+    "sha256": "c221c85808d63936e4aadf5d77ac3412f473426d96d41605c467094a2c07cd3d"
+  },
+  {
+    "file": "search-params.ts",
+    "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/app/(app)/(create)/lib/search-params.ts",
+    "sha256": "833b42a4d78feb27ae7b6a6e9349e85b890d990732faaa73e4f5be2f652c9959"
+  },
+  {
+    "file": "stock-performance.tsx",
+    "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/registry/bases/base/blocks/preview-02/cards/stock-performance.tsx",
+    "sha256": "c7869f21bf820168f1293976bfecab9a02029b23917766e7e6995c19d59563bf"
+  },
+  {
+    "file": "theme-picker.tsx",
+    "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/app/(app)/(create)/components/theme-picker.tsx",
+    "sha256": "4b38f4412ffb342f419e3fac21a2663569b51a82ddf0d99d73dc01568543155f"
+  }
+]

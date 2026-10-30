@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-30",
+  "source_recipe": "../attachment-r1/attachment-demo.tsx",
+  "license": "https://unsplash.com/license",
+  "note": "Unmodified JPEG response for exact upstream URLs (Accept image/jpeg); catalog resources only, cropped by Compose at runtime.",
+  "sources": [
+    {
+      "file": "attachment_workspace.jpg",
+      "url": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=900&auto=format&fit=crop&q=80",
+      "content_type": "image/jpeg",
+      "bytes": 90328,
+      "sha256": "e935afc1f9e1c66d906f22118444d5f58de37197c966bf8e72e4d229c80f10d2"
+    },
+    {
+      "file": "attachment_desk.jpg",
+      "url": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=900&auto=format&fit=crop&q=80",
+      "content_type": "image/jpeg",
+      "bytes": 112379,
+      "sha256": "59e0257ed29190f2ae5cca22c884fd19c11737ce929308f3671baf40f463d87a"
+    },
+    {
+      "file": "attachment_office.jpg",
+      "url": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=900&auto=format&fit=crop&q=80",
+      "content_type": "image/jpeg",
+      "bytes": 99240,
+      "sha256": "728d22bedd02d85623d1d408ec4f1eb89c373c03e288ed9e4b6a4714fbb24b40"
+    }
+  ]
+}

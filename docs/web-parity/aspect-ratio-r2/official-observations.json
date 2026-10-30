@@ -1,0 +1,794 @@
+[
+  {
+    "form": "desktop",
+    "mode": "light",
+    "id": "ar",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "caption": "منظر طبيعي جميل",
+    "dir": "rtl",
+    "figure": {
+      "x": 520.5,
+      "y": 306.125,
+      "width": 384,
+      "height": 244,
+      "top": 306.125,
+      "right": 904.5,
+      "bottom": 550.125,
+      "left": 520.5
+    },
+    "captionRect": {
+      "x": 520.5,
+      "y": 530.125,
+      "width": 384,
+      "height": 20,
+      "top": 530.125,
+      "right": 904.5,
+      "bottom": 550.125,
+      "left": 520.5
+    },
+    "photo": {
+      "x": 520.5,
+      "y": 306.125,
+      "width": 384,
+      "height": 216,
+      "top": 306.125,
+      "right": 904.5,
+      "bottom": 522.125,
+      "left": 520.5
+    },
+    "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+    "lineHeight": "20px",
+    "menuExpanded": "false"
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "id": "en",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "caption": "Beautiful landscape",
+    "dir": "ltr",
+    "figure": {
+      "x": 520.5,
+      "y": 306.125,
+      "width": 384,
+      "height": 244,
+      "top": 306.125,
+      "right": 904.5,
+      "bottom": 550.125,
+      "left": 520.5
+    },
+    "captionRect": {
+      "x": 520.5,
+      "y": 530.125,
+      "width": 384,
+      "height": 20,
+      "top": 530.125,
+      "right": 904.5,
+      "bottom": 550.125,
+      "left": 520.5
+    },
+    "photo": {
+      "x": 520.5,
+      "y": 306.125,
+      "width": 384,
+      "height": 216,
+      "top": 306.125,
+      "right": 904.5,
+      "bottom": 522.125,
+      "left": 520.5
+    },
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "lineHeight": "20px",
+    "menuExpanded": "false"
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "id": "he",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "caption": "נוף יפה",
+    "dir": "rtl",
+    "figure": {
+      "x": 520.5,
+      "y": 306.125,
+      "width": 384,
+      "height": 244,
+      "top": 306.125,
+      "right": 904.5,
+      "bottom": 550.125,
+      "left": 520.5
+    },
+    "captionRect": {
+      "x": 520.5,
+      "y": 530.125,
+      "width": 384,
+      "height": 20,
+      "top": 530.125,
+      "right": 904.5,
+      "bottom": 550.125,
+      "left": 520.5
+    },
+    "photo": {
+      "x": 520.5,
+      "y": 306.125,
+      "width": 384,
+      "height": 216,
+      "top": 306.125,
+      "right": 904.5,
+      "bottom": 522.125,
+      "left": 520.5
+    },
+    "font": "14px / 20px \"Noto Sans Hebrew\", \"Noto Sans Hebrew Fallback\"",
+    "lineHeight": "20px",
+    "menuExpanded": "false"
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "id": "ar",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "caption": "منظر طبيعي جميل",
+    "dir": "rtl",
+    "figure": {
+      "x": 520.5,
+      "y": 306.125,
+      "width": 384,
+      "height": 244,
+      "top": 306.125,
+      "right": 904.5,
+      "bottom": 550.125,
+      "left": 520.5
+    },
+    "captionRect": {
+      "x": 520.5,
+      "y": 530.125,
+      "width": 384,
+      "height": 20,
+      "top": 530.125,
+      "right": 904.5,
+      "bottom": 550.125,
+      "left": 520.5
+    },
+    "photo": {
+      "x": 520.5,
+      "y": 306.125,
+      "width": 384,
+      "height": 216,
+      "top": 306.125,
+      "right": 904.5,
+      "bottom": 522.125,
+      "left": 520.5
+    },
+    "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+    "lineHeight": "20px",
+    "menuExpanded": "false"
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "id": "en",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "caption": "Beautiful landscape",
+    "dir": "ltr",
+    "figure": {
+      "x": 520.5,
+      "y": 306.125,
+      "width": 384,
+      "height": 244,
+      "top": 306.125,
+      "right": 904.5,
+      "bottom": 550.125,
+      "left": 520.5
+    },
+    "captionRect": {
+      "x": 520.5,
+      "y": 530.125,
+      "width": 384,
+      "height": 20,
+      "top": 530.125,
+      "right": 904.5,
+      "bottom": 550.125,
+      "left": 520.5
+    },
+    "photo": {
+      "x": 520.5,
+      "y": 306.125,
+      "width": 384,
+      "height": 216,
+      "top": 306.125,
+      "right": 904.5,
+      "bottom": 522.125,
+      "left": 520.5
+    },
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "lineHeight": "20px",
+    "menuExpanded": "false"
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "id": "he",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "caption": "נוף יפה",
+    "dir": "rtl",
+    "figure": {
+      "x": 520.5,
+      "y": 306.125,
+      "width": 384,
+      "height": 244,
+      "top": 306.125,
+      "right": 904.5,
+      "bottom": 550.125,
+      "left": 520.5
+    },
+    "captionRect": {
+      "x": 520.5,
+      "y": 530.125,
+      "width": 384,
+      "height": 20,
+      "top": 530.125,
+      "right": 904.5,
+      "bottom": 550.125,
+      "left": 520.5
+    },
+    "photo": {
+      "x": 520.5,
+      "y": 306.125,
+      "width": 384,
+      "height": 216,
+      "top": 306.125,
+      "right": 904.5,
+      "bottom": 522.125,
+      "left": 520.5
+    },
+    "font": "14px / 20px \"Noto Sans Hebrew\", \"Noto Sans Hebrew Fallback\"",
+    "lineHeight": "20px",
+    "menuExpanded": "false"
+  },
+  {
+    "form": "compact",
+    "mode": "light",
+    "id": "ar",
+    "viewport": {
+      "width": 1095,
+      "height": 687
+    },
+    "caption": "منظر طبيعي جميل",
+    "dir": "rtl",
+    "figure": {
+      "x": 492,
+      "y": 306.125,
+      "width": 384,
+      "height": 244,
+      "top": 306.125,
+      "right": 876,
+      "bottom": 550.125,
+      "left": 492
+    },
+    "captionRect": {
+      "x": 492,
+      "y": 530.125,
+      "width": 384,
+      "height": 20,
+      "top": 530.125,
+      "right": 876,
+      "bottom": 550.125,
+      "left": 492
+    },
+    "photo": {
+      "x": 492,
+      "y": 306.125,
+      "width": 384,
+      "height": 216,
+      "top": 306.125,
+      "right": 876,
+      "bottom": 522.125,
+      "left": 492
+    },
+    "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+    "lineHeight": "20px",
+    "menuExpanded": "false"
+  },
+  {
+    "form": "compact",
+    "mode": "light",
+    "id": "en",
+    "viewport": {
+      "width": 1095,
+      "height": 687
+    },
+    "caption": "Beautiful landscape",
+    "dir": "ltr",
+    "figure": {
+      "x": 492,
+      "y": 306.125,
+      "width": 384,
+      "height": 244,
+      "top": 306.125,
+      "right": 876,
+      "bottom": 550.125,
+      "left": 492
+    },
+    "captionRect": {
+      "x": 492,
+      "y": 530.125,
+      "width": 384,
+      "height": 20,
+      "top": 530.125,
+      "right": 876,
+      "bottom": 550.125,
+      "left": 492
+    },
+    "photo": {
+      "x": 492,
+      "y": 306.125,
+      "width": 384,
+      "height": 216,
+      "top": 306.125,
+      "right": 876,
+      "bottom": 522.125,
+      "left": 492
+    },
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "lineHeight": "20px",
+    "menuExpanded": "false"
+  },
+  {
+    "form": "compact",
+    "mode": "light",
+    "id": "he",
+    "viewport": {
+      "width": 1095,
+      "height": 687
+    },
+    "caption": "נוף יפה",
+    "dir": "rtl",
+    "figure": {
+      "x": 492,
+      "y": 306.125,
+      "width": 384,
+      "height": 244,
+      "top": 306.125,
+      "right": 876,
+      "bottom": 550.125,
+      "left": 492
+    },
+    "captionRect": {
+      "x": 492,
+      "y": 530.125,
+      "width": 384,
+      "height": 20,
+      "top": 530.125,
+      "right": 876,
+      "bottom": 550.125,
+      "left": 492
+    },
+    "photo": {
+      "x": 492,
+      "y": 306.125,
+      "width": 384,
+      "height": 216,
+      "top": 306.125,
+      "right": 876,
+      "bottom": 522.125,
+      "left": 492
+    },
+    "font": "14px / 20px \"Noto Sans Hebrew\", \"Noto Sans Hebrew Fallback\"",
+    "lineHeight": "20px",
+    "menuExpanded": "false"
+  },
+  {
+    "form": "compact",
+    "mode": "dark",
+    "id": "ar",
+    "viewport": {
+      "width": 1095,
+      "height": 687
+    },
+    "caption": "منظر طبيعي جميل",
+    "dir": "rtl",
+    "figure": {
+      "x": 492,
+      "y": 306.125,
+      "width": 384,
+      "height": 244,
+      "top": 306.125,
+      "right": 876,
+      "bottom": 550.125,
+      "left": 492
+    },
+    "captionRect": {
+      "x": 492,
+      "y": 530.125,
+      "width": 384,
+      "height": 20,
+      "top": 530.125,
+      "right": 876,
+      "bottom": 550.125,
+      "left": 492
+    },
+    "photo": {
+      "x": 492,
+      "y": 306.125,
+      "width": 384,
+      "height": 216,
+      "top": 306.125,
+      "right": 876,
+      "bottom": 522.125,
+      "left": 492
+    },
+    "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+    "lineHeight": "20px",
+    "menuExpanded": "false"
+  },
+  {
+    "form": "compact",
+    "mode": "dark",
+    "id": "en",
+    "viewport": {
+      "width": 1095,
+      "height": 687
+    },
+    "caption": "Beautiful landscape",
+    "dir": "ltr",
+    "figure": {
+      "x": 492,
+      "y": 306.125,
+      "width": 384,
+      "height": 244,
+      "top": 306.125,
+      "right": 876,
+      "bottom": 550.125,
+      "left": 492
+    },
+    "captionRect": {
+      "x": 492,
+      "y": 530.125,
+      "width": 384,
+      "height": 20,
+      "top": 530.125,
+      "right": 876,
+      "bottom": 550.125,
+      "left": 492
+    },
+    "photo": {
+      "x": 492,
+      "y": 306.125,
+      "width": 384,
+      "height": 216,
+      "top": 306.125,
+      "right": 876,
+      "bottom": 522.125,
+      "left": 492
+    },
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "lineHeight": "20px",
+    "menuExpanded": "false"
+  },
+  {
+    "form": "compact",
+    "mode": "dark",
+    "id": "he",
+    "viewport": {
+      "width": 1095,
+      "height": 687
+    },
+    "caption": "נוף יפה",
+    "dir": "rtl",
+    "figure": {
+      "x": 492,
+      "y": 306.125,
+      "width": 384,
+      "height": 244,
+      "top": 306.125,
+      "right": 876,
+      "bottom": 550.125,
+      "left": 492
+    },
+    "captionRect": {
+      "x": 492,
+      "y": 530.125,
+      "width": 384,
+      "height": 20,
+      "top": 530.125,
+      "right": 876,
+      "bottom": 550.125,
+      "left": 492
+    },
+    "photo": {
+      "x": 492,
+      "y": 306.125,
+      "width": 384,
+      "height": 216,
+      "top": 306.125,
+      "right": 876,
+      "bottom": 522.125,
+      "left": 492
+    },
+    "font": "14px / 20px \"Noto Sans Hebrew\", \"Noto Sans Hebrew Fallback\"",
+    "lineHeight": "20px",
+    "menuExpanded": "false"
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "id": "ar",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "caption": "منظر طبيعي جميل",
+    "dir": "rtl",
+    "figure": {
+      "x": 65,
+      "y": 389.5078125,
+      "width": 260,
+      "height": 174.25,
+      "top": 389.5078125,
+      "right": 325,
+      "bottom": 563.7578125,
+      "left": 65
+    },
+    "captionRect": {
+      "x": 65,
+      "y": 543.7578125,
+      "width": 260,
+      "height": 20,
+      "top": 543.7578125,
+      "right": 325,
+      "bottom": 563.7578125,
+      "left": 65
+    },
+    "photo": {
+      "x": 65,
+      "y": 389.5078125,
+      "width": 260,
+      "height": 146.25,
+      "top": 389.5078125,
+      "right": 325,
+      "bottom": 535.7578125,
+      "left": 65
+    },
+    "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+    "lineHeight": "20px",
+    "menuExpanded": "false"
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "id": "en",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "caption": "Beautiful landscape",
+    "dir": "ltr",
+    "figure": {
+      "x": 65,
+      "y": 389.5078125,
+      "width": 260,
+      "height": 174.25,
+      "top": 389.5078125,
+      "right": 325,
+      "bottom": 563.7578125,
+      "left": 65
+    },
+    "captionRect": {
+      "x": 65,
+      "y": 543.7578125,
+      "width": 260,
+      "height": 20,
+      "top": 543.7578125,
+      "right": 325,
+      "bottom": 563.7578125,
+      "left": 65
+    },
+    "photo": {
+      "x": 65,
+      "y": 389.5078125,
+      "width": 260,
+      "height": 146.25,
+      "top": 389.5078125,
+      "right": 325,
+      "bottom": 535.7578125,
+      "left": 65
+    },
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "lineHeight": "20px",
+    "menuExpanded": "false"
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "id": "he",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "caption": "נוף יפה",
+    "dir": "rtl",
+    "figure": {
+      "x": 65,
+      "y": 389.5078125,
+      "width": 260,
+      "height": 174.25,
+      "top": 389.5078125,
+      "right": 325,
+      "bottom": 563.7578125,
+      "left": 65
+    },
+    "captionRect": {
+      "x": 65,
+      "y": 543.7578125,
+      "width": 260,
+      "height": 20,
+      "top": 543.7578125,
+      "right": 325,
+      "bottom": 563.7578125,
+      "left": 65
+    },
+    "photo": {
+      "x": 65,
+      "y": 389.5078125,
+      "width": 260,
+      "height": 146.25,
+      "top": 389.5078125,
+      "right": 325,
+      "bottom": 535.7578125,
+      "left": 65
+    },
+    "font": "14px / 20px \"Noto Sans Hebrew\", \"Noto Sans Hebrew Fallback\"",
+    "lineHeight": "20px",
+    "menuExpanded": "false"
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "id": "ar",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "caption": "منظر طبيعي جميل",
+    "dir": "rtl",
+    "figure": {
+      "x": 65,
+      "y": 389.5078125,
+      "width": 260,
+      "height": 174.25,
+      "top": 389.5078125,
+      "right": 325,
+      "bottom": 563.7578125,
+      "left": 65
+    },
+    "captionRect": {
+      "x": 65,
+      "y": 543.7578125,
+      "width": 260,
+      "height": 20,
+      "top": 543.7578125,
+      "right": 325,
+      "bottom": 563.7578125,
+      "left": 65
+    },
+    "photo": {
+      "x": 65,
+      "y": 389.5078125,
+      "width": 260,
+      "height": 146.25,
+      "top": 389.5078125,
+      "right": 325,
+      "bottom": 535.7578125,
+      "left": 65
+    },
+    "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+    "lineHeight": "20px",
+    "menuExpanded": "false"
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "id": "en",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "caption": "Beautiful landscape",
+    "dir": "ltr",
+    "figure": {
+      "x": 65,
+      "y": 389.5078125,
+      "width": 260,
+      "height": 174.25,
+      "top": 389.5078125,
+      "right": 325,
+      "bottom": 563.7578125,
+      "left": 65
+    },
+    "captionRect": {
+      "x": 65,
+      "y": 543.7578125,
+      "width": 260,
+      "height": 20,
+      "top": 543.7578125,
+      "right": 325,
+      "bottom": 563.7578125,
+      "left": 65
+    },
+    "photo": {
+      "x": 65,
+      "y": 389.5078125,
+      "width": 260,
+      "height": 146.25,
+      "top": 389.5078125,
+      "right": 325,
+      "bottom": 535.7578125,
+      "left": 65
+    },
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "lineHeight": "20px",
+    "menuExpanded": "false"
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "id": "he",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "caption": "נוף יפה",
+    "dir": "rtl",
+    "figure": {
+      "x": 65,
+      "y": 389.5078125,
+      "width": 260,
+      "height": 174.25,
+      "top": 389.5078125,
+      "right": 325,
+      "bottom": 563.7578125,
+      "left": 65
+    },
+    "captionRect": {
+      "x": 65,
+      "y": 543.7578125,
+      "width": 260,
+      "height": 20,
+      "top": 543.7578125,
+      "right": 325,
+      "bottom": 563.7578125,
+      "left": 65
+    },
+    "photo": {
+      "x": 65,
+      "y": 389.5078125,
+      "width": 260,
+      "height": 146.25,
+      "top": 389.5078125,
+      "right": 325,
+      "bottom": 535.7578125,
+      "left": 65
+    },
+    "font": "14px / 20px \"Noto Sans Hebrew\", \"Noto Sans Hebrew Fallback\"",
+    "lineHeight": "20px",
+    "menuExpanded": "false"
+  }
+]

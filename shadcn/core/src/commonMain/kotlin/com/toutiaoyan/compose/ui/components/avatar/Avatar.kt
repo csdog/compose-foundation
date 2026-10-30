@@ -21,6 +21,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import com.toutiaoyan.compose.ui.styles.cssStyleable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -34,8 +39,8 @@ import com.toutiaoyan.compose.ui.theme.currentTheme
 val AvatarSize.textStyle: TextVariant
     get() =
         when (this) {
-            AvatarSize.Sm, AvatarSize.Default -> TextVariant.LabelSmall
-            AvatarSize.Lg -> TextVariant.LabelLarge
+            AvatarSize.Sm -> TextVariant.BodySmall
+            AvatarSize.Default, AvatarSize.Lg -> TextVariant.BodyMedium
         }
 
 /** Lets [AvatarFallback]/[AvatarBadge] read their enclosing [Avatar]'s size. */
@@ -123,7 +128,7 @@ fun Avatar(
     ) {
         Box(
             modifier =
-                modifier.styleable(
+                modifier.cssStyleable(
                     styleState,
                     size.rememberStyle() then overlapRing then style,
                 ),
@@ -213,26 +218,41 @@ fun AvatarFallback(
         delayMillis = delayMillis,
         delayMs = delayMs,
         content = {
-            Text(variant = LocalAvatarSize.current.textStyle) { text }
+            Text(
+                variant = LocalAvatarSize.current.textStyle,
+                textStyle =
+                    TextStyle(
+                        fontWeight = FontWeight.Normal,
+                        letterSpacing = 0.sp,
+                    ),
+            ) { text }
         },
     )
 }
 
-/** A small status dot/icon anchored to an [Avatar]'s corner (e.g. online indicator). */
+/** Bottom-end status indicator (mirrored in RTL). Small avatars hide icon content. */
 @Composable
-fun AvatarBadge(
+fun BoxScope.AvatarBadge(
     modifier: Modifier = Modifier,
     style: Style = Style,
+    content: (@Composable () -> Unit)? = null,
 ) {
     val size = LocalAvatarSize.current
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Box(
         modifier =
-            modifier.styleable(
+            Modifier.align(Alignment.BottomEnd).then(modifier).cssStyleable(
                 styleState,
                 size.rememberBadgeStyle() then style,
             ),
-    )
+        contentAlignment = Alignment.Center,
+    ) {
+        if (size != AvatarSize.Sm && content != null) {
+            CompositionLocalProvider(LocalContentColor provides currentTheme.colors.primaryForeground) {
+                Box(Modifier.size(8.dp), contentAlignment = Alignment.Center) { content() }
+            }
+        }
+    }
 }
 
 /**
@@ -252,6 +272,7 @@ fun AvatarGroup(
         Row(
             modifier = modifier.styleable(styleState, style),
             horizontalArrangement = Arrangement.spacedBy(spacing),
+            verticalAlignment = Alignment.CenterVertically,
         ) { content() }
     }
 }
@@ -268,10 +289,13 @@ fun AvatarGroupCount(
     content: @Composable BoxScope.() -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    CompositionLocalProvider(LocalAvatarSize provides size) {
+    CompositionLocalProvider(
+        LocalAvatarSize provides size,
+        LocalContentColor provides currentTheme.colors.mutedForeground,
+    ) {
         Box(
             modifier =
-                modifier.styleable(
+                modifier.cssStyleable(
                     styleState,
                     rememberAvatarGroupCountStyle(size) then style,
                 ),
@@ -290,6 +314,15 @@ fun AvatarGroupCount(
     style: Style = Style,
 ) {
     AvatarGroupCount(modifier = modifier, size = size, style = style) {
-        Text(variant = size.textStyle, textStyle = TextColors.Muted) { text }
+        Text(
+            variant = TextVariant.BodyMedium,
+            textStyle =
+                TextColors.Muted.merge(
+                    TextStyle(
+                        fontWeight = FontWeight.Normal,
+                        letterSpacing = 0.sp,
+                    ),
+                ),
+        ) { text }
     }
 }

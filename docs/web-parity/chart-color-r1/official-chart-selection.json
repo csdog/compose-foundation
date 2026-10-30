@@ -1,0 +1,88 @@
+[
+  {
+    "url": "https://ui.shadcn.com/create?preset=b1YmsdHVI",
+    "dark": false,
+    "primary": "oklch(0.841 0.238 128.85)",
+    "bars": [
+      {
+        "fill": "oklch(0.623 0.214 259.815)",
+        "width": 40.00000762939453,
+        "height": 92.5714111328125,
+        "bottom": 292
+      },
+      {
+        "fill": "oklch(0.623 0.214 259.815)",
+        "width": 40,
+        "height": 127.28570556640625,
+        "bottom": 292
+      },
+      {
+        "fill": "oklch(0.623 0.214 259.815)",
+        "width": 40,
+        "height": 104.14289855957031,
+        "bottom": 292
+      },
+      {
+        "fill": "oklch(0.623 0.214 259.815)",
+        "width": 40,
+        "height": 150.42860412597656,
+        "bottom": 292
+      },
+      {
+        "fill": "oklch(0.623 0.214 259.815)",
+        "width": 40,
+        "height": 86.78570556640625,
+        "bottom": 292
+      },
+      {
+        "fill": "oklch(0.623 0.214 259.815)",
+        "width": 40,
+        "height": 162,
+        "bottom": 292
+      }
+    ]
+  },
+  {
+    "url": "https://ui.shadcn.com/create?preset=b1YmsdHVI",
+    "dark": true,
+    "primary": "oklch(0.768 0.233 130.85)",
+    "bars": [
+      {
+        "fill": "oklch(0.623 0.214 259.815)",
+        "width": 40.00000762939453,
+        "height": 92.5714111328125,
+        "bottom": 292
+      },
+      {
+        "fill": "oklch(0.623 0.214 259.815)",
+        "width": 40,
+        "height": 127.28570556640625,
+        "bottom": 292
+      },
+      {
+        "fill": "oklch(0.623 0.214 259.815)",
+        "width": 40,
+        "height": 104.14289855957031,
+        "bottom": 292
+      },
+      {
+        "fill": "oklch(0.623 0.214 259.815)",
+        "width": 40,
+        "height": 150.42860412597656,
+        "bottom": 292
+      },
+      {
+        "fill": "oklch(0.623 0.214 259.815)",
+        "width": 40,
+        "height": 86.78570556640625,
+        "bottom": 292
+      },
+      {
+        "fill": "oklch(0.623 0.214 259.815)",
+        "width": 40,
+        "height": 162,
+        "bottom": 292
+      }
+    ]
+  }
+]

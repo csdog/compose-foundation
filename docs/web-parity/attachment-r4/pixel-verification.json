@@ -1,0 +1,38 @@
+[
+  {
+    "golden_file_path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/snapshots/spinner_states_light.png",
+    "timestamp": 31482591882208,
+    "context_data": {},
+    "type": "unchanged"
+  },
+  {
+    "golden_file_path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/snapshots/scroll_fade_states_dark.png",
+    "timestamp": 31482356087125,
+    "context_data": {},
+    "type": "unchanged"
+  },
+  {
+    "golden_file_path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/snapshots/attachment_nova_layout_dark.png",
+    "timestamp": 31482459165208,
+    "context_data": {},
+    "type": "unchanged"
+  },
+  {
+    "golden_file_path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/snapshots/scroll_fade_states_light.png",
+    "timestamp": 31482296507791,
+    "context_data": {},
+    "type": "unchanged"
+  },
+  {
+    "golden_file_path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/snapshots/spinner_states_dark.png",
+    "timestamp": 31482610521916,
+    "context_data": {},
+    "type": "unchanged"
+  },
+  {
+    "golden_file_path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/snapshots/attachment_nova_layout_light.png",
+    "timestamp": 31482494103875,
+    "context_data": {},
+    "type": "unchanged"
+  }
+]

@@ -66,6 +66,7 @@ FAMILY_BY_ID = {
     # disclosure-family -- expands/collapses content in place
     "collapsible": "disclosure", "accordion": "disclosure", "breadcrumb": "disclosure",
     # layout-family -- structural containers, no interaction state of their own
+    "code-block": "text", "trace": "disclosure",
     "card": "layout", "separator": "layout", "aspect-ratio": "layout", "resizable": "layout",
     "scroll-area": "layout", "table": "layout", "pagination": "layout",
     # data-family -- renders a dataset/media set
@@ -88,6 +89,8 @@ PROPERTY_TYPES_BY_ID = {
     "badge": ["BadgeVariant"],
     "button": ["ButtonVariant", "ButtonSize"],
     "card": ["CardVariant", "CardSize"],
+    "code-block": ["CodeBlockVariant", "CodeBlockSize", "CodeBlockLineVariant"],
+    "trace": ["TraceStatus"],
     "chip": ["ChipVariant"],
     "select": ["SelectVariant", "SelectContentPosition"],
     "text-field": ["TextFieldVariant"],
@@ -98,7 +101,9 @@ PROPERTY_TYPES_BY_ID = {
     "avatar": ["ShadcnAvatarSize"],
     "bubble": ["ShadcnBubbleVariant"],
     "drawer": ["ShadcnDrawerDirection"],
-    "field": ["ShadcnFieldOrientation"],
+    "field": ["FieldOrientation", "FieldLegendVariant"],
+    "input": ["InputVariant", "InputType"],
+    "textarea": ["InputVariant"],
     "item": ["ItemVariant", "ItemSize", "ItemMediaVariant"],
     "empty": ["EmptyVariant", "EmptyMediaVariant"],
     "marker": ["ShadcnMarkerVariant"],
@@ -118,7 +123,7 @@ def parse_catalog_entries():
     text = CATALOG_REGISTRY.read_text()
     entries = []
     for m in re.finditer(
-        r'CatalogEntry\(id = "([^"]+)", title = "([^"]+)", category = CatalogCategory\.(\w+)(?:, isNew = (true|false))?\)',
+        r'CatalogEntry\(\s*(?:route\s*=\s*)?RouteKey\.ComponentDetail\("([^"]+)"\),\s*(?:title\s*=\s*)?"([^"]+)",\s*(?:category\s*=\s*)?CatalogCategory\.(\w+)(?:,\s*isNew\s*=\s*(true|false))?\s*,?\s*\)',
         text,
     ):
         entry_id, title, category, is_new = m.groups()
@@ -157,11 +162,12 @@ def extract_enum_values(type_name):
     `sealed interface Name { data object A : Name ... }` wherever it's declared, across
     both styles/ and components/ (properties live in either depending on the component)."""
     for directory in (STYLES_DIR, COMPONENTS_DIR):
-        for kt_file in directory.glob("*.kt"):
+        for kt_file in directory.rglob("*.kt"):
             text = kt_file.read_text()
             enum_match = re.search(rf"enum class {type_name}\b[^{{]*\{{([^}}]*)\}}", text)
             if enum_match:
-                body = enum_match.group(1)
+                body = re.sub(r"/\*.*?\*/", "", enum_match.group(1), flags=re.DOTALL)
+                body = re.sub(r"//[^\n]*", "", body)
                 values = [v.strip().split("(")[0] for v in body.split(",") if v.strip()]
                 return [v for v in values if v]
             iface_match = re.search(
@@ -192,15 +198,45 @@ def find_screenshots(component_id):
     [PREFIX_OVERRIDES] for the handful that don't."""
     prefix_stem = PREFIX_OVERRIDES.get(component_id, component_id.replace("-", "_"))
     matches = sorted(SNAPSHOTS_DIR.glob(f"{prefix_stem}_*.png"))
+    if component_id in {"field", "label"}:
+        matches += sorted(SNAPSHOTS_DIR.glob("form_nova_*.png"))
+    selection_kind = {"checkbox": "checkbox", "radio-group": "radio", "switch": "switch", "toggle": "toggle"}.get(component_id)
+    if selection_kind:
+        matches += sorted(SNAPSHOTS_DIR.glob("selection_nova_*.png"))
+        matches += sorted(SNAPSHOTS_DIR.glob(f"selection_{selection_kind}_focus_*.png"))
+    groups_kind = {"toggle-group": "toggle", "slider": "slider", "input-group": "input", "button-group": "button"}.get(component_id)
+    if groups_kind:
+        matches += sorted(SNAPSHOTS_DIR.glob("groups_nova_*.png"))
+        matches += sorted(SNAPSHOTS_DIR.glob(f"groups_{groups_kind}_focus_*.png"))
+    surface_kind = {"collapsible": "inline", "command": "inline", "date-picker": "inline", "calendar": "inline", "context-menu": "context", "dialog": "dialog", "drawer": "drawer"}.get(component_id)
+    if surface_kind:
+        matches += sorted(SNAPSHOTS_DIR.glob(f"surfaces_nova_{surface_kind}_*.png"))
+    completion_kinds = {"date-picker": ["range"], "calendar": ["range"], "dialog": ["dialog_backdrop"], "drawer": ["drawer_backdrop", "nested_backdrop"]}.get(component_id, [])
+    for kind in completion_kinds:
+        matches += sorted(SNAPSHOTS_DIR.glob(f"surfaces_completion_{kind}_*.png"))
+    choice_kind = {"input-otp": "otp", "select": "select", "combobox": "combo"}.get(component_id)
+    if choice_kind:
+        matches += sorted(SNAPSHOTS_DIR.glob("choice_nova_*.png"))
+        matches += sorted(SNAPSHOTS_DIR.glob(f"choice_{choice_kind}_*.png"))
     previews = []
     for path in matches:
         stem = path.stem  # e.g. button_variants_disabled_dark
         theme = "dark" if stem.endswith("_dark") else "light"
-        state = stem[len(prefix_stem) + 1 : -len("_" + theme)]
+        state = ("nova_completion_" + stem[len("surfaces_completion_"): -len("_" + theme)] if stem.startswith("surfaces_completion_") else
+                 "nova_" + stem[len("surfaces_nova_"): -len("_" + theme)] if stem.startswith("surfaces_nova_") else
+                 "nova_form" if stem.startswith("form_nova_") else
+                 "nova_selection" if stem.startswith("selection_nova_") else
+                 "nova_groups" if stem.startswith("groups_nova_") else
+                 "nova_choice" if stem.startswith("choice_nova_") else
+                 "nova_" + stem[len("choice_"): -len("_" + theme)] if stem.startswith("choice_") else
+                 "nova_focus" if stem.startswith("groups_") else
+                 "nova_focus" if stem.startswith("selection_") else
+                 stem[len(prefix_stem) + 1 : -len("_" + theme)])
         previews.append({
             "state": state,
             "theme": theme,
             "url": f"{RAW_BASE}/{path.name}",
+            "stylePreset": "Nova" if ("_nova_" in path.stem or path.stem.startswith(("code_block_", "trace_", "selection_", "groups_", "choice_", "surfaces_completion_"))) else "Vega",
         })
     return previews
 
@@ -233,26 +269,17 @@ def build_metadata():
 
 
 
-# Every ShadcnScreenshotTest.snapshot() call across the whole suite uses the default
-# `stylePreset` param (StylePreset.Vega) -- confirmed by grepping every test file
-# for an explicit override; zero exist outside the separate style_matrix_* comparison
-# test, which isn't part of this per-component preview set. So every preview image here
-# is Vega specifically, not a "the theme" in the abstract -- shadcn-compose ships 7 more
-# (Nova, Maia, Lyra, Mira, Luma, Sera, Rhea), each changing shape/spacing/animation, so a
-# consumer comparing against these previews needs to know which one they're looking at.
-ALL_STYLE_PRESETS = ["Vega", "Nova", "Maia", "Lyra", "Mira", "Luma", "Sera", "Rhea"]
-PREVIEW_STYLE_PRESET = "Vega"
-
+# Legacy snapshots default to Vega. Nova parity suites and the new CodeBlock/Trace
+# suites pass Nova explicitly; find_screenshots records that on each preview.
 
 def main():
     components, missing_previews = build_metadata()
     output = {
-        "stylePreset": PREVIEW_STYLE_PRESET,
+        "stylePreset": None,
         "stylePresetNote": (
-            "Every preview image was captured under the 'Vega' style preset (this library's "
-            f"default), not a neutral/preset-agnostic render. shadcn-compose ships {len(ALL_STYLE_PRESETS)} "
-            f"presets total ({', '.join(ALL_STYLE_PRESETS)}), each changing shape/spacing/animation -- "
-            "swapping presets would change these components' appearance without changing this file."
+            "Mixed preview presets: read each preview's stylePreset. Legacy previews use Vega; "
+            "the Nova parity matrices and Code Block/Trace previews use Nova. The catalog defaults "
+            "to Nova. Presets change shape, spacing and motion."
         ),
         "components": components,
     }

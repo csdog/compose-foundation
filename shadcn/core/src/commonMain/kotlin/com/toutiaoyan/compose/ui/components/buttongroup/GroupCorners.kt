@@ -9,6 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -72,3 +73,17 @@ internal fun groupItemCorners(
             }
     }
 }
+
+/** A CSS negative start margin: remove the occupied pixel as well as moving paint. */
+internal fun Modifier.groupBorderOverlap(orientation: ButtonGroupOrientation): Modifier =
+    layout { measurable, constraints ->
+        val child = measurable.measure(constraints)
+        val overlap = 1.dp.roundToPx()
+        val horizontal = orientation == ButtonGroupOrientation.Horizontal
+        layout(
+            if (horizontal) (child.width - overlap).coerceAtLeast(0) else child.width,
+            if (horizontal) child.height else (child.height - overlap).coerceAtLeast(0),
+        ) {
+            child.placeRelative(if (horizontal) -overlap else 0, if (horizontal) 0 else -overlap)
+        }
+    }

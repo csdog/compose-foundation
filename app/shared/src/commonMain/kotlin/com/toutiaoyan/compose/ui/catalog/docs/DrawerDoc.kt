@@ -2,8 +2,13 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
+import com.toutiaoyan.compose.ui.components.drawer.DrawerFooterColumn
+import com.toutiaoyan.compose.ui.theme.currentTheme
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -26,21 +31,83 @@ import com.toutiaoyan.compose.ui.components.drawer.DrawerSnapPoint
 import com.toutiaoyan.compose.ui.components.drawer.DrawerSwipeDirection
 import com.toutiaoyan.compose.ui.components.drawer.DrawerTitle
 import com.toutiaoyan.compose.ui.components.drawer.DrawerTrigger
-import com.toutiaoyan.compose.ui.components.field.Field
-import com.toutiaoyan.compose.ui.components.field.FieldGroup
-import com.toutiaoyan.compose.ui.components.input.Input
-import com.toutiaoyan.compose.ui.components.scrollarea.ScrollArea
-import com.toutiaoyan.compose.ui.components.text.Text
+
+private val drawerLargeContentCode =
+    """
+    @Composable
+    fun DrawerLargeContentExample() {
+        Drawer(swipeDirection = DrawerSwipeDirection.Down, showSwipeHandle = true) {
+            DrawerTrigger("Open large bottom drawer", variant = ButtonVariant.Outline)
+            DrawerContent {
+                DrawerHeader("Activity history", "Review your daily activity before setting a new goal.")
+                Column(
+                    Modifier.weight(1f, fill = false).clipToBounds()
+                        .verticalScroll(rememberScrollState()).padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    repeat(24) { index ->
+                        Column(
+                            Modifier.fillMaxWidth()
+                                .background(currentTheme.colors.muted, RoundedCornerShape(16.dp))
+                                .padding(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(4.dp),
+                        ) {
+                            SurfaceText("Day ${'$'}{index + 1}", medium = true)
+                            SurfaceText("${'$'}{6200 + index * 180} steps · ${'$'}{24 + index} active minutes", muted = true)
+                        }
+                    }
+                }
+                DrawerFooterColumn(Modifier.fillMaxWidth().background(currentTheme.colors.popover)) {
+                    Button("Done", onClick = close, modifier = Modifier.fillMaxWidth(), style = Style { width(1f) })
+                }
+            }
+        }
+    }
+
+    """.trimIndent()
+
+private val drawerNestedCode =
+    """
+    @Composable
+    fun DrawerNestedParityExample() {
+        val mobile = LocalWindowInfo.current.containerSize.width < with(LocalDensity.current) { 768.dp.roundToPx() }
+        DrawerNestedLevel(1, mobile)
+    }
+
+    @Composable
+    private fun DrawerNestedLevel(level: Int, mobile: Boolean) {
+        Drawer(showSwipeHandle = mobile, swipeDirection = if (mobile) DrawerSwipeDirection.Down else DrawerSwipeDirection.Right) {
+            DrawerTrigger(
+                when (level) { 1 -> "Open outer"; 2 -> "Open nested"; 3 -> "Open third"; else -> "Open fourth" },
+                modifier = if (level > 1) Modifier.fillMaxWidth() else Modifier,
+                variant = ButtonVariant.Outline,
+            )
+            DrawerContent {
+                DrawerHeader(
+                    when (level) { 1 -> "Drawer"; 2 -> "Nested Drawer"; 3 -> "Third Drawer"; else -> "Fourth Drawer" },
+                    "Open another drawer from the same direction.",
+                )
+                Box(Modifier.weight(1f, fill = !mobile).padding(16.dp)) {
+                    Box(
+                        Modifier.fillMaxWidth().then(if (mobile) Modifier.aspectRatio(16f / 9f) else Modifier.fillMaxHeight())
+                            .background(currentTheme.colors.muted, RoundedCornerShape(16.dp)),
+                    )
+                }
+                DrawerFooterColumn(Modifier.fillMaxWidth()) {
+                    if (level < 4) DrawerNestedLevel(level + 1, mobile)
+                    Button("Close", onClick = close, modifier = Modifier.fillMaxWidth(), style = Style { width(1f) })
+                }
+            }
+        }
+    }
+
+    """.trimIndent()
 
 val drawerDoc =
     ComponentDoc(
         id = "drawer",
         title = "Drawer",
-        description =
-            "Base UI / shadcn base-nova drawer (not Vaul/Radix): slides from an edge and " +
-                "dismisses by swiping that way. Trigger/Close are children host slots " +
-                "(wire Button onClick to toggle/close — Compose stand-in for Base render={Button}). " +
-                "Distinct from Sheet.",
+        description = "A drawer component for React.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.button.Button
@@ -74,57 +141,62 @@ val drawerDoc =
                     title = "Edit profile (bottom edge, drag to dismiss)",
                     code =
                         """
-                        var open by remember { mutableStateOf(false) }
-                        var name by remember { mutableStateOf("Pedro Duarte") }
-                        var username by remember { mutableStateOf("@peduarte") }
-                        Drawer(open = open, onOpenChange = { open = it }) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader(
-                                    "Edit profile",
-                                    description = "Make changes to your profile here. Click save when you're done.",
-                                )
-                                FieldGroup(modifier = Modifier.padding(16.dp)) {
-                                    Field("Name") {
-                                        Input(value = name, onValueChange = { name = it })
-                                    }
-                                    Field("Username") {
-                                        Input(value = username, onValueChange = { username = it })
+                        @Composable
+                        fun DrawerParityExample() {
+                            var open by remember { mutableStateOf(false) }
+                            var selected by remember { mutableStateOf("asap") }
+                            var confirmed by remember { mutableStateOf("") }
+                            val mobile = LocalWindowInfo.current.containerSize.width < with(LocalDensity.current) { 768.dp.roundToPx() }
+                            Column {
+                                Drawer(open = open, onOpenChange = { open = it }, showSwipeHandle = mobile, swipeDirection = if (mobile) DrawerSwipeDirection.Down else DrawerSwipeDirection.Right) {
+                                    DrawerTrigger("Open Drawer", variant = ButtonVariant.Secondary)
+                                    DrawerContent {
+                                        DrawerHeader("Pick a delivery time", "We'll prepare your order as soon as possible.")
+                                        Column(Modifier.weight(1f, fill = !mobile).clipToBounds().verticalScroll(rememberScrollState()).padding(16.dp)) {
+                                            RadioGroup(value = selected, onValueChange = { selected = it }) {
+                                                deliveryTimes.forEach { (value, label, description) ->
+                                                    Row(Modifier.fillMaxWidth().pointerInput(value) { detectTapGestures(onTap = { selected = value }) }.background(if (selected == value) currentTheme.colors.muted.copy(alpha = 0.3f) else androidx.compose.ui.graphics.Color.Transparent, RoundedCornerShape(twRadius.lg)).border(1.dp, currentTheme.colors.border, RoundedCornerShape(twRadius.lg)).padding(16.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                                                        Column(Modifier.weight(1f)) {
+                                                            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                                                SurfaceText(label, medium = true)
+                                                                if (value == "asap") Badge("Fastest", variant = BadgeVariant.Secondary)
+                                                            }
+                                                            SurfaceText(description, muted = true)
+                                                        }
+                                                        RadioGroupItem(value = value, label = label)
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        DrawerFooterColumn(modifier = Modifier.fillMaxWidth().background(currentTheme.colors.popover)) {
+                                            Button("Confirm Delivery Time", style = Style { width(1f); height(34.dp) }, modifier = Modifier.fillMaxWidth(), onClick = {
+                                                confirmed = deliveryTimes.first { it.first == selected }.second; open = false
+                                            })
+                                            Button("Cancel", style = Style { width(1f) }, modifier = Modifier.fillMaxWidth(), variant = ButtonVariant.Outline, onClick = { open = false })
+                                        }
                                     }
                                 }
-                                DrawerFooter {
-                                    Button("Save changes", onClick = { open = false })
-                                }
+                                if (confirmed.isNotEmpty()) SurfaceText("Delivery time confirmed: ${'$'}confirmed", muted = true)
                             }
                         }
+
+                        @Composable
+                        private fun SurfaceText(text: String, muted: Boolean = false, medium: Boolean = false) {
+                            val theme = currentTheme
+                            Text(textStyle = theme.typography.bodyMedium.copy(fontFamily = theme.fontFamily, fontSize = 14.sp, lineHeight = 20.sp,
+                                fontWeight = if (medium) FontWeight.Medium else FontWeight.Normal,
+                                color = if (muted) theme.colors.mutedForeground else theme.colors.foreground)) { text }
+                        }
+
+                        private val deliveryTimes = listOf(
+                            Triple("asap", "Standard delivery", "25–35 min · Driver assigned now"),
+                            Triple("5-00", "5:00 PM – 5:15 PM", "Prep starts at 4:45 PM"),
+                            Triple("5-30", "5:30 PM – 5:45 PM", "Good if you're heading home"),
+                            Triple("6-00", "6:00 PM – 6:15 PM", "Most popular · High demand"),
+                            Triple("6-30", "6:30 PM – 6:45 PM", "Last slot before kitchen closes"),
+                        )
                         """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        var name by remember { mutableStateOf("Pedro Duarte") }
-                        var username by remember { mutableStateOf("@peduarte") }
-                        Drawer(open = open, onOpenChange = { open = it }) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader(
-                                    "Edit profile",
-                                    description = "Make changes to your profile here. Click save when you're done.",
-                                )
-                                FieldGroup(modifier = Modifier.padding(16.dp)) {
-                                    Field("Name") {
-                                        Input(value = name, onValueChange = { name = it })
-                                    }
-                                    Field("Username") {
-                                        Input(value = username, onValueChange = { username = it })
-                                    }
-                                }
-                                DrawerFooter {
-                                    Button("Save changes", onClick = { open = false })
-                                }
-                            }
-                        }
-                    },
+                    preview = { DrawerParityExample() },
                 ),
                 ComponentExample(
                     title = "Swipe direction",
@@ -172,67 +244,13 @@ val drawerDoc =
                 ),
                 ComponentExample(
                     title = "Default swipe direction (down)",
-                    code =
-                        """
-                        Drawer(swipeDirection = DrawerSwipeDirection.Down) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerHeader(
-                                    "Edit profile",
-                                    description = "Make changes to your profile here.",
-                                )
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Drawer(swipeDirection = DrawerSwipeDirection.Down) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerHeader(
-                                    "Edit profile",
-                                    description = "Make changes to your profile here.",
-                                )
-                            }
-                        }
-                    },
+                    code = drawerLargeContentCode,
+                    preview = { DrawerLargeContentExample() },
                 ),
                 ComponentExample(
                     title = "Scrollable content",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(open = open, onOpenChange = { open = it }) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader("Notice", description = "A list that scrolls under the header.")
-                                ScrollArea(modifier = Modifier.height(160.dp).padding(horizontal = 16.dp)) {
-                                    Column {
-                                        repeat(12) { index ->
-                                            Text(modifier = Modifier.padding(vertical = 6.dp)) { "Item ${'$'}index" }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(open = open, onOpenChange = { open = it }) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader("Notice", description = "A list that scrolls under the header.")
-                                ScrollArea(modifier = Modifier.height(160.dp).padding(horizontal = 16.dp)) {
-                                    Column {
-                                        repeat(12) { index ->
-                                            Text(modifier = Modifier.padding(vertical = 6.dp)) { "Item $index" }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
+                    code = drawerLargeContentCode,
+                    preview = { DrawerLargeContentExample() },
                 ),
                 ComponentExample(
                     title = "Non-dismissible",
@@ -531,7 +549,7 @@ val drawerDoc =
                     code =
                         """
                         val snaps = listOf(
-                            DrawerSnapPoint.Absolute(148.dp),
+                            DrawerSnapPoint.Absolute(496.dp),
                             DrawerSnapPoint.Fraction(1f),
                         )
                         var open by remember { mutableStateOf(false) }
@@ -549,15 +567,21 @@ val drawerDoc =
                                 DrawerHeader(
                                     "Snap points",
                                     description =
-                                        "Drag between 148.dp and full height; past the lowest snap dismisses.",
+                                        "Drag the drawer to snap between a compact peek and a near full-height view.",
                                 )
+                                Box(Modifier.weight(1f).padding(16.dp)) {
+                                    Box(Modifier.fillMaxWidth().height(320.dp).background(currentTheme.colors.muted, RoundedCornerShape(16.dp)))
+                                }
+                                DrawerFooterColumn(Modifier.fillMaxWidth()) {
+                                    DrawerClose { Button("Close", onClick = close, modifier = Modifier.fillMaxWidth()) }
+                                }
                             }
                         }
                         """.trimIndent(),
                     preview = {
                         val snaps =
                             listOf(
-                                DrawerSnapPoint.Absolute(148.dp),
+                                DrawerSnapPoint.Absolute(496.dp),
                                 DrawerSnapPoint.Fraction(1f),
                             )
                         var open by remember { mutableStateOf(false) }
@@ -575,47 +599,55 @@ val drawerDoc =
                                 DrawerHeader(
                                     "Snap points",
                                     description =
-                                        "Drag between 148.dp and full height; past the lowest snap dismisses.",
+                                        "Drag the drawer to snap between a compact peek and a near full-height view.",
                                 )
+                                Box(Modifier.weight(1f).padding(16.dp)) {
+                                    Box(
+                                        Modifier.fillMaxWidth().height(
+                                            320.dp,
+                                        ).background(currentTheme.colors.muted, RoundedCornerShape(16.dp)),
+                                    )
+                                }
+                                DrawerFooterColumn(Modifier.fillMaxWidth()) {
+                                    DrawerClose { Button("Close", onClick = close, modifier = Modifier.fillMaxWidth()) }
+                                }
+                            }
+                        }
+                    },
+                ),
+                ComponentExample(
+                    title = "Indent effect",
+                    code =
+                        """
+                        // At the app root: OverlayHost { DrawerIndentHost { AppContent() } }
+                        Drawer(indentBackground = true, showSwipeHandle = true) {
+                            DrawerTrigger("Open indent drawer")
+                            DrawerContent {
+                                DrawerHeader("Indent effect", "Drag the drawer to restore the page scale and corners. Release to settle together.")
+                                DrawerFooter { DrawerClose { Button("Close", onClick = close) } }
+                            }
+                        }
+                        """.trimIndent(),
+                    preview = {
+                        Drawer(indentBackground = true, showSwipeHandle = true) {
+                            DrawerTrigger("Open indent drawer")
+                            DrawerContent {
+                                DrawerHeader(
+                                    "Indent effect",
+                                    (
+                                        "Drag the drawer to restore the page scale and corners. " +
+                                            "Release to settle together."
+                                    ),
+                                )
+                                DrawerFooter { DrawerClose { Button("Close", onClick = close) } }
                             }
                         }
                     },
                 ),
                 ComponentExample(
                     title = "Nested drawers",
-                    code =
-                        """
-                        var outer by remember { mutableStateOf(false) }
-                        var inner by remember { mutableStateOf(false) }
-                        Drawer(open = outer, onOpenChange = { outer = it }, showSwipeHandle = true) {
-                            DrawerTrigger("Open outer")
-                            DrawerContent {
-                                DrawerHeader("Outer", description = "Open another drawer from here.")
-                                Drawer(open = inner, onOpenChange = { inner = it }, showSwipeHandle = true) {
-                                    DrawerTrigger("Open nested")
-                                    DrawerContent {
-                                        DrawerHeader("Nested", description = "Parent scales/peeks while this is open.")
-                                    }
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var outer by remember { mutableStateOf(false) }
-                        var inner by remember { mutableStateOf(false) }
-                        Drawer(open = outer, onOpenChange = { outer = it }, showSwipeHandle = true) {
-                            DrawerTrigger("Open outer")
-                            DrawerContent {
-                                DrawerHeader("Outer", description = "Open another drawer from here.")
-                                Drawer(open = inner, onOpenChange = { inner = it }, showSwipeHandle = true) {
-                                    DrawerTrigger("Open nested")
-                                    DrawerContent {
-                                        DrawerHeader("Nested", description = "Parent scales/peeks while this is open.")
-                                    }
-                                }
-                            }
-                        }
-                    },
+                    code = drawerNestedCode,
+                    preview = { DrawerNestedParityExample() },
                 ),
                 ComponentExample(
                     title = "Disabled close",

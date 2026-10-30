@@ -33,7 +33,7 @@ val catalogEntries: List<CatalogEntry> =
     listOf(
         // Getting Started -- listed first so groupBy keeps this section on top.
         CatalogEntry(
-            route = RouteKey.ComponentDetail("introduction"),
+            route = RouteKey.Introduction,
             title = "Introduction",
             category = CatalogCategory.GETTING_STARTED,
         ),
@@ -88,6 +88,8 @@ val catalogEntries: List<CatalogEntry> =
             title = "Text",
             category = CatalogCategory.CORE_PRIMITIVES,
         ),
+        CatalogEntry(RouteKey.ComponentDetail("code-block"), "Code Block", CatalogCategory.DATA_DISPLAY, isNew = true),
+        CatalogEntry(RouteKey.ComponentDetail("trace"), "Trace", CatalogCategory.AI_ELEMENTS, isNew = true),
         // Forms & Inputs
         CatalogEntry(
             route = RouteKey.ComponentDetail("label"),
@@ -357,3 +359,33 @@ val catalogEntries: List<CatalogEntry> =
 
 val catalogEntriesByCategory: Map<CatalogCategory, List<CatalogEntry>> =
     catalogEntries.groupBy { it.category }
+
+/** The docs navigation follows the upstream alphabetical component list. */
+data class CatalogNavigationSection(val title: String, val entries: List<CatalogEntry>)
+
+private val extensionIds = setOf("chip", "text", "stepper")
+
+val catalogNavigationSections: List<CatalogNavigationSection> =
+    listOf(
+        CatalogNavigationSection(
+            "Getting Started",
+            catalogEntries.filter { it.category == CatalogCategory.GETTING_STARTED },
+        ),
+        CatalogNavigationSection(
+            "Components",
+            catalogEntries.filter {
+                it.category != CatalogCategory.GETTING_STARTED && it.category != CatalogCategory.UTILS &&
+                    (it.route as? RouteKey.ComponentDetail)?.componentId !in extensionIds
+            }.sortedBy { it.title },
+        ),
+        CatalogNavigationSection(
+            "Utils",
+            catalogEntries.filter { it.category == CatalogCategory.UTILS }.sortedBy { it.title },
+        ),
+        CatalogNavigationSection(
+            "Extensions",
+            catalogEntries.filter {
+                (it.route as? RouteKey.ComponentDetail)?.componentId in extensionIds
+            }.sortedBy { it.title },
+        ),
+    )

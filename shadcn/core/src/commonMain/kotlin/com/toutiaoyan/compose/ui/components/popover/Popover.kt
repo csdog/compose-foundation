@@ -5,6 +5,7 @@ package com.toutiaoyan.compose.ui.components.popover
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,14 +18,27 @@ import androidx.compose.foundation.style.rememberUpdatedStyleState
 import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.PointerEventType
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.role
@@ -45,16 +59,22 @@ import com.toutiaoyan.compose.ui.components.text.TextColors
 import com.toutiaoyan.compose.ui.components.text.TextVariant
 import com.toutiaoyan.compose.ui.theme.LocalContentColor
 import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.utils.keyboardInputMode
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
 
-@Immutable
 internal class PopoverController(
     val open: Boolean,
     val onOpenChange: (Boolean) -> Unit,
     val modal: Boolean,
+    val focus: PopoverFocusState,
 ) {
     fun toggle() = onOpenChange(!open)
+}
+
+internal class PopoverFocusState {
+    var presented by mutableStateOf(false)
+    var returnFocus: (() -> Boolean)? = null
 }
 
 private val LocalPopover = staticCompositionLocalOf<PopoverController?> { null }
@@ -125,7 +145,17 @@ fun Popover(
         if (!controlled) internalOpen = next
         onOpenChange?.invoke(next)
     }
-    val controller = PopoverController(open = isOpen, onOpenChange = setOpen, modal = modal)
+    val focus = remember { PopoverFocusState() }
+    var wasPresented by remember { mutableStateOf(false) }
+    LaunchedEffect(isOpen, focus.presented) {
+        if (focus.presented) wasPresented = true
+        if (!isOpen && !focus.presented && wasPresented) {
+            withFrameNanos { }
+            focus.returnFocus?.invoke()
+            wasPresented = false
+        }
+    }
+    val controller = PopoverController(open = isOpen, onOpenChange = setOpen, modal = modal, focus = focus)
     CompositionLocalProvider(LocalPopover provides controller) {
         Box(modifier = modifier) {
             PopoverScope(controller).content()
@@ -153,9 +183,32 @@ fun PopoverScope.PopoverTrigger(
     val interactionSource = remember { MutableInteractionSource() }
     val styleState = rememberUpdatedStyleState(interactionSource)
     val resolvedEnabled = enabled && !disabled
+    val triggerFocus = remember { FocusRequester() }
+    val childFocus = remember { FocusRequester() }
+    val returnFocus =
+        remember(triggerFocus, childFocus) {
+            // Prefer a supplied Button's focus target; an unstyled text trigger
+            // instead uses the wrapper's own clickable focus target.
+            { childFocus.requestFocus() || triggerFocus.requestFocus() }
+        }
+    DisposableEffect(controller.focus, returnFocus) {
+        onDispose { if (controller.focus.returnFocus === returnFocus) controller.focus.returnFocus = null }
+    }
     Box(
         modifier =
             modifier
+                .focusRequester(triggerFocus)
+                .onFocusChanged { if (it.hasFocus) controller.focus.returnFocus = returnFocus }
+                .pointerInput(controller.focus, returnFocus) {
+                    awaitPointerEventScope {
+                        while (true) {
+                            if (awaitPointerEvent(PointerEventPass.Initial).type == PointerEventType.Press) {
+                                controller.focus.returnFocus = returnFocus
+                            }
+                        }
+                    }
+                }
+                .keyboardInputMode()
                 .semantics {
                     role = Role.Button
                     stateDescription = if (controller.open) "Expanded" else "Collapsed"
@@ -166,6 +219,8 @@ fun PopoverScope.PopoverTrigger(
                     role = Role.Button,
                     onClick = controller::toggle,
                 )
+                .focusRequester(childFocus)
+                .focusGroup()
                 .styleable(styleState, style),
     ) {
         content()
@@ -225,10 +280,21 @@ fun PopoverScope.PopoverContent(
             enter = enter,
             exit = exit,
         ) {
+            DisposableEffect(controller.focus, controller.modal) {
+                if (controller.modal) controller.focus.presented = true
+                onDispose { if (controller.modal) controller.focus.presented = false }
+            }
             CompositionLocalProvider(LocalContentColor provides foreground) {
                 Column(
                     modifier =
-                        modifier.styleable(
+                        Modifier.keyboardInputMode().onPreviewKeyEvent { event ->
+                            if (controller.open && event.type == KeyEventType.KeyDown && event.key == Key.Escape) {
+                                controller.onOpenChange(false)
+                                true
+                            } else {
+                                false
+                            }
+                        }.then(modifier).styleable(
                             styleState,
                             rememberPopoverContentStyle() then style,
                         ),

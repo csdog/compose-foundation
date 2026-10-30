@@ -1,0 +1,34 @@
+{
+  "screenshots": [
+    "alert-r9-desktop-dark-actions.png",
+    "alert-r9-desktop-dark-compact.png",
+    "alert-r9-desktop-light-actions.png",
+    "alert-r9-desktop-light-compact.png",
+    "alert-r9-desktop-light-saved.png",
+    "alert-r9-desktop-light-undo.png",
+    "alert-r9-phone-dark-actions.png",
+    "alert-r9-phone-dark-compact.png",
+    "alert-r9-phone-light-actions.png",
+    "alert-r9-phone-light-compact.png",
+    "alert-r9-phone-light-saved.png",
+    "alert-r9-phone-light-undo.png"
+  ],
+  "geometrySource": "alert-r9-official-action-geometry.json",
+  "tests": {
+    "AlertNovaTest": 8,
+    "AlertExamplesTest": 5,
+    "ComponentDocumentationTest": 5,
+    "CatalogNavigationTest": 6,
+    "DocParagraphTest": 3,
+    "DocHeadingTest": 2,
+    "DocCodeBlockTest": 4,
+    "AlertNovaActionScreenshotTest": 2,
+    "AlertScreenshotTest": 4
+  },
+  "newPixelBaselines": [
+    "alert_nova_actions_light.png",
+    "alert_nova_actions_dark.png"
+  ],
+  "explicitPixelVerifications": 6,
+  "fullProjectPixelVerification": false
+}

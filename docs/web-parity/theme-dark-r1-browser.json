@@ -1,0 +1,170 @@
+[
+  {
+    "device": "desktop",
+    "theme": "light",
+    "name": "button",
+    "shot": "theme-dark-r1-desktop-light-button.png"
+  },
+  {
+    "device": "desktop",
+    "theme": "dark",
+    "name": "button",
+    "shot": "theme-dark-r1-desktop-dark-button.png"
+  },
+  {
+    "device": "desktop",
+    "theme": "light",
+    "name": "input",
+    "shot": "theme-dark-r1-desktop-light-input.png"
+  },
+  {
+    "device": "desktop",
+    "theme": "dark",
+    "name": "input",
+    "shot": "theme-dark-r1-desktop-dark-input.png"
+  },
+  {
+    "device": "desktop",
+    "theme": "light",
+    "name": "checkbox",
+    "shot": "theme-dark-r1-desktop-light-checkbox.png"
+  },
+  {
+    "device": "desktop",
+    "theme": "dark",
+    "name": "checkbox",
+    "shot": "theme-dark-r1-desktop-dark-checkbox.png"
+  },
+  {
+    "device": "desktop",
+    "theme": "light",
+    "name": "radio-group",
+    "shot": "theme-dark-r1-desktop-light-radio-group.png"
+  },
+  {
+    "device": "desktop",
+    "theme": "dark",
+    "name": "radio-group",
+    "shot": "theme-dark-r1-desktop-dark-radio-group.png"
+  },
+  {
+    "device": "desktop",
+    "theme": "light",
+    "name": "switch",
+    "shot": "theme-dark-r1-desktop-light-switch.png"
+  },
+  {
+    "device": "desktop",
+    "theme": "dark",
+    "name": "switch",
+    "shot": "theme-dark-r1-desktop-dark-switch.png"
+  },
+  {
+    "device": "desktop",
+    "theme": "light",
+    "name": "select",
+    "shot": "theme-dark-r1-desktop-light-select.png"
+  },
+  {
+    "device": "desktop",
+    "theme": "dark",
+    "name": "select",
+    "shot": "theme-dark-r1-desktop-dark-select.png"
+  },
+  {
+    "device": "desktop",
+    "theme": "light",
+    "name": "input-group",
+    "shot": "theme-dark-r1-desktop-light-input-group.png"
+  },
+  {
+    "device": "desktop",
+    "theme": "dark",
+    "name": "input-group",
+    "shot": "theme-dark-r1-desktop-dark-input-group.png"
+  },
+  {
+    "device": "phone",
+    "theme": "light",
+    "name": "button",
+    "shot": "theme-dark-r1-phone-light-button.png"
+  },
+  {
+    "device": "phone",
+    "theme": "dark",
+    "name": "button",
+    "shot": "theme-dark-r1-phone-dark-button.png"
+  },
+  {
+    "device": "phone",
+    "theme": "light",
+    "name": "input",
+    "shot": "theme-dark-r1-phone-light-input.png"
+  },
+  {
+    "device": "phone",
+    "theme": "dark",
+    "name": "input",
+    "shot": "theme-dark-r1-phone-dark-input.png"
+  },
+  {
+    "device": "phone",
+    "theme": "light",
+    "name": "checkbox",
+    "shot": "theme-dark-r1-phone-light-checkbox.png"
+  },
+  {
+    "device": "phone",
+    "theme": "dark",
+    "name": "checkbox",
+    "shot": "theme-dark-r1-phone-dark-checkbox.png"
+  },
+  {
+    "device": "phone",
+    "theme": "light",
+    "name": "radio-group",
+    "shot": "theme-dark-r1-phone-light-radio-group.png"
+  },
+  {
+    "device": "phone",
+    "theme": "dark",
+    "name": "radio-group",
+    "shot": "theme-dark-r1-phone-dark-radio-group.png"
+  },
+  {
+    "device": "phone",
+    "theme": "light",
+    "name": "switch",
+    "shot": "theme-dark-r1-phone-light-switch.png"
+  },
+  {
+    "device": "phone",
+    "theme": "dark",
+    "name": "switch",
+    "shot": "theme-dark-r1-phone-dark-switch.png"
+  },
+  {
+    "device": "phone",
+    "theme": "light",
+    "name": "select",
+    "shot": "theme-dark-r1-phone-light-select.png"
+  },
+  {
+    "device": "phone",
+    "theme": "dark",
+    "name": "select",
+    "shot": "theme-dark-r1-phone-dark-select.png"
+  },
+  {
+    "device": "phone",
+    "theme": "light",
+    "name": "input-group",
+    "shot": "theme-dark-r1-phone-light-input-group.png"
+  },
+  {
+    "device": "phone",
+    "theme": "dark",
+    "name": "input-group",
+    "shot": "theme-dark-r1-phone-dark-input-group.png"
+  }
+]

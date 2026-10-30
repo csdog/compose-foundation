@@ -1,0 +1,50 @@
+{
+  "revision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "sources": [
+    {
+      "file": "attachment.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/bases/base/ui/attachment.tsx",
+      "sha256": "8990c8ba1b1737acdbaf847aae6360ae544700beac7f3f53e559a57b04a48bfe"
+    },
+    {
+      "file": "style-nova.css",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+    },
+    {
+      "file": "attachment.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/content/docs/components/base/attachment.mdx",
+      "sha256": "1fe065378f7929d12d4b85c0472cc72543173d206e691ac32aaec07a25d95764"
+    },
+    {
+      "file": "attachment-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/attachment-demo.tsx",
+      "sha256": "a8a93864f678d5a6d99a1dfd68534cd121edb85391592df6d1e98ce73f5b9e7f"
+    },
+    {
+      "file": "attachment-trigger.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/attachment-trigger.tsx",
+      "sha256": "6e086fb3eeaeabbed821307b469a623ba1aa1ab0ee6cb60b51f8d2e8cf300dd4"
+    },
+    {
+      "file": "attachment-states.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/attachment-states.tsx",
+      "sha256": "c3a38e333741b26ff5c229ae5a7504abe8dabb2f49927e17e02a10bed469334a"
+    },
+    {
+      "file": "attachment-sizes.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/attachment-sizes.tsx",
+      "sha256": "c876bceb4ab182d5104d0efcbbb3caed20e9e0f0e3bbc5c8aef346c2fd5f5435"
+    },
+    {
+      "file": "attachment-image.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/attachment-image.tsx",
+      "sha256": "182a59fc489d3f725147cbddda83670beabf22dc99f99f93894e2caf037eff25"
+    },
+    {
+      "file": "attachment-group.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/attachment-group.tsx",
+      "sha256": "e150440d29054b35db7678d6602db30813148eca1ac66f0175ff2541329728c6"
+    }
+  ]
+}

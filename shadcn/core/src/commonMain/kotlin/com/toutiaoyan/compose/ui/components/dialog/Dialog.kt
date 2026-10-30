@@ -2,6 +2,22 @@
 
 package com.toutiaoyan.compose.ui.components.dialog
 
+import com.toutiaoyan.compose.ui.utils.keyboardInputMode
+import com.toutiaoyan.compose.ui.components.overlay.OverlayFocusOwner
+import com.toutiaoyan.compose.ui.components.overlay.overlayTriggerFocus
+import androidx.compose.ui.unit.offset
+import androidx.compose.foundation.style.contentPadding
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.layout.layout
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
+import com.toutiaoyan.compose.ui.tokens.StylePreset
+import com.toutiaoyan.compose.ui.components.overlay.overlayTypography
+import com.toutiaoyan.compose.ui.icons.NovaX
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
@@ -163,9 +179,11 @@ fun Dialog(
         onOpenChange?.invoke(next)
     }
     val controller = DialogController(open = isOpen, onOpenChange = setOpen, modal = modal)
-    CompositionLocalProvider(LocalDialog provides controller) {
-        Box(modifier = modifier) {
-            DialogScope(controller).content()
+    OverlayFocusOwner(isOpen, modal) {
+        CompositionLocalProvider(LocalDialog provides controller) {
+            Box(modifier = modifier) {
+                DialogScope(controller).content()
+            }
         }
     }
 }
@@ -192,11 +210,12 @@ fun DialogScope.DialogTrigger(
     val resolvedEnabled = enabled && !disabled
     Box(
         modifier =
-            modifier
+            modifier.overlayTriggerFocus()
                 .semantics {
                     role = Role.Button
                     stateDescription = if (controller.open) "Expanded" else "Collapsed"
                 }
+                .keyboardInputMode()
                 .clickable(
                     interactionSource = interactionSource,
                     enabled = resolvedEnabled,
@@ -220,8 +239,25 @@ fun DialogScope.DialogTrigger(
     size: ButtonSize = ButtonSize.Md,
     style: Style = Style,
 ) {
-    DialogTrigger(modifier = modifier, enabled = enabled, disabled = disabled, style = style) {
-        Button(text, onClick = toggle, enabled = enabled, disabled = disabled, variant = variant, size = size)
+    if (currentTheme.activePreset == StylePreset.Nova) {
+        val ctrl = dialogController()
+        Button(
+            text,
+            onClick = toggle,
+            enabled = enabled,
+            disabled = disabled,
+            variant = variant,
+            size = size,
+            modifier =
+                modifier.overlayTriggerFocus().semantics {
+                    stateDescription = if (ctrl.open) "Expanded" else "Collapsed"
+                },
+            style = style,
+        )
+    } else {
+        DialogTrigger(modifier = modifier, enabled = enabled, disabled = disabled, style = style) {
+            Button(text, onClick = toggle, enabled = enabled, disabled = disabled, variant = variant, size = size)
+        }
     }
 }
 
@@ -255,7 +291,11 @@ fun DialogScope.DialogContent(
     // browser emoji-font fallback). Override with any icon set (e.g. this repo's own demo
     // app passes a real Lucide XMark here -- see DialogDoc.kt).
     closeIcon: @Composable () -> Unit = {
-        Icon(X, tint = currentTheme.colors.mutedForeground, variant = IconVariant.Small)
+        Icon(
+            if (currentTheme.activePreset == StylePreset.Nova) NovaX else X,
+            tint = currentTheme.colors.mutedForeground,
+            variant = if (currentTheme.activePreset == StylePreset.Nova) IconVariant.Default else IconVariant.Small,
+        )
     },
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -276,7 +316,23 @@ fun DialogScope.DialogContent(
         modal.Content(enter = enter, exit = exit) {
             Box(
                 modifier =
-                    modifier.styleable(
+                    modifier.then(
+                        if (currentTheme.activePreset == StylePreset.Nova) {
+                            Modifier.layout { measurable, constraints ->
+                                val margin = 32.dp.roundToPx()
+                                val child =
+                                    measurable.measure(
+                                        constraints.copy(
+                                            maxWidth = (constraints.maxWidth - margin).coerceAtLeast(0),
+                                            minWidth = 0,
+                                        ),
+                                    )
+                                layout(child.width, child.height) { child.placeRelative(0, 0) }
+                            }
+                        } else {
+                            Modifier
+                        },
+                    ).styleable(
                         styleState,
                         rememberDialogPanelStyle(size) then style,
                     ),
@@ -286,7 +342,19 @@ fun DialogScope.DialogContent(
                 }
                 if (showCloseButton) {
                     DialogClose(
-                        modifier = Modifier.align(Alignment.TopEnd),
+                        modifier =
+                            Modifier.align(
+                                Alignment.TopEnd,
+                            ).then(
+                                if (currentTheme.activePreset == StylePreset.Nova) {
+                                    Modifier.offset(
+                                        8.dp,
+                                        (-8).dp,
+                                    )
+                                } else {
+                                    Modifier
+                                },
+                            ),
                         ariaLabel = closeAriaLabel,
                         icon = closeIcon,
                     )
@@ -316,7 +384,11 @@ fun DialogScope.DialogContent(
     scrimEnter: EnterTransition = OverlayTransitions.ScrimEnter,
     scrimExit: ExitTransition = OverlayTransitions.ScrimExit,
     closeIcon: @Composable () -> Unit = {
-        Icon(X, tint = currentTheme.colors.mutedForeground, variant = IconVariant.Small)
+        Icon(
+            if (currentTheme.activePreset == StylePreset.Nova) NovaX else X,
+            tint = currentTheme.colors.mutedForeground,
+            variant = if (currentTheme.activePreset == StylePreset.Nova) IconVariant.Default else IconVariant.Small,
+        )
     },
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -374,7 +446,18 @@ fun DialogOverlay(
     val modal =
         LocalDialogTeleportScope.current
             ?: error("DialogOverlay must be used within DialogPortal { }")
-    modal.Overlay(enter = enter, exit = exit)
+    modal.Overlay(
+        enter = enter,
+        exit = exit,
+        color =
+            if (currentTheme.activePreset == StylePreset.Nova) {
+                Color.Black.copy(
+                    alpha = 0.1f,
+                )
+            } else {
+                currentTheme.colors.foreground.copy(alpha = 0.5f)
+            },
+    )
 }
 
 /**
@@ -388,7 +471,11 @@ fun DialogClose(
     disabled: Boolean = false,
     ariaLabel: String = "Close",
     icon: @Composable () -> Unit = {
-        Icon(X, tint = currentTheme.colors.mutedForeground, variant = IconVariant.Small)
+        Icon(
+            if (currentTheme.activePreset == StylePreset.Nova) NovaX else X,
+            tint = currentTheme.colors.mutedForeground,
+            variant = if (currentTheme.activePreset == StylePreset.Nova) IconVariant.Default else IconVariant.Small,
+        )
     },
 ) {
     val controller = dialogController()
@@ -397,7 +484,15 @@ fun DialogClose(
     val theme = currentTheme
     val styleState = remember { MutableStyleState(interactionSource) }
     val pressStyle = rememberPressMotionStyle()
-    val touchTargetStyle = rememberMinTouchTargetStyle()
+    val touchTargetStyle =
+        if (currentTheme.activePreset == StylePreset.Nova) {
+            Style {
+                width(28.dp)
+                height(28.dp)
+            }
+        } else {
+            rememberMinTouchTargetStyle()
+        }
     val closeButtonStyle =
         remember(theme) {
             Style {
@@ -414,6 +509,7 @@ fun DialogClose(
                     if (!resolvedEnabled) disabled()
                 }
                 .styleable(styleState, touchTargetStyle then closeButtonStyle then pressStyle)
+                .keyboardInputMode()
                 .clickable(
                     interactionSource = interactionSource,
                     indication = null,
@@ -437,7 +533,10 @@ fun DialogHeader(
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Column(
         modifier = modifier.styleable(styleState, style),
-        verticalArrangement = Arrangement.spacedBy(twSpacing.xs),
+        verticalArrangement =
+            Arrangement.spacedBy(
+                if (currentTheme.activePreset == StylePreset.Nova) 8.dp else twSpacing.xs,
+            ),
     ) {
         content()
     }
@@ -475,6 +574,7 @@ fun DialogTitle(
     Text(
         modifier = modifier.semantics { heading() },
         variant = TextVariant.TitleMedium,
+        textStyle = overlayTypography(16, 16, medium = true),
         style = style,
         text = text,
     )
@@ -482,7 +582,7 @@ fun DialogTitle(
 
 @Composable
 fun DialogDescription(text: String) {
-    Text(variant = TextVariant.BodySmall, textStyle = TextColors.Muted) { text }
+    DialogDescription { text }
 }
 
 @Composable
@@ -496,7 +596,7 @@ fun DialogDescription(
     Text(
         modifier = modifier,
         variant = TextVariant.BodySmall,
-        textStyle = TextColors.Muted,
+        textStyle = overlayTypography(muted = true, fallback = TextColors.Muted),
         style = style,
         text = text,
     )
@@ -515,8 +615,52 @@ fun DialogFooter(
 ) {
     val controller = dialogController()
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    val colors = currentTheme.colors
+    val radius = twRadius.xl
+    val bleed =
+        if (nova) {
+            Modifier.layout { measurable, constraints ->
+                val inset = 16.dp.roundToPx()
+                val child = measurable.measure(constraints.offset(horizontal = inset * 2))
+                layout((child.width - inset * 2).coerceAtLeast(0), (child.height - inset).coerceAtLeast(0)) {
+                    child.placeRelative(-inset, 0)
+                }
+            }
+        } else {
+            Modifier
+        }
+    val chrome =
+        if (nova) {
+            Style {
+                background(colors.muted.copy(alpha = 0.5f))
+                shape(RoundedCornerShape(bottomStart = radius, bottomEnd = radius))
+                contentPadding(16.dp)
+            }
+        } else {
+            Style
+        }
+    val border =
+        if (nova) {
+            Modifier.drawWithContent {
+                drawContent()
+                drawLine(
+                    colors.border,
+                    Offset(0f, 0.5.dp.toPx()),
+                    Offset(size.width, 0.5.dp.toPx()),
+                    strokeWidth = 1.dp.toPx(),
+                )
+            }.padding(top = 1.dp)
+        } else {
+            Modifier
+        }
     Row(
-        modifier = modifier.styleable(styleState, style),
+        modifier =
+            bleed.then(
+                modifier,
+            ).then(
+                if (nova) Modifier.fillMaxWidth() else Modifier,
+            ).then(border).styleable(styleState, chrome then style),
         horizontalArrangement = Arrangement.spacedBy(twSpacing.sm, Alignment.End),
     ) {
         content()

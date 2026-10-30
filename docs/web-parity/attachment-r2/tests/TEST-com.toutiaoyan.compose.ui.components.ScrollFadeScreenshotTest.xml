@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ScrollFadeScreenshotTest[jvm]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-30T05:06:34.947Z" hostname="Apples-MacBook-Pro.local" time="0.518">
+  <properties/>
+  <testcase name="states_light[jvm]" classname="com.toutiaoyan.compose.ui.components.ScrollFadeScreenshotTest" time="0.49"/>
+  <testcase name="states_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.ScrollFadeScreenshotTest" time="0.026"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

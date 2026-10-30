@@ -1,0 +1,64 @@
+{
+  "source": "official-spinner.json",
+  "renderer": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36",
+  "method": "Original SVG path and viewBox; explicit CSS size12/16/20/24, controlled black/white stroke and white/#0a0a0a background, native browser SVG decode into sRGB canvas. No animation.",
+  "scope": "JVM test fixtures only",
+  "references": [
+    {
+      "file": "loader-circle-12-light.png",
+      "size": 12,
+      "dark": false,
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#000000\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" data-slot=\"spinner\" role=\"status\" aria-label=\"Loading\"><path d=\"M21 12a9 9 0 1 1-6.219-8.56\"/></svg>",
+      "sha256": "17b533ae6368010599e3ad6b49c6a33b70e9f7b6f92f710d35d7bedfb53779e8"
+    },
+    {
+      "file": "loader-circle-16-light.png",
+      "size": 16,
+      "dark": false,
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#000000\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" data-slot=\"spinner\" role=\"status\" aria-label=\"Loading\"><path d=\"M21 12a9 9 0 1 1-6.219-8.56\"/></svg>",
+      "sha256": "4657d68ee249a8e3d599e518cd5e34ce2aafff9d220661b426ff0f7f53681f08"
+    },
+    {
+      "file": "loader-circle-20-light.png",
+      "size": 20,
+      "dark": false,
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#000000\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" data-slot=\"spinner\" role=\"status\" aria-label=\"Loading\"><path d=\"M21 12a9 9 0 1 1-6.219-8.56\"/></svg>",
+      "sha256": "a80ea5c7684e788d57ebb057de26c016bc5e966b84d2e9b91d72c5efa4cfc0db"
+    },
+    {
+      "file": "loader-circle-24-light.png",
+      "size": 24,
+      "dark": false,
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#000000\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" data-slot=\"spinner\" role=\"status\" aria-label=\"Loading\"><path d=\"M21 12a9 9 0 1 1-6.219-8.56\"/></svg>",
+      "sha256": "c86d9b62619e6a2b942da3602de04c4f5eae82b394199d57fc9e9a9ce2c63333"
+    },
+    {
+      "file": "loader-circle-12-dark.png",
+      "size": 12,
+      "dark": true,
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" data-slot=\"spinner\" role=\"status\" aria-label=\"Loading\"><path d=\"M21 12a9 9 0 1 1-6.219-8.56\"/></svg>",
+      "sha256": "2c074e5beb0c1e4b70c632a8b41e5d164ce3099805ee0410a4984e9a8e8699fa"
+    },
+    {
+      "file": "loader-circle-16-dark.png",
+      "size": 16,
+      "dark": true,
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" data-slot=\"spinner\" role=\"status\" aria-label=\"Loading\"><path d=\"M21 12a9 9 0 1 1-6.219-8.56\"/></svg>",
+      "sha256": "5d51906d37a17f1e8469eb4925dd5147b2a30e65134e2918581e62560eb190d3"
+    },
+    {
+      "file": "loader-circle-20-dark.png",
+      "size": 20,
+      "dark": true,
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" data-slot=\"spinner\" role=\"status\" aria-label=\"Loading\"><path d=\"M21 12a9 9 0 1 1-6.219-8.56\"/></svg>",
+      "sha256": "c770ccc60161ffc04bb24da12647a140d72d77a80e416c560a0eba6a4421cb9c"
+    },
+    {
+      "file": "loader-circle-24-dark.png",
+      "size": 24,
+      "dark": true,
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" data-slot=\"spinner\" role=\"status\" aria-label=\"Loading\"><path d=\"M21 12a9 9 0 1 1-6.219-8.56\"/></svg>",
+      "sha256": "4bbeb0e388c00ae3b0e8fe43d14f71dafef679305cb884c46d86e03dd7b36de2"
+    }
+  ]
+}

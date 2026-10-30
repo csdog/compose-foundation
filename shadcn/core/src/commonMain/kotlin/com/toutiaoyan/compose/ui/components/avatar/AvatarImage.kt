@@ -7,6 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
@@ -78,7 +80,7 @@ fun BoxScope.AvatarImage(
         model = model,
         contentDescription = contentDescription,
         imageLoader = imageLoader,
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().clip(CircleShape),
         placeholder = placeholder,
         error = error,
         fallback = fallback,
@@ -148,7 +150,7 @@ fun BoxScope.AvatarImage(
     Image(
         imageVector = imageVector,
         contentDescription = contentDescription,
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().clip(CircleShape),
         alignment = alignment,
         contentScale = contentScale,
         alpha = alpha,
@@ -163,4 +165,28 @@ private fun setAvatarLoadState(
 ) {
     holder?.state = state
     onLoadingStatusChange?.invoke(state)
+}
+
+/** A decoded local image, without a network request. Shares the normal image/fallback state. */
+@Composable
+fun BoxScope.AvatarImage(
+    painter: Painter,
+    contentDescription: String? = null,
+    modifier: Modifier = Modifier,
+    contentScale: ContentScale = ContentScale.Crop,
+    colorFilter: ColorFilter? = null,
+    onLoadingStatusChange: ((AvatarImageLoadState) -> Unit)? = null,
+) {
+    val holder = LocalAvatarImageLoadState.current
+    DisposableEffect(holder, painter) {
+        setAvatarLoadState(holder, AvatarImageLoadState.Success, onLoadingStatusChange)
+        onDispose { setAvatarLoadState(holder, AvatarImageLoadState.Idle, onLoadingStatusChange) }
+    }
+    Image(
+        painter = painter,
+        contentDescription = contentDescription,
+        modifier = modifier.fillMaxSize().clip(CircleShape),
+        contentScale = contentScale,
+        colorFilter = colorFilter,
+    )
 }

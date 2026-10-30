@@ -1,0 +1,19 @@
+{
+  "text": "research-summary.pdf",
+  "weight": "500",
+  "size": "14px",
+  "font": "500 14px / 17.5px Geist, \"Geist Fallback\"",
+  "letterSpacing": "normal",
+  "kerning": "auto",
+  "range": {
+    "x": 549,
+    "y": 2796.5,
+    "width": 148.015625,
+    "height": 18,
+    "top": 2796.5,
+    "right": 697.015625,
+    "bottom": 2814.5,
+    "left": 549
+  },
+  "canvasAdvance": 148.00816345214844
+}

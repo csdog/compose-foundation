@@ -26,6 +26,14 @@ val switchDoc =
             var enabled by remember { mutableStateOf(false) }
             Switch(checked = enabled, onCheckedChange = { enabled = it }, text = "Airplane Mode")
             """.trimIndent(),
+        apiProperties =
+            listOf(
+                ApiProperty("checked", "Boolean?", "null"),
+                ApiProperty("defaultChecked", "Boolean", "false"),
+                ApiProperty("size", "SwitchSize", "Default"),
+                ApiProperty("invalid", "Boolean", "false"),
+                ApiProperty("disabled", "Boolean", "false"),
+            ),
         examples =
             listOf(
                 ComponentExample(
@@ -33,11 +41,11 @@ val switchDoc =
                     code =
                         """
                         var enabled by remember { mutableStateOf(false) }
-                        Switch(checked = enabled, onCheckedChange = { enabled = it })
+                        Switch("Airplane Mode", checked = enabled, onCheckedChange = { enabled = it })
                         """.trimIndent(),
                     preview = {
                         var enabled by remember { mutableStateOf(false) }
-                        Switch(checked = enabled, onCheckedChange = { enabled = it })
+                        Switch("Airplane Mode", checked = enabled, onCheckedChange = { enabled = it })
                     },
                 ),
                 ComponentExample(

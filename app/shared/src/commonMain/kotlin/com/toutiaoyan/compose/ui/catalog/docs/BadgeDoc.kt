@@ -3,19 +3,30 @@
 package com.toutiaoyan.compose.ui.catalog.docs
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.FlowRow
+import com.composables.icons.lucide.Lucide
+import com.composables.icons.lucide.Check
+import com.toutiaoyan.compose.ui.components.icon.Icon
+import com.toutiaoyan.compose.ui.components.spinner.Spinner
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.components.badge.Badge
 import com.toutiaoyan.compose.ui.components.badge.BadgeVariant
-import com.toutiaoyan.compose.ui.components.emojitext.EmojiText
 import com.toutiaoyan.compose.ui.components.text.Text
 
 val badgeDoc =
     ComponentDoc(
         id = "badge",
         title = "Badge",
-        description = "A small label used to highlight status, counts, or metadata.",
+        description = "Displays a badge or a component that looks like a badge.",
+        apiProperties =
+            listOf(
+                ApiProperty("modifier", "Modifier", "Modifier"),
+                ApiProperty("variant", "BadgeVariant", "Default"),
+                ApiProperty("onClick", "(() -> Unit)?", "null"),
+                ApiProperty("style", "Style", "Style"),
+                ApiProperty("content", "@Composable () -> Unit", "required"),
+            ),
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.badge.Badge
@@ -26,8 +37,26 @@ val badgeDoc =
             listOf(
                 ComponentExample(
                     title = "Default",
-                    code = """Badge("New")""",
-                    preview = { Badge("New") },
+                    code =
+                        """
+                        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Badge("Badge")
+                            Badge("Secondary", variant = BadgeVariant.Secondary)
+                            Badge("Destructive", variant = BadgeVariant.Destructive)
+                            Badge("Outline", variant = BadgeVariant.Outline)
+                        }
+                        """.trimIndent(),
+                    preview = {
+                        FlowRow(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                        ) {
+                            Badge("Badge")
+                            Badge("Secondary", variant = BadgeVariant.Secondary)
+                            Badge("Destructive", variant = BadgeVariant.Destructive)
+                            Badge("Outline", variant = BadgeVariant.Outline)
+                        }
+                    },
                 ),
                 ComponentExample(
                     title = "Default variant",
@@ -65,28 +94,28 @@ val badgeDoc =
                     preview = { Badge("Docs", variant = BadgeVariant.Link, onClick = {}) },
                 ),
                 ComponentExample(
-                    title = "With icon",
+                    title = "With Icon",
                     code =
                         """
                         Badge {
-                            Row(
-                                horizontalArrangement = Arrangement.spacedBy(4.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                EmojiText("✨")
-                                Text { "New" }
-                            }
+                            Icon(Lucide.Check)
+                            Text { "Verified" }
                         }
                         """.trimIndent(),
                     preview = {
                         Badge {
-                            Row(
-                                horizontalArrangement = Arrangement.spacedBy(4.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                EmojiText("✨")
-                                Text { "New" }
-                            }
+                            Icon(Lucide.Check)
+                            Text { "Verified" }
+                        }
+                    },
+                ),
+                ComponentExample(
+                    title = "With Spinner",
+                    code = """Badge(variant = BadgeVariant.Secondary) { Spinner(); Text { "Loading" } }""",
+                    preview = {
+                        Badge(variant = BadgeVariant.Secondary) {
+                            Spinner()
+                            Text { "Loading" }
                         }
                     },
                 ),

@@ -1,0 +1,26 @@
+{
+  "screenshots": [
+    "alert-r8-copied-glyph.png",
+    "alert-r8-copy-glyph.png",
+    "alert-r8-desktop-dark-colors-inline.png",
+    "alert-r8-desktop-dark-inline.png",
+    "alert-r8-desktop-light-colors-inline.png",
+    "alert-r8-desktop-light-inline.png",
+    "alert-r8-heading-hover.png",
+    "alert-r8-phone-dark-colors-inline.png",
+    "alert-r8-phone-dark-inline.png",
+    "alert-r8-phone-light-colors-inline.png",
+    "alert-r8-phone-light-inline.png"
+  ],
+  "headingClickUrl": "http://127.0.0.1:8765/alert?preview=r8-heading-inspect#destructive",
+  "tests": {
+    "DocParagraphTest": 3,
+    "DocHeadingTest": 2,
+    "DocCodeBlockTest": 4,
+    "AlertExamplesTest": 4,
+    "ComponentDocumentationTest": 5,
+    "CatalogNavigationTest": 6
+  },
+  "pixelBaselineUpdated": false,
+  "fullPixelVerification": false
+}

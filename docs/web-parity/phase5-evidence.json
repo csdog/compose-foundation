@@ -1,0 +1,379 @@
+{
+  "date": "2026-10-29",
+  "sourceCommit": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "localBaseUrl": "http://127.0.0.1:8765",
+  "screenshots": [
+    {
+      "file": "compose-checkbox-phase5-checked.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-checkbox-phase5-dark.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "compose-checkbox-phase5-light.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-checkbox-phase5-medium-light.png",
+      "viewport": [
+        1095,
+        687
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-checkbox-phase5-mobile-dark.png",
+      "viewport": [
+        390,
+        844
+      ],
+      "backgroundPixel": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "compose-checkbox-phase5-mobile-light.png",
+      "viewport": [
+        390,
+        844
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-radio-group-phase5-dark.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "compose-radio-group-phase5-keyboard.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-radio-group-phase5-light.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-radio-group-phase5-medium-light.png",
+      "viewport": [
+        1095,
+        687
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-radio-group-phase5-mobile-dark.png",
+      "viewport": [
+        390,
+        844
+      ],
+      "backgroundPixel": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "compose-radio-group-phase5-mobile-light.png",
+      "viewport": [
+        390,
+        844
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-switch-phase5-checked.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-switch-phase5-dark.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "compose-switch-phase5-keyboard.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-switch-phase5-light.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-switch-phase5-medium-light.png",
+      "viewport": [
+        1095,
+        687
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-switch-phase5-mobile-dark.png",
+      "viewport": [
+        390,
+        844
+      ],
+      "backgroundPixel": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "compose-switch-phase5-mobile-light.png",
+      "viewport": [
+        390,
+        844
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-toggle-phase5-dark.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "compose-toggle-phase5-light.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-toggle-phase5-medium-light.png",
+      "viewport": [
+        1095,
+        687
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-toggle-phase5-mobile-dark.png",
+      "viewport": [
+        390,
+        844
+      ],
+      "backgroundPixel": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "compose-toggle-phase5-mobile-light.png",
+      "viewport": [
+        390,
+        844
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-toggle-phase5-pressed.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "shadcn-checkbox-phase5-reference.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "shadcn-radio-group-phase5-reference.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "shadcn-switch-phase5-reference.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "shadcn-toggle-phase5-reference.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    }
+  ],
+  "verified": [
+    "Checkbox label changes state and focuses control",
+    "Switch label and Space",
+    "Radio label then ArrowRight selects Compact",
+    "Bookmark pressed fill",
+    "Live light/dark themes",
+    "1440/1095/390 viewports"
+  ],
+  "tests": {
+    "selection": 19,
+    "legacyCheckboxRadioSwitch": 14,
+    "catalog": 21,
+    "previousRelatedCore": 55,
+    "newSnapshotCount": 10
+  },
+  "legacyToggleMismatchCount": 8,
+  "legacyAudit": "toggle-legacy-baseline-comparison.json",
+  "remaining": [
+    "Radio single-entry Tab and dynamic order",
+    "Asymmetric inline-icon padding",
+    "Full hover/pressed/focus-visible matrix",
+    "Choice-card/group/table compositions",
+    "Special colored-container transparency"
+  ]
+}

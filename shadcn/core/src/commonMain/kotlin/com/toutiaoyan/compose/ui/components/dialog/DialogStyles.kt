@@ -6,6 +6,7 @@ import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.contentPadding
 import androidx.compose.runtime.Composable
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.utils.rememberTheme
 import com.toutiaoyan.compose.ui.styles.border
@@ -35,7 +36,7 @@ fun rememberDialogPanelStyle(size: DialogSize = DialogSize.Default): Style =
             // Official `rounded-xl` `p-4` `bg-popover`
             shape(RoundedCornerShape(radius.xl))
             background(colors.popover)
-            border(colors.border)
+            border(if (theme.activePreset == StylePreset.Nova) colors.foreground.copy(alpha = 0.1f) else colors.border)
             contentPadding(spacing.lg)
         }
     }

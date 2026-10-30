@@ -1,0 +1,93 @@
+{
+  "component": "breadcrumb",
+  "status": "main-parity-pass-complete-followups-recorded",
+  "wholeComponentComplete": false,
+  "wholeSiteComplete": false,
+  "tests": [
+    {
+      "name": "AvatarScreenshotTest[jvm]",
+      "tests": "8",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "BreadcrumbScreenshotTest[jvm]",
+      "tests": "5",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "AvatarParityTest[jvm]",
+      "tests": "5",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "BreadcrumbParityTest[jvm]",
+      "tests": "5",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "AvatarExamplesTest[jvm]",
+      "tests": "4",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "BreadcrumbExamplesTest[jvm]",
+      "tests": "4",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    }
+  ],
+  "jointTests": 31,
+  "pixelFixtures": 13,
+  "pixelScope": "Only AvatarScreenshotTest (8) and BreadcrumbScreenshotTest (5), including new Nova light/dark. Record, inspect and independent verify; no unrelated goldens refreshed.",
+  "browser": {
+    "sizes": [
+      [
+        1440,
+        1000
+      ],
+      [
+        390,
+        844
+      ]
+    ],
+    "dpr": 2,
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "official": 28,
+    "local": 28,
+    "menuLocal": 8,
+    "reviewedContacts": [
+      "contact-desktop-light.png",
+      "contact-desktop-dark.png",
+      "contact-phone-light.png",
+      "contact-phone-dark.png",
+      "contact-menu.png"
+    ],
+    "localThemeValidation": "Actual PNG background pixel check for every main example screenshot."
+  },
+  "builds": [
+    "wasmJsBrowserDevelopmentExecutableDistribution",
+    "jsBrowserDevelopmentExecutableDistribution"
+  ],
+  "pending": [
+    "Shared page P1/P3 width, scrollbar, heading/description/code spacing and font rasterization differences remain. At 390px window, source client width is 375px while local Canvas is 390px; Basic/Custom separator/Link component currently wrap differently.",
+    "Native BreadcrumbLink callbacks are exposed as buttons; DOM nav/ol/li/link/aria-current mappings and assistive technology parity remain open.",
+    "Browser default link focus outline, full hover reversal timing, custom focus styles, native router integrations and long text/dynamic slots need further audit.",
+    "Shared Dropdown panel row/shadow metrics, focus restoration and full translated RTL popup alignment matrix remain for the Dropdown pass."
+  ],
+  "checkpointScope": "Includes preceding uncommitted web alignment work. This batch validates Avatar/Breadcrumb specifically, not every changed component.",
+  "warnings": "Existing AGP experimental settings, Text internal API, Gradle deprecations and optional webpack os/path warnings remain; final task exits were zero."
+}

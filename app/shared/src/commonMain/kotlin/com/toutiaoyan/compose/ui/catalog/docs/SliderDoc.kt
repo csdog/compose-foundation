@@ -12,11 +12,13 @@ import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.components.slider.Slider
 import com.toutiaoyan.compose.ui.components.slider.SliderOrientation
 
+import androidx.compose.foundation.layout.widthIn
+
 val sliderDoc =
     ComponentDoc(
         id = "slider",
         title = "Slider",
-        description = "An input for selecting a value from within a range by dragging a thumb.",
+        description = "An input where the user selects a value from within a given range.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.slider.Slider
@@ -24,18 +26,41 @@ val sliderDoc =
             var volume by remember { mutableStateOf(50f) }
             Slider(value = volume, onValueChange = { volume = it }, valueRange = 0f..100f)
             """.trimIndent(),
+        apiProperties =
+            listOf(
+                ApiProperty("value / values", "Float / range / List<Float>", "required"),
+                ApiProperty("valueRange", "ClosedFloatingPointRange<Float>", "0f..1f"),
+                ApiProperty("step", "Float", "0f (continuous)"),
+                ApiProperty("orientation", "SliderOrientation", "Horizontal"),
+                ApiProperty("inverted", "Boolean", "false"),
+                ApiProperty("minStepsBetweenThumbs", "Int", "0"),
+                ApiProperty("onValueCommit", "callback?", "null"),
+                ApiProperty("disabled", "Boolean", "false"),
+            ),
         examples =
             listOf(
                 ComponentExample(
                     title = "Default",
                     code =
                         """
-                        var volume by remember { mutableStateOf(50f) }
-                        Slider(value = volume, onValueChange = { volume = it }, valueRange = 0f..100f)
+                        var volume by remember { mutableStateOf(75f) }
+                        Slider(value = volume, onValueChange = { volume = it }, valueRange = 0f..100f, step = 1f, modifier = Modifier.widthIn(max = 320.dp), label = "Volume")
                         """.trimIndent(),
                     preview = {
-                        var volume by remember { mutableStateOf(50f) }
-                        Slider(value = volume, onValueChange = { volume = it }, valueRange = 0f..100f)
+                        var volume by remember { mutableStateOf(75f) }
+                        Slider(
+                            value = volume,
+                            onValueChange = {
+                                volume = it
+                            },
+                            valueRange = 0f..100f,
+                            step = 1f,
+                            modifier =
+                                Modifier.widthIn(
+                                    max = 320.dp,
+                                ),
+                            label = "Volume",
+                        )
                     },
                 ),
                 ComponentExample(

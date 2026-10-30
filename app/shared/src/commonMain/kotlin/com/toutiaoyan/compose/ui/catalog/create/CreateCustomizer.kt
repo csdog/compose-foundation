@@ -107,6 +107,8 @@ fun CreateCustomizer(
     onBaseColorChange: (BaseColor) -> Unit,
     accent: Accent,
     onAccentChange: (Accent) -> Unit,
+    chartColor: String,
+    onChartColorChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     docked: Boolean = false,
     /** Official `--customizer-width`: 48→192dp, 2xl 56→224dp. */
@@ -115,7 +117,6 @@ fun CreateCustomizer(
     getCodeRequest: Int = 0,
     onOpenCommandPalette: () -> Unit = {},
 ) {
-    var chartColor by remember { mutableStateOf(baseColor.label) }
     var headingFont by remember { mutableStateOf(HEADING_FONTS.first()) }
     var bodyFont by remember { mutableStateOf(BODY_FONTS.first()) }
     var iconLibrary by remember { mutableStateOf(ICON_LIBRARIES.first()) }
@@ -201,14 +202,11 @@ fun CreateCustomizer(
                             stylePreset = stylePreset,
                             onStylePresetChange = onStylePresetChange,
                             baseColor = baseColor,
-                            onBaseColorChange = {
-                                onBaseColorChange(it)
-                                chartColor = it.label
-                            },
+                            onBaseColorChange = onBaseColorChange,
                             accent = accent,
                             onAccentChange = onAccentChange,
                             chartColor = chartColor,
-                            onChartColorChange = { chartColor = it },
+                            onChartColorChange = onChartColorChange,
                             headingFont = headingFont,
                             onHeadingFontChange = { headingFont = it },
                             bodyFont = bodyFont,
@@ -250,9 +248,15 @@ fun CreateCustomizer(
                         Button(
                             onClick = {
                                 onStylePresetChange(StylePreset.entries.random())
-                                onBaseColorChange(BaseColor.entries.random())
+                                val shuffledBase = BaseColor.entries.random()
+                                onBaseColorChange(shuffledBase)
                                 onAccentChange(Accent.entries.random())
-                                chartColor = BaseColor.entries.random().label
+                                onChartColorChange(
+                                    (
+                                        listOf(shuffledBase.label) +
+                                            Accent.entries.filter { it != Accent.Base }.map { it.label }
+                                    ).random(),
+                                )
                                 headingFont = HEADING_FONTS.random()
                                 bodyFont = BODY_FONTS.random()
                                 iconLibrary = ICON_LIBRARIES.random()
@@ -341,8 +345,15 @@ fun CreateCustomizer(
                                     MainMenuItem("Shuffle", "R") {
                                         menuOpen = false
                                         onStylePresetChange(StylePreset.entries.random())
-                                        onBaseColorChange(BaseColor.entries.random())
+                                        val shuffledBase = BaseColor.entries.random()
+                                        onBaseColorChange(shuffledBase)
                                         onAccentChange(Accent.entries.random())
+                                        onChartColorChange(
+                                            (
+                                                listOf(shuffledBase.label) +
+                                                    Accent.entries.filter { it != Accent.Base }.map { it.label }
+                                            ).random(),
+                                        )
                                     }
                                     MainMenuItem("Light/Dark", "D") {
                                         menuOpen = false
@@ -353,6 +364,7 @@ fun CreateCustomizer(
                                         onStylePresetChange(StylePreset.Nova)
                                         onBaseColorChange(BaseColor.Neutral)
                                         onAccentChange(Accent.Base)
+                                        onChartColorChange(BaseColor.Neutral.label)
                                     }
                                 }
                             }
@@ -370,14 +382,11 @@ fun CreateCustomizer(
                         stylePreset = stylePreset,
                         onStylePresetChange = onStylePresetChange,
                         baseColor = baseColor,
-                        onBaseColorChange = {
-                            onBaseColorChange(it)
-                            chartColor = it.label
-                        },
+                        onBaseColorChange = onBaseColorChange,
                         accent = accent,
                         onAccentChange = onAccentChange,
                         chartColor = chartColor,
-                        onChartColorChange = { chartColor = it },
+                        onChartColorChange = onChartColorChange,
                         headingFont = headingFont,
                         onHeadingFontChange = { headingFont = it },
                         bodyFont = bodyFont,
@@ -423,9 +432,15 @@ fun CreateCustomizer(
                         Button(
                             onClick = {
                                 onStylePresetChange(StylePreset.entries.random())
-                                onBaseColorChange(BaseColor.entries.random())
+                                val shuffledBase = BaseColor.entries.random()
+                                onBaseColorChange(shuffledBase)
                                 onAccentChange(Accent.entries.random())
-                                chartColor = BaseColor.entries.random().label
+                                onChartColorChange(
+                                    (
+                                        listOf(shuffledBase.label) +
+                                            Accent.entries.filter { it != Accent.Base }.map { it.label }
+                                    ).random(),
+                                )
                                 headingFont = HEADING_FONTS.random()
                                 bodyFont = BODY_FONTS.random()
                                 iconLibrary = ICON_LIBRARIES.random()
@@ -446,7 +461,7 @@ fun CreateCustomizer(
                                 onStylePresetChange(StylePreset.Nova)
                                 onBaseColorChange(BaseColor.Neutral)
                                 onAccentChange(Accent.Base)
-                                chartColor = BaseColor.Neutral.label
+                                onChartColorChange(BaseColor.Neutral.label)
                                 headingFont = HEADING_FONTS.first()
                                 bodyFont = BODY_FONTS.first()
                                 iconLibrary = ICON_LIBRARIES.first()
@@ -600,10 +615,7 @@ private fun CreateCustomizerPickers(
         optionLabel = { it.label },
         modifier = rowModifier,
         swatch = {
-            Box(modifier = Modifier.size(20.dp).background(baseColor.light.primary, CircleShape))
-        },
-        optionSwatch = { option ->
-            Box(modifier = Modifier.size(14.dp).background(option.light.primary, CircleShape))
+            Box(modifier = Modifier.size(16.dp).background(baseColor.dark.mutedForeground, CircleShape))
         },
     )
     PresetSelectorRow(
@@ -614,29 +626,19 @@ private fun CreateCustomizerPickers(
         optionLabel = { if (it == Accent.Base) baseColor.label else it.label },
         modifier = rowModifier,
         swatch = {
-            val swatch =
-                remember(accent, baseColor) {
-                    accent.applyTo(baseColor.light, dark = false).primary
-                }
-            Box(modifier = Modifier.size(20.dp).background(swatch, CircleShape))
-        },
-        optionSwatch = { option ->
-            val swatch =
-                remember(option, baseColor) {
-                    option.applyTo(baseColor.light, dark = false).primary
-                }
-            Box(modifier = Modifier.size(14.dp).background(swatch, CircleShape))
+            val swatch = chartColorSwatch(if (accent == Accent.Base) baseColor.label else accent.label)
+            Box(modifier = Modifier.size(16.dp).background(swatch, CircleShape))
         },
     )
     PresetSelectorRow(
         label = "Chart Color",
         value = chartColor,
-        options = BaseColor.entries.map { it.label } + Accent.entries.filter { it != Accent.Base }.map { it.label },
+        options = listOf(baseColor.label) + Accent.entries.filter { it != Accent.Base }.map { it.label },
         onValueChange = onChartColorChange,
         optionLabel = { it },
         modifier = rowModifier,
         swatch = {
-            Box(modifier = Modifier.size(20.dp).background(currentTheme.colors.chart1, CircleShape))
+            Box(modifier = Modifier.size(16.dp).background(chartColorSwatch(chartColor), CircleShape))
         },
     )
     if (!compact) FieldSeparator()

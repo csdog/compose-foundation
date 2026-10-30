@@ -12,12 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Outline
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.addOutline
 import androidx.compose.ui.graphics.drawscope.ContentDrawScope
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.node.CompositionLocalConsumerModifierNode
@@ -42,8 +38,9 @@ private const val FadeOutMs = 150
  * Material-style bounded ripple for [androidx.compose.foundation.LocalIndication].
  *
  * Draw-only: expanding circle from the press point. When [bounded], clipped to the
- * content's shape (the [androidx.compose.ui.graphics.layer.GraphicsLayer] outline set by
- * `Style { shape(...) }` / `Modifier.graphicsLayer`), falling back to layout bounds.
+ * layout bounds. The component (or caller's `Modifier.clip(shape)`) clips the ripple to
+ * its visual shape. A draw context's graphics-layer outline can belong to an ancestor
+ * and must not be treated as this component's outline.
  * Color defaults to [LocalContentColor] (else black).
  */
 data class RippleIndication(
@@ -80,7 +77,6 @@ private class RippleIndicationNode(
     DrawModifierNode,
     CompositionLocalConsumerModifierNode {
     private val ripples = mutableMapOf<PressInteraction.Press, RippleWave>()
-    private val contentClipPath = Path()
 
     override fun onAttach() {
         coroutineScope.launch {
@@ -127,26 +123,9 @@ private class RippleIndicationNode(
             }
         if (ripples.isEmpty()) return
         if (bounded) {
-            clipToContentShape { drawRipples(tint) }
+            clipRect { drawRipples(tint) }
         } else {
             drawRipples(tint)
-        }
-    }
-
-    private fun DrawScope.clipToContentShape(block: DrawScope.() -> Unit) {
-        when (val outline = drawContext.graphicsLayer?.outline) {
-            is Outline.Rounded,
-            is Outline.Generic,
-            -> {
-                contentClipPath.rewind()
-                contentClipPath.addOutline(outline)
-                clipPath(contentClipPath, block = block)
-            }
-            is Outline.Rectangle -> {
-                val rect = outline.rect
-                clipRect(rect.left, rect.top, rect.right, rect.bottom, block = block)
-            }
-            null -> clipRect(block = block)
         }
     }
 

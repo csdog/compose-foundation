@@ -6,6 +6,7 @@ import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.checked
 import androidx.compose.runtime.Composable
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -49,7 +50,15 @@ val SwitchSize.thumbInset: Dp get() = 2.dp
 fun rememberSwitchTrackStyle(): Style =
     rememberTheme {
         Style {
-            background(colors.border)
+            background(
+                if (theme.activePreset == StylePreset.Nova) {
+                    colors.input.copy(
+                        alpha = colors.input.alpha * if (theme.isDark) 0.8f else 1f,
+                    )
+                } else {
+                    colors.border
+                },
+            )
             border(Color.Transparent)
             checked { background(colors.primary) }
             focusRing(RoundedCornerShape(radius.full))

@@ -1,0 +1,9 @@
+[
+  "http://127.0.0.1:8765/composeResources/compose_foundation.app.shared.generated.resources/font/geist_medium.ttf",
+  "http://127.0.0.1:8765/composeResources/compose_foundation.app.shared.generated.resources/font/geist_bold.ttf",
+  "http://127.0.0.1:8765/composeResources/compose_foundation.app.shared.generated.resources/font/geist_semibold.ttf",
+  "http://127.0.0.1:8765/composeResources/compose_foundation.app.shared.generated.resources/font/geist_mono_regular.ttf",
+  "http://127.0.0.1:8765/composeResources/compose_foundation.app.shared.generated.resources/font/geist_regular.ttf",
+  "https://fonts.gstatic.com/s/notosansarabic/v33/nwpxtLGrOAZMl5nJ_wfgRg3DrWFZWsnVBJ_sS6tlqHHFlhQ5l3sQWIHPqzCfyGyfuXqAJQI.woff2",
+  "https://fonts.gstatic.com/s/notosanshebrew/v50/or3HQ7v33eiDljA1IufXTtVf7V6RvEEdhQlk0LlGxCyaeNKYZC0sqk3xXGiXd4qdpyhkhus.woff2"
+]

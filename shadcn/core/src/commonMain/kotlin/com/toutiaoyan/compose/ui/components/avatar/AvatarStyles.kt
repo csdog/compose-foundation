@@ -7,6 +7,7 @@ import androidx.compose.foundation.style.Style
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.shadow.Shadow
 import com.toutiaoyan.compose.ui.utils.rememberTheme
 
 enum class AvatarSize(
@@ -33,6 +34,7 @@ fun rememberAvatarFallbackStyle(): Style =
         Style {
             width(1f)
             height(1f)
+            shape(CircleShape)
             background(colors.muted)
             contentColor(colors.mutedForeground)
         }
@@ -52,8 +54,7 @@ fun AvatarSize.rememberBadgeStyle(): Style =
             height(badgeSize)
             shape(CircleShape)
             background(colors.primary)
-            borderWidth(2.dp)
-            borderColor(colors.background)
+            dropShadow(Shadow(radius = 0.dp, spread = 2.dp, color = colors.background))
         }
     }
 
@@ -62,8 +63,7 @@ fun AvatarSize.rememberBadgeStyle(): Style =
 fun rememberAvatarGroupMemberRingStyle(): Style =
     rememberTheme {
         Style {
-            borderWidth(2.dp)
-            borderColor(colors.background)
+            dropShadow(Shadow(radius = 0.dp, spread = 2.dp, color = colors.background))
         }
     }
 
@@ -77,7 +77,6 @@ fun rememberAvatarGroupCountStyle(size: AvatarSize = AvatarSize.Default): Style 
             shape(CircleShape)
             background(colors.muted)
             contentColor(colors.mutedForeground)
-            borderWidth(2.dp)
-            borderColor(colors.background)
+            dropShadow(Shadow(radius = 0.dp, spread = 2.dp, color = colors.background))
         }
     }

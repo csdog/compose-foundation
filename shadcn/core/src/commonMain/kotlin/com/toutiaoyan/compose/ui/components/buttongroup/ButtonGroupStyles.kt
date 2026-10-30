@@ -8,6 +8,8 @@ import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.contentPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.utils.rememberTheme
 import com.toutiaoyan.compose.ui.styles.border
 
@@ -15,7 +17,7 @@ import com.toutiaoyan.compose.ui.styles.border
 fun rememberButtonGroupOutlineStyle(): Style =
     rememberTheme {
         Style {
-            shape(RoundedCornerShape(radius.md))
+            shape(RoundedCornerShape(if (theme.activePreset == StylePreset.Nova) radius.lg else radius.md))
             border(colors.border)
         }
     }
@@ -31,6 +33,12 @@ fun rememberButtonGroupTextStyle(
         Style {
             shape(RoundedCornerShape(topStart, topEnd, bottomEnd, bottomStart))
             background(colors.muted)
-            contentPadding(horizontal = spacing.lg, vertical = spacing.sm)
+            if (theme.activePreset == StylePreset.Nova) {
+                border(colors.border)
+                contentPadding(horizontal = 10.dp, vertical = 0.dp)
+                minHeight(32.dp)
+            } else {
+                contentPadding(horizontal = spacing.lg, vertical = spacing.sm)
+            }
         }
     }

@@ -16,6 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.movableContentOf
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -57,6 +59,20 @@ fun CreatePage(
 ) {
     var welcomeOpen by remember { mutableStateOf(true) }
     var commandOpen by remember { mutableStateOf(false) }
+    var chartColor by remember { mutableStateOf(baseColor.label) }
+    val currentChartColor by rememberUpdatedState(chartColor)
+    val preview =
+        remember {
+            movableContentOf<Modifier> { placement ->
+                CreatePreviewCanvas(chartColor = currentChartColor, modifier = placement)
+            }
+        }
+    val changeBaseColor: (BaseColor) -> Unit = { next ->
+        // Official normalization keeps a colored chart theme, but replaces a base
+        // chart palette that is no longer available under the new base.
+        if (BaseColor.entries.any { it.label == chartColor }) chartColor = next.label
+        onBaseColorChange(next)
+    }
 
     Box(modifier = modifier.fillMaxSize()) {
         BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
@@ -75,19 +91,16 @@ fun CreatePage(
                     modifier = designerModifier,
                     verticalArrangement = Arrangement.spacedBy(gap),
                 ) {
-                    CreatePreviewCanvas(
-                        modifier =
-                            Modifier
-                                .weight(1f)
-                                .fillMaxWidth(),
-                    )
+                    preview(Modifier.weight(1f).fillMaxWidth())
                     CreateCustomizer(
                         stylePreset = stylePreset,
                         onStylePresetChange = onStylePresetChange,
                         baseColor = baseColor,
-                        onBaseColorChange = onBaseColorChange,
+                        onBaseColorChange = changeBaseColor,
                         accent = accent,
                         onAccentChange = onAccentChange,
+                        chartColor = chartColor,
+                        onChartColorChange = { chartColor = it },
                         onOpenCommandPalette = { commandOpen = true },
                         getCodeRequest = getCodeRequest,
                         docked = true,
@@ -104,21 +117,18 @@ fun CreatePage(
                         stylePreset = stylePreset,
                         onStylePresetChange = onStylePresetChange,
                         baseColor = baseColor,
-                        onBaseColorChange = onBaseColorChange,
+                        onBaseColorChange = changeBaseColor,
                         accent = accent,
                         onAccentChange = onAccentChange,
+                        chartColor = chartColor,
+                        onChartColorChange = { chartColor = it },
                         onOpenCommandPalette = { commandOpen = true },
                         getCodeRequest = getCodeRequest,
                         docked = false,
                         railWidth = railWidth,
                         modifier = Modifier.fillMaxHeight(),
                     )
-                    CreatePreviewCanvas(
-                        modifier =
-                            Modifier
-                                .weight(1f)
-                                .fillMaxHeight(),
-                    )
+                    preview(Modifier.weight(1f).fillMaxHeight())
                 }
             }
         }

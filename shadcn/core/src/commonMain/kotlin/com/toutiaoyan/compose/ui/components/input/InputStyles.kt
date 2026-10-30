@@ -4,6 +4,8 @@ package com.toutiaoyan.compose.ui.components.input
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
+import androidx.compose.foundation.style.disabled
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.contentPadding
 import androidx.compose.foundation.text.KeyboardOptions
@@ -72,8 +74,8 @@ object InputDefaults {
 }
 
 // Matches base-nova input: border, h-8 rounded-lg px-2.5 py-1,
-// focus-visible:border-ring focus-visible:ring-3 -- `focusRingAlways(...)` grows
-// the border to `theme.ring.width` on focus.
+// focus-visible:border-ring focus-visible:ring-3 -- `focusRingAlways(...)` draws
+// an outer shadow ring without growing the border.
 sealed interface InputVariant {
     data object Default : InputVariant
 
@@ -89,15 +91,32 @@ fun InputVariant.rememberStyle(): Style {
         when (receiver) {
             InputVariant.Default ->
                 Style {
-                    background(colors.background)
+                    background(
+                        if (theme.activePreset == StylePreset.Nova) {
+                            if (theme.isDark) {
+                                colors.input.copy(
+                                    alpha = colors.input.alpha * 0.3f,
+                                )
+                            } else {
+                                Color.Transparent
+                            }
+                        } else {
+                            colors.background
+                        },
+                    )
                     contentColor(colors.foreground)
-                    border(colors.border)
+                    border(if (theme.activePreset == StylePreset.Nova) colors.input else colors.border)
                     // Official `px-2.5 py-1`
                     contentPadding(horizontal = spacing.scale2p5, vertical = spacing.scale1)
                     textStyle(theme.typography.bodyMedium)
                     shape(RoundedCornerShape(radius.lg))
                     focusRingAlways(RoundedCornerShape(radius.lg))
                     disabledDim()
+                    if (theme.activePreset == StylePreset.Nova) {
+                        disabled {
+                            background(colors.input.copy(alpha = colors.input.alpha * if (theme.isDark) 0.8f else 0.5f))
+                        }
+                    }
                 }
 
             InputVariant.Filled ->

@@ -1,0 +1,115 @@
+{
+  "workflow": "c9d7020da320d13548d59415665d8fda",
+  "runs": [
+    {
+      "command": "./gradlew :app:shared:compileKotlinJvm --console=plain --no-scan",
+      "elapsed_seconds": 7.936,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0001.log",
+      "question": "Does the shared catalog compile with Chart Color owned by CreatePage and independent preview chart-role bindings?",
+      "scope": "targeted",
+      "sequence": 1,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *CreateChartColorTest :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 13.78,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "6288e77ee5d20c255ff46889f1bdb0dadd10ada522d9316ea15ca0baa60fc5b3"
+      ],
+      "log": "0002.log",
+      "question": "Do all independent chart palettes, actual picker changes, theme independence, breakpoint preservation and six proportional source bars pass?",
+      "scope": "targeted",
+      "sequence": 2,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *CreateChartColorTest :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 12.716,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0003.log",
+      "question": "With popup selection disambiguated from the current Base Color label, do chart independence and responsive state preservation pass?",
+      "scope": "targeted",
+      "sequence": 3,
+      "warning_fingerprints": [
+        "15d9f8632e1b7ac8794fbf366c8eb3ee3aace88a2a62a9e58c6aaadcfc993847"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *CreateChartColorTest --tests *CatalogPreviewTest --tests *CatalogNavigationTest :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 13.514,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "6288e77ee5d20c255ff46889f1bdb0dadd10ada522d9316ea15ca0baa60fc5b3"
+      ],
+      "log": "0004.log",
+      "question": "Do all 240 chart-role and 24 picker-swatch values match source, and does menu Reset restore shared graph and theme state after responsive changes?",
+      "scope": "targeted",
+      "sequence": 4,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "62e408f62e1de3f411f87c18e5075876096b9aea294de33d647ce5cae5a071de",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *CreateChartColorTest --tests *CatalogPreviewTest --tests *CatalogNavigationTest --console=plain --no-scan",
+      "elapsed_seconds": 5.031,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0005.log",
+      "question": "After targeting the actual menu Reset item rather than unrelated preview Reset buttons, do chart, reset, navigation and preview regressions pass?",
+      "scope": "targeted",
+      "sequence": 5,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *CreateChartColorTest --tests *CatalogPreviewTest --tests *CatalogNavigationTest :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 0.672,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0006.log",
+      "question": "The current selector source timestamp is later than the served Web distribution; do current-source regressions and a fresh development distribution now agree?",
+      "scope": "targeted",
+      "sequence": 6,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *CreateChartColorTest --tests *CatalogPreviewTest --tests *CatalogNavigationTest :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 14.015,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0007.log",
+      "question": "Do the remaining Analytics and dividend mini-graphs honor chart roles, does Contribution match the official 162px plot, and do current catalog regressions and Web distribution pass?",
+      "scope": "targeted",
+      "sequence": 7,
+      "warning_fingerprints": [
+        "47d6e662ea650a9654b8a495261a314ccb2d214e7f3ddb186bcdf3566bf3184e"
+      ]
+    }
+  ]
+}

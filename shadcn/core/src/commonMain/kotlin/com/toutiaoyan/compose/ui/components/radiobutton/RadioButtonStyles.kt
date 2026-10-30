@@ -6,6 +6,7 @@ import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.selected
 import androidx.compose.runtime.Composable
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.ui.graphics.Color
 import com.toutiaoyan.compose.ui.utils.rememberTheme
 import com.toutiaoyan.compose.ui.styles.border
@@ -19,8 +20,14 @@ import com.toutiaoyan.compose.ui.styles.focusRing
 fun rememberRadioButtonStyle(): Style =
     rememberTheme {
         Style {
-            background(Color.Transparent)
-            border(colors.border)
+            background(
+                if (theme.activePreset == StylePreset.Nova) {
+                    if (theme.isDark) colors.input.copy(alpha = colors.input.alpha * 0.3f) else Color.Transparent
+                } else {
+                    Color.Transparent
+                },
+            )
+            border(if (theme.activePreset == StylePreset.Nova) colors.input else colors.border)
             selected {
                 background(colors.primary)
                 borderColor(colors.primary)

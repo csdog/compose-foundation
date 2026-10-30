@@ -1,5 +1,14 @@
 package com.toutiaoyan.compose.ui.components.slider
+import com.toutiaoyan.compose.ui.utils.keyboardInputMode
 import androidx.compose.foundation.focusable
+import androidx.compose.foundation.interaction.PressInteraction
+import androidx.compose.ui.input.key.*
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.drag
@@ -50,8 +59,11 @@ private val TRACK_HEIGHT = SliderDefaults.TrackHeight
 
 /** base-nova Slider tokens (`.cn-slider-track` / `.cn-slider-thumb`). */
 object SliderDefaults {
-    /** Official thumb `size-4`. */
+    /** Original preset thumb size, retained for source compatibility. */
     val ThumbSize = 16.dp
+
+    /** base-nova `.cn-slider-thumb` uses `size-3`. */
+    val NovaThumbSize = 12.dp
 
     /** Official horizontal track `h-1` (vertical uses same as thickness). */
     val TrackHeight = 4.dp
@@ -93,6 +105,9 @@ internal class SliderController(
     val state: SliderState,
     val interactionSources: List<MutableInteractionSource>,
     val rangeSpan: Float,
+    val thumbSize: Dp = THUMB_SIZE,
+    val rtl: Boolean = false,
+    val focusRequesters: List<FocusRequester> = emptyList(),
     val currentValues: () -> List<Float>,
     val onValuesCommit: ((List<Float>) -> Unit)? = null,
 ) {
@@ -102,16 +117,16 @@ internal class SliderController(
     fun interactionSourceFor(index: Int): MutableInteractionSource =
         interactionSources.getOrElse(index) { interactionSources.first() }
 
-    fun commit() {
-        onValuesCommit?.invoke(currentValues())
+    fun commit(values: List<Float> = currentValues()) {
+        onValuesCommit?.invoke(values)
     }
 
     fun updateThumb(
         index: Int,
         raw: Float,
-    ) {
+    ): List<Float> {
         val current = currentValues()
-        if (index !in current.indices) return
+        if (index !in current.indices) return current
         val range = state.valueRange
         val gap =
             if (state.minStepsBetweenThumbs <= 0) {
@@ -121,10 +136,12 @@ internal class SliderController(
             }
         val minBound = if (index == 0) range.start else current[index - 1] + gap
         val maxBound = if (index == current.lastIndex) range.endInclusive else current[index + 1] - gap
-        if (minBound > maxBound) return
+        if (minBound > maxBound) return current
         val coerced = snapSliderValue(raw, range, state.step).coerceIn(minBound, maxBound)
-        if (coerced == current[index]) return
-        state.onValuesChange(current.toMutableList().also { it[index] = coerced })
+        if (coerced == current[index]) return current
+        val next = current.toMutableList().also { it[index] = coerced }
+        state.onValuesChange(next)
+        return next
     }
 
     fun setFromFraction(fraction: Float) {
@@ -343,6 +360,10 @@ private fun SliderImpl(
     onValuesCommit: ((List<Float>) -> Unit)? = null,
     content: @Composable BoxScope.() -> Unit,
 ) {
+    require(valueRange.start <= valueRange.endInclusive) { "Slider range must be increasing" }
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    val thumbSize = if (nova) SliderDefaults.NovaThumbSize else THUMB_SIZE
+    val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
     val rangeSpan = valueRange.endInclusive - valueRange.start
     val fractions =
         values.map { value ->
@@ -353,16 +374,30 @@ private fun SliderImpl(
     val interactionSources =
         remember(values.size) { List(values.size.coerceAtLeast(1)) { MutableInteractionSource() } }
 
+    val focusRequesters = remember(values.size) { List(values.size.coerceAtLeast(1)) { FocusRequester() } }
     val touchTargetStyle = rememberMinTouchTargetStyle()
     val outerStyleState = rememberUpdatedStyleState(null)
     val first = values.first()
     val vertical = orientation == SliderOrientation.Vertical
+    val geometryStyle =
+        if (nova) {
+            Style {
+                if (vertical) {
+                    minWidth(thumbSize)
+                    minHeight(160.dp)
+                } else {
+                    minHeight(thumbSize)
+                }
+            }
+        } else {
+            Style
+        }
 
     Box(
         modifier =
             modifier
                 .then(if (vertical) Modifier.fillMaxHeight() else Modifier.fillMaxWidth())
-                .styleable(outerStyleState, touchTargetStyle),
+                .styleable(outerStyleState, geometryStyle then touchTargetStyle),
         contentAlignment = if (vertical) Alignment.BottomCenter else Alignment.CenterStart,
     ) {
         BoxWithConstraints(
@@ -439,7 +474,14 @@ private fun SliderImpl(
                     .alpha(if (enabled) 1f else 0.5f),
             contentAlignment = if (vertical) Alignment.BottomCenter else Alignment.CenterStart,
         ) {
-            val usableWidth = if (vertical) maxHeight - THUMB_SIZE else maxWidth - THUMB_SIZE
+            val usableWidth =
+                if (vertical) {
+                    (maxHeight - thumbSize).coerceAtLeast(
+                        0.dp,
+                    )
+                } else {
+                    (maxWidth - thumbSize).coerceAtLeast(0.dp)
+                }
             val controller =
                 SliderController(
                     state =
@@ -460,6 +502,9 @@ private fun SliderImpl(
                         ),
                     interactionSources = interactionSources,
                     rangeSpan = rangeSpan,
+                    thumbSize = thumbSize,
+                    rtl = rtl,
+                    focusRequesters = focusRequesters,
                     currentValues = { currentValues.value },
                     onValuesCommit = { currentCommit.value?.invoke(it) },
                 )
@@ -486,9 +531,10 @@ private fun Modifier.sliderPointerInput(controller: SliderController): Modifier 
         controller.state.orientation,
         controller.state.inverted,
         controller.rangeSpan,
+        controller.thumbSize,
         controller.state.values.size,
     ) {
-        val thumbSizePx = THUMB_SIZE.toPx()
+        val thumbSizePx = controller.thumbSize.toPx()
         awaitEachGesture {
             val slider = latest.value
             if (!slider.state.enabled) return@awaitEachGesture
@@ -506,18 +552,28 @@ private fun Modifier.sliderPointerInput(controller: SliderController): Modifier 
                         vertical = vertical,
                     )
                 val valueFraction =
-                    if (slider.state.inverted) 1f - visual else visual
+                    if (slider.state.inverted xor (!vertical && slider.rtl)) 1f - visual else visual
                 return slider.state.valueRange.start +
                     valueFraction.coerceIn(0f, 1f) * slider.rangeSpan
             }
             val raw = valueAt(down.position)
             val index = slider.thumbIndexFor(raw)
+            slider.focusRequesters.getOrNull(index)?.requestFocus()
+            val press = PressInteraction.Press(down.position)
+            val source = slider.interactionSourceFor(index)
+            source.tryEmit(press)
             slider.updateThumb(index, raw)
-            drag(down.id) { change ->
-                change.consume()
-                slider.updateThumb(index, valueAt(change.position))
+            var completed = false
+            try {
+                completed =
+                    drag(down.id) { change ->
+                        change.consume()
+                        slider.updateThumb(index, valueAt(change.position))
+                    }
+                slider.commit()
+            } finally {
+                source.tryEmit(if (completed) PressInteraction.Release(press) else PressInteraction.Cancel(press))
             }
-            slider.commit()
         }
     }
 }
@@ -563,8 +619,31 @@ internal fun SliderRange(modifier: Modifier = Modifier) {
                 } else {
                     visualFractions.maxOrNull() ?: 0f
                 }
-            val length =
-                (slider.state.usableWidth * (endFraction - startFraction) + THUMB_SIZE / 2).coerceAtLeast(0.dp)
+            val nova = currentTheme.activePreset == StylePreset.Nova
+            val start =
+                if (nova &&
+                    (
+                        fractions.size > 1 ||
+                            slider.state.inverted
+                    )
+                ) {
+                    slider.thumbSize / 2 +
+                        slider.state.usableWidth * startFraction
+                } else {
+                    slider.state.usableWidth * startFraction
+                }
+            val end =
+                if (nova &&
+                    fractions.size <= 1 &&
+                    slider.state.inverted
+                ) {
+                    slider.state.usableWidth +
+                        slider.thumbSize
+                } else {
+                    slider.state.usableWidth * endFraction +
+                        slider.thumbSize / 2
+                }
+            val length = (end - start).coerceAtLeast(0.dp)
             val vertical = slider.state.orientation == SliderOrientation.Vertical
             val sized =
                 if (vertical) {
@@ -572,12 +651,12 @@ internal fun SliderRange(modifier: Modifier = Modifier) {
                 } else {
                     Modifier.width(length).height(TRACK_HEIGHT)
                 }
-            if (startFraction == 0f) {
+            if (start == 0.dp) {
                 sized.then(modifier)
             } else if (vertical) {
-                Modifier.offset(y = -slider.state.usableWidth * startFraction).then(sized).then(modifier)
+                Modifier.offset(y = -start).then(sized).then(modifier)
             } else {
-                Modifier.offset(x = slider.state.usableWidth * startFraction).then(sized).then(modifier)
+                Modifier.offset(x = start).then(sized).then(modifier)
             }
         } else {
             modifier
@@ -610,7 +689,43 @@ internal fun SliderThumb(
                     Modifier.offset(x = slider.state.usableWidth * fraction)
                 }
             offset
-                .size(THUMB_SIZE)
+                .size(slider.thumbSize)
+                .keyboardInputMode()
+                .focusRequester(slider.focusRequesters[index])
+                .onPreviewKeyEvent { event ->
+                    if (!slider.state.enabled || event.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
+                    val state = slider.state
+                    val unit = if (state.step > 0f) state.step else slider.rangeSpan / 100f
+                    val delta = if (event.isShiftPressed) unit * 10 else unit
+                    val reverse = if (state.inverted xor slider.rtl) -1 else 1
+                    val value = state.values[index]
+                    val target =
+                        when (event.key) {
+                            Key.MoveHome -> state.valueRange.start
+                            Key.MoveEnd -> state.valueRange.endInclusive
+                            Key.PageUp -> value + unit * 10
+                            Key.PageDown -> value - unit * 10
+                            Key.DirectionRight -> value + delta * reverse
+                            Key.DirectionLeft -> value - delta * reverse
+                            Key.DirectionUp -> value + delta * (if (state.inverted) -1 else 1)
+                            Key.DirectionDown -> value - delta * (if (state.inverted) -1 else 1)
+                            else -> return@onPreviewKeyEvent false
+                        }
+                    slider.commit(slider.updateThumb(index, target))
+                    true
+                }
+                .semantics {
+                    progressBarRangeInfo = ProgressBarRangeInfo(slider.state.values[index], slider.state.valueRange)
+                    setProgress { target ->
+                        if (!slider.state.enabled) {
+                            false
+                        } else {
+                            slider.commit(slider.updateThumb(index, target))
+                            true
+                        }
+                    }
+                    if (!slider.state.enabled) disabled()
+                }
                 .focusable(enabled = slider.state.enabled, interactionSource = interactionSource)
                 .then(modifier)
         } else {

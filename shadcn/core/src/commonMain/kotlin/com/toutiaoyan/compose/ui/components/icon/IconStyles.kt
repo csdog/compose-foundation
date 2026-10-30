@@ -6,7 +6,12 @@ import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.unit.Dp
 import com.toutiaoyan.compose.ui.utils.rememberTheme
+
+/** Inline controls can size default icons; an explicit Icon variant/style still wins. */
+internal val LocalInlineIconSize = staticCompositionLocalOf<Dp?> { null }
 
 /**
  * Size variants for [Icon], keyed off theme [com.toutiaoyan.compose.ui.tokens.IconStyles]
@@ -14,7 +19,7 @@ import com.toutiaoyan.compose.ui.utils.rememberTheme
  * maps onto fixed dp boxes.
  */
 sealed interface IconVariant {
-    /** Theme `icons.standardSize` (default). */
+    /** Inline control default, otherwise theme `icons.standardSize`. */
     data object Default : IconVariant
 
     /** Theme `icons.smallSize`. */
@@ -24,11 +29,12 @@ sealed interface IconVariant {
 @Composable
 fun IconVariant.rememberStyle(): Style {
     val receiver = this
-    return rememberTheme(receiver) {
+    val inlineSize = LocalInlineIconSize.current
+    return rememberTheme(receiver, inlineSize) {
         when (receiver) {
             IconVariant.Default ->
                 Style {
-                    size(icons.standardSize)
+                    size(inlineSize ?: icons.standardSize)
                 }
 
             IconVariant.Small ->

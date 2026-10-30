@@ -1,0 +1,29 @@
+{
+  "viewport": 1083,
+  "fonts": [
+    {
+      "url": "http://127.0.0.1:8765/composeResources/compose_foundation.app.shared.generated.resources/font/geist_medium.ttf",
+      "size": 127960
+    },
+    {
+      "url": "http://127.0.0.1:8765/composeResources/compose_foundation.app.shared.generated.resources/font/geist_semibold.ttf",
+      "size": 128172
+    },
+    {
+      "url": "http://127.0.0.1:8765/composeResources/compose_foundation.app.shared.generated.resources/font/geist_bold.ttf",
+      "size": 129124
+    },
+    {
+      "url": "http://127.0.0.1:8765/composeResources/compose_foundation.app.shared.generated.resources/font/geist_mono_regular.ttf",
+      "size": 149584
+    },
+    {
+      "url": "http://127.0.0.1:8765/composeResources/compose_foundation.app.shared.generated.resources/font/geist_regular.ttf",
+      "size": 126348
+    }
+  ],
+  "wasm": [
+    "http://127.0.0.1:8765/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8765/642a3a36aa63d3f1dd06.wasm"
+  ]
+}

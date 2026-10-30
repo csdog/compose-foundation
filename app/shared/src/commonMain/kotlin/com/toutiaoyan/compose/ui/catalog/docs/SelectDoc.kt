@@ -6,6 +6,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.width
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.components.select.Select
 import com.toutiaoyan.compose.ui.components.select.SelectContent
@@ -18,14 +20,14 @@ import com.toutiaoyan.compose.ui.components.select.SelectScrollDownButton
 import com.toutiaoyan.compose.ui.components.select.SelectScrollUpButton
 import com.toutiaoyan.compose.ui.components.select.SelectTrigger
 import com.toutiaoyan.compose.ui.components.select.SelectVariant
+import com.toutiaoyan.compose.ui.components.select.selectState
 import com.toutiaoyan.compose.ui.components.select.SelectValue
 
 val selectDoc =
     ComponentDoc(
         id = "select",
         title = "Select",
-        description =
-            "A plain (non-searchable) dropdown select. Unlike Combobox, the option list isn't filterable by typing.",
+        description = "Displays a list of options for the user to pick from—triggered by a button.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.select.Select
@@ -43,30 +45,55 @@ val selectDoc =
                 }
             }
             """.trimIndent(),
+        apiProperties =
+            listOf(
+                ApiProperty("value", "T?", "required"),
+                ApiProperty("open", "Boolean?", "null"),
+                ApiProperty("placeholder", "String", "Select an option"),
+                ApiProperty("invalid", "Boolean", "false"),
+                ApiProperty("SelectTrigger.size", "SelectSize", "Default"),
+                ApiProperty("SelectContent.alignItemWithTrigger", "Boolean?", "null"),
+            ),
         examples =
             listOf(
                 ComponentExample(
                     title = "Default",
                     code =
                         """
-                        var theme by remember { mutableStateOf<String?>(null) }
-                        Select(value = theme, onValueChange = { theme = it }, placeholder = "Theme") {
-                            SelectTrigger()
+                        var fruit by remember { mutableStateOf<String?>(null) }
+                        Select(value = fruit, onValueChange = { fruit = it }, placeholder = "Select a fruit") {
+                            SelectTrigger(modifier = Modifier.width(192.dp))
                             SelectContent {
-                                SelectItem("Light")
-                                SelectItem("Dark")
-                                SelectItem("System")
+                                SelectGroup(heading = "Fruits") {
+                                    val controller = selectState()
+                                    SelectItem<String?>(null, textValue = "Select a fruit", onSelect = { fruit = null; controller.setOpen(false); true })
+                                    SelectItem("Apple")
+                                    SelectItem("Banana")
+                                    SelectItem("Blueberry")
+                                    SelectItem("Grapes")
+                                    SelectItem("Pineapple")
+                                }
                             }
                         }
                         """.trimIndent(),
                     preview = {
-                        var theme by remember { mutableStateOf<String?>(null) }
-                        Select(value = theme, onValueChange = { theme = it }, placeholder = "Theme") {
-                            SelectTrigger()
+                        var fruit by remember { mutableStateOf<String?>(null) }
+                        Select(value = fruit, onValueChange = { fruit = it }, placeholder = "Select a fruit") {
+                            SelectTrigger(modifier = Modifier.width(192.dp))
                             SelectContent {
-                                SelectItem("Light")
-                                SelectItem("Dark")
-                                SelectItem("System")
+                                SelectGroup(heading = "Fruits") {
+                                    val controller = selectState()
+                                    SelectItem<String?>(null, textValue = "Select a fruit", onSelect = {
+                                        fruit = null
+                                        controller.setOpen(false)
+                                        true
+                                    })
+                                    SelectItem("Apple")
+                                    SelectItem("Banana")
+                                    SelectItem("Blueberry")
+                                    SelectItem("Grapes")
+                                    SelectItem("Pineapple")
+                                }
                             }
                         }
                     },

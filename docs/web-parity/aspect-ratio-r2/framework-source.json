@@ -1,0 +1,18 @@
+{
+  "dependency": "org.jetbrains.compose.ui:ui-text-desktop:1.12.2",
+  "source_jar_sha256": "937ef4aa07ca3293fc8c217a5af52b4edda2ee1f6669b82095fc77efc192eeb2",
+  "files": [
+    {
+      "file": "LineHeightStyle.kt",
+      "sha256": "7e6613823ea02eb5118f7c7fdfde13e1b6385b3c1dfd9ae276e85b0e16804ffc"
+    },
+    {
+      "file": "ParagraphBuilder.skiko.kt",
+      "sha256": "944d09e764a633c30343a6243d4cd06c6dbd1671e903e8cd92a7d35296d38e7f"
+    },
+    {
+      "file": "SkiaParagraph.skiko.kt",
+      "sha256": "c59ac1bfd3a0868af677a4e499b21649284e9e63afa8fae92dd7fda9cbd65026"
+    }
+  ]
+}

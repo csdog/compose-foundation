@@ -2,24 +2,14 @@ package com.toutiaoyan.compose.ui.tokens
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
-import com.toutiaoyan.compose.tailwind.core.Oklch
 import com.toutiaoyan.compose.tailwind.core.TwColors
-import com.toutiaoyan.compose.tailwind.core.toColor
 
 /**
- * shadcn/ui's real "base color" picker (ui.shadcn.com/create): a named neutral gray
- * family that defines the *entire* non-accent palette -- background, foreground,
- * secondary, muted, border, and ring. This is a different axis from [Accent],
- * which only overrides primary/primaryForeground on top of whichever base is selected.
- *
- * Every field below is a named `TwColors` shade (tailwind-compose's real, oklch-sourced
- * Tailwind v4 palette -- verified byte-for-byte identical to this file's previous hex
- * literals via a scratch test comparing every field against the full 26-hue/11-shade
- * table before migrating, see PR history). `background` is plain white (real shadcn's
- * `oklch(1 0 0)`, not a tinted shade). Each family follows the same real-shadcn shade
- * mapping: background=white/{f}950=foreground/{f}900=primary/{f}50=onPrimary/
- * {f}100=secondary/{f}500=onSurfaceVariant/{f}200=border/{f}400=ring, with dark mode
- * inverting light's primary/onPrimary pair and raising secondary/border to {f}800.
+ * Official shadcn/ui base palettes from apps/v4/public/r/colors/<base>.json.
+ * Named Tailwind shades preserve the source OKLCH values. Dark border/input use
+ * translucent white roles; surface, ring, chart and sidebar roles are explicit,
+ * rather than approximated by RGB blends or borrowed from other base families.
+ * Accent overrides are applied separately by Theme.
  */
 @Immutable
 enum class BaseColor(
@@ -37,6 +27,14 @@ enum class BaseColor(
                 mutedForeground = TwColors.neutral500,
                 border = TwColors.neutral200,
                 ring = TwColors.neutral400,
+                charts =
+                    listOf(
+                        TwColors.neutral300,
+                        TwColors.neutral500,
+                        TwColors.neutral600,
+                        TwColors.neutral700,
+                        TwColors.neutral800,
+                    ),
             ),
         dark =
             baseDark(
@@ -46,8 +44,15 @@ enum class BaseColor(
                 primaryForeground = TwColors.neutral900,
                 secondary = TwColors.neutral800,
                 mutedForeground = TwColors.neutral400,
-                border = TwColors.neutral800,
-                ring = TwColors.neutral400,
+                ring = TwColors.neutral500,
+                charts =
+                    listOf(
+                        TwColors.neutral300,
+                        TwColors.neutral500,
+                        TwColors.neutral600,
+                        TwColors.neutral700,
+                        TwColors.neutral800,
+                    ),
             ),
     ),
 
@@ -62,6 +67,14 @@ enum class BaseColor(
                 mutedForeground = TwColors.stone500,
                 border = TwColors.stone200,
                 ring = TwColors.stone400,
+                charts =
+                    listOf(
+                        TwColors.stone300,
+                        TwColors.stone500,
+                        TwColors.stone600,
+                        TwColors.stone700,
+                        TwColors.stone800,
+                    ),
             ),
         dark =
             baseDark(
@@ -71,8 +84,15 @@ enum class BaseColor(
                 primaryForeground = TwColors.stone900,
                 secondary = TwColors.stone800,
                 mutedForeground = TwColors.stone400,
-                border = TwColors.stone800,
-                ring = TwColors.stone400,
+                ring = TwColors.stone500,
+                charts =
+                    listOf(
+                        TwColors.stone300,
+                        TwColors.stone500,
+                        TwColors.stone600,
+                        TwColors.stone700,
+                        TwColors.stone800,
+                    ),
             ),
     ),
 
@@ -87,9 +107,15 @@ enum class BaseColor(
                 mutedForeground = TwColors.zinc500,
                 border = TwColors.zinc200,
                 ring = TwColors.zinc400,
+                charts =
+                    listOf(
+                        TwColors.zinc300,
+                        TwColors.zinc500,
+                        TwColors.zinc600,
+                        TwColors.zinc700,
+                        TwColors.zinc800,
+                    ),
             ),
-        // zinc.json dark sidebar-primary is a hardcoded blue, not aliased to primary
-        // like other base families / light mode.
         dark =
             baseDark(
                 background = TwColors.zinc950,
@@ -98,11 +124,15 @@ enum class BaseColor(
                 primaryForeground = TwColors.zinc900,
                 secondary = TwColors.zinc800,
                 mutedForeground = TwColors.zinc400,
-                border = TwColors.zinc800,
-                ring = TwColors.zinc400,
-            ).copy(
-                sidebarPrimary = Oklch(0.488f, 0.243f, 264.376f).toColor(),
-                sidebarPrimaryForeground = TwColors.zinc50,
+                ring = TwColors.zinc500,
+                charts =
+                    listOf(
+                        TwColors.zinc300,
+                        TwColors.zinc500,
+                        TwColors.zinc600,
+                        TwColors.zinc700,
+                        TwColors.zinc800,
+                    ),
             ),
     ),
 
@@ -117,6 +147,14 @@ enum class BaseColor(
                 mutedForeground = TwColors.mauve500,
                 border = TwColors.mauve200,
                 ring = TwColors.mauve400,
+                charts =
+                    listOf(
+                        TwColors.mauve300,
+                        TwColors.mauve500,
+                        TwColors.mauve600,
+                        TwColors.mauve700,
+                        TwColors.mauve800,
+                    ),
             ),
         dark =
             baseDark(
@@ -126,8 +164,15 @@ enum class BaseColor(
                 primaryForeground = TwColors.mauve900,
                 secondary = TwColors.mauve800,
                 mutedForeground = TwColors.mauve400,
-                border = TwColors.mauve800,
-                ring = TwColors.mauve400,
+                ring = TwColors.mauve500,
+                charts =
+                    listOf(
+                        TwColors.mauve300,
+                        TwColors.mauve500,
+                        TwColors.mauve600,
+                        TwColors.mauve700,
+                        TwColors.mauve800,
+                    ),
             ),
     ),
 
@@ -142,6 +187,14 @@ enum class BaseColor(
                 mutedForeground = TwColors.olive500,
                 border = TwColors.olive200,
                 ring = TwColors.olive400,
+                charts =
+                    listOf(
+                        TwColors.olive300,
+                        TwColors.olive500,
+                        TwColors.olive600,
+                        TwColors.olive700,
+                        TwColors.olive800,
+                    ),
             ),
         dark =
             baseDark(
@@ -151,8 +204,15 @@ enum class BaseColor(
                 primaryForeground = TwColors.olive900,
                 secondary = TwColors.olive800,
                 mutedForeground = TwColors.olive400,
-                border = TwColors.olive800,
-                ring = TwColors.olive400,
+                ring = TwColors.olive500,
+                charts =
+                    listOf(
+                        TwColors.olive300,
+                        TwColors.olive500,
+                        TwColors.olive600,
+                        TwColors.olive700,
+                        TwColors.olive800,
+                    ),
             ),
     ),
 
@@ -167,6 +227,14 @@ enum class BaseColor(
                 mutedForeground = TwColors.mist500,
                 border = TwColors.mist200,
                 ring = TwColors.mist400,
+                charts =
+                    listOf(
+                        TwColors.mist300,
+                        TwColors.mist500,
+                        TwColors.mist600,
+                        TwColors.mist700,
+                        TwColors.mist800,
+                    ),
             ),
         dark =
             baseDark(
@@ -176,8 +244,15 @@ enum class BaseColor(
                 primaryForeground = TwColors.mist900,
                 secondary = TwColors.mist800,
                 mutedForeground = TwColors.mist400,
-                border = TwColors.mist800,
-                ring = TwColors.mist400,
+                ring = TwColors.mist500,
+                charts =
+                    listOf(
+                        TwColors.mist300,
+                        TwColors.mist500,
+                        TwColors.mist600,
+                        TwColors.mist700,
+                        TwColors.mist800,
+                    ),
             ),
     ),
 
@@ -192,6 +267,14 @@ enum class BaseColor(
                 mutedForeground = TwColors.taupe500,
                 border = TwColors.taupe200,
                 ring = TwColors.taupe400,
+                charts =
+                    listOf(
+                        TwColors.taupe300,
+                        TwColors.taupe500,
+                        TwColors.taupe600,
+                        TwColors.taupe700,
+                        TwColors.taupe800,
+                    ),
             ),
         dark =
             baseDark(
@@ -201,8 +284,15 @@ enum class BaseColor(
                 primaryForeground = TwColors.taupe900,
                 secondary = TwColors.taupe800,
                 mutedForeground = TwColors.taupe400,
-                border = TwColors.taupe800,
-                ring = TwColors.taupe400,
+                ring = TwColors.taupe500,
+                charts =
+                    listOf(
+                        TwColors.taupe300,
+                        TwColors.taupe500,
+                        TwColors.taupe600,
+                        TwColors.taupe700,
+                        TwColors.taupe800,
+                    ),
             ),
     ),
 
@@ -217,31 +307,6 @@ enum class BaseColor(
 private val DESTRUCTIVE_LIGHT = TwColors.red600
 private val DESTRUCTIVE_DARK = TwColors.red400
 
-/**
- * Midpoint RGB blend of two opaque colors -- used to derive dark-mode card/popover/
- * sidebar tones as a "raised panel" between `background` and `secondary`. Verified
- * against real shadcn's zinc.json: blending Zinc's dark `background` (#09090B) and
- * `secondary` (#27272A) this way reproduces its real oklch-derived `card`/`popover`/
- * `sidebar` value (#18181B) to within one rounding unit -- close enough that deriving
- * the other six base-color families' card/popover/sidebar the same way (rather than
- * hand-verifying oklch values across 7 families x 2 modes) is a reasonable trade.
- */
-private fun blend(
-    a: Color,
-    b: Color,
-): Color {
-    val ar = (a.red * 255f).toInt()
-    val ag = (a.green * 255f).toInt()
-    val ab = (a.blue * 255f).toInt()
-    val br = (b.red * 255f).toInt()
-    val bg = (b.green * 255f).toInt()
-    val bb = (b.blue * 255f).toInt()
-    val r = (ar + br + 1) / 2
-    val g = (ag + bg + 1) / 2
-    val bl = (ab + bb + 1) / 2
-    return Color(0xFF000000.toInt() or (r shl 16) or (g shl 8) or bl)
-}
-
 private fun baseLight(
     background: Color,
     foreground: Color,
@@ -251,6 +316,7 @@ private fun baseLight(
     mutedForeground: Color,
     border: Color,
     ring: Color,
+    charts: List<Color>,
 ) = Colors(
     background = background,
     foreground = foreground,
@@ -271,12 +337,12 @@ private fun baseLight(
     border = border,
     input = border,
     ring = ring,
-    chart1 = TwColors.orange600,
-    chart2 = TwColors.teal600,
-    chart3 = TwColors.blue900,
-    chart4 = TwColors.yellow400,
-    chart5 = TwColors.amber500,
-    sidebar = background,
+    chart1 = charts[0],
+    chart2 = charts[1],
+    chart3 = charts[2],
+    chart4 = charts[3],
+    chart5 = charts[4],
+    sidebar = primaryForeground,
     sidebarForeground = foreground,
     sidebarPrimary = primary,
     sidebarPrimaryForeground = primaryForeground,
@@ -293,14 +359,14 @@ private fun baseDark(
     primaryForeground: Color,
     secondary: Color,
     mutedForeground: Color,
-    border: Color,
     ring: Color,
+    charts: List<Color>,
 ) = Colors(
     background = background,
     foreground = foreground,
-    card = blend(background, secondary),
+    card = primaryForeground,
     cardForeground = foreground,
-    popover = blend(background, secondary),
+    popover = primaryForeground,
     popoverForeground = foreground,
     primary = primary,
     primaryForeground = primaryForeground,
@@ -312,20 +378,20 @@ private fun baseDark(
     accentForeground = foreground,
     destructive = DESTRUCTIVE_DARK,
     destructiveForeground = TwColors.white,
-    border = border,
-    input = border,
+    border = Color.White.copy(alpha = 0.1f),
+    input = Color.White.copy(alpha = 0.15f),
     ring = ring,
-    chart1 = TwColors.violet600,
-    chart2 = TwColors.teal500,
-    chart3 = TwColors.amber500,
-    chart4 = TwColors.fuchsia600,
-    chart5 = TwColors.rose500,
-    sidebar = blend(background, secondary),
+    chart1 = charts[0],
+    chart2 = charts[1],
+    chart3 = charts[2],
+    chart4 = charts[3],
+    chart5 = charts[4],
+    sidebar = primaryForeground,
     sidebarForeground = foreground,
-    sidebarPrimary = primary,
-    sidebarPrimaryForeground = primaryForeground,
+    sidebarPrimary = TwColors.blue700,
+    sidebarPrimaryForeground = foreground,
     sidebarAccent = secondary,
     sidebarAccentForeground = foreground,
-    sidebarBorder = border,
+    sidebarBorder = Color.White.copy(alpha = 0.1f),
     sidebarRing = ring,
 )

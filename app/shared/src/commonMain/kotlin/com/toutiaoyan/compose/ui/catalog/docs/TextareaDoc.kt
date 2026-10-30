@@ -2,6 +2,9 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,30 +29,32 @@ val textareaDoc =
                 Textarea(value = bio, onValueChange = { bio = it }, placeholder = "Tell us about yourself")
             }
             """.trimIndent(),
+        apiProperties =
+            listOf(
+                ApiProperty("disabled", "Boolean", "false"),
+                ApiProperty("readOnly", "Boolean", "false"),
+                ApiProperty("invalid", "Boolean", "false"),
+                ApiProperty("rows", "Int?", "null"),
+                ApiProperty("minLines", "Int", "1"),
+                ApiProperty("maxLines", "Int", "Int.MAX_VALUE"),
+            ),
         examples =
             listOf(
                 ComponentExample(
                     title = "Default",
                     code =
                         """
-                        var bio by remember { mutableStateOf("") }
-                        Field("Bio") {
-                            Textarea(
-                                value = bio,
-                                onValueChange = { bio = it },
-                                placeholder = "Tell us about yourself",
-                            )
-                        }
+                        var message by remember { mutableStateOf("") }
+                        Textarea(message, { message = it }, modifier = Modifier.widthIn(max = 320.dp), placeholder = "Type your message here.")
                         """.trimIndent(),
                     preview = {
-                        var bio by remember { mutableStateOf("") }
-                        Field("Bio") {
-                            Textarea(
-                                value = bio,
-                                onValueChange = { bio = it },
-                                placeholder = "Tell us about yourself",
-                            )
-                        }
+                        var message by remember { mutableStateOf("") }
+                        Textarea(
+                            message,
+                            { message = it },
+                            modifier = Modifier.widthIn(max = 320.dp),
+                            placeholder = "Type your message here.",
+                        )
                     },
                 ),
                 ComponentExample(
@@ -444,13 +449,15 @@ val textareaDoc =
                         }
                         """.trimIndent(),
                     preview = {
-                        Field("Bio") {
-                            Textarea(
-                                value = "",
-                                onValueChange = {},
-                                placeholder = "Tell us about yourself",
-                                autoFocus = true,
-                            )
+                        AutofocusPreview {
+                            Field("Bio") {
+                                Textarea(
+                                    value = "",
+                                    onValueChange = {},
+                                    placeholder = "Tell us about yourself",
+                                    autoFocus = true,
+                                )
+                            }
                         }
                     },
                 ),

@@ -1,0 +1,81 @@
+{
+  "status": "passed-before-local-commit",
+  "staticGates": [
+    "ktlintCheck",
+    "detekt"
+  ],
+  "fullJointRegression": {
+    "run": "0020",
+    "tests": 53,
+    "failures": 0,
+    "pixelFixtures": 13
+  },
+  "fidelityFollowUp": {
+    "run": "0021",
+    "tests": 16,
+    "failures": 0,
+    "classes": [
+      "AttachmentExamplesTest (9)",
+      "ComponentDocumentationTest (7)"
+    ]
+  },
+  "finalStaticGatesRun": "0022",
+  "builds": [
+    "jsBrowserDevelopmentExecutableDistribution",
+    "wasmJsBrowserDevelopmentExecutableDistribution"
+  ],
+  "sourceChangesAfterInitialAudit": "Repository pre-commit formatting, mechanical long-line wraps preserving string values, explicit 0.35f..0.65f parser-safe range, formatter-safe generated snippet templates with unchanged output indentation. Added focused no-leaked-generator regression.",
+  "artifactClasses": [
+    {
+      "name": "AttachmentExamplesTest[jvm]",
+      "tests": "9",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "AvatarScreenshotTest[jvm]",
+      "tests": "8",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "ComponentDocumentationTest[jvm]",
+      "tests": "7",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "BreadcrumbScreenshotTest[jvm]",
+      "tests": "5",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "AvatarParityTest[jvm]",
+      "tests": "5",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "BreadcrumbParityTest[jvm]",
+      "tests": "5",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "AttachmentGroupFadeTest[jvm]",
+      "tests": "2",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    }
+  ],
+  "completionScope": "Checkpoint only; all previously documented component/site follow-ups stay open.",
+  "warnings": "Existing AGP/Gradle/Text and optional webpack os/path warnings remain, successful task exits0."
+}

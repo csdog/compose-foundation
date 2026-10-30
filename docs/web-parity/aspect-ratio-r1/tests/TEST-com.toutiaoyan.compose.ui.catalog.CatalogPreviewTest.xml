@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CatalogPreviewTest[jvm]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-30T03:03:35.356Z" hostname="Apples-MacBook-Pro.local" time="0.164">
+  <properties/>
+  <testcase name="compactHeaderHasWorkingNavigationEntry[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogPreviewTest" time="0.03"/>
+  <testcase name="inputAutofocusRequiresAnExplicitTryClick[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogPreviewTest" time="0.04"/>
+  <testcase name="apiKeyPreviewUsesPasswordSemantics[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogPreviewTest" time="0.019"/>
+  <testcase name="textareaAutofocusRequiresAnExplicitTryClick[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogPreviewTest" time="0.032"/>
+  <testcase name="expandingSourceKeepsLivePreviewState[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogPreviewTest" time="0.043"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

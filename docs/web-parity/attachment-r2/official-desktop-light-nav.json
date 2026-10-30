@@ -1,0 +1,38 @@
+[
+  {
+    "section": "default",
+    "scrollY": 0,
+    "heading": "Attachment",
+    "dark": false
+  },
+  {
+    "section": "image",
+    "scrollY": 2772,
+    "heading": "Image#",
+    "dark": false
+  },
+  {
+    "section": "states",
+    "scrollY": 3387.5,
+    "heading": "States#",
+    "dark": false
+  },
+  {
+    "section": "sizes",
+    "scrollY": 4154,
+    "heading": "Sizes#",
+    "dark": false
+  },
+  {
+    "section": "group",
+    "scrollY": 4739,
+    "heading": "Group#",
+    "dark": false
+  },
+  {
+    "section": "trigger",
+    "scrollY": 5249,
+    "heading": "Trigger#",
+    "dark": false
+  }
+]

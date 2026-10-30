@@ -1,0 +1,58 @@
+{
+  "read_on": "2026-10-30",
+  "sources": [
+    {
+      "file": "aspect-ratio-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/examples/base/aspect-ratio-demo.tsx",
+      "sha256": "6def4e7d7dc5e030275abb0c00ed44ec9ad289e1c2b198f6961d4c53aa37f156"
+    },
+    {
+      "file": "aspect-ratio-portrait.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/examples/base/aspect-ratio-portrait.tsx",
+      "sha256": "504074c9c37d462b6c87e1f052a49e82b3903dba4ec2d61bc6ce1359b10c2bbd"
+    },
+    {
+      "file": "aspect-ratio-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/examples/base/aspect-ratio-rtl.tsx",
+      "sha256": "50bef354657f87260007109b815a684e06166c5f33476bc8f8d4ddf4c52a2fbb"
+    },
+    {
+      "file": "aspect-ratio-square.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/examples/base/aspect-ratio-square.tsx",
+      "sha256": "d3a5434a5b85111307bb5aa385cebdd2403e23c4a10745bf5e7681bac7b8d0b3"
+    },
+    {
+      "file": "aspect-ratio.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/registry/bases/base/ui/aspect-ratio.tsx",
+      "sha256": "6df19df6b983c450361081b695dbf3541a6fe4a9d2ec148766991e4eb0bf6473"
+    },
+    {
+      "file": "select.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/registry/bases/base/ui/select.tsx",
+      "sha256": "6348d30035b68867d5efffe9b0b1611718226bef9fdeef9554349d6b98252110"
+    },
+    {
+      "file": "aspect-ratio.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/content/docs/components/base/aspect-ratio.mdx",
+      "sha256": "0a248906c3ee2ec5e9f5dc8272b07ce546914114d00fcce6c1912507e3526639"
+    },
+    {
+      "file": "shadcn1.png",
+      "url": "https://avatar.vercel.sh/shadcn1",
+      "note": "Underlying original, excluded from final catalog resource.",
+      "sha256": "82a889804014e7d2669ca3ccb9a0d44985c08dfacafb719195d97de423d25cc3"
+    },
+    {
+      "file": "official-image.png",
+      "url": "https://ui.shadcn.com/_next/image?url=https%3A%2F%2Favatar.vercel.sh%2Fshadcn1&w=3840&q=75",
+      "note": "curl PNG variant, excluded from final catalog resource.",
+      "sha256": "82de1d6211b25396ed69683aa6cc2a87ec5ec4d6f87c828aeeb1746e5af261db"
+    },
+    {
+      "file": "official-browser-decoded.png",
+      "url": "https://ui.shadcn.com/docs/components/base/aspect-ratio",
+      "note": "Loaded same-origin img decoded at 120x120 without CSS filters. Final catalog resource.",
+      "sha256": "ceec6a90988a9da854aa0d76b8b2103a0c054936a723664660c85fc11192a6d0"
+    }
+  ]
+}

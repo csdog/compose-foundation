@@ -1,5 +1,6 @@
 package com.toutiaoyan.compose.ui.components.button
 
+import com.toutiaoyan.compose.ui.utils.keyboardInputMode
 import androidx.compose.foundation.Indication
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.clickable
@@ -11,15 +12,22 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.StyleScope
 import androidx.compose.foundation.style.rememberUpdatedStyleState
 import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import com.toutiaoyan.compose.ui.styles.cssStyleable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.semantics.Role
@@ -29,6 +37,13 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
+import com.toutiaoyan.compose.ui.components.icon.LocalInlineIconSize
+import com.toutiaoyan.compose.ui.tokens.StylePreset
+import com.toutiaoyan.compose.ui.modifiers.RippleIndication
 import com.toutiaoyan.compose.ui.styles.rememberMinTouchTargetStyle
 import com.toutiaoyan.compose.ui.theme.LocalContentColor
 import com.toutiaoyan.compose.ui.theme.LocalTextDecoration
@@ -60,6 +75,7 @@ import com.toutiaoyan.compose.ui.components.text.Text
  * ```
  *
  * Style merge on the painted chrome (later wins): `variant → size → style`.
+ * Bounded press feedback follows that final shape without clipping the outer focus ring.
  * Press motion is an inner [indication], not a Style, so the outer min-touch
  * hit box does not scale or shift.
  * [modifier] is on the outer min-touch wrapper so weight / align / fillMaxWidth keep
@@ -87,6 +103,25 @@ fun Button(
             it.isEnabled = resolvedEnabled
         }
 
+    val theme = currentTheme
+    val isNova = theme.activePreset == StylePreset.Nova
+    val labelStyle =
+        if (isNova) {
+            theme.typography.labelLarge.copy(
+                fontFamily = theme.fontFamily,
+                fontSize =
+                    when (size) {
+                        ButtonSize.Xs -> 12.sp
+                        ButtonSize.Sm -> 12.8.sp
+                        else -> 14.sp
+                    },
+                lineHeight = if (size == ButtonSize.Xs) 16.sp else 20.sp,
+                fontWeight = FontWeight.Medium,
+                letterSpacing = 0.sp,
+            )
+        } else {
+            TextStyle.Default
+        }
     val touchTargetStyle = rememberMinTouchTargetStyle()
     // Link underline: Style `hovered { textDecoration }` is not reliable inside
     // SelectionContainer; drive Text via [LocalTextDecoration] instead (real shadcn:
@@ -95,6 +130,9 @@ fun Button(
     val linkDecoration =
         if (variant == ButtonVariant.Link && isHovered) TextDecoration.Underline else null
     val resolvedIndication = indication ?: LocalIndication.current
+    val clipIndication = (resolvedIndication as? RippleIndication)?.bounded != false
+    val indicationShape = remember { mutableStateOf<Shape>(RectangleShape) }
+    val chromeStyle = (variant.rememberStyle() then size.rememberStyle() then style).captureShape(indicationShape)
 
     // Outer: hit testing + theme minTouchTarget (default 48.dp), indication = null.
     // Inner: painted chrome + press indication (same interactionSource).
@@ -102,6 +140,7 @@ fun Button(
         modifier =
             modifier
                 .raiseFocusedSiblingZIndex()
+                .keyboardInputMode()
                 .semantics(mergeDescendants = true) {
                     role = Role.Button
                     if (!label.isNullOrEmpty()) {
@@ -129,27 +168,53 @@ fun Button(
         contentAlignment = Alignment.Center,
     ) {
         CompositionLocalProvider(
-            LocalContentColor provides variant.iconTint(currentTheme.colors),
+            LocalContentColor provides
+                if (isNova &&
+                    variant == ButtonVariant.Destructive
+                ) {
+                    theme.colors.destructive
+                } else {
+                    variant.iconTint(theme.colors)
+                },
+            LocalDefaultTextStyle provides labelStyle,
+            LocalInlineIconSize provides
+                if (isNova) {
+                    when (size) {
+                        ButtonSize.Xs, ButtonSize.IconXs -> 12.dp
+                        ButtonSize.Sm -> 14.dp
+                        else -> 16.dp
+                    }
+                } else {
+                    null
+                },
             LocalTextDecoration provides linkDecoration,
         ) {
             Box(
                 modifier =
                     Modifier
-                        .styleable(
+                        .cssStyleable(
                             styleState,
-                            variant.rememberStyle() then size.rememberStyle() then style,
+                            chromeStyle,
                         )
                         .then(
                             if (variant == ButtonVariant.Link) {
                                 Modifier
                             } else {
-                                Modifier.indication(interactionSource, resolvedIndication)
+                                // Keep focus rings and shadows on the outer chrome; clip only feedback/content.
+                                Modifier.graphicsLayer {
+                                    shape = indicationShape.value
+                                    clip = clipIndication
+                                }.indication(interactionSource, resolvedIndication)
                             },
                         ),
                 contentAlignment = Alignment.Center,
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally),
+                    horizontalArrangement =
+                        Arrangement.spacedBy(
+                            if (isNova && (size == ButtonSize.Xs || size == ButtonSize.Sm)) 4.dp else 6.dp,
+                            Alignment.CenterHorizontally,
+                        ),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     content()
@@ -186,5 +251,25 @@ fun Button(
         style = style,
     ) {
         Text { text }
+    }
+}
+
+/** Resolve the same shape cascade as chrome without guessing an ancestor graphics-layer outline. */
+@OptIn(ExperimentalFoundationStyleApi::class)
+private fun Style.captureShape(result: MutableState<Shape>): Style {
+    val original = this
+    return Style {
+        val target = this
+        var resolved: Shape = RectangleShape
+        with(original) {
+            object : StyleScope by target {
+                override fun shape(value: Shape) {
+                    resolved = value
+                    target.shape(value)
+                }
+            }.applyStyle()
+        }
+        // Read only by the inner graphics layer, never by composition or measurement.
+        result.value = resolved
     }
 }

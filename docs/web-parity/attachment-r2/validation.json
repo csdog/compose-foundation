@@ -1,0 +1,71 @@
+{
+  "component": "Attachment",
+  "component_audit_complete": false,
+  "whole_goal_complete": false,
+  "editor": "skipped",
+  "tests": {
+    "run": "0027",
+    "passed": 71,
+    "failures": 0,
+    "receipt": "test-results.json"
+  },
+  "pixel_verification": {
+    "run": "0028",
+    "unchanged": 6,
+    "recorded": 0,
+    "receipt": "pixel-verification.json"
+  },
+  "build": {
+    "run": "0027",
+    "js_compile": true,
+    "wasm_distribution": true
+  },
+  "browser": {
+    "example_captures": 48,
+    "official": 24,
+    "local": 24,
+    "forms": [
+      "1440x1000",
+      "390x844"
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "recipes": [
+      "default",
+      "image",
+      "states",
+      "sizes",
+      "group",
+      "trigger"
+    ],
+    "open_dialog_captures": 8,
+    "local_actions_and_closed_captures": 8,
+    "group_scroll_captures": 4,
+    "viewed_contacts": [
+      "contact-default.png",
+      "contact-image.png",
+      "contact-states.png",
+      "contact-sizes.png",
+      "contact-group.png",
+      "contact-trigger.png",
+      "contact-dialog.png",
+      "contact-dialog-actions.png",
+      "contact-dialog-closed.png"
+    ],
+    "local_matrix": "recaptured after progressive fade build0027",
+    "dialogs": "captured before additive group fade; Trigger runtime unchanged",
+    "source_condition": "Official attachment MDX pins base-rhea; repository target is base-nova. Nova p4/radiusxl/black10 dialog intentionally differs from rendered Rhea p6/larger radius/black50."
+  },
+  "remaining": [
+    "Group mandatory snap and 4dp logical scroll padding; keyboard scrolling and overscroll containment are not fully audited.",
+    "Nova xs media radius remains 8dp instead of 6dp; vertical multi-action gap remains 0dp instead of 4dp.",
+    "Dark title weight and filename truncation differ visibly; Geist medium500 is installed, so missing font weight is not an established cause.",
+    "Catalog native scrollbar/layout: official phone inner viewport375 vs local390; preview325 vs340 and horizontal card245 vs260.",
+    "Catalog headings, explanatory prose, code layout and navigation alignment remain part of shared P1.",
+    "Lucide FileSearch shape differs between the source icon version and installed catalog package.",
+    "Complex slots, tiny constraints, wrapping, hover/focus-within styling, standalone AttachmentTrigger and full assistive-technology mapping remain unclosed.",
+    "Photo URI and remove-action independence are covered by injected UriHandler JVM test, not a real browser popup in this round."
+  ]
+}

@@ -2,6 +2,25 @@
 
 package com.toutiaoyan.compose.ui.components.combobox
 
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.input.key.*
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.semantics.selected
+import com.toutiaoyan.compose.ui.components.inputgroup.*
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.clickable
@@ -57,6 +76,9 @@ import com.toutiaoyan.compose.ui.components.separator.Separator
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextColors
 import com.toutiaoyan.compose.ui.components.text.TextVariant
+import com.toutiaoyan.compose.ui.icons.NovaCheck
+import com.toutiaoyan.compose.ui.icons.NovaChevronRight
+import com.toutiaoyan.compose.ui.icons.NovaX
 import com.toutiaoyan.compose.ui.icons.Check
 import com.toutiaoyan.compose.ui.icons.ChevronRight
 import com.toutiaoyan.compose.ui.icons.X
@@ -117,6 +139,54 @@ class ComboboxController internal constructor(
     fun labelOf(value: Any?): String = format(value)
 }
 
+private class ComboboxEditing {
+    val inputs = mutableStateMapOf<Any, Unit>()
+    val inputFocus = FocusRequester()
+    val optionEnabled = mutableMapOf<Any?, Boolean>()
+    val pick = mutableMapOf<Any?, () -> Unit>()
+    var active by mutableStateOf<Any?>(null)
+    var userEdited by mutableStateOf(false)
+    var width by mutableStateOf(216.dp)
+
+    fun key(
+        event: KeyEvent,
+        ctrl: ComboboxController,
+    ): Boolean {
+        if (event.type != KeyEventType.KeyDown || ctrl.disabled) return false
+        val options = ctrl.filtered.filter { optionEnabled[it] != false }
+        when (event.key) {
+            Key.DirectionDown, Key.DirectionUp -> {
+                ctrl.setOpen(true)
+                if (options.isNotEmpty()) {
+                    val index = options.indexOfFirst { it == active || (active == null && ctrl.isHighlighted(it)) }
+                    active =
+                        if (event.key == Key.DirectionDown) {
+                            options[(index + 1).coerceAtMost(options.lastIndex)]
+                        } else {
+                            options[(if (index < 0) options.lastIndex else index - 1).coerceAtLeast(0)]
+                        }
+                }
+                return true
+            }
+            Key.Enter -> {
+                val target = active ?: options.firstOrNull { ctrl.isHighlighted(it) }
+                if (ctrl.open && target != null) {
+                    pick[target]?.invoke()
+                    return true
+                }
+            }
+            Key.Escape ->
+                if (ctrl.open) {
+                    ctrl.setOpen(false)
+                    return true
+                }
+            Key.Tab -> if (ctrl.open) ctrl.setOpen(false)
+        }
+        return false
+    }
+}
+
+private val LocalComboboxEditing = staticCompositionLocalOf<ComboboxEditing?> { null }
 private val LocalCombobox = staticCompositionLocalOf<ComboboxController?> { null }
 
 private val LocalComboboxItemSelected = staticCompositionLocalOf<Boolean?> { null }
@@ -327,10 +397,16 @@ private fun <T> ComboboxRoot(
 ) {
     var internalOpen by remember { mutableStateOf(defaultOpen) }
     var query by remember { mutableStateOf(defaultQuery) }
+    val editing = remember { ComboboxEditing() }
     val controlled = open != null
     val isOpen = open ?: internalOpen
     val setOpen: (Boolean) -> Unit = { next ->
         if (!controlled) internalOpen = next
+        if (!next && editing.inputs.isNotEmpty()) {
+            query = ""
+            editing.userEdited = false
+            editing.active = null
+        }
         onOpenChange?.invoke(next)
     }
     val filtered =
@@ -367,11 +443,12 @@ private fun <T> ComboboxRoot(
             multiple = multiple,
             canClear = canClear,
             highlighted =
-                if (autoHighlight && query.isNotBlank() && filtered.isNotEmpty()) {
-                    filtered.first()
-                } else {
-                    null
-                },
+                editing.active
+                    ?: if (autoHighlight && query.isNotBlank() && filtered.isNotEmpty()) {
+                        filtered.first()
+                    } else {
+                        null
+                    },
             onSelect = { raw ->
                 @Suppress("UNCHECKED_CAST")
                 onPick(raw as T)
@@ -385,7 +462,7 @@ private fun <T> ComboboxRoot(
                 label(raw as T)
             },
         )
-    CompositionLocalProvider(LocalCombobox provides controller) {
+    CompositionLocalProvider(LocalCombobox provides controller, LocalComboboxEditing provides editing) {
         Box(modifier = modifier) {
             ComboboxScope(controller).content()
         }
@@ -472,10 +549,10 @@ fun ComboboxScope.ComboboxTrigger(
 @Composable
 internal fun ComboboxIcon(modifier: Modifier = Modifier) {
     Icon(
-        ChevronRight,
+        if (currentTheme.activePreset == StylePreset.Nova) NovaChevronRight else ChevronRight,
         tint = currentTheme.colors.mutedForeground,
         modifier = modifier.rotate(90f),
-        variant = IconVariant.Small,
+        variant = if (currentTheme.activePreset == StylePreset.Nova) IconVariant.Default else IconVariant.Small,
     )
 }
 
@@ -503,9 +580,9 @@ internal fun ComboboxClear(
         contentAlignment = Alignment.Center,
     ) {
         Icon(
-            X,
+            if (currentTheme.activePreset == StylePreset.Nova) NovaX else X,
             tint = currentTheme.colors.mutedForeground,
-            variant = IconVariant.Small,
+            variant = if (currentTheme.activePreset == StylePreset.Nova) IconVariant.Default else IconVariant.Small,
         )
     }
 }
@@ -543,21 +620,24 @@ fun ComboboxScope.ComboboxContent(
 ) {
     val ctrl = comboboxController()
     val panelStyleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val editing = checkNotNull(LocalComboboxEditing.current)
+    val inline = editing.inputs.isNotEmpty()
+    val nova = currentTheme.activePreset == StylePreset.Nova
     ComboboxPortal {
         AnchoredPopup(
-            open = ctrl.open,
+            open = ctrl.open && !ctrl.disabled,
             onDismissRequest = { ctrl.setOpen(false) },
             offset = sideOffset,
             align = align,
             alignOffset = alignOffset,
             dismissOnClickOutside = dismissOnClickOutside,
-            focusable = ctrl.modal,
+            focusable = ctrl.modal && !inline,
             enter = enter,
             exit = exit,
         ) {
             Column(
                 modifier =
-                    modifier.styleable(
+                    modifier.then(if (inline) Modifier.width(editing.width + 28.dp) else Modifier).styleable(
                         panelStyleState,
                         rememberComboboxPanelStyle() then style,
                     ),
@@ -576,7 +656,7 @@ internal fun ComboboxPortal(content: @Composable () -> Unit) {
 @Composable
 private fun ComboboxDefaultList() {
     val ctrl = comboboxController()
-    ComboboxInput()
+    if (LocalComboboxEditing.current?.inputs?.isEmpty() != false) ComboboxInput()
     ComboboxList {
         if (ctrl.filtered.isEmpty()) {
             ComboboxEmpty()
@@ -594,7 +674,11 @@ private fun ComboboxDefaultList() {
 /** Option list inside [ComboboxContent]. Matches shadcn CommandList in the combobox recipe. */
 @Composable
 fun ComboboxList(content: @Composable () -> Unit) {
-    content()
+    if (currentTheme.activePreset == StylePreset.Nova) {
+        Column(Modifier.heightIn(max = 252.dp).verticalScroll(rememberScrollState())) { content() }
+    } else {
+        content()
+    }
 }
 
 /** Search field inside [ComboboxContent]. Matches the Command input in shadcn's combobox recipe. */
@@ -607,18 +691,24 @@ fun ComboboxInput(
 ) {
     val ctrl = comboboxController()
     val resolvedPlaceholder = placeholder ?: ctrl.searchPlaceholder
+    val editing = checkNotNull(LocalComboboxEditing.current)
+    val searchModifier = modifier.onPreviewKeyEvent { editing.key(it, ctrl) }
     if (icon == null) {
         Input(
             value = ctrl.query,
-            onValueChange = ctrl.setQuery,
+            onValueChange = {
+                editing.active = null
+                ctrl.setQuery(it)
+            },
             placeholder = resolvedPlaceholder,
             variant = InputVariant.Ghost,
-            disabled = disabled,
-            modifier = modifier.fillMaxWidth(),
+            disabled = disabled || ctrl.disabled,
+            autoFocus = currentTheme.activePreset == StylePreset.Nova,
+            modifier = searchModifier.fillMaxWidth(),
         )
     } else {
         Row(
-            modifier = modifier.fillMaxWidth(),
+            modifier = searchModifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(twSpacing.sm),
         ) {
@@ -635,6 +725,93 @@ fun ComboboxInput(
     }
 }
 
+/** Editable Base UI composition. The existing overload remains the popup search field. */
+@Composable
+fun ComboboxInput(
+    modifier: Modifier = Modifier,
+    placeholder: String? = null,
+    disabled: Boolean = false,
+    icon: (@Composable () -> Unit)? = null,
+    editable: Boolean,
+    showTrigger: Boolean = true,
+    showClear: Boolean = false,
+) {
+    if (!editable) {
+        ComboboxInput(modifier, placeholder, disabled, icon)
+        return
+    }
+    val ctrl = comboboxController()
+    val editing = checkNotNull(LocalComboboxEditing.current)
+    val token = remember { Any() }
+    DisposableEffect(editing, token) {
+        editing.inputs[token] = Unit
+        onDispose { editing.inputs.remove(token) }
+    }
+    val density = LocalDensity.current
+    LaunchedEffect(ctrl.open) { if (ctrl.open && !ctrl.disabled && !disabled) editing.inputFocus.requestFocus() }
+    InputGroup(
+        modifier =
+            modifier.width(
+                216.dp,
+            ).onGloballyPositioned { editing.width = with(density) { it.size.width.toDp() } },
+        invalid = ctrl.invalid,
+        disabled = disabled || ctrl.disabled,
+    ) {
+        InputGroupInput(
+            value = if (editing.userEdited || ctrl.query.isNotEmpty()) ctrl.query else ctrl.displayText.orEmpty(),
+            onValueChange = {
+                editing.userEdited = true
+                editing.active = null
+                ctrl.setQuery(it)
+                ctrl.setOpen(true)
+            },
+            modifier =
+                Modifier.focusRequester(editing.inputFocus).onPreviewKeyEvent { editing.key(it, ctrl) }
+                    .semantics { stateDescription = if (ctrl.open) "Expanded" else "Collapsed" },
+            placeholder = placeholder ?: ctrl.placeholder,
+        )
+        if (showTrigger || showClear) {
+            InputGroupAddon(InputGroupAddonAlign.InlineEnd) {
+                if (showClear && ctrl.canClear && ctrl.displayText != null) {
+                    InputGroupButton(
+                        onClick = {
+                            ctrl.clear()
+                            editing.userEdited = false
+                            editing.inputFocus.requestFocus()
+                        },
+                        size =
+                            InputGroupButtonSize.IconXs,
+                        label =
+                            "Clear",
+                        modifier =
+                            Modifier.focusProperties {
+                                canFocus =
+                                    false
+                            },
+                    ) {
+                        Icon(NovaX)
+                    }
+                } else if (showTrigger) {
+                    InputGroupButton(
+                        onClick = {
+                            editing.inputFocus.requestFocus()
+                            ctrl.toggle()
+                        },
+                        size = InputGroupButtonSize.IconXs,
+                        label = "Show suggestions",
+                        modifier =
+                            Modifier.focusProperties {
+                                canFocus = false
+                            },
+                    ) {
+                        if (icon != null) icon() else ComboboxIcon()
+                    }
+                }
+            }
+        }
+    }
+}
+
 /** Empty-state row when no options match the query. */
 @Composable
 fun ComboboxEmpty(
@@ -642,8 +819,21 @@ fun ComboboxEmpty(
     text: String? = null,
 ) {
     val ctrl = comboboxController()
-    Box(modifier = modifier.fillMaxWidth()) {
-        Text(variant = TextVariant.BodySmall, textStyle = TextColors.Muted) { text ?: ctrl.emptyText }
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    Box(
+        modifier = modifier.fillMaxWidth().then(if (nova) Modifier.padding(vertical = 8.dp) else Modifier),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            textStyle =
+                currentTheme.typography.bodyMedium.copy(
+                    fontFamily = currentTheme.fontFamily,
+                    color = currentTheme.colors.mutedForeground,
+                    fontSize = if (nova) 14.sp else 12.sp,
+                ),
+        ) {
+            text ?: ctrl.emptyText
+        }
     }
 }
 
@@ -658,13 +848,38 @@ fun ComboboxItem(
     onSelect: (() -> Boolean)? = null,
     textValue: String? = null,
     content: @Composable RowScope.() -> Unit = {
-        ComboboxItemIndicator()
-        Text(variant = TextVariant.BodySmall) { label }
+        if (currentTheme.activePreset != StylePreset.Nova) ComboboxItemIndicator()
+        Text(
+            textStyle =
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    currentTheme.typography.bodyMedium.copy(
+                        fontFamily = currentTheme.fontFamily,
+                        fontSize = 14.sp,
+                        lineHeight = 20.sp,
+                    )
+                } else {
+                    currentTheme.typography.bodySmall
+                },
+        ) {
+            label
+        }
     },
 ) {
     val ctrl = comboboxController()
     val resolvedEnabled = enabled && !disabled
     val selected = ctrl.isSelected(value)
+    val editing = checkNotNull(LocalComboboxEditing.current)
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    SideEffect {
+        editing.optionEnabled[value] = resolvedEnabled
+        editing.pick[value] = { if (onSelect?.invoke() != true) ctrl.select(value) }
+    }
+    DisposableEffect(editing, value) {
+        onDispose {
+            editing.optionEnabled.remove(value)
+            editing.pick.remove(value)
+        }
+    }
     val interactionSource = remember { MutableInteractionSource() }
     val styleState =
         rememberUpdatedStyleState(interactionSource) {
@@ -677,8 +892,11 @@ fun ComboboxItem(
     Row(
         modifier =
             modifier
+                .then(if (nova) Modifier.fillMaxWidth() else Modifier)
+                .focusProperties { if (editing.inputs.isNotEmpty()) canFocus = false }
                 .semantics {
                     role = Role.Button
+                    this.selected = selected
                     contentDescription = textValue ?: label
                     if (!resolvedEnabled) disabled()
                 }
@@ -693,13 +911,39 @@ fun ComboboxItem(
                 )
                 .styleable(
                     styleState,
-                    touchTargetStyle then pressStyle then rememberMenuItemStyle() then highlightStyle,
+                    (
+                        if (nova) {
+                            Style
+                        } else {
+                            touchTargetStyle
+                        }
+                    ) then
+                        pressStyle then
+                        (
+                            if (nova) {
+                                rememberComboboxItemStyle()
+                            } else {
+                                rememberMenuItemStyle()
+                            }
+                        ) then
+                        highlightStyle,
                 ),
         horizontalArrangement = Arrangement.spacedBy(twSpacing.xs),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         CompositionLocalProvider(LocalComboboxItemSelected provides selected) {
-            content()
+            if (!nova) {
+                content()
+            } else {
+                Row(
+                    Modifier.weight(1f),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    content()
+                }
+            }
+            if (nova) ComboboxItemIndicator()
         }
     }
 }
@@ -713,9 +957,18 @@ internal fun ComboboxItemIndicator(
         },
     modifier: Modifier = Modifier,
 ) {
-    Box(modifier = modifier.size(currentTheme.icons.smallSize)) {
+    Box(
+        modifier =
+            modifier.size(
+                if (currentTheme.activePreset == StylePreset.Nova) 16.dp else currentTheme.icons.smallSize,
+            ),
+    ) {
         if (selected) {
-            Icon(Check, tint = currentTheme.colors.foreground, variant = IconVariant.Small)
+            Icon(
+                if (currentTheme.activePreset == StylePreset.Nova) NovaCheck else Check,
+                tint = currentTheme.colors.foreground,
+                variant = IconVariant.Small,
+            )
         }
     }
 }
@@ -845,9 +1098,14 @@ fun ComboboxChip(
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
-                    X,
+                    if (currentTheme.activePreset == StylePreset.Nova) NovaX else X,
                     tint = currentTheme.colors.mutedForeground,
-                    variant = IconVariant.Small,
+                    variant =
+                        if (currentTheme.activePreset == StylePreset.Nova) {
+                            IconVariant.Default
+                        } else {
+                            IconVariant.Small
+                        },
                 )
             }
         }

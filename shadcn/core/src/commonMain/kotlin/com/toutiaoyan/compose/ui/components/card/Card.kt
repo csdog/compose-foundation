@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.style.contentPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
@@ -19,6 +21,20 @@ import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.ParentDataModifier
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.layout.layout
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.offset
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.heading
@@ -35,6 +51,16 @@ import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
 import com.toutiaoyan.compose.tailwind.core.twRadius
 import com.toutiaoyan.compose.tailwind.core.twSpacing
+
+// Header, title and footer share the same root size/spacing, including nested cards.
+@Immutable
+private data class CardMetrics(val size: CardSize, val spacing: Dp)
+
+private object CardActionData : ParentDataModifier {
+    override fun Density.modifyParentData(parentData: Any?): Any = this@CardActionData
+}
+
+private val LocalCardMetrics = staticCompositionLocalOf<CardMetrics?> { null }
 
 /**
  * Card shell matching real shadcn/ui's `card.tsx` composition:
@@ -92,6 +118,7 @@ fun Card(
     ) {
         CompositionLocalProvider(
             LocalContentColor provides variant.contentColor(currentTheme.colors),
+            LocalCardMetrics provides CardMetrics(size, resolvedSpacing),
         ) {
             content()
         }
@@ -128,9 +155,71 @@ fun CardHeader(
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Column(
         modifier = modifier.fillMaxWidth().styleable(styleState, style),
-        verticalArrangement = Arrangement.spacedBy(twSpacing.xs),
-        content = content,
-    )
+        verticalArrangement =
+            Arrangement.spacedBy(
+                if (currentTheme.activePreset == StylePreset.Nova) 4.dp else twSpacing.xs,
+            ),
+    ) {
+        if (currentTheme.activePreset != StylePreset.Nova) {
+            content()
+        } else {
+            Layout(content = { content() }, modifier = Modifier.fillMaxWidth()) { children, constraints ->
+                val gap = 4.dp.roundToPx()
+                val actions =
+                    children.filter {
+                        it.parentData == CardActionData
+                    }.map { it.measure(constraints.copy(minWidth = 0, minHeight = 0)) }
+                val actionWidth = actions.maxOfOrNull { it.width } ?: 0
+                val leadingWidth =
+                    if (constraints.hasBoundedWidth) {
+                        (
+                            constraints.maxWidth - actionWidth -
+                                if (actions.isEmpty()) {
+                                    0
+                                } else {
+                                    8.dp.roundToPx()
+                                }
+                        ).coerceAtLeast(
+                            0,
+                        )
+                    } else {
+                        androidx.compose.ui.unit.Constraints.Infinity
+                    }
+                val leading =
+                    children.filter {
+                        it.parentData != CardActionData
+                    }.map { it.measure(constraints.copy(minWidth = 0, minHeight = 0, maxWidth = leadingWidth)) }
+                val height =
+                    maxOf(
+                        leading.sumOf { it.height } + gap * (leading.size - 1).coerceAtLeast(0),
+                        actions.maxOfOrNull { it.height } ?: 0,
+                    )
+                val width =
+                    if (constraints.hasBoundedWidth) {
+                        constraints.maxWidth
+                    } else {
+                        (
+                            leading.maxOfOrNull { it.width }
+                                ?: 0
+                        ) +
+                            actionWidth +
+                            if (actions.isEmpty()) {
+                                0
+                            } else {
+                                8.dp.roundToPx()
+                            }
+                    }
+                layout(width, height) {
+                    var y = 0
+                    leading.forEach {
+                        it.placeRelative(0, y)
+                        y += it.height + gap
+                    }
+                    actions.forEach { it.placeRelative(width - it.width, 0) }
+                }
+            }
+        }
+    }
 }
 
 /** Convenience: [title] + optional [description] instead of slots. */
@@ -170,6 +259,7 @@ fun CardTitle(
     Text(
         modifier = modifier.semantics { heading() },
         variant = TextVariant.TitleSmall,
+        textStyle = cardTitleTypography(),
         style = style,
         text = text,
     )
@@ -186,6 +276,7 @@ fun CardTitle(
     Text(
         modifier = modifier.semantics { heading() },
         variant = TextVariant.TitleSmall,
+        textStyle = cardTitleTypography(),
         style = style,
         text = text,
     )
@@ -212,7 +303,7 @@ fun CardDescription(
     Text(
         modifier = modifier,
         variant = TextVariant.BodySmall,
-        textStyle = TextColors.Muted,
+        textStyle = cardDescriptionTypography(),
         style = style,
         text = text,
     )
@@ -229,7 +320,7 @@ fun CardDescription(
     Text(
         modifier = modifier,
         variant = TextVariant.BodySmall,
-        textStyle = TextColors.Muted,
+        textStyle = cardDescriptionTypography(),
         style = style,
         text = text,
     )
@@ -240,7 +331,7 @@ fun CardAction(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
-    Box(modifier = modifier, contentAlignment = Alignment.Center) {
+    Box(modifier = modifier.then(CardActionData), contentAlignment = Alignment.Center) {
         content()
     }
 }
@@ -277,10 +368,73 @@ fun CardFooter(
     content: @Composable RowScope.() -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val metrics = LocalCardMetrics.current
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    val colors = currentTheme.colors
+    val radius = twRadius.xl
+    val spacing = metrics?.spacing ?: CardDefaults.Spacing
+    val footerStyle =
+        if (nova) {
+            Style {
+                background(colors.muted.copy(alpha = 0.5f))
+                shape(RoundedCornerShape(bottomStart = radius, bottomEnd = radius))
+                contentPadding(spacing)
+            }
+        } else {
+            Style
+        }
+    val bleed =
+        if (nova && metrics != null) {
+            Modifier.layout { measurable, constraints ->
+                val inset = spacing.roundToPx()
+                val child = measurable.measure(constraints.offset(horizontal = inset * 2))
+                layout((child.width - inset * 2).coerceAtLeast(0), (child.height - inset).coerceAtLeast(0)) {
+                    child.placeRelative(-inset, 0)
+                }
+            }
+        } else {
+            Modifier
+        }
+    val topBorder =
+        if (nova) {
+            Modifier.drawWithContent {
+                drawContent()
+                drawLine(
+                    colors.border,
+                    Offset(0f, 0.5.dp.toPx()),
+                    Offset(size.width, 0.5.dp.toPx()),
+                    strokeWidth = 1.dp.toPx(),
+                )
+            }.then(Modifier.padding(top = 1.dp))
+        } else {
+            Modifier
+        }
     Row(
-        modifier = modifier.fillMaxWidth().styleable(styleState, style),
+        modifier = bleed.then(modifier).fillMaxWidth().then(topBorder).styleable(styleState, footerStyle, style),
         horizontalArrangement = Arrangement.spacedBy(twSpacing.sm),
         verticalAlignment = Alignment.CenterVertically,
         content = content,
     )
 }
+
+@Composable
+private fun cardTitleTypography(): TextStyle {
+    val theme = currentTheme
+    return if (theme.activePreset == StylePreset.Nova) {
+        theme.typography.bodyLarge.copy(
+            fontSize = if (LocalCardMetrics.current?.size == CardSize.Sm) 14.sp else 16.sp,
+            lineHeight = if (LocalCardMetrics.current?.size == CardSize.Sm) 19.25.sp else 22.sp,
+            fontWeight = FontWeight.Medium,
+        )
+    } else {
+        TextStyle.Default
+    }
+}
+
+@Composable
+private fun cardDescriptionTypography(): TextStyle =
+    if (currentTheme.activePreset == StylePreset.Nova) {
+        currentTheme.typography.bodyMedium.copy(color = currentTheme.colors.mutedForeground)
+    } else {
+        TextColors.Muted
+    }

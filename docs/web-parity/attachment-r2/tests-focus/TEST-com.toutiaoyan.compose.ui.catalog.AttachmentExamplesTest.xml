@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AttachmentExamplesTest[jvm]" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-30T04:59:19.203Z" hostname="Apples-MacBook-Pro.local" time="1.442">
+  <properties/>
+  <testcase name="triggerOpensDialogByKeyboardWhileActionsStayIndependent[jvm]" classname="com.toutiaoyan.compose.ui.catalog.AttachmentExamplesTest" time="1.441"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

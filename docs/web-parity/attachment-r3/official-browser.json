@@ -1,0 +1,1002 @@
+[
+  {
+    "role": "official",
+    "form": "desktop",
+    "mode": "light",
+    "width": 1440,
+    "height": 1000,
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "phase": "start",
+    "file": "official-desktop-light-start.png",
+    "actualDpr": 2,
+    "nativeInputs": [
+      {
+        "dx": -10000,
+        "dy": 0,
+        "mode": 0
+      }
+    ],
+    "preview": {
+      "x": 393.5,
+      "y": 198,
+      "width": 638,
+      "height": 242,
+      "top": 198,
+      "right": 1031.5,
+      "bottom": 440,
+      "left": 393.5
+    },
+    "group": {
+      "x": 520.5,
+      "y": 286,
+      "width": 384,
+      "height": 66,
+      "top": 286,
+      "right": 904.5,
+      "bottom": 352,
+      "left": 520.5
+    },
+    "scroll": 0,
+    "max": 676,
+    "padding": "4px",
+    "items": [
+      {
+        "text": "briefing-notes.pdfPDF · 1.4 MB",
+        "left": 520.5,
+        "width": 256
+      },
+      {
+        "text": "workspace.pngPNG · 820 KB",
+        "left": 788.5,
+        "width": 256
+      },
+      {
+        "text": "customers.csvCSV · 18 KB",
+        "left": 1056.5,
+        "width": 256
+      },
+      {
+        "text": "renderer.tsxTSX · 12 KB",
+        "left": 1324.5,
+        "width": 256
+      }
+    ]
+  },
+  {
+    "role": "official",
+    "form": "desktop",
+    "mode": "light",
+    "width": 1440,
+    "height": 1000,
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "phase": "wheel",
+    "file": "official-desktop-light-wheel.png",
+    "actualDpr": 2,
+    "nativeInputs": [
+      {
+        "dx": 330,
+        "dy": 0,
+        "mode": 0
+      }
+    ],
+    "preview": {
+      "x": 393.5,
+      "y": 198,
+      "width": 638,
+      "height": 242,
+      "top": 198,
+      "right": 1031.5,
+      "bottom": 440,
+      "left": 393.5
+    },
+    "group": {
+      "x": 520.5,
+      "y": 286,
+      "width": 384,
+      "height": 66,
+      "top": 286,
+      "right": 904.5,
+      "bottom": 352,
+      "left": 520.5
+    },
+    "scroll": 264,
+    "max": 676,
+    "padding": "4px",
+    "items": [
+      {
+        "text": "briefing-notes.pdfPDF · 1.4 MB",
+        "left": 256.5,
+        "width": 256
+      },
+      {
+        "text": "workspace.pngPNG · 820 KB",
+        "left": 524.5,
+        "width": 256
+      },
+      {
+        "text": "customers.csvCSV · 18 KB",
+        "left": 792.5,
+        "width": 256
+      },
+      {
+        "text": "renderer.tsxTSX · 12 KB",
+        "left": 1060.5,
+        "width": 256
+      }
+    ]
+  },
+  {
+    "role": "official",
+    "form": "desktop",
+    "mode": "light",
+    "width": 1440,
+    "height": 1000,
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "phase": "end",
+    "file": "official-desktop-light-end.png",
+    "actualDpr": 2,
+    "nativeInputs": [
+      {
+        "dx": 10000,
+        "dy": 0,
+        "mode": 0
+      }
+    ],
+    "preview": {
+      "x": 393.5,
+      "y": 198,
+      "width": 638,
+      "height": 242,
+      "top": 198,
+      "right": 1031.5,
+      "bottom": 440,
+      "left": 393.5
+    },
+    "group": {
+      "x": 520.5,
+      "y": 286,
+      "width": 384,
+      "height": 66,
+      "top": 286,
+      "right": 904.5,
+      "bottom": 352,
+      "left": 520.5
+    },
+    "scroll": 676,
+    "max": 676,
+    "padding": "4px",
+    "items": [
+      {
+        "text": "briefing-notes.pdfPDF · 1.4 MB",
+        "left": -155.5,
+        "width": 256
+      },
+      {
+        "text": "workspace.pngPNG · 820 KB",
+        "left": 112.5,
+        "width": 256
+      },
+      {
+        "text": "customers.csvCSV · 18 KB",
+        "left": 380.5,
+        "width": 256
+      },
+      {
+        "text": "renderer.tsxTSX · 12 KB",
+        "left": 648.5,
+        "width": 256
+      }
+    ]
+  },
+  {
+    "role": "official",
+    "form": "desktop",
+    "mode": "light",
+    "width": 1440,
+    "height": 1000,
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "phase": "keyboard",
+    "file": "official-desktop-light-keyboard.png",
+    "actualDpr": 2,
+    "nativeInputs": [],
+    "preview": {
+      "x": 393.5,
+      "y": 198,
+      "width": 638,
+      "height": 242,
+      "top": 198,
+      "right": 1031.5,
+      "bottom": 440,
+      "left": 393.5
+    },
+    "group": {
+      "x": 520.5,
+      "y": 286,
+      "width": 384,
+      "height": 66,
+      "top": 286,
+      "right": 904.5,
+      "bottom": 352,
+      "left": 520.5
+    },
+    "scroll": 532,
+    "max": 676,
+    "padding": "4px",
+    "items": [
+      {
+        "text": "briefing-notes.pdfPDF · 1.4 MB",
+        "left": -11.5,
+        "width": 256
+      },
+      {
+        "text": "workspace.pngPNG · 820 KB",
+        "left": 256.5,
+        "width": 256
+      },
+      {
+        "text": "customers.csvCSV · 18 KB",
+        "left": 524.5,
+        "width": 256
+      },
+      {
+        "text": "renderer.tsxTSX · 12 KB",
+        "left": 792.5,
+        "width": 256
+      }
+    ]
+  },
+  {
+    "role": "official",
+    "form": "desktop",
+    "mode": "dark",
+    "width": 1440,
+    "height": 1000,
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "phase": "start",
+    "file": "official-desktop-dark-start.png",
+    "actualDpr": 2,
+    "nativeInputs": [
+      {
+        "dx": -10000,
+        "dy": 0,
+        "mode": 0
+      }
+    ],
+    "preview": {
+      "x": 393.5,
+      "y": 198,
+      "width": 638,
+      "height": 242,
+      "top": 198,
+      "right": 1031.5,
+      "bottom": 440,
+      "left": 393.5
+    },
+    "group": {
+      "x": 520.5,
+      "y": 286,
+      "width": 384,
+      "height": 66,
+      "top": 286,
+      "right": 904.5,
+      "bottom": 352,
+      "left": 520.5
+    },
+    "scroll": 0,
+    "max": 676,
+    "padding": "4px",
+    "items": [
+      {
+        "text": "briefing-notes.pdfPDF · 1.4 MB",
+        "left": 520.5,
+        "width": 256
+      },
+      {
+        "text": "workspace.pngPNG · 820 KB",
+        "left": 788.5,
+        "width": 256
+      },
+      {
+        "text": "customers.csvCSV · 18 KB",
+        "left": 1056.5,
+        "width": 256
+      },
+      {
+        "text": "renderer.tsxTSX · 12 KB",
+        "left": 1324.5,
+        "width": 256
+      }
+    ]
+  },
+  {
+    "role": "official",
+    "form": "desktop",
+    "mode": "dark",
+    "width": 1440,
+    "height": 1000,
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "phase": "wheel",
+    "file": "official-desktop-dark-wheel.png",
+    "actualDpr": 2,
+    "nativeInputs": [
+      {
+        "dx": 330,
+        "dy": 0,
+        "mode": 0
+      }
+    ],
+    "preview": {
+      "x": 393.5,
+      "y": 198,
+      "width": 638,
+      "height": 242,
+      "top": 198,
+      "right": 1031.5,
+      "bottom": 440,
+      "left": 393.5
+    },
+    "group": {
+      "x": 520.5,
+      "y": 286,
+      "width": 384,
+      "height": 66,
+      "top": 286,
+      "right": 904.5,
+      "bottom": 352,
+      "left": 520.5
+    },
+    "scroll": 264,
+    "max": 676,
+    "padding": "4px",
+    "items": [
+      {
+        "text": "briefing-notes.pdfPDF · 1.4 MB",
+        "left": 256.5,
+        "width": 256
+      },
+      {
+        "text": "workspace.pngPNG · 820 KB",
+        "left": 524.5,
+        "width": 256
+      },
+      {
+        "text": "customers.csvCSV · 18 KB",
+        "left": 792.5,
+        "width": 256
+      },
+      {
+        "text": "renderer.tsxTSX · 12 KB",
+        "left": 1060.5,
+        "width": 256
+      }
+    ]
+  },
+  {
+    "role": "official",
+    "form": "desktop",
+    "mode": "dark",
+    "width": 1440,
+    "height": 1000,
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "phase": "end",
+    "file": "official-desktop-dark-end.png",
+    "actualDpr": 2,
+    "nativeInputs": [
+      {
+        "dx": 10000,
+        "dy": 0,
+        "mode": 0
+      }
+    ],
+    "preview": {
+      "x": 393.5,
+      "y": 198,
+      "width": 638,
+      "height": 242,
+      "top": 198,
+      "right": 1031.5,
+      "bottom": 440,
+      "left": 393.5
+    },
+    "group": {
+      "x": 520.5,
+      "y": 286,
+      "width": 384,
+      "height": 66,
+      "top": 286,
+      "right": 904.5,
+      "bottom": 352,
+      "left": 520.5
+    },
+    "scroll": 676,
+    "max": 676,
+    "padding": "4px",
+    "items": [
+      {
+        "text": "briefing-notes.pdfPDF · 1.4 MB",
+        "left": -155.5,
+        "width": 256
+      },
+      {
+        "text": "workspace.pngPNG · 820 KB",
+        "left": 112.5,
+        "width": 256
+      },
+      {
+        "text": "customers.csvCSV · 18 KB",
+        "left": 380.5,
+        "width": 256
+      },
+      {
+        "text": "renderer.tsxTSX · 12 KB",
+        "left": 648.5,
+        "width": 256
+      }
+    ]
+  },
+  {
+    "role": "official",
+    "form": "desktop",
+    "mode": "dark",
+    "width": 1440,
+    "height": 1000,
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "phase": "keyboard",
+    "file": "official-desktop-dark-keyboard.png",
+    "actualDpr": 2,
+    "nativeInputs": [],
+    "preview": {
+      "x": 393.5,
+      "y": 198,
+      "width": 638,
+      "height": 242,
+      "top": 198,
+      "right": 1031.5,
+      "bottom": 440,
+      "left": 393.5
+    },
+    "group": {
+      "x": 520.5,
+      "y": 286,
+      "width": 384,
+      "height": 66,
+      "top": 286,
+      "right": 904.5,
+      "bottom": 352,
+      "left": 520.5
+    },
+    "scroll": 532,
+    "max": 676,
+    "padding": "4px",
+    "items": [
+      {
+        "text": "briefing-notes.pdfPDF · 1.4 MB",
+        "left": -11.5,
+        "width": 256
+      },
+      {
+        "text": "workspace.pngPNG · 820 KB",
+        "left": 256.5,
+        "width": 256
+      },
+      {
+        "text": "customers.csvCSV · 18 KB",
+        "left": 524.5,
+        "width": 256
+      },
+      {
+        "text": "renderer.tsxTSX · 12 KB",
+        "left": 792.5,
+        "width": 256
+      }
+    ]
+  },
+  {
+    "role": "official",
+    "form": "phone",
+    "mode": "dark",
+    "width": 390,
+    "height": 844,
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "phase": "start",
+    "file": "official-phone-dark-start.png",
+    "actualDpr": 2,
+    "nativeInputs": [
+      {
+        "dx": -10000,
+        "dy": 0,
+        "mode": 0
+      }
+    ],
+    "preview": {
+      "x": 25,
+      "y": 286.796875,
+      "width": 325,
+      "height": 242,
+      "top": 286.796875,
+      "right": 350,
+      "bottom": 528.796875,
+      "left": 25
+    },
+    "group": {
+      "x": 65,
+      "y": 374.796875,
+      "width": 245,
+      "height": 66,
+      "top": 374.796875,
+      "right": 310,
+      "bottom": 440.796875,
+      "left": 65
+    },
+    "scroll": 0,
+    "max": 771,
+    "padding": "4px",
+    "items": [
+      {
+        "text": "briefing-notes.pdfPDF · 1.4 MB",
+        "left": 65,
+        "width": 245
+      },
+      {
+        "text": "workspace.pngPNG · 820 KB",
+        "left": 322,
+        "width": 245
+      },
+      {
+        "text": "customers.csvCSV · 18 KB",
+        "left": 579,
+        "width": 245
+      },
+      {
+        "text": "renderer.tsxTSX · 12 KB",
+        "left": 836,
+        "width": 245
+      }
+    ]
+  },
+  {
+    "role": "official",
+    "form": "phone",
+    "mode": "dark",
+    "width": 390,
+    "height": 844,
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "phase": "wheel",
+    "file": "official-phone-dark-wheel.png",
+    "actualDpr": 2,
+    "nativeInputs": [
+      {
+        "dx": 330,
+        "dy": 0,
+        "mode": 0
+      }
+    ],
+    "preview": {
+      "x": 25,
+      "y": 286.796875,
+      "width": 325,
+      "height": 242,
+      "top": 286.796875,
+      "right": 350,
+      "bottom": 528.796875,
+      "left": 25
+    },
+    "group": {
+      "x": 65,
+      "y": 374.796875,
+      "width": 245,
+      "height": 66,
+      "top": 374.796875,
+      "right": 310,
+      "bottom": 440.796875,
+      "left": 65
+    },
+    "scroll": 261,
+    "max": 771,
+    "padding": "4px",
+    "items": [
+      {
+        "text": "briefing-notes.pdfPDF · 1.4 MB",
+        "left": -196,
+        "width": 245
+      },
+      {
+        "text": "workspace.pngPNG · 820 KB",
+        "left": 61,
+        "width": 245
+      },
+      {
+        "text": "customers.csvCSV · 18 KB",
+        "left": 318,
+        "width": 245
+      },
+      {
+        "text": "renderer.tsxTSX · 12 KB",
+        "left": 575,
+        "width": 245
+      }
+    ]
+  },
+  {
+    "role": "official",
+    "form": "phone",
+    "mode": "dark",
+    "width": 390,
+    "height": 844,
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "phase": "end",
+    "file": "official-phone-dark-end.png",
+    "actualDpr": 2,
+    "nativeInputs": [
+      {
+        "dx": 10000,
+        "dy": 0,
+        "mode": 0
+      }
+    ],
+    "preview": {
+      "x": 25,
+      "y": 286.796875,
+      "width": 325,
+      "height": 242,
+      "top": 286.796875,
+      "right": 350,
+      "bottom": 528.796875,
+      "left": 25
+    },
+    "group": {
+      "x": 65,
+      "y": 374.796875,
+      "width": 245,
+      "height": 66,
+      "top": 374.796875,
+      "right": 310,
+      "bottom": 440.796875,
+      "left": 65
+    },
+    "scroll": 771,
+    "max": 771,
+    "padding": "4px",
+    "items": [
+      {
+        "text": "briefing-notes.pdfPDF · 1.4 MB",
+        "left": -706,
+        "width": 245
+      },
+      {
+        "text": "workspace.pngPNG · 820 KB",
+        "left": -449,
+        "width": 245
+      },
+      {
+        "text": "customers.csvCSV · 18 KB",
+        "left": -192,
+        "width": 245
+      },
+      {
+        "text": "renderer.tsxTSX · 12 KB",
+        "left": 65,
+        "width": 245
+      }
+    ]
+  },
+  {
+    "role": "official",
+    "form": "phone",
+    "mode": "dark",
+    "width": 390,
+    "height": 844,
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "phase": "keyboard",
+    "file": "official-phone-dark-keyboard.png",
+    "actualDpr": 2,
+    "nativeInputs": [],
+    "preview": {
+      "x": 25,
+      "y": 286.796875,
+      "width": 325,
+      "height": 242,
+      "top": 286.796875,
+      "right": 350,
+      "bottom": 528.796875,
+      "left": 25
+    },
+    "group": {
+      "x": 65,
+      "y": 374.796875,
+      "width": 245,
+      "height": 66,
+      "top": 374.796875,
+      "right": 310,
+      "bottom": 440.796875,
+      "left": 65
+    },
+    "scroll": 767,
+    "max": 771,
+    "padding": "4px",
+    "items": [
+      {
+        "text": "briefing-notes.pdfPDF · 1.4 MB",
+        "left": -702,
+        "width": 245
+      },
+      {
+        "text": "workspace.pngPNG · 820 KB",
+        "left": -445,
+        "width": 245
+      },
+      {
+        "text": "customers.csvCSV · 18 KB",
+        "left": -188,
+        "width": 245
+      },
+      {
+        "text": "renderer.tsxTSX · 12 KB",
+        "left": 69,
+        "width": 245
+      }
+    ]
+  },
+  {
+    "role": "official",
+    "form": "phone",
+    "mode": "light",
+    "width": 390,
+    "height": 844,
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "phase": "start",
+    "file": "official-phone-light-start.png",
+    "actualDpr": 2,
+    "nativeInputs": [
+      {
+        "dx": -10000,
+        "dy": 0,
+        "mode": 0
+      }
+    ],
+    "preview": {
+      "x": 25,
+      "y": 286.796875,
+      "width": 325,
+      "height": 242,
+      "top": 286.796875,
+      "right": 350,
+      "bottom": 528.796875,
+      "left": 25
+    },
+    "group": {
+      "x": 65,
+      "y": 374.796875,
+      "width": 245,
+      "height": 66,
+      "top": 374.796875,
+      "right": 310,
+      "bottom": 440.796875,
+      "left": 65
+    },
+    "scroll": 0,
+    "max": 771,
+    "padding": "4px",
+    "items": [
+      {
+        "text": "briefing-notes.pdfPDF · 1.4 MB",
+        "left": 65,
+        "width": 245
+      },
+      {
+        "text": "workspace.pngPNG · 820 KB",
+        "left": 322,
+        "width": 245
+      },
+      {
+        "text": "customers.csvCSV · 18 KB",
+        "left": 579,
+        "width": 245
+      },
+      {
+        "text": "renderer.tsxTSX · 12 KB",
+        "left": 836,
+        "width": 245
+      }
+    ]
+  },
+  {
+    "role": "official",
+    "form": "phone",
+    "mode": "light",
+    "width": 390,
+    "height": 844,
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "phase": "wheel",
+    "file": "official-phone-light-wheel.png",
+    "actualDpr": 2,
+    "nativeInputs": [
+      {
+        "dx": 330,
+        "dy": 0,
+        "mode": 0
+      }
+    ],
+    "preview": {
+      "x": 25,
+      "y": 286.796875,
+      "width": 325,
+      "height": 242,
+      "top": 286.796875,
+      "right": 350,
+      "bottom": 528.796875,
+      "left": 25
+    },
+    "group": {
+      "x": 65,
+      "y": 374.796875,
+      "width": 245,
+      "height": 66,
+      "top": 374.796875,
+      "right": 310,
+      "bottom": 440.796875,
+      "left": 65
+    },
+    "scroll": 261,
+    "max": 771,
+    "padding": "4px",
+    "items": [
+      {
+        "text": "briefing-notes.pdfPDF · 1.4 MB",
+        "left": -196,
+        "width": 245
+      },
+      {
+        "text": "workspace.pngPNG · 820 KB",
+        "left": 61,
+        "width": 245
+      },
+      {
+        "text": "customers.csvCSV · 18 KB",
+        "left": 318,
+        "width": 245
+      },
+      {
+        "text": "renderer.tsxTSX · 12 KB",
+        "left": 575,
+        "width": 245
+      }
+    ]
+  },
+  {
+    "role": "official",
+    "form": "phone",
+    "mode": "light",
+    "width": 390,
+    "height": 844,
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "phase": "end",
+    "file": "official-phone-light-end.png",
+    "actualDpr": 2,
+    "nativeInputs": [
+      {
+        "dx": 10000,
+        "dy": 0,
+        "mode": 0
+      }
+    ],
+    "preview": {
+      "x": 25,
+      "y": 286.796875,
+      "width": 325,
+      "height": 242,
+      "top": 286.796875,
+      "right": 350,
+      "bottom": 528.796875,
+      "left": 25
+    },
+    "group": {
+      "x": 65,
+      "y": 374.796875,
+      "width": 245,
+      "height": 66,
+      "top": 374.796875,
+      "right": 310,
+      "bottom": 440.796875,
+      "left": 65
+    },
+    "scroll": 771,
+    "max": 771,
+    "padding": "4px",
+    "items": [
+      {
+        "text": "briefing-notes.pdfPDF · 1.4 MB",
+        "left": -706,
+        "width": 245
+      },
+      {
+        "text": "workspace.pngPNG · 820 KB",
+        "left": -449,
+        "width": 245
+      },
+      {
+        "text": "customers.csvCSV · 18 KB",
+        "left": -192,
+        "width": 245
+      },
+      {
+        "text": "renderer.tsxTSX · 12 KB",
+        "left": 65,
+        "width": 245
+      }
+    ]
+  },
+  {
+    "role": "official",
+    "form": "phone",
+    "mode": "light",
+    "width": 390,
+    "height": 844,
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "phase": "keyboard",
+    "file": "official-phone-light-keyboard.png",
+    "actualDpr": 2,
+    "nativeInputs": [],
+    "preview": {
+      "x": 25,
+      "y": 286.796875,
+      "width": 325,
+      "height": 242,
+      "top": 286.796875,
+      "right": 350,
+      "bottom": 528.796875,
+      "left": 25
+    },
+    "group": {
+      "x": 65,
+      "y": 374.796875,
+      "width": 245,
+      "height": 66,
+      "top": 374.796875,
+      "right": 310,
+      "bottom": 440.796875,
+      "left": 65
+    },
+    "scroll": 767,
+    "max": 771,
+    "padding": "4px",
+    "items": [
+      {
+        "text": "briefing-notes.pdfPDF · 1.4 MB",
+        "left": -702,
+        "width": 245
+      },
+      {
+        "text": "workspace.pngPNG · 820 KB",
+        "left": -445,
+        "width": 245
+      },
+      {
+        "text": "customers.csvCSV · 18 KB",
+        "left": -188,
+        "width": 245
+      },
+      {
+        "text": "renderer.tsxTSX · 12 KB",
+        "left": 69,
+        "width": 245
+      }
+    ]
+  }
+]

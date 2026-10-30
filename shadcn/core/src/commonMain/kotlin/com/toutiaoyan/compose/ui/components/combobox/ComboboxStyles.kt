@@ -8,6 +8,12 @@ import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.contentPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.style.hovered
+import androidx.compose.foundation.style.focused
+import androidx.compose.ui.graphics.Color
+import com.toutiaoyan.compose.ui.styles.disabledDim
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.utils.rememberTheme
 import com.toutiaoyan.compose.ui.styles.border
 import com.toutiaoyan.compose.ui.styles.focusRingShadow
@@ -19,10 +25,10 @@ fun rememberComboboxPanelStyle(): Style =
     rememberTheme {
         Style {
             width(200.dp)
-            shape(RoundedCornerShape(radius.md))
+            shape(RoundedCornerShape(if (theme.activePreset == StylePreset.Nova) radius.lg else radius.md))
             background(colors.popover)
-            border(colors.border)
-            contentPadding(spacing.sm)
+            border(if (theme.activePreset == StylePreset.Nova) colors.foreground.copy(alpha = 0.1f) else colors.border)
+            contentPadding(if (theme.activePreset == StylePreset.Nova) 4.dp else spacing.sm)
         }
     }
 
@@ -75,5 +81,26 @@ fun rememberComboboxHighlightedItemStyle(): Style =
     rememberTheme {
         Style {
             background(colors.muted)
+        }
+    }
+
+@Composable
+internal fun rememberComboboxItemStyle(): Style =
+    rememberTheme {
+        Style {
+            background(Color.Transparent)
+            shape(RoundedCornerShape(radius.md))
+            minHeight(28.dp)
+            contentPadding(PaddingValues(start = 6.dp, end = 8.dp, top = 4.dp, bottom = 4.dp))
+            contentColor(colors.popoverForeground)
+            hovered {
+                background(colors.accent)
+                contentColor(colors.accentForeground)
+            }
+            focused {
+                background(colors.accent)
+                contentColor(colors.accentForeground)
+            }
+            disabledDim()
         }
     }

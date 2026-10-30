@@ -1,7 +1,37 @@
-@file:OptIn(ExperimentalFoundationStyleApi::class, ExperimentalTypeInference::class)
+@file:OptIn(
+    androidx.compose.ui.ExperimentalComposeUiApi::class,
+    ExperimentalFoundationStyleApi::class,
+    ExperimentalTypeInference::class,
+)
 
 package com.toutiaoyan.compose.ui.components.command
 
+import com.toutiaoyan.compose.ui.components.input.LocalInputCompositionObserver
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.foundation.style.hovered
+import androidx.compose.ui.input.pointer.PointerEventType
+import androidx.compose.ui.input.pointer.onPointerEvent
+import com.toutiaoyan.compose.ui.icons.NovaCommandKey
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.style.contentPadding
+import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.ui.tokens.StylePreset
+import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.components.overlay.overlayTypography
+import com.toutiaoyan.compose.ui.components.inputgroup.InputGroup
+import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupAddon
+import com.toutiaoyan.compose.ui.components.icon.Icon
+import com.toutiaoyan.compose.ui.icons.NovaSearch
+import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -75,6 +105,9 @@ internal class CommandController(
     var label: String = "Command Menu"
     var highlightedId by mutableStateOf<Any?>(null)
     var currentValue by mutableStateOf("")
+    var navigationRevision by mutableIntStateOf(0)
+    var isComposing: Boolean = false
+    var controlled: Boolean = false
     var onValueChange: ((String) -> Unit)? = null
     val items = mutableStateListOf<CommandNavItem>()
 
@@ -103,11 +136,15 @@ internal class CommandController(
                     }
                 }
             }
-        val next = enabled[nextIdx]
-        highlightedId = next.id
-        if (currentValue != next.value) {
-            currentValue = next.value
-            onValueChange?.invoke(next.value)
+        highlight(enabled[nextIdx])
+    }
+
+    fun highlight(item: CommandNavItem) {
+        navigationRevision++
+        if (!controlled) highlightedId = item.id
+        if (currentValue != item.value) {
+            if (!controlled) currentValue = item.value
+            onValueChange?.invoke(item.value)
         }
     }
 
@@ -123,7 +160,7 @@ private fun handleCommandKey(
     ctrl: CommandController,
     event: KeyEvent,
 ): Boolean {
-    if (event.type != KeyEventType.KeyDown) return false
+    if (event.type != KeyEventType.KeyDown || ctrl.isComposing) return false
     return when (event.key) {
         Key.DirectionDown -> {
             ctrl.stepHighlight(1)
@@ -133,6 +170,18 @@ private fun handleCommandKey(
             ctrl.stepHighlight(-1)
             true
         }
+        Key.MoveHome, Key.MoveEnd -> {
+            val item =
+                (
+                    if (event.key == Key.MoveHome) {
+                        ctrl.items
+                    } else {
+                        ctrl.items.asReversed()
+                    }
+                ).firstOrNull { it.enabled }
+            if (item != null) ctrl.highlight(item)
+            item != null
+        }
         Key.Enter, Key.NumPadEnter -> ctrl.selectHighlighted()
         else -> false
     }
@@ -140,6 +189,9 @@ private fun handleCommandKey(
 
 internal val DefaultCommandFilter: (String, String) -> Boolean =
     { query, value -> value.contains(query, ignoreCase = true) }
+
+private val LocalCommandGroup =
+    staticCompositionLocalOf<androidx.compose.runtime.snapshots.SnapshotStateMap<Any, Boolean>?> { null }
 
 private val LocalCommand = staticCompositionLocalOf<CommandController?> { null }
 
@@ -256,7 +308,27 @@ private fun CommandScaffold(
         if (value == null) internalValue = next
         onValueChange?.invoke(next)
     }
+    controller.controlled = value != null
     controller.currentValue = value ?: internalValue
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    LaunchedEffect(nova, controller.query, controller.items.toList(), value) {
+        if (nova &&
+            (
+                controller.controlled ||
+                    controller.items.none {
+                        it.id == controller.highlightedId &&
+                            it.enabled
+                    }
+            )
+        ) {
+            controller.highlightedId =
+                (
+                    controller.items.firstOrNull {
+                        it.enabled && it.value == controller.currentValue
+                    } ?: controller.items.firstOrNull { it.enabled }
+                )?.id
+        }
+    }
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     CompositionLocalProvider(LocalCommand provides controller) {
         Column(
@@ -355,30 +427,51 @@ fun CommandScope.CommandInput(
     icon: (@Composable () -> Unit)? = null,
 ) {
     val ctrl = commandController()
-    if (icon == null) {
-        Input(
-            value = ctrl.query,
-            onValueChange = { ctrl.query = it },
-            placeholder = placeholder,
-            variant = InputVariant.Ghost,
-            disabled = disabled,
-            modifier = modifier.fillMaxWidth(),
-        )
-    } else {
-        Row(
-            modifier = modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(twSpacing.sm),
-        ) {
-            icon()
+    val observer = remember(ctrl) { { active: Boolean -> ctrl.isComposing = active } }
+    CompositionLocalProvider(LocalInputCompositionObserver provides observer) {
+        if (currentTheme.activePreset == StylePreset.Nova) {
+            val colors = currentTheme.colors
+            InputGroup(
+                modifier = modifier.fillMaxWidth().padding(start = 4.dp, end = 4.dp, top = 4.dp),
+                style =
+                    Style {
+                        background(colors.input.copy(alpha = 0.3f))
+                        borderColor(colors.input.copy(alpha = 0.3f))
+                    },
+            ) {
+                InputGroupAddon { if (icon != null) icon() else Icon(NovaSearch, tint = colors.mutedForeground) }
+                Input(
+                    value = ctrl.query,
+                    onValueChange = { ctrl.query = it },
+                    placeholder = placeholder,
+                    disabled = disabled,
+                )
+            }
+        } else if (icon == null) {
             Input(
                 value = ctrl.query,
                 onValueChange = { ctrl.query = it },
                 placeholder = placeholder,
                 variant = InputVariant.Ghost,
                 disabled = disabled,
-                modifier = Modifier.weight(1f),
+                modifier = modifier.fillMaxWidth(),
             )
+        } else {
+            Row(
+                modifier = modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(twSpacing.sm),
+            ) {
+                icon()
+                Input(
+                    value = ctrl.query,
+                    onValueChange = { ctrl.query = it },
+                    placeholder = placeholder,
+                    variant = InputVariant.Ghost,
+                    disabled = disabled,
+                    modifier = Modifier.weight(1f),
+                )
+            }
         }
     }
 }
@@ -391,7 +484,18 @@ fun CommandScope.CommandList(
 ) {
     val ctrl = commandController()
     Column(
-        modifier = modifier.fillMaxWidth().semantics { contentDescription = ctrl.label },
+        modifier =
+            modifier.fillMaxWidth().then(
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    Modifier.heightIn(
+                        max = 288.dp,
+                    ).verticalScroll(rememberScrollState())
+                } else {
+                    Modifier
+                },
+            ).semantics {
+                contentDescription = ctrl.label
+            },
         content = content,
     )
 }
@@ -412,9 +516,27 @@ fun CommandEmpty(
             modifier =
                 modifier
                     .fillMaxWidth()
-                    .styleable(emptyStyleState, rememberMenuLabelStyle()),
+                    .then(
+                        if (currentTheme.activePreset == StylePreset.Nova) {
+                            Modifier.padding(
+                                vertical = 24.dp,
+                            )
+                        } else {
+                            Modifier
+                        },
+                    )
+                    .styleable(
+                        emptyStyleState,
+                        if (currentTheme.activePreset == StylePreset.Nova) Style else rememberMenuLabelStyle(),
+                    ),
+            contentAlignment =
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    Alignment.Center
+                } else {
+                    Alignment.TopStart
+                },
         ) {
-            Text(variant = TextVariant.BodySmall, textStyle = TextColors.Muted) { text }
+            Text(variant = TextVariant.BodySmall, textStyle = overlayTypography(fallback = TextColors.Muted)) { text }
         }
     }
 }
@@ -426,11 +548,26 @@ fun CommandGroup(
     heading: String? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    Column(modifier = modifier.fillMaxWidth()) {
-        if (heading != null) {
-            CommandGroupHeading(text = heading)
+    val matches = remember { androidx.compose.runtime.mutableStateMapOf<Any, Boolean>() }
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    CompositionLocalProvider(LocalCommandGroup provides matches) {
+        Column(
+            modifier =
+                modifier.fillMaxWidth().then(
+                    if (nova &&
+                        matches.values.any {
+                            it
+                        }
+                    ) {
+                        Modifier.padding(4.dp)
+                    } else {
+                        Modifier
+                    },
+                ),
+        ) {
+            if (heading != null && (!nova || matches.values.any { it })) CommandGroupHeading(text = heading)
+            content()
         }
-        content()
     }
 }
 
@@ -443,7 +580,7 @@ fun CommandGroupHeading(
     val headingStyleState = remember { MutableStyleState(MutableInteractionSource()) }
     Text(
         variant = TextVariant.LabelSmall,
-        textStyle = TextColors.Muted,
+        textStyle = overlayTypography(12, 16, medium = true, muted = true, fallback = TextColors.Muted),
         modifier =
             modifier
                 .fillMaxWidth()
@@ -476,14 +613,14 @@ fun CommandItem(
     textValue: String? = null,
     content: @Composable () -> Unit = {
         if (shortcut == null) {
-            Text(variant = TextVariant.BodySmall) { label }
+            Text(variant = TextVariant.BodySmall, textStyle = overlayTypography()) { label }
         } else {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                Text(variant = TextVariant.BodySmall) { label }
+                Text(variant = TextVariant.BodySmall, textStyle = overlayTypography()) { label }
                 CommandShortcut(shortcut)
             }
         }
@@ -494,11 +631,15 @@ fun CommandItem(
     val resolvedValue = value ?: label
     val matches = forceMount || ctrl.matches(resolvedValue, keywords)
     val itemId = remember { Any() }
-    DisposableEffect(matches, resolvedEnabled, onSelect) {
+    val group = LocalCommandGroup.current
+    DisposableEffect(group, itemId) { onDispose { group?.remove(itemId) } }
+    SideEffect { group?.set(itemId, matches) }
+    val latestSelect by rememberUpdatedState(onSelect)
+    DisposableEffect(matches, resolvedEnabled, resolvedValue) {
         if (matches) ctrl.visibleCount++
         val nav =
             if (matches) {
-                CommandNavItem(itemId, resolvedValue, resolvedEnabled, onSelect).also { ctrl.items.add(it) }
+                CommandNavItem(itemId, resolvedValue, resolvedEnabled) { latestSelect() }.also { ctrl.items.add(it) }
             } else {
                 null
             }
@@ -513,18 +654,41 @@ fun CommandItem(
     if (!matches) return
     val highlighted =
         ctrl.highlightedId == itemId ||
-            (ctrl.currentValue.isNotEmpty() && ctrl.currentValue == resolvedValue)
+            (ctrl.highlightedId == null && ctrl.currentValue.isNotEmpty() && ctrl.currentValue == resolvedValue)
+    val bringIntoView = remember { BringIntoViewRequester() }
+    val novaItem = currentTheme.activePreset == StylePreset.Nova
+    LaunchedEffect(highlighted, novaItem, ctrl.navigationRevision) {
+        if (highlighted && novaItem && ctrl.navigationRevision > 0) bringIntoView.bringIntoView()
+    }
     val interactionSource = remember { MutableInteractionSource() }
     val styleState =
         rememberUpdatedStyleState(interactionSource) {
             it.isEnabled = resolvedEnabled
-            if (highlighted) it.isHovered = true
+            it.isHovered = highlighted
         }
     val pressStyle = rememberPressMotionStyle()
-    val touchTargetStyle = rememberMinTouchTargetStyle()
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    val colors = currentTheme.colors
+    val touchTargetStyle = if (nova) Style else rememberMinTouchTargetStyle()
+    val itemStyle =
+        if (nova) {
+            Style {
+                width(1f)
+                contentPadding(horizontal = 8.dp, vertical = 6.dp)
+                shape(RoundedCornerShape(6.dp))
+                if (highlighted) background(colors.muted)
+                hovered { background(colors.muted) }
+                if (!resolvedEnabled) alpha(0.5f)
+            }
+        } else {
+            rememberMenuItemStyle()
+        }
     Box(
         modifier =
-            modifier
+            modifier.bringIntoViewRequester(bringIntoView)
+                .onPointerEvent(PointerEventType.Enter) {
+                    if (resolvedEnabled) ctrl.items.firstOrNull { it.id == itemId }?.let(ctrl::highlight)
+                }
                 .semantics {
                     role = Role.Button
                     contentDescription = textValue ?: label
@@ -536,17 +700,13 @@ fun CommandItem(
                     enabled = resolvedEnabled,
                     role = Role.Button,
                     onClick = {
-                        ctrl.highlightedId = itemId
-                        if (ctrl.currentValue != label) {
-                            ctrl.currentValue = label
-                            ctrl.onValueChange?.invoke(label)
-                        }
+                        ctrl.items.firstOrNull { it.id == itemId }?.let(ctrl::highlight)
                         onSelect()
                     },
                 )
-                .styleable(styleState, touchTargetStyle then pressStyle then rememberMenuItemStyle()),
+                .styleable(styleState, touchTargetStyle then pressStyle then itemStyle),
     ) {
-        content()
+        CompositionLocalProvider(LocalDefaultTextStyle provides overlayTypography()) { content() }
     }
 }
 
@@ -556,9 +716,16 @@ fun CommandShortcut(
     text: String,
     modifier: Modifier = Modifier,
 ) {
+    if (currentTheme.activePreset == StylePreset.Nova && text.startsWith("⌘")) {
+        Row(modifier, verticalAlignment = Alignment.CenterVertically) {
+            Icon(NovaCommandKey, modifier = Modifier.size(12.dp), tint = currentTheme.colors.mutedForeground)
+            Text(textStyle = overlayTypography(12, 16, muted = true)) { text.removePrefix("⌘") }
+        }
+        return
+    }
     Text(
         variant = TextVariant.LabelSmall,
-        textStyle = TextColors.Muted,
+        textStyle = overlayTypography(12, 16, muted = true, fallback = TextColors.Muted),
         modifier = modifier,
     ) { text }
 }
@@ -606,7 +773,7 @@ fun CommandFooter(
     style: Style = Style,
 ) {
     CommandFooter(modifier = modifier, style = style) {
-        Text(variant = TextVariant.BodySmall, textStyle = TextColors.Muted) { text }
+        Text(variant = TextVariant.BodySmall, textStyle = overlayTypography(fallback = TextColors.Muted)) { text }
     }
 }
 
@@ -622,6 +789,6 @@ fun CommandLoading(
         horizontalArrangement = Arrangement.spacedBy(twSpacing.sm),
     ) {
         Spinner()
-        Text(variant = TextVariant.BodySmall, textStyle = TextColors.Muted) { text }
+        Text(variant = TextVariant.BodySmall, textStyle = overlayTypography(fallback = TextColors.Muted)) { text }
     }
 }

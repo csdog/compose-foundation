@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import com.toutiaoyan.compose.ui.components.inputgroup.InputGroup
 import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupAddon
@@ -25,13 +26,15 @@ import com.toutiaoyan.compose.ui.components.input.Input
 import com.toutiaoyan.compose.ui.components.button.ButtonVariant
 import com.toutiaoyan.compose.ui.theme.currentTheme
 
+import androidx.compose.foundation.layout.widthIn
+import com.composables.icons.lucide.Search
+import com.toutiaoyan.compose.ui.components.icon.Icon
+
 val inputGroupDoc =
     ComponentDoc(
         id = "input-group",
         title = "Input Group",
-        description =
-            "Addons, buttons, and helper content around an Input/Textarea — matching " +
-                "shadcn input-group.tsx (InputGroup / InputGroupAddon / InputGroupButton / InputGroupText).",
+        description = "Add addons, buttons, and helper content to inputs.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.inputgroup.InputGroup
@@ -43,23 +46,33 @@ val inputGroupDoc =
                 Input(value = amount, onValueChange = { amount = it })
             }
             """.trimIndent(),
+        apiProperties =
+            listOf(
+                ApiProperty("invalid", "Boolean", "false"),
+                ApiProperty("disabled", "Boolean", "false"),
+                ApiProperty("contentDescription", "String?", "null"),
+                ApiProperty("InputGroupAddon.align", "InputGroupAddonAlign", "InlineStart"),
+                ApiProperty("InputGroupButton.size", "InputGroupButtonSize", "Xs"),
+            ),
         examples =
             listOf(
                 ComponentExample(
-                    title = "inline-start",
+                    title = "Default",
                     code =
                         """
-                        var amount by remember { mutableStateOf("") }
-                        InputGroup(contentDescription = "Amount") {
-                            InputGroupAddon("${'$'}")
-                            Input(value = amount, onValueChange = { amount = it })
+                        var query by remember { mutableStateOf("") }
+                        InputGroup(modifier = Modifier.widthIn(max = 320.dp), contentDescription = "Search") {
+                            InputGroupInput(value = query, onValueChange = { query = it }, placeholder = "Search...")
+                            InputGroupAddon { Icon(Lucide.Search) }
+                            InputGroupAddon("12 results", align = InputGroupAddonAlign.InlineEnd)
                         }
                         """.trimIndent(),
                     preview = {
-                        var amount by remember { mutableStateOf("") }
-                        InputGroup(contentDescription = "Amount") {
-                            InputGroupAddon("$")
-                            Input(value = amount, onValueChange = { amount = it })
+                        var query by remember { mutableStateOf("") }
+                        InputGroup(modifier = Modifier.widthIn(max = 320.dp), contentDescription = "Search") {
+                            InputGroupInput(value = query, onValueChange = { query = it }, placeholder = "Search...")
+                            InputGroupAddon { Icon(Lucide.Search) }
+                            InputGroupAddon("12 results", align = InputGroupAddonAlign.InlineEnd)
                         }
                     },
                 ),

@@ -7,6 +7,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -46,33 +48,55 @@ import com.toutiaoyan.compose.tailwind.core.twSpacing
  * - **02** → registry `preview` (dev / product cards)
  */
 @Composable
-fun CreatePreviewCanvas(modifier: Modifier = Modifier) {
+fun CreatePreviewCanvas(
+    chartColor: String,
+    modifier: Modifier = Modifier,
+) {
     // Official default item is preview-02 (= our 01).
     var previewIndex by remember { mutableIntStateOf(0) }
-    val gap = twSpacing.lg
     // preview.tsx: rounded-2xl ring ring-foreground/10
     val frameShape = RoundedCornerShape(16.dp)
 
-    Box(
+    BoxWithConstraints(
         modifier =
             modifier
                 .fillMaxSize()
                 .clip(frameShape)
                 .border(1.dp, currentTheme.colors.foreground.copy(alpha = 0.10f), frameShape)
                 // preview.tsx: bg-muted / dark:bg-muted/30
-                .background(currentTheme.colors.muted.copy(alpha = if (currentTheme.isLight) 1f else 0.30f)),
+                .background(
+                    if (previewIndex == 0 && !currentTheme.isLight) {
+                        currentTheme.colors.background
+                    } else {
+                        currentTheme.colors.muted.copy(alpha = if (currentTheme.isLight) 1f else 0.30f)
+                    },
+                ),
     ) {
-        Row(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .horizontalScroll(rememberScrollState())
-                    .padding(twSpacing.xl),
-            horizontalArrangement = Arrangement.spacedBy(gap),
+        val finance = previewIndex == 0
+        val metrics = financePreviewMetrics(maxWidth, currentTheme.activePreset)
+        val gap = if (finance) metrics.gap else twSpacing.lg
+        CompositionLocalProvider(
+            LocalPreviewChartColors provides resolveChartColors(chartColor, currentTheme.isDark),
+            LocalCreatePreviewWidth provides maxWidth,
         ) {
-            when (previewIndex) {
-                0 -> CreatePreview01Columns(gap)
-                else -> CreatePreview02CanvasColumns(gap)
+            if (finance) {
+                // Separate layout nodes preserve native semantics actions for each
+                // axis; stacking both modifiers on one node hid vertical ScrollBy.
+                Box(Modifier.fillMaxSize().horizontalScroll(rememberScrollState())) {
+                    Row(
+                        Modifier.fillMaxHeight().verticalScroll(rememberScrollState()).padding(gap),
+                        horizontalArrangement = Arrangement.spacedBy(gap),
+                    ) {
+                        CreatePreview01Columns(gap, metrics.columnWidth)
+                    }
+                }
+            } else {
+                Row(
+                    Modifier.fillMaxSize().horizontalScroll(rememberScrollState()).padding(twSpacing.xl),
+                    horizontalArrangement = Arrangement.spacedBy(gap),
+                ) {
+                    CreatePreview02CanvasColumns(gap)
+                }
             }
         }
 
@@ -92,8 +116,11 @@ fun CreatePreviewCanvas(modifier: Modifier = Modifier) {
  * as Create's "02"; it is now the default "01".
  */
 @Composable
-private fun RowScope.CreatePreview01Columns(gap: Dp) {
-    PreviewColumn(gap) {
+private fun RowScope.CreatePreview01Columns(
+    gap: Dp,
+    columnWidth: Dp,
+) {
+    FinancePreviewColumn(columnWidth, gap) {
         CreateContributionHistoryCard()
         CreateEmptyDistributeTrackCard()
         CreateQrConnectCard()
@@ -101,43 +128,43 @@ private fun RowScope.CreatePreview01Columns(gap: Dp) {
         CreateIndexInvestingCard()
         CreateSyncingStateCard()
     }
-    PreviewColumn(gap) {
+    FinancePreviewColumn(columnWidth, gap) {
         CreatePayoutThresholdCard()
         CreateClaimableBalanceCard()
         CreatePreferencesCard()
         CreateSavingsProgressCard()
         CreateKitchenIslandCard()
     }
-    PreviewWideColumn(gap) {
+    FinancePreviewColumn(columnWidth * 2 + gap, gap) {
         CreateSavingsTargetsCard()
         CreateRecentTransactionsCard()
         Row(horizontalArrangement = Arrangement.spacedBy(gap)) {
-            Column(modifier = Modifier.width(320.dp), verticalArrangement = Arrangement.spacedBy(gap)) {
+            Column(modifier = Modifier.width(columnWidth - 4.dp), verticalArrangement = Arrangement.spacedBy(gap)) {
                 CreateSidebarNavCard()
                 CreateFaqCard()
             }
-            Column(modifier = Modifier.width(320.dp), verticalArrangement = Arrangement.spacedBy(gap)) {
+            Column(modifier = Modifier.width(columnWidth - 4.dp), verticalArrangement = Arrangement.spacedBy(gap)) {
                 CreatePaymentsCard()
                 CreateFrontDoorCard()
             }
         }
         CreateReleaseCatalogCard()
     }
-    PreviewColumn(gap) {
+    FinancePreviewColumn(columnWidth, gap) {
         CreateAccountAccessCard()
         CreateCardOverviewCard()
         CreateTransferFundsCard()
         CreateCoverArtCard()
         CreateLoadingCard()
     }
-    PreviewColumn(gap) {
+    FinancePreviewColumn(columnWidth, gap) {
         CreateReceivingMethodCard()
         CreatePowerUsageCard()
         CreateEmptyConnectBankCard()
         CreateUpcomingPaymentsCard()
         CreateRollerShadesCard()
     }
-    PreviewColumn(gap) {
+    FinancePreviewColumn(columnWidth, gap) {
         CreateStockPerformanceCard()
         CreateEmptyExploreCatalogCard()
         CreateNewMilestoneCard()
@@ -212,16 +239,13 @@ internal fun PreviewColumn(
 }
 
 @Composable
-private fun PreviewWideColumn(
+private fun FinancePreviewColumn(
+    width: Dp,
     gap: Dp,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Column(
-        modifier =
-            Modifier
-                .width(656.dp)
-                .fillMaxHeight()
-                .verticalScroll(rememberScrollState()),
+        modifier = Modifier.width(width).padding(4.dp),
         verticalArrangement = Arrangement.spacedBy(gap),
         content = content,
     )

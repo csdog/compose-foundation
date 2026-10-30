@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CatalogNavigationTest[jvm]" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-30T06:20:31.218Z" hostname="Apples-MacBook-Pro.local" time="0.66">
+  <properties/>
+  <testcase name="searchSupportsArrowKeysAndEnter[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogNavigationTest" time="0.173"/>
+  <testcase name="searchDismissesWithEscape[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogNavigationTest" time="0.086"/>
+  <testcase name="emptySearchHasNoEmptyGroupHeadings[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogNavigationTest" time="0.078"/>
+  <testcase name="tableOfContentsScrollsToTheActualSection[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogNavigationTest" time="0.233"/>
+  <testcase name="navigationIncludesEveryEntryOnceAndKeepsExtensionsSeparate[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogNavigationTest" time="0.013"/>
+  <testcase name="searchFocusesInputAndNavigatesToAFilteredResult[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogNavigationTest" time="0.077"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

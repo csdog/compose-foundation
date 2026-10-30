@@ -17,12 +17,19 @@ dependency, no icon-library dependency — every component is drawn from this li
 
 ## Installation
 
-Published to Maven Central.
+The coordinates below use this checkout's **0.3.0 development version**. A Maven
+release is a separate publishing step.
+
+In 0.3.0, `Attachment` content and actions use `AttachmentScope` to pass the root's
+size and orientation to its parts. Trailing lambdas keep the same syntax. Change
+stored slot types to `@Composable AttachmentScope.() -> Unit`; extract reusable
+parts as `AttachmentScope` extension composables. A stored unscoped lambda can be
+wrapped in `{ oldContent() }`. The previous JVM entry point remains as a binary bridge.
 
 ```toml
 # gradle/libs.versions.toml
 [versions]
-ty-compose-ui = "0.2.4"
+ty-compose-ui = "0.3.0"
 
 [libraries]
 ty-compose-ui = { module = "com.toutiaoyan.compose:ui", version.ref = "ty-compose-ui" }
@@ -59,6 +66,9 @@ deliberate, documented exceptions — `native-select`, `direction`, `data-table`
 against real source in [`docs/shadcn-parity.md`](docs/shadcn-parity.md).
 Ongoing alignment work is logged in [
 `docs/shadcn-align-progress.md`](docs/shadcn-align-progress.md).
+
+Web visual alignment: [implementation plan](docs/shadcn-web-plan.md) ·
+[current progress and component checklist](docs/shadcn-web-progress.md).
 
 ## Project structure
 

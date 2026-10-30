@@ -21,7 +21,7 @@ must run first — the metadata generator's preview URLs point at its output
 
 ```jsonc
 {
-  "stylePreset": "Vega",
+  "stylePreset": null,
   "stylePresetNote": "...",
   "components": [
     {
@@ -36,7 +36,7 @@ must run first — the metadata generator's preview URLs point at its output
         "ButtonSize": ["Xs", "Sm", "Md", "Lg", "Icon", "IconXs", "IconSm", "IconLg"]
       },
       "previews": [
-        { "state": "variants", "theme": "light", "url": "https://raw.githubusercontent.com/.../button_variants_light.png" },
+        { "state": "variants", "theme": "light", "stylePreset": "Vega", "url": "https://raw.githubusercontent.com/.../button_variants_light.png" },
         { "state": "variants", "theme": "dark", "url": "..." },
         { "state": "variants_disabled", "theme": "light", "url": "..." }
       ]
@@ -45,11 +45,15 @@ must run first — the metadata generator's preview URLs point at its output
 }
 ```
 
+Since 2026-10-29, previews include both legacy Vega images and Nova parity matrices.
+The root `stylePreset` is `null`; each preview carries its own `stylePreset`.
+The live catalog defaults to Nova. Never infer a preview's preset from the catalog default.
+
 **Top level**
 
 | Field | Meaning |
 |---|---|
-| `stylePreset` | The one style preset (of 8 this library ships) every preview image below was captured under. Read `stylePresetNote` before assuming these previews represent "the" look of a component — swapping presets changes shape/spacing/animation. |
+| `stylePreset` | Legacy global field; null for mixed sets. Read each preview’s `stylePreset`. Read `stylePresetNote` before assuming these previews represent "the" look of a component — swapping presets changes shape/spacing/animation. |
 | `components` | Array described below. |
 
 Beyond `stylePreset`, `Theme` has two more independent theming axes, neither varied here:
@@ -70,7 +74,7 @@ doesn't even expose these as parameters, so there's no per-color variant set to 
 | `family` | A *different*, curated grouping by interaction pattern, meant specifically for cross-library parity comparison — not the same as `category`. See below. |
 | `isNew` | Whether the catalog currently flags this component as newly added. |
 | `properties` | Every variant/size sealed-interface or enum this component exposes, with its full set of values. Empty object `{}` is a real answer for components with no such API (e.g. plain layout primitives), not a gap. |
-| `previews` | One entry per captured state × theme. `state` is a free-form label (`"variants"`, `"variants_disabled"`, `"focused"`, ...) — read it, don't parse it. `url` is a public GitHub-raw link, no auth needed. |
+| `previews` | One entry per captured state × theme. `state` is a free-form label (`"variants"`, `"variants_disabled"`, `"focused"`, ...) — read it, don't parse it. `url` is the publication target on GitHub raw; newly added previews become reachable after the repository is pushed. `stylePreset` records Vega or Nova for this specific image. |
 
 ## Parity families
 
@@ -88,10 +92,10 @@ actual UX for that pattern, regardless of which of those three specific componen
 | `overlay` | dialog, tooltip, sheet, sidebar, context-menu, drawer, alert-dialog, hover-card |
 | `selection` | tabs, radio-group, switch, command, menubar, navigation-menu, toggle, toggle-group, checkbox, stepper |
 | `feedback` | alert, progress, skeleton, spinner, toast |
-| `disclosure` | collapsible, accordion, breadcrumb |
+| `disclosure` | collapsible, accordion, breadcrumb, trace |
 | `layout` | card, separator, aspect-ratio, resizable, scroll-area, table, pagination |
 | `data` | chart, calendar, carousel |
-| `text` | text, badge, chip, kbd, label, avatar, item, empty |
+| `text` | text, badge, chip, kbd, label, avatar, item, empty, code-block |
 | `ai` | message, bubble, attachment, marker, message-scroller |
 | `utils` | shimmer, scroll-fade |
 

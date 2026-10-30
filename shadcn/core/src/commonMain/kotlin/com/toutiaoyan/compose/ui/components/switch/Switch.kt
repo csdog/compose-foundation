@@ -1,5 +1,9 @@
 package com.toutiaoyan.compose.ui.components.switch
+import com.toutiaoyan.compose.ui.utils.keyboardInputMode
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -25,15 +29,24 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.focusProperties
+import com.toutiaoyan.compose.ui.styles.cssStyleable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.shadow.Shadow
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.ui.unit.Dp
 import com.toutiaoyan.compose.tailwind.core.twSpacing
 import com.toutiaoyan.compose.ui.components.button.ButtonAnimation
+import com.toutiaoyan.compose.ui.components.field.FieldLabel
 import com.toutiaoyan.compose.ui.components.label.Label
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextColors
@@ -97,8 +110,26 @@ fun Switch(
         } else {
             null
         }
-    val errorColor = currentTheme.colors.destructive
-    val invalidStyle = if (invalid) Style { borderColor(errorColor) } else Style
+    val theme = currentTheme
+    val nova = theme.activePreset == StylePreset.Nova
+    val errorColor = theme.colors.destructive
+    val invalidStyle =
+        if (invalid) {
+            Style {
+                borderColor(if (nova && theme.isDark) errorColor.copy(alpha = errorColor.alpha * 0.5f) else errorColor)
+                if (nova) {
+                    dropShadow(
+                        Shadow(
+                            radius = 0.dp,
+                            spread = 3.dp,
+                            color = errorColor.copy(alpha = if (theme.isDark) 0.4f else 0.2f),
+                        ),
+                    )
+                }
+            }
+        } else {
+            Style
+        }
     val interactionSource = remember { MutableInteractionSource() }
     val pressStyle = rememberPressMotionStyle(animation)
     val touchTargetStyle = rememberMinTouchTargetStyle()
@@ -109,9 +140,21 @@ fun Switch(
         }
     val thumbInset = size.thumbInset
     val thumbOffset by animateDpAsState(
-        if (isChecked) size.trackWidth - size.thumbSize - thumbInset else thumbInset,
+        if (isChecked) {
+            size.trackWidth - size.thumbSize - thumbInset
+        } else if (nova) {
+            0.dp
+        } else {
+            thumbInset
+        },
+        animationSpec = if (nova) tween(150) else spring(),
     )
-    val thumbColor = currentTheme.colors.background
+    val thumbColor =
+        if (nova && theme.isDark) {
+            if (isChecked) theme.colors.primaryForeground else theme.colors.foreground
+        } else {
+            theme.colors.background
+        }
     val state =
         SwitchState(
             checked = isChecked,
@@ -124,6 +167,7 @@ fun Switch(
         modifier =
             modifier
                 .semantics {
+                    if (invalid) error("Invalid selection")
                     if (label.isNotEmpty()) {
                         contentDescription = if (required) "$label, required" else label
                     }
@@ -131,6 +175,7 @@ fun Switch(
                         disabled()
                     }
                 }
+                .keyboardInputMode()
                 .toggleable(
                     value = isChecked,
                     onValueChange = { setChecked?.invoke(it) },
@@ -146,8 +191,11 @@ fun Switch(
             Box(
                 modifier =
                     Modifier
-                        .size(width = size.trackWidth, height = size.trackHeight)
-                        .styleable(styleState, rememberSwitchTrackStyle() then invalidStyle, style),
+                        .size(
+                            width = size.trackWidth,
+                            height = if (nova && size == SwitchSize.Default) 18.4.dp else size.trackHeight,
+                        )
+                        .cssStyleable(styleState, rememberSwitchTrackStyle() then invalidStyle, style),
                 content = content,
             )
         }
@@ -173,6 +221,18 @@ fun Switch(
     defaultChecked: Boolean = false,
     style: Style = Style,
 ) {
+    val labelTarget = remember { FocusRequester() }
+    var localChecked by remember { mutableStateOf(defaultChecked) }
+    val value = checked ?: localChecked
+    val update: ((Boolean) -> Unit)? =
+        if (checked == null || onCheckedChange != null) {
+            { next ->
+                if (checked == null) localChecked = next
+                onCheckedChange?.invoke(next)
+            }
+        } else {
+            null
+        }
     Row(
         modifier = modifier,
         verticalAlignment =
@@ -181,8 +241,9 @@ fun Switch(
     ) {
         val resolvedEnabled = enabled && !disabled && !LocalFieldSetDisabled.current
         Switch(
-            checked = checked,
-            onCheckedChange = onCheckedChange,
+            checked = value,
+            modifier = Modifier.focusRequester(labelTarget),
+            onCheckedChange = update,
             enabled = resolvedEnabled,
             size = size,
             invalid = invalid,
@@ -193,13 +254,40 @@ fun Switch(
             style = style,
         )
         if (description == null) {
-            Label(text, disabled = !resolvedEnabled)
+            Label(
+                text,
+                modifier =
+                    Modifier.focusProperties { canFocus = false }.clickable(
+                        enabled = resolvedEnabled && update != null,
+                    ) {
+                        update?.invoke(!value)
+                        labelTarget.requestFocus()
+                    },
+                disabled = !resolvedEnabled,
+            )
         } else {
             Column(verticalArrangement = Arrangement.spacedBy(twSpacing.xs2)) {
-                Label(text, disabled = !resolvedEnabled)
+                FieldLabel(
+                    text,
+                    modifier =
+                        Modifier.focusProperties { canFocus = false }.clickable(
+                            enabled = resolvedEnabled && update != null,
+                        ) {
+                            update?.invoke(!value)
+                            labelTarget.requestFocus()
+                        },
+                    disabled = !resolvedEnabled,
+                )
                 Text(
                     variant = TextVariant.BodySmall,
-                    textStyle = TextColors.Muted,
+                    textStyle =
+                        if (currentTheme.activePreset == StylePreset.Nova) {
+                            currentTheme.typography.bodyMedium.merge(
+                                TextColors.Muted,
+                            )
+                        } else {
+                            TextColors.Muted
+                        },
                 ) { description }
             }
         }

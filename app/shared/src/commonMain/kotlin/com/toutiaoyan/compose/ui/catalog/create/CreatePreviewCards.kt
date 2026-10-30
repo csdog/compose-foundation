@@ -3,6 +3,7 @@
 package com.toutiaoyan.compose.ui.catalog.create
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,9 +12,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,8 +25,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.composables.icons.lucide.ArrowRight
 import com.composables.icons.lucide.Calendar
@@ -55,6 +63,8 @@ import com.toutiaoyan.compose.ui.components.buttongroup.ButtonGroupItem
 import com.toutiaoyan.compose.ui.components.card.Card
 import com.toutiaoyan.compose.ui.components.card.CardAction
 import com.toutiaoyan.compose.ui.components.card.CardDescription
+import com.toutiaoyan.compose.ui.components.card.CardContent
+import com.toutiaoyan.compose.ui.components.card.CardFooter
 import com.toutiaoyan.compose.ui.components.card.CardHeader
 import com.toutiaoyan.compose.ui.components.card.CardTitle
 import com.toutiaoyan.compose.ui.components.checkbox.Checkbox
@@ -102,6 +112,7 @@ import com.toutiaoyan.compose.ui.components.switch.Switch
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextColors
 import com.toutiaoyan.compose.ui.components.text.TextVariant
+import com.toutiaoyan.compose.ui.components.slider.Slider
 import com.toutiaoyan.compose.ui.components.textarea.Textarea
 import com.toutiaoyan.compose.ui.components.input.Input
 import com.toutiaoyan.compose.ui.theme.currentTheme
@@ -296,19 +307,68 @@ private fun SavingsTarget(
 
 @Composable
 fun CreateContributionHistoryCard(modifier: Modifier = Modifier) {
+    val compact = isCompactCreatePreview()
     Card(modifier = modifier) {
         CardHeader {
             CardTitle { "Contribution History" }
             CardDescription { "Last 6 months of activity" }
         }
-        Column(modifier = cardContentModifier, verticalArrangement = Arrangement.spacedBy(twSpacing.lg)) {
-            BarChart(listOf(.62f, .85f, .69f, 1f, .58f), listOf("Dec", "Jan", "Feb", "Mar", "Apr"), 160.dp)
-            Row(horizontalArrangement = Arrangement.spacedBy(twSpacing.md)) {
-                SummaryBlock("Upcoming", "May 2024", "Scheduled", Modifier.weight(1f))
-                SummaryBlock("Savings Plan", "Accelerated", "Recurring", Modifier.weight(1f))
+        CardContent {
+            BarChart(
+                listOf(800f, 1100f, 900f, 1300f, 750f, 1400f),
+                listOf("Dec", "Jan", "Feb", "Mar", "Apr", "May"),
+                200.dp,
+            )
+        }
+        CardContent {
+            if (compact) {
+                Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    ContributionSummary("Upcoming", "May 25, 2024", "$1,000 scheduled")
+                    ContributionSummary("Auto-Save Plan", "Accelerated", "Recurring weekly")
+                }
+            } else {
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    ContributionSummary("Upcoming", "May 25, 2024", "$1,000 scheduled", Modifier.weight(1f))
+                    ContributionSummary("Auto-Save Plan", "Accelerated", "Recurring weekly", Modifier.weight(1f))
+                }
             }
         }
-        Button(onClick = {}, modifier = cardContentModifier) { Text { "View Full Report" } }
+        CardFooter {
+            Button("View Full Report", modifier = Modifier.fillMaxWidth(), style = Style { width(1f) })
+        }
+    }
+}
+
+@Composable
+private fun ContributionSummary(
+    label: String,
+    value: String,
+    description: String,
+    modifier: Modifier = Modifier,
+) {
+    val colors = currentTheme.colors
+    Column(
+        modifier =
+            modifier.fillMaxWidth().background(colors.muted.copy(alpha = .5f), RoundedCornerShape(10.dp))
+                .padding(horizontal = 12.dp, vertical = 10.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
+        Text(
+            textStyle =
+                TextStyle(
+                    fontSize = 12.sp,
+                    lineHeight = 18.sp,
+                    fontWeight = FontWeight.Medium,
+                    letterSpacing = .6.sp,
+                    color = colors.mutedForeground,
+                ),
+        ) {
+            label.uppercase()
+        }
+        Text(textStyle = TextStyle(fontSize = 18.sp, lineHeight = 28.sp, fontWeight = FontWeight.SemiBold)) { value }
+        Text(
+            textStyle = TextStyle(fontSize = 14.sp, lineHeight = 20.sp, color = colors.mutedForeground),
+        ) { description }
     }
 }
 
@@ -427,58 +487,76 @@ fun CreateNewMilestoneCard(modifier: Modifier = Modifier) {
 @Composable
 fun CreatePayoutThresholdCard(modifier: Modifier = Modifier) {
     var notes by remember { mutableStateOf("") }
+    var amount by remember { mutableStateOf(2500f) }
     val currencies = listOf("USD — United States Dollar", "EUR — Euro", "GBP — British Pound", "JPY — Japanese Yen")
+    var currency by remember { mutableStateOf(currencies.first()) }
+    val actionFill = currentTheme.colors.muted
     Card(modifier = modifier) {
         CardHeader {
-            Box(Modifier.fillMaxWidth()) {
-                Column(verticalArrangement = Arrangement.spacedBy(twSpacing.xs)) {
-                    CardTitle { "Payout Threshold" }
-                    CardDescription { "Set the minimum balance required before a payout is triggered." }
+            CardTitle { "Payout Threshold" }
+            CardDescription { "Set the minimum balance required before a payout is triggered." }
+            CardAction {
+                Button(
+                    onClick = {},
+                    variant = ButtonVariant.Ghost,
+                    size = ButtonSize.IconSm,
+                    style = Style { background(actionFill) },
+                ) {
+                    Icon(Lucide.X, variant = IconVariant.Small, contentDescription = "Close")
                 }
-                CardAction(modifier = Modifier.align(Alignment.TopEnd)) { Icon(Lucide.X, variant = IconVariant.Small) }
             }
         }
-        FieldGroup(modifier = cardContentModifier) {
-            Field {
-                FieldLabel("Preferred Currency")
-                Select(
-                    value = currencies.first(),
-                    onValueChange = {},
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    SelectTrigger()
-                    SelectContent {
-                        currencies.forEach { SelectItem(it) }
+        CardContent {
+            FieldGroup {
+                Field {
+                    FieldLabel("Preferred Currency")
+                    Select(value = currency, onValueChange = { currency = it }, modifier = Modifier.fillMaxWidth()) {
+                        SelectTrigger(modifier = Modifier.fillMaxWidth())
+                        SelectContent { currencies.forEach { SelectItem(it) } }
                     }
                 }
-            }
-            Field {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    FieldLabel("Minimum Payout Amount")
-                    Text(variant = TextVariant.TitleMedium) { "$2500.00" }
+                Field {
+                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        FieldLabel("Minimum Payout Amount", Modifier.weight(1f).alignByBaseline())
+                        Text(
+                            Modifier.alignByBaseline(),
+                            maxLines = 1,
+                            textStyle =
+                                TextStyle(
+                                    fontSize = 24.sp,
+                                    lineHeight = 32.sp,
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontFeatureSettings = "tnum",
+                                ),
+                        ) { "$${amount.toInt()}.00" }
+                    }
+                    Slider(
+                        value = amount,
+                        onValueChange = { amount = it },
+                        valueRange = 50f..10000f,
+                        step = 50f,
+                        label = "Minimum Payout Amount",
+                        getValueLabel = { "$${it.toInt()}.00" },
+                    )
+                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                        FieldDescription("$50 (MIN)")
+                        FieldDescription("$10,000 (MAX)")
+                    }
                 }
-                Progress(.25f)
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    FieldDescription("$50 (MIN)")
-                    FieldDescription("$10,000 (MAX)")
+                Field {
+                    FieldLabel("Notes")
+                    Textarea(
+                        notes,
+                        { notes = it },
+                        placeholder = "Add any notes for this payout configuration...",
+                        modifier = Modifier.heightIn(min = 100.dp).semantics { contentDescription = "Notes" },
+                    )
                 }
-            }
-            Field {
-                FieldLabel("Notes")
-                Textarea(
-                    notes,
-                    { notes = it },
-                    placeholder = "Add any notes for this payout configuration...",
-                )
             }
         }
-        Button(onClick = {}, modifier = cardContentModifier) { Text { "Save Threshold" } }
+        CardFooter {
+            Button("Save Threshold", modifier = Modifier.fillMaxWidth(), style = Style { width(1f) })
+        }
     }
 }
 
@@ -617,7 +695,7 @@ fun CreateEmptyDistributeTrackCard(modifier: Modifier = Modifier) {
 
 @Composable
 fun CreateAnalyticsCard(modifier: Modifier = Modifier) {
-    val primary = currentTheme.colors.primary
+    val chartColor = previewChartColors()[0]
     Card(modifier = modifier) {
         CardHeader {
             Box(Modifier.fillMaxWidth()) {
@@ -657,7 +735,7 @@ fun CreateAnalyticsCard(modifier: Modifier = Modifier) {
                             size.height * .53f,
                         )
                     }
-                drawPath(path, primary, style = Stroke(width = 3f))
+                drawPath(path, chartColor, style = Stroke(width = 3f))
             }
         }
     }
@@ -867,25 +945,51 @@ private fun BarChart(
     labels: List<String>,
     height: androidx.compose.ui.unit.Dp,
 ) {
+    val color = previewChartColors()[1]
+    val maximum = values.maxOrNull()?.coerceAtLeast(1f) ?: 1f
+    val corner =
+        if (currentTheme.activePreset in
+            listOf(
+                com.toutiaoyan.compose.ui.tokens.StylePreset.Lyra,
+                com.toutiaoyan.compose.ui.tokens.StylePreset.Sera,
+            )
+        ) {
+            0.dp
+        } else {
+            6.dp
+        }
     Row(
-        modifier = Modifier.fillMaxWidth().height(height),
+        modifier = Modifier.fillMaxWidth().height(height).padding(top = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(twSpacing.xs),
         verticalAlignment = Alignment.Bottom,
     ) {
         values.forEachIndexed { index, value ->
             Column(
                 modifier = Modifier.weight(1f).fillMaxHeight(),
-                verticalArrangement = Arrangement.Bottom,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Box(
-                    modifier =
-                        Modifier.weight(value).fillMaxWidth().background(
-                            currentTheme.colors.primary,
-                            RoundedCornerShape(topStart = twRadius.sm, topEnd = twRadius.sm),
-                        ),
-                )
-                Text(variant = TextVariant.LabelSmall, textStyle = TextColors.Muted) { labels[index] }
+                // Each category has an independent plot area. A weight on its only
+                // flexible child always filled that area, regardless of the value.
+                Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.BottomCenter) {
+                    Box(
+                        Modifier.widthIn(max = 40.dp).fillMaxWidth()
+                            .fillMaxHeight((value / maximum).coerceIn(0f, 1f))
+                            .background(color, RoundedCornerShape(topStart = corner, topEnd = corner))
+                            .semantics { contentDescription = "${labels[index]}: $value" },
+                    )
+                }
+                Box(Modifier.fillMaxWidth().height(30.dp).padding(top = 8.dp), contentAlignment = Alignment.TopCenter) {
+                    Text(
+                        textStyle =
+                            TextStyle(
+                                fontSize = 12.sp,
+                                lineHeight = 18.sp,
+                                color = currentTheme.colors.mutedForeground,
+                            ),
+                    ) {
+                        labels[index]
+                    }
+                }
             }
         }
     }
@@ -902,7 +1006,7 @@ private fun MiniBars(values: List<Float>) {
             Box(
                 modifier =
                     Modifier.weight(1f).fillMaxHeight(value)
-                        .background(currentTheme.colors.primary, RoundedCornerShape(topStart = 2.dp, topEnd = 2.dp)),
+                        .background(previewChartColors()[1], RoundedCornerShape(topStart = 2.dp, topEnd = 2.dp)),
             )
         }
     }

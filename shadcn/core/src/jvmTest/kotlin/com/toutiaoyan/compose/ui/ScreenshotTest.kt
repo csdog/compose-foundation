@@ -6,6 +6,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.input.InputMode
+import androidx.compose.ui.input.InputModeManager
+import androidx.compose.ui.platform.LocalInputModeManager
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.hasAnyAncestor
@@ -59,7 +62,7 @@ abstract class ScreenshotTest {
     }
 
     /**
-     * Like [snapshot], but requests real system focus on the node tagged [focusTag] before
+     * Like [snapshot], but enters keyboard mode and requests real system focus on the node tagged [focusTag] before
      * capturing -- this exercises the same focus/interaction pipeline a real user would
      * drive, rather than special-casing a "forced focused" prop on the component under test.
      *
@@ -76,9 +79,12 @@ abstract class ScreenshotTest {
         stylePreset: StylePreset = StylePreset.Vega,
         content: @Composable () -> Unit,
     ) {
+        lateinit var inputMode: InputModeManager
         composeRule.setContent {
+            inputMode = LocalInputModeManager.current
             SnapshotSurface(darkTheme, stylePreset, content)
         }
+        composeRule.runOnIdle { inputMode.requestInputMode(InputMode.Keyboard) }
         val focusable = hasRequestFocusAction() and (hasTestTag(focusTag) or hasAnyAncestor(hasTestTag(focusTag)))
         composeRule.onNode(focusable, useUnmergedTree = true).requestFocus()
         composeRule.waitForIdle()

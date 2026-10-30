@@ -5,6 +5,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.hovered
+import androidx.compose.foundation.style.pressed
+import androidx.compose.ui.graphics.Color
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.runtime.Composable
 import com.toutiaoyan.compose.ui.utils.rememberTheme
 import com.toutiaoyan.compose.ui.styles.border
@@ -41,9 +44,10 @@ fun rememberSliderThumbStyle(): Style =
     rememberTheme {
         Style {
             shape(RoundedCornerShape(radius.full))
-            background(colors.background)
+            background(if (theme.activePreset == StylePreset.Nova) Color.White else colors.background)
             border(colors.ring)
             hovered { dropShadow(focusRingShadow()) }
+            pressed { dropShadow(focusRingShadow()) }
             focusRing(RoundedCornerShape(radius.full))
         }
     }

@@ -5,6 +5,10 @@ package com.toutiaoyan.compose.ui.catalog.docs
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.style.fillWidth
+import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.layout.widthIn
+import com.toutiaoyan.compose.ui.components.input.InputType
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +30,9 @@ import com.toutiaoyan.compose.ui.components.card.CardSize
 import com.toutiaoyan.compose.ui.components.card.CardTitle
 import com.toutiaoyan.compose.ui.components.card.CardVariant
 import com.toutiaoyan.compose.ui.components.field.Field
+import com.toutiaoyan.compose.ui.components.field.FieldLabel
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.style.contentPadding
 import com.toutiaoyan.compose.ui.components.field.FieldGroup
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.input.Input
@@ -34,9 +41,7 @@ val cardDoc =
     ComponentDoc(
         id = "card",
         title = "Card",
-        description =
-            "Displays content in a bordered container. Compose with CardHeader / CardTitle / " +
-                "CardDescription / CardContent / CardFooter.",
+        description = "Displays a card with header, content, and footer.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.card.Card
@@ -50,26 +55,77 @@ val cardDoc =
                 CardContent("Card body content")
             }
             """.trimIndent(),
+        apiProperties =
+            listOf(
+                ApiProperty("variant", "CardVariant", "Default"),
+                ApiProperty("size", "CardSize", "Default"),
+                ApiProperty("spacing", "Dp?", "null (16.dp / 12.dp for Sm)"),
+            ),
         examples =
             listOf(
                 ComponentExample(
-                    title = "Compound",
+                    title = "Default",
                     code =
                         """
-                        Card(modifier = Modifier.width(320.dp)) {
-                            CardHeader("Account", description = "Manage your settings")
-                            CardContent("Card body content")
+                        Card(modifier = Modifier.widthIn(max = 384.dp)) {
+                            CardHeader {
+                                CardTitle("Login to your account")
+                                CardDescription("Enter your email below to login to your account")
+                                CardAction { Button("Sign Up", variant = ButtonVariant.Link) }
+                            }
+                            CardContent {
+                                FieldGroup {
+                                    Field("Email") { Input(email, { email = it }, placeholder = "m@example.com") }
+                                    Field("Password") { Input(password, { password = it }, type = InputType.Password) }
+                                }
+                            }
                             CardFooter {
-                                Button("Save", onClick = {}, size = ButtonSize.Sm)
+                                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    Button("Login", style = Style { fillWidth() })
+                                    Button("Login with Google", variant = ButtonVariant.Outline, style = Style { fillWidth() })
+                                }
                             }
                         }
                         """.trimIndent(),
                     preview = {
-                        Card(modifier = Modifier.width(320.dp)) {
-                            CardHeader("Account", description = "Manage your settings")
-                            CardContent("Card body content")
+                        var email by remember { mutableStateOf("") }
+                        var password by remember { mutableStateOf("") }
+                        Card(modifier = Modifier.widthIn(max = 384.dp)) {
+                            CardHeader {
+                                CardTitle("Login to your account")
+                                CardDescription("Enter your email below to login to your account")
+                                CardAction { Button("Sign Up", variant = ButtonVariant.Link) }
+                            }
+                            CardContent {
+                                FieldGroup {
+                                    Field("Email") { Input(email, { email = it }, placeholder = "m@example.com") }
+                                    Field {
+                                        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                                            FieldLabel("Password")
+                                            Button(
+                                                "Forgot your password?",
+                                                variant = ButtonVariant.Link,
+                                                size = ButtonSize.Sm,
+                                                style =
+                                                    Style {
+                                                        height(20.dp)
+                                                        contentPadding(0.dp)
+                                                    },
+                                            )
+                                        }
+                                        Input(password, { password = it }, type = InputType.Password)
+                                    }
+                                }
+                            }
                             CardFooter {
-                                Button("Save", onClick = {}, size = ButtonSize.Sm)
+                                Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    Button("Login", style = Style { fillWidth() })
+                                    Button(
+                                        "Login with Google",
+                                        variant = ButtonVariant.Outline,
+                                        style = Style { fillWidth() },
+                                    )
+                                }
                             }
                         }
                     },

@@ -79,4 +79,29 @@ class DrawerTest {
             nearestDrawerSnapIndex(750f, offsets, snapToSequentialPoints = false, fromIndex = 1, velocityClosing = 0f),
         )
     }
+
+    @Test fun sequential_snap_uses_physical_offsets_instead_of_list_order() {
+        val offsets = listOf(600f, 0f, 800f)
+        assertEquals(0, nearestDrawerSnapIndex(20f, offsets, true, 1, 1000f))
+        assertEquals(2, nearestDrawerSnapIndex(650f, offsets, true, 0, 1000f))
+        assertEquals(1, nearestDrawerSnapIndex(580f, offsets, true, 0, -1000f))
+        assertEquals(0, nearestDrawerSnapIndex(700f, offsets, true, 2, -1000f))
+    }
+
+    @Test fun sequential_zero_velocity_keeps_a_short_cancelled_drag_at_its_snap() {
+        assertEquals(1, nearestDrawerSnapIndex(20f, listOf(600f, 0f, 800f), true, 1, 0f))
+    }
+
+    @Test fun deeperDrawersContributeToEveryAncestorStack() {
+        val root = DrawerNestHost()
+        val child = DrawerNestHost(root)
+        root.onChildOpenChange(true)
+        child.onChildOpenChange(true)
+        assertEquals(2, root.openChildCount)
+        assertEquals(1, child.openChildCount)
+        child.onChildOpenChange(false)
+        assertEquals(1, root.openChildCount)
+        root.onChildOpenChange(false)
+        assertEquals(0, root.openChildCount)
+    }
 }

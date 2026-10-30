@@ -1,0 +1,281 @@
+{
+  "theme": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] dark",
+  "blocks": [
+    {
+      "type": "usage",
+      "figure": {
+        "fontSize": "14px",
+        "lineHeight": "24.5px",
+        "fontFamily": "Geist, \"Geist Fallback\"",
+        "fontWeight": "400",
+        "backgroundColor": "lab(7.22637 -0.0000149012 0)",
+        "color": "lab(66.128 -0.0000298023 0.0000119209)",
+        "borderRadius": "18px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "paddingLeft": "0px",
+        "paddingRight": "0px",
+        "width": "640px",
+        "height": "187px"
+      },
+      "pre": {
+        "fontSize": "14px",
+        "lineHeight": "24.5px",
+        "fontFamily": "\"Geist Mono\", \"Geist Mono Fallback\"",
+        "fontWeight": "400",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "lab(66.128 -0.0000298023 0.0000119209)",
+        "borderRadius": "0px",
+        "paddingTop": "14px",
+        "paddingBottom": "14px",
+        "paddingLeft": "0px",
+        "paddingRight": "0px",
+        "width": "640px",
+        "height": "187px"
+      },
+      "code": {
+        "fontSize": "14px",
+        "lineHeight": "24.5px",
+        "fontFamily": "\"Geist Mono\", \"Geist Mono Fallback\"",
+        "fontWeight": "400",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "lab(66.128 -0.0000298023 0.0000119209)",
+        "borderRadius": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "paddingLeft": "0px",
+        "paddingRight": "0px",
+        "width": "640px",
+        "height": "159px"
+      },
+      "line": {
+        "fontSize": "14px",
+        "lineHeight": "24.5px",
+        "fontFamily": "\"Geist Mono\", \"Geist Mono Fallback\"",
+        "fontWeight": "400",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "lab(66.128 -0.0000298023 0.0000119209)",
+        "borderRadius": "0px",
+        "paddingTop": "1px",
+        "paddingBottom": "1px",
+        "paddingLeft": "0px",
+        "paddingRight": "0px",
+        "width": "640px",
+        "height": "26.5px"
+      },
+      "lineBefore": {
+        "fontSize": "14px",
+        "lineHeight": "24.5px",
+        "fontFamily": "\"Geist Mono\", \"Geist Mono Fallback\"",
+        "fontWeight": "400",
+        "backgroundColor": "lab(7.22637 -0.0000149012 0)",
+        "color": "lab(67.52 -0.0000298023 0)",
+        "borderRadius": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "paddingLeft": "0px",
+        "paddingRight": "24px",
+        "width": "64px",
+        "height": "24.5px"
+      },
+      "tokens": [
+        {
+          "text": "import",
+          "color": "rgb(160, 160, 160)"
+        },
+        {
+          "text": " {",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "text": "  Alert,",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "text": "  AlertAction,",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "text": "  AlertDescription,",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "text": "  AlertTitle,",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "text": "} ",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "text": "from",
+          "color": "rgb(160, 160, 160)"
+        },
+        {
+          "text": " \"@/components/ui/alert\"",
+          "color": "rgb(153, 255, 228)"
+        }
+      ],
+      "copy": {
+        "fontSize": "14px",
+        "lineHeight": "20px",
+        "fontFamily": "\"Geist Mono\", \"Geist Mono Fallback\"",
+        "fontWeight": "500",
+        "backgroundColor": "lab(7.22637 -0.0000149012 0)",
+        "color": "lab(66.128 -0.0000298023 0.0000119209)",
+        "borderRadius": "8px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "paddingLeft": "0px",
+        "paddingRight": "0px",
+        "width": "28px",
+        "height": "28px"
+      },
+      "copySvg": {
+        "fontSize": "14px",
+        "lineHeight": "20px",
+        "fontFamily": "\"Geist Mono\", \"Geist Mono Fallback\"",
+        "fontWeight": "500",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "lab(66.128 -0.0000298023 0.0000119209)",
+        "borderRadius": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "paddingLeft": "0px",
+        "paddingRight": "0px",
+        "width": "16px",
+        "height": "16px"
+      }
+    },
+    {
+      "type": "composition",
+      "figure": {
+        "fontSize": "14px",
+        "lineHeight": "24.5px",
+        "fontFamily": "Geist, \"Geist Fallback\"",
+        "fontWeight": "400",
+        "backgroundColor": "lab(7.22637 -0.0000149012 0)",
+        "color": "lab(66.128 -0.0000298023 0.0000119209)",
+        "borderRadius": "18px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "paddingLeft": "0px",
+        "paddingRight": "0px",
+        "width": "640px",
+        "height": "147.672px"
+      },
+      "pre": {
+        "fontSize": "14px",
+        "lineHeight": "24.5px",
+        "fontFamily": "\"Geist Mono\", \"Geist Mono Fallback\"",
+        "fontWeight": "400",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "lab(66.128 -0.0000298023 0.0000119209)",
+        "borderRadius": "0px",
+        "paddingTop": "14px",
+        "paddingBottom": "14px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px",
+        "width": "640px",
+        "height": "147.672px"
+      },
+      "code": {
+        "fontSize": "14px",
+        "lineHeight": "13.3px",
+        "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+        "fontWeight": "400",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "lab(66.128 -0.0000298023 0.0000119209)",
+        "borderRadius": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "paddingLeft": "0px",
+        "paddingRight": "0px",
+        "width": "608px",
+        "height": "119.672px"
+      },
+      "line": {
+        "fontSize": "14px",
+        "lineHeight": "13.3px",
+        "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+        "fontWeight": "400",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "lab(66.128 -0.0000298023 0.0000119209)",
+        "borderRadius": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "paddingLeft": "0px",
+        "paddingRight": "0px",
+        "width": "608px",
+        "height": "13.2969px"
+      },
+      "lineBefore": {
+        "fontSize": "14px",
+        "lineHeight": "13.3px",
+        "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+        "fontWeight": "400",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "lab(66.128 -0.0000298023 0.0000119209)",
+        "borderRadius": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "paddingLeft": "0px",
+        "paddingRight": "0px",
+        "width": "auto",
+        "height": "auto"
+      },
+      "tokens": [
+        {
+          "text": "Alert",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "text": "├── Icon",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "text": "├── AlertTitle",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "text": "├── AlertDescription",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "text": "└── AlertAction",
+          "color": "rgb(255, 255, 255)"
+        }
+      ],
+      "copy": {
+        "fontSize": "14px",
+        "lineHeight": "20px",
+        "fontFamily": "\"Geist Mono\", \"Geist Mono Fallback\"",
+        "fontWeight": "500",
+        "backgroundColor": "lab(7.22637 -0.0000149012 0)",
+        "color": "lab(66.128 -0.0000298023 0.0000119209)",
+        "borderRadius": "8px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "paddingLeft": "0px",
+        "paddingRight": "0px",
+        "width": "28px",
+        "height": "28px"
+      },
+      "copySvg": {
+        "fontSize": "14px",
+        "lineHeight": "20px",
+        "fontFamily": "\"Geist Mono\", \"Geist Mono Fallback\"",
+        "fontWeight": "500",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "lab(66.128 -0.0000298023 0.0000119209)",
+        "borderRadius": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "paddingLeft": "0px",
+        "paddingRight": "0px",
+        "width": "16px",
+        "height": "16px"
+      }
+    }
+  ]
+}

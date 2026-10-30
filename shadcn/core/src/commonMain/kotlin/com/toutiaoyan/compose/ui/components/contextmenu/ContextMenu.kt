@@ -2,6 +2,35 @@
 
 package com.toutiaoyan.compose.ui.components.contextmenu
 
+import androidx.compose.foundation.focusable
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.awaitLongPressOrCancellation
+import androidx.compose.foundation.gestures.waitForUpOrCancellation
+import androidx.compose.ui.input.pointer.PointerType
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInWindow
+import androidx.compose.ui.unit.round
+import androidx.compose.ui.unit.IntSize
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.unit.IntRect
+import com.toutiaoyan.compose.ui.components.overlay.LocalOverlayHost
+import com.toutiaoyan.compose.ui.components.overlay.HostPortal
+import com.toutiaoyan.compose.ui.components.overlay.overlayOutsideDismiss
+import com.toutiaoyan.compose.ui.components.overlay.OverlayFocusOwner
+import com.toutiaoyan.compose.ui.components.overlay.LocalOverlayFocus
+import com.toutiaoyan.compose.ui.components.overlay.WindowPointPositionProvider
+import androidx.compose.ui.input.key.*
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.withFrameNanos
+import com.toutiaoyan.compose.ui.tokens.StylePreset
+import com.toutiaoyan.compose.ui.theme.currentTheme
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
@@ -66,6 +95,8 @@ internal class ContextMenuController(
     val onOpenChange: (Boolean) -> Unit,
     val onPoint: (IntOffset) -> Unit,
     val modal: Boolean,
+    val pointIsWindow: Boolean,
+    val rootOrigin: IntOffset,
 )
 
 private val LocalContextMenu = staticCompositionLocalOf<ContextMenuController?> { null }
@@ -126,6 +157,8 @@ fun ContextMenu(
 ) {
     var internalOpen by remember { mutableStateOf(defaultOpen) }
     var lastPoint by remember { mutableStateOf(IntOffset.Zero) }
+    var pointIsWindow by remember { mutableStateOf(false) }
+    var rootOrigin by remember { mutableStateOf(IntOffset.Zero) }
     val controlled = open != null
     val isOpen = open ?: internalOpen
     val setOpen: (Boolean) -> Unit = { next ->
@@ -137,12 +170,19 @@ fun ContextMenu(
             open = isOpen,
             lastPoint = lastPoint,
             onOpenChange = setOpen,
-            onPoint = { lastPoint = it },
+            onPoint = {
+                lastPoint = it
+                pointIsWindow = true
+            },
             modal = modal,
+            pointIsWindow = pointIsWindow,
+            rootOrigin = rootOrigin,
         )
-    CompositionLocalProvider(LocalContextMenu provides controller) {
-        Box(modifier = modifier) {
-            ContextMenuScope(controller).content()
+    OverlayFocusOwner(isOpen, modal) {
+        CompositionLocalProvider(LocalContextMenu provides controller) {
+            Box(modifier = modifier.onGloballyPositioned { rootOrigin = it.positionInWindow().round() }) {
+                ContextMenuScope(controller).content()
+            }
         }
     }
 }
@@ -157,12 +197,62 @@ fun ContextMenuScope.ContextMenuTrigger(
     val controller = contextMenuController()
     val onOpenChange = controller.onOpenChange
     val onPoint = controller.onPoint
+    val latestController by rememberUpdatedState(controller)
+    val requester = remember { FocusRequester() }
+    val focusOwner = LocalOverlayFocus.current
+    var origin by remember { mutableStateOf(IntOffset.Zero) }
+    var targetSize by remember { mutableStateOf(IntSize.Zero) }
     Box(
         modifier =
             modifier
-                .semantics {
+                .onGloballyPositioned {
+                    origin = it.positionInWindow().round()
+                    targetSize = it.size
+                }
+                .semantics(mergeDescendants = true) {
                     stateDescription = if (controller.open) "Expanded" else "Collapsed"
                 }
+                .focusRequester(requester)
+                .onFocusChanged { if (it.isFocused) focusOwner?.returnTo = requester }
+                .onPreviewKeyEvent {
+                    if (!disabled &&
+                        it.type == KeyEventType.KeyDown &&
+                        (
+                            it.key == Key.Menu ||
+                                (
+                                    it.key == Key.F10 &&
+                                        it.isShiftPressed
+                                )
+                        )
+                    ) {
+                        onPoint(origin + IntOffset(0, targetSize.height))
+                        onOpenChange(true)
+                        true
+                    } else {
+                        false
+                    }
+                }
+                .focusable(enabled = !disabled)
+                .then(
+                    if (disabled) {
+                        Modifier
+                    } else {
+                        Modifier.pointerInput(Unit) {
+                            awaitEachGesture {
+                                val down = awaitFirstDown(requireUnconsumed = false)
+                                if (down.type == PointerType.Touch) {
+                                    val press = awaitLongPressOrCancellation(down.id)
+                                    if (press != null) {
+                                        latestController.onPoint(origin + press.position.round())
+                                        latestController.onOpenChange(true)
+                                        press.consume()
+                                        waitForUpOrCancellation()
+                                    }
+                                }
+                            }
+                        }
+                    },
+                )
                 .then(
                     if (disabled) {
                         Modifier
@@ -173,7 +263,7 @@ fun ContextMenuScope.ContextMenuTrigger(
                                     val event = awaitPointerEvent()
                                     if (event.type == PointerEventType.Press && event.buttons.isSecondaryPressed) {
                                         val position = event.changes.first().position
-                                        onPoint(IntOffset(position.x.toInt(), position.y.toInt()))
+                                        onPoint(origin + position.round())
                                         onOpenChange(true)
                                     }
                                 }
@@ -225,6 +315,8 @@ fun ContextMenuScope.ContextMenuContent(
             DropdownMenuScope(onOpenChange = { if (!it) controller.onOpenChange(false) })
         }
     val density = LocalDensity.current
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    val navigation = remember { ContextMenuNavigation() }
     val point =
         remember(controller.lastPoint, sideOffset, alignOffset, density) {
             val sidePx = with(density) { sideOffset.roundToPx() }
@@ -234,32 +326,87 @@ fun ContextMenuScope.ContextMenuContent(
         }
 
     if (visibleState.currentState || visibleState.targetState) {
+        val focusState = LocalOverlayFocus.current
+        DisposableEffect(focusState) {
+            focusState?.presented = true
+            onDispose { focusState?.presented = false }
+        }
         ContextMenuPortal {
-            Popup(
-                popupPositionProvider = PointPositionProvider(point),
-                onDismissRequest = { controller.onOpenChange(false) },
-                properties =
-                    PopupProperties(
-                        focusable = controller.modal,
-                        dismissOnBackPress = controller.modal,
-                        dismissOnClickOutside = dismissOnClickOutside && visibleState.targetState,
-                    ),
-            ) {
+            val host = LocalOverlayHost.current
+            val menuPanel: @Composable () -> Unit = {
                 AnimatedVisibility(
                     visibleState = visibleState,
                     enter = enter,
                     exit = exit,
                 ) {
-                    Column(
-                        modifier =
-                            modifier.styleable(
-                                styleState,
-                                rememberMenuPanelStyle() then style,
-                            ),
+                    CompositionLocalProvider(
+                        LocalContextMenuNova provides nova,
+                        LocalContextMenuNavigation provides navigation,
                     ) {
-                        scope.content()
+                        LaunchedEffect(Unit) {
+                            withFrameNanos { }
+                            navigation.items.firstOrNull()?.requestFocus()
+                        }
+                        Column(
+                            modifier =
+                                modifier.overlayOutsideDismiss(
+                                    host,
+                                    !controller.modal && visibleState.targetState && dismissOnClickOutside,
+                                ) {
+                                    controller.onOpenChange(false)
+                                }.onPreviewKeyEvent {
+                                    if (it.type == KeyEventType.KeyDown && it.key == Key.Escape) {
+                                        controller.onOpenChange(false)
+                                        true
+                                    } else {
+                                        navigation.key(it)
+                                    }
+                                }.styleable(
+                                    styleState,
+                                    rememberMenuPanelStyle() then style,
+                                ),
+                        ) {
+                            scope.content()
+                        }
                     }
                 }
+            }
+            if (!controller.modal && host != null) {
+                HostPortal(host) {
+                    Layout(content = menuPanel) { measurables, constraints ->
+                        val child = measurables.firstOrNull()?.measure(constraints.copy(minWidth = 0, minHeight = 0))
+                        val cursor = if (controller.pointIsWindow) point else controller.rootOrigin + point
+                        val position =
+                            WindowPointPositionProvider(
+                                cursor,
+                            ).calculatePosition(
+                                IntRect.Zero,
+                                androidx.compose.ui.unit.IntSize(constraints.maxWidth, constraints.maxHeight),
+                                layoutDirection,
+                                androidx.compose.ui.unit.IntSize(child?.width ?: 0, child?.height ?: 0),
+                            )
+                        layout(constraints.maxWidth, constraints.maxHeight) { child?.place(position.x, position.y) }
+                    }
+                }
+            } else {
+                Popup(
+                    popupPositionProvider =
+                        if (controller.pointIsWindow) {
+                            WindowPointPositionProvider(
+                                point,
+                            )
+                        } else {
+                            PointPositionProvider(point)
+                        },
+                    onDismissRequest = { controller.onOpenChange(false) },
+                    properties =
+                        PopupProperties(
+                            focusable = controller.modal,
+                            dismissOnBackPress = controller.modal,
+                            dismissOnClickOutside = dismissOnClickOutside && visibleState.targetState,
+                        ),
+                    content = menuPanel,
+                )
             }
         }
     }
@@ -332,7 +479,10 @@ fun ContextMenuSeparator(
     modifier: Modifier = Modifier,
     style: Style = Style,
 ) {
-    DropdownMenuSeparator(modifier = modifier, style = style)
+    DropdownMenuSeparator(
+        modifier = modifier.then(if (LocalContextMenuNova.current) Modifier.padding(vertical = 4.dp) else Modifier),
+        style = style,
+    )
 }
 
 /** Alias for [DropdownMenuGroup] matching shadcn's `ContextMenuGroup`. */

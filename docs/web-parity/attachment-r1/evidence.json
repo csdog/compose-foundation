@@ -1,0 +1,124 @@
+{
+  "date": "2026-10-30",
+  "component": "attachment",
+  "component_audit_complete": false,
+  "whole_goal_complete": false,
+  "source": "sources.json",
+  "tests": "test-results.json",
+  "functional_tests": 12,
+  "js_compile": "passed run0006",
+  "wasm_distribution": "passed run0006",
+  "pixel_verify": false,
+  "goldens_recorded": false,
+  "sources": [
+    {
+      "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/attachment/Attachment.kt",
+      "sha256": "63f9332aaa13e0033efa02eb7969c78c0d1ea6b2236e60aa65ad1e8980fdd01f"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/attachment/AttachmentStateTest.kt",
+      "sha256": "fc9d9efbe5a4af450205e91d695c5e809beb1f6f4ff11d8ba13d1ef84d4fed69"
+    },
+    {
+      "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/AttachmentDoc.kt",
+      "sha256": "44463d65f2058fd592afe834d965857a313ac5d9cf5bbb37d3f8903b86355293"
+    }
+  ],
+  "browser": [
+    {
+      "file": "local-desktop-dark-states.png",
+      "sha256": "a6cc7257c48a10cce8446c7af7091e75c813c4c64ce2a7e630963646d8e14ada",
+      "width": 1440,
+      "height": 1000,
+      "role": "final state check"
+    },
+    {
+      "file": "local-desktop-light-states.png",
+      "sha256": "5f44336d019687b0940bf8c3c39d535c1df6779acdac88646dc98fcc874f96e4",
+      "width": 1440,
+      "height": 1000,
+      "role": "final state check"
+    },
+    {
+      "file": "local-initial-compact-light.png",
+      "sha256": "5d931c06b2355dd662f6ef38878fc686748831b6d8e16a94d262b6cb7aa90015",
+      "width": 1083,
+      "height": 675,
+      "role": "initial observation"
+    },
+    {
+      "file": "local-phone-dark-states-end.png",
+      "sha256": "4240dd55d85074005df6075fdf7ad5788ae49353a509416dcd24c725bb92ed24",
+      "width": 390,
+      "height": 844,
+      "role": "final state check"
+    },
+    {
+      "file": "local-phone-dark-states.png",
+      "sha256": "e443df48d354a6b447617f6eaf3a01540510c67177ed5a98925f9e538286b01a",
+      "width": 390,
+      "height": 844,
+      "role": "final state check"
+    },
+    {
+      "file": "local-phone-light-states-end.png",
+      "sha256": "53c203733905968e5ad590677e388523d57459d39c8c9371064714c5363a84ed",
+      "width": 390,
+      "height": 844,
+      "role": "final state check"
+    },
+    {
+      "file": "local-phone-light-states.png",
+      "sha256": "7a3e6acc6bb333dc6f36451006c655ddd392b20bc28415266842c6ea7572d143",
+      "width": 390,
+      "height": 844,
+      "role": "final state check"
+    },
+    {
+      "file": "official-desktop-dark-states.png",
+      "sha256": "9b4a3598795e483a2118224fadca3f94c6f4b51b27d59721a7830a8a66a890f2",
+      "width": 1440,
+      "height": 1000,
+      "role": "final state check"
+    },
+    {
+      "file": "official-desktop-light-states.png",
+      "sha256": "5c6fcd54ee502d8f4ccaceb71069f8d39347d640b82d20e18bdfb623d1683343",
+      "width": 1440,
+      "height": 1000,
+      "role": "final state check"
+    },
+    {
+      "file": "official-initial-compact-dark.png",
+      "sha256": "309fd4308d0ee5e302a84814cdae7d7a13a33c37361e8c3aa92a6566698683c0",
+      "width": 1095,
+      "height": 687,
+      "role": "initial observation"
+    },
+    {
+      "file": "official-phone-dark-states.png",
+      "sha256": "89a16dff7c4276119a28726932702fca42ac2d0665d003f549f64faa2ccf6920",
+      "width": 390,
+      "height": 844,
+      "role": "final state check"
+    },
+    {
+      "file": "official-phone-light-states.png",
+      "sha256": "068d85bd244739276c4e34cab9d74934b7a9794ce1075047c39d6932bb018083",
+      "width": 390,
+      "height": 844,
+      "role": "final state check"
+    }
+  ],
+  "browser_scope": "Official States at desktop1440x1000/phone390x844 light/dark; current local first three-state row at same sizes/themes; phone actually scrolled to Error and back. This is not the full official demo matrix.",
+  "style_condition": "Official attachment MDX/examples pin base-rhea (root radius observed18); implementation target stays base-nova (root CSS rounded-xl). Shared state/card/error selectors verified from Base source. Do not force Nova radius to Rhea by copying rendered values.",
+  "animation_evidence": "Run0004 text-gradient Style output stayed static under correctly frozen clock. Run0005 glyph-overlay Modifier.shimmer passed same pixel test; final0006 passed root Uploading/Processing inheritance, Done transition, explicit override and nested state. Earlier freeze-after-composition attempts do not prove whether animation ran.",
+  "remaining": [
+    "Official demo/image/states/sizes/group/trigger recipes and actual image resources",
+    "Root style/min-width/max-width/flexible content and independently laid out actions",
+    "Nova media sizes/orientation/image variant and truncation across widths",
+    "Trigger labels, focus/hover/disabled, action independence and dialog/keyboard interaction",
+    "Group snap/edge fade/keyboard scroll",
+    "Full recipe state/theme/size/RTL/accessibility and pixel verification"
+  ]
+}

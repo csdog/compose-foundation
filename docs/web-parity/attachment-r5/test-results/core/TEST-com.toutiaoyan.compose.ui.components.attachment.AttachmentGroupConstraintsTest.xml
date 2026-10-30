@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AttachmentGroupConstraintsTest[jvm]" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-30T06:21:49.941Z" hostname="Apples-MacBook-Pro.local" time="0.133">
+  <properties/>
+  <testcase name="explicitRequiredWidthRemainsScrollable[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentGroupConstraintsTest" time="0.055"/>
+  <testcase name="horizontalMinimumAndVerticalCapUseDifferentRules[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentGroupConstraintsTest" time="0.017"/>
+  <testcase name="groupLimitsStayIndependentAndNestedGroupsUseNearestViewport[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentGroupConstraintsTest" time="0.019"/>
+  <testcase name="preferredAndStyleWidthsFollowLiveViewportInBothDirections[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentGroupConstraintsTest" time="0.041"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

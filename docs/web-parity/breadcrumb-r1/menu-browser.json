@@ -1,0 +1,54 @@
+[
+  {
+    "form": "desktop",
+    "mode": "light",
+    "trigger": {
+      "x": 610,
+      "y": 418
+    },
+    "actions": [
+      "open",
+      "ArrowDown",
+      "Escape"
+    ]
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "trigger": {
+      "x": 610,
+      "y": 418
+    },
+    "actions": [
+      "open",
+      "ArrowDown",
+      "Escape"
+    ]
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "trigger": {
+      "x": 116,
+      "y": 441
+    },
+    "actions": [
+      "open",
+      "ArrowDown",
+      "Escape"
+    ]
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "trigger": {
+      "x": 116,
+      "y": 441
+    },
+    "actions": [
+      "open",
+      "ArrowDown",
+      "Escape"
+    ]
+  }
+]

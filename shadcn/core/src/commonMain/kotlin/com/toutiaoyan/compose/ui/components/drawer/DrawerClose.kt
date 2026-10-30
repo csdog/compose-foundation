@@ -2,6 +2,7 @@
 
 package com.toutiaoyan.compose.ui.components.drawer
 
+import com.toutiaoyan.compose.ui.utils.keyboardInputMode
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -107,6 +108,7 @@ fun DrawerCloseIcon(
                     if (!resolvedEnabled) disabled()
                 }
                 .styleable(styleState, touchTargetStyle then closeButtonStyle)
+                .keyboardInputMode()
                 .clickable(
                     interactionSource = interactionSource,
                     indication = LocalIndication.current,

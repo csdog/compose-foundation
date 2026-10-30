@@ -8,67 +8,84 @@ Token / 已验证过的视觉对照仍以 `[shadcn-parity.md](shadcn-parity.md)`
 默认风格组合 **base-nova**。`new-york-v4`（Radix/Vaul）仅作历史对照，与 Base 分歧时以 Base 为准。
 详见 `vendor/README.md` / `AGENTS.md` / `shadcn-parity.md`。
 
-循环：每 5 分钟一轮，直到喊停。本文件是该循环的进度日志。
+以下 Tick 是此前对齐循环的历史日志，不表示当前有运行中的定时任务。
 
----
+## Web 页面专项（2026-10-28）
 
-## 当前状态（2026-08-21）
+本轮要求尽量复现 ui.shadcn.com 的实际页面与组件展示；
+执行计划见 [shadcn-web-plan.md](shadcn-web-plan.md)，
+逐组件状态与本轮验证见 [shadcn-web-progress.md](shadcn-web-progress.md)。
+旧 Tick 不作为本轮视觉验收通过的依据。
 
+### Web 第二批（2026-10-28）
 
-| 维度                                                | 状态                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **对齐目标**                                        | **Base UI / base-nova**（`bases/base/ui`；Tick 75–87 已扫导出面 + 关键 Overlay 默认值） |
-| 官方 `base/*` 文档里的组件                              | 除下面「刻意不做」外均已对照；`questionnaire` 含在内 |
-| 组合槽位（Trigger / Content / Header / …）              | 以 Base export 为准：多余槽位 internal / Compose helpers；缺槽已补（如 AttachmentAction/Trigger、CalendarDayButton） |
-| 官方同名 prop（`open` / `disabled` / `sideOffset` / `alignOffset` / …） | **默认值跟官方 Base 走**（含 SubContent / Menubar / ContextMenu / HoverCard 的 alignOffset） |
-| Token（色 / 圆角 / 间距 / focus ring）                   | 见 `shadcn-parity.md` §1–3、§6–7，已对齐 |
-| `shadcn-parity.md` §4 组件矩阵                        | Overlay / Form / Layout / AI Elements 已按 Base 更新；剩余 ⚠️ 多为平台差异（Empty dashed、Chart Canvas、NativeSelect） |
+已补顶栏全局搜索与浏览器 Cmd/Ctrl+K、字母顺序侧栏、手机 Sheet、宽屏章节目录、
+Installation 与 Button/Badge API、组件页滚动恢复；Nova Badge、默认行内图标尺寸及 Spinner 内容色已修正。
+共用弹层已补 Escape 处理。31 项定向测试、11 张显式像素校验通过。
+旧 Badge 的 4 张基准差异经改动前源码对照，actual 图 SHA-256 全部相同；旧基准未更新。
+完整浏览器证据、剩余差异和比较 JSON 见 [Web 进度](shadcn-web-progress.md)。
 
+## 当前状态（本地核对：2026-10-28）
 
+本节依据当前工作树核对，包含尚未提交的按钮波纹修复；本次没有重新抓取上游
+registry，因此不将旧日志中的对齐结论视为对最新版上游的重新认证。
 
+- 对齐目标仍是 **Base UI / base-nova**；已有对齐记录见下方 Tick 1–99，
+  组件差异矩阵见 [shadcn-parity.md](shadcn-parity.md)。
+- `Questionnaire` 已实现，含 Root `item` / `onItemChange`、Item `onStatusChange`；
+  不再列为缺失组件或待补 API。
+- `LocalGroupCorners` 已从源码删除。
+- Chip 已使用 `rememberTheme` 缓存，并为标签提供当前 `LocalContentColor`；
+  旧主题缓存与内容色问题不再作为待修复缺陷。
+- Sidebar 已支持 Icon 折叠、Provider 内 Cmd/Ctrl+B、floating/inset、移动端 Sheet；
+  默认宽度 256.dp、图标栏 48.dp、移动端 288.dp。持久化由 `onPersistOpen` 回调交给调用方。
+- `SheetDefaults.ShowCloseButton = true`；ToggleGroup 默认 `spacing = 8.dp`。
+  旧文档中“为保 golden 保留旧默认值”的说法已失效。
+- Empty 默认虚线边框已实现。Chart 使用 Canvas 而非 Recharts 是平台实现差异，
+  不作为缺少绘图组件的待办。
+- 当前工作树已修复 Button 的 shape 波纹裁剪，新增 5 项像素回归与截图基准，
+  覆盖圆形、非对称圆角、自定义路径及轮廓外阴影；本轮测试和跨平台编译已通过。
+
+### 已核对的源码入口
+
+- [ChipStyles.kt](../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/chip/ChipStyles.kt)、
+  [Chip.kt](../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/chip/Chip.kt)、
+  [RememberTheme.kt](../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/utils/RememberTheme.kt)
+- [Sidebar.kt](../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/sidebar/Sidebar.kt)、
+  [Sheet.kt](../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/sheet/Sheet.kt)、
+  [ToggleGroup.kt](../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/togglegroup/ToggleGroup.kt)
+- [Questionnaire.kt](../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/questionnaire/Questionnaire.kt)、
+  [Empty.kt](../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/empty/Empty.kt)
 
 ### 刻意不做（不是缺口）
 
-- `native-select` — 真原生 `<select>`，Compose 画不出来
-- `direction` — Compose 已有 `LocalLayoutDirection`
-- `form` — 并入 `Field`（无 react-hook-form 依赖）
-- `data-table` — 官方自己也只是 Table 指南
-- `toast` — 官方已弃用，用 `sonner` → `ShadcnToast`
+- `native-select` — 原生 HTML `<select>` 不在当前 Compose 绘制组件范围内。
+- `direction` — 使用 Compose 的 `LocalLayoutDirection`。
+- `form` — 并入 Field，没有引入 react-hook-form。
+- `data-table` — 当前按 Table 组合使用，不作为单独的组件移植任务。
+- `toast` — 现有实现走 sonner 对应的 Toast，不另建旧版同名组件。
 
+## 待办（按优先级，仅保留未完成项）
 
-
-### 本轮之前的缺口
-
-- `questionnaire` — 官方在 Base / Aria / Radix 三套 registry 都有。先前只扫 `new-york-v4/ui` 时漏了；现以 `bases/base/ui/questionnaire.tsx` 为准。
-
-### 切换到 Base 后的待扫
-
-- 除已按 Base 对齐的 **Drawer** 外，其余曾按 `new-york-v4`（Radix/Vaul）对齐的组件：对照 `bases/base/ui/<name>.tsx` 核对导出面 / prop / 默认值（Dialog、Sheet、Select、Popover、DropdownMenu、Tooltip…）。
-
----
-
-
-
-## 待办（按优先级）
-
-0. **全局对齐目标 → Base UI / base-nova**（文档已改；组件按 `bases/base/ui` 扫差异）
-1. ~~落地~~ `Questionnaire` ~~组合 API~~（Tick 1）
-2. ~~Questionnaire~~ `shortcuts` ~~/ Item~~ `disabled`（Tick 2–4 合并）
-3. ~~把~~ `shadcn-parity.md` ~~§4 扩到 Overlay / Data / Layout 第一批~~（Tick 5–6：Separator / Dialog / Sheet / ScrollArea / Calendar）
-4. `LocalGroupCorners` ~~已无读者~~（代码里已删干净）
-5. ~~ButtonGroup / ToggleGroup 的~~ `focus-visible:z-10` ~~邻项 ring 裁切~~（Tick 8–9）
-6. ~~Questionnaire resume：~~`defaultItem` ~~/ Choice~~ `defaultChecked` ~~/ Input~~ `defaultValue`（Tick 7）
-7. ~~QuestionnaireChoiceDescription 槽位~~（Tick 8–9；string Choice `description` 仍可用）
-8. Questionnaire ~~自定义校验 schema~~（Tick 14–15）；~~切题动画~~（Tick 16–17）；`onStatusChange` ~~/~~ `item`（Tick 19）；~~Custom Progress / Error 文案~~（Tick 20）；~~Choice~~ `checked` ~~/ Navigation state~~（Tick 21）；~~Card 组合~~（Tick 22）；~~Dialog 组合~~（Tick 23）；~~Root~~ `items`（Tick 24）；~~ChoiceInput / ChoiceLabel~~（Tick 25）；~~form reset~~（Tick 26）；~~导航可脱离 Actions~~（Tick 27）；~~Root~~ `disabled` ~~/ Input~~ `contentDescription`（Tick 28）；~~键盘切题 / Ctrl+Enter / Progress aria-label~~（Tick 29）；~~ArrowUp/Down 切选项 / Input~~ `type`（Tick 30）；~~Choices selectableGroup / Choice selected / ButtonGroup aria-label~~（Tick 31）。
-9. ~~Calendar~~ `captionLayout = dropdown`（Tick 10）；Sheet Content `showCloseButton` 官方默认已是 `true`，我们为保 golden 仍默认 `false`。ToggleGroup 官方 `spacing` 默认已是 `2`（8dp），我们为保 golden 仍默认 `0`（Tick 32：`ToggleGroupDefaults.Spacing`）。~~TabsList~~ `variant="line"`（Tick 33）。~~Combobox~~ `multiple` ~~+ Chips~~（Tick 34）。~~ComboboxClear / Trigger~~ `showClear` ~~/ InputGroup aria-label~~（Tick 35–36）。~~Badge~~ `variant="link"`（Tick 37）。~~Card~~ `--card-spacing`（Tick 38）。~~Item~~ `size="xs"` ~~/ TabsList aria-label~~（Tick 39）。~~AlertAction~~（Tick 40）。~~Combobox~~ `showTrigger` ~~/~~ `itemToStringValue`（Tick 41–42）。~~AvatarGroupCount~~（Tick 43）。~~AvatarGroup overlap~~（Tick 44）。~~Combobox~~ `autoHighlight`（Tick 45）。~~Empty Outline~~（Tick 46）。~~Progress Label/Value/Track~~（Tick 47）。~~Empty~~ `spacing` ~~/ Media~~ `size`（Tick 48）。~~Bubble Tinted / EmptyContent~~ `spacing`（Tick 49–50）。~~EmptyTitle Official / MessageScroller Content+Item~~（Tick 51–52）。~~BubbleReactions~~ `side`（Tick 53）。~~Skeleton Accent~~（Tick 54）。~~Empty~~ `padding` ~~/~~ `md:p-12`（Tick 55）。~~MessageScrollerButton Start~~（Tick 56）。~~Tooltip Arrow~~（Tick 57）。~~Empty~~ `rounded-lg`（Tick 58）。~~ResizableHandle official hairline~~（Tick 59）。~~ChartLegend bottom~~（Tick 60）。~~Sheet official close~~（Tick 61）。~~Tooltip sideOffset 0~~（Tick 62）。~~SelectContent item-aligned~~（Tick 63）。~~EmptyMedia official default~~（Tick 64）。~~ChartContainer initialDimension / Drawer hide handle~~（Tick 65–66）。~~MessageScroller Provider/Viewport~~（Tick 67）。~~AlertDialog official close~~（Tick 68）。~~CommandDialog official close~~（Tick 69）。~~Drawer official close~~（Tick 70）。
-10. Sidebar：`collapsible=icon`（Tick 11）；~~Cmd/Ctrl+B~~（Tick 12）；~~floating/inset~~（Tick 13）；~~移动端 Sheet~~（Tick 14–15）；`16rem` ~~宽度 / cookie 钩子~~（Tick 16–17）；~~移动端~~ `18rem`（Tick 18）。
-11. ~~Chart 写入 §4~~（Tick 8–9）
+1. **CI 显式执行截图校验。**
+   [.github/workflows/ci.yml](../.github/workflows/ci.yml) 的 Desktop job 当前只运行
+   `jvmTest --continue`；应显式接入 `:shadcn:core:verifyRoborazziJvm`，
+   让像素差异成为 CI 失败条件。详见 [visual-testing.md](visual-testing.md)。
+2. **核对旧截图基准与当前源码。**
+   波纹修复验证期间发现部分现有按钮基准尺寸与当前渲染不同；应逐项确认原因后
+   再更新，不以批量录制替代检查。本次没有改动这些旧基准。
+3. **补充动态交互回归。**
+   本轮已有静态 shape 下的按压像素覆盖；仍需补运行时主题/shape 切换、
+   跨组件 hover 状态和弹层关闭后的焦点恢复等过程测试。
+4. **建立公共 API / ABI 兼容性基准。**
+   当前构建未接入 `apiCheck` / `apiDump` 或等效兼容性校验；正式发布前应明确
+   导出 API 基准与破坏性变更检查流程。
 
 ---
 
+## 循环日志（历史记录，非当前待办）
 
-
-## 循环日志
+以下描述保留各 Tick 当时的状态；已完成事项以顶部的本地核对结果为准。
 
 先前对话（[~228 ticks](890186cb-3c26-4cd4-b5c4-7d4a399f30b0)）没有单独进度文档，摘要：
 
@@ -749,3 +766,59 @@ Overlay 公共 API 对齐官方 `new-york-v4` exports（dialog / sheet / drawer 
 - 选中态在 **`SidebarMenuButton.isActive`**（官方）；`SidebarMenu(activeId, onItemClick)` 仍可作为 `(value, label)` 行的便利 overload
 - MenuButton：**`h-8` / `h-7` / `h-12`**，hover/active `sidebar-accent`，默认字色 `sidebar-foreground`（不再 muted），icon-collapsed tooltip 仅在收起轨时显示
 - Sub：`border-l` + `mx-3.5` / `px-2.5` / `gap-1`；SubButton **`h-7`**
+
+
+### 2026-10-29 — Web 对齐第三批
+
+Card Nova 标题/描述、右侧 Action、满宽 Footer 已修复；新增 Code Block 与 Trace 公开组件、目录和参数表。
+59 项定向回归、19 张相关像素快照通过（本批新增 8 张），JVM/JS/Wasm 与 Web distribution 通过。
+Wasm 代码区追加 Geist Mono 后又通过目录回归与 Web 构建。三个页面已检查桌面/手机浅深主题和基础交互。
+完整状态矩阵、官方扩展示例和 Input/Field 等后续批次仍未关闭。
+最新范围与截图见 [Web 进度](shadcn-web-progress.md)，不把历史 Tick 当作本轮验收证据。
+
+
+### 2026-10-29 — Web 对齐第四批
+
+Input / Field / Label / Textarea 的 Nova 基础字号、尺寸、间距、底色、错误/禁用状态及默认演示已更新；补支付表单及 API 表。
+修复演示 autoFocus 加载时抢焦点/跳页，API Key 默认密码遮挡与官方一致。
+本批 35 项定向检查、6 张新增像素快照通过，JVM/JS/Wasm 及 Web distribution 通过；此前相关回归一并重跑。
+旧表单 25 张失配已用改动前源码复现，最终实际渲染哈希全部一致，旧基准未刷新。
+复杂 Field 布局和完整状态矩阵仍未关闭，详见 [Web 进度](shadcn-web-progress.md)。
+
+
+### 2026-10-29 — Web 对齐第五批
+
+Checkbox / Radio Group / Switch / Toggle 的 Nova 基础样式、错误 ring、默认示例和 API 表已更新。
+标签点击会聚焦真实控件；Radio 补方向键循环、禁用跳过、RTL/Home/End；Toggle 新增兼容 invalid 重载。
+Nova 默认开启焦点 ring，显式关闭仍有效。本批 54 项定向检查、10 张新快照通过，跨 JVM/JS/Wasm 构建通过。
+旧 Toggle 8 张失配已用改动前实现复现且哈希相同，基准未刷新；Tab 单入口及复杂组合仍未关闭。
+最新范围及截图见 [Web 进度](shadcn-web-progress.md)。
+
+
+## 2026-10-29 · Web 第六批
+
+Toggle Group / Slider / Input Group / Button Group 的 Nova 基础样式、默认示例与键盘/布局修正已落地。Slider 在关闭触控最小尺寸时保持可见，Input Group 按 border-box 为 32dp，嵌套图标按钮按实际高度测量。详细范围、尚未关闭的矩阵和历史快照对照见 [Web 进度](shadcn-web-progress.md#第六批实现2026-10-29)。原组件源码复现了 22 张旧基准差异，未批量刷新。
+
+
+## 2026-10-29 · Web 第七批
+
+Input OTP / Select / Combobox 的基础 Nova 对齐已落地：OTP 连体格及选择范围、Select 当前行对齐和键盘链路、可编辑 Combobox 新入口。修复 Web 中 Enter 释放使 Select 重新打开，以及 inline addon 按钮把 Input Group 撑高的问题。92 项相关检查、12 张新快照、JS/Wasm 构建通过。旧 Select/Combobox 17 张历史失配与改动前实际 PNG 一致，旧 OTP 7 项验证通过。完整边界与截图见 [Web 进度](shadcn-web-progress.md#第七批实现2026-10-29)。
+
+
+### 2026-10-29：Web 第八批六个组件
+
+- Collapsible、Command、Context Menu、Date Picker recipe、Dialog、Drawer 的默认示例和主要 Nova 样式已按官方页面更新。
+- 修复 Command 自定义 value/重组高亮、Collapsible 根禁用、Drawer 桌面宽度约束；增加 Context Menu 键盘/长按入口与子菜单导航。
+- Drawer 新增 `DrawerFooterColumn`，原 `DrawerFooter` RowScope 签名保留；Dialog 默认 recipe 补手机逆序纵向动作。
+- 108 项相关检查、8 张新 Nova 像素基准及 JVM/JS/Wasm 构建通过；旧主题 13 张历史失配的修改前后 SHA-256 完全相同。
+- 三种宽度、浅深主题及交互截图索引：`web-parity/phase8-evidence.json`。完整范围与真实残差见 `shadcn-web-progress.md` 第八批，未将本批基础完成等同于整站验收完成。
+
+
+### 2026-10-29：Web 第九批，六组件剩余实现
+
+- Collapsible / Command / Context Menu / Date Picker / Dialog / Drawer 的上批 Web 缺口已补齐；清单按 Web 对照范围关闭。
+- 新增窗口根 `OverlayHost`：4dp 背景模糊、嵌套背景捕获、非模态 portal 与不消费输入的外部点击监听。
+- 修复初始/恢复/Tab 焦点、隐藏内容焦点、长列表滚动、受控值、IME 组合保护、RTL/字母定位/窗口坐标、顺序吸附实际手势和日期时区/locale/范围/月界限。
+- 151 项相关检查与显式像素 verify 通过，8 张新基准；4 张 Nova Dialog/Drawer 图仅按已检查的初始焦点变化更新。
+- 旧预设 21 项有 15 项失配（13 项历史问题 + 2 项 Drawer 焦点变化），保持旧 golden；本批没有用批量重录掩盖历史差异。
+- 浏览器证据 `web-parity/phase9-evidence.json`；Android/iOS 原生 blur、读屏和真实系统输入法仍列设备实测，未宣称全原生平台发布验收完成。

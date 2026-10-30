@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AvatarParityTest[jvm]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-30T07:42:37.450Z" hostname="Apples-MacBook-Pro.local" time="0.627">
+  <properties/>
+  <testcase name="decodedImageHidesFallbackAndRemovalRestoresIt[jvm]" classname="com.toutiaoyan.compose.ui.components.avatar.AvatarParityTest" time="0.473"/>
+  <testcase name="fallbackUsesTwelveAndFourteenPixelNormalType[jvm]" classname="com.toutiaoyan.compose.ui.components.avatar.AvatarParityTest" time="0.034"/>
+  <testcase name="groupOverlapMirrorsInRtlWithoutChangingWidth[jvm]" classname="com.toutiaoyan.compose.ui.components.avatar.AvatarParityTest" time="0.048"/>
+  <testcase name="loadingDelayAndErrorAreDistinct[jvm]" classname="com.toutiaoyan.compose.ui.components.avatar.AvatarParityTest" time="0.037"/>
+  <testcase name="badgesMirrorToBottomLeftInRtlAndSmallHidesIcon[jvm]" classname="com.toutiaoyan.compose.ui.components.avatar.AvatarParityTest" time="0.033"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

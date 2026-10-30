@@ -1,0 +1,265 @@
+[
+  {
+    "role": "core",
+    "class": "AttachmentScreenshotTest[jvm]",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "vertical_dark[jvm]",
+      "vertical_light[jvm]",
+      "states_light[jvm]",
+      "composer_upload_tray_dark[jvm]",
+      "composer_upload_tray_light[jvm]",
+      "states_dark[jvm]"
+    ]
+  },
+  {
+    "role": "core",
+    "class": "AttachmentLayoutTest[jvm]",
+    "tests": 9,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "longTitleReservesActionsAndTracksWidthAndDirection[jvm]",
+      "mediaAndGapsUseNovaSizeAndRootWidthIsAtLeast160[jvm]",
+      "legacyPresetStillAllowsCallerStyleOverrides[jvm]",
+      "novaLayoutDark[jvm]",
+      "mediaSpinnerUsesRootSizeWhileActionsKeepTheirOwnIconSize[jvm]",
+      "novaLayoutLight[jvm]",
+      "styleWidthAndBackgroundOverrideTheActualCard[jvm]",
+      "actionsRemainIndependentlyClickableOnAnInteractiveCard[jvm]",
+      "verticalMediaFillsCardAndActionsDoNotConsumeColumnSpace[jvm]"
+    ]
+  },
+  {
+    "role": "core",
+    "class": "SpinnerScreenshotTest[jvm]",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "states_light[jvm]",
+      "states_dark[jvm]"
+    ]
+  },
+  {
+    "role": "core",
+    "class": "AttachmentGroupSnapTest[jvm]",
+    "tests": 9,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "changingDirectionUpdatesExistingGroupSnapGeometry[jvm]",
+      "tabReachesOffscreenActionsAndEnterActivatesOnlyTheFocusedOne[jvm]",
+      "keyboardCanScrollInsideAnOversizedCard[jvm]",
+      "wheelSettlesWithoutAddingTouchFlingInertia[jvm]",
+      "arrowKeysSnapWithoutActivatingIndependentActions[jvm]",
+      "nonAttachmentContentDoesNotCreateSnapStops[jvm]",
+      "variableWidthCardsSnapWithLogicalPaddingInBothDirections[jvm]",
+      "oversizedCardCanSettleInsideItsOwnSnapArea[jvm]",
+      "horizontalOverflowDoesNotChainToParentAtTheStartingEdge[jvm]"
+    ]
+  },
+  {
+    "role": "core",
+    "class": "ScrollFadeTest[jvm]",
+    "tests": 7,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "fade_size_is_unchanged_when_it_comfortably_fits_the_container[jvm]",
+      "fade_size_is_clamped_to_half_the_container_so_opposite_fades_never_overlap[jvm]",
+      "trailing_edge_does_not_fade_once_scrolled_to_the_very_end[jvm]",
+      "fade_size_never_goes_negative_on_a_zero_size_container[jvm]",
+      "trailing_edge_fades_while_there_is_more_content_ahead[jvm]",
+      "leading_edge_fades_once_scrolled_away_from_the_start[jvm]",
+      "leading_edge_does_not_fade_at_the_very_start[jvm]"
+    ]
+  },
+  {
+    "role": "core",
+    "class": "AttachmentScopeTest[jvm]",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "oldAndScopedJvmEntryPointsBothExist[jvm]",
+      "nestedRootsDoNotBorrowOuterSize[jvm]",
+      "extractedScopeHelpersKeepRootConfiguration[jvm]",
+      "actionsTrackOrientationAndKeepPhysicalRightInRtl[jvm]",
+      "mediaCornerTracksRootSizeChanges[jvm]"
+    ]
+  },
+  {
+    "role": "core",
+    "class": "AttachmentGroupConstraintsTest[jvm]",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "explicitRequiredWidthRemainsScrollable[jvm]",
+      "horizontalMinimumAndVerticalCapUseDifferentRules[jvm]",
+      "groupLimitsStayIndependentAndNestedGroupsUseNearestViewport[jvm]",
+      "preferredAndStyleWidthsFollowLiveViewportInBothDirections[jvm]"
+    ]
+  },
+  {
+    "role": "core",
+    "class": "ButtonNovaParityTest[jvm]",
+    "tests": 7,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "darkMatrix[jvm]",
+      "novaLabelColorChangesWithThemeWithoutResize[jvm]",
+      "smallDefaultIconUsesItsButtonSize[jvm]",
+      "smallLabelUsesNovaTypographyAndThemeFont[jvm]",
+      "destructiveBackgroundAndContentFollowLiveTheme[jvm]",
+      "vegaLabelColorChangesWithThemeWithoutResize[jvm]",
+      "lightMatrix[jvm]"
+    ]
+  },
+  {
+    "role": "core",
+    "class": "AttachmentGroupFadeTest[jvm]",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "overflowEdgesRevealGraduallyAndMirrorInRtl[jvm]",
+      "fittingContentDoesNotFade[jvm]"
+    ]
+  },
+  {
+    "role": "core",
+    "class": "BadgeNovaParityTest[jvm]",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "darkMatrix[jvm]",
+      "spinnerInheritsBadgeSizeAndContentColor[jvm]",
+      "ghostDoesNotPaintAPermanentMutedBackground[jvm]",
+      "destructiveTintUpdatesAcrossThemes[jvm]",
+      "lightMatrix[jvm]",
+      "badgeUsesInlineDimensionsAndDoesNotOverlayItsSlots[jvm]"
+    ]
+  },
+  {
+    "role": "core",
+    "class": "ScrollFadeScreenshotTest[jvm]",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "states_light[jvm]",
+      "states_dark[jvm]"
+    ]
+  },
+  {
+    "role": "core",
+    "class": "ShimmerScreenshotTest[jvm]",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "states_light[jvm]",
+      "states_dark[jvm]"
+    ]
+  },
+  {
+    "role": "core",
+    "class": "AttachmentInteractionTest[jvm]",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "descendantFocusRingsCardWithoutChangingLayoutInBothInputModesAndThemes[jvm]",
+      "standaloneTriggerCoversParentAndRespectsZOrderRegardlessOfInsertionOrder[jvm]",
+      "standaloneTriggerKeyboardAndBothDisableFlagsFollowLiveChanges[jvm]"
+    ]
+  },
+  {
+    "role": "core",
+    "class": "SpinnerGeometryTest[jvm]",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "paintSilhouetteMatchesOfficialSvgAtPublicSizesAndCustomStyle[jvm]"
+    ]
+  },
+  {
+    "role": "core",
+    "class": "AttachmentStateTest[jvm]",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "processingLambdaTitleInheritsMovingShimmer[jvm]",
+      "rootMediaAndDescriptionFollowLiveStateAndTheme[jvm]",
+      "uploadingTitleInheritsMovingShimmer[jvm]",
+      "explicitDescriptionOverrideAndNestedAttachmentRemainIndependent[jvm]",
+      "imageOpacityTracksLifecycleAndCallerShapeClipsTheImage[jvm]"
+    ]
+  },
+  {
+    "role": "catalog",
+    "class": "AttachmentExamplesTest[jvm]",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "fullPreviewKeepsOuterPaddingAndUpdatesItsSurfaceAcrossThemes[jvm]",
+      "triggerOpensDialogByKeyboardWhileActionsStayIndependent[jvm]",
+      "sizeRecipeInherits14Then12SpLabels[jvm]",
+      "defaultLoadsThreeRealPhotosAndKeepsSquareMediaAcrossWidthsAndThemes[jvm]",
+      "imageActionsDoNotActivateTheImageLink[jvm]",
+      "statesRenderAllFiveAndErrorDescriptionInheritsItsColor[jvm]"
+    ]
+  },
+  {
+    "role": "catalog",
+    "class": "CatalogNavigationTest[jvm]",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "searchSupportsArrowKeysAndEnter[jvm]",
+      "searchDismissesWithEscape[jvm]",
+      "emptySearchHasNoEmptyGroupHeadings[jvm]",
+      "tableOfContentsScrollsToTheActualSection[jvm]",
+      "navigationIncludesEveryEntryOnceAndKeepsExtensionsSeparate[jvm]",
+      "searchFocusesInputAndNavigatesToAFilteredResult[jvm]"
+    ]
+  },
+  {
+    "role": "catalog",
+    "class": "CatalogPreviewTest[jvm]",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "compactHeaderHasWorkingNavigationEntry[jvm]",
+      "inputAutofocusRequiresAnExplicitTryClick[jvm]",
+      "apiKeyPreviewUsesPasswordSemantics[jvm]",
+      "textareaAutofocusRequiresAnExplicitTryClick[jvm]",
+      "expandingSourceKeepsLivePreviewState[jvm]"
+    ]
+  },
+  {
+    "role": "catalog",
+    "class": "ComponentDocumentationTest[jvm]",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "fragmentNavigationLoadsRestoresAndRepeatsRealSectionScroll[jvm]",
+      "actualCopyPageExportsDescriptionsAndNewTocAnchorsScrollIntoView[jvm]",
+      "generatedSectionFragmentsAreReadableAndUnique[jvm]",
+      "alertExportIncludesDescriptionsCompositionAndKotlinApiInPageOrder[jvm]",
+      "plainCompositionBlockCopiesItsOwnCodeAndShowsFeedback[jvm]"
+    ]
+  }
+]

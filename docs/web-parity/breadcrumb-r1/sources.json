@@ -1,0 +1,7 @@
+{
+  "revision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "docs": "https://ui.shadcn.com/docs/components/base/breadcrumb",
+  "component": "https://github.com/shadcn-ui/ui/blob/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/bases/base/ui/breadcrumb.tsx",
+  "target": "base-nova",
+  "sourcePreviewCaveat": "Live Rhea page is not a Nova pixel golden; structural metrics cross-checked with pinned Nova stylesheet."
+}

@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.tokens.Colors
 import com.toutiaoyan.compose.ui.utils.rememberTheme
 import com.toutiaoyan.compose.ui.styles.border
@@ -53,21 +54,33 @@ fun ToggleVariant.rememberStyle(): Style {
         when (receiver) {
             ToggleVariant.Default ->
                 Style {
-                    background(Color.Transparent)
+                    background(if (theme.activePreset == StylePreset.Nova) colors.background else Color.Transparent)
                     contentColor(foreground)
                     hovered { background(colors.muted) }
-                    checked { background(colors.secondary) }
+                    checked {
+                        background(
+                            if (theme.activePreset == StylePreset.Nova) colors.muted else colors.secondary,
+                        )
+                    }
                     focusRing(RoundedCornerShape(radius.lg))
                     disabledDim()
                 }
 
             ToggleVariant.Outline ->
                 Style {
-                    background(Color.Transparent)
+                    background(if (theme.activePreset == StylePreset.Nova) colors.background else Color.Transparent)
                     contentColor(foreground)
-                    border(colors.border)
-                    hovered { background(colors.secondary) }
-                    checked { background(colors.secondary) }
+                    border(if (theme.activePreset == StylePreset.Nova) colors.input else colors.border)
+                    hovered {
+                        background(
+                            if (theme.activePreset == StylePreset.Nova) colors.muted else colors.secondary,
+                        )
+                    }
+                    checked {
+                        background(
+                            if (theme.activePreset == StylePreset.Nova) colors.muted else colors.secondary,
+                        )
+                    }
                     focusRing(RoundedCornerShape(radius.lg))
                     disabledDim()
                 }
@@ -87,6 +100,7 @@ fun ToggleSize.rememberStyle(): Style {
                     height(28.dp)
                     minWidth(28.dp)
                     fontSize(12.8.sp)
+                    if (theme.activePreset == StylePreset.Nova) shape(RoundedCornerShape(minOf(radius.md, 12.dp)))
                 }
 
             // base-nova default = h-8 min-w-8 px-2.5

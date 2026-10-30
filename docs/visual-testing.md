@@ -24,15 +24,23 @@ suite makes every component's visual states a committed, diffable artifact.
   preset (`style_matrix_button_focused_<preset>_<light|dark>.png`) -- this is the
   durable proof that picking a style preset actually changes the ring/shape tokens end
   to end (`StylePreset` -> `Theme.light/dark(ring = ...)` -> `Button`
-  -> `shadcnFocusRing`), not just in the two presets that happened to get eyeballed live.
+  -> Style `dropShadow`), not just in the two presets that happened to get eyeballed live.
 
-Not covered yet: hover state (no reliable hover-simulation API is used here -- only
-prop-driven states and real focus/click are exercised), and per-side border-stripping
-inside `ToggleGroup`/`ButtonGroup` (see `docs/shadcn-parity.md`).
+- **Held-press shape regression** (`modifiers/RippleShapeTest.kt`, current working tree):
+  five pixel/screenshot cases cover circles in light/dark themes, asymmetric corners,
+  a generic path, and preservation of the shadow outside the clip. Presses are driven
+  through a controlled `InteractionSource`, with a frozen animation clock.
+- **Grouped focus shape** (`ButtonGroupScreenshotTest.with_label_focused_*`):
+  covers the shape override at grouped ends. This does not establish complete
+  per-side border or hover coverage for every ButtonGroup/ToggleGroup configuration.
 
-**A real blind spot, found the hard way:** every golden here composes once, under one
-fixed theme, and never recomposes -- so a `Style { }` block that captures a stale
-CompositionLocal snapshot (see `.claude/AGENTS.md`'s notes on this anti-pattern) renders
+Still to add: cross-component hover-state coverage, live theme/shape changes, and
+focus restoration after closing overlays. Hover tests can emit `HoverInteraction`
+through a controlled source; lack of pointer simulation is not an API limitation.
+
+**A real blind spot, found the hard way:** most existing fixtures render under one
+fixed theme without switching it at runtime -- so a `Style { }` block that captures a stale
+CompositionLocal snapshot (see `AGENTS.md`'s notes on this anti-pattern) renders
 *correctly* in a static test, because the one theme it was composed under happens to be
 the one it's frozen at. This exact bug shipped undetected in `InputGroup`/
 `Input`'s error state until a live dark-mode toggle in the running catalog app
@@ -49,14 +57,20 @@ will not catch a live theme change.
 # Record goldens (first run, or after an intentional visual change)
 ./gradlew :shadcn:core:recordRoborazziJvm
 
-# Verify against committed goldens (what CI runs, via :shadcn:core:jvmTest)
+# Verify pixels against the committed goldens explicitly
 ./gradlew :shadcn:core:verifyRoborazziJvm
 ```
+
+Plain `:shadcn:core:jvmTest` runs the test bodies but does not enable Roborazzi pixel
+comparison by itself. As checked on 2026-10-28, the Desktop job in
+[CI](../.github/workflows/ci.yml) still runs plain `jvmTest --continue`; connecting
+explicit verification is pending, even though an upload step for screenshot diffs
+already exists. Do not treat that upload step as proof that comparison ran.
 
 Goldens live in `shadcn/core/src/jvmTest/snapshots/` and are committed to git. On a
 mismatch, Roborazzi writes a `*_compare.png` beside the golden with
 expected/actual/diff side by side; CI uploads these as the `screenshot-diffs` artifact
-on failure.
+when the workflow actually runs screenshot verification and a mismatch occurs.
 
 ## Android Preview 截图（Layoutlib）
 

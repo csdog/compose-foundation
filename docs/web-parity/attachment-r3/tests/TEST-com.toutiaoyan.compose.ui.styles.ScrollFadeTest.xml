@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ScrollFadeTest[jvm]" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-10-30T05:42:19.222Z" hostname="Apples-MacBook-Pro.local" time="0.001">
+  <properties/>
+  <testcase name="fade_size_is_unchanged_when_it_comfortably_fits_the_container[jvm]" classname="com.toutiaoyan.compose.ui.styles.ScrollFadeTest" time="0.0"/>
+  <testcase name="fade_size_is_clamped_to_half_the_container_so_opposite_fades_never_overlap[jvm]" classname="com.toutiaoyan.compose.ui.styles.ScrollFadeTest" time="0.0"/>
+  <testcase name="trailing_edge_does_not_fade_once_scrolled_to_the_very_end[jvm]" classname="com.toutiaoyan.compose.ui.styles.ScrollFadeTest" time="0.0"/>
+  <testcase name="fade_size_never_goes_negative_on_a_zero_size_container[jvm]" classname="com.toutiaoyan.compose.ui.styles.ScrollFadeTest" time="0.0"/>
+  <testcase name="trailing_edge_fades_while_there_is_more_content_ahead[jvm]" classname="com.toutiaoyan.compose.ui.styles.ScrollFadeTest" time="0.0"/>
+  <testcase name="leading_edge_fades_once_scrolled_away_from_the_start[jvm]" classname="com.toutiaoyan.compose.ui.styles.ScrollFadeTest" time="0.0"/>
+  <testcase name="leading_edge_does_not_fade_at_the_very_start[jvm]" classname="com.toutiaoyan.compose.ui.styles.ScrollFadeTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

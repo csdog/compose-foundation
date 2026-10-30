@@ -7,6 +7,7 @@ import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.contentPadding
 import androidx.compose.runtime.Composable
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.utils.rememberTheme
 import com.toutiaoyan.compose.ui.styles.border
@@ -16,10 +17,10 @@ fun rememberCommandPanelStyle(): Style =
     rememberTheme {
         Style {
             width(280.dp)
-            shape(RoundedCornerShape(radius.md))
+            shape(RoundedCornerShape(if (theme.activePreset == StylePreset.Nova) radius.xl else radius.md))
             background(colors.popover)
             border(colors.border)
-            contentPadding(spacing.sm)
+            contentPadding(if (theme.activePreset == StylePreset.Nova) 4.dp else spacing.sm)
         }
     }
 

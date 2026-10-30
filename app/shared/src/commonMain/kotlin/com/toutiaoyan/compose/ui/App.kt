@@ -1,5 +1,7 @@
 package com.toutiaoyan.compose.ui
 
+import com.toutiaoyan.compose.ui.components.drawer.DrawerIndentHost
+import com.toutiaoyan.compose.ui.components.overlay.OverlayHost
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -12,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.rememberNavBackStack
+import com.toutiaoyan.compose.ui.catalog.catalogFontFamily
 import com.toutiaoyan.compose.ui.navigation.AppNavSavedStateConfiguration
 import com.toutiaoyan.compose.ui.navigation.AppRouter
 import com.toutiaoyan.compose.ui.navigation.AppRouterImpl
@@ -39,6 +42,7 @@ import kotlinx.coroutines.flow.emptyFlow
 @Preview
 fun App(
     inboundDeepLinks: Flow<String> = emptyFlow(),
+    searchRequests: Flow<Unit> = emptyFlow(),
     /**
      * Web: called once the Navigation 3 back stack is attached, for browser path sync
      * (see angryecho-kmp `onNavHostReady`).
@@ -67,30 +71,36 @@ fun App(
     }
 
     var darkModeOverride by remember { mutableStateOf<Boolean?>(null) }
-    var stylePreset by remember { mutableStateOf(StylePreset.Vega) }
-    var baseColor by remember { mutableStateOf(BaseColor.Zinc) }
+    var stylePreset by remember { mutableStateOf(StylePreset.Nova) }
+    var baseColor by remember { mutableStateOf(BaseColor.Neutral) }
     var accent by remember { mutableStateOf(Accent.Base) }
     val isDarkMode = darkModeOverride ?: isSystemInDarkTheme()
 
     Theme(
         // Fixed chrome identity -- not stylePreset/baseColor/accent, see doc comment above.
         preset = StylePreset.Vega,
-        baseColor = BaseColor.Zinc,
+        baseColor = BaseColor.Neutral,
         accent = Accent.Base,
-        baseRadius = Radius(4.dp),
+        baseRadius = Radius(10.dp),
         isDark = isDarkMode,
+        fontFamily = catalogFontFamily(),
     ) {
-        CatalogNavDisplay(
-            backStack = backStack,
-            appRouter = appRouter,
-            stylePreset = stylePreset,
-            onStylePresetChange = { stylePreset = it },
-            baseColor = baseColor,
-            onBaseColorChange = { baseColor = it },
-            accent = accent,
-            onAccentChange = { accent = it },
-            isDarkMode = isDarkMode,
-            onToggleDarkMode = { darkModeOverride = it },
-        )
+        OverlayHost {
+            DrawerIndentHost {
+                CatalogNavDisplay(
+                    backStack = backStack,
+                    appRouter = appRouter,
+                    stylePreset = stylePreset,
+                    onStylePresetChange = { stylePreset = it },
+                    baseColor = baseColor,
+                    onBaseColorChange = { baseColor = it },
+                    accent = accent,
+                    onAccentChange = { accent = it },
+                    isDarkMode = isDarkMode,
+                    onToggleDarkMode = { darkModeOverride = it },
+                    searchRequests = searchRequests,
+                )
+            }
+        }
     }
 }

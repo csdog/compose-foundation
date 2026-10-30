@@ -42,4 +42,27 @@ class BreadcrumbScreenshotTest : ScreenshotTest() {
 
     @Test
     fun with_ellipsis_light() = withEllipsis(darkTheme = false)
+
+    private fun nova(dark: Boolean) =
+        snapshot(
+            "breadcrumb_nova",
+            darkTheme = dark,
+            stylePreset = com.toutiaoyan.compose.ui.tokens.StylePreset.Nova,
+        ) {
+            Breadcrumb {
+                BreadcrumbList {
+                    BreadcrumbItem("Home", onClick = {})
+                    BreadcrumbSeparator()
+                    BreadcrumbItem { BreadcrumbEllipsis() }
+                    BreadcrumbSeparator()
+                    BreadcrumbItem("Components", onClick = {})
+                    BreadcrumbSeparator()
+                    BreadcrumbItem("Breadcrumb")
+                }
+            }
+        }
+
+    @Test fun nova_light() = nova(false)
+
+    @Test fun nova_dark() = nova(true)
 }

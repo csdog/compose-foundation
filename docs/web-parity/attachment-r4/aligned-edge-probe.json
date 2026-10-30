@@ -1,0 +1,30 @@
+[
+  {
+    "mode": "light",
+    "phase": "end",
+    "sampleY": 405,
+    "firstCardFillPixel": 88,
+    "lastCardFillPixel": 306
+  },
+  {
+    "mode": "light",
+    "phase": "keyboard",
+    "sampleY": 405,
+    "firstCardFillPixel": 88,
+    "lastCardFillPixel": 309
+  },
+  {
+    "mode": "dark",
+    "phase": "end",
+    "sampleY": 405,
+    "firstCardFillPixel": 91,
+    "lastCardFillPixel": 306
+  },
+  {
+    "mode": "dark",
+    "phase": "keyboard",
+    "sampleY": 405,
+    "firstCardFillPixel": 91,
+    "lastCardFillPixel": 309
+  }
+]

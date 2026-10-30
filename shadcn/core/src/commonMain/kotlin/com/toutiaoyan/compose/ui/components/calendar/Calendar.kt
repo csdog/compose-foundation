@@ -2,6 +2,9 @@
 
 package com.toutiaoyan.compose.ui.components.calendar
 
+import com.toutiaoyan.compose.ui.tokens.StylePreset
+import com.toutiaoyan.compose.ui.icons.NovaChevronRight
+import com.toutiaoyan.compose.ui.components.overlay.overlayTypography
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +29,19 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.foundation.style.then
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.withFrameNanos
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.background
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.input.key.Key
@@ -62,7 +78,8 @@ import kotlin.jvm.JvmName
 import com.toutiaoyan.compose.tailwind.core.twSpacing
 import com.toutiaoyan.compose.tailwind.core.twRadius
 
-/** A plain Gregorian calendar date -- the library has no `kotlinx-datetime` dependency, so this stays a minimal value type. */
+/** A plain Gregorian calendar date -- the library has no `kotlinx-datetime` dependency,
+ so this stays a minimal value type. */
 data class CalendarDate(val year: Int, val month: Int, val day: Int) : Comparable<CalendarDate> {
     override fun compareTo(other: CalendarDate): Int {
         if (year != other.year) return year - other.year
@@ -73,17 +90,6 @@ data class CalendarDate(val year: Int, val month: Int, val day: Int) : Comparabl
 
 /** Inclusive start/end for [Calendar] range mode. Matches react-day-picker / shadcn `DateRange`. */
 data class CalendarDateRange(val from: CalendarDate?, val to: CalendarDate?)
-
-private val MONTH_NAMES =
-    listOf(
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December",
-    )
-
-/** react-day-picker `formatMonthDropdown`: `month: "short"`. */
-private val SHORT_MONTH_NAMES =
-    listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
-private val WEEKDAY_LABELS = listOf("Su", "Mo", "Tu", "We", "Th", "Fr", "Sa")
 
 /** react-day-picker / shadcn `captionLayout`. [Label] is the default caption text. */
 enum class CalendarCaptionLayout {
@@ -119,12 +125,39 @@ class CalendarState(
     val fromYear: Int,
     val toYear: Int,
 ) {
+    internal var locale: CalendarLocale = CalendarLocale.English
+    internal var minMonth: CalendarDate? = null
+    internal var maxMonth: CalendarDate? = null
+    internal val canGoPrevious get() = minMonth?.let { CalendarDate(year, month, 1) > it } ?: true
+    internal val canGoNext get() =
+        maxMonth?.let {
+            val end = addMonths(year, month, numberOfMonths - 1)
+            CalendarDate(end.first, end.second, 1) < it
+        } ?: true
+
+    internal fun goToMonth(
+        year: Int,
+        month: Int,
+    ) {
+        var target = CalendarDate(year, month, 1)
+        val lastStart =
+            maxMonth?.let {
+                addMonths(it.year, it.month, 1 - numberOfMonths).let {
+                        (y, m) ->
+                    CalendarDate(y, m, 1)
+                }
+            }
+        if (lastStart != null && target > lastStart) target = lastStart
+        if (minMonth != null && target < minMonth!!) target = minMonth!!
+        onMonthChange(target.year, target.month)
+    }
+
     val caption: String get() = captionFor(year, month)
 
     fun captionFor(
         year: Int,
         month: Int,
-    ) = "${MONTH_NAMES[month - 1]} $year"
+    ) = locale.formatCaption(year, month)
 
     fun isSelectedDay(date: CalendarDate) =
         date == selected || date == rangeFrom || date == rangeTo || date in selectedDates
@@ -140,13 +173,13 @@ class CalendarState(
     fun goPrevious() {
         val delta = if (pagedNavigation) numberOfMonths else 1
         val (y, m) = addMonths(year, month, -delta)
-        onMonthChange(y, m)
+        goToMonth(y, m)
     }
 
     fun goNext() {
         val delta = if (pagedNavigation) numberOfMonths else 1
         val (y, m) = addMonths(year, month, delta)
-        onMonthChange(y, m)
+        goToMonth(y, m)
     }
 
     fun moveFocusTo(date: CalendarDate) {
@@ -203,6 +236,17 @@ class CalendarState(
         if (!isDisabled(date)) onSelectedChange(date)
     }
 }
+
+private class CalendarFocusRegistry {
+    val items = mutableMapOf<CalendarDate, MutableList<Pair<Boolean, FocusRequester>>>()
+
+    fun focus(date: CalendarDate?) {
+        val entries = items[date] ?: return
+        (entries.firstOrNull { it.first } ?: entries.firstOrNull())?.second?.requestFocus()
+    }
+}
+
+private val LocalCalendarFocus = staticCompositionLocalOf<CalendarFocusRegistry?> { null }
 
 private val LocalCalendar = staticCompositionLocalOf<CalendarState?> { null }
 
@@ -346,7 +390,7 @@ fun Calendar(
     today: CalendarDate? = null,
     disabled: (CalendarDate) -> Boolean = { false },
     numberOfMonths: Int = 1,
-    weekStartsOn: Int = 0,
+    weekStartsOn: Int = LocalCalendarLocale.current.firstDayOfWeek,
     showOutsideDays: Boolean = true,
     fromDate: CalendarDate? = null,
     toDate: CalendarDate? = null,
@@ -378,8 +422,8 @@ fun Calendar(
         numberOfMonths = numberOfMonths,
         weekStartsOn = weekStartsOn,
         showOutsideDays = showOutsideDays,
-        fromDate = startMonth ?: fromMonth ?: fromDate,
-        toDate = endMonth ?: toMonth ?: toDate,
+        fromDate = (startMonth ?: fromMonth)?.copy(day = 1) ?: fromDate,
+        toDate = (endMonth ?: toMonth)?.let { it.copy(day = daysInMonth(it.year, it.month)) } ?: toDate,
         fixedWeeks = fixedWeeks,
         hideNavigation = hideNavigation,
         disableNavigation = disableNavigation,
@@ -403,7 +447,7 @@ fun Calendar(
     today: CalendarDate? = null,
     disabled: (CalendarDate) -> Boolean = { false },
     numberOfMonths: Int = 1,
-    weekStartsOn: Int = 0,
+    weekStartsOn: Int = LocalCalendarLocale.current.firstDayOfWeek,
     showOutsideDays: Boolean = true,
     fromDate: CalendarDate? = null,
     toDate: CalendarDate? = null,
@@ -445,8 +489,8 @@ fun Calendar(
         numberOfMonths = numberOfMonths,
         weekStartsOn = weekStartsOn,
         showOutsideDays = showOutsideDays,
-        fromDate = startMonth ?: fromMonth ?: fromDate,
-        toDate = endMonth ?: toMonth ?: toDate,
+        fromDate = (startMonth ?: fromMonth)?.copy(day = 1) ?: fromDate,
+        toDate = (endMonth ?: toMonth)?.let { it.copy(day = daysInMonth(it.year, it.month)) } ?: toDate,
         fixedWeeks = fixedWeeks,
         hideNavigation = hideNavigation,
         disableNavigation = disableNavigation,
@@ -470,7 +514,7 @@ fun Calendar(
     today: CalendarDate? = null,
     disabled: (CalendarDate) -> Boolean = { false },
     numberOfMonths: Int = 1,
-    weekStartsOn: Int = 0,
+    weekStartsOn: Int = LocalCalendarLocale.current.firstDayOfWeek,
     showOutsideDays: Boolean = true,
     fromDate: CalendarDate? = null,
     toDate: CalendarDate? = null,
@@ -506,8 +550,8 @@ fun Calendar(
         numberOfMonths = numberOfMonths,
         weekStartsOn = weekStartsOn,
         showOutsideDays = showOutsideDays,
-        fromDate = startMonth ?: fromMonth ?: fromDate,
-        toDate = endMonth ?: toMonth ?: toDate,
+        fromDate = (startMonth ?: fromMonth)?.copy(day = 1) ?: fromDate,
+        toDate = (endMonth ?: toMonth)?.let { it.copy(day = daysInMonth(it.year, it.month)) } ?: toDate,
         fixedWeeks = fixedWeeks,
         hideNavigation = hideNavigation,
         disableNavigation = disableNavigation,
@@ -558,6 +602,9 @@ private fun CalendarImpl(
     var focusedDate by remember(selected, rangeFrom, selectedDates) {
         mutableStateOf(selected ?: rangeFrom ?: selectedDates.minOrNull() ?: today)
     }
+    val focusRegistry = remember { CalendarFocusRegistry() }
+    var focusRevision by remember { mutableIntStateOf(0) }
+    LaunchedEffect(focusedDate, focusRevision) { if (focusRevision > 0) focusRegistry.focus(focusedDate) }
     val rootStyleState = remember { MutableStyleState(MutableInteractionSource()) }
     val state =
         CalendarState(
@@ -576,7 +623,10 @@ private fun CalendarImpl(
             },
             onMonthChange = onMonthChange,
             onSelectedChange = onDayClick,
-            onFocusedDateChange = { focusedDate = it },
+            onFocusedDateChange = {
+                focusedDate = it
+                focusRevision++
+            },
             numberOfMonths = numberOfMonths.coerceAtLeast(1),
             weekStartsOn = weekStartsOn.coerceIn(0, 6),
             showOutsideDays = showOutsideDays,
@@ -590,11 +640,34 @@ private fun CalendarImpl(
             toYear = toDate?.year ?: (year + 10),
         )
 
-    CompositionLocalProvider(LocalCalendar provides state) {
+    state.locale = LocalCalendarLocale.current
+    state.minMonth = fromDate?.copy(day = 1)
+    state.maxMonth = toDate?.copy(day = 1)
+    val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+    val autoFocus = LocalCalendarAutoFocus.current
+    LaunchedEffect(autoFocus) {
+        if (autoFocus) {
+            withFrameNanos { }
+            val target =
+                (
+                    listOfNotNull(focusedDate, today) +
+                        (1..daysInMonth(year, month)).map {
+                            CalendarDate(year, month, it)
+                        }
+                ).firstOrNull { focusRegistry.items.containsKey(it) && !state.isDisabled(it) }
+            if (target != null && target != focusedDate) {
+                focusedDate = target
+                focusRevision++
+            } else {
+                focusRegistry.focus(target)
+            }
+        }
+    }
+    CompositionLocalProvider(LocalCalendar provides state, LocalCalendarFocus provides focusRegistry) {
         Column(
             modifier =
                 modifier
-                    .onPreviewKeyEvent { handleCalendarKey(state, it) }
+                    .onPreviewKeyEvent { handleCalendarKey(state, it, rtl) }
                     .styleable(
                         rootStyleState,
                         rememberCalendarRootStyle() then style,
@@ -609,11 +682,12 @@ private fun CalendarImpl(
 private fun handleCalendarKey(
     state: CalendarState,
     event: KeyEvent,
+    rtl: Boolean,
 ): Boolean {
     if (event.type != KeyEventType.KeyDown) return false
     when (event.key) {
-        Key.DirectionLeft -> state.moveFocusByDays(-1)
-        Key.DirectionRight -> state.moveFocusByDays(1)
+        Key.DirectionLeft -> state.moveFocusByDays(if (rtl) 1 else -1)
+        Key.DirectionRight -> state.moveFocusByDays(if (rtl) -1 else 1)
         Key.DirectionUp -> state.moveFocusByDays(-7)
         Key.DirectionDown -> state.moveFocusByDays(7)
         Key.MoveHome -> state.moveFocusToWeekEdge(end = false)
@@ -626,7 +700,8 @@ private fun handleCalendarKey(
     return true
 }
 
-private val CELL_SIZE = 36.dp
+private val CELL_SIZE: androidx.compose.ui.unit.Dp
+    @Composable get() = if (currentTheme.activePreset == StylePreset.Nova) 28.dp else 36.dp
 
 /** One cell in a month grid (`date` + whether it falls in the displayed month). */
 data class CalendarCell(val date: CalendarDate, val inCurrentMonth: Boolean)
@@ -687,7 +762,20 @@ fun CalendarMonths() {
         } else {
             (0 until count).toList()
         }
-    Row(horizontalArrangement = Arrangement.spacedBy(twSpacing.lg)) {
+    val windowWidth = with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(twSpacing.lg),
+        verticalArrangement = Arrangement.spacedBy(twSpacing.lg),
+        maxItemsInEachRow =
+            if (currentTheme.activePreset == StylePreset.Nova &&
+                windowWidth < CELL_SIZE * 7 * count +
+                twSpacing.lg * (count - 1)
+            ) {
+                1
+            } else {
+                count
+            },
+    ) {
         offsets.forEachIndexed { visualIndex, offset ->
             val (y, m) = addMonths(state.year, state.month, offset)
             Column(verticalArrangement = Arrangement.spacedBy(twSpacing.sm)) {
@@ -741,11 +829,17 @@ fun CalendarHeader() {
 @Composable
 fun CalendarWeekdays() {
     val weekStartsOn = calendarState().weekStartsOn
-    val labels = WEEKDAY_LABELS.drop(weekStartsOn) + WEEKDAY_LABELS.take(weekStartsOn)
+    val weekdays = LocalCalendarLocale.current.weekdays
+    val labels = weekdays.drop(weekStartsOn) + weekdays.take(weekStartsOn)
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.size(CELL_SIZE * 7, CELL_SIZE)) {
         labels.forEach { label ->
             Box(modifier = Modifier.size(CELL_SIZE), contentAlignment = Alignment.Center) {
-                Text(variant = TextVariant.LabelSmall, textStyle = TextColors.Muted) { label }
+                Text(
+                    variant = TextVariant.LabelSmall,
+                    textStyle = overlayTypography(12, 16, muted = true, fallback = TextColors.Muted),
+                ) {
+                    label
+                }
             }
         }
     }
@@ -859,12 +953,12 @@ private fun CalendarCaptionDropdowns(modifier: Modifier = Modifier) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (state.captionLayout == CalendarCaptionLayout.DropdownYears) {
-            CalendarTitle(MONTH_NAMES[state.month - 1])
+            CalendarTitle(LocalCalendarLocale.current.months[state.month - 1])
         } else {
             CalendarCaptionSelect(
-                label = SHORT_MONTH_NAMES[state.month - 1],
-                options = SHORT_MONTH_NAMES,
-                onSelect = { state.onMonthChange(state.year, it + 1) },
+                label = LocalCalendarLocale.current.shortMonths[state.month - 1],
+                options = LocalCalendarLocale.current.shortMonths,
+                onSelect = { state.goToMonth(state.year, it + 1) },
             )
         }
         if (state.captionLayout == CalendarCaptionLayout.DropdownMonths) {
@@ -874,7 +968,7 @@ private fun CalendarCaptionDropdowns(modifier: Modifier = Modifier) {
             CalendarCaptionSelect(
                 label = state.year.toString(),
                 options = years.map { it.toString() },
-                onSelect = { state.onMonthChange(years[it], state.month) },
+                onSelect = { state.goToMonth(years[it], state.month) },
             )
         }
     }
@@ -894,10 +988,15 @@ private fun CalendarCaptionSelect(
             ) {
                 Text(variant = TextVariant.LabelSmall) { label }
                 Icon(
-                    ChevronRight,
+                    if (currentTheme.activePreset == StylePreset.Nova) NovaChevronRight else ChevronRight,
                     tint = currentTheme.colors.mutedForeground,
                     modifier = Modifier.rotate(90f),
-                    variant = IconVariant.Small,
+                    variant =
+                        if (currentTheme.activePreset == StylePreset.Nova) {
+                            IconVariant.Default
+                        } else {
+                            IconVariant.Small
+                        },
                 )
             }
         }
@@ -918,20 +1017,31 @@ private fun CalendarNavButton(
     onClick: () -> Unit,
     disabled: Boolean = false,
 ) {
-    val enabled = !calendarState().disableNavigation && !disabled
+    val locale = LocalCalendarLocale.current
+    val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+    val enabled =
+        !calendarState().disableNavigation &&
+            !disabled &&
+            (
+                if (pointingLeft) {
+                    calendarState().canGoPrevious
+                } else {
+                    calendarState().canGoNext
+                }
+            )
     val interactionSource = remember { MutableInteractionSource() }
     val styleState =
         rememberUpdatedStyleState(interactionSource) {
             it.isEnabled = enabled
         }
     val pressStyle = rememberPressMotionStyle()
-    val touchTargetStyle = rememberMinTouchTargetStyle()
+    val touchTargetStyle = if (currentTheme.activePreset == StylePreset.Nova) Style else rememberMinTouchTargetStyle()
     Box(
         modifier =
             Modifier
                 .semantics {
                     role = Role.Button
-                    contentDescription = if (pointingLeft) "Previous month" else "Next month"
+                    contentDescription = if (pointingLeft) locale.previousMonth else locale.nextMonth
                     if (!enabled) disabled()
                 }
                 .clickable(
@@ -950,10 +1060,10 @@ private fun CalendarNavButton(
             contentAlignment = Alignment.Center,
         ) {
             Icon(
-                ChevronRight,
+                if (currentTheme.activePreset == StylePreset.Nova) NovaChevronRight else ChevronRight,
                 tint = currentTheme.colors.foreground,
-                modifier = if (pointingLeft) Modifier.rotate(180f) else Modifier,
-                variant = IconVariant.Small,
+                modifier = if (pointingLeft != rtl) Modifier.rotate(180f) else Modifier,
+                variant = if (currentTheme.activePreset == StylePreset.Nova) IconVariant.Default else IconVariant.Small,
             )
         }
     }
@@ -974,11 +1084,48 @@ fun CalendarDayButton(
     outsideHidden: Boolean,
     onClick: () -> Unit,
 ) {
+    if (outsideHidden && currentTheme.activePreset == StylePreset.Nova) {
+        Box(Modifier.size(CELL_SIZE))
+        return
+    }
+    val accessibleDate = LocalCalendarLocale.current.formatAccessibleDate(cell.date)
+    val focusRegistry = LocalCalendarFocus.current
+    val requester = remember { FocusRequester() }
+    DisposableEffect(focusRegistry, cell.date, cell.inCurrentMonth) {
+        val entry = cell.inCurrentMonth to requester
+        focusRegistry?.items?.getOrPut(cell.date) { mutableListOf() }?.add(entry)
+        onDispose {
+            focusRegistry?.items?.get(cell.date)?.let {
+                it.remove(entry)
+                if (it.isEmpty()) focusRegistry.items.remove(cell.date)
+            }
+        }
+    }
+    val range = LocalCalendar.current
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    val start = range?.rangeFrom == cell.date && range.rangeTo != null
+    val end = range?.rangeTo == cell.date && range.rangeFrom != null
+    val middle = nova && isRangeMiddle
+    val radius = twRadius.md
+    val bridge =
+        if (nova && (middle || start || end) && range?.rangeFrom != range?.rangeTo) {
+            Modifier.background(
+                currentTheme.colors.accent,
+                RoundedCornerShape(
+                    topStart = if (start) radius else 0.dp,
+                    bottomStart = if (start) radius else 0.dp,
+                    topEnd = if (end) radius else 0.dp,
+                    bottomEnd = if (end) radius else 0.dp,
+                ),
+            )
+        } else {
+            Modifier
+        }
     val theme = currentTheme
     val interactionSource = remember { MutableInteractionSource() }
     val styleState = remember { MutableStyleState(interactionSource) }
     val pressStyle = rememberPressMotionStyle()
-    val touchTargetStyle = rememberMinTouchTargetStyle()
+    val touchTargetStyle = if (currentTheme.activePreset == StylePreset.Nova) Style else rememberMinTouchTargetStyle()
     val cellStyle =
         Style {
             shape(RoundedCornerShape(twRadius.md))
@@ -988,8 +1135,12 @@ fun CalendarDayButton(
                 } else if (isRangeMiddle) {
                     background(theme.colors.accent)
                 } else if (isToday) {
-                    borderWidth(1.dp)
-                    borderColor(theme.colors.border)
+                    if (theme.activePreset == StylePreset.Nova) {
+                        background(theme.colors.accent)
+                    } else {
+                        borderWidth(1.dp)
+                        borderColor(theme.colors.border)
+                    }
                 }
                 if (isFocused && !isDisabled) {
                     borderWidth(1.dp)
@@ -1003,10 +1154,19 @@ fun CalendarDayButton(
         }
     Box(
         modifier =
-            Modifier
+            Modifier.then(bridge).focusRequester(requester)
+                .focusProperties {
+                    canFocus =
+                        !isDisabled &&
+                        !outsideHidden &&
+                        (
+                            range?.focusedDate == null ||
+                                isFocused
+                        )
+                }
                 .semantics {
                     role = Role.Button
-                    contentDescription = "${cell.date.year}-${cell.date.month}-${cell.date.day}"
+                    contentDescription = accessibleDate
                     selected = isSelected
                     if (isDisabled) disabled()
                 }
@@ -1033,11 +1193,13 @@ fun CalendarDayButton(
             Text(
                 variant = TextVariant.BodySmall,
                 textStyle =
-                    when {
-                        isSelected -> TextStyle(color = currentTheme.colors.primaryForeground)
-                        !cell.inCurrentMonth -> TextColors.Muted
-                        else -> TextStyle.Default
-                    },
+                    overlayTypography().merge(
+                        when {
+                            isSelected -> TextStyle(color = currentTheme.colors.primaryForeground)
+                            !cell.inCurrentMonth -> TextColors.Muted
+                            else -> TextStyle.Default
+                        },
+                    ),
             ) { if (outsideHidden) "" else cell.date.day.toString() }
         }
     }

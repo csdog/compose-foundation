@@ -3,6 +3,21 @@
 package com.toutiaoyan.compose.ui.components.inputgroup
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.style.contentPadding
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.shadow.Shadow
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+import com.toutiaoyan.compose.ui.components.field.LocalFieldSetDisabled
+import com.toutiaoyan.compose.ui.components.icon.LocalInlineIconSize
+import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -12,7 +27,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
-import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -24,6 +38,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
+import com.toutiaoyan.compose.ui.styles.cssStyleable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.semantics.contentDescription
@@ -59,6 +74,18 @@ import com.toutiaoyan.compose.tailwind.core.twSpacing
 internal val LocalInsideInputGroup = compositionLocalOf { false }
 
 internal val LocalInputGroupDisabled = compositionLocalOf { false }
+
+internal class InputGroupLayoutState {
+    val addons = mutableStateMapOf<Any, InputGroupAddonAlign>()
+    val controls = mutableStateMapOf<Any, Pair<Boolean, Boolean>>() // invalid, enabled
+    val requesters = mutableMapOf<Any, FocusRequester>()
+
+    fun focusInput() {
+        requesters.entries.firstOrNull { controls[it.key]?.second == true }?.value?.requestFocus()
+    }
+}
+
+internal val LocalInputGroupLayout = staticCompositionLocalOf<InputGroupLayoutState?> { null }
 
 @Immutable
 class InputGroupState(
@@ -139,12 +166,17 @@ fun InputGroup(
     // colors/shapes read here — not inside Style{} (stale CompositionLocal snapshot).
     val theme = currentTheme
     val colors = theme.colors
+    val nova = theme.activePreset == StylePreset.Nova
+    val layoutState = remember { InputGroupLayoutState() }
+    val resolvedDisabled = disabled || LocalFieldSetDisabled.current
+    val groupDisabled = resolvedDisabled || layoutState.controls.values.any { !it.second }
+    val groupInvalid = invalid || layoutState.controls.values.any { it.first }
     val shapes = twRadius
     val border =
         when {
-            invalid -> colors.destructive
+            groupInvalid -> colors.destructive
             hasFocusWithin -> colors.ring
-            else -> colors.border
+            else -> if (nova) colors.input else colors.border
         }
 
     val containerStyle =
@@ -153,11 +185,28 @@ fun InputGroup(
             // base-nova `.cn-input-group`: `h-8 rounded-lg`
             // (`h-auto` when block addons present — minHeight lets Layout grow)
             minHeight(32.dp)
-            background(colors.background)
+            val tint =
+                if (groupDisabled) {
+                    if (theme.isDark) 0.8f else 0.5f
+                } else if (theme.isDark) {
+                    0.3f
+                } else {
+                    0f
+                }
+            background(if (nova) colors.input.copy(alpha = colors.input.alpha * tint) else colors.background)
             borderWidth(1.dp)
             borderColor(border)
             shape(RoundedCornerShape(shapes.lg))
             if (hasFocusWithin) dropShadow(theme.focusRingShadow())
+            if (nova && groupInvalid) {
+                dropShadow(
+                    Shadow(
+                        radius = 0.dp,
+                        spread = 3.dp,
+                        color = colors.destructive.copy(alpha = if (theme.isDark) 0.4f else 0.2f),
+                    ),
+                )
+            }
         }
 
     Layout(
@@ -168,16 +217,18 @@ fun InputGroup(
                     if (label != null) this.contentDescription = label
                 }
                 .onFocusEvent { hasFocusWithin = it.hasFocus }
-                .styleable(styleState, containerStyle then style),
+                .alpha(if (nova && groupDisabled) 0.5f else 1f)
+                .cssStyleable(styleState, containerStyle then style),
         content = {
             CompositionLocalProvider(
                 LocalInsideInputGroup provides true,
-                LocalInputGroupDisabled provides disabled,
+                LocalInputGroupDisabled provides resolvedDisabled,
+                LocalInputGroupLayout provides layoutState,
                 LocalInputGroup provides
                     InputGroupState(
-                        invalid = invalid,
+                        invalid = groupInvalid,
                         focused = hasFocusWithin,
-                        disabled = disabled,
+                        disabled = groupDisabled,
                     ),
             ) {
                 content()
@@ -230,7 +281,7 @@ fun InputGroup(
                 )
             }
 
-        val midH =
+        val measuredMidH =
             max(
                 max(
                     inlineStartPlaceables.maxOfOrNull { it.height } ?: 0,
@@ -238,6 +289,16 @@ fun InputGroup(
                 ),
                 controlPlaceables.maxOfOrNull { it.height } ?: 0,
             )
+        val midH =
+            if (nova && blockStarts.isEmpty() && blockEnds.isEmpty() && controlPlaceables.isNotEmpty() &&
+                controlPlaceables.all {
+                    it.height <= 32.dp.roundToPx()
+                }
+            ) {
+                30.dp.roundToPx()
+            } else {
+                measuredMidH
+            }
         val totalH =
             blockStartPlaceables.sumOf { it.height } + midH + blockEndPlaceables.sumOf { it.height }
         val layoutW =
@@ -310,40 +371,45 @@ fun InputGroupAddon(
 ) {
     val theme = currentTheme
     val muted = theme.colors.mutedForeground
+    val nova = theme.activePreset == StylePreset.Nova
+    val layoutState = LocalInputGroupLayout.current
+    val key = remember { Any() }
+    DisposableEffect(layoutState, key) { onDispose { layoutState?.addons?.remove(key) } }
+    SideEffect { layoutState?.addons?.set(key, align) }
     val spacing = twSpacing
     // py-1.5 ≈ 6dp; pl-3/pr-3 = spacing.md; keep xs gap to the control (long-value regression).
     val pad =
         when (align) {
             InputGroupAddonAlign.InlineStart ->
                 Modifier.padding(
-                    start = spacing.md,
-                    end = spacing.xs,
+                    start = if (nova) 8.dp else spacing.md,
+                    end = if (nova) 0.dp else spacing.xs,
                     top = 6.dp,
                     bottom = 6.dp,
                 )
 
             InputGroupAddonAlign.InlineEnd ->
                 Modifier.padding(
-                    start = spacing.xs,
-                    end = spacing.md,
+                    start = if (nova) 0.dp else spacing.xs,
+                    end = if (nova) 8.dp else spacing.md,
                     top = 6.dp,
                     bottom = 6.dp,
                 )
 
             InputGroupAddonAlign.BlockStart ->
                 Modifier.padding(
-                    start = spacing.md,
-                    end = spacing.md,
-                    top = spacing.md,
-                    bottom = spacing.xs,
+                    start = if (nova) 10.dp else spacing.md,
+                    end = if (nova) 10.dp else spacing.md,
+                    top = if (nova) 8.dp else spacing.md,
+                    bottom = if (nova) 6.dp else spacing.xs,
                 )
 
             InputGroupAddonAlign.BlockEnd ->
                 Modifier.padding(
-                    start = spacing.md,
-                    end = spacing.md,
-                    top = spacing.xs,
-                    bottom = spacing.md,
+                    start = if (nova) 10.dp else spacing.md,
+                    end = if (nova) 10.dp else spacing.md,
+                    top = if (nova) 6.dp else spacing.xs,
+                    bottom = if (nova) 8.dp else spacing.md,
                 )
         }
     val widthMod =
@@ -353,13 +419,34 @@ fun InputGroupAddon(
             Modifier
         }
 
-    CompositionLocalProvider(LocalContentColor provides muted) {
+    val addonTextStyle =
+        theme.typography.bodyMedium.copy(
+            fontFamily = theme.fontFamily,
+            color = muted,
+            fontSize = 14.sp,
+            lineHeight = 20.sp,
+            fontWeight = FontWeight.Medium,
+        )
+    CompositionLocalProvider(
+        LocalContentColor provides muted,
+        LocalInlineIconSize provides if (nova) 16.dp else LocalInlineIconSize.current,
+        LocalDefaultTextStyle provides if (nova) addonTextStyle else LocalDefaultTextStyle.current,
+    ) {
         Row(
             modifier =
                 modifier
                     .then(InputGroupAddonParentDataModifier(align))
                     .then(widthMod)
-                    .then(pad),
+                    .then(pad)
+                    .focusProperties { canFocus = false }
+                    .clickable(
+                        interactionSource =
+                            remember {
+                                MutableInteractionSource()
+                            },
+                        indication = null,
+                        enabled = !LocalInputGroupDisabled.current,
+                    ) { layoutState?.focusInput() },
             verticalAlignment = Alignment.CenterVertically,
             // gap-2
             horizontalArrangement = Arrangement.spacedBy(spacing.sm),
@@ -403,6 +490,34 @@ fun InputGroupButton(
     style: Style = Style,
     content: @Composable () -> Unit,
 ) {
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    val radius = twRadius
+    val groupButtonStyle =
+        if (nova) {
+            Style {
+                when (size) {
+                    InputGroupButtonSize.Xs -> {
+                        height(24.dp)
+                        contentPadding(horizontal = 6.dp, vertical = 0.dp)
+                        shape(RoundedCornerShape((radius.lg - 3.dp).coerceAtLeast(0.dp)))
+                    }
+                    InputGroupButtonSize.Sm -> height(28.dp)
+                    InputGroupButtonSize.IconXs -> {
+                        width(24.dp)
+                        height(24.dp)
+                        contentPadding(0.dp)
+                        shape(RoundedCornerShape((radius.lg - 3.dp).coerceAtLeast(0.dp)))
+                    }
+                    InputGroupButtonSize.IconSm -> {
+                        width(32.dp)
+                        height(32.dp)
+                        contentPadding(0.dp)
+                    }
+                }
+            }
+        } else {
+            Style
+        }
     Button(
         onClick = onClick,
         modifier = modifier,
@@ -410,14 +525,18 @@ fun InputGroupButton(
         disabled = disabled || LocalInputGroupDisabled.current,
         variant = variant,
         size =
-            when (size) {
-                InputGroupButtonSize.Xs -> ButtonSize.Xs
-                InputGroupButtonSize.Sm -> ButtonSize.Sm
-                InputGroupButtonSize.IconXs -> ButtonSize.IconXs
-                InputGroupButtonSize.IconSm -> ButtonSize.IconSm
+            if (nova) {
+                ButtonSize.Md
+            } else {
+                when (size) {
+                    InputGroupButtonSize.Xs -> ButtonSize.Xs
+                    InputGroupButtonSize.Sm -> ButtonSize.Sm
+                    InputGroupButtonSize.IconXs -> ButtonSize.IconXs
+                    InputGroupButtonSize.IconSm -> ButtonSize.IconSm
+                }
             },
         label = label,
-        style = style,
+        style = groupButtonStyle then style,
         content = content,
     )
 }
@@ -453,7 +572,23 @@ fun InputGroupText(
     text: String,
     modifier: Modifier = Modifier,
 ) {
-    Text(modifier = modifier, variant = TextVariant.BodySmall, textStyle = TextColors.Muted) { text }
+    val theme = currentTheme
+    if (theme.activePreset == StylePreset.Nova) {
+        Text(
+            modifier = modifier,
+            textStyle =
+                theme.typography.bodyMedium.copy(
+                    fontFamily = theme.fontFamily,
+                    color = theme.colors.mutedForeground,
+                    fontSize = 14.sp,
+                    lineHeight = 20.sp,
+                ),
+        ) {
+            text
+        }
+    } else {
+        Text(modifier = modifier, variant = TextVariant.BodySmall, textStyle = TextColors.Muted) { text }
+    }
 }
 
 /** Composable overload for icon + text (or other) addon chrome. */

@@ -1,0 +1,28 @@
+[
+  {
+    "changedBounds" : [
+      22,
+      22,
+      41,
+      41
+    ],
+    "changedPixels" : 201,
+    "height" : 64,
+    "mode" : "light",
+    "outsideGlyphChanged" : false,
+    "width" : 64
+  },
+  {
+    "changedBounds" : [
+      22,
+      22,
+      41,
+      41
+    ],
+    "changedPixels" : 199,
+    "height" : 64,
+    "mode" : "dark",
+    "outsideGlyphChanged" : false,
+    "width" : 64
+  }
+]

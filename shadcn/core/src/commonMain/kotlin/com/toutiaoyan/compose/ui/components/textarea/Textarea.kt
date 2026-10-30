@@ -4,6 +4,10 @@ package com.toutiaoyan.compose.ui.components.textarea
 
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
+import androidx.compose.foundation.style.contentPadding
+import androidx.compose.foundation.style.then
+import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -50,6 +54,14 @@ fun Textarea(
     minLines: Int = 1,
     maxLines: Int = Int.MAX_VALUE,
 ) {
+    val textareaStyle =
+        if (currentTheme.activePreset == StylePreset.Nova) {
+            Style {
+                contentPadding(horizontal = 10.dp, vertical = 8.dp)
+            }
+        } else {
+            Style
+        }
     Input(
         value = value,
         onValueChange = onValueChange,
@@ -64,7 +76,7 @@ fun Textarea(
         maxLength = maxLength,
         autoFocus = autoFocus,
         variant = variant,
-        style = style,
+        style = textareaStyle then style,
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
         singleLine = false,

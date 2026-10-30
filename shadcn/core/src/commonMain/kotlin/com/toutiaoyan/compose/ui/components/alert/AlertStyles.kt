@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.toutiaoyan.compose.ui.styles.border
 import com.toutiaoyan.compose.ui.tokens.Colors
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.utils.rememberTheme
 
 sealed interface AlertVariant {
@@ -27,22 +28,32 @@ fun AlertVariant.contentColor(colors: Colors): Color =
 fun AlertVariant.rememberStyle(): Style {
     val receiver = this
     return rememberTheme(receiver) {
-        val foreground = receiver.contentColor(colors)
+        val nova = theme.activePreset == StylePreset.Nova
+        val foreground =
+            if (nova && receiver == AlertVariant.Default) {
+                colors.cardForeground
+            } else {
+                receiver.contentColor(
+                    colors,
+                )
+            }
         when (receiver) {
             AlertVariant.Default ->
                 Style {
-                    background(colors.background)
+                    if (nova) width(1f)
+                    background(if (nova) colors.card else colors.background)
                     contentColor(foreground)
                     border(colors.border)
-                    shape(RoundedCornerShape(radius.lg))
+                    shape(RoundedCornerShape(if (nova) baseRadius.value else radius.lg))
                 }
 
             AlertVariant.Destructive ->
                 Style {
-                    background(colors.background)
+                    if (nova) width(1f)
+                    background(if (nova) colors.card else colors.background)
                     contentColor(foreground)
                     border(colors.border)
-                    shape(RoundedCornerShape(radius.lg))
+                    shape(RoundedCornerShape(if (nova) baseRadius.value else radius.lg))
                 }
         }
     }

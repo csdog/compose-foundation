@@ -1,4 +1,5 @@
 package com.toutiaoyan.compose.ui.components.chip
+import com.toutiaoyan.compose.ui.utils.keyboardInputMode
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -77,7 +78,7 @@ fun Chip(
 
     val clickableModifier =
         if (onClick != null) {
-            Modifier.clickable(
+            Modifier.keyboardInputMode().clickable(
                 interactionSource = interactionSource,
                 indication = null,
                 enabled = resolvedEnabled,

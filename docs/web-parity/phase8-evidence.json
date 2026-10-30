@@ -1,0 +1,290 @@
+{
+  "date": "2026-10-29",
+  "base": "https://ui.shadcn.com/docs/components/base/",
+  "screenshots": [
+    {
+      "route": "collapsible",
+      "width": 1440,
+      "height": 1000,
+      "theme": "light",
+      "file": "local-collapsible-phase8-1440-light.png"
+    },
+    {
+      "route": "collapsible",
+      "width": 1440,
+      "height": 1000,
+      "theme": "dark",
+      "file": "local-collapsible-phase8-1440-dark.png"
+    },
+    {
+      "route": "command",
+      "width": 1440,
+      "height": 1000,
+      "theme": "light",
+      "file": "local-command-phase8-1440-light.png"
+    },
+    {
+      "route": "command",
+      "width": 1440,
+      "height": 1000,
+      "theme": "dark",
+      "file": "local-command-phase8-1440-dark.png"
+    },
+    {
+      "route": "context-menu",
+      "width": 1440,
+      "height": 1000,
+      "theme": "light",
+      "file": "local-context-menu-phase8-1440-light.png"
+    },
+    {
+      "route": "context-menu",
+      "width": 1440,
+      "height": 1000,
+      "theme": "dark",
+      "file": "local-context-menu-phase8-1440-dark.png"
+    },
+    {
+      "route": "date-picker",
+      "width": 1440,
+      "height": 1000,
+      "theme": "light",
+      "file": "local-date-picker-phase8-1440-light.png"
+    },
+    {
+      "route": "date-picker",
+      "width": 1440,
+      "height": 1000,
+      "theme": "dark",
+      "file": "local-date-picker-phase8-1440-dark.png"
+    },
+    {
+      "route": "dialog",
+      "width": 1440,
+      "height": 1000,
+      "theme": "light",
+      "file": "local-dialog-phase8-1440-light.png"
+    },
+    {
+      "route": "dialog",
+      "width": 1440,
+      "height": 1000,
+      "theme": "dark",
+      "file": "local-dialog-phase8-1440-dark.png"
+    },
+    {
+      "route": "drawer",
+      "width": 1440,
+      "height": 1000,
+      "theme": "light",
+      "file": "local-drawer-phase8-1440-light.png"
+    },
+    {
+      "route": "drawer",
+      "width": 1440,
+      "height": 1000,
+      "theme": "dark",
+      "file": "local-drawer-phase8-1440-dark.png"
+    },
+    {
+      "route": "collapsible",
+      "width": 1095,
+      "height": 687,
+      "theme": "light",
+      "file": "local-collapsible-phase8-1095-light.png"
+    },
+    {
+      "route": "collapsible",
+      "width": 1095,
+      "height": 687,
+      "theme": "dark",
+      "file": "local-collapsible-phase8-1095-dark.png"
+    },
+    {
+      "route": "command",
+      "width": 1095,
+      "height": 687,
+      "theme": "light",
+      "file": "local-command-phase8-1095-light.png"
+    },
+    {
+      "route": "command",
+      "width": 1095,
+      "height": 687,
+      "theme": "dark",
+      "file": "local-command-phase8-1095-dark.png"
+    },
+    {
+      "route": "context-menu",
+      "width": 1095,
+      "height": 687,
+      "theme": "light",
+      "file": "local-context-menu-phase8-1095-light.png"
+    },
+    {
+      "route": "context-menu",
+      "width": 1095,
+      "height": 687,
+      "theme": "dark",
+      "file": "local-context-menu-phase8-1095-dark.png"
+    },
+    {
+      "route": "date-picker",
+      "width": 1095,
+      "height": 687,
+      "theme": "light",
+      "file": "local-date-picker-phase8-1095-light.png"
+    },
+    {
+      "route": "date-picker",
+      "width": 1095,
+      "height": 687,
+      "theme": "dark",
+      "file": "local-date-picker-phase8-1095-dark.png"
+    },
+    {
+      "route": "dialog",
+      "width": 1095,
+      "height": 687,
+      "theme": "light",
+      "file": "local-dialog-phase8-1095-light.png"
+    },
+    {
+      "route": "dialog",
+      "width": 1095,
+      "height": 687,
+      "theme": "dark",
+      "file": "local-dialog-phase8-1095-dark.png"
+    },
+    {
+      "route": "drawer",
+      "width": 1095,
+      "height": 687,
+      "theme": "light",
+      "file": "local-drawer-phase8-1095-light.png"
+    },
+    {
+      "route": "drawer",
+      "width": 1095,
+      "height": 687,
+      "theme": "dark",
+      "file": "local-drawer-phase8-1095-dark.png"
+    },
+    {
+      "route": "collapsible",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "file": "local-collapsible-phase8-390-light.png"
+    },
+    {
+      "route": "collapsible",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "file": "local-collapsible-phase8-390-dark.png"
+    },
+    {
+      "route": "command",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "file": "local-command-phase8-390-light.png"
+    },
+    {
+      "route": "command",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "file": "local-command-phase8-390-dark.png"
+    },
+    {
+      "route": "context-menu",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "file": "local-context-menu-phase8-390-light.png"
+    },
+    {
+      "route": "context-menu",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "file": "local-context-menu-phase8-390-dark.png"
+    },
+    {
+      "route": "date-picker",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "file": "local-date-picker-phase8-390-light.png"
+    },
+    {
+      "route": "date-picker",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "file": "local-date-picker-phase8-390-dark.png"
+    },
+    {
+      "route": "dialog",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "file": "local-dialog-phase8-390-light.png"
+    },
+    {
+      "route": "dialog",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "file": "local-dialog-phase8-390-dark.png"
+    },
+    {
+      "route": "drawer",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "file": "local-drawer-phase8-390-light.png"
+    },
+    {
+      "route": "drawer",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "file": "local-drawer-phase8-390-dark.png"
+    }
+  ],
+  "openAndInteractionScreenshots": [
+    "local-collapsible-phase8-open-dark.png",
+    "local-collapsible-phase8-open-light.png",
+    "local-command-phase8-interaction-empty-dark.png",
+    "local-command-phase8-interaction-empty-light.png",
+    "local-context-menu-phase8-open-dark.png",
+    "local-context-menu-phase8-open-light.png",
+    "local-date-picker-phase8-interaction-selected.png",
+    "local-date-picker-phase8-open-dark.png",
+    "local-date-picker-phase8-open-light.png",
+    "local-dialog-phase8-open-390-dark.png",
+    "local-dialog-phase8-open-390-light.png",
+    "local-dialog-phase8-open-dark.png",
+    "local-dialog-phase8-open-light.png",
+    "local-drawer-phase8-interaction-confirmed.png",
+    "local-drawer-phase8-open-390-dark.png",
+    "local-drawer-phase8-open-390-light.png",
+    "local-drawer-phase8-open-dark.png",
+    "local-drawer-phase8-open-light.png"
+  ],
+  "verifiedInteractions": [
+    "Collapsible order details expand/collapse",
+    "Command filtering to empty result",
+    "Context menu right click; JVM validates Shift+F10/disabled skipping and submenu arrows",
+    "Date Picker selection updates trigger",
+    "Dialog mobile actions stack Save then Cancel; Escape covered by JVM",
+    "Drawer mobile whole-card selection and confirmation updates delivery summary"
+  ],
+  "limitations": [
+    "Backdrop blur not implemented",
+    "Full focus restoration, IME, RTL, touch cancellation and complex nested/snap states remain in progress document"
+  ]
+}

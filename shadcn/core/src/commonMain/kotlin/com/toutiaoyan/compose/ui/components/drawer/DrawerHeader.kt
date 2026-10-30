@@ -2,6 +2,7 @@
 
 package com.toutiaoyan.compose.ui.components.drawer
 
+import com.toutiaoyan.compose.ui.components.overlay.overlayTypography
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -71,6 +72,7 @@ fun DrawerTitle(
     Text(
         modifier = modifier.semantics { heading() },
         variant = TextVariant.TitleMedium,
+        textStyle = overlayTypography(16, 24, medium = true),
         style = style,
         text = text,
     )
@@ -78,7 +80,7 @@ fun DrawerTitle(
 
 @Composable
 fun DrawerDescription(text: String) {
-    Text(variant = TextVariant.BodySmall, textStyle = TextColors.Muted) { text }
+    DrawerDescription { text }
 }
 
 @Composable
@@ -92,7 +94,7 @@ fun DrawerDescription(
     Text(
         modifier = modifier,
         variant = TextVariant.BodySmall,
-        textStyle = TextColors.Muted,
+        textStyle = overlayTypography(muted = true, fallback = TextColors.Muted),
         style = style,
         text = text,
     )

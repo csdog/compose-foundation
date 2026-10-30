@@ -1,0 +1,611 @@
+{
+  "date": "2026-10-29",
+  "scope": [
+    "collapsible",
+    "command",
+    "context-menu",
+    "date-picker",
+    "dialog",
+    "drawer"
+  ],
+  "reference": {
+    "base": "Base UI / base-nova",
+    "commit": "96da9cc7f1aa10580a3741664e2a77c721206c00"
+  },
+  "runtime": "Chromium / Compose Wasm development executable at http://127.0.0.1:8765",
+  "screenshots": [
+    {
+      "file": "local-dialog-phase9-open-light.png",
+      "component": "dialog",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light",
+      "observation": "Modal blur and initial Name input focus"
+    },
+    {
+      "file": "local-dialog-phase9-nonmodal.png",
+      "component": "dialog",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light",
+      "observation": "Visible nonmodal dialog; subsequent Home click navigated to /"
+    },
+    {
+      "file": "local-command-phase9-end-scroll.png",
+      "component": "command",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light",
+      "observation": "End reveals Action 79 while input retains focus"
+    },
+    {
+      "file": "local-date-picker-phase9-localized-open.png",
+      "component": "date-picker",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light",
+      "observation": "Chinese caption/weekdays, Monday first, focused current day"
+    },
+    {
+      "file": "local-date-picker-phase9-keyboard-selected.png",
+      "component": "date-picker",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light",
+      "observation": "ArrowRight, Enter, Escape selects 2026年10月30日"
+    },
+    {
+      "file": "local-context-menu-phase9-touch-longpress.png",
+      "component": "context-menu",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "light",
+      "observation": "CDP touchStart, long press, touchEnd opens menu"
+    },
+    {
+      "file": "local-context-menu-phase9-touch-cancel.png",
+      "component": "context-menu",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "light",
+      "observation": "CDP touchCancel prevents delayed menu opening"
+    },
+    {
+      "file": "local-context-menu-phase9-nonmodal.png",
+      "component": "context-menu",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light",
+      "observation": "Visible nonmodal menu; subsequent Home click navigated to /"
+    },
+    {
+      "file": "local-drawer-phase9-open-desktop-light.png",
+      "component": "drawer",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light",
+      "observation": "Side drawer, blurred background, initial selection focus"
+    },
+    {
+      "file": "local-drawer-phase9-final-phone-light.png",
+      "component": "drawer",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "light",
+      "observation": "Bottom drawer, blurred background, scrolling body reserves footer space"
+    },
+    {
+      "file": "local-drawer-phase9-final-phone-dark.png",
+      "component": "drawer",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "dark",
+      "observation": "Bottom drawer, dark theme, scrolling body reserves footer space"
+    },
+    {
+      "file": "local-drawer-phase9-final-phone-dark-scrolled.png",
+      "component": "drawer",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "dark",
+      "observation": "Last delivery option and description fully visible above fixed footer after scrolling"
+    }
+  ],
+  "automated": {
+    "total": 151,
+    "completion": 29,
+    "surfaces": 23,
+    "choice": 27,
+    "groups": 23,
+    "form": 14,
+    "drawer_math": 12,
+    "catalog": 23,
+    "pixel_mode": "-Proborazzi.test.verify=true",
+    "targets": [
+      "JVM",
+      "JS",
+      "WasmJS"
+    ],
+    "new_goldens": 8,
+    "reviewed_nova_focus_goldens": 4
+  },
+  "legacy": {
+    "total": 21,
+    "passed": 6,
+    "mismatched": 15,
+    "report": "surfaces-phase9-legacy-comparison.json",
+    "goldens_rewritten": false
+  },
+  "limitations": [
+    "Native Android/iOS GPU blur and assistive technology require device testing",
+    "IME protocol guard verified; physical system candidate windows not exercised",
+    "Touch events are browser CDP simulation, not a physical device",
+    "Collapsible keepMounted, external focus recovery and animation reversal covered by JVM UI tests; phase8 browser screenshots remain applicable"
+  ],
+  "bottom_height_followup": {
+    "date": "2026-10-29",
+    "cause": "Catalog recipe imposed an extra 360dp maximum on the mobile scroll body",
+    "fix": "Remove recipe cap; wrap content, retaining viewport minus 96dp panel maximum and independent scrolling body",
+    "tests": {
+      "DrawerSizingTest": 2,
+      "catalog": 23,
+      "failures": 0
+    },
+    "build_targets": [
+      "JS",
+      "WasmJS"
+    ],
+    "screenshots": [
+      {
+        "file": "drawer-bottom-natural-height-390x844.png",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "panel_height_approx": 566,
+        "observation": "All five delivery options and footer visible without scrolling"
+      },
+      {
+        "file": "drawer-bottom-viewport-cap-390x600.png",
+        "viewport": {
+          "width": 390,
+          "height": 600
+        },
+        "panel_height_approx": 504,
+        "observation": "Viewport cap leaves 96px above drawer"
+      },
+      {
+        "file": "drawer-bottom-viewport-cap-scrolled-390x600.png",
+        "viewport": {
+          "width": 390,
+          "height": 600
+        },
+        "observation": "Last option fully visible after scrolling; footer remains fixed"
+      }
+    ]
+  },
+  "snap_followup": {
+    "date": "2026-10-29",
+    "reference": "https://github.com/shadcn-ui/ui/blob/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/drawer-snap-points.tsx",
+    "fixes": [
+      "Example uses 31rem/496dp instead of outdated 148dp API snippet",
+      "Nova snap panel retains viewport minus 96dp height maximum",
+      "Absolute and fractional snap coordinates retain viewport-based meaning"
+    ],
+    "validation": {
+      "passed": 69,
+      "failed": 0,
+      "pixel_verify": true,
+      "build_targets": [
+        "JS",
+        "WasmJS"
+      ],
+      "browser_input": "Chromium mouse drag",
+      "checked": [
+        "initial",
+        "expand",
+        "collapse",
+        "dismiss",
+        "reopen",
+        "resize"
+      ]
+    },
+    "screenshots": [
+      {
+        "file": "drawer-snap-corrected-initial-desktop.png",
+        "state": "initial",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      {
+        "file": "drawer-snap-corrected-expanded-desktop.png",
+        "state": "expanded",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      {
+        "file": "drawer-snap-corrected-collapsed-desktop.png",
+        "state": "collapsed",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      {
+        "file": "drawer-snap-corrected-dismissed-desktop.png",
+        "state": "dismissed",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      {
+        "file": "drawer-snap-corrected-initial-phone.png",
+        "state": "initial",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        }
+      },
+      {
+        "file": "drawer-snap-corrected-expanded-phone.png",
+        "state": "expanded",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        }
+      }
+    ]
+  },
+  "floating_side_followup": {
+    "date": "2026-10-29",
+    "reference": "https://ui.shadcn.com/docs/components/base/drawer#position",
+    "reference_measurement": {
+      "viewport": [
+        1440,
+        1000
+      ],
+      "rect": {
+        "x": 8,
+        "y": 8,
+        "width": 384,
+        "height": 984
+      },
+      "border_radius": 24
+    },
+    "implementation_scope": "Nova horizontal drawers follow user-requested current preview rather than pinned historical edge-attached Nova chrome",
+    "inset_dp": 8,
+    "corner_radius_dp": 24,
+    "validation": {
+      "build_targets": [
+        "JS",
+        "WasmJS"
+      ],
+      "browser_checks": [
+        "desktop left/right spacing",
+        "phone left spacing and width",
+        "click left gutter dismisses"
+      ],
+      "reviewed_updated_goldens": [
+        "surfaces_completion_nested_backdrop_light",
+        "surfaces_completion_nested_backdrop_dark"
+      ],
+      "passed": 94,
+      "failed": 0,
+      "pixel_verify": true
+    },
+    "screenshots": [
+      {
+        "file": "drawer-floating-left-desktop.png",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      {
+        "file": "drawer-floating-right-desktop.png",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      {
+        "file": "drawer-floating-left-phone.png",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        }
+      }
+    ]
+  },
+  "large_content_followup": {
+    "date": "2026-10-29",
+    "reference": "https://ui.shadcn.com/docs/components/base/drawer#custom-sizes",
+    "example": "24 activity history records",
+    "entry_points": [
+      "Default swipe direction (down)",
+      "Scrollable content"
+    ],
+    "layout": "Fixed header/footer, weight(fill=false) scroll body, viewport minus 96dp maximum",
+    "validation": {
+      "catalog_tests_passed": 23,
+      "build_targets": [
+        "JS",
+        "WasmJS"
+      ],
+      "browser": [
+        "desktop and mobile scroll to Day 24",
+        "header and Done remain fixed"
+      ],
+      "core_goldens_rewritten": false
+    },
+    "screenshots": [
+      {
+        "file": "drawer-large-bottom-desktop-open.png",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "state": "open"
+      },
+      {
+        "file": "drawer-large-bottom-desktop-end.png",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "state": "end"
+      },
+      {
+        "file": "drawer-large-bottom-mobile-open.png",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "state": "open"
+      },
+      {
+        "file": "drawer-large-bottom-mobile-end.png",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "state": "end"
+      }
+    ]
+  },
+  "nested_motion_followup": {
+    "date": "2026-10-29",
+    "reference": "https://ui.shadcn.com/docs/components/base/drawer#nested",
+    "changes": [
+      "Continuous parent depth instead of conditional static graphicsLayer",
+      "450ms edge-origin scale and compensated 16dp peek",
+      "300ms covered-content fade",
+      "All-ancestor nested depth",
+      "Same-direction vertical frontmost-height tracking with natural-height restoration",
+      "Four-level catalog example with matching desktop/mobile directions"
+    ],
+    "validation": {
+      "passed": 97,
+      "failed": 0,
+      "pixel_verify": true,
+      "build_targets": [
+        "JS",
+        "WasmJS"
+      ],
+      "new_motion_tests": 2,
+      "new_ancestor_count_test": 1,
+      "reviewed_updated_goldens": [
+        "surfaces_completion_nested_backdrop_light",
+        "surfaces_completion_nested_backdrop_dark"
+      ],
+      "browser_checks": [
+        "desktop/mobile two and four levels",
+        "stepwise Escape returns to original parent"
+      ],
+      "scope": "Open, close and interrupted/reversed transitions; browser validation is not native device gesture verification"
+    },
+    "screenshots": [
+      {
+        "file": "drawer-nested-motion-two-desktop.png",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "state": "two"
+      },
+      {
+        "file": "drawer-nested-motion-four-desktop.png",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "state": "four"
+      },
+      {
+        "file": "drawer-nested-motion-restored-desktop.png",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "state": "restored"
+      },
+      {
+        "file": "drawer-nested-motion-two-phone.png",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "state": "two"
+      },
+      {
+        "file": "drawer-nested-motion-four-phone.png",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "state": "four"
+      },
+      {
+        "file": "drawer-nested-motion-restored-phone.png",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "state": "restored"
+      }
+    ]
+  },
+  "snap_display_followup": {
+    "date": "2026-10-29",
+    "url": "http://127.0.0.1:8765/drawer?preview=snap496-20261029",
+    "expanded_code_verified": {
+      "absolute_496": true,
+      "absolute_148": false,
+      "old_drag_description": false,
+      "body_height_320": true,
+      "footer_close": true
+    },
+    "screenshot": "drawer-snap-full-code-current.png",
+    "preview_server": "Cache-Control: no-store, max-age=0; SPA HEAD routing corrected",
+    "original_user_tab": "Not verified: native Chrome tab interaction timed out; requested its URL to check whether it is another preview"
+  },
+  "vertical_floating_followup": {
+    "date": "2026-10-29",
+    "inset_dp": 8,
+    "corner_radius_dp": 24,
+    "scope": "Nova top/bottom standard and snap drawers; side drawers retain the prior floating behavior",
+    "geometry": {
+      "vertical_width": "viewport minus 16dp",
+      "vertical_max_height": "viewport minus 96dp",
+      "bottom_full_snap_top": 88,
+      "bottom_inset": 8
+    },
+    "validation": {
+      "sizing_tests": 9,
+      "build_targets": [
+        "JS",
+        "WasmJS"
+      ],
+      "browser_checks": [
+        "normal bottom exterior gaps",
+        "side gap click dismisses",
+        "snap expansion with exterior gaps"
+      ],
+      "current_iab_reloaded": true,
+      "reviewed_goldens": 6,
+      "passed": 99,
+      "failed": 0,
+      "pixel_verify": true
+    },
+    "screenshots": [
+      {
+        "file": "drawer-bottom-inset8-phone.png",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        }
+      },
+      {
+        "file": "drawer-snap-inset8-desktop-initial.png",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      {
+        "file": "drawer-snap-inset8-phone-expanded.png",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        }
+      }
+    ]
+  },
+  "rapid_outside_dismiss_followup": {
+    "date": "2026-10-29",
+    "reproduction": "Four outside mouse clicks roughly 80ms apart at a four-level stack left Third Drawer visible",
+    "fix": [
+      "Exiting Drawer scrim delegates to nearest still-open Drawer",
+      "Latest ancestor state and outside prevention policies are checked",
+      "One request per click; blocking ancestors are not bypassed",
+      "Handoff is portal-scoped and not inherited by ordinary Dialogs",
+      "Interrupted entry remains composed until the reverse exit is idle"
+    ],
+    "validation": {
+      "passed": 104,
+      "failed": 0,
+      "new_dismiss_tests": 5,
+      "pixel_verify": true,
+      "goldens_rewritten": false,
+      "build_targets": [
+        "JS",
+        "WasmJS"
+      ],
+      "browser_checks": [
+        "four rapid desktop mouse clicks close four layers",
+        "single mobile touch closes one layer",
+        "four rapid mobile touches close four layers"
+      ],
+      "mobile_input": "Chromium CDP touch simulation"
+    },
+    "screenshots": [
+      {
+        "file": "drawer-rapid-dismiss-before-desktop.png",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      {
+        "file": "drawer-rapid-dismiss-after-desktop.png",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      {
+        "file": "drawer-rapid-dismiss-single-touch-mobile.png",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        }
+      },
+      {
+        "file": "drawer-rapid-dismiss-four-touch-mobile.png",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        }
+      }
+    ]
+  }
+}

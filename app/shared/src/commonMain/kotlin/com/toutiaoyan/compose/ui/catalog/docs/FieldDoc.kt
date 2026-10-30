@@ -2,6 +2,17 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
+import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.clickable
+import com.toutiaoyan.compose.ui.components.button.Button
+import com.toutiaoyan.compose.ui.components.button.ButtonVariant
+import com.toutiaoyan.compose.ui.components.select.Select
+import com.toutiaoyan.compose.ui.components.select.SelectTrigger
+import com.toutiaoyan.compose.ui.components.select.SelectContent
+import com.toutiaoyan.compose.ui.components.select.SelectItem
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,11 +41,7 @@ val fieldDoc =
     ComponentDoc(
         id = "field",
         title = "Field",
-        description =
-            "Combine labels, controls, and help text — matching real shadcn field.tsx " +
-                "(FieldSet / FieldLegend / FieldGroup / Field / FieldContent / FieldLabel / " +
-                "FieldTitle / FieldDescription / FieldError / FieldSeparator). No Form wrapper; " +
-                "compose with your own hoisted state.",
+        description = "Combine labels, controls, and help text to build accessible form fields.",
         usageCode =
             """
             FieldGroup {
@@ -43,8 +50,71 @@ val fieldDoc =
                 }
             }
             """.trimIndent(),
+        apiProperties =
+            listOf(
+                ApiProperty("orientation", "FieldOrientation", "Vertical"),
+                ApiProperty("disabled", "Boolean", "false"),
+                ApiProperty("invalid", "Boolean", "false (slot overload) / error != null (label overload)"),
+            ),
         examples =
             listOf(
+                ComponentExample(
+                    title = "Default",
+                    code =
+                        """
+                        var name by remember { mutableStateOf("") }
+                        var number by remember { mutableStateOf("") }
+                        var cvv by remember { mutableStateOf("") }
+                        var month by remember { mutableStateOf<String?>(null) }
+                        var year by remember { mutableStateOf<String?>(null) }
+                        var comments by remember { mutableStateOf("") }
+                        var sameAddress by remember { mutableStateOf(true) }
+                        FieldGroup(Modifier.widthIn(max = 384.dp)) {
+                            FieldSet {
+                                FieldLegend("Payment Method")
+                                FieldDescription("All transactions are secure and encrypted")
+                                FieldGroup {
+                                    Field("Name on Card") { Input(name, { name = it }, placeholder = "Evil Rabbit") }
+                                    Field("Card Number", description = "Enter your 16-digit card number") {
+                                        Input(number, { number = it }, placeholder = "1234 5678 9012 3456")
+                                    }
+                                    Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                                        Field("Month", Modifier.weight(1f)) {
+                                            Select(value = month, onValueChange = { month = it }, placeholder = "MM") {
+                                                SelectTrigger()
+                                                SelectContent { (1..12).forEach { SelectItem(it.toString().padStart(2, '0')) } }
+                                            }
+                                        }
+                                        Field("Year", Modifier.weight(1f)) {
+                                            Select(value = year, onValueChange = { year = it }, placeholder = "YYYY") {
+                                                SelectTrigger()
+                                                SelectContent { (2026..2035).forEach { SelectItem(it.toString()) } }
+                                            }
+                                        }
+                                        Field("CVV", Modifier.weight(1f)) { Input(cvv, { cvv = it }, placeholder = "123", maxLength = 4) }
+                                    }
+                                }
+                            }
+                            FieldSeparator()
+                            FieldSet {
+                                FieldLegend("Billing Address")
+                                FieldDescription("The billing address associated with your payment method")
+                                Field(orientation = FieldOrientation.Horizontal) {
+                                    Checkbox(checked = sameAddress, onCheckedChange = { sameAddress = it })
+                                    FieldLabel("Same as shipping address", Modifier.clickable { sameAddress = !sameAddress })
+                                }
+                            }
+                            Field("Comments") { Textarea(comments, { comments = it }, placeholder = "Add any additional comments") }
+                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                Button("Submit")
+                                Button("Cancel", variant = ButtonVariant.Outline, onClick = {
+                                    name = ""; number = ""; cvv = ""; month = null; year = null; comments = ""; sameAddress = true
+                                })
+                            }
+                        }
+                        """.trimIndent(),
+                    preview = { PaymentFieldExample() },
+                ),
                 ComponentExample(
                     title = "Profile form",
                     code =
@@ -534,3 +604,63 @@ val fieldDoc =
                 ),
             ),
     )
+
+@Composable
+private fun PaymentFieldExample() {
+    var name by remember { mutableStateOf("") }
+    var number by remember { mutableStateOf("") }
+    var cvv by remember { mutableStateOf("") }
+    var month by remember { mutableStateOf<String?>(null) }
+    var year by remember { mutableStateOf<String?>(null) }
+    var comments by remember { mutableStateOf("") }
+    var sameAddress by remember { mutableStateOf(true) }
+    FieldGroup(Modifier.widthIn(max = 384.dp)) {
+        FieldSet {
+            FieldLegend("Payment Method")
+            FieldDescription("All transactions are secure and encrypted")
+            FieldGroup {
+                Field("Name on Card") { Input(name, { name = it }, placeholder = "Evil Rabbit") }
+                Field("Card Number", description = "Enter your 16-digit card number") {
+                    Input(number, { number = it }, placeholder = "1234 5678 9012 3456")
+                }
+                Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                    Field("Month", Modifier.weight(1f)) {
+                        Select(value = month, onValueChange = { month = it }, placeholder = "MM") {
+                            SelectTrigger()
+                            SelectContent { (1..12).forEach { SelectItem(it.toString().padStart(2, '0')) } }
+                        }
+                    }
+                    Field("Year", Modifier.weight(1f)) {
+                        Select(value = year, onValueChange = { year = it }, placeholder = "YYYY") {
+                            SelectTrigger()
+                            SelectContent { (2026..2035).forEach { SelectItem(it.toString()) } }
+                        }
+                    }
+                    Field("CVV", Modifier.weight(1f)) { Input(cvv, { cvv = it }, placeholder = "123", maxLength = 4) }
+                }
+            }
+        }
+        FieldSeparator()
+        FieldSet {
+            FieldLegend("Billing Address")
+            FieldDescription("The billing address associated with your payment method")
+            Field(orientation = FieldOrientation.Horizontal) {
+                Checkbox(checked = sameAddress, onCheckedChange = { sameAddress = it })
+                FieldLabel("Same as shipping address", Modifier.clickable { sameAddress = !sameAddress })
+            }
+        }
+        Field("Comments") { Textarea(comments, { comments = it }, placeholder = "Add any additional comments") }
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Button("Submit")
+            Button("Cancel", variant = ButtonVariant.Outline, onClick = {
+                name = ""
+                number = ""
+                cvv = ""
+                month = null
+                year = null
+                comments = ""
+                sameAddress = true
+            })
+        }
+    }
+}

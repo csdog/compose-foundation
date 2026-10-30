@@ -4,6 +4,8 @@ val componentDocsById: Map<String, ComponentDoc> =
     listOf(
         buttonDoc,
         cardDoc,
+        codeBlockDoc,
+        traceDoc,
         badgeDoc,
         chipDoc,
         inputDoc,

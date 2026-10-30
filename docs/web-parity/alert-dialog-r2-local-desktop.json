@@ -1,0 +1,86 @@
+[
+  {
+    "name": "basic",
+    "theme": "light",
+    "shot": "alert-dialog-r2-local-desktop-light-basic.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-desktop-basic#basic"
+  },
+  {
+    "name": "basic",
+    "theme": "dark",
+    "shot": "alert-dialog-r2-local-desktop-dark-basic.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-desktop-basic#basic"
+  },
+  {
+    "name": "small",
+    "theme": "light",
+    "shot": "alert-dialog-r2-local-desktop-light-small.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-desktop-small#small"
+  },
+  {
+    "name": "small",
+    "theme": "dark",
+    "shot": "alert-dialog-r2-local-desktop-dark-small.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-desktop-small#small"
+  },
+  {
+    "name": "media",
+    "theme": "light",
+    "shot": "alert-dialog-r2-local-desktop-light-media.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-desktop-media#media"
+  },
+  {
+    "name": "media",
+    "theme": "dark",
+    "shot": "alert-dialog-r2-local-desktop-dark-media.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-desktop-media#media"
+  },
+  {
+    "name": "small-with-media",
+    "theme": "light",
+    "shot": "alert-dialog-r2-local-desktop-light-small-with-media.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-desktop-small-with-media#small-with-media"
+  },
+  {
+    "name": "small-with-media",
+    "theme": "dark",
+    "shot": "alert-dialog-r2-local-desktop-dark-small-with-media.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-desktop-small-with-media#small-with-media"
+  },
+  {
+    "name": "destructive",
+    "theme": "light",
+    "shot": "alert-dialog-r2-local-desktop-light-destructive.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-desktop-destructive#destructive"
+  },
+  {
+    "name": "destructive",
+    "theme": "dark",
+    "shot": "alert-dialog-r2-local-desktop-dark-destructive.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-desktop-destructive#destructive"
+  },
+  {
+    "name": "rtl-normal",
+    "theme": "light",
+    "shot": "alert-dialog-r2-local-desktop-light-rtl-normal.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-desktop-rtl-normal#rtl"
+  },
+  {
+    "name": "rtl-normal",
+    "theme": "dark",
+    "shot": "alert-dialog-r2-local-desktop-dark-rtl-normal.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-desktop-rtl-normal#rtl"
+  },
+  {
+    "name": "rtl-small",
+    "theme": "light",
+    "shot": "alert-dialog-r2-local-desktop-light-rtl-small.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-desktop-rtl-small#rtl"
+  },
+  {
+    "name": "rtl-small",
+    "theme": "dark",
+    "shot": "alert-dialog-r2-local-desktop-dark-rtl-small.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-desktop-rtl-small#rtl"
+  }
+]

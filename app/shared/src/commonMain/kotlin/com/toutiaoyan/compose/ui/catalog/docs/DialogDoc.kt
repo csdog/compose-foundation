@@ -14,7 +14,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.components.button.Button
-import com.toutiaoyan.compose.ui.components.button.ButtonVariant
 import com.toutiaoyan.compose.ui.components.dialog.Dialog
 import com.toutiaoyan.compose.ui.components.dialog.DialogClose
 import com.toutiaoyan.compose.ui.components.dialog.DialogContent
@@ -24,9 +23,6 @@ import com.toutiaoyan.compose.ui.components.dialog.DialogHeader
 import com.toutiaoyan.compose.ui.components.dialog.DialogSize
 import com.toutiaoyan.compose.ui.components.dialog.DialogTitle
 import com.toutiaoyan.compose.ui.components.dialog.DialogTrigger
-import com.toutiaoyan.compose.ui.components.field.Field
-import com.toutiaoyan.compose.ui.components.field.FieldGroup
-import com.toutiaoyan.compose.ui.components.input.Input
 import com.toutiaoyan.compose.ui.components.scrollarea.ScrollArea
 import com.toutiaoyan.compose.ui.components.text.Text
 
@@ -34,7 +30,10 @@ val dialogDoc =
     ComponentDoc(
         id = "dialog",
         title = "Dialog",
-        description = "A modal window layered over the page.",
+        description = (
+            "A window overlaid on either the primary window or another " +
+                "dialog window, rendering the content underneath inert."
+        ),
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.dialog.Dialog
@@ -58,55 +57,33 @@ val dialogDoc =
                     title = "Edit profile",
                     code =
                         """
-                        var open by remember { mutableStateOf(false) }
-                        var name by remember { mutableStateOf("Pedro Duarte") }
-                        var username by remember { mutableStateOf("@peduarte") }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Edit profile")
-                            DialogContent(
-                                "Edit profile",
-                                description = "Make changes to your profile here. Click save when you're done.",
-                            ) {
-                                FieldGroup(modifier = Modifier.padding(top = 16.dp)) {
-                                    Field("Name") {
-                                        Input(value = name, onValueChange = { name = it })
+                        @Composable
+                        fun DialogParityExample() {
+                            var open by remember { mutableStateOf(false) }
+                            var name by remember { mutableStateOf("Pedro Duarte") }
+                            var username by remember { mutableStateOf("@peduarte") }
+                            val mobile = LocalWindowInfo.current.containerSize.width < with(LocalDensity.current) { 640.dp.roundToPx() }
+                            Dialog(open = open, onOpenChange = { open = it }) {
+                                DialogTrigger("Open Dialog", variant = ButtonVariant.Outline)
+                                DialogContent("Edit profile", description = "Make changes to your profile here. Click save when you're done.") {
+                                    FieldGroup {
+                                        Field("Name") { Input(value = name, onValueChange = { name = it }) }
+                                        Field("Username") { Input(value = username, onValueChange = { username = it }) }
                                     }
-                                    Field("Username") {
-                                        Input(value = username, onValueChange = { username = it })
+                                    DialogFooter {
+                                        if (mobile) Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                                            Button("Save changes", onClick = { open = false }, modifier = Modifier.fillMaxWidth(), style = Style { width(1f) })
+                                            Button("Cancel", onClick = { open = false }, variant = ButtonVariant.Outline, modifier = Modifier.fillMaxWidth(), style = Style { width(1f) })
+                                        } else {
+                                            Button("Cancel", onClick = { open = false }, variant = ButtonVariant.Outline)
+                                            Button("Save changes", onClick = { open = false })
+                                        }
                                     }
-                                }
-                                DialogFooter(modifier = Modifier.padding(top = 16.dp)) {
-                                    Button("Cancel", onClick = { open = false }, variant = ButtonVariant.Outline)
-                                    Button("Save changes", onClick = { open = false })
                                 }
                             }
                         }
                         """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        var name by remember { mutableStateOf("Pedro Duarte") }
-                        var username by remember { mutableStateOf("@peduarte") }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Edit profile")
-                            DialogContent(
-                                "Edit profile",
-                                description = "Make changes to your profile here. Click save when you're done.",
-                            ) {
-                                FieldGroup(modifier = Modifier.padding(top = 16.dp)) {
-                                    Field("Name") {
-                                        Input(value = name, onValueChange = { name = it })
-                                    }
-                                    Field("Username") {
-                                        Input(value = username, onValueChange = { username = it })
-                                    }
-                                }
-                                DialogFooter(modifier = Modifier.padding(top = 16.dp)) {
-                                    Button("Cancel", onClick = { open = false }, variant = ButtonVariant.Outline)
-                                    Button("Save changes", onClick = { open = false })
-                                }
-                            }
-                        }
-                    },
+                    preview = { DialogParityExample() },
                 ),
                 ComponentExample(
                     title = "Custom close icon",

@@ -2,6 +2,8 @@
 
 package com.toutiaoyan.compose.ui.components.drawer
 
+import com.toutiaoyan.compose.ui.tokens.StylePreset
+import com.toutiaoyan.compose.ui.styles.border
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
@@ -27,8 +29,15 @@ enum class DrawerSwipeDirection { Up, Down, Left, Right }
 fun DrawerSwipeDirection.rememberPanelStyle(): Style =
     rememberTheme(this) {
         Style {
-            shape(drawerPanelShape(this@rememberPanelStyle, radius.xl))
+            shape(
+                if (theme.activePreset == StylePreset.Nova) {
+                    RoundedCornerShape(DrawerDefaults.CornerRadius)
+                } else {
+                    drawerPanelShape(this@rememberPanelStyle, radius.xl)
+                },
+            )
             background(colors.popover)
+            if (theme.activePreset == StylePreset.Nova) border(colors.border)
         }
     }
 
@@ -57,8 +66,8 @@ fun rememberDrawerFooterStyle(): Style =
 fun rememberDrawerSwipeHandleStyle(): Style =
     rememberTheme {
         Style {
-            width(100.dp)
-            height(8.dp)
+            width(if (theme.activePreset == StylePreset.Nova) 96.dp else 100.dp)
+            height(if (theme.activePreset == StylePreset.Nova) 4.dp else 8.dp)
             shape(RoundedCornerShape(percent = 50))
             background(colors.muted)
         }

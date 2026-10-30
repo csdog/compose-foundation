@@ -6,6 +6,9 @@ import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.contentPadding
 import androidx.compose.foundation.style.hovered
+import androidx.compose.foundation.style.focused
+import androidx.compose.foundation.layout.PaddingValues
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -45,12 +48,25 @@ object SelectDefaults {
 fun SelectVariant.rememberStyle(size: SelectSize = SelectSize.Default): Style =
     rememberTheme(this, size) {
         Style {
-            background(Color.Transparent)
+            background(
+                if (theme.activePreset == StylePreset.Nova) {
+                    if (theme.isDark) colors.input.copy(alpha = colors.input.alpha * 0.3f) else Color.Transparent
+                } else {
+                    Color.Transparent
+                },
+            )
             border(colors.input)
             shape(RoundedCornerShape(radius.lg))
             focusRing(RoundedCornerShape(radius.lg))
             // Official `pl-2.5 pr-2` — approximate with horizontal 2.5; py from height.
-            contentPadding(horizontal = spacing.scale2p5, vertical = spacing.scale1)
+            if (theme.activePreset == StylePreset.Nova) {
+                contentPadding(PaddingValues(start = 10.dp, end = 8.dp))
+                if (size == SelectSize.Sm) shape(RoundedCornerShape(minOf(radius.md, 10.dp)))
+                hovered { if (theme.isDark) background(colors.input.copy(alpha = colors.input.alpha * 0.5f)) }
+                disabledDim()
+            } else {
+                contentPadding(horizontal = spacing.scale2p5, vertical = spacing.scale1)
+            }
             height(
                 if (size is SelectSize.Sm) {
                     SelectDefaults.TriggerHeightSm
@@ -58,7 +74,7 @@ fun SelectVariant.rememberStyle(size: SelectSize = SelectSize.Default): Style =
                     SelectDefaults.TriggerHeight
                 },
             )
-            shadowXs()
+            if (theme.activePreset != StylePreset.Nova) shadowXs()
         }
     }
 
@@ -71,9 +87,9 @@ fun SelectVariant.rememberPanelStyle(): Style =
     rememberTheme(this) {
         Style {
             background(colors.popover)
-            border(colors.border)
-            shape(RoundedCornerShape(radius.md))
-            contentPadding(spacing.xs2)
+            border(if (theme.activePreset == StylePreset.Nova) colors.foreground.copy(alpha = 0.1f) else colors.border)
+            shape(RoundedCornerShape(if (theme.activePreset == StylePreset.Nova) radius.lg else radius.md))
+            contentPadding(if (theme.activePreset == StylePreset.Nova) 4.dp else spacing.xs2)
             shadowMd()
         }
     }
@@ -89,8 +105,19 @@ fun rememberSelectItemStyle(): Style =
         Style {
             background(Color.Transparent)
             contentColor(colors.popoverForeground)
-            shape(RoundedCornerShape(radius.sm))
-            contentPadding(horizontal = spacing.sm, vertical = 1.5.spacing.dp)
+            shape(RoundedCornerShape(if (theme.activePreset == StylePreset.Nova) radius.md else radius.sm))
+            if (theme.activePreset == StylePreset.Nova) {
+                minHeight(28.dp)
+                contentPadding(PaddingValues(start = 6.dp, end = 8.dp, top = 4.dp, bottom = 4.dp))
+            } else {
+                contentPadding(horizontal = spacing.sm, vertical = 1.5.spacing.dp)
+            }
+            if (theme.activePreset == StylePreset.Nova) {
+                focused {
+                    background(colors.accent)
+                    contentColor(colors.accentForeground)
+                }
+            }
             hovered {
                 background(colors.accent)
                 contentColor(colors.accentForeground)

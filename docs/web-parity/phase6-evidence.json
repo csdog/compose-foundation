@@ -1,0 +1,380 @@
+{
+  "date": "2026-10-29",
+  "sourceCommit": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "officialBaseUrl": "https://ui.shadcn.com/docs/components/base/",
+  "localBaseUrl": "http://127.0.0.1:8765",
+  "routes": [
+    "/toggle-group",
+    "/slider",
+    "/input-group",
+    "/button-group"
+  ],
+  "screenshots": [
+    {
+      "file": "compose-button-group-phase6-dark.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "compose-button-group-phase6-light.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-button-group-phase6-medium.png",
+      "viewport": [
+        1095,
+        687
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-button-group-phase6-menu.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-button-group-phase6-mobile-dark.png",
+      "viewport": [
+        390,
+        844
+      ],
+      "backgroundPixel": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "compose-button-group-phase6-mobile-light.png",
+      "viewport": [
+        390,
+        844
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-input-group-phase6-dark.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "compose-input-group-phase6-edited.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-input-group-phase6-light.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-input-group-phase6-medium.png",
+      "viewport": [
+        1095,
+        687
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-input-group-phase6-mobile-dark.png",
+      "viewport": [
+        390,
+        844
+      ],
+      "backgroundPixel": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "compose-input-group-phase6-mobile-light.png",
+      "viewport": [
+        390,
+        844
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-slider-phase6-dark.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "compose-slider-phase6-keyboard.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-slider-phase6-light.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-slider-phase6-medium.png",
+      "viewport": [
+        1095,
+        687
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-slider-phase6-mobile-dark.png",
+      "viewport": [
+        390,
+        844
+      ],
+      "backgroundPixel": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "compose-slider-phase6-mobile-light.png",
+      "viewport": [
+        390,
+        844
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-toggle-group-phase6-dark.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "compose-toggle-group-phase6-keyboard.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-toggle-group-phase6-light.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-toggle-group-phase6-medium.png",
+      "viewport": [
+        1095,
+        687
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-toggle-group-phase6-mobile-dark.png",
+      "viewport": [
+        390,
+        844
+      ],
+      "backgroundPixel": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "compose-toggle-group-phase6-mobile-light.png",
+      "viewport": [
+        390,
+        844
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "shadcn-button-group-phase6-reference.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        250,
+        250,
+        250
+      ]
+    },
+    {
+      "file": "shadcn-input-group-phase6-reference.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        250,
+        250,
+        250
+      ]
+    },
+    {
+      "file": "shadcn-slider-phase6-reference.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        250,
+        250,
+        250
+      ]
+    },
+    {
+      "file": "shadcn-toggle-group-phase6-reference.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        250,
+        250,
+        250
+      ]
+    }
+  ],
+  "validation": {
+    "GroupsNovaParity": 23,
+    "FormNovaParity": 14,
+    "SelectionNovaParity": 19,
+    "catalogJvmTests": 21,
+    "totalRelatedTests": 77,
+    "newGoldenCount": 10,
+    "explicitGoldenVerify": true,
+    "jvmJsWasmCompile": true,
+    "wasmDistribution": true,
+    "legacyMismatchesReproduced": 22,
+    "legacyGoldensRecorded": false
+  },
+  "browserChecks": [
+    "1440x1000 light/dark",
+    "390x844 light/dark",
+    "1095x687 light",
+    "live theme switching",
+    "click search addon, focus field and type compose",
+    "focus slider thumb and ArrowRight",
+    "bold toggle, ArrowRight focus-only then Space italic toggle",
+    "nested message buttons and menu open/Escape"
+  ],
+  "remaining": [
+    "Toggle Group single Tab entry and dynamic visual reorder",
+    "full vertical/RTL/multi-thumb gesture matrix and accessible thumb labels",
+    "Input Group button/kbd negative margins and complex input compositions",
+    "arbitrary mixed ButtonGroup children and complete menu icon/content parity"
+  ],
+  "startupCorrection": "Use /toggle or /slider, not /components/toggle. The earlier multi-level startup URL failed because asset references are relative."
+}

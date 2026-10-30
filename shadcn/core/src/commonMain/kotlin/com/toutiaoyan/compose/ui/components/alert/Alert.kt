@@ -17,6 +17,18 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.constrainWidth
+import androidx.compose.ui.unit.constrainHeight
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.text.font.FontWeight
+import com.toutiaoyan.compose.ui.tokens.StylePreset
+import com.toutiaoyan.compose.ui.components.icon.LocalInlineIconSize
+import androidx.compose.foundation.style.then
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.heading
@@ -31,6 +43,10 @@ import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.tailwind.core.twSpacing
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
+
+private enum class AlertPart { Icon, Action }
+
+private val LocalAlertVariant = staticCompositionLocalOf<AlertVariant> { AlertVariant.Default }
 
 private class AlertActionHolder {
     var content: (@Composable () -> Unit)? = null
@@ -73,27 +89,87 @@ fun Alert(
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val actionHolder = remember { AlertActionHolder() }
     actionHolder.content = null
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    val contentColor =
+        if (nova && variant == AlertVariant.Default) {
+            currentTheme.colors.cardForeground
+        } else {
+            variant.contentColor(
+                currentTheme.colors,
+            )
+        }
     CompositionLocalProvider(
-        LocalContentColor provides variant.contentColor(currentTheme.colors),
+        LocalContentColor provides contentColor,
+        LocalAlertVariant provides variant,
+        LocalInlineIconSize provides if (nova) 16.dp else LocalInlineIconSize.current,
         LocalAlertActionHolder provides actionHolder,
     ) {
-        Box(
-            modifier =
-                modifier
-                    .semantics { liveRegion = LiveRegionMode.Assertive }
-                    .styleable(styleState, variant.rememberStyle(), style)
-                    .padding(horizontal = twSpacing.lg, vertical = twSpacing.md),
-        ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(twSpacing.sm)) {
-                if (icon != null) {
-                    Column(modifier = Modifier.padding(top = 2.dp)) { icon() }
-                }
-                Column(verticalArrangement = Arrangement.spacedBy(twSpacing.xs2)) {
+        if (nova) {
+            Layout(
+                modifier =
+                    modifier.semantics { liveRegion = LiveRegionMode.Assertive }
+                        .styleable(styleState, variant.rememberStyle(), style)
+                        .padding(horizontal = 10.dp, vertical = 8.dp),
+                content = {
+                    if (icon != null) Box(Modifier.layoutId(AlertPart.Icon)) { icon() }
                     AlertScope().content()
+                },
+            ) { measurables, constraints ->
+                val loose = constraints.copy(minWidth = 0, minHeight = 0)
+                val action = measurables.firstOrNull { it.layoutId == AlertPart.Action }?.measure(loose)
+                val symbol = measurables.firstOrNull { it.layoutId == AlertPart.Icon }?.measure(loose)
+                val start = if (symbol != null) symbol.width + 8.dp.roundToPx() else 0
+                // CSS pr-18 replaces the usual 10px right padding: reserve 62px more.
+                val end = if (action != null) 62.dp.roundToPx() else 0
+                val bodyNodes = measurables.filter { it.layoutId != AlertPart.Action && it.layoutId != AlertPart.Icon }
+                val width =
+                    if (constraints.hasBoundedWidth) {
+                        constraints.maxWidth
+                    } else {
+                        val natural = bodyNodes.maxOfOrNull { it.maxIntrinsicWidth(Constraints.Infinity) } ?: 0
+                        constraints.constrainWidth(
+                            (natural.toLong() + start + end).coerceAtMost((Constraints.Infinity - 1).toLong()).toInt(),
+                        )
+                    }
+                val bodyWidth = (width - start - end).coerceAtLeast(0)
+                val body = bodyNodes.map { it.measure(loose.copy(maxWidth = bodyWidth)) }
+                val gap = 2.dp.roundToPx()
+                val bodyHeight = body.sumOf { it.height } + gap * (body.size - 1).coerceAtLeast(0)
+                val height =
+                    constraints.constrainHeight(
+                        maxOf(bodyHeight, (symbol?.height ?: 0) + if (symbol != null) 2.dp.roundToPx() else 0),
+                    )
+                layout(constraints.constrainWidth(width), height) {
+                    symbol?.placeRelative(0, 2.dp.roundToPx())
+                    var y = 0
+                    body.forEach { child ->
+                        child.placeRelative(start, y)
+                        y += child.height + gap
+                    }
+                    // CSS absolute offsets start inside the 1px border: top/right
+                    // 8px therefore place the action 9px from the outer bounds.
+                    action?.placeRelative(width - action.width + 2.dp.roundToPx(), 0)
                 }
             }
-            actionHolder.content?.let { action ->
-                Box(modifier = Modifier.align(Alignment.TopEnd), content = { action() })
+        } else {
+            Box(
+                modifier =
+                    modifier
+                        .semantics { liveRegion = LiveRegionMode.Assertive }
+                        .styleable(styleState, variant.rememberStyle(), style)
+                        .padding(horizontal = twSpacing.lg, vertical = twSpacing.md),
+            ) {
+                Row(horizontalArrangement = Arrangement.spacedBy(twSpacing.sm)) {
+                    if (icon != null) {
+                        Column(modifier = Modifier.padding(top = 2.dp)) { icon() }
+                    }
+                    Column(verticalArrangement = Arrangement.spacedBy(twSpacing.xs2)) {
+                        AlertScope().content()
+                    }
+                }
+                actionHolder.content?.let { action ->
+                    Box(modifier = Modifier.align(Alignment.TopEnd), content = { action() })
+                }
             }
         }
     }
@@ -137,7 +213,28 @@ fun AlertScope.AlertTitle(
     Text(
         modifier = modifier.semantics { heading() },
         variant = TextVariant.LabelLarge,
-        style = style,
+        style =
+            (
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    Style {
+                        fontSize(14.sp)
+                        lineHeight(20.sp)
+                    }
+                } else {
+                    Style
+                }
+            ) then style,
+        textStyle =
+            if (currentTheme.activePreset == StylePreset.Nova) {
+                TextStyle(
+                    fontSize = 14.sp,
+                    lineHeight = 20.sp,
+                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+                    fontWeight = FontWeight.Medium,
+                )
+            } else {
+                TextStyle.Default
+            },
         text = text,
     )
 }
@@ -145,7 +242,7 @@ fun AlertScope.AlertTitle(
 /** Matches shadcn's `AlertDescription`. */
 @Composable
 fun AlertScope.AlertDescription(text: String) {
-    Text(variant = TextVariant.BodySmall, textStyle = TextColors.Muted) { text }
+    AlertDescription { text }
 }
 
 @Composable
@@ -159,14 +256,45 @@ fun AlertScope.AlertDescription(
     Text(
         modifier = modifier,
         variant = TextVariant.BodySmall,
-        textStyle = TextColors.Muted,
-        style = style,
+        textStyle =
+            if (currentTheme.activePreset == StylePreset.Nova) {
+                TextStyle(
+                    fontSize = 14.sp,
+                    lineHeight = 20.sp,
+                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+                    fontWeight = FontWeight.Normal,
+                    color =
+                        if (LocalAlertVariant.current == AlertVariant.Destructive) {
+                            currentTheme.colors.destructive.copy(
+                                alpha = .9f,
+                            )
+                        } else {
+                            currentTheme.colors.mutedForeground
+                        },
+                )
+            } else {
+                TextColors.Muted
+            },
+        style =
+            (
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    Style {
+                        fontSize(14.sp)
+                        lineHeight(20.sp)
+                    }
+                } else {
+                    Style
+                }
+            ) then style,
         text = text,
     )
 }
 
 /**
- * Official `AlertAction`: a button or other action in the top-right of the alert.
+ * Official `AlertAction`: a button or other action at the top end of the alert.
+ * Nova retains the official fixed 72dp end reserve. For wider content, add
+ * matching end padding to a body Column; the action does not resize that reserve.
+ * Multiple controls belong inside one action slot. RTL uses the logical end.
  * Omit it to keep existing Default/Destructive pixels.
  */
 @Composable
@@ -174,6 +302,10 @@ fun AlertScope.AlertAction(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
+    if (currentTheme.activePreset == StylePreset.Nova) {
+        Box(modifier.layoutId(AlertPart.Action)) { content() }
+        return
+    }
     val holder =
         checkNotNull(LocalAlertActionHolder.current) {
             "AlertAction must be used inside Alert { … }"

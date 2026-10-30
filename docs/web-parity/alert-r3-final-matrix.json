@@ -1,0 +1,68 @@
+[
+  {
+    "viewport": "desktop",
+    "theme": "light",
+    "paths": [
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-light/00.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-light/01.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-light/02.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-light/03.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-light/04.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-light/05.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-light/06.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-light/07.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-light/08.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-light/09.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-light/10.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-light/11.png"
+    ]
+  },
+  {
+    "viewport": "desktop",
+    "theme": "dark",
+    "paths": [
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-dark/00.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-dark/01.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-dark/02.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-dark/03.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-dark/04.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-dark/05.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-dark/06.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-dark/07.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-dark/08.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-dark/09.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-dark/10.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-desktop-dark/11.png"
+    ]
+  },
+  {
+    "viewport": "phone",
+    "theme": "light",
+    "paths": [
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-phone-light/00.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-phone-light/01.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-phone-light/02.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-phone-light/03.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-phone-light/04.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-phone-light/05.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-phone-light/06.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-phone-light/07.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-phone-light/08.png"
+    ]
+  },
+  {
+    "viewport": "phone",
+    "theme": "dark",
+    "paths": [
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-phone-dark/00.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-phone-dark/01.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-phone-dark/02.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-phone-dark/03.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-phone-dark/04.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-phone-dark/05.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-phone-dark/06.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-phone-dark/07.png",
+      "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r3-final-phone-dark/08.png"
+    ]
+  }
+]

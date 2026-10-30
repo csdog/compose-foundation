@@ -43,22 +43,36 @@ val collapsibleDoc =
                     title = "Default",
                     code =
                         """
-                        var open by remember { mutableStateOf(false) }
-                        Collapsible(open = open, onOpenChange = { open = it }) {
-                            CollapsibleTrigger(if (open) "Hide details" else "Show details", variant = ButtonVariant.Outline)
-                            CollapsibleContent("@peduarte starred 3 repositories")
+                        @Composable
+                        fun CollapsibleParityExample() {
+                            Collapsible(modifier = Modifier.widthIn(max = 350.dp)) {
+                                Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                                    SurfaceText("Order #4189", medium = true)
+                                    CollapsibleTrigger(modifier = Modifier.size(32.dp), style = ButtonVariant.Ghost.rememberStyle() then ButtonSize.Icon.rememberStyle()) { Image(Lucide.ChevronsUpDown, "Toggle details", Modifier.size(16.dp), colorFilter = ColorFilter.tint(currentTheme.colors.foreground)) }
+                                }
+                                Spacer(Modifier.height(8.dp))
+                                Row(Modifier.fillMaxWidth().border(1.dp, currentTheme.colors.border, RoundedCornerShape(6.dp)).padding(horizontal = 16.dp, vertical = 8.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+                                    SurfaceText("Status", muted = true); SurfaceText("Shipped", medium = true)
+                                }
+                                CollapsibleContent {
+                                    listOf("Shipping address" to "100 Market St, San Francisco", "Items" to "2x Studio Headphones").forEach { (title, text) ->
+                                        Column(Modifier.fillMaxWidth().padding(top = 8.dp).border(1.dp, currentTheme.colors.border, RoundedCornerShape(6.dp)).padding(horizontal = 16.dp, vertical = 8.dp)) {
+                                            SurfaceText(title, medium = true); SurfaceText(text, muted = true)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        @Composable
+                        private fun SurfaceText(text: String, muted: Boolean = false, medium: Boolean = false) {
+                            val theme = currentTheme
+                            Text(textStyle = theme.typography.bodyMedium.copy(fontFamily = theme.fontFamily, fontSize = 14.sp, lineHeight = 20.sp,
+                                fontWeight = if (medium) FontWeight.Medium else FontWeight.Normal,
+                                color = if (muted) theme.colors.mutedForeground else theme.colors.foreground)) { text }
                         }
                         """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Collapsible(open = open, onOpenChange = { open = it }) {
-                            CollapsibleTrigger(
-                                if (open) "Hide details" else "Show details",
-                                variant = ButtonVariant.Outline,
-                            )
-                            CollapsibleContent("@peduarte starred 3 repositories")
-                        }
-                    },
+                    preview = { CollapsibleParityExample() },
                 ),
                 ComponentExample(
                     title = "Always-visible siblings",

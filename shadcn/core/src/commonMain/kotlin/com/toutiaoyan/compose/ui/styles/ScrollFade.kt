@@ -1,6 +1,7 @@
 package com.toutiaoyan.compose.ui.styles
 
 import androidx.compose.foundation.ScrollState
+import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawWithContent
@@ -12,7 +13,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 
 enum class ScrollFadeOrientation { Vertical, Horizontal }
@@ -55,11 +58,23 @@ fun Modifier.scrollFade(
     scrollState: ScrollState,
     orientation: ScrollFadeOrientation = ScrollFadeOrientation.Vertical,
     edgeSize: Dp = 24.dp,
+): Modifier = scrollFade(scrollState, orientation, edgeSize, .5f, 0.dp)
+
+/** Source CSS can cap masks by a viewport fraction and reveal them over a scroll range. */
+internal fun Modifier.scrollFade(
+    scrollState: ScrollState,
+    orientation: ScrollFadeOrientation,
+    edgeSize: Dp,
+    edgeFraction: Float,
+    revealDistance: Dp,
 ): Modifier =
     composed {
         val density = LocalDensity.current
         val requestedFadePx = with(density) { edgeSize.toPx() }
+        val revealPx = with(density) { revealDistance.toPx() }
         val isVertical = orientation == ScrollFadeOrientation.Vertical
+        val reverse = !isVertical && LocalLayoutDirection.current == LayoutDirection.Rtl
+        val easing = CubicBezierEasing(.42f, 0f, .58f, 1f) // CSS ease-in-out.
 
         this
             .graphicsLayer { compositingStrategy = CompositingStrategy.Offscreen }
@@ -68,37 +83,59 @@ fun Modifier.scrollFade(
                 if (scrollState.maxValue <= 0) return@drawWithContent
 
                 val extent = if (isVertical) size.height else size.width
-                val fadePx = clampedFadeSizePx(requestedFadePx, extent)
+                val fadePx = clampedFadeSizePx(minOf(requestedFadePx, extent * edgeFraction), extent)
                 if (fadePx <= 0f) return@drawWithContent
 
-                if (shouldFadeLeadingEdge(scrollState.value)) {
+                fun revealed(distance: Int): Float =
+                    when {
+                        distance <= 0 -> 0f
+                        revealPx <= 0f -> fadePx
+                        else -> fadePx * easing.transform((distance / revealPx).coerceIn(0f, 1f))
+                    }
+                val start = revealed(scrollState.value)
+                val end = revealed(scrollState.maxValue - scrollState.value)
+                val leading = if (reverse) end else start
+                val trailing = if (reverse) start else end
+                if (leading > 0f) {
                     val brush =
                         if (isVertical) {
-                            Brush.verticalGradient(listOf(Color.Transparent, Color.Black), startY = 0f, endY = fadePx)
+                            Brush.verticalGradient(listOf(Color.Transparent, Color.Black), startY = 0f, endY = leading)
                         } else {
-                            Brush.horizontalGradient(listOf(Color.Transparent, Color.Black), startX = 0f, endX = fadePx)
+                            Brush.horizontalGradient(
+                                listOf(Color.Transparent, Color.Black),
+                                startX = 0f,
+                                endX = leading,
+                            )
                         }
-                    val fadeSize = if (isVertical) Size(size.width, fadePx) else Size(fadePx, size.height)
+                    val fadeSize = if (isVertical) Size(size.width, leading) else Size(leading, size.height)
                     drawRect(brush = brush, blendMode = BlendMode.DstIn, size = fadeSize)
                 }
 
-                if (shouldFadeTrailingEdge(scrollState.value, scrollState.maxValue)) {
-                    val topLeft = if (isVertical) Offset(0f, size.height - fadePx) else Offset(size.width - fadePx, 0f)
+                if (trailing > 0f) {
+                    val topLeft =
+                        if (isVertical) {
+                            Offset(
+                                0f,
+                                size.height - trailing,
+                            )
+                        } else {
+                            Offset(size.width - trailing, 0f)
+                        }
                     val brush =
                         if (isVertical) {
                             Brush.verticalGradient(
                                 listOf(Color.Black, Color.Transparent),
-                                startY = size.height - fadePx,
+                                startY = size.height - trailing,
                                 endY = size.height,
                             )
                         } else {
                             Brush.horizontalGradient(
                                 listOf(Color.Black, Color.Transparent),
-                                startX = size.width - fadePx,
+                                startX = size.width - trailing,
                                 endX = size.width,
                             )
                         }
-                    val fadeSize = if (isVertical) Size(size.width, fadePx) else Size(fadePx, size.height)
+                    val fadeSize = if (isVertical) Size(size.width, trailing) else Size(trailing, size.height)
                     drawRect(brush = brush, blendMode = BlendMode.DstIn, topLeft = topLeft, size = fadeSize)
                 }
             }

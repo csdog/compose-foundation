@@ -1,5 +1,7 @@
 package com.toutiaoyan.compose.ui.components.drawer
 
+import com.toutiaoyan.compose.ui.components.overlay.OverlayFocusOwner
+import com.toutiaoyan.compose.ui.components.overlay.overlayTriggerFocus
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
@@ -7,6 +9,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -69,12 +72,38 @@ internal fun DrawerSwipeDirection.isVertical(): Boolean =
  * Counts open nested drawers so a parent can apply Base-style stack peek/scale
  * (`--nested-drawers` / `data-nested-drawer-open`).
  */
-internal class DrawerNestHost {
+internal class DrawerNestHost(
+    private val parent: DrawerNestHost? = null,
+    private val direction: DrawerSwipeDirection = DrawerSwipeDirection.Down,
+) {
+    var naturalHeightPx by mutableFloatStateOf(0f)
+        private set
+    var frontmostHeightPx by mutableFloatStateOf(0f)
+        private set
+
+    fun onNaturalHeight(height: Float) {
+        naturalHeightPx = height
+        if (openChildCount == 0) reportFrontmostHeight(height, direction)
+    }
+
+    private fun reportFrontmostHeight(
+        height: Float,
+        sourceDirection: DrawerSwipeDirection,
+    ) {
+        if (sourceDirection != direction) return
+        frontmostHeightPx = height
+        parent?.reportFrontmostHeight(height, direction)
+    }
+
     var openChildCount by mutableIntStateOf(0)
         private set
 
     fun onChildOpenChange(open: Boolean) {
         openChildCount = (openChildCount + if (open) 1 else -1).coerceAtLeast(0)
+        parent?.onChildOpenChange(open)
+        if (!open && openChildCount == 0 && naturalHeightPx > 0f) {
+            reportFrontmostHeight(naturalHeightPx, direction)
+        }
     }
 }
 
@@ -101,6 +130,7 @@ internal class DrawerState(
     val snapToSequentialPoints: Boolean,
     /** Open nested drawers above this one (for stack styling). */
     val nestedOpenCount: Int,
+    val indentGesture: DrawerIndentGesture? = null,
 ) {
     fun toggle() = onOpenChange(!open)
 
@@ -202,6 +232,8 @@ fun Drawer(
      */
     dismissible: Boolean = true,
     modal: Boolean = true,
+    /** Opt in to the nearest DrawerIndentHost background effect. */
+    indentBackground: Boolean = false,
     content: @Composable DrawerScope.() -> Unit,
 ) {
     var internalOpen by remember { mutableStateOf(defaultOpen) }
@@ -229,8 +261,16 @@ fun Drawer(
         }
     }
 
+    val indentHost = LocalDrawerIndentState.current
+    val indentKey = remember { Any() }
+    val indentGesture = remember { DrawerIndentGesture() }
+    DisposableEffect(indentHost, isOpen, indentBackground) {
+        if (isOpen && indentBackground) indentHost?.register(indentKey) { indentGesture.progress() }
+        onDispose { indentHost?.unregister(indentKey) }
+    }
+
     val parentNest = LocalDrawerNestHost.current
-    val selfNest = remember { DrawerNestHost() }
+    val selfNest = remember(parentNest, swipeDirection) { DrawerNestHost(parentNest, swipeDirection) }
     DisposableEffect(isOpen, parentNest) {
         if (isOpen) {
             parentNest?.onChildOpenChange(true)
@@ -241,7 +281,7 @@ fun Drawer(
     }
 
     val pointerDismiss =
-        dismissible && dismissOnClickOutside && !disablePointerDismissal
+        dismissOnClickOutside && !disablePointerDismissal
     val state =
         DrawerState(
             open = isOpen,
@@ -257,13 +297,16 @@ fun Drawer(
             onSnapPointChange = setSnap,
             snapToSequentialPoints = snapToSequentialPoints,
             nestedOpenCount = selfNest.openChildCount,
+            indentGesture = if (indentBackground) indentGesture else null,
         )
-    CompositionLocalProvider(
-        LocalDrawerState provides state,
-        LocalDrawerNestHost provides selfNest,
-    ) {
-        Box(modifier = modifier) {
-            DrawerScope(state).content()
+    OverlayFocusOwner(isOpen, modal) {
+        CompositionLocalProvider(
+            LocalDrawerState provides state,
+            LocalDrawerNestHost provides selfNest,
+        ) {
+            Box(modifier = modifier) {
+                DrawerScope(state).content()
+            }
         }
     }
 }
@@ -286,7 +329,7 @@ fun DrawerScope.DrawerTrigger(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
-    Box(modifier = modifier) {
+    Box(modifier = modifier.overlayTriggerFocus()) {
         content()
     }
 }
@@ -307,7 +350,7 @@ fun DrawerScope.DrawerTrigger(
     Button(
         text,
         onClick = toggle,
-        modifier = modifier,
+        modifier = modifier.overlayTriggerFocus(),
         enabled = enabled,
         disabled = disabled,
         variant = variant,

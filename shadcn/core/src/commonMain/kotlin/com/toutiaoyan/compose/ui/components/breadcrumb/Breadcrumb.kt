@@ -2,10 +2,15 @@
 
 package com.toutiaoyan.compose.ui.components.breadcrumb
 
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
@@ -13,28 +18,32 @@ import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
+import androidx.compose.foundation.style.hovered
+import androidx.compose.foundation.style.animate
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import com.toutiaoyan.compose.ui.utils.rememberTheme
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
-import com.toutiaoyan.compose.ui.icons.ChevronRight
+import com.toutiaoyan.compose.ui.icons.NovaChevronRight
 import com.toutiaoyan.compose.ui.components.icon.Icon
-import com.toutiaoyan.compose.ui.components.icon.IconVariant
-import com.toutiaoyan.compose.ui.icons.MoreHorizontal
+import com.toutiaoyan.compose.ui.icons.NovaEllipsis
 import com.toutiaoyan.compose.ui.styles.rememberMinTouchTargetStyle
-import com.toutiaoyan.compose.ui.styles.rememberPressMotionStyle
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.components.text.Text
-import com.toutiaoyan.compose.ui.components.text.TextColors
 import com.toutiaoyan.compose.ui.components.text.TextVariant
-import com.toutiaoyan.compose.tailwind.core.twSpacing
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
 
@@ -63,32 +72,47 @@ fun Breadcrumb(
     content: @Composable RowScope.() -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Row(
+    FlowRow(
         modifier =
             modifier
                 .semantics { contentDescription = ariaLabel }
                 .styleable(styleState, style),
-        horizontalArrangement = Arrangement.spacedBy(twSpacing.xs),
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+        itemVerticalAlignment = Alignment.CenterVertically,
+    ) { content() }
+}
+
+/** Ordered, wrapping run of crumbs. Each BreadcrumbItem stays atomic. */
+@Composable
+fun RowScope.BreadcrumbList(
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+    content: @Composable RowScope.() -> Unit,
+) {
+    val state = remember { MutableStyleState(MutableInteractionSource()) }
+    FlowRow(
+        modifier = modifier.styleable(state, style),
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+        itemVerticalAlignment = Alignment.CenterVertically,
+    ) { content() }
+}
+
+/** One inline-flex list item; icon and text content wrap as a single crumb. */
+@Composable
+fun RowScope.BreadcrumbItem(
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+    content: @Composable RowScope.() -> Unit,
+) {
+    val state = remember { MutableStyleState(MutableInteractionSource()) }
+    Row(
+        modifier.styleable(state, style),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        verticalAlignment = Alignment.CenterVertically,
         content = content,
     )
-}
-
-/**
- * Matches shadcn's `BreadcrumbList`. Children stay in the parent [Breadcrumb]
- * row (no extra spacing) so existing flat call sites keep the same layout.
- */
-@Composable
-fun RowScope.BreadcrumbList(content: @Composable RowScope.() -> Unit) {
-    content()
-}
-
-/**
- * Matches shadcn's `BreadcrumbItem`. Passthrough — crumb spacing lives on
- * [Breadcrumb], not on each item.
- */
-@Composable
-fun RowScope.BreadcrumbItem(content: @Composable RowScope.() -> Unit) {
-    content()
 }
 
 /**
@@ -129,7 +153,18 @@ fun BreadcrumbLink(
     val resolvedEnabled = !disabled
     val interactionSource = remember { MutableInteractionSource() }
     val styleState = remember { MutableStyleState(interactionSource) }
-    val pressStyle = rememberPressMotionStyle()
+    val linkStyle =
+        rememberTheme(resolvedEnabled) {
+            Style {
+                contentColor(colors.mutedForeground)
+                animate(
+                    toSpec = tween(150, easing = FastOutSlowInEasing),
+                    fromSpec = tween(150, easing = FastOutSlowInEasing),
+                ) {
+                    if (resolvedEnabled) hovered { contentColor(colors.foreground) }
+                }
+            }
+        }
     val touchTargetStyle = rememberMinTouchTargetStyle()
     Box(
         modifier =
@@ -140,6 +175,7 @@ fun BreadcrumbLink(
                     contentDescription = text
                     if (!resolvedEnabled) disabled()
                 }
+                .hoverable(interactionSource, enabled = resolvedEnabled)
                 .clickable(
                     interactionSource = interactionSource,
                     indication = null,
@@ -147,10 +183,10 @@ fun BreadcrumbLink(
                     role = Role.Button,
                     onClick = onClick,
                 )
-                .styleable(styleState, touchTargetStyle then pressStyle then style),
+                .styleable(styleState, touchTargetStyle then linkStyle then style),
         contentAlignment = Alignment.Center,
     ) {
-        Text(variant = TextVariant.BodyMedium, textStyle = TextColors.Muted) { text }
+        Text(variant = TextVariant.BodyMedium) { text }
     }
 }
 
@@ -188,6 +224,7 @@ fun BreadcrumbPage(
                 .semantics {
                     contentDescription = text
                     selected = true
+                    disabled()
                 }
                 .styleable(styleState, style),
     ) { text }
@@ -210,11 +247,21 @@ fun BreadcrumbSeparator(
     modifier: Modifier = Modifier,
     style: Style = Style,
     content: @Composable () -> Unit = {
-        Icon(ChevronRight, tint = currentTheme.colors.mutedForeground, variant = IconVariant.Small)
+        Icon(
+            NovaChevronRight,
+            modifier =
+                Modifier.size(
+                    14.dp,
+                ).rotate(if (LocalLayoutDirection.current == LayoutDirection.Rtl) 180f else 0f),
+            tint = currentTheme.colors.mutedForeground,
+        )
     },
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Box(modifier = modifier.styleable(styleState, style)) {
+    Box(
+        modifier = modifier.clearAndSetSemantics { }.styleable(styleState, style),
+        contentAlignment = Alignment.Center,
+    ) {
         content()
     }
 }
@@ -229,9 +276,16 @@ fun BreadcrumbEllipsis(
     Box(
         modifier =
             modifier
-                .semantics { contentDescription = "More" }
-                .styleable(styleState, style),
+                .clearAndSetSemantics { }
+                .styleable(
+                    styleState,
+                    Style {
+                        width(20.dp)
+                        height(20.dp)
+                    } then style,
+                ),
+        contentAlignment = Alignment.Center,
     ) {
-        Icon(MoreHorizontal, tint = currentTheme.colors.mutedForeground, variant = IconVariant.Small)
+        Icon(NovaEllipsis, modifier = Modifier.size(16.dp), tint = currentTheme.colors.mutedForeground)
     }
 }

@@ -1,6 +1,7 @@
 @file:OptIn(ExperimentalFoundationStyleApi::class)
 
 package com.toutiaoyan.compose.ui.components.messagescroller
+import com.toutiaoyan.compose.ui.utils.keyboardInputMode
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.tween
@@ -382,6 +383,7 @@ fun MessageScrollerButton(
                             }
                     }
                     .hoverable(interactionSource)
+                    .keyboardInputMode()
                     .clickable(
                         interactionSource = interactionSource,
                         indication = null,

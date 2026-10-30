@@ -27,7 +27,7 @@ val commandDoc =
     ComponentDoc(
         id = "command",
         title = "Command",
-        description = "A searchable/filterable action list -- the building block behind a command palette.",
+        description = "Command menu for search and quick actions.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.command.Command
@@ -59,39 +59,61 @@ val commandDoc =
                     title = "Default",
                     code =
                         """
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                    CommandItem("Search Emoji", onSelect = {})
-                                    CommandItem("Calculator", onSelect = {})
+                        @Composable
+                        fun CommandParityExample() {
+                            var selection by remember { mutableStateOf("") }
+                            Column(Modifier.widthIn(max = 384.dp)) {
+                                Command(modifier = Modifier.fillMaxWidth()) {
+                                    CommandInput()
+                                    CommandList {
+                                        CommandEmpty()
+                                        CommandGroup(heading = "Suggestions") {
+                                            CommandExampleItem("Calendar", Lucide.Calendar, onSelect = { selection = "Calendar" })
+                                            CommandExampleItem("Search Emoji", Lucide.Smile, onSelect = { selection = "Search Emoji" })
+                                            CommandExampleItem("Calculator", Lucide.Calculator, disabled = true, onSelect = {})
+                                        }
+                                        CommandSeparator()
+                                        CommandGroup(heading = "Settings") {
+                                            CommandExampleItem("Profile", Lucide.User, "⌘P", onSelect = { selection = "Profile" })
+                                            CommandExampleItem("Billing", Lucide.CreditCard, "⌘B", onSelect = { selection = "Billing" })
+                                            CommandExampleItem("Settings", Lucide.Settings, "⌘S", onSelect = { selection = "Settings" })
+                                        }
+                                    }
                                 }
-                                CommandSeparator()
-                                CommandGroup(heading = "Settings") {
-                                    CommandItem("Profile", onSelect = {})
-                                    CommandItem("Billing", onSelect = {})
+                                if (selection.isNotEmpty()) SurfaceText("Selected: ${'$'}selection", muted = true)
+                            }
+                        }
+
+                        @Composable
+                        private fun SurfaceText(text: String, muted: Boolean = false, medium: Boolean = false) {
+                            val theme = currentTheme
+                            Text(textStyle = theme.typography.bodyMedium.copy(fontFamily = theme.fontFamily, fontSize = 14.sp, lineHeight = 20.sp,
+                                fontWeight = if (medium) FontWeight.Medium else FontWeight.Normal,
+                                color = if (muted) theme.colors.mutedForeground else theme.colors.foreground)) { text }
+                        }
+
+                        @Composable
+                        private fun CommandExampleItem(label: String, icon: androidx.compose.ui.graphics.vector.ImageVector, shortcut: String? = null, disabled: Boolean = false, onSelect: () -> Unit) {
+                            CommandItem(label, onSelect, disabled = disabled) {
+                                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    Image(icon, null, Modifier.size(16.dp), colorFilter = ColorFilter.tint(if (disabled) currentTheme.colors.mutedForeground else currentTheme.colors.foreground))
+                                    Text(Modifier.weight(1f)) { label }
+                                    if (shortcut != null) CommandShortcut(shortcut)
                                 }
                             }
                         }
                         """.trimIndent(),
+                    preview = { CommandParityExample() },
+                ),
+                ComponentExample(
+                    title = "Long list keyboard navigation",
+                    code =
+                        "Command { CommandInput(); CommandList { " +
+                            "repeat(80) { CommandItem(\"Action \$it\", {}) } } }",
                     preview = {
                         Command {
                             CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                    CommandItem("Search Emoji", onSelect = {})
-                                    CommandItem("Calculator", onSelect = {})
-                                }
-                                CommandSeparator()
-                                CommandGroup(heading = "Settings") {
-                                    CommandItem("Profile", onSelect = {}, shortcut = "⌘P")
-                                    CommandItem("Billing", onSelect = {})
-                                }
-                            }
+                            CommandList { repeat(80) { CommandItem("Action $it", {}) } }
                         }
                     },
                 ),

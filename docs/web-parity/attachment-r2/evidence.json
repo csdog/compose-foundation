@@ -1,0 +1,795 @@
+{
+  "component": "Attachment",
+  "round": 2,
+  "component_audit_complete": false,
+  "whole_goal_complete": false,
+  "validation": "validation.json",
+  "source_conditions": "sources.json",
+  "remaining": [
+    "Group mandatory snap and 4dp logical scroll padding; keyboard scrolling and overscroll containment are not fully audited.",
+    "Nova xs media radius remains 8dp instead of 6dp; vertical multi-action gap remains 0dp instead of 4dp.",
+    "Dark title weight and filename truncation differ visibly; Geist medium500 is installed, so missing font weight is not an established cause.",
+    "Catalog native scrollbar/layout: official phone inner viewport375 vs local390; preview325 vs340 and horizontal card245 vs260.",
+    "Catalog headings, explanatory prose, code layout and navigation alignment remain part of shared P1.",
+    "Lucide FileSearch shape differs between the source icon version and installed catalog package.",
+    "Complex slots, tiny constraints, wrapping, hover/focus-within styling, standalone AttachmentTrigger and full assistive-technology mapping remain unclosed.",
+    "Photo URI and remove-action independence are covered by injected UriHandler JVM test, not a real browser popup in this round."
+  ],
+  "artifacts": [
+    {
+      "file": "docs/web-parity/attachment-r2/pixel-verification.json",
+      "bytes": 1305,
+      "sha256": "cdf8c55fccfc4fa5409a6a7112525ee519dac999eaf42059c41773913d8163b1"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/sources.json",
+      "bytes": 516,
+      "sha256": "eff8ed95b39c986971bfd386cceef8c97fe2ff48878f56447cdae38910bcecfa"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-desktop-light-sizes.png",
+      "bytes": 115468,
+      "sha256": "1afffc004b4e922db56b8b6a2e066a36e8d11d882455d2655021dd6d71d2b96a"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-matrix.json",
+      "bytes": 26350,
+      "sha256": "521ba34ec90fc7d3f6aa7e120c2680c7d8c5c6138243089e96bd4e20077edd78"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-phone-light-group-scroll-mid.png",
+      "bytes": 38838,
+      "sha256": "d9fb4e8d4794cf37d4908781c1f3f77b73c19de0951a3c8c9b9667738488c1a3"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-desktop-dark-states.png",
+      "bytes": 144816,
+      "sha256": "798bb5e76a45a72be6f62b1ad84e3b5f922a135d59883e0f6796f2468df3fd89"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-phone-light-default.png",
+      "bytes": 81315,
+      "sha256": "8577d7a37d76d98f3b5dc83db4586c77bd81dfe5c3a19c034ebb1541314577bd"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/contact-dialog.png",
+      "bytes": 271461,
+      "sha256": "d2dd0c710f63a73772f479c668fc9d43626101ee2db18c6e1788524f76ca07f4"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-desktop-light-default.png",
+      "bytes": 212924,
+      "sha256": "0ed658909916881c9cf2ef4bc15b4559831e25f2c3cb382fde7afadbad2f9761"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-phone-light-group.png",
+      "bytes": 39015,
+      "sha256": "951d09b8513d179bd6395c09502a083e57a6d18d851c69d982822dde02e96279"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-desktop-light-image.png",
+      "bytes": 184700,
+      "sha256": "031a349931595130ebbb1bc997b32ad3152ab4229983e8d7ee8ece8a6d7dcb86"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-phone-dark-dialog.png",
+      "bytes": 53305,
+      "sha256": "1cdce6516cb2463892118418e09ce74f080251523ea8c4ee59e06c2d5cceb013"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-phone-dark-dialog.png",
+      "bytes": 74197,
+      "sha256": "a92138e09bafcba50800c274982cd263f2848a1c4a7eadb92faf5bb66128922e"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-desktop-dark-group.png",
+      "bytes": 124688,
+      "sha256": "77c7c2926e182cd3657ff0fc6edd1e925fd7bebc74f5b7a3e4f157efb759606a"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-phone-light-group.png",
+      "bytes": 44721,
+      "sha256": "d246e26a13a1f5974e88a3dd81dccb8a7e67a6e8ceea0d8b61315dd9bd804dad"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/spinner-before-light.png",
+      "bytes": 677,
+      "sha256": "a183d579b7991d74f250fb8d5fe7f848a6107b4ba3a6fb23a960b93428ab01bb"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-phone-dark-dialog-closed.png",
+      "bytes": 73936,
+      "sha256": "639c9807321ff81b63ea83b6b6d0d82f85e57077404a696c25da3ca75e525f33"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/spinner-after-light.png",
+      "bytes": 527,
+      "sha256": "0edfb72e999eaf85863f694275d7fbe8093314db3182abacd3aa542059dbf6ea"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/pixel-before-spinner-update.json",
+      "bytes": 1528,
+      "sha256": "251c9cf9a3da401d50273db3a3cacb6adf15e3d6b2e967c56b561f8c57266968"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/contact-trigger.png",
+      "bytes": 89839,
+      "sha256": "594d4982723f820efeaae2dbdefeb1a151d6be83c70465259fc1b7f0353c7abc"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-spinner.json",
+      "bytes": 606,
+      "sha256": "d3cabd194507db292d0e867e141af608ca07c5703831e05cd63912622e66c2c9"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-desktop-light-trigger.png",
+      "bytes": 124801,
+      "sha256": "264cd76f36c5a11723d002a10ce1af23f2911fc8110806d7933307961ef910aa"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/test-results.json",
+      "bytes": 8758,
+      "sha256": "c86ef81aa04255d455bcf64cfa4b4600a3c4cb57ac280f29cc3394b3eeb3b471"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-desktop-dark-dialog-actions.png",
+      "bytes": 135268,
+      "sha256": "741adf4b5ad153550260a9abb9d8e5f429a45f1f92b19e1087eadbcaf6aa124c"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-desktop-dark-group.png",
+      "bytes": 149131,
+      "sha256": "7e6511475852bf7623863c795fc6c89df62012500c9f6ceab009f8aeaa41a9a2"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-desktop-dark-trigger.png",
+      "bytes": 123001,
+      "sha256": "4f6f565d7054bf10ab34e8bafed8d7afcaea6c8d289d90c5bec5e3c97d5c4088"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-phone-dark-sizes.png",
+      "bytes": 40851,
+      "sha256": "104cca8a08db8397d433fd491021fabf1902263b1d09da1c7a3667708f053ad7"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-desktop-light-sizes.png",
+      "bytes": 139753,
+      "sha256": "e28db840063776a8e56b4ebf7abc7512da16190dd2b2921d76eec94ec508e304"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-desktop-dark-dialog-closed.png",
+      "bytes": 135057,
+      "sha256": "a1061a8e10c1d161a70eff5a6776d2e5d8459a121f1e9ca20016d178bfd38b90"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/contact-sizes.png",
+      "bytes": 145866,
+      "sha256": "8a8359ab759852f61ffcdaf3d4fbf26b2dee8403b9166f8d6ef733fab98c2ffe"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-desktop-light-dialog-closed.png",
+      "bytes": 136077,
+      "sha256": "bd0cea20666e3b6673f59d74d824bc051140eea698a71c9b2f33784ea8ea4e8d"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-phone-dark-image.png",
+      "bytes": 78420,
+      "sha256": "212a77b5b5021efb220fcce864d85342845d26b16b63a4b42af3b5d1be5e259c"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-desktop-light-image.png",
+      "bytes": 203446,
+      "sha256": "f58abad2e706ec519341470fa1bdc053bd95036ef5b502a482b81485c6345d94"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-phone-light-dialog-actions.png",
+      "bytes": 51900,
+      "sha256": "67653f3d984399f745940965ae3be7b81c5cbdf40e09e4630ba1fb0e2f8d4080"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-desktop-dark-states.png",
+      "bytes": 121534,
+      "sha256": "b04bcd8e2bb23ebf149a0d8aa02715b0eb8452d673b7e60f5da45c562831ca1e"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-phone-light-default.png",
+      "bytes": 77974,
+      "sha256": "c9ac45d730e2138bdf97d0f101e9fa67b68ab714285a3f9eeb04fc90c11c7a40"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-desktop-light-dialog.png",
+      "bytes": 138419,
+      "sha256": "b968b230431fb829a5a143f2cf474b53bbb41b9575d8abba96c09c28f1cd1e63"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/contact-image.png",
+      "bytes": 606363,
+      "sha256": "ba852c0ac3386e75e2638c061ee5f6be7872a176c6505a87da00e4b5c73b7dc8"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-desktop-dark-trigger.png",
+      "bytes": 163345,
+      "sha256": "e6f5215fe6df156ee3780e3a7821fede917edc0d8062cce268d31a406bb5ebf1"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/spinner-compare-light.png",
+      "bytes": 4262,
+      "sha256": "4ff8a745762fd8e093aca30b417742bda7446fb6659c73a3b6afefedf21fded5"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-phone-dark-default.png",
+      "bytes": 81335,
+      "sha256": "003787b33cafa12aa1dc9f11d05e6551139cacbcd7a93f3fe22ea36731377d07"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-phone-light-states.png",
+      "bytes": 50172,
+      "sha256": "0b32ce3dbd30ab5bd99c941ec6191aee04b1ba486cc0628ca39761372aba8ae8"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-phone-dark-sizes.png",
+      "bytes": 39891,
+      "sha256": "0508de9852fc1ec28c5abafbcf802b8a0fc7aa2a70f121a92c898adb9db04025"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-matrix.json",
+      "bytes": 5098,
+      "sha256": "4e3e847e361fd826eabbd606c3a48e87ae830287b7ca0f9d57d822a700f511d8"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-phone-light-states.png",
+      "bytes": 49217,
+      "sha256": "5b7f7d0c5f89e144d18434e42fa7bdfbf5a68c092c0aad3f615f09a8d3c0107e"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/spinner-compare-dark.png",
+      "bytes": 4268,
+      "sha256": "9967cedcf3225b854f56c3de85e1d8c810425cd96a47fd676741fba4426b77ac"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-phone-dark-default.png",
+      "bytes": 77843,
+      "sha256": "ea102cc98fc07e5c3515ea15fa643652dece95d23d60568063777e5194450ddd"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-phone-dark-image.png",
+      "bytes": 77609,
+      "sha256": "28a52e5a380768302f5baf89c475e54fef93d5e4d712eb94af0ef9e509f5b954"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-desktop-light-dialog.png",
+      "bytes": 148207,
+      "sha256": "ee663c6c60ca74ea6f80da7e2d4d814f7401d7bca246416a065b1d3bc80f4044"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-phone-light-trigger.png",
+      "bytes": 48944,
+      "sha256": "a661aa2a661051af7f4f4e05bbea43aaa40ba105e1741e62585819ec6ad7bb2f"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-phone-dark-states.png",
+      "bytes": 48348,
+      "sha256": "df28da6e9456bb939754294c3b146631d5f6d47442dbdb384ef098299a62bf02"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/spinner-oracle.json",
+      "bytes": 4403,
+      "sha256": "f3932cbd4a89c5ef0f80b826e6fcce8c09ace773359d521a93ddfa1d7e4c8759"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/contact-group.png",
+      "bytes": 111118,
+      "sha256": "58657f523e89bb49932d38f56a825d253362f2a042f718a5c07beaca58761d8d"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-phone-dark-group.png",
+      "bytes": 45153,
+      "sha256": "cab76c815b80b8706c1de58b1d30e03ea365ee89bb1f8016f91d036f6d8c58bb"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-desktop-light-group.png",
+      "bytes": 148492,
+      "sha256": "cdd072954519fab5fc1139f02363f9b897150128f8117d57958404e08b8d3fd6"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-desktop-light-trigger.png",
+      "bytes": 163797,
+      "sha256": "6e7a40f7b2fc7846474910bd9c6ce50a22438009eae50269eadda4f1e631965b"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-dialog-interactions.json",
+      "bytes": 3107,
+      "sha256": "8e950bf19053b686db4d17ec6a2d08c0861cd7cadff39d6b6f5f9dff79b8df54"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-scroll-fade.json",
+      "bytes": 2284,
+      "sha256": "0e08510d382e7fd9721f158bcc194b3ff72dddaf6d0166bb93aa6bf12cb2cc75"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-phone-light-group-scroll-start.png",
+      "bytes": 44506,
+      "sha256": "cefaac5a140c313eaaaaf374f057c5537765faedfd5108ad93ebc2d7f77459dd"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/contact-dialog-actions.png",
+      "bytes": 252776,
+      "sha256": "1b297f44dec65431155da366011a95933904c481cd205d06dbba81d5118a296e"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-phone-dark-dialog-actions.png",
+      "bytes": 50512,
+      "sha256": "26759075569b488bb229683f132fc6f0cf27854befd8ce05ab0e79064d5d0c70"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-phone-dark-group.png",
+      "bytes": 37605,
+      "sha256": "a220b1a62154f051184f2c40c7927271419828ff5799679be8f6a8050521e1a1"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-desktop-light-dialog-actions.png",
+      "bytes": 136279,
+      "sha256": "f7aa42688b10bdd6506a9a63dacd0573cb751cc07ceeff333b4b5a2db122b569"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/spinner-baseline-diff.json",
+      "bytes": 399,
+      "sha256": "8cce68708385d74efb192c30ccd4a8dcf0b5bf993bc2b16f5253c44d0ef1c59a"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/validation.json",
+      "bytes": 2558,
+      "sha256": "46b9cc5b1a68de0fb74c0465b61229e6d0772dc3dfa644b5e641ea9900ef0177"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-dialog-interactions.json",
+      "bytes": 1664,
+      "sha256": "2e19c9fdb3abb54f3b5c0961ffe2cb3cc1a16c6f3be2be90f8f11cb6301c630a"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/image-sources.json",
+      "bytes": 1195,
+      "sha256": "ac76d665df7051291dc1f8c053636e7b90ed7139f84a60286b4a3275e9769c20"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-desktop-dark-dialog.png",
+      "bytes": 135897,
+      "sha256": "7e9f010e151b26dd7602ed3e575a1a5f50bfc5c123c9f678fdbf28d65c083bf0"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/contact-default.png",
+      "bytes": 699280,
+      "sha256": "128cd051d4e578a6c7a812e6a130e60e5c5f94886258b3daf5eac892cc2aa37c"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-desktop-light-nav.json",
+      "bytes": 595,
+      "sha256": "475516f309e53701b3b2b312519d73aea0fed811e3c44b92e7b231a258729514"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-desktop-light-default.png",
+      "bytes": 181196,
+      "sha256": "ef9ad59a00cb95c038f54e5ce7fbf820e9416d66aec8ea0ca2be3016418c5918"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-phone-dark-states.png",
+      "bytes": 50961,
+      "sha256": "975e12dd3d047dbf0129d40a9cad761a34a2e37ffd6bf892b1e6d7465d2bed86"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/contact-states.png",
+      "bytes": 281051,
+      "sha256": "f12c294df95a9b95b310bcc21b3a2027383ea8ff89f9767b5e8584b2705eb86a"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-phone-light-image.png",
+      "bytes": 78697,
+      "sha256": "ce812995491422cdacd612c1029cf0721e7493160400254e02a10054f70abbc6"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/gradle-ledger.json",
+      "bytes": 43384,
+      "sha256": "317879883216df74573ff23453749683ddb035d82d5999ece3ea6c55fd33d27e"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-desktop-light-group.png",
+      "bytes": 127675,
+      "sha256": "315fb16c43ee1eab3000619d7c6dce0b719e1f0230179bad757a19027c297a17"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-phone-light-dialog.png",
+      "bytes": 55973,
+      "sha256": "65c7319aba25346c15569ba116b47ba42eee9f93495fc8f24c64832aec048b46"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-phone-light-trigger.png",
+      "bytes": 46122,
+      "sha256": "a6afedc6458a981825497215db551f58e8e8d153caba4ad5743457b1994a50b8"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-desktop-dark-default.png",
+      "bytes": 179930,
+      "sha256": "94adefcd014e6bcb4f9437a8e8e12aed40919c5fe33004e8beea9d2488d4b381"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-phone-light-dialog.png",
+      "bytes": 72294,
+      "sha256": "76b60c43b3b9ba9009c6231d0d3e296a506c1224820b3ec4dca12f99a2dcbc04"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-phone-light-sizes.png",
+      "bytes": 40862,
+      "sha256": "193a7fdc25ba0c8504a5b7fd09fb861c41cd999efff136359d52bf490586a2b7"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-phone-light-dialog-closed.png",
+      "bytes": 51757,
+      "sha256": "0feb0302c5e58374f0d3d01654fec809849d0d575fa1fb1612aa46b25d45bced"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-desktop-light-states.png",
+      "bytes": 122579,
+      "sha256": "158b373e0c44a6d54677874fae0e2a277fb8012851b5a1d80948f4247b84ec30"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-phone-light-group-scroll-mid.png",
+      "bytes": 47541,
+      "sha256": "ffe31f4bbd6cb6c6ea4319a44f24817981705e36edeb74a8d7b62f5ad07bc520"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/contact-dialog-closed.png",
+      "bytes": 250781,
+      "sha256": "6c7a9f5fd68485e62f099c6bf98430f0f810de2735709592c1b972baaf5fdb42"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/spinner.tsx",
+      "bytes": 531,
+      "sha256": "494f71fd2733709d0e43be44e3353d9df215b370137af0195251cbdfdcc9e17b"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-desktop-dark-image.png",
+      "bytes": 204697,
+      "sha256": "0b106d80be8e1bfc2bc485d18f8a51e2aa4a7779b64536adc931742343a493d7"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/spinner-after-dark.png",
+      "bytes": 534,
+      "sha256": "f42e698478c142d2154fc04227e383baf89b306ae920c86223f64e12e2a530b2"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-desktop-dark-sizes.png",
+      "bytes": 114708,
+      "sha256": "eb0e0e13f5f4471f106df198200d7b48b0aca57d655d4f68a42941b48305a61a"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-phone-light-sizes.png",
+      "bytes": 40268,
+      "sha256": "c70e3fd7850346ce98c5b1a961fd4fbf2cc2f1226bfbdb3ff7f74590d8738819"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/pane-observations.json",
+      "bytes": 13114,
+      "sha256": "a97d110a4c7f41bc7d4f512c6622a1d2887c1455a5a7aa38b9dfecba846a93e8"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-phone-dark-trigger.png",
+      "bytes": 44433,
+      "sha256": "a4970dcd45ae75a11bf368ce2d5e3076a7cf1d6058d7d551a944b8b889231848"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-desktop-dark-default.png",
+      "bytes": 214258,
+      "sha256": "e4802ae160e407c69e7fcae6f146a6cb836a8cff5c60d3f200c13722bf2d7097"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/preview-condition.json",
+      "bytes": 332,
+      "sha256": "6a790d6ec045eb1a507eff852094aa56619353a9371bc09667d0484320e43a11"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-phone-dark-trigger.png",
+      "bytes": 48146,
+      "sha256": "5024d6c24673e3503a786a9901a2268348aea6946d6528777d59894fe96521cb"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-phone-light-group-scroll-start.png",
+      "bytes": 39015,
+      "sha256": "951d09b8513d179bd6395c09502a083e57a6d18d851c69d982822dde02e96279"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-desktop-dark-sizes.png",
+      "bytes": 141143,
+      "sha256": "e638aa808c869778354b1e7a2e8c799e5b982f838f2038a4d615ddca2148dfc0"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-desktop-dark-image.png",
+      "bytes": 183580,
+      "sha256": "075e591df518036cb494d4257042cb80a8fbb4abeb5867c272df7183b3374dea"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/local-desktop-dark-dialog.png",
+      "bytes": 159894,
+      "sha256": "7f2f52de45a0b8d4333aa8c29d983e4d66a41ab2baf4737fb306f55a2339c73e"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-phone-light-image.png",
+      "bytes": 78165,
+      "sha256": "9a2311239f77befd296c4f7c9db4b62929bdf948c58095d40d69f11eea26cc6e"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/official-desktop-light-states.png",
+      "bytes": 143903,
+      "sha256": "a6dd2885632e9502c06b63bca7951ac4577dfd58ca793e852866fc23af45d01b"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/spinner-before-dark.png",
+      "bytes": 689,
+      "sha256": "79335374dfd79ed877cf3418b6051a76dff7adcef23466923bde9ff586475d72"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/tests/TEST-com.toutiaoyan.compose.ui.catalog.AttachmentExamplesTest.xml",
+      "bytes": 1287,
+      "sha256": "123e30b8e88f6a41f0aa77a5405c8c3774ca65394685c665201f8e0ce182d584"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/tests/TEST-com.toutiaoyan.compose.ui.catalog.CatalogNavigationTest.xml",
+      "bytes": 1209,
+      "sha256": "0128c95df4ce4027c4980971662e6dc1ad1b50d3d2638ae83f2948c97021c931"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/tests/TEST-com.toutiaoyan.compose.ui.components.attachment.AttachmentScreenshotTest.xml",
+      "bytes": 1179,
+      "sha256": "4a29950455cd04483ba2ed1ef0b681e194ff0022873fe06a5a6436a00df7aae4"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/tests/TEST-com.toutiaoyan.compose.ui.components.attachment.AttachmentLayoutTest.xml",
+      "bytes": 1791,
+      "sha256": "1a5832838ad8dbec1a48a16068d9ed4c01c5d02c0f25f16436f411cdb0bb6dea"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/tests/TEST-com.toutiaoyan.compose.ui.components.spinner.SpinnerScreenshotTest.xml",
+      "bytes": 587,
+      "sha256": "a4be0ab6fedbe8c6c222ee3023703b4630bb188517ab1962113bc8c2c4611b52"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/tests/TEST-com.toutiaoyan.compose.ui.catalog.CatalogPreviewTest.xml",
+      "bytes": 1039,
+      "sha256": "677c4cdac5be4f0081a7aacf3e1f96c650ac6a3ce8ae67292ad29862068749e1"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/tests/TEST-com.toutiaoyan.compose.ui.styles.ScrollFadeTest.xml",
+      "bytes": 1402,
+      "sha256": "fd91d5fb62e4b6c9d31337030d796a67ac562b00b5d27229ff0503f9b966a4f0"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/tests/TEST-com.toutiaoyan.compose.ui.catalog.ComponentDocumentationTest.xml",
+      "bytes": 1180,
+      "sha256": "829b5151a787d6ec66d94219a407e0e03673bb0d9dcf05336be65d39918caac1"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/tests/TEST-com.toutiaoyan.compose.ui.components.button.ButtonNovaParityTest.xml",
+      "bytes": 1369,
+      "sha256": "69d8c2141e153fd997465cd561e64c080f9a5737c90eca3179ca591526fc8a2e"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/tests/TEST-com.toutiaoyan.compose.ui.components.attachment.AttachmentGroupFadeTest.xml",
+      "bytes": 643,
+      "sha256": "2592f4dd74b7f3786b306c4da165017d0a31336b017bcf053b01b9dd2db23b78"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/tests/TEST-com.toutiaoyan.compose.ui.components.badge.BadgeNovaParityTest.xml",
+      "bytes": 1200,
+      "sha256": "3fb07ddffa0452551e749540c551bcd6ddde002d337a1a4c09c787e49fe0110c"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/tests/TEST-com.toutiaoyan.compose.ui.components.ScrollFadeScreenshotTest.xml",
+      "bytes": 579,
+      "sha256": "62e7cd296977de862df3e5658c73252cb477daf1db9c3ac2aec0cfe8a9e9e39d"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/tests/TEST-com.toutiaoyan.compose.ui.components.ShimmerScreenshotTest.xml",
+      "bytes": 567,
+      "sha256": "4ac387dad3c6f25fa97b3658dd91b9d0ac88535234695de565e6342458219a7d"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/tests/TEST-com.toutiaoyan.compose.ui.components.spinner.SpinnerGeometryTest.xml",
+      "bytes": 501,
+      "sha256": "76d5552ad3e10eb3f294c9a32493f20192b241c68fbc469b26fa79dfccc22ff4"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/tests/TEST-com.toutiaoyan.compose.ui.components.attachment.AttachmentStateTest.xml",
+      "bytes": 1162,
+      "sha256": "db6f36d35b1e0ed3317097ce3130e5291db368ce6dcf9ebed4d5cdfe52fc92b0"
+    },
+    {
+      "file": "docs/web-parity/attachment-r2/tests-focus/TEST-com.toutiaoyan.compose.ui.catalog.AttachmentExamplesTest.xml",
+      "bytes": 491,
+      "sha256": "be9cb44e6211303c92fc199b902fbc1d4d03db27a5f489f2dbb7b93c1787512f"
+    },
+    {
+      "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/attachment/Attachment.kt",
+      "bytes": 18825,
+      "sha256": "9ec7e055b8cbfbfa813baa8a68eb5c39bb9ba59d35e33c12ca6e89342ab61221"
+    },
+    {
+      "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/attachment/AttachmentLayout.kt",
+      "bytes": 5962,
+      "sha256": "9fa8f5a8c7dd0aa4c0380bcdb62e8771af2d54c6d74870ebe294f50faaa4ff66"
+    },
+    {
+      "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/attachment/AttachmentStyles.kt",
+      "bytes": 795,
+      "sha256": "4d37bd7a9b8bd297bdacf0ecc4c0521f4b1598a42b1e9b08ab06ae5620e2e0fe"
+    },
+    {
+      "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/spinner/Spinner.kt",
+      "bytes": 3724,
+      "sha256": "8dcc91a3d156095b2501c69df7f800b023e3949603a4333e3936ec795729a630"
+    },
+    {
+      "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/styles/ScrollFade.kt",
+      "bytes": 6089,
+      "sha256": "708fd31db2e0a46614db7194f31ea1479dcab64378a146c6f66fea38db1a1a42"
+    },
+    {
+      "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/AttachmentDoc.kt",
+      "bytes": 35446,
+      "sha256": "648138fa193da1952d86b6d9be25e4de2e74d369c89dc2fc183cb98a647f6e5e"
+    },
+    {
+      "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ComponentDoc.kt",
+      "bytes": 1098,
+      "sha256": "e6cd72239b230d3b1a02d8707f3eee5471138b84bdd489d820852f683752c159"
+    },
+    {
+      "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/PreviewCodeSection.kt",
+      "bytes": 4880,
+      "sha256": "9294beb8f2a5731f5a87cc1a0bfe9a19e1d84738286410f2cf08bd351cc5aee5"
+    },
+    {
+      "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/ComponentDetailScreen.kt",
+      "bytes": 13360,
+      "sha256": "0bb1c9a1be4206a36bbeef8be40df28c6d82101444ccc5094749704e8cac3cc6"
+    },
+    {
+      "file": "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/AttachmentExamplesTest.kt",
+      "bytes": 8698,
+      "sha256": "7a04c105d8cf283cf30dc62be467788d0fa01bea8af9d3669c391b85e895a59a"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/spinner/SpinnerGeometryTest.kt",
+      "bytes": 4725,
+      "sha256": "c75e70af727fc96437b3ac162a75d4c029a2a23c4fb0351c1b29303f309e5ce3"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/attachment/AttachmentGroupFadeTest.kt",
+      "bytes": 3963,
+      "sha256": "156fc48156a70567c37ce3dcfa5c167cdc49d5d799f0079ae54bd5dbb057dc8e"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/attachment/AttachmentLayoutTest.kt",
+      "bytes": 12027,
+      "sha256": "cf9c827e81c3989cba784fb701b2084bd2f87473552d1cc22794c9f0be09613c"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/attachment/AttachmentStateTest.kt",
+      "bytes": 8936,
+      "sha256": "660a5db3fd08a484c3349a9d074abe6b0cfaddedf7d5afb74b9e358d2dc4ae5a"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/resources/spinner/loader-circle-16-dark.png",
+      "bytes": 303,
+      "sha256": "5d51906d37a17f1e8469eb4925dd5147b2a30e65134e2918581e62560eb190d3"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/resources/spinner/loader-circle-20-light.png",
+      "bytes": 342,
+      "sha256": "a80ea5c7684e788d57ebb057de26c016bc5e966b84d2e9b91d72c5efa4cfc0db"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/resources/spinner/loader-circle-12-light.png",
+      "bytes": 234,
+      "sha256": "17b533ae6368010599e3ad6b49c6a33b70e9f7b6f92f710d35d7bedfb53779e8"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/resources/spinner/loader-circle-24-dark.png",
+      "bytes": 423,
+      "sha256": "4bbeb0e388c00ae3b0e8fe43d14f71dafef679305cb884c46d86e03dd7b36de2"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/resources/spinner/loader-circle-20-dark.png",
+      "bytes": 349,
+      "sha256": "c770ccc60161ffc04bb24da12647a140d72d77a80e416c560a0eba6a4421cb9c"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/resources/spinner/loader-circle-24-light.png",
+      "bytes": 418,
+      "sha256": "c86d9b62619e6a2b942da3602de04c4f5eae82b394199d57fc9e9a9ce2c63333"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/resources/spinner/loader-circle-16-light.png",
+      "bytes": 297,
+      "sha256": "4657d68ee249a8e3d599e518cd5e34ce2aafff9d220661b426ff0f7f53681f08"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/resources/spinner/loader-circle-12-dark.png",
+      "bytes": 245,
+      "sha256": "2c074e5beb0c1e4b70c632a8b41e5d164ce3099805ee0410a4984e9a8e8699fa"
+    },
+    {
+      "file": "app/shared/src/commonMain/composeResources/drawable/attachment_workspace.jpg",
+      "bytes": 90328,
+      "sha256": "e935afc1f9e1c66d906f22118444d5f58de37197c966bf8e72e4d229c80f10d2"
+    },
+    {
+      "file": "app/shared/src/commonMain/composeResources/drawable/attachment_desk.jpg",
+      "bytes": 112379,
+      "sha256": "59e0257ed29190f2ae5cca22c884fd19c11737ce929308f3671baf40f463d87a"
+    },
+    {
+      "file": "app/shared/src/commonMain/composeResources/drawable/attachment_office.jpg",
+      "bytes": 99240,
+      "sha256": "728d22bedd02d85623d1d408ec4f1eb89c373c03e288ed9e4b6a4714fbb24b40"
+    },
+    {
+      "file": "app/webApp/build/dist/wasmJs/developmentExecutable/658820f72b4617efb380.wasm",
+      "bytes": 8648883,
+      "sha256": "08e904ec38a6a81a4809a853acf68022f83905286827e804e88b262c37f2954d"
+    },
+    {
+      "file": "app/webApp/build/dist/wasmJs/developmentExecutable/webApp.js",
+      "bytes": 3674354,
+      "sha256": "cd87e2c08683466847525ca15ecfc09d53568b8de5e3ea75df98dccd16b05f6f"
+    },
+    {
+      "file": "app/webApp/build/dist/wasmJs/developmentExecutable/0001de436ec8c878f693.wasm",
+      "bytes": 39381118,
+      "sha256": "08f3dbc2da1af44c61a949174ec6f67a9c4111f10ac5d53d34be4d3f850b9c35"
+    },
+    {
+      "file": "app/webApp/build/dist/wasmJs/developmentExecutable/index.html",
+      "bytes": 1022,
+      "sha256": "af3ef9f81953e35cb4386036fbf85958c91909d0dbfa1dd176400c05355a6ea7"
+    },
+    {
+      "file": "app/webApp/build/dist/wasmJs/developmentExecutable/styles.css",
+      "bytes": 102,
+      "sha256": "adeed4cf2e4f76faf945f1f0adf8a05fce135eb43b383a06ee336aa936ff9e5c"
+    },
+    {
+      "file": "app/webApp/build/dist/wasmJs/developmentExecutable/favicon.svg",
+      "bytes": 1088,
+      "sha256": "96db1090214e1fe55051ecf0e2f54de39be7075c48c57d7a16be355c608b13ca"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/snapshots/attachment_nova_layout_dark.png",
+      "bytes": 8804,
+      "sha256": "aff27dbbca7ddcc3a01eda24361dfadd539c536ea9cc236428b90cf4efc6c0c4"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/snapshots/attachment_nova_layout_light.png",
+      "bytes": 8400,
+      "sha256": "652eda022f70452998c8bc040bb7661f890c60ddf74eb756f6991aab19120db1"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/snapshots/scroll_fade_states_dark.png",
+      "bytes": 2515,
+      "sha256": "c332f643b93c643992944e686dcd6031d9a94d110e455b9a6d51bfdf6bac224f"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/snapshots/scroll_fade_states_light.png",
+      "bytes": 2420,
+      "sha256": "e3bd1f4b53affaf0350af2fc9839bad712dce497c7a9b420b32c962aa267ab80"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/snapshots/spinner_states_dark.png",
+      "bytes": 534,
+      "sha256": "f42e698478c142d2154fc04227e383baf89b306ae920c86223f64e12e2a530b2"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/snapshots/spinner_states_light.png",
+      "bytes": 527,
+      "sha256": "0edfb72e999eaf85863f694275d7fbe8093314db3182abacd3aa542059dbf6ea"
+    }
+  ]
+}

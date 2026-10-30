@@ -1,0 +1,71 @@
+{
+  "component": "avatar",
+  "date": "2026-10-30",
+  "status": "main-parity-pass-complete-followups-recorded",
+  "wholeComponentComplete": false,
+  "wholeSiteComplete": false,
+  "tests": [
+    {
+      "name": "AvatarParityTest[jvm]",
+      "tests": "5",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "AvatarExamplesTest[jvm]",
+      "tests": "4",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    }
+  ],
+  "builds": [
+    "jsBrowserDevelopmentExecutableDistribution",
+    "wasmJsBrowserDevelopmentExecutableDistribution"
+  ],
+  "browser": {
+    "viewportDpr": 2,
+    "sizes": [
+      [
+        1440,
+        1000
+      ],
+      [
+        390,
+        844
+      ]
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "officialExamples": 24,
+    "localExamples": 24,
+    "localMenuStates": 8,
+    "sourceMenuOpen": 1,
+    "reviewedContacts": [
+      "contact-desktop-light.png",
+      "contact-desktop-dark.png",
+      "contact-phone-light.png",
+      "contact-phone-dark.png",
+      "contact-menu.png"
+    ],
+    "localThemeValidation": "Actual PNG background channels checked, rather than filename or DOM body text (Canvas body text is empty).",
+    "discardedRun": "Initial menu coordinates and goto navigation reset theme; those snapshots were replaced and are not validation evidence.",
+    "menuExitValidation": "Entire 128x135px menu region matched the pre-open screenshot within one channel level after Escape; includes faded text, not just background."
+  },
+  "pending": [
+    "Avatar decorative 1px ::after border with lighten/darken blend remains unported; image clipping currently uses CircleShape.",
+    "AvatarGroupCount requires explicit size for non-default member sizes; source group-has selectors adapt automatically, including mixed groups.",
+    "Caller-owned generic slot typography, arbitrary shape overrides, remote loading races/retries and native assistive technology need further review.",
+    "Dropdown shared panel row metrics, pointer-vs-keyboard initial highlight, full focus restoration and nested menus need their own audit; basic open/select/ArrowDown/Escape is covered.",
+    "Shared page P1/P3 differences remain: content offset, 15px source scrollbar, heading spacing, code formatting and API table layout."
+  ],
+  "warnings": "Existing AGP experimental options, Text internal API, Gradle deprecations and JS optional os/path resolution warnings persist; final build task exit was zero.",
+  "followUp": {
+    "date": "2026-10-30",
+    "audit": "../breadcrumb-r1/evidence.json",
+    "change": "Explicit CircleShape added to fallback after native visual inspection exposed a square background. Six prior Avatar Vega goldens and two new Nova fixtures now recorded, visually checked and independently verified."
+  }
+}

@@ -1,0 +1,356 @@
+{
+  "command_fingerprints": {
+    "10b56af7390e4b6ffe2ce73e86edcd466793a76ababe24ea8701b29dd55a2898": 1,
+    "21125e25f464bffe61d95ef388eb7abdf8e765a29d21f194ee0a2788e41a07b5": 1,
+    "34832f61a43cedbead3575010c7e61904e42fdbcdf3a8111a950c08f6af985c1": 1,
+    "3c85ca62344f84a992575e8d2e8219a20cff4147f66cb925f2f2e203eed43aa2": 3,
+    "4de372b7239a1bb5f1bc109acee33f2d415b0156210d2266e0feffa360809e34": 8,
+    "bbb41cb725023a0e69164bb6acfd6cd125e52da0afeb0ad04731fb6a0bf14d33": 2,
+    "e8942d2954f95ef6034907ad52535ea35c857ae9282657169408245e03b63eb4": 1
+  },
+  "failure_fingerprints": {
+    "037ae8cfe93511987ff505486d211ef9a7e999e3f6d432f271de7d0bc35ffb68": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/attachment/AttachmentGroupSnap.kt:23:98 Cannot infer type for value parameter 'child'. Specify it explicitly.",
+      "occurrences": 1
+    },
+    "56a724f878271abe46afb0c8a421d824fe08289a2d94b29b473c015e1a6f2f5f": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/attachment/AttachmentGroupSnap.kt:70:10 Object 'AttachmentGroupItemElement' is not abstract and does not implement abs...",
+      "occurrences": 1
+    },
+    "574759ba6d9faaabaae82b71f7e3ca7f2157c303399fd59978d79d4f9a5699e6": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:compileKotlinJvm' (registered in build file 'shadcn/core/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kotlin ...",
+      "occurrences": 1
+    },
+    "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:jvmTest'. > There were failing tests. See the report at: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/reports/tests/jvmTest/index.html",
+      "occurrences": 4
+    },
+    "77b0e169873d6ca57a5b19690166b84aff4eef1720bf6a556561afe381cb2285": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/attachment/AttachmentGroupSnap.kt:23:72 Unresolved reference 'it'.",
+      "occurrences": 1
+    },
+    "93b1f7cf4bf013b62f565437bf17e50d07e85f555e7ae9237c822cda50cb97c0": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/attachment/AttachmentGroupSnap.kt:25:97 Unresolved reference 'size'.",
+      "occurrences": 1
+    },
+    "b8bf81772d571ffd811d2b496f98b23f8fc3cc6e53017f9466c8fac4fffeafcd": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/attachment/AttachmentGroupSnap.kt:29:43 Unresolved reference 'size'.",
+      "occurrences": 1
+    },
+    "e0b3ddd9b61e15337d8800ec04cf209d15cfbdd298d6ec2143b9d87bf9429cbe": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:compileKotlinJvm' (registered in build file 'shadcn/core/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kotlin ...",
+      "occurrences": 1
+    },
+    "e13aae798c7e49ea484e32b35f0a515806233169cbc48c58265e2f8e579f62d4": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/attachment/AttachmentGroupSnap.kt:23:55 Unresolved reference 'it'.",
+      "occurrences": 1
+    },
+    "ee2ddb667a7fec033113c4d2a4b3092bcbf733bf5c629e9279e585d01b34bb00": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/attachment/AttachmentGroupSnap.kt:23:20 Unresolved reference 'childrenLayoutCoordinates' on receiver of type 'LayoutCo...",
+      "occurrences": 1
+    }
+  },
+  "failure_fingerprints_truncated_occurrences": 0,
+  "run_count": 17,
+  "runs": [
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentGroupSnapTest --tests *AttachmentGroupFadeTest --console=plain --no-scan",
+      "elapsed_seconds": 2.406,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "ee2ddb667a7fec033113c4d2a4b3092bcbf733bf5c629e9279e585d01b34bb00",
+        "e13aae798c7e49ea484e32b35f0a515806233169cbc48c58265e2f8e579f62d4",
+        "77b0e169873d6ca57a5b19690166b84aff4eef1720bf6a556561afe381cb2285",
+        "037ae8cfe93511987ff505486d211ef9a7e999e3f6d432f271de7d0bc35ffb68",
+        "93b1f7cf4bf013b62f565437bf17e50d07e85f555e7ae9237c822cda50cb97c0",
+        "b8bf81772d571ffd811d2b496f98b23f8fc3cc6e53017f9466c8fac4fffeafcd",
+        "e0b3ddd9b61e15337d8800ec04cf209d15cfbdd298d6ec2143b9d87bf9429cbe"
+      ],
+      "log": "0001.log",
+      "question": "Do actual variable-width LTR/RTL touch gestures snap with4dp logical padding, preserve oversized-card scrolling, support arrow keys on actions and contain horizontal edge motion?",
+      "scope": "targeted",
+      "sequence": 1,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentGroupSnapTest --tests *AttachmentGroupFadeTest --console=plain --no-scan",
+      "elapsed_seconds": 2.09,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "56a724f878271abe46afb0c8a421d824fe08289a2d94b29b473c015e1a6f2f5f",
+        "574759ba6d9faaabaae82b71f7e3ca7f2157c303399fd59978d79d4f9a5699e6"
+      ],
+      "log": "0002.log",
+      "question": "Using actual attachment modifier-node boundaries rather than unsupported LayoutCoordinates children, do LTR/RTL pointer and keyboard snapping, oversized cards, containment and fades pass?",
+      "scope": "targeted",
+      "sequence": 2,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentGroupSnapTest --tests *AttachmentGroupFadeTest --console=plain --no-scan",
+      "elapsed_seconds": 8.483,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0003.log",
+      "question": "With the required ModifierNodeElement equality/hash contract implemented, do real card boundaries drive correct touch/keyboard snap and containment in both directions?",
+      "scope": "targeted",
+      "sequence": 3,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentGroupSnapTest --tests *AttachmentGroupFadeTest --console=plain --no-scan",
+      "elapsed_seconds": 2.396,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0004.log",
+      "question": "Does an oversized card preserve its actual held position on low-velocity release rather than an assumed pointer distance, alongside variable-width snap, RTL keys, containment and fades?",
+      "scope": "targeted",
+      "sequence": 4,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentGroupSnapTest --tests *AttachmentGroupFadeTest --console=plain --no-scan",
+      "elapsed_seconds": 8.723,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0005.log",
+      "question": "Do actual Group touch snap, action-key navigation, oversized-card pointer and40dp keyboard movement, RTL, containment and progressive fade pass together after the keyboard correction?",
+      "scope": "targeted",
+      "sequence": 5,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentGroupSnapTest.keyboardCanScrollInsideAnOversizedCard --tests *AttachmentGroupSnapTest.nonAttachmentContentDoesNotCreateSnapStops --tests *AttachmentGroupSnapTest.changingDirectionUpdatesExistingGroupSnapGeometry --console=plain --no-scan",
+      "elapsed_seconds": 2.56,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0006.log",
+      "question": "Identify which oversized-card arrow transition drifts from its40dp target, while checking new non-attachment filtering and in-place RTL geometry tests.",
+      "scope": "targeted",
+      "sequence": 6,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentGroupSnapTest --tests *AttachmentGroupFadeTest --console=plain --no-scan",
+      "elapsed_seconds": 2.464,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0007.log",
+      "question": "Measuring card movement relative to the actual group origin (the test scene has24dp padding), do all7 snap contracts and2 fade contracts pass, including oversized keyboard motion?",
+      "scope": "targeted",
+      "sequence": 7,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentLayoutTest --tests *AttachmentStateTest --tests *AttachmentScreenshotTest --tests *AttachmentGroupSnapTest --tests *AttachmentGroupFadeTest --tests *ScrollFadeTest --tests *ScrollFadeScreenshotTest --tests *ShimmerScreenshotTest --tests *SpinnerGeometryTest --tests *SpinnerScreenshotTest --tests *ButtonNovaParityTest --tests *BadgeNovaParityTest :app:shared:jvmTest --tests *AttachmentExamplesTest --tests *CatalogPreviewTest --tests *CatalogNavigationTest --tests *ComponentDocumentationTest :app:shared:compileKotlinJs :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 19.902,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0008.log",
+      "question": "Do all Attachment/Spinner/fade/catalog regressions pass after snap nodes and keyboard/containment integration, including7 new snap tests, and do JS/Wasm builds succeed?",
+      "scope": "targeted",
+      "sequence": 8,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "07c459e756eb09cf48d595e9d13d6425af0719345bca6a47651cf66ae20009e5",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentGroupSnapTest --tests *AttachmentLayoutTest.novaLayoutLight --tests *AttachmentLayoutTest.novaLayoutDark --tests *SpinnerScreenshotTest --tests *ScrollFadeScreenshotTest -Proborazzi.test.verify=true --console=plain --no-scan",
+      "elapsed_seconds": 3.483,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0009.log",
+      "question": "Do all8 Group snap and focus contracts, including actual Tab/ShiftTab offscreen actions and Enter activation, pass together while the6 existing Attachment/Spinner/shared-fade pixel baselines verify unchanged?",
+      "scope": "targeted",
+      "sequence": 9,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentGroupSnapTest --tests *AttachmentGroupFadeTest --console=plain --no-scan",
+      "elapsed_seconds": 9.176,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0010.log",
+      "question": "Does a real mouse-wheel sequence settle at the nearest card without adding touch-fling decay, while Tab actions are fully visible and all prior snap/fade contracts still pass?",
+      "scope": "targeted",
+      "sequence": 10,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentGroupSnapTest --tests *AttachmentGroupFadeTest --console=plain --no-scan",
+      "elapsed_seconds": 2.9,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0011.log",
+      "question": "With wheel units chosen from actual Foundation desktop OS conversion and an observable settled-position condition, does a real wheel sequence stop at the third card without extra inertia, and do focus/snap regressions pass?",
+      "scope": "targeted",
+      "sequence": 11,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentLayoutTest --tests *AttachmentStateTest --tests *AttachmentScreenshotTest --tests *AttachmentGroupSnapTest --tests *AttachmentGroupFadeTest --tests *ScrollFadeTest --tests *ScrollFadeScreenshotTest --tests *ShimmerScreenshotTest --tests *SpinnerGeometryTest --tests *SpinnerScreenshotTest --tests *ButtonNovaParityTest --tests *BadgeNovaParityTest :app:shared:jvmTest --tests *AttachmentExamplesTest --tests *CatalogPreviewTest --tests *CatalogNavigationTest --tests *ComponentDocumentationTest :app:shared:compileKotlinJs :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 18.458,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0012.log",
+      "question": "After removing duplicate wheel decay, do all9 Group contracts and the existing Attachment/Spinner/fade/catalog suites pass, and do final JS/Wasm builds include the corrected wheel path?",
+      "scope": "targeted",
+      "sequence": 12,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "310f70a285ec98c1cc3e4903d47209145ec4625396220a7fe2ef139654057851"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentLayoutTest.novaLayoutLight --tests *AttachmentLayoutTest.novaLayoutDark --tests *SpinnerScreenshotTest --tests *ScrollFadeScreenshotTest -Proborazzi.test.verify=true --console=plain --no-scan",
+      "elapsed_seconds": 2.225,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0013.log",
+      "question": "After the final wheel-event observer and decay correction, do all6 Attachment/Spinner/shared-fade pixel baselines still verify unchanged without recording?",
+      "scope": "targeted",
+      "sequence": 13,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentGroupSnapTest --tests *AttachmentGroupFadeTest :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 18.523,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0014.log",
+      "question": "When wheel settling resets both approach and spring velocity, do9 snap contracts including a multi-event wheel sequence pass, and does the Wasm preview build for a direct browser comparison?",
+      "scope": "targeted",
+      "sequence": 14,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "83cf62da805495fc30d9713ffd56dca3ab3df95ff7f4876ba40884a171977456",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 15.538,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0015.log",
+      "question": "Build temporary numeric input/fling tracing to identify why the real Wasm wheel sequence still reaches the last card; remove tracing after diagnosis.",
+      "scope": "targeted",
+      "sequence": 15,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "c6ec0d9aafbe8207442ed73e4053d08f28705038289f72c8591f096ef24daa56"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentLayoutTest --tests *AttachmentStateTest --tests *AttachmentScreenshotTest --tests *AttachmentGroupSnapTest --tests *AttachmentGroupFadeTest --tests *ScrollFadeTest --tests *ScrollFadeScreenshotTest --tests *ShimmerScreenshotTest --tests *SpinnerGeometryTest --tests *SpinnerScreenshotTest --tests *ButtonNovaParityTest --tests *BadgeNovaParityTest :app:shared:jvmTest --tests *AttachmentExamplesTest --tests *CatalogPreviewTest --tests *CatalogNavigationTest --tests *ComponentDocumentationTest :app:shared:compileKotlinJs :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 9.312,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0016.log",
+      "question": "After removing temporary tracing, do all80 Attachment/Spinner/fade/catalog regressions pass and do clean JS/Wasm builds include final snap and wheel velocity handling for native-DPR browser acceptance?",
+      "scope": "targeted",
+      "sequence": 16,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AttachmentLayoutTest.novaLayoutLight --tests *AttachmentLayoutTest.novaLayoutDark --tests *SpinnerScreenshotTest --tests *ScrollFadeScreenshotTest -Proborazzi.test.verify=true --console=plain --no-scan",
+      "elapsed_seconds": 2.22,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0017.log",
+      "question": "Does the clean final snap/wheel implementation preserve all6 existing Attachment/Spinner/shared-fade pixel baselines after trace removal?",
+      "scope": "targeted",
+      "sequence": 17,
+      "warning_fingerprints": []
+    }
+  ],
+  "version": 1,
+  "warning_fingerprints": {
+    "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312": {
+      "excerpt": "w: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/text/Text.kt:5:16 Suppression of error 'INVISIBLE_REFERENCE' might compile and work, but the compiler behavior is UNSP...",
+      "occurrences": 11
+    },
+    "07c459e756eb09cf48d595e9d13d6425af0719345bca6a47651cf66ae20009e5": {
+      "excerpt": "webpack 5.108.1 compiled with 1 warning in 385 ms",
+      "occurrences": 1
+    },
+    "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4": {
+      "excerpt": "You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.",
+      "occurrences": 5
+    },
+    "310f70a285ec98c1cc3e4903d47209145ec4625396220a7fe2ef139654057851": {
+      "excerpt": "webpack 5.108.1 compiled with 1 warning in 393 ms",
+      "occurrences": 1
+    },
+    "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2": {
+      "excerpt": "Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.",
+      "occurrences": 5
+    },
+    "83cf62da805495fc30d9713ffd56dca3ab3df95ff7f4876ba40884a171977456": {
+      "excerpt": "webpack 5.108.1 compiled with 1 warning in 381 ms",
+      "occurrences": 1
+    },
+    "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a": {
+      "excerpt": "WARNING: The option setting 'android.experimental.enableScreenshotTest=true' is experimental.",
+      "occurrences": 5
+    },
+    "c6ec0d9aafbe8207442ed73e4053d08f28705038289f72c8591f096ef24daa56": {
+      "excerpt": "webpack 5.108.1 compiled with 1 warning in 376 ms",
+      "occurrences": 1
+    },
+    "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=UNSUPPORTED_PROJECT_OPTION_USE to the gradle.properties file to suppress this warning.",
+      "occurrences": 10
+    },
+    "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90": {
+      "excerpt": "WARNING: The option setting 'android.experimental.testSuiteSupport=true' is experimental.",
+      "occurrences": 5
+    }
+  },
+  "warning_fingerprints_truncated_occurrences": 0,
+  "workflow": "0f4b216815608b24f74de5322347229c"
+}

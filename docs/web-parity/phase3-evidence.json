@@ -1,0 +1,262 @@
+{
+  "date": "2026-10-29",
+  "sourceCommit": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "localBaseUrl": "http://127.0.0.1:8765",
+  "fontCommit": "b5d164a0c066c2c9bfcd5ab65dd8244551f0ac06",
+  "screenshots": [
+    {
+      "file": "compose-card-phase3-dark.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "compose-card-phase3-light.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-card-phase3-medium-light.png",
+      "viewport": [
+        1095,
+        687
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-card-phase3-mobile-dark.png",
+      "viewport": [
+        390,
+        844
+      ],
+      "backgroundPixel": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "compose-card-phase3-mobile-light.png",
+      "viewport": [
+        390,
+        844
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-code-block-phase3-dark.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "compose-code-block-phase3-light.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-code-block-phase3-medium-light.png",
+      "viewport": [
+        1095,
+        687
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-code-block-phase3-mobile-dark.png",
+      "viewport": [
+        390,
+        844
+      ],
+      "backgroundPixel": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "compose-code-block-phase3-mobile-light.png",
+      "viewport": [
+        390,
+        844
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-code-block-phase3-wrap.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-trace-phase3-dark.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "compose-trace-phase3-expanded.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-trace-phase3-light.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-trace-phase3-medium-light.png",
+      "viewport": [
+        1095,
+        687
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "compose-trace-phase3-mobile-dark.png",
+      "viewport": [
+        390,
+        844
+      ],
+      "backgroundPixel": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "compose-trace-phase3-mobile-light.png",
+      "viewport": [
+        390,
+        844
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "shadcn-card-phase3-reference.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "shadcn-code-block-phase3-reference.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "shadcn-trace-phase3-reference.png",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "backgroundPixel": [
+        255,
+        255,
+        255
+      ]
+    }
+  ],
+  "verified": [
+    "CodeBlock wrap toggle",
+    "Trace expand details",
+    "live theme switch",
+    "Geist Mono on Wasm"
+  ],
+  "remaining": [
+    "Input/Field dimensions",
+    "Card image and complete RTL",
+    "CodeBlock download and constrained-height examples",
+    "Trace full tool-call example",
+    "all applicable state matrices",
+    "per-route browser title"
+  ]
+}

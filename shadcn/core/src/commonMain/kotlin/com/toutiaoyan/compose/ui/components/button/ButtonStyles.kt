@@ -6,20 +6,25 @@ import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.contentPadding
 import androidx.compose.foundation.style.hovered
+import androidx.compose.foundation.style.then
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.toutiaoyan.compose.ui.tokens.Colors
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.utils.rememberTheme
 import com.toutiaoyan.compose.ui.styles.border
 import com.toutiaoyan.compose.ui.styles.disabledDim
+import com.toutiaoyan.compose.ui.styles.focusVisible
 import com.toutiaoyan.compose.ui.styles.focusRing
 
 // Matches shadcn/ui's real button.tsx (github.com/shadcn-ui/ui) as closely as our
-// Style API allows: most variants have zero border (only Outline has one), hover
-// is an alpha-blended background rather than a whole-node dim. Every variant gets
+// Style API allows. base-nova reserves a transparent border on every variant;
+// destructive uses a tinted background with destructive-colored content. Every variant gets
 // the same `focusRing(...)` ring -- real shadcn's shared `.cn-button` class applies
 // focus-visible:ring-* regardless of variant, including Link.
 
@@ -81,68 +86,175 @@ fun ButtonVariant.iconTint(colors: Colors): Color =
 fun ButtonVariant.rememberStyle(): Style {
     val receiver = this
     return rememberTheme(receiver) {
-        when (receiver) {
-            // Press motion is owned by [ButtonAnimation] on Button (not here),
-            // so Scale / Bounce / MoveDown / None can be chosen without fighting this block.
-            ButtonVariant.Default ->
+        val isNova = theme.activePreset == StylePreset.Nova
+        (
+            if (isNova) {
                 Style {
-                    background(colors.primary)
-                    contentColor(colors.primaryForeground)
-                    hovered { background(colors.primary.copy(alpha = 0.9f)) }
-                    focusRing(RoundedCornerShape(radius.lg))
-                    disabledDim()
+                    border(Color.Transparent)
+                    fontWeight(FontWeight.Medium)
                 }
+            } else {
+                Style
+            }
+        ) then
+            when (receiver) {
+                // Press motion is owned by [ButtonAnimation] on Button (not here),
+                // so Scale / Bounce / MoveDown / None can be chosen without fighting this block.
+                ButtonVariant.Default ->
+                    Style {
+                        background(colors.primary)
+                        contentColor(colors.primaryForeground)
+                        hovered { background(colors.primary.copy(alpha = if (isNova) 0.8f else 0.9f)) }
+                        focusRing(RoundedCornerShape(radius.lg))
+                        disabledDim()
+                    }
 
-            ButtonVariant.Outline ->
-                Style {
-                    background(colors.background)
-                    contentColor(colors.foreground)
-                    border(colors.border)
-                    hovered {
+                ButtonVariant.Outline ->
+                    Style {
+                        background(
+                            if (isNova &&
+                                isDark
+                            ) {
+                                colors.input.copy(
+                                    alpha =
+                                        colors.input.alpha * 0.3f,
+                                )
+                            } else {
+                                colors.background
+                            },
+                        )
+                        contentColor(colors.foreground)
+                        border(if (isNova && isDark) colors.input else colors.border)
+                        hovered {
+                            background(
+                                if (isNova && isDark) {
+                                    colors.input.copy(alpha = colors.input.alpha * 0.5f)
+                                } else if (isNova) {
+                                    colors.muted
+                                } else {
+                                    colors.secondary
+                                },
+                            )
+                            contentColor(if (isNova) colors.foreground else colors.secondaryForeground)
+                        }
+                        focusRing(RoundedCornerShape(radius.lg))
+                        disabledDim()
+                    }
+
+                ButtonVariant.Secondary ->
+                    Style {
                         background(colors.secondary)
                         contentColor(colors.secondaryForeground)
+                        hovered {
+                            background(
+                                if (isNova) {
+                                    androidx.compose.ui.graphics.lerp(
+                                        colors.secondary,
+                                        colors.foreground,
+                                        0.05f,
+                                    )
+                                } else {
+                                    colors.secondary.copy(
+                                        alpha =
+                                        0.8f,
+                                    )
+                                },
+                            )
+                        }
+                        focusRing(RoundedCornerShape(radius.lg))
+                        disabledDim()
                     }
-                    focusRing(RoundedCornerShape(radius.lg))
-                    disabledDim()
-                }
 
-            ButtonVariant.Secondary ->
-                Style {
-                    background(colors.secondary)
-                    contentColor(colors.secondaryForeground)
-                    hovered { background(colors.secondary.copy(alpha = 0.8f)) }
-                    focusRing(RoundedCornerShape(radius.lg))
-                    disabledDim()
-                }
-
-            ButtonVariant.Ghost ->
-                Style {
-                    contentColor(colors.foreground)
-                    hovered {
-                        background(colors.secondary)
-                        contentColor(colors.secondaryForeground)
+                ButtonVariant.Ghost ->
+                    Style {
+                        contentColor(colors.foreground)
+                        hovered {
+                            background(
+                                if (isNova) {
+                                    colors.muted.copy(
+                                        alpha =
+                                            if (isDark) {
+                                                0.5f
+                                            } else {
+                                                1f
+                                            },
+                                    )
+                                } else {
+                                    colors.secondary
+                                },
+                            )
+                            contentColor(if (isNova) colors.foreground else colors.secondaryForeground)
+                        }
+                        focusRing(RoundedCornerShape(radius.lg))
+                        disabledDim()
                     }
-                    focusRing(RoundedCornerShape(radius.lg))
-                    disabledDim()
-                }
 
-            ButtonVariant.Destructive ->
-                Style {
-                    background(colors.destructive)
-                    contentColor(colors.destructiveForeground)
-                    hovered { background(colors.destructive.copy(alpha = 0.9f)) }
-                    focusRing(RoundedCornerShape(radius.lg))
-                    disabledDim()
-                }
+                ButtonVariant.Destructive ->
+                    Style {
+                        background(
+                            if (isNova) {
+                                colors.destructive.copy(
+                                    alpha =
+                                        if (isDark) {
+                                            0.2f
+                                        } else {
+                                            0.1f
+                                        },
+                                )
+                            } else {
+                                colors.destructive
+                            },
+                        )
+                        contentColor(if (isNova) colors.destructive else colors.destructiveForeground)
+                        hovered {
+                            background(
+                                colors.destructive.copy(
+                                    alpha =
+                                        if (!isNova) {
+                                            0.9f
+                                        } else if (isDark) {
+                                            0.3f
+                                        } else {
+                                            0.2f
+                                        },
+                                ),
+                            )
+                        }
+                        focusRing(RoundedCornerShape(radius.lg))
+                        if (isNova && ring.enabled) {
+                            focusVisible {
+                                borderColor(colors.destructive.copy(alpha = 0.4f))
+                                dropShadow(
+                                    Shadow(
+                                        radius =
+                                            0.dp,
+                                        spread =
+                                            ring.width +
+                                                ring.offset,
+                                        color =
+                                            colors.destructive.copy(
+                                                alpha =
+                                                    if (isDark) {
+                                                        0.4f
+                                                    } else {
+                                                        0.2f
+                                                    },
+                                            ),
+                                    ),
+                                )
+                            }
+                        }
+                        disabledDim()
+                    }
 
-            ButtonVariant.Link ->
-                Style {
-                    contentColor(colors.primary)
-                    hovered { textDecoration(TextDecoration.Underline) }
-                    focusRing(RoundedCornerShape(radius.lg))
-                    disabledDim()
-                }
-        }
+                ButtonVariant.Link ->
+                    Style {
+                        contentColor(colors.primary)
+                        hovered { textDecoration(TextDecoration.Underline) }
+                        focusRing(RoundedCornerShape(radius.lg))
+                        disabledDim()
+                    }
+            }
     }
 }
 
@@ -176,8 +288,9 @@ fun ButtonSize.rememberStyle(): Style {
             // base-nova `xs`: `h-6 px-2 text-xs`
             ButtonSize.Xs ->
                 Style {
-                    contentPadding(horizontal = spacing.sm, vertical = 0.dp)
+                    contentPadding(horizontal = spacing.scale2, vertical = 0.dp)
                     fontSize(12.sp)
+                    if (theme.activePreset == StylePreset.Nova) shape(RoundedCornerShape(minOf(radius.md, 10.dp)))
                     height(24.dp)
                 }
 
@@ -186,6 +299,7 @@ fun ButtonSize.rememberStyle(): Style {
                 Style {
                     contentPadding(horizontal = spacing.scale2p5, vertical = 0.dp)
                     fontSize(12.8.sp)
+                    if (theme.activePreset == StylePreset.Nova) shape(RoundedCornerShape(minOf(radius.md, 12.dp)))
                     height(28.dp)
                 }
 
@@ -216,6 +330,7 @@ fun ButtonSize.rememberStyle(): Style {
             ButtonSize.IconXs ->
                 Style {
                     contentPadding(0.dp)
+                    if (theme.activePreset == StylePreset.Nova) shape(RoundedCornerShape(minOf(radius.md, 10.dp)))
                     width(24.dp)
                     height(24.dp)
                 }
@@ -223,6 +338,7 @@ fun ButtonSize.rememberStyle(): Style {
             ButtonSize.IconSm ->
                 Style {
                     contentPadding(0.dp)
+                    if (theme.activePreset == StylePreset.Nova) shape(RoundedCornerShape(minOf(radius.md, 12.dp)))
                     width(28.dp)
                     height(28.dp)
                 }

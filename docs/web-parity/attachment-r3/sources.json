@@ -1,0 +1,16 @@
+{
+  "component_sources": "../attachment-r1/sources.json",
+  "revision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "six_recipe_matrix": "../attachment-r2/validation.json",
+  "current_official_group_css": "official-group-layout.json",
+  "framework": "Local primary sources: org.jetbrains.compose.foundation/foundation-desktop and foundation-wasm-js1.12.2, ui-desktop1.12.2, ui-test-desktop1.12.2 source jars",
+  "framework_apis": [
+    "SnapLayoutInfoProvider",
+    "rememberSnapFlingBehavior",
+    "TraversableNode",
+    "requireLayoutCoordinates",
+    "desktop/web ScrollConfig",
+    "MouseInjectionScope"
+  ],
+  "calibration": "native-calibration.json"
+}

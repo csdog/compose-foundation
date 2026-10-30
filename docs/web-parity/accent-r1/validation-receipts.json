@@ -1,0 +1,129 @@
+{
+  "workflow": "0d25c2106c987b8cad51fc585e11b7d9",
+  "runs": [
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AccentSourceTest --console=plain --no-scan",
+      "elapsed_seconds": 1.514,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0001.log",
+      "question": "Do current accent values and untouched roles match the 374 official overrides across seven base palettes?",
+      "scope": "targeted",
+      "sequence": 1,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AccentSourceTest --console=plain --no-scan",
+      "elapsed_seconds": 1.095,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0002.log",
+      "question": "With the upstream Rose dark sidebar exception included in the fixture, which current accent color roles differ?",
+      "scope": "targeted",
+      "sequence": 2,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AccentSourceTest --tests *BaseColorSourceTest --tests *ThemeRoleRenderingTest --console=plain --no-scan",
+      "elapsed_seconds": 9.17,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0003.log",
+      "question": "Do the exact official accent overrides now pass for all 17 colors, seven bases and both modes without changing ring or other omitted roles?",
+      "scope": "targeted",
+      "sequence": 3,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AccentRenderingTest --tests *AccentSourceTest --tests *ColorContrastTest --tests *ThemeRoleRenderingTest :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 4.898,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "6597c25244fc8444f621acd7fbd74ae383e59f268ce293ce1c56e8f113d100ee",
+        "3e4f94416f08f47007b79a29f375c09b8629e068372dfdec740b96fa867a6030",
+        "196a729038601117cd924a14e4314ad5df256692334bf59a9f9c29f735aa9a01"
+      ],
+      "log": "0004.log",
+      "question": "Do accent changes repaint actual button chrome/content and preserve base rings; do the existing contrast checks still pass?",
+      "scope": "targeted",
+      "sequence": 4,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AccentRenderingTest --tests *AccentSourceTest --tests *ColorContrastTest --tests *ThemeRoleRenderingTest -Proborazzi.test.record=true :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 12.813,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0005.log",
+      "question": "With the catalog Text API used correctly, do rendered accent transitions and contrast pass, and can the two new accent matrices be recorded for review?",
+      "scope": "targeted",
+      "sequence": 5,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "9fac893a6bd306b7d767c8d9587cecf3df14fddea8c5a7031365837c001bc2b6",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AccentRenderingTest.lightMatrix --tests *AccentRenderingTest.darkMatrix -Proborazzi.test.record=true --console=plain --no-scan",
+      "elapsed_seconds": 2.894,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0006.log",
+      "question": "Do the two new accent reference images render readable single-line headers and secondary labels after widening test-only columns?",
+      "scope": "targeted",
+      "sequence": 6,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AccentSourceTest --tests *AccentRenderingTest --tests *BaseColorSourceTest --tests *ThemeRoleRenderingTest --tests *ColorContrastTest --tests *CssStyleableTest --tests *FocusVisibleTest --tests *ButtonNovaParityTest --tests *FormNovaParityTest --tests *AlertDialogNovaTest --tests *AlertDialogMediaScreenshotTest -Proborazzi.test.verify=true --console=plain --no-scan",
+      "elapsed_seconds": 4.308,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0007.log",
+      "question": "Do the two reviewed accent matrices and 14 existing Base-accent baselines verify, together with source, live-theme, contrast and focus regression tests?",
+      "scope": "targeted",
+      "sequence": 7,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    }
+  ]
+}

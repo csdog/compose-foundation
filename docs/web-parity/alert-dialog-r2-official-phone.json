@@ -1,0 +1,212 @@
+[
+  {
+    "theme": "light",
+    "name": "basic",
+    "shot": "alert-dialog-r2-official-phone-light-basic.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "panel": {
+      "text": "Are you absolutely sure?This action cannot be undone. This will permanently delete your account and remove your data from our servers.CancelContinue",
+      "width": 320,
+      "height": 227,
+      "role": "alertdialog"
+    }
+  },
+  {
+    "theme": "light",
+    "name": "small",
+    "shot": "alert-dialog-r2-official-phone-light-small.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "panel": {
+      "text": "Allow accessory to connect?Do you want to allow the USB accessory to connect to this device?Don't allowAllow",
+      "width": 320,
+      "height": 167,
+      "role": "alertdialog"
+    }
+  },
+  {
+    "theme": "light",
+    "name": "media",
+    "shot": "alert-dialog-r2-official-phone-light-media.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "panel": {
+      "text": "Share this project?Anyone with the link will be able to view and edit this project.CancelShare",
+      "width": 320,
+      "height": 261,
+      "role": "alertdialog"
+    }
+  },
+  {
+    "theme": "light",
+    "name": "small-with-media",
+    "shot": "alert-dialog-r2-official-phone-light-small-with-media.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "panel": {
+      "text": "Allow accessory to connect?Do you want to allow the USB accessory to connect to this device?Don't allowAllow",
+      "width": 320,
+      "height": 221,
+      "role": "alertdialog"
+    }
+  },
+  {
+    "theme": "light",
+    "name": "destructive",
+    "shot": "alert-dialog-r2-official-phone-light-destructive.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "panel": {
+      "text": "Delete chat?This will permanently delete this chat conversation. View Settings delete any memories saved during this chat.CancelDelete",
+      "width": 320,
+      "height": 241,
+      "role": "alertdialog"
+    }
+  },
+  {
+    "theme": "light",
+    "name": "rtl-normal",
+    "shot": "alert-dialog-r2-official-phone-light-rtl-normal.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "panel": {
+      "text": "هل أنت متأكد تمامًا؟لا يمكن التراجع عن هذا الإجراء. سيؤدي هذا إلى حذف حسابك نهائيًا من خوادمنا.إلغاءمتابعة",
+      "width": 320,
+      "height": 207,
+      "role": "alertdialog"
+    }
+  },
+  {
+    "theme": "light",
+    "name": "rtl-small",
+    "shot": "alert-dialog-r2-official-phone-light-rtl-small.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "panel": {
+      "text": "السماح للملحق بالاتصال؟هل تريد السماح لملحق USB بالاتصال بهذا الجهاز؟عدم السماحالسماح",
+      "width": 320,
+      "height": 201,
+      "role": "alertdialog"
+    }
+  },
+  {
+    "theme": "dark",
+    "name": "basic",
+    "shot": "alert-dialog-r2-official-phone-dark-basic.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "panel": {
+      "text": "Are you absolutely sure?This action cannot be undone. This will permanently delete your account and remove your data from our servers.CancelContinue",
+      "width": 320,
+      "height": 227,
+      "role": "alertdialog"
+    }
+  },
+  {
+    "theme": "dark",
+    "name": "small",
+    "shot": "alert-dialog-r2-official-phone-dark-small.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "panel": {
+      "text": "Allow accessory to connect?Do you want to allow the USB accessory to connect to this device?Don't allowAllow",
+      "width": 320,
+      "height": 167,
+      "role": "alertdialog"
+    }
+  },
+  {
+    "theme": "dark",
+    "name": "media",
+    "shot": "alert-dialog-r2-official-phone-dark-media.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "panel": {
+      "text": "Share this project?Anyone with the link will be able to view and edit this project.CancelShare",
+      "width": 320,
+      "height": 261,
+      "role": "alertdialog"
+    }
+  },
+  {
+    "theme": "dark",
+    "name": "small-with-media",
+    "shot": "alert-dialog-r2-official-phone-dark-small-with-media.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "panel": {
+      "text": "Allow accessory to connect?Do you want to allow the USB accessory to connect to this device?Don't allowAllow",
+      "width": 320,
+      "height": 221,
+      "role": "alertdialog"
+    }
+  },
+  {
+    "theme": "dark",
+    "name": "destructive",
+    "shot": "alert-dialog-r2-official-phone-dark-destructive.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "panel": {
+      "text": "Delete chat?This will permanently delete this chat conversation. View Settings delete any memories saved during this chat.CancelDelete",
+      "width": 320,
+      "height": 241,
+      "role": "alertdialog"
+    }
+  },
+  {
+    "theme": "dark",
+    "name": "rtl-normal",
+    "shot": "alert-dialog-r2-official-phone-dark-rtl-normal.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "panel": {
+      "text": "هل أنت متأكد تمامًا؟لا يمكن التراجع عن هذا الإجراء. سيؤدي هذا إلى حذف حسابك نهائيًا من خوادمنا.إلغاءمتابعة",
+      "width": 320,
+      "height": 207,
+      "role": "alertdialog"
+    }
+  },
+  {
+    "theme": "dark",
+    "name": "rtl-small",
+    "shot": "alert-dialog-r2-official-phone-dark-rtl-small.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "panel": {
+      "text": "السماح للملحق بالاتصال؟هل تريد السماح لملحق USB بالاتصال بهذا الجهاز؟عدم السماحالسماح",
+      "width": 320,
+      "height": 201,
+      "role": "alertdialog"
+    }
+  }
+]

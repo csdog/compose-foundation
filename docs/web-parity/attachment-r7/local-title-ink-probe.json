@@ -1,0 +1,102 @@
+[
+  {
+    "form": "desktop",
+    "theme": "light",
+    "titleInkExtremeRgb": [
+      10,
+      10,
+      10
+    ],
+    "region": {
+      "left": 550,
+      "top": 247,
+      "right": 683,
+      "bottom": 266
+    },
+    "mediaInkExtremeRgb": [
+      10,
+      10,
+      10
+    ],
+    "mediaBackgroundRgb": [
+      245,
+      245,
+      245
+    ]
+  },
+  {
+    "form": "desktop",
+    "theme": "dark",
+    "titleInkExtremeRgb": [
+      250,
+      250,
+      250
+    ],
+    "region": {
+      "left": 550,
+      "top": 247,
+      "right": 683,
+      "bottom": 266
+    },
+    "mediaInkExtremeRgb": [
+      250,
+      250,
+      250
+    ],
+    "mediaBackgroundRgb": [
+      38,
+      38,
+      38
+    ]
+  },
+  {
+    "form": "phone",
+    "theme": "dark",
+    "titleInkExtremeRgb": [
+      250,
+      250,
+      250
+    ],
+    "region": {
+      "left": 122,
+      "top": 327,
+      "right": 255,
+      "bottom": 346
+    },
+    "mediaInkExtremeRgb": [
+      250,
+      250,
+      250
+    ],
+    "mediaBackgroundRgb": [
+      38,
+      38,
+      38
+    ]
+  },
+  {
+    "form": "phone",
+    "theme": "light",
+    "titleInkExtremeRgb": [
+      10,
+      10,
+      10
+    ],
+    "region": {
+      "left": 122,
+      "top": 327,
+      "right": 255,
+      "bottom": 346
+    },
+    "mediaInkExtremeRgb": [
+      10,
+      10,
+      10
+    ],
+    "mediaBackgroundRgb": [
+      245,
+      245,
+      245
+    ]
+  }
+]

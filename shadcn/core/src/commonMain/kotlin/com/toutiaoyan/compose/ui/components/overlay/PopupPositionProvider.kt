@@ -121,3 +121,27 @@ class PointPositionProvider(private val pointInAnchor: IntOffset) : PopupPositio
         )
     }
 }
+
+/** Context-menu cursor position is absolute: a trigger may be nested or offset inside its root. */
+internal class WindowPointPositionProvider(private val point: IntOffset) : PopupPositionProvider {
+    override fun calculatePosition(
+        anchorBounds: IntRect,
+        windowSize: IntSize,
+        layoutDirection: LayoutDirection,
+        popupContentSize: IntSize,
+    ): IntOffset {
+        val x = if (point.x + popupContentSize.width <= windowSize.width) point.x else point.x - popupContentSize.width
+        val y =
+            if (point.y +
+                popupContentSize.height <= windowSize.height
+            ) {
+                point.y
+            } else {
+                point.y - popupContentSize.height
+            }
+        return IntOffset(
+            x.coerceIn(0, (windowSize.width - popupContentSize.width).coerceAtLeast(0)),
+            y.coerceIn(0, (windowSize.height - popupContentSize.height).coerceAtLeast(0)),
+        )
+    }
+}

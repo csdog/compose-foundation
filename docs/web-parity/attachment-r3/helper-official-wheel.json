@@ -1,0 +1,222 @@
+[
+  {
+    "role": "official",
+    "form": "desktop",
+    "mode": "light",
+    "width": 1440,
+    "height": 1000,
+    "phase": "wheel",
+    "file": "helper-official-desktop-light-wheel.png",
+    "preview": {
+      "x": 393.5,
+      "y": 198,
+      "width": 638,
+      "height": 242,
+      "top": 198,
+      "right": 1031.5,
+      "bottom": 440,
+      "left": 393.5
+    },
+    "group": {
+      "x": 520.5,
+      "y": 286,
+      "width": 384,
+      "height": 66,
+      "top": 286,
+      "right": 904.5,
+      "bottom": 352,
+      "left": 520.5
+    },
+    "scroll": 264,
+    "max": 676,
+    "padding": "4px",
+    "items": [
+      {
+        "text": "briefing-notes.pdfPDF \u00b7 1.4 MB",
+        "left": 256.5,
+        "width": 256
+      },
+      {
+        "text": "workspace.pngPNG \u00b7 820 KB",
+        "left": 524.5,
+        "width": 256
+      },
+      {
+        "text": "customers.csvCSV \u00b7 18 KB",
+        "left": 792.5,
+        "width": 256
+      },
+      {
+        "text": "renderer.tsxTSX \u00b7 12 KB",
+        "left": 1060.5,
+        "width": 256
+      }
+    ],
+    "status": "DPR1 emulation input; superseded by calibrated native-DPR2 captures"
+  },
+  {
+    "role": "official",
+    "form": "desktop",
+    "mode": "dark",
+    "width": 1440,
+    "height": 1000,
+    "phase": "wheel",
+    "file": "helper-official-desktop-dark-wheel.png",
+    "preview": {
+      "x": 393.5,
+      "y": 198,
+      "width": 638,
+      "height": 242,
+      "top": 198,
+      "right": 1031.5,
+      "bottom": 440,
+      "left": 393.5
+    },
+    "group": {
+      "x": 520.5,
+      "y": 286,
+      "width": 384,
+      "height": 66,
+      "top": 286,
+      "right": 904.5,
+      "bottom": 352,
+      "left": 520.5
+    },
+    "scroll": 264,
+    "max": 676,
+    "padding": "4px",
+    "items": [
+      {
+        "text": "briefing-notes.pdfPDF \u00b7 1.4 MB",
+        "left": 256.5,
+        "width": 256
+      },
+      {
+        "text": "workspace.pngPNG \u00b7 820 KB",
+        "left": 524.5,
+        "width": 256
+      },
+      {
+        "text": "customers.csvCSV \u00b7 18 KB",
+        "left": 792.5,
+        "width": 256
+      },
+      {
+        "text": "renderer.tsxTSX \u00b7 12 KB",
+        "left": 1060.5,
+        "width": 256
+      }
+    ],
+    "status": "DPR1 emulation input; superseded by calibrated native-DPR2 captures"
+  },
+  {
+    "role": "official",
+    "form": "phone",
+    "mode": "dark",
+    "width": 390,
+    "height": 844,
+    "phase": "wheel",
+    "file": "helper-official-phone-dark-wheel.png",
+    "preview": {
+      "x": 25,
+      "y": 286.796875,
+      "width": 325,
+      "height": 242,
+      "top": 286.796875,
+      "right": 350,
+      "bottom": 528.796875,
+      "left": 25
+    },
+    "group": {
+      "x": 65,
+      "y": 374.796875,
+      "width": 245,
+      "height": 66,
+      "top": 374.796875,
+      "right": 310,
+      "bottom": 440.796875,
+      "left": 65
+    },
+    "scroll": 261,
+    "max": 771,
+    "padding": "4px",
+    "items": [
+      {
+        "text": "briefing-notes.pdfPDF \u00b7 1.4 MB",
+        "left": -196,
+        "width": 245
+      },
+      {
+        "text": "workspace.pngPNG \u00b7 820 KB",
+        "left": 61,
+        "width": 245
+      },
+      {
+        "text": "customers.csvCSV \u00b7 18 KB",
+        "left": 318,
+        "width": 245
+      },
+      {
+        "text": "renderer.tsxTSX \u00b7 12 KB",
+        "left": 575,
+        "width": 245
+      }
+    ],
+    "status": "DPR1 emulation input; superseded by calibrated native-DPR2 captures"
+  },
+  {
+    "role": "official",
+    "form": "phone",
+    "mode": "light",
+    "width": 390,
+    "height": 844,
+    "phase": "wheel",
+    "file": "helper-official-phone-light-wheel.png",
+    "preview": {
+      "x": 25,
+      "y": 286.796875,
+      "width": 325,
+      "height": 242,
+      "top": 286.796875,
+      "right": 350,
+      "bottom": 528.796875,
+      "left": 25
+    },
+    "group": {
+      "x": 65,
+      "y": 374.796875,
+      "width": 245,
+      "height": 66,
+      "top": 374.796875,
+      "right": 310,
+      "bottom": 440.796875,
+      "left": 65
+    },
+    "scroll": 253,
+    "max": 771,
+    "padding": "4px",
+    "items": [
+      {
+        "text": "briefing-notes.pdfPDF \u00b7 1.4 MB",
+        "left": -188,
+        "width": 245
+      },
+      {
+        "text": "workspace.pngPNG \u00b7 820 KB",
+        "left": 69,
+        "width": 245
+      },
+      {
+        "text": "customers.csvCSV \u00b7 18 KB",
+        "left": 326,
+        "width": 245
+      },
+      {
+        "text": "renderer.tsxTSX \u00b7 12 KB",
+        "left": 583,
+        "width": 245
+      }
+    ],
+    "status": "DPR1 emulation input; superseded by calibrated native-DPR2 captures"
+  }
+]

@@ -2,6 +2,8 @@
 
 package com.toutiaoyan.compose.ui.components.accordion
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
@@ -10,6 +12,23 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusGroup
+import androidx.compose.foundation.hoverable
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.interaction.collectIsHoveredAsState
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.text.style.TextDecoration
+import com.toutiaoyan.compose.ui.theme.LocalTextDecoration
+import androidx.compose.ui.platform.LocalInputModeManager
+import androidx.compose.ui.input.InputMode
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,6 +45,7 @@ import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.SideEffect
@@ -40,6 +60,18 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.layout
+import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.constrainWidth
+import androidx.compose.ui.unit.constrainHeight
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInParent
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.input.key.Key
@@ -55,15 +87,15 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.tailwind.core.twSpacing
-import com.toutiaoyan.compose.ui.components.icon.Icon
-import com.toutiaoyan.compose.ui.components.icon.IconVariant
 import com.toutiaoyan.compose.ui.components.separator.Separator
 import com.toutiaoyan.compose.ui.components.separator.SeparatorOrientation
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextVariant
-import com.toutiaoyan.compose.ui.icons.ChevronDown
-import com.toutiaoyan.compose.ui.icons.ChevronUp
 import com.toutiaoyan.compose.ui.styles.rememberMinTouchTargetStyle
 import com.toutiaoyan.compose.ui.styles.rememberPressMotionStyle
 import com.toutiaoyan.compose.ui.theme.currentTheme
@@ -105,10 +137,14 @@ private val LocalAccordionItem = staticCompositionLocalOf<AccordionItemScope?> {
 
 private val LocalAccordionNav = compositionLocalOf<AccordionNavState?> { null }
 
+private data class AccordionItemId(val value: String)
+
 private class AccordionNavState {
+    var measuredOrder: List<String> = emptyList()
     val itemOrder = mutableStateListOf<String>()
     val itemEnabled = mutableStateMapOf<String, Boolean>()
     private val focusRequesters = mutableMapOf<String, FocusRequester>()
+    val positions = mutableMapOf<String, Offset>()
 
     fun requester(value: String): FocusRequester = focusRequesters.getOrPut(value) { FocusRequester() }
 
@@ -116,6 +152,7 @@ private class AccordionNavState {
         itemOrder.remove(value)
         itemEnabled.remove(value)
         focusRequesters.remove(value)
+        positions.remove(value)
     }
 }
 
@@ -260,6 +297,37 @@ fun Accordion(
             Row(modifier = modifier.styleable(rootStyleState, style)) {
                 AccordionScope(controller).content()
             }
+        } else if (currentTheme.activePreset == StylePreset.Nova) {
+            Layout(
+                modifier = modifier.styleable(rootStyleState, style),
+                content = { AccordionScope(controller).content() },
+            ) { measurables, constraints ->
+                // Parent data follows Compose's current child order, including
+                // keyed moves. Decide the last divider before measuring items.
+                navState.measuredOrder = measurables.mapNotNull { (it.layoutId as? AccordionItemId)?.value }
+                var usedHeight = 0
+                val children =
+                    measurables.map { measurable ->
+                        val remaining =
+                            if (constraints.maxHeight == Constraints.Infinity) {
+                                Constraints.Infinity
+                            } else {
+                                (constraints.maxHeight - usedHeight).coerceAtLeast(0)
+                            }
+                        measurable.measure(constraints.copy(minWidth = 0, minHeight = 0, maxHeight = remaining)).also {
+                            usedHeight += it.height
+                        }
+                    }
+                val width = constraints.constrainWidth(children.maxOfOrNull { it.width } ?: 0)
+                val height = constraints.constrainHeight(usedHeight)
+                layout(width, height) {
+                    var y = 0
+                    children.forEach { child ->
+                        child.placeRelative(0, y)
+                        y += child.height
+                    }
+                }
+            }
         } else {
             Column(modifier = modifier.styleable(rootStyleState, style)) {
                 AccordionScope(controller).content()
@@ -363,14 +431,34 @@ fun AccordionScope.AccordionItem(
         }
     }
     if (controller.orientation == AccordionOrientation.Horizontal) {
-        Row(modifier = modifier.styleable(styleState, style)) {
+        Row(
+            modifier =
+                modifier.onGloballyPositioned {
+                    nav?.positions?.set(value, it.positionInParent())
+                }.styleable(styleState, style),
+        ) {
             Column { itemContent() }
             Separator(orientation = SeparatorOrientation.Vertical)
         }
     } else {
-        Column(modifier = modifier.styleable(styleState, style)) {
+        Column(
+            modifier =
+                modifier.layoutId(AccordionItemId(value)).onGloballyPositioned {
+                    nav?.positions?.set(value, it.positionInParent())
+                }.styleable(styleState, style),
+        ) {
             itemContent()
-            Separator()
+            val isNova = currentTheme.activePreset == StylePreset.Nova
+            Separator(
+                Modifier.layout { measurable, constraints ->
+                    val last = isNova && nav?.measuredOrder?.lastOrNull() == value
+                    val placeable =
+                        measurable.measure(
+                            if (last) constraints.copy(minHeight = 0, maxHeight = 0) else constraints,
+                        )
+                    layout(placeable.width, placeable.height) { if (!last) placeable.place(0, 0) }
+                },
+            )
         }
     }
 }
@@ -405,7 +493,28 @@ fun AccordionScope.AccordionItem(
     style: Style = Style,
 ) {
     AccordionItem(value = value, title = title, modifier = modifier, disabled = disabled, style = style) {
-        Text { content }
+        Text(
+            style =
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    Style {
+                        fontSize(14.sp)
+                        lineHeight(20.sp)
+                    }
+                } else {
+                    Style
+                },
+            textStyle =
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    TextStyle(
+                        color = currentTheme.colors.foreground,
+                        fontSize = 14.sp,
+                        lineHeight = 20.sp,
+                        fontWeight = FontWeight.Normal,
+                    )
+                } else {
+                    TextStyle.Default
+                },
+        ) { content }
     }
 }
 
@@ -434,6 +543,42 @@ fun AccordionItemScope.AccordionTrigger(
     val resolvedDisabled = this.disabled || disabled
     val interactionSource = remember { MutableInteractionSource() }
     val styleState = rememberUpdatedStyleState(interactionSource)
+    val hovered by interactionSource.collectIsHoveredAsState()
+    val focused = interactionSource.collectIsFocusedAsState()
+    val theme = currentTheme
+    val inputMode = LocalInputModeManager.current
+    val focusModifier =
+        if (theme.activePreset == StylePreset.Nova) {
+            Modifier.drawWithContent {
+                drawContent()
+                if (focused.value && !resolvedDisabled && inputMode.inputMode == InputMode.Keyboard) {
+                    val spread = 3.dp.toPx()
+                    val radius = theme.baseRadius.value.toPx() + spread / 2
+                    drawRoundRect(
+                        color = theme.colors.ring,
+                        topLeft = Offset(0.5.dp.toPx(), 0.5.dp.toPx()),
+                        size =
+                            Size(
+                                (size.width - 1.dp.toPx()).coerceAtLeast(0f),
+                                (size.height - 1.dp.toPx()).coerceAtLeast(0f),
+                            ),
+                        cornerRadius = CornerRadius(theme.baseRadius.value.toPx()),
+                        style = Stroke(1.dp.toPx()),
+                    )
+                    drawRoundRect(
+                        color = theme.colors.ring.copy(alpha = 0.5f),
+                        topLeft = Offset(-spread / 2, -spread / 2),
+                        size = Size(size.width + spread, size.height + spread),
+                        cornerRadius = CornerRadius(radius),
+                        style = Stroke(spread),
+                    )
+                }
+            }
+        } else {
+            Modifier
+        }
+    val direction = LocalLayoutDirection.current
+    val orientation = accordionController().orientation
     val pressStyle = rememberPressMotionStyle()
     val touchTargetStyle = rememberMinTouchTargetStyle()
     val resolvedIcon = icon ?: LocalAccordionIcon.current
@@ -442,7 +587,7 @@ fun AccordionItemScope.AccordionTrigger(
     val loop = accordionController().loop
     Row(
         modifier =
-            modifier
+            modifier.then(focusModifier)
                 .then(if (requester != null) Modifier.focusRequester(requester) else Modifier)
                 .semantics(mergeDescendants = true) {
                     role = Role.Button
@@ -450,6 +595,7 @@ fun AccordionItemScope.AccordionTrigger(
                     stateDescription = if (open) "Expanded" else "Collapsed"
                     if (resolvedDisabled) disabled()
                 }
+                .hoverable(interactionSource, enabled = !resolvedDisabled)
                 .clickable(
                     interactionSource = interactionSource,
                     indication = null,
@@ -458,7 +604,8 @@ fun AccordionItemScope.AccordionTrigger(
                     onClick = toggle,
                 )
                 .onPreviewKeyEvent { event ->
-                    if (nav == null) false else handleAccordionKey(nav, value, event, loop)
+                    if (event.type == KeyEventType.KeyDown) inputMode.requestInputMode(InputMode.Keyboard)
+                    if (nav == null) false else handleAccordionKey(nav, value, event, loop, orientation, direction)
                 }
                 .then(if (resolvedDisabled) Modifier.alpha(0.5f) else Modifier)
                 .styleable(
@@ -466,10 +613,14 @@ fun AccordionItemScope.AccordionTrigger(
                     touchTargetStyle then pressStyle then rememberAccordionTriggerStyle() then style,
                 ),
         horizontalArrangement = Arrangement.spacedBy(twSpacing.sm),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.Top,
     ) {
         Box(modifier = Modifier.weight(1f)) {
-            content()
+            CompositionLocalProvider(
+                LocalTextDecoration provides if (hovered && !resolvedDisabled) TextDecoration.Underline else null,
+            ) {
+                content()
+            }
         }
         resolvedIcon(open)
     }
@@ -485,7 +636,29 @@ fun AccordionItemScope.AccordionTrigger(
     icon: (@Composable (isOpen: Boolean) -> Unit)? = null,
 ) {
     AccordionTrigger(modifier = modifier, style = style, disabled = disabled, icon = icon) {
-        Text(variant = TextVariant.LabelLarge) { text }
+        Text(
+            variant = TextVariant.LabelLarge,
+            style =
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    Style {
+                        fontSize(14.sp)
+                        lineHeight(20.sp)
+                    }
+                } else {
+                    Style
+                },
+            textStyle =
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    TextStyle(
+                        color = currentTheme.colors.foreground,
+                        fontSize = 14.sp,
+                        lineHeight = 20.sp,
+                        fontWeight = FontWeight.Medium,
+                    )
+                } else {
+                    TextStyle.Default
+                },
+        ) { text }
     }
 }
 
@@ -502,20 +675,14 @@ internal fun AccordionItemIndicator(
     modifier: Modifier = Modifier,
 ) {
     val tint = currentTheme.colors.mutedForeground
-    // Stack both glyphs like Base `group-aria-expanded:hidden` / `:inline`.
-    Box(modifier = modifier, contentAlignment = Alignment.Center) {
-        Icon(
-            ChevronDown,
-            tint = tint,
-            modifier = Modifier.alpha(if (isOpen) 0f else 1f),
-            variant = IconVariant.Small,
-        )
-        Icon(
-            ChevronUp,
-            tint = tint,
-            modifier = Modifier.alpha(if (isOpen) 1f else 0f),
-            variant = IconVariant.Small,
-        )
+    Canvas(modifier.size(16.dp)) {
+        val path =
+            Path().apply {
+                moveTo(size.width * .25f, size.height * if (isOpen) .625f else .375f)
+                lineTo(size.width * .5f, size.height * if (isOpen) .375f else .625f)
+                lineTo(size.width * .75f, size.height * if (isOpen) .625f else .375f)
+            }
+        drawPath(path, tint, style = Stroke(width = size.width / 12f, cap = StrokeCap.Round))
     }
 }
 
@@ -524,24 +691,51 @@ internal fun AccordionItemIndicator(
 fun AccordionItemScope.AccordionContent(
     modifier: Modifier = Modifier,
     style: Style = Style,
-    enter: EnterTransition = fadeIn() + expandVertically(),
-    exit: ExitTransition = fadeOut() + shrinkVertically(),
+    enter: EnterTransition =
+        if (currentTheme.activePreset == StylePreset.Nova) {
+            expandVertically(
+                tween(200, easing = CubicBezierEasing(0f, 0f, 0.58f, 1f)),
+            )
+        } else {
+            fadeIn() + expandVertically()
+        },
+    exit: ExitTransition =
+        if (currentTheme.activePreset == StylePreset.Nova) {
+            shrinkVertically(
+                tween(200, easing = CubicBezierEasing(0f, 0f, 0.58f, 1f)),
+            )
+        } else {
+            fadeOut() + shrinkVertically()
+        },
     forceMount: Boolean = false,
     keepMounted: Boolean? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
+    val nav = LocalAccordionNav.current
+    var contentHasFocus by remember { mutableStateOf(false) }
+    LaunchedEffect(open) {
+        if (!open && contentHasFocus) nav?.requester(value)?.requestFocus()
+    }
     val body: @Composable () -> Unit = {
         val contentStyleState = remember { MutableStyleState(MutableInteractionSource()) }
         Column(
             modifier =
-                modifier
+                modifier.onFocusChanged { contentHasFocus = it.hasFocus }.focusGroup()
                     .styleable(contentStyleState, style)
-                    .padding(bottom = twSpacing.md),
+                    .padding(bottom = if (currentTheme.activePreset == StylePreset.Nova) 10.dp else twSpacing.md),
             content = content,
         )
     }
     if (keepMounted ?: forceMount) {
-        Box(modifier = if (open) Modifier else Modifier.size(0.dp)) {
+        Box(
+            modifier =
+                if (open) {
+                    Modifier
+                } else {
+                    Modifier.size(0.dp).clearAndSetSemantics {
+                    }.focusProperties { onEnter = { cancelFocusChange() } }.focusGroup()
+                },
+        ) {
             body()
         }
     } else {
@@ -561,8 +755,22 @@ fun AccordionItemScope.AccordionContent(
     text: String,
     modifier: Modifier = Modifier,
     style: Style = Style,
-    enter: EnterTransition = fadeIn() + expandVertically(),
-    exit: ExitTransition = fadeOut() + shrinkVertically(),
+    enter: EnterTransition =
+        if (currentTheme.activePreset == StylePreset.Nova) {
+            expandVertically(
+                tween(200, easing = CubicBezierEasing(0f, 0f, 0.58f, 1f)),
+            )
+        } else {
+            fadeIn() + expandVertically()
+        },
+    exit: ExitTransition =
+        if (currentTheme.activePreset == StylePreset.Nova) {
+            shrinkVertically(
+                tween(200, easing = CubicBezierEasing(0f, 0f, 0.58f, 1f)),
+            )
+        } else {
+            fadeOut() + shrinkVertically()
+        },
     forceMount: Boolean = false,
     keepMounted: Boolean? = null,
 ) {
@@ -574,7 +782,28 @@ fun AccordionItemScope.AccordionContent(
         forceMount = forceMount,
         keepMounted = keepMounted,
     ) {
-        Text { text }
+        Text(
+            style =
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    Style {
+                        fontSize(14.sp)
+                        lineHeight(20.sp)
+                    }
+                } else {
+                    Style
+                },
+            textStyle =
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    TextStyle(
+                        color = currentTheme.colors.foreground,
+                        fontSize = 14.sp,
+                        lineHeight = 20.sp,
+                        fontWeight = FontWeight.Normal,
+                    )
+                } else {
+                    TextStyle.Default
+                },
+        ) { text }
     }
 }
 
@@ -583,22 +812,50 @@ private fun handleAccordionKey(
     current: String,
     event: KeyEvent,
     loop: Boolean,
+    orientation: AccordionOrientation,
+    direction: LayoutDirection,
 ): Boolean {
     if (event.type != KeyEventType.KeyDown) return false
-    val enabled = nav.itemOrder.filter { nav.itemEnabled[it] != false }
+    val enabled =
+        nav.itemOrder.filter { nav.itemEnabled[it] != false }.sortedBy {
+            val position = nav.positions[it] ?: Offset.Zero
+            if (orientation == AccordionOrientation.Vertical) {
+                position.y
+            } else if (direction == LayoutDirection.Rtl) {
+                -position.x
+            } else {
+                position.x
+            }
+        }
     if (enabled.isEmpty()) return false
     val idx = enabled.indexOf(current)
     if (idx < 0) return false
     val last = enabled.lastIndex
+    val forward =
+        if (orientation == AccordionOrientation.Vertical) {
+            Key.DirectionDown
+        } else if (direction == LayoutDirection.Rtl) {
+            Key.DirectionLeft
+        } else {
+            Key.DirectionRight
+        }
+    val backward =
+        if (orientation == AccordionOrientation.Vertical) {
+            Key.DirectionUp
+        } else if (direction == LayoutDirection.Rtl) {
+            Key.DirectionRight
+        } else {
+            Key.DirectionLeft
+        }
     val next =
         when (event.key) {
-            Key.DirectionDown, Key.DirectionRight ->
+            forward ->
                 when {
                     idx < last -> enabled[idx + 1]
                     loop -> enabled[0]
                     else -> return false
                 }
-            Key.DirectionUp, Key.DirectionLeft ->
+            backward ->
                 when {
                     idx > 0 -> enabled[idx - 1]
                     loop -> enabled[last]

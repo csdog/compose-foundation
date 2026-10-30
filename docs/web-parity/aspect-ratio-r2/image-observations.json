@@ -1,0 +1,326 @@
+[
+  {
+    "file" : "official-desktop-light-ar.png",
+    "form" : "desktop",
+    "language" : "ar",
+    "mode" : "light",
+    "photo_height_pixels" : 216,
+    "photo_top" : 306,
+    "role" : "official"
+  },
+  {
+    "file" : "local-desktop-light-ar.png",
+    "form" : "desktop",
+    "language" : "ar",
+    "mode" : "light",
+    "photo_height_pixels" : 216,
+    "photo_top" : 285,
+    "role" : "local"
+  },
+  {
+    "file" : "official-desktop-light-en.png",
+    "form" : "desktop",
+    "language" : "en",
+    "mode" : "light",
+    "photo_height_pixels" : 216,
+    "photo_top" : 306,
+    "role" : "official"
+  },
+  {
+    "file" : "local-desktop-light-en.png",
+    "form" : "desktop",
+    "language" : "en",
+    "mode" : "light",
+    "photo_height_pixels" : 216,
+    "photo_top" : 285,
+    "role" : "local"
+  },
+  {
+    "file" : "official-desktop-light-he.png",
+    "form" : "desktop",
+    "language" : "he",
+    "mode" : "light",
+    "photo_height_pixels" : 216,
+    "photo_top" : 306,
+    "role" : "official"
+  },
+  {
+    "file" : "local-desktop-light-he.png",
+    "form" : "desktop",
+    "language" : "he",
+    "mode" : "light",
+    "photo_height_pixels" : 216,
+    "photo_top" : 285,
+    "role" : "local"
+  },
+  {
+    "file" : "official-desktop-dark-ar.png",
+    "form" : "desktop",
+    "language" : "ar",
+    "mode" : "dark",
+    "photo_height_pixels" : 216,
+    "photo_top" : 306,
+    "role" : "official"
+  },
+  {
+    "file" : "local-desktop-dark-ar.png",
+    "form" : "desktop",
+    "language" : "ar",
+    "mode" : "dark",
+    "photo_height_pixels" : 216,
+    "photo_top" : 285,
+    "role" : "local"
+  },
+  {
+    "file" : "official-desktop-dark-en.png",
+    "form" : "desktop",
+    "language" : "en",
+    "mode" : "dark",
+    "photo_height_pixels" : 216,
+    "photo_top" : 306,
+    "role" : "official"
+  },
+  {
+    "file" : "local-desktop-dark-en.png",
+    "form" : "desktop",
+    "language" : "en",
+    "mode" : "dark",
+    "photo_height_pixels" : 216,
+    "photo_top" : 285,
+    "role" : "local"
+  },
+  {
+    "file" : "official-desktop-dark-he.png",
+    "form" : "desktop",
+    "language" : "he",
+    "mode" : "dark",
+    "photo_height_pixels" : 216,
+    "photo_top" : 306,
+    "role" : "official"
+  },
+  {
+    "file" : "local-desktop-dark-he.png",
+    "form" : "desktop",
+    "language" : "he",
+    "mode" : "dark",
+    "photo_height_pixels" : 216,
+    "photo_top" : 285,
+    "role" : "local"
+  },
+  {
+    "file" : "official-compact-light-ar.png",
+    "form" : "compact",
+    "language" : "ar",
+    "mode" : "light",
+    "photo_height_pixels" : 216,
+    "photo_top" : 306,
+    "role" : "official"
+  },
+  {
+    "file" : "local-compact-light-ar.png",
+    "form" : "compact",
+    "language" : "ar",
+    "mode" : "light",
+    "photo_height_pixels" : 216,
+    "photo_top" : 285,
+    "role" : "local"
+  },
+  {
+    "file" : "official-compact-light-en.png",
+    "form" : "compact",
+    "language" : "en",
+    "mode" : "light",
+    "photo_height_pixels" : 216,
+    "photo_top" : 306,
+    "role" : "official"
+  },
+  {
+    "file" : "local-compact-light-en.png",
+    "form" : "compact",
+    "language" : "en",
+    "mode" : "light",
+    "photo_height_pixels" : 216,
+    "photo_top" : 285,
+    "role" : "local"
+  },
+  {
+    "file" : "official-compact-light-he.png",
+    "form" : "compact",
+    "language" : "he",
+    "mode" : "light",
+    "photo_height_pixels" : 216,
+    "photo_top" : 306,
+    "role" : "official"
+  },
+  {
+    "file" : "local-compact-light-he.png",
+    "form" : "compact",
+    "language" : "he",
+    "mode" : "light",
+    "photo_height_pixels" : 216,
+    "photo_top" : 285,
+    "role" : "local"
+  },
+  {
+    "file" : "official-compact-dark-ar.png",
+    "form" : "compact",
+    "language" : "ar",
+    "mode" : "dark",
+    "photo_height_pixels" : 216,
+    "photo_top" : 306,
+    "role" : "official"
+  },
+  {
+    "file" : "local-compact-dark-ar.png",
+    "form" : "compact",
+    "language" : "ar",
+    "mode" : "dark",
+    "photo_height_pixels" : 216,
+    "photo_top" : 285,
+    "role" : "local"
+  },
+  {
+    "file" : "official-compact-dark-en.png",
+    "form" : "compact",
+    "language" : "en",
+    "mode" : "dark",
+    "photo_height_pixels" : 216,
+    "photo_top" : 306,
+    "role" : "official"
+  },
+  {
+    "file" : "local-compact-dark-en.png",
+    "form" : "compact",
+    "language" : "en",
+    "mode" : "dark",
+    "photo_height_pixels" : 216,
+    "photo_top" : 285,
+    "role" : "local"
+  },
+  {
+    "file" : "official-compact-dark-he.png",
+    "form" : "compact",
+    "language" : "he",
+    "mode" : "dark",
+    "photo_height_pixels" : 216,
+    "photo_top" : 306,
+    "role" : "official"
+  },
+  {
+    "file" : "local-compact-dark-he.png",
+    "form" : "compact",
+    "language" : "he",
+    "mode" : "dark",
+    "photo_height_pixels" : 216,
+    "photo_top" : 285,
+    "role" : "local"
+  },
+  {
+    "file" : "official-phone-light-ar.png",
+    "form" : "phone",
+    "language" : "ar",
+    "mode" : "light",
+    "photo_height_pixels" : 146,
+    "photo_top" : 389,
+    "role" : "official"
+  },
+  {
+    "file" : "local-phone-light-ar.png",
+    "form" : "phone",
+    "language" : "ar",
+    "mode" : "light",
+    "photo_height_pixels" : 146,
+    "photo_top" : 366,
+    "role" : "local"
+  },
+  {
+    "file" : "official-phone-light-en.png",
+    "form" : "phone",
+    "language" : "en",
+    "mode" : "light",
+    "photo_height_pixels" : 146,
+    "photo_top" : 389,
+    "role" : "official"
+  },
+  {
+    "file" : "local-phone-light-en.png",
+    "form" : "phone",
+    "language" : "en",
+    "mode" : "light",
+    "photo_height_pixels" : 146,
+    "photo_top" : 366,
+    "role" : "local"
+  },
+  {
+    "file" : "official-phone-light-he.png",
+    "form" : "phone",
+    "language" : "he",
+    "mode" : "light",
+    "photo_height_pixels" : 146,
+    "photo_top" : 389,
+    "role" : "official"
+  },
+  {
+    "file" : "local-phone-light-he.png",
+    "form" : "phone",
+    "language" : "he",
+    "mode" : "light",
+    "photo_height_pixels" : 146,
+    "photo_top" : 366,
+    "role" : "local"
+  },
+  {
+    "file" : "official-phone-dark-ar.png",
+    "form" : "phone",
+    "language" : "ar",
+    "mode" : "dark",
+    "photo_height_pixels" : 147,
+    "photo_top" : 389,
+    "role" : "official"
+  },
+  {
+    "file" : "local-phone-dark-ar.png",
+    "form" : "phone",
+    "language" : "ar",
+    "mode" : "dark",
+    "photo_height_pixels" : 146,
+    "photo_top" : 366,
+    "role" : "local"
+  },
+  {
+    "file" : "official-phone-dark-en.png",
+    "form" : "phone",
+    "language" : "en",
+    "mode" : "dark",
+    "photo_height_pixels" : 147,
+    "photo_top" : 389,
+    "role" : "official"
+  },
+  {
+    "file" : "local-phone-dark-en.png",
+    "form" : "phone",
+    "language" : "en",
+    "mode" : "dark",
+    "photo_height_pixels" : 146,
+    "photo_top" : 366,
+    "role" : "local"
+  },
+  {
+    "file" : "official-phone-dark-he.png",
+    "form" : "phone",
+    "language" : "he",
+    "mode" : "dark",
+    "photo_height_pixels" : 147,
+    "photo_top" : 389,
+    "role" : "official"
+  },
+  {
+    "file" : "local-phone-dark-he.png",
+    "form" : "phone",
+    "language" : "he",
+    "mode" : "dark",
+    "photo_height_pixels" : 146,
+    "photo_top" : 366,
+    "role" : "local"
+  }
+]

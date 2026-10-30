@@ -3,6 +3,8 @@ package com.toutiaoyan.compose.ui.styles
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.StyleScope
 import androidx.compose.foundation.style.focused
+import androidx.compose.ui.input.InputMode
+import androidx.compose.ui.platform.LocalInputModeManager
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.shadow.Shadow
@@ -24,6 +26,9 @@ import com.toutiaoyan.compose.tailwind.style.ringShadow
  * every sibling after it. `dropShadow(radius = 0.dp, spread = ring.width)` renders as a
  * perfectly crisp, solid-looking ring -- not a blurred shadow, confirmed by screenshot test --
  * with zero effect on measured layout size, exactly matching real CSS `box-shadow`'s behavior
+ * on opaque surfaces. For transparent controls, [cssStyleable] clips the native painter
+ * outside the final shape so the shadow cannot tint the interior; Style still owns the
+ * focus/error state and shadow declaration.
  * (which is what real shadcn's `ring-*` utilities actually compile to, not `border`).
  *
  * `spread = width + offset` folds shadcn's `ring-offset-*` (a transparent gap before the ring,
@@ -40,7 +45,7 @@ fun ThemeData.focusRingShadow(color: Color = colors.ring): Shadow =
 fun RememberThemeScope.focusRingShadow(color: Color = colors.ring): Shadow = theme.focusRingShadow(color)
 
 /**
- * Sets [shape] unconditionally *and* rings it on focus, in one call -- the fix for a real bug
+ * Sets [shape] unconditionally *and* rings it on keyboard focus, in one call -- the fix for a real bug
  * class, not just a convenience wrapper. `dropShadow` carries no shape of its own ([ringShadow]
  * is a plain radius/spread/color [Shadow]); it always follows whatever this same `Style { }`
  * block's own `shape(...)` says, and falls back to a sharp `RectangleShape` if that call is
@@ -91,11 +96,11 @@ fun RememberThemeScope.focusRingShadow(color: Color = colors.ring): Shadow = the
 fun StyleScope.focusRing(shape: Shape) {
     val theme = Theme.LocalTheme.currentValue
     shape(shape)
-    if (theme.ring.enabled) applyFocusRing(theme)
+    if (theme.ring.enabled) applyFocusRing(theme, keyboardOnly = true)
 }
 
 /**
- * Same as [focusRing], but ignores `theme.ring.enabled` -- the ring is the primary visual
+ * Same as [focusRing], but ignores the input mode and `theme.ring.enabled` -- the ring is the primary visual
  * cue that a text field is the one currently receiving keystrokes, so `Input`,
  * `Textarea`, `Combobox`, and `Command` (all styled via
  * `InputStyles.kt`) always show it. `Ring.enabled` exists for everything else --
@@ -110,9 +115,22 @@ fun StyleScope.focusRingAlways(shape: Shape) {
 }
 
 @OptIn(ExperimentalFoundationStyleApi::class)
-private fun StyleScope.applyFocusRing(theme: ThemeData) {
+private fun StyleScope.applyFocusRing(
+    theme: ThemeData,
+    keyboardOnly: Boolean = false,
+) {
     focused {
-        borderColor(theme.colors.ring)
-        dropShadow(theme.focusRingShadow())
+        if (!keyboardOnly || LocalInputModeManager.currentValue.inputMode == InputMode.Keyboard) {
+            borderColor(theme.colors.ring)
+            dropShadow(theme.focusRingShadow())
+        }
+    }
+}
+
+/** Style equivalent of CSS focus-visible for non-text-entry controls. */
+@OptIn(ExperimentalFoundationStyleApi::class)
+fun StyleScope.focusVisible(block: StyleScope.() -> Unit) {
+    focused {
+        if (LocalInputModeManager.currentValue.inputMode == InputMode.Keyboard) block()
     }
 }

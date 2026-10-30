@@ -2,18 +2,11 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.toutiaoyan.compose.tailwind.core.twRadius
 import com.toutiaoyan.compose.ui.components.contextmenu.ContextMenu
 import com.toutiaoyan.compose.ui.components.contextmenu.ContextMenuCheckboxItem
 import com.toutiaoyan.compose.ui.components.contextmenu.ContextMenuContent
@@ -29,15 +22,12 @@ import com.toutiaoyan.compose.ui.components.contextmenu.ContextMenuSub
 import com.toutiaoyan.compose.ui.components.contextmenu.ContextMenuSubContent
 import com.toutiaoyan.compose.ui.components.contextmenu.ContextMenuSubTrigger
 import com.toutiaoyan.compose.ui.components.contextmenu.ContextMenuTrigger
-import com.toutiaoyan.compose.ui.components.text.Text
-import com.toutiaoyan.compose.ui.components.text.TextColors
-import com.toutiaoyan.compose.ui.theme.currentTheme
 
 val contextMenuDoc =
     ComponentDoc(
         id = "context-menu",
         title = "Context Menu",
-        description = "A menu triggered by right-click, opened at the cursor.",
+        description = "Displays a menu of actions triggered by a right click.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.contextmenu.ContextMenu
@@ -57,47 +47,57 @@ val contextMenuDoc =
                     title = "Default",
                     code =
                         """
-                        ContextMenu {
-                            ContextMenuTrigger {
-                                Box(
-                                    modifier = Modifier.size(width = 240.dp, height = 80.dp)
-                                        .background(currentTheme.colors.muted, RoundedCornerShape(TwRadius.md)),
-                                    contentAlignment = Alignment.Center,
-                                ) {
-                                    Text(textStyle = TextStyles.Muted) { "Right-click here" }
+                        @Composable
+                        fun ContextMenuParityExample() {
+                            var bookmarks by remember { mutableStateOf(true) }
+                            var urls by remember { mutableStateOf(false) }
+                            var person by remember { mutableStateOf("pedro") }
+                            ContextMenu {
+                                ContextMenuTrigger {
+                                    Box(Modifier.widthIn(max = 320.dp).fillMaxWidth().aspectRatio(16f / 9f), contentAlignment = Alignment.Center) {
+                                        val border = currentTheme.colors.border
+                                        Canvas(Modifier.matchParentSize()) { drawRoundRect(border, cornerRadius = CornerRadius(12.dp.toPx()), style = androidx.compose.ui.graphics.drawscope.Stroke(1.dp.toPx(), pathEffect = PathEffect.dashPathEffect(floatArrayOf(4.dp.toPx(), 4.dp.toPx())))) }
+                                        SurfaceText("Right click here")
+                                    }
+                                }
+                                ContextMenuContent {
+                                    ContextMenuItem("Back", onClick = {}, shortcut = "⌘[")
+                                    ContextMenuItem("Forward", onClick = {}, disabled = true, shortcut = "⌘]")
+                                    ContextMenuItem("Reload", onClick = {}, shortcut = "⌘R")
+                                    ContextMenuSub {
+                                        ContextMenuSubTrigger("More Tools")
+                                        ContextMenuSubContent {
+                                            ContextMenuItem("Save Page...", onClick = {})
+                                            ContextMenuItem("Create Shortcut...", onClick = {})
+                                            ContextMenuItem("Name Window...", onClick = {})
+                                            ContextMenuSeparator()
+                                            ContextMenuItem("Developer Tools", onClick = {})
+                                            ContextMenuSeparator()
+                                            ContextMenuItem("Delete", onClick = {}, destructive = true)
+                                        }
+                                    }
+                                    ContextMenuSeparator()
+                                    ContextMenuCheckboxItem("Show Bookmarks", checked = bookmarks, onCheckedChange = { bookmarks = it })
+                                    ContextMenuCheckboxItem("Show Full URLs", checked = urls, onCheckedChange = { urls = it })
+                                    ContextMenuSeparator()
+                                    ContextMenuLabel("People")
+                                    ContextMenuRadioGroup(value = person, onValueChange = { person = it }) {
+                                        ContextMenuRadioItem("pedro", "Pedro Duarte")
+                                        ContextMenuRadioItem("colm", "Colm Tuite")
+                                    }
                                 }
                             }
-                            ContextMenuContent {
-                                ContextMenuItem("Back", onClick = {})
-                                ContextMenuItem("Reload", onClick = {})
-                                ContextMenuSeparator()
-                                ContextMenuItem("Inspect", onClick = {})
-                            }
+                        }
+
+                        @Composable
+                        private fun SurfaceText(text: String, muted: Boolean = false, medium: Boolean = false) {
+                            val theme = currentTheme
+                            Text(textStyle = theme.typography.bodyMedium.copy(fontFamily = theme.fontFamily, fontSize = 14.sp, lineHeight = 20.sp,
+                                fontWeight = if (medium) FontWeight.Medium else FontWeight.Normal,
+                                color = if (muted) theme.colors.mutedForeground else theme.colors.foreground)) { text }
                         }
                         """.trimIndent(),
-                    preview = {
-                        ContextMenu {
-                            ContextMenuTrigger {
-                                Box(
-                                    modifier =
-                                        Modifier.size(width = 240.dp, height = 80.dp)
-                                            .background(
-                                                currentTheme.colors.muted,
-                                                RoundedCornerShape(twRadius.md),
-                                            ),
-                                    contentAlignment = Alignment.Center,
-                                ) {
-                                    Text(textStyle = TextColors.Muted) { "Right-click here" }
-                                }
-                            }
-                            ContextMenuContent {
-                                ContextMenuItem("Back", onClick = {})
-                                ContextMenuItem("Reload", onClick = {})
-                                ContextMenuSeparator()
-                                ContextMenuItem("Inspect", onClick = {})
-                            }
-                        }
-                    },
+                    preview = { ContextMenuParityExample() },
                 ),
                 ComponentExample(
                     title = "Checkboxes",

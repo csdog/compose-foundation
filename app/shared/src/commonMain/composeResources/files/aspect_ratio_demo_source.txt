@@ -1,0 +1,12 @@
+Catalog illustration copied on 2026-10-30 from the image actually served by shadcn/ui:
+https://ui.shadcn.com/_next/image?url=https%3A%2F%2Favatar.vercel.sh%2Fshadcn1&w=3840&q=75
+Underlying image: https://avatar.vercel.sh/shadcn1
+Examples: https://github.com/shadcn-ui/ui/tree/main/apps/v4/examples/base
+The optimized 120x120 PNG is bundled unchanged for offline cross-platform previews.
+Its indexed-color dithering differs from the underlying original PNG. Grayscale and
+20% dark brightness are applied at rendering time, matching the official examples.
+Final bitmap: decoded directly from the official page's loaded img at 120x120,
+without CSS filters, to preserve the browser-negotiated optimized image variant.
+The curl PNG and browser-negotiated variant have visibly different compression
+artifacts, so the decoded source is used for the catalog. Captures and hashes:
+docs/web-parity/aspect-ratio-r1/ (official-browser-decoded.png).

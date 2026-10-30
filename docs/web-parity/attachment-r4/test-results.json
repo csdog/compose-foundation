@@ -1,0 +1,146 @@
+[
+  {
+    "role": "core",
+    "class": "AttachmentScreenshotTest[jvm]",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "file": "docs/web-parity/attachment-r4/test-results/core/TEST-com.toutiaoyan.compose.ui.components.attachment.AttachmentScreenshotTest.xml"
+  },
+  {
+    "role": "core",
+    "class": "AttachmentLayoutTest[jvm]",
+    "tests": 9,
+    "failures": 0,
+    "errors": 0,
+    "file": "docs/web-parity/attachment-r4/test-results/core/TEST-com.toutiaoyan.compose.ui.components.attachment.AttachmentLayoutTest.xml"
+  },
+  {
+    "role": "core",
+    "class": "SpinnerScreenshotTest[jvm]",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "file": "docs/web-parity/attachment-r4/test-results/core/TEST-com.toutiaoyan.compose.ui.components.spinner.SpinnerScreenshotTest.xml"
+  },
+  {
+    "role": "core",
+    "class": "AttachmentGroupSnapTest[jvm]",
+    "tests": 9,
+    "failures": 0,
+    "errors": 0,
+    "file": "docs/web-parity/attachment-r4/test-results/core/TEST-com.toutiaoyan.compose.ui.components.attachment.AttachmentGroupSnapTest.xml"
+  },
+  {
+    "role": "core",
+    "class": "ScrollFadeTest[jvm]",
+    "tests": 7,
+    "failures": 0,
+    "errors": 0,
+    "file": "docs/web-parity/attachment-r4/test-results/core/TEST-com.toutiaoyan.compose.ui.styles.ScrollFadeTest.xml"
+  },
+  {
+    "role": "core",
+    "class": "AttachmentScopeTest[jvm]",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "file": "docs/web-parity/attachment-r4/test-results/core/TEST-com.toutiaoyan.compose.ui.components.attachment.AttachmentScopeTest.xml"
+  },
+  {
+    "role": "core",
+    "class": "AttachmentGroupConstraintsTest[jvm]",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "file": "docs/web-parity/attachment-r4/test-results/core/TEST-com.toutiaoyan.compose.ui.components.attachment.AttachmentGroupConstraintsTest.xml"
+  },
+  {
+    "role": "core",
+    "class": "ButtonNovaParityTest[jvm]",
+    "tests": 7,
+    "failures": 0,
+    "errors": 0,
+    "file": "docs/web-parity/attachment-r4/test-results/core/TEST-com.toutiaoyan.compose.ui.components.button.ButtonNovaParityTest.xml"
+  },
+  {
+    "role": "core",
+    "class": "AttachmentGroupFadeTest[jvm]",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "file": "docs/web-parity/attachment-r4/test-results/core/TEST-com.toutiaoyan.compose.ui.components.attachment.AttachmentGroupFadeTest.xml"
+  },
+  {
+    "role": "core",
+    "class": "BadgeNovaParityTest[jvm]",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "file": "docs/web-parity/attachment-r4/test-results/core/TEST-com.toutiaoyan.compose.ui.components.badge.BadgeNovaParityTest.xml"
+  },
+  {
+    "role": "core",
+    "class": "ScrollFadeScreenshotTest[jvm]",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "file": "docs/web-parity/attachment-r4/test-results/core/TEST-com.toutiaoyan.compose.ui.components.ScrollFadeScreenshotTest.xml"
+  },
+  {
+    "role": "core",
+    "class": "ShimmerScreenshotTest[jvm]",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "file": "docs/web-parity/attachment-r4/test-results/core/TEST-com.toutiaoyan.compose.ui.components.ShimmerScreenshotTest.xml"
+  },
+  {
+    "role": "core",
+    "class": "SpinnerGeometryTest[jvm]",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "file": "docs/web-parity/attachment-r4/test-results/core/TEST-com.toutiaoyan.compose.ui.components.spinner.SpinnerGeometryTest.xml"
+  },
+  {
+    "role": "core",
+    "class": "AttachmentStateTest[jvm]",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "file": "docs/web-parity/attachment-r4/test-results/core/TEST-com.toutiaoyan.compose.ui.components.attachment.AttachmentStateTest.xml"
+  },
+  {
+    "role": "catalog",
+    "class": "AttachmentExamplesTest[jvm]",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "file": "docs/web-parity/attachment-r4/test-results/catalog/TEST-com.toutiaoyan.compose.ui.catalog.AttachmentExamplesTest.xml"
+  },
+  {
+    "role": "catalog",
+    "class": "CatalogNavigationTest[jvm]",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "file": "docs/web-parity/attachment-r4/test-results/catalog/TEST-com.toutiaoyan.compose.ui.catalog.CatalogNavigationTest.xml"
+  },
+  {
+    "role": "catalog",
+    "class": "CatalogPreviewTest[jvm]",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "file": "docs/web-parity/attachment-r4/test-results/catalog/TEST-com.toutiaoyan.compose.ui.catalog.CatalogPreviewTest.xml"
+  },
+  {
+    "role": "catalog",
+    "class": "ComponentDocumentationTest[jvm]",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "file": "docs/web-parity/attachment-r4/test-results/catalog/TEST-com.toutiaoyan.compose.ui.catalog.ComponentDocumentationTest.xml"
+  }
+]

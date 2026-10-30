@@ -2,6 +2,7 @@
 
 package com.toutiaoyan.compose.ui.components.collapsible
 
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
 import androidx.compose.runtime.Composable
@@ -11,6 +12,6 @@ import com.toutiaoyan.compose.ui.utils.rememberTheme
 fun rememberCollapsibleContentStyle(): Style =
     rememberTheme {
         Style {
-            contentPaddingTop(spacing.sm)
+            if (theme.activePreset != StylePreset.Nova) contentPaddingTop(spacing.sm)
         }
     }

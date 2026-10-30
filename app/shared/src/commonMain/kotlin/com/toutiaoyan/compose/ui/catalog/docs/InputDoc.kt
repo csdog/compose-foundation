@@ -2,6 +2,9 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -16,9 +19,10 @@ val inputDoc =
     ComponentDoc(
         id = "input",
         title = "Input",
-        description =
-            "A styled text control matching real shadcn input.tsx. Labels and helper/error " +
-                "copy belong on Field / FieldLabel / FieldDescription / FieldError.",
+        description = (
+            "A text input component for forms and user data entry with " +
+                "built-in styling and accessibility features."
+        ),
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.field.Field
@@ -35,31 +39,34 @@ val inputDoc =
                 )
             }
             """.trimIndent(),
+        apiProperties =
+            listOf(
+                ApiProperty("type", "InputType", "Text"),
+                ApiProperty("disabled", "Boolean", "false"),
+                ApiProperty("readOnly", "Boolean", "false"),
+                ApiProperty("invalid", "Boolean", "false"),
+                ApiProperty("maxLength", "Int?", "null"),
+                ApiProperty("autoFocus", "Boolean", "false"),
+            ),
         examples =
             listOf(
                 ComponentExample(
                     title = "Default",
                     code =
                         """
-                        var email by remember { mutableStateOf("") }
-                        Field("Email") {
-                            Input(
-                                value = email,
-                                onValueChange = { email = it },
-                                type = InputType.Email,
-                                placeholder = "you@example.com",
-                            )
+                        var apiKey by remember { mutableStateOf("") }
+                        Field("API Key", description = "Your API key is encrypted and stored securely.", modifier = Modifier.widthIn(max = 320.dp)) {
+                            Input(apiKey, { apiKey = it }, placeholder = "sk-...", type = InputType.Password)
                         }
                         """.trimIndent(),
                     preview = {
-                        var email by remember { mutableStateOf("") }
-                        Field("Email") {
-                            Input(
-                                value = email,
-                                onValueChange = { email = it },
-                                type = InputType.Email,
-                                placeholder = "you@example.com",
-                            )
+                        var apiKey by remember { mutableStateOf("") }
+                        Field(
+                            "API Key",
+                            description = "Your API key is encrypted and stored securely.",
+                            modifier = Modifier.widthIn(max = 320.dp),
+                        ) {
+                            Input(apiKey, { apiKey = it }, placeholder = "sk-...", type = InputType.Password)
                         }
                     },
                 ),
@@ -545,13 +552,15 @@ val inputDoc =
                         }
                         """.trimIndent(),
                     preview = {
-                        Field("Email") {
-                            Input(
-                                value = "",
-                                onValueChange = {},
-                                placeholder = "m@example.com",
-                                autoFocus = true,
-                            )
+                        AutofocusPreview {
+                            Field("Email") {
+                                Input(
+                                    value = "",
+                                    onValueChange = {},
+                                    placeholder = "m@example.com",
+                                    autoFocus = true,
+                                )
+                            }
                         }
                     },
                 ),

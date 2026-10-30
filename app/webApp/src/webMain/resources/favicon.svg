@@ -1,0 +1,18 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0_666_2)">
+        <rect width="256" height="256" rx="48" fill="url(#kotlin-gradient)"/>
+        <path d="M208 128L128 208" stroke="#FFFFFF" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M192 40L40 192" stroke="#FFFFFF" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M208 208L40 40" stroke="#FFFFFF" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <defs>
+        <radialGradient id="kotlin-gradient" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(247.4928 10.52388) scale(293.2444)">
+            <stop offset="0.00343514" stop-color="#EF4857"/>
+            <stop offset="0.4689" stop-color="#D211EC"/>
+            <stop offset="1" stop-color="#7F52FF"/>
+        </radialGradient>
+        <clipPath id="clip0_666_2">
+            <rect width="256" height="256" rx="48" fill="white"/>
+        </clipPath>
+    </defs>
+</svg>

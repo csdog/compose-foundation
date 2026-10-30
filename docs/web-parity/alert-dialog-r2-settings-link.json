@@ -1,0 +1,5 @@
+{
+  "before": "http://127.0.0.1:8765/alert-dialog?preview=r2-settings-link#destructive",
+  "after": "http://127.0.0.1:8765/alert-dialog?preview=r2-settings-link#",
+  "closedUrl": "http://127.0.0.1:8765/alert-dialog?preview=r2-settings-link#"
+}

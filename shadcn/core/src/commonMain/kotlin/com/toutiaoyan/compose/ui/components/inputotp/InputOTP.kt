@@ -3,6 +3,36 @@
 package com.toutiaoyan.compose.ui.components.inputotp
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.offset
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.zIndex
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.boundsInRoot
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.waitForUpOrCancellation
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import com.toutiaoyan.compose.ui.components.buttongroup.GroupChildRegistry
+import com.toutiaoyan.compose.ui.components.buttongroup.groupItemCorners
+import com.toutiaoyan.compose.ui.components.buttongroup.ButtonGroupOrientation
+import com.toutiaoyan.compose.ui.components.buttongroup.register
+import com.toutiaoyan.compose.ui.components.icon.Icon
+import com.toutiaoyan.compose.ui.icons.NovaMinus
+import com.toutiaoyan.compose.ui.tokens.StylePreset
+import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -49,8 +79,11 @@ internal class InputOTPController(
     val maxLength: Int,
     val isFocused: Boolean,
     val masked: Boolean,
+    val activeIndex: Int,
+    val slots: MutableMap<Int, Rect>,
 )
 
+private val LocalOTPGroupRegistry = staticCompositionLocalOf<GroupChildRegistry?> { null }
 private val LocalInputOTP = staticCompositionLocalOf<InputOTPController?> { null }
 
 @Composable
@@ -139,9 +172,15 @@ fun InputOTP(
     style: Style = Style,
     content: (@Composable InputOTPScope.() -> Unit)? = null,
 ) {
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    var selection by remember { mutableStateOf(TextRange(value.length)) }
+    val slots = remember { mutableMapOf<Int, Rect>() }
+    val rootBounds = remember { mutableStateOf(Rect.Zero) }
+    val focusRequester = remember { FocusRequester() }
     val interactionSource = remember { MutableInteractionSource() }
     val resolvedEnabled = enabled && !disabled && !LocalFieldSetDisabled.current
     val resolvedLength = maxLength ?: length
+    require(resolvedLength > 0) { "InputOTP length must be positive" }
     val resolvedAccept: (Char) -> Boolean =
         if (pattern != null) {
             { char -> pattern.matches(char.toString()) }
@@ -168,28 +207,88 @@ fun InputOTP(
             maxLength = resolvedLength,
             isFocused = isFocused,
             masked = resolvedMasked,
+            activeIndex = selection.start.coerceIn(0, minOf(value.length, resolvedLength - 1)),
+            slots = slots,
         )
 
     CompositionLocalProvider(LocalInputOTP provides controller) {
-        Box(modifier = modifier.styleable(styleState, style)) {
-            if (content != null) {
-                InputOTPScope().content()
-            } else {
-                InputOTPScope().InputOTPGroup {
-                    repeat(resolvedLength) { index ->
-                        InputOTPSlot(index)
+        Box(
+            modifier =
+                modifier
+                    .onGloballyPositioned { rootBounds.value = it.boundsInRoot() }
+                    .then(
+                        if (nova) {
+                            Modifier.alpha(
+                                if (resolvedEnabled) 1f else 0.5f,
+                            ).pointerInput(resolvedEnabled, value, readOnly) {
+                                if (!resolvedEnabled) return@pointerInput
+                                awaitEachGesture {
+                                    val down =
+                                        awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
+                                    val absolute = down.position + rootBounds.value.topLeft
+                                    val index =
+                                        slots.entries
+                                            .minByOrNull { kotlin.math.abs(it.value.center.x - absolute.x) }
+                                            ?.key
+                                            ?: 0
+                                    focusRequester.requestFocus()
+                                    val cursor = index.coerceAtMost(value.length)
+                                    selection = TextRange(cursor, (cursor + 1).coerceAtMost(value.length))
+                                    down.consume()
+                                    waitForUpOrCancellation()?.consume()
+                                }
+                            }
+                        } else {
+                            Modifier
+                        },
+                    )
+                    .styleable(styleState, style),
+        ) {
+            val visualContent: @Composable () -> Unit = {
+                if (content != null) {
+                    InputOTPScope().content()
+                } else {
+                    InputOTPScope().InputOTPGroup {
+                        repeat(resolvedLength) { InputOTPSlot(it) }
                     }
                 }
             }
+            if (nova) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    visualContent()
+                }
+            } else {
+                visualContent()
+            }
             BasicTextField(
-                value = value,
-                onValueChange = { new -> onValueChange(new.filter(resolvedAccept).take(resolvedLength)) },
+                value =
+                    TextFieldValue(
+                        value,
+                        TextRange(selection.start.coerceIn(0, value.length), selection.end.coerceIn(0, value.length)),
+                    ),
+                onValueChange = { next ->
+                    val clean = next.text.filter(resolvedAccept).take(resolvedLength)
+
+                    fun mapped(offset: Int) = next.text.take(offset).count(resolvedAccept).coerceAtMost(clean.length)
+                    selection = TextRange(mapped(next.selection.start), mapped(next.selection.end))
+                    onValueChange(clean)
+                },
                 enabled = resolvedEnabled,
                 readOnly = readOnly,
-                modifier = Modifier.matchParentSize(),
+                modifier = Modifier.matchParentSize().focusRequester(focusRequester),
                 interactionSource = interactionSource,
+                singleLine = true,
                 textStyle = currentTheme.typography.bodyMedium.copy(color = Color.Transparent),
                 cursorBrush = SolidColor(Color.Transparent),
+                visualTransformation =
+                    if (resolvedMasked) {
+                        PasswordVisualTransformation()
+                    } else {
+                        VisualTransformation.None
+                    },
                 keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
             )
         }
@@ -203,12 +302,16 @@ fun InputOTPScope.InputOTPGroup(
     content: @Composable InputOTPGroupScope.() -> Unit,
 ) {
     inputOTPController()
-    Row(
-        modifier = modifier.height(36.dp),
-        horizontalArrangement = Arrangement.spacedBy(twSpacing.sm),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        InputOTPGroupScope().content()
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    val registry = remember { GroupChildRegistry() }
+    CompositionLocalProvider(LocalOTPGroupRegistry provides registry) {
+        Row(
+            modifier = modifier.height(if (nova) 32.dp else 36.dp),
+            horizontalArrangement = Arrangement.spacedBy(if (nova) (-1).dp else twSpacing.sm),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            InputOTPGroupScope().content()
+        }
     }
 }
 
@@ -220,8 +323,32 @@ fun InputOTPGroupScope.InputOTPSlot(
 ) {
     val ctrl = inputOTPController()
     val char = ctrl.value.getOrNull(index)
-    val isActive = ctrl.isFocused && index == ctrl.value.length
-    OtpSlot(char = char, isActive = isActive, masked = ctrl.masked, modifier = modifier)
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    val (position, count) = checkNotNull(LocalOTPGroupRegistry.current).register()
+    val corners = groupItemCorners(position, count, ButtonGroupOrientation.Horizontal, twRadius.lg)
+    val shape =
+        if (nova) {
+            RoundedCornerShape(
+                corners.topStart,
+                corners.topEnd,
+                corners.bottomEnd,
+                corners.bottomStart,
+            )
+        } else {
+            RoundedCornerShape(twRadius.md)
+        }
+    val isActive = ctrl.isFocused && index == if (nova) ctrl.activeIndex else ctrl.value.length
+    OtpSlot(
+        char = char,
+        isActive = isActive,
+        masked = ctrl.masked,
+        modifier =
+            modifier.onGloballyPositioned {
+                ctrl.slots[index] = it.boundsInRoot()
+            },
+        shape = shape,
+        overlap = nova && position > 0,
+    )
 }
 
 /** Vertical divider between slot groups. Matches shadcn's `InputOTPSeparator`. */
@@ -230,6 +357,10 @@ fun InputOTPGroupScope.InputOTPSeparator(
     modifier: Modifier = Modifier,
     style: Style = Style,
 ) {
+    if (currentTheme.activePreset == StylePreset.Nova) {
+        OTPMinus(modifier, style)
+        return
+    }
     Separator(
         modifier = modifier.fillMaxHeight(),
         orientation = SeparatorOrientation.Vertical,
@@ -244,30 +375,92 @@ private fun OtpSlot(
     isActive: Boolean,
     masked: Boolean,
     modifier: Modifier = Modifier,
+    shape: RoundedCornerShape,
+    overlap: Boolean,
 ) {
     val theme = currentTheme
+    val nova = theme.activePreset == StylePreset.Nova
     val slotStyle =
         Style {
-            background(theme.colors.background)
+            background(
+                if (nova && theme.isDark) {
+                    theme.colors.input.copy(
+                        alpha = theme.colors.input.alpha * 0.3f,
+                    ).compositeOver(theme.colors.background)
+                } else {
+                    theme.colors.background
+                },
+            )
             borderWidth(1.dp)
-            borderColor(if (isActive) theme.colors.ring else theme.colors.border)
-            shape(RoundedCornerShape(twRadius.md))
+            borderColor(
+                if (isActive) {
+                    theme.colors.ring
+                } else if (nova) {
+                    theme.colors.input
+                } else {
+                    theme.colors.border
+                },
+            )
+            shape(shape)
             if (isActive) dropShadow(theme.focusRingShadow())
         }
 
     Box(
         modifier =
             modifier
-                .size(36.dp)
+                .size(
+                    width =
+                        if (nova) {
+                            if (overlap) 33.dp else 32.dp
+                        } else {
+                            36.dp
+                        },
+                    height = if (nova) 32.dp else 36.dp,
+                )
+                .zIndex(if (isActive) 10f else 0f)
                 .styleable(remember { MutableStyleState(MutableInteractionSource()) }, slotStyle),
         contentAlignment = Alignment.Center,
     ) {
-        Text(variant = TextVariant.TitleMedium) {
+        Text(
+            variant = if (nova) TextVariant.BodySmall else TextVariant.TitleMedium,
+            textStyle =
+                if (nova) {
+                    theme.typography.bodyMedium.copy(
+                        fontFamily = theme.fontFamily,
+                        fontSize = 14.sp,
+                        lineHeight = 20.sp,
+                    )
+                } else {
+                    androidx.compose.ui.text.TextStyle.Default
+                },
+        ) {
             when {
                 char == null -> ""
                 masked -> "•"
                 else -> char.toString()
             }
         }
+        if (nova && isActive && char == null) {
+            Box(
+                Modifier.width(1.dp).height(16.dp).background(theme.colors.foreground),
+            )
+        }
     }
+}
+
+/** Horizontal minus between separate OTP groups. */
+@Composable
+fun InputOTPScope.InputOTPSeparator(
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+) {
+    OTPMinus(modifier, style)
+}
+
+@Composable
+private fun OTPMinus(
+    modifier: Modifier,
+    style: Style,
+) {
+    Icon(NovaMinus, modifier = modifier.size(16.dp), style = style)
 }

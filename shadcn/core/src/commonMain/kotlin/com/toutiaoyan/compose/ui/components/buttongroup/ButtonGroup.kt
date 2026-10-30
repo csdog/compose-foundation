@@ -25,6 +25,15 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
+import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.tokens.StylePreset
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.ParentDataModifier
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.constrainHeight
+import androidx.compose.ui.unit.constrainWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -135,17 +144,70 @@ fun ButtonGroup(
         val scope = ButtonGroupScope()
         when (orientation) {
             ButtonGroupOrientation.Horizontal ->
-                Row(
-                    modifier = groupModifier.height(IntrinsicSize.Min),
-                    horizontalArrangement =
-                        if (spacing > 0.dp) Arrangement.spacedBy(spacing) else Arrangement.Start,
-                ) { scope.content() }
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    NovaButtonGroupRow(groupModifier, spacing) { scope.content() }
+                } else {
+                    Row(
+                        modifier = groupModifier.height(IntrinsicSize.Min),
+                        horizontalArrangement =
+                            if (spacing > 0.dp) Arrangement.spacedBy(spacing) else Arrangement.Start,
+                    ) { scope.content() }
+                }
             ButtonGroupOrientation.Vertical ->
                 Column(
                     modifier = groupModifier.width(IntrinsicSize.Min),
                     verticalArrangement =
                         if (spacing > 0.dp) Arrangement.spacedBy(spacing) else Arrangement.Top,
                 ) { scope.content() }
+        }
+    }
+}
+
+private object GroupSeparatorParentData : ParentDataModifier {
+    override fun Density.modifyParentData(parentData: Any?): Any = this@GroupSeparatorParentData
+}
+
+/** Measure controls at their real height before stretching separators. Intrinsic
+ * measurement sees icon ink bounds, which can otherwise squeeze a 32dp button to 18dp. */
+@Composable
+private fun NovaButtonGroupRow(
+    modifier: Modifier,
+    spacing: Dp,
+    content: @Composable () -> Unit,
+) {
+    Layout(modifier = modifier, content = content) { measurables, constraints ->
+        val children = arrayOfNulls<androidx.compose.ui.layout.Placeable>(measurables.size)
+        val loose = constraints.copy(minWidth = 0, minHeight = 0)
+        measurables.forEachIndexed { index, measurable ->
+            if (measurable.parentData !== GroupSeparatorParentData) children[index] = measurable.measure(loose)
+        }
+        val height = constraints.constrainHeight(children.filterNotNull().maxOfOrNull { it.height } ?: 0)
+        measurables.forEachIndexed { index, measurable ->
+            if (children[index] == null) {
+                children[index] =
+                    measurable.measure(
+                        loose.copy(
+                            minHeight =
+                            height,
+                            maxHeight =
+                            height,
+                        ),
+                    )
+            }
+        }
+        val gap = spacing.roundToPx()
+        val width =
+            constraints.constrainWidth(
+                children.filterNotNull().sumOf {
+                    it.width
+                } + gap * (children.size - 1).coerceAtLeast(0),
+            )
+        layout(width, height) {
+            var x = 0
+            children.filterNotNull().forEach { child ->
+                child.placeRelative(x, (height - child.height) / 2)
+                x += child.width + gap
+            }
         }
     }
 }
@@ -172,17 +234,21 @@ fun ButtonGroupScope.ButtonGroupItem(
             "ButtonGroupItem must be used inside ButtonGroup { … }"
         }
     val (index, count) = controller.registry.register()
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    val rounded = if (nova) twRadius.lg else twRadius.md
     val spaced = controller.spacing > 0.dp
     val corners =
         if (spaced) {
-            groupItemCorners(0, 1, ButtonGroupOrientation.Horizontal, twRadius.md)
+            groupItemCorners(0, 1, ButtonGroupOrientation.Horizontal, rounded)
         } else {
-            groupItemCorners(index, count, controller.orientation, twRadius.md)
+            groupItemCorners(index, count, controller.orientation, rounded)
         }
     val itemShape = RoundedCornerShape(corners.topStart, corners.topEnd, corners.bottomEnd, corners.bottomStart)
     val overlapModifier =
         if (!spaced && index > 0 && variant == ButtonVariant.Outline) {
-            if (controller.orientation == ButtonGroupOrientation.Horizontal) {
+            if (nova) {
+                Modifier.groupBorderOverlap(controller.orientation)
+            } else if (controller.orientation == ButtonGroupOrientation.Horizontal) {
                 Modifier.offset(x = (-1).dp)
             } else {
                 Modifier.offset(y = (-1).dp)
@@ -232,12 +298,23 @@ fun ButtonGroupSeparator(
     style: Style = Style,
 ) {
     val orientation = LocalButtonGroupOrientation.current
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    val groupSeparatorModifier =
+        if (nova && orientation == ButtonGroupOrientation.Horizontal) {
+            modifier.then(
+                GroupSeparatorParentData,
+            ).padding(vertical = 1.dp)
+        } else {
+            modifier
+        }
+    val separatorColor = currentTheme.colors.input
+    val separatorStyle = if (nova) Style { background(separatorColor) } else Style
     when (orientation) {
         ButtonGroupOrientation.Horizontal ->
             Separator(
-                modifier = modifier.fillMaxHeight(),
+                modifier = groupSeparatorModifier.fillMaxHeight(),
                 orientation = SeparatorOrientation.Vertical,
-                style = style,
+                style = separatorStyle then style,
             )
         ButtonGroupOrientation.Vertical ->
             Separator(
@@ -266,6 +343,12 @@ fun ButtonGroupText(
                 styleState,
                 rememberButtonGroupTextStyle(topStart, topEnd, bottomEnd, bottomStart) then style,
             ),
+        contentAlignment =
+            if (currentTheme.activePreset == StylePreset.Nova) {
+                Alignment.CenterStart
+            } else {
+                Alignment.TopStart
+            },
     ) {
         Text(variant = TextVariant.LabelLarge, modifier = Modifier) { text }
     }

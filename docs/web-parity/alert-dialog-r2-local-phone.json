@@ -1,0 +1,88 @@
+[
+  {
+    "name": "basic",
+    "theme": "light",
+    "shot": "alert-dialog-r2-local-phone-light-basic.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-phone-basic#basic"
+  },
+  {
+    "name": "basic",
+    "theme": "dark",
+    "shot": "alert-dialog-r2-local-phone-dark-basic.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-phone-basic#basic"
+  },
+  {
+    "name": "small",
+    "theme": "light",
+    "shot": "alert-dialog-r2-local-phone-light-small.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-phone-small#small"
+  },
+  {
+    "name": "small",
+    "theme": "dark",
+    "shot": "alert-dialog-r2-local-phone-dark-small.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-phone-small#small"
+  },
+  {
+    "name": "media",
+    "theme": "light",
+    "shot": "alert-dialog-r2-local-phone-light-media.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-phone-media#media"
+  },
+  {
+    "name": "media",
+    "theme": "dark",
+    "shot": "alert-dialog-r2-local-phone-dark-media.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-phone-media#media"
+  },
+  {
+    "name": "small-with-media",
+    "theme": "light",
+    "shot": "alert-dialog-r2-local-phone-light-small-with-media.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-phone-small-with-media#small-with-media"
+  },
+  {
+    "name": "small-with-media",
+    "theme": "dark",
+    "shot": "alert-dialog-r2-local-phone-dark-small-with-media.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-phone-small-with-media#small-with-media"
+  },
+  {
+    "name": "destructive",
+    "theme": "light",
+    "shot": "alert-dialog-r2-local-phone-light-destructive.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-phone-destructive#destructive"
+  },
+  {
+    "name": "destructive",
+    "theme": "dark",
+    "shot": "alert-dialog-r2-local-phone-dark-destructive.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-phone-destructive#destructive"
+  },
+  {
+    "name": "rtl-normal",
+    "theme": "light",
+    "shot": "alert-dialog-r2-local-phone-light-rtl-normal.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-normalized-phone-rtl#rtl",
+    "pointerNormalized": true
+  },
+  {
+    "name": "rtl-normal",
+    "theme": "dark",
+    "shot": "alert-dialog-r2-local-phone-dark-rtl-normal.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-normalized-phone-rtl#rtl",
+    "pointerNormalized": true
+  },
+  {
+    "name": "rtl-small",
+    "theme": "light",
+    "shot": "alert-dialog-r2-local-phone-light-rtl-small.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-phone-rtl-small#rtl"
+  },
+  {
+    "name": "rtl-small",
+    "theme": "dark",
+    "shot": "alert-dialog-r2-local-phone-dark-rtl-small.png",
+    "url": "http://127.0.0.1:8765/alert-dialog?preview=r2-final-phone-rtl-small#rtl"
+  }
+]

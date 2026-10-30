@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-30",
+  "workflow": "ca9c4af9183a62a58765a63da455eadc",
+  "final_run": 8,
+  "tests": {
+    "ComponentDocumentationTest": {
+      "tests": 3,
+      "failures": 0,
+      "errors": 0
+    },
+    "AlertExamplesTest": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0
+    },
+    "CatalogNavigationTest": {
+      "tests": 6,
+      "failures": 0,
+      "errors": 0
+    }
+  },
+  "browser": {
+    "desktop": "1440x900, light/dark",
+    "phone": "390x844, light/dark",
+    "copy_page_feedback": "Observed Copied; exact full payload checked by JVM UI clipboard receiver",
+    "composition_copy_feedback": "Observed Copied with original AnimatedContent after synchronizing the rendered phone frame",
+    "rtl_link": {
+      "url": "https://ui.shadcn.com/docs/rtl",
+      "title": "RTL - shadcn/ui",
+      "test_popup_closed": true
+    },
+    "api_horizontal_scroll": "Default column revealed with horizontal wheel in phone view"
+  },
+  "screenshots": [
+    "api-action-toc-desktop-light.png",
+    "api-end-phone-dark.png",
+    "api-end-phone-light.png",
+    "api-phone-horizontal-scroll.png",
+    "api-reference-desktop-dark.png",
+    "api-reference-desktop-light.png",
+    "api-reference-phone-dark.png",
+    "api-reference-phone-light.png",
+    "composition-copy-feedback-phone.png",
+    "composition-desktop-dark.png",
+    "composition-phone-dark.png",
+    "composition-phone-light.png",
+    "composition-toc-desktop-light.png",
+    "copy-page-feedback.png",
+    "expanded-code.png"
+  ]
+}

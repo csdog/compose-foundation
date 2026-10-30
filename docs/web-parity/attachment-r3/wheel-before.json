@@ -1,0 +1,98 @@
+[
+  {
+    "role": "local",
+    "form": "desktop",
+    "mode": "light",
+    "width": 1440,
+    "height": 1000,
+    "phase": "wheel",
+    "file": "before-local-desktop-light-wheel.png",
+    "preview": {
+      "left": 366,
+      "width": 638,
+      "top": 177,
+      "height": 242
+    },
+    "group": {
+      "left": 493,
+      "width": 384,
+      "centreY": 298
+    },
+    "scroll": "Canvas pixels, no numeric DOM scroll state",
+    "review": "pending visual contact review",
+    "build_run": "0008",
+    "status": "pre-wheel-correction"
+  },
+  {
+    "role": "local",
+    "form": "desktop",
+    "mode": "dark",
+    "width": 1440,
+    "height": 1000,
+    "phase": "wheel",
+    "file": "before-local-desktop-dark-wheel.png",
+    "preview": {
+      "left": 366,
+      "width": 638,
+      "top": 177,
+      "height": 242
+    },
+    "group": {
+      "left": 493,
+      "width": 384,
+      "centreY": 298
+    },
+    "scroll": "Canvas pixels, no numeric DOM scroll state",
+    "review": "pending visual contact review",
+    "build_run": "0008",
+    "status": "pre-wheel-correction"
+  },
+  {
+    "role": "local",
+    "form": "phone",
+    "mode": "dark",
+    "width": 390,
+    "height": 844,
+    "phase": "wheel",
+    "file": "before-local-phone-dark-wheel.png",
+    "preview": {
+      "left": 25,
+      "width": 340,
+      "top": 263,
+      "height": 242
+    },
+    "group": {
+      "left": 65,
+      "width": 260,
+      "centreY": 384
+    },
+    "scroll": "Canvas pixels, no numeric DOM scroll state",
+    "review": "pending visual contact review",
+    "build_run": "0008",
+    "status": "pre-wheel-correction"
+  },
+  {
+    "role": "local",
+    "form": "phone",
+    "mode": "light",
+    "width": 390,
+    "height": 844,
+    "phase": "wheel",
+    "file": "before-local-phone-light-wheel.png",
+    "preview": {
+      "left": 25,
+      "width": 340,
+      "top": 263,
+      "height": 242
+    },
+    "group": {
+      "left": 65,
+      "width": 260,
+      "centreY": 384
+    },
+    "scroll": "Canvas pixels, no numeric DOM scroll state",
+    "review": "pending visual contact review",
+    "build_run": "0008",
+    "status": "pre-wheel-correction"
+  }
+]

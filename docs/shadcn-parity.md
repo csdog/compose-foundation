@@ -22,73 +22,65 @@ gaps) lives in [`shadcn-align-progress.md`](shadcn-align-progress.md).
   mapping beyond clamping to `[0, 1]`); shown so the comparison is against an actual
   color, not an abstract oklch triple.
 
-Real shadcn's default base color family is **neutral**; compose-foundation's tokens were
-originally picked against **zinc**. The two are close in lightness but not hue-identical
-— treat "match" below as "same visual weight," not "identical hex."
+Current runtime palettes are `BaseColor` selected by `Theme`; the default family is **Neutral**. The older top-level `LightColors` / `DarkColors` constants are legacy definitions and are not the palette used by the catalog Theme. Do not compare official Neutral against local Zinc and call a hue difference an exact match.
 
 ---
 
 ## 1. Color tokens
 
-### Light theme
+Rechecked 2026-10-30 against the seven official `apps/v4/public/r/colors/<base>.json` files saved in `web-parity/theme-dark-r1-source/`. An independent frozen fixture checks all **434 role values** (31 roles × seven families × two modes). These checks cover base palettes before `Accent.applyTo`; the accent override matrix was separately verified on 2026-10-30 as described below.
 
-| Token | shadcn oklch (official) | shadcn hex (computed) | Ours | Match |
-|---|---|---|---|---|
-| `background` | `oklch(1 0 0)` | `#FFFFFF` | `#FFFFFF` | ✅ |
-| `foreground` | `oklch(0.145 0 0)` | `#0A0A0A` | `#09090B` | ✅ (~1 step) |
-| `primary` | `oklch(0.205 0 0)` | `#171717` | `#171717` | ✅ **fixed** (was `#09090B`) |
-| `primary-foreground` | `oklch(0.985 0 0)` | `#FAFAFA` | `#FAFAFA` | ✅ |
-| `secondary` / `muted` / `accent` | `oklch(0.97 0 0)` | `#F5F5F5` | `#F4F4F5` | ✅ |
-| `secondary-foreground` | `oklch(0.205 0 0)` | `#171717` | `#171717` | ✅ **fixed** (same root cause as `primary`) |
-| `muted-foreground` | `oklch(0.556 0 0)` | `#737373` | `#71717A` | ✅ (neutral vs. zinc hue) |
-| `destructive` | `oklch(0.577 0.245 27.325)` | `#E7000B` | `#E7000B` | ✅ **fixed** (was `#DC2626`) |
-| `border` / `input` | `oklch(0.922 0 0)` | `#E5E5E5` | `#E4E4E7` | ✅ |
-| `ring` | `oklch(0.708 0 0)` | `#A1A1A1` | `#A1A1AA` | ✅ |
-| `card` | `oklch(1 0 0)` (zinc.json) | `#FFFFFF` | `TwColors.white` | ✅ |
-| `card-foreground` | `oklch(0.141 0.005 285.823)` | ≈`#09090B` | `TwColors.zinc950` | ✅ |
-| `popover` / `popover-foreground` | same as `card` / `card-foreground` | — | same as `card` / `cardForeground` | ✅ |
-| `sidebar` | `oklch(0.985 0 0)` | `#FAFAFA` | `TwColors.zinc50` | ✅ |
-| `sidebar-foreground` | same as `card-foreground` | — | `TwColors.zinc950` | ✅ |
-| `sidebar-primary` | `oklch(0.21 0.006 285.885)` (zinc900) | — | `TwColors.neutral900` (== our `primary`) | ✅ (~family; see note) |
-| `sidebar-accent` / `-border` / `-ring` | zinc100 / zinc200 / zinc400 triples | — | `TwColors.zinc100` / `zinc200` / `zinc400` | ✅ |
+The table below uses **Neutral on both sides**. Local values equal the same parsed OKLCH values (including alpha), rather than approximate effective hex colors. Dark translucent roles blend over the actual parent surface; they have no single opaque replacement.
 
+| Role | Official Neutral light / local light | Official Neutral dark / local dark |
+|---|---|---|
+| `background` | `oklch(1 0 0)` | `oklch(0.145 0 0)` |
+| `foreground` | `oklch(0.145 0 0)` | `oklch(0.985 0 0)` |
+| `card` | `oklch(1 0 0)` | `oklch(0.205 0 0)` |
+| `card-foreground` | `oklch(0.145 0 0)` | `oklch(0.985 0 0)` |
+| `popover` | `oklch(1 0 0)` | `oklch(0.205 0 0)` |
+| `popover-foreground` | `oklch(0.145 0 0)` | `oklch(0.985 0 0)` |
+| `primary` | `oklch(0.205 0 0)` | `oklch(0.922 0 0)` |
+| `primary-foreground` | `oklch(0.985 0 0)` | `oklch(0.205 0 0)` |
+| `secondary` | `oklch(0.97 0 0)` | `oklch(0.269 0 0)` |
+| `secondary-foreground` | `oklch(0.205 0 0)` | `oklch(0.985 0 0)` |
+| `muted` | `oklch(0.97 0 0)` | `oklch(0.269 0 0)` |
+| `muted-foreground` | `oklch(0.556 0 0)` | `oklch(0.708 0 0)` |
+| `accent` | `oklch(0.97 0 0)` | `oklch(0.269 0 0)` |
+| `accent-foreground` | `oklch(0.205 0 0)` | `oklch(0.985 0 0)` |
+| `destructive` | `oklch(0.577 0.245 27.325)` | `oklch(0.704 0.191 22.216)` |
+| `border` | `oklch(0.922 0 0)` | `oklch(1 0 0 / 10%)` |
+| `input` | `oklch(0.922 0 0)` | `oklch(1 0 0 / 15%)` |
+| `ring` | `oklch(0.708 0 0)` | `oklch(0.556 0 0)` |
+| `chart-1` | `oklch(0.87 0 0)` | `oklch(0.87 0 0)` |
+| `chart-2` | `oklch(0.556 0 0)` | `oklch(0.556 0 0)` |
+| `chart-3` | `oklch(0.439 0 0)` | `oklch(0.439 0 0)` |
+| `chart-4` | `oklch(0.371 0 0)` | `oklch(0.371 0 0)` |
+| `chart-5` | `oklch(0.269 0 0)` | `oklch(0.269 0 0)` |
+| `sidebar` | `oklch(0.985 0 0)` | `oklch(0.205 0 0)` |
+| `sidebar-foreground` | `oklch(0.145 0 0)` | `oklch(0.985 0 0)` |
+| `sidebar-primary` | `oklch(0.205 0 0)` | `oklch(0.488 0.243 264.376)` |
+| `sidebar-primary-foreground` | `oklch(0.985 0 0)` | `oklch(0.985 0 0)` |
+| `sidebar-accent` | `oklch(0.97 0 0)` | `oklch(0.269 0 0)` |
+| `sidebar-accent-foreground` | `oklch(0.205 0 0)` | `oklch(0.985 0 0)` |
+| `sidebar-border` | `oklch(0.922 0 0)` | `oklch(1 0 0 / 10%)` |
+| `sidebar-ring` | `oklch(0.708 0 0)` | `oklch(0.556 0 0)` |
 
-### Dark theme
+All seven dark families use translucent white for `border` / `sidebar-border` (10%) and `input` (15%), their own 900 surface shade and 500 ring shade, and the official blue 700 sidebar primary. Chart roles use each base family's 300/500/600/700/800 ramp in both modes. Light sidebar uses the family's 50 shade.
 
-| Token | shadcn oklch (official) | shadcn hex (computed) | Ours | Match |
-|---|---|---|---|---|
-| `background` | `oklch(0.145 0 0)` | `#0A0A0A` | `#09090B` | ✅ |
-| `foreground` | `oklch(0.985 0 0)` | `#FAFAFA` | `#FAFAFA` | ✅ |
-| `primary` | `oklch(0.922 0 0)` | `#E5E5E5` | `#E5E5E5` | ✅ **fixed** (was near-white `#FAFAFA`) |
-| `primary-foreground` | `oklch(0.205 0 0)` | `#171717` | `#171717` | ✅ **fixed** |
-| `secondary` / `muted` / `accent` | `oklch(0.269 0 0)` | `#262626` | `#27272A` | ✅ |
-| `muted-foreground` | `oklch(0.708 0 0)` | `#A1A1A1` | `#A1A1AA` | ✅ |
-| `destructive` | `oklch(0.704 0.191 22.216)` | `#FF6467` | `#FF6467` | ✅ **fixed** (was a dark maroon `#7F1D1D` — the opposite direction from real) |
-| `border` (10%) / `input` (15%) | `oklch(1 0 0 / 10–15%)` translucent white over `background` | `#222222` / `#2F2F2F` effective (composited over `#0A0A0A`) | `#27272A` | ✅ close enough (ours is an opaque token vs. real's translucent overlay — different mechanism, similar result) |
-| `ring` | `oklch(0.556 0 0)` | `#737373` | `#71717A` | ✅ |
-| `card` / `popover` / `sidebar` | `oklch(0.21 0.006 285.885)` | ≈`#18181B` | `TwColors.zinc900` | ✅ (raised above `background`/`zinc950`) |
-| `card-foreground` / `popover-foreground` / `sidebar-foreground` | `oklch(0.985 0 0)` | `#FAFAFA` | `TwColors.zinc50` | ✅ |
-| `sidebar-primary` | `oklch(0.488 0.243 264.376)` (hardcoded blue) | `#1447E6` | `BaseColor.Zinc.dark` → `Oklch(0.488, 0.243, 264.376).toColor()` | ✅ |
-| `sidebar-accent` / `-border` / `-ring` | zinc800 / translucent / zinc500 | — | `TwColors.zinc800` / `zinc800` / `zinc500` | ✅ close (`sidebar-border` opaque vs real translucent, same as `border` row) |
+Nova transparent control fills remain transparent on light surfaces and apply `input/30` on dark Input/Textarea/Checkbox/Radio/Select/InputGroup; unchecked Switch applies dark `input/80`. They are not precomposited over the global background. Relevant controls retain Style-configured focus/error shadows; internal `cssStyleable` uses Compose's native shadow painter with the final shape's interior clipped out, preserving CSS outer-shadow behavior on transparent fills. See `CssStyleableTest` and the theme rendering tests.
 
-**Update (2026-07-07):** all the `primary`/`primaryForeground`/`secondaryForeground`/`destructive`
-mismatches flagged in the original pass have since been fixed in `Colors.kt` —
-verified directly against the hex values above. Everything in this table is now within
-rounding/hue-family tolerance.
-
-**Update (2026-08-03):** per-container-role tokens (`card`/`popover`/`sidebar*`) — already
-present in `Colors.kt` and wired into Card/Popover/Sidebar — are now documented here.
-They map **byte-identical** to named `TwColors` zinc shades (same oklch triples as
-[`ui.shadcn.com/r/colors/zinc.json`](https://ui.shadcn.com/r/colors/zinc.json)); the
-previous `Oklch(...).toColor()` literals were swapped for `TwColors.white` /
-`zinc50` / `zinc900` / `zinc950` with no color change.
-
-**Update (2026-08-03):** `Colors` field names now match shadcn CSS variable names
-(`foreground`, `primaryForeground`, `ring`, …). Legacy `success` / `warning` / `error`
-palette fields were removed from `Colors`; Toast success/warning accents use local
-`TwColors` shades instead.
+`Colors` field names follow CSS role names (`foreground`, `primaryForeground`, `ring`, …). `destructiveForeground` is a local extra role, absent from the 31 upstream base-role fixture; no exact upstream equivalence is claimed for it. Legacy constants and accent overrides must not be inferred correct from this base-role table. Other component state matrices and historical screenshot mismatches remain tracked in `shadcn-web-progress.md`.
 
 ---
+
+### Accent overrides (rechecked 2026-10-30)
+
+All 17 non-Base accents now follow [the official theme registry](https://github.com/shadcn-ui/ui/blob/main/apps/v4/registry/themes.ts), saved with a hash in `web-parity/accent-r1/`. The independent fixture contains **375 overrides** across both modes (normally 11 per theme/mode, with an extra dark Rose `sidebar`). Tests apply these over all seven bases and compare every declared and omitted role. `Accent.Base` returns the supplied base unchanged.
+
+Overrides include primary/foreground, secondary/foreground, chart1–5, and sidebar primary/foreground. The focus ring retains the base value. Most primary colors use shade 700 in light mode and 800 in dark mode; Lime/Yellow use 400/500 with shade 900 foregrounds. Charts use 300/500/600/700/800; sidebar primary uses 600/500. Sidebar foregrounds follow each source entry, independently of the primary foreground; dark Rose additionally uses Zinc 900 for its sidebar surface. The fixed Zinc secondary roles are upstream behavior even over a different base.
+
+The old hand-tuned hexadecimal accents and accent-colored focus ring were source mismatches, not deliberate exceptions retained in this pass. Two new rendered matrices cover all 18 options including Base, with actual primary/secondary Buttons and sidebar/chart swatches. These swatches do not prove Sidebar or Chart component behavior. Existing Base-accent screenshot baselines remain unchanged. Create-page layout and independent chart-color controls remain separate gaps.
 
 ## 2. Radius tokens
 
@@ -227,7 +219,8 @@ approximated from memory.
   default palette's container-role fields are named `TwColors` shades (not raw
   `Oklch(...).toColor()`). Prefer `TwColors.*` when the shade is byte-identical; keep
   hex only when a scratch ARGB compare against the full TwColors table fails (current
-  exceptions: `success`, `warning`, `destructiveHover`, and all of `Accent.kt`).
+  historical exceptions: `success`, `warning`, `destructiveHover`, and `Accent.kt`;
+  the Accent exception was superseded by the exact official-source correction on 2026-10-30).
   §2: Vega/Nova now use `Shapes.fromBaseRadius(10.dp)` (real `--radius`);
   `rounded-md` call sites use `shapes.md`. Earlier the same day this section still
   documented the historical `baseRadius = 8.dp` workaround.
@@ -331,9 +324,8 @@ shape handling at all; the group's own corner-stripping "just works" for the rin
 Verified via `ButtonGroupScreenshotTest.with_label_focused`: the ring appears only at
 the outer rounded ends, never at the internal flush seam between grouped items —
 pixel-checked directly (`(229,229,229)` ring band at the outer edge, no separate band at
-the seam). This also means `LocalGroupCorners` (still provided by
-`ButtonGroup`/`ToggleGroup`) has **no remaining reader** — only the old ring
-modifier ever consumed it. Candidate for a follow-up cleanup, not yet done.
+the seam). The obsolete `LocalGroupCorners` provider and its readers have since
+been removed; no cleanup remains for that mechanism (source checked 2026-10-28).
 
 **Lesson generalized:** the same failure mode as §6 — a specific, falsifiable technical
 claim ("dropShadow blurs at radius=0") was carried forward across sessions and cited as

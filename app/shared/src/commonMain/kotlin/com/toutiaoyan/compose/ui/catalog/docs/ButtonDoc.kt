@@ -4,6 +4,7 @@ package com.toutiaoyan.compose.ui.catalog.docs
 
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.Check
+import com.composables.icons.lucide.ArrowUp
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.ui.unit.dp
@@ -18,7 +19,20 @@ val buttonDoc =
     ComponentDoc(
         id = "button",
         title = "Button",
-        description = "Triggers an action or event. Supports six variants and text + icon size scales.",
+        description = "Displays a button or a component that looks like a button.",
+        apiProperties =
+            listOf(
+                ApiProperty("onClick", "() -> Unit", "{}"),
+                ApiProperty("modifier", "Modifier", "Modifier"),
+                ApiProperty("enabled", "Boolean", "true"),
+                ApiProperty("disabled", "Boolean", "false"),
+                ApiProperty("variant", "ButtonVariant", "Default"),
+                ApiProperty("size", "ButtonSize", "Md"),
+                ApiProperty("indication", "Indication?", "null"),
+                ApiProperty("label", "String?", "null"),
+                ApiProperty("style", "Style", "Style"),
+                ApiProperty("content", "@Composable () -> Unit", "required"),
+            ),
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.button.Button
@@ -32,12 +46,29 @@ val buttonDoc =
                     title = "Default",
                     code =
                         """
-                        Button("Default")
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Button("Button", variant = ButtonVariant.Outline)
+                            Button(onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Icon, label = "Submit") {
+                                Icon(Lucide.ArrowUp)
+                            }
+                        }
                         """.trimIndent(),
-                    preview = { Button("Default") },
+                    preview = {
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Button("Button", variant = ButtonVariant.Outline)
+                            Button(
+                                onClick = {},
+                                variant = ButtonVariant.Outline,
+                                size = ButtonSize.Icon,
+                                label = "Submit",
+                            ) {
+                                Icon(Lucide.ArrowUp)
+                            }
+                        }
+                    },
                 ),
                 ComponentExample(
-                    title = "Default variant",
+                    title = "Default",
                     code =
                         """
                         Button("Default", variant = ButtonVariant.Default)
@@ -146,22 +177,12 @@ val buttonDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default size",
-                    code = """Button("Default", size = ButtonSize.Md)""",
-                    preview = { Button("Default", size = ButtonSize.Md) },
-                ),
-                ComponentExample(
                     title = "Disabled",
                     code =
                         """
                         Button("Disabled", disabled = true)
                         """.trimIndent(),
                     preview = { Button("Disabled", disabled = true) },
-                ),
-                ComponentExample(
-                    title = "Default disabled",
-                    code = """Button("Button", disabled = false)""",
-                    preview = { Button("Button", disabled = false) },
                 ),
                 ComponentExample(
                     title = "Spinner",
@@ -186,11 +207,6 @@ val buttonDoc =
                         Button("Save", onClick = {}, label = "Save")
                         """.trimIndent(),
                     preview = { Button("Save", onClick = {}, label = "Save") },
-                ),
-                ComponentExample(
-                    title = "Default label",
-                    code = """Button("Button", onClick = {}, label = "Button")""",
-                    preview = { Button("Button", onClick = {}, label = "Button") },
                 ),
             ),
     )

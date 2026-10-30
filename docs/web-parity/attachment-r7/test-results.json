@@ -1,0 +1,60 @@
+[
+  {
+    "class": "AttachmentExamplesTest[jvm]",
+    "tests": 8,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "fullPreviewKeepsOuterPaddingAndUpdatesItsSurfaceAcrossThemes[jvm]",
+      "triggerOpensDialogByKeyboardWhileActionsStayIndependent[jvm]",
+      "sizeRecipeInherits14Then12SpLabels[jvm]",
+      "defaultLoadsThreeRealPhotosAndKeepsSquareMediaAcrossWidthsAndThemes[jvm]",
+      "imageActionsDoNotActivateTheImageLink[jvm]",
+      "statesRenderAllFiveAndErrorDescriptionInheritsItsColor[jvm]",
+      "triggerTitleKeepsTheSourceMediumWeightAndGlyphAdvance[jvm]",
+      "triggerGlyphMatchesTheCurrentNativeSvgInBothThemes[jvm]"
+    ]
+  },
+  {
+    "class": "CatalogNavigationTest[jvm]",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "searchSupportsArrowKeysAndEnter[jvm]",
+      "searchDismissesWithEscape[jvm]",
+      "emptySearchHasNoEmptyGroupHeadings[jvm]",
+      "tableOfContentsScrollsToTheActualSection[jvm]",
+      "navigationIncludesEveryEntryOnceAndKeepsExtensionsSeparate[jvm]",
+      "searchFocusesInputAndNavigatesToAFilteredResult[jvm]"
+    ]
+  },
+  {
+    "class": "CatalogPreviewTest[jvm]",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "compactHeaderHasWorkingNavigationEntry[jvm]",
+      "inputAutofocusRequiresAnExplicitTryClick[jvm]",
+      "apiKeyPreviewUsesPasswordSemantics[jvm]",
+      "textareaAutofocusRequiresAnExplicitTryClick[jvm]",
+      "expandingSourceKeepsLivePreviewState[jvm]"
+    ]
+  },
+  {
+    "class": "ComponentDocumentationTest[jvm]",
+    "tests": 7,
+    "failures": 0,
+    "errors": 0,
+    "cases": [
+      "fragmentNavigationLoadsRestoresAndRepeatsRealSectionScroll[jvm]",
+      "actualCopyPageExportsDescriptionsAndNewTocAnchorsScrollIntoView[jvm]",
+      "generatedSectionFragmentsAreReadableAndUnique[jvm]",
+      "attachmentGuidanceLoadsByFragmentCopiesAndNavigatesThroughAllSections[jvm]",
+      "alertExportIncludesDescriptionsCompositionAndKotlinApiInPageOrder[jvm]",
+      "plainCompositionBlockCopiesItsOwnCodeAndShowsFeedback[jvm]",
+      "attachmentGuidanceExportAndTocKeepSourceOrderAndReadableFragments[jvm]"
+    ]
+  }
+]

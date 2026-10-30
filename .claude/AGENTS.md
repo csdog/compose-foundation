@@ -57,7 +57,7 @@ dry-run wired, not yet released)
 | API surface management            | `kotlin-multiplatform-library-publishing` (apiCheck / apiDump — not yet wired, see Notes) |
 | Platform-specific implementations | `kotlin-multiplatform-expect-actual`                                                      |
 | Catalog app navigation            | `kotlin-multiplatform-navigation`                                                         |
-| Unit / integration tests          | `kotlin-multiplatform-unit-testing` (not yet wired, see Notes)                            |
+| Unit / integration tests          | `kotlin-multiplatform-unit-testing` (JVM / screenshot tests are wired; see `docs/visual-testing.md`)                            |
 | Code quality (detekt, ktlint)     | `kotlin-multiplatform-code-quality`                                                       |
 | CI automation                     | `kotlin-multiplatform-ci-github-actions`                                                  |
 | Architecture audit                | `kotlin-multiplatform-audit`                                                              |
@@ -109,52 +109,26 @@ dry-run wired, not yet released)
 1. **Variants are flat, stateless sealed interfaces** (`data object` per variant, e.g.
    `ButtonVariant`, `ChipVariant`) -- no hardcoded theme values baked into the object.
 2. **Variant -> `Style` mapping is a `@Composable fun <Variant>.rememberStyle(): Style`**
-   (see `styles/ButtonStyles.kt`, `styles/ChipStyles.kt`), not a plain non-composable
-   `val style: Style get() = ...` property. Read the theme via `Theme.current`,
-   then `remember(this, <every theme sub-object the block reads>) { Style { ... } }`.
-   **The remember keys must list every theme field the block actually reads** (`colors`,
-   `shapes`, `spacing`, ...) -- switching a `ShadcnStylePreset` changes `shapes`/`spacing`
-   without necessarily changing `colors`, so an incomplete key list leaves a stale cached
-   `Style` until an unrelated key happens to change too. **Known bug:** `ChipStyles.kt`'s
-   `remember(this, colors)` is missing `shapes`/`spacing` despite reading `shapes.full`
-   and `spacing.md`/`spacing.xs` -- exactly the caching failure this rule exists to
-   prevent. Fix by keying on all three like every other `*Styles.kt` file already does.
-3. Inside a `Style { }` block passed to `Modifier.styleable`, use the
-   `StyleScope.colors/shapes/spacing/typography` extensions
-   (`theme/StyleScopeExtensions.kt`, backed by `StyleScope.currentValue`), not the
-   `@Composable currentTheme` getter -- `Style` blocks can resolve outside normal
-   composition, and `currentValue` is the only read guaranteed fresh there. In
-   practice, every `*Styles.kt` file in this project uses a *third*, equally-correct
-   option instead: read `currentTheme.colors`/`.shapes`/etc. once into a plain `val` in
-   the enclosing `@Composable` (a real composition position, properly subscribed to
-   `LocalTheme`), then reference *that captured val* -- not `currentTheme.colors.X`
-   again -- from inside the `Style { }` body. Either fix works; what's never safe is
-   calling the `currentTheme` getter directly from inside the `Style { }` lambda itself.
-   **Known bug, fixed:** `InputGroup.kt`'s `containerStyle` and
-   `Input.kt`'s `errorStyle` both did exactly that (
-   `Style { background(currentTheme.colors.background) }` inline in the component body, not in a
-   dedicated `*Styles.kt` factory) -- confirmed live via a real dark-mode toggle
-   screenshot: the input group's background froze at light-mode white forever after
-   toggling dark, while every sibling element (which read `currentTheme` from normal
-   composable-property-getter positions, not from inside a `Style{}` closure) correctly
-   re-themed. Existing static single-theme Roborazzi goldens never caught this --
-   they only ever compose once, under one theme, so a stale-frozen-at-first-theme
-   value is indistinguishable from a correct one in a screenshot that never
-   recomposes. This class of bug only shows up on a live in-place theme *change*, not a
-   fresh render under either theme alone.
-   `currentTheme` is `@Composable` (`Local.current`), so `Style { currentTheme… }`
-   is already a compiler error. Inside `Style { }` use StyleScope `colors` /
-   `theme` (`currentValue`). Do not capture theme colors in composition and stuff
-   them into a Style lambda -- that compiles but can freeze across theme changes.
-4. **`contentColor()` set inside a `Style` block is not reliable for text painted by a
-   *nested* `Text`/`BasicText`/`BasicTextField`** on a live dark-mode toggle, for
-   variants with no explicit `background()` (confirmed live: `ChipVariant.Outline`).
-   Fix: read the resolved color via a plain (non-memoized) `@Composable get()` and pass
-   it explicitly into `Text(color = ...)` / `BasicTextField(textStyle = ...,
-   cursorBrush = ...)` -- never rely on ambient Style-color inheritance for text.
-   **Known regression:** `Chip.kt` dropped its `color = variant.contentColor`
-   pass-through when `ChipVariant.rememberStyle()` was introduced -- needs re-adding.
-5. **The focus ring is drawn via the Style API's own `dropShadow()`, called directly
+   (see `components/button/ButtonStyles.kt` / `components/chip/ChipStyles.kt`).
+   Prefer `utils/RememberTheme.kt`'s `rememberTheme(receiver)`: its keys include
+   `Theme.LocalTheme`, `twRadius`, `twSpacing`, `unitSpacing`, and caller keys.
+   An explicit `remember` must key every theme/token input its factory reads.
+   `ChipVariant.rememberStyle()` already uses `rememberTheme`; the old missing-key
+   defect is fixed and is not a pending task.
+3. Inside a `Style { }` block, use `StyleScope` theme extensions backed by
+   `currentValue`, or values from a fully keyed `rememberTheme` factory. Do not call
+   the `@Composable currentTheme` getter inside the Style lambda, or capture theme
+   values in an unkeyed `remember`. The former is a compiler error; the latter can
+   freeze the first theme. The historical InputGroup/Input theme bug is fixed;
+   retain live theme-switch coverage because static light/dark snapshots cannot
+   detect a value that freezes after the first render.
+4. **Nested text needs an explicit current content-color path.** Do not assume
+   Style `contentColor()` alone will update nested `Text` / `BasicTextField` on
+   a live theme switch. `Chip` already provides
+   `LocalContentColor provides variant.contentColor(currentTheme.colors)` around
+   its label; this is the current fix, not a missing pass-through. Inputs pass
+   their resolved text/cursor colors explicitly. Preserve these paths when refactoring.
+5. **The focus ring is configured via the Style API's `dropShadow()`, called directly
    inside each component's `focused { }` block** (`styles/FocusRing.kt`'s
    `ThemeData.focusRingShadow()` builds the `Shadow` value: `radius = 0.dp`,
    `spread = ring.width + ring.offset`, color from `colors.ring` at
@@ -172,10 +146,17 @@ dry-run wired, not yet released)
    `Toggle` and merged in via `.styleable(...)`'s override-not-additive cascade) --
    not just whatever `shape()` the *same* `Style{}` block itself declares. Verified via
    `ButtonGroupScreenshotTest.with_label_focused`: the ring correctly appears only at the
-   outer rounded ends, never at the internal flush seam between grouped items. This means
-   `LocalGroupCorners` (still provided by `ButtonGroup`/`ToggleGroup` via
-   `CompositionLocalProvider`) has **no remaining reader** -- only the old ring modifier
-   ever consumed it. Candidate for a follow-up cleanup pass, not yet done.
+   outer rounded ends, never at the internal flush seam between grouped items.
+   **Transparent-surface correction (2026-10-30):** native Style drop shadows fill
+   the shape underneath its background; with `bg-transparent` / `bg-input/30`, that
+   fill leaks through the interior (confirmed by focused Input/invalid-field pixel
+   comparisons). The affected controls use internal `cssStyleable`: Style still
+   resolves real interaction state and the final caller-overridden shape, while
+   Compose's `DropShadowPainter` renders the same shadow clipped with
+   `ClipOp.Difference` against `Shape.createOutline`. This is an outer-shadow
+   knockout, not a hand-drawn per-corner ring or a border-width/layout change.
+   Preserve transparent-interior and generic-shape coverage in CssStyleableTest.
+   `LocalGroupCorners` has been removed from the source; no provider/reader cleanup remains.
    A component whose "active"/"focused" state is a *computed* boolean rather than a real
    per-node focus event (`InputOTP`'s `OtpSlot`, `InputGroup`'s
    `hasFocusWithin`, `StylePresetMatrixTest`'s ring swatch) can't use the `focused { }`
@@ -228,9 +209,11 @@ dry-run wired, not yet released)
    A few fields (`success`/`warning`/`destructiveHover` in both files) are **intentionally
    still hex literals**: the same scratch test found they're hand-tuned, not exact/near
    matches to any named shade -- snapping them would silently shift the actual color, not
-   just rename it. Same reasoning applies to **all of `Accent.kt`**, left entirely
-   unmigrated -- none of its 17 colors match any named shade (its own doc comment already
-   says "corrected for ideal dark background contrast").
+   just rename it. **Accent correction (2026-10-30):** `Accent.kt` now follows the current official
+   `apps/v4/registry/themes.ts` rather than the old hand-tuned values. Its colors
+   exactly match named `TwColors` shades. Preserve secondary/chart/sidebar overrides,
+   Lime/Yellow foreground exceptions, Rose dark sidebar, and the base focus ring.
+   `AccentSourceTest` checks all declared and omitted roles against a frozen source fixture.
 10. **`Colors` has per-container-role tokens** (`card`/`onCard`, `popover`/
     `onPopover`, `sidebar`/`onSidebar`, `sidebarPrimary`/`onSidebarPrimary`,
     `sidebarAccent`/`onSidebarAccent`, `sidebarBorder`, `sidebarRing`), matching real
@@ -385,8 +368,8 @@ scope decision**:
 - **`accordion`/`aspect-ratio`/`item`/`input-group`/`toggle`** -- checked against real
   shadcn, judged as acceptable documented deviations, not gaps: `accordion`'s doc example
   has 3 items vs real's 1 (arguably more useful documentation, not less correct);
-  `aspect-ratio`'s real demo loads a real image and this project has no image-loading
-  dependency anywhere (a deliberate zero-icon/zero-image-lib stance, not an oversight);
+  `aspect-ratio` now bundles the actual upstream demo PNG as a catalog resource
+  with grayscale/dark brightness; no network image-loading dependency is added;
   `item`'s doc example is richer than real's minimal single-item default (a superset, not
   a mismatch); `input-group`'s addon pattern differs from real's but is a valid alternate
   composition; `toggle`'s icon-only `aria-label` pattern vs this library's text-glyph
@@ -426,7 +409,7 @@ real site and easy to miss entirely.
 ## Notes for future sessions
 
 - **The Compose Styles API does not match what the `kotlin-multiplatform-design-system`
-  skill assumes.** The real annotation in Compose Multiplatform 1.11.1 is
+  skill assumes.** The annotation in the currently configured Compose Multiplatform 1.12.2 is
   `androidx.compose.foundation.style.ExperimentalFoundationStyleApi`, not
   `ExperimentalStylesApi`. `padding()` does not exist on `StyleScope` -- use
   `contentPadding(...)`. Verify any new Style API usage against the real jar
@@ -453,14 +436,16 @@ real site and easy to miss entirely.
   The same rule applies to `components.json` fields (`tailwind.baseColor`, `style`) --
   see item 8 above for a case where this was skipped and a fabricated-sounding but
   actually-real set of custom base colors got documented as "official" when it isn't.
-- Roborazzi screenshot tests are wired (`library/src/jvmTest/`, Robolectric-less
+- Roborazzi screenshot tests are wired (`shadcn/core/src/jvmTest/`, Robolectric-less
   JVM/Desktop capture, see `docs/visual-testing.md`) and compile/pass cleanly (verified
   2026-07-08 via `./gradlew :shadcn:core:verifyRoborazziJvm`). Plain `:shadcn:core:jvmTest` does
   *not* pixel-compare against the committed goldens (`captureRoboImage` is a no-op writer
   without the record/verify system properties the wrapper tasks set) -- after any
   component visual change, run `./gradlew :shadcn:core:recordRoborazziJvm` to update the
   affected goldens, then `./gradlew :shadcn:core:verifyRoborazziJvm` to confirm a clean diff
-  before committing.
+  before committing. `jvmTest` alone does not enable pixel comparison. The current
+  `.github/workflows/ci.yml` still invokes plain `jvmTest`; explicit screenshot
+  verification in CI remains a task in `docs/shadcn-align-progress.md`.
 
 ## Commands installed
 

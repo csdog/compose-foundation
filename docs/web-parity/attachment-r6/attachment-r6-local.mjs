@@ -1,0 +1,6 @@
+const p=(await taskSpace(10)).page('p2'),fs=await import('node:fs/promises'),d='/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/attachment-r6',base='http://127.0.0.1:8765/attachment?audit=r6',rows=[];await p.cdp('Page.bringToFront');await p.goto(base);await p.reload();for(let i=0;i<4;i++)await p.screenshot({path:'/private/tmp/attachment-r6-warm.png'});let current='light';
+for(const [form,mode,width,height] of [['desktop','light',1440,1000],['desktop','dark',1440,1000],['phone','dark',390,844],['phone','light',390,844]]){
+await p.cdp('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:2,mobile:false});if(current!==mode){await p.mouse.click(form==='desktop'?1318:268,32,{label:'switch guidance page theme'});current=mode;}
+for(const section of ['features','accessibility','label-icon-only-actions','label-the-trigger','keyboard-scrolling','meaning-beyond-color']){
+await p.goto(base+'#'+section);const file=`local-${form}-${mode}-${section}.png`;for(let i=0;i<3;i++)await p.screenshot({path:d+'/'+file});rows.push({form,mode,width,height,section,file,dpr:await p.evaluate(()=>devicePixelRatio),url:await p.url(),review:'pending screenshot review'});}
+console.log({form,mode,captured:6});await fs.writeFile(d+'/local-browser.json',JSON.stringify(rows,null,2));}

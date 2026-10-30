@@ -1,0 +1,30 @@
+[
+  {
+    "form": "desktop",
+    "mode": "light",
+    "width": 1440,
+    "height": 1000,
+    "file": "local-desktop-light-sizes.png"
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "width": 1440,
+    "height": 1000,
+    "file": "local-desktop-dark-sizes.png"
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "width": 390,
+    "height": 844,
+    "file": "local-phone-dark-sizes.png"
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "width": 390,
+    "height": 844,
+    "file": "local-phone-light-sizes.png"
+  }
+]

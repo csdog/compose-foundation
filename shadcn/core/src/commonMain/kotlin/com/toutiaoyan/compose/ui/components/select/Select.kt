@@ -2,9 +2,33 @@
 
 package com.toutiaoyan.compose.ui.components.select
 
+import com.toutiaoyan.compose.ui.utils.keyboardInputMode
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.ScrollState
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.ui.layout.boundsInRoot
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.ui.input.key.*
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.shadow.Shadow
+import androidx.compose.ui.semantics.error
+import androidx.compose.ui.unit.sp
+import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -19,6 +43,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.style.contentPadding
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
@@ -36,6 +62,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
+import com.toutiaoyan.compose.ui.styles.cssStyleable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
@@ -61,6 +88,8 @@ import com.toutiaoyan.compose.ui.components.separator.Separator
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextColors
 import com.toutiaoyan.compose.ui.components.text.TextVariant
+import com.toutiaoyan.compose.ui.icons.NovaCheck
+import com.toutiaoyan.compose.ui.icons.NovaChevronRight
 import com.toutiaoyan.compose.ui.icons.Check
 import com.toutiaoyan.compose.ui.icons.ChevronRight
 import com.toutiaoyan.compose.ui.styles.rememberMenuLabelStyle
@@ -100,6 +129,58 @@ class SelectController internal constructor(
     fun labelOf(value: Any?): String = format(value)
 }
 
+private data class SelectFocusItem(val value: Any?, val requester: FocusRequester, val enabled: Boolean)
+
+private class SelectKeyboard {
+    val trigger = FocusRequester()
+    var width by mutableStateOf(144.dp)
+    var height by mutableStateOf(32.dp)
+    var panelTop by mutableStateOf(0f)
+    val centers = mutableStateMapOf<Any?, Float>()
+    val items = mutableStateListOf<SelectFocusItem>()
+    var active: Any? = null
+    val pick = mutableMapOf<Any?, () -> Unit>()
+    var fromEnd = false
+    private var suppressActivationUp = false
+
+    fun consumeRelease(event: KeyEvent): Boolean {
+        if (event.type == KeyEventType.KeyUp && event.key in listOf(Key.Enter, Key.Spacebar) && suppressActivationUp) {
+            suppressActivationUp = false
+            return true
+        }
+        return false
+    }
+
+    fun move(
+        key: Key,
+        controller: SelectController,
+    ): Boolean {
+        val options = items.filter { it.enabled }
+        if (options.isEmpty()) return false
+        val index = options.indexOfFirst { it.value == active }
+        val target =
+            when (key) {
+                Key.DirectionDown -> (index + 1).coerceAtMost(options.lastIndex)
+                Key.DirectionUp -> (if (index < 0) options.lastIndex else index - 1).coerceAtLeast(0)
+                Key.MoveHome -> 0
+                Key.MoveEnd -> options.lastIndex
+                Key.Enter, Key.Spacebar -> {
+                    suppressActivationUp = true
+                    options.getOrNull(index)?.let { pick[it.value]?.invoke() }
+                    return index >= 0
+                }
+                Key.Escape -> {
+                    controller.setOpen(false)
+                    return true
+                }
+                else -> return false
+            }
+        options[target].requester.requestFocus()
+        return true
+    }
+}
+
+private val LocalSelectKeyboard = staticCompositionLocalOf<SelectKeyboard?> { null }
 private val LocalSelect = staticCompositionLocalOf<SelectController?> { null }
 
 private val LocalSelectScroll = staticCompositionLocalOf<ScrollState?> { null }
@@ -155,10 +236,16 @@ fun <T> Select(
 ) {
     var internalOpen by remember { mutableStateOf(defaultOpen) }
     val isOpen = open ?: internalOpen
-    val setOpen =
-        remember(onOpenChange) {
-            onOpenChange ?: { internalOpen = it }
-        }
+    val setOpen: (Boolean) -> Unit = { next ->
+        if (open == null) internalOpen = next
+        onOpenChange?.invoke(next)
+    }
+    val keyboard = remember { SelectKeyboard() }
+    var wasOpen by remember { mutableStateOf(isOpen) }
+    LaunchedEffect(isOpen) {
+        if (!isOpen && wasOpen) keyboard.trigger.requestFocus()
+        wasOpen = isOpen
+    }
     val resolvedDisabled = disabled || LocalFieldSetDisabled.current
     val controller =
         remember(
@@ -193,7 +280,7 @@ fun <T> Select(
                 },
             )
         }
-    CompositionLocalProvider(LocalSelect provides controller) {
+    CompositionLocalProvider(LocalSelect provides controller, LocalSelectKeyboard provides keyboard) {
         Box(modifier = modifier) {
             SelectScope().content()
         }
@@ -219,19 +306,64 @@ fun SelectScope.SelectTrigger(
         }
     val pressStyle = rememberPressMotionStyle(animation)
     val description = accessibilityLabel.ifEmpty { ctrl.displayText ?: ctrl.placeholder }
-    val errorColor = currentTheme.colors.destructive
+    val theme = currentTheme
+    val nova = theme.activePreset == StylePreset.Nova
+    val keyboard = checkNotNull(LocalSelectKeyboard.current)
+    val density = LocalDensity.current
+    val errorColor = theme.colors.destructive
     val resolvedInvalid = invalid || ctrl.invalid
-    val invalidStyle = if (resolvedInvalid) Style { borderColor(errorColor) } else Style
+    val invalidStyle =
+        if (resolvedInvalid) {
+            Style {
+                borderColor(if (nova && theme.isDark) errorColor.copy(alpha = errorColor.alpha * 0.5f) else errorColor)
+                if (nova) {
+                    dropShadow(
+                        Shadow(
+                            radius = 0.dp,
+                            spread = 3.dp,
+                            color = errorColor.copy(alpha = if (theme.isDark) 0.4f else 0.2f),
+                        ),
+                    )
+                }
+            }
+        } else {
+            Style
+        }
 
     Row(
         modifier =
             modifier
-                .widthIn(min = 140.dp)
+                .then(if (nova) Modifier.width(IntrinsicSize.Max) else Modifier)
+                .onGloballyPositioned {
+                    keyboard.width = with(density) { it.size.width.toDp() }
+                    keyboard.height = with(density) { it.size.height.toDp() }
+                }
+                .widthIn(min = if (nova) 0.dp else 140.dp)
+                .focusRequester(keyboard.trigger)
+                .keyboardInputMode()
+                .onPreviewKeyEvent { event ->
+                    if (keyboard.consumeRelease(event)) return@onPreviewKeyEvent true
+                    if (event.type == KeyEventType.KeyDown &&
+                        !ctrl.disabled &&
+                        event.key in
+                        listOf(
+                            Key.DirectionDown,
+                            Key.DirectionUp,
+                        )
+                    ) {
+                        keyboard.fromEnd = event.key == Key.DirectionUp
+                        ctrl.setOpen(true)
+                        true
+                    } else {
+                        false
+                    }
+                }
                 .semantics(mergeDescendants = true) {
                     role = Role.DropdownList
                     contentDescription = description
                     stateDescription = if (ctrl.open) "Expanded" else "Collapsed"
                     if (ctrl.disabled) disabled()
+                    if (resolvedInvalid) error("Invalid selection")
                 }
                 .clickable(
                     interactionSource = interactionSource,
@@ -239,8 +371,8 @@ fun SelectScope.SelectTrigger(
                     enabled = !ctrl.disabled,
                     role = Role.Button,
                 ) { ctrl.setOpen(!ctrl.open) }
-                .styleable(styleState, pressStyle then variant.rememberStyle(size) then invalidStyle then style),
-        horizontalArrangement = Arrangement.spacedBy(twSpacing.sm),
+                .cssStyleable(styleState, pressStyle then variant.rememberStyle(size) then invalidStyle then style),
+        horizontalArrangement = Arrangement.spacedBy(if (nova) 6.dp else twSpacing.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Row(
@@ -257,10 +389,10 @@ fun SelectScope.SelectTrigger(
 @Composable
 internal fun SelectIcon(modifier: Modifier = Modifier) {
     Icon(
-        ChevronRight,
+        if (currentTheme.activePreset == StylePreset.Nova) NovaChevronRight else ChevronRight,
         tint = currentTheme.colors.mutedForeground,
         modifier = modifier.rotate(90f),
-        variant = IconVariant.Small,
+        variant = if (currentTheme.activePreset == StylePreset.Nova) IconVariant.Default else IconVariant.Small,
     )
 }
 
@@ -271,10 +403,23 @@ fun SelectScope.SelectValue(
 ) {
     val ctrl = selectController()
     val placeholderText = placeholder ?: ctrl.placeholder
+    val theme = currentTheme
     Text(
         modifier = modifier,
         variant = TextVariant.BodySmall,
-        textStyle = if (ctrl.displayText == null) TextColors.Muted else TextStyle.Default,
+        textStyle =
+            if (theme.activePreset == StylePreset.Nova) {
+                theme.typography.bodyMedium.copy(
+                    fontFamily = theme.fontFamily,
+                    fontSize = 14.sp,
+                    lineHeight = 20.sp,
+                    color = if (ctrl.displayText == null) theme.colors.mutedForeground else theme.colors.foreground,
+                )
+            } else if (ctrl.displayText == null) {
+                TextColors.Muted
+            } else {
+                TextStyle.Default
+            },
     ) { ctrl.displayText ?: placeholderText }
 }
 
@@ -333,6 +478,8 @@ fun SelectScope.SelectContent(
 ) {
     val ctrl = selectController()
     val scrollState = rememberScrollState()
+    val keyboard = checkNotNull(LocalSelectKeyboard.current)
+    val nova = currentTheme.activePreset == StylePreset.Nova
 
     @Suppress("DEPRECATION")
     val itemAligned =
@@ -344,11 +491,29 @@ fun SelectScope.SelectContent(
     // Base keeps sideOffset=4 even when alignItemWithTrigger is true.
     val resolvedEnter = if (itemAligned) EnterTransition.None else enter
     val resolvedExit = if (itemAligned) ExitTransition.None else exit
+    val density = LocalDensity.current
+    var alignedCenter by remember(ctrl.open, ctrl.displayText) { mutableStateOf<Float?>(null) }
+    val target =
+        keyboard.items.firstOrNull {
+            it.enabled && ctrl.isSelected(it.value)
+        } ?: keyboard.items.firstOrNull { it.enabled }
+    val measuredCenter = target?.let { keyboard.centers[it.value]?.minus(keyboard.panelTop) }
+    LaunchedEffect(ctrl.open, measuredCenter) {
+        if (ctrl.open && alignedCenter == null && measuredCenter != null) alignedCenter = measuredCenter
+    }
+    val resolvedOffset =
+        if (nova && itemAligned && alignedCenter != null) {
+            with(density) {
+                -(keyboard.height / 2) - alignedCenter!!.toDp()
+            }
+        } else {
+            sideOffset
+        }
     SelectPortal {
         AnchoredPopup(
-            open = ctrl.open,
+            open = ctrl.open && !ctrl.disabled,
             onDismissRequest = { ctrl.setOpen(false) },
-            offset = sideOffset,
+            offset = resolvedOffset,
             align = align,
             alignOffset = alignOffset,
             dismissOnClickOutside = dismissOnClickOutside,
@@ -359,16 +524,55 @@ fun SelectScope.SelectContent(
             val panelStyleState = remember { MutableStyleState(MutableInteractionSource()) }
             CompositionLocalProvider(LocalSelectScroll provides scrollState) {
                 val scope = SelectContentScope()
+                LaunchedEffect(keyboard.items.size) {
+                    val available = keyboard.items.filter { it.enabled }
+                    val target =
+                        available.firstOrNull { ctrl.isSelected(it.value) }
+                            ?: if (keyboard.fromEnd) available.lastOrNull() else available.firstOrNull()
+                    target?.requester?.requestFocus()
+                }
                 Column(
                     modifier =
                         modifier
-                            .widthIn(min = 128.dp, max = 280.dp)
-                            .styleable(panelStyleState, variant.rememberPanelStyle() then style),
+                            .onGloballyPositioned { keyboard.panelTop = it.boundsInRoot().top }
+                            .widthIn(min = if (nova) 144.dp else 128.dp, max = 280.dp)
+                            .onPreviewKeyEvent {
+                                    event ->
+                                keyboard.consumeRelease(event) ||
+                                    (
+                                        event.type == KeyEventType.KeyDown &&
+                                            keyboard.move(
+                                                event.key,
+                                                ctrl,
+                                            )
+                                    )
+                            }
+                            .styleable(
+                                panelStyleState,
+                                variant.rememberPanelStyle() then (
+                                    if (nova) {
+                                        Style {
+                                            width(keyboard.width.coerceAtLeast(144.dp))
+                                        }
+                                    } else {
+                                        Style
+                                    }
+                                ) then style,
+                            ),
                 ) {
                     // Official Content always composes ScrollUp + Viewport + ScrollDown.
                     scope.SelectScrollUpButton()
                     SelectViewport(
-                        modifier = Modifier.verticalScroll(scrollState),
+                        modifier =
+                            (
+                                if (nova) {
+                                    Modifier.heightIn(
+                                        max = 288.dp,
+                                    )
+                                } else {
+                                    Modifier
+                                }
+                            ).verticalScroll(scrollState),
                     ) {
                         scope.content()
                     }
@@ -401,6 +605,7 @@ internal fun SelectViewport(
 @Composable
 fun SelectContentScope.SelectScrollUpButton(modifier: Modifier = Modifier) {
     val scrollState = LocalSelectScroll.current
+    if (currentTheme.activePreset == StylePreset.Nova && scrollState?.canScrollBackward != true) return
     val scope = rememberCoroutineScope()
     Box(
         modifier =
@@ -412,10 +617,10 @@ fun SelectContentScope.SelectScrollUpButton(modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center,
     ) {
         Icon(
-            ChevronRight,
+            if (currentTheme.activePreset == StylePreset.Nova) NovaChevronRight else ChevronRight,
             tint = currentTheme.colors.mutedForeground,
             modifier = Modifier.rotate(-90f),
-            variant = IconVariant.Small,
+            variant = if (currentTheme.activePreset == StylePreset.Nova) IconVariant.Default else IconVariant.Small,
         )
     }
 }
@@ -427,6 +632,7 @@ fun SelectContentScope.SelectScrollUpButton(modifier: Modifier = Modifier) {
 @Composable
 fun SelectContentScope.SelectScrollDownButton(modifier: Modifier = Modifier) {
     val scrollState = LocalSelectScroll.current
+    if (currentTheme.activePreset == StylePreset.Nova && scrollState?.canScrollForward != true) return
     val scope = rememberCoroutineScope()
     Box(
         modifier =
@@ -438,10 +644,10 @@ fun SelectContentScope.SelectScrollDownButton(modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center,
     ) {
         Icon(
-            ChevronRight,
+            if (currentTheme.activePreset == StylePreset.Nova) NovaChevronRight else ChevronRight,
             tint = currentTheme.colors.mutedForeground,
             modifier = Modifier.rotate(90f),
-            variant = IconVariant.Small,
+            variant = if (currentTheme.activePreset == StylePreset.Nova) IconVariant.Default else IconVariant.Small,
         )
     }
 }
@@ -464,6 +670,30 @@ fun <T> SelectContentScope.SelectItem(
     val ctrl = selectController()
     val resolvedEnabled = enabled && !disabled
     val isSelected = ctrl.isSelected(value)
+    val keyboard = checkNotNull(LocalSelectKeyboard.current)
+    val requester = remember { FocusRequester() }
+    DisposableEffect(keyboard, value) {
+        keyboard.items.add(SelectFocusItem(value, requester, resolvedEnabled))
+        onDispose {
+            keyboard.items.removeAll { it.requester === requester }
+            keyboard.pick.remove(value)
+            keyboard.centers.remove(value)
+        }
+    }
+    SideEffect {
+        keyboard.pick[value] = { if (onSelect?.invoke() != true) ctrl.select(value) }
+        val index = keyboard.items.indexOfFirst { it.requester === requester }
+        if (index >= 0 &&
+            keyboard.items[index].enabled != resolvedEnabled
+        ) {
+            keyboard.items[index] =
+                SelectFocusItem(
+                    value,
+                    requester,
+                    resolvedEnabled,
+                )
+        }
+    }
     val interactionSource = remember { MutableInteractionSource() }
     val styleState =
         rememberUpdatedStyleState(interactionSource) {
@@ -484,6 +714,9 @@ fun <T> SelectContentScope.SelectItem(
         modifier =
             modifier
                 .fillMaxWidth()
+                .focusRequester(requester)
+                .onGloballyPositioned { keyboard.centers[value] = it.boundsInRoot().center.y }
+                .onFocusChanged { if (it.isFocused) keyboard.active = value }
                 .semantics {
                     role = Role.Button
                     this.selected = isSelected
@@ -500,12 +733,28 @@ fun <T> SelectContentScope.SelectItem(
                     },
                 )
                 .styleable(styleState, rememberSelectItemStyle()),
-        horizontalArrangement = Arrangement.spacedBy(twSpacing.sm),
+        horizontalArrangement =
+            Arrangement.spacedBy(
+                if (currentTheme.activePreset == StylePreset.Nova) 6.dp else twSpacing.sm,
+            ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         CompositionLocalProvider(
             LocalContentColor provides itemContentColor,
             LocalSelectItemSelected provides isSelected,
+            LocalDefaultTextStyle provides
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    currentTheme.typography.bodyMedium.copy(
+                        fontFamily =
+                            currentTheme.fontFamily,
+                        fontSize =
+                            14.sp,
+                        lineHeight =
+                            20.sp,
+                    )
+                } else {
+                    LocalDefaultTextStyle.current
+                },
         ) {
             if (content != null) {
                 SelectItemText {
@@ -525,10 +774,32 @@ internal fun RowScope.SelectItemText(
     text: String,
     modifier: Modifier = Modifier,
 ) {
-    Text(
-        modifier = modifier.weight(1f),
-        variant = TextVariant.BodySmall,
-    ) { text }
+    val theme = currentTheme
+    if (theme.activePreset != StylePreset.Nova) {
+        Text(modifier = modifier.weight(1f), variant = TextVariant.BodySmall) { text }
+        return
+    }
+    // CSS's single-line 20px box is independent of the fallback font's
+    // natural ascent/descent. The clickable row owns the merged label semantics.
+    Box(
+        modifier = modifier.weight(1f).height(with(LocalDensity.current) { 20.sp.toDp() }),
+        contentAlignment = Alignment.CenterStart,
+    ) {
+        Text(
+            // Match shrink-0/whitespace-nowrap while preserving tall glyph ink.
+            modifier =
+                Modifier.wrapContentWidth(Alignment.Start, unbounded = true)
+                    .wrapContentHeight(Alignment.CenterVertically, unbounded = true),
+            maxLines = 1,
+            variant = TextVariant.BodyMedium,
+            textStyle =
+                theme.typography.bodyMedium.copy(
+                    fontFamily = theme.fontFamily,
+                    fontSize = 14.sp,
+                    lineHeight = 20.sp,
+                ),
+        ) { text }
+    }
 }
 
 /** Slot form used when [SelectItem] has custom children. */
@@ -554,12 +825,17 @@ internal fun SelectItemIndicator(
     modifier: Modifier = Modifier,
     tint: Color = LocalContentColor.current,
 ) {
-    Box(modifier = modifier.size(currentTheme.icons.smallSize)) {
+    Box(
+        modifier =
+            modifier.size(
+                if (currentTheme.activePreset == StylePreset.Nova) 16.dp else currentTheme.icons.smallSize,
+            ),
+    ) {
         if (selected) {
             Icon(
-                Check,
+                if (currentTheme.activePreset == StylePreset.Nova) NovaCheck else Check,
                 tint = tint,
-                variant = IconVariant.Small,
+                variant = if (currentTheme.activePreset == StylePreset.Nova) IconVariant.Default else IconVariant.Small,
             )
         }
     }
@@ -589,12 +865,49 @@ fun SelectContentScope.SelectLabel(
     modifier: Modifier = Modifier,
     style: Style = Style,
 ) {
+    val theme = currentTheme
+    val nova = theme.activePreset == StylePreset.Nova
+    val labelStyle =
+        if (nova) {
+            Style {
+                minHeight(24.dp)
+                contentPadding(PaddingValues(start = 6.dp, end = 6.dp, top = 4.dp, bottom = 4.dp))
+            }
+        } else {
+            Style
+        }
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Text(
-        variant = TextVariant.LabelSmall,
-        modifier = modifier.styleable(styleState, rememberMenuLabelStyle() then style),
-        textStyle = TextColors.Muted,
-    ) { text }
+    if (nova) {
+        Box(
+            modifier =
+                modifier.semantics(mergeDescendants = true) {
+                }.styleable(
+                    styleState,
+                    rememberMenuLabelStyle() then labelStyle then style,
+                ),
+            contentAlignment = Alignment.CenterStart,
+        ) {
+            Text(
+                textStyle =
+                    theme.typography.bodySmall.copy(
+                        fontFamily = theme.fontFamily,
+                        fontSize = 12.sp,
+                        lineHeight = 16.sp,
+                        color = theme.colors.mutedForeground,
+                    ),
+            ) {
+                text
+            }
+        }
+    } else {
+        Text(
+            variant = TextVariant.LabelSmall,
+            modifier = modifier.styleable(styleState, rememberMenuLabelStyle() then style),
+            textStyle = TextColors.Muted,
+        ) {
+            text
+        }
+    }
 }
 
 @Composable

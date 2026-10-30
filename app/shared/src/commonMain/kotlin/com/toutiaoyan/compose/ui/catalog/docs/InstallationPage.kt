@@ -39,10 +39,10 @@ private fun InstallationContent() {
                 """
                 // gradle/libs.versions.toml
                 [versions]
-                shadcn-compose = "0.1.0-SNAPSHOT"
+                shadcn-compose = "$CatalogLibraryVersion"
 
                 [libraries]
-                shadcn-compose = { module = "com.toutiaoyan:shadcn-compose", version.ref = "shadcn-compose" }
+                shadcn-compose = { module = "$CatalogLibraryModule", version.ref = "shadcn-compose" }
                 """.trimIndent(),
             modifier = Modifier.fillMaxWidth(),
         )

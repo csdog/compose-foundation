@@ -1,0 +1,238 @@
+{
+  "functional_results_file": "test-results.json",
+  "functional_run": "0007",
+  "pixel_run": "0008",
+  "pixel_verification": {
+    "summary": {
+      "total": 2,
+      "recorded": 0,
+      "added": 0,
+      "changed": 0,
+      "unchanged": 2
+    },
+    "results": [
+      {
+        "golden_file_path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/snapshots/aspect_ratio_states_dark.png",
+        "timestamp": 20285298195416,
+        "context_data": {},
+        "type": "unchanged"
+      },
+      {
+        "golden_file_path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/snapshots/aspect_ratio_states_light.png",
+        "timestamp": 20285239135958,
+        "context_data": {},
+        "type": "unchanged"
+      }
+    ]
+  },
+  "ledger": {
+    "command_fingerprints": {
+      "10064dc03510311f2c650b039a0d6ec932a13ad73415a13ede15924121c14e41": 1,
+      "653d74b1e2444a0768ee0058805bd1f27d40eda33fa3598c9f41e3c451b6a6b2": 3,
+      "691a1ff2e87a0c8584f0c653a2dbca5d55b54a4e6e273b8f2efcaa68d37f6119": 1,
+      "72040207192c66b5476c7144e9ed68f87cccde79d43b5c2303afcf2e08e08124": 1,
+      "ef0c21902dff57992db75bd7910b87146dfd65211f4e72ac82520eed6b3d3d70": 1,
+      "efbe982f276a3b6b6948dc4c27cc965d7b1e0af164a576067a91209b6abbdd27": 1
+    },
+    "failure_fingerprints": {
+      "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25": {
+        "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:jvmTest'. > There were failing tests. See the report at: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/reports/tests/jvmTest/index.html",
+        "occurrences": 1
+      },
+      "6288e77ee5d20c255ff46889f1bdb0dadd10ada522d9316ea15ca0baa60fc5b3": {
+        "excerpt": "* What went wrong: Execution failed for task ':app:shared:jvmTest'. > There were failing tests. See the report at: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/reports/tests/jvmTest/index.html",
+        "occurrences": 1
+      }
+    },
+    "failure_fingerprints_truncated_occurrences": 0,
+    "run_count": 8,
+    "runs": [
+      {
+        "command": "./gradlew :shadcn:core:jvmTest --tests *AspectRatioLayoutTest :app:shared:compileKotlinJvm --console=plain --no-scan",
+        "elapsed_seconds": 8.252,
+        "exit_status": 1,
+        "failure_fingerprints": [
+          "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+        ],
+        "log": "0001.log",
+        "question": "Does AspectRatio respect live parent constraints, portrait ratios, square default and caller Style width before the ratio is measured?",
+        "scope": "targeted",
+        "sequence": 1,
+        "warning_fingerprints": [
+          "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+          "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+          "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+          "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+          "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+        ]
+      },
+      {
+        "command": "./gradlew :shadcn:core:jvmTest --tests *AspectRatioLayoutTest --tests *AspectRatioScreenshotTest :app:shared:jvmTest --tests *AspectRatioExamplesTest :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+        "elapsed_seconds": 17.179,
+        "exit_status": 1,
+        "failure_fingerprints": [
+          "6288e77ee5d20c255ff46889f1bdb0dadd10ada522d9316ea15ca0baa60fc5b3"
+        ],
+        "log": "0002.log",
+        "question": "After fixing Style measurement ordering, do AspectRatio geometry and all image/RTL examples pass, and does the Web resource build succeed?",
+        "scope": "targeted",
+        "sequence": 2,
+        "warning_fingerprints": [
+          "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+          "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+          "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+          "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+          "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+          "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+        ]
+      },
+      {
+        "command": "./gradlew :shadcn:core:jvmTest --tests *AspectRatioLayoutTest --tests *AspectRatioScreenshotTest -Proborazzi.test.verify=true :app:shared:jvmTest --tests *AspectRatioExamplesTest :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+        "elapsed_seconds": 3.021,
+        "exit_status": 0,
+        "failure_fingerprints": [],
+        "log": "0003.log",
+        "question": "With actual low-contrast avatar samples as the oracle, do grayscale/brightness, RTL, live aspect geometry and existing two pixel baselines pass?",
+        "scope": "targeted",
+        "sequence": 3,
+        "warning_fingerprints": [
+          "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+          "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+          "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+          "ab1634b433a6407ca72d5eef68f68f79c43b9325012ee01647b8fa73fd81cfe0",
+          "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+          "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+        ]
+      },
+      {
+        "command": "./gradlew :shadcn:core:jvmTest --tests *AspectRatioLayoutTest --tests *AspectRatioScreenshotTest -Proborazzi.test.verify=true :app:shared:jvmTest --tests *AspectRatioExamplesTest --tests *CatalogPreviewTest --tests *CatalogNavigationTest :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+        "elapsed_seconds": 12.597,
+        "exit_status": 0,
+        "failure_fingerprints": [],
+        "log": "0004.log",
+        "question": "Do final optimized-image examples, responsive geometry, Style constraints, RTL switching and two existing pixel baselines pass with the final Web distribution?",
+        "scope": "targeted",
+        "sequence": 4,
+        "warning_fingerprints": [
+          "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+          "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+          "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+          "c1ec91a5ef765ce15832893e9576cd54cacaf55a8b7b8d3e821c20a878d2b1f7",
+          "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+          "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+        ]
+      },
+      {
+        "command": "./gradlew :shadcn:core:jvmTest --tests *AspectRatioLayoutTest --tests *AspectRatioScreenshotTest -Proborazzi.test.verify=true :app:shared:jvmTest --tests *AspectRatioExamplesTest --tests *CatalogPreviewTest --tests *CatalogNavigationTest :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+        "elapsed_seconds": 11.089,
+        "exit_status": 0,
+        "failure_fingerprints": [],
+        "log": "0005.log",
+        "question": "Does the final browser-negotiated bitmap preserve actual grayscale/brightness and responsive RTL previews with existing pixel baselines unchanged?",
+        "scope": "targeted",
+        "sequence": 5,
+        "warning_fingerprints": [
+          "15d9f8632e1b7ac8794fbf366c8eb3ee3aace88a2a62a9e58c6aaadcfc993847"
+        ]
+      },
+      {
+        "command": "./gradlew :shadcn:core:jvmTest --tests *AspectRatioLayoutTest --tests *AspectRatioScreenshotTest -Proborazzi.test.verify=true :app:shared:jvmTest --tests *AspectRatioExamplesTest --tests *CatalogPreviewTest --tests *CatalogNavigationTest :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+        "elapsed_seconds": 12.579,
+        "exit_status": 0,
+        "failure_fingerprints": [],
+        "log": "0006.log",
+        "question": "Does reserving the shared preview border yield the official 260px phone image while preserving live previews, navigation, RTL and existing AspectRatio pixels?",
+        "scope": "targeted",
+        "sequence": 6,
+        "warning_fingerprints": [
+          "dea4a72b34c95e4d07f0eb302fc3af1c41932202ee834d68ee2c2d771a0b7b41"
+        ]
+      },
+      {
+        "command": "./gradlew :shadcn:core:jvmTest --tests *SelectLabelLayoutTest --tests *ChoiceNovaParityTest --tests *AspectRatioLayoutTest --tests *AspectRatioScreenshotTest :app:shared:jvmTest --tests *AspectRatioExamplesTest --tests *CatalogPreviewTest --tests *CatalogNavigationTest :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+        "elapsed_seconds": 19.063,
+        "exit_status": 0,
+        "failure_fingerprints": [],
+        "log": "0007.log",
+        "question": "Does Nova Select keep Hebrew and long labels single-line within the official fixed anchor width, preserve keyboard selection, and retain the AspectRatio and catalog regressions?",
+        "scope": "targeted",
+        "sequence": 7,
+        "warning_fingerprints": [
+          "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+          "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+          "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+          "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+          "0d92dab3f8856ff6392f023a829ed0ca692c33ed9ba455e4a90bb37840ef7361",
+          "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+          "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+        ]
+      },
+      {
+        "command": "./gradlew :shadcn:core:jvmTest --tests *AspectRatioScreenshotTest -Proborazzi.test.verify=true --console=plain --no-scan",
+        "elapsed_seconds": 2.519,
+        "exit_status": 0,
+        "failure_fingerprints": [],
+        "log": "0008.log",
+        "question": "After the Select no-wrap fix, do the two existing AspectRatio screenshot goldens still verify without recording?",
+        "scope": "targeted",
+        "sequence": 8,
+        "warning_fingerprints": [
+          "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+          "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+          "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+          "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+          "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+        ]
+      }
+    ],
+    "version": 1,
+    "warning_fingerprints": {
+      "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312": {
+        "excerpt": "w: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/text/Text.kt:5:16 Suppression of error 'INVISIBLE_REFERENCE' might compile and work, but the compiler behavior is UNSP...",
+        "occurrences": 4
+      },
+      "0d92dab3f8856ff6392f023a829ed0ca692c33ed9ba455e4a90bb37840ef7361": {
+        "excerpt": "webpack 5.108.1 compiled with 1 warning in 423 ms",
+        "occurrences": 1
+      },
+      "15d9f8632e1b7ac8794fbf366c8eb3ee3aace88a2a62a9e58c6aaadcfc993847": {
+        "excerpt": "webpack 5.108.1 compiled with 1 warning in 415 ms",
+        "occurrences": 1
+      },
+      "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4": {
+        "excerpt": "You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.",
+        "occurrences": 6
+      },
+      "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2": {
+        "excerpt": "Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.",
+        "occurrences": 6
+      },
+      "ab1634b433a6407ca72d5eef68f68f79c43b9325012ee01647b8fa73fd81cfe0": {
+        "excerpt": "webpack 5.108.1 compiled with 1 warning in 441 ms",
+        "occurrences": 1
+      },
+      "c1ec91a5ef765ce15832893e9576cd54cacaf55a8b7b8d3e821c20a878d2b1f7": {
+        "excerpt": "webpack 5.108.1 compiled with 1 warning in 404 ms",
+        "occurrences": 1
+      },
+      "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a": {
+        "excerpt": "WARNING: The option setting 'android.experimental.enableScreenshotTest=true' is experimental.",
+        "occurrences": 6
+      },
+      "dea4a72b34c95e4d07f0eb302fc3af1c41932202ee834d68ee2c2d771a0b7b41": {
+        "excerpt": "webpack 5.108.1 compiled with 1 warning in 399 ms",
+        "occurrences": 1
+      },
+      "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e": {
+        "excerpt": "Add android.sync.suppressAgpWarnings=UNSUPPORTED_PROJECT_OPTION_USE to the gradle.properties file to suppress this warning.",
+        "occurrences": 12
+      },
+      "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90": {
+        "excerpt": "WARNING: The option setting 'android.experimental.testSuiteSupport=true' is experimental.",
+        "occurrences": 6
+      }
+    },
+    "warning_fingerprints_truncated_occurrences": 0,
+    "workflow": "08850faa342aeb1b1a14d8906135aaa1"
+  }
+}

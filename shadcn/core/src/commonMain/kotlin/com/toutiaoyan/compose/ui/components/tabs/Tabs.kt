@@ -2,6 +2,7 @@
 
 package com.toutiaoyan.compose.ui.components.tabs
 
+import com.toutiaoyan.compose.ui.utils.keyboardInputMode
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
@@ -379,6 +380,7 @@ fun TabsListScope.TabsTrigger(
     Box(
         modifier =
             modifier
+                .keyboardInputMode()
                 .focusRequester(requester)
                 .semantics {
                     role = Role.Tab

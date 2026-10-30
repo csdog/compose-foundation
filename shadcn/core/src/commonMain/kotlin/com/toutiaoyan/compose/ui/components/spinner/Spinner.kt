@@ -12,14 +12,18 @@ import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.isSpecified
+import com.toutiaoyan.compose.ui.components.icon.LocalInlineIconSize
+import com.toutiaoyan.compose.ui.theme.LocalContentColor
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.layout.size
 import com.toutiaoyan.compose.tailwind.modifiers.animateSpin
 import com.toutiaoyan.compose.ui.theme.currentTheme
 
@@ -30,8 +34,8 @@ import com.toutiaoyan.compose.ui.theme.currentTheme
  * silhouette is drawn directly with [Canvas]/[Stroke] instead of depending on
  * one just for this.
  *
- * Default size is Style-driven (16.dp). [size] Sm/Lg override that; Default
- * keeps the existing chrome.
+ * Default size follows an inline Badge/Button when present, otherwise 16.dp.
+ * [size] Sm/Lg and an explicit modifier override that; color follows ambient content.
  *
  * Usage:
  * ```
@@ -49,18 +53,29 @@ fun Spinner(
     label: String = "Loading",
     style: Style = Style,
 ) {
-    val color = currentTheme.colors.foreground
+    val color = LocalContentColor.current.takeIf { it.isSpecified } ?: currentTheme.colors.foreground
+    val inlineSize = LocalInlineIconSize.current
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    val sizeOverride =
+    val preferredSize =
         when (size) {
-            SpinnerSize.Default -> Modifier
-            SpinnerSize.Sm -> Modifier.size(12.dp)
-            SpinnerSize.Lg -> Modifier.size(24.dp)
+            SpinnerSize.Default -> inlineSize
+            SpinnerSize.Sm -> 12.dp
+            SpinnerSize.Lg -> 24.dp
+        }
+    val sizeStyle =
+        remember(preferredSize) {
+            if (preferredSize == null) {
+                Style
+            } else {
+                Style {
+                    width(preferredSize)
+                    height(preferredSize)
+                }
+            }
         }
     Canvas(
         modifier =
             modifier
-                .then(sizeOverride)
                 .animateSpin()
                 .semantics {
                     contentDescription = label
@@ -68,16 +83,21 @@ fun Spinner(
                 }
                 .styleable(
                     styleState,
-                    rememberSpinnerStyle() then style,
+                    rememberSpinnerStyle() then sizeStyle then style,
                 ),
     ) {
-        // A ~270 degree arc (Loader2Icon's open-gap silhouette), not a full circle.
+        // Lucide LoaderCircle: 24-unit viewBox, r=9, stroke=2, 288° sweep.
+        // Scale the path and stroke together, keeping its ink inside the viewport.
+        val unit = this.size.minDimension / 24f
+        val diameter = 18f * unit
         drawArc(
             color = color,
             startAngle = 0f,
-            sweepAngle = 270f,
+            sweepAngle = 288f,
             useCenter = false,
-            style = Stroke(width = this.size.minDimension * 0.18f, cap = StrokeCap.Round),
+            topLeft = Offset((this.size.width - diameter) / 2f, (this.size.height - diameter) / 2f),
+            size = Size(diameter, diameter),
+            style = Stroke(width = 2f * unit, cap = StrokeCap.Round),
         )
     }
 }

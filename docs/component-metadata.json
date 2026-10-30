@@ -1,182 +1,285 @@
 {
-  "stylePreset": "Vega",
-  "stylePresetNote": "Every preview image was captured under the 'Vega' style preset (this library's default), not a neutral/preset-agnostic render. compose-foundation ships 8 presets total (Vega, Nova, Maia, Lyra, Mira, Luma, Sera, Rhea), each changing shape/spacing/animation -- swapping presets would change these components' appearance without changing this file.",
+  "stylePreset": null,
+  "stylePresetNote": "Mixed preview presets: read each preview's stylePreset. Legacy previews use Vega; the Nova parity matrices and Code Block/Trace previews use Nova. The catalog defaults to Nova. Presets change shape, spacing and motion.",
   "components": [
     {
       "id": "button",
       "title": "Button",
-      "description": "Triggers an action or event. Supports six variants and text + icon size scales.",
+      "description": "Displays a button or a component that looks like a button.",
       "category": "core-primitives",
       "family": "action",
       "isNew": false,
-      "properties": {},
+      "properties": {
+        "ButtonVariant": [
+          "Default",
+          "Outline",
+          "Secondary",
+          "Ghost",
+          "Destructive",
+          "Link"
+        ],
+        "ButtonSize": [
+          "Xs",
+          "Sm",
+          "Md",
+          "Lg",
+          "Icon",
+          "IconXs",
+          "IconSm",
+          "IconLg"
+        ]
+      },
       "previews": [
         {
           "state": "focused",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_focused_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_focused_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_focused_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "group_states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "group_states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_states_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "group_with_label",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_with_label_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_with_label_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "group_with_label_focused",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_with_label_focused_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_with_label_focused_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "group_with_label_focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_with_label_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_with_label_focused_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "group_with_label",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_with_label_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_with_label_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "icon_sizes",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_icon_sizes_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_icon_sizes_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "icon_sizes",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_icon_sizes_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_icon_sizes_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "icon_variants",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_icon_variants_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_icon_variants_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "icon_variants",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_icon_variants_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_icon_variants_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_parity",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_nova_parity_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_parity",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_nova_parity_light.png",
+          "stylePreset": "Nova"
         },
         {
           "state": "pressed",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_pressed_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_pressed_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "unpressed_baseline",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_unpressed_baseline_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_unpressed_baseline_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "variants",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_variants_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_variants_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "variants_disabled",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_variants_disabled_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_variants_disabled_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "variants_disabled",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_variants_disabled_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_variants_disabled_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "variants",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_variants_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_variants_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
     {
       "id": "card",
       "title": "Card",
-      "description": "Displays content in a bordered container. Compose with CardHeader / CardTitle / CardDescription / CardContent / CardFooter.",
+      "description": "Displays a card with header, content, and footer.",
       "category": "core-primitives",
       "family": "layout",
       "isNew": false,
-      "properties": {},
+      "properties": {
+        "CardVariant": [
+          "Default",
+          "Elevated",
+          "Filled"
+        ],
+        "CardSize": [
+          "Default",
+          "Sm"
+        ]
+      },
       "previews": [
         {
           "state": "create_account",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/card_create_account_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/card_create_account_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "create_account",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/card_create_account_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/card_create_account_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "muted_text_isolation",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/card_muted_text_isolation_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/card_muted_text_isolation_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_parity",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/card_nova_parity_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_parity",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/card_nova_parity_light.png",
+          "stylePreset": "Nova"
         },
         {
           "state": "spacing",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/card_spacing_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/card_spacing_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "spacing",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/card_spacing_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/card_spacing_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "variants",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/card_variants_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/card_variants_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "variants",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/card_variants_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/card_variants_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
     {
       "id": "badge",
       "title": "Badge",
-      "description": "A small label used to highlight status, counts, or metadata.",
+      "description": "Displays a badge or a component that looks like a badge.",
       "category": "core-primitives",
       "family": "text",
       "isNew": false,
-      "properties": {},
+      "properties": {
+        "BadgeVariant": [
+          "Default",
+          "Secondary",
+          "Destructive",
+          "Outline",
+          "Ghost",
+          "Link"
+        ]
+      },
       "previews": [
         {
           "state": "focused",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/badge_focused_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/badge_focused_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/badge_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/badge_focused_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_parity",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/badge_nova_parity_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_parity",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/badge_nova_parity_light.png",
+          "stylePreset": "Nova"
         },
         {
           "state": "variants",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/badge_variants_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/badge_variants_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "variants",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/badge_variants_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/badge_variants_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -187,138 +290,196 @@
       "category": "core-primitives",
       "family": "text",
       "isNew": false,
-      "properties": {},
+      "properties": {
+        "ChipVariant": [
+          "Default",
+          "Selected",
+          "Outline"
+        ]
+      },
       "previews": [
         {
           "state": "focused",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chip_focused_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chip_focused_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chip_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chip_focused_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chip_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chip_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chip_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chip_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
     {
       "id": "input",
       "title": "Input",
-      "description": "A styled text control matching real shadcn input.tsx. Labels and helper/error copy belong on Field / FieldLabel / FieldDescription / FieldError.",
+      "description": "A text input component for forms and user data entry with built-in styling and accessibility features.",
       "category": "core-primitives",
       "family": "field",
       "isNew": false,
-      "properties": {},
+      "properties": {
+        "InputVariant": [
+          "Default",
+          "Filled",
+          "Ghost"
+        ],
+        "InputType": [
+          "Text",
+          "Password",
+          "Email",
+          "Tel",
+          "Url",
+          "Number",
+          "Decimal",
+          "Search"
+        ]
+      },
       "previews": [
         {
           "state": "focused",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_focused_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_focused_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_focused_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "focused_with_ring_disabled",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_focused_with_ring_disabled_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_focused_with_ring_disabled_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "group_bottom_bar",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_bottom_bar_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_bottom_bar_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "group_bottom_bar",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_bottom_bar_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_bottom_bar_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "group_focused",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_focused_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_focused_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "group_focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_focused_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "group_long_value",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_long_value_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_long_value_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "group_long_value",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_long_value_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_long_value_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "group_states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "group_states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_states_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_nova_focus_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_nova_focus_light.png",
+          "stylePreset": "Nova"
         },
         {
           "state": "otp_focused",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_focused_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_focused_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "otp_focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_focused_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "otp_focused_with_ring_disabled",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_focused_with_ring_disabled_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_focused_with_ring_disabled_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "otp_states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "otp_states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_states_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "otp_verify_email",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_verify_email_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_verify_email_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "otp_verify_email",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_verify_email_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_verify_email_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -334,22 +495,105 @@
         {
           "state": "color_inheritance",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/text_color_inheritance_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/text_color_inheritance_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "color_inheritance",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/text_color_inheritance_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/text_color_inheritance_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "styles",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/text_styles_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/text_styles_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "styles",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/text_styles_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/text_styles_light.png",
+          "stylePreset": "Vega"
+        }
+      ]
+    },
+    {
+      "id": "code-block",
+      "title": "Code Block",
+      "description": "Displays code, terminal output and diffs with an optional header, line numbers and a copy button.",
+      "category": "data-display",
+      "family": "text",
+      "isNew": true,
+      "properties": {
+        "CodeBlockVariant": [
+          "Default",
+          "Destructive"
+        ],
+        "CodeBlockSize": [
+          "Default",
+          "Sm"
+        ],
+        "CodeBlockLineVariant": [
+          "Default",
+          "Added",
+          "Removed",
+          "Highlighted"
+        ]
+      },
+      "previews": [
+        {
+          "state": "focus",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/code_block_focus_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "focus",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/code_block_focus_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "parity",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/code_block_parity_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "parity",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/code_block_parity_light.png",
+          "stylePreset": "Nova"
+        }
+      ]
+    },
+    {
+      "id": "trace",
+      "title": "Trace",
+      "description": "Display a sequence of steps with collapsible details and status indicators.",
+      "category": "ai-elements",
+      "family": "disclosure",
+      "isNew": true,
+      "properties": {
+        "TraceStatus": [
+          "Running",
+          "Error",
+          "Pending"
+        ]
+      },
+      "previews": [
+        {
+          "state": "parity",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/trace_parity_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "parity",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/trace_parity_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
@@ -365,12 +609,26 @@
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/label_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/label_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/label_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/label_states_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_form",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/form_nova_parity_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_form",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/form_nova_parity_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
@@ -386,22 +644,50 @@
         {
           "state": "focused",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/checkbox_focused_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/checkbox_focused_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/checkbox_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/checkbox_focused_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/checkbox_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/checkbox_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/checkbox_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/checkbox_states_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_selection",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/selection_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_selection",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/selection_nova_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/selection_checkbox_focus_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/selection_checkbox_focus_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
@@ -417,22 +703,50 @@
         {
           "state": "focused",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/radio_focused_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/radio_focused_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/radio_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/radio_focused_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/radio_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/radio_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/radio_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/radio_states_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_selection",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/selection_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_selection",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/selection_nova_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/selection_radio_focus_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/selection_radio_focus_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
@@ -448,32 +762,62 @@
         {
           "state": "focused",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/switch_focused_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/switch_focused_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/switch_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/switch_focused_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "sizes",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/switch_sizes_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/switch_sizes_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "sizes",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/switch_sizes_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/switch_sizes_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/switch_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/switch_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/switch_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/switch_states_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_selection",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/selection_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_selection",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/selection_nova_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/selection_switch_focus_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/selection_switch_focus_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
@@ -484,54 +828,91 @@
       "category": "forms-and-inputs",
       "family": "selection",
       "isNew": false,
-      "properties": {},
+      "properties": {
+        "ToggleVariant": [
+          "Default",
+          "Outline"
+        ]
+      },
       "previews": [
         {
           "state": "focused",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_focused_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_focused_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_focused_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "group_states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_group_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_group_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "group_states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_group_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_group_states_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "sizes",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_sizes_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_sizes_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "sizes",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_sizes_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_sizes_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_states_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_selection",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/selection_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_selection",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/selection_nova_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/selection_toggle_focus_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/selection_toggle_focus_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
     {
       "id": "slider",
       "title": "Slider",
-      "description": "An input for selecting a value from within a range by dragging a thumb.",
+      "description": "An input where the user selects a value from within a given range.",
       "category": "forms-and-inputs",
       "family": "field",
       "isNew": false,
@@ -540,29 +921,57 @@
         {
           "state": "focused",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/slider_focused_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/slider_focused_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/slider_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/slider_focused_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/slider_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/slider_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/slider_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/slider_states_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_groups",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/groups_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_groups",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/groups_nova_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/groups_slider_focus_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/groups_slider_focus_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
     {
       "id": "toggle-group",
       "title": "Toggle Group",
-      "description": "A segmented row of toggles for single- or multi-select, e.g. text formatting.",
+      "description": "A set of two-state buttons that can be toggled on or off.",
       "category": "forms-and-inputs",
       "family": "selection",
       "isNew": false,
@@ -571,12 +980,38 @@
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_group_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_group_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_group_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toggle_group_states_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_groups",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/groups_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_groups",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/groups_nova_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/groups_toggle_focus_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/groups_toggle_focus_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
@@ -592,39 +1027,45 @@
         {
           "state": "compact",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/stepper_compact_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/stepper_compact_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "compact",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/stepper_compact_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/stepper_compact_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "mid_progress",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/stepper_mid_progress_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/stepper_mid_progress_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "mid_progress",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/stepper_mid_progress_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/stepper_mid_progress_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "vertical",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/stepper_vertical_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/stepper_vertical_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "vertical",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/stepper_vertical_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/stepper_vertical_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
     {
       "id": "input-group",
       "title": "Input Group",
-      "description": "Addons, buttons, and helper content around an Input/Textarea \u2014 matching shadcn input-group.tsx (InputGroup / InputGroupAddon / InputGroupButton / InputGroupText).",
+      "description": "Add addons, buttons, and helper content to inputs.",
       "category": "forms-and-inputs",
       "family": "field",
       "isNew": false,
@@ -633,83 +1074,150 @@
         {
           "state": "bottom_bar",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_bottom_bar_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_bottom_bar_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "bottom_bar",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_bottom_bar_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_bottom_bar_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "focused",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_focused_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_focused_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_focused_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "long_value",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_long_value_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_long_value_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "long_value",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_long_value_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_long_value_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_group_states_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_groups",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/groups_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_groups",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/groups_nova_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/groups_input_focus_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/groups_input_focus_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
     {
       "id": "button-group",
       "title": "Button Group",
-      "description": "Visually joins a row of buttons into a single segmented control.",
+      "description": "A container that groups related buttons together with consistent styling.",
       "category": "forms-and-inputs",
       "family": "action",
       "isNew": false,
-      "properties": {},
+      "properties": {
+        "ButtonGroupOrientation": [
+          "Horizontal",
+          "Vertical"
+        ]
+      },
       "previews": [
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_states_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "with_label",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_with_label_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_with_label_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "with_label_focused",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_with_label_focused_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_with_label_focused_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "with_label_focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_with_label_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_with_label_focused_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "with_label",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_with_label_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/button_group_with_label_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_groups",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/groups_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_groups",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/groups_nova_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/groups_button_focus_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/groups_button_focus_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
@@ -720,58 +1228,106 @@
       "category": "forms-and-inputs",
       "family": "field",
       "isNew": false,
-      "properties": {},
+      "properties": {
+        "InputVariant": [
+          "Default",
+          "Filled",
+          "Ghost"
+        ]
+      },
       "previews": [
         {
           "state": "focused",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/textarea_focused_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/textarea_focused_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/textarea_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/textarea_focused_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/textarea_nova_focus_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/textarea_nova_focus_light.png",
+          "stylePreset": "Nova"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/textarea_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/textarea_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/textarea_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/textarea_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
     {
       "id": "field",
       "title": "Field",
-      "description": "Combine labels, controls, and help text \u2014 matching real shadcn field.tsx (FieldSet / FieldLegend / FieldGroup / Field / FieldContent / FieldLabel / FieldTitle / FieldDescription / FieldError / FieldSeparator). No Form wrapper; compose with your own hoisted state.",
+      "description": "Combine labels, controls, and help text to build accessible form fields.",
       "category": "forms-and-inputs",
       "family": "field",
       "isNew": false,
-      "properties": {},
+      "properties": {
+        "FieldOrientation": [
+          "Vertical",
+          "Horizontal",
+          "Responsive"
+        ],
+        "FieldLegendVariant": [
+          "Legend",
+          "Label"
+        ]
+      },
       "previews": [
         {
           "state": "profile_form",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/field_profile_form_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/field_profile_form_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "profile_form",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/field_profile_form_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/field_profile_form_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/field_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/field_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/field_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/field_states_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_form",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/form_nova_parity_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_form",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/form_nova_parity_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
@@ -782,164 +1338,200 @@
       "category": "forms-and-inputs",
       "family": "field",
       "isNew": true,
-      "properties": {},
+      "properties": {
+        "QuestionnaireShortcuts": [
+          "None",
+          "Letters",
+          "Numbers"
+        ]
+      },
       "previews": [
         {
           "state": "animate",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_animate_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_animate_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "animate",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_animate_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_animate_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "card",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_card_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_card_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "card",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_card_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_card_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "choice_parts",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_choice_parts_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_choice_parts_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "choice_parts",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_choice_parts_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_choice_parts_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "custom_progress",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_custom_progress_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_custom_progress_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "custom_progress",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_custom_progress_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_custom_progress_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "custom_validation",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_custom_validation_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_custom_validation_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "custom_validation",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_custom_validation_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_custom_validation_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "default",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_default_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_default_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "default",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_default_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_default_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "dialog",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_dialog_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_dialog_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "dialog",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_dialog_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_dialog_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "disabled",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_disabled_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_disabled_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "disabled",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_disabled_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_disabled_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "items",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_items_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_items_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "items",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_items_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_items_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "navigation_state",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_navigation_state_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_navigation_state_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "navigation_state",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_navigation_state_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_navigation_state_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "reset",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_reset_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_reset_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "reset",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_reset_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_reset_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "resume",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_resume_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_resume_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "resume",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_resume_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_resume_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "shortcuts",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_shortcuts_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_shortcuts_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "shortcuts",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_shortcuts_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_shortcuts_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "status",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_status_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_status_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "status",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_status_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_status_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "without_actions",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_without_actions_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_without_actions_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "without_actions",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_without_actions_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_without_actions_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
     {
       "id": "input-otp",
       "title": "Input OTP",
-      "description": "A one-time-passcode input with boxed slots that fill left-to-right.",
+      "description": "Accessible one-time password component with copy-paste functionality.",
       "category": "forms-and-inputs",
       "family": "field",
       "isNew": false,
@@ -948,37 +1540,68 @@
         {
           "state": "focused",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_focused_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_focused_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_focused_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "focused_with_ring_disabled",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_focused_with_ring_disabled_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_focused_with_ring_disabled_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_states_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "verify_email",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_verify_email_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_verify_email_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "verify_email",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_verify_email_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/input_otp_verify_email_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_choice",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/choice_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_choice",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/choice_nova_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_otp_focus",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/choice_otp_focus_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_otp_focus",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/choice_otp_focus_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
@@ -994,32 +1617,38 @@
         {
           "state": "group_count",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/avatar_group_count_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/avatar_group_count_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "group_count",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/avatar_group_count_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/avatar_group_count_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "group_overlap",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/avatar_group_overlap_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/avatar_group_overlap_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "group_overlap",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/avatar_group_overlap_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/avatar_group_overlap_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/avatar_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/avatar_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/avatar_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/avatar_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -1035,12 +1664,14 @@
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/aspect_ratio_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/aspect_ratio_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/aspect_ratio_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/aspect_ratio_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -1056,12 +1687,14 @@
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/separator_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/separator_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/separator_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/separator_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -1077,12 +1710,14 @@
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/kbd_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/kbd_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/kbd_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/kbd_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -1093,27 +1728,47 @@
       "category": "data-display",
       "family": "text",
       "isNew": false,
-      "properties": {},
+      "properties": {
+        "ItemVariant": [
+          "Default",
+          "Outline",
+          "Muted"
+        ],
+        "ItemSize": [
+          "Default",
+          "Sm",
+          "Xs"
+        ],
+        "ItemMediaVariant": [
+          "Default",
+          "Icon",
+          "Image"
+        ]
+      },
       "previews": [
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/item_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/item_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/item_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/item_states_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "xs",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/item_xs_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/item_xs_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "xs",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/item_xs_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/item_xs_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -1124,87 +1779,112 @@
       "category": "data-display",
       "family": "text",
       "isNew": false,
-      "properties": {},
+      "properties": {
+        "EmptyVariant": [
+          "Default",
+          "Outline"
+        ],
+        "EmptyMediaVariant": [
+          "Default",
+          "Icon"
+        ]
+      },
       "previews": [
         {
           "state": "content_spacing",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_content_spacing_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_content_spacing_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "content_spacing",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_content_spacing_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_content_spacing_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "md_padding",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_md_padding_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_md_padding_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "md_padding",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_md_padding_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_md_padding_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "media_default",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_media_default_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_media_default_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "media_default",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_media_default_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_media_default_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "outline",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_outline_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_outline_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "outline",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_outline_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_outline_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "rounded_lg",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_rounded_lg_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_rounded_lg_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "rounded_lg",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_rounded_lg_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_rounded_lg_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "spacing",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_spacing_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_spacing_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "spacing",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_spacing_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_spacing_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_states_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "title_lg",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_title_lg_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_title_lg_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "title_lg",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_title_lg_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_title_lg_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -1215,47 +1895,60 @@
       "category": "feedback",
       "family": "feedback",
       "isNew": false,
-      "properties": {},
+      "properties": {
+        "AlertVariant": [
+          "Default",
+          "Destructive"
+        ]
+      },
       "previews": [
         {
           "state": "action",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_action_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_action_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "action",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_action_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_action_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "dialog_close_button",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_close_button_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_close_button_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "dialog_close_button",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_close_button_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_close_button_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "dialog_states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "dialog_states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_states_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -1271,22 +1964,26 @@
         {
           "state": "label",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/progress_label_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/progress_label_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "label",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/progress_label_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/progress_label_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/progress_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/progress_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/progress_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/progress_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -1302,12 +1999,14 @@
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/skeleton_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/skeleton_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/skeleton_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/skeleton_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -1323,12 +2022,14 @@
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/spinner_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/spinner_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/spinner_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/spinner_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -1344,12 +2045,14 @@
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toast_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toast_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toast_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/toast_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -1365,22 +2068,38 @@
         {
           "state": "collapsed",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/collapsible_collapsed_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/collapsible_collapsed_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "collapsed",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/collapsible_collapsed_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/collapsible_collapsed_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "expanded",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/collapsible_expanded_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/collapsible_expanded_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "expanded",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/collapsible_expanded_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/collapsible_expanded_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_inline",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_nova_inline_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_inline",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_nova_inline_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
@@ -1396,32 +2115,38 @@
         {
           "state": "collapsed",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/accordion_collapsed_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/accordion_collapsed_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "collapsed",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/accordion_collapsed_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/accordion_collapsed_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "expanded",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/accordion_expanded_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/accordion_expanded_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "expanded",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/accordion_expanded_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/accordion_expanded_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "trigger_focused",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/accordion_trigger_focused_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/accordion_trigger_focused_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "trigger_focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/accordion_trigger_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/accordion_trigger_focused_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -1437,27 +2162,32 @@
         {
           "state": "item_focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tabs_item_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tabs_item_focused_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "line",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tabs_line_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tabs_line_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "line",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tabs_line_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tabs_line_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tabs_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tabs_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tabs_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tabs_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -1473,17 +2203,20 @@
         {
           "state": "ellipsis",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/breadcrumb_ellipsis_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/breadcrumb_ellipsis_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/breadcrumb_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/breadcrumb_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/breadcrumb_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/breadcrumb_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -1499,32 +2232,38 @@
         {
           "state": "arrow",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tooltip_arrow_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tooltip_arrow_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "arrow",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tooltip_arrow_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tooltip_arrow_light.png",
+          "stylePreset": "Vega"
         },
         {
-          "state": "side_offset_0",
+          "state": "side_offset_4",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tooltip_side_offset_0_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tooltip_side_offset_4_dark.png",
+          "stylePreset": "Vega"
         },
         {
-          "state": "side_offset_0",
+          "state": "side_offset_4",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tooltip_side_offset_0_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tooltip_side_offset_4_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "trigger",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tooltip_trigger_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tooltip_trigger_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "trigger",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tooltip_trigger_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tooltip_trigger_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -1540,22 +2279,26 @@
         {
           "state": "dimensions_form",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/popover_dimensions_form_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/popover_dimensions_form_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "dimensions_form",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/popover_dimensions_form_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/popover_dimensions_form_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/popover_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/popover_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/popover_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/popover_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -1571,12 +2314,14 @@
         {
           "state": "trigger",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/hover_card_trigger_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/hover_card_trigger_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "trigger",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/hover_card_trigger_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/hover_card_trigger_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -1592,19 +2337,21 @@
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/dropdown_menu_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/dropdown_menu_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/dropdown_menu_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/dropdown_menu_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
     {
       "id": "context-menu",
       "title": "Context Menu",
-      "description": "A menu triggered by right-click, opened at the cursor.",
+      "description": "Displays a menu of actions triggered by a right click.",
       "category": "overlays-and-navigation",
       "family": "overlay",
       "isNew": false,
@@ -1613,19 +2360,33 @@
         {
           "state": "idle",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/context_menu_idle_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/context_menu_idle_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "idle",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/context_menu_idle_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/context_menu_idle_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_context",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_nova_context_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_context",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_nova_context_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
     {
       "id": "dialog",
       "title": "Dialog",
-      "description": "A modal window layered over the page.",
+      "description": "A window overlaid on either the primary window or another dialog window, rendering the content underneath inert.",
       "category": "overlays-and-navigation",
       "family": "overlay",
       "isNew": false,
@@ -1634,17 +2395,44 @@
         {
           "state": "close_button_focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/dialog_close_button_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/dialog_close_button_focused_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/dialog_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/dialog_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/dialog_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/dialog_states_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_dialog",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_nova_dialog_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_dialog",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_nova_dialog_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_completion_dialog_backdrop",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_completion_dialog_backdrop_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_completion_dialog_backdrop",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_completion_dialog_backdrop_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
@@ -1660,22 +2448,26 @@
         {
           "state": "close_button",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_close_button_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_close_button_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "close_button",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_close_button_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_close_button_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -1691,39 +2483,45 @@
         {
           "state": "close_button",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sheet_close_button_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sheet_close_button_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "close_button",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sheet_close_button_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sheet_close_button_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "edit_profile",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sheet_edit_profile_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sheet_edit_profile_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "edit_profile",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sheet_edit_profile_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sheet_edit_profile_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sheet_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sheet_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sheet_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sheet_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
     {
       "id": "drawer",
       "title": "Drawer",
-      "description": "A modal panel that slides in from a screen edge and can be swiped back toward that edge to dismiss. Distinct from Sheet: same sliding-panel shape, but with real drag-to-dismiss physics.",
+      "description": "A drawer component for React.",
       "category": "overlays-and-navigation",
       "family": "overlay",
       "isNew": false,
@@ -1732,59 +2530,105 @@
         {
           "state": "bottom",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_bottom_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_bottom_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "bottom",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_bottom_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_bottom_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "close_button",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_close_button_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_close_button_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "close_button",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_close_button_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_close_button_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "edit_profile",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_edit_profile_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_edit_profile_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "edit_profile",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_edit_profile_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_edit_profile_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "end",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_end_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_end_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "top",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_top_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_top_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "without_handle",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_without_handle_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_without_handle_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "without_handle",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_without_handle_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/drawer_without_handle_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_drawer",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_nova_drawer_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_drawer",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_nova_drawer_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_completion_drawer_backdrop",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_completion_drawer_backdrop_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_completion_drawer_backdrop",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_completion_drawer_backdrop_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_completion_nested_backdrop",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_completion_nested_backdrop_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_completion_nested_backdrop",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_completion_nested_backdrop_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
     {
       "id": "combobox",
       "title": "Combobox",
-      "description": "A select with a filterable/searchable option list.",
+      "description": "Autocomplete input with a list of suggestions.",
       "category": "overlays-and-navigation",
       "family": "field",
       "isNew": false,
@@ -1793,105 +2637,205 @@
         {
           "state": "auto_highlight",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_auto_highlight_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_auto_highlight_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "auto_highlight",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_auto_highlight_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_auto_highlight_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "chips",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_chips_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_chips_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "chips",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_chips_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_chips_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "clear",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_clear_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_clear_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "clear",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_clear_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_clear_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "idle",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_idle_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_idle_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "idle",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_idle_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_idle_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "no_trigger",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_no_trigger_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_no_trigger_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "no_trigger",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_no_trigger_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/combobox_no_trigger_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_choice",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/choice_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_choice",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/choice_nova_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_combo_focus",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/choice_combo_focus_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_combo_focus",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/choice_combo_focus_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_combo_open",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/choice_combo_open_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_combo_open",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/choice_combo_open_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
     {
       "id": "select",
       "title": "Select",
-      "description": "A plain (non-searchable) dropdown select. Unlike Combobox, the option list isn't filterable by typing.",
+      "description": "Displays a list of options for the user to pick from\u2014triggered by a button.",
       "category": "overlays-and-navigation",
       "family": "field",
       "isNew": false,
-      "properties": {},
+      "properties": {
+        "SelectVariant": [
+          "Default"
+        ],
+        "SelectContentPosition": [
+          "Popper",
+          "AlignItemWithTrigger",
+          "@Deprecated",
+          "ReplaceWith",
+          ")\n    ItemAligned"
+        ]
+      },
       "previews": [
         {
           "state": "closed",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/select_closed_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/select_closed_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "closed",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/select_closed_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/select_closed_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "item_aligned",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/select_item_aligned_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/select_item_aligned_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "item_aligned",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/select_item_aligned_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/select_item_aligned_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "placeholder",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/select_placeholder_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/select_placeholder_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "placeholder",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/select_placeholder_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/select_placeholder_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "trigger_focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/select_trigger_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/select_trigger_focused_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_choice",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/choice_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_choice",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/choice_nova_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_select_focus",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/choice_select_focus_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_select_focus",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/choice_select_focus_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_select_open",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/choice_select_open_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_select_open",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/choice_select_open_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
     {
       "id": "date-picker",
       "title": "Date Picker",
-      "description": "A date picker built by composing Popover and Calendar -- not a standalone component in real shadcn/ui either.",
+      "description": "A date picker component with range and presets.",
       "category": "overlays-and-navigation",
       "family": "field",
       "isNew": false,
@@ -1900,19 +2844,45 @@
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/date_picker_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/date_picker_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/date_picker_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/date_picker_states_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_inline",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_nova_inline_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_inline",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_nova_inline_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_completion_range",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_completion_range_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_completion_range",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_completion_range_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
     {
       "id": "command",
       "title": "Command",
-      "description": "A searchable/filterable action list -- the building block behind a command palette.",
+      "description": "Command menu for search and quick actions.",
       "category": "overlays-and-navigation",
       "family": "selection",
       "isNew": false,
@@ -1921,22 +2891,38 @@
         {
           "state": "dialog_close_button",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/command_dialog_close_button_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/command_dialog_close_button_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "dialog_close_button",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/command_dialog_close_button_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/command_dialog_close_button_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/command_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/command_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/command_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/command_states_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_inline",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_nova_inline_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_inline",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_nova_inline_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
@@ -1952,12 +2938,14 @@
         {
           "state": "idle",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/menubar_idle_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/menubar_idle_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "idle",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/menubar_idle_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/menubar_idle_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -1973,17 +2961,20 @@
         {
           "state": "idle",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/navigation_menu_idle_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/navigation_menu_idle_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "idle",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/navigation_menu_idle_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/navigation_menu_idle_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "item_focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/navigation_menu_item_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/navigation_menu_item_focused_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -1999,12 +2990,14 @@
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/table_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/table_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/table_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/table_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -2020,12 +3013,14 @@
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/pagination_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/pagination_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/pagination_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/pagination_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -2041,12 +3036,14 @@
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/scroll_area_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/scroll_area_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/scroll_area_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/scroll_area_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -2062,42 +3059,50 @@
         {
           "state": "bar_states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chart_bar_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chart_bar_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "bar_states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chart_bar_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chart_bar_states_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "initial_dimension",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chart_initial_dimension_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chart_initial_dimension_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "initial_dimension",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chart_initial_dimension_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chart_initial_dimension_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "legend_bottom",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chart_legend_bottom_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chart_legend_bottom_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "legend_bottom",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chart_legend_bottom_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chart_legend_bottom_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "line_states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chart_line_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chart_line_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "line_states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chart_line_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/chart_line_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -2113,22 +3118,50 @@
         {
           "state": "caption_dropdown",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/calendar_caption_dropdown_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/calendar_caption_dropdown_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "caption_dropdown",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/calendar_caption_dropdown_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/calendar_caption_dropdown_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/calendar_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/calendar_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/calendar_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/calendar_states_light.png",
+          "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_inline",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_nova_inline_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_inline",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_nova_inline_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_completion_range",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_completion_range_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_completion_range",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/surfaces_completion_range_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
@@ -2144,22 +3177,26 @@
         {
           "state": "overlap_regression",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/carousel_overlap_regression_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/carousel_overlap_regression_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "previous_isolated_size",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/carousel_previous_isolated_size_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/carousel_previous_isolated_size_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/carousel_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/carousel_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/carousel_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/carousel_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -2175,42 +3212,50 @@
         {
           "state": "narrow_first",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_narrow_first_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_narrow_first_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "sidebar_and_content",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_sidebar_and_content_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_sidebar_and_content_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "sidebar_and_content",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_sidebar_and_content_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_sidebar_and_content_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_states_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "wide_first",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_wide_first_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_wide_first_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "without_handle",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_without_handle_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_without_handle_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "without_handle",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_without_handle_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_without_handle_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -2226,87 +3271,104 @@
         {
           "state": "app_shell",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_app_shell_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_app_shell_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "app_shell",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_app_shell_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_app_shell_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "collapsed",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_collapsed_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_collapsed_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "collapsed",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_collapsed_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_collapsed_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "expanded",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_expanded_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_expanded_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "expanded",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_expanded_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_expanded_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "floating",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_floating_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_floating_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "floating",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_floating_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_floating_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "icon_collapsed",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_icon_collapsed_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_icon_collapsed_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "icon_collapsed",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_icon_collapsed_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_icon_collapsed_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "inset",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_inset_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_inset_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "inset",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_inset_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_inset_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "mobile",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_mobile_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_mobile_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "mobile",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_mobile_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_mobile_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "official_width",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_official_width_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_official_width_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "official_width",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_official_width_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_official_width_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "trigger_focused",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_trigger_focused_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/sidebar_trigger_focused_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -2322,107 +3384,128 @@
         {
           "state": "conversation_with_bubbles",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_conversation_with_bubbles_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_conversation_with_bubbles_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "conversation_with_bubbles",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_conversation_with_bubbles_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_conversation_with_bubbles_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "end_aligned",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_end_aligned_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_end_aligned_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "end_aligned",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_end_aligned_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_end_aligned_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "group",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_group_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_group_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "scroller_button_start",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_button_start_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_button_start_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "scroller_button_start",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_button_start_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_button_start_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "scroller_button_visible",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_button_visible_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_button_visible_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "scroller_chat_panel",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_chat_panel_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_chat_panel_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "scroller_chat_panel",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_chat_panel_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_chat_panel_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "scroller_content_items",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_content_items_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_content_items_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "scroller_content_items",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_content_items_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_content_items_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "scroller_icon_override",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_icon_override_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_icon_override_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "scroller_overflow_settles_at_bottom",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_overflow_settles_at_bottom_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_overflow_settles_at_bottom_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "scroller_overflow_settles_at_bottom",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_overflow_settles_at_bottom_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_overflow_settles_at_bottom_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "scroller_short_content",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_short_content_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_short_content_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "scroller_short_content",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_short_content_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_short_content_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "scroller_viewport",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_viewport_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_viewport_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "scroller_viewport",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_viewport_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_viewport_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "start_aligned",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_start_aligned_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_start_aligned_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "start_aligned",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_start_aligned_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_start_aligned_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -2438,52 +3521,62 @@
         {
           "state": "alignment",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_alignment_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_alignment_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "alignment",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_alignment_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_alignment_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "conversation_with_reactions",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_conversation_with_reactions_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_conversation_with_reactions_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "conversation_with_reactions",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_conversation_with_reactions_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_conversation_with_reactions_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "reactions_top",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_reactions_top_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_reactions_top_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "reactions_top",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_reactions_top_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_reactions_top_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "tinted",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_tinted_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_tinted_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "tinted",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_tinted_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_tinted_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "variants",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_variants_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_variants_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "variants",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_variants_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_variants_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -2499,32 +3592,38 @@
         {
           "state": "composer_upload_tray",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/attachment_composer_upload_tray_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/attachment_composer_upload_tray_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "composer_upload_tray",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/attachment_composer_upload_tray_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/attachment_composer_upload_tray_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/attachment_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/attachment_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/attachment_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/attachment_states_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "vertical",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/attachment_vertical_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/attachment_vertical_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "vertical",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/attachment_vertical_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/attachment_vertical_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -2540,27 +3639,32 @@
         {
           "state": "border",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/marker_border_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/marker_border_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "default",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/marker_default_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/marker_default_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "default",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/marker_default_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/marker_default_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "separator",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/marker_separator_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/marker_separator_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "separator",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/marker_separator_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/marker_separator_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -2576,72 +3680,86 @@
         {
           "state": "button_start",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_button_start_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_button_start_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "button_start",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_button_start_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_button_start_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "button_visible",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_button_visible_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_button_visible_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "chat_panel",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_chat_panel_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_chat_panel_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "chat_panel",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_chat_panel_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_chat_panel_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "content_items",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_content_items_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_content_items_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "content_items",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_content_items_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_content_items_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "icon_override",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_icon_override_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_icon_override_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "overflow_settles_at_bottom",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_overflow_settles_at_bottom_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_overflow_settles_at_bottom_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "overflow_settles_at_bottom",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_overflow_settles_at_bottom_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_overflow_settles_at_bottom_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "short_content",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_short_content_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_short_content_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "short_content",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_short_content_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_short_content_light.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "viewport",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_viewport_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_viewport_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "viewport",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_viewport_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_viewport_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -2657,12 +3775,14 @@
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/shimmer_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/shimmer_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/shimmer_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/shimmer_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     },
@@ -2678,12 +3798,14 @@
         {
           "state": "states",
           "theme": "dark",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/scroll_fade_states_dark.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/scroll_fade_states_dark.png",
+          "stylePreset": "Vega"
         },
         {
           "state": "states",
           "theme": "light",
-          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/scroll_fade_states_light.png"
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/scroll_fade_states_light.png",
+          "stylePreset": "Vega"
         }
       ]
     }

@@ -6,6 +6,10 @@ import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.contentPadding
 import androidx.compose.foundation.style.hovered
+import androidx.compose.foundation.style.focused
+import androidx.compose.ui.graphics.shadow.Shadow
+import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -31,7 +35,7 @@ sealed interface BadgeVariant {
     data object Link : BadgeVariant
 }
 
-/** Same color each variant passes to Style `contentColor(...)`, for [LocalContentColor]. */
+/** Base tint for legacy presets. Nova resolves tinted/destructive and hover colors inside Badge. */
 fun BadgeVariant.contentColor(colors: Colors): Color =
     when (this) {
         BadgeVariant.Default -> colors.primaryForeground
@@ -46,6 +50,51 @@ fun BadgeVariant.contentColor(colors: Colors): Color =
 fun BadgeVariant.rememberStyle(): Style {
     val receiver = this
     return rememberTheme(receiver) {
+        if (theme.activePreset == StylePreset.Nova) {
+            val foreground =
+                when (receiver) {
+                    BadgeVariant.Destructive -> colors.destructive
+                    BadgeVariant.Ghost -> colors.foreground
+                    else -> receiver.contentColor(colors)
+                }
+            return@rememberTheme Style {
+                height(20.dp)
+                border(if (receiver == BadgeVariant.Outline) colors.border else Color.Transparent)
+                // Center a 16px line box inside the fixed 20px inline-flex badge.
+                contentPadding(horizontal = spacing.scale2, vertical = 0.dp)
+                fontSize(12.sp)
+                fontWeight(FontWeight.Medium)
+                contentColor(foreground)
+                focusRing(RoundedCornerShape(radius.full))
+                when (receiver) {
+                    BadgeVariant.Default -> background(colors.primary)
+                    BadgeVariant.Secondary -> background(colors.secondary)
+                    BadgeVariant.Destructive -> {
+                        background(colors.destructive.copy(alpha = if (isDark) 0.2f else 0.1f))
+                        if (ring.enabled) {
+                            focused {
+                                dropShadow(
+                                    Shadow(
+                                        radius = 0.dp,
+                                        spread = ring.width + ring.offset,
+                                        color = colors.destructive.copy(alpha = if (isDark) 0.4f else 0.2f),
+                                    ),
+                                )
+                            }
+                        }
+                    }
+                    BadgeVariant.Ghost -> {
+                        background(Color.Transparent)
+                        hovered {
+                            background(colors.muted.copy(alpha = if (isDark) 0.5f else 1f))
+                            contentColor(colors.mutedForeground)
+                        }
+                    }
+                    BadgeVariant.Link -> hovered { textDecoration(TextDecoration.Underline) }
+                    BadgeVariant.Outline -> Unit
+                }
+            }
+        }
         val foreground = receiver.contentColor(colors)
         // Real badge.tsx always reserves `border border-transparent` (1px) so
         // switching to Outline doesn't change layout size; focus-visible ring is

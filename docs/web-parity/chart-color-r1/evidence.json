@@ -1,0 +1,168 @@
+{
+  "date": "2026-10-30",
+  "scope": "Create independent Chart Color / source data / bar plot geometry. Chart component and whole-site reviews remain open.",
+  "sources": "sources.json",
+  "runtimeFiles": [
+    {
+      "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/CreatePage.kt",
+      "sha256": "d330853b1422ccf58dc1930162e089f70c0eee5c1da45da62eec2c215a62b231"
+    },
+    {
+      "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/create/CreateChartColors.kt",
+      "sha256": "1ff090fd03f7e49b8e5597df8adc8f54824b701997fc61e522343557e80662ed"
+    },
+    {
+      "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/create/CreateCustomizer.kt",
+      "sha256": "beab00a2d6a019ce701df763b665860bcfecf9203af6c17bb8cf9efea19a466e"
+    },
+    {
+      "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/create/CreatePreviewCanvas.kt",
+      "sha256": "70979ba74095de8d403ff3a1d619feee6a0b97e3424bc696ae6f217d13a0750f"
+    },
+    {
+      "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/create/CreatePreviewCards.kt",
+      "sha256": "1d924c9546730a527224df9ba3b4d72e9305e75a3661c864226c70b815920e2d"
+    },
+    {
+      "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/create/CreatePreview02Cards.kt",
+      "sha256": "0dffd5ac1b11d6b8c786b1396eaebe2be227f87f891d5cd321b066441326bf5d"
+    }
+  ],
+  "fixture": {
+    "file": "app/shared/src/jvmTest/resources/themes/create-chart-colors.tsv",
+    "roles": 240,
+    "swatches": 24,
+    "sha256": "20ea471c1323b51b5f276eae789e7c4593d2f14b74aed933d05a922989202edc"
+  },
+  "tests": "test-results.json",
+  "passedTests": 15,
+  "validationReceipts": "validation-receipts.json",
+  "distribution": [
+    {
+      "file": "658820f72b4617efb380.wasm",
+      "sha256": "08e904ec38a6a81a4809a853acf68022f83905286827e804e88b262c37f2954d"
+    },
+    {
+      "file": "webApp.js",
+      "sha256": "178155c31078443eb6c45d7f4f3162b2868ae2012160805fd21189640b0bbbe0"
+    },
+    {
+      "file": "23e3aa040e3bbe82cb9e.wasm",
+      "sha256": "d7c4ed2773d581614cbc5b5f8897d00b709e29d13d576acd8998e6e4e89e843d"
+    }
+  ],
+  "browser": [
+    {
+      "file": "local-desktop-light.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "888b9d604d8f1581eb85920029bf988707501012df47320950d3244fdf13fabe",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "local-desktop-dark.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "858b855f0e909e2167b7ae21d3fab6665591437002e0a0b9667dfb993866a5ee",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "local-phone-light.png",
+      "size": [
+        390,
+        844
+      ],
+      "sha256": "e8e55cfbbf591bf9d501ca2b75d8b4879d4eb76e103679ac554757d72a78fe8e",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "local-phone-dark.png",
+      "size": [
+        390,
+        844
+      ],
+      "sha256": "a728f62abcb1c77e6866f052c358b30be7469e50af62c0400fbf04e641641677",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "official-desktop-light.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "d75224828cbca8bb9c026ca0a8c05f214b5cd94160d259cb527d6301654bbf16",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "official-desktop-dark.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "b5d28e80f50ec069fcb42da6052ae951d02aacdc6e3656f710422574bc578f5d",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "official-phone-light.png",
+      "size": [
+        390,
+        844
+      ],
+      "sha256": "311611d3ddf5c3d47dd5681d8c3693a87e3ef83828b53b38028dc7af1f4771f4",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "official-phone-dark.png",
+      "size": [
+        390,
+        844
+      ],
+      "sha256": "fd7261dc6689e0756a1cdb3c09e7939a633e9c423a0d221c8191a2ea036b3c71",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "local-neutral-chart-lime-theme.png",
+      "sha256": "a8488f8b049d0ee144cdfe2b9bc7ad391d4d9f1560c2694fd594b2e4f912c1a8",
+      "visuallyReviewed": true
+    }
+  ],
+  "officialGeometry": "official-before-chart-change.json",
+  "officialChartSelection": "official-chart-selection.json",
+  "plotGeometry": {
+    "total": 200,
+    "top": 8,
+    "xAxis": 30,
+    "maximumBar": 162,
+    "maxBarWidth": 40,
+    "months": [
+      "Dec",
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May"
+    ],
+    "values": [
+      800,
+      1100,
+      900,
+      1300,
+      750,
+      1400
+    ]
+  },
+  "noSnapshotBaselinesRewritten": true,
+  "limits": [
+    "Core Chart page/component not fully reviewed",
+    "No complete tooltip, keyboard or screen-reader output verification",
+    "Create hover-preview / parameter locks during shuffle still differ",
+    "Contribution card width, summary content, responsive stacking, full-width footer and Payout crowding still differ",
+    "Other previews still have simplified series, circle pie placeholder and Stock Performance placeholder",
+    "No full-project pixel verification"
+  ],
+  "diagnosticCaptures": "Other PNG files are intermediate menu/old-distribution observations, not accepted final proof."
+}

@@ -8,6 +8,32 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.focusGroup
+import androidx.compose.foundation.focusable
+import androidx.compose.foundation.layout.size
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.withFrameNanos
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.graphics.BlurEffect
+import androidx.compose.ui.graphics.TileMode
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.rememberGraphicsLayer
+import androidx.compose.ui.graphics.layer.drawLayer
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -16,6 +42,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.IntSize
@@ -34,6 +66,9 @@ private object FullWindowPositionProvider : PopupPositionProvider {
         popupContentSize: IntSize,
     ): IntOffset = IntOffset.Zero
 }
+
+/** Opt-in for nested surfaces whose exiting native window still receives outside clicks. */
+internal val LocalOverlayExitOutsideDismiss = staticCompositionLocalOf<(() -> Unit)?> { null }
 
 /** Default duration for modal enter/exit, aligned with web shadcn `animate-in` / `animate-out`. */
 internal const val OverlayAnimMs = 250
@@ -54,6 +89,8 @@ class TeleportPrimitiveScope internal constructor(
     internal val dismissOnClickOutside: Boolean,
     internal val onPointerDownOutside: (() -> Boolean)?,
     internal val onInteractOutside: (() -> Boolean)?,
+    internal val childHost: OverlayHostState?,
+    internal val onExitOutsideDismiss: (() -> Unit)? = null,
 )
 
 /**
@@ -88,20 +125,23 @@ fun TeleportPrimitive(
     visibleState.targetState = visible
 
     // Stay composed while entering, showing, or exiting — drop only when fully settled closed.
-    if (!visibleState.currentState && !visibleState.targetState) return
+    if (!visibleState.currentState && !visibleState.targetState && visibleState.isIdle) return
 
-    Popup(
-        popupPositionProvider = FullWindowPositionProvider,
-        onDismissRequest = onDismissRequest,
-        properties =
-            PopupProperties(
-                focusable = true,
-                dismissOnBackPress = true,
-                // handled by Overlay so the scrim itself is the hit target
-                dismissOnClickOutside = false,
-                usePlatformDefaultWidth = false,
-            ),
-    ) {
+    val modal = LocalOverlayModal.current
+    val host = LocalOverlayHost.current
+    val focusState = LocalOverlayFocus.current
+    val exitOutsideDismiss = LocalOverlayExitOutsideDismiss.current
+    val layer = rememberGraphicsLayer()
+    val childHost = remember(layer, host) { if (host != null) OverlayHostState(layer) else null }
+    val body: @Composable () -> Unit = {
+        DisposableEffect(host, childHost, modal) {
+            if (!modal && childHost != null) host?.branches?.add(childHost)
+            onDispose { host?.branches?.remove(childHost) }
+        }
+        DisposableEffect(focusState) {
+            focusState?.presented = true
+            onDispose { focusState?.presented = false }
+        }
         val scope =
             TeleportPrimitiveScope(
                 visibleState = visibleState,
@@ -110,10 +150,56 @@ fun TeleportPrimitive(
                 dismissOnClickOutside = dismissOnClickOutside && visibleState.targetState,
                 onPointerDownOutside = onPointerDownOutside,
                 onInteractOutside = onInteractOutside,
+                childHost = childHost,
+                onExitOutsideDismiss = exitOutsideDismiss,
             )
-        Box(modifier = Modifier.fillMaxSize()) {
-            scope.content()
+        Box(
+            modifier =
+                Modifier.fillMaxSize().then(
+                    if (modal) Modifier.observeOverlayOutside(childHost) else Modifier,
+                ).onPreviewKeyEvent {
+                        event ->
+                    if (event.type == KeyEventType.KeyDown && event.key == Key.Escape && visibleState.targetState) {
+                        onDismissRequest()
+                        true
+                    } else {
+                        false
+                    }
+                },
+        ) {
+            Box(
+                Modifier.fillMaxSize().drawWithContent {
+                    layer.record {
+                        if (host != null) drawLayer(host.background)
+                        this@drawWithContent.drawContent()
+                    }
+                    drawLayer(layer)
+                },
+            ) {
+                // Exit handoff belongs only to this portal. Nested surfaces must opt in
+                // themselves, so an ordinary Dialog inside a Drawer cannot inherit it.
+                androidx.compose.runtime.CompositionLocalProvider(LocalOverlayExitOutsideDismiss provides null) {
+                    scope.content()
+                }
+            }
+            childHost?.portals?.forEach { (id, portal) -> androidx.compose.runtime.key(id) { portal() } }
         }
+    }
+    if (!modal && host != null) {
+        HostPortal(host, body)
+    } else {
+        Popup(
+            popupPositionProvider = FullWindowPositionProvider,
+            onDismissRequest = onDismissRequest,
+            properties =
+                PopupProperties(
+                    focusable = true,
+                    dismissOnBackPress = true,
+                    dismissOnClickOutside = false,
+                    usePlatformDefaultWidth = false,
+                ),
+            content = body,
+        )
     }
 }
 
@@ -126,7 +212,19 @@ fun TeleportPrimitiveScope.Overlay(
     enter: EnterTransition = OverlayTransitions.ScrimEnter,
     exit: ExitTransition = OverlayTransitions.ScrimExit,
 ) {
+    Overlay(color = currentTheme.colors.foreground.copy(alpha = 0.5f), enter = enter, exit = exit)
+}
+
+/** Configurable scrim, preserving the original two-parameter overload for existing callers. */
+@Composable
+fun TeleportPrimitiveScope.Overlay(
+    color: Color,
+    enter: EnterTransition = OverlayTransitions.ScrimEnter,
+    exit: ExitTransition = OverlayTransitions.ScrimExit,
+) {
     val interactionSource = remember { MutableInteractionSource() }
+    val host = LocalOverlayHost.current
+    val blur = host != null && currentTheme.activePreset == StylePreset.Nova
     AnimatedVisibility(
         visibleState = visibleState,
         enter = enter,
@@ -136,16 +234,31 @@ fun TeleportPrimitiveScope.Overlay(
             modifier =
                 Modifier
                     .fillMaxSize()
-                    .background(currentTheme.colors.foreground.copy(alpha = 0.5f))
                     .then(
-                        if (dismissOnClickOutside) {
+                        if (blur) {
+                            Modifier.graphicsLayer {
+                                renderEffect = BlurEffect(4.dp.toPx(), 4.dp.toPx(), TileMode.Clamp)
+                            }.drawWithContent {
+                                drawLayer(checkNotNull(host).background)
+                                drawContent()
+                            }
+                        } else {
+                            Modifier
+                        },
+                    )
+                    .background(color)
+                    .focusProperties { canFocus = false }
+                    .then(
+                        if (dismissOnClickOutside || (!visibleState.targetState && onExitOutsideDismiss != null)) {
                             Modifier.clickable(
                                 interactionSource = interactionSource,
                                 indication = null,
                                 onClick = {
-                                    // Radix: true = preventDefault. Overlay click is
-                                    // `onPointerDownOutside` then `onInteractOutside`.
-                                    if (onPointerDownOutside?.invoke() != true &&
+                                    // A closing native Popup still owns this hit target.
+                                    // Forward only to the nearest open ancestor's policy.
+                                    if (!visibleState.targetState) {
+                                        onExitOutsideDismiss?.invoke()
+                                    } else if (onPointerDownOutside?.invoke() != true &&
                                         onInteractOutside?.invoke() != true
                                     ) {
                                         onDismissRequest()
@@ -172,7 +285,21 @@ fun TeleportPrimitiveScope.Content(
     exit: ExitTransition = ExitTransition.None,
     content: @Composable () -> Unit,
 ) {
-    val interactionSource = remember { MutableInteractionSource() }
+    val initialFocus = remember { FocusRequester() }
+    val managed = LocalOverlayFocus.current != null
+    val focusManager = LocalFocusManager.current
+    var initializing by remember { mutableStateOf(true) }
+    var hasFocus by remember { mutableStateOf(false) }
+    var wasFocused by remember { mutableStateOf(false) }
+    val modal = LocalOverlayModal.current
+    val host = LocalOverlayHost.current
+    LaunchedEffect(hasFocus) {
+        if (hasFocus) {
+            wasFocused = true
+        } else if (managed && !modal && wasFocused && visibleState.targetState && dismissOnClickOutside) {
+            if (onInteractOutside?.invoke() != true) onDismissRequest()
+        }
+    }
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = contentAlignment,
@@ -182,15 +309,31 @@ fun TeleportPrimitiveScope.Content(
             enter = enter,
             exit = exit,
         ) {
+            LaunchedEffect(initialFocus) {
+                if (managed) {
+                    withFrameNanos { }
+                    initialFocus.requestFocus()
+                    initializing = !focusManager.moveFocus(FocusDirection.Next)
+                }
+            }
             Box(
                 modifier =
-                    Modifier.clickable(
-                        interactionSource = interactionSource,
-                        indication = null,
-                        onClick = {},
-                    ),
+                    Modifier.overlayOutsideDismiss(host, !modal && visibleState.targetState && dismissOnClickOutside) {
+                        if (onPointerDownOutside?.invoke() != true &&
+                            onInteractOutside?.invoke() != true
+                        ) {
+                            onDismissRequest()
+                        }
+                    }.onFocusChanged { hasFocus = it.hasFocus }.focusGroup().pointerInput(
+                        Unit,
+                    ) { detectTapGestures { } },
             ) {
-                content()
+                if (managed && initializing) Box(Modifier.size(0.dp).focusRequester(initialFocus).focusable())
+                androidx.compose.runtime.CompositionLocalProvider(
+                    LocalOverlayHost provides (childHost ?: LocalOverlayHost.current),
+                ) {
+                    content()
+                }
             }
         }
     }

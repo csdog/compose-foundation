@@ -2,6 +2,7 @@
 
 package com.toutiaoyan.compose.ui.components.sidebar
 
+import com.toutiaoyan.compose.ui.utils.keyboardInputMode
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
@@ -423,6 +424,7 @@ fun SidebarTrigger(
                     contentDescription = if (state.open) "Collapse sidebar" else "Expand sidebar"
                     if (!resolvedEnabled) disabled()
                 }
+                .keyboardInputMode()
                 .clickable(
                     interactionSource = interactionSource,
                     indication = null,
@@ -462,6 +464,7 @@ fun SidebarRail(
                     role = Role.Button
                     contentDescription = if (state.open) "Collapse sidebar" else "Expand sidebar"
                 }
+                .keyboardInputMode()
                 .clickable(
                     interactionSource = interactionSource,
                     indication = null,
@@ -561,6 +564,7 @@ fun SidebarGroupAction(
                     role = Role.Button
                     contentDescription = label
                 }
+                .keyboardInputMode()
                 .clickable(
                     interactionSource = interactionSource,
                     indication = null,
@@ -916,6 +920,7 @@ fun SidebarMenuButton(
                             selected = resolvedActive
                             if (!resolvedEnabled) disabled()
                         }
+                        .keyboardInputMode()
                         .clickable(
                             interactionSource = interactionSource,
                             indication = null,
@@ -1081,6 +1086,7 @@ fun SidebarMenuAction(
                     role = Role.Button
                     contentDescription = label
                 }
+                .keyboardInputMode()
                 .clickable(
                     interactionSource = interactionSource,
                     indication = null,
@@ -1247,6 +1253,7 @@ fun SidebarMenuSubButton(
                         selected = resolvedActive
                         if (!resolvedEnabled) disabled()
                     }
+                    .keyboardInputMode()
                     .clickable(
                         interactionSource = interactionSource,
                         indication = null,

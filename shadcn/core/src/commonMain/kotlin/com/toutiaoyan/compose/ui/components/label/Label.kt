@@ -8,6 +8,9 @@ import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.styleable
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.unit.sp
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -38,16 +41,39 @@ fun Label(
     disabled: Boolean = false,
     style: Style = Style,
 ) {
+    LabelImpl(text, modifier, required, disabled, style)
+}
+
+@Composable
+internal fun LabelImpl(
+    text: String,
+    modifier: Modifier,
+    required: Boolean,
+    disabled: Boolean,
+    style: Style,
+    fieldLabel: Boolean = false,
+) {
+    val theme = currentTheme
+    val nova = theme.activePreset == StylePreset.Nova
+    val typography =
+        if (nova) {
+            theme.typography.labelLarge.copy(
+                lineHeight = if (fieldLabel) 19.25.sp else 14.sp,
+                letterSpacing = 0.sp,
+            )
+        } else {
+            TextStyle.Default
+        }
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Row(modifier = modifier.styleable(styleState, style)) {
+    Row(modifier = modifier.alpha(if (nova && disabled) 0.5f else 1f).styleable(styleState, style)) {
         Text(
             variant = TextVariant.LabelLarge,
-            textStyle = if (disabled) TextColors.Muted else TextStyle.Default,
+            textStyle = if (!nova && disabled) TextColors.Muted else typography,
         ) { text }
         if (required) {
             Text(
                 variant = TextVariant.LabelLarge,
-                textStyle = TextStyle(color = currentTheme.colors.destructive),
+                textStyle = typography.copy(color = currentTheme.colors.destructive),
             ) { " *" }
         }
     }

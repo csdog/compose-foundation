@@ -7,6 +7,8 @@ import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.triStateToggleIndeterminate
 import androidx.compose.foundation.style.triStateToggleOn
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.ui.graphics.Color
 import com.toutiaoyan.compose.ui.utils.rememberTheme
 import com.toutiaoyan.compose.ui.styles.border
@@ -20,8 +22,14 @@ import com.toutiaoyan.compose.ui.styles.focusRing
 fun rememberCheckboxStyle(): Style =
     rememberTheme {
         Style {
-            background(Color.Transparent)
-            border(colors.border)
+            background(
+                if (theme.activePreset == StylePreset.Nova) {
+                    if (theme.isDark) colors.input.copy(alpha = colors.input.alpha * 0.3f) else Color.Transparent
+                } else {
+                    Color.Transparent
+                },
+            )
+            border(if (theme.activePreset == StylePreset.Nova) colors.input else colors.border)
             triStateToggleOn {
                 background(colors.primary)
                 borderColor(colors.primary)
@@ -30,7 +38,7 @@ fun rememberCheckboxStyle(): Style =
                 background(colors.primary)
                 borderColor(colors.primary)
             }
-            focusRing(RoundedCornerShape(radius.xs))
+            focusRing(RoundedCornerShape(if (theme.activePreset == StylePreset.Nova) 4.dp else radius.xs))
             disabledDim()
         }
     }

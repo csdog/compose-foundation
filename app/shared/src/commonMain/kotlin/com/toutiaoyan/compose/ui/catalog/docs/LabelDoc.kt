@@ -2,6 +2,12 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
+import androidx.compose.ui.Modifier
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.clickable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,12 +28,33 @@ val labelDoc =
 
             Label("Email", required = true)
             """.trimIndent(),
+        apiProperties =
+            listOf(
+                ApiProperty("required", "Boolean", "false"),
+                ApiProperty("disabled", "Boolean", "false"),
+            ),
         examples =
             listOf(
                 ComponentExample(
                     title = "Default",
-                    code = """Label("Email")""",
-                    preview = { Label("Email") },
+                    code =
+                        """
+                        var checked by remember { mutableStateOf(false) }
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Checkbox(checked = checked, onCheckedChange = { checked = it })
+                            Label("Accept terms and conditions", modifier = Modifier.clickable { checked = !checked })
+                        }
+                        """.trimIndent(),
+                    preview = {
+                        var checked by remember { mutableStateOf(false) }
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Checkbox(checked = checked, onCheckedChange = { checked = it })
+                            Label("Accept terms and conditions", modifier = Modifier.clickable { checked = !checked })
+                        }
+                    },
                 ),
                 ComponentExample(
                     title = "Required",

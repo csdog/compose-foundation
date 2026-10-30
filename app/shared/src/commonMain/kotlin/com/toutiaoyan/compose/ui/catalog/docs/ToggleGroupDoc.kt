@@ -15,11 +15,17 @@ import com.toutiaoyan.compose.ui.components.togglegroup.ToggleGroupItem
 import com.toutiaoyan.compose.ui.components.togglegroup.ToggleGroupOrientation
 import com.toutiaoyan.compose.ui.components.togglegroup.ToggleGroupType
 
+import com.composables.icons.lucide.Lucide
+import com.composables.icons.lucide.Bold
+import com.composables.icons.lucide.Italic
+import com.composables.icons.lucide.Underline
+import com.toutiaoyan.compose.ui.components.icon.Icon
+
 val toggleGroupDoc =
     ComponentDoc(
         id = "toggle-group",
         title = "Toggle Group",
-        description = "A segmented row of toggles for single- or multi-select, e.g. text formatting.",
+        description = "A set of two-state buttons that can be toggled on or off.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.togglegroup.ToggleGroup
@@ -31,25 +37,35 @@ val toggleGroupDoc =
                 ToggleGroupItem("italic", "I")
             }
             """.trimIndent(),
+        apiProperties =
+            listOf(
+                ApiProperty("value", "Set<String>?", "null"),
+                ApiProperty("type", "ToggleGroupType", "Multiple"),
+                ApiProperty("variant", "ToggleVariant", "Default"),
+                ApiProperty("size", "ToggleSize", "Md"),
+                ApiProperty("spacing", "Dp", "8.dp"),
+                ApiProperty("orientation", "ToggleGroupOrientation", "Horizontal"),
+                ApiProperty("disabled", "Boolean", "false"),
+            ),
         examples =
             listOf(
                 ComponentExample(
                     title = "Default",
                     code =
                         """
-                        var value by remember { mutableStateOf(setOf("bold")) }
-                        ToggleGroup(value = value, onValueChange = { value = it }) {
-                            ToggleGroupItem("bold", "B")
-                            ToggleGroupItem("italic", "I")
-                            ToggleGroupItem("underline", "U")
+                        var value by remember { mutableStateOf(emptySet<String>()) }
+                        ToggleGroup(value = value, onValueChange = { value = it }, variant = ToggleVariant.Outline) {
+                            ToggleGroupItem("bold", label = "Toggle bold") { Icon(Lucide.Bold) }
+                            ToggleGroupItem("italic", label = "Toggle italic") { Icon(Lucide.Italic) }
+                            ToggleGroupItem("underline", label = "Toggle strikethrough") { Icon(Lucide.Underline) }
                         }
                         """.trimIndent(),
                     preview = {
-                        var value by remember { mutableStateOf(setOf("bold")) }
-                        ToggleGroup(value = value, onValueChange = { value = it }) {
-                            ToggleGroupItem("bold", "B")
-                            ToggleGroupItem("italic", "I")
-                            ToggleGroupItem("underline", "U")
+                        var value by remember { mutableStateOf(emptySet<String>()) }
+                        ToggleGroup(value = value, onValueChange = { value = it }, variant = ToggleVariant.Outline) {
+                            ToggleGroupItem("bold", label = "Toggle bold") { Icon(Lucide.Bold) }
+                            ToggleGroupItem("italic", label = "Toggle italic") { Icon(Lucide.Italic) }
+                            ToggleGroupItem("underline", label = "Toggle strikethrough") { Icon(Lucide.Underline) }
                         }
                     },
                 ),

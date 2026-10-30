@@ -14,9 +14,10 @@ import androidx.compose.ui.Modifier
 
 /**
  * Constrains its content to a fixed width/height ratio. Matches real shadcn/ui's
- * `aspect-ratio.tsx`, which is a thin Radix wrapper with no styling of its own --
- * `Modifier.aspectRatio` already does exactly that in Compose, so this is a thin
- * pass-through kept for API parity with the rest of the catalog.
+ * current Base wrapper, which uses CSS aspect-ratio without imposing a surface.
+ * Caller modifiers and Style establish the available size before the ratio is
+ * measured. Clipping, images, and accessibility descriptions belong to content.
+ * The existing Kotlin square default is retained; the web wrapper requires ratio.
  *
  * Usage:
  * ```
@@ -33,7 +34,7 @@ fun AspectRatio(
     content: @Composable () -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Box(modifier = modifier.aspectRatio(ratio).styleable(styleState, style)) {
+    Box(modifier = modifier.styleable(styleState, style).aspectRatio(ratio)) {
         content()
     }
 }

@@ -1,0 +1,423 @@
+{
+  "component": "Attachment",
+  "round": 6,
+  "component_audit_complete": false,
+  "whole_goal_complete": false,
+  "validation": "validation.json",
+  "fixed_source": "../attachment-r1/sources.json",
+  "closed": [
+    "Missing Features overview and four Accessibility subsections",
+    "Shared paragraph/list/code rendering with identical Copy Page data",
+    "Readable nested TOC anchors/deep links and real browser clicks",
+    "Measured prose list inset/gaps/marker colour and shortened duplicated root API prose"
+  ],
+  "remaining": [
+    "Kotlin API names, custom overlay semantics and URI code intentionally differ from React/HTML. Text length and code line counts therefore differ.",
+    "Shared P1/P3 section placement, font weight/rasterisation, syntax highlighting, API table column structure and long-type viewport/scroll rules remain open.",
+    "Attachment transition-colors timing, automatic standalone-overlay hover wiring, FileSearch glyph, complex slots/extreme constraints and complete native assistive technology mappings remain open.",
+    "Six legacy Vega pixel differences retained in r4; no blanket baseline record.",
+    "All remaining and already-checked components stay in whole-site review scope. Editor skipped."
+  ],
+  "artifacts": [
+    {
+      "file": "attachment-r6-contacts.swift",
+      "bytes": 2042,
+      "sha256": "203332c87195a056aca573bd1b7fdc445f6755f1920b173464ad5b6e18ea2063"
+    },
+    {
+      "file": "attachment-r6-local.mjs",
+      "bytes": 1306,
+      "sha256": "f44015fc132a3855a02d7f06cfde5fd53bb95201dc918b47e6d2db5c0573bc63"
+    },
+    {
+      "file": "attachment-r6-official.mjs",
+      "bytes": 1718,
+      "sha256": "dbd11ce5eaaf7067e26c697c79528e82335343f436140a8e40d53fee9c4a2494"
+    },
+    {
+      "file": "attachment-r6-toc-check.mjs",
+      "bytes": 1179,
+      "sha256": "d4f2c7358fd583bb1c5b208e4a7150867ec658957f5652166a31194e4886487d"
+    },
+    {
+      "file": "browser-toc-check.json",
+      "bytes": 689,
+      "sha256": "353e411866800b2e1aee0494c3be8d3a92f38db3efbe7447bd523581c38a3295"
+    },
+    {
+      "file": "contact-desktop-accessibility.png",
+      "bytes": 271548,
+      "sha256": "793a104346b1f0c53cfbf14023173205d982456a85ffc5cea66e401d3137d429"
+    },
+    {
+      "file": "contact-desktop-features.png",
+      "bytes": 241657,
+      "sha256": "b57eee7bfa949eb034a59e2aea3cf3f1d5b53d3821683b6c32a1a89e97bcb00a"
+    },
+    {
+      "file": "contact-desktop-keyboard-scrolling.png",
+      "bytes": 237327,
+      "sha256": "63c52f9738b571321f3d82d1b2573e109ba00e06be0b337dab06cba2feca495a"
+    },
+    {
+      "file": "contact-desktop-label-icon-only-actions.png",
+      "bytes": 255319,
+      "sha256": "655202f68775f7bac686161f5b9e4c5289122de3a79fd6b3c707adf78a5837b4"
+    },
+    {
+      "file": "contact-desktop-label-the-trigger.png",
+      "bytes": 419699,
+      "sha256": "c8b34e16913bafa3b86ef362c930128bbb89abf814c69f0da3427c9151661142"
+    },
+    {
+      "file": "contact-desktop-meaning-beyond-color.png",
+      "bytes": 217629,
+      "sha256": "18cbde1d794206eebd19cf109053f657fe2e0caeb4665bb1c22ed58a92a8140c"
+    },
+    {
+      "file": "contact-phone-accessibility.png",
+      "bytes": 312387,
+      "sha256": "b5d22606b2b4dd03a7f0f3a1049ee4187cd572364185ff90550c4140bcd98759"
+    },
+    {
+      "file": "contact-phone-features.png",
+      "bytes": 294621,
+      "sha256": "0f73841f9fb668e80b9dc6a8421984880b5f429513daeea0926899390bb7e0e8"
+    },
+    {
+      "file": "contact-phone-keyboard-scrolling.png",
+      "bytes": 302857,
+      "sha256": "dbf9ddce1db7a6c17b6b90d9084d656cac5399ef45618d9712ae1163acdd0b10"
+    },
+    {
+      "file": "contact-phone-label-icon-only-actions.png",
+      "bytes": 292049,
+      "sha256": "a55d557505ac95cfa32a285950edfe7518ea7716968c9c80757c507618e2c0e5"
+    },
+    {
+      "file": "contact-phone-label-the-trigger.png",
+      "bytes": 298811,
+      "sha256": "007c845c1e7eb45483ecbc10accaa93aec34e842dd4b87f8d210445136dc167e"
+    },
+    {
+      "file": "contact-phone-meaning-beyond-color.png",
+      "bytes": 243039,
+      "sha256": "2cc59260780f3a9b669aba81c9a36f912e42af55f660c1964bf49ef28f79b9d8"
+    },
+    {
+      "file": "gradle-ledger.json",
+      "bytes": 7676,
+      "sha256": "27beb3e905ec807a23bd402a1c292da51c41cc62af41aabc5d4aba257fbb959b"
+    },
+    {
+      "file": "local-browser.json",
+      "bytes": 11918,
+      "sha256": "d033aedbc297b74bc831383e4c8886a289b254e912e69687079de744c6231fae"
+    },
+    {
+      "file": "local-desktop-dark-accessibility.png",
+      "bytes": 179004,
+      "sha256": "92754a24cbc7146cf561e04237fded5481459b12b51885a913d048ed0f733119"
+    },
+    {
+      "file": "local-desktop-dark-features.png",
+      "bytes": 217972,
+      "sha256": "de922f8160984ecb95a0c393fa63e044dc728b55a128d9ecc325ce780f78dd04"
+    },
+    {
+      "file": "local-desktop-dark-keyboard-scrolling.png",
+      "bytes": 166907,
+      "sha256": "8afda6f5a27fa20271ee2965a38a12f1c27fa5e0ebbc1747e5480535a43a20e0"
+    },
+    {
+      "file": "local-desktop-dark-label-icon-only-actions.png",
+      "bytes": 178432,
+      "sha256": "ff68ba55d59f65bc191bd5ee62b5a68dbbfdbd2318591cf17cdbf87badd7ec0a"
+    },
+    {
+      "file": "local-desktop-dark-label-the-trigger.png",
+      "bytes": 170517,
+      "sha256": "9a76699e94c8cc6937fffda1097c737f0626c6601c81b3e5c4c3b3a3c8221506"
+    },
+    {
+      "file": "local-desktop-dark-meaning-beyond-color.png",
+      "bytes": 164558,
+      "sha256": "95145e7f7bc50927e90b4fe15e09aa3ea581b4883f83366d5ed0c6fe8e58719b"
+    },
+    {
+      "file": "local-desktop-light-accessibility.png",
+      "bytes": 182941,
+      "sha256": "cb40906ec44f7f1a677b80506b3476a5047efb94e3f74d3634c121b38ed1658f"
+    },
+    {
+      "file": "local-desktop-light-features.png",
+      "bytes": 218789,
+      "sha256": "49d7f1bfe2656f45728f86ccc80bb8e1ad997a0d423188a972169b347bc8f571"
+    },
+    {
+      "file": "local-desktop-light-keyboard-scrolling.png",
+      "bytes": 164819,
+      "sha256": "6373216af7d1a900a6608fee9461bfa10f95e61eb7f1d655fd97ce007f15aec2"
+    },
+    {
+      "file": "local-desktop-light-label-icon-only-actions.png",
+      "bytes": 182880,
+      "sha256": "650466b9f98f489803586814020301b67b75bfaeb8a4f5b7e94e2eb965c31319"
+    },
+    {
+      "file": "local-desktop-light-label-the-trigger.png",
+      "bytes": 172516,
+      "sha256": "cec66bb83a68f4b4a5ce2434e0d28531d13539f2a4a65d639402dba21b55c26a"
+    },
+    {
+      "file": "local-desktop-light-meaning-beyond-color.png",
+      "bytes": 162480,
+      "sha256": "d7bb72d517910c024a20fe6ae05aba7962567569cbf55483885d3c0112a1857b"
+    },
+    {
+      "file": "local-phone-dark-accessibility.png",
+      "bytes": 62331,
+      "sha256": "0df8eac52807550b96c22fc2b55ba77697a67c8c316dd4f8abbc1e387d81698b"
+    },
+    {
+      "file": "local-phone-dark-features.png",
+      "bytes": 61699,
+      "sha256": "538432268f1843b0256da5c394d6244259e8d02364eec57ab8088f0e3dbbe8f3"
+    },
+    {
+      "file": "local-phone-dark-keyboard-scrolling.png",
+      "bytes": 58883,
+      "sha256": "5a707d71b07bacdaacb356abc6011a052cc8b34792979fa55462bd68a7ad205b"
+    },
+    {
+      "file": "local-phone-dark-label-icon-only-actions.png",
+      "bytes": 58071,
+      "sha256": "adcef90a85095d51d7cc0e0dd7a60af463ba1c52200f67f641460c5465522507"
+    },
+    {
+      "file": "local-phone-dark-label-the-trigger.png",
+      "bytes": 62725,
+      "sha256": "cba0e9c894b0f62715667c1581c30576c30ed2f2d32d45ef39725b661a7c065c"
+    },
+    {
+      "file": "local-phone-dark-meaning-beyond-color.png",
+      "bytes": 52769,
+      "sha256": "62d209df02f3c0960ec4a35a042fba410d64de90f2ada44b952d21be6fbe3eba"
+    },
+    {
+      "file": "local-phone-light-accessibility.png",
+      "bytes": 63208,
+      "sha256": "020d8c40c11bfecaa13ad5be3ed620a4b6d938ef35563192054f56dafcf14cac"
+    },
+    {
+      "file": "local-phone-light-features.png",
+      "bytes": 61038,
+      "sha256": "188abc0db4a2962b814ab4008238fdefd816ab755cd0e818c5bbd9ae1da0a359"
+    },
+    {
+      "file": "local-phone-light-keyboard-scrolling.png",
+      "bytes": 58315,
+      "sha256": "e2f626560fc5d639cea2423921ab7bb1c2e9ec34c87a3869ef785a2876946ee7"
+    },
+    {
+      "file": "local-phone-light-label-icon-only-actions.png",
+      "bytes": 60696,
+      "sha256": "1aabc6820af0a36c7c7a7d5a1760d9872388bbf406e086b90c65ddaccf4275ca"
+    },
+    {
+      "file": "local-phone-light-label-the-trigger.png",
+      "bytes": 64838,
+      "sha256": "80ea3cbf157b57aafd44221ed23c539e3423ac694938e1ac2ca660c1688351ee"
+    },
+    {
+      "file": "local-phone-light-meaning-beyond-color.png",
+      "bytes": 52269,
+      "sha256": "a3c298d97700ad6776d818985c4205e38dc78fef89c75f20672440dec46e0858"
+    },
+    {
+      "file": "local-toc-accessibility.png",
+      "bytes": 183157,
+      "sha256": "d4ea445c03b7b21bcaac6b1b175198080ce3e01f6f6efac7ca7e52e661b404aa"
+    },
+    {
+      "file": "local-toc-features.png",
+      "bytes": 218951,
+      "sha256": "2815613fe64f0a17a10e86e4a1486e57253506abf0991b001b45aa7d8c7b0134"
+    },
+    {
+      "file": "local-toc-keyboard-scrolling.png",
+      "bytes": 165005,
+      "sha256": "69afd5d3e0876070248c382d12e64cf4453bb72befae0a52e642600b02e1d846"
+    },
+    {
+      "file": "official-browser.json",
+      "bytes": 34220,
+      "sha256": "c6e89f0c65eafc38c043002587175b2c027ad4c8a15de6135a3fc4756c967fec"
+    },
+    {
+      "file": "official-desktop-dark-accessibility.png",
+      "bytes": 179110,
+      "sha256": "0dcf6749410e095812481357300e84c5571e5697da5c210c948af66cccc8698b"
+    },
+    {
+      "file": "official-desktop-dark-features.png",
+      "bytes": 221161,
+      "sha256": "39593485c95dcf28a4fede82b2b354c91b0b6b3540848ee68c7f2dfde456dbc6"
+    },
+    {
+      "file": "official-desktop-dark-keyboard-scrolling.png",
+      "bytes": 176827,
+      "sha256": "33859251e4e6f455dfbbdd375cc3b84873a5e7350bc9f3f4b8b9afe8ce98bd02"
+    },
+    {
+      "file": "official-desktop-dark-label-icon-only-actions.png",
+      "bytes": 181329,
+      "sha256": "a2dd3eac312f1577b0bd16851a4a9e1f5f042a20499fd8fd7de9f6bd7b4527ad"
+    },
+    {
+      "file": "official-desktop-dark-label-the-trigger.png",
+      "bytes": 175593,
+      "sha256": "3f7b5cb9ed9a8e6c22633a89a0f14d5635fdf9922760599f410f5bae550f36d0"
+    },
+    {
+      "file": "official-desktop-dark-meaning-beyond-color.png",
+      "bytes": 166511,
+      "sha256": "a0387273deb13cde39db0799492689852490ef0580509c7a4237df52f28e082f"
+    },
+    {
+      "file": "official-desktop-light-accessibility.png",
+      "bytes": 178374,
+      "sha256": "f44f988c210cf3335d843dc91df70f39fe7feb10490a040cca60497ade249b8a"
+    },
+    {
+      "file": "official-desktop-light-features.png",
+      "bytes": 219211,
+      "sha256": "90a9a8954935a2ded517a158fff0f6e663c43ea35c3f1fb28bdaf60153cae213"
+    },
+    {
+      "file": "official-desktop-light-keyboard-scrolling.png",
+      "bytes": 174073,
+      "sha256": "bd89612c23fe26a6132794203afc1c261755c93633ff720dbb77a2e6e7481a5e"
+    },
+    {
+      "file": "official-desktop-light-label-icon-only-actions.png",
+      "bytes": 180274,
+      "sha256": "d76edb6b8387b70af723b62ea94998b6ea050bcd6be42bbbe86a5451950aa937"
+    },
+    {
+      "file": "official-desktop-light-label-the-trigger.png",
+      "bytes": 174211,
+      "sha256": "dee4a90eb5fd4938642dd99b4b3f65c43b511cf0dff7d395b55d065d2f88efbc"
+    },
+    {
+      "file": "official-desktop-light-meaning-beyond-color.png",
+      "bytes": 163904,
+      "sha256": "77e78a19f99bed0b10b97b725e61603307531f62b7b898aef2bdf558d2ba6711"
+    },
+    {
+      "file": "official-list-styles.json",
+      "bytes": 2343,
+      "sha256": "904e6f98d102807d65644f43a2898becf5a5c8459dd0225e51dbb1d024bc8283"
+    },
+    {
+      "file": "official-marker-colors.json",
+      "bytes": 237,
+      "sha256": "f13b6fe65d676e9f136a8ffbdf0e5724768a0a9cffb309b7fedd111b72778206"
+    },
+    {
+      "file": "official-phone-dark-accessibility.png",
+      "bytes": 66677,
+      "sha256": "aadc4355bcf4dc9dfcf3251179c3e8e5a0c1852ab2dffc85bd35f90d25eb5f5e"
+    },
+    {
+      "file": "official-phone-dark-features.png",
+      "bytes": 61467,
+      "sha256": "e6f301d89de167b891f96e6049a51c9fbb2cc24c5beb4e00d373379ef271c3f3"
+    },
+    {
+      "file": "official-phone-dark-keyboard-scrolling.png",
+      "bytes": 69035,
+      "sha256": "241a6ca659564e5e56dd447d99f79813b6c2a634b71d83450ef4eee78bfccc4c"
+    },
+    {
+      "file": "official-phone-dark-label-icon-only-actions.png",
+      "bytes": 58212,
+      "sha256": "252f19e8a3eec822e15013ab6b8cb64813ca95a86c2cdeac8e4332d5b596959a"
+    },
+    {
+      "file": "official-phone-dark-label-the-trigger.png",
+      "bytes": 58654,
+      "sha256": "120ca8b05fbbac33cddab3bb1ba65d3ecfacb58dfe20b93e8df4e20801bf064f"
+    },
+    {
+      "file": "official-phone-dark-meaning-beyond-color.png",
+      "bytes": 46019,
+      "sha256": "4b65bc4459b885750b64560940a25a9f16b7d373d05334af2eaf0b2929fe875d"
+    },
+    {
+      "file": "official-phone-light-accessibility.png",
+      "bytes": 66033,
+      "sha256": "dd9c0951dd6417a5bd426a71d766f82db8b00fe1ddaf34c183a1284a69ddf71e"
+    },
+    {
+      "file": "official-phone-light-features.png",
+      "bytes": 60560,
+      "sha256": "affad07ee0c7f5bfcbe5ccb2f1f63effaa70b527a723ba5f71d8851aa44dd0a3"
+    },
+    {
+      "file": "official-phone-light-keyboard-scrolling.png",
+      "bytes": 68013,
+      "sha256": "4ebadbd4544201720324437c76f916c119f5518ec9101232134cd8fc8b3a2169"
+    },
+    {
+      "file": "official-phone-light-label-icon-only-actions.png",
+      "bytes": 58895,
+      "sha256": "e42f73c3813ce1486decefcc7bfa8b9486c527f005a51c67a6dfa2fd277f3249"
+    },
+    {
+      "file": "official-phone-light-label-the-trigger.png",
+      "bytes": 59093,
+      "sha256": "6357d15210237ce32d18337338def35092fb0dc4d86daeec7e009dd869a52d91"
+    },
+    {
+      "file": "official-phone-light-meaning-beyond-color.png",
+      "bytes": 45479,
+      "sha256": "e60e26e9ffe3298e348a14b54bb1065bd6863e6c49ceaf9342e63e4fb46077b2"
+    },
+    {
+      "file": "source-hashes.json",
+      "bytes": 983,
+      "sha256": "f4278d0615714d1fae09ca949f45e2296a0a7d6271e51620da10f9a70ffdf275"
+    },
+    {
+      "file": "test-results/TEST-com.toutiaoyan.compose.ui.catalog.AttachmentExamplesTest.xml",
+      "bytes": 1288,
+      "sha256": "bfc8fadd19909704fe1ae996950b407d8a957da7b98d761949de4d4d788947ba"
+    },
+    {
+      "file": "test-results/TEST-com.toutiaoyan.compose.ui.catalog.CatalogNavigationTest.xml",
+      "bytes": 1208,
+      "sha256": "59868870fee37c96f2055b729315f5437c84886f08a8d4331e442905906e5864"
+    },
+    {
+      "file": "test-results/TEST-com.toutiaoyan.compose.ui.catalog.CatalogPreviewTest.xml",
+      "bytes": 1039,
+      "sha256": "9cc53dc3dd802491b1f6fb6c8bdac5d0f0c60d1e16cb73caececd04c279cbb1c"
+    },
+    {
+      "file": "test-results/TEST-com.toutiaoyan.compose.ui.catalog.ComponentDocumentationTest.xml",
+      "bytes": 1539,
+      "sha256": "56bb1f2869766064379e4355e83d3301b08e3910804317b28473a68a6d5cdbd6"
+    },
+    {
+      "file": "test-results.json",
+      "bytes": 2012,
+      "sha256": "c558be08f6ba1d6c25d27132f88b98134f444b4adda3fad587905b5747fbb7fc"
+    },
+    {
+      "file": "validation.json",
+      "bytes": 2052,
+      "sha256": "d7b03b9f5b25824e2e4143166bf4b1260f1dcd67d7730e81df086ac484bdd31f"
+    }
+  ]
+}

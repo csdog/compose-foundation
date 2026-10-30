@@ -2,6 +2,7 @@
 
 package com.toutiaoyan.compose.ui.components.sheet
 
+import com.toutiaoyan.compose.ui.utils.keyboardInputMode
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.CubicBezierEasing
@@ -226,6 +227,7 @@ fun SheetScope.SheetTrigger(
                     role = Role.Button
                     stateDescription = if (controller.open) "Expanded" else "Collapsed"
                 }
+                .keyboardInputMode()
                 .clickable(
                     interactionSource = interactionSource,
                     enabled = resolvedEnabled,
@@ -545,6 +547,7 @@ fun SheetClose(
                     if (!resolvedEnabled) disabled()
                 }
                 .styleable(styleState, touchTargetStyle then closeButtonStyle then pressStyle)
+                .keyboardInputMode()
                 .clickable(
                     interactionSource = interactionSource,
                     indication = null,

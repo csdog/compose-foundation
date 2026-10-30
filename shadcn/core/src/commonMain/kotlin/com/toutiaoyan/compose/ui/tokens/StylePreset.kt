@@ -58,28 +58,19 @@ enum class StylePreset(
     ),
 
     /** Nova: "Reduced padding and margins." Snappy animation frames,
-     *  ultra-tight spacing layouts, and compact 14px icon bounds. */
+     *  component-specific compact layouts, with standard 16px icons. */
     Nova(
         radius = TwRadiusScale.fromBaseRadius(baseRadius = 10.dp),
-        spacing =
-            TwSpacingScale.named(
-                xs2 = 1.dp,
-                xs = 3.dp,
-                sm = 6.dp,
-                md = 9.dp,
-                lg = 12.dp,
-                xl = 15.dp,
-                xl2 = 18.dp,
-                xl3 = 24.dp,
-            ),
+        // Tailwind units stay 4px; Nova density comes from each component class.
+        spacing = TwSpacingScale.Default,
         typography = Typography(),
-        ring = Ring(width = 3.dp, opacity = 0.5f),
+        ring = Ring(width = 3.dp, opacity = 0.5f, enabled = true),
         animations =
             Animations(
                 defaultTransition = TweenSpec(durationMillis = 100),
                 visibilityTransition = TweenSpec(durationMillis = 75),
             ),
-        icons = IconStyles(standardSize = 14.dp, smallSize = 12.dp, strokeWidth = 1.5f),
+        icons = IconStyles(standardSize = 16.dp, smallSize = 14.dp, strokeWidth = 2f),
     ),
 
     /** Maia: "Rounded, with generous spacing." Fluid, bouncy transitions and
@@ -267,8 +258,8 @@ enum class StylePreset(
     val spacingDeriveFromUnit: Boolean
         get() =
             when (this) {
-                Vega, Lyra, Luma, Sera -> true
-                Nova, Maia, Mira, Rhea -> false
+                Vega, Nova, Lyra, Luma, Sera -> true
+                Maia, Mira, Rhea -> false
             }
 
     /** Resolved spacing for a Theme: derive from [unitSpacing] when applicable. */

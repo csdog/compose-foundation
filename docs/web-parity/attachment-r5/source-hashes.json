@@ -1,0 +1,18 @@
+[
+  {
+    "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/attachment/Attachment.kt",
+    "sha256": "915704ccff02e9afe7e3da1825625ad523c400337dd128368cfd56e0ce070ba5"
+  },
+  {
+    "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/styles/CssStyleable.kt",
+    "sha256": "d73c0dda02faee925b2f1dc3d37cbe48cd753831a5bf7cbc19dadaef8183846a"
+  },
+  {
+    "file": "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/attachment/AttachmentInteractionTest.kt",
+    "sha256": "3a0d0521d96ee12e1303df73a3d5461a7ea153e484c55c447c06db6473fdc46a"
+  },
+  {
+    "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/AttachmentDoc.kt",
+    "sha256": "f7b639cf7d9a94bf0910d41dfa815d7f3038e115a961ddf3cd333b3eb3042037"
+  }
+]

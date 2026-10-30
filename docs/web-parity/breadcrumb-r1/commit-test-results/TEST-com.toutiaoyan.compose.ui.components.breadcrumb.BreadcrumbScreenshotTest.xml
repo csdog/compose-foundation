@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="BreadcrumbScreenshotTest[jvm]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-30T08:09:27.882Z" hostname="Apples-MacBook-Pro.local" time="0.12">
+  <properties/>
+  <testcase name="nova_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.breadcrumb.BreadcrumbScreenshotTest" time="0.023"/>
+  <testcase name="nova_light[jvm]" classname="com.toutiaoyan.compose.ui.components.breadcrumb.BreadcrumbScreenshotTest" time="0.027"/>
+  <testcase name="states_light[jvm]" classname="com.toutiaoyan.compose.ui.components.breadcrumb.BreadcrumbScreenshotTest" time="0.021"/>
+  <testcase name="with_ellipsis_light[jvm]" classname="com.toutiaoyan.compose.ui.components.breadcrumb.BreadcrumbScreenshotTest" time="0.025"/>
+  <testcase name="states_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.breadcrumb.BreadcrumbScreenshotTest" time="0.022"/>
+  <system-out><![CDATA[Roborazzi: breadcrumb_nova_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=23800, width=350, height=68) changed:false
+Roborazzi: breadcrumb_nova_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=23800, width=350, height=68) changed:false
+Roborazzi: breadcrumb_states_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=19456, width=304, height=64) changed:false
+Roborazzi: breadcrumb_ellipsis_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=14552, width=214, height=68) changed:false
+Roborazzi: breadcrumb_states_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=19456, width=304, height=64) changed:false
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

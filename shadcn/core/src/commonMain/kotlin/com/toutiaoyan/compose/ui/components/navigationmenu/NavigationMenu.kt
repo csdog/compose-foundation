@@ -2,6 +2,7 @@
 
 package com.toutiaoyan.compose.ui.components.navigationmenu
 
+import com.toutiaoyan.compose.ui.utils.keyboardInputMode
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.clickable
@@ -561,6 +562,7 @@ private fun NavMenuHitTarget(
                     if (!enabled) disabled()
                 }
                 .hoverable(interactionSource, enabled = enabled)
+                .keyboardInputMode()
                 .clickable(
                     interactionSource = interactionSource,
                     indication = null,

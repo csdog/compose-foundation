@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AttachmentScopeTest[jvm]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-30T06:10:20.462Z" hostname="Apples-MacBook-Pro.local" time="0.078">
+  <properties/>
+  <testcase name="oldAndScopedJvmEntryPointsBothExist[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentScopeTest" time="0.012"/>
+  <testcase name="nestedRootsDoNotBorrowOuterSize[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentScopeTest" time="0.015"/>
+  <testcase name="extractedScopeHelpersKeepRootConfiguration[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentScopeTest" time="0.014"/>
+  <testcase name="actionsTrackOrientationAndKeepPhysicalRightInRtl[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentScopeTest" time="0.019"/>
+  <testcase name="mediaCornerTracksRootSizeChanges[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentScopeTest" time="0.017"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

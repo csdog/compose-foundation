@@ -2,6 +2,11 @@
 
 package com.toutiaoyan.compose.ui.components.collapsible
 
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.animation.core.tween
+import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
@@ -10,6 +15,8 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusGroup
+import com.toutiaoyan.compose.ui.components.field.LocalFieldSetDisabled
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,7 +30,10 @@ import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,6 +41,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
@@ -40,11 +51,15 @@ import com.toutiaoyan.compose.ui.components.button.ButtonSize
 import com.toutiaoyan.compose.ui.components.button.ButtonVariant
 import com.toutiaoyan.compose.ui.components.text.Text
 
-@Immutable
+internal class CollapsibleFocus {
+    var returnTo: FocusRequester? = null
+}
+
 internal class CollapsibleController(
     val open: Boolean,
     val enabled: Boolean,
     val onOpenChange: (Boolean) -> Unit,
+    val focus: CollapsibleFocus,
 ) {
     fun toggle() {
         if (enabled) onOpenChange(!open)
@@ -58,6 +73,12 @@ private fun collapsibleController(): CollapsibleController =
     checkNotNull(LocalCollapsible.current) {
         "CollapsibleTrigger / CollapsibleContent must be used inside Collapsible { … }"
     }
+
+@Composable
+private fun Modifier.collapsibleTriggerFocus(focus: CollapsibleFocus): Modifier {
+    val requester = remember { FocusRequester() }
+    return focusRequester(requester).onFocusChanged { if (it.isFocused) focus.returnTo = requester }
+}
 
 /** Reads the nearest [Collapsible] scope. Matches Radix `useCollapsible`. */
 @Composable
@@ -98,17 +119,8 @@ class CollapsibleScope internal constructor(
  * [defaultOpen]) for uncontrolled, matching Radix `open` / `defaultOpen` /
  * `onOpenChange`.
  *
- * One deliberate deviation: a small default gap above [CollapsibleContent],
- * unlike [com.toutiaoyan.compose.ui.components.separator.Separator]'s
- * zero-margin-by-design. Real shadcn can rely on the caller's own
- * `className="mt-2"` on the content element, but Compose's default height
- * animation finishes before opacity — verified by freezing the animation
- * clock mid-transition — so for a few frames the still-fading-in content sits
- * at its full final height flush against the trigger, reading as a visual
- * overlap glitch rather than a fade. Since *every* caller would otherwise
- * need to remember to pad their own content to avoid that glitch, this bakes
- * in a small structural gap instead of leaving it fully bare. Override with
- * [CollapsibleContent]'s `style`.
+ * Nova content has no intrinsic top gap; callers own their layout spacing.
+ * Other presets retain the historical content gap.
  *
  * Usage:
  * ```
@@ -137,11 +149,13 @@ fun Collapsible(
         if (!controlled) internalOpen = next
         onOpenChange?.invoke(next)
     }
+    val focus = remember { CollapsibleFocus() }
     val controller =
         CollapsibleController(
             open = isOpen,
-            enabled = enabled && !disabled,
+            enabled = enabled && !disabled && !LocalFieldSetDisabled.current,
             onOpenChange = setOpen,
+            focus = focus,
         )
     val rootStyleState = remember { MutableStyleState(MutableInteractionSource()) }
     CompositionLocalProvider(LocalCollapsible provides controller) {
@@ -227,11 +241,11 @@ fun CollapsibleScope.CollapsibleTrigger(
 ) {
     val controller = collapsibleController()
     val interactionSource = remember { MutableInteractionSource() }
-    val styleState = rememberUpdatedStyleState(interactionSource)
     val triggerEnabled = enabled && !disabled && controller.enabled
+    val styleState = rememberUpdatedStyleState(interactionSource) { it.isEnabled = triggerEnabled }
     Box(
         modifier =
-            modifier
+            modifier.collapsibleTriggerFocus(controller.focus)
                 .semantics {
                     role = Role.Button
                     stateDescription = if (controller.open) "Expanded" else "Collapsed"
@@ -243,6 +257,7 @@ fun CollapsibleScope.CollapsibleTrigger(
                     onClick = controller::toggle,
                 )
                 .styleable(styleState, style),
+        contentAlignment = if (currentTheme.activePreset == StylePreset.Nova) Alignment.Center else Alignment.TopStart,
     ) {
         content()
     }
@@ -259,8 +274,32 @@ fun CollapsibleScope.CollapsibleTrigger(
     size: ButtonSize = ButtonSize.Md,
     style: Style = Style,
 ) {
-    CollapsibleTrigger(modifier = modifier, enabled = enabled, disabled = disabled, style = style) {
-        Button(text, onClick = toggle, enabled = enabled, disabled = disabled, variant = variant, size = size)
+    if (currentTheme.activePreset == StylePreset.Nova) {
+        val ctrl = collapsibleController()
+        Button(
+            text,
+            onClick = toggle,
+            enabled = enabled && ctrl.enabled,
+            disabled = disabled,
+            variant = variant,
+            size = size,
+            modifier =
+                modifier.collapsibleTriggerFocus(ctrl.focus).semantics {
+                    stateDescription = if (ctrl.open) "Expanded" else "Collapsed"
+                },
+            style = style,
+        )
+    } else {
+        CollapsibleTrigger(modifier = modifier, enabled = enabled, disabled = disabled, style = style) {
+            Button(
+                text,
+                onClick = toggle,
+                enabled = enabled && collapsibleController().enabled,
+                disabled = disabled,
+                variant = variant,
+                size = size,
+            )
+        }
     }
 }
 
@@ -282,13 +321,31 @@ internal fun CollapsibleScope.CollapsibleHeader(content: @Composable Collapsible
 fun CollapsibleScope.CollapsibleContent(
     modifier: Modifier = Modifier,
     style: Style = Style,
-    enter: EnterTransition = fadeIn() + expandVertically(),
-    exit: ExitTransition = fadeOut() + shrinkVertically(),
+    enter: EnterTransition =
+        if (currentTheme.activePreset == StylePreset.Nova) {
+            expandVertically(
+                tween(200),
+            )
+        } else {
+            fadeIn() + expandVertically()
+        },
+    exit: ExitTransition =
+        if (currentTheme.activePreset == StylePreset.Nova) {
+            shrinkVertically(
+                tween(200),
+            )
+        } else {
+            fadeOut() + shrinkVertically()
+        },
     forceMount: Boolean = false,
     keepMounted: Boolean? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val controller = collapsibleController()
+    var contentHasFocus by remember { mutableStateOf(false) }
+    LaunchedEffect(controller.open) {
+        if (!controller.open && contentHasFocus) controller.focus.returnTo?.requestFocus()
+    }
     val contentStyleState = remember { MutableStyleState(MutableInteractionSource()) }
     // The gap lives *inside* AnimatedVisibility, not as Arrangement.spacedBy on
     // the root Column: spacedBy would reserve its gap unconditionally based on
@@ -300,7 +357,7 @@ fun CollapsibleScope.CollapsibleContent(
     val body: @Composable () -> Unit = {
         Column(
             modifier =
-                modifier.styleable(
+                modifier.onFocusChanged { contentHasFocus = it.hasFocus }.focusGroup().styleable(
                     contentStyleState,
                     rememberCollapsibleContentStyle() then style,
                 ),
@@ -308,7 +365,15 @@ fun CollapsibleScope.CollapsibleContent(
         )
     }
     if (keepMounted ?: forceMount) {
-        Box(modifier = if (controller.open) Modifier else Modifier.size(0.dp)) {
+        Box(
+            modifier =
+                if (controller.open) {
+                    Modifier
+                } else {
+                    Modifier.size(0.dp).clearAndSetSemantics {
+                    }.focusProperties { onEnter = { cancelFocusChange() } }.focusGroup()
+                },
+        ) {
             body()
         }
     } else {
@@ -328,8 +393,22 @@ fun CollapsibleScope.CollapsibleContent(
     text: String,
     modifier: Modifier = Modifier,
     style: Style = Style,
-    enter: EnterTransition = fadeIn() + expandVertically(),
-    exit: ExitTransition = fadeOut() + shrinkVertically(),
+    enter: EnterTransition =
+        if (currentTheme.activePreset == StylePreset.Nova) {
+            expandVertically(
+                tween(200),
+            )
+        } else {
+            fadeIn() + expandVertically()
+        },
+    exit: ExitTransition =
+        if (currentTheme.activePreset == StylePreset.Nova) {
+            shrinkVertically(
+                tween(200),
+            )
+        } else {
+            fadeOut() + shrinkVertically()
+        },
     forceMount: Boolean = false,
     keepMounted: Boolean? = null,
 ) {

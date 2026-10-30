@@ -1,0 +1,48 @@
+{
+  "run": "0006",
+  "total": 12,
+  "classes": [
+    {
+      "class": "AttachmentStateTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "file": "tests/TEST-com.toutiaoyan.compose.ui.components.attachment.AttachmentStateTest.xml",
+      "sha256": "f517ba1fe761168ac0adbde76ff643cc147a896ef8933b9368b7ca6213a2d95f",
+      "cases": [
+        "processingLambdaTitleInheritsMovingShimmer[jvm]",
+        "rootMediaAndDescriptionFollowLiveStateAndTheme[jvm]",
+        "uploadingTitleInheritsMovingShimmer[jvm]",
+        "explicitDescriptionOverrideAndNestedAttachmentRemainIndependent[jvm]"
+      ]
+    },
+    {
+      "class": "AttachmentScreenshotTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "file": "tests/TEST-com.toutiaoyan.compose.ui.components.attachment.AttachmentScreenshotTest.xml",
+      "sha256": "5a3d5297e0b95d48619fc4bdd0f699b4e6a90bd93ca25c884a1c5fd2b517ea8c",
+      "cases": [
+        "vertical_dark[jvm]",
+        "vertical_light[jvm]",
+        "states_light[jvm]",
+        "composer_upload_tray_dark[jvm]",
+        "composer_upload_tray_light[jvm]",
+        "states_dark[jvm]"
+      ]
+    },
+    {
+      "class": "ShimmerScreenshotTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "file": "tests/TEST-com.toutiaoyan.compose.ui.components.ShimmerScreenshotTest.xml",
+      "sha256": "e2e60f11f76ab8216c24145af63b75c85ba573827d5924a1434735aceb586745",
+      "cases": [
+        "states_light[jvm]",
+        "states_dark[jvm]"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,351 @@
+{
+  "component": "Attachment",
+  "round": 5,
+  "component_audit_complete": false,
+  "whole_goal_complete": false,
+  "validation": "validation.json",
+  "fixed_source": "../attachment-r1/sources.json",
+  "changed": [
+    "Nova root focus-within1dp/ring50% for root and descendants, cleared on final blur",
+    "onClick root hovered muted50% using real clickable interaction source",
+    "Standalone Box overlay trigger zIndex10 independent of insertion order",
+    "API guidance and three actual focus/layer/keyboard contracts"
+  ],
+  "remaining": [
+    "Base transition-colors timing is not implemented; only final hover colour state is connected.",
+    "Custom BoxScope overlays do not automatically enable a surrounding Attachment root hover condition; only onClick adaptation has automatic root hover wiring.",
+    "Native source and local convenience API differ in Tab order; not declared identical.",
+    "Light hover uniform grey differs by1 channel level (source246/local247); no pixel-identical colour claim.",
+    "Font weight/truncation, FileSearch icon version, complex slots/extreme constraints, complete native screen-reader mappings and native device gestures remain open.",
+    "Six legacy Vega Attachment pixel differences remain in r4 without blanket record.",
+    "Whole-site P1/P3 and all remaining/rechecked components stay active; editor skipped.",
+    "Official standalone Features/Accessibility chapters and navigation are not fully migrated; API label guidance does not substitute for those sections."
+  ],
+  "artifacts": [
+    {
+      "file": "attachment-r5-contacts.swift",
+      "bytes": 1970,
+      "sha256": "6c9b7e8f052b9b989241232accf2d6c9f81372d98613c6785e9833cf757d26a1"
+    },
+    {
+      "file": "attachment-r5-local.mjs",
+      "bytes": 2581,
+      "sha256": "1102f910aa63118c1064856e4272c3403f7e8cb23a8e4f441530ec42b10e51a7"
+    },
+    {
+      "file": "attachment-r5-source.mjs",
+      "bytes": 3101,
+      "sha256": "e92be70c3d6611bf47a76797bbd5422f065ce6f1b220ba087722180f7024b2a4"
+    },
+    {
+      "file": "contact-action-focus.png",
+      "bytes": 81469,
+      "sha256": "55cd9c00c29758759ecf3cd8e217096923f37a483290fea8f9ac87e082452a50"
+    },
+    {
+      "file": "contact-hover.png",
+      "bytes": 71589,
+      "sha256": "b5417c9bc166fcbdd83bfc8820dec60c60ba0328da0ba5b363c69282f128ddbd"
+    },
+    {
+      "file": "contact-preview-focus.png",
+      "bytes": 76801,
+      "sha256": "7e60168fa1c84a0cd68365fc2bb27900f2edae189d0d52d2da5c2c13e2685eb2"
+    },
+    {
+      "file": "contact-rest.png",
+      "bytes": 72309,
+      "sha256": "b4e8faeb326361d2a02a496f6dc3606e9eee7c1214059adf7338077eb7aee4e5"
+    },
+    {
+      "file": "gradle-ledger.json",
+      "bytes": 10559,
+      "sha256": "9a6380a0c531fc0190d7a3897bc90f66ecc3abfd242a42f02cb4bdda37fe1cf3"
+    },
+    {
+      "file": "local-browser.json",
+      "bytes": 12362,
+      "sha256": "e40c09181e8d5f29652a2d2449d23ebdc2606d6536f85102381e1cc8144892df"
+    },
+    {
+      "file": "local-desktop-dark-action-focus.png",
+      "bytes": 154735,
+      "sha256": "62f2156238902e4007eaf3e816031104e9b456d40ed14a2223013c4ddc3f02d1"
+    },
+    {
+      "file": "local-desktop-dark-hover.png",
+      "bytes": 153877,
+      "sha256": "71825e5b0fd225d60e5a34eab365a1f8eaabf0c01f112c60e01a5755edc158ce"
+    },
+    {
+      "file": "local-desktop-dark-preview-focus.png",
+      "bytes": 154173,
+      "sha256": "151889bc0b1bfe162370179b2344cc111db585526dec8f383a6daa0d8a565cb0"
+    },
+    {
+      "file": "local-desktop-dark-rest.png",
+      "bytes": 153892,
+      "sha256": "24062813157d71c4c08278bea7cd2e3f3af5592eb89a900bbe37cb3b9d9fa6a1"
+    },
+    {
+      "file": "local-desktop-light-action-focus.png",
+      "bytes": 155812,
+      "sha256": "9550f9d8911f905f2347d92002bac9fbed638b0e3736e6393df599d662cdb6d1"
+    },
+    {
+      "file": "local-desktop-light-hover.png",
+      "bytes": 154805,
+      "sha256": "3892081d487d1c035f227058f7c61790df789df8aefc0b9ed6e0b367abf1bdd0"
+    },
+    {
+      "file": "local-desktop-light-preview-focus.png",
+      "bytes": 155193,
+      "sha256": "b8a734ba78ee4369e6ecede38c33c394d72270fd75dde7ea16dfb056c3414de7"
+    },
+    {
+      "file": "local-desktop-light-rest.png",
+      "bytes": 154853,
+      "sha256": "142a42a2b20da824bb2d756c7de7e641c04e6586049a7ae6d85bd581e278fec1"
+    },
+    {
+      "file": "local-phone-dark-action-focus.png",
+      "bytes": 50343,
+      "sha256": "257e7d621026ab05aaa035151b1cf56d8b656b2237157c112b3a7d823f98f871"
+    },
+    {
+      "file": "local-phone-dark-hover.png",
+      "bytes": 49604,
+      "sha256": "7884e0f2cde8624c342bdbac4d210ec7b4088d325797e33844fa0a0afee4b51e"
+    },
+    {
+      "file": "local-phone-dark-preview-focus.png",
+      "bytes": 49857,
+      "sha256": "65b81eef7615ed5675dec01a4e289c1d835f86d3630f9b27890e7065b17cad98"
+    },
+    {
+      "file": "local-phone-dark-rest.png",
+      "bytes": 49619,
+      "sha256": "c49a672599b198022c5457f4de86568ea38c79d6a5318459e8db8ff28ea9af30"
+    },
+    {
+      "file": "local-phone-light-action-focus.png",
+      "bytes": 51927,
+      "sha256": "3c2a2771edeefb54eccc4b0d66a2735385b6c8a12a9aa9a0b19bf1e308aff80e"
+    },
+    {
+      "file": "local-phone-light-hover.png",
+      "bytes": 51079,
+      "sha256": "d16d7aa09a4410d11a6c62ec853b4681e90040cd4da0a026f7c1cbc7ddc67d37"
+    },
+    {
+      "file": "local-phone-light-preview-focus.png",
+      "bytes": 51448,
+      "sha256": "dabbc80659ac8678184121d64e4410e83519f155c94b3556f8048baab5a77e46"
+    },
+    {
+      "file": "local-phone-light-rest.png",
+      "bytes": 51150,
+      "sha256": "2d41ce90879b06932d00fdd6c54c0e6dc19ed3f9e48fa5a8ae2dcf43aa41f18d"
+    },
+    {
+      "file": "official-browser.json",
+      "bytes": 14412,
+      "sha256": "344087b3346cfbe8acce5e0a5f1c65c156cbc7055cc3043ac3ddc0cb9025986b"
+    },
+    {
+      "file": "official-desktop-dark-action-focus.png",
+      "bytes": 164005,
+      "sha256": "24f2978c3a1cf4a1b37dc84930dc75e936f9414bcd06af35aa03b852b4f08bfa"
+    },
+    {
+      "file": "official-desktop-dark-hover.png",
+      "bytes": 162982,
+      "sha256": "109cd01326317858de1693ad2d33ce648415dbde3072ff24d2edfb4265dcd792"
+    },
+    {
+      "file": "official-desktop-dark-preview-focus.png",
+      "bytes": 163560,
+      "sha256": "278569f180d354e3d34b17c904741eea9b6786b29fa52c1b8fb98f179581243f"
+    },
+    {
+      "file": "official-desktop-dark-rest.png",
+      "bytes": 163363,
+      "sha256": "e8219b7c1681ba7906e8e85735a86681e83068fffa4a8a0a925225434b510480"
+    },
+    {
+      "file": "official-desktop-light-action-focus.png",
+      "bytes": 164209,
+      "sha256": "8143e8cce86319e6a1aa92b88404814b314ba71d92d92a229925851d1346ea7f"
+    },
+    {
+      "file": "official-desktop-light-hover.png",
+      "bytes": 163069,
+      "sha256": "a0dbb52e95f53dca389a56ac868cb40069fcc0131c5b544f850b6772df90a6f8"
+    },
+    {
+      "file": "official-desktop-light-preview-focus.png",
+      "bytes": 163594,
+      "sha256": "8d4cfdcbfa37658577977ff5d68d03e60793c501c6a0df1a0e786adad1793a70"
+    },
+    {
+      "file": "official-desktop-light-rest.png",
+      "bytes": 163253,
+      "sha256": "68ca88e28e65a7740df987443c22cb297f2df57cdc859b23b9c26cff3d85f9de"
+    },
+    {
+      "file": "official-phone-dark-action-focus.png",
+      "bytes": 49005,
+      "sha256": "6458cc7e72bdb9e11ad5933f96f8de224d2e1949c323ab8e396f5719be2b7be7"
+    },
+    {
+      "file": "official-phone-dark-hover.png",
+      "bytes": 48179,
+      "sha256": "9dd3911bd0350dbea83aa2d008e8ce24141b927555f87fb4eea5507d07f3b5ca"
+    },
+    {
+      "file": "official-phone-dark-preview-focus.png",
+      "bytes": 48611,
+      "sha256": "ca5afb640e4dbc89cb244005e09bbb18aaf7357a2055d3b16d4b3afb3abfc875"
+    },
+    {
+      "file": "official-phone-dark-rest.png",
+      "bytes": 48148,
+      "sha256": "5fee544e29ea5a182e7d4ebd39ffc7077930f9534d0cfa0ea63c30270e2319a6"
+    },
+    {
+      "file": "official-phone-light-action-focus.png",
+      "bytes": 49727,
+      "sha256": "5dec6e8b0ded73a5702ce123356e36430216fc5bfc44ae5e2d778637a08741d0"
+    },
+    {
+      "file": "official-phone-light-hover.png",
+      "bytes": 48601,
+      "sha256": "6782281be01029f1dda809a2093e05d4956257e6c70447d51f6f2196b58b36a5"
+    },
+    {
+      "file": "official-phone-light-preview-focus.png",
+      "bytes": 49224,
+      "sha256": "10cd6098ffbdd1a9bced9dc29055645aa63903cf1b79f882e669e02f21cb98f3"
+    },
+    {
+      "file": "official-phone-light-rest.png",
+      "bytes": 48956,
+      "sha256": "6db6474a710d6d388c699d4d87d46563617c2708f523957122457e9ee2c5ea11"
+    },
+    {
+      "file": "pixel-verification.json",
+      "bytes": 1403,
+      "sha256": "898e01c31821b50b42fbff87f2d4f6a9625e0efa4b11ce5aceb96ef3b9623107"
+    },
+    {
+      "file": "source-hashes.json",
+      "bytes": 798,
+      "sha256": "d68036e2fc0037c6918e78ee9ca1112b1bd9a78d33d192244ed1e82f2b632ff2"
+    },
+    {
+      "file": "test-results/catalog/TEST-com.toutiaoyan.compose.ui.catalog.AttachmentExamplesTest.xml",
+      "bytes": 1288,
+      "sha256": "facd726ab02fc361b64228f209abccc3ee38ceb1d9c4e4df373dcc4042b99e07"
+    },
+    {
+      "file": "test-results/catalog/TEST-com.toutiaoyan.compose.ui.catalog.CatalogNavigationTest.xml",
+      "bytes": 1208,
+      "sha256": "80c32dec530e5f9a38ab4d9965f90f91df813eae11cc363a905aab4d065d1937"
+    },
+    {
+      "file": "test-results/catalog/TEST-com.toutiaoyan.compose.ui.catalog.CatalogPreviewTest.xml",
+      "bytes": 1039,
+      "sha256": "28a3b0d991f3c8a62ac4a3fa3da8190b4ec4163a8bf84e12d33bf7558eb33fa4"
+    },
+    {
+      "file": "test-results/catalog/TEST-com.toutiaoyan.compose.ui.catalog.ComponentDocumentationTest.xml",
+      "bytes": 1179,
+      "sha256": "03f32cfdbfe0a5615915a708fafbf9364b44731151fb344bd62b61023e723fba"
+    },
+    {
+      "file": "test-results/core/TEST-com.toutiaoyan.compose.ui.components.ScrollFadeScreenshotTest.xml",
+      "bytes": 580,
+      "sha256": "f3888144bcba4852d21dbc678d971da082715b10cdac40dfa47e1e6bf432ec12"
+    },
+    {
+      "file": "test-results/core/TEST-com.toutiaoyan.compose.ui.components.ShimmerScreenshotTest.xml",
+      "bytes": 571,
+      "sha256": "cac1e9769b04e0c6729c6bd77cf98980d1b71833e7313e5c89889e43fc695a31"
+    },
+    {
+      "file": "test-results/core/TEST-com.toutiaoyan.compose.ui.components.attachment.AttachmentGroupConstraintsTest.xml",
+      "bytes": 1061,
+      "sha256": "7de19d79ab3add3326ac7fa2d0b4106db50712267f89111a0b6c91d5d92ea1f3"
+    },
+    {
+      "file": "test-results/core/TEST-com.toutiaoyan.compose.ui.components.attachment.AttachmentGroupFadeTest.xml",
+      "bytes": 643,
+      "sha256": "b2bbd222958bd26922c6b8564880fbb1506afcae6a1e4b1b14b17426795a2fd3"
+    },
+    {
+      "file": "test-results/core/TEST-com.toutiaoyan.compose.ui.components.attachment.AttachmentGroupSnapTest.xml",
+      "bytes": 1876,
+      "sha256": "c52ff9f5fdcca448113fa72f9a83670956da9884fd79905b16564df3d371d989"
+    },
+    {
+      "file": "test-results/core/TEST-com.toutiaoyan.compose.ui.components.attachment.AttachmentInteractionTest.xml",
+      "bytes": 911,
+      "sha256": "f2ca83cbf30f5d384d685e93a46803d89a7ac8e76af255a8b8339320aa1e9632"
+    },
+    {
+      "file": "test-results/core/TEST-com.toutiaoyan.compose.ui.components.attachment.AttachmentLayoutTest.xml",
+      "bytes": 1792,
+      "sha256": "3e5eb589535f19e8a59158b318a67f110c69a128f89b468b1ccd317cf860909d"
+    },
+    {
+      "file": "test-results/core/TEST-com.toutiaoyan.compose.ui.components.attachment.AttachmentScopeTest.xml",
+      "bytes": 1112,
+      "sha256": "5183aff36880eca9fc69de94ebb9dee614d167ec7efb06fc6473290f7588507b"
+    },
+    {
+      "file": "test-results/core/TEST-com.toutiaoyan.compose.ui.components.attachment.AttachmentScreenshotTest.xml",
+      "bytes": 1180,
+      "sha256": "6020bfcaf3244ca78f1e4b2878c9f5a33eeb35bbbc4cfbad1d358e30d6acb625"
+    },
+    {
+      "file": "test-results/core/TEST-com.toutiaoyan.compose.ui.components.attachment.AttachmentStateTest.xml",
+      "bytes": 1164,
+      "sha256": "5e59bbe7a029adffa3a916af27a8748ec08cd7b7606b4ab76934723fdefb010c"
+    },
+    {
+      "file": "test-results/core/TEST-com.toutiaoyan.compose.ui.components.badge.BadgeNovaParityTest.xml",
+      "bytes": 1200,
+      "sha256": "8273820c1ad0e9ac5268fc4024f5214fd1570353f1c065dfd1db4e62549b735e"
+    },
+    {
+      "file": "test-results/core/TEST-com.toutiaoyan.compose.ui.components.button.ButtonNovaParityTest.xml",
+      "bytes": 1369,
+      "sha256": "8ac9a86ee33175a5e4e0d79ba77b7d74b05f615378dae818f163f570e7556913"
+    },
+    {
+      "file": "test-results/core/TEST-com.toutiaoyan.compose.ui.components.spinner.SpinnerGeometryTest.xml",
+      "bytes": 501,
+      "sha256": "db870445af72fd7bf008ba0b8f7b690bddc09eeda4ecfd4dd09e710fca2ea6e2"
+    },
+    {
+      "file": "test-results/core/TEST-com.toutiaoyan.compose.ui.components.spinner.SpinnerScreenshotTest.xml",
+      "bytes": 587,
+      "sha256": "4c9b22a80a2434d27484fad6ed14e5d9994808ba2500e5669f364983fbec033f"
+    },
+    {
+      "file": "test-results/core/TEST-com.toutiaoyan.compose.ui.styles.ScrollFadeTest.xml",
+      "bytes": 1400,
+      "sha256": "fc5a1b5e5efd82fe975ccc39318cb40c89ad07371780980e7899aa9a7f4baa38"
+    },
+    {
+      "file": "test-results.json",
+      "bytes": 7903,
+      "sha256": "c11d0cb7dcf75f02cda0666b543aa1c3c425e6cbc6bcc3acd4212c62352228f8"
+    },
+    {
+      "file": "validation.json",
+      "bytes": 1930,
+      "sha256": "fc664a94bd0f26c337a2451cacb3b9dbe5dbbfaf20b7a056f0533d1a269c5a63"
+    }
+  ]
+}

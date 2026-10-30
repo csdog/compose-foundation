@@ -1,0 +1,722 @@
+[
+  {
+    "role": "local",
+    "form": "desktop",
+    "mode": "light",
+    "width": 1440,
+    "height": 1000,
+    "phase": "start",
+    "nativeInputs": {
+      "dpr": 2,
+      "events": [
+        {
+          "dx": -10000,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 330,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 10000,
+          "dy": 0,
+          "mode": 0
+        }
+      ]
+    },
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "file": "local-desktop-light-start.png",
+    "preview": {
+      "left": 366,
+      "width": 638,
+      "top": 177,
+      "height": 242,
+      "pixelRatio": 1
+    },
+    "group": {
+      "left": 493,
+      "width": 384,
+      "centreY": 298
+    },
+    "scroll": "Canvas pixels, no numeric DOM scroll state",
+    "review": "pending visual contact review"
+  },
+  {
+    "role": "local",
+    "form": "desktop",
+    "mode": "light",
+    "width": 1440,
+    "height": 1000,
+    "phase": "wheel",
+    "nativeInputs": {
+      "dpr": 2,
+      "events": [
+        {
+          "dx": -10000,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 330,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 10000,
+          "dy": 0,
+          "mode": 0
+        }
+      ]
+    },
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "file": "local-desktop-light-wheel.png",
+    "preview": {
+      "left": 366,
+      "width": 638,
+      "top": 177,
+      "height": 242,
+      "pixelRatio": 1
+    },
+    "group": {
+      "left": 493,
+      "width": 384,
+      "centreY": 298
+    },
+    "scroll": "Canvas pixels, no numeric DOM scroll state",
+    "review": "pending visual contact review"
+  },
+  {
+    "role": "local",
+    "form": "desktop",
+    "mode": "light",
+    "width": 1440,
+    "height": 1000,
+    "phase": "end",
+    "nativeInputs": {
+      "dpr": 2,
+      "events": [
+        {
+          "dx": -10000,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 330,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 10000,
+          "dy": 0,
+          "mode": 0
+        }
+      ]
+    },
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "file": "local-desktop-light-end.png",
+    "preview": {
+      "left": 366,
+      "width": 638,
+      "top": 177,
+      "height": 242,
+      "pixelRatio": 1
+    },
+    "group": {
+      "left": 493,
+      "width": 384,
+      "centreY": 298
+    },
+    "scroll": "Canvas pixels, no numeric DOM scroll state",
+    "review": "pending visual contact review"
+  },
+  {
+    "role": "local",
+    "form": "desktop",
+    "mode": "light",
+    "width": 1440,
+    "height": 1000,
+    "phase": "keyboard",
+    "nativeInputs": {
+      "dpr": 2,
+      "events": [
+        {
+          "dx": -10000,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 330,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 10000,
+          "dy": 0,
+          "mode": 0
+        }
+      ]
+    },
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "file": "local-desktop-light-keyboard.png",
+    "preview": {
+      "left": 366,
+      "width": 638,
+      "top": 177,
+      "height": 242,
+      "pixelRatio": 1
+    },
+    "group": {
+      "left": 493,
+      "width": 384,
+      "centreY": 298
+    },
+    "scroll": "Canvas pixels, no numeric DOM scroll state",
+    "review": "pending visual contact review"
+  },
+  {
+    "role": "local",
+    "form": "desktop",
+    "mode": "dark",
+    "width": 1440,
+    "height": 1000,
+    "phase": "start",
+    "nativeInputs": {
+      "dpr": 2,
+      "events": [
+        {
+          "dx": -10000,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 330,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 10000,
+          "dy": 0,
+          "mode": 0
+        }
+      ]
+    },
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "file": "local-desktop-dark-start.png",
+    "preview": {
+      "left": 366,
+      "width": 638,
+      "top": 177,
+      "height": 242,
+      "pixelRatio": 1
+    },
+    "group": {
+      "left": 493,
+      "width": 384,
+      "centreY": 298
+    },
+    "scroll": "Canvas pixels, no numeric DOM scroll state",
+    "review": "pending visual contact review"
+  },
+  {
+    "role": "local",
+    "form": "desktop",
+    "mode": "dark",
+    "width": 1440,
+    "height": 1000,
+    "phase": "wheel",
+    "nativeInputs": {
+      "dpr": 2,
+      "events": [
+        {
+          "dx": -10000,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 330,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 10000,
+          "dy": 0,
+          "mode": 0
+        }
+      ]
+    },
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "file": "local-desktop-dark-wheel.png",
+    "preview": {
+      "left": 366,
+      "width": 638,
+      "top": 177,
+      "height": 242,
+      "pixelRatio": 1
+    },
+    "group": {
+      "left": 493,
+      "width": 384,
+      "centreY": 298
+    },
+    "scroll": "Canvas pixels, no numeric DOM scroll state",
+    "review": "pending visual contact review"
+  },
+  {
+    "role": "local",
+    "form": "desktop",
+    "mode": "dark",
+    "width": 1440,
+    "height": 1000,
+    "phase": "end",
+    "nativeInputs": {
+      "dpr": 2,
+      "events": [
+        {
+          "dx": -10000,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 330,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 10000,
+          "dy": 0,
+          "mode": 0
+        }
+      ]
+    },
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "file": "local-desktop-dark-end.png",
+    "preview": {
+      "left": 366,
+      "width": 638,
+      "top": 177,
+      "height": 242,
+      "pixelRatio": 1
+    },
+    "group": {
+      "left": 493,
+      "width": 384,
+      "centreY": 298
+    },
+    "scroll": "Canvas pixels, no numeric DOM scroll state",
+    "review": "pending visual contact review"
+  },
+  {
+    "role": "local",
+    "form": "desktop",
+    "mode": "dark",
+    "width": 1440,
+    "height": 1000,
+    "phase": "keyboard",
+    "nativeInputs": {
+      "dpr": 2,
+      "events": [
+        {
+          "dx": -10000,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 330,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 10000,
+          "dy": 0,
+          "mode": 0
+        }
+      ]
+    },
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "file": "local-desktop-dark-keyboard.png",
+    "preview": {
+      "left": 366,
+      "width": 638,
+      "top": 177,
+      "height": 242,
+      "pixelRatio": 1
+    },
+    "group": {
+      "left": 493,
+      "width": 384,
+      "centreY": 298
+    },
+    "scroll": "Canvas pixels, no numeric DOM scroll state",
+    "review": "pending visual contact review"
+  },
+  {
+    "role": "local",
+    "form": "phone",
+    "mode": "dark",
+    "width": 390,
+    "height": 844,
+    "phase": "start",
+    "nativeInputs": {
+      "dpr": 2,
+      "events": [
+        {
+          "dx": -10000,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 330,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 10000,
+          "dy": 0,
+          "mode": 0
+        }
+      ]
+    },
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "file": "local-phone-dark-start.png",
+    "preview": {
+      "left": 25,
+      "width": 340,
+      "top": 264,
+      "height": 241,
+      "pixelRatio": 1
+    },
+    "group": {
+      "left": 65,
+      "width": 260,
+      "centreY": 385
+    },
+    "scroll": "Canvas pixels, no numeric DOM scroll state",
+    "review": "pending visual contact review"
+  },
+  {
+    "role": "local",
+    "form": "phone",
+    "mode": "dark",
+    "width": 390,
+    "height": 844,
+    "phase": "wheel",
+    "nativeInputs": {
+      "dpr": 2,
+      "events": [
+        {
+          "dx": -10000,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 330,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 10000,
+          "dy": 0,
+          "mode": 0
+        }
+      ]
+    },
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "file": "local-phone-dark-wheel.png",
+    "preview": {
+      "left": 25,
+      "width": 340,
+      "top": 264,
+      "height": 241,
+      "pixelRatio": 1
+    },
+    "group": {
+      "left": 65,
+      "width": 260,
+      "centreY": 385
+    },
+    "scroll": "Canvas pixels, no numeric DOM scroll state",
+    "review": "pending visual contact review"
+  },
+  {
+    "role": "local",
+    "form": "phone",
+    "mode": "dark",
+    "width": 390,
+    "height": 844,
+    "phase": "end",
+    "nativeInputs": {
+      "dpr": 2,
+      "events": [
+        {
+          "dx": -10000,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 330,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 10000,
+          "dy": 0,
+          "mode": 0
+        }
+      ]
+    },
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "file": "local-phone-dark-end.png",
+    "preview": {
+      "left": 25,
+      "width": 340,
+      "top": 264,
+      "height": 241,
+      "pixelRatio": 1
+    },
+    "group": {
+      "left": 65,
+      "width": 260,
+      "centreY": 385
+    },
+    "scroll": "Canvas pixels, no numeric DOM scroll state",
+    "review": "pending visual contact review"
+  },
+  {
+    "role": "local",
+    "form": "phone",
+    "mode": "dark",
+    "width": 390,
+    "height": 844,
+    "phase": "keyboard",
+    "nativeInputs": {
+      "dpr": 2,
+      "events": [
+        {
+          "dx": -10000,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 330,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 10000,
+          "dy": 0,
+          "mode": 0
+        }
+      ]
+    },
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "file": "local-phone-dark-keyboard.png",
+    "preview": {
+      "left": 25,
+      "width": 340,
+      "top": 264,
+      "height": 241,
+      "pixelRatio": 1
+    },
+    "group": {
+      "left": 65,
+      "width": 260,
+      "centreY": 385
+    },
+    "scroll": "Canvas pixels, no numeric DOM scroll state",
+    "review": "pending visual contact review"
+  },
+  {
+    "role": "local",
+    "form": "phone",
+    "mode": "light",
+    "width": 390,
+    "height": 844,
+    "phase": "start",
+    "nativeInputs": {
+      "dpr": 2,
+      "events": [
+        {
+          "dx": -10000,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 330,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 10000,
+          "dy": 0,
+          "mode": 0
+        }
+      ]
+    },
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "file": "local-phone-light-start.png",
+    "preview": {
+      "left": 25,
+      "width": 340,
+      "top": 264,
+      "height": 241,
+      "pixelRatio": 1
+    },
+    "group": {
+      "left": 65,
+      "width": 260,
+      "centreY": 385
+    },
+    "scroll": "Canvas pixels, no numeric DOM scroll state",
+    "review": "pending visual contact review"
+  },
+  {
+    "role": "local",
+    "form": "phone",
+    "mode": "light",
+    "width": 390,
+    "height": 844,
+    "phase": "wheel",
+    "nativeInputs": {
+      "dpr": 2,
+      "events": [
+        {
+          "dx": -10000,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 330,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 10000,
+          "dy": 0,
+          "mode": 0
+        }
+      ]
+    },
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "file": "local-phone-light-wheel.png",
+    "preview": {
+      "left": 25,
+      "width": 340,
+      "top": 264,
+      "height": 241,
+      "pixelRatio": 1
+    },
+    "group": {
+      "left": 65,
+      "width": 260,
+      "centreY": 385
+    },
+    "scroll": "Canvas pixels, no numeric DOM scroll state",
+    "review": "pending visual contact review"
+  },
+  {
+    "role": "local",
+    "form": "phone",
+    "mode": "light",
+    "width": 390,
+    "height": 844,
+    "phase": "end",
+    "nativeInputs": {
+      "dpr": 2,
+      "events": [
+        {
+          "dx": -10000,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 330,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 10000,
+          "dy": 0,
+          "mode": 0
+        }
+      ]
+    },
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "file": "local-phone-light-end.png",
+    "preview": {
+      "left": 25,
+      "width": 340,
+      "top": 264,
+      "height": 241,
+      "pixelRatio": 1
+    },
+    "group": {
+      "left": 65,
+      "width": 260,
+      "centreY": 385
+    },
+    "scroll": "Canvas pixels, no numeric DOM scroll state",
+    "review": "pending visual contact review"
+  },
+  {
+    "role": "local",
+    "form": "phone",
+    "mode": "light",
+    "width": 390,
+    "height": 844,
+    "phase": "keyboard",
+    "nativeInputs": {
+      "dpr": 2,
+      "events": [
+        {
+          "dx": -10000,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 330,
+          "dy": 0,
+          "mode": 0
+        },
+        {
+          "dx": 10000,
+          "dy": 0,
+          "mode": 0
+        }
+      ]
+    },
+    "dpr": 2,
+    "input": "single CDP wheel at native host DPR; pixel330 for wheel phase",
+    "file": "local-phone-light-keyboard.png",
+    "preview": {
+      "left": 25,
+      "width": 340,
+      "top": 264,
+      "height": 241,
+      "pixelRatio": 1
+    },
+    "group": {
+      "left": 65,
+      "width": 260,
+      "centreY": 385
+    },
+    "scroll": "Canvas pixels, no numeric DOM scroll state",
+    "review": "pending visual contact review"
+  }
+]

@@ -2,26 +2,21 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.toutiaoyan.compose.ui.components.field.FieldDescription
-import com.toutiaoyan.compose.ui.components.field.FieldLabel
 import com.toutiaoyan.compose.ui.components.inputotp.InputOTP
 import com.toutiaoyan.compose.ui.components.inputotp.InputOTPGroup
 import com.toutiaoyan.compose.ui.components.inputotp.InputOTPSeparator
 import com.toutiaoyan.compose.ui.components.inputotp.InputOTPSlot
 import com.toutiaoyan.compose.ui.components.inputotp.InputOTPType
-import com.toutiaoyan.compose.tailwind.core.twSpacing
 
 val inputOTPDoc =
     ComponentDoc(
         id = "input-otp",
         title = "Input OTP",
-        description = "A one-time-passcode input with boxed slots that fill left-to-right.",
+        description = "Accessible one-time password component with copy-paste functionality.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.inputotp.InputOTP
@@ -29,26 +24,28 @@ val inputOTPDoc =
             var code by remember { mutableStateOf("") }
             InputOTP(value = code, onValueChange = { code = it }, length = 6)
             """.trimIndent(),
+        apiProperties =
+            listOf(
+                ApiProperty("value", "String", "required"),
+                ApiProperty("length / maxLength", "Int", "required / null"),
+                ApiProperty("pattern", "Regex?", "null"),
+                ApiProperty("masked", "Boolean", "false"),
+                ApiProperty("readOnly", "Boolean", "false"),
+                ApiProperty("onComplete", "callback?", "null"),
+                ApiProperty("disabled", "Boolean", "false"),
+            ),
         examples =
             listOf(
                 ComponentExample(
-                    title = "Verify your email",
+                    title = "Default",
                     code =
                         """
-                        var code by remember { mutableStateOf("") }
-                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                            FieldLabel("One-time password")
-                            InputOTP(value = code, onValueChange = { code = it }, length = 6)
-                            FieldDescription("Please enter the one-time password sent to your phone.")
-                        }
+                        var code by remember { mutableStateOf("123456") }
+                        InputOTP(value = code, onValueChange = { code = it }, length = 6)
                         """.trimIndent(),
                     preview = {
-                        var code by remember { mutableStateOf("") }
-                        Column(verticalArrangement = Arrangement.spacedBy(twSpacing.sm)) {
-                            FieldLabel("One-time password")
-                            InputOTP(value = code, onValueChange = { code = it }, length = 6)
-                            FieldDescription("Please enter the one-time password sent to your phone.")
-                        }
+                        var code by remember { mutableStateOf("123456") }
+                        InputOTP(value = code, onValueChange = { code = it }, length = 6)
                     },
                 ),
                 ComponentExample(
@@ -57,11 +54,9 @@ val inputOTPDoc =
                         """
                         var code by remember { mutableStateOf("") }
                         InputOTP(value = code, onValueChange = { code = it }, length = 6) {
-                            InputOTPGroup {
-                                InputOTPSlot(0); InputOTPSlot(1); InputOTPSlot(2)
-                                InputOTPSeparator()
-                                InputOTPSlot(3); InputOTPSlot(4); InputOTPSlot(5)
-                            }
+                            InputOTPGroup { InputOTPSlot(0); InputOTPSlot(1); InputOTPSlot(2) }
+                            InputOTPSeparator()
+                            InputOTPGroup { InputOTPSlot(3); InputOTPSlot(4); InputOTPSlot(5) }
                         }
                         """.trimIndent(),
                     preview = {
@@ -71,7 +66,9 @@ val inputOTPDoc =
                                 InputOTPSlot(0)
                                 InputOTPSlot(1)
                                 InputOTPSlot(2)
-                                InputOTPSeparator()
+                            }
+                            InputOTPSeparator()
+                            InputOTPGroup {
                                 InputOTPSlot(3)
                                 InputOTPSlot(4)
                                 InputOTPSlot(5)
@@ -344,15 +341,9 @@ val inputOTPDoc =
                         """
                         var code by remember { mutableStateOf("") }
                         InputOTP(value = code, onValueChange = { code = it }, length = 6) {
-                            InputOTPGroup {
-                                InputOTPSlot(0)
-                                InputOTPSlot(1)
-                                InputOTPSlot(2)
-                                InputOTPSeparator()
-                                InputOTPSlot(3)
-                                InputOTPSlot(4)
-                                InputOTPSlot(5)
-                            }
+                            InputOTPGroup { InputOTPSlot(0); InputOTPSlot(1); InputOTPSlot(2) }
+                            InputOTPSeparator()
+                            InputOTPGroup { InputOTPSlot(3); InputOTPSlot(4); InputOTPSlot(5) }
                         }
                         """.trimIndent(),
                     preview = {
@@ -362,7 +353,9 @@ val inputOTPDoc =
                                 InputOTPSlot(0)
                                 InputOTPSlot(1)
                                 InputOTPSlot(2)
-                                InputOTPSeparator()
+                            }
+                            InputOTPSeparator()
+                            InputOTPGroup {
                                 InputOTPSlot(3)
                                 InputOTPSlot(4)
                                 InputOTPSlot(5)

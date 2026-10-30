@@ -230,7 +230,7 @@ fun CreatePreview02PieChartCard(modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.spacedBy(twSpacing.md),
         ) {
             Box(
-                Modifier.size(130.dp).background(currentTheme.colors.primary, RoundedCornerShape(65.dp)),
+                Modifier.size(130.dp).background(previewChartColors()[0], RoundedCornerShape(65.dp)),
                 contentAlignment = Alignment.Center,
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -1237,12 +1237,14 @@ private fun PreviewBars(
                 verticalArrangement = Arrangement.Bottom,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Box(
-                    Modifier.weight(value).fillMaxWidth().background(
-                        previewColor(index),
-                        RoundedCornerShape(topStart = twRadius.sm, topEnd = twRadius.sm),
-                    ),
-                )
+                Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.BottomCenter) {
+                    Box(
+                        Modifier.fillMaxWidth().fillMaxHeight(value.coerceIn(0f, 1f)).background(
+                            previewChartColors()[index % 5],
+                            RoundedCornerShape(topStart = twRadius.sm, topEnd = twRadius.sm),
+                        ),
+                    )
+                }
                 if (labels.isNotEmpty()) {
                     Text(
                         variant = TextVariant.LabelSmall,

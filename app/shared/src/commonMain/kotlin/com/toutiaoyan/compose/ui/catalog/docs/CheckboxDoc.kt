@@ -25,6 +25,14 @@ val checkboxDoc =
             var checked by remember { mutableStateOf(false) }
             Checkbox(checked = checked, onCheckedChange = { checked = it }, text = "Accept terms")
             """.trimIndent(),
+        apiProperties =
+            listOf(
+                ApiProperty("checked", "Boolean?", "null"),
+                ApiProperty("defaultChecked", "Boolean", "false"),
+                ApiProperty("indeterminate", "Boolean", "false"),
+                ApiProperty("invalid", "Boolean", "false"),
+                ApiProperty("disabled", "Boolean", "false"),
+            ),
         examples =
             listOf(
                 ComponentExample(
@@ -32,11 +40,11 @@ val checkboxDoc =
                     code =
                         """
                         var checked by remember { mutableStateOf(false) }
-                        Checkbox(checked = checked, onCheckedChange = { checked = it })
+                        Checkbox("Accept terms and conditions", checked = checked, onCheckedChange = { checked = it })
                         """.trimIndent(),
                     preview = {
                         var checked by remember { mutableStateOf(false) }
-                        Checkbox(checked = checked, onCheckedChange = { checked = it })
+                        Checkbox("Accept terms and conditions", checked = checked, onCheckedChange = { checked = it })
                     },
                 ),
                 ComponentExample(

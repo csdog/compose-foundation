@@ -27,6 +27,10 @@ import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.toutiaoyan.compose.ui.tokens.StylePreset
+import com.toutiaoyan.compose.ui.components.label.LabelImpl
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import com.toutiaoyan.compose.tailwind.core.TwBreakpoint
@@ -64,7 +68,7 @@ import kotlin.jvm.JvmName
  */
 internal val LocalFieldSetDisabled = staticCompositionLocalOf { false }
 
-/** Real shadcn `FieldSet` — `flex flex-col gap-6`. [disabled] matches HTML `fieldset disabled`. */
+/** FieldSet: Nova gap-4; legacy presets keep gap-6. [disabled] matches HTML `fieldset disabled`. */
 @Composable
 fun FieldSet(
     modifier: Modifier = Modifier,
@@ -73,11 +77,14 @@ fun FieldSet(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    CompositionLocalProvider(LocalFieldSetDisabled provides disabled) {
+    CompositionLocalProvider(LocalFieldSetDisabled provides (disabled || LocalFieldSetDisabled.current)) {
         Column(
             modifier = modifier.fillMaxWidth().styleable(styleState, style),
-            // gap-6 = 24dp
-            verticalArrangement = Arrangement.spacedBy(twSpacing.xl2),
+            // Nova gap-4 = 16; legacy spacing remains unchanged.
+            verticalArrangement =
+                Arrangement.spacedBy(
+                    if (currentTheme.activePreset == StylePreset.Nova) 16.dp else twSpacing.xl2,
+                ),
             content = content,
         )
     }
@@ -116,13 +123,27 @@ fun FieldLegend(
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Text(
-        modifier = modifier.semantics { heading() }.padding(bottom = twSpacing.md).styleable(styleState, style),
+        modifier =
+            modifier.semantics {
+                heading()
+            }.padding(
+                bottom = if (currentTheme.activePreset == StylePreset.Nova) 6.dp else twSpacing.md,
+            ).styleable(styleState, style),
         variant =
             when (variant) {
                 FieldLegendVariant.Legend -> TextVariant.BodyLarge
                 FieldLegendVariant.Label -> TextVariant.BodySmall
             },
-        textStyle = TextStyle(fontWeight = FontWeight.Medium),
+        textStyle =
+            if (currentTheme.activePreset == StylePreset.Nova) {
+                currentTheme.typography.bodyMedium.copy(
+                    fontWeight = FontWeight.Medium,
+                    fontSize = if (variant == FieldLegendVariant.Legend) 16.sp else 14.sp,
+                    lineHeight = if (variant == FieldLegendVariant.Legend) 24.sp else 20.sp,
+                )
+            } else {
+                TextStyle(fontWeight = FontWeight.Medium)
+            },
     ) { text }
 }
 
@@ -138,7 +159,7 @@ fun FieldLegend(
     FieldLegend(text = text(), modifier = modifier, variant = variant, style = style)
 }
 
-/** Real shadcn `FieldGroup` — `flex flex-col gap-7` (28dp). */
+/** FieldGroup: Nova gap-5 (20dp); legacy gap-7 (28dp). */
 @Composable
 fun FieldGroup(
     modifier: Modifier = Modifier,
@@ -148,7 +169,10 @@ fun FieldGroup(
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Column(
         modifier = modifier.fillMaxWidth().styleable(styleState, style),
-        verticalArrangement = Arrangement.spacedBy(7.spacing.dp),
+        verticalArrangement =
+            Arrangement.spacedBy(
+                if (currentTheme.activePreset == StylePreset.Nova) 20.dp else 7.spacing.dp,
+            ),
         content = content,
     )
 }
@@ -181,7 +205,7 @@ fun fieldState(): FieldState =
 
 /**
  * One labeled control + description/error, matching real shadcn's `Field`
- * (`gap-3`, optional `data-invalid` → destructive content color).
+ * (Nova gap-2, optional `data-invalid` → destructive content color).
  */
 @Composable
 fun Field(
@@ -215,32 +239,50 @@ fun Field(
         FieldOrientation.Vertical -> {
             Column(
                 modifier = modifier.fillMaxWidth().styleable(styleState, style),
-                // gap-3 = 12dp
-                verticalArrangement = Arrangement.spacedBy(twSpacing.md),
+                // Nova gap-2 = 8; legacy spacing remains unchanged.
+                verticalArrangement =
+                    Arrangement.spacedBy(
+                        if (currentTheme.activePreset == StylePreset.Nova) 8.dp else twSpacing.md,
+                    ),
             ) { body() }
         }
 
         FieldOrientation.Horizontal -> {
             Row(
                 modifier = modifier.fillMaxWidth().styleable(styleState, style),
-                horizontalArrangement = Arrangement.spacedBy(twSpacing.md),
+                horizontalArrangement =
+                    Arrangement.spacedBy(
+                        if (currentTheme.activePreset == StylePreset.Nova) 8.dp else twSpacing.md,
+                    ),
                 verticalAlignment = Alignment.CenterVertically,
             ) { body() }
         }
 
         FieldOrientation.Responsive -> {
             BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
-                val horizontal = maxWidth >= TwBreakpoint.md
+                val horizontal =
+                    maxWidth >=
+                        if (currentTheme.activePreset == StylePreset.Nova) {
+                            448.dp
+                        } else {
+                            TwBreakpoint.md
+                        }
                 if (horizontal) {
                     Row(
                         modifier = Modifier.fillMaxWidth().styleable(styleState, style),
-                        horizontalArrangement = Arrangement.spacedBy(twSpacing.md),
+                        horizontalArrangement =
+                            Arrangement.spacedBy(
+                                if (currentTheme.activePreset == StylePreset.Nova) 8.dp else twSpacing.md,
+                            ),
                         verticalAlignment = Alignment.CenterVertically,
                     ) { body() }
                 } else {
                     Column(
                         modifier = Modifier.fillMaxWidth().styleable(styleState, style),
-                        verticalArrangement = Arrangement.spacedBy(twSpacing.md),
+                        verticalArrangement =
+                            Arrangement.spacedBy(
+                                if (currentTheme.activePreset == StylePreset.Nova) 8.dp else twSpacing.md,
+                            ),
                     ) { body() }
                 }
             }
@@ -296,7 +338,10 @@ fun FieldContent(
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Column(
         modifier = modifier.styleable(styleState, style),
-        verticalArrangement = Arrangement.spacedBy(1.5.spacing.dp),
+        verticalArrangement =
+            Arrangement.spacedBy(
+                if (currentTheme.activePreset == StylePreset.Nova) 2.dp else 1.5.spacing.dp,
+            ),
         content = content,
     )
 }
@@ -310,12 +355,13 @@ fun FieldLabel(
     disabled: Boolean = false,
     style: Style = Style,
 ) {
-    Label(
+    LabelImpl(
         text = text,
         modifier = modifier,
         required = required,
         disabled = disabled || LocalFieldSetDisabled.current,
         style = style,
+        fieldLabel = true,
     )
 }
 
@@ -343,7 +389,15 @@ fun FieldTitle(
     Text(
         modifier = modifier.semantics { heading() }.styleable(styleState, style),
         variant = TextVariant.BodySmall,
-        textStyle = TextStyle(fontWeight = FontWeight.Medium),
+        textStyle =
+            if (currentTheme.activePreset == StylePreset.Nova) {
+                currentTheme.typography.bodyMedium.copy(
+                    fontWeight = FontWeight.Medium,
+                    lineHeight = 19.25.sp,
+                )
+            } else {
+                TextStyle(fontWeight = FontWeight.Medium)
+            },
     ) { text }
 }
 
@@ -368,7 +422,14 @@ fun FieldDescription(
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Text(
         variant = TextVariant.BodySmall,
-        textStyle = TextColors.Muted,
+        textStyle =
+            if (currentTheme.activePreset == StylePreset.Nova) {
+                currentTheme.typography.bodyMedium.merge(
+                    TextColors.Muted,
+                )
+            } else {
+                TextColors.Muted
+            },
         style = style,
         modifier = modifier.styleable(styleState, style),
     ) { text }
@@ -413,7 +474,14 @@ fun FieldError(
         }
     Text(
         variant = TextVariant.BodySmall,
-        textStyle = TextStyle(color = destructive),
+        textStyle =
+            if (currentTheme.activePreset == StylePreset.Nova) {
+                currentTheme.typography.bodyMedium.copy(
+                    color = destructive,
+                )
+            } else {
+                TextStyle(color = destructive)
+            },
         style = style,
         modifier =
             modifier

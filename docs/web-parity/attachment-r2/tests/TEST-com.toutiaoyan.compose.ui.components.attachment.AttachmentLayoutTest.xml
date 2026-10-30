@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AttachmentLayoutTest[jvm]" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-10-30T05:06:35.784Z" hostname="Apples-MacBook-Pro.local" time="0.393">
+  <properties/>
+  <testcase name="longTitleReservesActionsAndTracksWidthAndDirection[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentLayoutTest" time="0.09"/>
+  <testcase name="mediaAndGapsUseNovaSizeAndRootWidthIsAtLeast160[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentLayoutTest" time="0.034"/>
+  <testcase name="legacyPresetStillAllowsCallerStyleOverrides[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentLayoutTest" time="0.017"/>
+  <testcase name="novaLayoutDark[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentLayoutTest" time="0.022"/>
+  <testcase name="mediaSpinnerUsesRootSizeWhileActionsKeepTheirOwnIconSize[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentLayoutTest" time="0.031"/>
+  <testcase name="novaLayoutLight[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentLayoutTest" time="0.021"/>
+  <testcase name="styleWidthAndBackgroundOverrideTheActualCard[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentLayoutTest" time="0.017"/>
+  <testcase name="actionsRemainIndependentlyClickableOnAnInteractiveCard[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentLayoutTest" time="0.138"/>
+  <testcase name="verticalMediaFillsCardAndActionsDoNotConsumeColumnSpace[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentLayoutTest" time="0.023"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AttachmentGroupSnapTest[jvm]" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-10-30T06:10:19.665Z" hostname="Apples-MacBook-Pro.local" time="0.6">
+  <properties/>
+  <testcase name="changingDirectionUpdatesExistingGroupSnapGeometry[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentGroupSnapTest" time="0.057"/>
+  <testcase name="tabReachesOffscreenActionsAndEnterActivatesOnlyTheFocusedOne[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentGroupSnapTest" time="0.078"/>
+  <testcase name="keyboardCanScrollInsideAnOversizedCard[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentGroupSnapTest" time="0.032"/>
+  <testcase name="wheelSettlesWithoutAddingTouchFlingInertia[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentGroupSnapTest" time="0.288"/>
+  <testcase name="arrowKeysSnapWithoutActivatingIndependentActions[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentGroupSnapTest" time="0.031"/>
+  <testcase name="nonAttachmentContentDoesNotCreateSnapStops[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentGroupSnapTest" time="0.031"/>
+  <testcase name="variableWidthCardsSnapWithLogicalPaddingInBothDirections[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentGroupSnapTest" time="0.048"/>
+  <testcase name="oversizedCardCanSettleInsideItsOwnSnapArea[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentGroupSnapTest" time="0.017"/>
+  <testcase name="horizontalOverflowDoesNotChainToParentAtTheStartingEdge[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentGroupSnapTest" time="0.017"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-28",
+  "baseline_component_source": "git show 78beb3b373fef6db3aff2c16a54133ae6b55507c:shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/badge/Badge.kt",
+  "method": "SHA-256 comparison of actual renders from pre-task Badge source and current Badge source, under the same toolchain and surrounding code",
+  "actual_images_identical": {
+    "badge_variants_light": true,
+    "badge_variants_dark": true,
+    "badge_focused_light": true,
+    "badge_focused_dark": true
+  },
+  "old_goldens_modified": false
+}

@@ -1,0 +1,1130 @@
+[
+  {
+    "form": "desktop",
+    "mode": "light",
+    "width": 1440,
+    "height": 1000,
+    "section": "features",
+    "file": "official-desktop-light-features.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "heading": {
+      "x": 392.5,
+      "y": 87.4375,
+      "width": 640,
+      "height": 26.25,
+      "top": 87.4375,
+      "right": 1032.5,
+      "bottom": 113.6875,
+      "left": 392.5
+    },
+    "font": "18.75px",
+    "lineHeight": "26.25px",
+    "tag": "H2",
+    "nodes": [
+      {
+        "tag": "UL",
+        "text": "\nIcon and image media through AttachmentMedia\nUpload states: idle, uploading, processing, error, and done with built-in styling and a shimmer while in progress\nThree sizes and horizontal or vertical orientation\nA full-card AttachmentTrigger that open",
+        "rect": {
+          "x": 392.5,
+          "y": 132.4375,
+          "width": 640,
+          "height": 247.5,
+          "top": 132.4375,
+          "right": 1032.5,
+          "bottom": 379.9375,
+          "left": 392.5
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "width": 1440,
+    "height": 1000,
+    "section": "accessibility",
+    "file": "official-desktop-light-accessibility.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "heading": {
+      "x": 392.5,
+      "y": 87.5625,
+      "width": 640,
+      "height": 26.25,
+      "top": 87.5625,
+      "right": 1032.5,
+      "bottom": 113.8125,
+      "left": 392.5
+    },
+    "font": "18.75px",
+    "lineHeight": "26.25px",
+    "tag": "H2",
+    "nodes": [
+      {
+        "tag": "P",
+        "text": "AttachmentAction renders a Button, and AttachmentTrigger renders a real <button> (or your element via render). Follow the guidance below so both are operable and announced.",
+        "rect": {
+          "x": 392.5,
+          "y": 128.8125,
+          "width": 640,
+          "height": 52.5,
+          "top": 128.8125,
+          "right": 1032.5,
+          "bottom": 181.3125,
+          "left": 392.5
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "width": 1440,
+    "height": 1000,
+    "section": "label-icon-only-actions",
+    "file": "official-desktop-light-label-icon-only-actions.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "heading": {
+      "x": 392.5,
+      "y": 84.90625,
+      "width": 640,
+      "height": 24.46875,
+      "top": 84.90625,
+      "right": 1032.5,
+      "bottom": 109.375,
+      "left": 392.5
+    },
+    "font": "16.875px",
+    "lineHeight": "24.4688px",
+    "tag": "H3",
+    "nodes": [
+      {
+        "tag": "P",
+        "text": "AttachmentAction is usually icon-only, so give each one an aria-label describing the action and its target.",
+        "rect": {
+          "x": 392.5,
+          "y": 124.375,
+          "width": 640,
+          "height": 52.5,
+          "top": 124.375,
+          "right": 1032.5,
+          "bottom": 176.875,
+          "left": 392.5
+        }
+      },
+      {
+        "tag": "FIGURE",
+        "text": "Copy<AttachmentAction aria-label=\"Remove sales-dashboard.pdf\">\n  <XIcon />\n</AttachmentAction>",
+        "rect": {
+          "x": 392.5,
+          "y": 194.375,
+          "width": 640,
+          "height": 107.5,
+          "top": 194.375,
+          "right": 1032.5,
+          "bottom": 301.875,
+          "left": 392.5
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "width": 1440,
+    "height": 1000,
+    "section": "label-the-trigger",
+    "file": "official-desktop-light-label-the-trigger.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "heading": {
+      "x": 392.5,
+      "y": 84.96875,
+      "width": 640,
+      "height": 24.46875,
+      "top": 84.96875,
+      "right": 1032.5,
+      "bottom": 109.4375,
+      "left": 392.5
+    },
+    "font": "16.875px",
+    "lineHeight": "24.4688px",
+    "tag": "H3",
+    "nodes": [
+      {
+        "tag": "P",
+        "text": "AttachmentTrigger covers the card with no text of its own, so give it an aria-label for what activating it does.",
+        "rect": {
+          "x": 392.5,
+          "y": 124.4375,
+          "width": 640,
+          "height": 52.5,
+          "top": 124.4375,
+          "right": 1032.5,
+          "bottom": 176.9375,
+          "left": 392.5
+        }
+      },
+      {
+        "tag": "FIGURE",
+        "text": "Copy<AttachmentTrigger\n  render={\n    <a\n      href={url}\n      target=\"_blank\"\n      rel=\"noreferrer\"\n      aria-label=\"Open workspace.png\"\n    />\n  }\n/>",
+        "rect": {
+          "x": 392.5,
+          "y": 194.4375,
+          "width": 640,
+          "height": 293,
+          "top": 194.4375,
+          "right": 1032.5,
+          "bottom": 487.4375,
+          "left": 392.5
+        }
+      },
+      {
+        "tag": "P",
+        "text": "The trigger sits behind the actions in the stacking order, so an AttachmentAction and the AttachmentTrigger never trap each other \u2014 both remain separately focusable and clickable.",
+        "rect": {
+          "x": 392.5,
+          "y": 506.1875,
+          "width": 640,
+          "height": 52.5,
+          "top": 506.1875,
+          "right": 1032.5,
+          "bottom": 558.6875,
+          "left": 392.5
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "width": 1440,
+    "height": 1000,
+    "section": "keyboard-scrolling",
+    "file": "official-desktop-light-keyboard-scrolling.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "heading": {
+      "x": 392.5,
+      "y": 85.28125,
+      "width": 640,
+      "height": 24.46875,
+      "top": 85.28125,
+      "right": 1032.5,
+      "bottom": 109.75,
+      "left": 392.5
+    },
+    "font": "16.875px",
+    "lineHeight": "24.4688px",
+    "tag": "H3",
+    "nodes": [
+      {
+        "tag": "P",
+        "text": "An AttachmentGroup scrolls horizontally. When its attachments are interactive: a trigger or actions, keyboard users reach off-screen items by tabbing to them. For a row of presentational attachments, make the group itself focusable and scrollable by ",
+        "rect": {
+          "x": 392.5,
+          "y": 124.75,
+          "width": 640,
+          "height": 105,
+          "top": 124.75,
+          "right": 1032.5,
+          "bottom": 229.75,
+          "left": 392.5
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "width": 1440,
+    "height": 1000,
+    "section": "meaning-beyond-color",
+    "file": "official-desktop-light-meaning-beyond-color.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "heading": {
+      "x": 392.5,
+      "y": 84.84375,
+      "width": 640,
+      "height": 24.46875,
+      "top": 84.84375,
+      "right": 1032.5,
+      "bottom": 109.3125,
+      "left": 392.5
+    },
+    "font": "16.875px",
+    "lineHeight": "24.4688px",
+    "tag": "H3",
+    "nodes": [
+      {
+        "tag": "P",
+        "text": "The error state uses a destructive color. Keep the failure reason in AttachmentDescription so the state is not conveyed by color alone.",
+        "rect": {
+          "x": 392.5,
+          "y": 124.3125,
+          "width": 640,
+          "height": 52.5,
+          "top": 124.3125,
+          "right": 1032.5,
+          "bottom": 176.8125,
+          "left": 392.5
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "width": 1440,
+    "height": 1000,
+    "section": "features",
+    "file": "official-desktop-dark-features.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "heading": {
+      "x": 392.5,
+      "y": 87.4375,
+      "width": 640,
+      "height": 26.25,
+      "top": 87.4375,
+      "right": 1032.5,
+      "bottom": 113.6875,
+      "left": 392.5
+    },
+    "font": "18.75px",
+    "lineHeight": "26.25px",
+    "tag": "H2",
+    "nodes": [
+      {
+        "tag": "UL",
+        "text": "\nIcon and image media through AttachmentMedia\nUpload states: idle, uploading, processing, error, and done with built-in styling and a shimmer while in progress\nThree sizes and horizontal or vertical orientation\nA full-card AttachmentTrigger that open",
+        "rect": {
+          "x": 392.5,
+          "y": 132.4375,
+          "width": 640,
+          "height": 247.5,
+          "top": 132.4375,
+          "right": 1032.5,
+          "bottom": 379.9375,
+          "left": 392.5
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "width": 1440,
+    "height": 1000,
+    "section": "accessibility",
+    "file": "official-desktop-dark-accessibility.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "heading": {
+      "x": 392.5,
+      "y": 87.5625,
+      "width": 640,
+      "height": 26.25,
+      "top": 87.5625,
+      "right": 1032.5,
+      "bottom": 113.8125,
+      "left": 392.5
+    },
+    "font": "18.75px",
+    "lineHeight": "26.25px",
+    "tag": "H2",
+    "nodes": [
+      {
+        "tag": "P",
+        "text": "AttachmentAction renders a Button, and AttachmentTrigger renders a real <button> (or your element via render). Follow the guidance below so both are operable and announced.",
+        "rect": {
+          "x": 392.5,
+          "y": 128.8125,
+          "width": 640,
+          "height": 52.5,
+          "top": 128.8125,
+          "right": 1032.5,
+          "bottom": 181.3125,
+          "left": 392.5
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "width": 1440,
+    "height": 1000,
+    "section": "label-icon-only-actions",
+    "file": "official-desktop-dark-label-icon-only-actions.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "heading": {
+      "x": 392.5,
+      "y": 84.90625,
+      "width": 640,
+      "height": 24.46875,
+      "top": 84.90625,
+      "right": 1032.5,
+      "bottom": 109.375,
+      "left": 392.5
+    },
+    "font": "16.875px",
+    "lineHeight": "24.4688px",
+    "tag": "H3",
+    "nodes": [
+      {
+        "tag": "P",
+        "text": "AttachmentAction is usually icon-only, so give each one an aria-label describing the action and its target.",
+        "rect": {
+          "x": 392.5,
+          "y": 124.375,
+          "width": 640,
+          "height": 52.5,
+          "top": 124.375,
+          "right": 1032.5,
+          "bottom": 176.875,
+          "left": 392.5
+        }
+      },
+      {
+        "tag": "FIGURE",
+        "text": "Copy<AttachmentAction aria-label=\"Remove sales-dashboard.pdf\">\n  <XIcon />\n</AttachmentAction>",
+        "rect": {
+          "x": 392.5,
+          "y": 194.375,
+          "width": 640,
+          "height": 107.5,
+          "top": 194.375,
+          "right": 1032.5,
+          "bottom": 301.875,
+          "left": 392.5
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "width": 1440,
+    "height": 1000,
+    "section": "label-the-trigger",
+    "file": "official-desktop-dark-label-the-trigger.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "heading": {
+      "x": 392.5,
+      "y": 84.96875,
+      "width": 640,
+      "height": 24.46875,
+      "top": 84.96875,
+      "right": 1032.5,
+      "bottom": 109.4375,
+      "left": 392.5
+    },
+    "font": "16.875px",
+    "lineHeight": "24.4688px",
+    "tag": "H3",
+    "nodes": [
+      {
+        "tag": "P",
+        "text": "AttachmentTrigger covers the card with no text of its own, so give it an aria-label for what activating it does.",
+        "rect": {
+          "x": 392.5,
+          "y": 124.4375,
+          "width": 640,
+          "height": 52.5,
+          "top": 124.4375,
+          "right": 1032.5,
+          "bottom": 176.9375,
+          "left": 392.5
+        }
+      },
+      {
+        "tag": "FIGURE",
+        "text": "Copy<AttachmentTrigger\n  render={\n    <a\n      href={url}\n      target=\"_blank\"\n      rel=\"noreferrer\"\n      aria-label=\"Open workspace.png\"\n    />\n  }\n/>",
+        "rect": {
+          "x": 392.5,
+          "y": 194.4375,
+          "width": 640,
+          "height": 293,
+          "top": 194.4375,
+          "right": 1032.5,
+          "bottom": 487.4375,
+          "left": 392.5
+        }
+      },
+      {
+        "tag": "P",
+        "text": "The trigger sits behind the actions in the stacking order, so an AttachmentAction and the AttachmentTrigger never trap each other \u2014 both remain separately focusable and clickable.",
+        "rect": {
+          "x": 392.5,
+          "y": 506.1875,
+          "width": 640,
+          "height": 52.5,
+          "top": 506.1875,
+          "right": 1032.5,
+          "bottom": 558.6875,
+          "left": 392.5
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "width": 1440,
+    "height": 1000,
+    "section": "keyboard-scrolling",
+    "file": "official-desktop-dark-keyboard-scrolling.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "heading": {
+      "x": 392.5,
+      "y": 85.28125,
+      "width": 640,
+      "height": 24.46875,
+      "top": 85.28125,
+      "right": 1032.5,
+      "bottom": 109.75,
+      "left": 392.5
+    },
+    "font": "16.875px",
+    "lineHeight": "24.4688px",
+    "tag": "H3",
+    "nodes": [
+      {
+        "tag": "P",
+        "text": "An AttachmentGroup scrolls horizontally. When its attachments are interactive: a trigger or actions, keyboard users reach off-screen items by tabbing to them. For a row of presentational attachments, make the group itself focusable and scrollable by ",
+        "rect": {
+          "x": 392.5,
+          "y": 124.75,
+          "width": 640,
+          "height": 105,
+          "top": 124.75,
+          "right": 1032.5,
+          "bottom": 229.75,
+          "left": 392.5
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "width": 1440,
+    "height": 1000,
+    "section": "meaning-beyond-color",
+    "file": "official-desktop-dark-meaning-beyond-color.png",
+    "dpr": 2,
+    "clientWidth": 1425,
+    "heading": {
+      "x": 392.5,
+      "y": 84.84375,
+      "width": 640,
+      "height": 24.46875,
+      "top": 84.84375,
+      "right": 1032.5,
+      "bottom": 109.3125,
+      "left": 392.5
+    },
+    "font": "16.875px",
+    "lineHeight": "24.4688px",
+    "tag": "H3",
+    "nodes": [
+      {
+        "tag": "P",
+        "text": "The error state uses a destructive color. Keep the failure reason in AttachmentDescription so the state is not conveyed by color alone.",
+        "rect": {
+          "x": 392.5,
+          "y": 124.3125,
+          "width": 640,
+          "height": 52.5,
+          "top": 124.3125,
+          "right": 1032.5,
+          "bottom": 176.8125,
+          "left": 392.5
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "width": 390,
+    "height": 844,
+    "section": "features",
+    "file": "official-phone-dark-features.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "heading": {
+      "x": 24,
+      "y": 85.40625,
+      "width": 327,
+      "height": 33.0703125,
+      "top": 85.40625,
+      "right": 351,
+      "bottom": 118.4765625,
+      "left": 24
+    },
+    "font": "23.625px",
+    "lineHeight": "33.075px",
+    "tag": "H2",
+    "nodes": [
+      {
+        "tag": "UL",
+        "text": "\nIcon and image media through AttachmentMedia\nUpload states: idle, uploading, processing, error, and done with built-in styling and a shimmer while in progress\nThree sizes and horizontal or vertical orientation\nA full-card AttachmentTrigger that open",
+        "rect": {
+          "x": 24,
+          "y": 142.1015625,
+          "width": 327,
+          "height": 609.421875,
+          "top": 142.1015625,
+          "right": 351,
+          "bottom": 751.5234375,
+          "left": 24
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "width": 390,
+    "height": 844,
+    "section": "accessibility",
+    "file": "official-phone-dark-accessibility.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "heading": {
+      "x": 24,
+      "y": 85.390625,
+      "width": 327,
+      "height": 33.0703125,
+      "top": 85.390625,
+      "right": 351,
+      "bottom": 118.4609375,
+      "left": 24
+    },
+    "font": "23.625px",
+    "lineHeight": "33.075px",
+    "tag": "H2",
+    "nodes": [
+      {
+        "tag": "P",
+        "text": "AttachmentAction renders a Button, and AttachmentTrigger renders a real <button> (or your element via render). Follow the guidance below so both are operable and announced.",
+        "rect": {
+          "x": 24,
+          "y": 137.359375,
+          "width": 327,
+          "height": 165.3515625,
+          "top": 137.359375,
+          "right": 351,
+          "bottom": 302.7109375,
+          "left": 24
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "width": 390,
+    "height": 844,
+    "section": "label-icon-only-actions",
+    "file": "official-phone-dark-label-icon-only-actions.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "heading": {
+      "x": 24,
+      "y": 82.78125,
+      "width": 327,
+      "height": 30.828125,
+      "top": 82.78125,
+      "right": 351,
+      "bottom": 113.609375,
+      "left": 24
+    },
+    "font": "21.2625px",
+    "lineHeight": "30.8306px",
+    "tag": "H3",
+    "nodes": [
+      {
+        "tag": "P",
+        "text": "AttachmentAction is usually icon-only, so give each one an aria-label describing the action and its target.",
+        "rect": {
+          "x": 24,
+          "y": 132.5078125,
+          "width": 327,
+          "height": 99.2109375,
+          "top": 132.5078125,
+          "right": 351,
+          "bottom": 231.71875,
+          "left": 24
+        }
+      },
+      {
+        "tag": "FIGURE",
+        "text": "Copy<AttachmentAction aria-label=\"Remove sales-dashboard.pdf\">\n  <XIcon />\n</AttachmentAction>",
+        "rect": {
+          "x": 24,
+          "y": 249.21875,
+          "width": 327,
+          "height": 107.5,
+          "top": 249.21875,
+          "right": 351,
+          "bottom": 356.71875,
+          "left": 24
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "width": 390,
+    "height": 844,
+    "section": "label-the-trigger",
+    "file": "official-phone-dark-label-the-trigger.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "heading": {
+      "x": 24,
+      "y": 82.7890625,
+      "width": 327,
+      "height": 30.828125,
+      "top": 82.7890625,
+      "right": 351,
+      "bottom": 113.6171875,
+      "left": 24
+    },
+    "font": "21.2625px",
+    "lineHeight": "30.8306px",
+    "tag": "H3",
+    "nodes": [
+      {
+        "tag": "P",
+        "text": "AttachmentTrigger covers the card with no text of its own, so give it an aria-label for what activating it does.",
+        "rect": {
+          "x": 24,
+          "y": 132.515625,
+          "width": 327,
+          "height": 132.28125,
+          "top": 132.515625,
+          "right": 351,
+          "bottom": 264.796875,
+          "left": 24
+        }
+      },
+      {
+        "tag": "FIGURE",
+        "text": "Copy<AttachmentTrigger\n  render={\n    <a\n      href={url}\n      target=\"_blank\"\n      rel=\"noreferrer\"\n      aria-label=\"Open workspace.png\"\n    />\n  }\n/>",
+        "rect": {
+          "x": 24,
+          "y": 282.296875,
+          "width": 327,
+          "height": 293,
+          "top": 282.296875,
+          "right": 351,
+          "bottom": 575.296875,
+          "left": 24
+        }
+      },
+      {
+        "tag": "P",
+        "text": "The trigger sits behind the actions in the stacking order, so an AttachmentAction and the AttachmentTrigger never trap each other \u2014 both remain separately focusable and clickable.",
+        "rect": {
+          "x": 24,
+          "y": 598.921875,
+          "width": 327,
+          "height": 198.421875,
+          "top": 598.921875,
+          "right": 351,
+          "bottom": 797.34375,
+          "left": 24
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "width": 390,
+    "height": 844,
+    "section": "keyboard-scrolling",
+    "file": "official-phone-dark-keyboard-scrolling.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "heading": {
+      "x": 24,
+      "y": 82.4140625,
+      "width": 327,
+      "height": 30.828125,
+      "top": 82.4140625,
+      "right": 351,
+      "bottom": 113.2421875,
+      "left": 24
+    },
+    "font": "21.2625px",
+    "lineHeight": "30.8306px",
+    "tag": "H3",
+    "nodes": [
+      {
+        "tag": "P",
+        "text": "An AttachmentGroup scrolls horizontally. When its attachments are interactive: a trigger or actions, keyboard users reach off-screen items by tabbing to them. For a row of presentational attachments, make the group itself focusable and scrollable by ",
+        "rect": {
+          "x": 24,
+          "y": 132.140625,
+          "width": 327,
+          "height": 297.6328125,
+          "top": 132.140625,
+          "right": 351,
+          "bottom": 429.7734375,
+          "left": 24
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "width": 390,
+    "height": 844,
+    "section": "meaning-beyond-color",
+    "file": "official-phone-dark-meaning-beyond-color.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "heading": {
+      "x": 24,
+      "y": 82.34375,
+      "width": 327,
+      "height": 30.828125,
+      "top": 82.34375,
+      "right": 351,
+      "bottom": 113.171875,
+      "left": 24
+    },
+    "font": "21.2625px",
+    "lineHeight": "30.8306px",
+    "tag": "H3",
+    "nodes": [
+      {
+        "tag": "P",
+        "text": "The error state uses a destructive color. Keep the failure reason in AttachmentDescription so the state is not conveyed by color alone.",
+        "rect": {
+          "x": 24,
+          "y": 132.0703125,
+          "width": 327,
+          "height": 132.28125,
+          "top": 132.0703125,
+          "right": 351,
+          "bottom": 264.3515625,
+          "left": 24
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "width": 390,
+    "height": 844,
+    "section": "features",
+    "file": "official-phone-light-features.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "heading": {
+      "x": 24,
+      "y": 85.40625,
+      "width": 327,
+      "height": 33.0703125,
+      "top": 85.40625,
+      "right": 351,
+      "bottom": 118.4765625,
+      "left": 24
+    },
+    "font": "23.625px",
+    "lineHeight": "33.075px",
+    "tag": "H2",
+    "nodes": [
+      {
+        "tag": "UL",
+        "text": "\nIcon and image media through AttachmentMedia\nUpload states: idle, uploading, processing, error, and done with built-in styling and a shimmer while in progress\nThree sizes and horizontal or vertical orientation\nA full-card AttachmentTrigger that open",
+        "rect": {
+          "x": 24,
+          "y": 142.1015625,
+          "width": 327,
+          "height": 609.421875,
+          "top": 142.1015625,
+          "right": 351,
+          "bottom": 751.5234375,
+          "left": 24
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "width": 390,
+    "height": 844,
+    "section": "accessibility",
+    "file": "official-phone-light-accessibility.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "heading": {
+      "x": 24,
+      "y": 85.390625,
+      "width": 327,
+      "height": 33.0703125,
+      "top": 85.390625,
+      "right": 351,
+      "bottom": 118.4609375,
+      "left": 24
+    },
+    "font": "23.625px",
+    "lineHeight": "33.075px",
+    "tag": "H2",
+    "nodes": [
+      {
+        "tag": "P",
+        "text": "AttachmentAction renders a Button, and AttachmentTrigger renders a real <button> (or your element via render). Follow the guidance below so both are operable and announced.",
+        "rect": {
+          "x": 24,
+          "y": 137.359375,
+          "width": 327,
+          "height": 165.3515625,
+          "top": 137.359375,
+          "right": 351,
+          "bottom": 302.7109375,
+          "left": 24
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "width": 390,
+    "height": 844,
+    "section": "label-icon-only-actions",
+    "file": "official-phone-light-label-icon-only-actions.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "heading": {
+      "x": 24,
+      "y": 82.78125,
+      "width": 327,
+      "height": 30.828125,
+      "top": 82.78125,
+      "right": 351,
+      "bottom": 113.609375,
+      "left": 24
+    },
+    "font": "21.2625px",
+    "lineHeight": "30.8306px",
+    "tag": "H3",
+    "nodes": [
+      {
+        "tag": "P",
+        "text": "AttachmentAction is usually icon-only, so give each one an aria-label describing the action and its target.",
+        "rect": {
+          "x": 24,
+          "y": 132.5078125,
+          "width": 327,
+          "height": 99.2109375,
+          "top": 132.5078125,
+          "right": 351,
+          "bottom": 231.71875,
+          "left": 24
+        }
+      },
+      {
+        "tag": "FIGURE",
+        "text": "Copy<AttachmentAction aria-label=\"Remove sales-dashboard.pdf\">\n  <XIcon />\n</AttachmentAction>",
+        "rect": {
+          "x": 24,
+          "y": 249.21875,
+          "width": 327,
+          "height": 107.5,
+          "top": 249.21875,
+          "right": 351,
+          "bottom": 356.71875,
+          "left": 24
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "width": 390,
+    "height": 844,
+    "section": "label-the-trigger",
+    "file": "official-phone-light-label-the-trigger.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "heading": {
+      "x": 24,
+      "y": 82.7890625,
+      "width": 327,
+      "height": 30.828125,
+      "top": 82.7890625,
+      "right": 351,
+      "bottom": 113.6171875,
+      "left": 24
+    },
+    "font": "21.2625px",
+    "lineHeight": "30.8306px",
+    "tag": "H3",
+    "nodes": [
+      {
+        "tag": "P",
+        "text": "AttachmentTrigger covers the card with no text of its own, so give it an aria-label for what activating it does.",
+        "rect": {
+          "x": 24,
+          "y": 132.515625,
+          "width": 327,
+          "height": 132.28125,
+          "top": 132.515625,
+          "right": 351,
+          "bottom": 264.796875,
+          "left": 24
+        }
+      },
+      {
+        "tag": "FIGURE",
+        "text": "Copy<AttachmentTrigger\n  render={\n    <a\n      href={url}\n      target=\"_blank\"\n      rel=\"noreferrer\"\n      aria-label=\"Open workspace.png\"\n    />\n  }\n/>",
+        "rect": {
+          "x": 24,
+          "y": 282.296875,
+          "width": 327,
+          "height": 293,
+          "top": 282.296875,
+          "right": 351,
+          "bottom": 575.296875,
+          "left": 24
+        }
+      },
+      {
+        "tag": "P",
+        "text": "The trigger sits behind the actions in the stacking order, so an AttachmentAction and the AttachmentTrigger never trap each other \u2014 both remain separately focusable and clickable.",
+        "rect": {
+          "x": 24,
+          "y": 598.921875,
+          "width": 327,
+          "height": 198.421875,
+          "top": 598.921875,
+          "right": 351,
+          "bottom": 797.34375,
+          "left": 24
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "width": 390,
+    "height": 844,
+    "section": "keyboard-scrolling",
+    "file": "official-phone-light-keyboard-scrolling.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "heading": {
+      "x": 24,
+      "y": 82.4140625,
+      "width": 327,
+      "height": 30.828125,
+      "top": 82.4140625,
+      "right": 351,
+      "bottom": 113.2421875,
+      "left": 24
+    },
+    "font": "21.2625px",
+    "lineHeight": "30.8306px",
+    "tag": "H3",
+    "nodes": [
+      {
+        "tag": "P",
+        "text": "An AttachmentGroup scrolls horizontally. When its attachments are interactive: a trigger or actions, keyboard users reach off-screen items by tabbing to them. For a row of presentational attachments, make the group itself focusable and scrollable by ",
+        "rect": {
+          "x": 24,
+          "y": 132.140625,
+          "width": 327,
+          "height": 297.6328125,
+          "top": 132.140625,
+          "right": 351,
+          "bottom": 429.7734375,
+          "left": 24
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "width": 390,
+    "height": 844,
+    "section": "meaning-beyond-color",
+    "file": "official-phone-light-meaning-beyond-color.png",
+    "dpr": 2,
+    "clientWidth": 375,
+    "heading": {
+      "x": 24,
+      "y": 82.34375,
+      "width": 327,
+      "height": 30.828125,
+      "top": 82.34375,
+      "right": 351,
+      "bottom": 113.171875,
+      "left": 24
+    },
+    "font": "21.2625px",
+    "lineHeight": "30.8306px",
+    "tag": "H3",
+    "nodes": [
+      {
+        "tag": "P",
+        "text": "The error state uses a destructive color. Keep the failure reason in AttachmentDescription so the state is not conveyed by color alone.",
+        "rect": {
+          "x": 24,
+          "y": 132.0703125,
+          "width": 327,
+          "height": 132.28125,
+          "top": 132.0703125,
+          "right": 351,
+          "bottom": 264.3515625,
+          "left": 24
+        }
+      }
+    ],
+    "review": "Six guidance sections reviewed in desktop/phone light/dark contacts; final API prose simplification reviewed in all affected captures. Kotlin prose/code and shared skeleton/type/table differences remain explicit."
+  }
+]

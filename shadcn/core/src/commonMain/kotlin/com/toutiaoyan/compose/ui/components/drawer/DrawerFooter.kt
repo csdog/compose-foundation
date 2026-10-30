@@ -32,3 +32,18 @@ fun DrawerFooter(
         content()
     }
 }
+
+/** Vertical actions matching the Base UI footer, preserving the original RowScope [DrawerFooter] API. */
+@Composable
+fun DrawerFooterColumn(
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+    content: @Composable androidx.compose.foundation.layout.ColumnScope.() -> Unit,
+) {
+    val state = remember { MutableStyleState(MutableInteractionSource()) }
+    androidx.compose.foundation.layout.Column(
+        modifier = modifier.styleable(state, rememberDrawerFooterStyle() then style),
+        verticalArrangement = Arrangement.spacedBy(twSpacing.scale2),
+        content = content,
+    )
+}

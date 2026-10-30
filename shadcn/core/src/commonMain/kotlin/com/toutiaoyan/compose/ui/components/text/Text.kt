@@ -8,23 +8,24 @@ package com.toutiaoyan.compose.ui.components.text
 
 import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.StyleOuterNode
+import androidx.compose.foundation.style.TextDrawFlag
 import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.InlineTextContent
-import androidx.compose.foundation.text.modifiers.StylePhase
-import androidx.compose.foundation.text.modifiers.TextStyleProviderNode
 import androidx.compose.foundation.text.selection.LocalSelectionRegistrar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorProducer
 import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.layout.MeasureResult
 import androidx.compose.ui.layout.MeasureScope
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.node.LayoutModifierNode
 import androidx.compose.ui.node.ModifierNodeElement
 import androidx.compose.ui.node.traverseAncestors
@@ -32,11 +33,12 @@ import androidx.compose.ui.platform.InspectorInfo
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Constraints
 import com.toutiaoyan.compose.ui.theme.LocalContentColor
 import com.toutiaoyan.compose.ui.theme.LocalTextDecoration
 import com.toutiaoyan.compose.ui.theme.Theme
 import kotlin.jvm.JvmName
+
+internal val LocalDefaultTextStyle = staticCompositionLocalOf { TextStyle.Default }
 
 /**
  * Usage:
@@ -147,25 +149,32 @@ private fun TextImpl(
     // (`ComposeFoundationFlags.isInheritedTextStyleEnabled`) and, when it is on, a specified
     // TextStyle color overrides Style `contentColor`. Baking LocalContentColor into TextStyle
     // therefore paints over ancestor Style (Card / Button / WithAncestorContentColor).
-    // Resolve the inherited content color from the Style node and copy that onto TextStyle.
+    // Resolve the inherited content color from the Style node during BasicText drawing.
     // Inside SelectionContainer the string node skips Style inheritance, so LocalContentColor
     // (else theme.foreground) stays on TextStyle there.
     // A specified [textStyle] color is also pushed as a nearer Style `contentColor`.
     // LocalTextDecoration covers Link-button hover underline where Style inheritance is skipped.
-    val merged = resolveTypography(theme, variant).merge(textStyle)
+    val merged =
+        resolveTypography(theme, variant)
+            .merge(if (variant == TextVariant.BodyMedium) LocalDefaultTextStyle.current else TextStyle.Default)
+            .merge(textStyle)
     val specifiedColor = merged.color.takeIf { it.isSpecified }
     val ambientColor = LocalContentColor.current
     val fallbackColor = if (ambientColor.isSpecified) ambientColor else theme.colors.foreground
     val inSelection = LocalSelectionRegistrar.current != null
-    val inheritedContentColor = remember { mutableStateOf(Color.Unspecified) }
-    val ambientDecoration = LocalTextDecoration.current
-    val resolvedColor =
-        when {
-            specifiedColor != null -> specifiedColor
-            inSelection -> fallbackColor
-            inheritedContentColor.value.isSpecified -> inheritedContentColor.value
-            else -> fallbackColor
+    val inheritedContentColor = remember { InheritedContentColor() }
+    // ColorProducer is consumed in BasicText's draw phase. Ancestor Style updates
+    // can repaint text without remeasurement or a state write back to composition.
+    val colorProducer =
+        if (specifiedColor != null || inSelection) {
+            null
+        } else {
+            ColorProducer {
+                inheritedContentColor.node?.inheritedColor()?.takeIf { it.isSpecified } ?: fallbackColor
+            }
         }
+    val ambientDecoration = LocalTextDecoration.current
+    val resolvedColor = specifiedColor ?: fallbackColor
     val resolvedStyle =
         run {
             val colored = merged.copy(color = resolvedColor)
@@ -193,6 +202,7 @@ private fun TextImpl(
             text = plainText,
             modifier = styledModifier,
             style = resolvedStyle,
+            color = colorProducer,
             maxLines = maxLines,
             overflow = overflow,
         )
@@ -201,6 +211,7 @@ private fun TextImpl(
             text = annotatedText!!,
             modifier = styledModifier,
             style = resolvedStyle,
+            color = colorProducer,
             maxLines = maxLines,
             overflow = overflow,
             inlineContent = inlineContent,
@@ -209,18 +220,22 @@ private fun TextImpl(
 }
 
 /**
- * Reads the nearest Style node's inherited content color. Compose Foundation does not expose a
- * public reader; [TextStyleProviderNode] is the same internal hook `TextStringSimpleNode` uses.
+ * Reads the nearest explicitly specified Style content color. Compose Foundation does not expose a
+ * public reader. Read each Style node's own resolved color rather than its inherited cache.
  * The element sits inside [styleable] so the nearest node includes this Text's own `contentColor`
  * and any ancestor's.
  */
+private class InheritedContentColor {
+    var node: AncestorContentColorNode? = null
+}
+
 private class AncestorContentColorElement(
-    private val color: MutableState<Color>,
+    private val color: InheritedContentColor,
 ) : ModifierNodeElement<AncestorContentColorNode>() {
     override fun create(): AncestorContentColorNode = AncestorContentColorNode(color)
 
     override fun update(node: AncestorContentColorNode) {
-        node.color = color
+        node.updateColor(color)
     }
 
     override fun InspectorInfo.inspectableProperties() {
@@ -233,37 +248,46 @@ private class AncestorContentColorElement(
 }
 
 private class AncestorContentColorNode(
-    var color: MutableState<Color>,
-) : Modifier.Node(),
-    LayoutModifierNode {
+    private var color: InheritedContentColor,
+) : Modifier.Node(), LayoutModifierNode {
+    // Preserve the existing Style/text layout boundary; color resolution stays in draw.
     override fun MeasureScope.measure(
         measurable: Measurable,
         constraints: Constraints,
     ): MeasureResult {
-        publishInheritedContentColor()
         val placeable = measurable.measure(constraints)
-        return layout(placeable.width, placeable.height) {
-            placeable.place(0, 0)
-        }
+        return layout(placeable.width, placeable.height) { placeable.place(0, 0) }
     }
 
-    private fun publishInheritedContentColor() {
+    fun updateColor(next: InheritedContentColor) {
+        if (color === next) return
+        if (color.node === this) color.node = null
+        color = next
+        if (isAttached) color.node = this
+    }
+
+    override fun onAttach() {
+        color.node = this
+    }
+
+    override fun onDetach() {
+        if (color.node === this) color.node = null
+    }
+
+    fun inheritedColor(): Color {
         var inherited = Color.Unspecified
         traverseAncestors(StyleOuterNodeKey) { node ->
-            val provider = node as? TextStyleProviderNode
-            if (provider != null) {
-                inherited =
-                    provider
-                        .computeInheritedTextStyle(StylePhase.Draw, TextStyle.Default)
-                        .color
+            val ownColor =
+                (node as? StyleOuterNode)
+                    ?.resolveAnimatedStyleFor(TextDrawFlag)?.contentColor ?: Color.Unspecified
+            if (ownColor.isSpecified) {
+                inherited = ownColor
                 false
             } else {
                 true
             }
         }
-        if (inherited.isSpecified && color.value != inherited) {
-            color.value = inherited
-        }
+        return inherited
     }
 }
 

@@ -52,4 +52,6 @@ internal fun resolveTypography(
         TextVariant.BodySmall -> theme.typography.bodySmall
         TextVariant.LabelLarge -> theme.typography.labelLarge
         TextVariant.LabelSmall -> theme.typography.labelSmall
+    }.let { style ->
+        if (style.fontFamily == null) style.copy(fontFamily = theme.fontFamily) else style
     }

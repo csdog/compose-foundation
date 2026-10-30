@@ -1,4 +1,6 @@
 package com.toutiaoyan.compose.ui.components.checkbox
+import com.toutiaoyan.compose.ui.utils.keyboardInputMode
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -20,18 +22,28 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.focusProperties
+import com.toutiaoyan.compose.ui.styles.cssStyleable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.shadow.Shadow
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.tailwind.core.twSpacing
 import com.toutiaoyan.compose.ui.components.button.ButtonAnimation
+import com.toutiaoyan.compose.ui.components.field.FieldLabel
 import com.toutiaoyan.compose.ui.components.label.Label
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextColors
@@ -104,8 +116,34 @@ fun Checkbox(
             isChecked -> ToggleableState.On
             else -> ToggleableState.Off
         }
-    val errorColor = currentTheme.colors.destructive
-    val invalidStyle = if (invalid) Style { borderColor(errorColor) } else Style
+    val theme = currentTheme
+    val nova = theme.activePreset == StylePreset.Nova
+    val errorColor = theme.colors.destructive
+    val invalidStyle =
+        if (invalid) {
+            Style {
+                borderColor(
+                    if (nova && (toggleState != ToggleableState.Off)) {
+                        theme.colors.primary
+                    } else if (nova && theme.isDark) {
+                        errorColor.copy(alpha = errorColor.alpha * 0.5f)
+                    } else {
+                        errorColor
+                    },
+                )
+                if (nova) {
+                    dropShadow(
+                        Shadow(
+                            radius = 0.dp,
+                            spread = 3.dp,
+                            color = errorColor.copy(alpha = if (theme.isDark) 0.4f else 0.2f),
+                        ),
+                    )
+                }
+            }
+        } else {
+            Style
+        }
     val interactionSource = remember { MutableInteractionSource() }
     val pressStyle = rememberPressMotionStyle(animation)
     val touchTargetStyle = rememberMinTouchTargetStyle()
@@ -119,6 +157,7 @@ fun Checkbox(
         modifier =
             modifier
                 .semantics {
+                    if (invalid) error("Invalid selection")
                     if (label.isNotEmpty()) {
                         contentDescription = if (required) "$label, required" else label
                     }
@@ -126,6 +165,7 @@ fun Checkbox(
                         disabled()
                     }
                 }
+                .keyboardInputMode()
                 .triStateToggleable(
                     state = toggleState,
                     onClick = { setChecked?.invoke(toggleState != ToggleableState.On) },
@@ -142,7 +182,7 @@ fun Checkbox(
                 modifier =
                     Modifier
                         .size(16.dp)
-                        .styleable(styleState, rememberCheckboxStyle() then invalidStyle, style),
+                        .cssStyleable(styleState, rememberCheckboxStyle() then invalidStyle, style),
                 contentAlignment = Alignment.Center,
             ) {
                 content()
@@ -170,6 +210,18 @@ fun Checkbox(
     defaultChecked: Boolean = false,
     style: Style = Style,
 ) {
+    val labelTarget = remember { FocusRequester() }
+    var localChecked by remember { mutableStateOf(defaultChecked) }
+    val value = checked ?: localChecked
+    val update: ((Boolean) -> Unit)? =
+        if (checked == null || onCheckedChange != null) {
+            { next ->
+                if (checked == null) localChecked = next
+                onCheckedChange?.invoke(next)
+            }
+        } else {
+            null
+        }
     Row(
         modifier = modifier,
         verticalAlignment =
@@ -178,8 +230,9 @@ fun Checkbox(
     ) {
         val resolvedEnabled = enabled && !disabled && !LocalFieldSetDisabled.current
         Checkbox(
-            checked = checked,
-            onCheckedChange = onCheckedChange,
+            checked = value,
+            modifier = Modifier.focusRequester(labelTarget),
+            onCheckedChange = update,
             indeterminate = indeterminate,
             enabled = resolvedEnabled,
             invalid = invalid,
@@ -190,13 +243,40 @@ fun Checkbox(
             style = style,
         )
         if (description == null) {
-            Label(text, disabled = !resolvedEnabled)
+            Label(
+                text,
+                modifier =
+                    Modifier.focusProperties { canFocus = false }.clickable(
+                        enabled = resolvedEnabled && update != null,
+                    ) {
+                        update?.invoke(indeterminate || !value)
+                        labelTarget.requestFocus()
+                    },
+                disabled = !resolvedEnabled,
+            )
         } else {
             Column(verticalArrangement = Arrangement.spacedBy(twSpacing.xs2)) {
-                Label(text, disabled = !resolvedEnabled)
+                FieldLabel(
+                    text,
+                    modifier =
+                        Modifier.focusProperties { canFocus = false }.clickable(
+                            enabled = resolvedEnabled && update != null,
+                        ) {
+                            update?.invoke(indeterminate || !value)
+                            labelTarget.requestFocus()
+                        },
+                    disabled = !resolvedEnabled,
+                )
                 Text(
                     variant = TextVariant.BodySmall,
-                    textStyle = TextColors.Muted,
+                    textStyle =
+                        if (currentTheme.activePreset == StylePreset.Nova) {
+                            currentTheme.typography.bodyMedium.merge(
+                                TextColors.Muted,
+                            )
+                        } else {
+                            TextColors.Muted
+                        },
                 ) { description }
             }
         }
@@ -213,15 +293,32 @@ internal fun CheckboxIndicator(
     modifier: Modifier = Modifier,
 ) {
     val markColor = currentTheme.colors.primaryForeground
+    val nova = currentTheme.activePreset == StylePreset.Nova
     if (state == ToggleableState.Off) return
     Canvas(modifier = modifier.size(14.dp)) {
-        val stroke = Stroke(width = size.width * 0.16f)
+        val stroke =
+            if (nova) {
+                Stroke(
+                    width = size.width / 12f,
+                    cap = StrokeCap.Round,
+                    join = StrokeJoin.Round,
+                )
+            } else {
+                Stroke(width = size.width * 0.16f)
+            }
         if (state == ToggleableState.On) {
             val path =
                 Path().apply {
-                    moveTo(size.width * 0.15f, size.height * 0.55f)
-                    lineTo(size.width * 0.42f, size.height * 0.8f)
-                    lineTo(size.width * 0.88f, size.height * 0.2f)
+                    if (nova) {
+                        // Lucide Check: M20 6 L9 17 L4 12 in a 24-unit viewport.
+                        moveTo(size.width * 20f / 24f, size.height * 6f / 24f)
+                        lineTo(size.width * 9f / 24f, size.height * 17f / 24f)
+                        lineTo(size.width * 4f / 24f, size.height * 12f / 24f)
+                    } else {
+                        moveTo(size.width * 0.15f, size.height * 0.55f)
+                        lineTo(size.width * 0.42f, size.height * 0.8f)
+                        lineTo(size.width * 0.88f, size.height * 0.2f)
+                    }
                 }
             drawPath(path, color = markColor, style = stroke)
         } else {
