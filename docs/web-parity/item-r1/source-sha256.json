@@ -1,0 +1,8 @@
+{
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/item/Item.kt": "47c4072ed434d7e1fab657c83f13fa1b10b8415da9b90ee53fd4c131a5d1c194",
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/item/ItemStyles.kt": "a8adcf9bd86b34f42529e28f0433d440a916cbaba6225524b8df744905ceb133",
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/item/ItemContext.kt": "29ff96fd8a28690b12e4d729fd321cde65ec98c0ed006922cefc17066703445f",
+  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/item/ItemParityTest.kt": "faa56f6f7ef5cfd4836acf0bf464b42ce7fdcbc5e92b5bb87f60e48d550a5dc6",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ItemDoc.kt": "6f6f5bb7bd9964f1477fb2f622379fe0d3cbb4fc1a2dd4f76679fbe4e6766e34",
+  "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/ItemExamplesTest.kt": "61b2a3529022f9e6195f458ec9f2a82c0c1a481482fc975e75e316bd533dca7f"
+}

@@ -1,0 +1,50 @@
+{
+  "comparison": "Committed baselines versus current native render; no prepass isolation, causal attribution remains open.",
+  "results": [
+    {
+      "name": "states",
+      "width": 1024,
+      "height": 168,
+      "changedPixels": 120,
+      "bounds": [
+        511,
+        24,
+        511,
+        143
+      ],
+      "changes": {
+        "38,38,38 -> 34,34,34": 120
+      }
+    },
+    {
+      "name": "without_handle",
+      "width": 1024,
+      "height": 168,
+      "changedPixels": 120,
+      "bounds": [
+        511,
+        24,
+        511,
+        143
+      ],
+      "changes": {
+        "38,38,38 -> 34,34,34": 120
+      }
+    },
+    {
+      "name": "sidebar_and_content",
+      "width": 368,
+      "height": 208,
+      "changedPixels": 160,
+      "bounds": [
+        136,
+        24,
+        136,
+        183
+      ],
+      "changes": {
+        "38,38,38 -> 34,34,34": 160
+      }
+    }
+  ]
+}

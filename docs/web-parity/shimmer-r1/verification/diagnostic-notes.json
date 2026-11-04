@@ -1,0 +1,8 @@
+{
+  "redPaint": "5/5 failed before Text bridge. First bridge made ancestor brush pass but 4 own-brush cases still failed because Compose StyleProperties.contentColor clears contentBrush. Separate color node then made all5 pass.",
+  "redPhase": "Modifier caller control passed before change. Style caller composition count expected4 actual64; moving progress reads to Style/draw made both phase cases pass while glyph pixels changed.",
+  "compileCorrection": "Deferred State edit accidentally used progress.value inside ShaderBrush Float field; parent corrected only that Float site.",
+  "legacyAttribution": "Initial timing/palette guesses were not treated as proof. Exact prepass sources produced byte-identical actual images for both changed goldens, proving differences preexisting this round. No golden record/update.",
+  "restoration": "Parent restored exact current-green bytes and changed only Shimmer KDoc TextStyles.Muted to TextColors.Muted. Final18/ktlint command passed with matching cached XML.",
+  "rawLogs": "Never read or exposed raw Gradle logs; compact ledger preserved before wrapper finish."
+}

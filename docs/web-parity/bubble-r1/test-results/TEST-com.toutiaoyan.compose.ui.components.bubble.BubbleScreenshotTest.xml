@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="BubbleScreenshotTest[jvm]" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-10-30T08:50:08.300Z" hostname="Apples-MacBook-Pro.local" time="1.088">
+  <properties/>
+  <testcase name="reactions_top_light[jvm]" classname="com.toutiaoyan.compose.ui.components.bubble.BubbleScreenshotTest" time="0.785"/>
+  <testcase name="reactions_top_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.bubble.BubbleScreenshotTest" time="0.03"/>
+  <testcase name="variants_light[jvm]" classname="com.toutiaoyan.compose.ui.components.bubble.BubbleScreenshotTest" time="0.038"/>
+  <testcase name="nova_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.bubble.BubbleScreenshotTest" time="0.033"/>
+  <testcase name="conversation_with_reactions_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.bubble.BubbleScreenshotTest" time="0.035"/>
+  <testcase name="nova_light[jvm]" classname="com.toutiaoyan.compose.ui.components.bubble.BubbleScreenshotTest" time="0.031"/>
+  <testcase name="alignment_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.bubble.BubbleScreenshotTest" time="0.021"/>
+  <testcase name="variants_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.bubble.BubbleScreenshotTest" time="0.024"/>
+  <testcase name="conversation_with_reactions_light[jvm]" classname="com.toutiaoyan.compose.ui.components.bubble.BubbleScreenshotTest" time="0.028"/>
+  <testcase name="tinted_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.bubble.BubbleScreenshotTest" time="0.019"/>
+  <testcase name="alignment_light[jvm]" classname="com.toutiaoyan.compose.ui.components.bubble.BubbleScreenshotTest" time="0.021"/>
+  <testcase name="tinted_light[jvm]" classname="com.toutiaoyan.compose.ui.components.bubble.BubbleScreenshotTest" time="0.019"/>
+  <system-out><![CDATA[Roborazzi: bubble_reactions_top_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=29192, width=328, height=89) changed:false
+Roborazzi: bubble_reactions_top_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=29192, width=328, height=89) changed:false
+Roborazzi: bubble_variants_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=104304, width=328, height=318) changed:false
+Roborazzi: bubble_nova_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=157680, width=432, height=365) changed:false
+Roborazzi: bubble_conversation_with_reactions_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=122672, width=328, height=374) changed:false
+Roborazzi: bubble_nova_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=157680, width=432, height=365) changed:false
+Roborazzi: bubble_alignment_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=45264, width=328, height=138) changed:false
+Roborazzi: bubble_variants_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=104304, width=328, height=318) changed:false
+Roborazzi: bubble_conversation_with_reactions_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=122672, width=328, height=374) changed:false
+Roborazzi: bubble_tinted_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=29192, width=328, height=89) changed:false
+Roborazzi: bubble_alignment_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=45264, width=328, height=138) changed:false
+Roborazzi: bubble_tinted_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=29192, width=328, height=89) changed:false
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

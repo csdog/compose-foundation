@@ -1,0 +1,6 @@
+{
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/accordion/Accordion.kt": "4b353fe8b5366dbce9c70a150ab789a47b82284e296cf8375a78e0636862db81",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/CatalogFonts.kt": "980254352ac1404db5d8bbe4061d17c638b0392c4cfa00663d29fc17621fef29",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/AccordionDoc.kt": "aadf8910f0d72710c356a2a288c7cca7c02601ec64898fb875dfa6236de02670",
+  "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/AccordionRtlPreviewTest.kt": "13cdbb6b9813556135cdae7837784b230f2f0d53a77d310d2adbda864e90e690"
+}

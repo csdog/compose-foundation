@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TabsBehaviorParityTest[jvm]" tests="12" skipped="0" failures="1" errors="0" timestamp="2026-10-30T22:26:40.693Z" hostname="Apples-MacBook-Pro.local" time="0.846">
+  <properties/>
+  <testcase name="verticalHomeEndAndNonLoopingBoundaryWork[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.459"/>
+  <testcase name="tabExitsTheListThroughOneRovingEntry[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.051"/>
+  <testcase name="keyedReorderUsesCurrentVisualOrderForArrows[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.035"/>
+  <testcase name="controlledRefusalKeepsSelectionWhileFocusMoves[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.028"/>
+  <testcase name="keptPanelPreservesInputButTakesNoSpaceOrFocusWhenHidden[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.114">
+    <failure message="java.lang.AssertionError: Failed to assert the following: (Focused = 'false')&#10;Semantics of the node:&#10;Node #69 at (l=35.0, t=69.0, r=113.0, b=95.0)px, Tag: 'input'&#10;ContentDataType = 'PlatformContentDataType(type=1)'&#10;EditableText = 'Ada'&#10;Focused = 'true'&#10;ImeAction = 'Default'&#10;InputText = 'Ada'&#10;IsEditable = 'true'&#10;TextSelectionRange = 'TextRange(3, 3)'&#10;Actions = [GetTextLayoutResult, InsertTextAtCursor, OnClick, OnFillData, OnLongClick, PasteText, PerformImeAction, RequestFocus, SetSelection, SetText]&#10;MergeDescendants = 'true'&#10;Has 2 siblings&#10;Selector used: (TestTag = 'input')&#10;" type="java.lang.AssertionError">java.lang.AssertionError: Failed to assert the following: (Focused = 'false')
+Semantics of the node:
+Node #69 at (l=35.0, t=69.0, r=113.0, b=95.0)px, Tag: 'input'
+ContentDataType = 'PlatformContentDataType(type=1)'
+EditableText = 'Ada'
+Focused = 'true'
+ImeAction = 'Default'
+InputText = 'Ada'
+IsEditable = 'true'
+TextSelectionRange = 'TextRange(3, 3)'
+Actions = [GetTextLayoutResult, InsertTextAtCursor, OnClick, OnFillData, OnLongClick, PasteText, PerformImeAction, RequestFocus, SetSelection, SetText]
+MergeDescendants = 'true'
+Has 2 siblings
+Selector used: (TestTag = 'input')
+
+	at androidx.compose.ui.test.AssertionsKt.assert(Assertions.kt:293)
+	at androidx.compose.ui.test.AssertionsKt.assert$default(Assertions.kt:283)
+	at androidx.compose.ui.test.AssertionsKt.assertIsNotFocused(Assertions.kt:124)
+	at com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest.keptPanelPreservesInputButTakesNoSpaceOrFocusWhenHidden(TabsBehaviorParityTest.kt:172)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at androidx.compose.ui.test.junit4.DesktopComposeTestRule$apply$1$evaluate$1.invokeSuspend(DesktopComposeTestRule.desktop.kt:90)
+	at androidx.compose.ui.test.junit4.DesktopComposeTestRule$apply$1$evaluate$1.invoke(DesktopComposeTestRule.desktop.kt)
+	at androidx.compose.ui.test.junit4.DesktopComposeTestRule$apply$1$evaluate$1.invoke(DesktopComposeTestRule.desktop.kt)
+	at androidx.compose.ui.test.SkikoComposeUiTest$runTest$1$1$1$1$1.invokeSuspend(ComposeUiTest.skiko.kt:276)
+	at androidx.compose.ui.test.SkikoComposeUiTest$runTest$1$1$1$1$1.invoke(ComposeUiTest.skiko.kt)
+	at androidx.compose.ui.test.SkikoComposeUiTest$runTest$1$1$1$1$1.invoke(ComposeUiTest.skiko.kt)
+	at androidx.compose.ui.platform.FrameRecomposer$withMonotonicFrameClock$2.invokeSuspend(FrameRecomposer.skiko.kt:182)
+	at androidx.compose.ui.platform.FrameRecomposer$withMonotonicFrameClock$2.invoke(FrameRecomposer.skiko.kt)
+	at androidx.compose.ui.platform.FrameRecomposer$withMonotonicFrameClock$2.invoke(FrameRecomposer.skiko.kt)
+	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatched(Undispatched.kt:66)
+	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatchedOrReturn(Undispatched.kt:43)
+	at kotlinx.coroutines.BuildersKt__Builders_commonKt.withContext(Builders.common.kt:497)
+	at kotlinx.coroutines.BuildersKt.withContext(Unknown Source)
+	at androidx.compose.ui.platform.FrameRecomposer.withMonotonicFrameClock(FrameRecomposer.skiko.kt:181)
+	at androidx.compose.ui.test.SkikoComposeUiTest$runTest$1.invokeSuspend(ComposeUiTest.skiko.kt:275)
+	at androidx.compose.ui.test.SkikoComposeUiTest$runTest$1.invoke(ComposeUiTest.skiko.kt)
+	at androidx.compose.ui.test.SkikoComposeUiTest$runTest$1.invoke(ComposeUiTest.skiko.kt)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$1.invokeSuspend(TestBuilders.kt:317)
+	at _COROUTINE._BOUNDARY._(CoroutineDebugging.kt:42)
+	at androidx.compose.ui.test.SkikoComposeUiTest$runTest$1.invokeSuspend(ComposeUiTest.skiko.kt:275)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$1.invokeSuspend(TestBuilders.kt:317)
+Caused by: java.lang.AssertionError: Failed to assert the following: (Focused = 'false')
+Semantics of the node:
+Node #69 at (l=35.0, t=69.0, r=113.0, b=95.0)px, Tag: 'input'
+ContentDataType = 'PlatformContentDataType(type=1)'
+EditableText = 'Ada'
+Focused = 'true'
+ImeAction = 'Default'
+InputText = 'Ada'
+IsEditable = 'true'
+TextSelectionRange = 'TextRange(3, 3)'
+Actions = [GetTextLayoutResult, InsertTextAtCursor, OnClick, OnFillData, OnLongClick, PasteText, PerformImeAction, RequestFocus, SetSelection, SetText]
+MergeDescendants = 'true'
+Has 2 siblings
+Selector used: (TestTag = 'input')
+
+	at androidx.compose.ui.test.AssertionsKt.assert(Assertions.kt:293)
+	at androidx.compose.ui.test.AssertionsKt.assert$default(Assertions.kt:283)
+	at androidx.compose.ui.test.AssertionsKt.assertIsNotFocused(Assertions.kt:124)
+	at com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest.keptPanelPreservesInputButTakesNoSpaceOrFocusWhenHidden(TabsBehaviorParityTest.kt:172)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at androidx.compose.ui.test.junit4.DesktopComposeTestRule$apply$1$evaluate$1.invokeSuspend(DesktopComposeTestRule.desktop.kt:90)
+	at androidx.compose.ui.test.junit4.DesktopComposeTestRule$apply$1$evaluate$1.invoke(DesktopComposeTestRule.desktop.kt)
+	at androidx.compose.ui.test.junit4.DesktopComposeTestRule$apply$1$evaluate$1.invoke(DesktopComposeTestRule.desktop.kt)
+	at androidx.compose.ui.test.SkikoComposeUiTest$runTest$1$1$1$1$1.invokeSuspend(ComposeUiTest.skiko.kt:276)
+	at androidx.compose.ui.test.SkikoComposeUiTest$runTest$1$1$1$1$1.invoke(ComposeUiTest.skiko.kt)
+	at androidx.compose.ui.test.SkikoComposeUiTest$runTest$1$1$1$1$1.invoke(ComposeUiTest.skiko.kt)
+	at androidx.compose.ui.platform.FrameRecomposer$withMonotonicFrameClock$2.invokeSuspend(FrameRecomposer.skiko.kt:182)
+	at androidx.compose.ui.platform.FrameRecomposer$withMonotonicFrameClock$2.invoke(FrameRecomposer.skiko.kt)
+	at androidx.compose.ui.platform.FrameRecomposer$withMonotonicFrameClock$2.invoke(FrameRecomposer.skiko.kt)
+	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatched(Undispatched.kt:66)
+	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatchedOrReturn(Undispatched.kt:43)
+	at kotlinx.coroutines.BuildersKt__Builders_commonKt.withContext(Builders.common.kt:497)
+	at kotlinx.coroutines.BuildersKt.withContext(Unknown Source)
+	at androidx.compose.ui.platform.FrameRecomposer.withMonotonicFrameClock(FrameRecomposer.skiko.kt:181)
+	at androidx.compose.ui.test.SkikoComposeUiTest$runTest$1.invokeSuspend(ComposeUiTest.skiko.kt:275)
+	at androidx.compose.ui.test.SkikoComposeUiTest$runTest$1.invoke(ComposeUiTest.skiko.kt)
+	at androidx.compose.ui.test.SkikoComposeUiTest$runTest$1.invoke(ComposeUiTest.skiko.kt)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$1.invokeSuspend(TestBuilders.kt:317)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.test.TestDispatcher.processEvent$kotlinx_coroutines_test(TestDispatcher.kt:24)
+	at kotlinx.coroutines.test.TestCoroutineScheduler.tryRunNextTaskUnless$kotlinx_coroutines_test(TestCoroutineScheduler.kt:98)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$workRunner$1.invokeSuspend(TestBuilders.kt:326)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source)
+	at kotlinx.coroutines.test.TestBuildersJvmKt.createTestResult(TestBuildersJvm.kt:10)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:309)
+	at kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:167)
+	at kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)
+	at androidx.compose.ui.test.SkikoComposeUiTest.runTest(ComposeUiTest.skiko.kt:263)
+	at androidx.compose.ui.test.junit4.DesktopComposeTestRule$apply$1.evaluate(DesktopComposeTestRule.desktop.kt:89)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.gradle.api.internal.tasks.testing.junit.JUnitTestExecutor.runRequest(JUnitTestExecutor.java:175)
+	at org.gradle.api.internal.tasks.testing.junit.JUnitTestExecutor.accept(JUnitTestExecutor.java:84)
+	at org.gradle.api.internal.tasks.testing.junit.JUnitTestExecutor.accept(JUnitTestExecutor.java:47)
+	at org.gradle.api.internal.tasks.testing.junit.AbstractJUnitTestDefinitionProcessor.processTestDefinition(AbstractJUnitTestDefinitionProcessor.java:65)
+	at org.gradle.api.internal.tasks.testing.SuiteTestDefinitionProcessor.processTestDefinition(SuiteTestDefinitionProcessor.java:53)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.gradle.internal.dispatch.MethodInvocation.invokeOn(MethodInvocation.java:77)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:28)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:19)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:88)
+	at jdk.proxy1/jdk.proxy1.$Proxy4.processTestDefinition(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$2.run(TestWorker.java:178)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:126)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:122)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:72)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+</failure>
+  </testcase>
+  <testcase name="rtlArrowDirectionIsReversed[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.027"/>
+  <testcase name="missingOrDisabledUncontrolledSelectionFallsBack[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.021"/>
+  <testcase name="uncontrolledRootInitiallySelectsFirstEnabledTab[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.019"/>
+  <testcase name="disabledTabIsSkippedAndManualActivationIsSeparate[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.024"/>
+  <testcase name="defaultKeyboardFocusRequiresExplicitActivation[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.023"/>
+  <testcase name="switchingPanelsRemovesOldContentWithoutAnImplicitFade[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.025"/>
+  <testcase name="savedSetterUsesLatestOwnerCallback[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.018"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

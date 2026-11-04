@@ -1,0 +1,155 @@
+[
+  {
+    "name": "sidebar_app_shell_light",
+    "prepassType": "changed",
+    "prepassArtifactOrigin": "rendered-actual",
+    "currentArtifactOrigin": "rendered-actual",
+    "prepassArtifactSha256": "fa56e99d9257103c038f8909c3d13dbb441873454165fcea5062ea845f33031c",
+    "currentArtifactSha256": "0152493d417b029d01bf8849bb6ae1b5da580f2b429b739b44f2e194202f78e5",
+    "artifactByteIdentical": false
+  },
+  {
+    "name": "sidebar_expanded_dark",
+    "prepassType": "changed",
+    "prepassArtifactOrigin": "rendered-actual",
+    "currentArtifactOrigin": "rendered-actual",
+    "prepassArtifactSha256": "6f3f429e2e22637d8fbf1f1453b89c7a151a6c67327d56117c8fbb498a5ea807",
+    "currentArtifactSha256": "b64bd4287d7f3b8e74b4ad8983d97fddabf51b8bcde6977f3b7d97e3e910fc03",
+    "artifactByteIdentical": false
+  },
+  {
+    "name": "sidebar_collapsed_light",
+    "prepassType": "unchanged",
+    "prepassArtifactOrigin": "canonical-golden-for-passed-verification",
+    "currentArtifactOrigin": "rendered-actual",
+    "prepassArtifactSha256": "2c51a10003fe4f106cf71690db7d0cb2a6a3b1cbd56532fff8e41289b5def216",
+    "currentArtifactSha256": "301e9c2f83db439cfbba7de3085d0d45acb05844833ff1b0a0d98fe3b4904441",
+    "artifactByteIdentical": false
+  },
+  {
+    "name": "sidebar_mobile_dark",
+    "prepassType": "changed",
+    "prepassArtifactOrigin": "rendered-actual",
+    "currentArtifactOrigin": "rendered-actual",
+    "prepassArtifactSha256": "d4ec0395104ea7f69361c1f4d2fdd4a05eaedebc763b689c0d009a1233a4caea",
+    "currentArtifactSha256": "0b8b2b9b0b635a65039aaae234a7bdc5b98ce178d7e48c6ae41f1b4904ea6ae7",
+    "artifactByteIdentical": false
+  },
+  {
+    "name": "sidebar_floating_dark",
+    "prepassType": "changed",
+    "prepassArtifactOrigin": "rendered-actual",
+    "currentArtifactOrigin": "rendered-actual",
+    "prepassArtifactSha256": "412e31719fd7de21b392232eb42cec3337670da6553c797e439389f2dc9b55c8",
+    "currentArtifactSha256": "412e31719fd7de21b392232eb42cec3337670da6553c797e439389f2dc9b55c8",
+    "artifactByteIdentical": true
+  },
+  {
+    "name": "sidebar_official_width_light",
+    "prepassType": "changed",
+    "prepassArtifactOrigin": "rendered-actual",
+    "currentArtifactOrigin": "rendered-actual",
+    "prepassArtifactSha256": "85fc239c8010b7b28e22058454518c010114752cfeba414e0ebc59dcb9234a8b",
+    "currentArtifactSha256": "b8a44687d473b79f18a7795653ca48ac47c18b74fa06cd313f898e189483b1dc",
+    "artifactByteIdentical": false
+  },
+  {
+    "name": "sidebar_inset_light",
+    "prepassType": "changed",
+    "prepassArtifactOrigin": "rendered-actual",
+    "currentArtifactOrigin": "rendered-actual",
+    "prepassArtifactSha256": "566865ee088c3f55e1f7585d2da630fa0a4c8377d9ebfd113bc297dc060a9b0f",
+    "currentArtifactSha256": "566865ee088c3f55e1f7585d2da630fa0a4c8377d9ebfd113bc297dc060a9b0f",
+    "artifactByteIdentical": true
+  },
+  {
+    "name": "sidebar_mobile_light",
+    "prepassType": "changed",
+    "prepassArtifactOrigin": "rendered-actual",
+    "currentArtifactOrigin": "rendered-actual",
+    "prepassArtifactSha256": "3d62b0a38dab4a0ce7f0c42955b69b2e44ea8f09787a843aa9b82155e8363ac7",
+    "currentArtifactSha256": "150121e40a3673f56ede5b9333656c7d0122d257b0a236afc5a9573a4ceeb4b2",
+    "artifactByteIdentical": false
+  },
+  {
+    "name": "sidebar_icon_collapsed_light",
+    "prepassType": "changed",
+    "prepassArtifactOrigin": "rendered-actual",
+    "currentArtifactOrigin": "rendered-actual",
+    "prepassArtifactSha256": "f85e5dd77c30cb2ecfb08eb917efadb4ee233c316e3362f62cc1d0ca39107f0e",
+    "currentArtifactSha256": "f6ddc653a2e9ba4f3211432a18e305b0c08f0d2dacf36a42ac91ba8fd87e0b19",
+    "artifactByteIdentical": false
+  },
+  {
+    "name": "sidebar_inset_dark",
+    "prepassType": "changed",
+    "prepassArtifactOrigin": "rendered-actual",
+    "currentArtifactOrigin": "rendered-actual",
+    "prepassArtifactSha256": "df7a87ead8d5b071ae5e387b066fe6954562f23eaac9a3e1cf09ec29f6cccdde",
+    "currentArtifactSha256": "df7a87ead8d5b071ae5e387b066fe6954562f23eaac9a3e1cf09ec29f6cccdde",
+    "artifactByteIdentical": true
+  },
+  {
+    "name": "sidebar_trigger_focused_light",
+    "prepassType": "unchanged",
+    "prepassArtifactOrigin": "canonical-golden-for-passed-verification",
+    "currentArtifactOrigin": "canonical-golden-for-passed-verification",
+    "prepassArtifactSha256": "301e9c2f83db439cfbba7de3085d0d45acb05844833ff1b0a0d98fe3b4904441",
+    "currentArtifactSha256": "301e9c2f83db439cfbba7de3085d0d45acb05844833ff1b0a0d98fe3b4904441",
+    "artifactByteIdentical": true
+  },
+  {
+    "name": "sidebar_icon_collapsed_dark",
+    "prepassType": "changed",
+    "prepassArtifactOrigin": "rendered-actual",
+    "currentArtifactOrigin": "rendered-actual",
+    "prepassArtifactSha256": "6aa71198a3a0225a3e0e72f1de3ef3dff0cf4d4375c9b47e1cef977af5f79aec",
+    "currentArtifactSha256": "020ff30b5ab4cf7f24f16a692ce3f75cd847e37e2ba73cabd8ea40101498cdb2",
+    "artifactByteIdentical": false
+  },
+  {
+    "name": "sidebar_expanded_light",
+    "prepassType": "changed",
+    "prepassArtifactOrigin": "rendered-actual",
+    "currentArtifactOrigin": "rendered-actual",
+    "prepassArtifactSha256": "85fc239c8010b7b28e22058454518c010114752cfeba414e0ebc59dcb9234a8b",
+    "currentArtifactSha256": "b8a44687d473b79f18a7795653ca48ac47c18b74fa06cd313f898e189483b1dc",
+    "artifactByteIdentical": false
+  },
+  {
+    "name": "sidebar_app_shell_dark",
+    "prepassType": "changed",
+    "prepassArtifactOrigin": "rendered-actual",
+    "currentArtifactOrigin": "rendered-actual",
+    "prepassArtifactSha256": "61f9a417f2ebd3aa8f2d71ba6aa0d962c3bda0c081af39843c788f2c8284a945",
+    "currentArtifactSha256": "464af653c1031caf015af5a9bf64e0d00191c735b50d59bf9b0f382b6cb49cd1",
+    "artifactByteIdentical": false
+  },
+  {
+    "name": "sidebar_official_width_dark",
+    "prepassType": "changed",
+    "prepassArtifactOrigin": "rendered-actual",
+    "currentArtifactOrigin": "rendered-actual",
+    "prepassArtifactSha256": "6f3f429e2e22637d8fbf1f1453b89c7a151a6c67327d56117c8fbb498a5ea807",
+    "currentArtifactSha256": "b64bd4287d7f3b8e74b4ad8983d97fddabf51b8bcde6977f3b7d97e3e910fc03",
+    "artifactByteIdentical": false
+  },
+  {
+    "name": "sidebar_floating_light",
+    "prepassType": "changed",
+    "prepassArtifactOrigin": "rendered-actual",
+    "currentArtifactOrigin": "rendered-actual",
+    "prepassArtifactSha256": "1474a889d1e61f214c325dcf86d1065398d04736d6d6a7128a763eaff8be6015",
+    "currentArtifactSha256": "1474a889d1e61f214c325dcf86d1065398d04736d6d6a7128a763eaff8be6015",
+    "artifactByteIdentical": true
+  },
+  {
+    "name": "sidebar_collapsed_dark",
+    "prepassType": "changed",
+    "prepassArtifactOrigin": "rendered-actual",
+    "currentArtifactOrigin": "rendered-actual",
+    "prepassArtifactSha256": "ef9fc99cbf57e8e40e1b671e00a2c8ca6e4db3d9e51bfd3b044d8d2b0c9569a9",
+    "currentArtifactSha256": "aba69b435bdff2980d9dcf9c0b369cacdd36144991fd55e894758273ac081735",
+    "artifactByteIdentical": false
+  }
+]

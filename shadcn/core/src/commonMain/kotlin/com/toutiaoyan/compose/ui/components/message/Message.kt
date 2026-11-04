@@ -16,6 +16,22 @@ import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
+import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.theme.LocalContentColor
+import com.toutiaoyan.compose.ui.tokens.StylePreset
+import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.remember
@@ -29,15 +45,31 @@ import com.toutiaoyan.compose.ui.components.text.TextVariant
 /** Which side of a [Message] row its avatar sits on -- the sender's own messages are usually [End]. */
 enum class MessageAlign { Start, End }
 
-/**
- * The enclosing [Message]'s [MessageAlign], read by [MessageHeader] and
- * [MessageFooter] so they self-align to match -- matches real shadcn's CSS
- * `group-data-[align=end]/message:justify-end` (a parent-state selector with no direct
- * Compose equivalent, so this is threaded down via [CompositionLocalProvider] instead).
- * Defaults to [MessageAlign.Start] so Header/Footer degrade gracefully if ever used
- * outside a [Message].
- */
+/** Alignment inherited by the content column, bubbles, and footer. */
 internal val LocalMessageAlign = compositionLocalOf { MessageAlign.Start }
+
+/** Registers descendant parts after successful composition; no writes during composition/measurement. */
+internal class MessageParts {
+    var footerCount by mutableIntStateOf(0)
+    var ghostCount by mutableIntStateOf(0)
+}
+
+internal val LocalMessageParts = compositionLocalOf<MessageParts?> { null }
+
+@Composable
+internal fun TrackMessagePart(ghost: Boolean = false) {
+    val parts = LocalMessageParts.current
+    DisposableEffect(parts, ghost) {
+        if (parts != null) {
+            if (ghost) parts.ghostCount++ else parts.footerCount++
+        }
+        onDispose {
+            if (parts != null) {
+                if (ghost) parts.ghostCount-- else parts.footerCount--
+            }
+        }
+    }
+}
 
 class MessageState(val align: MessageAlign)
 
@@ -73,27 +105,47 @@ fun Message(
     modifier: Modifier = Modifier,
     style: Style = Style,
     align: MessageAlign = MessageAlign.Start,
-    avatar: @Composable () -> Unit,
+    avatar: (@Composable () -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    val parts = remember { MessageParts() }
     Row(
-        // Real shadcn's `.message` is `w-full` -- without this, the row sizes to its
-        // own content (avatar + however wide the bubble happens to be) and the parent
-        // Column's default Alignment.Start then places that whole undersized row flush
-        // left, regardless of [align]. Bubble's own end-alignment only resolves
-        // *within* this row, so a narrower-than-full row left an End-aligned bubble
-        // looking stranded short of the real right edge, with dead space after it.
-        modifier = modifier.fillMaxWidth().styleable(styleState, style),
-        horizontalArrangement = Arrangement.spacedBy(twSpacing.sm),
+        modifier =
+            modifier.then(if (nova) Modifier else Modifier.fillMaxWidth())
+                .styleable(styleState, rememberMessageRootStyle() then style),
+        horizontalArrangement = Arrangement.spacedBy(if (nova) 8.dp else twSpacing.sm),
     ) {
-        CompositionLocalProvider(LocalMessageAlign provides align) {
+        CompositionLocalProvider(
+            LocalMessageAlign provides align,
+            LocalMessageParts provides if (nova) parts else null,
+            LocalDefaultTextStyle provides
+                if (nova) {
+                    TextStyle(
+                        fontFamily = currentTheme.fontFamily, fontSize = 14.sp, lineHeight = 20.sp,
+                        lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+                    )
+                } else {
+                    LocalDefaultTextStyle.current
+                },
+        ) {
+            val avatarSlot = @Composable {
+                if (avatar != null) {
+                    Box(
+                        modifier =
+                            Modifier.align(Alignment.Bottom).offset {
+                                IntOffset(0, if (nova && parts.footerCount > 0) -32.dp.roundToPx() else 0)
+                            },
+                    ) { avatar() }
+                }
+            }
             if (align == MessageAlign.Start) {
-                Box(modifier = Modifier.align(Alignment.Bottom)) { avatar() }
-                MessageContent(content = content)
+                avatarSlot()
+                MessageContentBody(Modifier.weight(1f), Style, content)
             } else {
-                MessageContent(content = content)
-                Box(modifier = Modifier.align(Alignment.Bottom)) { avatar() }
+                MessageContentBody(Modifier.weight(1f), Style, content)
+                avatarSlot()
             }
         }
     }
@@ -118,7 +170,7 @@ fun Message(
 fun MessageAvatar(
     modifier: Modifier = Modifier,
     style: Style = Style,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit = {},
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Box(
@@ -140,21 +192,45 @@ fun MessageAvatar(
     style: Style = Style,
 ) {
     MessageAvatar(modifier = modifier, style = style) {
-        Text { text }
+        Box(Modifier.size(32.dp), contentAlignment = Alignment.Center) { Text { text } }
     }
 }
 
 /** The flex column beside [MessageAvatar]. Matches shadcn's `MessageContent`. */
 @Composable
 fun RowScope.MessageContent(content: @Composable ColumnScope.() -> Unit) {
-    // fill = true (the default): real shadcn's MessageContent is `w-full`, occupying
-    // its full flex-1 share -- with fill = false a shrunk column (e.g. a short bubble)
-    // would be positioned right after the previous sibling instead of at its slot's
-    // true edge, leaving the avatar stranded short of the row's real end for
-    // MessageAlign.End, even with the outer Row now correctly filling its width.
+    MessageContentBody(Modifier.weight(1f), Style, content)
+}
+
+/** Standalone content slot; root modifier and style are caller-controlled. */
+@Composable
+fun MessageContent(
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    MessageContentBody(modifier, style, content)
+}
+
+@Composable
+private fun MessageContentBody(
+    modifier: Modifier,
+    style: Style,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Column(
-        modifier = Modifier.weight(1f),
-        verticalArrangement = Arrangement.spacedBy(twSpacing.xs),
+        modifier = modifier.styleable(styleState, rememberMessageRootStyle() then style),
+        horizontalAlignment =
+            if (nova &&
+                LocalMessageAlign.current == MessageAlign.End
+            ) {
+                Alignment.End
+            } else {
+                Alignment.Start
+            },
+        verticalArrangement = Arrangement.spacedBy(if (nova) 10.dp else twSpacing.xs),
         content = content,
     )
 }
@@ -169,12 +245,21 @@ fun MessageGroup(
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Column(
         modifier = modifier.styleable(styleState, style),
-        verticalArrangement = Arrangement.spacedBy(twSpacing.sm),
+        verticalArrangement =
+            Arrangement.spacedBy(
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    8.dp
+                } else {
+                    twSpacing.sm
+                },
+            ),
         content = content,
     )
 }
 
-/** A metadata row (e.g. sender name) above a [Message]'s content, self-aligned to match [LocalMessageAlign]. */
+/**
+ * A metadata row (e.g. sender name) above a [Message]'s content, aligned to start in Nova and to the message side in legacy presets.
+ */
 @Composable
 fun ColumnScope.MessageHeader(
     modifier: Modifier = Modifier,
@@ -182,14 +267,34 @@ fun ColumnScope.MessageHeader(
     content: @Composable RowScope.() -> Unit,
 ) {
     val align = LocalMessageAlign.current
+    val nova = currentTheme.activePreset == StylePreset.Nova
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Row(
         modifier =
             modifier
-                .align(if (align == MessageAlign.End) Alignment.End else Alignment.Start)
-                .styleable(styleState, style),
-        horizontalArrangement = Arrangement.spacedBy(twSpacing.xs),
-        content = content,
+                .align(if (!nova && align == MessageAlign.End) Alignment.End else Alignment.Start)
+                .styleable(styleState, rememberMessageMetadataStyle() then style),
+        horizontalArrangement = Arrangement.spacedBy(if (nova) 0.dp else twSpacing.xs),
+        verticalAlignment = Alignment.CenterVertically,
+        content = {
+            CompositionLocalProvider(
+                LocalContentColor provides if (nova) currentTheme.colors.mutedForeground else LocalContentColor.current,
+                LocalDefaultTextStyle provides
+                    if (nova) {
+                        TextStyle(
+                            fontFamily = currentTheme.fontFamily, fontSize = 12.sp, lineHeight = 16.sp,
+                            fontWeight = FontWeight.Medium,
+                            lineHeightStyle =
+                                LineHeightStyle(
+                                    LineHeightStyle.Alignment.Center,
+                                    LineHeightStyle.Trim.None,
+                                ),
+                        )
+                    } else {
+                        LocalDefaultTextStyle.current
+                    },
+            ) { content() }
+        },
     )
 }
 
@@ -201,11 +306,20 @@ fun ColumnScope.MessageHeader(
     style: Style = Style,
 ) {
     MessageHeader(modifier = modifier, style = style) {
-        Text(variant = TextVariant.LabelLarge) { text }
+        Text(
+            variant =
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    TextVariant.BodyMedium
+                } else {
+                    TextVariant.LabelLarge
+                },
+        ) { text }
     }
 }
 
-/** A metadata row (e.g. timestamp) below a [Message]'s content, self-aligned to match [LocalMessageAlign]. */
+/**
+ * A metadata row (e.g. timestamp) below a [Message]'s content, aligned to start in Nova and to the message side in legacy presets.
+ */
 @Composable
 fun ColumnScope.MessageFooter(
     modifier: Modifier = Modifier,
@@ -213,14 +327,35 @@ fun ColumnScope.MessageFooter(
     content: @Composable RowScope.() -> Unit,
 ) {
     val align = LocalMessageAlign.current
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    TrackMessagePart()
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Row(
         modifier =
             modifier
                 .align(if (align == MessageAlign.End) Alignment.End else Alignment.Start)
-                .styleable(styleState, style),
-        horizontalArrangement = Arrangement.spacedBy(twSpacing.xs),
-        content = content,
+                .styleable(styleState, rememberMessageMetadataStyle() then style),
+        horizontalArrangement = Arrangement.spacedBy(if (nova) 0.dp else twSpacing.xs),
+        verticalAlignment = Alignment.CenterVertically,
+        content = {
+            CompositionLocalProvider(
+                LocalContentColor provides if (nova) currentTheme.colors.mutedForeground else LocalContentColor.current,
+                LocalDefaultTextStyle provides
+                    if (nova) {
+                        TextStyle(
+                            fontFamily = currentTheme.fontFamily, fontSize = 12.sp, lineHeight = 16.sp,
+                            fontWeight = FontWeight.Medium,
+                            lineHeightStyle =
+                                LineHeightStyle(
+                                    LineHeightStyle.Alignment.Center,
+                                    LineHeightStyle.Trim.None,
+                                ),
+                        )
+                    } else {
+                        LocalDefaultTextStyle.current
+                    },
+            ) { content() }
+        },
     )
 }
 
@@ -232,6 +367,10 @@ fun ColumnScope.MessageFooter(
     style: Style = Style,
 ) {
     MessageFooter(modifier = modifier, style = style) {
-        Text(variant = TextVariant.LabelSmall, textStyle = TextColors.Muted) { text }
+        if (currentTheme.activePreset == StylePreset.Nova) {
+            Text { text }
+        } else {
+            Text(variant = TextVariant.LabelSmall, textStyle = TextColors.Muted) { text }
+        }
     }
 }

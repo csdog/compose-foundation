@@ -14,6 +14,7 @@ dependencies {
     implementation(libs.kotlinx.coroutinesSwing)
 
     implementation(libs.compose.uiToolingPreview)
+    testImplementation(libs.kotlin.testJunit)
 }
 
 compose.desktop {
@@ -24,7 +25,10 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "com.toutiaoyan.compose.ui"
             packageVersion = "1.0.0"
+            windows { iconFile.set(project.file("icons/app.ico")) }
+            linux { iconFile.set(project.file("src/main/resources/icons/app.png")) }
             macOS {
+                iconFile.set(project.file("icons/app.icns"))
                 bundleID = "com.toutiaoyan.compose.ui"
                 infoPlist {
                     extraKeysRawXml =

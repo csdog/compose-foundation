@@ -1,0 +1,15 @@
+{
+  "reference": "../../../chart-preview-r3/verification/initial8/native",
+  "unchanged": {
+    "first-390-light.png": true,
+    "first-1440-dark.png": true,
+    "first-390-dark.png": true,
+    "first-1440-light.png": true
+  },
+  "sha256": {
+    "first-390-light.png": "2e9169af2773ac894ab97625a62ee857cf2dacf236b9e35ddb655d2c69b7b70d",
+    "first-1440-dark.png": "1f550720b17fa532fdf1e7b2efaf5c5746bd0d5ed60e022f483a5f23cbb2ca55",
+    "first-390-dark.png": "82a963aa23fde73cc3ad56c16f289a6ec42107e1f7bd50bc9057a3e72ba0be72",
+    "first-1440-light.png": "47e08ee178893313f019dd8870ed60bcf436caac60974e64b53f347be1298f26"
+  }
+}

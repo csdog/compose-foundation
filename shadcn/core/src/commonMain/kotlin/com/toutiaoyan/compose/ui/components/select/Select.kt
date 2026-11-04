@@ -73,6 +73,7 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -407,6 +408,8 @@ fun SelectScope.SelectValue(
     Text(
         modifier = modifier,
         variant = TextVariant.BodySmall,
+        maxLines = if (theme.activePreset == StylePreset.Nova) 1 else Int.MAX_VALUE,
+        overflow = if (theme.activePreset == StylePreset.Nova) TextOverflow.Ellipsis else TextOverflow.Clip,
         textStyle =
             if (theme.activePreset == StylePreset.Nova) {
                 theme.typography.bodyMedium.copy(

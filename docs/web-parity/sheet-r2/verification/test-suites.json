@@ -1,0 +1,29 @@
+[
+  {
+    "file": "TEST-com.toutiaoyan.compose.ui.components.sheet.SheetParityTest.xml",
+    "tests": "15",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.763",
+    "timestamp": "2026-10-30T20:43:13.353Z"
+  },
+  {
+    "file": "TEST-com.toutiaoyan.compose.ui.components.sheet.SheetLayoutTest.xml",
+    "tests": "12",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "1.045",
+    "timestamp": "2026-10-30T20:43:12.306Z"
+  },
+  {
+    "file": "TEST-com.toutiaoyan.compose.ui.catalog.SheetExamplesTest.xml",
+    "tests": "28",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "8.455",
+    "timestamp": "2026-10-30T20:47:01.097Z"
+  }
+]

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MessageScrollerParityTest[jvm]" tests="27" skipped="0" failures="0" errors="0" timestamp="2026-10-30T14:43:45.053Z" hostname="Apples-MacBook-Pro.local" time="1.631">
+  <properties/>
+  <testcase name="rowPaddingBelongsToTheMeasuredMessageBoundary[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.493"/>
+  <testcase name="cancellingSmoothCommandClearsItsProgrammaticState[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.048"/>
+  <testcase name="visibilityExcludesPreviousPeekBandAndTracksCurrentTurn[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.038"/>
+  <testcase name="newTurnKeepsPreviousPeekAndSpacerIsConsumedByStreaming[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.061"/>
+  <testcase name="commandsHonorContentPaddingMarginAndAllFourAlignments[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.034"/>
+  <testcase name="commandsBeforeAViewportExistsReturnFalse[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.016"/>
+  <testcase name="novaContentGapIsTwentyFour[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.036"/>
+  <testcase name="nova_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.301"/>
+  <testcase name="nova_light[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.036"/>
+  <testcase name="prependingPreservesTheSameVisibleMessagePosition[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.035"/>
+  <testcase name="keyboardEndCanReachTheLiveEdgeAndFollowLaterAppends[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.05"/>
+  <testcase name="providerDefaultsOpenAtEndWithoutFollowingNewContent[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.029"/>
+  <testcase name="cancelledOpeningPositionDoesNotKeepTheTranscriptTransparent[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.036"/>
+  <testcase name="shortLastTurnOpensAtEndWithoutAddingBlankSpace[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.021"/>
+  <testcase name="pointerIntentCancelsAnActiveSmoothCommand[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.038"/>
+  <testcase name="thresholdScalesWithDensityInsteadOfUsingPhysicalPixels[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.034"/>
+  <testcase name="openingAtLastAnchorOnlyPinsATurnTallerThanTheViewport[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.023"/>
+  <testcase name="optedInFollowingHandlesStreamGrowthAndPointerIntentReleasesIt[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.03"/>
+  <testcase name="prependPreservationCanBeDisabled[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.026"/>
+  <testcase name="reflowAboveTheReadingRowPreservesItsPosition[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.027"/>
+  <testcase name="anonymousAnchorDoesNotEraseTheLastNamedCurrentAnchor[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.015"/>
+  <testcase name="buttonStopsAcceptingInputWhileItsExitAnimationIsStillMounted[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.019"/>
+  <testcase name="readerScrollReleasesAndExplicitEndResumesFollowing[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.06"/>
+  <testcase name="newerCommandKeepsItsFollowingModeWhenTheOlderAnimationIsCancelled[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.036"/>
+  <testcase name="pointerIntentCancelsAnAnchorWaitingForItsSpacerFrame[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.03"/>
+  <testcase name="commandsReturnFalseAfterViewportUnmountAndVisibilityClears[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.029"/>
+  <testcase name="userMutationCancelsOneCorrectionWithoutDetachingTheController[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest" time="0.025"/>
+  <system-out><![CDATA[Roborazzi: message_scroller_provider_nova_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=87904, width=328, height=268) changed:false
+Roborazzi: message_scroller_provider_nova_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=87904, width=328, height=268) changed:false
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

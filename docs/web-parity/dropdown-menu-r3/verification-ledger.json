@@ -1,0 +1,145 @@
+{
+  "command_fingerprints": {
+    "0111dd2e53ca89762a38920b1952f760fcf34d57a56aabce0155591124616d2c": 1,
+    "af2ee286e2880d5d3c86e3b198d76d12b2b1356e36d4744c301ebb636df32dc0": 1,
+    "bcb7632be1d6ec54b5c4d2f8c977492dc0fe88fab454165cdbfd9bdbfd01e442": 1
+  },
+  "failure_fingerprints": {
+    "0ca732b69eeb39946d40f21088aa21e63d227282163ef4d8c485b6eda3e7d652": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/DropdownMenuAdditionalRecipes.kt:612:56 Unresolved reference 'Layout'.",
+      "occurrences": 1
+    },
+    "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a": {
+      "excerpt": "Module not found: Error: Can't resolve 'path' in '/Users/cscs/IdeaProjects/angryecho/compose-foundation/build/js/packages/compose-foundation-app-webApp/kotlin'",
+      "occurrences": 2
+    },
+    "5a390a018f0c53db85e56bd27362127ada391e6268146cdb0ea062b338d47706": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/DropdownMenuAdditionalRecipes.kt:710:67 Unresolved reference 'CircleHelp'.",
+      "occurrences": 1
+    },
+    "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4": {
+      "excerpt": "Module not found: Error: Can't resolve 'os' in '/Users/cscs/IdeaProjects/angryecho/compose-foundation/build/js/packages/compose-foundation-app-webApp/kotlin'",
+      "occurrences": 2
+    },
+    "8bb58e8e65ac7d659aa82834087f2aba07d120c567cd6420d9f101c74d5bf948": {
+      "excerpt": "* What went wrong: Execution failed for task ':app:shared:compileKotlinJvm' (registered in build file 'app/shared/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kotlin co...",
+      "occurrences": 1
+    }
+  },
+  "failure_fingerprints_truncated_occurrences": 0,
+  "run_count": 3,
+  "runs": [
+    {
+      "command": "./gradlew :app:shared:compileKotlinJvm --console=plain --no-scan",
+      "elapsed_seconds": 12.076,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "0ca732b69eeb39946d40f21088aa21e63d227282163ef4d8c485b6eda3e7d652",
+        "5a390a018f0c53db85e56bd27362127ada391e6268146cdb0ea062b338d47706",
+        "8bb58e8e65ac7d659aa82834087f2aba07d120c567cd6420d9f101c74d5bf948"
+      ],
+      "log": "0001.log",
+      "question": "Do the seven additional dropdown recipes and leading slots compile on the shared JVM target?",
+      "scope": "targeted",
+      "sequence": 1,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *DropdownMenuExamplesTest :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution :app:webApp:jsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 43.782,
+      "exit_status": 0,
+      "failure_fingerprints": [
+        "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4",
+        "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a"
+      ],
+      "log": "0002.log",
+      "question": "Do all thirteen dropdown recipes compile and preserve icon checkbox/radio state, nested complex notifications, RTL and long-menu scrolling?",
+      "scope": "targeted",
+      "sequence": 2,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "a5ea31a40ee900447b39aa164074b28b4eba04d6b5ffc43b65d433a6ffffec10",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *DropdownMenuExamplesTest :shadcn:core:jvmTest --tests *DropdownMenuScreenshotTest --tests *ContextMenuScreenshotTest --tests *MenubarScreenshotTest -Proborazzi.test.verify=true :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution :app:webApp:jsBrowserDevelopmentExecutableDistribution :shadcn:core:ktlintCheck :shadcn:core:detekt :app:shared:ktlintCheck :app:shared:detekt --console=plain --no-scan",
+      "elapsed_seconds": 39.155,
+      "exit_status": 0,
+      "failure_fingerprints": [
+        "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4",
+        "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a"
+      ],
+      "log": "0003.log",
+      "question": "Do the final thirteen dropdown recipes pass catalog regression, eight menu golden verification, Web distributions, and four owning-module quality gates after documentation polish?",
+      "scope": "targeted",
+      "sequence": 3,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "b31efcef4b8f770b24a049cb9ba3982ffeb41d54a9dcda8120d66b790fb3b92d",
+        "dea1df736e1eaa22b569ded8dd89d42ff69f2af833de15035dd20f5bb096df9f",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "6a41883b1d378b94f5d1dd65207b6d667827a592216250e5827fb8a57da22c2f",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2"
+      ]
+    }
+  ],
+  "version": 1,
+  "warning_fingerprints": {
+    "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312": {
+      "excerpt": "w: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/text/Text.kt:5:16 Suppression of error 'INVISIBLE_REFERENCE' might compile and work, but the compiler behavior is UNSP...",
+      "occurrences": 6
+    },
+    "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4": {
+      "excerpt": "You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.",
+      "occurrences": 3
+    },
+    "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2": {
+      "excerpt": "Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.",
+      "occurrences": 3
+    },
+    "6a41883b1d378b94f5d1dd65207b6d667827a592216250e5827fb8a57da22c2f": {
+      "excerpt": "webpack 5.108.1 compiled with 1 warning in 466 ms",
+      "occurrences": 1
+    },
+    "a5ea31a40ee900447b39aa164074b28b4eba04d6b5ffc43b65d433a6ffffec10": {
+      "excerpt": "webpack 5.108.1 compiled with 1 warning in 422 ms",
+      "occurrences": 1
+    },
+    "b31efcef4b8f770b24a049cb9ba3982ffeb41d54a9dcda8120d66b790fb3b92d": {
+      "excerpt": "WARNING: *Important* Test suite support is experimental and subject to change",
+      "occurrences": 1
+    },
+    "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a": {
+      "excerpt": "WARNING: The option setting 'android.experimental.enableScreenshotTest=true' is experimental.",
+      "occurrences": 3
+    },
+    "dea1df736e1eaa22b569ded8dd89d42ff69f2af833de15035dd20f5bb096df9f": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=TEST_SUITE_SUPPORT_EXPERIMENTAL to the gradle.properties file to suppress this warning.",
+      "occurrences": 1
+    },
+    "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=UNSUPPORTED_PROJECT_OPTION_USE to the gradle.properties file to suppress this warning.",
+      "occurrences": 6
+    },
+    "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90": {
+      "excerpt": "WARNING: The option setting 'android.experimental.testSuiteSupport=true' is experimental.",
+      "occurrences": 3
+    }
+  },
+  "warning_fingerprints_truncated_occurrences": 0,
+  "workflow": "8f1610daf308bcbd4430525cb52356a1"
+}

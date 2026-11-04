@@ -6,6 +6,7 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusGroup
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -46,6 +47,12 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.text.font.FontWeight
+import com.toutiaoyan.compose.ui.tokens.StylePreset
+import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
 import com.toutiaoyan.compose.tailwind.core.twSpacing
 import com.toutiaoyan.compose.ui.components.overlay.AnchoredPopup
 import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
@@ -266,7 +273,24 @@ fun PopoverScope.PopoverContent(
 ) {
     val controller = popoverController()
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val panelFocus = remember { FocusRequester() }
+    var panelHasFocus by remember { mutableStateOf(false) }
     val foreground = currentTheme.colors.popoverForeground
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    val bodyTypography =
+        if (nova) {
+            TextStyle(
+                fontSize = 14.sp,
+                lineHeight = 20.sp,
+                lineHeightStyle =
+                    LineHeightStyle(
+                        LineHeightStyle.Alignment.Center,
+                        LineHeightStyle.Trim.None,
+                    ),
+            )
+        } else {
+            LocalDefaultTextStyle.current
+        }
     PopoverPortal {
         AnchoredPopup(
             open = controller.open,
@@ -284,7 +308,16 @@ fun PopoverScope.PopoverContent(
                 if (controller.modal) controller.focus.presented = true
                 onDispose { if (controller.modal) controller.focus.presented = false }
             }
-            CompositionLocalProvider(LocalContentColor provides foreground) {
+            LaunchedEffect(controller.open, controller.modal) {
+                if (controller.open && controller.modal) {
+                    withFrameNanos { }
+                    if (!panelHasFocus) panelFocus.requestFocus()
+                }
+            }
+            CompositionLocalProvider(
+                LocalContentColor provides foreground,
+                LocalDefaultTextStyle provides bodyTypography,
+            ) {
                 Column(
                     modifier =
                         Modifier.keyboardInputMode().onPreviewKeyEvent { event ->
@@ -294,10 +327,13 @@ fun PopoverScope.PopoverContent(
                             } else {
                                 false
                             }
-                        }.then(modifier).styleable(
-                            styleState,
-                            rememberPopoverContentStyle() then style,
-                        ),
+                        }.focusRequester(panelFocus)
+                            .onFocusChanged { panelHasFocus = it.hasFocus }
+                            .then(modifier).focusable(enabled = controller.modal).styleable(
+                                styleState,
+                                rememberPopoverContentStyle() then style,
+                            ),
+                    verticalArrangement = Arrangement.spacedBy(if (nova) 10.dp else 0.dp),
                     content = content,
                 )
             }
@@ -401,7 +437,14 @@ fun PopoverHeader(
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Column(
         modifier = modifier.styleable(styleState, style),
-        verticalArrangement = Arrangement.spacedBy(twSpacing.xs),
+        verticalArrangement =
+            Arrangement.spacedBy(
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    2.dp
+                } else {
+                    twSpacing.xs
+                },
+            ),
         content = content,
     )
 }
@@ -443,6 +486,17 @@ fun PopoverTitle(
     Text(
         modifier = modifier.semantics { heading() },
         variant = TextVariant.TitleSmall,
+        textStyle =
+            if (currentTheme.activePreset == StylePreset.Nova) {
+                TextStyle(
+                    fontSize = 14.sp,
+                    lineHeight = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+                )
+            } else {
+                TextStyle.Default
+            },
         style = style,
         text = text,
     )
@@ -469,7 +523,16 @@ fun PopoverDescription(
     Text(
         modifier = modifier,
         variant = TextVariant.BodySmall,
-        textStyle = TextColors.Muted,
+        textStyle =
+            if (currentTheme.activePreset == StylePreset.Nova) {
+                TextColors.Muted.copy(
+                    fontSize = 14.sp,
+                    lineHeight = 20.sp,
+                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+                )
+            } else {
+                TextColors.Muted
+            },
         style = style,
         text = text,
     )

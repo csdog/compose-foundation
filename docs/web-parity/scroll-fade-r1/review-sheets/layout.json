@@ -1,0 +1,49 @@
+{
+  "groups": {
+    "default": {
+      "names": [
+        "default-start",
+        "default-middle",
+        "default-end"
+      ],
+      "cols": 3,
+      "cw": 344,
+      "ch": 314
+    },
+    "compact": {
+      "names": [
+        "no-overflow",
+        "horizontal-start",
+        "horizontal-middle",
+        "horizontal-end",
+        "rtl-arabic",
+        "rtl-english",
+        "rtl-hebrew"
+      ],
+      "cols": 4,
+      "cw": 344,
+      "ch": 170
+    },
+    "edges": {
+      "names": [
+        "edges-start",
+        "edges-scrolled"
+      ],
+      "cols": 2,
+      "cw": 344,
+      "ch": 612
+    },
+    "pairs": {
+      "names": [
+        "sizes-start",
+        "sizes-scrolled",
+        "none-start",
+        "none-scrolled"
+      ],
+      "cols": 2,
+      "cw": 344,
+      "ch": 492
+    }
+  },
+  "note": "All64 final native fixture captures, no cropping/resizing.12px cell margins. mockWindowInfo1440/390 inside desktop1024x768 scene, not browser/mobile proof."
+}

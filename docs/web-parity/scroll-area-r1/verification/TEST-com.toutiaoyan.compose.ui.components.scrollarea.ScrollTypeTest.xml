@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ScrollTypeTest[jvm]" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-30T19:44:56.407Z" hostname="Apples-MacBook-Pro.local" time="0.001">
+  <properties/>
+  <testcase name="dir_mapsToLayoutDirection[jvm]" classname="com.toutiaoyan.compose.ui.components.scrollarea.ScrollTypeTest" time="0.0"/>
+  <testcase name="mayShow_auto_onlyWhenOverflowing[jvm]" classname="com.toutiaoyan.compose.ui.components.scrollarea.ScrollTypeTest" time="0.0"/>
+  <testcase name="mayShow_scrollAndHover_requireOverflow[jvm]" classname="com.toutiaoyan.compose.ui.components.scrollarea.ScrollTypeTest" time="0.0"/>
+  <testcase name="mayShow_always_regardlessOfOverflow[jvm]" classname="com.toutiaoyan.compose.ui.components.scrollarea.ScrollTypeTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

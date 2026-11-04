@@ -1,0 +1,67 @@
+{
+  "workflow": "db834db2992e718b127c67b899d27eaa",
+  "originalRed": {
+    "tests": 5,
+    "failures": 4,
+    "passed": 1,
+    "seconds": 2.713
+  },
+  "green5": {
+    "tests": 5,
+    "passed": 5,
+    "seconds": 13.836
+  },
+  "final": {
+    "behavior": 8,
+    "manager": 5,
+    "chrome": 6,
+    "examples": 24,
+    "independentTotal": 43,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "coreSeconds": 13.565,
+    "firstAppAndTwoLintSeconds": 38.91,
+    "finalAppAndSharedLintSeconds": 22.646,
+    "coreKtlint": "PASS",
+    "sharedKtlint": "PASS",
+    "scopeNote": "Core19 actual pass and app24 actual pass across separate owning runs; app24 reran fresh after final legacy-extension ToastDoc default fixes. Not one single43 combined command."
+  },
+  "jsWebpack": {
+    "exit": 0,
+    "seconds": 24.801,
+    "clean": false,
+    "unresolved": [
+      "os",
+      "path"
+    ],
+    "scope": "Before late legacy-extension ToastDoc defaults correction; core runtime and official three recipes unchanged."
+  },
+  "wasmWebpack": {
+    "exit": 0,
+    "seconds": 18.861,
+    "webpackWarnings": 1,
+    "scope": "Completed around late ToastDoc correction; final doc bytes validated by subsequent JVM app24/shared lint, not claimed as final web-doc byte acceptance."
+  },
+  "inputHashCount": 15,
+  "inputChangesAfterInitialAppPass": [
+    "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ToastDoc.kt"
+  ],
+  "nativeCaptures": 40,
+  "nativeChangedAfterFinalDocFix": [],
+  "parentReviewedAllNative": true,
+  "browserAcceptance": false,
+  "legacyGoldens": "not run; no baseline records",
+  "fullRepositoryCommitGate": "not run",
+  "warnings": [
+    "AGP experimental screenshot/testsuite",
+    "Text INVISIBLE_REFERENCE suppression",
+    "Gradle10 deprecatedfeatures",
+    "JS unresolved os/path",
+    "Wasm one webpackwarning"
+  ],
+  "reviewLimits": [
+    "Native scenes only, no browser/phone OS acceptance",
+    "Shadow approximation and action focus appearance retained as observed by parent"
+  ]
+}

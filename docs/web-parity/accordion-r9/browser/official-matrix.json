@@ -1,0 +1,362 @@
+[
+  {
+    "lang": "ar",
+    "dark": true,
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    },
+    "toolbar": {
+      "x": 393.5,
+      "y": 271.046875,
+      "width": 638,
+      "height": 64,
+      "top": 271.046875,
+      "right": 1031.5,
+      "bottom": 335.046875,
+      "left": 393.5
+    },
+    "preview": {
+      "x": 393.5,
+      "y": 335.046875,
+      "width": 638,
+      "height": 288,
+      "top": 335.046875,
+      "right": 1031.5,
+      "bottom": 623.046875,
+      "left": 393.5
+    },
+    "text": "كيف يمكنني إعادة تعيين كلمة المرور؟انقر على 'نسيت كلمة المرور' في صفحة تسجيل الدخول، أدخل عنوان بريدك الإلكتروني، وسنرسل لك رابطًا لإعادة تعيين كلمة المرور. سينتهي صلاحية الرابط خلال 24 ساعة.هل يمكنني تغيير خطة الاشتراك الخاصة بي؟ما هي طرق الدفع التي تقبلونها؟",
+    "expanded": "كيف يمكنني إعادة تعيين كلمة المرور؟"
+  },
+  {
+    "lang": "en",
+    "dark": true,
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    },
+    "toolbar": {
+      "x": 393.5,
+      "y": 271.046875,
+      "width": 638,
+      "height": 64,
+      "top": 271.046875,
+      "right": 1031.5,
+      "bottom": 335.046875,
+      "left": 393.5
+    },
+    "preview": {
+      "x": 393.5,
+      "y": 335.046875,
+      "width": 638,
+      "height": 288,
+      "top": 335.046875,
+      "right": 1031.5,
+      "bottom": 623.046875,
+      "left": 393.5
+    },
+    "text": "How do I reset my password?Click on 'Forgot Password' on the login page, enter your email address, and we'll send you a link to reset your password.Can I change my subscription plan?What payment methods do you accept?",
+    "expanded": "How do I reset my password?"
+  },
+  {
+    "lang": "he",
+    "dark": true,
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    },
+    "toolbar": {
+      "x": 393.5,
+      "y": 271.046875,
+      "width": 638,
+      "height": 64,
+      "top": 271.046875,
+      "right": 1031.5,
+      "bottom": 335.046875,
+      "left": 393.5
+    },
+    "preview": {
+      "x": 393.5,
+      "y": 335.046875,
+      "width": 638,
+      "height": 288,
+      "top": 335.046875,
+      "right": 1031.5,
+      "bottom": 623.046875,
+      "left": 393.5
+    },
+    "text": "איך אני מאפס את הסיסמה שלי?לחץ על 'שכחתי סיסמה' בעמוד ההתחברות, הזן את כתובת האימייל שלך, ונשלח לך קישור לאיפוס הסיסמה. הקישור יפוג תוך 24 שעות.האם אני יכול לשנות את תוכנית המנוי שלי?אילו אמצעי תשלום אתם מקבלים?",
+    "expanded": "איך אני מאפס את הסיסמה שלי?"
+  },
+  {
+    "lang": "ar",
+    "dark": false,
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    },
+    "toolbar": {
+      "x": 393.5,
+      "y": 271.046875,
+      "width": 638,
+      "height": 64,
+      "top": 271.046875,
+      "right": 1031.5,
+      "bottom": 335.046875,
+      "left": 393.5
+    },
+    "preview": {
+      "x": 393.5,
+      "y": 335.046875,
+      "width": 638,
+      "height": 288,
+      "top": 335.046875,
+      "right": 1031.5,
+      "bottom": 623.046875,
+      "left": 393.5
+    },
+    "text": "كيف يمكنني إعادة تعيين كلمة المرور؟انقر على 'نسيت كلمة المرور' في صفحة تسجيل الدخول، أدخل عنوان بريدك الإلكتروني، وسنرسل لك رابطًا لإعادة تعيين كلمة المرور. سينتهي صلاحية الرابط خلال 24 ساعة.هل يمكنني تغيير خطة الاشتراك الخاصة بي؟ما هي طرق الدفع التي تقبلونها؟",
+    "expanded": "كيف يمكنني إعادة تعيين كلمة المرور؟"
+  },
+  {
+    "lang": "en",
+    "dark": false,
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    },
+    "toolbar": {
+      "x": 393.5,
+      "y": 271.046875,
+      "width": 638,
+      "height": 64,
+      "top": 271.046875,
+      "right": 1031.5,
+      "bottom": 335.046875,
+      "left": 393.5
+    },
+    "preview": {
+      "x": 393.5,
+      "y": 335.046875,
+      "width": 638,
+      "height": 288,
+      "top": 335.046875,
+      "right": 1031.5,
+      "bottom": 623.046875,
+      "left": 393.5
+    },
+    "text": "How do I reset my password?Click on 'Forgot Password' on the login page, enter your email address, and we'll send you a link to reset your password.Can I change my subscription plan?What payment methods do you accept?",
+    "expanded": "How do I reset my password?"
+  },
+  {
+    "lang": "he",
+    "dark": false,
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    },
+    "toolbar": {
+      "x": 393.5,
+      "y": 271.046875,
+      "width": 638,
+      "height": 64,
+      "top": 271.046875,
+      "right": 1031.5,
+      "bottom": 335.046875,
+      "left": 393.5
+    },
+    "preview": {
+      "x": 393.5,
+      "y": 335.046875,
+      "width": 638,
+      "height": 288,
+      "top": 335.046875,
+      "right": 1031.5,
+      "bottom": 623.046875,
+      "left": 393.5
+    },
+    "text": "איך אני מאפס את הסיסמה שלי?לחץ על 'שכחתי סיסמה' בעמוד ההתחברות, הזן את כתובת האימייל שלך, ונשלח לך קישור לאיפוס הסיסמה. הקישור יפוג תוך 24 שעות.האם אני יכול לשנות את תוכנית המנוי שלי?אילו אמצעי תשלום אתם מקבלים?",
+    "expanded": "איך אני מאפס את הסיסמה שלי?"
+  },
+  {
+    "lang": "ar",
+    "dark": true,
+    "viewport": {
+      "w": 390,
+      "h": 1000
+    },
+    "toolbar": {
+      "x": 25,
+      "y": 252.234375,
+      "width": 325,
+      "height": 64,
+      "top": 252.234375,
+      "right": 350,
+      "bottom": 316.234375,
+      "left": 25
+    },
+    "preview": {
+      "x": 25,
+      "y": 316.234375,
+      "width": 325,
+      "height": 288,
+      "top": 316.234375,
+      "right": 350,
+      "bottom": 604.234375,
+      "left": 25
+    },
+    "text": "كيف يمكنني إعادة تعيين كلمة المرور؟انقر على 'نسيت كلمة المرور' في صفحة تسجيل الدخول، أدخل عنوان بريدك الإلكتروني، وسنرسل لك رابطًا لإعادة تعيين كلمة المرور. سينتهي صلاحية الرابط خلال 24 ساعة.هل يمكنني تغيير خطة الاشتراك الخاصة بي؟ما هي طرق الدفع التي تقبلونها؟",
+    "expanded": "كيف يمكنني إعادة تعيين كلمة المرور؟"
+  },
+  {
+    "lang": "en",
+    "dark": true,
+    "viewport": {
+      "w": 390,
+      "h": 1000
+    },
+    "toolbar": {
+      "x": 25,
+      "y": 252.234375,
+      "width": 325,
+      "height": 64,
+      "top": 252.234375,
+      "right": 350,
+      "bottom": 316.234375,
+      "left": 25
+    },
+    "preview": {
+      "x": 25,
+      "y": 316.234375,
+      "width": 325,
+      "height": 288,
+      "top": 316.234375,
+      "right": 350,
+      "bottom": 604.234375,
+      "left": 25
+    },
+    "text": "How do I reset my password?Click on 'Forgot Password' on the login page, enter your email address, and we'll send you a link to reset your password.Can I change my subscription plan?What payment methods do you accept?",
+    "expanded": "How do I reset my password?"
+  },
+  {
+    "lang": "he",
+    "dark": true,
+    "viewport": {
+      "w": 390,
+      "h": 1000
+    },
+    "toolbar": {
+      "x": 25,
+      "y": 252.234375,
+      "width": 325,
+      "height": 64,
+      "top": 252.234375,
+      "right": 350,
+      "bottom": 316.234375,
+      "left": 25
+    },
+    "preview": {
+      "x": 25,
+      "y": 316.234375,
+      "width": 325,
+      "height": 288,
+      "top": 316.234375,
+      "right": 350,
+      "bottom": 604.234375,
+      "left": 25
+    },
+    "text": "איך אני מאפס את הסיסמה שלי?לחץ על 'שכחתי סיסמה' בעמוד ההתחברות, הזן את כתובת האימייל שלך, ונשלח לך קישור לאיפוס הסיסמה. הקישור יפוג תוך 24 שעות.האם אני יכול לשנות את תוכנית המנוי שלי?אילו אמצעי תשלום אתם מקבלים?",
+    "expanded": "איך אני מאפס את הסיסמה שלי?"
+  },
+  {
+    "lang": "ar",
+    "dark": false,
+    "viewport": {
+      "w": 390,
+      "h": 1000
+    },
+    "toolbar": {
+      "x": 25,
+      "y": 252.234375,
+      "width": 325,
+      "height": 64,
+      "top": 252.234375,
+      "right": 350,
+      "bottom": 316.234375,
+      "left": 25
+    },
+    "preview": {
+      "x": 25,
+      "y": 316.234375,
+      "width": 325,
+      "height": 288,
+      "top": 316.234375,
+      "right": 350,
+      "bottom": 604.234375,
+      "left": 25
+    },
+    "text": "كيف يمكنني إعادة تعيين كلمة المرور؟انقر على 'نسيت كلمة المرور' في صفحة تسجيل الدخول، أدخل عنوان بريدك الإلكتروني، وسنرسل لك رابطًا لإعادة تعيين كلمة المرور. سينتهي صلاحية الرابط خلال 24 ساعة.هل يمكنني تغيير خطة الاشتراك الخاصة بي؟ما هي طرق الدفع التي تقبلونها؟",
+    "expanded": "كيف يمكنني إعادة تعيين كلمة المرور؟"
+  },
+  {
+    "lang": "en",
+    "dark": false,
+    "viewport": {
+      "w": 390,
+      "h": 1000
+    },
+    "toolbar": {
+      "x": 25,
+      "y": 252.234375,
+      "width": 325,
+      "height": 64,
+      "top": 252.234375,
+      "right": 350,
+      "bottom": 316.234375,
+      "left": 25
+    },
+    "preview": {
+      "x": 25,
+      "y": 316.234375,
+      "width": 325,
+      "height": 288,
+      "top": 316.234375,
+      "right": 350,
+      "bottom": 604.234375,
+      "left": 25
+    },
+    "text": "How do I reset my password?Click on 'Forgot Password' on the login page, enter your email address, and we'll send you a link to reset your password.Can I change my subscription plan?What payment methods do you accept?",
+    "expanded": "How do I reset my password?"
+  },
+  {
+    "lang": "he",
+    "dark": false,
+    "viewport": {
+      "w": 390,
+      "h": 1000
+    },
+    "toolbar": {
+      "x": 25,
+      "y": 252.234375,
+      "width": 325,
+      "height": 64,
+      "top": 252.234375,
+      "right": 350,
+      "bottom": 316.234375,
+      "left": 25
+    },
+    "preview": {
+      "x": 25,
+      "y": 316.234375,
+      "width": 325,
+      "height": 288,
+      "top": 316.234375,
+      "right": 350,
+      "bottom": 604.234375,
+      "left": 25
+    },
+    "text": "איך אני מאפס את הסיסמה שלי?לחץ על 'שכחתי סיסמה' בעמוד ההתחברות, הזן את כתובת האימייל שלך, ונשלח לך קישור לאיפוס הסיסמה. הקישור יפוג תוך 24 שעות.האם אני יכול לשנות את תוכנית המנוי שלי?אילו אמצעי תשלום אתם מקבלים?",
+    "expanded": "איך אני מאפס את הסיסמה שלי?"
+  }
+]

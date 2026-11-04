@@ -1,0 +1,202 @@
+@file:OptIn(androidx.compose.foundation.style.ExperimentalFoundationStyleApi::class)
+
+package com.toutiaoyan.compose.ui.catalog.docs
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.unit.*
+import androidx.compose.ui.window.Popup
+import androidx.compose.ui.window.PopupPositionProvider
+import androidx.compose.ui.window.PopupProperties
+import com.toutiaoyan.compose.ui.components.questionnaire.*
+import com.toutiaoyan.compose.ui.components.text.Text
+import com.toutiaoyan.compose.ui.components.text.TextColors
+import com.toutiaoyan.compose.ui.components.toast.Toaster
+import com.toutiaoyan.compose.ui.components.toast.ToastState
+import com.toutiaoyan.compose.ui.components.toast.rememberToastState
+
+// region shared
+private val questionnaireSourceItems =
+    listOf(
+        QuestionnaireItemDefinition(
+            name = "direction",
+            required = true,
+            prompt = "What should the agent build next?",
+            description = "Choose a direction or describe another task.",
+            choices =
+                listOf(
+                    QuestionnaireChoiceDefinition(
+                        "tool-calls",
+                        "Tool call timeline",
+                        "Show what the agent ran and what came back.",
+                    ),
+                    QuestionnaireChoiceDefinition(
+                        "approvals",
+                        "Approval checkpoints",
+                        "Ask before sensitive or destructive actions.",
+                    ),
+                    QuestionnaireChoiceDefinition(
+                        "handoffs",
+                        "Sub-agent handoffs",
+                        "Make delegated work and results easier to follow.",
+                    ),
+                ),
+            input = QuestionnaireInputDefinition("Another agent feature", "Describe another feature…"),
+        ),
+        QuestionnaireItemDefinition(
+            name = "signals",
+            multiple = true,
+            prompt = "What should every progress update include?",
+            description = "Select all that apply, or skip this question.",
+            choices =
+                listOf(
+                    QuestionnaireChoiceDefinition(
+                        "progress",
+                        "Progress",
+                    ),
+                    QuestionnaireChoiceDefinition(
+                        "decisions",
+                        "Decisions",
+                    ),
+                    QuestionnaireChoiceDefinition("risks", "Risks"),
+                    QuestionnaireChoiceDefinition("next-step", "Next step"),
+                ),
+        ),
+        QuestionnaireItemDefinition(
+            name = "timing",
+            required = true,
+            prompt = "When should work begin?",
+            description = "Choose when the agent should begin the work.",
+            choices =
+                listOf(
+                    QuestionnaireChoiceDefinition("now", "Start now"),
+                    QuestionnaireChoiceDefinition("next-cycle", "Next development cycle"),
+                    QuestionnaireChoiceDefinition("backlog", "Add it to the backlog"),
+                ),
+        ),
+    )
+
+@Composable
+private fun QuestionnaireSourceToast(state: ToastState) {
+    if (state.toasts.isEmpty()) return
+    val inset = with(LocalDensity.current) { 16.dp.roundToPx() }
+    val position =
+        remember(inset) {
+            object : PopupPositionProvider {
+                override fun calculatePosition(
+                    anchorBounds: IntRect,
+                    windowSize: IntSize,
+                    layoutDirection: LayoutDirection,
+                    popupContentSize: IntSize,
+                ) = IntOffset(
+                    (windowSize.width - popupContentSize.width - inset).coerceAtLeast(0),
+                    (windowSize.height - popupContentSize.height - inset).coerceAtLeast(0),
+                )
+            }
+        }
+    Popup(popupPositionProvider = position, properties = PopupProperties(focusable = false)) {
+        Toaster(state, modifier = Modifier.testTag("questionnaire-toast"))
+    }
+}
+// endregion shared
+
+// region default
+@Composable
+internal fun QuestionnaireDefaultRecipe() {
+    val toast = rememberToastState()
+    Questionnaire(
+        modifier = Modifier.widthIn(max = 448.dp).fillMaxWidth().testTag("questionnaire-recipe"),
+        items = questionnaireSourceItems,
+        defaultItem = "direction",
+        shortcuts = QuestionnaireShortcuts.Letters,
+        onSubmit = { answers ->
+            val direction = answers["direction"]?.firstOrNull() ?: "None"
+            val signals = answers["signals"].orEmpty().joinToString(", ").ifBlank { "None" }
+            val timing = answers["timing"]?.firstOrNull() ?: "None"
+            toast.show(
+                "Agent plan saved",
+                description = (
+                    "Direction: $direction · Progress signals: $signals · Timing: " +
+                        "$timing"
+                ),
+            )
+        },
+    ) {
+        QuestionnaireProgress()
+        questionnaireSourceItems.forEach { question ->
+            QuestionnaireItem(question.name, required = question.required, multiple = question.multiple) {
+                QuestionnaireTitle(question.prompt)
+                question.description?.let { QuestionnaireDescription(it) }
+                QuestionnaireChoices {
+                    question.choices.forEach { choice ->
+                        QuestionnaireChoice(choice.value) {
+                            Text(
+                                textStyle =
+                                    TextStyle(
+                                        fontSize =
+                                            14.sp,
+                                        lineHeight =
+                                            19.25.sp,
+                                        fontWeight =
+                                            FontWeight.Medium,
+                                        lineHeightStyle =
+                                            LineHeightStyle(
+                                                LineHeightStyle.Alignment.Center,
+                                                LineHeightStyle.Trim.None,
+                                            ),
+                                    ),
+                            ) {
+                                choice.label
+                            }
+                            choice.description?.let { description ->
+                                Text(
+                                    textStyle =
+                                        TextColors.Muted.copy(
+                                            fontSize = 14.sp,
+                                            lineHeight = 19.25.sp,
+                                            lineHeightStyle =
+                                                LineHeightStyle(
+                                                    LineHeightStyle.Alignment.Center,
+                                                    LineHeightStyle.Trim.None,
+                                                ),
+                                        ),
+                                ) {
+                                    description
+                                }
+                            }
+                        }
+                    }
+                    question.input?.let { input ->
+                        QuestionnaireInput(contentDescription = input.label, placeholder = input.placeholder)
+                    }
+                }
+                QuestionnaireError()
+            }
+        }
+        QuestionnaireActions {
+            QuestionnairePrevious()
+            QuestionnaireSkip()
+            QuestionnaireNext("Next")
+            QuestionnaireSubmit("Save plan")
+        }
+    }
+    QuestionnaireSourceToast(toast)
+}
+// endregion default
+
+internal val questionnaireOfficialExamples =
+    listOf(
+        ComponentExample(
+            "Default",
+            code = questionnaireDefaultRecipeCode,
+            minPreviewHeight = 540.dp,
+            mobileMinPreviewHeight = 640.dp,
+            preview = { QuestionnaireDefaultRecipe() },
+        ),
+    )

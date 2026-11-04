@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-02",
+  "inputHashesRechecked": 18,
+  "nativePngs": 44,
+  "testXmlFiles": 6,
+  "independentTestCount": 60,
+  "numericRedFailures": 3,
+  "numericGreenPassed": 3,
+  "nativeReviewComplete": true,
+  "nativeOriginalPixelContactSheets": 8,
+  "browserReviewComplete": false,
+  "rawGradleLogsCopied": false
+}

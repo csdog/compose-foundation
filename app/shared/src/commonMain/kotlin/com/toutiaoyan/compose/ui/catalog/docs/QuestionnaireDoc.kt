@@ -27,7 +27,6 @@ import com.toutiaoyan.compose.ui.components.questionnaire.Questionnaire
 import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireActions
 import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireChoice
 import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireChoiceDescription
-import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireChoiceInput
 import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireChoiceLabel
 import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireChoices
 import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireDescription
@@ -89,7 +88,7 @@ val questionnaireDoc =
         title = "Questionnaire",
         description =
             "A multi-step questionnaire with single-choice, multiple-choice, freeform, " +
-                "and skippable questions — matching real shadcn questionnaire.tsx.",
+                "and skippable questions.",
         usageCode =
             """
             Questionnaire(onSubmit = { answers -> }) {
@@ -113,7 +112,7 @@ val questionnaireDoc =
         examples =
             listOf(
                 ComponentExample(
-                    title = "Default",
+                    title = "Default (Kotlin)",
                     code =
                         """
                         Questionnaire(onSubmit = { }) {
@@ -833,7 +832,6 @@ val questionnaireDoc =
                         """
                         QuestionnaireChoice("timeline") {
                             Row {
-                                QuestionnaireChoiceInput()
                                 Column {
                                     QuestionnaireChoiceLabel("Tool call timeline")
                                     QuestionnaireChoiceDescription("Show what the agent ran.")
@@ -853,7 +851,6 @@ val questionnaireDoc =
                                             horizontalArrangement = Arrangement.spacedBy(12.dp),
                                             verticalAlignment = Alignment.Top,
                                         ) {
-                                            QuestionnaireChoiceInput()
                                             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                                                 QuestionnaireChoiceLabel("Tool call timeline")
                                                 QuestionnaireChoiceDescription(
@@ -867,7 +864,6 @@ val questionnaireDoc =
                                             horizontalArrangement = Arrangement.spacedBy(12.dp),
                                             verticalAlignment = Alignment.Top,
                                         ) {
-                                            QuestionnaireChoiceInput()
                                             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                                                 QuestionnaireChoiceLabel("Approval checkpoints")
                                                 QuestionnaireChoiceDescription(
@@ -974,3 +970,4 @@ val questionnaireDoc =
                 ),
             ),
     )
+        .let { native -> native.copy(examples = questionnaireOfficialExamples + native.examples) }

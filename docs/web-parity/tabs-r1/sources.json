@@ -1,0 +1,50 @@
+{
+  "revision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "files": [
+    {
+      "file": "source/tabs.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/content/docs/components/base/tabs.mdx",
+      "sha256": "dfdad7346332d0dfc9c21cba8325c32833560ec105b04cec89102af79eacd3b9"
+    },
+    {
+      "file": "source/tabs.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/bases/base/ui/tabs.tsx",
+      "sha256": "1eda25325a7aae9184224247d837b94f98f162d4f697740cc2b1bd53bd35cec6"
+    },
+    {
+      "file": "source/tabs-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/tabs-demo.tsx",
+      "sha256": "c18cc0202d363aaf330092d660f87685517dd430fdacb8b8db4c4a369a8b54df"
+    },
+    {
+      "file": "source/tabs-line.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/tabs-line.tsx",
+      "sha256": "e92af625ab9f399fb34dedcd382fd9ca4be8105d0c036f7bfee5af2e8840896d"
+    },
+    {
+      "file": "source/tabs-vertical.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/tabs-vertical.tsx",
+      "sha256": "127f4af062695fecd0af209af63353cb1347c81436630ba983b0735be999a854"
+    },
+    {
+      "file": "source/tabs-disabled.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/tabs-disabled.tsx",
+      "sha256": "127b4b6a2c5d778fd0b103ae7f47e59ed49126f8b56d939a3280e58fb3aee5c7"
+    },
+    {
+      "file": "source/tabs-icons.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/tabs-icons.tsx",
+      "sha256": "42366fce32443934aa6039aead4c87b0745be23234631f403ca8e4fe4e4b29b7"
+    },
+    {
+      "file": "source/tabs-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/tabs-rtl.tsx",
+      "sha256": "6a594ff1ad1cd1640d60420443ffd08bb2c70022b907f15fae3df4161e892a52"
+    },
+    {
+      "file": "source/style-nova.css",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+    }
+  ]
+}

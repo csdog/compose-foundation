@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="PaginationParityTest[jvm]" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-10-30T17:57:58.816Z" hostname="Apples-MacBook-Pro.local" time="0.292">
+  <properties/>
+  <testcase name="novaPageLinksAre32SquareWithTwoPixelGap[jvm]" classname="com.toutiaoyan.compose.ui.components.pagination.PaginationParityTest" time="0.026"/>
+  <testcase name="novaPreviousAndNextShowDefaultLabelsOnDesktop[jvm]" classname="com.toutiaoyan.compose.ui.components.pagination.PaginationParityTest" time="0.021"/>
+  <testcase name="keyboardActivationRequestsPageAndControlledRejectionKeepsSelection[jvm]" classname="com.toutiaoyan.compose.ui.components.pagination.PaginationParityTest" time="0.056"/>
+  <testcase name="disabledPageLinkDimsItsActualTextAndCannotActivate[jvm]" classname="com.toutiaoyan.compose.ui.components.pagination.PaginationParityTest" time="0.024"/>
+  <testcase name="minimumTouchTargetKeeps32PixelPageChrome[jvm]" classname="com.toutiaoyan.compose.ui.components.pagination.PaginationParityTest" time="0.016"/>
+  <testcase name="novaEllipsisIs32SquareAndHiddenFromAccessibility[jvm]" classname="com.toutiaoyan.compose.ui.components.pagination.PaginationParityTest" time="0.015"/>
+  <testcase name="localizedSlotUsesVisibleTextAndCallerSizeOverrides[jvm]" classname="com.toutiaoyan.compose.ui.components.pagination.PaginationParityTest" time="0.017"/>
+  <testcase name="directionalLabelsSwitchAt640AndKeepSourcePadding[jvm]" classname="com.toutiaoyan.compose.ui.components.pagination.PaginationParityTest" time="0.023"/>
+  <testcase name="controlledExtensionTracksPageAndAllBoundaryControls[jvm]" classname="com.toutiaoyan.compose.ui.components.pagination.PaginationParityTest" time="0.061"/>
+  <testcase name="previousChevronMirrorsInRtl[jvm]" classname="com.toutiaoyan.compose.ui.components.pagination.PaginationParityTest" time="0.017"/>
+  <testcase name="novaRootUsesAvailableWidthAndCentersItsContents[jvm]" classname="com.toutiaoyan.compose.ui.components.pagination.PaginationParityTest" time="0.015"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

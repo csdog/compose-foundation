@@ -1,0 +1,7 @@
+{
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/hovercard/HoverCard.kt": "49e424c53703a67b351cbafc7039314b695a6bde2e16975d9c3e7b9353e2a43b",
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/hovercard/HoverCardStyles.kt": "1d6a1324d4b17c2bfa4475d6d816a6dfff7a4ad655d07b8dcc9aea39f34fb890",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/HoverCardDoc.kt": "69b73733a1b012aa9b3695e46b310895eb52f69a4fc0aa237f1e862751c57276",
+  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/hovercard/HoverCardParityTest.kt": "eeab6a7be334825993f02243a23a3838b8f7a314001f65795c9a5554c63ade08",
+  "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/HoverCardExamplesTest.kt": "c63fd2d53de405d4f0b7a0f63ee64c3235454655dcffe3f1ae56ecf25ad7a582"
+}

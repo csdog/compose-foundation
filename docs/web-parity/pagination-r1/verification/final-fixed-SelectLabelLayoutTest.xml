@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="SelectLabelLayoutTest[jvm]" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-10-30T17:57:59.126Z" hostname="Apples-MacBook-Pro.local" time="0.367">
+  <properties/>
+  <testcase name="arabicOptionsDark[jvm]" classname="com.toutiaoyan.compose.ui.components.select.SelectLabelLayoutTest" time="0.136"/>
+  <testcase name="arabicOptionsLight[jvm]" classname="com.toutiaoyan.compose.ui.components.select.SelectLabelLayoutTest" time="0.073"/>
+  <testcase name="veryLongLabelKeepsRowHeightAndPanelWidth[jvm]" classname="com.toutiaoyan.compose.ui.components.select.SelectLabelLayoutTest" time="0.042"/>
+  <testcase name="novaSelectedValueStaysSingleLineInNarrowSmallTrigger[jvm]" classname="com.toutiaoyan.compose.ui.components.select.SelectLabelLayoutTest" time="0.019"/>
+  <testcase name="novaLongSelectedValueHasSingleConstrainedLine[jvm]" classname="com.toutiaoyan.compose.ui.components.select.SelectLabelLayoutTest" time="0.016"/>
+  <testcase name="novaLanguageLabelsStaySingleLineAtOfficialAnchorWidth[jvm]" classname="com.toutiaoyan.compose.ui.components.select.SelectLabelLayoutTest" time="0.046"/>
+  <testcase name="novaArabicFontMetricsDoNotEnlargeSingleLineOptions[jvm]" classname="com.toutiaoyan.compose.ui.components.select.SelectLabelLayoutTest" time="0.035"/>
+  <system-out><![CDATA[Roborazzi: select_nova_arabic_options_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=786432, width=1024, height=768) changed:false
+Roborazzi: select_nova_arabic_options_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=786432, width=1024, height=768) changed:false
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

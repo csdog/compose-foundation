@@ -178,8 +178,8 @@ class SidebarScreenshotTest : ScreenshotTest() {
     private fun mobile(darkTheme: Boolean) {
         snapshot("sidebar_mobile", darkTheme = darkTheme) {
             SidebarProvider(
-                open = true,
-                onOpenChange = {},
+                openMobile = true,
+                onOpenMobileChange = {},
                 mobile = true,
                 modifier = Modifier.height(200.dp),
             ) {

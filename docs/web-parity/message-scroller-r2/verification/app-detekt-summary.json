@@ -1,0 +1,2591 @@
+{
+  "module": ":app:shared",
+  "task": "detektMetadataCommonMain",
+  "total": 26557,
+  "changedFiles": {
+    "MessageScrollerDoc.kt": {
+      "count": 350,
+      "rules": {
+        "LongMethod": 1,
+        "CyclomaticComplexMethod": 1,
+        "ImportOrdering": 1,
+        "Indentation": 341,
+        "NoWildcardImports": 1,
+        "WildcardImport": 1,
+        "MagicNumber": 4
+      },
+      "findings": [
+        {
+          "line": "795",
+          "column": "13",
+          "rule": "LongMethod",
+          "message": "The function InteractiveChatPanel is too long (81). The maximum length is 60."
+        },
+        {
+          "line": "795",
+          "column": "13",
+          "rule": "CyclomaticComplexMethod",
+          "message": "The function InteractiveChatPanel appears to be too complex based on Cyclomatic Complexity (complexity: 16). Defined complexity threshold for methods is set to '15'"
+        },
+        {
+          "line": "5",
+          "column": "1",
+          "rule": "ImportOrdering",
+          "message": "Imports must be ordered in lexicographic order without any empty lines in-between with \"java\", \"javax\", \"kotlin\" and aliases in the end"
+        },
+        {
+          "line": "132",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 8)"
+        },
+        {
+          "line": "133",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "134",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "135",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 8)"
+        },
+        {
+          "line": "168",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (8) (should be 12)"
+        },
+        {
+          "line": "170",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 8)"
+        },
+        {
+          "line": "185",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indent of multiline string closing quotes"
+        },
+        {
+          "line": "187",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 8)"
+        },
+        {
+          "line": "204",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indent of multiline string closing quotes"
+        },
+        {
+          "line": "206",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 8)"
+        },
+        {
+          "line": "213",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indent of multiline string closing quotes"
+        },
+        {
+          "line": "215",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 8)"
+        },
+        {
+          "line": "216",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "217",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "218",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "219",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "220",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "221",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "222",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "223",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "224",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "226",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "227",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "228",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "229",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "230",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "231",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "232",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "233",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "235",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "236",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "237",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "238",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 8)"
+        },
+        {
+          "line": "240",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 8)"
+        },
+        {
+          "line": "241",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "242",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "243",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "244",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "245",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "247",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "248",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "249",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "250",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "251",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "252",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "253",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "254",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "255",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "256",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "257",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "258",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "259",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "260",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "261",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "262",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "264",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "265",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "266",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "267",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "268",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "269",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "270",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "271",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "272",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "273",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "274",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "275",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "276",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "277",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "278",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "279",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "280",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "281",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "282",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "283",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "284",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "286",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "287",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "288",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "289",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "290",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "291",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "292",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "293",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "294",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "295",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "297",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "298",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "299",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "300",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "301",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "302",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "303",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "304",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "305",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "306",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "307",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "309",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "310",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "311",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "312",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "313",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "314",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "315",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "316",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "317",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "318",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "319",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "321",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "322",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "323",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "324",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "325",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "326",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "327",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "328",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "329",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "330",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "331",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "332",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "333",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 8)"
+        },
+        {
+          "line": "335",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 8)"
+        },
+        {
+          "line": "336",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "337",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "338",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "339",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "340",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "341",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 20)"
+        },
+        {
+          "line": "378",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indent of multiline string closing quotes"
+        },
+        {
+          "line": "379",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "380",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "381",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "382",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "383",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "384",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "385",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "386",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "387",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "388",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 32)"
+        },
+        {
+          "line": "389",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "390",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "391",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "392",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "393",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "394",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "395",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "396",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (44) (should be 36)"
+        },
+        {
+          "line": "397",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "398",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (44) (should be 36)"
+        },
+        {
+          "line": "399",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (48) (should be 40)"
+        },
+        {
+          "line": "400",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (52) (should be 44)"
+        },
+        {
+          "line": "401",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (52) (should be 44)"
+        },
+        {
+          "line": "402",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (56) (should be 48)"
+        },
+        {
+          "line": "403",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (56) (should be 48)"
+        },
+        {
+          "line": "404",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (52) (should be 44)"
+        },
+        {
+          "line": "405",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (48) (should be 40)"
+        },
+        {
+          "line": "406",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (48) (should be 40)"
+        },
+        {
+          "line": "407",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (52) (should be 44)"
+        },
+        {
+          "line": "408",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (44) (should be 36)"
+        },
+        {
+          "line": "409",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "410",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "411",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "412",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "413",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "414",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "415",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "416",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "417",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "418",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (44) (should be 40)"
+        },
+        {
+          "line": "419",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (48) (should be 44)"
+        },
+        {
+          "line": "420",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (52) (should be 48)"
+        },
+        {
+          "line": "421",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (56) (should be 52)"
+        },
+        {
+          "line": "422",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (60) (should be 56)"
+        },
+        {
+          "line": "423",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (64) (should be 60)"
+        },
+        {
+          "line": "424",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (68) (should be 64)"
+        },
+        {
+          "line": "425",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (72) (should be 68)"
+        },
+        {
+          "line": "426",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (64) (should be 60)"
+        },
+        {
+          "line": "427",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (60) (should be 56)"
+        },
+        {
+          "line": "428",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (56) (should be 52)"
+        },
+        {
+          "line": "429",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (52) (should be 48)"
+        },
+        {
+          "line": "430",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (48) (should be 44)"
+        },
+        {
+          "line": "431",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (44) (should be 40)"
+        },
+        {
+          "line": "432",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "433",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "434",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "435",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "436",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "437",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "438",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "439",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "440",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "441",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "442",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "443",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "444",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 20)"
+        },
+        {
+          "line": "460",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indent of multiline string closing quotes"
+        },
+        {
+          "line": "461",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "462",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "463",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "464",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "465",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "466",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "467",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "468",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "469",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "470",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "471",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "472",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "473",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "474",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "475",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "476",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "477",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 20)"
+        },
+        {
+          "line": "497",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indent of multiline string closing quotes"
+        },
+        {
+          "line": "498",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "499",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "500",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "501",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "502",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "503",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "504",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "505",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "506",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "507",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "508",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "509",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "510",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "511",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "512",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "513",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "514",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "515",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "516",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "517",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "518",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "519",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "520",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 20)"
+        },
+        {
+          "line": "545",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indent of multiline string closing quotes"
+        },
+        {
+          "line": "546",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "547",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "548",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "549",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "550",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "551",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "552",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "553",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "554",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (44) (should be 36)"
+        },
+        {
+          "line": "555",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "556",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "557",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (44) (should be 40)"
+        },
+        {
+          "line": "558",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (48) (should be 44)"
+        },
+        {
+          "line": "559",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (44) (should be 40)"
+        },
+        {
+          "line": "560",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (44) (should be 40)"
+        },
+        {
+          "line": "561",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (48) (should be 44)"
+        },
+        {
+          "line": "562",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (44) (should be 40)"
+        },
+        {
+          "line": "563",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (44) (should be 40)"
+        },
+        {
+          "line": "564",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (48) (should be 44)"
+        },
+        {
+          "line": "565",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (44) (should be 40)"
+        },
+        {
+          "line": "566",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "567",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "568",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "569",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "570",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "571",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "572",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "573",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "574",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "575",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "576",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 20)"
+        },
+        {
+          "line": "591",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indent of multiline string closing quotes"
+        },
+        {
+          "line": "592",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "593",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "594",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "595",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "596",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "597",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "598",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "599",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "600",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "601",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "602",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "603",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "604",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "605",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "606",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "607",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "608",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "609",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 20)"
+        },
+        {
+          "line": "636",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indent of multiline string closing quotes"
+        },
+        {
+          "line": "637",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "638",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "639",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "640",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "641",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "642",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "643",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "644",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "645",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "646",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (44) (should be 36)"
+        },
+        {
+          "line": "647",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (48) (should be 40)"
+        },
+        {
+          "line": "648",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (52) (should be 40)"
+        },
+        {
+          "line": "649",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (44) (should be 36)"
+        },
+        {
+          "line": "650",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "651",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "652",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "653",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "654",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "655",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "656",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "657",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "658",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "659",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "660",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "661",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "662",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "663",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "664",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "665",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 20)"
+        },
+        {
+          "line": "676",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indent of multiline string closing quotes"
+        },
+        {
+          "line": "677",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "678",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "679",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "680",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "681",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "682",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "683",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "684",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "685",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "686",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "687",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "688",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "689",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 20)"
+        },
+        {
+          "line": "787",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indent of multiline string closing quotes"
+        },
+        {
+          "line": "788",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "789",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "790",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "864",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "865",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "866",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "867",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "868",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "8",
+          "column": "1",
+          "rule": "NoWildcardImports",
+          "message": "Wildcard import"
+        },
+        {
+          "line": "8",
+          "column": "1",
+          "rule": "WildcardImport",
+          "message": "com.toutiaoyan.compose.ui.components.messagescroller.* is a wildcard import. Replace it with fully qualified imports."
+        },
+        {
+          "line": "381",
+          "column": "70",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "466",
+          "column": "40",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "598",
+          "column": "40",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "654",
+          "column": "40",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        }
+      ]
+    },
+    "MessageScrollerRecipes.kt": {
+      "count": 55,
+      "rules": {
+        "LongParameterList": 1,
+        "LongMethod": 1,
+        "Indentation": 29,
+        "NoWildcardImports": 9,
+        "WildcardImport": 9,
+        "MagicNumber": 6
+      },
+      "findings": [
+        {
+          "line": "80",
+          "column": "32",
+          "rule": "LongParameterList",
+          "message": "The function ScrollerRecipeFrame(title: String, description: String, note: String, modifier: Modifier, action: (@Composable () -> Unit)?, footer: (@Composable () -> Unit)?, transcript: @Composable () -> Unit) has too many parameters. The current threshold is set to 6."
+        },
+        {
+          "line": "80",
+          "column": "13",
+          "rule": "LongMethod",
+          "message": "The function ScrollerRecipeFrame is too long (68). The maximum length is 60."
+        },
+        {
+          "line": "58",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "59",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "60",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "61",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "122",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "123",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "124",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "125",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "126",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "132",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "133",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "134",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "135",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "136",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "137",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "138",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "139",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "140",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "141",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "142",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "143",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "177",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 16)"
+        },
+        {
+          "line": "239",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 16)"
+        },
+        {
+          "line": "250",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 16)"
+        },
+        {
+          "line": "263",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 16)"
+        },
+        {
+          "line": "275",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 16)"
+        },
+        {
+          "line": "288",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 16)"
+        },
+        {
+          "line": "321",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (48) (should be 44)"
+        },
+        {
+          "line": "363",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 24)"
+        },
+        {
+          "line": "8",
+          "column": "1",
+          "rule": "NoWildcardImports",
+          "message": "Wildcard import"
+        },
+        {
+          "line": "11",
+          "column": "1",
+          "rule": "NoWildcardImports",
+          "message": "Wildcard import"
+        },
+        {
+          "line": "23",
+          "column": "1",
+          "rule": "NoWildcardImports",
+          "message": "Wildcard import"
+        },
+        {
+          "line": "24",
+          "column": "1",
+          "rule": "NoWildcardImports",
+          "message": "Wildcard import"
+        },
+        {
+          "line": "25",
+          "column": "1",
+          "rule": "NoWildcardImports",
+          "message": "Wildcard import"
+        },
+        {
+          "line": "26",
+          "column": "1",
+          "rule": "NoWildcardImports",
+          "message": "Wildcard import"
+        },
+        {
+          "line": "27",
+          "column": "1",
+          "rule": "NoWildcardImports",
+          "message": "Wildcard import"
+        },
+        {
+          "line": "28",
+          "column": "1",
+          "rule": "NoWildcardImports",
+          "message": "Wildcard import"
+        },
+        {
+          "line": "30",
+          "column": "1",
+          "rule": "NoWildcardImports",
+          "message": "Wildcard import"
+        },
+        {
+          "line": "8",
+          "column": "1",
+          "rule": "WildcardImport",
+          "message": "androidx.compose.foundation.layout.* is a wildcard import. Replace it with fully qualified imports."
+        },
+        {
+          "line": "11",
+          "column": "1",
+          "rule": "WildcardImport",
+          "message": "androidx.compose.runtime.* is a wildcard import. Replace it with fully qualified imports."
+        },
+        {
+          "line": "23",
+          "column": "1",
+          "rule": "WildcardImport",
+          "message": "com.toutiaoyan.compose.ui.components.bubble.* is a wildcard import. Replace it with fully qualified imports."
+        },
+        {
+          "line": "24",
+          "column": "1",
+          "rule": "WildcardImport",
+          "message": "com.toutiaoyan.compose.ui.components.button.* is a wildcard import. Replace it with fully qualified imports."
+        },
+        {
+          "line": "25",
+          "column": "1",
+          "rule": "WildcardImport",
+          "message": "com.toutiaoyan.compose.ui.components.card.* is a wildcard import. Replace it with fully qualified imports."
+        },
+        {
+          "line": "26",
+          "column": "1",
+          "rule": "WildcardImport",
+          "message": "com.toutiaoyan.compose.ui.components.dropdownmenu.* is a wildcard import. Replace it with fully qualified imports."
+        },
+        {
+          "line": "27",
+          "column": "1",
+          "rule": "WildcardImport",
+          "message": "com.toutiaoyan.compose.ui.components.message.* is a wildcard import. Replace it with fully qualified imports."
+        },
+        {
+          "line": "28",
+          "column": "1",
+          "rule": "WildcardImport",
+          "message": "com.toutiaoyan.compose.ui.components.messagescroller.* is a wildcard import. Replace it with fully qualified imports."
+        },
+        {
+          "line": "30",
+          "column": "1",
+          "rule": "WildcardImport",
+          "message": "com.toutiaoyan.compose.ui.components.tabs.* is a wildcard import. Replace it with fully qualified imports."
+        },
+        {
+          "line": "52",
+          "column": "31",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "52",
+          "column": "63",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "52",
+          "column": "74",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "310",
+          "column": "63",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "311",
+          "column": "59",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "348",
+          "column": "10",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        }
+      ]
+    }
+  },
+  "otherFiles": {
+    "CatalogTopBar.kt": 21,
+    "ComponentMarkdown.kt": 1,
+    "CodeBlock.kt": 29,
+    "AttachmentDoc.kt": 498,
+    "BubbleDoc.kt": 230,
+    "CarouselDoc.kt": 242,
+    "CalendarRecipeCode.kt": 9,
+    "RtlPreview.kt": 14,
+    "CalendarDoc.kt": 255,
+    "AspectRatioDoc.kt": 88,
+    "InlineDocCode.kt": 52,
+    "PreviewCodeSection.kt": 10,
+    "DocTypography.kt": 20,
+    "SurfaceParityExamples.kt": 89,
+    "ThemingPage.kt": 14,
+    "BreadcrumbDoc.kt": 226,
+    "ComponentDetailScreen.kt": 43,
+    "CatalogSearchDialog.kt": 23,
+    "CreatePage.kt": 6,
+    "CreatePreview02Cards.kt": 102,
+    "CreateCustomizer.kt": 130,
+    "CreatePreview01ExtraCards.kt": 32,
+    "CreatePreviewCards.kt": 76,
+    "CatalogNavDisplay.kt": 52,
+    "App.kt": 1,
+    "CatalogSidebar.kt": 4,
+    "CardDoc.kt": 254,
+    "ChipDoc.kt": 68,
+    "TabsDoc.kt": 402,
+    "InputOTPDoc.kt": 280,
+    "ShimmerDoc.kt": 70,
+    "TableDoc.kt": 306,
+    "NavigationMenuDoc.kt": 454,
+    "CommandDoc.kt": 955,
+    "FieldDoc.kt": 382,
+    "KbdDoc.kt": 311,
+    "ProgressDoc.kt": 107,
+    "SpinnerDoc.kt": 34,
+    "ItemDoc.kt": 632,
+    "InputGroupDoc.kt": 238,
+    "CalendarClock.kt": 1,
+    "EmptyDoc.kt": 232,
+    "EmptyAdditionalRecipes.kt": 51,
+    "ScrollFadeDoc.kt": 28,
+    "MessageDoc.kt": 690,
+    "TooltipDoc.kt": 325,
+    "DatePickerDoc.kt": 1483,
+    "CodeBlockDoc.kt": 98,
+    "RadioGroupDoc.kt": 223,
+    "MenubarDoc.kt": 1394,
+    "ScrollAreaDoc.kt": 262,
+    "TextareaDoc.kt": 358,
+    "DropdownMenuAdditionalRecipes.kt": 109,
+    "SheetDoc.kt": 515,
+    "EmptyRecipeIcons.kt": 7,
+    "InstallationPage.kt": 11,
+    "DrawerDoc.kt": 594,
+    "LabelDoc.kt": 58,
+    "ContextMenuDoc.kt": 619,
+    "AlertDialogDoc.kt": 194,
+    "PopoverDoc.kt": 333,
+    "AlertDoc.kt": 340,
+    "TextDoc.kt": 55,
+    "DarkModePage.kt": 7,
+    "DialogDoc.kt": 611,
+    "ButtonDoc.kt": 148,
+    "SeparatorDoc.kt": 99,
+    "CollapsibleDoc.kt": 182,
+    "ButtonGroupDoc.kt": 248,
+    "ToastDoc.kt": 553,
+    "MarkerDoc.kt": 346,
+    "DropdownMenuDoc.kt": 439,
+    "IntroductionPage.kt": 5,
+    "HoverCardDoc.kt": 350,
+    "AutofocusPreview.kt": 1,
+    "TraceDoc.kt": 65,
+    "StepperDoc.kt": 312,
+    "Breadcrumb.kt": 1,
+    "BadgeDoc.kt": 86,
+    "CheckboxDoc.kt": 134,
+    "AvatarDoc.kt": 236,
+    "ResizableDoc.kt": 263,
+    "SidebarDoc.kt": 1393,
+    "AccordionDoc.kt": 894,
+    "SliderDoc.kt": 299,
+    "ToggleGroupDoc.kt": 311,
+    "DocCopyIcons.kt": 3,
+    "QuestionnaireDoc.kt": 698,
+    "ChartDoc.kt": 366,
+    "SkeletonDoc.kt": 52,
+    "TypographyPage.kt": 5,
+    "SelectDoc.kt": 699,
+    "ToggleDoc.kt": 168,
+    "ComboboxDoc.kt": 1161,
+    "InputDoc.kt": 452,
+    "PaginationDoc.kt": 375,
+    "SwitchDoc.kt": 148,
+    "CatalogFonts.kt": 1,
+    "DocTableOfContents.kt": 14,
+    "CreateWelcomeDialog.kt": 11,
+    "CreatePreviewCanvas.kt": 32,
+    "Res.kt": 40,
+    "Drawable0.commonMain.kt": 140,
+    "Font0.commonMain.kt": 52,
+    "ExpectResourceCollectors.kt": 3,
+    "DocInstallation.kt": 2,
+    "ApiReference.kt": 1,
+    "AttachmentPreviewIcon.kt": 2,
+    "CreatePreviewLayout.kt": 2,
+    "WebLinks.kt": 1,
+    "AppRouter.kt": 1
+  },
+  "otherTopRules": {
+    "Indentation": 25127,
+    "MagicNumber": 511,
+    "NoWildcardImports": 134,
+    "WildcardImport": 134,
+    "ImportOrdering": 73,
+    "Wrapping": 69,
+    "LongMethod": 28,
+    "LongParameterList": 14,
+    "CyclomaticComplexMethod": 11,
+    "TopLevelPropertyNaming": 7
+  },
+  "otherFilesCount": 111,
+  "otherFindingsCount": 26152
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ScrollFadeInteractionTest[jvm]" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-10-30T20:10:49.449Z" hostname="Apples-MacBook-Pro.local" time="0.229">
+  <properties/>
+  <testcase name="noneRetainsAllContentPixelsAndScrolling[jvm]" classname="com.toutiaoyan.compose.ui.styles.ScrollFadeInteractionTest" time="0.016"/>
+  <testcase name="overlappingRtlGradientKeepsCssLogicalStopOrder[jvm]" classname="com.toutiaoyan.compose.ui.styles.ScrollFadeInteractionTest" time="0.018"/>
+  <testcase name="horizontalAndRtlMasksMirrorTheReadingDirection[jvm]" classname="com.toutiaoyan.compose.ui.styles.ScrollFadeInteractionTest" time="0.017"/>
+  <testcase name="physicalLeftRemainsOnTheLeftInRtl[jvm]" classname="com.toutiaoyan.compose.ui.styles.ScrollFadeInteractionTest" time="0.014"/>
+  <testcase name="halfRevealIsHalfDepthRatherThanInstantFullDepth[jvm]" classname="com.toutiaoyan.compose.ui.styles.ScrollFadeInteractionTest" time="0.014"/>
+  <testcase name="logicalStartInRtlOnlyRevealsTheRightEdgeAfterScrolling[jvm]" classname="com.toutiaoyan.compose.ui.styles.ScrollFadeInteractionTest" time="0.015"/>
+  <testcase name="realTouchScrollingUpdatesTheMaskWithoutComposingTheCaller[jvm]" classname="com.toutiaoyan.compose.ui.styles.ScrollFadeInteractionTest" time="0.025"/>
+  <testcase name="bottomOnlyDoesNotFadeTheTop[jvm]" classname="com.toutiaoyan.compose.ui.styles.ScrollFadeInteractionTest" time="0.015"/>
+  <testcase name="attachmentCappedBridgeKeepsItsFractionAndRevealContract[jvm]" classname="com.toutiaoyan.compose.ui.styles.ScrollFadeInteractionTest" time="0.018"/>
+  <testcase name="fixedAndAsymmetricDepthsOverrideTheDefaultPercentage[jvm]" classname="com.toutiaoyan.compose.ui.styles.ScrollFadeInteractionTest" time="0.014"/>
+  <testcase name="horizontalLtrStartsCrispOnTheLeft[jvm]" classname="com.toutiaoyan.compose.ui.styles.ScrollFadeInteractionTest" time="0.014"/>
+  <testcase name="topOnlyDoesNotFadeTheBottom[jvm]" classname="com.toutiaoyan.compose.ui.styles.ScrollFadeInteractionTest" time="0.016"/>
+  <testcase name="fittingContentDoesNotFadeAndShrinkingOverflowRemovesTheMask[jvm]" classname="com.toutiaoyan.compose.ui.styles.ScrollFadeInteractionTest" time="0.014"/>
+  <testcase name="defaultVerticalMaskTracksStartMiddleAndEndOverAnUnrelatedBackground[jvm]" classname="com.toutiaoyan.compose.ui.styles.ScrollFadeInteractionTest" time="0.019"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

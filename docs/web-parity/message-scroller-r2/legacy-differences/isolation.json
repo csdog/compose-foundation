@@ -1,0 +1,15 @@
+{
+  "method": "Temporarily restore ONLY Tabs.kt and TabsStyles.kt from gitHEAD; beforeturn diff confirms those two files contained only currentpasschanges. Keep all other current code/tokens/renderer. Verify all5oldVegaTabsimages.",
+  "sameOldFailures": [
+    "tabs_states_light",
+    "tabs_states_dark",
+    "tabs_item_focused_light"
+  ],
+  "actualByteIdenticalToCurrent": {
+    "tabs_states_light": true,
+    "tabs_states_dark": true,
+    "tabs_item_focused_light": true
+  },
+  "result": "All three mismatches reproduce byte-identically without this pass changes. Preexisting bottom-strip difference retained; no oldgoldens refreshed. Two other oldTabs passed.",
+  "currentSourceRestoredByteForByte": true
+}

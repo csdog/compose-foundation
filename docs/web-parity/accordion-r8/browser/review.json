@@ -1,0 +1,45 @@
+{
+  "date": "2026-11-02",
+  "spaceId": 4,
+  "appWasm": "8a876a4ab770edcfebc1.wasm",
+  "skikoWasm": "658820f72b4617efb380.wasm",
+  "acceptedKeyboardScreenshots": [
+    "horizontal-keyboard-1440-light.png",
+    "horizontal-keyboard-1440-dark.png",
+    "horizontal-keyboard-390-light.png",
+    "horizontal-keyboard-390-dark.png"
+  ],
+  "all4VisuallyReviewed": true,
+  "matrix": {
+    "widths": [
+      1440,
+      390
+    ],
+    "height": 1000,
+    "mobile": false,
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "realPhone": false
+  },
+  "method": "Desktop: actual TOC click aligns same hash; first trigger click, ArrowRight visually confirms Styled? focus, Enter opens complete answer. Dark repeats actual keys. Phone: public Usage→Horizontal navigation after resize, then focused Home/Enter/Right/Enter (dark), first click/Right/Enter (light).",
+  "native": "8 horizontal native frames byte-identical to R7; reused prior visual review. Three dynamic reorder regressions run in real Compose native UI, not browser reorder manipulation.",
+  "anchorCorrection": "Official #card85.516 at390 becomes-350.953 at1440 without automatic reanchor. Same TOC click returns87.547. Local same-hash TOC click also realigns. No navigation source change required.",
+  "limitations": [
+    "Final before-keyboard screenshot is an observation, not a claim that initial asynchronous link positioning is settled. Actual TOC navigation was used before keyboard input.",
+    "No touch, screenreader, all extension/style combinations or RTL toolbar acceptance established this round.",
+    "Theme override persistence across full document reload remains pending."
+  ],
+  "sha256": {
+    "desktop-right-focus.png": "5a7a37ee1341af6ba44f4486401b36ed96ac2ff03f96e7ac914276fd7aabc2d2",
+    "final-desktop-before-keyboard.png": "dd3f3d711291beed4342bf90c2130b0597ea488ff7ed99e44529c3ddf2681707",
+    "horizontal-keyboard-1440-dark.png": "96b961fb6be5b804bc0f59c0ce5674422694f9c45487872d4855b2d9a3018754",
+    "horizontal-keyboard-1440-light.png": "864aa18afdc7c5b94cd02dc4c8ac38e724851b3b1523fafa96ec9b2e442d0285",
+    "horizontal-keyboard-390-dark.png": "79d0927fa3dd9717fb7734e8edc08d63b2d0a47efce11e0558fc0186310a2336",
+    "horizontal-keyboard-390-light.png": "43fe42b682b8c58351260148b9ec6aa5d9d0eda3647840641452c9d7f4d67b45",
+    "local-repeat-anchor-after.png": "1e105b1cb90a74e5e28e9e6acbf86a1bd4bbe38a7d493aba2290ca2c79e52c5a",
+    "local-repeat-anchor-before.png": "df2ff0d08fb6ad0e9cbd732868084ead6c6ef6f9f16afeadda62579cff149b01",
+    "phone-before-keyboard.png": "79d0927fa3dd9717fb7734e8edc08d63b2d0a47efce11e0558fc0186310a2336"
+  }
+}

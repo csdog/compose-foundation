@@ -26,6 +26,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.contentPadding
 import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
@@ -52,23 +53,40 @@ import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.isCtrlPressed
 import androidx.compose.ui.input.key.isMetaPressed
+import androidx.compose.ui.input.key.isAltPressed
+import androidx.compose.ui.input.key.isShiftPressed
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.sp
+import com.toutiaoyan.compose.ui.components.icon.Icon
+import com.toutiaoyan.compose.ui.icons.NovaCheck
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.disabled
+import androidx.compose.ui.semantics.hideFromAccessibility
 import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.progressBarRangeInfo
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.toggleableState
+import androidx.compose.ui.state.ToggleableState
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -85,6 +103,8 @@ import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextColors
 import com.toutiaoyan.compose.ui.components.text.TextVariant
 import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.styles.cssStyleable
+import com.toutiaoyan.compose.ui.utils.keyboardInputMode
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
 
@@ -190,6 +210,7 @@ fun Questionnaire(
                 modifier
                     .fillMaxWidth()
                     .focusable()
+                    .keyboardInputMode()
                     .onPreviewKeyEvent { handleQuestionnaireKey(ctrl, it) }
                     .semantics { if (resolvedDisabled) this.disabled() }
                     .styleable(styleState, style),
@@ -262,7 +283,7 @@ internal class QuestionnaireController(
     var onValueChange: ((String) -> Unit)?,
     var onSubmit: (Map<String, List<String>>) -> Unit,
 ) {
-    var externalValue: String? = null
+    var externalValue by mutableStateOf<String?>(null)
     private var uncontrolled by mutableStateOf(initialValue)
     val names = mutableStateListOf<String>()
     val requiredByName = mutableStateMapOf<String, Boolean>()
@@ -273,13 +294,14 @@ internal class QuestionnaireController(
     val choiceOrder = mutableStateMapOf<String, MutableList<String>>()
     val choiceEnabled = mutableStateMapOf<String, Boolean>()
     val inputs = mutableStateMapOf<String, String>()
+    private val inputSelected = mutableStateMapOf<String, Boolean>()
     val errors = mutableStateMapOf<String, String>()
     val invalidByName = mutableStateMapOf<String, Boolean>()
     val validators = mutableStateMapOf<String, (List<String>) -> String?>()
     val skippedByName = mutableStateMapOf<String, Boolean>()
-    var shortcuts: QuestionnaireShortcuts = QuestionnaireShortcuts.None
-    var animate: Boolean = false
-    var disabled: Boolean = false
+    var shortcuts by mutableStateOf(QuestionnaireShortcuts.None)
+    var animate by mutableStateOf(false)
+    var disabled by mutableStateOf(false)
     var inputFocused by mutableStateOf(false)
     var choiceFocused by mutableStateOf(false)
     var focusedChoiceValue by mutableStateOf<String?>(null)
@@ -309,19 +331,26 @@ internal class QuestionnaireController(
     val canSkip: Boolean
         get() {
             val name = activeName ?: return false
-            return requiredByName[name] != true && !isLast
+            return requiredByName[name] != true
         }
 
     fun answers(): Map<String, List<String>> =
         names.associateWith { name ->
-            val selected = choices[name].orEmpty().toList()
-            val typed = inputs[name]?.trim().orEmpty()
+            val order = choiceOrder[name].orEmpty()
+            val selected =
+                choices[name].orEmpty().toList().sortedBy {
+                    order.indexOf(it).takeIf { index ->
+                        index >= 0
+                    }
+                        ?: Int.MAX_VALUE
+                }
+            val typed = if (inputSelected[name] == true) inputs[name]?.trim().orEmpty() else ""
             if (typed.isNotEmpty()) selected + typed else selected
         }
 
     fun hasAnswer(name: String): Boolean {
         if (choices[name].orEmpty().isNotEmpty()) return true
-        return !inputs[name].orEmpty().trim().isEmpty()
+        return inputSelected[name] == true && inputs[name].orEmpty().isNotBlank()
     }
 
     fun applyItems(defs: List<QuestionnaireItemDefinition>) {
@@ -370,7 +399,7 @@ internal class QuestionnaireController(
         name: String,
         required: Boolean,
         multiple: Boolean,
-        requiredMessage: String,
+        requiredMessage: String?,
         disabled: Boolean,
         invalid: Boolean = false,
         validator: ((List<String>) -> String?)? = null,
@@ -378,7 +407,12 @@ internal class QuestionnaireController(
         if (name !in names) names.add(name)
         requiredByName[name] = required
         multipleByName[name] = multiple
-        requiredMessageByName[name] = requiredMessage
+        if (requiredMessage == null) {
+            requiredMessageByName.remove(name)
+        } else {
+            requiredMessageByName[name] =
+                requiredMessage
+        }
         disabledByName[name] = disabled
         invalidByName[name] = invalid
         if (validator != null) {
@@ -404,6 +438,7 @@ internal class QuestionnaireController(
         choices.remove(name)
         choiceOrder.remove(name)
         inputs.remove(name)
+        inputSelected.remove(name)
         errors.remove(name)
         inputPresentByName.remove(name)
     }
@@ -432,7 +467,7 @@ internal class QuestionnaireController(
         choiceDefaultApplied[key] = true
         if (!defaultChecked) return
         val already = choices[item].orEmpty()
-        if (multipleByName[item] != true && already.isNotEmpty()) return
+        if (multipleByName[item] != true && (already.isNotEmpty() || inputSelected[item] == true)) return
         selectChoice(item, value)
     }
 
@@ -446,6 +481,8 @@ internal class QuestionnaireController(
         inputDefaultApplied[name] = true
         if (defaultValue.isNotEmpty() && inputs[name].isNullOrEmpty()) {
             inputs[name] = defaultValue
+            inputSelected[name] = defaultValue.isNotBlank() &&
+                (multipleByName[name] == true || choices[name].isNullOrEmpty())
         }
     }
 
@@ -478,17 +515,20 @@ internal class QuestionnaireController(
     fun selectByShortcut(label: String): Boolean {
         if (disabled) return false
         val name = activeName ?: return false
-        val ordered =
-            choiceOrder[name].orEmpty().filter { choiceEnabled["$name/$it"] != false }
-        val value =
+        val ordered = choiceOrder[name].orEmpty().filter { choiceEnabled["$name/$it"] != false }
+        val index =
             when (shortcuts) {
-                QuestionnaireShortcuts.Letters ->
-                    ordered.getOrNull(label.uppercase().first() - 'A')
-                QuestionnaireShortcuts.Numbers ->
-                    ordered.getOrNull(label.toIntOrNull()?.minus(1) ?: -1)
-                QuestionnaireShortcuts.None -> null
-            } ?: return false
+                QuestionnaireShortcuts.Letters -> label.uppercase().firstOrNull()?.minus('A') ?: -1
+                QuestionnaireShortcuts.Numbers -> (label.toIntOrNull() ?: 0) - 1
+                QuestionnaireShortcuts.None -> return false
+            }
+        if (index == ordered.size && inputPresentByName[name] == true) {
+            pendingAnswerFocus = InputAnswerKey
+            return true
+        }
+        val value = ordered.getOrNull(index) ?: return false
         selectChoice(name, value)
+        pendingAnswerFocus = value
         return true
     }
 
@@ -500,8 +540,11 @@ internal class QuestionnaireController(
         pendingAnswerFocus = null
     }
 
-    fun registerInput(name: String) {
-        inputPresentByName[name] = true
+    fun registerInput(
+        name: String,
+        enabled: Boolean = true,
+    ) {
+        inputPresentByName[name] = enabled
     }
 
     fun unregisterInput(name: String) {
@@ -555,6 +598,7 @@ internal class QuestionnaireController(
         } else {
             current.clear()
             current.add(value)
+            inputSelected[name] = false
         }
         skippedByName[name] = false
         errors.remove(name)
@@ -573,6 +617,7 @@ internal class QuestionnaireController(
         } else if (selected) {
             current.clear()
             current.add(value)
+            inputSelected[name] = false
         } else {
             current.remove(value)
         }
@@ -592,31 +637,40 @@ internal class QuestionnaireController(
         text: String,
     ) {
         inputs[name] = text
+        inputSelected[name] = text.isNotBlank()
         if (text.isNotBlank()) {
+            if (multipleByName[name] != true) choices[name]?.clear()
             skippedByName[name] = false
             errors.remove(name)
         }
     }
 
     fun previous() {
+        if (disabled) return
         val enabled = enabledNames()
         val i = enabled.indexOf(activeName)
         if (i > 0) goTo(enabled[i - 1])
     }
 
     fun skip() {
+        if (disabled) return
         if (!canSkip) return
         val name = activeName ?: return
         skippedByName[name] = true
         choices[name]?.clear()
-        inputs.remove(name)
+        inputSelected[name] = false
         errors.remove(name)
         val enabled = enabledNames()
         val i = enabled.indexOf(name)
-        if (i >= 0 && i < enabled.lastIndex) goTo(enabled[i + 1])
+        if (i >= 0 && i < enabled.lastIndex) {
+            goTo(enabled[i + 1])
+        } else if (isLast) {
+            submit()
+        }
     }
 
     fun next() {
+        if (disabled) return
         val name = activeName ?: return
         if (!validate(name)) return
         if (isLast) return
@@ -626,8 +680,15 @@ internal class QuestionnaireController(
     }
 
     fun submit() {
-        val name = activeName ?: return
-        if (!validate(name)) return
+        if (activeName == null || disabled) return
+        val firstInvalid = enabledNames().firstOrNull { !validate(it) }
+        if (firstInvalid != null) {
+            goTo(firstInvalid)
+            pendingAnswerFocus = choiceOrder[firstInvalid]?.firstOrNull {
+                choiceEnabled["$firstInvalid/$it"] != false
+            } ?: InputAnswerKey
+            return
+        }
         onSubmit(answers())
     }
 
@@ -635,13 +696,22 @@ internal class QuestionnaireController(
         if (isLast) submit() else next()
     }
 
+    private fun fallbackError(name: String): String =
+        requiredMessageByName[name]
+            ?: if (requiredByName[name] == true) {
+                "Choose an answer to continue."
+            } else {
+                "Choose an answer or skip this question."
+            }
+
     private fun validate(name: String): Boolean {
-        if (invalidByName[name] == true) {
-            errors[name] = requiredMessageByName[name] ?: "This question is required."
-            return false
+        if (disabledByName[name] == true) return true
+        if (skippedByName[name] == true && requiredByName[name] != true) {
+            errors.remove(name)
+            return true
         }
-        if (requiredByName[name] == true && !hasAnswer(name)) {
-            errors[name] = requiredMessageByName[name] ?: "This question is required."
+        if (invalidByName[name] == true || !hasAnswer(name)) {
+            errors[name] = fallbackError(name)
             return false
         }
         val custom = validators[name]?.invoke(answers()[name].orEmpty())
@@ -654,8 +724,9 @@ internal class QuestionnaireController(
     }
 
     fun errorMessage(name: String): String? {
+        if (skippedByName[name] == true && requiredByName[name] != true) return null
         if (invalidByName[name] == true) {
-            return requiredMessageByName[name] ?: "This question is required."
+            return fallbackError(name)
         }
         return errors[name]
     }
@@ -671,6 +742,7 @@ internal class QuestionnaireController(
     fun reset() {
         choices.values.forEach { it.clear() }
         inputs.clear()
+        inputSelected.clear()
         errors.clear()
         skippedByName.clear()
         choiceDefaultApplied.clear()
@@ -745,13 +817,20 @@ private fun handleQuestionnaireKey(
     if (event.type != KeyEventType.KeyDown) return false
     if (ctrl.disabled) return false
     val enter = event.key == Key.Enter || event.key == Key.NumPadEnter
-    if (enter && (event.isCtrlPressed || event.isMetaPressed)) {
+    if (enter && (event.isCtrlPressed || event.isMetaPressed) && !event.isAltPressed && !event.isShiftPressed) {
         ctrl.continueOrSubmit()
+        return true
+    }
+    if (event.isCtrlPressed || event.isMetaPressed || event.isAltPressed) return false
+    if (enter && ctrl.choiceFocused) {
+        val name = ctrl.activeName
+        val choice = ctrl.focusedChoiceValue
+        if (name != null && choice != null && ctrl.isSelected(name, choice)) ctrl.continueOrSubmit()
         return true
     }
     if (ctrl.inputFocused) {
         val name = ctrl.activeName
-        if (enter && name != null && ctrl.hasAnswer(name)) {
+        if (enter && name != null && ctrl.inputs[name].orEmpty().isNotBlank()) {
             ctrl.continueOrSubmit()
             return true
         }
@@ -777,7 +856,7 @@ private fun handleQuestionnaireKey(
             if (ctrl.choiceFocused) return false
             val name = ctrl.activeName ?: return false
             if (ctrl.itemStatus(name) != QuestionnaireItemStatus.Unanswered) {
-                ctrl.continueOrSubmit()
+                ctrl.next()
             }
             return true
         }
@@ -805,36 +884,75 @@ fun QuestionnaireScope.QuestionnaireProgress(
     style: Style = Style,
     /** Official Progress `aria-label`. */
     contentDescription: String = "Questionnaire progress",
-    text: (QuestionnaireProgressState) -> String = { "Question ${it.current} of ${it.total}" },
+    text: (QuestionnaireProgressState) ->
+    String =
+        {
+            if (it.total > 0) {
+                "Question ${it.current} of ${it.total}"
+            } else {
+                ""
+            }
+        },
 ) {
     val ctrl = questionnaireController()
-    val total = ctrl.enabledNames().size.coerceAtLeast(1)
-    val current = ctrl.index + 1
+    val total = ctrl.enabledNames().size
+    val current = if (total > 0) ctrl.index + 1 else 0
     val state =
         QuestionnaireProgressState(
             current = current,
             total = total,
-            first = ctrl.index == 0,
-            last = ctrl.isLast,
+            first = total > 0 && ctrl.index == 0,
+            last = total > 0 && ctrl.isLast,
         )
     val label = text(state)
     val progressName = contentDescription
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    val typography =
+        if (nova) {
+            TextColors.Muted.merge(
+                rememberQuestionnaireTypography(12.sp, 16.sp, FontWeight.Medium),
+            ).copy(fontFeatureSettings = "tnum")
+        } else {
+            TextColors.Muted.merge(TextStyle(fontWeight = FontWeight.Medium))
+        }
+    val measurer = rememberTextMeasurer()
+    val minimumWidth =
+        if (nova) {
+            with(LocalDensity.current) {
+                measurer.measure(
+                    AnnotatedString("00000000000000"),
+                    style =
+                        typography.copy(
+                            fontFamily =
+                                currentTheme.fontFamily,
+                        ),
+                ).size.width.toDp()
+            }
+        } else {
+            0.dp
+        }
     Text(
         modifier =
             modifier
+                .widthIn(min = minimumWidth)
+                .heightIn(min = if (nova) with(LocalDensity.current) { 16.sp.toDp() } else 0.dp)
                 .semantics {
-                    progressBarRangeInfo =
-                        ProgressBarRangeInfo(
-                            current = current.toFloat(),
-                            range = 0f..total.toFloat(),
-                            steps = (total - 1).coerceAtLeast(0),
-                        )
+                    liveRegion = LiveRegionMode.Polite
+                    if (total > 0) {
+                        stateDescription = label
+                        progressBarRangeInfo =
+                            ProgressBarRangeInfo(
+                                current = current.toFloat(),
+                                range = 1f..total.toFloat(),
+                                steps = (total - 2).coerceAtLeast(0),
+                            )
+                    }
                     this.contentDescription = progressName
                 }
                 .styleable(styleState, style),
         variant = TextVariant.BodySmall,
-        textStyle = TextColors.Muted.merge(TextStyle(fontWeight = FontWeight.Medium)),
+        textStyle = typography,
     ) { label }
 }
 
@@ -844,7 +962,7 @@ fun QuestionnaireScope.QuestionnaireItem(
     modifier: Modifier = Modifier,
     required: Boolean = false,
     multiple: Boolean = false,
-    requiredMessage: String = "This question is required.",
+    requiredMessage: String? = null,
     disabled: Boolean = false,
     invalid: Boolean = false,
     validate: ((List<String>) -> String?)? = null,
@@ -885,14 +1003,28 @@ fun QuestionnaireScope.QuestionnaireItem(
             ) {
                 Column(
                     modifier = itemModifier,
-                    verticalArrangement = Arrangement.spacedBy(twSpacing.md),
+                    verticalArrangement =
+                        Arrangement.spacedBy(
+                            if (currentTheme.activePreset == StylePreset.Nova) {
+                                16.dp
+                            } else {
+                                twSpacing.md
+                            },
+                        ),
                     content = content,
                 )
             }
         } else {
             Column(
                 modifier = itemModifier,
-                verticalArrangement = Arrangement.spacedBy(twSpacing.md),
+                verticalArrangement =
+                    Arrangement.spacedBy(
+                        if (currentTheme.activePreset == StylePreset.Nova) {
+                            16.dp
+                        } else {
+                            twSpacing.md
+                        },
+                    ),
                 content = content,
             )
         }
@@ -909,7 +1041,12 @@ fun QuestionnaireScope.QuestionnaireTitle(
     Text(
         modifier = modifier.semantics { heading() }.styleable(styleState, style),
         variant = TextVariant.TitleMedium,
-        textStyle = TextStyle(fontWeight = FontWeight.Medium),
+        textStyle =
+            if (currentTheme.activePreset == StylePreset.Nova) {
+                rememberQuestionnaireTypography(16.sp, 22.sp, FontWeight.Medium)
+            } else {
+                TextStyle(fontWeight = FontWeight.Medium)
+            },
     ) { text }
 }
 
@@ -934,7 +1071,12 @@ fun QuestionnaireScope.QuestionnaireDescription(
     Text(
         modifier = modifier.styleable(styleState, style),
         variant = TextVariant.BodySmall,
-        textStyle = TextColors.Muted,
+        textStyle =
+            if (currentTheme.activePreset == StylePreset.Nova) {
+                TextColors.Muted.merge(rememberQuestionnaireTypography(14.sp, 20.sp))
+            } else {
+                TextColors.Muted
+            },
     ) { text }
 }
 
@@ -1035,7 +1177,11 @@ fun QuestionnaireScope.QuestionnaireChoice(
                     }
                     .semantics {
                         role = if (multiple) Role.Checkbox else Role.RadioButton
-                        this.selected = choiceSelected
+                        if (multiple) {
+                            toggleableState = if (choiceSelected) ToggleableState.On else ToggleableState.Off
+                        } else {
+                            this.selected = choiceSelected
+                        }
                         if (!resolvedEnabled) disabled()
                         if (itemError != null) error(itemError)
                     }
@@ -1055,9 +1201,35 @@ fun QuestionnaireScope.QuestionnaireChoice(
                         },
                     )
                     .then(if (resolvedEnabled) Modifier.pointerHoverIcon(PointerIcon.Hand) else Modifier)
-                    .styleable(styleState, rememberQuestionnaireChoiceStyle(selected) then style),
+                    .cssStyleable(
+                        styleState,
+                        rememberQuestionnaireChoiceStyle(
+                            selected,
+                            itemError != null ||
+                                ctrl.invalidByName[name] == true,
+                        ) then
+                            style,
+                    ),
             verticalAlignment = Alignment.Top,
+            horizontalArrangement =
+                Arrangement.spacedBy(
+                    if (currentTheme.activePreset == StylePreset.Nova) {
+                        10.dp
+                    } else {
+                        8.dp
+                    },
+                ),
         ) {
+            QuestionnaireChoiceInput(
+                Modifier.offset(
+                    y =
+                        if (currentTheme.activePreset == StylePreset.Nova) {
+                            1.8.dp
+                        } else {
+                            0.dp
+                        },
+                ),
+            )
             Column(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(twSpacing.xs2),
@@ -1075,7 +1247,20 @@ fun QuestionnaireScope.QuestionnaireChoiceShortcut(modifier: Modifier = Modifier
     val name = LocalQuestionnaireItemName.current ?: return
     val value = LocalQuestionnaireChoiceValue.current ?: return
     val label = ctrl.shortcutFor(name, value) ?: return
-    Kbd(label, modifier = modifier)
+    if (currentTheme.activePreset == StylePreset.Nova) {
+        Kbd(
+            label,
+            modifier =
+                modifier.offset(
+                    y =
+                        1.8.dp,
+                ).semantics { hideFromAccessibility() },
+            style =
+                rememberQuestionnaireShortcutStyle(),
+        )
+    } else {
+        Kbd(label, modifier = modifier)
+    }
 }
 
 /** Official `QuestionnaireChoiceInput` — native radio/checkbox stand-in (16dp, not separately clickable). */
@@ -1084,18 +1269,32 @@ fun QuestionnaireScope.QuestionnaireChoiceInput(modifier: Modifier = Modifier) {
     val selected = LocalQuestionnaireChoiceSelected.current
     val multiple = LocalQuestionnaireChoiceMultiple.current
     val colors = currentTheme.colors
-    val shape = if (multiple) RoundedCornerShape(2.dp) else CircleShape
-    val stroke = if (selected) colors.primary else colors.border
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    val shape = if (multiple) RoundedCornerShape(if (nova) 4.dp else 2.dp) else CircleShape
+    val stroke =
+        if (selected) {
+            colors.primary
+        } else if (nova) {
+            colors.input
+        } else {
+            colors.border
+        }
+    val background =
+        when {
+            selected && (nova || multiple) -> colors.primary
+            nova && currentTheme.isDark -> colors.input.copy(alpha = colors.input.alpha * 0.3f)
+            else -> Color.Transparent
+        }
     Box(
         modifier =
-            modifier
-                .size(16.dp)
-                .background(if (multiple && selected) colors.primary else Color.Transparent, shape)
-                .border(1.dp, stroke, shape),
+            modifier.size(16.dp).semantics { hideFromAccessibility() }
+                .background(background, shape).border(1.dp, stroke, shape),
         contentAlignment = Alignment.Center,
     ) {
         if (!multiple && selected) {
-            Box(Modifier.size(8.dp).background(colors.primary, CircleShape))
+            Box(Modifier.size(8.dp).background(if (nova) colors.primaryForeground else colors.primary, CircleShape))
+        } else if (multiple && selected && nova) {
+            Icon(NovaCheck, Modifier.size(14.dp), tint = colors.primaryForeground)
         }
     }
 }
@@ -1111,7 +1310,12 @@ fun QuestionnaireScope.QuestionnaireChoiceLabel(
     Text(
         modifier = modifier.styleable(styleState, style),
         variant = TextVariant.BodySmall,
-        textStyle = TextStyle(fontWeight = FontWeight.Medium),
+        textStyle =
+            if (currentTheme.activePreset == StylePreset.Nova) {
+                rememberQuestionnaireTypography(14.sp, 19.25.sp)
+            } else {
+                TextStyle(fontWeight = FontWeight.Medium)
+            },
     ) { text }
 }
 
@@ -1138,7 +1342,17 @@ fun QuestionnaireScope.QuestionnaireChoice(
         onCheckedChange = onCheckedChange,
         style = style,
     ) {
-        QuestionnaireChoiceLabel(text)
+        QuestionnaireChoiceLabel(
+            text,
+            style =
+                if (description != null &&
+                    currentTheme.activePreset == StylePreset.Nova
+                ) {
+                    Style { fontWeight(FontWeight.Medium) }
+                } else {
+                    Style
+                },
+        )
         if (description != null) {
             QuestionnaireChoiceDescription(description)
         }
@@ -1156,7 +1370,12 @@ fun QuestionnaireScope.QuestionnaireChoiceDescription(
     Text(
         modifier = modifier.styleable(styleState, style),
         variant = TextVariant.BodySmall,
-        textStyle = TextColors.Muted,
+        textStyle =
+            if (currentTheme.activePreset == StylePreset.Nova) {
+                TextColors.Muted.merge(rememberQuestionnaireTypography(14.sp, 19.25.sp))
+            } else {
+                TextColors.Muted
+            },
     ) { text }
 }
 
@@ -1179,8 +1398,9 @@ fun QuestionnaireScope.QuestionnaireInput(
         }
     val focusRequester = remember { FocusRequester() }
     SideEffect { ctrl.applyInputDefault(name, defaultValue) }
-    DisposableEffect(name) {
-        ctrl.registerInput(name)
+    val resolvedInputEnabled = enabled && !disabled && !LocalFieldSetDisabled.current
+    DisposableEffect(name, resolvedInputEnabled) {
+        ctrl.registerInput(name, resolvedInputEnabled)
         onDispose { ctrl.unregisterInput(name) }
     }
     LaunchedEffect(ctrl.pendingAnswerFocus) {
@@ -1194,6 +1414,7 @@ fun QuestionnaireScope.QuestionnaireInput(
         onValueChange = { ctrl.setInput(name, it) },
         modifier =
             modifier
+                .heightIn(min = questionnaireActionMinHeight())
                 .fillMaxWidth()
                 .focusRequester(focusRequester)
                 .then(
@@ -1208,7 +1429,14 @@ fun QuestionnaireScope.QuestionnaireInput(
         disabled = disabled,
         type = type,
         placeholder = placeholder,
-        style = style,
+        style =
+            (
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    Style { contentPadding(horizontal = 10.dp, vertical = 4.dp) }
+                } else {
+                    Style
+                }
+            ) then style,
     )
 }
 
@@ -1227,10 +1455,16 @@ fun QuestionnaireScope.QuestionnaireError(
     Text(
         modifier =
             modifier
+                .then(if (currentTheme.activePreset == StylePreset.Nova) Modifier.padding(top = 8.dp) else Modifier)
                 .semantics { liveRegion = LiveRegionMode.Assertive }
                 .styleable(styleState, style),
         variant = TextVariant.BodySmall,
-        textStyle = TextStyle(color = destructive),
+        textStyle =
+            if (currentTheme.activePreset == StylePreset.Nova) {
+                rememberQuestionnaireTypography(14.sp, 20.sp).copy(color = destructive)
+            } else {
+                TextStyle(color = destructive)
+            },
     ) { message }
 }
 
@@ -1242,7 +1476,7 @@ fun QuestionnaireScope.QuestionnaireActions(
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Row(
-        modifier = modifier.fillMaxWidth().styleable(styleState, style),
+        modifier = modifier.heightIn(min = questionnaireActionMinHeight()).fillMaxWidth().styleable(styleState, style),
         horizontalArrangement = Arrangement.spacedBy(twSpacing.sm),
         verticalAlignment = Alignment.CenterVertically,
         content = content,
@@ -1260,10 +1494,11 @@ private fun QuestionnairePreviousButton(
     style: Style,
 ) {
     val ctrl = questionnaireController()
+    if (!ctrl.canPrevious) return
     Button(
         text = text,
         onClick = ctrl::previous,
-        modifier = modifier,
+        modifier = modifier.heightIn(min = questionnaireActionMinHeight()),
         enabled = enabled && ctrl.canPrevious,
         disabled = disabled,
         variant = variant,
@@ -1308,7 +1543,7 @@ fun QuestionnairePrevious(
 ) {
     QuestionnairePreviousButton(
         text = text,
-        modifier = modifier,
+        modifier = modifier.heightIn(min = questionnaireActionMinHeight()),
         enabled = enabled,
         disabled = disabled,
         variant = variant,
@@ -1328,10 +1563,11 @@ fun RowScope.QuestionnaireSkip(
     style: Style = Style,
 ) {
     val ctrl = questionnaireController()
+    if (!ctrl.canSkip) return
     Button(
         text = text,
         onClick = ctrl::skip,
-        modifier = modifier,
+        modifier = modifier.heightIn(min = questionnaireActionMinHeight()),
         enabled = enabled && ctrl.canSkip,
         disabled = disabled,
         variant = variant,
@@ -1351,10 +1587,11 @@ fun QuestionnaireSkip(
     style: Style = Style,
 ) {
     val ctrl = questionnaireController()
+    if (!ctrl.canSkip) return
     Button(
         text = text,
         onClick = ctrl::skip,
-        modifier = modifier,
+        modifier = modifier.heightIn(min = questionnaireActionMinHeight()),
         enabled = enabled && ctrl.canSkip,
         disabled = disabled,
         variant = variant,
@@ -1374,11 +1611,11 @@ private fun QuestionnaireNextButton(
     style: Style,
 ) {
     val ctrl = questionnaireController()
-    if (ctrl.isLast) return
+    if (ctrl.isLast || ctrl.enabledNames().size <= 1) return
     Button(
         text = text,
         onClick = ctrl::next,
-        modifier = modifier,
+        modifier = modifier.heightIn(min = questionnaireActionMinHeight()),
         enabled = enabled,
         disabled = disabled,
         variant = variant,
@@ -1398,7 +1635,7 @@ fun RowScope.QuestionnaireNext(
     style: Style = Style,
 ) {
     val ctrl = questionnaireController()
-    if (ctrl.isLast) return
+    if (ctrl.isLast || ctrl.enabledNames().size <= 1) return
     Box(modifier = modifier, contentAlignment = Alignment.CenterEnd) {
         QuestionnaireNextButton(
             text = text,
@@ -1424,7 +1661,7 @@ fun QuestionnaireNext(
 ) {
     QuestionnaireNextButton(
         text = text,
-        modifier = modifier,
+        modifier = modifier.heightIn(min = questionnaireActionMinHeight()),
         enabled = enabled,
         disabled = disabled,
         variant = variant,
@@ -1448,7 +1685,7 @@ private fun QuestionnaireSubmitButton(
     Button(
         text = text,
         onClick = ctrl::submit,
-        modifier = modifier,
+        modifier = modifier.heightIn(min = questionnaireActionMinHeight()),
         enabled = enabled,
         disabled = disabled,
         variant = variant,
@@ -1494,7 +1731,7 @@ fun QuestionnaireSubmit(
 ) {
     QuestionnaireSubmitButton(
         text = text,
-        modifier = modifier,
+        modifier = modifier.heightIn(min = questionnaireActionMinHeight()),
         enabled = enabled,
         disabled = disabled,
         variant = variant,
@@ -1517,7 +1754,7 @@ fun RowScope.QuestionnaireReset(
     Button(
         text = text,
         onClick = ctrl::reset,
-        modifier = modifier,
+        modifier = modifier.heightIn(min = questionnaireActionMinHeight()),
         enabled = enabled,
         disabled = disabled,
         variant = variant,
@@ -1544,7 +1781,7 @@ fun QuestionnaireReset(
     Button(
         text = text,
         onClick = ctrl::reset,
-        modifier = modifier,
+        modifier = modifier.heightIn(min = questionnaireActionMinHeight()),
         enabled = enabled,
         disabled = disabled,
         variant = variant,
@@ -1552,3 +1789,13 @@ fun QuestionnaireReset(
         style = style,
     )
 }
+
+@Composable
+private fun questionnaireActionMinHeight(): Dp =
+    if (currentTheme.activePreset == StylePreset.Nova &&
+        with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width < 640.dp.roundToPx() }
+    ) {
+        44.dp
+    } else {
+        0.dp
+    }

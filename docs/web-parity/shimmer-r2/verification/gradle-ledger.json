@@ -1,0 +1,300 @@
+{
+  "command_fingerprints": {
+    "2529ef37a066521db868940789723b98f448d960a3a91d560ea46bc9eee8d4a0": 1,
+    "4c9dfd61577cc7fa2d4f19cdb45eddbdf3b6bf9ca77ad4a132e21b7c5e65de73": 1,
+    "7a8bcca2ef6d33296bc3d11066a3205ecd38f20e8bbf41fcc8b5379a1878062a": 1,
+    "80243058094ea3eab50a4078b9a2576793f5ecdd6eb33dadd4c2a7d4d74d9807": 1,
+    "8ab8b2f9c19e654138fc2ba2452bcca887e24fef936acd7f5093b63c97da30b9": 1,
+    "a4b9a9392e013212269a7006553231784a7debb708a5123d25f477ea21bd9360": 4,
+    "a8208028d59c271c9a95d450b97984ea14d26cfb1c444b915b57df6088117ef0": 3
+  },
+  "failure_fingerprints": {
+    "0b81193e4785823d61869291bf12fe679cef9488e92a95e7380862a48042e488": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/styles/ShimmerColors.kt:105:16 Function invocation 'colors(...)' expected.",
+      "occurrences": 1
+    },
+    "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a": {
+      "excerpt": "Module not found: Error: Can't resolve 'path' in '/Users/cscs/IdeaProjects/angryecho/compose-foundation/build/js/packages/compose-foundation-app-webApp/kotlin'",
+      "occurrences": 1
+    },
+    "489299eb65642d88d6189b5a68b530e699c43f8bdf9a702cdcb02ec03d272de5": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/styles/ShimmerColors.kt:105:16 No value passed for parameter 'base'.",
+      "occurrences": 1
+    },
+    "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:jvmTest'. > There were failing tests. See the report at: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/reports/tests/jvmTest/index.html",
+      "occurrences": 3
+    },
+    "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4": {
+      "excerpt": "Module not found: Error: Can't resolve 'os' in '/Users/cscs/IdeaProjects/angryecho/compose-foundation/build/js/packages/compose-foundation-app-webApp/kotlin'",
+      "occurrences": 1
+    },
+    "8e1c91afc125b78161042c6caa2aa7eaff401ec95f1e88e41c13744e217ab31e": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/styles/ShimmerColors.kt:104:24 No value passed for parameter 'base'.",
+      "occurrences": 1
+    },
+    "ab6768298a94dec3666b6212271861535b48637b955a2ccd517c5b027d447abd": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/styles/ShimmerColors.kt:97:16 Assignment type mismatch: actual type is 'List<Color>', but 'LinkedHashMap<Color, List<Color>>' was...",
+      "occurrences": 1
+    },
+    "b8804ec65bc8485caf2b385cdd562f0e48314836e95c3a6b41b7cb04b28e2fb6": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/styles/ShimmerColors.kt:104:24 Function invocation 'colors(...)' expected.",
+      "occurrences": 1
+    },
+    "d201cc1b40ec6dd2cfb0984135ee2c6091782bbd7f1a51d0c51a6f25bdf4923c": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/styles/ShimmerColors.kt:97:9 'val' cannot be reassigned.",
+      "occurrences": 1
+    },
+    "dd3aae6cf5518c7ec0b600da383df3094e80b184aa4a76ac0fd820b4692c38bd": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:compileKotlinJvm' (registered in build file 'shadcn/core/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kotlin ...",
+      "occurrences": 1
+    }
+  },
+  "failure_fingerprints_truncated_occurrences": 0,
+  "run_count": 12,
+  "runs": [
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *ShimmerCssColorTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 0.056,
+      "exit_status": 1,
+      "failure_fingerprints": [],
+      "log": "0001.log",
+      "question": "Do the four CSS shimmer color tests expose currentColor, alpha and dark relative-OKLCH mismatches before implementation changes?",
+      "scope": "targeted",
+      "sequence": 1,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *ShimmerCssColorTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.854,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0002.log",
+      "question": "Do the four CSS shimmer color tests expose currentColor, alpha and dark relative-OKLCH mismatches before implementation changes?",
+      "scope": "targeted",
+      "sequence": 2,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *ShimmerCssColorTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.457,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0003.log",
+      "question": "After correcting the dark pixel oracle to select glyph maxima, do all four public CSS shimmer-color contracts fail against the unchanged implementation?",
+      "scope": "targeted",
+      "sequence": 3,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *ShimmerCssColorTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 10.223,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0004.log",
+      "question": "Do four CSS shimmer-color pixel tests turn GREEN after currentColor brush resolution, relative OKLCH peak and alpha-preserving gradient changes?",
+      "scope": "targeted",
+      "sequence": 4,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *ShimmerCssColorTest --tests *ShimmerColorMathTest --tests *ShimmerCurrentColorTest --tests *ShimmerTextPaintTest --tests *TextColorInheritanceTest --tests *AttachmentStateTest :shadcn:core:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.916,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "d201cc1b40ec6dd2cfb0984135ee2c6091782bbd7f1a51d0c51a6f25bdf4923c",
+        "ab6768298a94dec3666b6212271861535b48637b955a2ccd517c5b027d447abd",
+        "b8804ec65bc8485caf2b385cdd562f0e48314836e95c3a6b41b7cb04b28e2fb6",
+        "8e1c91afc125b78161042c6caa2aa7eaff401ec95f1e88e41c13744e217ab31e",
+        "0b81193e4785823d61869291bf12fe679cef9488e92a95e7380862a48042e488",
+        "489299eb65642d88d6189b5a68b530e699c43f8bdf9a702cdcb02ec03d272de5",
+        "dd3aae6cf5518c7ec0b600da383df3094e80b184aa4a76ac0fd820b4692c38bd"
+      ],
+      "log": "0005.log",
+      "question": "Do 37 targeted color, currentColor, paint, inheritance and Attachment regressions plus core ktlint pass after cache and unspecified-color refinements?",
+      "scope": "targeted",
+      "sequence": 5,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *ShimmerCssColorTest --tests *ShimmerColorMathTest --tests *ShimmerCurrentColorTest --tests *ShimmerTextPaintTest --tests *TextColorInheritanceTest --tests *AttachmentStateTest :shadcn:core:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 20.342,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0006.log",
+      "question": "After correcting the cache local binding, do 37 targeted Shimmer color/currentColor/paint regressions plus core ktlint pass?",
+      "scope": "targeted",
+      "sequence": 6,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *ShimmerCssColorTest --tests *ShimmerColorMathTest --tests *ShimmerCurrentColorTest --tests *ShimmerTextPaintTest --tests *TextColorInheritanceTest --tests *AttachmentStateTest :shadcn:core:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 19.975,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0007.log",
+      "question": "Do 38 expanded regressions and core ktlint pass after generic same-node currentColor preservation, including raw Style.then shimmer?",
+      "scope": "targeted",
+      "sequence": 7,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests *ShimmerScreenshotTest --tests *TextScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.806,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0008.log",
+      "question": "Do unchanged legacy Shimmer and Text baselines retain the prior four passes and two known preexisting differences after currentColor refinements?",
+      "scope": "targeted",
+      "sequence": 8,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:compileKotlinJvm :app:shared:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 17.974,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0009.log",
+      "question": "Do nine Shimmer recipe previews and generated copied code compile in shared JVM and pass shared ktlint?",
+      "scope": "targeted",
+      "sequence": 9,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *ShimmerExamplesTest :app:shared:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 28.6,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0010.log",
+      "question": "Do 40 four-mode Shimmer recipe tests prove animation pixels, status semantics, responsive comparisons, Replay, md None, RTL and copied snippets, with shared ktlint passing?",
+      "scope": "targeted",
+      "sequence": 10,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "b31efcef4b8f770b24a049cb9ba3982ffeb41d54a9dcda8120d66b790fb3b92d",
+        "dea1df736e1eaa22b569ded8dd89d42ff69f2af833de15035dd20f5bb096df9f",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:ktlintCheck :app:webApp:jsBrowserDevelopmentWebpack --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 35.755,
+      "exit_status": 0,
+      "failure_fingerprints": [
+        "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4",
+        "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a"
+      ],
+      "log": "0011.log",
+      "question": "Do the final Shimmer CSS-style recipes, currentColor paint protocol and version/doc literals compile for JS, with shared ktlint passing?",
+      "scope": "targeted",
+      "sequence": 11,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:wasmJsBrowserDevelopmentWebpack --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 18.911,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0012.log",
+      "question": "Does final Shimmer currentColor paint, CSS color sampling and official recipe source compile for Wasm independently after JS validation?",
+      "scope": "targeted",
+      "sequence": 12,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "2a76a3f3787b391fa39609fc93d4708dc4c4d17f70d47b3f2a6660b55135cf09",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    }
+  ],
+  "version": 1,
+  "warning_fingerprints": {
+    "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312": {
+      "excerpt": "w: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/text/Text.kt:5:16 Suppression of error 'INVISIBLE_REFERENCE' might compile and work, but the compiler behavior is UNSP...",
+      "occurrences": 5
+    },
+    "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4": {
+      "excerpt": "You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.",
+      "occurrences": 7
+    },
+    "2a76a3f3787b391fa39609fc93d4708dc4c4d17f70d47b3f2a6660b55135cf09": {
+      "excerpt": "webpack 5.108.1 compiled with 1 warning in 383 ms",
+      "occurrences": 1
+    },
+    "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2": {
+      "excerpt": "Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.",
+      "occurrences": 7
+    },
+    "b31efcef4b8f770b24a049cb9ba3982ffeb41d54a9dcda8120d66b790fb3b92d": {
+      "excerpt": "WARNING: *Important* Test suite support is experimental and subject to change",
+      "occurrences": 1
+    },
+    "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a": {
+      "excerpt": "WARNING: The option setting 'android.experimental.enableScreenshotTest=true' is experimental.",
+      "occurrences": 7
+    },
+    "dea1df736e1eaa22b569ded8dd89d42ff69f2af833de15035dd20f5bb096df9f": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=TEST_SUITE_SUPPORT_EXPERIMENTAL to the gradle.properties file to suppress this warning.",
+      "occurrences": 1
+    },
+    "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=UNSUPPORTED_PROJECT_OPTION_USE to the gradle.properties file to suppress this warning.",
+      "occurrences": 14
+    },
+    "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90": {
+      "excerpt": "WARNING: The option setting 'android.experimental.testSuiteSupport=true' is experimental.",
+      "occurrences": 7
+    }
+  },
+  "warning_fingerprints_truncated_occurrences": 0,
+  "workflow": "5b8266abb49162b453395c272d4f3b1f"
+}

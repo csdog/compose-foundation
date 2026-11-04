@@ -1,6 +1,7 @@
 package com.toutiaoyan.compose.ui.catalog.docs
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -13,6 +14,11 @@ data class ComponentExample(
     val previewPadding: Dp = 40.dp,
     val descriptionMarkdown: String? = null,
     val previewBackground: (@Composable () -> Color)? = null,
+    val hideCode: Boolean = false,
+    val previewHeight: Dp? = null,
+    val previewVerticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
+    /** Steps keep their content inset on desktop and use the full column below640px. */
+    val desktopPreviewInsetStart: Dp = 0.dp,
     val preview: @Composable () -> Unit,
 )
 

@@ -1,0 +1,48 @@
+{
+  "tests": "8",
+  "failures": "6",
+  "errors": "0",
+  "skipped": "0",
+  "cases": [
+    {
+      "name": "tabExitsTheListThroughOneRovingEntry[jvm]",
+      "status": "fail",
+      "message": "java.lang.AssertionError: Failed to assert the following: (Focused = 'true')\nSemantics of the node:\nNode #13 at (l=24.0, t=56.0, r=80.0, b=88.0)px, Tag: 'after'\nContentDescription = '[After]'\nFocused = 'false'\nRole = 'Button'\nText = '[After]'\nActions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]\nMergeDescendants = 'true'\nHas 1 sibling\nSelector used: (TestTag = 'after')\n"
+    },
+    {
+      "name": "controlledRefusalKeepsSelectionWhileFocusMoves[jvm]",
+      "status": "pass",
+      "message": ""
+    },
+    {
+      "name": "rtlArrowDirectionIsReversed[jvm]",
+      "status": "fail",
+      "message": "java.lang.AssertionError: Failed to assert the following: (Focused = 'true')\nSemantics of the node:\nNode #38 at (l=94.0, t=26.0, r=140.0, b=51.0)px, Tag: 'b'\nFocused = 'false'\nRole = 'Tab'\nSelected = 'false'\nText = '[Beta]'\nActions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]\nMergeDescendants = 'true'\nHas 2 siblings\nSelector used: (TestTag = 'b')\n"
+    },
+    {
+      "name": "missingOrDisabledUncontrolledSelectionFallsBack[jvm]",
+      "status": "fail",
+      "message": "java.lang.AssertionError: Failed to assert the following: (Selected = 'true')\nSemantics of the node:\nNode #53 at (l=82.0, t=26.0, r=128.0, b=51.0)px, Tag: 'b'\nFocused = 'false'\nRole = 'Tab'\nSelected = 'false'\nText = '[Beta]'\nActions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]\nMergeDescendants = 'true'\nHas 1 sibling\nSelector used: (TestTag = 'b')\n"
+    },
+    {
+      "name": "uncontrolledRootInitiallySelectsFirstEnabledTab[jvm]",
+      "status": "fail",
+      "message": "java.lang.AssertionError: Failed to assert the following: (Selected = 'true')\nSemantics of the node:\nNode #65 at (l=102.0, t=26.0, r=156.0, b=51.0)px, Tag: 'a'\nFocused = 'false'\nRole = 'Tab'\nSelected = 'false'\nText = '[Alpha]'\nActions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]\nMergeDescendants = 'true'\nHas 2 siblings\nSelector used: (TestTag = 'a')\n"
+    },
+    {
+      "name": "disabledTabIsSkippedAndManualActivationIsSeparate[jvm]",
+      "status": "pass",
+      "message": ""
+    },
+    {
+      "name": "defaultKeyboardFocusRequiresExplicitActivation[jvm]",
+      "status": "fail",
+      "message": "java.lang.AssertionError: Failed to assert the following: (Selected = 'false')\nSemantics of the node:\nNode #94 at (l=96.0, t=26.0, r=142.0, b=51.0)px, Tag: 'b'\nFocused = 'true'\nRole = 'Tab'\nSelected = 'true'\nText = '[Beta]'\nActions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]\nMergeDescendants = 'true'\nHas 1 sibling\nSelector used: (TestTag = 'b')\n"
+    },
+    {
+      "name": "switchingPanelsRemovesOldContentWithoutAnImplicitFade[jvm]",
+      "status": "fail",
+      "message": "java.lang.AssertionError: Failed: assertDoesNotExist.\nReason: Did not expect any node but found '1' node that satisfies: (Text + InputText + EditableText contains 'Old panel' (ignoreCase: false))\nNode found:\nNode #110 at (l=24.0, t=68.0, r=87.0, b=84.0)px\nText = '[Old panel]'\nActions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]\n"
+    }
+  ]
+}

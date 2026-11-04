@@ -1,0 +1,15 @@
+{
+  "scope": "Only undo this round Nova changes; retain prior uncommitted panel focus behavior. Not pure HEAD isolation.",
+  "files": [
+    {
+      "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/popover/Popover.kt",
+      "currentSha256": "fe2a7081522c7f2d75eb5341929c5f45b4633b3bc22f0892055487eb67e82920",
+      "prepassSha256": "f13c37b05382e454aacc7f27be8ec62e44a9f5f56181aad3a7a952f4d14f2130"
+    },
+    {
+      "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/popover/PopoverStyles.kt",
+      "currentSha256": "aaa14e4ca66b9e32a49fafa27dd5d8e2e343514a69f8f6d739efed2146ee8f4e",
+      "prepassSha256": "37b9ca8bc9d05e0c199ecc352c1b170ac938d12d6fa38b87c20520e9fdcb8a9e"
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "revision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "files": [
+    {
+      "file": "source/scroll-area.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/bases/base/ui/scroll-area.tsx",
+      "sha256": "7e49845827447091a6493473779a05ba45cb8302e3703a6f9e4225dd6315cce2"
+    },
+    {
+      "file": "source/scroll-area.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/content/docs/components/base/scroll-area.mdx",
+      "sha256": "4572c57f1f068afb74ee7253a28cdd4ee89256067a805bacb9cee53eced52ebb"
+    },
+    {
+      "file": "source/scroll-area-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/scroll-area-demo.tsx",
+      "sha256": "42798039376e6e4a12a03e43619e80fa80a509b33222b23e3ac23c9526e4ac83"
+    },
+    {
+      "file": "source/scroll-area-horizontal-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/scroll-area-horizontal-demo.tsx",
+      "sha256": "018d58754aa961711cf163c734f38f84b34c729aab5b965b0b88d8cc8ceae515"
+    },
+    {
+      "file": "source/scroll-area-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/scroll-area-rtl.tsx",
+      "sha256": "f7264584c800be476c46204c4f37d7f2c3bf2813db3868ab0ffe82950537bff4"
+    },
+    {
+      "file": "source/style-nova.css",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+    },
+    {
+      "file": "source/base-ScrollAreaRoot.tsx",
+      "url": "https://raw.githubusercontent.com/mui/base-ui/v1.6.0/packages/react/src/scroll-area/root/ScrollAreaRoot.tsx",
+      "sha256": "b44a887603f889e450f56b414f3fa54a7fc7539d744baa58ddc8bfcf5f1105d7"
+    },
+    {
+      "file": "source/base-ScrollAreaViewport.tsx",
+      "url": "https://raw.githubusercontent.com/mui/base-ui/v1.6.0/packages/react/src/scroll-area/viewport/ScrollAreaViewport.tsx",
+      "sha256": "f0846a4ed36ce57a724b1439b0df8c0ec0d181c2dd9f7f3a6a645380135df5c0"
+    },
+    {
+      "file": "source/base-ScrollAreaScrollbar.tsx",
+      "url": "https://raw.githubusercontent.com/mui/base-ui/v1.6.0/packages/react/src/scroll-area/scrollbar/ScrollAreaScrollbar.tsx",
+      "sha256": "59858126e2b3568f53f4870deb9c73d0a54b0d2873697f590ec0587bca7ee203"
+    },
+    {
+      "file": "source/base-ScrollAreaThumb.tsx",
+      "url": "https://raw.githubusercontent.com/mui/base-ui/v1.6.0/packages/react/src/scroll-area/thumb/ScrollAreaThumb.tsx",
+      "sha256": "d468965725ae012f69d4751390fde9c9ae51fdc4f93f90ec3f91b445b797f422"
+    },
+    {
+      "file": "source/base-ScrollAreaCorner.tsx",
+      "url": "https://raw.githubusercontent.com/mui/base-ui/v1.6.0/packages/react/src/scroll-area/corner/ScrollAreaCorner.tsx",
+      "sha256": "a80e731c2c94ff2fbfcaa4b20c4ca1f54c6201785f9821e840294a7f3fa3103e"
+    },
+    {
+      "file": "source/base-constants.ts",
+      "url": "https://raw.githubusercontent.com/mui/base-ui/v1.6.0/packages/react/src/scroll-area/constants.ts",
+      "sha256": "9fc45414ac2ce0857c5ee7100a7a66bfd9955afe56afd8ea5d5851f365f8928c"
+    },
+    {
+      "file": "source/base-ui-lock-excerpt.txt",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/pnpm-lock.yaml",
+      "sha256": "5872262c4a9c5cf3bb15d8d6133d18ca90861513897671a3ed9b4c4564eb7dfc",
+      "fullSourceSha256": "5bb6003094e2aa696461b456ee600f4a617c529f29262c1ae2ffc91d149303fd",
+      "note": "Matching base-ui/react dependency lines only; not full lockfile."
+    }
+  ]
+}

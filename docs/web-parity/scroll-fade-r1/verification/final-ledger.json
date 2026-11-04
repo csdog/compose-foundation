@@ -1,0 +1,376 @@
+{
+  "command_fingerprints": {
+    "4c9dfd61577cc7fa2d4f19cdb45eddbdf3b6bf9ca77ad4a132e21b7c5e65de73": 1,
+    "7a55d8bd7a6bd30d7c36761964d0d34ad25ae4cb3c6c641590b465e8ac759aa5": 1,
+    "7c9a3f18fcfeca82d14f0df0cabb055e2046adfd416215b0abdc3ffee9ff4e9d": 1,
+    "8a1c8e24d5686b432e58d88806e5560bc2cebe1f48e6c6a61201beb5fb89134b": 2,
+    "a81a355f21b1b0f34e81c766a09492a11f1e6222645b5b84f5b52814c73a2bd7": 2,
+    "acab95c95d8b372449021d9eb48e298b72d581825e4f9832e62885270acaf723": 1,
+    "b0c7cc7c01d4878fbcda3641a30cc2af2446396c7122c070bf8503ab264a7e3a": 1,
+    "cadaa71e8e2baa67b796576517ded173900a9429d32c3e0055499821c9713770": 2,
+    "d02b5e8f7ed4c5e051555c21f23bbf6b99463e038f100964a9524a174c9e085e": 2,
+    "ec7c86d6f02008706c67b1d77a982e4d557740efcc7a7834abc1de311a38eb3b": 1,
+    "f322dd0c42885881937f431f37ade7b5fdf4beafa7e411ad7b21314f9e7292b2": 2,
+    "f896569abaa90951fac0d7c14b273c4009900190f4888a903deecb5563e6065b": 3
+  },
+  "failure_fingerprints": {
+    "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a": {
+      "excerpt": "Module not found: Error: Can't resolve 'path' in '/Users/cscs/IdeaProjects/angryecho/compose-foundation/build/js/packages/compose-foundation-app-webApp/kotlin'",
+      "occurrences": 2
+    },
+    "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:jvmTest'. > There were failing tests. See the report at: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/reports/tests/jvmTest/index.html",
+      "occurrences": 4
+    },
+    "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4": {
+      "excerpt": "Module not found: Error: Can't resolve 'os' in '/Users/cscs/IdeaProjects/angryecho/compose-foundation/build/js/packages/compose-foundation-app-webApp/kotlin'",
+      "occurrences": 2
+    }
+  },
+  "failure_fingerprints_truncated_occurrences": 0,
+  "run_count": 19,
+  "runs": [
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests com.toutiaoyan.compose.ui.styles.ScrollFadeTest --tests com.toutiaoyan.compose.ui.styles.ScrollFadeInteractionTest :shadcn:core:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 16.854,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0001.log",
+      "question": "Do ScrollFade source math and actual mask interactions pass after the default/CSS gradient changes, and is the owning core module formatted?",
+      "scope": "targeted",
+      "sequence": 1,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests com.toutiaoyan.compose.ui.styles.ScrollFadeTest --tests com.toutiaoyan.compose.ui.styles.ScrollFadeInteractionTest :shadcn:core:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 15.555,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0002.log",
+      "question": "After accounting for Color alpha quantization, do all26 ScrollFade math/mask cases including the existing capped Attachment bridge pass, with core ktlint?",
+      "scope": "targeted",
+      "sequence": 2,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 3.211,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0003.log",
+      "question": "Does the existing MessageScrollerParityTest remain correct after moving its fade mask before the viewport scroll modifier?",
+      "scope": "targeted",
+      "sequence": 3,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:recordRoborazziJvm --tests com.toutiaoyan.compose.ui.styles.ScrollFadeNovaScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.701,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0004.log",
+      "question": "Record only the six new ScrollFadeNovaScreenshotTest fixtures for parent review after core behavior and MessageScroller regression pass.",
+      "scope": "targeted",
+      "sequence": 4,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest :app:shared:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 24.749,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0005.log",
+      "question": "Do all28 compiled ScrollFade source recipes across native mock desktop/mobile and light/dark preserve scroll interactions and source dimensions, and does shared ktlint pass?",
+      "scope": "targeted",
+      "sequence": 5,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:recordRoborazziJvm --tests com.toutiaoyan.compose.ui.styles.ScrollFadeNovaScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 6.286,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0006.log",
+      "question": "Re-record only the six new ScrollFade Nova fixtures after parent corrected the text line box to source40dp tiles, leaving existing snapshots untouched.",
+      "scope": "targeted",
+      "sequence": 6,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest :app:shared:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 21.711,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0007.log",
+      "question": "Do all28 ScrollFade catalog fixtures still pass with generic Tailwind corner radii derived from the site base radius, and does shared ktlint pass?",
+      "scope": "targeted",
+      "sequence": 7,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests com.toutiaoyan.compose.ui.styles.ScrollFadeTest --tests com.toutiaoyan.compose.ui.styles.ScrollFadeInteractionTest --tests com.toutiaoyan.compose.ui.styles.ScrollFadeNovaScreenshotTest --tests com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest :shadcn:core:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 3.965,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0008.log",
+      "question": "After parent raster approval, independently verify all26 ScrollFade behavior cases,29 MessageScroller dependency regressions and6 new goldens, plus core ktlint.",
+      "scope": "targeted",
+      "sequence": 8,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:recordRoborazziJvm --tests com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest.nova_light --tests com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest.nova_dark --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.572,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0009.log",
+      "question": "Parent approved the intentional viewport fade fix after pixel analysis; record only MessageScroller nova_light/nova_dark, preserving all other existing baselines.",
+      "scope": "targeted",
+      "sequence": 9,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests com.toutiaoyan.compose.ui.components.ScrollFadeScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.777,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0010.log",
+      "question": "Compare only the two old ScrollFade fixtures after correcting viewport modifier order and deterministic midpoint capture; produce current actuals for parent review without recording.",
+      "scope": "targeted",
+      "sequence": 10,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:recordRoborazziJvm --tests com.toutiaoyan.compose.ui.components.ScrollFadeScreenshotTest.states_light --tests com.toutiaoyan.compose.ui.components.ScrollFadeScreenshotTest.states_dark --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.421,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0011.log",
+      "question": "Record only the two parent-reviewed legacy ScrollFade states after correcting deterministic midpoint capture and mask order; originals are preserved separately.",
+      "scope": "targeted",
+      "sequence": 11,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests com.toutiaoyan.compose.ui.styles.ScrollFadeTest --tests com.toutiaoyan.compose.ui.styles.ScrollFadeInteractionTest --tests com.toutiaoyan.compose.ui.styles.ScrollFadeNovaScreenshotTest --tests com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest --tests com.toutiaoyan.compose.ui.components.ScrollFadeScreenshotTest :shadcn:core:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 8.132,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0012.log",
+      "question": "After reviewing and selectively updating exactly four intentional old baselines, independently verify all63 core ScrollFade/MessageScroller/legacy cases and core ktlint.",
+      "scope": "targeted",
+      "sequence": 12,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:jsBrowserDevelopmentWebpack --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 25.523,
+      "exit_status": 0,
+      "failure_fingerprints": [
+        "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4",
+        "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a"
+      ],
+      "log": "0013.log",
+      "question": "After91 independently passing targeted cases, both owning ktlint checks and review of64 native captures, does the final ScrollFade JS catalog development bundle compile?",
+      "scope": "targeted",
+      "sequence": 13,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests com.toutiaoyan.compose.ui.styles.ScrollFadeInteractionTest.overlappingRtlGradientKeepsCssLogicalStopOrder --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.355,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0014.log",
+      "question": "Does the new actual-pixel RTL overlap regression fail against the existing swap-before-CSS-stop-fixup renderer, proving the logical stop-order defect?",
+      "scope": "targeted",
+      "sequence": 14,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests com.toutiaoyan.compose.ui.styles.ScrollFadeInteractionTest.overlappingRtlGradientKeepsCssLogicalStopOrder --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 8.625,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0015.log",
+      "question": "Does preserving logical stop order before mirroring now pass the exact RTL-overlap actual-pixel regression that failed in the RED run?",
+      "scope": "targeted",
+      "sequence": 15,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests com.toutiaoyan.compose.ui.styles.ScrollFadeTest --tests com.toutiaoyan.compose.ui.styles.ScrollFadeInteractionTest --tests com.toutiaoyan.compose.ui.styles.ScrollFadeNovaScreenshotTest --tests com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerParityTest --tests com.toutiaoyan.compose.ui.components.ScrollFadeScreenshotTest :shadcn:core:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 13.924,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0016.log",
+      "question": "After the proven RTL stop-order fix, independently verify all64 core ScrollFade/NewNova/legacy/MessageScroller cases and core ktlint without recording baselines.",
+      "scope": "targeted",
+      "sequence": 16,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest :app:shared:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 14.838,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0017.log",
+      "question": "After the final RTL logical-gradient correction, do all28 ScrollFade catalog cases/shared ktlint pass and are64 source fixture captures stable?",
+      "scope": "targeted",
+      "sequence": 17,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :app:webApp:jsBrowserDevelopmentWebpack --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 21.569,
+      "exit_status": 0,
+      "failure_fingerprints": [
+        "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4",
+        "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a"
+      ],
+      "log": "0018.log",
+      "question": "Does the final JS catalog compile after the proven RTL stop-order fix,92 passing targeted cases and unchanged64 reviewed capture hashes, including the latest page title/description?",
+      "scope": "targeted",
+      "sequence": 18,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:wasmJsBrowserDevelopmentWebpack --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 18.178,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0019.log",
+      "question": "Does the final RTL-correct ScrollFade catalog produce its Wasm development bundle after92 targeted cases and a separate final JS build?",
+      "scope": "targeted",
+      "sequence": 19,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63a3fadfa1a3e1c5629d71e6e1bb586104600030ec0d0e77134db8b11368d05b",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    }
+  ],
+  "version": 1,
+  "warning_fingerprints": {
+    "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312": {
+      "excerpt": "w: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/text/Text.kt:5:16 Suppression of error 'INVISIBLE_REFERENCE' might compile and work, but the compiler behavior is UNSP...",
+      "occurrences": 5
+    },
+    "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4": {
+      "excerpt": "You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.",
+      "occurrences": 13
+    },
+    "63a3fadfa1a3e1c5629d71e6e1bb586104600030ec0d0e77134db8b11368d05b": {
+      "excerpt": "webpack 5.108.1 compiled with 1 warning in 391 ms",
+      "occurrences": 1
+    },
+    "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2": {
+      "excerpt": "Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.",
+      "occurrences": 13
+    },
+    "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a": {
+      "excerpt": "WARNING: The option setting 'android.experimental.enableScreenshotTest=true' is experimental.",
+      "occurrences": 13
+    },
+    "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=UNSUPPORTED_PROJECT_OPTION_USE to the gradle.properties file to suppress this warning.",
+      "occurrences": 26
+    },
+    "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90": {
+      "excerpt": "WARNING: The option setting 'android.experimental.testSuiteSupport=true' is experimental.",
+      "occurrences": 13
+    }
+  },
+  "warning_fingerprints_truncated_occurrences": 0,
+  "workflow": "c94bc92d104a4a875093bb2d0d4333bb"
+}

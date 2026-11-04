@@ -7,6 +7,19 @@ if [ ! -x "$PROJECT_DIR/gradlew" ]; then
   exit 0
 fi
 
-(cd "$PROJECT_DIR" && ./gradlew ktlintFormat ktlintCheck detekt --quiet)
+# Agents can opt into their installed compact-output Gradle wrapper without changing
+# the checks or the default developer workflow. Both values must come from one owner.
+if [ -n "${COMPOSE_FOUNDATION_GRADLE_RUNNER:-}" ] || [ -n "${COMPOSE_FOUNDATION_GRADLE_WORKFLOW:-}" ]; then
+  if [ ! -f "${COMPOSE_FOUNDATION_GRADLE_RUNNER:-}" ] || [ -z "${COMPOSE_FOUNDATION_GRADLE_WORKFLOW:-}" ]; then
+    echo "Both COMPOSE_FOUNDATION_GRADLE_RUNNER and COMPOSE_FOUNDATION_GRADLE_WORKFLOW are required." >&2
+    exit 1
+  fi
+  (cd "$PROJECT_DIR" && python3 "$COMPOSE_FOUNDATION_GRADLE_RUNNER" run \
+    --workflow "$COMPOSE_FOUNDATION_GRADLE_WORKFLOW" --scope broad \
+    --question "Do the commit hook format, lint, and detekt checks pass for this checkpoint?" -- \
+    ./gradlew ktlintFormat ktlintCheck detekt --quiet)
+else
+  (cd "$PROJECT_DIR" && ./gradlew ktlintFormat ktlintCheck detekt --quiet)
+fi
 
 git add -u

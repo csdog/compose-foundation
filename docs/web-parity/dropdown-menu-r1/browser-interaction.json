@@ -1,0 +1,9 @@
+{
+  "supersedes": "r1-interaction-observation-superseded.json",
+  "correction": "Earlier DOM-presence checks reported false failures because Web keeps stale accessibility nodes after canvas closes.",
+  "escapeChecks": "r2-six-browser.json",
+  "outsideAndProfileChecks": "r2-dismiss-browser.json",
+  "all24EscapeChecksPassed": true,
+  "defaultFourQuadrantsOutsideAndProfilePassed": true,
+  "accessibilityNodeCleanup": "pending"
+}

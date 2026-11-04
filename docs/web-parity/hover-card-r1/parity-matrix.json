@@ -1,0 +1,58 @@
+{
+  "revision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "recipes": [
+    {
+      "name": "Default",
+      "implementation": "first pass implemented",
+      "jvmInteraction": "passed in run0004",
+      "desktopLight": "pending browser recovery",
+      "desktopDark": "pending browser recovery",
+      "phoneLight": "pending browser recovery",
+      "phoneDark": "pending browser recovery"
+    },
+    {
+      "name": "Basic",
+      "implementation": "first pass implemented",
+      "jvmInteraction": "passed in run0004",
+      "desktopLight": "pending browser recovery",
+      "desktopDark": "pending browser recovery",
+      "phoneLight": "pending browser recovery",
+      "phoneDark": "pending browser recovery"
+    },
+    {
+      "name": "Sides",
+      "implementation": "first pass implemented",
+      "jvmInteraction": "passed in run0004",
+      "desktopLight": "pending browser recovery",
+      "desktopDark": "pending browser recovery",
+      "phoneLight": "pending browser recovery",
+      "phoneDark": "pending browser recovery"
+    },
+    {
+      "name": "RTL",
+      "implementation": "first pass implemented",
+      "jvmInteraction": "passed in run0004",
+      "desktopLight": "pending browser recovery",
+      "desktopDark": "pending browser recovery",
+      "phoneLight": "pending browser recovery",
+      "phoneDark": "pending browser recovery"
+    }
+  ],
+  "knownGaps": [
+    "safe polygon across trigger/popup gap and text selection protection",
+    "multiple triggers/handles and arbitrary root anchor geometry",
+    "global Escape with focus outside the HoverCard root",
+    "RTL non-center alignment and collision padding",
+    "animation origin based on actual flipped side",
+    "full reader/focusable-content, pointer type and dynamic theme matrix",
+    "focus blur currently shares hover close delay; Base UI focus blur uses a separate immediate path"
+  ],
+  "verification": {
+    "coreBehavior": 12,
+    "coreNewScreenshots": 2,
+    "coreExistingScreenshots": 2,
+    "catalogTests": 5,
+    "screenshotMode": "Independent verify, no existing baseline refreshed",
+    "browser": "Pending user approval to recreate the missing task space"
+  }
+}

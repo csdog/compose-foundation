@@ -1,0 +1,22 @@
+[
+  {
+    "name": "contentBrushAppliesToAnnotatedText[jvm]",
+    "failure": "java.lang.AssertionError: Annotated text must use Style brush"
+  },
+  {
+    "name": "styleShimmerActuallyChangesGlyphPixels[jvm]",
+    "failure": "java.lang.AssertionError: Style shimmer must repaint actual glyphs"
+  },
+  {
+    "name": "contentBrushOverridesSpecifiedPlainTextColor[jvm]",
+    "failure": "java.lang.AssertionError: Specified text color must not hide Style brush"
+  },
+  {
+    "name": "translucentBrushDoesNotMultiplyOriginalTextAlphaTwice[jvm]",
+    "failure": "java.lang.AssertionError: Expected <0.5> with absolute tolerance <0.02>, actual <1.0>."
+  },
+  {
+    "name": "ancestorBrushIsInheritedWithoutTintingWhitespace[jvm]",
+    "failure": "java.lang.AssertionError: Expected value to be true."
+  }
+]

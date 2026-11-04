@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DropdownMenuExamplesTest[jvm]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-30T13:22:25.796Z" hostname="Apples-MacBook-Pro.local" time="0.758">
+  <properties/>
+  <testcase name="notificationIconsKeepIndependentCheckedStates[jvm]" classname="com.toutiaoyan.compose.ui.catalog.DropdownMenuExamplesTest" time="0.576"/>
+  <testcase name="checkboxSelectionStaysOpenAndPersistsAfterReopening[jvm]" classname="com.toutiaoyan.compose.ui.catalog.DropdownMenuExamplesTest" time="0.116"/>
+  <testcase name="paymentIconsSelectExactlyOneMethod[jvm]" classname="com.toutiaoyan.compose.ui.catalog.DropdownMenuExamplesTest" time="0.064"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

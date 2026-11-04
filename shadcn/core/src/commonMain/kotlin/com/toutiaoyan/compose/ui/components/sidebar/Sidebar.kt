@@ -4,7 +4,11 @@ package com.toutiaoyan.compose.ui.components.sidebar
 
 import com.toutiaoyan.compose.ui.utils.keyboardInputMode
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -33,12 +37,19 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.foundation.style.then
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.unit.constrainWidth
+import androidx.compose.ui.semantics.paneTitle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.Layout
@@ -91,7 +102,12 @@ class SidebarState(
     val toggle: () -> Unit,
     val collapsible: SidebarCollapsible = SidebarCollapsible.Offcanvas,
     val mobile: Boolean = false,
+    val openMobile: Boolean = false,
+    val setOpen: (Boolean) -> Unit = {},
+    val setOpenMobile: (Boolean) -> Unit = {},
 ) {
+    val isMobile: Boolean get() = mobile
+
     /** Icon-collapse rail: closed but still a narrow strip (`collapsible="icon"`). */
     val iconCollapsed: Boolean
         get() = !mobile && collapsible == SidebarCollapsible.Icon && !open
@@ -123,8 +139,9 @@ fun sidebarState(): SidebarState = LocalSidebarState.current
  * narrow rail (`3rem` / 48dp) instead of hiding the sidebar. Cmd/Ctrl+[shortcutKey]
  * (official `b`) toggles when focus is inside this provider — Compose has no window-
  * level key hook, so it is not app-wide. [SidebarVariant.Floating] / [SidebarVariant.Inset]
- * match official `variant`. Pass [mobile] `true` to render the rail as a [Sheet]
- * (official `useIsMobile`); default `false` so existing desktop goldens stay. Optional
+ * match official `variant`. A null [mobile] follows the 768dp breakpoint; pass a
+ * Boolean to override it. Desktop [open] and [openMobile] are independent, with
+ * mobile closed by default. Optional
  * [onPersistOpen] is the cookie hook (`SidebarDefaults.CookieName`, 7-day max-age) —
  * Compose has no `document.cookie`, so persistence is the caller's job.
  *
@@ -145,7 +162,7 @@ fun SidebarProvider(
     defaultOpen: Boolean = true,
     shortcutEnabled: Boolean = true,
     shortcutKey: Key = Key.B,
-    mobile: Boolean = false,
+    mobile: Boolean? = null,
     onPersistOpen: ((Boolean) -> Unit)? = null,
     /**
      * When true (default), the provider row expands to max constraints — correct for a
@@ -155,37 +172,59 @@ fun SidebarProvider(
      * produce invalid Constraints (`maxWidth < minWidth`).
      */
     fillMaxSize: Boolean = true,
+    openMobile: Boolean? = null,
+    onOpenMobileChange: ((Boolean) -> Unit)? = null,
+    defaultOpenMobile: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     var internalOpen by remember { mutableStateOf(defaultOpen) }
-    val controlled = open != null
-    val isOpen =
-        if (collapsible == SidebarCollapsible.None) {
-            true
-        } else {
-            open ?: internalOpen
+    var internalOpenMobile by remember { mutableStateOf(defaultOpenMobile) }
+    val viewportWidth = with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
+    val isMobile = mobile ?: (viewportWidth < 768.dp)
+    val isOpen = open ?: internalOpen
+    val isOpenMobile = openMobile ?: internalOpenMobile
+    val controlled = rememberUpdatedState(open != null)
+    val controlledMobile = rememberUpdatedState(openMobile != null)
+    val onChange = rememberUpdatedState(onOpenChange)
+    val onMobileChange = rememberUpdatedState(onOpenMobileChange)
+    val persist = rememberUpdatedState(onPersistOpen)
+    val currentOpen = rememberUpdatedState(isOpen)
+    val currentMobileOpen = rememberUpdatedState(isOpenMobile)
+    val currentMode = rememberUpdatedState(isMobile)
+    val setOpen: (Boolean) -> Unit =
+        remember {
+            { next ->
+                if (!controlled.value) internalOpen = next
+                onChange.value?.invoke(next)
+                persist.value?.invoke(next)
+            }
         }
-    val setOpen: (Boolean) -> Unit = { next ->
-        if (!controlled) internalOpen = next
-        onOpenChange?.invoke(next)
-        onPersistOpen?.invoke(next)
-    }
+    val setOpenMobile: (Boolean) -> Unit =
+        remember {
+            { next ->
+                if (!controlledMobile.value) internalOpenMobile = next
+                onMobileChange.value?.invoke(next)
+            }
+        }
+    val toggle: () -> Unit =
+        remember {
+            {
+                if (currentMode.value) {
+                    val mobileOpen = if (controlledMobile.value) currentMobileOpen.value else internalOpenMobile
+                    setOpenMobile(!mobileOpen)
+                } else {
+                    setOpen(!currentOpen.value)
+                }
+            }
+        }
     val state =
-        remember(isOpen, collapsible, mobile) {
-            SidebarState(
-                open = isOpen,
-                toggle = {
-                    if (collapsible != SidebarCollapsible.None) setOpen(!isOpen)
-                },
-                collapsible = collapsible,
-                mobile = mobile,
-            )
+        remember(isOpen, isOpenMobile, collapsible, isMobile) {
+            SidebarState(isOpen, toggle, collapsible, isMobile, isOpenMobile, setOpen, setOpenMobile)
         }
     val layout = remember { SidebarLayout() }
     val shortcutModifier =
         Modifier.onPreviewKeyEvent { event ->
             if (!shortcutEnabled) return@onPreviewKeyEvent false
-            if (collapsible == SidebarCollapsible.None) return@onPreviewKeyEvent false
             if (event.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
             if (event.key != shortcutKey) return@onPreviewKeyEvent false
             if (!(event.isCtrlPressed || event.isMetaPressed)) {
@@ -269,16 +308,15 @@ fun Sidebar(
                 if (padded) iconWidth + twSpacing.lg else iconWidth
             SidebarCollapsible.Offcanvas, SidebarCollapsible.None -> 0.dp
         }
-    val animatedWidth by animateDpAsState(if (expanded) width else collapsedWidth)
+    val animatedWidth by animateDpAsState(
+        if (expanded) width else collapsedWidth,
+        animationSpec = tween(200, easing = LinearEasing),
+        label = "sidebar-width",
+    )
     val sidebarBorderColor = currentTheme.colors.sidebarBorder
     val railStyleState = remember { MutableStyleState(MutableInteractionSource()) }
     val contentStyleState = remember { MutableStyleState(MutableInteractionSource()) }
-    val clipModifier =
-        if (state.collapsible == SidebarCollapsible.Icon || padded) {
-            Modifier.clipToBounds()
-        } else {
-            Modifier
-        }
+    val clipModifier = Modifier.clipToBounds()
     val ariaModifier =
         if (ariaLabel != null) {
             Modifier.semantics { contentDescription = ariaLabel }
@@ -288,17 +326,16 @@ fun Sidebar(
     if (state.mobile && state.collapsible != SidebarCollapsible.None) {
         val sheetSide = if (side == SidebarSide.End) SheetSide.End else SheetSide.Start
         Sheet(
-            open = state.open,
-            onOpenChange = { next -> if (next != state.open) state.toggle() },
-            modifier = modifier.then(ariaModifier),
+            open = state.openMobile,
+            onOpenChange = state.setOpenMobile,
         ) {
             SheetContent(
-                modifier = Modifier.width(SidebarDefaults.MobileWidth),
+                modifier = modifier.then(ariaModifier).semantics { paneTitle = ariaLabel ?: "Sidebar" },
                 side = sheetSide,
                 showCloseButton = false,
-                style = rememberSidebarContentStyle() then style,
+                style = rememberSidebarMobileStyle() then style,
             ) {
-                content()
+                Column(Modifier.fillMaxSize(), content = content)
             }
         }
         return
@@ -310,24 +347,32 @@ fun Sidebar(
                     .width(animatedWidth)
                     .then(clipModifier)
                     .then(ariaModifier)
-                    .drawBehind {
-                        val x = if (side == SidebarSide.End) 0f else size.width
-                        drawLine(
-                            color = sidebarBorderColor,
-                            start = Offset(x, 0f),
-                            end = Offset(x, size.height),
-                            strokeWidth = 1.dp.toPx(),
-                        )
+                    .drawWithContent {
+                        drawContent()
+                        if (state.collapsible != SidebarCollapsible.None) {
+                            val stroke = 1.dp.toPx()
+                            val physicalLeft = (side == SidebarSide.Start) == (layoutDirection == LayoutDirection.Ltr)
+                            val x = if (physicalLeft) size.width - stroke / 2f else stroke / 2f
+                            drawLine(
+                                color = sidebarBorderColor,
+                                start = Offset(x, 0f),
+                                end = Offset(x, size.height),
+                                strokeWidth = stroke,
+                            )
+                        }
                     }
                     .styleable(railStyleState, rememberSidebarRailStyle() then style),
         ) {
-            if (expanded || state.collapsible == SidebarCollapsible.Icon) {
+            SidebarPanelBody(
+                width = if (state.collapsible == SidebarCollapsible.Offcanvas) width else null,
+                slideFromStart = side == SidebarSide.Start && state.collapsible == SidebarCollapsible.Offcanvas,
+            ) {
                 Column(
                     modifier =
                         Modifier
                             .width(width)
                             .styleable(contentStyleState, rememberSidebarContentStyle()),
-                    verticalArrangement = Arrangement.spacedBy(twSpacing.sm),
+                    verticalArrangement = Arrangement.Top,
                     content = content,
                 )
             }
@@ -341,7 +386,10 @@ fun Sidebar(
                     .then(ariaModifier)
                     .padding(twSpacing.sm),
         ) {
-            if (expanded || state.collapsible == SidebarCollapsible.Icon) {
+            SidebarPanelBody(
+                width = if (state.collapsible == SidebarCollapsible.Offcanvas) (width - twSpacing.sm * 2) else null,
+                slideFromStart = side == SidebarSide.Start && state.collapsible == SidebarCollapsible.Offcanvas,
+            ) {
                 Column(
                     modifier =
                         Modifier
@@ -352,10 +400,27 @@ fun Sidebar(
                                     rememberSidebarInnerStyle(variant) then
                                     style,
                             ),
-                    verticalArrangement = Arrangement.spacedBy(twSpacing.sm),
+                    verticalArrangement = Arrangement.Top,
                     content = content,
                 )
             }
+        }
+    }
+}
+
+/** Keep offcanvas content composed at full panel width while its visible gap closes. */
+@Composable
+private fun SidebarPanelBody(
+    width: Dp?,
+    slideFromStart: Boolean,
+    content: @Composable () -> Unit,
+) {
+    Layout(content = content) { measurables, constraints ->
+        val contentWidth = width?.roundToPx()?.coerceAtLeast(0) ?: constraints.maxWidth
+        val child = measurables.single().measure(constraints.copy(minWidth = contentWidth, maxWidth = contentWidth))
+        val visibleWidth = constraints.constrainWidth(contentWidth)
+        layout(visibleWidth, child.height) {
+            child.placeRelative(if (slideFromStart) visibleWidth - child.width else 0, 0)
         }
     }
 }
@@ -421,7 +486,7 @@ fun SidebarTrigger(
             modifier
                 .semantics {
                     role = Role.Button
-                    contentDescription = if (state.open) "Collapse sidebar" else "Expand sidebar"
+                    contentDescription = "Toggle Sidebar"
                     if (!resolvedEnabled) disabled()
                 }
                 .keyboardInputMode()
@@ -462,7 +527,7 @@ fun SidebarRail(
             modifier
                 .semantics {
                     role = Role.Button
-                    contentDescription = if (state.open) "Collapse sidebar" else "Expand sidebar"
+                    contentDescription = "Toggle Sidebar"
                 }
                 .keyboardInputMode()
                 .clickable(
@@ -483,7 +548,11 @@ fun SidebarHeader(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Column(modifier = modifier.fillMaxWidth().styleable(styleState, style), content = content)
+    Column(
+        modifier = modifier.fillMaxWidth().styleable(styleState, rememberSidebarSectionStyle() then style),
+        verticalArrangement = Arrangement.spacedBy(twSpacing.sm),
+        content = content,
+    )
 }
 
 @Composable
@@ -493,7 +562,11 @@ fun SidebarFooter(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Column(modifier = modifier.fillMaxWidth().styleable(styleState, style), content = content)
+    Column(
+        modifier = modifier.fillMaxWidth().styleable(styleState, rememberSidebarSectionStyle() then style),
+        verticalArrangement = Arrangement.spacedBy(twSpacing.sm),
+        content = content,
+    )
 }
 
 /** A labeled section within the sidebar body, matching real shadcn's `SidebarGroup`/`SidebarGroupLabel`. */
@@ -506,8 +579,10 @@ fun SidebarGroup(
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Column(
-        modifier = modifier.fillMaxWidth().animateContentSize().styleable(styleState, style),
-        verticalArrangement = Arrangement.spacedBy(twSpacing.xs2),
+        modifier =
+            modifier.fillMaxWidth().animateContentSize()
+                .styleable(styleState, rememberSidebarSectionStyle() then style),
+        verticalArrangement = Arrangement.Top,
     ) {
         if (label != null) {
             SidebarGroupLabel(label)
@@ -592,13 +667,17 @@ fun ColumnScope.SidebarContent(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val scrollState = rememberScrollState()
+    val scrolling =
+        if (sidebarState().iconCollapsed) Modifier.clipToBounds() else Modifier.verticalScroll(scrollState)
     Column(
         modifier =
             modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .styleable(styleState, style),
-        verticalArrangement = Arrangement.spacedBy(twSpacing.sm),
+                .styleable(styleState, style)
+                .then(scrolling),
+        verticalArrangement = Arrangement.Top,
         content = content,
     )
 }

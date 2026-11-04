@@ -1,0 +1,13 @@
+{
+  "currentSourcesRestored": true,
+  "files": [
+    {
+      "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/popover/Popover.kt",
+      "sha256": "fe2a7081522c7f2d75eb5341929c5f45b4633b3bc22f0892055487eb67e82920"
+    },
+    {
+      "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/popover/PopoverStyles.kt",
+      "sha256": "aaa14e4ca66b9e32a49fafa27dd5d8e2e343514a69f8f6d739efed2146ee8f4e"
+    }
+  ]
+}

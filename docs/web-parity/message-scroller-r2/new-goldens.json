@@ -1,0 +1,7 @@
+{
+  "scope": "Only two new expanded NovaTabs snapshots recorded and rawimages viewed, then final independentverify4/4 passed. All oldVega baselines retained despite3preexisting mismatches.",
+  "files": {
+    "tabs_nova_light.png": "e8e41e0b7d28c811fad675320ab86d0110b39bb1cb6494e434cde8d9aafdfd24",
+    "tabs_nova_dark.png": "df2e7a9011b2111478bc1eeb8d97f739fc197a05424b27d5af3f62c20ea522c0"
+  }
+}

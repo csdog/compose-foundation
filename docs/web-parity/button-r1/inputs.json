@@ -1,0 +1,38 @@
+[
+  {
+    "path": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/button/Button.kt",
+    "sha256": "0efb3bc30820101c2c063a7fc11d628a358a5c6599f514ef36350cbef348f120"
+  },
+  {
+    "path": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/button/ButtonStyles.kt",
+    "sha256": "acedca9e3f6735670596a0b0db9e0f17d2170acf9781a3e209b709be444f3145"
+  },
+  {
+    "path": "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/button/ButtonIconPlacementTest.kt",
+    "sha256": "3c8b855271cb06f994c8b2c8bd382d0ca1b568227a097bc72875632e437fe400"
+  },
+  {
+    "path": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ButtonDoc.kt",
+    "sha256": "53e41d619eaa6ca4d0d48b8336833fc6aa8737f18e1d2733fbdc9c49cbef53e8"
+  },
+  {
+    "path": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ButtonRecipes.kt",
+    "sha256": "69a2cf0207a5e7e1358c8ee2d1f5e41c2b621482570bf09266f9d43d5304207c"
+  },
+  {
+    "path": "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/ButtonExamplesTest.kt",
+    "sha256": "56149b48df6111d00469e437899a2f5c7af4bf6723133615d92bbf4119f85c4a"
+  },
+  {
+    "path": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/DocInstallation.kt",
+    "sha256": "134d768753252f5602edd56eb41fbf61723d6e810d53bd39529581b2421ba74d"
+  },
+  {
+    "path": "gradle.properties",
+    "sha256": "96d50c0b31cf9e4c57ecc0059f50dcfddc4b682e22fc6f93a5bceeaeb3c1f25b"
+  },
+  {
+    "path": ".git-hooks/pre-commit",
+    "sha256": "85ff1885631c3fbc549b54fb0d59d029d9413bde73957678089ba1df8c84a307"
+  }
+]

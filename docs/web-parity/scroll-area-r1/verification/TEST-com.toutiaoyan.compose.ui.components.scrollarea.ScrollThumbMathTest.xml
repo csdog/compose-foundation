@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ScrollThumbMathTest[jvm]" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-10-30T19:44:56.405Z" hostname="Apples-MacBook-Pro.local" time="0.001">
+  <properties/>
+  <testcase name="offset_fraction_advances_proportionally_with_scroll_value[jvm]" classname="com.toutiaoyan.compose.ui.components.scrollarea.ScrollThumbMathTest" time="0.0"/>
+  <testcase name="thumb_fraction_matches_viewport_share_of_the_track[jvm]" classname="com.toutiaoyan.compose.ui.components.scrollarea.ScrollThumbMathTest" time="0.0"/>
+  <testcase name="drag_delta_is_scaled_up_because_the_thumb_travels_less_than_the_content_scrolls[jvm]" classname="com.toutiaoyan.compose.ui.components.scrollarea.ScrollThumbMathTest" time="0.0"/>
+  <testcase name="offset_fraction_is_zero_at_the_top_of_the_scroll_range[jvm]" classname="com.toutiaoyan.compose.ui.components.scrollarea.ScrollThumbMathTest" time="0.0"/>
+  <testcase name="thumb_fraction_is_clamped_so_it_never_disappears_on_very_long_content[jvm]" classname="com.toutiaoyan.compose.ui.components.scrollarea.ScrollThumbMathTest" time="0.0"/>
+  <testcase name="drag_delta_is_zero_when_there_is_no_room_for_the_thumb_to_travel[jvm]" classname="com.toutiaoyan.compose.ui.components.scrollarea.ScrollThumbMathTest" time="0.0"/>
+  <testcase name="minimumThumbStillStopsAtEndOfTrack[jvm]" classname="com.toutiaoyan.compose.ui.components.scrollarea.ScrollThumbMathTest" time="0.0"/>
+  <testcase name="offsetClampsStaleScrollValueAfterContentShrinks[jvm]" classname="com.toutiaoyan.compose.ui.components.scrollarea.ScrollThumbMathTest" time="0.0"/>
+  <testcase name="thumb_fraction_is_full_when_content_exactly_fills_the_viewport[jvm]" classname="com.toutiaoyan.compose.ui.components.scrollarea.ScrollThumbMathTest" time="0.0"/>
+  <testcase name="thumbCannotExceedTinyTrack[jvm]" classname="com.toutiaoyan.compose.ui.components.scrollarea.ScrollThumbMathTest" time="0.0"/>
+  <testcase name="dragging_the_full_travel_distance_reaches_exactly_maxValue[jvm]" classname="com.toutiaoyan.compose.ui.components.scrollarea.ScrollThumbMathTest" time="0.0"/>
+  <testcase name="unavailableMetricsAndInvalidDragDoNotProduceNan[jvm]" classname="com.toutiaoyan.compose.ui.components.scrollarea.ScrollThumbMathTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

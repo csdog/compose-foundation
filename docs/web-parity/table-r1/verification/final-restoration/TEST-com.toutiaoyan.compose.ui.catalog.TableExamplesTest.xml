@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TableExamplesTest[jvm]" tests="28" skipped="0" failures="0" errors="0" timestamp="2026-10-30T22:16:29.174Z" hostname="Apples-MacBook-Pro.local" time="1.894">
+  <properties/>
+  <testcase name="actionsUseRealMenusAndDismissAfterSelection[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.647"/>
+  <testcase name="rtlEnglishSelectorChangesLabelsAndDirection[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.151"/>
+  <testcase name="rtlHebrewSelectorChangesLabelsAndDirection[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.097"/>
+  <testcase name="rtlArabicUsesTranslatedRows[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.036"/>
+  <testcase name="defaultHasAllSevenInvoicesAndSourceFooter[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.036"/>
+  <testcase name="apiReferenceCallerStillRendersWithBuiltInScrolling[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.019"/>
+  <testcase name="footerRecipeHasThreeInvoicesButKeepsSourceTotal[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.025"/>
+  <testcase name="actionsUseRealMenusAndDismissAfterSelection[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.069"/>
+  <testcase name="rtlEnglishSelectorChangesLabelsAndDirection[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.079"/>
+  <testcase name="rtlHebrewSelectorChangesLabelsAndDirection[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.076"/>
+  <testcase name="rtlArabicUsesTranslatedRows[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.043"/>
+  <testcase name="defaultHasAllSevenInvoicesAndSourceFooter[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.029"/>
+  <testcase name="apiReferenceCallerStillRendersWithBuiltInScrolling[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.016"/>
+  <testcase name="footerRecipeHasThreeInvoicesButKeepsSourceTotal[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.025"/>
+  <testcase name="actionsUseRealMenusAndDismissAfterSelection[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.059"/>
+  <testcase name="rtlEnglishSelectorChangesLabelsAndDirection[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.066"/>
+  <testcase name="rtlHebrewSelectorChangesLabelsAndDirection[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.064"/>
+  <testcase name="rtlArabicUsesTranslatedRows[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.027"/>
+  <testcase name="defaultHasAllSevenInvoicesAndSourceFooter[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.025"/>
+  <testcase name="apiReferenceCallerStillRendersWithBuiltInScrolling[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.016"/>
+  <testcase name="footerRecipeHasThreeInvoicesButKeepsSourceTotal[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.019"/>
+  <testcase name="actionsUseRealMenusAndDismissAfterSelection[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.055"/>
+  <testcase name="rtlEnglishSelectorChangesLabelsAndDirection[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.064"/>
+  <testcase name="rtlHebrewSelectorChangesLabelsAndDirection[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.065"/>
+  <testcase name="rtlArabicUsesTranslatedRows[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.026"/>
+  <testcase name="defaultHasAllSevenInvoicesAndSourceFooter[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.023"/>
+  <testcase name="apiReferenceCallerStillRendersWithBuiltInScrolling[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.015"/>
+  <testcase name="footerRecipeHasThreeInvoicesButKeepsSourceTotal[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TableExamplesTest" time="0.019"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

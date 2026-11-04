@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.contentPadding
+import com.toutiaoyan.compose.ui.catalog.catalogViewportWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -16,8 +17,6 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,72 +42,9 @@ internal fun RtlPreview(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
-    val mobile = LocalWindowInfo.current.containerSize.width < with(LocalDensity.current) { 640.dp.roundToPx() }
-    val colors = currentTheme.colors
+    val mobile = catalogViewportWidth() < 640.dp
     Column(modifier.fillMaxWidth()) {
-        Row(
-            Modifier.testTag("rtl-preview-toolbar").fillMaxWidth().height(63.dp).padding(horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Select(value = labels[language], onValueChange = { onLanguageChange(labels.indexOf(it)) }) {
-                SelectTrigger(Modifier.width(144.dp), size = SelectSize.Sm, accessibilityLabel = "Preview language")
-                SelectContent { labels.forEach { SelectItem(it) } }
-            }
-            Spacer(Modifier.weight(1f))
-            Popover {
-                val infoFocus = remember { FocusRequester() }
-                PopoverTrigger {
-                    Button(
-                        onClick = toggle,
-                        variant = ButtonVariant.Ghost,
-                        size = ButtonSize.IconSm,
-                        modifier = Modifier.size(28.dp),
-                        label = "Translation information",
-                    ) {
-                        DocIcon(Lucide.CircleAlert)
-                    }
-                }
-                PopoverContent(
-                    modifier = Modifier.focusRequester(infoFocus).focusable(),
-                    align = PopupAlign.End,
-                    style =
-                        Style {
-                            width(224.dp)
-                            contentPadding(0.dp)
-                            shape(RoundedCornerShape(10.dp))
-                        },
-                ) {
-                    LaunchedEffect(Unit) { infoFocus.requestFocus() }
-                    Column(Modifier.padding(vertical = 10.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                        val notices =
-                            listOf(
-                                (
-                                    "I used AI to translate the text for demonstration purposes. " +
-                                        "It's not perfect and may contain errors."
-                                ),
-                                (
-                                    "لقد استخدمت الذكاء الاصطناعي لترجمة النص للأغراض التجريبية " +
-                                        "فقط. قد لا تكون الترجمة دقيقة وقد تحتوي على أخطاء."
-                                ),
-                                (
-                                    "השתמשתי בבינה מלאכותית כדי לתרגם את הטקסט למטרות הדגמה. זה לא " +
-                                        "מושלם ויכול להכיל שגיאות."
-                                ),
-                            )
-                        notices.forEachIndexed { index, notice ->
-                            if (index > 0) Box(Modifier.fillMaxWidth().height(1.dp).background(colors.border))
-                            Text(
-                                modifier = Modifier.padding(horizontal = 10.dp),
-                                textStyle = TextStyle(fontSize = 12.sp, lineHeight = 16.sp),
-                            ) {
-                                notice
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        Box(Modifier.fillMaxWidth().height(1.dp).background(colors.border))
+        RtlPreviewToolbar(language, labels, onLanguageChange)
         Box(
             Modifier.testTag(
                 "rtl-preview-body",
@@ -118,4 +54,77 @@ internal fun RtlPreview(
             content()
         }
     }
+}
+
+/** Shared language and translation controls; each recipe owns its preview layout. */
+@Composable
+internal fun RtlPreviewToolbar(
+    language: Int,
+    labels: List<String>,
+    onLanguageChange: (Int) -> Unit,
+) {
+    val colors = currentTheme.colors
+    Row(
+        Modifier.testTag("rtl-preview-toolbar").fillMaxWidth().height(63.dp).padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Select(value = labels[language], onValueChange = { onLanguageChange(labels.indexOf(it)) }) {
+            SelectTrigger(Modifier.width(144.dp), size = SelectSize.Sm, accessibilityLabel = "Preview language")
+            SelectContent { labels.forEach { SelectItem(it) } }
+        }
+        Spacer(Modifier.weight(1f))
+        Popover {
+            val infoFocus = remember { FocusRequester() }
+            PopoverTrigger {
+                Button(
+                    onClick = toggle,
+                    variant = ButtonVariant.Ghost,
+                    size = ButtonSize.IconSm,
+                    modifier = Modifier.size(28.dp),
+                    label = "Translation information",
+                ) {
+                    DocIcon(Lucide.CircleAlert)
+                }
+            }
+            PopoverContent(
+                modifier = Modifier.focusRequester(infoFocus).focusable(),
+                align = PopupAlign.End,
+                style =
+                    Style {
+                        width(224.dp)
+                        contentPadding(0.dp)
+                        shape(RoundedCornerShape(10.dp))
+                    },
+            ) {
+                LaunchedEffect(Unit) { infoFocus.requestFocus() }
+                Column(Modifier.padding(vertical = 10.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                    val notices =
+                        listOf(
+                            (
+                                "I used AI to translate the text for demonstration purposes. " +
+                                    "It's not perfect and may contain errors."
+                            ),
+                            (
+                                "لقد استخدمت الذكاء الاصطناعي لترجمة النص للأغراض التجريبية " +
+                                    "فقط. قد لا تكون الترجمة دقيقة وقد تحتوي على أخطاء."
+                            ),
+                            (
+                                "השתמשתי בבינה מלאכותית כדי לתרגם את הטקסט למטרות הדגמה. זה לא " +
+                                    "מושלם ויכול להכיל שגיאות."
+                            ),
+                        )
+                    notices.forEachIndexed { index, notice ->
+                        if (index > 0) Box(Modifier.fillMaxWidth().height(1.dp).background(colors.border))
+                        Text(
+                            modifier = Modifier.padding(horizontal = 10.dp),
+                            textStyle = TextStyle(fontSize = 12.sp, lineHeight = 16.sp),
+                        ) {
+                            notice
+                        }
+                    }
+                }
+            }
+        }
+    }
+    Box(Modifier.fillMaxWidth().height(1.dp).background(colors.border))
 }

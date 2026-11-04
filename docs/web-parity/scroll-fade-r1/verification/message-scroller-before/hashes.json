@@ -1,0 +1,10 @@
+[
+  {
+    "file": "message_scroller_provider_nova_light.png",
+    "sha256": "731c680bafacc063b02d96e06e68834afd28b17f7d8d3d2d772180438401f1b4"
+  },
+  {
+    "file": "message_scroller_provider_nova_dark.png",
+    "sha256": "dbaef1d4d600cba48df809967b707893b7d3eaff85e9e9563b5c1d0d4bd97b55"
+  }
+]

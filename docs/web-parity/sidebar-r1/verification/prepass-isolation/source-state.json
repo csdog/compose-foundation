@@ -1,0 +1,34 @@
+{
+  "sources": [
+    {
+      "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/sidebar/Sidebar.kt",
+      "backup": "/private/tmp/sidebar-isolation/Sidebar.kt",
+      "currentSha": "07a18be9ddc5a2d325ba1648b122cfa7620538f965210e8ad3a244be11e22490",
+      "prepassSha": "2cb1e490c700aa53e039c5cf0f2852a6f5ce20265a6b8bbc44d48c964429751c"
+    },
+    {
+      "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/sidebar/SidebarStyles.kt",
+      "backup": "/private/tmp/sidebar-isolation/SidebarStyles.kt",
+      "currentSha": "dfa4a51a0c68cf19e50befadeb8c832d5dd3086455dbb4cc1eaec4cfb291a654",
+      "prepassSha": "4bb1c9c5875561565425eb7e9e9f6938495832dba7c5b38c34e798873616eca4"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/sidebar/SidebarScreenshotTest.kt",
+      "backup": "/private/tmp/sidebar-isolation/SidebarScreenshotTest.kt",
+      "currentSha": "05381cffc3429fa3d764d79cb47272982ebd19d294ce0f975a2d847031084d65",
+      "prepassSha": "18af6e2d723db52407e2f16221e017559adbe95b997231f610b53bd0d53a0d24"
+    }
+  ],
+  "temporarilyMoved": [
+    {
+      "file": "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/sidebar/SidebarResponsiveStateTest.kt",
+      "backup": "/private/tmp/sidebar-isolation/SidebarResponsiveStateTest.kt",
+      "sha": "e693086300252e4ef672d8c44d4666bd46a4f893079488e3fe2c768faf7fa046"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/sidebar/SidebarMobileParityTest.kt",
+      "backup": "/private/tmp/sidebar-isolation/SidebarMobileParityTest.kt",
+      "sha": "1ce59013248d4d51d5c6aae8dcff9c310693d42113e547ae23e924418423fe9b"
+    }
+  ]
+}

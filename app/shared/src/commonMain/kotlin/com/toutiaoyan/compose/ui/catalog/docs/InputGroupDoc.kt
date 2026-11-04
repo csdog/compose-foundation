@@ -52,6 +52,7 @@ val inputGroupDoc =
                 ApiProperty("disabled", "Boolean", "false"),
                 ApiProperty("contentDescription", "String?", "null"),
                 ApiProperty("InputGroupAddon.align", "InputGroupAddonAlign", "InlineStart"),
+                ApiProperty("InputGroupAddon.style", "Style", "Style"),
                 ApiProperty("InputGroupButton.size", "InputGroupButtonSize", "Xs"),
             ),
         examples =

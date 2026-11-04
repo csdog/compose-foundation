@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-31",
+  "taskSpaceId": 18,
+  "result": "task space not found: 18",
+  "replacementAuthorized": false,
+  "guideVersion": "2.2.0",
+  "guideComplete": true,
+  "skill": "/Users/cscs/.agents/skills/ego-browser/SKILL.md",
+  "guideRule": "Never use a new TaskSpace to recover from a stuck, blocked, timed-out, or unexpected Page. Recover within the existing space; if it cannot continue, stop and ask the user.",
+  "browserQuadrantsVerified": false,
+  "fallback": "Official page/source text and native targeted checks; no replacement browser adopted."
+}

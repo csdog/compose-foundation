@@ -1,0 +1,46 @@
+{
+  "round": "accordion-r10",
+  "workflow": "87494f2706abf29ae7100dc29d1cc4bf",
+  "compileFailure": "Font-only draft attempted internal Theme.LocalTheme; parent fixed using public scoped Theme. Not runtime regression.",
+  "regressionRed": {
+    "tests": 4,
+    "failures": 4,
+    "actualTriggerHeight": 52,
+    "expectedTriggerHeight": 42,
+    "seconds": 12.395
+  },
+  "tightGreen": {
+    "tests": 4,
+    "failures": 0,
+    "seconds": 11.567
+  },
+  "final": {
+    "uniqueTests": 49,
+    "coreNova": 15,
+    "catalogRtl": 4,
+    "catalogFrame": 24,
+    "catalogExamples": 2,
+    "sharedBreadcrumb": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "coreKtlint": "PASS",
+    "sharedKtlint": "PASS",
+    "testsAndLintSeconds": 12.799,
+    "wasmDevelopmentDistribution": "PASS",
+    "wasmSeconds": 21.372,
+    "nativeRtlPngs": 12,
+    "inputHashesChecked": 16,
+    "inputHashesChanged": []
+  },
+  "warnings": [
+    "Existing Text.kt INVISIBLE_REFERENCE suppression",
+    "Existing experimental AGP test-suite/screenshot options",
+    "Existing Gradle10 deprecations",
+    "Development webpack1 warning"
+  ],
+  "workflowFinished": true,
+  "rawManagedLogsCleaned": true,
+  "finalInputHashesChecked": 16,
+  "finalInputHashesChanged": []
+}

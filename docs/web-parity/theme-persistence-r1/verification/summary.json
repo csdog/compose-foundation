@@ -1,0 +1,33 @@
+{
+  "round": "theme-persistence-r1",
+  "workflow": "a2b5446c82026a90ee382f74056e9482",
+  "final": {
+    "uniqueTests": 12,
+    "themePreference": 1,
+    "catalogNavigation": 6,
+    "catalogPreview": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "sharedKtlint": "PASS",
+    "webAppKtlint": "PASS",
+    "testsAndLintSeconds": 22.384,
+    "jsCompilation": "PASS",
+    "wasmDevelopmentDistribution": "PASS",
+    "webBuildSeconds": 18.809,
+    "inputHashesChecked": 5,
+    "inputHashesChanged": [],
+    "browserImagesReviewed": 10
+  },
+  "beforeEvidence": "r11 diagnostics and navigation origins reproduce memory-only theme loss on full reload. New unit test verifies new host-seed/callback API; no runtime RED claimed for nonexistent old parameters.",
+  "warnings": [
+    "Existing AGP experimental test-suite/screenshot flags",
+    "Existing Text.kt INVISIBLE_REFERENCE suppression",
+    "Gradle10 deprecations",
+    "Development webpack1 warning"
+  ],
+  "workflowFinished": true,
+  "rawManagedLogsCleaned": true,
+  "oldGoldensOrBroadGateRun": false,
+  "newCommit": false
+}

@@ -6,7 +6,7 @@ import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.contentPadding
 import androidx.compose.foundation.style.hovered
-import androidx.compose.foundation.style.focused
+import com.toutiaoyan.compose.ui.styles.focusVisible
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.tokens.StylePreset
@@ -72,7 +72,7 @@ fun BadgeVariant.rememberStyle(): Style {
                     BadgeVariant.Destructive -> {
                         background(colors.destructive.copy(alpha = if (isDark) 0.2f else 0.1f))
                         if (ring.enabled) {
-                            focused {
+                            focusVisible {
                                 dropShadow(
                                     Shadow(
                                         radius = 0.dp,

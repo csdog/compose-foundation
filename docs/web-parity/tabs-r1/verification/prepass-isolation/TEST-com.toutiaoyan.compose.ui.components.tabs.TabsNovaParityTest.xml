@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TabsNovaParityTest[jvm]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-30T22:33:41.770Z" hostname="Apples-MacBook-Pro.local" time="0.788">
+  <properties/>
+  <testcase name="nova_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsNovaParityTest" time="0.732"/>
+  <testcase name="nova_light[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsNovaParityTest" time="0.054"/>
+  <system-out><![CDATA[Roborazzi: tabs_nova_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=26240, width=328, height=80) changed:false
+Roborazzi: tabs_nova_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=26240, width=328, height=80) changed:false
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -7,14 +7,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.style.Style
+import com.toutiaoyan.compose.ui.components.button.ButtonVariant
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenu
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuCheckboxItem
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuContent
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuGroup
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuItem
-import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuItemVariant
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuLabel
-import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuPortal
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuRadioGroup
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuRadioItem
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuSeparator
@@ -22,1339 +22,732 @@ import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuSub
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuSubContent
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuSubTrigger
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuTrigger
-import com.toutiaoyan.compose.ui.components.overlay.PopupPlacement
+
+private val dropdownMenuExampleOrder =
+    listOf(
+        "Default",
+        "Basic",
+        "Submenu",
+        "Shortcuts",
+        "Icons",
+        "Checkboxes",
+        "Checkboxes Icons",
+        "Radio Group",
+        "Radio Icons",
+        "Destructive",
+        "Avatar",
+        "Complex",
+        "RTL",
+    )
 
 val dropdownMenuDoc =
     ComponentDoc(
         id = "dropdown-menu",
         title = "Dropdown Menu",
-        description = "An anchored list of actions, optionally grouped under labels and separators.",
+        description = "Displays a menu to the user — such as a set of actions or functions — triggered by a button.",
         usageCode =
             """
-            import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenu
-            import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuContent
-            import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuGroup
-            import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuItemVariant
-            import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuTrigger
+            import com.toutiaoyan.compose.ui.components.dropdownmenu.*
+            import com.toutiaoyan.compose.ui.components.button.ButtonVariant
+            import androidx.compose.foundation.style.Style
 
             var open by remember { mutableStateOf(false) }
             DropdownMenu(open = open, onOpenChange = { open = it }) {
-                DropdownMenuTrigger("Open")
-                DropdownMenuContent {
+                DropdownMenuTrigger("Open", variant = ButtonVariant.Outline)
+                DropdownMenuContent(style = Style { width(128.dp) }) {
                     DropdownMenuGroup {
                         DropdownMenuLabel("My Account")
-                        DropdownMenuSeparator()
                         DropdownMenuItem("Profile", onClick = {})
                         DropdownMenuItem("Billing", onClick = {})
+                        DropdownMenuItem("Settings", onClick = {})
                     }
                     DropdownMenuSeparator()
-                    DropdownMenuItem("Log out", onClick = {}, variant = DropdownMenuItemVariant.Destructive, shortcut = "⇧⌘Q")
+                    DropdownMenuItem("GitHub", onClick = {})
+                    DropdownMenuItem("Support", onClick = {})
+                    DropdownMenuItem("API", onClick = {}, disabled = true)
                 }
             }
             """.trimIndent(),
+        usageImportsCode =
+            """
+            import androidx.compose.foundation.Image
+            import androidx.compose.foundation.layout.*
+            import androidx.compose.foundation.shape.CircleShape
+            import androidx.compose.foundation.style.Style
+            import androidx.compose.runtime.*
+            import androidx.compose.ui.*
+            import androidx.compose.ui.graphics.*
+            import androidx.compose.ui.graphics.vector.ImageVector
+            import androidx.compose.ui.platform.LocalLayoutDirection
+            import androidx.compose.ui.text.TextStyle
+            import androidx.compose.ui.text.style.LineHeightStyle
+            import androidx.compose.ui.unit.*
+            import com.composables.icons.lucide.*
+            import com.toutiaoyan.compose.ui.components.avatar.*
+            import com.toutiaoyan.compose.ui.components.button.*
+            import com.toutiaoyan.compose.ui.components.dropdownmenu.*
+            import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
+            import com.toutiaoyan.compose.ui.components.text.Text
+            import com.toutiaoyan.compose.ui.theme.currentTheme
+            import org.jetbrains.compose.resources.painterResource
+            // For Avatar, add the photo to your drawable resources and import your generated Res.
+            """.trimIndent(),
+        examplesHeading = null,
+        compositionCode =
+            """
+            DropdownMenu
+            ├── DropdownMenuTrigger
+            └── DropdownMenuContent
+                ├── DropdownMenuGroup
+                │   ├── DropdownMenuLabel
+                │   ├── DropdownMenuItem
+                │   ├── DropdownMenuCheckboxItem
+                │   └── DropdownMenuRadioGroup → DropdownMenuRadioItem
+                ├── DropdownMenuSeparator
+                └── DropdownMenuSub
+                    ├── DropdownMenuSubTrigger
+                    └── DropdownMenuSubContent
+            """.trimIndent(),
         examples =
-            listOf(
-                ComponentExample(
-                    title = "Default",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuLabel("My Account")
-                                DropdownMenuSeparator()
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuItem("Billing", onClick = {})
-                                DropdownMenuItem("Team", onClick = {})
-                                DropdownMenuSeparator()
-                                DropdownMenuItem("Log out", onClick = {}, variant = DropdownMenuItemVariant.Destructive)
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuLabel("My Account")
-                                DropdownMenuSeparator()
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuItem("Billing", onClick = {})
-                                DropdownMenuItem("Team", onClick = {})
-                                DropdownMenuSeparator()
-                                DropdownMenuItem("Log out", onClick = {}, variant = DropdownMenuItemVariant.Destructive)
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Checkboxes",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        var showStatus by remember { mutableStateOf(true) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("View")
-                            DropdownMenuContent {
-                                DropdownMenuLabel("Appearance")
-                                DropdownMenuSeparator()
-                                DropdownMenuCheckboxItem("Status Bar", checked = showStatus) {
-                                    showStatus = it
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        var showStatus by remember { mutableStateOf(true) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("View")
-                            DropdownMenuContent {
-                                DropdownMenuLabel("Appearance")
-                                DropdownMenuSeparator()
-                                DropdownMenuCheckboxItem(
-                                    label = "Status Bar",
-                                    checked = showStatus,
-                                    onCheckedChange = { showStatus = it },
-                                )
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Radio group",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        var panel by remember { mutableStateOf("bottom") }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Panel")
-                            DropdownMenuContent {
-                                DropdownMenuLabel("Panel Position")
-                                DropdownMenuSeparator()
-                                DropdownMenuRadioGroup(value = panel, onValueChange = { panel = it }) {
-                                    DropdownMenuRadioItem(value = "top", label = "Top")
-                                    DropdownMenuRadioItem(value = "bottom", label = "Bottom")
-                                    DropdownMenuRadioItem(value = "right", label = "Right")
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        var panel by remember { mutableStateOf("bottom") }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Panel")
-                            DropdownMenuContent {
-                                DropdownMenuLabel("Panel Position")
-                                DropdownMenuSeparator()
-                                DropdownMenuRadioGroup(value = panel, onValueChange = { panel = it }) {
-                                    DropdownMenuRadioItem(value = "top", label = "Top")
-                                    DropdownMenuRadioItem(value = "bottom", label = "Bottom")
-                                    DropdownMenuRadioItem(value = "right", label = "Right")
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Submenu",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuSub {
-                                    DropdownMenuSubTrigger("More")
-                                    DropdownMenuSubContent {
-                                        DropdownMenuItem("Save", onClick = {})
-                                        DropdownMenuItem("Export", onClick = {})
+            (
+                listOf(
+                    ComponentExample(
+                        title = "Default",
+                        code =
+                            """
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("Open", variant = ButtonVariant.Outline)
+                                DropdownMenuContent(style = Style { width(160.dp) }) {
+                                    DropdownMenuGroup {
+                                        DropdownMenuLabel("My Account")
+                                        DropdownMenuItem("Profile", onClick = {}, shortcut = "⇧⌘P")
+                                        DropdownMenuItem("Billing", onClick = {}, shortcut = "⌘B")
+                                        DropdownMenuItem("Settings", onClick = {}, shortcut = "⌘S")
+                                    }
+                                    DropdownMenuSeparator()
+                                    DropdownMenuGroup {
+                                        DropdownMenuItem("Team", onClick = {})
+                                        DropdownMenuSub {
+                                            DropdownMenuSubTrigger("Invite users")
+                                            DropdownMenuSubContent(style = Style { width(96.dp) }) {
+                                                DropdownMenuItem("Email", onClick = {})
+                                                DropdownMenuItem("Message", onClick = {})
+                                                DropdownMenuSeparator()
+                                                DropdownMenuItem("More...", onClick = {})
+                                            }
+                                        }
+                                        DropdownMenuItem("New Team", onClick = {}, shortcut = "⌘+T")
+                                    }
+                                    DropdownMenuSeparator()
+                                    DropdownMenuGroup {
+                                        DropdownMenuItem("GitHub", onClick = {})
+                                        DropdownMenuItem("Support", onClick = {})
+                                        DropdownMenuItem("API", onClick = {}, disabled = true)
+                                    }
+                                    DropdownMenuSeparator()
+                                    DropdownMenuGroup {
+                                        DropdownMenuItem("Log out", onClick = {}, shortcut = "⇧⌘Q")
                                     }
                                 }
                             }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuSub {
-                                    DropdownMenuSubTrigger("More")
-                                    DropdownMenuSubContent {
-                                        DropdownMenuItem("Save", onClick = {})
-                                        DropdownMenuItem("Export", onClick = {})
+                            """.trimIndent(),
+                        preview = {
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("Open", variant = ButtonVariant.Outline)
+                                DropdownMenuContent(style = Style { width(160.dp) }) {
+                                    DropdownMenuGroup {
+                                        DropdownMenuLabel("My Account")
+                                        DropdownMenuItem("Profile", onClick = {}, shortcut = "⇧⌘P")
+                                        DropdownMenuItem("Billing", onClick = {}, shortcut = "⌘B")
+                                        DropdownMenuItem("Settings", onClick = {}, shortcut = "⌘S")
+                                    }
+                                    DropdownMenuSeparator()
+                                    DropdownMenuGroup {
+                                        DropdownMenuItem("Team", onClick = {})
+                                        DropdownMenuSub {
+                                            DropdownMenuSubTrigger("Invite users")
+                                            DropdownMenuSubContent(style = Style { width(96.dp) }) {
+                                                DropdownMenuItem("Email", onClick = {})
+                                                DropdownMenuItem("Message", onClick = {})
+                                                DropdownMenuSeparator()
+                                                DropdownMenuItem("More...", onClick = {})
+                                            }
+                                        }
+                                        DropdownMenuItem("New Team", onClick = {}, shortcut = "⌘+T")
+                                    }
+                                    DropdownMenuSeparator()
+                                    DropdownMenuGroup {
+                                        DropdownMenuItem("GitHub", onClick = {})
+                                        DropdownMenuItem("Support", onClick = {})
+                                        DropdownMenuItem("API", onClick = {}, disabled = true)
+                                    }
+                                    DropdownMenuSeparator()
+                                    DropdownMenuGroup {
+                                        DropdownMenuItem("Log out", onClick = {}, shortcut = "⇧⌘Q")
                                     }
                                 }
                             }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Inset",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        var showStatus by remember { mutableStateOf(true) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("View")
-                            DropdownMenuContent {
-                                DropdownMenuLabel("Appearance", inset = true)
-                                DropdownMenuSeparator()
-                                DropdownMenuCheckboxItem("Status Bar", checked = showStatus) {
-                                    showStatus = it
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Basic",
+                        descriptionMarkdown = "A basic dropdown menu with labels and separators.",
+                        code =
+                            """
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("Open", variant = ButtonVariant.Outline)
+                                DropdownMenuContent(style = Style { width(128.dp) }) {
+                                    DropdownMenuGroup {
+                                        DropdownMenuLabel("My Account")
+                                        DropdownMenuItem("Profile", onClick = {})
+                                        DropdownMenuItem("Billing", onClick = {})
+                                        DropdownMenuItem("Settings", onClick = {})
+                                    }
+                                    DropdownMenuSeparator()
+                                    DropdownMenuItem("GitHub", onClick = {})
+                                    DropdownMenuItem("Support", onClick = {})
+                                    DropdownMenuItem("API", onClick = {}, disabled = true)
                                 }
-                                DropdownMenuItem("Reset", onClick = {}, inset = true)
                             }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        var showStatus by remember { mutableStateOf(true) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("View")
-                            DropdownMenuContent {
-                                DropdownMenuLabel("Appearance", inset = true)
-                                DropdownMenuSeparator()
-                                DropdownMenuCheckboxItem(
-                                    label = "Status Bar",
-                                    checked = showStatus,
-                                    onCheckedChange = { showStatus = it },
-                                )
-                                DropdownMenuItem("Reset", onClick = {}, inset = true)
+                            """.trimIndent(),
+                        preview = {
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("Open", variant = ButtonVariant.Outline)
+                                DropdownMenuContent(style = Style { width(128.dp) }) {
+                                    DropdownMenuGroup {
+                                        DropdownMenuLabel("My Account")
+                                        DropdownMenuItem("Profile", onClick = {})
+                                        DropdownMenuItem("Billing", onClick = {})
+                                        DropdownMenuItem("Settings", onClick = {})
+                                    }
+                                    DropdownMenuSeparator()
+                                    DropdownMenuItem("GitHub", onClick = {})
+                                    DropdownMenuItem("Support", onClick = {})
+                                    DropdownMenuItem("API", onClick = {}, disabled = true)
+                                }
                             }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default inset",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("View")
-                            DropdownMenuContent {
-                                DropdownMenuLabel("Appearance", inset = false)
-                                DropdownMenuItem("Reset", onClick = {}, inset = false)
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Submenu",
+                        descriptionMarkdown = "Use DropdownMenuSub to nest secondary actions.",
+                        code =
+                            """
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("Open", variant = ButtonVariant.Outline)
+                                DropdownMenuContent(style = Style { width(128.dp) }) {
+                                    DropdownMenuGroup {
+                                        DropdownMenuItem("Team", onClick = {})
+                                        DropdownMenuSub {
+                                            DropdownMenuSubTrigger("Invite users")
+                                            DropdownMenuSubContent(style = Style { width(128.dp) }) {
+                                                DropdownMenuItem("Email", onClick = {})
+                                                DropdownMenuItem("Message", onClick = {})
+                                                DropdownMenuSub {
+                                                    DropdownMenuSubTrigger("More options")
+                                                    DropdownMenuSubContent(style = Style { width(96.dp) }) {
+                                                        DropdownMenuItem("Calendly", onClick = {})
+                                                        DropdownMenuItem("Slack", onClick = {})
+                                                        DropdownMenuSeparator()
+                                                        DropdownMenuItem("Webhook", onClick = {})
+                                                    }
+                                                }
+                                                DropdownMenuSeparator()
+                                                DropdownMenuItem("Advanced...", onClick = {})
+                                            }
+                                        }
+                                        DropdownMenuItem("New Team", onClick = {}, shortcut = "⌘+T")
+                                    }
+                                }
                             }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("View")
-                            DropdownMenuContent {
-                                DropdownMenuLabel("Appearance", inset = false)
-                                DropdownMenuItem("Reset", onClick = {}, inset = false)
+                            """.trimIndent(),
+                        preview = {
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("Open", variant = ButtonVariant.Outline)
+                                DropdownMenuContent(style = Style { width(128.dp) }) {
+                                    DropdownMenuGroup {
+                                        DropdownMenuItem("Team", onClick = {})
+                                        DropdownMenuSub {
+                                            DropdownMenuSubTrigger("Invite users")
+                                            DropdownMenuSubContent(style = Style { width(128.dp) }) {
+                                                DropdownMenuItem("Email", onClick = {})
+                                                DropdownMenuItem("Message", onClick = {})
+                                                DropdownMenuSub {
+                                                    DropdownMenuSubTrigger("More options")
+                                                    DropdownMenuSubContent(style = Style { width(96.dp) }) {
+                                                        DropdownMenuItem("Calendly", onClick = {})
+                                                        DropdownMenuItem("Slack", onClick = {})
+                                                        DropdownMenuSeparator()
+                                                        DropdownMenuItem("Webhook", onClick = {})
+                                                    }
+                                                }
+                                                DropdownMenuSeparator()
+                                                DropdownMenuItem("Advanced...", onClick = {})
+                                            }
+                                        }
+                                        DropdownMenuItem("New Team", onClick = {}, shortcut = "⌘+T")
+                                    }
+                                }
                             }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Shortcuts",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {}, shortcut = "⇧⌘P")
-                                DropdownMenuItem("Billing", onClick = {}, shortcut = "⌘B")
-                                DropdownMenuSeparator()
-                                DropdownMenuItem("Log out", onClick = {}, shortcut = "⇧⌘Q", destructive = true)
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Shortcuts",
+                        descriptionMarkdown = "Add DropdownMenuShortcut to show keyboard hints.",
+                        code =
+                            """
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("Open", variant = ButtonVariant.Outline)
+                                DropdownMenuContent(style = Style { width(128.dp) }) {
+                                    DropdownMenuGroup {
+                                        DropdownMenuLabel("My Account")
+                                        DropdownMenuItem("Profile", onClick = {}, shortcut = "⇧⌘P")
+                                        DropdownMenuItem("Billing", onClick = {}, shortcut = "⌘B")
+                                        DropdownMenuItem("Settings", onClick = {}, shortcut = "⌘S")
+                                    }
+                                    DropdownMenuSeparator()
+                                    DropdownMenuItem("Log out", onClick = {}, shortcut = "⇧⌘Q")
+                                }
                             }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {}, shortcut = "⇧⌘P")
-                                DropdownMenuItem("Billing", onClick = {}, shortcut = "⌘B")
-                                DropdownMenuSeparator()
-                                DropdownMenuItem("Log out", onClick = {}, shortcut = "⇧⌘Q", destructive = true)
+                            """.trimIndent(),
+                        preview = {
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("Open", variant = ButtonVariant.Outline)
+                                DropdownMenuContent(style = Style { width(128.dp) }) {
+                                    DropdownMenuGroup {
+                                        DropdownMenuLabel("My Account")
+                                        DropdownMenuItem("Profile", onClick = {}, shortcut = "⇧⌘P")
+                                        DropdownMenuItem("Billing", onClick = {}, shortcut = "⌘B")
+                                        DropdownMenuItem("Settings", onClick = {}, shortcut = "⌘S")
+                                    }
+                                    DropdownMenuSeparator()
+                                    DropdownMenuItem("Log out", onClick = {}, shortcut = "⇧⌘Q")
+                                }
                             }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default destructive",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {}, destructive = false)
-                                DropdownMenuItem("Billing", onClick = {}, destructive = false)
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Checkboxes",
+                        descriptionMarkdown = "Use DropdownMenuCheckboxItem for toggles.",
+                        code =
+                            """
+                            var showStatus by remember { mutableStateOf(true) }
+                            var showActivity by remember { mutableStateOf(false) }
+                            var showPanel by remember { mutableStateOf(false) }
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("Open", variant = ButtonVariant.Outline)
+                                DropdownMenuContent(style = Style { width(160.dp) }) {
+                                    DropdownMenuGroup {
+                                        DropdownMenuLabel("Appearance")
+                                        DropdownMenuCheckboxItem("Status Bar", checked = showStatus, onCheckedChange = { showStatus = it })
+                                        DropdownMenuCheckboxItem("Activity Bar", checked = showActivity, disabled = true, onCheckedChange = { showActivity = it })
+                                        DropdownMenuCheckboxItem("Panel", checked = showPanel, onCheckedChange = { showPanel = it })
+                                    }
+                                }
                             }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {}, destructive = false)
-                                DropdownMenuItem("Billing", onClick = {}, destructive = false)
+                            """.trimIndent(),
+                        preview = {
+                            var showStatus by remember { mutableStateOf(true) }
+                            var showActivity by remember { mutableStateOf(false) }
+                            var showPanel by remember { mutableStateOf(false) }
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("Open", variant = ButtonVariant.Outline)
+                                DropdownMenuContent(style = Style { width(160.dp) }) {
+                                    DropdownMenuGroup {
+                                        DropdownMenuLabel("Appearance")
+                                        DropdownMenuCheckboxItem(
+                                            "Status Bar",
+                                            checked =
+                                            showStatus,
+                                            onCheckedChange =
+                                                {
+                                                    showStatus =
+                                                        it
+                                                },
+                                        )
+                                        DropdownMenuCheckboxItem(
+                                            "Activity Bar",
+                                            checked =
+                                            showActivity,
+                                            disabled =
+                                            true,
+                                            onCheckedChange =
+                                                {
+                                                    showActivity =
+                                                        it
+                                                },
+                                        )
+                                        DropdownMenuCheckboxItem(
+                                            "Panel",
+                                            checked =
+                                            showPanel,
+                                            onCheckedChange =
+                                                {
+                                                    showPanel =
+                                                        it
+                                                },
+                                        )
+                                    }
+                                }
                             }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default variant",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {}, variant = DropdownMenuItemVariant.Default)
-                                DropdownMenuItem("Billing", onClick = {}, variant = DropdownMenuItemVariant.Default)
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Radio Group",
+                        descriptionMarkdown = "Use DropdownMenuRadioGroup for exclusive choices.",
+                        code =
+                            """
+                            var panel by remember { mutableStateOf("bottom") }
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("Open", variant = ButtonVariant.Outline)
+                                DropdownMenuContent(style = Style { width(128.dp) }) {
+                                    DropdownMenuGroup {
+                                        DropdownMenuLabel("Panel Position")
+                                        DropdownMenuRadioGroup(value = panel, onValueChange = { panel = it }) {
+                                            DropdownMenuRadioItem(value = "top", label = "Top")
+                                            DropdownMenuRadioItem(value = "bottom", label = "Bottom")
+                                            DropdownMenuRadioItem(value = "right", label = "Right")
+                                        }
+                                    }
+                                }
                             }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {}, variant = DropdownMenuItemVariant.Default)
-                                DropdownMenuItem("Billing", onClick = {}, variant = DropdownMenuItemVariant.Default)
+                            """.trimIndent(),
+                        preview = {
+                            var panel by remember { mutableStateOf("bottom") }
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("Open", variant = ButtonVariant.Outline)
+                                DropdownMenuContent(style = Style { width(128.dp) }) {
+                                    DropdownMenuGroup {
+                                        DropdownMenuLabel("Panel Position")
+                                        DropdownMenuRadioGroup(value = panel, onValueChange = { panel = it }) {
+                                            DropdownMenuRadioItem(value = "top", label = "Top")
+                                            DropdownMenuRadioItem(value = "bottom", label = "Bottom")
+                                            DropdownMenuRadioItem(value = "right", label = "Right")
+                                        }
+                                    }
+                                }
                             }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Disabled",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {})
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Inset",
+                        code =
+                            """
+                            var open by remember { mutableStateOf(false) }
+                            var showStatus by remember { mutableStateOf(true) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("View")
+                                DropdownMenuContent {
+                                    DropdownMenuLabel("Appearance", inset = true)
+                                    DropdownMenuSeparator()
+                                    DropdownMenuCheckboxItem("Status Bar", checked = showStatus) {
+                                        showStatus = it
+                                    }
+                                    DropdownMenuItem("Reset", onClick = {}, inset = true)
+                                }
+                            }
+                            """.trimIndent(),
+                        preview = {
+                            var open by remember { mutableStateOf(false) }
+                            var showStatus by remember { mutableStateOf(true) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("View")
+                                DropdownMenuContent {
+                                    DropdownMenuLabel("Appearance", inset = true)
+                                    DropdownMenuSeparator()
+                                    DropdownMenuCheckboxItem(
+                                        label = "Status Bar",
+                                        checked = showStatus,
+                                        onCheckedChange = { showStatus = it },
+                                    )
+                                    DropdownMenuItem("Reset", onClick = {}, inset = true)
+                                }
+                            }
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Disabled",
+                        code =
+                            """
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("Open")
+                                DropdownMenuContent {
+                                    DropdownMenuItem("Profile", onClick = {})
+                                        DropdownMenuItem("Billing", onClick = {}, disabled = true)
+                                    DropdownMenuItem("Team", onClick = {})
+                                }
+                            }
+                            """.trimIndent(),
+                        preview = {
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("Open")
+                                DropdownMenuContent {
+                                    DropdownMenuItem("Profile", onClick = {})
                                     DropdownMenuItem("Billing", onClick = {}, disabled = true)
-                                DropdownMenuItem("Team", onClick = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuItem("Billing", onClick = {}, disabled = true)
-                                DropdownMenuItem("Team", onClick = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default disabled",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {}, disabled = false)
-                                DropdownMenuItem("Billing", onClick = {}, disabled = false)
-                                DropdownMenuItem("Team", onClick = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {}, disabled = false)
-                                DropdownMenuItem("Billing", onClick = {}, disabled = false)
-                                DropdownMenuItem("Team", onClick = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Non-modal",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }, modal = false) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuItem("Billing", onClick = {})
-                                DropdownMenuItem("Team", onClick = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }, modal = false) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuItem("Billing", onClick = {})
-                                DropdownMenuItem("Team", onClick = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Modal",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }, modal = true) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }, modal = true) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default modal",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }, modal = true) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }, modal = true) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Non-dismissible",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent(dismissOnClickOutside = false) {
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuItem("Billing", onClick = {})
-                                DropdownMenuItem("Team", onClick = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent(dismissOnClickOutside = false) {
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuItem("Billing", onClick = {})
-                                DropdownMenuItem("Team", onClick = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default dismiss",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent(dismissOnClickOutside = true) {
-                                DropdownMenuItem("Profile", onClick = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent(dismissOnClickOutside = true) {
-                                DropdownMenuItem("Profile", onClick = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Group heading",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuGroup(heading = "My Account") {
-                                    DropdownMenuItem("Profile", onClick = {})
-                                    DropdownMenuItem("Billing", onClick = {})
+                                    DropdownMenuItem("Team", onClick = {})
                                 }
                             }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuGroup(heading = "My Account") {
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Non-modal",
+                        code =
+                            """
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }, modal = false) {
+                                DropdownMenuTrigger("Open")
+                                DropdownMenuContent {
                                     DropdownMenuItem("Profile", onClick = {})
                                     DropdownMenuItem("Billing", onClick = {})
+                                    DropdownMenuItem("Team", onClick = {})
                                 }
                             }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Content side",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent(side = PopupPlacement.Top) {
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuItem("Billing", onClick = {})
+                            """.trimIndent(),
+                        preview = {
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }, modal = false) {
+                                DropdownMenuTrigger("Open")
+                                DropdownMenuContent {
+                                    DropdownMenuItem("Profile", onClick = {})
+                                    DropdownMenuItem("Billing", onClick = {})
+                                    DropdownMenuItem("Team", onClick = {})
+                                }
                             }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent(side = PopupPlacement.Top) {
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuItem("Billing", onClick = {})
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Non-dismissible",
+                        code =
+                            """
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("Open")
+                                DropdownMenuContent(dismissOnClickOutside = false) {
+                                    DropdownMenuItem("Profile", onClick = {})
+                                    DropdownMenuItem("Billing", onClick = {})
+                                    DropdownMenuItem("Team", onClick = {})
+                                }
                             }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Placement",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent(placement = PopupPlacement.Top) {
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuItem("Billing", onClick = {})
+                            """.trimIndent(),
+                        preview = {
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("Open")
+                                DropdownMenuContent(dismissOnClickOutside = false) {
+                                    DropdownMenuItem("Profile", onClick = {})
+                                    DropdownMenuItem("Billing", onClick = {})
+                                    DropdownMenuItem("Team", onClick = {})
+                                }
                             }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent(placement = PopupPlacement.Top) {
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuItem("Billing", onClick = {})
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Indeterminate checkbox",
+                        code =
+                            """
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("View")
+                                DropdownMenuContent {
+                                    DropdownMenuCheckboxItem(
+                                        "Select all",
+                                        checked = false,
+                                        indeterminate = true,
+                                        onCheckedChange = {},
+                                    )
+                                }
                             }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default side",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent(side = PopupPlacement.Bottom) {
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuItem("Billing", onClick = {})
+                            """.trimIndent(),
+                        preview = {
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("View")
+                                DropdownMenuContent {
+                                    DropdownMenuCheckboxItem(
+                                        "Select all",
+                                        checked = false,
+                                        indeterminate = true,
+                                        onCheckedChange = {},
+                                    )
+                                }
                             }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent(side = PopupPlacement.Bottom) {
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuItem("Billing", onClick = {})
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Keep open on select",
+                        code =
+                            """
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("Open")
+                                DropdownMenuContent {
+                                    DropdownMenuItem("Stay open", onClick = {}, onSelect = { true })
+                                    DropdownMenuItem("Close", onClick = {})
+                                }
                             }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default placement",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent(placement = PopupPlacement.Bottom) {
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuItem("Billing", onClick = {})
+                            """.trimIndent(),
+                        preview = {
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("Open")
+                                DropdownMenuContent {
+                                    DropdownMenuItem("Stay open", onClick = {}, onSelect = { true })
+                                    DropdownMenuItem("Close", onClick = {})
+                                }
                             }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent(placement = PopupPlacement.Bottom) {
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuItem("Billing", onClick = {})
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Prevent checkbox toggle",
+                        code =
+                            """
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("View")
+                                DropdownMenuContent {
+                                    DropdownMenuCheckboxItem(
+                                        "Locked option",
+                                        checked = true,
+                                        onCheckedChange = {},
+                                        onSelect = { true },
+                                    )
+                                }
                             }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Indeterminate checkbox",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("View")
-                            DropdownMenuContent {
-                                DropdownMenuCheckboxItem(
-                                    "Select all",
-                                    checked = false,
-                                    indeterminate = true,
-                                    onCheckedChange = {},
-                                )
+                            """.trimIndent(),
+                        preview = {
+                            var open by remember { mutableStateOf(false) }
+                            DropdownMenu(open = open, onOpenChange = { open = it }) {
+                                DropdownMenuTrigger("View")
+                                DropdownMenuContent {
+                                    DropdownMenuCheckboxItem(
+                                        "Locked option",
+                                        checked = true,
+                                        onCheckedChange = {},
+                                        onSelect = { true },
+                                    )
+                                }
                             }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("View")
-                            DropdownMenuContent {
-                                DropdownMenuCheckboxItem(
-                                    "Select all",
-                                    checked = false,
-                                    indeterminate = true,
-                                    onCheckedChange = {},
-                                )
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default indeterminate",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("View")
-                            DropdownMenuContent {
-                                DropdownMenuCheckboxItem(
-                                    "Status Bar",
-                                    checked = false,
-                                    indeterminate = false,
-                                    onCheckedChange = {},
-                                )
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("View")
-                            DropdownMenuContent {
-                                DropdownMenuCheckboxItem(
-                                    "Status Bar",
-                                    checked = false,
-                                    indeterminate = false,
-                                    onCheckedChange = {},
-                                )
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Keep open on select",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Stay open", onClick = {}, onSelect = { true })
-                                DropdownMenuItem("Close", onClick = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Stay open", onClick = {}, onSelect = { true })
-                                DropdownMenuItem("Close", onClick = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Prevent checkbox toggle",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("View")
-                            DropdownMenuContent {
-                                DropdownMenuCheckboxItem(
-                                    "Locked option",
-                                    checked = true,
-                                    onCheckedChange = {},
-                                    onSelect = { true },
-                                )
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("View")
-                            DropdownMenuContent {
-                                DropdownMenuCheckboxItem(
-                                    "Locked option",
-                                    checked = true,
-                                    onCheckedChange = {},
-                                    onSelect = { true },
-                                )
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Custom text value",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("⌘N", onClick = {}, textValue = "New file")
-                                DropdownMenuItem("⌘O", onClick = {}, textValue = "Open file")
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("⌘N", onClick = {}, textValue = "New file")
-                                DropdownMenuItem("⌘O", onClick = {}, textValue = "Open file")
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Abbreviated text value",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("sm", onClick = {}, textValue = "Small")
-                                DropdownMenuItem("md", onClick = {}, textValue = "Medium")
-                                DropdownMenuItem("lg", onClick = {}, textValue = "Large")
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("sm", onClick = {}, textValue = "Small")
-                                DropdownMenuItem("md", onClick = {}, textValue = "Medium")
-                                DropdownMenuItem("lg", onClick = {}, textValue = "Large")
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Checkbox text value",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("View")
-                            DropdownMenuContent {
-                                DropdownMenuCheckboxItem(
-                                    "sm",
-                                    checked = true,
-                                    onCheckedChange = {},
-                                    textValue = "Small",
-                                )
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        DropdownMenu(open = open, onOpenChange = { open = it }) {
-                            DropdownMenuTrigger("View")
-                            DropdownMenuContent {
-                                DropdownMenuCheckboxItem(
-                                    "sm",
-                                    checked = true,
-                                    onCheckedChange = {},
-                                    textValue = "Small",
-                                )
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Uncontrolled",
-                    code =
-                        """
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuItem("Log out", onClick = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuItem("Log out", onClick = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default open",
-                    code =
-                        """
-                        DropdownMenu(defaultOpen = false) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        DropdownMenu(defaultOpen = false) {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Portal",
-                    code =
-                        """
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuPortal {
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Uncontrolled",
+                        code =
+                            """
+                            DropdownMenu {
+                                DropdownMenuTrigger("Open")
                                 DropdownMenuContent {
                                     DropdownMenuItem("Profile", onClick = {})
                                     DropdownMenuItem("Log out", onClick = {})
                                 }
                             }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuPortal {
+                            """.trimIndent(),
+                        preview = {
+                            DropdownMenu {
+                                DropdownMenuTrigger("Open")
                                 DropdownMenuContent {
                                     DropdownMenuItem("Profile", onClick = {})
                                     DropdownMenuItem("Log out", onClick = {})
                                 }
                             }
-                        }
-                    },
+                        },
+                    ),
+                ) + dropdownMenuAdditionalExamples
+            ).sortedBy {
+                val index = dropdownMenuExampleOrder.indexOf(it.title)
+                if (index < 0) dropdownMenuExampleOrder.size else index
+            },
+        apiSections =
+            listOf(
+                ComponentApiSection(
+                    "DropdownMenu",
+                    "Controlled or local open state and modal input policy.",
+                    listOf(
+                        ApiProperty("open / defaultOpen", "Boolean? / Boolean", "null / false"),
+                        ApiProperty("onOpenChange", "((Boolean) -> Unit)?", "null"),
+                        ApiProperty("modal", "Boolean", "true"),
+                        ApiProperty("modifier", "Modifier", "Modifier"),
+                    ),
                 ),
-                ComponentExample(
-                    title = "Label",
-                    code =
-                        """
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuLabel("My Account")
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuItem("Billing", onClick = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuLabel("My Account")
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuItem("Billing", onClick = {})
-                            }
-                        }
-                    },
+                ComponentApiSection(
+                    "DropdownMenuContent / SubContent",
+                    "Positioned, height-bounded scrollable panels.",
+                    listOf(
+                        ApiProperty(
+                            "placement / side",
+                            "PopupPlacement / PopupPlacement?",
+                            "Bottom / null (root); End / null (sub)",
+                        ),
+                        ApiProperty("sideOffset", "Dp", "4.dp (root); 0.dp (sub)"),
+                        ApiProperty(
+                            "align / alignOffset",
+                            "PopupAlign / Dp",
+                            "Start / 0.dp (root); Start / -3.dp (sub)",
+                        ),
+                        ApiProperty("dismissOnClickOutside", "Boolean", "true"),
+                        ApiProperty("enter / exit", "EnterTransition / ExitTransition", "PopupTransitions"),
+                        ApiProperty("modifier / style", "Modifier / Style", "Default"),
+                    ),
                 ),
-                ComponentExample(
-                    title = "Separator",
-                    code =
-                        """
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuSeparator()
-                                DropdownMenuItem("Log out", onClick = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuSeparator()
-                                DropdownMenuItem("Log out", onClick = {})
-                            }
-                        }
-                    },
+                ComponentApiSection(
+                    "Items and submenu triggers",
+                    (
+                        "Labels own their semantics; optional leadingContent owns " +
+                            "visuals."
+                    ),
+                    listOf(
+                        ApiProperty("label / textValue", "String / String?", "Required / null"),
+                        ApiProperty(
+                            "leadingContent",
+                            "(@Composable () -> Unit)?",
+                            "null on checkbox, radio and sub trigger",
+                        ),
+                        ApiProperty("enabled / disabled", "Boolean / Boolean", "true / false"),
+                        ApiProperty("checked / onCheckedChange", "Boolean / (Boolean) -> Unit", "Required on checkbox"),
+                        ApiProperty("value / onValueChange", "String / (String) -> Unit", "Required on radio group"),
+                        ApiProperty("onSelect", "(() -> Boolean)?", "null; return true to prevent selection"),
+                        ApiProperty("inset / indeterminate", "Boolean", "false where supported"),
+                        ApiProperty(
+                            "shortcut / variant",
+                            "String? / DropdownMenuItemVariant",
+                            "null / Default on plain item",
+                        ),
+                        ApiProperty("style", "Style", "Style"),
+                    ),
                 ),
-                ComponentExample(
-                    title = "Shortcut",
-                    code =
-                        """
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Print", onClick = {}, shortcut = "⌘P")
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Print", onClick = {}, shortcut = "⌘P")
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Group",
-                    code =
-                        """
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuGroup {
-                                    DropdownMenuItem("Profile", onClick = {})
-                                    DropdownMenuItem("Billing", onClick = {})
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuGroup {
-                                    DropdownMenuItem("Profile", onClick = {})
-                                    DropdownMenuItem("Billing", onClick = {})
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Trigger",
-                    code =
-                        """
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Content",
-                    code =
-                        """
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuItem("Billing", onClick = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {})
-                                DropdownMenuItem("Billing", onClick = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Side offset",
-                    code =
-                        """
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent(sideOffset = 4.dp) {
-                                DropdownMenuItem("Profile", onClick = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent(sideOffset = 4.dp) {
-                                DropdownMenuItem("Profile", onClick = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default side offset",
-                    code =
-                        """
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent(sideOffset = 4.dp) {
-                                DropdownMenuItem("Profile", onClick = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent(sideOffset = 4.dp) {
-                                DropdownMenuItem("Profile", onClick = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Item",
-                    code =
-                        """
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuItem("Profile", onClick = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Checkbox item",
-                    code =
-                        """
-                        var showStatus by remember { mutableStateOf(true) }
-                        DropdownMenu {
-                            DropdownMenuTrigger("View")
-                            DropdownMenuContent {
-                                DropdownMenuCheckboxItem("Status Bar", checked = showStatus) {
-                                    showStatus = it
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var showStatus by remember { mutableStateOf(true) }
-                        DropdownMenu {
-                            DropdownMenuTrigger("View")
-                            DropdownMenuContent {
-                                DropdownMenuCheckboxItem(
-                                    label = "Status Bar",
-                                    checked = showStatus,
-                                    onCheckedChange = { showStatus = it },
-                                )
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Radio item",
-                    code =
-                        """
-                        var panel by remember { mutableStateOf("bottom") }
-                        DropdownMenu {
-                            DropdownMenuTrigger("Panel")
-                            DropdownMenuContent {
-                                DropdownMenuRadioGroup(value = panel, onValueChange = { panel = it }) {
-                                    DropdownMenuRadioItem(value = "bottom", label = "Bottom")
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var panel by remember { mutableStateOf("bottom") }
-                        DropdownMenu {
-                            DropdownMenuTrigger("Panel")
-                            DropdownMenuContent {
-                                DropdownMenuRadioGroup(value = panel, onValueChange = { panel = it }) {
-                                    DropdownMenuRadioItem(value = "bottom", label = "Bottom")
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Sub",
-                    code =
-                        """
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuSub {
-                                    DropdownMenuSubTrigger("More")
-                                    DropdownMenuSubContent {
-                                        DropdownMenuItem("Save", onClick = {})
-                                    }
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuSub {
-                                    DropdownMenuSubTrigger("More")
-                                    DropdownMenuSubContent {
-                                        DropdownMenuItem("Save", onClick = {})
-                                    }
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Sub trigger",
-                    code =
-                        """
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuSub {
-                                    DropdownMenuSubTrigger("More")
-                                    DropdownMenuSubContent {
-                                        DropdownMenuItem("Save", onClick = {})
-                                    }
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuSub {
-                                    DropdownMenuSubTrigger("More")
-                                    DropdownMenuSubContent {
-                                        DropdownMenuItem("Save", onClick = {})
-                                    }
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Sub content",
-                    code =
-                        """
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuSub {
-                                    DropdownMenuSubTrigger("More")
-                                    DropdownMenuSubContent {
-                                        DropdownMenuItem("Save", onClick = {})
-                                        DropdownMenuItem("Export", onClick = {})
-                                    }
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuSub {
-                                    DropdownMenuSubTrigger("More")
-                                    DropdownMenuSubContent {
-                                        DropdownMenuItem("Save", onClick = {})
-                                        DropdownMenuItem("Export", onClick = {})
-                                    }
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Sub side offset",
-                    code =
-                        """
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuSub {
-                                    DropdownMenuSubTrigger("More")
-                                    DropdownMenuSubContent(sideOffset = 4.dp) {
-                                        DropdownMenuItem("Save", onClick = {})
-                                    }
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuSub {
-                                    DropdownMenuSubTrigger("More")
-                                    DropdownMenuSubContent(sideOffset = 4.dp) {
-                                        DropdownMenuItem("Save", onClick = {})
-                                    }
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default sub side offset",
-                    code =
-                        """
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuSub {
-                                    DropdownMenuSubTrigger("More")
-                                    DropdownMenuSubContent(sideOffset = 4.dp) {
-                                        DropdownMenuItem("Save", onClick = {})
-                                    }
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuSub {
-                                    DropdownMenuSubTrigger("More")
-                                    DropdownMenuSubContent(sideOffset = 4.dp) {
-                                        DropdownMenuItem("Save", onClick = {})
-                                    }
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default sub placement",
-                    code =
-                        """
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuSub {
-                                    DropdownMenuSubTrigger("More")
-                                    DropdownMenuSubContent(placement = PopupPlacement.End) {
-                                        DropdownMenuItem("Save", onClick = {})
-                                    }
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuSub {
-                                    DropdownMenuSubTrigger("More")
-                                    DropdownMenuSubContent(placement = PopupPlacement.End) {
-                                        DropdownMenuItem("Save", onClick = {})
-                                    }
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default sub side",
-                    code =
-                        """
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuSub {
-                                    DropdownMenuSubTrigger("More")
-                                    DropdownMenuSubContent(side = PopupPlacement.End) {
-                                        DropdownMenuItem("Save", onClick = {})
-                                    }
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        DropdownMenu {
-                            DropdownMenuTrigger("Open")
-                            DropdownMenuContent {
-                                DropdownMenuSub {
-                                    DropdownMenuSubTrigger("More")
-                                    DropdownMenuSubContent(side = PopupPlacement.End) {
-                                        DropdownMenuItem("Save", onClick = {})
-                                    }
-                                }
-                            }
-                        }
-                    },
+            ),
+        afterExamples =
+            listOf(
+                ComponentGuideSection(
+                    "Kotlin API notes",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            (
+                                "The first thirteen recipes follow the official Base UI page. " +
+                                    "The additional examples cover Kotlin state and selection " +
+                                    "APIs. "
+                            ) +
+                                "leadingContent supplies optional visuals for checkbox, radio and submenu rows. " +
+                                (
+                                    "Long menu content scrolls within the available window space. " +
+                                        "Avatar uses the bundled shadcn photo; replace the resource in " +
+                                        "your app."
+                                ),
+                        ),
+                    ),
                 ),
             ),
     )

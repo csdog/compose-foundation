@@ -1,0 +1,16 @@
+[
+  {
+    "name": "com.toutiaoyan.compose.ui.components.skeleton.SkeletonParityTest",
+    "tests": 10,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.toutiaoyan.compose.ui.catalog.SkeletonExamplesTest",
+    "tests": 40,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  }
+]

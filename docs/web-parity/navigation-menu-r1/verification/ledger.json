@@ -1,0 +1,395 @@
+{
+  "command_fingerprints": {
+    "05e85ed93093b4d710936773ab5de6824994fd90b15503897e7ba44f9dc0b689": 1,
+    "2eb1cddeece95f85e4581b4b697940b00889ad38b8fff6184cee65e79ab9ba2c": 1,
+    "37f19587391c051463f43f5d806cdd3fc4969dad2387980414aad61328c0e4bb": 1,
+    "4b0ba3340aec8f82f89492355930953cd8606a0c3e29a958c9270ce50f862667": 4,
+    "5d98a402c306380b0aaf4360c90926f6cc0bb796cbf8389bb2b9de6f95ec796d": 1,
+    "789f9de443c60acbfd4e4bc169c94e0fcb745a9dfb3c793112b5839e2599f50c": 2,
+    "a7ad229b69e00713d345bac9a925431dfa7e064f8dacc03aa1c19462b38fdbc2": 1,
+    "b1b3d396ac5e8381d6e53623ab4483e2a2b8375dafc4b8562a33491a937d3cc3": 1,
+    "d9457ea3d2a293561829cedd45bd2ef264fa2ed767165bbf5663f270eefdf8d8": 1,
+    "d9aed360e1f50b7281f5c5f05dff959de942f1b129970b7238574e0e37ed95b0": 7
+  },
+  "failure_fingerprints": {
+    "0c7ed9a6b8b9db03f8211f388a112328f28a86d8bbdcc841d82f2a9b4490563b": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/navigationmenu/NavigationMenuParityTest.kt:52:57 Unresolved reference 'value' on receiver of type 'Int'.",
+      "occurrences": 1
+    },
+    "39be05cd34e68856e02af472826dc159f297ca56b59255b2f8e9d8526d3d7766": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/navigationmenu/NavigationMenuParityTest.kt:191:9 Type inference failed. The value of the type parameter 'T' must be menti...",
+      "occurrences": 1
+    },
+    "57466b7cc42ffc30055c1b596d00269b68801d3540a8e52b6637ffeaf0101963": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:compileTestKotlinJvm' (registered in build file 'shadcn/core/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kot...",
+      "occurrences": 1
+    },
+    "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:jvmTest'. > There were failing tests. See the report at: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/reports/tests/jvmTest/index.html",
+      "occurrences": 7
+    },
+    "6814a5bc1e81ca0687f3f2110b183be27b01cdb53e05d2e567318dcec50837c1": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/navigationmenu/NavigationMenuParityTest.kt:52:50 Candidate 'val GestureScope.width: Int' is inapplicable because of a rec...",
+      "occurrences": 1
+    },
+    "805f46a9a13075298d7d15c804fc5f72e02384efdd8e4b840c2df3dfe439a7b0": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:compileTestKotlinJvm' (registered in build file 'shadcn/core/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kot...",
+      "occurrences": 1
+    },
+    "f14e815e2f42e17a911914ba47dff6fe6153d21cda4922b338d4f43119ff3480": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/navigationmenu/NavigationMenuParityTest.kt:52:36 Candidate 'val GestureScope.width: Int' is inapplicable because of a rec...",
+      "occurrences": 1
+    }
+  },
+  "failure_fingerprints_truncated_occurrences": 0,
+  "run_count": 20,
+  "runs": [
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *NavigationMenuParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.316,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "f14e815e2f42e17a911914ba47dff6fe6153d21cda4922b338d4f43119ff3480",
+        "6814a5bc1e81ca0687f3f2110b183be27b01cdb53e05d2e567318dcec50837c1",
+        "0c7ed9a6b8b9db03f8211f388a112328f28a86d8bbdcc841d82f2a9b4490563b",
+        "57466b7cc42ffc30055c1b596d00269b68801d3540a8e52b6637ffeaf0101963"
+      ],
+      "log": "0001.log",
+      "question": "Which new NavigationMenu parity contracts fail before the parent changes production source?",
+      "scope": "targeted",
+      "sequence": 1,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *NavigationMenuParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.743,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0002.log",
+      "question": "After correcting test-only DpRect bounds access, which production NavigationMenu parity contracts fail?",
+      "scope": "targeted",
+      "sequence": 2,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *NavigationMenuParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 203.564,
+      "exit_status": 130,
+      "failure_fingerprints": [],
+      "interrupted_signal": 2,
+      "log": "0003.log",
+      "question": "Do eight NavigationMenu parity contracts pass after parent production changes to Nova chrome and hover lifecycle?",
+      "scope": "targeted",
+      "sequence": 3,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *baseDefaultsWaitFiftyMillisecondsForOpenAndCloseWithoutStealingHover* --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 8.207,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "39be05cd34e68856e02af472826dc159f297ca56b59255b2f8e9d8526d3d7766",
+        "805f46a9a13075298d7d15c804fc5f72e02384efdd8e4b840c2df3dfe439a7b0"
+      ],
+      "log": "0004.log",
+      "question": "Does fifty-millisecond pointer hover opening and closing remain stable without a focusable popup stealing trigger hover?",
+      "scope": "targeted",
+      "sequence": 4,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *baseDefaultsWaitFiftyMillisecondsForOpenAndCloseWithoutStealingHover* --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.42,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0005.log",
+      "question": "After test nullable-list inference correction, does pointer hover remain stable across fifty-millisecond open and close delays?",
+      "scope": "targeted",
+      "sequence": 5,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *baseDefaultsWaitFiftyMillisecondsForOpenAndCloseWithoutStealingHover* --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 8.853,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0006.log",
+      "question": "Does explicit pointer-versus-keyboard open ownership stop the reproduced hover first-null cycle through fifty-millisecond delays?",
+      "scope": "targeted",
+      "sequence": 6,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *baseDefaultsWaitFiftyMillisecondsForOpenAndCloseWithoutStealingHover* --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.3,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0007.log",
+      "question": "With actual pointer movement out of the trigger and effect-frame allowance, does fifty-millisecond open and close preserve stable hover state?",
+      "scope": "targeted",
+      "sequence": 7,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *NavigationMenuParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.101,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0008.log",
+      "question": "After pointer hover stability passes, do all ten NavigationMenu state, disabled, geometry, touch and accessible-name regressions pass?",
+      "scope": "targeted",
+      "sequence": 8,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *anOldLeaveTimer* --tests *selectingAPanelLink* --tests *touchActivation* --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.879,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0009.log",
+      "question": "With retained physical pointer cleared and explicit frozen-clock frames, do timer supersession, panel selection and real touch toggling behave correctly?",
+      "scope": "targeted",
+      "sequence": 9,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *touchActivation* --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.637,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0010.log",
+      "question": "Does controlled state tracing prove that a second real trigger tap dismisses on pointerdown then reopens on click?",
+      "scope": "targeted",
+      "sequence": 10,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *touchActivation* --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 8.808,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0011.log",
+      "question": "Does capturing trigger expansion on pointerdown prevent the proven first-null-first reopen race on a second real tap?",
+      "scope": "targeted",
+      "sequence": 11,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *NavigationMenuParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.133,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0012.log",
+      "question": "After the isolated touch race regression passes, do all ten NavigationMenu parity tests pass together?",
+      "scope": "targeted",
+      "sequence": 12,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *NavigationMenuParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 9.251,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0013.log",
+      "question": "Do thirteen NavigationMenu parity tests pass after panel link context, closeOnClick API and keyboard regressions were added?",
+      "scope": "targeted",
+      "sequence": 13,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *keyboardEnterOpensAndEscapeClosesTheKeyboardPopup* --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 9.533,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0014.log",
+      "question": "Does keyboard Enter transfer focus into the popup and Escape close it while restoring trigger focus?",
+      "scope": "targeted",
+      "sequence": 14,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *NavigationMenuParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.312,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0015.log",
+      "question": "After keyboard focus and Escape restoration pass independently, do all thirteen NavigationMenu contracts pass together?",
+      "scope": "targeted",
+      "sequence": 15,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:recordRoborazziJvm --tests *NavigationMenuNovaScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.934,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0016.log",
+      "question": "Can the four new Nova NavigationMenu fixture goldens be recorded after all thirteen behavior tests pass?",
+      "scope": "targeted",
+      "sequence": 16,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests *NavigationMenuParityTest --tests *NavigationMenuNovaScreenshotTest --tests *NavigationMenuScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 3.294,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0017.log",
+      "question": "After visual review, do thirteen behavior tests, four new Nova screenshots and three unchanged legacy NavigationMenu screenshots independently verify?",
+      "scope": "targeted",
+      "sequence": 17,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:ktlintCheck :app:shared:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 19.26,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0018.log",
+      "question": "Do the affected core and shared modules satisfy their configured ktlint checks after NavigationMenu changes?",
+      "scope": "targeted",
+      "sequence": 18,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:jsBrowserDistribution --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 134.757,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0019.log",
+      "question": "Does the JS browser distribution compile NavigationMenu state, pointer, focus and API changes after scoped tests and formatting pass?",
+      "scope": "targeted",
+      "sequence": 19,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:wasmJsBrowserDistribution --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 94.455,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0020.log",
+      "question": "After JS distribution passes, does the separate Wasm distribution compile the final NavigationMenu changes with one worker?",
+      "scope": "targeted",
+      "sequence": 20,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    }
+  ],
+  "version": 1,
+  "warning_fingerprints": {
+    "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312": {
+      "excerpt": "w: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/text/Text.kt:5:16 Suppression of error 'INVISIBLE_REFERENCE' might compile and work, but the compiler behavior is UNSP...",
+      "occurrences": 8
+    },
+    "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4": {
+      "excerpt": "You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.",
+      "occurrences": 10
+    },
+    "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2": {
+      "excerpt": "Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.",
+      "occurrences": 10
+    },
+    "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a": {
+      "excerpt": "WARNING: The option setting 'android.experimental.enableScreenshotTest=true' is experimental.",
+      "occurrences": 11
+    },
+    "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=UNSUPPORTED_PROJECT_OPTION_USE to the gradle.properties file to suppress this warning.",
+      "occurrences": 22
+    },
+    "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90": {
+      "excerpt": "WARNING: The option setting 'android.experimental.testSuiteSupport=true' is experimental.",
+      "occurrences": 11
+    }
+  },
+  "warning_fingerprints_truncated_occurrences": 0,
+  "workflow": "2b1a12fa59de36a5ba0764bd74172858"
+}

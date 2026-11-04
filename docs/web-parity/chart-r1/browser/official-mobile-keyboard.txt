@@ -1,0 +1,243 @@
+[p1 "Chart - shadcn/ui" | space "Compose Foundation shadcn acceptance 2026-11-02"(4): 2 managed, 0 untracked — p1* "Chart - shadcn/ui", p2 "Compose Foundation — Components"]
+root
+  container
+    container
+      container
+        anchor [ref=1, url=https://ui.shadcn.com/]
+          text "Home"
+        anchor [ref=2, url=https://ui.shadcn.com/docs/installation]
+          text "Docs"
+        anchor [ref=3, url=https://ui.shadcn.com/docs/components]
+          text "Components"
+        anchor [ref=4, loc=href:/blocks, url=https://ui.shadcn.com/blocks]
+          text "Blocks"
+        anchor [ref=5, loc=href:/charts/area, url=https://ui.shadcn.com/charts/area]
+          text "Charts"
+        anchor [ref=6, loc=href:/docs/directory, url=https://ui.shadcn.com/docs/directory]
+          text "Directory"
+        anchor [ref=7, loc=href:/typeset, url=https://ui.shadcn.com/typeset]
+          text "Typeset"
+        anchor [ref=8, url=https://ui.shadcn.com/create]
+          text "Create"
+      container
+        button [ref=9]
+          text "Search documentation..."
+        anchor [ref=10, url=https://github.com/shadcn-ui/ui]
+          svg_root
+          text "127k"
+        button [ref=11]
+          svg_root
+        anchor [ref=12, url=https://ui.shadcn.com/create]
+          svg_root
+          text "New"
+    container
+      container [ref=13]
+        unordered_list
+          list_item
+            anchor [ref=14, loc=href:/docs/components/base/badge, url=https://ui.shadcn.com/docs/components/base/badge]
+              text "Badge"
+          list_item
+            anchor [ref=15, loc=href:/docs/components/base/breadcrumb, url=https://ui.shadcn.com/docs/components/base/breadcrumb]
+              text "Breadcrumb"
+          list_item
+            anchor [ref=16, loc=href:/docs/components/base/bubble, url=https://ui.shadcn.com/docs/components/base/bubble]
+              text "Bubble"
+          list_item
+            anchor [ref=17, loc=href:/docs/components/base/button, url=https://ui.shadcn.com/docs/components/base/button]
+              text "Button"
+          list_item
+            anchor [ref=18, loc=href:/docs/components/base/button-group, url=https://ui.shadcn.com/docs/components/base/button-group]
+              text "Button Group"
+          list_item
+            anchor [ref=19, loc=href:/docs/components/base/calendar, url=https://ui.shadcn.com/docs/components/base/calendar]
+              text "Calendar"
+          list_item
+            anchor [ref=20, loc=href:/docs/components/base/card, url=https://ui.shadcn.com/docs/components/base/card]
+              text "Card"
+          list_item
+            anchor [ref=21, url=https://ui.shadcn.com/docs/components/base/carousel]
+              text "Carousel"
+          list_item
+            anchor [ref=22, url=https://ui.shadcn.com/docs/components/base/chart]
+              text "Chart"
+          list_item
+            anchor [ref=23, url=https://ui.shadcn.com/docs/components/base/checkbox]
+              text "Checkbox"
+          list_item
+            anchor [ref=24, loc=href:/docs/components/base/code-block, url=https://ui.shadcn.com/docs/components/base/code-block]
+              text "Code Block"
+          list_item
+            anchor [ref=25, loc=href:/docs/components/base/collapsible, url=https://ui.shadcn.com/docs/components/base/collapsible]
+              text "Collapsible"
+          list_item
+            anchor [ref=26, loc=href:/docs/components/base/combobox, url=https://ui.shadcn.com/docs/components/base/combobox]
+              text "Combobox"
+          list_item
+            anchor [ref=27, loc=href:/docs/components/base/command, url=https://ui.shadcn.com/docs/components/base/command]
+              text "Command"
+          list_item
+            anchor [ref=28, loc=href:/docs/components/base/context-menu, url=https://ui.shadcn.com/docs/components/base/context-menu]
+              text "Context Menu"
+          list_item
+            anchor [ref=29, loc=href:/docs/components/base/data-table, url=https://ui.shadcn.com/docs/components/base/data-table]
+              text "Data Table"
+          list_item
+            anchor [ref=30, loc=href:/docs/components/base/date-picker, url=https://ui.shadcn.com/docs/components/base/date-picker]
+              text "Date Picker"
+          list_item
+            anchor [ref=42, loc=href:/docs/components/base/dialog, url=https://ui.shadcn.com/docs/components/base/dialog]
+              text "Dialog"
+          list_item
+            anchor [ref=43, loc=href:/docs/components/base/direction, url=https://ui.shadcn.com/docs/components/base/direction]
+              text "Direction"
+          list_item
+            anchor [ref=44, loc=href:/docs/components/base/drawer, url=https://ui.shadcn.com/docs/components/base/drawer]
+              text "Drawer"
+          list_item
+            anchor [ref=45, loc=href:/docs/components/base/dropdown-menu, url=https://ui.shadcn.com/docs/components/base/dropdown-menu]
+              text "Dropdown Menu"
+          list_item
+            anchor [ref=46, loc=href:/docs/components/base/empty, url=https://ui.shadcn.com/docs/components/base/empty]
+              text "Empty"
+          list_item
+            anchor [ref=47, loc=href:/docs/components/base/field, url=https://ui.shadcn.com/docs/components/base/field]
+              text "Field"
+          list_item
+            anchor [ref=48, loc=href:/docs/components/base/hover-card, url=https://ui.shadcn.com/docs/components/base/hover-card]
+              text "Hover Card"
+          list_item
+            anchor [ref=49, loc=href:/docs/components/base/input, url=https://ui.shadcn.com/docs/components/base/input]
+              text "Input"
+          list_item
+            anchor [ref=50, loc=href:/docs/components/base/input-group, url=https://ui.shadcn.com/docs/components/base/input-group]
+              text "Input Group"
+          list_item
+            anchor [ref=51, loc=href:/docs/components/base/input-otp, url=https://ui.shadcn.com/docs/components/base/input-otp]
+              text "Input OTP"
+      container
+        container
+          container
+            container
+              heading
+                text "Chart"
+              container
+                container
+                  button [ref=31]
+                    svg_root
+                    text "Copy Page"
+                  button [ref=32]
+                    svg_root
+                container
+                  anchor [ref=33, url=https://ui.shadcn.com/docs/components/base/carousel]
+                    svg_root
+                  anchor [ref=34, url=https://ui.shadcn.com/docs/components/base/checkbox]
+                    svg_root
+            paragraph
+              text "Beautiful charts. Built using Recharts. Copy and paste into your apps."
+          container
+            container
+              anchor [ref=35, url=https://ui.shadcn.com/docs/components/base/chart]
+                text "Base UI"
+              anchor [ref=36, loc=href:/docs/components/aria/chart, url=https://ui.shadcn.com/docs/components/aria/chart]
+                text "React Aria"
+              anchor [ref=37, loc=href:/docs/components/radix/chart, url=https://ui.shadcn.com/docs/components/radix/chart]
+                text "Radix UI"
+              svg_root
+            alert
+              paragraph
+                text "Updated:"
+                text "The"
+                text "chart"
+                text "component now uses Recharts v3. If you're upgrading existing chart code, see"
+                anchor [ref=38, url=https://ui.shadcn.com/docs/components/base/chart#updating-to-recharts-v3]
+                  text "Updating to Recharts v3"
+                text "."
+            container
+              container
+                container
+                  text "Bar Chart - Interactive"
+                  text "Showing total visitors for the last 3 months"
+                container
+                  button [ref=39]
+                    text "Desktop"
+                    text "7,324"
+                  button [ref=40]
+                    text "Mobile"
+                    text "7,250"
+              container
+                text "Apr 1, 2024"
+                text "Page Views"
+                text "150"
+                application "Apr 2 Apr 6 Apr 10 Apr 14 Apr 18 Apr 22 Apr 26 Apr 30" [ref=41]
+                  text "Apr 2"
+                  text "Apr 6"
+                  text "Apr 10"
+                  text "Apr 14"
+                  text "Apr 18"
+                  text "Apr 22"
+                  text "Apr 26"
+                  text "Apr 30"
+            paragraph
+              text "Introducing"
+              text "Charts"
+              text ". A collection of chart components that you can copy and paste into your apps."
+            paragraph
+              text "Charts are designed to look great out of the box. They work well with the other components and are fully customizable to fit your project."
+            paragraph
+              anchor [ref=52, loc=href:/charts, url=https://ui.shadcn.com/charts]
+                text "Browse the Charts Library"
+              text "."
+        container
+          container [ref=53]
+            anchor [ref=57, url=https://ui.shadcn.com/docs/components/base/chart#your-first-chart]
+              text "Your First Chart"
+            anchor [ref=58, url=https://ui.shadcn.com/docs/components/base/chart#add-a-grid]
+              text "Add a Grid"
+            anchor [ref=59, url=https://ui.shadcn.com/docs/components/base/chart#add-an-axis]
+              text "Add an Axis"
+            anchor [ref=60, url=https://ui.shadcn.com/docs/components/base/chart#add-tooltip]
+              text "Add Tooltip"
+            anchor [ref=61, url=https://ui.shadcn.com/docs/components/base/chart#add-legend]
+              text "Add Legend"
+            anchor [ref=62, url=https://ui.shadcn.com/docs/components/base/chart#chart-config]
+              text "Chart Config"
+            anchor [ref=63, url=https://ui.shadcn.com/docs/components/base/chart#theming]
+              text "Theming"
+            anchor [ref=64, url=https://ui.shadcn.com/docs/components/base/chart#css-variables]
+              text "CSS Variables"
+            anchor [ref=65, url=https://ui.shadcn.com/docs/components/base/chart#hex-hsl-or-oklch]
+              text "hex, hsl or oklch"
+            anchor [ref=66, url=https://ui.shadcn.com/docs/components/base/chart#using-colors]
+              text "Using Colors"
+            anchor [ref=67, url=https://ui.shadcn.com/docs/components/base/chart#components]
+              text "Components"
+            anchor [ref=68, url=https://ui.shadcn.com/docs/components/base/chart#chart-data]
+              text "Chart Data"
+            anchor [ref=69, url=https://ui.shadcn.com/docs/components/base/chart#tailwind]
+              text "Tailwind"
+            anchor [ref=70, url=https://ui.shadcn.com/docs/components/base/chart#tooltip]
+              text "Tooltip"
+            anchor [ref=71, url=https://ui.shadcn.com/docs/components/base/chart#props]
+              text "Props"
+            anchor [ref=72, url=https://ui.shadcn.com/docs/components/base/chart#colors]
+              text "Colors"
+            anchor [ref=73, url=https://ui.shadcn.com/docs/components/base/chart#custom]
+              text "Custom"
+            anchor [ref=74, url=https://ui.shadcn.com/docs/components/base/chart#legend]
+              text "Legend"
+            anchor [ref=88, url=https://ui.shadcn.com/docs/components/base/chart#colors-1]
+              text "Colors"
+            anchor [ref=89, url=https://ui.shadcn.com/docs/components/base/chart#custom-1]
+              text "Custom"
+            anchor [ref=90, url=https://ui.shadcn.com/docs/components/base/chart#accessibility]
+              text "Accessibility"
+            anchor [ref=91, url=https://ui.shadcn.com/docs/components/base/chart#rtl]
+              text "RTL"
+          container
+            text "Deploy your shadcn/ui app on Vercel"
+            text "Trusted by OpenAI, Sonos, Adobe, and more."
+            text "Vercel provides tools and infrastructure to deploy apps and features at scale."
+            button [ref=75]
+              text "Deploy Now"
+            anchor [ref=76, url=https://vercel.com/new?utm_source=shadcn_site&utm_medium=web&utm_campaign=docs_cta_deploy_now_callout]
+[more content below the viewport: scrollY=0, viewport 1000 / page 16436 px; scroll or use snapshot({ scope: "full_page" })]

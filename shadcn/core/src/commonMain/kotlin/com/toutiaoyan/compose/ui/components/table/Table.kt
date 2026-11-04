@@ -2,6 +2,29 @@
 
 package com.toutiaoyan.compose.ui.components.table
 
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.hoverable
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.style.contentPadding
+import androidx.compose.ui.AbsoluteAlignment
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.ParentDataModifier
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.constrainWidth
+import androidx.compose.ui.unit.constrainHeight
+import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -25,8 +48,6 @@ import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.components.separator.Separator
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextColors
-import com.toutiaoyan.compose.ui.components.text.TextVariant
-import com.toutiaoyan.compose.tailwind.core.twSpacing
 import androidx.compose.ui.text.TextStyle
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
@@ -57,20 +78,64 @@ fun Table(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Column(
+    val scroll = rememberScrollState()
+    BoxWithConstraints(
         modifier =
-            modifier
-                .fillMaxWidth()
-                .then(
-                    if (ariaLabel != null) {
-                        Modifier.semantics { contentDescription = ariaLabel }
-                    } else {
-                        Modifier
-                    },
-                )
-                .styleable(styleState, style),
-        content = content,
-    )
+            modifier.fillMaxWidth().then(
+                if (ariaLabel == null) Modifier else Modifier.semantics { contentDescription = ariaLabel },
+            ).styleable(styleState, style),
+    ) {
+        val bounded = constraints.hasBoundedWidth
+        Column(
+            Modifier.then(if (bounded) Modifier.horizontalScroll(scroll) else Modifier)
+                .width(IntrinsicSize.Max).widthIn(min = if (bounded) maxWidth else 0.dp),
+        ) {
+            TableStack(content)
+        }
+    }
+}
+
+private enum class TablePart : ParentDataModifier {
+    Caption,
+    HeaderDivider,
+    RowDivider,
+    ;
+
+    override fun Density.modifyParentData(parentData: Any?): Any = this@TablePart
+}
+
+/** Caption-bottom and last-row rules apply regardless of declaration order. */
+@Composable
+private fun ColumnScope.TableStack(content: @Composable ColumnScope.() -> Unit) {
+    Layout(content = { content() }) { children, constraints ->
+        val ordered =
+            children.filter { it.parentData != TablePart.Caption } +
+                children.filter { it.parentData == TablePart.Caption }
+        val lastContent =
+            ordered.indexOfLast {
+                it.parentData != TablePart.Caption && it.parentData != TablePart.RowDivider
+            }
+        val visible =
+            ordered.filterIndexed {
+                    index,
+                    child,
+                ->
+                child.parentData != TablePart.RowDivider || index < lastContent
+            }
+        val placeables =
+            visible.map {
+                it.measure(constraints.copy(minWidth = 0, minHeight = 0, maxHeight = Constraints.Infinity))
+            }
+        val width = constraints.constrainWidth(placeables.maxOfOrNull { it.width } ?: 0)
+        val height = constraints.constrainHeight(placeables.sumOf { it.height })
+        layout(width, height) {
+            var y = 0
+            placeables.forEach {
+                it.placeRelative(0, y)
+                y += it.height
+            }
+        }
+    }
 }
 
 @Composable
@@ -79,16 +144,18 @@ fun ColumnScope.TableHeaderRow(
     style: Style = Style,
     cells: @Composable RowScope.() -> Unit,
 ) {
-    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val interaction = remember { MutableInteractionSource() }
+    val styleState = remember { MutableStyleState(interaction) }
     Row(
         modifier =
-            modifier.styleable(
+            modifier.hoverable(interaction).styleable(
                 styleState,
                 rememberTableRowStyle(selected = false) then style,
             ),
+        verticalAlignment = Alignment.CenterVertically,
         content = cells,
     )
-    Separator()
+    Separator(Modifier.then(TablePart.HeaderDivider))
 }
 
 @Composable
@@ -99,17 +166,18 @@ fun ColumnScope.TableRow(
     style: Style = Style,
     cells: @Composable RowScope.() -> Unit,
 ) {
-    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    val footer = LocalTableFooter.current
+    val interaction = remember { MutableInteractionSource() }
+    val styleState = remember { MutableStyleState(interaction) }
     Row(
         modifier =
-            modifier.styleable(
+            modifier.semantics { this.selected = selected }.hoverable(interaction).styleable(
                 styleState,
-                rememberTableRowStyle(selected = selected, footer = footer) then style,
+                rememberTableRowStyle(selected = selected) then style,
             ),
+        verticalAlignment = Alignment.CenterVertically,
         content = cells,
     )
-    if (!isLast) Separator()
+    if (!isLast) Separator(Modifier.then(TablePart.RowDivider))
 }
 
 /** Alias for [TableHeaderRow] matching shadcn's `TableHeader`. */
@@ -122,17 +190,20 @@ fun ColumnScope.TableHeader(
     TableHeaderRow(modifier = modifier, style = style, cells = cells)
 }
 
-/** Matches shadcn's `TableBody`. Children stay in the parent [Table] column. */
+/** Matches shadcn's `TableBody`, including automatic removal of the last row divider. */
 @Composable
 fun ColumnScope.TableBody(content: @Composable ColumnScope.() -> Unit) {
-    content()
+    Column(Modifier.fillMaxWidth()) { TableStack(content) }
 }
 
-/** Matches shadcn's `TableFooter` (`bg-muted/50`). Children stay in the parent [Table] column. */
+/** Matches shadcn's `TableFooter`: top border, muted/50 background and medium text. */
 @Composable
 fun ColumnScope.TableFooter(content: @Composable ColumnScope.() -> Unit) {
-    CompositionLocalProvider(LocalTableFooter provides true) {
-        content()
+    Column(
+        Modifier.fillMaxWidth().background(com.toutiaoyan.compose.ui.theme.currentTheme.colors.muted.copy(alpha = .5f)),
+    ) {
+        Separator()
+        CompositionLocalProvider(LocalTableFooter provides true) { TableStack(content) }
     }
 }
 
@@ -157,21 +228,43 @@ fun RowScope.TableHead(
     TableHead(text = text(), modifier = modifier, style = style)
 }
 
+private fun tableTypography(medium: Boolean = false): TextStyle =
+    TextStyle(
+        fontSize = 14.sp,
+        lineHeight = 20.sp,
+        fontWeight = if (medium) FontWeight.Medium else FontWeight.Normal,
+        lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+    )
+
+private fun tableAlignment(style: TextStyle): Alignment =
+    when (style.textAlign) {
+        TextAlign.End -> Alignment.CenterEnd
+        TextAlign.Right -> AbsoluteAlignment.CenterRight
+        TextAlign.Left -> AbsoluteAlignment.CenterLeft
+        TextAlign.Center -> Alignment.Center
+        else -> Alignment.CenterStart
+    }
+
 @Composable
 fun RowScope.TableHeadCell(
     text: String,
     modifier: Modifier = Modifier,
     style: Style = Style,
+    textStyle: TextStyle = TextStyle.Default,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Text(
-        variant = TextVariant.LabelLarge,
-        modifier =
-            modifier
-                .padding(horizontal = twSpacing.sm)
-                .padding(end = 4.dp)
-                .styleable(styleState, style),
-    ) { text }
+    Box(
+        modifier.styleable(
+            styleState,
+            Style {
+                height(40.dp)
+                contentPadding(horizontal = 8.dp, vertical = 0.dp)
+            } then style,
+        ),
+        contentAlignment = tableAlignment(textStyle),
+    ) {
+        Text(maxLines = 1, textStyle = tableTypography(medium = true).merge(textStyle)) { text }
+    }
 }
 
 @Composable
@@ -180,18 +273,38 @@ fun RowScope.TableCell(
     modifier: Modifier = Modifier,
     muted: Boolean = false,
     style: Style = Style,
+    textStyle: TextStyle = TextStyle.Default,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Text(
-        variant = TextVariant.BodyMedium,
-        textStyle = if (muted) TextColors.Muted else TextStyle.Default,
-        style = style,
-        modifier =
-            modifier
-                .padding(horizontal = twSpacing.sm)
-                .padding(end = 4.dp)
-                .styleable(styleState, style),
-    ) { text }
+    Box(
+        modifier.styleable(styleState, Style { contentPadding(8.dp) } then style),
+        contentAlignment = tableAlignment(textStyle),
+    ) {
+        Text(
+            maxLines = 1,
+            textStyle =
+                tableTypography(LocalTableFooter.current)
+                    .merge(if (muted) TextColors.Muted else TextStyle.Default).merge(textStyle),
+        ) { text }
+    }
+}
+
+/** Supply `content = { ... }` for arbitrary cells; the trailing String-lambda overload stays unambiguous. */
+@Composable
+@JvmName("TableCellContent")
+fun RowScope.TableCell(
+    content: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+    contentAlignment: Alignment = Alignment.CenterStart,
+) {
+    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    Box(
+        modifier.styleable(styleState, Style { contentPadding(8.dp) } then style),
+        contentAlignment = contentAlignment,
+    ) {
+        content()
+    }
 }
 
 @Composable
@@ -214,16 +327,14 @@ fun ColumnScope.TableCaption(
     style: Style = Style,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Text(
-        variant = TextVariant.BodySmall,
-        textStyle = TextColors.Muted,
-        style = style,
-        modifier =
-            modifier
-                .fillMaxWidth()
-                .padding(top = twSpacing.md)
-                .styleable(styleState, style),
-    ) { text }
+    Box(
+        modifier.then(TablePart.Caption).fillMaxWidth().padding(top = 16.dp).styleable(styleState, style),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            textStyle = tableTypography().merge(TextColors.Muted).merge(TextStyle(textAlign = TextAlign.Center)),
+        ) { text }
+    }
 }
 
 @Composable

@@ -1,0 +1,23 @@
+[
+  {
+    "name": "TooltipBehaviorParityTest[jvm]",
+    "tests": "8",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "TooltipChromeParityTest[jvm]",
+    "tests": "2",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "TooltipExamplesTest[jvm]",
+    "tests": "20",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  }
+]

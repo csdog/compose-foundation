@@ -15,6 +15,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import com.toutiaoyan.compose.ui.styles.focusRingShadow
+import com.toutiaoyan.compose.tailwind.style.ringShadow
+import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.utils.rememberTheme
 import kotlinx.coroutines.delay
 
@@ -160,6 +162,6 @@ fun rememberScrollThumbStyle(): Style =
 fun rememberScrollAreaViewportStyle(focused: Boolean): Style =
     rememberTheme(focused) {
         Style {
-            if (focused) dropShadow(focusRingShadow())
+            if (focused) dropShadow(focusRingShadow(), ringShadow(colors.foreground, 1.dp))
         }
     }

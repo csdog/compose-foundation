@@ -1,0 +1,78 @@
+[
+  {
+    "file": "official-desktop-light.png",
+    "width": 1440,
+    "height": 1000,
+    "dark": false,
+    "plot": {
+      "x": 417.5,
+      "y": 501.5,
+      "width": 590,
+      "height": 250
+    },
+    "card": {
+      "x": 393.5,
+      "y": 354.5,
+      "width": 638,
+      "height": 437
+    },
+    "firstBar": "M 13.8867,138.6 h 15 v 81.4 h -15 Z"
+  },
+  {
+    "file": "official-desktop-dark.png",
+    "width": 1440,
+    "height": 1000,
+    "dark": true,
+    "plot": {
+      "x": 417.5,
+      "y": 501.5,
+      "width": 590,
+      "height": 250
+    },
+    "card": {
+      "x": 393.5,
+      "y": 354.5,
+      "width": 638,
+      "height": 437
+    },
+    "firstBar": "M 13.8867,138.6 h 15 v 81.4 h -15 Z"
+  },
+  {
+    "file": "official-phone-light.png",
+    "width": 390,
+    "height": 1000,
+    "dark": false,
+    "plot": {
+      "x": 33,
+      "y": 548.0390625,
+      "width": 309,
+      "height": 250
+    },
+    "card": {
+      "x": 25,
+      "y": 373.140625,
+      "width": 325,
+      "height": 440.8984375
+    },
+    "firstBar": "M 12.95,138.6 h 7 v 81.4 h -7 Z"
+  },
+  {
+    "file": "official-phone-dark.png",
+    "width": 390,
+    "height": 1000,
+    "dark": true,
+    "plot": {
+      "x": 33,
+      "y": 548.0390625,
+      "width": 309,
+      "height": 250
+    },
+    "card": {
+      "x": 25,
+      "y": 373.140625,
+      "width": 325,
+      "height": 440.8984375
+    },
+    "firstBar": "M 12.95,138.6 h 7 v 81.4 h -7 Z"
+  }
+]

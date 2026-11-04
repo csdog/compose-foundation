@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ShimmerTextPaintTest[jvm]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-30T20:54:38.339Z" hostname="Apples-MacBook-Pro.local" time="0.524">
+  <properties/>
+  <testcase name="contentBrushAppliesToAnnotatedText[jvm]" classname="com.toutiaoyan.compose.ui.styles.ShimmerTextPaintTest" time="0.383"/>
+  <testcase name="styleShimmerActuallyChangesGlyphPixels[jvm]" classname="com.toutiaoyan.compose.ui.styles.ShimmerTextPaintTest" time="0.088"/>
+  <testcase name="contentBrushOverridesSpecifiedPlainTextColor[jvm]" classname="com.toutiaoyan.compose.ui.styles.ShimmerTextPaintTest" time="0.017"/>
+  <testcase name="translucentBrushDoesNotMultiplyOriginalTextAlphaTwice[jvm]" classname="com.toutiaoyan.compose.ui.styles.ShimmerTextPaintTest" time="0.017"/>
+  <testcase name="ancestorBrushIsInheritedWithoutTintingWhitespace[jvm]" classname="com.toutiaoyan.compose.ui.styles.ShimmerTextPaintTest" time="0.017"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

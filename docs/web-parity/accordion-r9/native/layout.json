@@ -1,0 +1,37 @@
+{
+  "sheets": [
+    {
+      "file": "contact-1440-light.png",
+      "names": [
+        "ar-1440-light",
+        "en-1440-light",
+        "he-1440-light"
+      ]
+    },
+    {
+      "file": "contact-1440-dark.png",
+      "names": [
+        "ar-1440-dark",
+        "en-1440-dark",
+        "he-1440-dark"
+      ]
+    },
+    {
+      "file": "contact-390-light.png",
+      "names": [
+        "ar-390-light",
+        "en-390-light",
+        "he-390-light"
+      ]
+    },
+    {
+      "file": "contact-390-dark.png",
+      "names": [
+        "ar-390-dark",
+        "en-390-dark",
+        "he-390-dark"
+      ]
+    }
+  ],
+  "note": "Native images composited on theme background, original pixels retained; left-to-right Arabic, English, Hebrew."
+}

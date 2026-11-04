@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MessageScrollerScreenshotTest[jvm]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-30T08:50:09.512Z" hostname="Apples-MacBook-Pro.local" time="0.192">
+  <properties/>
+  <testcase name="chat_panel_light[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerScreenshotTest" time="0.135"/>
+  <testcase name="chat_panel_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerScreenshotTest" time="0.057"/>
+  <system-out><![CDATA[Roborazzi: message_scroller_chat_panel_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=177008, width=368, height=481) changed:false
+Roborazzi: message_scroller_chat_panel_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=177008, width=368, height=481) changed:false
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,10 @@
+[
+  {
+    "name": "modifierAnimationRepaintsWithoutRecomposingCaller[jvm]",
+    "failure": null
+  },
+  {
+    "name": "styleAnimationRepaintsWithoutRecomposingCaller[jvm]",
+    "failure": "java.lang.AssertionError: Style frames must stay out of composition expected:<4> but was:<64>"
+  }
+]

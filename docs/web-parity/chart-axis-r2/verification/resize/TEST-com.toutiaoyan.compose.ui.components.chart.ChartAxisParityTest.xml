@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ChartAxisParityTest[jvm]" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-02T02:07:41.645Z" hostname="Apples-MacBook-Pro.local" time="0.835">
+  <properties/>
+  <testcase name="explicitMaximumCapsLabelsWithoutDroppingTheEndTick[jvm]" classname="com.toutiaoyan.compose.ui.components.chart.ChartAxisParityTest" time="0.391"/>
+  <testcase name="narrowAndEmptyAxesNeverPlaceAnOversizedLabel[jvm]" classname="com.toutiaoyan.compose.ui.components.chart.ChartAxisParityTest" time="0.015"/>
+  <testcase name="arabicAxisResizeMatchesAFreshNarrowLayout[jvm]" classname="com.toutiaoyan.compose.ui.components.chart.ChartAxisParityTest" time="0.243"/>
+  <testcase name="dateLabelsUseTheirFullWidthAndPreserveTheLastDay[jvm]" classname="com.toutiaoyan.compose.ui.components.chart.ChartAxisParityTest" time="0.059"/>
+  <testcase name="hebrewAxisResizeMatchesAFreshNarrowLayout[jvm]" classname="com.toutiaoyan.compose.ui.components.chart.ChartAxisParityTest" time="0.049"/>
+  <testcase name="selectedLabelsKeepTheRequiredGap[jvm]" classname="com.toutiaoyan.compose.ui.components.chart.ChartAxisParityTest" time="0.014"/>
+  <testcase name="arabicTicksReserveTheirActualShapedWidth[jvm]" classname="com.toutiaoyan.compose.ui.components.chart.ChartAxisParityTest" time="0.032"/>
+  <testcase name="hebrewTicksReserveTheirActualShapedWidth[jvm]" classname="com.toutiaoyan.compose.ui.components.chart.ChartAxisParityTest" time="0.029"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

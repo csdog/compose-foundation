@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ShimmerCssColorTest[jvm]" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-30T21:07:58.344Z" hostname="Apples-MacBook-Pro.local" time="0.522">
+  <properties/>
+  <testcase name="darkDefaultPeakUsesRelativeOklchLightness[jvm]" classname="com.toutiaoyan.compose.ui.styles.ShimmerCssColorTest" time="0.431"/>
+  <testcase name="defaultBaseIsTheActualTextColor[jvm]" classname="com.toutiaoyan.compose.ui.styles.ShimmerCssColorTest" time="0.019"/>
+  <testcase name="lightDefaultPeakUsesCurrentColorAtTwentyPercentAlpha[jvm]" classname="com.toutiaoyan.compose.ui.styles.ShimmerCssColorTest" time="0.04"/>
+  <testcase name="explicitTranslucentPeakKeepsItsAlphaInsteadOfCompositingOverBase[jvm]" classname="com.toutiaoyan.compose.ui.styles.ShimmerCssColorTest" time="0.03"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

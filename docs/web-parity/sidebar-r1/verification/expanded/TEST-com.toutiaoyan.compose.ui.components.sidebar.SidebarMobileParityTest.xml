@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="SidebarMobileParityTest[jvm]" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-30T21:36:51.481Z" hostname="Apples-MacBook-Pro.local" time="0.954">
+  <properties/>
+  <testcase name="defaultMobileWidthZeroRootPaddingAndOutsideClosesOnlyMobile[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.sidebar.SidebarMobileParityTest" time="0.531"/>
+  <testcase name="callerStyleCanOverrideDefaultMobileWidth[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.sidebar.SidebarMobileParityTest" time="0.05"/>
+  <testcase name="defaultMobileWidthZeroRootPaddingAndOutsideClosesOnlyMobile[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.sidebar.SidebarMobileParityTest" time="0.087"/>
+  <testcase name="callerStyleCanOverrideDefaultMobileWidth[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.sidebar.SidebarMobileParityTest" time="0.044"/>
+  <testcase name="defaultMobileWidthZeroRootPaddingAndOutsideClosesOnlyMobile[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.sidebar.SidebarMobileParityTest" time="0.079"/>
+  <testcase name="callerStyleCanOverrideDefaultMobileWidth[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.sidebar.SidebarMobileParityTest" time="0.044"/>
+  <testcase name="defaultMobileWidthZeroRootPaddingAndOutsideClosesOnlyMobile[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.sidebar.SidebarMobileParityTest" time="0.074"/>
+  <testcase name="callerStyleCanOverrideDefaultMobileWidth[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.sidebar.SidebarMobileParityTest" time="0.043"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

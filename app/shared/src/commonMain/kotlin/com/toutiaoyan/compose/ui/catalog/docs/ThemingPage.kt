@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
+import com.toutiaoyan.compose.ui.catalog.rememberGuideScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,7 +28,7 @@ private fun ThemingContent() {
         modifier =
             Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(rememberGuideScrollState())
                 .padding(twSpacing.xl),
         verticalArrangement = Arrangement.spacedBy(twSpacing.lg),
     ) {

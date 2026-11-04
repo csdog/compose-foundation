@@ -1,0 +1,67 @@
+[
+  {
+    "name": "TabsBehaviorParityTest[jvm]",
+    "tests": "12",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "failuresDetail": []
+  },
+  {
+    "name": "TabsExamplesTest[jvm]",
+    "tests": "32",
+    "failures": "12",
+    "errors": "0",
+    "skipped": "0",
+    "failuresDetail": [
+      {
+        "name": "rtlArabicDefaultHasTranslatedCardAndMirroredTriggers[viewport=1,440,dark=false][jvm]",
+        "message": "java.lang.AssertionError: Failed to assert count of nodes.\nReason: Expected '2' nodes but found '1' node that satisfies: (Text + InputText + EditableText contains '\u0646\u0638\u0631\u0629 \u0639\u0627\u0645\u0629' (ignoreCase: false))\nNode found:\nNode #23 at (l=440.0, t=336.0, r=510.0, b=361.0)px, Tag: 'tabs-overview'\nFocused = 'false'\nRole = 'Tab'\nSelected = 'false'\nText = '[\u0646\u0638\u0631\u0629 \u0639\u0627\u0645\u0629]'\nActions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]\nMergeDescendants = 'true'\nHas 3 siblings\n"
+      },
+      {
+        "name": "iconsAreSeparateFromTextAndBothTriggersWork[viewport=1,440,dark=false][jvm]",
+        "message": "java.lang.AssertionError: Expected value to be true."
+      },
+      {
+        "name": "rtlArabicDefaultHasTranslatedCardAndMirroredTriggers[viewport=1,440,dark=true][jvm]",
+        "message": "java.lang.AssertionError: Failed to assert count of nodes.\nReason: Expected '2' nodes but found '1' node that satisfies: (Text + InputText + EditableText contains '\u0646\u0638\u0631\u0629 \u0639\u0627\u0645\u0629' (ignoreCase: false))\nNode found:\nNode #323 at (l=440.0, t=336.0, r=510.0, b=361.0)px, Tag: 'tabs-overview'\nFocused = 'false'\nRole = 'Tab'\nSelected = 'false'\nText = '[\u0646\u0638\u0631\u0629 \u0639\u0627\u0645\u0629]'\nActions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]\nMergeDescendants = 'true'\nHas 3 siblings\n"
+      },
+      {
+        "name": "iconsAreSeparateFromTextAndBothTriggersWork[viewport=1,440,dark=true][jvm]",
+        "message": "java.lang.AssertionError: Expected value to be true."
+      },
+      {
+        "name": "rtlArabicDefaultHasTranslatedCardAndMirroredTriggers[viewport=390,dark=false][jvm]",
+        "message": "java.lang.AssertionError: Failed to assert count of nodes.\nReason: Expected '2' nodes but found '1' node that satisfies: (Text + InputText + EditableText contains '\u0646\u0638\u0631\u0629 \u0639\u0627\u0645\u0629' (ignoreCase: false))\nNode found:\nNode #623 at (l=294.0, t=336.0, r=364.0, b=361.0)px, Tag: 'tabs-overview'\nFocused = 'false'\nRole = 'Tab'\nSelected = 'false'\nText = '[\u0646\u0638\u0631\u0629 \u0639\u0627\u0645\u0629]'\nActions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]\nMergeDescendants = 'true'\nHas 3 siblings\n"
+      },
+      {
+        "name": "rtlHebrewSelectorKeepsRtl[viewport=390,dark=false][jvm]",
+        "message": "java.lang.AssertionError: Failed to inject mouse input.\nReason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Hebrew (\u05e2\u05d1\u05e8\u05d9\u05ea)' (ignoreCase: false))\n"
+      },
+      {
+        "name": "rtlEnglishSelectorRestoresLtr[viewport=390,dark=false][jvm]",
+        "message": "java.lang.AssertionError: Failed to inject mouse input.\nReason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'English' (ignoreCase: false))\n"
+      },
+      {
+        "name": "iconsAreSeparateFromTextAndBothTriggersWork[viewport=390,dark=false][jvm]",
+        "message": "java.lang.AssertionError: Expected value to be true."
+      },
+      {
+        "name": "rtlArabicDefaultHasTranslatedCardAndMirroredTriggers[viewport=390,dark=true][jvm]",
+        "message": "java.lang.AssertionError: Failed to assert count of nodes.\nReason: Expected '2' nodes but found '1' node that satisfies: (Text + InputText + EditableText contains '\u0646\u0638\u0631\u0629 \u0639\u0627\u0645\u0629' (ignoreCase: false))\nNode found:\nNode #879 at (l=294.0, t=336.0, r=364.0, b=361.0)px, Tag: 'tabs-overview'\nFocused = 'false'\nRole = 'Tab'\nSelected = 'false'\nText = '[\u0646\u0638\u0631\u0629 \u0639\u0627\u0645\u0629]'\nActions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]\nMergeDescendants = 'true'\nHas 3 siblings\n"
+      },
+      {
+        "name": "rtlHebrewSelectorKeepsRtl[viewport=390,dark=true][jvm]",
+        "message": "java.lang.AssertionError: Failed to inject mouse input.\nReason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Hebrew (\u05e2\u05d1\u05e8\u05d9\u05ea)' (ignoreCase: false))\n"
+      },
+      {
+        "name": "rtlEnglishSelectorRestoresLtr[viewport=390,dark=true][jvm]",
+        "message": "java.lang.AssertionError: Failed to inject mouse input.\nReason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'English' (ignoreCase: false))\n"
+      },
+      {
+        "name": "iconsAreSeparateFromTextAndBothTriggersWork[viewport=390,dark=true][jvm]",
+        "message": "java.lang.AssertionError: Expected value to be true."
+      }
+    ]
+  }
+]

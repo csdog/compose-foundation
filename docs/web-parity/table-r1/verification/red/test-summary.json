@@ -1,0 +1,48 @@
+{
+  "tests": "10",
+  "failures": "10",
+  "errors": "0",
+  "skipped": "0",
+  "cases": [
+    {
+      "name": "headerIsFortyAndBodyUsesFourteenTwentyWithEightPixelPadding[dark=false][jvm]",
+      "failure": "java.lang.AssertionError: Actual height is 32.0.dp, expected 40.0.dp (tolerance: 0.5.dp)"
+    },
+    {
+      "name": "rowIsTransparentAndHoverUsesMutedAtHalfAlpha[dark=false][jvm]",
+      "failure": "java.lang.AssertionError: expected:<Color(0.0, 1.0, 0.0, 1.0, sRGB IEC61966-2.1)> but was:<Color(1.0, 1.0, 1.0, 1.0, sRGB IEC61966-2.1)>"
+    },
+    {
+      "name": "selectedStateIsExposedToAccessibility[dark=false][jvm]",
+      "failure": "java.lang.AssertionError: Failed to assert the following: (Selected = 'true')\nSemantics of the node:\nNode #18 at (l=24.0, t=24.0, r=324.0, b=56.0)px, Tag: 'selected'\nHas 1 child\nSelector used: (TestTag = 'selected')\n"
+    },
+    {
+      "name": "captionDeclaredFirstRendersBelowRowsWithSixteenPixelMargin[dark=false][jvm]",
+      "failure": "java.lang.AssertionError: Expected value to be true."
+    },
+    {
+      "name": "footerIsHalfMutedWithATopRuleAndNoTrailingRule[dark=false][jvm]",
+      "failure": "java.lang.AssertionError: Expected <0.98039216> with absolute tolerance <0.005>, actual <0.9607843>."
+    },
+    {
+      "name": "headerIsFortyAndBodyUsesFourteenTwentyWithEightPixelPadding[dark=true][jvm]",
+      "failure": "java.lang.AssertionError: Actual height is 32.0.dp, expected 40.0.dp (tolerance: 0.5.dp)"
+    },
+    {
+      "name": "rowIsTransparentAndHoverUsesMutedAtHalfAlpha[dark=true][jvm]",
+      "failure": "java.lang.AssertionError: expected:<Color(0.0, 1.0, 0.0, 1.0, sRGB IEC61966-2.1)> but was:<Color(0.039215688, 0.039215688, 0.039215688, 1.0, sRGB IEC61966-2.1)>"
+    },
+    {
+      "name": "selectedStateIsExposedToAccessibility[dark=true][jvm]",
+      "failure": "java.lang.AssertionError: Failed to assert the following: (Selected = 'true')\nSemantics of the node:\nNode #51 at (l=24.0, t=24.0, r=324.0, b=56.0)px, Tag: 'selected'\nHas 1 child\nSelector used: (TestTag = 'selected')\n"
+    },
+    {
+      "name": "captionDeclaredFirstRendersBelowRowsWithSixteenPixelMargin[dark=true][jvm]",
+      "failure": "java.lang.AssertionError: Expected value to be true."
+    },
+    {
+      "name": "footerIsHalfMutedWithATopRuleAndNoTrailingRule[dark=true][jvm]",
+      "failure": "java.lang.AssertionError: Expected <0.09411765> with absolute tolerance <0.005>, actual <0.14901961>."
+    }
+  ]
+}

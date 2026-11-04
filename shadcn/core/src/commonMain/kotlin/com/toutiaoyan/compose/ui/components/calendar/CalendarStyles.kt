@@ -6,9 +6,11 @@ import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.hovered
 import androidx.compose.foundation.style.contentPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.Dp
 import com.toutiaoyan.compose.ui.utils.rememberTheme
 import com.toutiaoyan.compose.ui.styles.border
 
@@ -32,22 +34,23 @@ fun rememberCalendarCaptionDropdownStyle(): Style =
     }
 
 @Composable
-fun rememberCalendarNavButtonStyle(): Style =
-    rememberTheme {
+fun rememberCalendarNavButtonStyle(cellSize: Dp = 28.dp): Style =
+    rememberTheme(cellSize) {
         Style {
-            width(28.dp)
-            height(28.dp)
+            width(cellSize)
+            height(cellSize)
             shape(RoundedCornerShape(radius.md))
             if (theme.activePreset != StylePreset.Nova) border(colors.border)
+            hovered { background(colors.muted.copy(alpha = if (isDark) 0.5f else 1f)) }
         }
     }
 
 @Composable
-fun rememberCalendarDayCellChromeStyle(): Style =
-    rememberTheme {
+fun rememberCalendarDayCellChromeStyle(cellSize: Dp? = null): Style =
+    rememberTheme(cellSize) {
         Style {
-            width(if (theme.activePreset == StylePreset.Nova) 28.dp else 36.dp)
-            height(if (theme.activePreset == StylePreset.Nova) 28.dp else 36.dp)
+            width(cellSize ?: if (theme.activePreset == StylePreset.Nova) 28.dp else 36.dp)
+            height(cellSize ?: if (theme.activePreset == StylePreset.Nova) 28.dp else 36.dp)
             contentPadding(if (theme.activePreset == StylePreset.Nova) 0.dp else 2.dp)
             shape(RoundedCornerShape(radius.md))
         }

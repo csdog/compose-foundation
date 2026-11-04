@@ -1,0 +1,42 @@
+[
+  {
+    "path": "gradle.properties",
+    "sha256": "684f3d4e2df5f1e6ff9bab670e0b1bb7431b0f2ae46960537c757cc4cc84d8cb"
+  },
+  {
+    "path": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/DocInstallation.kt",
+    "sha256": "efa30a5ada396a56419c65d707a79993bc53abcc5ccfe6593766b1dfd8db4eb8"
+  },
+  {
+    "path": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/BadgeRecipes.kt",
+    "sha256": "909a163089dd1a37782539977d2bb64b63cc30f7b602690e0504c0d674b5189d"
+  },
+  {
+    "path": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/BadgeDoc.kt",
+    "sha256": "0a8304d617937021394c1659ffc5b827f5365a1b542cc7096fcc5e9eeacb5c02"
+  },
+  {
+    "path": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/badge/BadgeStyles.kt",
+    "sha256": "b3e800575700ed96602d77558240f59399d553b123e9a55bc15aeec5b50eef18"
+  },
+  {
+    "path": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/badge/Badge.kt",
+    "sha256": "88d366c309aa6d1fa3ba16917a77741f508db968d106c2b0603b866992f66994"
+  },
+  {
+    "path": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/spinner/Spinner.kt",
+    "sha256": "a844c71a1774d704f92112fd5f7af5eb10db022dde9d32197b2565e93d3746f9"
+  },
+  {
+    "path": "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/BadgeExamplesTest.kt",
+    "sha256": "7955371645b12d14612a6f313b76a5f721dd95c96b89123aac088881025beeef"
+  },
+  {
+    "path": "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/badge/BadgeExtendedApiTest.kt",
+    "sha256": "445c5d2da0914fbef0cdd357781785870612d223446ce220dbc723cac14331e7"
+  },
+  {
+    "path": "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/spinner/SpinnerIntrinsicSizeTest.kt",
+    "sha256": "d4c082d2068bdf9405a35daaaf0c01e88bb79d9c1fb8e8ac84f98872c32e2a03"
+  }
+]

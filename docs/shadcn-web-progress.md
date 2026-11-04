@@ -1,10 +1,12 @@
 # Web 对齐进度
 
-更新：2026-10-30。计划见 [shadcn-web-plan.md](shadcn-web-plan.md)。
+更新：2026-11-04。计划见 [shadcn-web-plan.md](shadcn-web-plan.md)。
 
 前八批基础实现及第九批六个组件的 Web 剩余实现已完成；本批详细范围与验证见文末。
 第九批相关回归、像素与 JVM/JS/Wasm 验证见文末；第八批及之前的证据保留。
 整站逐组件、逐状态验收仍未完成。清单中的未勾选项需区分“尚未开始核对”和“基础已验证、完整矩阵待关闭”；历史失配另见各批基准对照记录。
+
+质量验证口径更正（Message Scroller 第二轮发现）：历史记录中的“所属模块四项质量检查通过”指任务退出成功；默认 `:shadcn:core:detekt` 与 `:app:shared:detekt` 实际 sourceCount=0，并未分析公共源码。真正覆盖本轮改动的是两个 `detektMetadataCommonMain` 任务；本轮实际执行已发现大量规则报告，详情和范围见文末。既有格式/JVM/截图/Web结果仍按各自证据成立，不能据默认detekt成功推断完整静态分析通过。
 
 ## 本轮基线
 
@@ -51,6 +53,7 @@
 - [x] Button 首屏示例改成官方 Outline + Submit 组合。
 - [x] Nova Button 颜色、小尺寸、文字样式修正及定向回归。
 - [x] 主题切换文字颜色缓存修复及 Vega/Nova 回归。
+- [x] Web 手动浅深主题持久化、系统主题回退及存储不可用时降级；[验证](web-parity/theme-persistence-r1/README.md)。
 - [ ] 逐组件/逐状态完整验收（见下方清单）。
 
 ## 本轮改动与验证
@@ -118,23 +121,23 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 “基础已验证”表示已有本轮实现、定向测试和浏览器证据，后半句列出真实剩余范围；
 “尚未开始本轮页面与完整状态对照”表示该组件页还未进入本轮逐页核对。历史对齐结果不自动继承。
 
-- [ ] Accordion (`accordion`)：2026-10-30 已复查官方/本地桌面及手机、浅深色首屏；修正 FAQ 首屏、384dp 宽度、Nova 紧凑间距和末项边框。六组官方示例已补、hover/描边图标已修正、RTL 键盘回归通过；Borders/Card/语言选择器四象限已验证；保留内容 Tab/状态和动态末项分隔线回归通过；Basic/Multiple 真实内容及四象限已补验、200ms 动画反转回归通过；Disabled 四象限、受控拒绝及 forceMount 状态已验证；预览高度策略和扩展 API 全量矩阵待关闭，详见文末。
+- [ ] Accordion (`accordion`)：官网七组配方已逐轮对照；已修固定预览、Horizontal竖排与动态导航、RTL工具栏/Noto字体及20px行框，并补五组行为说明。r11常规六例48张新四象限浏览器图与Multiple全展开8图已复查，37项目录验证通过；共享Web主题持久化、七宽度水平布局已关闭，原生滚动基础桥接已验证。仍留字形/描述换行/垂直间距、代码面板细节、原生Hebrew标签，以及扩展API/Style/动态slot/辅助技术/触摸矩阵；见[页面布局新记录](web-parity/page-layout-r1/README.md)、[组件记录](web-parity/accordion-r11/README.md)及r7–r10。
 - [ ] Alert (`alert`)：九组示例四象限、Composition/四个 Kotlin API 小节、说明/源码导出及新目录跳转已验证；共享 focus-visible、说明弹层焦点、URL/标题锚点、代码框/内联背景已验证；操作区默认定位及多按钮调用者布局四象限已补验；全文法、超高操作/任意复杂槽位、窗口重排、辅助技术及细微排版仍待关闭。
 - [ ] Alert Dialog (`alert-dialog`)：官方七组预览、Composition/Kotlin API 已补；Media 桌面两列/手机与 Small 居中、24dp 图标、三语两尺寸切换及 Settings 链接已验证；56 项定向测试与六张 Nova 像素基准通过，桌面/手机浅深矩阵已检查。共用深色 input/border 令牌已在共享主题复核中修正；正文换行/字重及阿拉伯语回退字体、无障碍映射与四张旧 Vega 基准失配仍待关闭。
 - [x] Aspect Ratio (`aspect-ratio`)：Default/Square/Portrait/三语 RTL 组件复核完成；固定 caption 20dp 行框并修正 Nova Select 真实 Arabic 字体选项高度。三种宽度、浅深色、语言切换及展开代码保留状态已验证；53 项功能/布局测试、四张像素基准通过。色域/整数测量适配及共享页面剩余差异见文末第二轮记录，不代表全站 P1/P3 或 Select 已完成。
 - [ ] Attachment (`attachment`)：六组示例、Nova布局、Group吸附/键盘/渐隐/约束、整卡焦点和onClick hover，以及Features/Accessibility指南、目录/导出已补。第七轮按官网当前SVG修正FileSearch；实际标题14px/500字重和约148px排版字宽已验证，未调粗字体。26项目录回归、JS/Wasm构建通过；旧Vega、字形像素观感、自定义overlay hover、颜色过渡与原生辅助技术仍待关闭。按用户要求暂停逐轮细化，剩余项合并到后续统一处理；第八轮 hover 动画只有定向测试通过，尚未完成浏览器验收。证据见attachment-r2至attachment-r8。
 - [ ] Avatar (`avatar`)：2026-10-30 首轮主要差异已补：真实图片、九组官方配方与额外 Fallback、Composition/六个 Kotlin API 小节；修正 fallback 字号、外圈、图标徽标、RTL 徽标及绿色令牌，补齐菜单键盘导航。9 项测试、JS/Wasm distribution 和四象限浏览器检查通过。混合尺寸分组计数、图片混合边框、菜单完整焦点/像素矩阵等保留明确后续项，见文末及 avatar-r1。
-- [ ] Badge (`badge`)：基础已验证（第二批）；Nova 尺寸/字号/颜色与浏览器检查已完成，完整官方示例和交互矩阵待关闭。
+- [ ] Badge (`badge`)：七个官方页面示例已补齐；桌面/手机浅深28组双方截图及英语/希伯来语8组双方截图已复查；补 href/invalid/逻辑图标边距与 Spinner 固有尺寸修复，23项定向测试通过。原生链接语义、完整交互/辅助技术和共享页面差异仍开放。[证据](web-parity/badge-r1/README.md)。
 - [ ] Breadcrumb (`breadcrumb`)：2026-10-30 七组官方配方、Composition/七个 API 小节已补；修正 6dp 换行列表、4dp item 间距、14dp 镜像描边分隔符、20/16dp 省略号及链接 hover。9 项组件/目录定向测试、四象限七组浏览器检查、JS/Wasm distribution 通过；连同 Avatar 共 31 项联合验证和 13 张像素基准通过。共享手机宽度导致的换行差异、链接/导航原生语义和焦点细节仍明确保留，详见 breadcrumb-r1。
-- [ ] Bubble (`bubble`)：尚未开始本轮页面与完整状态对照。
-- [ ] Button (`button`)：基础已验证（第一、二批）；默认示例、Nova 样式和形状反馈已修正，非对称图标内边距及 Rounded/As Link/RTL 等完整示例待关闭。
+- [ ] Bubble (`bubble`)：2026-10-30 九组官方配方、Composition/四个 API 及可访问性指南已补；修正自然宽度/80% 上限、Ghost 全宽、字号行框、Muted/Tinted 颜色和反应行悬浮定位。17 项定向测试、16 张像素基准、JS/Wasm distribution、四象限首屏对照及静态检查通过。任意复杂槽位裁剪/多 Content 布局、按钮反应自动 padding、完整焦点及原生辅助技术矩阵仍待关闭，见 bubble-r1。
+- [ ] Button (`button`)：14组实际配方已整理，补Size配对/640dp响应、Rounded、Spinner、三语RTL与公开逻辑图标边距；修正Nova光标、Arabic20dp行框及加载/RTL自然宽度换行。17项定向测试、2张旧Nova基准显式verify、JS/Wasm与七组重点四象限对照通过。As Link、Group菜单/Tabler图形、invalid/expanded/pressed完整状态及共享页面差异仍开放。[证据](web-parity/button-r1/README.md)。
 - [ ] Button Group (`button-group`)：基础已验证（第六批）；连体接缝、嵌套图标按钮、默认菜单已修正，任意混合子项、纵向/尺寸矩阵及菜单完整图标待关闭。
-- [ ] Calendar (`calendar`)：尚未开始本轮页面与完整状态对照。
-- [ ] Card (`card`)：Nova 标题、描述、Action 与 Footer 已修复；Create 财务配方已补响应式摘要和真实铺满页脚，字体实际行高及 Image/RTL 等完整验收待完成。
-- [ ] Carousel (`carousel`)：尚未开始本轮页面与完整状态对照。
+- [ ] Calendar (`calendar`)：2026-10-30 完成首轮公历主要对照：15 组配方及源码、Composition/四组 API、预设/时间/已订日期/价格格/周数/RTL 已补。修正可变周数、日格/行距、真实焦点和键盘作用域、百年年份范围及月份边界；15 项功能/目录测试、12 张像素基准及 JS/Wasm 构建通过，十组官方与十五组本地四象限首屏已检查。波斯历、原生时间输入行为、caption 细节及完整辅助技术/交互矩阵仍保留，见 calendar-r1 和文末。
+- [ ] Card (`card`)：Nova 标题、描述、Action 与 Footer 已修复；Create 财务配方已补响应式摘要和真实铺满页脚，字体实际行高及 Image/RTL 等完整验收待完成；Carousel 对照另发现 Card 默认四向 padding 与官网仅 py-4 不同，目前在配方中显式覆盖，共享默认值待专项核对。
+- [ ] Carousel (`carousel`)：已完成首轮页面、七个官网配方及四象限浏览器对照；补齐 compound root、响应式多页、竖向、API、自动播放与 RTL，23 项定向测试通过。鼠标拖动、Embla options/loop/plugins 与完整状态仍待补齐，见 Carousel 首轮记录。
 - [ ] Code Block (`code-block`)：已补公开组合组件、编号/差异行/换行/复制与目录页；扩展示例及完整状态矩阵待验收。
 - [ ] Trace (`trace`)：已补公开状态行、折叠详情、键盘/受控回归与目录页；官方复杂工具调用示例待补。
-- [ ] Chart (`chart`)：Create 独立 Chart Color、六柱数据/几何和部分预览配色已修正并回归；Chart 本页及核心组件完整样式、示例、tooltip/键盘/辅助技术等状态对照仍未完成。
+- [ ] Chart (`chart`)：本页八组官方配方已迁移，补真实tooltip/键盘选点、系列切换、主题/图标、响应尺寸、数值域与日期轴修复。最新64项定向测试、两模块ktlint通过；44原生图一致，追加16张Web图复查。缩放后阿语轴重叠已修，官网/本地Mobile键盘180确认。五步骤320高及桌面48/手机0缩进已补，本轮51项app测试和20图复查通过。标题层级/Steps正文、窄屏日期刻度和动效/完整交互仍待补齐，详见chart-r1、chart-axis-r2及chart-preview-r3。
 - [ ] Checkbox (`checkbox`)：Nova 4dp 圆角、input 底色/边框、错误 ring、标签点击和控件焦点已修正；复杂组合与完整状态矩阵待关闭。
 - [ ] Chip (`chip`)：项目扩展，检查一致性。
 - [x] Collapsible (`collapsible`)：第九批完成 Web 剩余项：外部收起回收内容焦点、keepMounted 状态保持/隐藏语义、动画中断反转。
@@ -144,47 +147,47 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [x] Date Picker (`date-picker`)：第九批完成 Web 剩余项：本地时区、可配置 locale/周起始日/读屏日期、连续范围、多月换行、月界限、隐藏日期语义和真实键盘焦点；弹层显式初始焦点。
 - [x] Dialog (`dialog`)：第九批完成 Web 剩余项：4dp 背景模糊、初始焦点/Tab 闭环/恢复触发器、非模态背景交互与外部关闭；须在窗口根接入 OverlayHost。
 - [x] Drawer (`drawer`)：第九批完成 Web 剩余项：背景模糊和嵌套捕获、初始/恢复焦点、受控 snap 切换、真实顺序吸附、手势与外部关闭策略解耦；真机覆盖另列。
-- [ ] Dropdown Menu (`dropdown-menu`)：尚未开始本轮页面与完整状态对照。
-- [ ] Empty (`empty`)：尚未开始本轮页面与完整状态对照。
+- [ ] Dropdown Menu (`dropdown-menu`)：官网13个配方已全部移植，图标槽位、Complex/RTL、章节顺序和导出代码已补齐。21项定向测试通过；新增七配方四象限共28个展开/Escape画面验证通过。手机长菜单可滚动，默认宽度、指针聚焦、阴影/ring、完整状态及可访问树同步仍待关闭，详见文末。
+- [ ] Empty (`empty`)：官网七配方已全部基础移植，头像/灰度/外描组、搜索输入、真实说明链接和三语RTL已补；12项定向测试通过（含两张Nova独立verify），所属模块质量检查通过。浏览器四象限仍待授权恢复，旧截图12changed/4missing、平衡换行与完整状态仍保留。
 - [ ] Field (`field`)：Nova 间距/字号、448 响应式阈值、嵌套 disabled、支付表单示例已补；choice-card、嵌套组及完整 RTL 待核对。
-- [ ] Hover Card (`hover-card`)：尚未开始本轮页面与完整状态对照。
+- [ ] Hover Card (`hover-card`)：官网Default/Basic/Sides/RTL已移植，Trigger定时/键盘焦点、Nova面板及物理/逻辑side已补。12项行为、4项新旧截图独立verify、5项配方共21项通过，所属模块检查通过；浏览器四象限和完整状态仍待关闭，详见文末。
 - [ ] Input (`input`)：32 高、14/16 响应式字号、dark/disabled/invalid/focus 已修正；复杂组合与全状态矩阵待关闭。
 - [ ] Input Group (`input-group`)：基础已验证（第六、七批）；32dp 布局、附件聚焦、禁用/错误和单行按钮附件已修正，button/kbd 负 margin、复杂多控件与完整焦点矩阵待关闭。
 - [ ] Input OTP (`input-otp`)：基础已验证（第七批）；连体格、分组、编辑/粘贴/密码语义和默认示例已完成，光标闪烁、invalid API、完整 IME/自动填码矩阵待关闭。
-- [ ] Item (`item`)：尚未开始本轮页面与完整状态对照。
-- [ ] Kbd (`kbd`)：尚未开始本轮页面与完整状态对照。
+- [ ] Item (`item`)：官网11配方和10个API部分已基础移植；Nova尺寸/媒体/透明border、Header/Footer换行、列表间距/语义、href与固定内容列已补。23项定向验证及所属模块检查通过；浏览器四象限、HTML链接语义/target、完整状态仍保留，详见文末。
+- [ ] Kbd (`kbd`)：六组官方配方、Nova尺寸/排版/Tooltip对比度及新内容slot已补齐；19项定向验证通过，浏览器桌面/手机浅深及完整状态矩阵待验。见 Kbd 本轮记录。
 - [ ] Label (`label`)：基础已验证（第四、五批）；14 Medium、disabled 透明度和可点击标签已修正，Checkbox 基础依赖已补齐，复杂 Field 组合与完整状态矩阵待关闭。
-- [ ] Marker (`marker`)：尚未开始本轮页面与完整状态对照。
-- [ ] Menubar (`menubar`)：尚未开始本轮页面与完整状态对照。
-- [ ] Message (`message`)：尚未开始本轮页面与完整状态对照。
-- [ ] Message Scroller (`message-scroller`)：尚未开始本轮页面与完整状态对照。
-- [ ] Navigation Menu (`navigation-menu`)：尚未开始本轮页面与完整状态对照。
-- [ ] Pagination (`pagination`)：尚未开始本轮页面与完整状态对照。
-- [ ] Popover (`popover`)：尚未开始本轮页面与完整状态对照。
-- [ ] Progress (`progress`)：尚未开始本轮页面与完整状态对照。
-- [ ] Questionnaire (`questionnaire`)：尚未开始本轮页面与完整状态对照。
+- [ ] Marker (`marker`)：已读取官方八配方与 Nova/Rhea 相同样式规则；八组本地示例和 Nova 基础排版/间距/装饰图标语义已实现；13项新增定向验证通过，旧图4/5通过，浏览器及完整状态待验。
+- [ ] Menubar (`menubar`)：已读取官方六配方并开始修复；Nova栏样式、菜单上下文/滚动/键盘、选择语义和六组示例已补齐；27项定向验证通过，浏览器及完整状态仍待核验。
+- [ ] Message (`message`)：六配方、头像/Footer/ghost布局、元信息排版和API补齐；34项定向验证通过，浏览器四象限及完整状态仍待核验。
+- [ ] Message Scroller (`message-scroller`)：真实滚动原语及官网6/11配方已迁移；本轮新增Previous Context、Load History、Visibility，核心78项独立验证、目录31项通过。InputGroupAddon Style与Button调用方尺寸绘制问题已修复，公共版本0.3.14。其余5配方、浏览器四象限、窄屏目录触发器裁剪及原语遗留仍保留；真实公共源码Detekt未通过，详见文末。
+- [ ] Navigation Menu (`navigation-menu`)：官网Default/三语RTL的内容、真实导航、图标及768/1024媒体查询已移植，75条文案逐字核对；本轮修复面板链接悬停关闭/重开及Popup导航依赖作用域，公共版本0.3.16。核心22项独立验证、目录18项及两个ktlint通过；共享视口/Root align、浏览器及完整状态仍开放，详见文末。
+- [ ] Pagination (`pagination`)：官网Default/Simple/Icons Only/三语RTL已移植；Nova32dp/2dp间隔、响应式文字、RTL箭头、禁用及省略号语义已补，新增内容slot/size/style并修正Select当前值换行，版本0.3.17。核心24、目录16及两个ktlint通过，JS/Wasm成功；旧Vega2图预存失配，浏览器及完整状态仍待关闭，详见文末。
+- [ ] Popover (`popover`)：本轮已核对官网来源，修正 Nova 面板间距、圆角、阴影细环与完整行高；原生9项、两项ktlint与JS/Wasm已验证。五组官网配方已迁移，原生24项示例交互已过；默认非模态与焦点行为、动画及浏览器完整状态矩阵仍待完成。
+- [ ] Progress (`progress`)：本轮已对照官网来源，修正自动轨道、标签/数值横向换行、Nova字号、端点裁剪及进度语义；四组官网配方已迁移。原生29项验证通过，浏览器/完整样式与可访问性矩阵仍待完成。
+- [ ] Questionnaire (`questionnaire`)：本轮修正 Nova 选项图形/间距/字号、导航与验证、单选输入互斥、提交顺序和受控更新；官网 Default 三题流程已迁移。原生38项通过；其余13组官网配方及浏览器/完整状态矩阵待完成。
 - [ ] Radio Group (`radio-group`)：Nova 间距/错误状态、方向键循环、跳过 disabled、RTL/Home/End 已补；Tab 单入口、动态重排和完整矩阵待关闭。
-- [ ] Resizable (`resizable`)：尚未开始本轮页面与完整状态对照。
-- [ ] Scroll Area (`scroll-area`)：尚未开始本轮页面与完整状态对照。
-- [ ] Scroll Fade (`scroll-fade`)：尚未开始本轮页面与完整状态对照。
-- [ ] Select (`select`)：基础已验证（第七批）；默认水果示例、选中行定位、键盘/焦点和错误状态已修正，已按官网固定弹层宽度补 Nova 标签不收缩/不换行及 6dp 间距，长标签与希伯来语回归通过；复杂碰撞/长列表滚动、键入搜索、动态重排与完整 RTL 待关闭。
-- [ ] Separator (`separator`)：尚未开始本轮页面与完整状态对照。
-- [ ] Sheet (`sheet`)：尚未开始本轮页面与完整状态对照。
-- [ ] Shimmer (`shimmer`)：尚未开始本轮页面与完整状态对照。
-- [ ] Sidebar (`sidebar`)：尚未开始本轮页面与完整状态对照。
-- [ ] Skeleton (`skeleton`)：尚未开始本轮页面与完整状态对照。
+- [ ] Resizable (`resizable`)：官网四配方与三语 RTL 已迁移；Nova 分隔线/grip、0..100%范围、真实鼠标/触摸命中、键盘调节及嵌套比例已补。37项定向验证和两个ktlint通过；浏览器四象限、多面板/resize光标及完整状态仍待完成。
+- [ ] Scroll Area (`scroll-area`)：已迁移官网 Tags/三幅照片横向/三语RTL配方；Nova轨道、thumb端点、轨道点击及滚轮、键盘、双轴corner和Lazy拖动已补，49项定向验证与两个ktlint通过，JS/Wasm退出0但仍有诊断。浏览器、任意Root形状继承及完整状态仍开放。
+- [ ] Scroll Fade (`scroll-fade`)：七组官网配方、12%/40dp/96dp规则、逐边/尺寸/none、RTL停点及MessageScroller视口遮罩顺序已补；92项定向验证和两个ktlint通过。浏览器四象限、CSS fallback与完整状态仍开放，详见文末。
+- [ ] Select (`select`)：基础已验证（第七批）；默认水果示例、选中行定位、键盘/焦点和错误状态已修正，已按官网固定弹层宽度补 Nova 标签不收缩/不换行及 6dp 间距，长标签与希伯来语菜单项回归通过，本轮另补SelectValue当前值单行/省略、窄触发器不再换行裁剪；复杂碰撞/长列表滚动、键入搜索、动态重排与完整 RTL 待关闭。
+- [ ] Separator (`separator`)：官网五配方、Nova文本/间距与768dp响应式Menu已移植；默认语义及方向描述、自适应竖线调用方式已修正，32项定向验证及两模块ktlint通过，JS/Wasm退出0但仍有诊断。平台role差异、浏览器四象限及完整状态仍开放，详见文末。
+- [ ] Sheet (`sheet`)：官网四配方及三语RTL已迁移；响应式宽度、动画/焦点、Nova单侧border与shadow、Header/Footer/正文权重和RTL关闭按钮已补。55项定向验证及core/shared两个ktlint通过；浏览器四象限、旧基准审计和完整状态矩阵仍开放，详见文末。
+- [ ] Shimmer (`shimmer`)：已修复Style绘制/重组、实际currentColor、浅深高光alpha/OKLCH及九组官网配方；78项定向验证和core/shared两个ktlint通过。字体spread、自动减弱动态、色域/采样误差及浏览器完整矩阵仍开放，详见文末。
+- [ ] Sidebar (`sidebar`)：已核对官网来源并补桌面/移动端独立状态、响应式切换、Offcanvas内容保留/200ms动画、移动面板与内侧边框；内容滚动及Header/Footer/Group间距也已补齐，34项定向验证及两个ktlint通过。官网配方、浏览器四象限及完整状态矩阵仍待完成，详见 sidebar-r1/r2。
+- [ ] Skeleton (`skeleton`)：七组官网配方及三语RTL已迁移，Shimmer扩展复制代码已统一；脉冲Style逐帧重组49次问题已修复。50项定向测试、两项旧截图验证及core/shared ktlint通过，40张原生截图已检查。浏览器四象限及完整状态验收仍开放，见 skeleton-r1。
 - [ ] Slider (`slider`)：基础已验证（第六批）；Create Payout 静态 Progress 已换为真实 50..10000/step50 Slider，金额和键盘 Home/End 已回归；12dp Nova 滑块、填充/尺寸、键盘步进和 commit 已修正，多滑块标签、动态焦点与完整竖向/反转/RTL 手势矩阵待关闭。
 - [ ] Spinner (`spinner`)：已补内容色与行内尺寸继承；Attachment 第二轮按官网 LoaderCircle SVG 修正弧线半径、笔画及 sweep，验证实际绘制尺寸和 Style 覆盖，并显式验证浅深像素基准。Spinner 页面完整示例与交互复核仍待关闭。
 - [ ] Stepper (`stepper`)：项目扩展，检查一致性。
 - [ ] Switch (`switch`)：Nova 轨道/滑块尺寸、暗色滑块、150ms 位移、错误 ring 和标签焦点已修正；复杂组合及完整状态矩阵待关闭。
-- [ ] Table (`table`)：尚未开始本轮页面与完整状态对照。
-- [ ] Tabs (`tabs`)：尚未开始本轮页面与完整状态对照。
+- [ ] Table (`table`)：已补caption-bottom、Header40dp、单元格14/20与p8、行hover/selected、Footer半透明顶线、内容槽和横向溢出；四组官网数据/交互配方及三语RTL已加入。44项定向测试和core/shared ktlint通过，24张原生图已检查；共享自动列宽/跨列、希伯来字体及浏览器完整矩阵仍开放，详见 table-r1。
+- [ ] Tabs (`tabs`)：六组官网配方、四面板与三语RTL已迁移；默认Manual、单Tab入口/RTL键盘/动态顺序、隐藏面板状态与焦点、选中chrome及透明focus阴影已修正。58项定向测试、core/shared ktlint通过，44张原生图已检查；150ms颜色过渡、辅助技术及浏览器完整矩阵仍开放，详见 tabs-r1。
 - [ ] Text (`text`)：项目扩展，检查一致性。
 - [ ] Textarea (`textarea`)：64 最小高、上下 8 内边距、顶部对齐、内容自增高已补；完整组合矩阵待关闭。
-- [ ] Toast (`toast`)：尚未开始本轮页面与完整状态对照。
+- [ ] Toast (`toast`)：本轮进行中，已对照固定上游 Base UI Toast 源码，补 Default/Types/Promise 配方及管理器、图标和卡片样式；43项定向测试通过，堆叠/手势/动效和浏览器四象限仍待验。见 Toast 本轮记录。
 - [ ] Toggle (`toggle`)：Nova 字重/行内图标/间距/选中/小号圆角已修正，新增兼容 invalid 重载；非对称图标内边距、完整 hover/pressed 矩阵待关闭。
 - [ ] Toggle Group (`toggle-group`)：基础已验证（第六批）；连体样式、单选取消和方向键焦点已修正，Tab 单入口、动态重排与完整纵向矩阵待关闭。
-- [ ] Tooltip (`tooltip`)：尚未开始本轮页面与完整状态对照。
+- [ ] Tooltip (`tooltip`)：本轮进行中，已对照八份固定上游源码，接入五组官方配方并修计时、Escape、排版及箭头占位；30项定向测试及core/shared ktlint通过，32张原生图已检查；动效/剩余交互与浏览器矩阵待验。见 Tooltip 本轮记录。
 
 ## 旧 Badge 基准排查
 
@@ -1182,3 +1185,822 @@ Attachment 按用户要求暂缓，已转入清单下一个尚未开始对照的
 当前 ktlint1.0.1 对复杂 raw-string 插值产生了重复文本：AlertDialog 的 header、Attachment 图标和 Trigger 配方受影响。已改为预计算简单变量配合 trimMargin，并保留原 trimIndent 行为；新增配方回归检查，确保源码中仅有一个 vector builder、根/内层缩进正确且不泄漏生成器表达式。只是修复提交门禁引入的代码示例问题，Attachment 其余暂缓项不变。
 
 最终 `ktlintCheck` / `detekt` 全部通过；格式化后的 53 项联合回归及 13 张像素基准通过。随后追加 16 项定向回归（Attachment9、文档7，包含新增配方检查），JS/Wasm development distribution 均通过，再次通过静态门禁。相关 XML 和压缩 Gradle 记录见 [commit-validation.json](web-parity/breadcrumb-r1/commit-validation.json)。浏览器截图对应相同组件 UI；后续变更为格式和配方生成器修复，不把提交门禁通过扩大为全站组件验收。
+
+
+### Bubble 首轮（2026-10-30）
+
+按清单推进到 Bubble；Attachment 的未关闭项继续暂缓，不再逐轮打磨。本轮读取并保存官方 Base UI 源码、九组配方和 Nova/Rhea 样式，[来源](web-parity/bubble-r1/sources.json)。
+
+- 补齐 Default、Variants、Alignment、Bubble Group、Links and Buttons、Reactions、Show More / Collapsible、Tooltip、Popover。示例正文、真实点击通知、交互反应、折叠内容及错误详情均已接入；通知挂在窗口根层。补 Composition、四个 Kotlin API 小节及三组可访问性指南。
+- 气泡按内容测宽，非 Ghost 最宽 80%，Ghost 可用整行；继承 Message 的 End 对齐，RTL 镜像。默认 14sp / 22.75sp 行框显式保留 leading，Nova padding 12/8dp 加 1dp 边框。根 variant 向内容传递；Muted 使用 foreground，Tinted 按 OKLCH 相对色计算而非透明色叠加。
+- 反应行不参与父气泡测量，按自身高度偏移 75%、内联边缘 12dp；真实鼠标可点击超出气泡范围的按钮。互动内容提供 hover、键盘激活和 focus-visible。共享 Popover 增加无可聚焦子项时的焦点回退，使纯文本错误面板可 Esc 关闭，已有输入框自动焦点回归通过。公开签名调整，开发版本与安装示例同步 0.3.3。
+- 17 项定向测试通过（Bubble 核心 7、目录 8、Popover 焦点 2）。仅重录本轮影响的 12 张 Bubble 与 Message/MessageScroller 各两张基准，保留旧图；已检查 Nova 浅深色、聊天依赖图并独立 verify 共 16 张。JS/Wasm development distribution、ktlintCheck/detekt 通过。现有 Text 内部 API、AGP/Gradle 与可选 os/path Webpack 警告仍保留。
+- 官方/本地九组示例各 36 张首屏截图及四张对照图已检查，覆盖 1440×1000 和 390×844、DPR 2、浅深色；本地主题逐张按像素校验。桌面长内容尾部、实际展开状态及错误 Popover 过渡帧已另存截图；Popover 打开/关闭终态截图仍需补验，不将过渡帧计为终态验收。这不代表全部浏览器交互和超长内容四象限验收完毕。
+
+明确剩余范围：
+
+1. 官网此页 live preview 明确使用 Rhea/theme-blue；项目按 Nova 保留 8dp 纵向 padding、xl 圆角和 50% focus ring，不复制 Rhea 的 10px/22px/30%。手机官方滚动条使 clientWidth=375，本地 Canvas=390；共享页面内容偏移、标题/描述/代码框、字体和 emoji 栅格差异继续保留。
+2. 任意自定义槽位的 overflow-hidden、同一气泡多个 BubbleContent 的纵向 gap 布局尚未移植；当前 BoxScope 保持兼容。旧调用只在 Content 指定 Ghost 不会解除根层 80% 上限，新配方在根指定 variant。
+3. 按钮反应行需显式 Style padding=0，尚无 CSS has-button 自动检测；复杂 RTL 反应行、所有 variants 的 hover/focus/动画反转及原生辅助技术未全覆盖。
+4. 全部长内容尾部和 Tooltip/Popover/通知交互的浏览器四象限仍需补验；本轮功能测试通过不能替代该矩阵。
+
+Bubble 保持未勾选；下一项尚未开始完整对照的是 Calendar。用户新增桌面应用图标和托盘设置需求，先完成该增量，再继续清单。
+
+
+### 桌面应用图标和托盘设置（2026-10-30，用户新增）
+
+- 复用 Web Kotlin 渐变 favicon，生成带透明圆角的 1024px PNG；窗口、Dock/taskbar、托盘共用该图案，安装包配置 macOS ICNS、Windows ICO 和 Linux PNG。
+- 原生“设置”菜单新增“显示托盘图标”“关闭窗口时最小化到托盘”，默认启用并持久化；禁用托盘或系统不支持时关闭窗口直接退出，不留下无法恢复的隐藏窗口。托盘菜单提供打开、关闭策略和退出。Dock 重开、托盘打开及深链恢复原窗口，不重新创建导航状态。
+- 设置持久化测试及 macOS createDistributable 成功；ICNS 经 AppKit 解码验证，生成 app 已实际启动，无 Java/Compose 启动异常。完整手动托盘交互及 Windows/Linux 运行检查仍待验证，不据此声称跨平台运行验收完成。
+- 使用入口及验证边界见 [desktop README](../app/desktopApp/README.md)。完成该增量后继续 Calendar；Attachment 暂缓项保持原记录。
+
+
+#### 本轮最终门禁状态
+
+桌面入口拆分及显式导入后，`:app:desktopApp:ktlintCheck`、`:app:desktopApp:detekt`、`:app:desktopApp:test`、`:app:desktopApp:createDistributable` 联合通过。此前全仓 ktlintCheck/detekt 已通过；追加桌面改动后的最终全仓复查被自动审批系统因额度不足拒绝，未实际启动。未绕过该拒绝，也未执行依赖同一全仓检查的 commit hook，因此本轮改动尚未提交。证据见 bubble-r1/quality-validation.json；该状态不影响已经通过的桌面定向验证。
+
+
+### Calendar 首轮公历对照（2026-10-30）
+
+按“尚未开始本轮页面与完整状态对照”进入 Calendar；Attachment 暂缓项未重新展开。官方页面本轮明确指定 base-nova，不沿用 Bubble 页的 Rhea 例外。[来源与固定 revision](web-parity/calendar-r1/sources.json)、MDX、组件、12 个官方示例源文件和 Nova Calendar 样式已归档。
+
+已修改：
+
+- 将原来重复展示默认参数的目录页改为 15 组有意义的配方：Default、Basic、Range Calendar、Month and Year Selector、Presets、Date and Time Picker、Booked dates、Custom Cell Size、Week Numbers、RTL，加 Multiple、Disabled、Monday、Hide outside days、Month bounds。补 Composition、四组 API、时区说明及键盘指南；复杂配方的状态、价格格、已订日期、预设和时间 footer 代码已实际导出，未保留“见目录实现”的占位源码。
+- Default 使用系统时区的当前公历日期和 dropdown caption；Basic 无初始选择，Range 为当年 1 月 12 日至 2 月 11 日并显示两月。日期预设更新选择及可见月份；已订日期为当年 1 月 12–26 日，禁用、灰色并带删除线；价格格使用工作日 $100、周末 $120。保留单选点击取消的目录行为。
+- Nova 默认 28dp 日格，星期 12.8sp / 22.4sp、标题与表格间距 16dp、每周上方/周间 8dp；默认改为可变周数，显式 fixedWeeks 仍可固定六周。自定义 cellSize 作用于日期、导航、表头和周数栏；周数显示两位数。多月在小于 768dp 的窗口纵向排列。
+- 移除仅因“已选中”就显示的初始 focus ring，跟随实际焦点；日期键盘处理限定在日按钮，避免拦截月份按钮或 caption 的 Enter。原生日按钮可跳过禁用日期、跨月保留真实焦点；月份边界也约束键盘移动。dropdown 默认年份范围从前后十年改为锚定年份前 100 年至该年，默认年底禁止继续向后导航。
+- Calendar 按自然内容宽度布局，窄父容器不再将两位日期折成两行；保留官网大格在窄 Card 中被裁切的现象。Card 使用已测量的自然宽度：时间 220dp、已订 212dp、周数 240dp、大格 7×cellSize+16dp，预设最大 300dp；修复目录 Card 误撑到 500dp。预设按钮使用现有 Button 的 fillWidth Style 绘制等宽背景。
+- 核心增加 cellSize/showWeekNumber、CalendarGrid 自定义 dayStyle/dayContent 及 CalendarDayButton modifier/style/content，版本及安装示例同步 0.3.4。保持 core 无新日期库、Material 或图标集依赖。
+
+验证：
+
+- 最终 15 项功能/目录测试通过：核心 9、目录 6；覆盖尺寸/可变周、窄屏日期不换行、周数跨年、月份 Enter、禁用跳过/跨月焦点、日期槽位、百年范围与边界、未传 today 时范围保持锚定、真实预设、独立时间编辑、已订禁用、价格范围选择和配方导出。此前现有 Chinese/RTL、月份范围和 Nova 选择/尺寸回归也已定向通过，未将其扩大为全仓测试通过。
+- 只记录本轮影响的 Calendar 10 张及 DatePicker 两张基准，旧图保存在 baselines-before；检查对照图后独立 verify 共 12 张通过。周数补零后只重录对应两张并再 verify 全部 12 张。同步派生 docs/previews 和 metadata；也补齐上轮 Bubble 及直接依赖的派生预览，共 28 张，未重录其他组件。
+- 官方十组公历示例 × 桌面/手机 × 浅深色共 40 张，本地十五组共 60 张首屏截图，四张对照图已检查；本地主题以背景像素逐张验证。视口为 1440×1000、390×844，DPR 2。另存浅色桌面/手机 Range/Presets/Time/Custom 下半段八张，最后预设按钮背景已单独补验浅深色桌面/手机；实际月份切换至 November、鼠标选日后 ArrowRight+Enter 选中 16 日、月份菜单打开/Esc 关闭已检查。首屏和浅色补验不替代全部交互四象限。
+- JS/Wasm development distribution 成功；core/catalog 所属模块 ktlintCheck/detekt 均通过，最后预设绘制调整后 catalog 两项再次通过。保留原有 Text 内部 API、AGP/Gradle 及可选 os/path Webpack 警告。汇总见 [evidence.json](web-parity/calendar-r1/evidence.json)。
+
+明确保留：
+
+1. 波斯历/Jalali 需要独立历法引擎，当前 CalendarDate 为公历；已在页面和文档明确解释，未用翻译月份冒充实现。官网该示例为自带 32px 日期格的独立组件，仍需后续移植与日期换算验证。
+2. 时间字段目前为两个独立可编辑文本，不具备 HTML time 的分段、原生键盘操作及格式/范围校验；日期与时区转换已沿用既有 app helper，不代表所有历法/时区边界验收。
+3. Caption 目前为 DropdownMenu，不是官网透明 native select/combobox；字号/精确内边距、完整键盘、焦点返回及选项滚动待验。官网 Intl 默认浏览器语言显示“10月/十二月”，Kotlin 明确 English locale 显示 Oct/Dec，这个环境相关格式差异尚未统一。
+4. Arabic 星期已按官网真实标签修正；三语切换、Hebrew 的全部月份/标签、读屏日期长名称、网格/星期的原生语义尚未完整验证。周数目前按周起点、包含 1 月 1 日的周计算，ISO/自定义 firstWeekContainsDate 尚无完整支持矩阵。
+5. 不同 variants/disabled/hover/focus 的全部浅深状态、无选中/外部月份切换后的焦点、被拒绝的受控回调、复杂范围/外部日期、自定义槽位与超窄布局仍需完整复查。共享页面 P1/P3 的 15px 滚动条、内容/标题位置、字体栅格、代码及 API 表格差异仍沿用全站记录；首屏截取没有覆盖所有展开状态和深色长内容尾部。
+
+Calendar 保持未勾选。下一项优先进入尚未开始本轮完整对照的 Carousel。此前最终全仓检查遭自动审批额度拒绝的限制未绕过，本轮仅执行新增实现必要的所属模块检查；因此累计改动暂未 commit，待最终门禁可执行后提交。
+
+
+### Carousel 首轮页面、配方与行为对照（2026-10-30）
+
+按固定上游 `96da9cc7f1aa10580a3741664e2a77c721206c00` 的 Base UI / Nova 读取组件、MDX 与 Default、Sizes、Spacing、Orientation、API、Plugins、RTL 七个示例；另读取 Embla Autoplay v8.6.0 的 stop/reset 实现。[来源和校验值](web-parity/carousel-r1/sources.json)。
+
+已修改：
+
+- 新增 `CarouselRoot` 为内容及外置控件提供统一 state、orientation、Carousel 语义和键盘处理；`CarouselContent` 可继承状态。新增原生 Pager 的 PageSize、pageSpacing、userScrollEnabled 参数；公共 API 版本同步升至 0.3.5。
+- 上/下一页按实际 canScrollBackward/Forward 禁用，修复一屏多卡到末尾仍可继续点击的问题；快速导航以 targetPage 为基准。Nova 控件改为 28dp 圆形 Chevron，继承竖向/RTL 方向，其余 preset 保留原尺寸。
+- 七个官网配方与导出 Kotlin 示例同步，增加响应式尺寸、间距、多卡、竖向、页码、两秒自动播放和 RTL；保留额外 dots 配方。API 使用 settledPage 显示稳定页码。自动播放在 hover/drag 后停止；官网示例的 stop 后 reset 不会重新激活，已按真实源码处理。
+- 为卡片显式应用官网 py-4 与内容方形布局，使数字在完整卡片中居中；修正 RTL 工具栏占位挤压展示区的问题。Card 的全局 padding 差异留给 Card 专项，不扩大本次修改范围。
+
+验证与证据：
+
+- 官网七个配方及本地八个配方，分别采集 1440×1000 桌面、390×844 手机，浅/深色，DPR 2；已逐张检查四组对照拼图，另检查最终 Nova 默认浅色/竖向深色原始基准。[浏览器记录](web-parity/carousel-r1/local-browser.json)。拼图用于比对组件，裁剪区域和段落长度不同，不代表整页像素一致。
+- 浏览器实测 Next 从 1 到 2、ArrowRight 从 2 到 3；鼠标拖动后仍为 3，未通过。Compose foundation 1.12.2 `AbstractScrollableNode.CanDragCalculation` 明确过滤 PointerType.Mouse，已定位原生 Pager 的限制。桌面页面注入 touch 也没有翻页，不能据此声称手机真实触摸通过。[交互记录](web-parity/carousel-r1/browser-interaction.json)。
+- 5 项核心行为、6 项配方、12 项截图共 23 项定向测试通过，截图最后以 verify 模式独立验证；四个所属模块 ktlint/detekt 检查通过。[测试 XML](web-parity/carousel-r1/test-results)，[实现 ledger](web-parity/carousel-r1/implementation-ledger.json)，[质量 ledger](web-parity/carousel-r1/quality-ledger.json)。JS 与 Wasm distribution 构建任务 exit 0，但 ledger 仍捕获已有 webpack path resolve 字样，不能把 exit 0 解释为无诊断构建。
+- 四张旧 Vega 基准出现差异：只将导航函数临时替换为 HEAD 原函数后重跑，四张实际 PNG 与当前实现的 SHA 均相同，证明这部分导航差异已存在；保留旧图、对比图与复现记录后定向刷新。八张新增 Nova 基准单独记录，全部独立验证通过。[旧基准复现](web-parity/carousel-r1/legacy-differences/head-reproduction.json)。
+
+明确保留：
+
+1. 鼠标拖动尚不等价于 Embla；真实触摸、拖动暂停自动播放、快速/反向手势与滚轮边界仍需完整矩阵。
+2. Embla loop、align、containScroll、opts 和完整 plugins API 尚未移植；PageSize/spacing 只覆盖本轮配方。原生 Pager 需要有界 viewport，动态高度、任意内容/Style 覆盖仍待核对。
+3. native pageCount 是 item 数，Embla scrollSnapList 可能小于 item 数；API 当前在落定时更新，与官网 select 时机不同。完整事件接口尚未等价。
+4. RTL 已测 Arabic 导航方向并修正布局；三语切换、全部键盘焦点/读屏、语义和用户拒绝受控回调等完整状态未验。后台页面暂停、reduced motion 等 autoplay 生命周期也未完整验证。
+5. 全站 P1/P3 的横向偏移、375/390 client width、标题/段落/代码区域、字体栅格等差异仍保留；旧两张仅浅色 Vega 特例也未补深色。
+
+Carousel 保持未勾选，下一项优先 Dropdown Menu。最终全仓门禁此前被自动审批额度拒绝，本次未绕过，也未跳过 commit hook，因此累计修改尚未提交。
+
+
+### Dropdown Menu 首轮基础配方（2026-10-30，进行中）
+
+已读取固定上游 `96da9cc7f1aa10580a3741664e2a77c721206c00` 的 Base UI 组件、Nova CSS、MDX 和官网全部 13 个配方，保存[源码与校验值](web-parity/dropdown-menu-r1/sources.json)。本次先处理 Default、Basic、Submenu、Shortcuts、Checkboxes、Radio Group；其余 7 个不是已完成项，见[配方矩阵](web-parity/dropdown-menu-r1/parity-matrix.json)。
+
+已修改：
+
+- 首屏改为官网完整账户菜单：快捷键、Invite users 子菜单、GitHub/Support、禁用 API 与普通 Log out；触发器改为 Outline。新增 Basic，并同步六个配方的预览与导出代码、分组、宽度和初始状态。Submenu 包含 More options 下的第二层；Checkboxes 包含禁用 Activity Bar、可切换 Panel；Radio 默认 Bottom。
+- 原鼠标两层子菜单测试持续无法 idle。两份线程样本证明在重复创建/绘制 Popup，未把 FontMgr 栈误判为永久原生阻塞。修复 hover 打开的子弹层抢焦点造成的开关循环：hover 保持非聚焦，ArrowRight 再提升为键盘聚焦；打开的后代通过稳定 token 向祖先登记，避免跨入第三层时祖先提前关闭。保留原鼠标测试，并增加完整两层键盘进入和选取测试，两条路径均通过。
+- Nova 分隔线补齐官网 my-1/-mx-1 的 4dp 竖向间距和横向出血；Context Menu 别名去掉原来的额外间距，避免重复叠加。Nova 菜单字体使用不裁剪的 20px/16px 行盒，基础行实测恢复 28dp。快捷键从误用 CommandShortcut 改为官网原字符的 12/16 文本与 tracking，保留 ⌘B、⌘+T 的文本语义。
+
+验证与证据：
+
+- 5 项配方测试通过：禁用项/选择关闭、28dp 行高、复选状态跨关闭保留、鼠标两层选择关闭整树、键盘两层选择关闭整树。Label 的文字语义边界是 16dp，并不包含上下 padding；已据此修正测试，没有为了 24dp 断言放大文字。
+- Dropdown Menu 4 张、Context Menu 2 张、Menubar 2 张共 8 张截图独立 verify 通过；其中新增 Nova 浅/深两张，已人工查看。三个旧 Vega 基准先失败，保留旧图/实际图/对比图后，临时仅将三份菜单源码换回 HEAD 复现，实际 PNG SHA 全部与当前修改相同；恢复当前代码后才定向刷新这三张旧基准。[HEAD 复现](web-parity/dropdown-menu-r1/legacy-differences/head-reproduction.json)。
+- 四个所属模块 ktlint/detekt 门禁及 JS/Wasm distribution 命令 exit 0；仍有已有 webpack os/path resolve 字样，未声称无诊断构建。[验证 ledger](web-parity/dropdown-menu-r1/verification-ledger.json)，[测试 XML](web-parity/dropdown-menu-r1/test-results)。
+- 官网和本地六个基础配方均已采集桌面/手机、浅/深色展开态。此前用残留的 Web 可访问节点是否存在来判定关闭，得出了错误的“无法关闭”结论；本轮已纠正。临时回调和动画状态观测确认控制状态更新、动画落定；关闭后的真实画面已核实。正式干净构建下完成 24 个展开/Escape 视觉检查，以及默认菜单四象限的外部点击、Profile 选择关闭检查，关闭区域与原基准像素差均为 0。[六配方记录](web-parity/dropdown-menu-r1/r2-six-browser.json)，[外部/选择记录](web-parity/dropdown-menu-r1/r2-dismiss-browser.json)。可访问树仍保留旧 Profile 节点，读屏同步问题保留为待查。
+
+继续保留并优先处理：
+
+1. Icons、Checkboxes Icons、Radio Icons、Destructive、Avatar、Complex、RTL 七个官网配方尚未移植。本地旧参数示例很多，页面章节/顺序、Composition/API 与官网还未完整整理。
+2. 已确认的 Web 基础关闭路径见上述记录；两层鼠标/键盘、焦点返回、hover 转键盘、Enter/Space 开启、后退键、受控状态拒绝和外部主动打开等路径仍需完整覆盖。Web 关闭后的可访问树残留节点及读屏同步仍待排查。
+3. 菜单默认 anchor-width/min-width、子菜单默认最小宽、可用高度/滚动、读屏 menu/menuitem 与 checkbox/radio 状态语义仍待核对。本轮六个配方显式设置官网宽度，不代表核心默认宽度已对齐。
+4. Nova border 与官网外描 ring 的布局差别、阴影强度、指针打开时首行被自动聚焦/高亮（官网未高亮）及完整 hover/disabled/focus/RTL 图标状态仍需进一步核对；全站 P1/P3 的位置、滚动条、字体和代码展示差异继续保留。
+
+Dropdown Menu 保持未勾选。本轮未绕过此前被自动审批拒绝的最终全仓门禁和 commit hook，因此累计修改尚未 commit。
+
+
+### Dropdown Menu 浏览器判断修正与禁用色（2026-10-30）
+
+本轮纠正了上一轮“Web 无法关闭”的判断。临时回调日志显示外部关闭确实将受控 open 写为 false，动画状态也落定为 `(false, false, true)`；但 Canvas 的旧可访问节点仍保留在 DOM，原来等待节点删除的条件不成立。上一轮手机 Profile 选择后的截图本身已经显示菜单关闭，不能把等待条件超时解释为组件关闭失败。[原始回调记录](web-parity/dropdown-menu-r1/r2-callback-trace.json)、[动画观测](web-parity/dropdown-menu-r1/r2-transition-state.json)。临时日志已全部移除并重建干净 Web 预览，没有为了这个误判修改 Popup 动画或受控状态实现。
+
+- 六个基础配方各完成桌面 1440×1000、手机 390×844、浅深色共 24 个稳定展开与 Escape 关闭检查；先把鼠标移到触发器、等待悬浮样式稳定，再记录关闭基准，避免把代码按钮的悬浮变化算成菜单关闭差异。菜单区域关闭后与基准像素差全部为 0。已逐张查看四张组件对照拼图；手机小标题比桌面高 8px，裁剪坐标已据实修正。[24 项记录](web-parity/dropdown-menu-r1/r2-six-browser.json)。
+- 默认菜单另验证四象限的外部点击及 Profile 选择关闭，八次关闭画面差也全部为 0；同时每次 DOM 仍有一个旧 Profile 节点，直接证明原有存在性判断不可靠。[关闭交互记录](web-parity/dropdown-menu-r1/r2-dismiss-browser.json)。这些检查证明真实 Canvas 关闭行为，不代表可访问树/读屏同步问题已修复。
+- 对照图发现 Nova 禁用 API 文字先变为 muted，再经行 opacity 变淡，形成重复变淡。新增用例先 RED（实际基础色 #737373，对照正常项 #0A0A0A），再修正 Nova 普通菜单项保持基础前景色，仅经既有行 opacity 变淡。非 Nova 的原行为保留。浅深两张 Nova 基准定向记录、人工检查，Default/Basic 的八个受影响浏览器场景重新采集并复验关闭；其余 16 个未受影响场景沿用前一轮证据。[RED XML](web-parity/dropdown-menu-r1/test-results/r2-disabled-color-red.xml)、[八项复验](web-parity/dropdown-menu-r1/r2-disabled-color-browser.json)。
+- 最终 6 项配方测试、Dropdown/Context Menu/Menubar 共 8 项截图独立 verify 通过，四个所属模块 ktlint/detekt 检查通过；JS/Wasm distribution exit 0，仍记录已有 webpack os/path 字样。[最终验证 ledger](web-parity/dropdown-menu-r1/r2-verification-ledger.json)。
+
+仍未完成的是另外七个官网配方、默认宽度/可用高度、复杂嵌套和完整键盘/受控状态、指针开启时首行额外聚焦高亮、阴影/ring 几何及 Web 可访问树残留同步。下一步补 Icons、Checkboxes Icons、Radio Icons、Destructive、Avatar、Complex、RTL；Dropdown Menu 继续保持未勾选，Editor 仍排除，Attachment 遗留仍按用户要求后续集中处理。
+
+
+### Dropdown Menu 七组图标与复杂配方（2026-10-30）
+
+在前六组基础配方上补齐 Icons、Checkboxes Icons、Radio Icons、Destructive、Avatar、Complex、RTL；页面前13组按官网顺序排列，保留八组有独立行为价值的 Kotlin 扩展示例。描述、Composition、导入代码与 API 表已整理；RTL 导出示例不依赖目录私有预览包装器，头像使用已有打包资源。
+
+- CheckboxItem、RadioItem、SubTrigger 新增可空 leadingContent 槽位，core 不引入图标集；有图标的行仍由真实菜单项承担状态、点击与键盘行为。公共 API 版本及安装示例同步 0.3.6。
+- 根菜单及子菜单增加可用窗口高度限制和内部滚动。Complex 覆盖多层最近项目、主题单选、通知复选及共享 Sidebar/Email 状态；RTL 提供英/阿/希三语配方及方向切换。三语完整浏览器交互仍待验，不因配方存在而标记通过。
+- [最终测试与质量 ledger](web-parity/dropdown-menu-r3/verification-ledger.json)：13项目录配方测试、Dropdown/Context Menu/Menubar 的8项截图独立 verify 全部通过，本轮未重录基准；四个所属模块 ktlint/detekt 通过。JS/Wasm distribution exit 0，已有 webpack os/path 诊断继续保留。[四份测试 XML](web-parity/dropdown-menu-r3/test-results)。
+- 官网七组配方四象限28张展开截图已留存；本地同范围28次展开和 Escape 关闭检查全部通过，真实画面关闭后与各自基准像素差均为0。[官网记录](web-parity/dropdown-menu-r3/official-browser.json)、[本地记录](web-parity/dropdown-menu-r3/local-browser.json)。检查了桌面 Avatar、Complex、Radio Icons、RTL 和手机 Complex/RTL 等代表性原图；不声称其余截图已逐张人工复核。Avatar 的 Notifications 未发生换行。
+- 手机 Complex 的整屏高菜单初始看不到 Sign Out，菜单内滚动后可见，截图见 dropdown-menu-r3/local-phone-light-complex-scrolled.png。页面自身与官网的标题/段落滚动位置不同，导致本地菜单可用空间较小；不能把此画面说成官网等高或全部内容初始可见。
+
+Dropdown Menu 继续未勾选。剩余包括默认 anchor/min-width 和子菜单固有宽度、指针打开首行额外聚焦高亮、ring/阴影几何、完整键盘及受控拒绝矩阵、短窗口/真实触摸、读屏状态与 Web 关闭后可访问树残留。此前全仓最终门禁被自动审批系统因额度拒绝，本轮未绕过或跳过 commit hook，累计修改尚未提交。Ego Lite 提示可更新，未擅自升级。
+
+手机 RTL 滚动已单独复验，底部“تسجيل الخروج”可见。首次误点滚动了页面本身，已排除；重定位并查看触发器画面后再执行菜单内滚动，详见 [长菜单记录](web-parity/dropdown-menu-r3/long-menu-scroll.json)。下一项优先尚未开始本轮复核的 Empty；Dropdown 遗留保留，Attachment 仍按用户要求暂缓。
+
+
+### Empty 本轮源码与前三组配方（2026-10-30，进行中）
+
+读取固定上游 `96da9cc7f1aa10580a3741664e2a77c721206c00` 的 Base Empty、Nova CSS、MDX 与七组配方；十份源文件保存校验值，[来源](web-parity/empty-r1/sources.json)。实际官网配方为 Default、Outline、Background、Avatar、Avatar Group、InputGroup、RTL；本地旧列表存在大量仅重复默认参数的示例，不能算已覆盖官网。
+
+已修改：
+
+- Nova 默认不画可见边框；Outline 增加虚线外框和1dp边框空间，非Nova旧边框策略保持。第一轮新增截图暴露虚线在内边距以内穿过标题，已将Nova绘制顺序移到Style之前，最终浅深截图已查看。
+- Nova Header/Content 默认 max-width 384dp，Content填满可用宽度；用缓存Style实现，调用方Style仍可覆盖。显式根高度中内容垂直居中。标题由实际12px改为14/20，tracking从错误的-0.025sp改为-0.35sp；描述使用14/22.75并保留完整行盒。
+- 目录首三组改为官网实际项目空态、Cloud Storage Empty虚线轮廓及通知背景配方，预览和导出代码同步，增加Composition。其余四组暂未移植，不能把删除重复参数示例理解为全页完成。[配方矩阵](web-parity/empty-r1/parity-matrix.json)。
+
+验证：四项行为测试已通过，覆盖384dp上限、调用方覆盖为480dp、标题及描述排版、固定高度垂直居中。新增Nova浅深两张基准已定向记录并查看；独立verify和所属模块质量门禁结果待追加。初次编译的Text调用、预览参数名、无效文档字段及rememberTheme receiver用法错误均已修正，未因这些错误放宽断言。
+
+浏览器本轮未执行成功：原Ego工作空间18已不存在，listTaskSpaces仅返回用户所有的新标签页。按ego-browser运行指南禁止通过新建空间绕过丢失状态的规定，已请求用户允许重建，等待答复；未接管用户标签页，也未把历史图算作本轮证据。
+
+明确保留：四组剩余配方、Tabler媒体图案（当前前三组暂用Lucide近似）、Learn More链接行为与muted色、Outline桌面40/手机24dp预览inset、平衡换行、完整Style/radius覆盖，以及全部浏览器四象限和交互检查。Empty保持未勾选；Editor继续排除，Attachment继续按用户要求暂缓。
+
+最终验证补充：6项EmptyParityTest通过（4项行为、2张Nova独立verify），四个所属模块ktlint/detekt及shared JVM编译通过。[ledger](web-parity/empty-r1/verification-ledger.json)、[当前实现XML](web-parity/empty-r1/test-results)。旧EmptyScreenshotTest的16项未通过：12changed、4missing；修正本轮意外影响的nonNova字号/行盒后仍相同。仅临时替换Empty.kt为HEAD原实现复现，16张实际PNG的SHA全部与当前实现相同；恢复当前源码后保留该缺口，未重录旧图。[HEAD隔离复现](web-parity/empty-r1/legacy-differences/head-reproduction.json)。因此不能声称Empty整套截图通过。新增两张Nova文档预览按现有规则补24px边距，元数据已生成。
+
+
+### Empty 七配方、链接与媒体补齐（2026-10-30）
+
+- Avatar、Avatar Group、InputGroup、RTL 四组预览和导出代码补齐，前七组顺序与官网相同。头像使用已有打包资源，48dp并去色；组通过真实AvatarGroup提供-8dp重叠和外描2dp背景环，没有用内边框缩小照片。InputGroup保留本地输入状态，说明通过AnnotatedString呈现可点击的Contact support链接。RTL通过目录语言选择器切换官网英/阿/希文案和布局方向，导出代码不依赖私有RtlPreview。
+- EmptyDescription新增AnnotatedString重载，与普通文字共享排版；公共API版本与安装文档同步0.3.7。补齐六个组成部分的API表、导入代码和Composition。
+- 首三组及RTL的媒体替换为Tabler SVG原始路径，不再使用Lucide近似图案；使用v3.34.1（官网依赖声明^3.31.0范围内）并保留来源校验与MIT许可，core没有增加图标库。Learn More接入UriHandler和muted色；图标继承按钮/附加区的前景色，修正主按钮内图标仍为普通foreground的问题。Outline预览按768dp断点采用桌面40dp、手机24dp外部留白。这些修改是源码及测试层面完成，尚无本轮浏览器视觉验收。
+
+验证：[最终ledger](web-parity/empty-r1/r2-verification-ledger.json)、[测试XML](web-parity/empty-r1/test-results)。6项配方测试覆盖七组顺序、48dp实际头像及灰度像素、头像组40dp步进、编辑/清空搜索、支持链接点击、Learn More跳转和三语方向/顺序；6项核心测试（包括Nova浅深两图独立verify）通过。本轮未重录任何基准。四个所属模块质量门禁通过；最后一次仅改app后，重跑了app六项测试、shared质量门禁及JS/Wasm构建，没有无理由重复core。Web构建exit0，仍捕获已有webpack os/path诊断，不声称无诊断构建。
+
+保留差异：[矩阵](web-parity/empty-r1/parity-matrix.json)已更新。全部七组的浏览器桌面/手机浅深矩阵、平衡/pretty换行、完整键盘焦点/读屏、任意Style/shape覆盖及大内容布局仍未关闭；标题heading和Learn More按钮语义与官网div/anchor有差别。旧16项截图仍保留上一轮HEAD复现结论（12changed、4missing），未自动刷新。浏览器空间重建问题仍等待用户答复，没有接管用户标签或另开空间。Empty继续未勾选。累计工作未提交：此前全仓最终门禁因自动审批额度被拒，未绕过commit hook。
+
+
+### Hover Card 本轮复核计划与发现（2026-10-30，进行中）
+
+固定上游Base/Nova和官网配方见[来源](web-parity/hover-card-r1/sources.json)。实际依赖为Base UI1.6.0，已读取并保存该版本Trigger/Root/Popup及focus、dismiss实现；没有将master分支的实现作为固定版本依据。
+
+本轮计划：先修核心trigger定时/焦点/样式，补Default、Basic、Sides、RTL预览及导出代码，再运行定向行为与浅深Nova截图，并在浏览器恢复后检查桌面/手机四象限。
+
+发现与修改：
+
+- Base UI默认delay/closeDelay为600/300ms；官网Default/Basic显式10/100，Sides100/100，RTL10/100。本地旧默认0/100且作用在整个root，已将hover监听移到真实trigger，新增trigger级参数优先于root/provider别名。
+- 增加keyboard模式聚焦打开和触发器焦点下Escape关闭；延迟回调通过rememberUpdatedState读取最新值。初始defaultOpen/受控open不再因初始idle分支自动关闭。默认外部点击关闭改为Base UI useDismiss的true。
+- Nova面板为256dp、10dp内边距、lg圆角、外描foreground/10 ring和分层shadow；没有占据布局的1dp边框。明确内容14/20和popover前景色，并补100ms淡入/缩放/按side滑入。物理Left/Top/Bottom/Right及随布局方向变化的InlineStart/InlineEnd经HoverCardSide暴露，旧PopupPlacement重载保留。公共API版本及安装文档更新0.3.8。
+- 官网默认示例实际没有头像，是Hover Here链接样式按钮和@nextjs文本预览；已改正原本额外头像及错误文案。四组官网配方、Trigger Delays/Positioning说明、Composition和三个官方API部分已补，保留三组独立Kotlin扩展示例。
+- 首次行为测试存在输入夹具问题：enter需同时发moveTo，触摸用例需显式Touch模式；修正后触摸通过，但鼠标仍全部不触发。进一步定位到hover委托只在SideEffect读取，组合未订阅状态；已改为组合阶段读取Boolean，当前正复验。保存[RED测试](web-parity/hover-card-r1/test-results)，不因错误归因降低断言。
+
+明确待验/保留：安全多边形指针通道与文本选取保持打开、多个trigger/handle、非触发器焦点时的全局Escape、root额外布局内容下的实际anchor、RTL非居中align及碰撞边界、实际翻转side对应的动画原点、完整触摸/读屏/任意Style与动态主题矩阵。浏览器空间恢复仍等待用户答复，尚无本轮四象限视觉验收；Hover Card保持未勾选。
+
+
+### Hover Card 本轮验证结果（2026-10-30）
+
+最终[ledger](web-parity/hover-card-r1/verification-ledger.json)及[三份XML](web-parity/hover-card-r1/test-results)已保存。12项核心行为全部通过，覆盖600/300默认定时、trigger优先级、延迟期间最新callback、受控拒绝不反复回调、hover排除root其他子区域、触摸/disabled、keyboard focus与Escape不抢焦点、进入面板取消关闭计时、离开后关闭，以及Nova256×40/14×20和RTL物理/逻辑side映射。跨面板测试第一次在挂载前断言，补50ms挂载帧后保留500ms进入/350ms离开断言，通过后再全量复验。
+
+- 两张新增Nova浅深图定向记录并人工查看，随后独立verify通过；旧两张trigger基准也独立verify通过，没有刷新旧基准。截图夹具使用官网semibold标题及12/16 muted日期。原始Popup截图含透明大画布且靠窗口左边界，不代表整页或最终浏览器对齐；文档派生图只按既有规则铺主题底色、增加24px边距，不裁剪/缩放。
+- 截图检查时发现样式适配层会用最后一次dropShadow替换整个列表，原连续调用只留下ring；已改为单次vararg传入全部阴影。原生PNG底边外采样alpha逐渐24→18→9→4→0，证明阴影确实绘制；不把此探针等同于官网像素匹配。[探针](web-parity/hover-card-r1/shadow-alpha-probes.json)。
+- 5项目录配方测试通过，涵盖真实@nextjs文案、四个物理side的独立内容、三语商品/价格及两个逻辑side、受控预览状态、官方章节/API/导出独立性。四个所属模块ktlint/detekt通过；JS/Wasm distribution命令exit0，但仍捕获已有webpack os/path诊断，未声称无诊断构建。
+
+仍未完成：[矩阵](web-parity/hover-card-r1/parity-matrix.json)记录安全多边形指针通道/文本选取、多个trigger/handle、非触发器焦点的全局Escape、root额外布局anchor、RTL非居中align/碰撞、按实际翻转side选择动画原点、focus blur独立关闭时机及完整读屏/动态主题/自定义Style矩阵。本地focus blur当前沿用hover closeDelay，而Base UI有独立立即关闭路径。浏览器任务空间重建仍等待用户答复，本轮没有桌面/手机浅深视觉验收。Hover Card保持未勾选；下一项优先尚未开始本轮复核的Item。Editor仍排除，Attachment遗留仍暂缓。
+
+提交状态保持：实际pre-commit会运行全仓ktlintFormat/ktlintCheck/detekt；此前该最终全仓操作已被自动审批因额度拒绝，本轮只复核hook内容，未绕过、未触发被拒操作，累计修改尚未提交。
+
+
+### Item 本轮源码、配方与布局复核（2026-10-30）
+
+固定上游Base组件、Nova CSS、MDX及11组配方共14份文件已保存[来源及校验值](web-parity/item-r1/sources.json)。未依据旧的“本地示例更丰富”说明直接判断等价；实际Default、Variant、Size、Icon、Avatar、Image、Group、Header、Link、Dropdown、RTL与旧目录重复参数示例差别明显。
+
+修改：
+
+- Nova三variant均保留1dp边框空间，Default/Muted为透明边框，Muted改为50%填色，圆角lg；Default/Sm为12/10dp内边距、10dp间距，Xs为10/8dp、8dp间距。链接行支持100ms hover背景过渡和keyboard focus ring。
+- Nova根改用FlowRow且保留RowScope调用约定，Header/Footer可占完整独立行；非Nova保留原Row。ItemContent的4dp间距在Xs归零，新增fill=false表示不可伸展的尾列。标题14/19.25 Medium、单行ellipsis，描述14/21或Xs12/18、两行ellipsis；补AnnotatedString/textStyle支持，实际音乐标题可保留专辑的muted span。
+- Icon媒体不再强制32dp底色徽章；Image随Default/Sm/Xs为40/32/24dp。描述按真实组合注册/移除，媒体在有描述时置顶并平移2dp，移除后恢复居中。组间距按成员尺寸自动16/10/8dp，暴露原生collection信息；Separator增加8dp上下间距。
+- 新增href导航适配和显式onClick覆盖；Compose1.12.2没有公开Role.Link，href行保留通用clickable语义，不伪造内部Role值，也不宣称已等价HTML anchor。普通onClick仍为Button。API变更同步版本及安装文档0.3.9。
+- 官网11配方、10个组成部分API、Composition、Item vs Field说明与Kotlin导出代码已更新；保留真实按钮、Dropdown复合Item、三语切换和3列图片Header。既有头像及[6张远程原图资源](web-parity/item-r1/assets.json)已打包，预览不依赖实时下载。音乐渐变接口实际返回PNG，按响应格式保存；模型图片为原JPEG。
+
+验证与纠正：
+
+- [最终ledger](web-parity/item-r1/verification-ledger.json)、[三份测试XML](web-parity/item-r1/test-results)。9项核心行为、2张新Nova独立verify、4张旧截图独立verify、8项配方共23项通过。覆盖完整行宽/换行、透明border布局、图片尺寸、描述动态媒体位移、Xs字号/间距、组尺寸间距与初始列表索引、固定时长列、导航/禁用、实际crop配置；配方覆盖真实资源、Header图片在正文上方、音乐行导航、Dropdown选择关闭及三语action顺序。
+- 媒体第一次测得0dp，是testTag放在offset外层；改测实际子节点后2dp断言通过，未把期望改为0。文本getter第一次返回false，实际width124/maxLines1/Ellipsis/hasVisualOverflow均正确；源码证明JVM SkiaParagraph.isLineEllipsized固定返回false。[getter证据](web-parity/item-r1/ellipsis-getter-evidence.json)。新增窄标题/两行描述Nova截图，浅深原图人工查看，真实ellipsis可见，随后独立verify通过。
+- 旧两张浅色基准直接通过，两张深色仅边框RGB38→34。保存旧图/实际/对比后，仅暂换Item.kt与ItemStyles.kt为HEAD，并暂移新API测试以允许旧源码编译；两张actual SHA与当前实现完全相同。[HEAD隔离复现](web-parity/item-r1/legacy-differences/head-reproduction.json)。当前源码/测试已恢复；依据已落地BaseColor.kt的dark White/10令牌，人工查看后仅定向刷新这两张深色基准，再独立verify全部六图。未刷新两张浅色旧图。
+- 配方首次只有Invite选择器匹配两个合法按钮造成失败，已断言两者且分别检查enabled，未修改产品文案。四个所属模块ktlint/detekt通过；JS/Wasm distribution命令exit0，已有webpack os/path诊断继续留存。文档派生预览按既有24px边距/主题底色规则生成，元数据已更新；这些JVM图不等于浏览器整页验收。
+
+保留差异：[矩阵](web-parity/item-r1/parity-matrix.json)。全部11组的浏览器桌面/手机浅深四象限仍未验证，尤其窄屏Header/头像响应式需真实画面；href通过平台UriHandler导航，Web默认_blank与官网同页/新页target及rel属性尚未完全等价，原生整行Link角色亦未解决；相邻内容的CSS自动flex-none在Kotlin需显式fill=false，Xs在Dropdown中自动p-0尚未实现，当前配方显式8dp覆盖。平衡/pretty换行、Next图片优化像素、嵌套组选择器、keyed重排的collection索引、完整hover/focus/pressed/disabled/动态主题和任意Style约束继续待验。
+
+Item保持未勾选，浏览器工作空间重建仍等待用户答复；没有接管用户标签或新建替代空间。下一项优先尚未开始本轮核对的Kbd。Editor仍排除，Attachment遗留仍按用户要求暂缓。累计修改尚未提交：此前最终全仓门禁被自动审批因额度拒绝，实际pre-commit仍要求同一组全仓检查，未绕过。
+
+
+### Kbd 六配方、Nova 排版与 Tooltip 内容对比度（2026-10-30）
+
+按固定上游 96da9cc 对照 Base Kbd、Nova 样式、六个官方配方及 Tailwind preflight；[来源与校验](web-parity/kbd-r1/sources.json)。Default、Group、Button、Tooltip、Input Group、RTL 顺序与内容已补齐：实际内联段落中的 Ctrl+B/Ctrl+K、可输入搜索框、Save/Print 真实 Tooltip，以及 EN/AR/HE 方向切换。键帽仅展示快捷键，不安装全局快捷键处理器，与上游一致。
+
+- Nova 键帽高/最小宽20dp，水平内边距与组间距4dp，字号/行高12/16、Medium，默认内联图标12dp；普通组分隔文字采用等宽字体，键帽使用主题 sans。颜色与样式缓存包含当前主题和 Tooltip 上下文，调用方 Style 仍最后覆盖。Nova 禁止文字选取，父按钮点击可穿透到实际处理器。
+- Tooltip 只在实际内容区提供内部上下文：浅色键帽 background/20、深色 background/10，文字使用 background。覆盖真实 Tooltip 打开状态及运行中浅深切换，没有把 trigger 标记为 Tooltip 内容。
+- 新增明确命名的 `Kbd(content = { ... })` 内容重载，保留旧 `Kbd { text }` String lambda。测试发现把新 slot 放最后会吞掉旧 String lambda、显示空键帽，已改为 content 必选首参并验证 Ctrl→Alt 更新。公共版本与安装文档同步0.3.10。
+
+[验证 ledger](web-parity/kbd-r1/verification-ledger.json)、[测试 XML](web-parity/kbd-r1/test-results)：7项核心行为、4张新增 Nova 浅深/Tooltip 黄金图独立 verify、2张旧 Kbd 黄金图 verify、6项配方测试，共19项通过。行为覆盖几何、字体、图标、旧lambda、父按钮回调、调用方覆盖与真实Tooltip动态主题；单字符居中容许0.5像素Row整数取整，长Ctrl左右4dp内边距仍严格断言。四个所属模块ktlint/detekt通过；JS/Wasm命令exit0，但保留已有webpack os/path诊断，不声称无诊断构建。新增4张原图已目视检查，生成24px边距、不透明背景的文档预览并更新元数据。
+
+旧 Tooltip 六张黄金图均 changed，未刷新。只临时回退此次 content provider 一行重跑六项，其实际 PNG 与当前实现六张 SHA256 全部一致；已恢复 provider。[隔离证据](web-parity/kbd-r1/tooltip-legacy-differences/provider-isolation.json)。因此这些差异不由本次 provider 包裹造成，留待 Tooltip 专项复核，不能声称整套 Tooltip 截图通过。
+
+[剩余矩阵](web-parity/kbd-r1/parity-matrix.json)：浏览器桌面/手机浅深对照、内联段落响应换行/基线、平台等宽字体与官网 GeistMono 度量、完整选取/读屏/自定义交互slot/触摸状态仍待核验。浏览器工作空间重建仍等待答复，未接管用户标签。Kbd保持未勾选。下一项进入Marker；Editor排除、Attachment遗留暂缓。最终全仓门禁及依赖它的commit hook仍受此前自动审批额度拒绝限制，未绕过。
+
+
+### Marker 八配方与 Nova 基础样式（2026-10-30）
+
+官方 MDX 指定 base-rhea，但固定上游96da9cc的Nova和Rhea Marker规则逐字相同；本轮没有借此切换整个目录主题。[12份来源与校验](web-parity/marker-r1/sources.json)包括组件、MDX、八个配方、两套样式摘录。
+
+- 本地原来以Today和重复Pinned messages演示为主，现按Default、Variants、Status、Shimmer、Separator、Border、With Icon、Links and Buttons八组重建。Default恢复分支、Thinking、压缩分隔、文件搜索四行；Border恢复三条实际文案与Lucide图标，core没有添加图标库依赖。示例导出包含独立导入和正文，不依赖私有辅助函数。
+- Nova root补足全宽、最小高16dp、14/20字号/行高和muted前景；图标16×16dp并清除装饰子树语义。分隔线在原8dp间隔外补各4dp边距；底边1dp线内移半像素，完整落在组件范围内；Border底部8dp留白。旧非Nova排版与边框路径保留，调用方modifier与Style仍位于原根层并可覆盖尺寸。
+- 状态通过polite liveRegion接入；Spinner在装饰icon槽中不会重复宣读Loading。Shimmer接入已有文本brush效果。链接实际调用UriHandler，按钮实际触发toast。竖排图标示例通过调用方Column组合；root仍为Row，不声称支持CSS任意render/flex-direction。
+
+[测试 XML](web-parity/marker-r1/test-results)：6项核心行为、2张新增Nova浅深截图独立verify、5项配方测试通过。覆盖14/20排版、8dp图标间距、20dp实际行高/16dp空行最小高、Style尺寸覆盖、装饰语义、动态浅深颜色、完整1px底边与8dp底部留白，以及1px居中分隔线/12dp标签留白；实际链接跳转和按钮toast通过。两张新增图已目视检查并补文档预览，原有图未重录。
+
+旧5张截图最终4通过、1张separator_dark changed。只临时恢复HEAD的Marker.kt与MarkerStyles.kt进行隔离：separator_dark在HEAD仍失败且actual PNG哈希逐字一致，确认为预存差异。border_light在HEAD通过，定位为本次对旧图标无条件居中引入回归，已改为仅Nova Center、其他预设保持TopStart；恢复当前源码后的独立旧图verify确认border_light通过。[隔离过程](web-parity/marker-r1/legacy-differences/head-isolation.json)明确排除了成功用例遗留的旧actual文件，未拿陈旧文件冒充复现。
+
+[最终ledger](web-parity/marker-r1/verification-ledger.json)：core/shared四个ktlintCheck/detekt检查通过；JS/Wasm构建命令exit0，仍保留已有webpack os/path诊断，不声称无诊断构建。[剩余矩阵](web-parity/marker-r1/parity-matrix.json)明确保留浏览器桌面/手机浅深、完整键盘/触摸/读屏、hover/focus视觉、长文本与separator溢出、Style图标颜色继承及shimmer动画/减弱动态设置。链接使用官网绝对URL而非目录页内锚点，Compose原生没有Role.Link；上述适配不等同于HTML anchor语义。Marker保持未勾选。Editor仍排除，Attachment遗留仍暂缓。
+
+Marker保持未勾选，下一项优先尚未开始完整对照的Menubar。浏览器工作空间重建仍等待答复；最终全仓门禁和依赖它的commit hook未绕过，累计修改暂未提交。
+
+
+### Menubar 六配方、Nova 菜单与键盘导航（2026-10-30）
+
+读取固定上游96da9cc的Base组件、MDX、六个配方及Nova规则，[9份来源与校验](web-parity/menubar-r1/sources.json)。官网默认有File/Edit/View/Profiles四个菜单，本地原先缺Profiles与完整内容；本轮按Default、Checkbox、Radio、Submenu、With Icons、RTL六组重建并置于首位，保留39个Kotlin扩展示例。默认文件/编辑子菜单、禁用项、快捷键提示、View勾选与Profiles单选内容均按源配方补齐；上游未受控的勾选项及Radio/RTL真实setter示例使用本地remember，关闭重开后保留；literal checked=true及Default固定benoit/no setter保持只读，没有擅自变成可编辑。新增真实点击测试验证只读项不会变更。图标使用现有Lucide库，HelpCircle对应已安装库的CircleQuestionMark命名。
+
+- Nova栏高32dp，圆角lg，边框内留白3dp，触发器之间2dp；触发器14/20 Medium，水平/垂直内边距6/2dp、实际高24dp，hover/展开为muted。测试实测根边缘到首触发器4dp（含1dp边框），没有凭观感放松尺寸。
+- 每个MenubarMenu复用真实DropdownMenu root/content，保留同一anchor；菜单项获得Nova上下文、视口高度限制、滚动、方向键/Home/End/typeahead及子菜单行为。顶层左右方向键按LTR/RTL方向切换、跳过禁用项并循环，关闭态只移动焦点；菜单打开时横向切换另一个菜单。子菜单打开箭头先于顶层切换消费事件。Down打开首项、Up打开末项；Escape关闭并恢复原trigger焦点。
+- MenubarItem补自由内容slot用于图标，MenubarContent补align，RTL示例按方向指定Start/End；语言选择器切换官网EN/AR/HE文案与方向，导出代码包含自己的translations而不依赖私有RtlPreview。新增16个API部分、usage导入和composition。公共API与安装文档同步0.3.11。
+- Menubar选择标记与Dropdown不同：Menubar Checkbox/Radio用左侧16dp标记、6dp间隔、文字起点28dp；通过内部上下文只作用于Menubar两个别名，普通Dropdown继续右侧标记。Menubar行独立补md圆角，Label补14/20 Medium（普通Dropdown标签仍12/16）。同时修正共享Checkbox/Radio缺少标准toggleableState/selected语义的问题，保留原回调和文字描述；indeterminate也有标准状态。没有把测试改成只检查描述字符串。
+
+[测试 XML](web-parity/menubar-r1/test-results)：核心9项行为+6张Nova浅深图独立verify+旧Menubar两图verify，合计17/17；目录最终7项配方测试+普通Dropdown三项选择状态回归，10项通过，总计27项（来自独立定向运行）。除尺寸/字体外覆盖方向键循环和禁用跳过、RTL左右方向、Home/End、Up/Down初始焦点、Escape返回、开菜单切换、子菜单按键优先级、内容slot、Label、28dp选择文字起点与indeterminate语义。回归测试验证普通Dropdown checkbox持久化、带图标通知独立勾选和付款方式单选。源码内置上下文默认关闭、仅Menubar别名启用，普通Dropdown保留原右侧分支；本轮没有另做Dropdown选择标记像素位置验收。
+
+本次只录6张新Nova图，先检查原图后独立verify；菜单两图因md圆角修正做了定向更新，栏两图不重复录制。已有menubar_idle_dark在本轮开始前已是修改状态，本轮没有重录旧图。[新图范围与hash](web-parity/menubar-r1/new-goldens.json)。已生成六张不透明背景/24px边距的文档预览并更新元数据；弹层原图包含透明的1024×768测试画布，这些不是浏览器布局验收。
+
+[最终ledger](web-parity/menubar-r1/verification-ledger.json)：core/shared四个质量门禁通过，最后只读配方修正后的shared两项检查与目录7项测试通过。最终并行Web复验曾出现JS GC overhead OOM及Wasm在未改动ToastTheme处的后端异常；改为分别以`--no-parallel --max-workers=1`构建后，Wasm及JS均exit0，未修改Toast、堆大小或项目配置。[构建诊断](web-parity/menubar-r1/build-diagnosis.json)保留并行内存压力限制，不声称默认并行已稳定或旧webpack os/path诊断已消失。[剩余矩阵](web-parity/menubar-r1/parity-matrix.json)仍记录：单Tab停靠/roving焦点、root disabled/orientation/loopFocus可配置项、动态重排与重复ID处理、快速切换关闭/指针焦点策略、共享192dp固定面板与源码min-width/内容宽度、完整100ms动效/变换原点/退出/透明表面、selection别名部分inset/leadingContent等API、原生menubar/menuitem角色与完整自定义slot/Style/触摸/读屏矩阵。继承的press motion仍需与源码无额外按压缩放的状态比较。[浏览器当前状态](web-parity/menubar-r1/browser-status.json)重新确认原空间18仍不存在，其他空间均由用户持有。桌面/手机浅深对照仍待重建授权，没有接管用户标签，Menubar保持未勾选。
+
+Editor排除，Attachment遗留暂缓。下一项优先尚未开始完整对照的Message；此前全仓门禁被自动审批额度拒绝，未绕过依赖相同门禁的commit hook，本轮累计修改暂未提交。
+
+
+### Message 六配方、头像与元信息布局（2026-10-30）
+
+固定上游96da9cc的Base组件、MDX、六配方及Nova/Rhea Message规则已归档，[10份来源](web-parity/message-r1/sources.json)。两套Message CSS逐字相同；官网页面使用Rhea/theme-blue，本地六组配方使用Nova+Blue，并保留目录当前浅深色、基础色、圆角与字体。嵌套Bubble/Attachment/Button保持库内Nova样式，不伪称整个页面等同Rhea。
+
+- Default、Avatar、Group、Header and Footer、Actions、Attachment六组按官网正文、消息顺序、分组与状态重建，保留7个Kotlin扩展示例。三张头像使用上游原始02/03/10 PNG；Workspace复用已有同URL、同SHA的打包资源。[4项素材来源](web-parity/message-r1/assets.json)。Attachment仅组合已有API，没有修改或重新展开用户暂缓的Attachment内部差异。
+- Nova消息行/分组8dp间距、内容列10dp间距，普通文本14/20；avatar可省略，省略时不产生空节点或8dp空隙。MessageAvatar改为最小宽32dp、随内容测高并按最终shape裁剪，空头像仅占32dp宽、0高度；48dp头像可完整展示，字符串便利重载仍提供32dp头像。
+- Footer存在时头像按源码固定向上平移32dp，多个Footer不重复累加；移除全部Footer还原。Header/Footer为12/16 Medium、muted色、水平12dp留白；同消息Ghost Bubble存在时清零留白。部件通过DisposableEffect注册/注销，未在composition或measurement中回写Snapshot状态；头像偏移在placement读取，ghost样式缓存包含部件与主题状态。动态ghost移除、footer从2→1→0、兄弟消息隔离和运行中浅深色测试通过。
+- MessageContent新增可独立使用的modifier/style重载，同时保留旧RowScope扩展。Message root的Nova全宽走默认Style，调用方Style仍可覆盖宽度；内部列由Message持有。公共版本及安装文档同步0.3.12；补六部分API、正确导入与组合树。
+
+上游存在矛盾：MDX明确Header无论align均靠start；CSS的content下直接data-slot子项self-end选择器也会选中Header。本轮Nova Header按MDX靠start，Footer按消息侧对齐；该项作为已说明差异留待浏览器自定义End Header核实，没有冒称CSS与文档完全一致。
+
+当前[测试XML](web-parity/message-r1/test-results)：Message10项行为（含单独补跑的旧重载兼容项）、4张新增浅深/ghost图独立verify、7张旧Message图verify、Bubble7项回归及目录六项配方测试通过，共34项，来自独立定向运行。覆盖无头像间距、内在头像/空占位、动态Footer平移、ghost留白恢复与隔离、元信息排版与动态颜色、End Header/Footer位置、modifier/style宽度、RTL镜像、最终shape裁剪、原图与正文/反应/liveRegion、空头像分组文本对齐及操作按钮标签。旧RowScope额外兼容测试确认，新增无receiver重载没有吞掉原MessageContent尾lambda调用；240dp Row中尾部32dp元素仍完整占位，内容列保持weight分配。
+
+四张新原图已目视检查后独立verify，[录图范围与hash](web-parity/message-r1/new-goldens.json)。本轮未重录旧Message/MessageScroller基准；它们在此前轮次已有未提交变化。已生成四张24dp边距/不透明背景的文档预览并更新元数据。[最终ledger](web-parity/message-r1/verification-ledger.json)：所属core/shared四个质量检查通过；JS和Wasm分别以`--no-parallel --max-workers=1`成功构建，保持原堆大小及项目配置，未出现上一轮并行内存失败。之后仅清理代码示例空白行尾空格并追加JVM兼容测试，最终shared JVM编译及四项质量检查仍通过，未无理由重跑截图/Web。保留已有AGP/Text内部API/Gradle警告，未因本轮没有os/path指纹就宣称历史诊断已修复。
+
+[剩余矩阵](web-parity/message-r1/parity-matrix.json)保留：浏览器桌面/手机浅深对照、初次挂载/取消/重排的部件注册过渡帧、嵌套Message/portal/任意包裹层与CSS后代选择器差异、长连续文本与字体缩放、自定义style与footer/布局复杂状态、完整键盘/触摸/读屏。原生HTML title工具提示未重建。Copy/Like/Dislike/Retry/Download上游配方没有业务handler，本地同样展示有可访问名称的按钮，不声称实现剪贴板、反馈服务或PDF文件下载。Bubble及Attachment此前遗留保持原记录。
+
+[浏览器状态](web-parity/message-r1/browser-status.json)本轮重新只读确认：原空间18不存在，只有用户持有的0/1/3空间；正常桌面权限重试也相同，没有新建、接管或导航。重建授权仍待答复。Message保持未勾选；Editor仍排除。此前全仓门禁的自动审批额度拒绝未绕过，累计改动暂未commit。
+
+Message继续未勾选；下一项优先尚未开始完整对照的Message Scroller。
+
+
+### Message Scroller 第一轮：真实滚动控制器与 Nova 样式（2026-10-30，未完成）
+
+本轮没有把旧有的被动包装器或原生示例视为官网完整实现。固定上游 `96da9cc7f1aa10580a3741664e2a77c721206c00`，读取 Base 包装器、MDX、11个配方、`packages/react/src/message-scroller` 的实际控制器/命令/几何/状态与测试，以及 Nova/Rhea 独立 CSS。28个来源的 hash 已逐一验证，见[来源](web-parity/message-scroller-r1/sources.json)。页面使用 Rhea，而本库仍以 Nova 为主：Nova Content `gap-6`=24dp，Rhea `gap-8`=32dp；Root 的样式来自 TSX，不能因 CSS 没有 Root selector 推断其无样式。
+
+本轮发现并修改：
+
+- Provider 原来并未提供官网完整滚动能力。新增显式 State、一次性 Start/End/LastAnchor 开场、8dp边缘阈值、64dp前文预览；默认 `autoScroll=false`、开场 End。自动跟随在实际回到末端时重新启用，内容增长本身不被当作用户滚动。
+- Provider 内 Root 改为 BoxScope 框架，Viewport 真正拥有原生滚动，Content/Item 可独立组合，浮动 Button 显式作为 Viewport 的兄弟。保留无 Provider 的旧 Root 自动 Column/按钮与像素阈值适配。新增真实 messageId/scrollAnchor 注册、单新回合顶端锚定和尾部占位；流式回复消耗占位，仅占位从正数降至0时转交末端跟随。
+- suspend Start/End/Message 命令支持 Auto/Smooth、Start/Center/End/Nearest 与 Dp margin。未知/未挂载目标返回 false，目前还没有官网的待挂载ID队列。补上可滚动方向、当前回合和可见消息查询，排除前文 peek 和匿名ID；历史前插及上方行高度变化保持阅读位置，可关闭保留策略。
+- Content/Item 测量回调移至调用方 padding 外侧，修复目标位置少算 padding。布局回调只写普通几何缓存，通过合并通道在下一帧协调状态。默认 Content 间距32→24dp；Nova浮动按钮28dp，使用16dp Lucide描边箭头；退场期间立即不可点击、不可聚焦并从可访问树隐藏，保留动态Style/主题缓存。
+- 新增取消回归，先 RED 复现两处真实缺陷：UserInput 抢占布局补偿会取消整个 Root 控制器；等待 spacer 生效的跳转在指针按下后仍从0跳至536。修复后每次布局修正是结构化子任务，每条命令有调用方生命周期内的嵌套 job，按下/滚轮/键盘意图会取消待执行跳转。新命令覆盖旧命令时，旧取消清理不能清掉新命令的跟随状态。原生正在执行的 smooth-scroll 指针中断本来就通过，没有把它误报成修复项。继续复现初次 End 定位被 UserInput 中断后 `pendingScroll=true` 的问题（Viewport 因此持续 alpha0）；初次定位在 finally 清除此标记，中断后显示当前阅读位置，回归通过。
+- 公共API变化升为0.3.13。迁移时 Root 的 ColumnScope→BoxScope；Provider 内必须使用 Viewport，并显式放置 MessageScrollerButton；需要旧/Rhea间距请显式传32.dp。目录主用法、七个API段落和一个可操作的 `Provider controls (Kotlin)` 示例已更新；原生示例保留为补充，不冒充官网配方。
+
+验证与证据：
+
+- 核心独立 verify56/56：25项实际行为、2张新Nova浅深截图、15项既有纯函数、14张旧截图。目录示例3/3，验证跳转、加载历史保持位置、自由阅读不被追加消息拉走和显式末端恢复。所属core/shared四项ktlint/detekt通过。[矩阵](web-parity/message-scroller-r1/parity-matrix.json)与[测试证据](web-parity/message-scroller-r1/verification/)分别记录覆盖范围，不能据此声称官网页面验收完成。
+- 两张新Provider图片逐张查看，箭头纠正为描边后独立verify通过；[浅色预览](previews/message_scroller_provider_nova_light.png)、[深色预览](previews/message_scroller_provider_nova_dark.png)，新图片hash见[new-goldens](web-parity/message-scroller-r1/new-goldens.json)。
+- 旧图最初5项不匹配均逐张查看：4张Content/Viewport是本次公开默认间距32→24dp的预期变化；另1张dark start-button边框在只恢复HEAD按钮函数的隔离实验中逐字节相同，是已存在差异。隔离后恢复当前源文件，仅对这5张进行定向record，然后14张旧图独立verify全部通过；保留[隔离方法/结果](web-parity/message-scroller-r1/legacy-differences/isolation.json)、原始actual/compare与XML，没有批量刷新其他组件截图。
+- 本轮最终JS（134.7s）与Wasm（92.8s）分别通过，开场取消修复后core56/56、app3/3和所属四项质量检查均再次通过，见[验证矩阵](web-parity/message-scroller-r1/parity-matrix.json)与[Gradle ledger](web-parity/message-scroller-r1/verification/gradle-ledger.json)。两目标分开执行 `--no-parallel --max-workers=1`，没有修改项目堆或并行配置。
+- 原浏览器任务空间18仍不存在：默认沙箱启动失败，正常桌面权限只读重查返回 `task space not found: 18`。未创建替代空间或接管用户标签，重建请求仍待答复；本轮没有桌面/手机×浅深浏览器验收，详见[browser-status](web-parity/message-scroller-r1/browser-status.json)。
+
+剩余差异和下一步：官网 Default、Anchoring、Group chat、Previous context、Streaming、Opening position、Load history、Animation、Commands、Visibility、Scrollable 共11个配方的真实聊天数据、布局及交互还未替换到目录页，[后续逐配方计划](web-parity/message-scroller-r1/plan.md)列出迁移顺序和验收门槛；下一轮继续 Message Scroller，不能先当作已完成后转向 Navigation Menu。滚动原语仍缺未挂载ID命令队列、完整region/log/additions/busy辅助技术映射、细滚动条和stable gutter/overscroll/content-visibility、任意wrapper/多viewport/变换坐标/选区与重排矩阵、完整Button render/variant/size转发；其余键盘/RTL/主题/Style/字号及手势过渡验证见矩阵。Message Scroller保持未勾选，Editor排除，Attachment暂缓项保持。此前全仓pre-commit门禁遭自动审批因额度拒绝，未绕过；累计改动仍待可运行最终门禁后提交。
+
+
+### Message Scroller 第二轮：三个官网配方及其真实依赖（2026-10-30，仍未完成）
+
+按上一轮[计划](web-parity/message-scroller-r1/plan.md)继续，新增 Opening Saved Threads、Jumping to Messages、Reading Scroll State 三个官网配方；没有用原生 Provider controls 替代这三个示例。仍固定96da9cc，本轮额外读取 MessageAnimated、动画预设、Base Tabs、Nova Card/Tabs 选择器，来源归档累计33文件，见[来源](web-parity/message-scroller-r1/sources.json)。官网配方默认Rhea（MessageAnimated实际导入radix-rhea），本库依然对齐Nova目标；例如常规内容间距24dp、Card间距16dp为Nova，不误用Rhea数值。
+
+新增和修正：
+
+- **Opening Saved Threads**：保留原四条消息和open-* IDs、560dp高/最大384dp宽卡片、三个等分Tabs。初次测量完成后显式跳open-3并保留64dp前文；start/end/last-anchor切换及重复点击已实现。不把一次性LastAnchor的“短回合回退末端”替代官网显式跳转，也不声称具有浏览器before-paint的同样时机。
+- **Jumping to Messages**：原八条消息、四个用户锚点及文案；Jump to…下拉、Conversations组、256dp菜单、超过42字符取前39字符加省略号、选择后关闭菜单并Smooth/Start跳转。无Footer卡片保留外侧16dp底部留白，Content独立16dp内边距，宽度缩小时CardAction不会遮住描述。
+- **Reading Scroll State**：保留12条checkpoint消息、16dp行间距及官网四种完整页脚文案，状态来自真实messageScrollerScrollable查询。用户消息按固定源码以10dp/260ms/[.16,1,.3,1]入场，助手初始不动；内容段落间距8dp。动画中间帧、系统减少动态效果联动仍未做浏览器验收。
+- **组件依赖Tabs**：Nova trigger原来16×4内边距，改为源码6×2和1dp透明边框；水平25dp高来自32dp列表扣6dp内边距再扣源码calc的1dp。选中indicator改跟踪真正的外层trigger，修复等分Tab底色只包文字；字符串标签采用单行intrinsic测量，修复手机last-anchor换行后被裁切。深色选中底色/边框使用input/30与input，避免黑色底。Vega的间距/配色保持原值；Tabs独立页面/完整状态并未据此宣称完成。
+- **真正的手机反馈循环**：初次运行在手机底部页脚断言处持续占用CPU，已由测试线程栈和运行状态确认后，经wrapper停止该次运行。页脚在“middle一行”和“bottom两行”切换，缩小视口后旧末端位置变成离末端20dp，导致状态反复翻转。新增RED复现缩小200→160后仍停400而非440；修复仅在内容不变、无anchor/spacer且原本在末端的视口缩小时保持末端，不启用autoScroll=false后的内容跟随。自由阅读保持不动，后续追加也不被拉走。没有固定页脚高度掩盖问题；该逻辑是KMP原生布局修正，不声称React中有同样显式代码，浏览器原生锚定效果仍待对照。
+- 导出代码由[scripts/generate_message_scroller_recipe_code.py](../scripts/generate_message_scroller_recipe_code.py)直接从编译预览的imports/shared/各配方段生成，包含原始数据和辅助函数；生成幂等，不独立维护另一份示例实现。三个配方置于旧补充示例之前；实际官网Default完整聊天首屏还没迁移，当前首屏临时为Opening Saved Threads，保持明确缺口。
+
+验证及未关闭项：
+
+- 核心独立verify62/62：Scroller29（27行为+2新Nova图）、既有纯函数15、旧Scroller图14、Tabs Nova4（2行为+2新图）。目录15/15：三个配方×桌面/手机宽度×浅/深共12组完整交互，加原有Provider controls3项。手机footer循环修复后完整执行结束，初次定位/重复Tabs/下拉前后跳转/Home/PageDown/End和页脚状态均验证通过。
+- 生成并逐张查看了12张**原生**画面：432/360dp容器，24dp外侧留白，对应384/312dp卡片；这些不是浏览器截图。截图曾揭示测试未发现的手机标签裁切，已修复并重新查看最终画面。[原生图片及hash](web-parity/message-scroller-r2/native-captures.json)、[XML与中断诊断](web-parity/message-scroller-r2/verification/)、[浅色Opening](previews/message_scroller_opening_light.png)、[深色Opening](previews/message_scroller_opening_dark.png)。
+- 只定向record两张**新**Nova Tabs图，查看后独立verify通过；[新图hash](web-parity/message-scroller-r2/new-goldens.json)。旧Vega5图中2通过、3存在底部条带差异：states_light、states_dark、item_focused_light。分别恢复Tabs.kt/TabsStyles.kt到HEAD的隔离实验仍得到三个逐字节相同actual；当前源码已逐字节恢复，旧基线未刷新。保留[对比图/隔离结论](web-parity/message-scroller-r2/legacy-differences/isolation.json)，不把这三项报成绿色或本轮引入的回归。
+- core/shared格式检查通过；默认两个detekt任务其实sourceCount=0/NO-SOURCE。只读task元数据确认真正覆盖本轮公共源码的是detektMetadataCommonMain，分别覆盖221/131文件，detektJvmMain反而只有2/3个平台文件。实际运行两个正确task **未通过**：core10731项，app26557项。当前涉及文件也有报告，没有把全体违规未经隔离就归为既有；不在UI配方迁移中清理全模块规则或改构建配置。[源码覆盖元数据](web-parity/message-scroller-r2/verification/detekt-source-metadata.json)、[core摘要](web-parity/message-scroller-r2/verification/core-detekt-summary.json)、[app摘要](web-parity/message-scroller-r2/verification/app-detekt-summary.json)、[完整压缩XML与hash](web-parity/message-scroller-r2/verification/detekt-reports.json)已保留，文档开头已更正历史验证口径。
+- 最终JS132.5s、Wasm94.3s分别通过，见[本轮矩阵](web-parity/message-scroller-r2/parity-matrix.json)与[Gradle ledger](web-parity/message-scroller-r2/verification/gradle-ledger.json)。两目标分别单worker运行，未改项目堆/并行配置。
+- 新鲜只读重查仍返回原Ego任务空间18不存在；没有另建空间或接管用户标签，重建请求仍待答复。本轮没有浏览器桌面/手机×浅深验收，见[browser-status](web-parity/message-scroller-r2/browser-status.json)。
+
+仍余8配方：Default、Anchoring、Group Chat、Previous Context、Streaming、Load History、Animation、Visibility；下一轮按计划继续Visibility/Load History/Previous Context。已迁移的三个也仍需官网浏览器完整状态复核，Opening/Commands脚注的CSS text-balance目前仍为原生普通居中换行；Tabs的active shadow、hover/focus/文字透明度、variants/RTL/辅助技术、自定义Style等完整矩阵仍待独立页面核对。上一轮滚动原语遗留继续开放，其中官网仅在itemCount===0时排队未知ID，不能扩大为任意未知ID都排队。Message Scroller继续未勾选，Editor排除，Attachment暂缓；旧截图差异、Rhea/Nova目标区别、首屏和浏览器缺口均记录在[矩阵](web-parity/message-scroller-r2/parity-matrix.json)。此前全仓提交门禁遭自动审批因额度拒绝，未绕过hook，累计改动仍未commit。
+
+
+### Message Scroller 第三轮：前文、历史与目录配方（2026-10-31，仍未完成）
+
+本轮按固定上游 revision 96da9cc 补齐 Previous Context、Load History、Visibility，累计6/11个官网配方；[42份来源及hash](web-parity/message-scroller-r1/sources.json)、[本轮源码事实](web-parity/message-scroller-r3/source-notes.json)、[剩余矩阵](web-parity/message-scroller-r3/parity-matrix.json)。导出代码继续从实际编译的源码区域生成，六个示例各含独立导入与辅助函数。实际 Default/chat 仍未迁移，临时首屏现为 Keeping Context Visible，不能把它视为官网默认示例完成。
+
+- Keeping Context Visible：保留原8条消息，`get(2)`是最初两条消息而非两轮对话；64–128dp前文滑块、24dp margin、固定下一条用户文本、两行省略、Plus菜单、发送与重置均按源码接入。读取实际helper确认先等待1000ms，再按词及尾随空白每35ms输出；忙碌时禁用控件，连续三次发送后显示耗尽提示。协程由keyed子树拥有，重置/卸载取消；没有独立游离任务。
+- Loading Earlier Messages：先显示原10条中的后5条，一次加载全部，按钮随后为禁用的History Loaded，并显示真实toast；匿名End of Conversation标记不注册锚点。前插保留读者原段落位置，Reset只重建Root并保留Provider。此前计划写的“多次批量加载”不符合官网实际配方，已更正。目录使用窗口toast host；独立导出示例可传ToastState，缺省局部Toaster的位置差别保留说明。
+- Tracking the Reader’s Position：原4个用户ID、12dp margin、36dp外侧触发器、256dp左侧面板及当前行样式，接入真实锚点查询、焦点/悬停和顺滑跳转。官网外侧几何在原生窄布局中导致触发器大部分被裁掉，尚未擅自改到卡片内部；需恢复浏览器后对照实际溢出/碰撞与触摸打开行为。selected语义也不等同完整aria-current=location映射。
+
+配方发现并修复两个真实组件依赖问题：
+
+- InputGroupAddon两个重载增加`style`，默认逻辑内边距缓存为Style，调用方按边覆盖而非累加；将点击/焦点修饰符放在styleable外层，使padding也可点击聚焦输入框。新增5项几何、RTL、String重载与真实点击回归；API及安装示例同步0.3.14。修正旧focused测试为实际编辑框tag后，用精确的本轮之前组件体加无行为Style签名shim隔离，旧12张默认图逐字节一致；[隔离证据](web-parity/message-scroller-r3/legacy-differences/focused-isolation-result.json)。这项隔离在Button修复之前进行，不能扩大为最终Button版本已复验全部旧图；旧基准未重录。
+- Button原先`fillMaxWidth`只扩大可点击外层，绘制层仍包住文字，History底部按钮没有铺满。改为单子节点Layout把原调用方约束传到绘制层，再单独扩展最小触摸区域；全宽、指定高度实际着色，并保留48dp触摸区域内28dp图标按钮尺寸。尺寸测试由3失败/1通过变为4通过，另7项既有Nova回归通过。
+
+[最终XML与ledger](web-parity/message-scroller-r3/verification)：核心独立verify共78项（Scroller29行为+15纯逻辑+14旧图，Tabs4，Addon5，Button尺寸4与Nova7），目录31项通过；两个所属ktlintCheck通过。JS/Wasm分别以单worker非并行方式构建成功，耗时147.935s/94.733s。最后新增的测试仅核对已保存PNG色值，未更改产品代码。本轮未录制新旧黄金基准。
+
+[20张原生画面及hash](web-parity/message-scroller-r3/native-captures.json)已逐张查看，覆盖三组初始态、Context发送耗尽和目录面板，在432/360dp内容约束及浅深色下采集；实际卡片宽384/312dp，底层测试场景仍为1024×768，不能当成手机浏览器viewport或弹层碰撞证据。已添加六张文档预览。曾观察手机深色目录当前行疑似白色，但异常原图未单独归档，未能复现；新增保存PNG的色值断言在四例单独运行和完整31例顺序中均通过（深色#262626、浅色#f5f5f5），最终图已复看。本轮未修改主题代码，也未宣称已找到异常根因。
+
+浏览器仍未验收：原Ego工作空间18的只读检查返回不存在，既有重建询问未收到答复，未接管用户标签或另开空间。[浏览器状态](web-parity/message-scroller-r3/browser-status.json)。上轮真正覆盖公共源码的Detekt仍失败（core10731/app26557条）；本轮未重复相同失败，也不能拿默认任务零源码成功当作静态分析通过。现有警告与Tabs/原语遗留继续保留。
+
+仍余Default、Anchoring、Group Chat、Streaming、Animation五配方；六个已迁移配方也需要浏览器四象限与完整状态验收。text-balance、tabular-nums、完整辅助技术及原语差异见矩阵。此前“必须先做完Scroller再转Navigation Menu”是代理拟定的顺序，现按用户“优先尚未开始本轮页面与完整状态对照”的要求调整：下一项Navigation Menu；以上缺口保持开放，Message Scroller不勾选。Editor排除，Attachment遗留继续暂缓。累计修改未提交：此前全仓pre-commit遭自动审批因额度拒绝，未绕过hook。
+
+
+### Navigation Menu 第一轮：Nova 基础样式与真实开关事件（2026-10-31，仍未完成）
+
+按用户优先级开始本轮此前尚未核对的Navigation Menu。[官网文档](https://ui.shadcn.com/docs/components/base/navigation-menu)与固定上游96da9cc的组件/Default/RTL/Nova样式、实际依赖Base UI 1.6.0原语及常量共[10份来源和hash](web-parity/navigation-menu-r1/sources.json)；[完整计划](web-parity/navigation-menu-r1/plan.md)、[剩余矩阵](web-parity/navigation-menu-r1/parity-matrix.json)。官网首屏并不是原来的Home/Getting started/Docs三项原生示例，旧首例已明确标为Native overview (Kotlin)；完整Default和三语RTL仍需移植，不拿旧示例当作配方完成。
+
+- Nova列表间隔改为0；Trigger为36dp高、10×6dp内边距、14/20 Medium，补12dp装饰箭头、4dp间距/1dp偏移和300ms旋转，打开态muted/50、hover/focus为muted。Link为8dp内边距、14/20常规字号，面板内md圆角、外侧lg圆角；面板内抑制额外focus ring。Panel取消强制320dp，改为内容固有宽度、4dp内边距、popover前景色继承、外描ring和shadow。既有非Nova样式保留，旧3图独立verify通过。
+- 固定依赖源码确认打开/关闭默认均为50ms，补closeDelayDuration；旧skipDelayDuration作为Kotlin扩展保留。延迟任务改为读取最新controller/回调，禁用或卸载清理悬停状态，旧关闭任务只关闭仍为自己ID的当前项。测试中的旧回调old:first及禁用后仍请求first均已复现并修复。
+- 复验曾在203秒后通过wrapper中断，不能计为通过。后续真实状态记录确认持续悬停时重复first/null循环；单看全局输入模式无效，因为桌面可能默认Keyboard。现在由稳定item scope记录实际打开方式：悬停/触摸不抢焦点，键盘打开在下一帧聚焦实际面板。Escape关闭后只在关闭被接受、没有其他项打开时恢复仍挂载的触发器；控件ID不再覆盖可访问名称，使用真实可见文案。
+- 真实触摸第二次点击曾记录`first → null → first`：外部关闭先在按下时发生，松开时已重组的触发器又按新状态打开。现在保存按下时expanded快照并据此切换，键盘清空指针快照；修复后实际双次触摸可关闭。官网500ms悬停点击粘滞窗口来自同版本常量，已按指针类型和开启动作接入；精确边界/浏览器行为仍待专门验收。
+- Link默认请求关闭并提供closeOnClick=false，API、Composition与安装版本同步0.3.15。新增参数涉及已发布函数签名，现有编译产物需要重新编译；常见尾随lambda/具名调用保持可用。
+
+[测试XML](web-parity/navigation-menu-r1/verification)：13项行为+4张新增Nova图+3张旧图，独立verify共20项通过；覆盖几何、半muted像素、零间隔、最新回调、禁用取消、计时器换项、持续悬停、链接关闭/保留、真实触摸、键盘Enter/Escape及恢复焦点、调用方Style尺寸和固有面板宽度。初始RED中的旧leave测试在新项赋值之前就因帧未推进失败，部分click测试也混入滞留鼠标位置，不能将它们算作特定产品原因的证据；已改为真实移动离开、组合前冻结时钟及事件后定向推进，再核对状态和画面。触摸竞态和悬停循环另有直接状态记录，未用测试环境覆盖输入模式掩盖问题。
+
+四张新原图先查看后独立verify，[范围与hash](web-parity/navigation-menu-r1/new-goldens.json)。它们是样式fixture，含三条Getting started链接，不是官网完整Default/RTL，更不是浏览器/手机矩阵。Popup图保留1024×768测试场景的透明外围；已按现有不裁剪/不缩放、24px边距和不透明主题底色规则派生四张文档预览并更新元数据，旧基准未重录。两个所属ktlintCheck通过；JS/Wasm分别单worker、非并行构建成功，耗时134.757s/94.455s，[最终ledger](web-parity/navigation-menu-r1/verification/ledger.json)已归档。生产源码在最终验证后未改动，保留既有AGP实验选项、Text内部API及Gradle废弃警告。
+
+尚未关闭：官网完整Default/RTL及响应式Components隐藏/双列/宽度、真实链接和图标；root共享视口及align、跨面板位置/宽高与方向过渡；完整方向键/Tab/焦点移出、受控拒绝、安全指针通道、快速换项、嵌套/重排/卸载、读屏及HTML导航/链接语义。当前仍是逐项AnchoredPopup与透传Positioner，不能以本轮样式修复销项。自定义child/Style、最小触摸尺寸、动态主题/大字号/长文案及全部状态矩阵继续开放。下一步补官网两组完整配方，再处理共享视口和完整状态。
+
+[浏览器状态](web-parity/navigation-menu-r1/browser-status.json)：原空间18只读复查仍不存在，既有重建询问未收到答复，未另建空间或接管用户标签。真实公共源码Detekt仍承接上轮未通过状态，本轮未重复相同失败，不能声称完整静态分析通过。Navigation Menu保持未勾选；Editor排除、Attachment遗留暂缓。此前全仓pre-commit遭自动审批因额度拒绝，未绕过hook，累计修改尚未commit。
+
+
+### Navigation Menu 第二轮：官网 Default / RTL 配方与面板链接（2026-10-31，仍未完成）
+
+官网两组实际内容已置于Kotlin扩展示例之前，使用上一轮固定revision/依赖的[10份来源](web-parity/navigation-menu-r1/sources.json)。Default恢复Getting started三链接、Components六链接、With Icon三图标/占位链接及Docs；Components仅在窗口达到768dp时组合显示，双列8dp间隔，内容宽500dp、1024dp后600dp。Getting started内容宽384dp、Icon内容宽200dp；标题14/14 Medium，说明14/20并限制两行。三语RTL保留初始Arabic、真实语言选择器及全部[75条逐字文案](web-parity/navigation-menu-r2/translation-verification.json)，实际切换English/Hebrew同时更新内容和方向。[完整矩阵](web-parity/navigation-menu-r2/parity-matrix.json)。
+
+可复制代码从实际编译的`NavigationMenuRecipes.kt`区域生成，包含导入、数据和辅助函数；RTL导出提供language参数/初始Arabic，不依赖目录私有RtlPreview。两组均沿用示例已有Lucide图标包，未给core增加图标集依赖。旧Kotlin示例通过构造后不可变copy追加官网两组，避免仅为新增两组重缩进六百余行旧代码。
+
+本轮补真实示例后发现两个依赖问题：
+
+- 面板内NavigationMenuLink沿用了顶层普通链接“悬停关闭菜单”的逻辑。最初只断言最终可见的测试通过，但受控回调追踪记录了`[null, first]`，证明关闭后又被内容悬停重开。现按面板上下文区分，只允许顶层普通链接在悬停时关闭；每个新Root重置上下文。新增两个回归同时验证面板悬停不请求null、选择后执行一次动作，以及顶层Docs悬停仍关闭；没有把最终可见当成从未关闭的证据。
+- Popup内读取的LocalUriHandler没有使用外层覆盖。直接调用实际Typography按钮的OnClick会关闭面板但URI记录为空，外侧Docs控制则记录正确；将导航依赖在示例根、Popup之前捕获，并显式传回调给面板辅助函数后，真实鼠标点击才全部验证通过。此处记录已观察的依赖作用域差别，不猜测框架内部根因。版本及安装示例同步0.3.16，公共函数签名未再变化。
+
+[最终XML](web-parity/navigation-menu-r2/verification)：目录18项通过（Default/图标/Components/三语切换各四种模拟宽度主题，共16项，加顺序/导出依赖和767/768/1023/1024实时断点两项）；真实鼠标逐一选择九条说明链接及Docs并验证URI和关闭，图标占位项只关闭、不虚构业务状态。核心独立verify22项通过（15行为+既有4张Nova与3张Vega图），本轮未record任何基准。初始应用测试14失败；128ms短于实际250ms弹层动画，改400ms后画面稳定但URI仍失败，显式鼠标移动也未解决；仅在导航回调前移后全部实际交互通过。直接OnClick诊断四例及打印已从最终测试中移除，诊断XML留档，没有用语义调用替代真实指针验收。
+
+[26张原生图与hash](web-parity/navigation-menu-r2/native-captures.json)已逐张查看，涵盖Default闭合/三种面板、Arabic闭合/展开及Hebrew展开，已增加四张实际配方的文档预览并更新元数据。边界必须区分：LocalWindowInfo模拟1440/390dp，而场景仍是1024×768、内容约束720/390dp；面板截图只是元素裁剪，不能证明Root对齐、碰撞、外部ring/shadow或真实手机最大宽度。Getting started面板测得392dp（384内容+两侧4），其大于390的模拟宽度也说明不能拿这些图当作手机布局已通过。原生字形/换行与浏览器的精确对照继续保留。
+
+两个所属ktlintCheck通过；JS/Wasm分别单worker非并行构建成功，耗时145.955s/94.324s，[最终ledger](web-parity/navigation-menu-r2/verification/ledger.json)已归档；最终验证后无生产源码改动。既有AGP实验选项、Text内部API和Gradle废弃警告继续保留。实际commonMain Detekt仍承接前述未通过记录，本轮没有重复同一失败或用默认零源码任务冒充静态分析通过。
+
+组件仍未完成：root共享视口、Root align（包括RTL end）、跨面板宽高/位置/方向过渡还未实现，当前逐项AnchoredPopup/透传Positioner不等价；完整键盘、受控拒绝、500ms边界、安全指针通道、快速切换、嵌套/重排/卸载、主题/字号/Style/触摸尺寸与读屏矩阵均待关闭。图标项保留无业务状态并关闭菜单，但官网`href="#"`的当前页hash导航没有映射；普通链接用原生Button语义和显式URI回调，不能当作HTML anchor/render/target完全等价。Components通过条件组合隐藏，而官网用CSS保留挂载，跨断点的状态/关闭行为仍需核对。
+
+[浏览器状态](web-parity/navigation-menu-r2/browser-status.json)：原Ego空间18复查仍不存在，既有重建询问未回复，未新建空间、接管用户标签或导航。按照用户优先尚未开始本轮完整对照的要求，下一项Pagination；以上Navigation Menu缺口保留，继续未勾选。Editor排除、Attachment遗留暂缓。此前全仓提交门禁遭自动审批因额度拒绝，未绕过hook，累计修改仍未commit。
+
+
+### Pagination 第一轮：四组官网配方、Nova 与当前值裁剪（2026-10-31，仍未完成）
+
+已按[官网页面](https://ui.shadcn.com/docs/components/base/pagination)及固定96da9cc的[8份组件/示例/Nova/Select来源](web-parity/pagination-r1/sources.json)开始复查。[计划](web-parity/pagination-r1/plan.md)、[完整矩阵](web-parity/pagination-r1/parity-matrix.json)。本地原为36dp图标分页，默认有10页/受控状态；官网Nova为32dp，Default只含1、固定选中的2、3、省略号、前后链接，Simple有1–5，Icons Only还含行数选择器。“Icons Only”指没有页码，不是桌面隐藏Previous/Next文字。
+
+- Nova页码复用已存在的Button渲染路径，保留32dp视觉尺寸、Outline/Ghost、14/20 Medium、禁用透明度及调用方约束；48dp触摸目标不会放大32dp绘制区。内容间隔改2dp，根层按可用宽度居中，caller Style最后覆盖。省略号为32dp容器/16dp Lucide并隐藏装饰语义，旧填充字形在非Nova保留。
+- Previous/Next默认文字从640dp起显示，以下隐藏；16dp线条箭头按RTL镜像，6/10dp逻辑内边距、6dp图文间隔。隐藏文字时实测34dp宽、32dp高，显示后按钮宽度比文字多40dp，均有回归。默认英语ARIA描述与可翻译可见文案分开，可由ariaLabel覆盖。
+- PaginationLink补必选content槽位重载及size/style，阿拉伯数字不再硬编码成Int字符串；Nova使用实际可见文字作名称。原数值重载、受控page/pageCount/windowing与First/Last保留为Kotlin扩展，非Nova默认排版保留。新增签名/版本及安装示例同步0.3.17，已有编译产物需重新编译。
+
+四个真实官网示例已排在Kotlin扩展前：Default固定active=2、Simple五页、Icons Only使用横向Field与80dp Select，初值25，可实际选择10/25/50/100；标签点击也会打开选择器。RTL初始Arabic，保留6条翻译、阿拉伯数字转换及真实EN/HE切换。官网占位href="#"不引入业务翻页状态，点击3/5后仍选中2；可操作分页另标Controlled (Kotlin)。四份可复制代码从实际编译区域生成，包含导入与辅助函数，不依赖私有RtlPreview。Composition、API和导航回调说明已补齐。
+
+逐图检查补出了Select依赖遗漏：144dp、Sm28dp语言触发器的Hebrew当前值会换两行并裁掉；以前的“语言标签不换行”测试只覆盖SelectItem菜单项，不覆盖SelectValue。新增测试先复现lineCount=2，按固定Select TSX的nowrap/line-clamp-1对Nova当前值设置单行/Ellipsis，保留非Nova原逻辑。实际Hebrew及超长值均有逻辑/尺寸回归；超长样例的GetTextLayoutResult.isLineEllipsized返回false，但[实际PNG](web-parity/pagination-r1/select-value-fix/long-value-diagnostic.png)明确绘制省略号，故用两张查看后的浅深golden验证实际视觉，没有按错误假设修改产品或只删掉视觉要求。最终四张Hebrew工具栏图已复看，其余24张与先前已看图逐字节一致。
+
+[最终XML与ledger](web-parity/pagination-r1/verification)：核心独立24项通过（Pagination11行为+4新Nova图，SelectLabelLayout7项含2张既有Arabic图，SelectValueOverflow2新图）；目录四配方×模拟1440/390及浅深共16项通过。两项所属ktlint通过；最终JS/Wasm在Select修复后分别单worker、非并行构建成功，耗时133.971s/94.374s，最终验证后生产源码未改。中间JS139.598s和因新增修复主动中断的Wasm41.015s不冒充最终结果。既有AGP/Text内部API/Gradle警告保留，实际commonMain Detekt未重复同一失败，不声称完整分析通过。
+
+[6张新增基准及hash](web-parity/pagination-r1/new-goldens.json)严格限定4张Pagination与2张Select省略；均先查看再独立verify，并按原规则生成不裁剪、不透明底色/24px边距文档预览、更新元数据。原Pagination两张Vega基准仍changed：用本轮之前的精确Pagination/Styles体、仅加入不被旧fixture使用的签名编译shim复验，两张actual逐字节相同，[隔离结果](web-parity/pagination-r1/legacy-differences/isolation-result.json)确认本轮未引入；当前源码已逐字节恢复，旧基准没有重录，不能把它们计绿。
+
+[28张原生画面](web-parity/pagination-r1/native-captures.json)已检查，覆盖固定页码点击后的hover、五页、25/50行及菜单展开、Arabic/Hebrew。LocalWindowInfo模拟1440/390dp，但实际测试场景仍1024×768、内容约束640/390dp；不是官网/本地浏览器四象限，也不能证明真实手机碰撞、字体/换行和读屏。
+
+仍保留HTML nav/ul/li/anchor、aria-current与原生Role.Button/selected的差别；href/render/target及当前页hash导航没有映射，导航由Kotlin回调/可控状态承担。完整指针/键盘/读屏、RTL逻辑padding的浏览器像素、动态主题/大字号/长内容/Style与触摸尺寸矩阵，Select独立页面及Kotlin额外分页窗口的边界仍待关闭。组件保持未勾选。
+
+[浏览器状态](web-parity/pagination-r1/browser-status.json)：原空间18仍缺失，本轮将先前未答复的新建专用验收空间询问重新呈现，尚未收到答复；未另开空间或接管用户标签。下一项按优先级推进未开始的Popover。Editor排除，Attachment遗留暂缓；此前全仓提交门禁遭自动审批因额度拒绝，未绕过hook，累计修改尚未commit。
+
+
+### Popover 第一轮：Nova 面板与完整文本行高（2026-10-31，仍未完成）
+
+已读取[官网 Base Popover](https://ui.shadcn.com/docs/components/base/popover)，按固定上游 `96da9cc7f1aa10580a3741664e2a77c721206c00` 归档组件、MDX、Default/Basic/Align/With Form/RTL 五个配方及 Nova CSS，[8 份来源与校验](web-parity/popover-r1/sources.json)。[计划](web-parity/popover-r1/plan.md)与[差异矩阵](web-parity/popover-r1/parity-matrix.json)。本轮版本 `0.3.18`。
+
+Nova 核心面板保持默认 288dp，改为 10dp 内边距、10dp 子项间距、lg 圆角、foreground/10 ring 与双层 shadow-md；Header 间距由 4dp 改为 2dp，标题与说明 14/20sp，标题 medium，说明 muted。默认正文继承 14/20sp，调用方 Style 仍可覆盖宽度。其他预设保留旧样式；本轮没有修改先前已有的 panelFocus 实现。
+
+布局测试最初暴露标题区只有 34dp：原生单行首尾行高被裁减。为 Nova 文本显式设置 LineHeightStyle Center/Trim.None 后，原断言 42dp 通过，没有降低期望。最终独立验证共 9 项通过：5 项布局（浅/深 288×70dp 的双 20dp 内容、10dp 内边距/间距、42dp Header、自定义 320dp 宽、正文20dp完整行高），2 张新 Nova 浅/深截图，2 项既有关闭返回焦点测试。两项 owning ktlintCheck 通过。[最终验证记录与 XML](web-parity/popover-r1/verification)已归档，JS 构建命令 exit0（47.292s），Wasm 构建命令 exit0（24.485s）；仍有既有 webpack os/path 诊断及 Wasm warning，不声称无诊断构建。工作流已清理托管日志。新增两图先 record、实际查看后独立 verify；首次截图容器过窄导致弹层贴场景边缘，已改为 360×180dp 内容面板、Outline trigger、alignStart 后重新查看与 verify。[原生截图说明](web-parity/popover-r1/native-captures.json)明确不是浏览器截图，也没有模拟手机验收。
+
+旧 Vega 四张图单独 verify 均 CHANGED。临时撤回本轮 Nova 修改、保留此前未提交的 panelFocus 行为后，四张 actual 的 SHA256 与本轮源码完全一致；[隔离证据](web-parity/popover-r1/legacy-differences/isolation-result.json)证明差异早于本轮，不能推断为纯 HEAD 通过。本轮源码已按备份逐字恢复；没有重录旧基准。
+
+尚未关闭的差异包括五组官网配方（当前默认表单只有两项，官网 Default 为四项/320dp）、三语 RTL 的物理边/逻辑边、受控拒绝与嵌套、碰撞定位、焦点与读屏、官网 100ms 动画及完整浏览器桌面/手机浅深矩阵。[Base UI 文档](https://base-ui.com/react/components/popover)的 Root.modal 默认 false，而本地仍 true，初始焦点与关闭恢复也需一并核对，不能仅改默认值后宣称功能等价。原浏览器空间 18 已丢失，替换空间申请仍待答复，未擅自重建。Popover 保持未勾选；Editor 排除，Attachment 遗留暂缓。下一步继续 Popover 配方与交互，之后才进入尚未开始的 Progress。
+
+
+### Popover 第二轮：官网五组配方与真实输入（2026-10-31，仍未完成）
+
+复用[上一轮固定官网来源](web-parity/popover-r1/sources.json)，新增实际编译的 `PopoverRecipes.kt`：Default 为 320dp 四项尺寸网格（100%、300px、25px、none），输入跨两列；Basic 为 288dp/alignStart 的标题说明；Align 用 Sm 按钮、24dp 间距和三个 160dp 面板；With Form 为 256dp/alignStart、两项水平 Field、半宽标签与 16dp 组间距；RTL 包含四物理边与两逻辑边，三语言共24条文案[逐字校验](web-parity/popover-r2/source-check.json)。物理左右按语言方向映射到现有逻辑 PopupPlacement，保留 Popup 内文方向；完整翻转/碰撞矩阵尚待实测。五组置于目录首位，原有 Kotlin 扩展示例保留；Usage 与官网 Header/Title/Description 组合及导入同步。`generate_popover_recipe_code.py` 从实际配方区域生成独立可复制代码，包含辅助函数和导入、不依赖目录 RtlPreview，重复执行无变化。
+
+24项目录测试（6方法×1440/390模拟窗口×浅深）通过：真实鼠标打开、Escape 关闭；Default 四个初值、标签聚焦与修改、关闭卸载后恢复默认值；With Form 两项输入实际修改、水平排列；三个 Align 触发器与面板；Arabic 六边触发及面板文案，实际语言菜单切换 English/Hebrew 并打开逻辑边面板。所有预期保持真实状态与官网初值，没有增加业务提交按钮。宽高断言包括 Default320×230dp、Basic288×62dp、Form256×152dp、Align160dp 与28dp按钮。此前核心9项回归和两项 owning ktlint 通过。[最终XML与验证记录](web-parity/popover-r2/verification)已归档，JS命令exit0（20.329s），Wasm命令exit0（13.344s）；仍有既有webpack os/path诊断和Wasm warning，不声称无诊断构建。工作流已清理。
+
+测试发现两处需要精确区分：Input 编辑语义节点高度22dp不是32dp外框，改为测量已存在的行根节点、未添加强制尺寸包装；冻结时钟下输入后显式推进一帧周期，未降低输入值断言。新增高度断言又暴露 Default 的 leading-none 标题被原生字形指标撑到16dp，导致整体232dp；仅为该官网 h4增加14sp行框测量、字形居中允许外溢绘制，不裁字形，保持源配方 leading-none 并使原230dp期望通过。标准 PopoverTitle 的20sp行框不受此配方调整影响。
+
+[36张原生面板截图的四张审阅拼图](web-parity/popover-r2/review-sheets)已逐张查看，保留原像素、无缩放裁切；包含编辑后的表单、三个 Align 与三语言面板。截图只覆盖面板，不证明完整页面、外部阴影或锚点位置。模拟390和1440的面板渲染相同，原生 Popup 仍使用实际1024×768桌面场景自己的 WindowInfo，因此不能把这些图作为手机 CSS/响应式输入字号验证。本轮再次只读确认浏览器空间18仍不存在，[恢复记录](web-parity/popover-r2/browser-status.json)保留指南要求与已提交但尚未答复的重建申请；没有创建替代空间。
+
+组件保持未勾选。[剩余矩阵](web-parity/popover-r2/parity-matrix.json)保留默认非模态、初始/最终焦点、受控拒绝/嵌套/快速切换、100ms方向动画、完整键盘/读屏与官网桌面/手机浅深对照。核心未改，库版本保持0.3.18；上一轮4张旧图预存差异记录继续有效，本轮没有重录旧图。按用户优先级，下一步先进入尚未开始本轮核对的 Progress，Popover 的剩余交互与浏览器项目继续保留。Editor 排除，Attachment 遗留暂缓。
+
+
+### Progress 第一轮：自动轨道、真实数值与四组官网配方（2026-10-31，仍未完成）
+
+对照[官网 Base Progress](https://ui.shadcn.com/docs/components/base/progress)，按固定96da9cc归档组件、MDX、Default/Label/Controlled/RTL四配方、Nova CSS，并补充Base UI1.6的ProgressValue源文件，共[8份可校验来源](web-parity/progress-r1/sources.json)。[计划与迁移说明](web-parity/progress-r1/plan.md)、[剩余矩阵](web-parity/progress-r1/parity-matrix.json)。库及安装说明版本0.3.19。
+
+根组件现在始终追加轨道，content只放标签等可变内容；改为gap12的横向换行布局，ProgressValue向逻辑末端自动留白，RTL同步翻转。原有content的ColumnScope已移除，根style包含标签和轨道；目录与旧截图fixture中手动ProgressTrack调用已迁移，避免双轨道。自定义轨道可单独用ProgressTrack/显式value的ProgressIndicator。Nova标签/数值14/20sp（保留完整行高），标签medium、数值muted；轨道4dp，填充末端改为直角，仅外轨道圆角裁剪。库max默认1保持Kotlin fraction约定，官网0..100配方显式max100，不隐瞒这项接口适配。
+
+进度语义和显示值读取逻辑目标，不再逐帧读动画中间值；宽度在测量阶段读取独立动画状态，按[文档中的Tailwind transition-all默认值](https://tailwindcss.com/docs/transition-property)使用150ms与0.4/0/0.2/1曲线，实际浏览器computed timing尚未验证。不确定进度使用Indeterminate范围且默认数值留空；Base UI Value的aria-hidden:true对应为hideFromAccessibility。getValueLabel改为stateDescription保留标签；NaN、负数、越界和无效max不会生成非法范围。以上原生语义属性测试不代替真实读屏验收，尤其标签关联与重复朗读仍需核对。
+
+Default现在13→66、500ms、60%宽；Label为56%和384dp最大宽；Controlled初始50、0..100/step1滑块；RTL保留三条源文案及Arabic“٥٦%”，目录语言工具栏可切换English/Hebrew。复制代码由实际编译配方生成，独立导入、不依赖目录RtlPreview，重复生成不变；Usage与官网33及说明文字同步，原Kotlin扩展示例保留。
+
+[最终验证记录、XML和源码哈希](web-parity/progress-r1/verification)已归档。JS命令exit0（最终26.683s），仍有既有os/path诊断；Wasm命令exit0（18.670s），有一项webpack warning。最后的Usage33和说明改动由最终JS及Wasm编译字符串证据确认纳入，未用较早构建冒充最终产物。工作流已清理。最终针对性测试29项通过：核心9项布局/填充像素/RTL/目标值与动画解耦/不确定/数值边界/描述/窄宽换行/Value隐藏语义，4张新Nova浅深与RTL基准独立verify；目录16项（4方法×模拟1440/390×浅深）验证500ms前后的13/66、尺寸和标签、方向键/Home/End、真实鼠标点击slider并比对值，以及实际三语言切换。[28张目录原生图的审阅拼图](web-parity/progress-r1/review-sheets)与单独查看的4张新基准保留原像素，无缩放裁切。模拟窗口仍是1024×768桌面原生场景，组件截图不证明真实手机和完整页面；浏览器空间18丢失的恢复记录与未答复申请继续保留，未擅自创建替代空间。
+
+旧4张图独立verify为CHANGED。恢复本轮前的完整核心备份和原手动Track fixture后仍4项CHANGED，但四张actual哈希均与当前版本不同：[隔离记录](web-parity/progress-r1/legacy-differences/isolation-result.json)说明既有基准差异与本轮端点/布局变化混合，不能将当前四项全部宣称为预存。已恢复本轮源码及迁移后的fixture，没有重录旧基准。
+
+Progress保持未勾选。完整浏览器浅深桌面/手机、读屏、Controlled触摸拖动、动画中间帧/反向/颜色尺寸过渡、字体缩放与长文本、全部Style覆盖及Root显式高度的flex伸展行为仍待完成；Track自定义shape目前仍受标准圆角裁剪，完整上游min/null/format/render接口也未逐项映射。下一步优先进入尚未开始本轮核对的Questionnaire；Editor排除，Attachment遗留暂缓。
+
+
+### Questionnaire 第一轮：基础状态与官网默认三题流程（2026-10-31，仍未完成）
+
+已读取[官网 Base Questionnaire](https://ui.shadcn.com/docs/components/base/questionnaire)，固定96da9cc归档14组配方、组件、MDX、Nova CSS及headless组件/类型/四个hook，共[24份来源](web-parity/questionnaire-r1/sources.json)。[计划](web-parity/questionnaire-r1/plan.md)、[剩余矩阵](web-parity/questionnaire-r1/parity-matrix.json)与[源码校验](web-parity/questionnaire-r1/source-check.json)包含Default集合34个字符串的逐字核对、复制代码生成幂等性。版本0.3.20。只迁移了官网Default，其余13组仍待做，原有Kotlin同名示例不算已对应官网。
+
+Choice现在自己提供16dp radio/checkbox图形，选中radio为primary底/8dp反色圆点，checkbox为14dp勾；外部行保留点击与checked语义，装饰图形/快捷键隐藏于读屏。Nova行采用12×10dp padding、10dp间距、lg圆角、输入边框、muted选中底/primary40%边框、hover/focus与invalid样式；CSS边框+padding+indicator+gap的标签起点39dp已由布局测试确认，未重复加入边框留白。进度12/16sp且tabular数字、标题16/22sp、说明和错误14/20sp、选项14/19.25sp，快捷键20dp/10sp；错误额外top8dp。小于640dp时按钮与输入最小44dp。原手动ChoiceInput/ChoiceShortcut调用需移除，目录和旧parts fixture已迁移；requiredMessage现在可空，缺省错误按required选文案。
+
+导航修正：首题Previous、必填题Skip隐藏；optional末题Skip也会提交。未作答optional不能靠Next隐式跳过，必须答题或明确Skip；提交会检查全部启用题并回到首个invalid，受控父级拒绝切换时不强推item。单选固定项与自由输入互斥，切换固定项时保留输入草稿但不提交它；Skip也保留草稿而清除其提交选择。多选payload按集合顺序排序，不随点击顺序改变。输入快捷键可聚焦freeform、选项快捷键选中并聚焦；Enter只确认已选choice或有内容的输入，Ctrl/Meta修饰键按源规则处理。全部键盘/IME行为尚未完成。
+
+最终截图核对发现Default首次打开没有A/B/C，而简单非集合示例有：控制器externalValue/shortcuts/animate/disabled原为SideEffect后写入的普通变量，渲染读不到变化。改为snapshot state后，初始与动态快捷键、接受后的受控item以及外部item回切均有UI测试证明，未用额外点击掩盖首次渲染差异。
+
+Default已按官网三题（direction/signals/timing）、letters、448dp最大宽与原文案实现；提交显示Agent plan saved及真实答案Toast。`generate_questionnaire_recipe_code.py`从实际编译区域生成独立导入/集合/辅助函数和配方，未维护第二套手写预览代码。提交map按Kotlin接口返回，原生Toast摆在窗口边缘；其灰色圆点、360dp卡片及排版仍与Sonner存在差异，留待Toast组件复核，当前只证明payload与操作结果。
+
+[最终XML、源码哈希与ledger](web-parity/questionnaire-r1/verification)：38项针对性验证通过（控制器10、UI8、新Nova图4、目录16=4方法×模拟1440/390×浅深），两项owning ktlint通过；JS命令exit0（25.620s，保留既有webpack os/path诊断），Wasm命令exit0（18.505s，有1项webpack warning）。新4图record后实际查看并独立verify，最终[36张目录原生图的四张拼图](web-parity/questionnaire-r1/review-sheets)保留原像素无缩放裁切。捕获包含初始、必填错误、多选、末题、自由输入/草稿和三种提交Toast，保留真实鼠标hover/输入focus状态；它们是1024×768原生桌面场景内的模拟宽度与主题，不是浏览器或真实手机页面验收。工作流已清理。
+
+旧30张图本轮只选了default/choice_parts浅深4张独立verify。临时恢复改动前核心/样式及原fixture（仅为未选中新增测试加两处不影响旧fixture的编译桥接）后，仍4项CHANGED，但actual哈希全部不同：[隔离证据](web-parity/questionnaire-r1/legacy-differences/isolation-result.json)说明预存基准差异和本轮有意修改混合，不能把当前差异全称为预存。已逐字恢复当前源码；旧基准未重录，另26张旧图未在本轮执行。
+
+Questionnaire保持未勾选。其余13配方、浏览器桌面/手机浅深、IME/重复按键、完整方向键与读屏关联、清空已校验答案后的即时重新验证、HTML输入约束验证、动态集合与受控答案/恢复/持久化、AnimatedVisibility常量true的进入时机与减弱动态效果、无Description标题的额外下间距、任意slot/Style覆盖和字体缩放等仍待核对。浏览器原空间18丢失，[恢复记录](web-parity/popover-r2/browser-status.json)及重建申请仍待答复，未创建替代空间。按用户优先级下一步进入尚未开始的Resizable；Editor排除，Attachment遗留暂缓。
+
+
+## Resizable 第一轮：配方、真实拖动和键盘（2026-10-31）
+
+按优先级进入本轮尚未开始的 Resizable。[计划](web-parity/resizable-r1/plan.md)、[固定来源与 SHA-256](web-parity/resizable-r1/sources.json)、[差异矩阵](web-parity/resizable-r1/parity-matrix.json)已保存。固定 shadcn 96da9cc；锁文件实际解析 react-resizable-panels 4.5.8，因此键盘和命中规则按该 tag 的实现核对，未混用旧版默认约束。
+
+Nova 改为 1dp 分隔线、4×24dp 圆角 grip（纵向组为24×4）、键盘焦点1dp环。默认范围从15..85%改为0..100%；真实可分配尺寸排除边框及分隔线。端点零宽高不会触发非法 weight；无效 delta/未测量尺寸不改变比例，自定义范围与禁用状态有独立验证。方向键按5%调节、Home/End到范围端点，支持 SetProgress；RTL 水平拖动按逻辑首面板位于右侧计算。
+
+首次鼠标命中测试发现，Compose 的 touchBoundsExpansion 实际只覆盖 stylus/eraser，无法扩展普通鼠标/触摸命中。已改为组级非挂起指针路由：鼠标10dp、触摸20dp，视觉仍保持1dp分隔线。真实鼠标偏移4dp、触摸偏移9dp、RTL/竖向/变更方向取消、边框和自定义5dp分隔线的尺寸计算均通过原生交互测试；没有使用只验证数学的测试代替拖动。
+
+官网 Default、Vertical、Handle、RTL 四组配方已移植：嵌套50/50与25/75、单线/有grip、框架尺寸和内边距、英/阿/希三语；变更语言保留布局比例。复制代码从编译配方生成并校验幂等，旧 Vertical/Handle 扩展示例改名避免冲突。字号14/20、半粗体；小面板文本按CSS居中逻辑保留字形，外层面板裁剪避免内容溢出。
+
+验证：核心真实交互10项＋数学5项＋新Nova基准6项＋目录16项，共37项独立通过；core/shared两个ktlint通过。目录第一次运行4项因旧示例标题重复失败，修复标题后16项全部通过。[四张无缩放联系表](web-parity/resizable-r1/review-sheets/layout.json)包含36个原生配方状态图，已逐张查看；新六张浅深基准也已查看。它们是桌面原生场景内的1440/390 mockWindowInfo，不代表真实手机或浏览器验收。补查旧8图：5项通过，3项深色图 CHANGED。逐像素比较仅分隔线从RGB(38,38,38)变为(34,34,34)，分别120/120/160像素，位置尺寸与文字无变化；[差异证据](web-parity/resizable-r1/legacy-pixel-diff.json)已保存。未作前版隔离，暂不归因为预存或本轮引入，未重录旧基线。
+
+[最终验证证据](web-parity/resizable-r1/verification/final-summary.json)：JS 26.356s、Wasm 18.278s均退出0；JS仍有webpack os/path解析诊断，Wasm一条webpack警告，不能称为干净构建。编译源码、6张新基准及36张目录图哈希均匹配，工作流已结束并清理原始日志。累计改动尚未commit：既有pre-commit要求全仓ktlintFormat/ktlintCheck/detekt，此前该门禁遭自动审批额度拒绝，未绕过hook。
+
+组件继续未勾选：resize光标、多于两面板、collapse/Enter、ref/受控布局/持久化、跨分隔线F6与交点命中、独立Handle范围外命中、完整读屏/Style/字体缩放，以及浏览器桌面/手机浅深均保留。原空间18丢失，[既有浏览器恢复记录](web-parity/popover-r2/browser-status.json)与重建申请仍待答复，未另建替代空间。公共版本0.3.21。按用户优先级下一项 Scroll Area；Editor排除，Attachment遗留暂缓。
+
+
+## Scroll Area 第一轮：官网配方、真实滚动与焦点（2026-10-31）
+
+按优先级进入尚未开始的 Scroll Area。[计划](web-parity/scroll-area-r1/plan.md)、[固定13份来源](web-parity/scroll-area-r1/sources.json)、[图片来源](web-parity/scroll-area-r1/artwork-sources.json)和[剩余矩阵](web-parity/scroll-area-r1/parity-matrix.json)已保存。官方Base Nova为Default、Horizontal、RTL三配方；锁文件实际解析Base UI1.6.0，已按该tag归档Root/Viewport/Scrollbar/Thumb/Corner和constants，不将本地Radix扩展策略作为Base UI默认行为。
+
+三组配方已迁移：Default为192×288dp框、16dp内边距、50个原始版本号、14sp leading-none标题及20sp版本行；Horizontal为384dp宽框，三幅原图以300×400dp裁剪显示、16dp间隔及12/16sp作者说明；RTL阿拉伯语初始，英文/希伯来语切换保留滚动位置并移动纵向轨道。三张图片按官网原URL下载为本地资源，哈希已保存，复制横向示例需同时引入这三个drawable。复制代码从编译配方生成并校验幂等。
+
+核心修复：Nova轨道10dp，1dp透明边框和padding对应7dp可见thumb，上游最小长度为16px。修正最小thumb下仍用原始内容比例定位导致越界的问题，改为按实际travel×当前滚动比例计算，超长内容在末端仍留在轨道内。非挂起指针节点实现thumb拖动及轨道按下居中/继续拖动，横向RTL按物理方向转换；双轴滚动条预留corner。轨道是Viewport的兄弟节点，需独立处理滚轮，现通过Compose原生scrollable和平台reverseDirection处理，不用猜测wheel单位。
+
+Viewport在溢出时可聚焦，方向/Home/End/Page/Space与Shift+Space可滚动；只处理Viewport自身焦点，不抢子文本框的Home/End。截图复核发现普通styleable的阴影把透明Viewport内部染灰，已改用CSS外阴影绘制并补1dp outline。新增viewportStyle供调用方设置形状，官网配方与Root一致；任意Root shape自动继承和焦点环外缘被原生Root形状裁剪的问题仍保留，未声称完全一致。默认ScrollArea.type由Hover改为Auto（溢出时显示）；需要旧600ms行为的调用方显式传ScrollType.Hover()，LazyScrollArea扩展默认保持Hover。
+
+验证：[最终证据](web-parity/scroll-area-r1/verification/final-summary.json)已归档。11项真实交互＋12项几何数学＋4项可见性策略＋4项Lazy metrics＋6项新Nova基准独立verify＋12项目录，共49项通过；core/shared两个ktlint通过。真实交互覆盖鼠标/触摸/Viewport与track滚轮、RTL、首尾端点、轨道按下、键盘、双轴及Lazy列表。首次Lazy底部点击测试因Compose click()默认把位置移回中心而失败，改为明确press/release，末端index>80阈值未降低。28张目录原生图与6张新图已查看，[八张无缩放联系表](web-parity/scroll-area-r1/review-sheets/layout.json)可复查。它们是桌面1024×768场景里的1440/390 mockWindowInfo，不能代替真实手机/浏览器。
+
+旧4图：ScrollArea浅色通过；深色thumb540像素颜色变化（主体RGB38→34，含抗锯齿），几何/文字未改变；Lazy浅深两图缺少原始基线，分别保存actual和XML。[像素差异](web-parity/scroll-area-r1/legacy-pixel-diff.json)未作前版隔离归因，未重录任何旧基准。
+
+最终构建：JS 34.428s、Wasm 19.890s均退出0；JS仍有webpack os/path解析诊断，Wasm一条webpack警告，不称为干净构建。11份编译源码、6张新基准、28张目录图哈希均匹配，工作流已结束、原始日志已清理。累计修改暂未commit：此前全仓pre-commit门禁被自动审批因额度拒绝，未绕过hook；所属模块检查不能代替该门禁。
+
+组件保持未勾选。完整官网/本地浏览器浅深桌面/手机、自动Root形状继承与focus ring裁剪、OS高精度touchpad/ctrl-wheel/按键重复、辅助技术、动态内容/主题/样式/方向改变、嵌套边界及Lazy可变高度/padding/reverse layout全矩阵仍开放。原浏览器空间18丢失，既有重建申请尚未回复，未创建替代空间。公共版本0.3.22；Editor排除，Attachment遗留暂缓，下一项优先Scroll Fade。
+
+
+## scroll-fade 第一轮：默认规则、完整配方与真实遮罩（2026-10-31）
+
+[计划](web-parity/scroll-fade-r1/plan.md)、[12份固定来源](web-parity/scroll-fade-r1/sources.json)、[差异矩阵](web-parity/scroll-fade-r1/parity-matrix.json)已保存。官网实际路径为/docs/utils/scroll-fade；七个配方为Default、No Overflow、Horizontal、Edge Fades、Fade Size、None、RTL。MDX前六指定Rhea、RTL指定Nova；这些普通Tailwind div的圆角仍使用site globals中的--radius公式，不能套用本地Rhea组件18/26dp人格半径，现默认按lg10/2xl18dp渲染。
+
+核心默认从24dp瞬时mask改为min(容器12%,40dp)，随96dp滚动距离以CSS ease-in-out渐入/出。新增ScrollFadeEdge与ScrollFadeSize.Length/Fraction、非对称leading/trailing、revealDistance及enabled=false。固定尺寸/任意百分比不受默认40dp cap；不再把所有大小强制截到半个容器，而按CSS单一渐变的停点fixup绘制。RTL对逻辑渐变方向反转而保留停点顺序，避免大尺寸重叠时错误地选择相反的黑色停点；新增像素回归已先失败再通过，[规则与例子](web-parity/scroll-fade-r1/mask-oracle.json)明确区分源码/规范及原生证据与浏览器验收。
+
+仍使用Offscreen+DstIn真正降低内容alpha，不叠固定底色；draw/cache阶段读取滚动状态，真实触摸测试确认调用方没有额外重组。红内容/蓝背景像素验证起点、中点、终点、半程reveal、无溢出/收缩、none、逻辑/物理边和RTL。Attachment原五参40dp/.12/96dp配置保持可用并有独立像素测试；未重新展开Attachment遗留。
+
+七配方已移植：320dp最大宽、40dp行、6dp间隔/内边距、正确视口高度、精确条目与三语翻译；七段复制代码从编译源码生成。公开说明已强调scrollFade须放在verticalScroll/horizontalScroll之前，让mask覆盖视口而非长内容；旧复制代码中不存在的shadcnScrollFade方法名已移除。页面及侧栏标题改为官网scroll-fade。
+
+关联修复：MessageScrollerViewport原来把mask放在verticalScroll内部，现改为视口层。旧两张Nova图仅Message4的文字alpha变化，浅色446/深色457像素、范围[25,220,95,232]，其他行、按钮与尺寸不变，[像素对照](web-parity/scroll-fade-r1/message-scroller-pixel-diff.json)可查。旧ScrollFade两张Vega测试同样mask顺序错误，且未等测量就读取maxValue；旧基线显示终点。现等待布局、断言实际中点后截图。上述四张旧图均在查看before/actual、确认源码意图后定向更新并独立verify；没有批量录旧基线。
+
+验证结果：数学13、真实像素/触摸14、新Nova6、修正旧ScrollFade2、MessageScroller依赖29、目录28，共92项独立通过，core/shared两个ktlint通过。64张原生目录图与六张新图已查看，[16张无缩放联系表](web-parity/scroll-fade-r1/review-sheets/layout.json)保留全部状态。最终RTL修正后64张目录图哈希与已查看版本逐字节一致。原生fixture仅在1024×768桌面场景提供1440/390 mockWindowInfo，不能替代真实手机、浏览器或全页验收。
+
+[最终验证证据](web-parity/scroll-fade-r1/verification/final-summary.json)：JS21.569s、Wasm18.178s均退出0；JS仍有webpack os/path解析诊断，Wasm一条webpack警告，未称为干净构建。最终页面说明已在编译JS中核对，14份源码、6张新Nova/4张定向修正旧基准、64张目录图哈希全部匹配，工作流已结束并清理原始日志。累计修改暂未commit：此前全仓pre-commit门禁遭自动审批因额度拒绝，未绕过hook；本轮所属模块检查不能代替全仓门禁。
+
+组件仍未勾选：官网/本地浏览器桌面/手机浅深、物理x时间线在RTL下的精确语义、unsupported-browser静态fallback、自定义spacing/rem、动态主题/字体/密度/方向/配置与enabled切换、复合mask和完整读屏/键盘矩阵仍保留。Mono参数允许调用方注入字体，目录用GeistMono，复制函数默认平台Monospace。浏览器原空间18丢失，既有重建申请尚未回复，未另建替代空间。公共版本0.3.23；Editor排除、Attachment遗留暂缓，下一项优先尚未开始的Separator。
+
+
+## Separator 第一轮：官网五配方与语义默认（2026-10-31）
+
+[计划](web-parity/separator-r1/plan.md)、[9份固定来源](web-parity/separator-r1/sources.json)、[矩阵](web-parity/separator-r1/parity-matrix.json)已归档。固定shadcn96da9cc/Base UI1.6.0，五组Default、Vertical、Menu、List、RTL均为base-nova。默认1dp线、border颜色、无内建margin及调用方Style覆盖原实现正确，未改绘制尺寸。
+
+Base UI固定role=separator及aria-orientation，默认有语义；本地原先沿用Radix的decorative=true，现改false，native提供Separator描述与Horizontal/Vertical状态，并验证调用方可用semantics覆盖本地化描述。Compose1.12.2无Role.Separator，以上是平台fallback，不作为HTML角色完全等价证明。原decorative=true装饰线扩展继续可用；迁移时需要静默线的调用方显式true。
+
+五配方已迁移，文本、三语翻译和复制代码从编译源码保持一致；旧复制字符串中的无效TextStyles.Muted/TextTypography名称已修正。Default384dp最大宽、14/20字号、14sp leading-none标题、6/16dp间距；Vertical20dp行；List三对Item/Value、两条线和8dp间距；Menu20+4+16=40dp行，低于768dp隐藏Help及第二竖线、间隔16→8dp。CSS竖线self-stretch对应的Compose父Row需有界高度，内容自适应时用IntrinsicSize.Min，示例和说明已补。
+
+验证：核心8项涵盖默认/装饰/本地化语义、方向更新、显式尺寸/红色覆盖、竖向有界/内在行高及零隐含margin；目录20项覆盖五配方×1440/390×浅深。新Nova4图和28张原生目录图已查看，[四张无缩放联系表](web-parity/separator-r1/review-sheets/layout.json)保留全部状态。这是1024×768桌面场景里的mockWindowInfo，不能代替浏览器/手机验收。
+
+旧Vega2图浅色通过、深色CHANGED，差异只有竖线20像素RGB38→34，[逐像素记录](web-parity/separator-r1/legacy-pixel-diff.json)可查。将Separator.kt替换为本轮前精确字节后，得到相同失败及完全一致actual哈希，证明此色差早于本轮（非纯HEAD隔离结论）；未刷新旧基线，已恢复当前源码。
+
+[最终证据](web-parity/separator-r1/verification/final-summary.json)：核心8＋新Nova4＋目录20共32项独立通过，core/shared两个ktlint通过。JS27.607s、Wasm19.961s均退出0；JS仍有webpack os/path解析诊断，Wasm一条webpack警告，未称为干净构建。11份源码/配置/生成器、4张新基准、28张目录图哈希匹配，最终目录图与已查看版本逐字节一致；当前源码在精确恢复后仅修正一处KDoc措辞，运行时代码未改变。工作流已结束、原始日志已清理。累计修改未commit：此前全仓pre-commit门禁因自动审批额度拒绝，未绕过hook，本轮模块检查不能代替全仓门禁。
+
+组件保持未勾选。浏览器桌面/手机浅深、真实辅助技术与role适配、dl/dt/dd语义、极端/无界父级、动态主题/字体/密度/Style及768边界、RTL Menu/List完整矩阵仍开放。浏览器原空间18丢失，既有恢复申请尚未回复，未创建替代空间。版本0.3.24；Editor排除，Attachment遗留暂缓，下一项优先Sheet。
+
+### Sheet 第一轮：尺寸、方向、动画与焦点基础（2026-10-31，进行中）
+
+已重新读取[官网 Sheet 页面](https://ui.shadcn.com/docs/components/base/sheet)，归档7份固定上游96da9cc的MDX、组件、Nova样式和四组配方；本轮重验全部来源哈希。发现本地横向面板固定320dp、进入/退出整块位移且500ms，Start/End动画方向没有随RTL翻转；默认逻辑End也不等于官网物理right。Header/Footer、面板根padding与border、标题/描述字号、关闭按钮和示例内容另有差异，完整待办见[Sheet逐项计划](web-parity/sheet-r1/README.md)。
+
+本轮先修复基础行为：横向默认75%视口宽度，640dp起上限384dp；尺寸转为可覆盖的Style默认值，已有Sidebar的336dp调用方宽度可生效。新增物理Left/Right并以Right为默认，保留逻辑Start/End扩展并按布局方向解析。SheetContent以密度换算40dp位移，面板200ms ease-in-out淡入淡出；遮罩调整为黑色10%与150ms，复用Nova已有OverlayHost模糊。根层接入共享焦点所有者；字符串触发器改为直接Button，避免外层clickable叠加，并在关闭完成后恢复键盘触发器焦点。
+
+原生15项定向测试及core ktlint已通过：390/639/640/1440宽度与断点、336dp显式覆盖、RTL物理Right及逻辑End、受控关闭拒绝、关闭按钮/Escape/无关闭按钮时空白关闭、外部关闭拦截、首个按钮与触发器焦点、动画中途位移和像素透明度及200ms后移除。4张浅深面板图已逐张查看；它们只是1024×768 JVM Popup场景中覆盖WindowInfo后的面板宽度证据，不是手机浏览器截图，也没有作为视觉一致性基准录入。Header/Footer及面板chrome仍明显保留旧实现。
+
+Sheet保持未勾选；下一步继续Header/Footer布局（包括body权重与Footer自动顶边距）、面板单侧border与shadow、28dp关闭按钮、官网Default/Side/NoClose/三语RTL配方，然后补完整状态矩阵。浏览器原空间18丢失的恢复申请仍未回复，未创建替代空间。Editor不做，Attachment遗留暂缓。版本0.3.25；本轮没有重录旧Sheet截图，也没有绕过现有提交hook。
+
+[本轮验证证据](web-parity/sheet-r1/verification/summary.json)：目录shared JVM调用方编译通过；JS27.077s退出0但仍有既存os/path解析诊断，Wasm18.453s退出0且一项webpack警告，不称干净构建。6份源码/配置及4张已查看原生图哈希一致。定向Gradle工作流已结束、完整临时日志已删除；没有运行全仓提交门禁或录制旧截图。
+
+### Sheet 第二轮：面板、Footer权重与四组官网配方（2026-10-31）
+
+补齐Nova面板popover底色、仅朝内一侧1dp边框、shadow-lg双阴影并移除根内边距；Header改16dp padding/2dp gap，标题16/24 medium、描述14/20 muted并保留完整行盒。Footer改ColumnScope、16dp padding、8dp gap，操作按钮默认拉伸；自动顶边距只消费正文权重分配后剩下的空间，不再用额外weight Spacer抢正文高度。新内部SheetColumn保留weight/fill和align/alignBy父数据，支持竖向面板内容自适应；完整intrinsic/动态布局矩阵仍开放。
+
+关闭按钮改为Ghost IconSm28dp、top/end12dp。最初仅看Nova原始right-3会把RTL按钮留在右侧，原生图发现它与右对齐标题重叠；进一步归档固定上游RTL转换器与registry builder，确认构建先展开Nova样式，再执行right-*→end-*。因此已按官网生成逻辑修正为RTL左上角，并更新定位断言。面板Left/Right仍是物理方向，与逻辑Start/End扩展分开。
+
+官网Default、Side、No Close Button、RTL四组配方已置于目录最前，旧Kotlin示例保留并改重复标题。默认表单精确文案、Pedro Duarte/@peduarte、标签点击聚焦与输入、Save不自动关闭、Close关闭均已接入；关闭卸载后重新打开恢复初始值。Side加入十段完整正文、14/22.75行高、每段8dp底边距、四方向、top/bottom 50%视口高度及滚动，Save保留面板而Cancel关闭。RTL沿用FieldGroup/Field结构及三语文本，Username为peduarte（无@），Arabic/Hebrew物理Left、English物理Right，关闭图标的默认辅助名称保留官网Close。复制代码由编译中的配方和共享辅助函数生成，避免预览与文本分离。
+
+[验证证据](web-parity/sheet-r2/verification/summary.json)：核心15旧行为＋12新布局/像素＋目录28，共55项独立通过；core/shared两个ktlint通过。测试覆盖Header字号行盒/间距、Footer纵向拉伸/贴底、正文weight不被Footer平分、fill=false、四边框像素、Top/Bottom自动高度、RTL关闭按钮位置、四方向长正文滚到底部后关闭、输入/标签焦点/重开重置与Save不关闭。最初Side测试在冻结时钟下调用循环performScrollTo，测试进程83.636s后失败；XML只含6项完成记录，未把它算通过。检查Compose1.12.2源码后改成单次ScrollBy加显式推进时钟，独立Side四模式以及完整28项随后通过。该测试夹具诊断不推断产品滚动故障或进程退出具体原因。
+
+已查看4张核心图和[12张原始像素拼接检查图](web-parity/sheet-r2/review-sheets/layout.json)，覆盖36张目录图；全部是JVM原生证据。390/1440为覆盖WindowInfo，真实Popup场景仍为1024×768；Top/Bottom原生图宽度仍是1024，不能声称手机浏览器布局已验收。JS38.178s退出0仍有既存os/path解析诊断；Wasm19.397s退出0并保留一项webpack警告。13份源码/配置/生成器与40张原生图哈希已重验；工作流已结束并删除完整临时日志。
+
+Sheet仍未勾选。浏览器桌面/手机浅深、触摸与软键盘初始焦点、无触发器恢复、嵌套/非模态/中断动画、完整密度/字体/Style/RTL样式矩阵、动态权重及alignBy/intrinsic、辅助技术与语言工具栏交互仍开放；没有重录或验证旧截图基准、没有创建新截图基准，也未运行全仓提交门禁。[剩余差异与验证范围](web-parity/sheet-r2/README.md)已记录。浏览器原空间18恢复申请仍未回复，未创建替代空间。版本0.3.26，Editor排除、Attachment遗留暂缓，接下来按优先级做尚未开始的Shimmer，包含先前记录的Style路径无像素动画问题。
+
+### Shimmer 第一轮：修复 Style 扫光与绘制阶段读值（2026-10-31，进行中）
+
+已归档固定上游96da9cc的MDX、九组Base配方及shadcn/tailwind.css，共[11份官方来源](web-parity/shimmer-r1/sources.json)。官网文本抓取工具访问live页面失败，改用官方仓库MDX/CSS作来源；不将其视为浏览器现场验收。来源表明确官网currentColor与OKLCH高光、字体3ch+40px spread、once/reverse、自动减弱动态及九组配方，本轮先处理已记录的Style路径根因。
+
+五项RED像素测试全部复现失败：Style扫光不改变像素、显式文字颜色遮住画刷、富文本与祖先画刷未绘制、半透明效果不正确。检查Compose1.12.2源码确认同节点contentColor会清空contentBrush；本地Text把显式TextStyle纯色追加在同一Style节点上，还缺少实际画刷绘制桥。现将显式纯色作为更近的独立节点，保持原纯色优先级，同时由原生绘制节点读取最近画刷，在隔离字形层以SrcIn绘制，避免污染空白/背景/兄弟节点；画刷存在时原纯色仅作不透明字形遮罩，避免把其alpha再乘一次。普通文本仍走直接绘制路径。五项测试随后独立通过。
+
+另加动画阶段测试发现Style调用方组合次数在采样间隔从4增至64；Modifier调用方原本已稳定，未把它误记为同类回归。动画辅助改返回State，Modifier在draw读值，remember后的Style在自身绘制观察作用域读值，每个绘制帧新建画刷避免ShaderBrush按尺寸缓存旧着色器。Style和Modifier均以真实像素变化加调用方组合次数不增加验证。补测浅/深、once结束后稳定、禁用后恢复红色并停止动画、SelectionContainer画刷、显式TextStyle纯色仍优先于普通Style纯色与祖先颜色动态更新；Attachment五项既有状态回归也通过。文档标题/描述对照官网，并修正复制文本和KDoc里不存在的TextStyles.Muted为实际TextColors.Muted。
+
+定向验证共18项（Shimmer新12＋TextColor旧1＋AttachmentState旧5）及core/shared两个ktlint通过，6张原生文字图已逐张查看。旧Shimmer/Text共6张verify：4PASS、2CHANGED，没有录制基准。为归因，临时安装本轮修改前的精确Text/Shimmer源码后仅verify两项变化；两张actual均与本轮当前actual逐字节相同，证明本轮前已存在，未归因于本次画刷/状态修复。Shimmer浅色644个字形像素差异、Text继承暗色背景/边框差异的历史来源仍未分配。已精确恢复当前green源码，仅改KDoc用词；恢复后的18项检查复用了相同编译产物的已通过结果，不声称一次新的独立执行。
+
+Shimmer保持未勾选；[完整计划与真实缺口](web-parity/shimmer-r1/README.md)列明仍待修复的currentColor/OKLCH及alpha混合、字体spread与任意百分比、自动减弱动态、九组官网示例和Replay/响应式None、RTL方向与完整字形/密度/字体矩阵。现有白色叠加高光不是官网颜色等价实现，未因此宣称页面已对齐。浏览器原空间18恢复授权仍未回复，未创建替代空间；Editor排除、Attachment遗留暂缓。版本0.3.27，没有更新截图基准或运行全仓提交门禁。
+
+[本轮最终证据](web-parity/shimmer-r1/verification/summary.json)：JS45.731s退出0，仍有既存os/path诊断；Wasm24.917s退出0并一项webpack警告，未称为干净构建。11份源码/配置/测试与6张已查看原生图哈希匹配，RED/GREEN、重组计数及旧基准隔离证据已归档。工作流结束，完整临时日志已清理。后续先补Shimmer官网颜色/减少动态与完整配方，再按清单进入尚未开始的Sidebar。
+
+### Shimmer 第二轮：currentColor、官网配色与九组配方（2026-10-31）
+
+继续使用[11份固定上游来源](web-parity/shimmer-r1/sources.json)，另核对W3C颜色及渐变插值规则，引用见[本轮说明](web-parity/shimmer-r2/README.md)。四项RED像素测试确认旧Style默认底色不跟随红字、浅色黑字峰值约0.478而非20% alpha、暗色峰值约0.455未按OKLCH提亮、半透明蓝色高光被合成为不透明紫色；修复后四项均通过。最初暗色测试错误地取了包含背景的最小通道，已先改为亮字形最大值再建立有效RED，未把无效oracle算作依据。
+
+Text新增内部currentColor画刷协议，在绘制边界解析显式TextStyle、LocalContentColor、祖先Style颜色和Style自带颜色；显式baseColor参数仍可覆盖。保留Foundation清空contentBrush前的同节点颜色，支持Style.shimmer及Text自身原始then链；更近的显式TextStyle仍优先。祖先/自身Style颜色在冻结动画时钟下变化也能重绘，调用方组合计数不增加。
+
+Style默认浅色高光保持当前RGB并将alpha乘0.2；暗色按max(0.8,L+0.4)及alpha+0.4提亮并截到1，L端点映射黑/白。显式高光保留alpha，中间停点按预乘OKLCH混合、最短色相路径与灰色借色相处理。Oklab渐变由257个sRGB样本近似，最多缓存四种底色，避免动画逐帧重算颜色。此近似没有证明全色域浏览器误差界；色域映射/P3、极端饱和色、量化与近无彩色阈值仍开放。旧Modifier白色SrcAtop叠加作为扩展保留，未改Attachment，也不再把该叠加称为CSS文字填充等价实现。
+
+官网Default、With Marker、Color、Duration、Spread、Angle、Play Once/Replay、Disabling the Shimmer、RTL九组配方已放到目录最前；旧Modifier示例改名Overlay (Kotlin)，主Usage使用Style。文字14/20、标签12/16 Mono；比较组最大512dp、24dp gap、640dp起两列，渐变使用整个段落宽度而非仅字形宽度。加入blue500/60与#378ADD、16/96dp spread、1100ms once及keyed Replay、768dp起关闭动画、英文/阿拉伯语RTL与两个Marker状态。复制代码从编译预览源码和共享函数生成。
+
+[最终验证](web-parity/shimmer-r2/verification/summary.json)：核心38（CSS颜色4、数值8、currentColor8、既有绘制/阶段12、TextColor1、AttachmentState5）＋目录40，共78项独立通过，core/shared两个ktlint通过。目录测试独立比较Marker每段文字像素（不借Spinner动画冒充扫光）、Replay结束后重启、桌面None静态/窄屏动态、颜色/速度/宽度/角度差异、两列/竖排及RTL文案。4张核心图与40张目录原生图均已查看，[4张拼接检查图](web-parity/shimmer-r2/review-sheets/layout.json)无缩放且原图40张已核实全不透明。1440/390是JVM窗口信息覆盖，不能替代浏览器或手机系统验收。
+
+旧Shimmer/Text六张verify仍为4PASS、2CHANGED；两张actual与上一轮精确修改前隔离结果逐字节相同，本轮没有额外旧图变化，未录制基准。JS35.755s退出0仍有既存os/path诊断；Wasm18.911s退出0并一项webpack警告。20份源码/配置/生成器/测试、44张原生图哈希已重验，工作流结束并清理完整临时日志。
+
+Shimmer保持未勾选。自动减弱动态、实际字体3ch+40px及百分比spread、浏览器四象限、色域/采样精度与完整时间/角度/RTL/字体/富文本矩阵仍待完成；直接在外部Foundation祖先节点设置同节点颜色和画刷而未用Style.shimmer包装仍受其清色规则限制，不能由Text自身then链测试外推为已支持。完整剩余范围已写入[本轮说明](web-parity/shimmer-r2/README.md)。浏览器空间18恢复授权仍未回复，未创建替代空间。版本0.3.28，Editor排除、Attachment遗留暂缓；下一项优先尚未开始本轮对照的Sidebar。
+
+### Sidebar 第一轮状态与移动面板复核（2026-10-31）
+
+固定上游19份来源、修正与证据见 [sidebar-r1/README.md](web-parity/sidebar-r1/README.md)。26项定向测试和core/shared ktlint通过；JS退出0仍有os/path错误，Wasm退出0带一项warning。旧17项截图1过16变，精确前后源码隔离确认十项仅本轮内侧border变化、五项完全相同、两项手机面板背景/间距变化；其余大面积色彩及scrim差异本轮前已存在，未更新旧基准。原生8张为几何夹具，不代表页面视觉验收。SidebarContent已有公开函数但尚无滚动，接下来修正内容区及Header/Footer布局。浏览器TaskSpace18仍丢失，未新建恢复空间；完整矩阵保持未完成。
+
+### Sidebar 第二轮内容区与分区布局（2026-10-31）
+
+修正全局padding/gap错放、SidebarContent没有滚动及Footer未固定在底部的问题。Header/Footer为8dp padding与gap，Group为8dp padding，内容无额外gap；Icon收缩时隐藏溢出。文档Header/Footer预览和复制代码均使用SidebarContent。新增8项RED→GREEN，包括真实鼠标滚轮；与旧26项合计34项、core/shared ktlint、shared JVM编译通过。8张布局截图已检查且最终版本字节相同。JS退出0仍有os/path错误，Wasm退出0带warning。来源、尺寸限制、未关闭项及证据见 [sidebar-r2](web-parity/sidebar-r2/README.md)。保持未勾选，接下来优先开始Skeleton来源及配方复核。
+
+### Skeleton 来源与缺口定位（2026-10-31）
+
+已核对官网页面，归档Base组件、Nova CSS、MDX及七组配方共10份来源并验证hash。默认chrome源码相符；本地Default缺头像且行高不符，Avatar预览是方块且缺文字骨架，其余五组配方缺失。后续迁移全部七配方、验证脉冲/裁剪/尺寸及复制代码一致性；此处仅为来源审计，未声称实现或浏览器通过。见 [skeleton-r1](web-parity/skeleton-r1/README.md)。
+
+### Skeleton 七配方与脉冲绘制复核（2026-10-31）
+
+Default补48dp圆头像与两行16dp骨架；Avatar改为40dp圆头像和两行短骨架，Card/Text/Form/Table/三语RTL按固定Nova来源迁移。七组官网配方及Shimmer项目扩展的预览/复制代码由同一份编译源码生成；Shimmer原先复制一行但预览三行的差异已消除。
+
+脉冲原实现正确完成两秒1→0.5→1循环，但在测试帧内使调用方重组49次；现保留State并由Style观察，动画不再逐帧重组调用方。原始8项中6过2失败，最终10项核心和40项目录状态合计50项、core/shared ktlint通过。浅深旧截图2项验证通过且未刷新基准。40张原生浅深/1440和390视口夹具已检查，11份源码/测试/生成器/配置及40图hash复验一致。JS退出0仍有os/path错误，Wasm退出0带warning，不声称干净Web构建。
+
+来源、样式策略、截图尺寸与脉冲相位限制见 [skeleton-r1/README.md](web-parity/skeleton-r1/README.md)。原生截图不替代浏览器四象限验收，原TaskSpace18仍丢失，保持未勾选。下一项优先Table；未运行或绕过全仓提交门禁，未新增commit。
+
+### Table 第一轮结构、样式与配方（2026-10-31）
+
+固定上游7份来源并核对明确的base-nova目标。修正Caption始终底置居中与16dp间距、Header40dp、body14/20和四边8dp、透明行/hover/selected语义与选中hover优先级、Footer独立半透明底色和顶线。新增具名content槽并保持原有尾随String lambda；测试曾抓到重载吞掉字符串，已调整签名修复。横向viewport内置，ApiReference调用方移除额外嵌套滚动。
+
+Default/三行Footer/真实Actions菜单/三语RTL的官方数据与交互已加入，预览与复制代码同源生成。但列宽仍是显式100dp首末列与中间权重，不等同HTML跨行自动列宽，footer也不是通用colSpan，此缺口保持开放。原有12组Kotlin扩展示例和多行thead、checkbox/复杂槽、expanded行色、过渡及完整辅助技术仍待完成；希伯来原生高度381px、英阿372px的字体度量差异已记录。
+
+原始10项全失败，最终core16/app28合计44项与core/shared ktlint通过；强化RTL位置断言后的app28重新运行通过，恢复检查core16使用已验证缓存，非第二次独立44全量运行。24张浅深/1440与390原生图已检查，源码与图片hash复验一致。旧2张截图均变化；精确原始源码隔离为浅色通过/深色仅两条976px分隔线既有RGB38→34失配，新增总高度16px来自本轮。未刷新基准。JS退出0仍有os/path错误，Wasm退出0带warning。
+
+证据、测试范围和计划见 [table-r1](web-parity/table-r1/README.md)。浏览器原TaskSpace18仍不存在，未自行新建恢复空间。Table保持未勾选；按尚未开始优先进入Tabs，后续再统一关闭已记录差异。全仓提交门禁仍未建立，本轮未新增commit。
+
+### Tabs 六配方、键盘与隐藏面板复核（2026-10-31）
+
+归档9份固定Nova来源并参照Base UI行为文档。Root默认改Manual（方向键只移动焦点，Enter/Space激活），补单Tab入口、RTL方向反转、disabled跳过、Home/End、非循环边界与重排顺序；稳定setter读取最新回调并尊重受控拒绝。有效默认值等待注册就绪，不再初始闪空。默认面板即时切换，显式动画扩展保留；keepMounted保留输入但不占间距、不参与隐藏焦点或辅助技术。
+
+默认滑动装饰改为trigger自身选中chrome；32dp横轨、14/20 medium、default gap0/Line gap4、root gap8、等分背景/垂直等宽和图标6dp间距已修正。Line下划线改源码外侧位置。原生focus阴影曾把透明Line内部染灰，浅深像素RED复现后使用已有cssStyleable外侧绘制修复。六组官网配方含四个真实Card面板及三语内容，预览和复制代码同源生成；旧Default activation扩展的代码/预览不再误写显式Automatic。
+
+最终core22与app36合计58项独立验证及两个ktlint通过，分别来自未改runtime的实际54项运行和最后app36新运行，不声称单次58全量。44图均已检查；焦点修正影响的8图已复查，其余36字节相同，最终13份源码/配置/测试及44图hash复验一致。旧7张基准变化，精确原始源码隔离4过3变，确认旧Vega3项原已失配，未刷新任何基准；原始源码的一帧面板测试明确RED，当前GREEN。
+
+最后JS退出0仍有os/path错误，Wasm退出0带warning。来源、同步说明、尺寸/截图边界与后续项见 [tabs-r1](web-parity/tabs-r1/README.md)。150ms颜色/下划线透明度过渡、ARIA/面板Tab停点、动态焦点移除和完整自定义/RTL矩阵仍待完成；共享语言栏Hebrew文字省略已记为原生观察。原浏览器TaskSpace18仍丢失，未新建替代空间，Tabs保持未勾选。下一项优先Toast；全仓提交门禁未运行，未新增commit。
+
+
+### Toast：Base UI 对照与管理器补齐（2026-10-31，进行中）
+
+本轮纠正对照目标：官网当前 Toast 页面使用 Base UI Toast，此前本地的 Sonner 描述不能作为完成依据。固定上游 `96da9cc7f1aa10580a3741664e2a77c721206c00` 的页面、组件、Default/Types/Promise 和 Nova 样式共六份源码已保存并校验 SHA256，见 [来源](web-parity/toast-r1/sources.json)。
+
+已实现默认5000ms、0常驻、默认关闭控件、action由回调显式决定关闭；同ID更新重启超时，超出显示数量的消息仍计时，替换manager不复用旧ID计时。补caller-owned suspend promise/loading，成功/失败更新原消息，取消清理并继续传播，已关闭消息不因完成而重建。卡片按popover/foreground、384dp宽度上限、16dp圆角、16dp内边距、14/20排版调整；状态点换为有许可证及来源归档的Lucide图标，Error使用destructive，Loading使用Spinner。目录官方三组配方接窗口级host，窗口边距16dp；代码从编译配方生成。旧位置/主题/取消等扩展保留，不等同官网完整能力。
+
+[验证结果](web-parity/toast-r1/verification/final/test-summary.json)：43项独立测试通过（计时/操作8、异步管理器5、浅深卡片6、模拟1440/390×浅深配方24），core/shared ktlint通过。最初五项行为测试在原实现上4失败/1通过，首轮修改后5通过。40张原生图已逐张通过8张原像素拼图目视检查，覆盖Default、五Types、Promise加载/成功、更新后的action及完整host位置；这些是原生桌面中的模拟宽度，不是浏览器/真实手机验收。六份上游和五个Lucide源文件哈希通过，生成片段二次运行幂等。旧扩展示例统一标注Kotlin extension，修正默认5000ms、显示3项、关闭按钮开启、gap12和Close toast说明，最后文档调整后24项配方与shared ktlint复验通过，40张图与已目视版本逐字节一致。旧Toast黄金图本轮未验证或刷新。详见 [本轮说明](web-parity/toast-r1/README.md)。
+
+明确剩余：源码折叠堆叠、peek/scale和可变高度展开，swipe，hover/focus/window失焦暂停，关闭保留与500/150/250ms动效，F6/Escape及焦点恢复、portal层级与RTL、准确CSS多层阴影和完整扩展矩阵。当前host仍是竖向Column，立即dismiss不能声称已有完整退出生命周期。原浏览器TaskSpace18丢失且替代空间未获授权，浅深×桌面/手机浏览器验收仍未完成；未勾选Toast。下一项优先Tooltip。
+
+
+Toast本轮最终构建记录：JS 24.801s退出0但仍报既有os/path模块诊断，Wasm 18.861s退出0且有1项webpack warning。Web编译对应runtime与官方三配方检查点；晚期仅旧扩展ToastDoc默认值/标题修正，最终字节经JVM配方及shared ktlint复验，不能扩大为最终Web文档验收。[最终摘要与输入哈希](web-parity/toast-r1/verification/summary.json)和[compact ledger](web-parity/toast-r1/verification/gradle-ledger.json)已归档，工作流清理，无基准更新。全仓提交门禁未运行，本轮未新增commit；Toast保持未勾选，继续优先Tooltip。
+
+
+### Tooltip：五配方、计时与箭头布局（2026-10-31，进行中）
+
+按官网Base UI页面与固定上游96da9cc对照，[八份源码与SHA](web-parity/tooltip-r1/sources.json)已校验。五组配方Default、Side、With Keyboard Shortcut、Disabled Button、RTL已编译接入，复制代码从实际预览区域生成。Hover改Outline；四方向按Left/Top/Bottom/Right顺序；Save图标+S键帽、禁用按钮包装层、AR/EN/HE真实语言切换与六方向均已接入。物理Start/End沿用共享PopupPlacement语义，logical sides在配方显式映射。旧例标记Kotlin extension，修正默认skip400和hoverable说明。
+
+原RED5有4失败/1通过：挂载通知、Escape不关闭、受控关闭不通知、11sp字体失败。原键盘焦点测试被初始化skip窗口掩盖，最终将skip设0强化后验证。已修首次hover延迟、focus立即打开、Escape单次关闭请求并保持焦点、当前hover抑制至离开重入；Provider只在真正打开/关闭后更新skip信息，不再挂载即写关闭时间。Nova chip改12/16 Normal、12/6内边距及320最大宽；箭头改overlay，Top侧anchor到chip实测4dp，不再因箭头额外占10dp。最终30项测试通过（Behavior8、Chrome2、目录5方法×1440/390×浅深=20），core/shared ktlint通过。32张原生图已通过4张仅裁空白、不缩放的拼图全部目视；组内互斥修复前后32张逐字节一致。原图与裁切元数据、XML和来源SHA均归档。详细范围与结果见 [tooltip-r1](web-parity/tooltip-r1/README.md)。
+
+明确剩余：click-to-close、hover打开但键盘焦点在trigger外时的全局Escape、safe-polygon hover转移/closeDelay、嵌套/替换Provider边界、多trigger/动态移除、碰撞后箭头最终方向/边缘对齐、准确zoom/slide动效、自动Kbd选择器样式与原生无障碍关联及完整扩展矩阵。原浏览器空间18重查仍不存在，依ego-browser指导不得擅自新建替代空间，浅深×桌面/手机浏览器验收未完成；保留未勾选，原生模拟不能替代浏览器验收。
+
+
+Tooltip目录验证还复现了390宽度语言切换后hover与focus同时打开两个同组提示。未弱化为first匹配；核对Base UI FloatingDelayGroup主源码（独立master来源与SHA已归档），新增hover→focus及focus→hover两项回归，修复前均失败。Provider现在在新owner打开时调用旧owner关闭，保留原焦点并抑制旧交互重开；原混合输入语言切换测试继续保留且全部通过。32张图展示真实键盘focus ring；390约束的RTL popup仍可能离开预览框，因为原生实际窗口1024宽，不能据此声称手机collision已验收。
+
+
+Tooltip最终结果与输入SHA归档于[verification](web-parity/tooltip-r1/verification/summary.json)：30定向测试及两模块ktlint通过，JS39.482s退出0仍有os/path诊断，Wasm19.050s退出0有1项webpack warning；最终9输入哈希一致，32图与已目视版本完全一致。工作流结束并清理日志。动态trigger移除与content hover卸载清理仍需专项状态验证；旧黄金未验证/未刷新，全仓门禁未运行，本轮未新增commit。浏览器空间仍不可用，Tooltip保持未勾选。清单已无“尚未开始本轮页面与完整状态对照”的具体组件标记；下一轮优先处理尚缺本页完整对照的Chart，再回到清单前部关闭已记录差异。Attachment继续遵守用户要求留待统一处理。
+
+
+### Chart 本页：八配方与浏览器恢复（2026-11-02，进行中）
+
+[固定上游11来源](web-parity/chart-r1/sources.json)覆盖Default、First Chart/Grid/Axis/Tooltip/Legend、Tooltip解剖与RTL八组。已移植六月、原30天数据与7324/7250汇总、真正切换系列、三语翻译与反向轴，代码从编译区域生成。组件补Bar/Line指针命中、键盘选点与浮动提示，defaultIndex仅初始化、initialDimension不再冻结测量尺寸；新增series主题色/图标、正确hideIcon fallback、tooltip独立格式化数值和空数据隐藏/formatter/indicator。
+
+原presentation RED4全失败，改后core17+目录32=49通过；恢复审计确认中断前最终语言切换修正已成功执行但未归档，恢复run复用缓存并逐XML确认，不算49项新执行。用户已明确允许新建专用浏览器验收空间，现canonical空间4、官网p1、本地p2，见[session记录](web-parity/browser-session.json)。原空间18的历史丢失记录保留，不再作为当前授权障碍。
+
+官网真实四象限截图与DOM几何已保存，确认首柱222在220px绘图区为81.4px，对应0..600域；旧Canvas用最大值454撑满错误。按[Recharts v3.3主源码与MIT许可](web-parity/chart-r1/recharts-scale-sources.json)移植five-tick域（Double替代Decimal），并修24dp卡片内容gap。明确官网Card本身border0，外框来自preview，去除重复边框。该检查点core21+目录32=53及两ktlint通过，44原生图中40变化待复查。随后发现日期轴被窄band截成Ap/A，已改实际文字测量与preserveEnd/minTickGap、统一plotPadding；最终57项正在验证。
+
+目前本地预览发现旧dist仍是0.3.17，未用它验收当前源码；webpack成功不等于dist同步，恢复owner正准备最终开发distribution供浏览器。Chart保持未勾选。剩余完整交互/动效、继承手机标题字号、刻度与formatter边界、多层阴影、rich config/payload别名及最终浏览器对照均需继续；旧黄金未验/未刷新，全仓门禁与新增commit未执行。
+
+
+### Chart 最终60项与四象限浏览器记录（2026-11-02）
+
+数字裁切补三项固定宽度回归，修复前全部失败；Tooltip数值先测量并保持单行，名称列允许收缩，修复后包含真实RTL全部通过。Default与Tooltip解剖按MDX隐藏代码面板，其他示例默认行为保留。最终28核心+32目录合计60项独立通过、两个ktlint通过；JS编译12.912s、Wasm开发distribution27.840s通过并保留1项webpack warning，不能扩大为最终production验收。18输入SHA再次一致，生成脚本重跑幂等；44原生图已全部复查。[最终证据](web-parity/chart-r1/verification/summary.json)。
+
+已使用获授权的空间4，官网与本地八示例各32张图（1440/390×浅深）全部保存并目视复查。新开发dist显示0.3.29，旧0.3.17产物明确排除。Mobile切换后的悬停值官网/本地均为Apr1/150，本地真实Tab/Home/Right显示Apr2/180；官网focus/arrow尝试未可靠观察到数字变化，保留键盘对照待办。390为桌面Chromium窄视口，不等同真实手机触摸。原图、拼图、局部裁切位置和矩阵见[浏览器记录](web-parity/chart-r1/browser/review.json)。
+
+仍未对齐：桌面header约108px对官网99px；手机标题15px对继承约18.9px；官网Steps缩进48及固定320px预览、本地全宽随内容高度；页面Chart Config/Theming等章节和层级缺失；窄屏阿语末两个月份拥挤；Tooltip解剖色板/名称换行、深色文字字重与刻度对比、精确柱宽/阴影、完整动效与辅助技术/触摸状态。具体清单见[Chart说明](web-parity/chart-r1/README.md)。Chart继续未勾选；旧golden未验/未刷新，全仓门禁未运行、未新增commit，Attachment继续后置。
+
+
+### Chart 响应轴补测与修正（2026-11-02）
+
+追查前轮阿语末两月重叠，确认首次窄屏和单独主题切换正常，但1440→390并切到RTL可复现且稳定帧仍错。JVM新增两项真实RTL间距/glyph与两项缩放后对照全新布局的像素测试，原实现8项轴测试均过，不能声称JVM RED。轴改为测量实际Text children，用同一placeable宽度筛选与放置，移除独立记忆宽度；浏览器新Wasm实际加载后原重现路径已消失，三语×浅深×宽窄12图及主图4图均已复查。[证据与边界](web-parity/chart-axis-r2/README.md)。
+
+最终32核心+32目录=64项独立通过、两ktlint通过，44原生图与final60字节一致。Wasm开发distribution32.657s通过并保留1项webpack warning，18输入SHA一致，工作流已正常结束和清理。官网键盘此前读取太早；保留SVG focus并逐键等待可见Tooltip状态，已确认Apr2/Page Views/180。实际窄屏日期刻度仍是本地Apr1/8/15/22/30对官网Apr7/14/22/30，图宽/字体度量及标题/Steps/文档章节等差异继续开放。未验/刷新旧golden、未运行全仓门禁、未新增commit，Chart保持未勾选。
+
+
+### Chart 五步骤预览尺寸（2026-11-02）
+
+官网实测五个步骤的preview均320px高，desktop内容缩进48px、手机0。桌面SVG509×286，虽然扣除40px上下padding只剩240px，仍按自然比例居中伸入padding区；本地此前全宽且随内容长高。新增目录`previewHeight`/`desktopPreviewInsetStart`元数据，仅五个Chart步骤使用320/48，并在固定预览内允许自然高度居中。标题留在主列，预览卡片及源码一起缩进，其他例继续原最小高度策略。
+
+新8项Frame测试及既有ChartExamples32、DocCodeBlock4、ComponentDocumentation7合计51项本轮独立通过，shared ktlint通过；4张新原生图已查看，原44配方图字节未变。Wasm开发distribution22.520s通过（1项webpack warning），8输入SHA一致且脚本生成幂等。新Wasm实际加载后，五步骤四象限20图及实际展开Legend源码画面均已复查；桌面本地图表510×286、手机260×200，剩余宽差来自全局列宽/scrollbar。见[本轮记录](web-parity/chart-preview-r3/README.md)。
+
+仍保留Add Grid/Axis/Tooltip/Legend的h2→h3层级、完整编号Steps和正文/ChartConfig等章节、主图标题/header与刻度及完整交互差异；Chart继续未勾选。上一轮64项核心/目录证据不与本轮51重复累计，未刷新旧golden、未运行全仓提交门禁或新增commit。清单已无明确尚未开始本轮页审的组件；下一轮回到清单前部，优先复核Accordion尚存预览高度策略与扩展API矩阵。Editor继续排除，Attachment剩余差异继续后置。
+
+
+### Accordion 第七轮：固定预览与orientation故障（2026-11-02）
+
+复核九份固定上游与当前DOM：Default/Basic/Disabled/Borders300、Multiple450、Card435，align=start、padding40。六组从minHeight改为固定height+顶部对齐；共享固定预览按官网overflow-visible交给外层圆角卡片裁剪，Chart居中与尺寸不变。RTL工具栏在官方preview外，本地仍内部Select，暂未生搬288固定高。官方例标题统一，其他例标Kotlin extension，补Composition树和Usage导入。
+
+新矩阵实际抓到Horizontal故障：焦点移动正确，但第二项正文被零宽挤掉，8项断言失败。官方Root始终flex-col，orientation只影响键盘轴；移除本地两处误用的横Row，恢复默认竖排并保留左右键/RTL导航。8个失败保持正文可见性断言并转绿，补竖排几何断言。[验证](web-parity/accordion-r7/verification/summary.json)：最终Frame24+Extension32+旧目录2+ChartFrame8+core Nova12合计78项独立通过，core/shared ktlint通过；Wasm开发26.837s通过、1条webpack warning，10输入SHA一致。56张原生图已逐张通过12张原像素拼图复查，额外4ChartFrame字节不变。
+
+官网/本地六例×宽窄×浅深各24张，最终48图已复查；首批深色误标被发现并替换，最终24本地图每张按实际背景像素核对。手机浅深真实Right/Enter后Styled?正文可见。桌面API尝试受缩放后同fragment未重新定位影响，截图落在Vertical，未算通过。另确认手动主题在App.kt仅remember、整页重载丢失，保留共享缺口。原图、SHA、几何、排除的诊断及限制见[本轮说明](web-parity/accordion-r7/README.md)。
+
+仍留RTL外置工具栏/精确Select、Horizontal同列动态重排、其余扩展API/Style/辅助技术/触摸矩阵、Card正文换行与深色字形、列宽/scrollbar和代码面板1px统计。Multiple全展开478px/固定450px的溢出已在官网实测，本地三项同时展开浏览器状态仍待补。Accordion保持未勾选；旧golden未验/未刷新，全仓提交门禁未运行、未新增commit。Editor继续排除，Attachment后置。
+
+
+### Accordion 第八轮：动态顺序与锚点结论更正（2026-11-02）
+
+新增LTR/RTL反转c,b,a的两项真实UI回归均RED；额外不同宽度RTL回归在Home断言RED，证明不能只给x排序补并列规则。根布局已按官网恢复竖排，现导航统一按实际y顺序，orientation只决定按键轴。最终Nova15+Extension32=47项独立通过，core/shared ktlint通过；8张原生扩展图字节不变。Wasm开发distribution21.084s通过（保留webpack warning），10项输入SHA一致，工作流已清理。见[验证](web-parity/accordion-r8/verification/summary.json)。
+
+撤回此前“缩放后未自动重新定位是本地缺陷”的推断：官网Card标题在390时85.516px，切1440后同hash变成-350.953px；再次点相同目录后回87.547px。本地相同目录点击亦正常，BrowserDocNavigation原有force/revision已处理；未加入与官网不同的强制缩放重定位。新app模块实际加载后，桌面/窄屏浅深四张实际Right/Enter场景已确认Styled?焦点及完整正文，补上r7未成功的桌面验收。[实测/画面](web-parity/accordion-r8/README.md)。
+
+仍留RTL工具栏/Select、其余扩展/Style/动态slot及辅助技术完整矩阵、换行/字形与全局页面细节；全页重载丢失手动主题仍是真实共享缺口，未因锚点更正撤回。Accordion继续未勾选；未运行旧golden或全仓提交门禁，本轮未新增commit。
+
+
+### Accordion 第九轮：RTL工具栏与自然高度（2026-11-02）
+
+官网三语×桌面/窄屏×浅深12状态确认：工具栏64px、Select144×28、正文固定288px/padding40/顶部对齐、Accordion最大448px。目录共用工具栏原本已存在，现抽出原有控制区域供Accordion复用，其他RTL配方正文布局保留。新增RTL指南段落，复制代码移除目录选择器。
+
+初步图像复查抓到固定高度压缩后续条目；新增第三个阿语标题自然高度断言在390浅深均RED。正文改为固定外框内自然高度测量，RED两项转绿。最终RTL4+固定预览24+旧示例2+共享Breadcrumb4=34项独立通过，shared ktlint通过；Wasm开发distribution15.135s通过、1条webpack warning，6输入SHA一致，工作流已正常结束。12原生图已复查，窄屏6图变化。见[本轮证据](web-parity/accordion-r9/README.md)。
+
+官网/本地各12张三语四象限浏览器图均已复查，新app401ff6…实际加载。早期菜单焦点/坐标未就绪导致切换未成功的截图已排除，不计通过。桌面翻译说明弹层可用。Web阿语字体/行高仍不同，窄屏第三项仍被代码边界遮住，不能用原生通过掩盖；全局窄屏342/327px、深色字重/字形、原生希伯来语选中标签省略等继续记录。Accordion仍未勾选；扩展/Style/动态slot、完整辅助技术及触摸矩阵待补，未运行旧golden或全仓提交门禁，未新增commit。Editor排除、Attachment后置。
+
+
+### Accordion 第十轮：官方RTL字体与20px行框（2026-11-02）
+
+官网computed样式证明阿语/希伯来语正文分别使用Noto Sans Arabic/Hebrew，工具栏仍用Geist；原本只切方向/翻译导致Web系统字体回退。加入固定Google Fonts提交的400/500静态资源，完整OFL许可证和生成脚本保留，四资源重复生成逐字节一致（合计484644bytes）。只替换Accordion RTL正文的字体，其余主题参数继承。
+
+换入真实Noto后单行标题42px回归四象限全部RED（实际52px）。Nova Accordion三条string文字路径统一Center/None/Tight20px行框，原断言转绿。最终核心15+RTL4+Frame24+旧例2+Breadcrumb4=49项独立通过，两个ktlint通过；Wasm开发21.372s通过、1条webpack warning，16输入SHA一致，工作流已清理。见[r10证据](web-parity/accordion-r10/README.md)。
+
+新app a8c35a…及两种Noto各两字重实际加载；12个三语四象限本地图已复查。窄屏阿语第三项浅深均恢复可见，实际点击展开完整支付回答；官网稳定对应状态另存。官网12静态状态复用r9基准并重新核对字体；未声称本轮重拍。原生RTL12+六例Frame48全部已目视复查；后者48图较r7都变化，不能说全局行框未影响旧例。Basic/Borders/Card固定预览仍存在长内容边界裁剪，需要对其余六例补本次变更后的浏览器矩阵。
+
+全局列宽/换行、深色字形观感、原生希伯来语标签省略及扩展/Style/动态slot/辅助技术/触摸和手动主题重载持久化继续开放。Accordion保持未勾选，旧golden/全仓提交门禁未运行，未新增commit；Editor排除、Attachment后置。
+
+### Accordion 第十一轮：常规六例Web回归与说明（2026-11-02）
+
+补齐r10行框修改后的官网/本地Default、Basic、Multiple、Disabled、Borders、Card各24状态，另补Multiple全展开各4状态，56图全部通过12张原像素对照拼图复查。发现五组行为说明缺失，现已补入现有描述字段/导出路径，Kotlin API名按实际接口适配。[记录与画面](web-parity/accordion-r11/README.md)。
+
+官网预览300/450/435px保持不变，Multiple全展开桌面自然358px、窄屏478px；双方450px固定外框均裁剪超出正文。本地已实际同时展开三项，桌面缩窄后状态保留。窄屏342/327px列宽导致换行/截断点仍不同，Canvas内部root未测自然高度，不用推断值冒称完全一致。
+
+早期深色误标来自Default整页重载丢失手动主题，已排除；最终56图逐张按实际背景像素确认。24次本地导航记录中4次整页重载，故重拍改为导航后再检查/设置主题。手动主题持久化仍待修。
+
+37项独立目录测试、shared ktlint通过，Wasm开发14.128s通过并保留1条webpack warning；新app289f86…实际加载，17输入SHA一致。新60原生图与r10目视版字节相同；core15未重跑，不累计。工作流已结束清理，旧golden和全仓提交门禁未执行、未新增commit。其余字形/代码面板/原生标签/扩展API/Style/动态slot/辅助技术/触摸继续开放，Accordion未勾选。Editor排除，Attachment后置。
+
+### 共享Web：手动主题持久化（2026-11-02）
+
+关闭此前Accordion r7–r11的共享主题重载缺口。App接收启动override和显式变化回调，Web入口读取/保存独立localStorage键；未设置或无效值随系统，手动选择优先，恢复/重组不写入，读写异常不影响当前UI切换。原生宿主保留原默认内存行为。[实现和证据](web-parity/theme-persistence-r1/README.md)。
+
+新应用重建测试及目录导航/预览共12项独立通过，shared/webApp ktlint通过；JS编译、Wasm开发distribution通过（18.809s），保留既有warning。5输入SHA一致。新app42ea70…实际加载，1440/390浅深四象限、系统深色→手动浅色、系统浅色→手动深色、整页刷新和Accordion/Chart跨页导航均复验；各次timeOrigin不同，非仅同页hash。官网持久化也通过真实整页刷新核对。
+
+另临时模拟p2存储SecurityError，验证系统回退、内存切换和重载降级；移除hook后原dark记录未变且恢复。共10张浏览器截图已全部目视复查，未删除存储键。JS仅编译、未单独运行；390不是触摸真机。工作流已结束和清理日志，旧golden/全仓提交门禁未执行、未新增commit。Accordion及其他组件剩余矩阵保持原范围，Editor排除、Attachment后置。
+
+### 共享 Web：水平布局、文档滚动与 Create 导航回归（2026-11-04）
+
+获准新建专用空间后恢复官网/本地验收，后续复用 TaskSpace 1。正文改为居中最大640dp，壳左右8dp，侧栏/目录各288dp，并按CSS视口1024/1280断点显示；390px正文由342变为官网327px，七宽度浅深14项几何测试通过。Web原生滚动条与Compose文档滚动双向同步，指南复用路由缓存，Create保留内部滚动；首轮同步安装及跨路由返回/空锚点处理均已补验证。[详细记录与证据](web-parity/page-layout-r1/README.md)。
+
+完整路由回归发现Create真实intrinsic崩溃，隔离至KitchenSliderRow所在FlowRow查询Slider固有宽高；仅示例提供尺寸回退后修复。最终28项独立测试、shared/webApp ktlint、JS编译及Wasm开发distribution通过；官网/本地八张桌面/手机浅深截图全部目视复查，DPR2在桥接构建已验，最终5f6构建另验Create往返稳定保留800px（同一timeOrigin）。仅等body高度会误读初始Introduction过渡页，现先目视确认目标页后操作，早期瞬态未计通过。垂直节奏、描述均衡换行、顶部/目录/代码细节、完整弹层滚动锁及触摸/辅助技术继续开放，不以本轮关闭全站P1/P3或Accordion。未运行旧golden、全仓提交门禁，未新增commit；Editor排除，Attachment后置。
+
+
+### Badge：七个官网示例与 Spinner 固有尺寸（2026-11-04）
+
+按官网实际 MDX 的 Default、Variants、With Icon、With Spinner、Link、Custom Colors、RTL 重写目录及配方，补 Composition/API。组件增加 href、invalid 和逻辑图标边 API，保留旧 JVM 入口；修正 RTL 图标边距及 Arabic/Hebrew 16dp 行高。颜色示例采用官网浅深调色板，RTL 三语言切换方向与字体。安装文档版本同步0.3.30。[完整证据与剩余项](web-parity/badge-r1/README.md)。
+
+真实浏览器发现 Spinner 示例两个 Badge 错分两行：Canvas 未提供固有宽度，FlowRow 的 fit-content 因而少算 Spinner。现在在公开 StyleScope 层记录声明尺寸并补固有查询，保持真实 Style/Modifier 测量优先级。先验证回归失败，再修复并验证动态尺寸和 Modifier 覆盖；最终桌面/手机浅深四种均同行。
+
+最终23项独立测试通过；BadgeNova2图、Spinner2图显式像素 verify，core/shared ktlint、JS编译、Wasm distribution 通过。全仓 ktlintCheck/detekt 退出0，但默认 detekt 公共源码覆盖限制仍在。官网/最终本地各28张，另各8张英语/希伯来语对照均已查看，最终 app147f，哈希/输入/原图/XML见证据目录。仅刷新经过旧实现隔离、与当前结果字节一致且符合官网white10%边框的 Nova 暗色1张基准；浅色和旧Vega4张未变，未宣称旧Vega全部通过。
+
+Badge仍不勾选：原生HTML链接语义、完整hover/pressed/辅助技术、长内容与共享页面/暗色字体/代码差异未关闭。未新增commit，未绕过或修改pre-commit；累积工作树及hook的Gradle wrapper接入待整理。Editor排除、Attachment后置。
+
+
+### Button：逻辑图标边距与十四组配方（2026-11-04）
+
+官网当前十五组实际docs示例已归档固定版本。本地整理十四组，新增Size四组文字/图标配对、Rounded、Spinner与三语RTL，补Cursor/Composition/API；公开ButtonIconPlacement Start/End/Both遵守Xs8/6、Sm10/6、Md/Lg10/8的普通/图标边距，正确映射RTL，保留两种旧JVM入口及Style最后覆盖。Nova改默认光标，Arabic文字行框30→20dp，按钮高度维持32dp，版本0.3.31。[来源、证据和剩余差异](web-parity/button-r1/README.md)。
+
+回归和浏览器逐步暴露三项真实问题：手机Spinner FlowRow错分两行（官网约250px单行略超245px内区）、Arabic字体leading撑高、桌面/手机RTL自然宽度与CSS不一致。现在非RTL示例保留自然单行，RTL以真实子项测量求自然总宽并限于可用宽后换行、逻辑定位；不依赖不足的Button固有尺寸查询。新增手机root245dp/各行右对齐和桌面五按钮同行断言。17项独立用例通过；两张既有ButtonNova图显式verify通过，未更新Button基准。core/shared ktlint、最终JS和Wasm distribution通过；官网/本地七组各28张桌面/手机浅深图已复查，最终app7c866，见validation与输入哈希。
+
+仍不勾选：As Link缺失（需真实链接语义，不能冒充Button）、Group More Options与完整菜单、Tabler图形、invalid/expanded/pressed/动态主题形状与辅助技术全矩阵、任意固有布局及共享排版差异均明确保留。Editor排除、Attachment后置。
+
+提交路径已接通：.git-hooks/pre-commit增加可选compact Gradle wrapper入口，保留原始ktlintFormat/ktlintCheck/detekt任务、默认开发者流程及git add-u。本批将之前累积的组件复核、共享Web布局、Badge/Button和已授权桌面示例改动集中整理为checkpoint；默认detekt公共源码覆盖限制仍存在，不将默认任务退出0当作完整静态分析。

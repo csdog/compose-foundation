@@ -19,6 +19,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.graphics.drawscope.ContentDrawScope
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.node.DrawModifierNode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorProducer
 import androidx.compose.ui.graphics.isSpecified
@@ -166,12 +174,17 @@ private fun TextImpl(
     // ColorProducer is consumed in BasicText's draw phase. Ancestor Style updates
     // can repaint text without remeasurement or a state write back to composition.
     val colorProducer =
-        if (specifiedColor != null || inSelection) {
-            null
-        } else {
-            ColorProducer {
-                inheritedContentColor.node?.inheritedColor()?.takeIf { it.isSpecified } ?: fallbackColor
-            }
+        ColorProducer {
+            val inherited = inheritedContentColor.node
+            val color =
+                if (specifiedColor != null || inSelection) {
+                    specifiedColor ?: fallbackColor
+                } else {
+                    inherited?.inheritedColor()?.takeIf { it.isSpecified } ?: fallbackColor
+                }
+            // When a Style brush paints the glyph mask, its alpha is the fill alpha.
+            // Do not multiply it by the original solid text color's alpha a second time.
+            if (inherited?.inheritedBrush() != null) color.copy(alpha = 1f) else color
         }
     val ambientDecoration = LocalTextDecoration.current
     val resolvedColor = specifiedColor ?: fallbackColor
@@ -191,10 +204,15 @@ private fun TextImpl(
         } else {
             Style
         }
+    val paintStyle = remember(style) { style.preserveTextCurrentColor() }
     val styledModifier =
         modifier
-            .styleable(styleState, style then colorStyle)
-            .then(AncestorContentColorElement(inheritedContentColor))
+            .styleable(styleState, paintStyle)
+            // Foundation contentColor clears contentBrush on the same Style node.
+            // Keep the explicit solid-color fallback nearer, on a separate node,
+            // so it retains its precedence without deleting an ancestor brush.
+            .then(if (specifiedColor != null) Modifier.styleable(style = colorStyle) else Modifier)
+            .then(AncestorContentColorElement(inheritedContentColor, resolvedColor))
     // Prefer BasicText(String): only TextStringSimpleNode applies Style-inherited typography
     // (fontSize / lineHeight / fontWeight). AnnotatedString always uses TextAnnotatedStringNode.
     if (plainText != null) {
@@ -231,25 +249,30 @@ private class InheritedContentColor {
 
 private class AncestorContentColorElement(
     private val color: InheritedContentColor,
+    private val fallbackColor: Color,
 ) : ModifierNodeElement<AncestorContentColorNode>() {
-    override fun create(): AncestorContentColorNode = AncestorContentColorNode(color)
+    override fun create(): AncestorContentColorNode = AncestorContentColorNode(color, fallbackColor)
 
     override fun update(node: AncestorContentColorNode) {
-        node.updateColor(color)
+        node.updateColor(color, fallbackColor)
     }
 
     override fun InspectorInfo.inspectableProperties() {
         name = "ancestorContentColor"
     }
 
-    override fun equals(other: Any?): Boolean = other is AncestorContentColorElement && other.color === color
+    override fun equals(other: Any?): Boolean =
+        other is AncestorContentColorElement &&
+            other.color === color &&
+            other.fallbackColor == fallbackColor
 
-    override fun hashCode(): Int = color.hashCode()
+    override fun hashCode(): Int = 31 * color.hashCode() + fallbackColor.hashCode()
 }
 
 private class AncestorContentColorNode(
     private var color: InheritedContentColor,
-) : Modifier.Node(), LayoutModifierNode {
+    private var fallbackColor: Color,
+) : Modifier.Node(), LayoutModifierNode, DrawModifierNode {
     // Preserve the existing Style/text layout boundary; color resolution stays in draw.
     override fun MeasureScope.measure(
         measurable: Measurable,
@@ -259,7 +282,11 @@ private class AncestorContentColorNode(
         return layout(placeable.width, placeable.height) { placeable.place(0, 0) }
     }
 
-    fun updateColor(next: InheritedContentColor) {
+    fun updateColor(
+        next: InheritedContentColor,
+        fallback: Color,
+    ) {
+        fallbackColor = fallback
         if (color === next) return
         if (color.node === this) color.node = null
         color = next
@@ -272,6 +299,60 @@ private class AncestorContentColorNode(
 
     override fun onDetach() {
         if (color.node === this) color.node = null
+    }
+
+    override fun ContentDrawScope.draw() {
+        val source = inheritedBrush()
+        val brush =
+            if (source is TextColorBrush) {
+                source.resolveTextColor(
+                    colorBeforeBrush().takeIf { it.isSpecified }
+                        ?: source.fallbackTextColor.takeIf { it.isSpecified }
+                        ?: inheritedColor().takeIf { it.isSpecified }
+                        ?: fallbackColor,
+                )
+            } else {
+                source
+            }
+        if (brush == null) {
+            drawContent()
+        } else {
+            // Isolate only the glyph subtree: the gradient must not paint surrounding
+            // whitespace, backgrounds or siblings. No layer is needed for ordinary text.
+            drawIntoCanvas { canvas ->
+                canvas.saveLayer(Rect(Offset.Zero, size), Paint())
+                try {
+                    drawContent()
+                    drawRect(brush, blendMode = BlendMode.SrcIn)
+                } finally {
+                    canvas.restore()
+                }
+            }
+        }
+    }
+
+    private fun colorBeforeBrush(): Color {
+        var result = Color.Unspecified
+        traverseAncestors(StyleOuterNodeKey) { node ->
+            val resolved = (node as? StyleOuterNode)?.resolveAnimatedStyleFor(TextDrawFlag)
+            if (!result.isSpecified && resolved?.contentColor?.isSpecified == true) result = resolved.contentColor
+            resolved?.contentBrush == null
+        }
+        return result
+    }
+
+    fun inheritedBrush(): Brush? {
+        var brush: Brush? = null
+        traverseAncestors(StyleOuterNodeKey) { node ->
+            val ownBrush = (node as? StyleOuterNode)?.resolveAnimatedStyleFor(TextDrawFlag)?.contentBrush
+            if (ownBrush != null) {
+                brush = ownBrush
+                false
+            } else {
+                true
+            }
+        }
+        return brush
     }
 
     fun inheritedColor(): Color {

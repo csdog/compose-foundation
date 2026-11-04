@@ -2,6 +2,8 @@
 
 package com.toutiaoyan.compose.ui.catalog
 
+import androidx.compose.ui.platform.testTag
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -35,8 +37,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.CollectionInfo
 import androidx.compose.ui.semantics.collectionInfo
@@ -76,12 +76,12 @@ fun ComponentDetailScreen(
     onNavigateComponent: (String) -> Unit = {},
     scrollState: ScrollState? = null,
 ) {
+    val pageScroll = scrollState ?: rememberScrollState()
     guidePagesById[componentId]?.let { guidePage ->
-        guidePage.content()
+        CompositionLocalProvider(LocalGuideScrollState provides pageScroll) { guidePage.content() }
         return
     }
     val doc = componentDocsById[componentId] ?: return
-    val pageScroll = scrollState ?: rememberScrollState()
     key(doc.id) { ComponentDetailContent(doc, onNavigateComponent, pageScroll) }
 }
 
@@ -98,7 +98,7 @@ internal fun ComponentDetailContent(
     val navigation = LocalDocNavigation.current
     val location = navigation?.location
     LaunchedEffect(location, doc.id, anchors, scrollState) {
-        if (location?.componentId != doc.id) return@LaunchedEffect
+        if (location?.componentId != doc.id || location.restoreScroll) return@LaunchedEffect
         if (location.fragment.isEmpty()) {
             scrollState.scrollTo(0)
         } else {
@@ -135,17 +135,18 @@ internal fun ComponentDetailContent(
     ) {
         BoxWithConstraints(Modifier.fillMaxSize()) {
             val showPageNavigation = maxWidth >= 600.dp
-            val horizontalPadding = if (maxWidth >= 760.dp) 76.dp else 24.dp
-            val showTableOfContents = maxWidth >= 1100.dp
+            val horizontalPadding = if (catalogViewportWidth() >= 768.dp) 0.dp else 16.dp
+            val showTableOfContents = catalogViewportWidth() >= 1280.dp
             Row(Modifier.fillMaxSize()) {
                 Column(
                     modifier = Modifier.weight(1f).fillMaxHeight().verticalScroll(scrollState),
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Column(
                         modifier =
-                            Modifier.widthIn(max = 792.dp).fillMaxWidth()
+                            Modifier.widthIn(max = 640.dp).fillMaxWidth()
                                 .onGloballyPositioned { anchors.content = it }
-                                .padding(horizontal = horizontalPadding, vertical = 48.dp),
+                                .padding(horizontal = horizontalPadding, vertical = 48.dp).testTag("doc-column"),
                         verticalArrangement = Arrangement.spacedBy(32.dp),
                     ) {
                         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -231,6 +232,10 @@ internal fun ComponentDetailContent(
                                     mobileMinPreviewHeight = example.mobileMinPreviewHeight,
                                     previewPadding = example.previewPadding,
                                     previewBackground = example.previewBackground,
+                                    hideCode = example.hideCode,
+                                    previewHeight = example.previewHeight,
+                                    previewVerticalAlignment = example.previewVerticalAlignment,
+                                    desktopPreviewInsetStart = example.desktopPreviewInsetStart,
                                     descriptionMarkdown = example.descriptionMarkdown,
                                     preview = example.preview,
                                 )
@@ -298,6 +303,10 @@ internal fun ComponentDetailContent(
                                                 example.previewPadding,
                                             previewBackground =
                                                 example.previewBackground,
+                                            hideCode = example.hideCode,
+                                            previewHeight = example.previewHeight,
+                                            previewVerticalAlignment = example.previewVerticalAlignment,
+                                            desktopPreviewInsetStart = example.desktopPreviewInsetStart,
                                             descriptionMarkdown =
                                                 example.descriptionMarkdown,
                                             headingAnchor =
@@ -363,7 +372,7 @@ private fun GuideSection(
     anchors: DocAnchors,
     id: String,
 ) {
-    val mobile = LocalWindowInfo.current.containerSize.width < with(LocalDensity.current) { 640.dp.roundToPx() }
+    val mobile = catalogViewportWidth() < 640.dp
     val bodySize = if (mobile) 18.9f else 15f
     val lineHeight = bodySize * 1.75f
     Column(Modifier.fillMaxWidth()) {

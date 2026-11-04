@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DropdownMenuScreenshotTest[jvm]" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-30T11:28:08.566Z" hostname="Apples-MacBook-Pro.local" time="0.438">
+  <properties/>
+  <testcase name="nova_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuScreenshotTest" time="0.198"/>
+  <testcase name="nova_light[jvm]" classname="com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuScreenshotTest" time="0.083"/>
+  <testcase name="states_light[jvm]" classname="com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuScreenshotTest" time="0.081"/>
+  <testcase name="states_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuScreenshotTest" time="0.076"/>
+  <system-out><![CDATA[Roborazzi: dropdown_menu_nova_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=786432, width=1024, height=768) changed:false
+Roborazzi: dropdown_menu_nova_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=786432, width=1024, height=768) changed:false
+Roborazzi: dropdown_menu_states_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=786432, width=1024, height=768) changed:false
+Roborazzi: dropdown_menu_states_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=786432, width=1024, height=768) changed:false
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

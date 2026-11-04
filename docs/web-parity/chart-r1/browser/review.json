@@ -1,0 +1,146 @@
+{
+  "date": "2026-11-02",
+  "spaceId": 4,
+  "source": {
+    "page": "p1",
+    "url": "https://ui.shadcn.com/docs/components/base/chart",
+    "captures": 32
+  },
+  "local": {
+    "page": "p2",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60",
+    "version": "0.3.29",
+    "distribution": "developmentExecutable",
+    "captures": 32
+  },
+  "matrix": {
+    "widths": [
+      1440,
+      390
+    ],
+    "height": 1000,
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "mobile": false,
+    "realPhoneOrTouch": false,
+    "examples": [
+      "default",
+      "first",
+      "grid",
+      "axis",
+      "tooltip",
+      "legend",
+      "anatomy",
+      "rtl"
+    ]
+  },
+  "visualReview": {
+    "all64Reviewed": true,
+    "localContactSheets": 8,
+    "officialContactSheets": 8,
+    "native44Reviewed": true,
+    "parityComplete": false,
+    "differences": "../README.md"
+  },
+  "interactions": {
+    "localMobileHover": {
+      "date": "Apr1,2024",
+      "value": 150,
+      "evidence": "local-mobile-hover-1440-light.png"
+    },
+    "localMobileKeyboard": {
+      "keys": [
+        "Tab",
+        "Home",
+        "ArrowRight"
+      ],
+      "date": "Apr2,2024",
+      "value": 180,
+      "evidence": "local-mobile-keyboard-1440-light.png"
+    },
+    "officialMobileHover": {
+      "value": 150,
+      "evidence": "official-mobile-hover-1440-dark.png"
+    },
+    "officialKeyboard": {
+      "value": 180,
+      "date": "Apr2,2024",
+      "method": "ArrowLeft one day at a time, waiting visible tooltip DOM update after each key; real application SVG focus retained.",
+      "evidence": "official-mobile-keyboard-confirmed-1440-dark.png",
+      "state": "official-mobile-keyboard-confirmed.json"
+    }
+  },
+  "excluded": [
+    "local-desktop-initial57.png",
+    "local-phone-initial.png",
+    "old0.3.17productionartifact"
+  ],
+  "sha256": {
+    "local-first-1440-light.png": "9dba4311081466d28bbb6b97e2e8ca7aa22dcf9328b7a956b5d2d37101adee4f",
+    "local-grid-1440-light.png": "60858c6ea192ed025806e1e02c3021efe00dea9335764f7c2b1791148f763368",
+    "local-axis-1440-light.png": "78232828e07d187222cd2fc92eefa1490c38c268807126c4d6e179d93b26d7e4",
+    "local-tooltip-1440-light.png": "44cec0e728c8ef9333af481eb50e48035df1adecbc5aecb36f7134a3edc26d0b",
+    "local-legend-1440-light.png": "9f139229a2aa4477012fc5e59b5c82b6f96f3513651cc0d1bdd4c10f2d60612b",
+    "local-anatomy-1440-light.png": "beb9de57df24d594f7c1a75261894c749f53b706dca6bfb0fe2a75b5ba309e19",
+    "local-rtl-1440-light.png": "4e847aa060c2d86a39e95d65628680ca7a945742cf475582bd0485e7d00eb099",
+    "local-first-1440-dark.png": "4d951aea7a5f76647f9e7d6b72b36326f38d0ce66c3275571838f9636fd9db28",
+    "local-grid-1440-dark.png": "c5adbb27363837b62b90c7fd86c907c2c93dfcf491e7fe745cf495644e0a3ed4",
+    "local-axis-1440-dark.png": "ae2947ff9bbe9d4d226944978fbeb83419b9c9aee5248c43c53927cd33d8e9db",
+    "local-tooltip-1440-dark.png": "b786a43b49b2e4e4c6784b1aaefa0cfa1a6e74fe6f7c22c3099b7c514f6dc62f",
+    "local-legend-1440-dark.png": "9754c9294c8c3368b27be7228e5f16a6176421845598e3b79b8d14b5f593e7d8",
+    "local-anatomy-1440-dark.png": "56c348514cea9b2b32ad665e8376d3f00f70a7af626d64451d47864f5f8a55b7",
+    "local-rtl-1440-dark.png": "e4066046cad0fe351cc4b004b068225514f3cb938399688fd6bf9f94e501d586",
+    "local-first-390-dark.png": "2485ac20633e5227c5b7168e953806617b12e3b5fa0cdd51a2825153bb9d2c24",
+    "local-grid-390-dark.png": "c46cf1bee7bed5323a56591eb7e893f6bdbf689b3841ba6b6e904d66dc43991c",
+    "local-axis-390-dark.png": "4083d31c8ca319f783078976db13f37cbe094dfc7c27729f310cb9a63e5ed25b",
+    "local-tooltip-390-dark.png": "8db8331853d8cf93d7e2e3a8e52a8ff966ee16540606dfeb73d9af5e76610354",
+    "local-legend-390-dark.png": "fb05c2f9914d01dd5a7851449dfd3a339c4a1cd356ef38d2820a55ded90769af",
+    "local-anatomy-390-dark.png": "4e3f104f606aabe16eb103af4fcbebe474a45602d28e6ffa5e2bf20862f21c0b",
+    "local-rtl-390-dark.png": "bc3f6feb45037dc76e88c7be3f6df4fd8fbbf646b387d155ec8f2aecff1ecaa5",
+    "local-first-390-light.png": "16a637b7a905ab7ea0b9e374e213bffad1f86a5d71dff178346bf9894dfecbdf",
+    "local-grid-390-light.png": "fb5fc2a289907881a52f87d4d53181bfd19016e84df8bf4ba01188ec75d88ea3",
+    "local-axis-390-light.png": "eb784c2c911d74e496a0d4ae59f2e4ad7675de6e9dc83db3c8c36dbf2d4c412b",
+    "local-tooltip-390-light.png": "a58b0d342716ecaf9c502376b5693fcebecc79ad1c5e76cd750530d41c3b3573",
+    "local-legend-390-light.png": "dd1dfb786fb85d0f05a564c7332d75f74b7ea7bc9170f221ea902474211a104f",
+    "local-anatomy-390-light.png": "59d5247f5ae6c94503f96919f667f3a081abaf2bdb589a3b3d13e4945c0da848",
+    "local-rtl-390-light.png": "034aea684545749b1cda440a6368a658c4973ecf44f90f87f645b14261626404",
+    "official-first-1440-light.png": "1766d8705cafdfd46da8b8cb00e2184f1f465366ed216238b4fc6968140d94b6",
+    "official-grid-1440-light.png": "be63c54924b7944ea7bae8cf61856de35b47cb22b2b0c4777cbf10d433ba5498",
+    "official-axis-1440-light.png": "61761a2ca6d68e51cbd834e75959fb622ceefee865b64be43f6a7f6216a03e3b",
+    "official-tooltip-1440-light.png": "b5b32db31014c56f865c07128c42ff8f19e78e41c8873a1bfd713a57c7fa4b1c",
+    "official-legend-1440-light.png": "a6f9868b473ff389c2b982776de9ac90e6912f73cab59f1997104053f7b016c8",
+    "official-anatomy-1440-light.png": "62889b87eced4be933763a67155830e717cd65e2c94a3094d7db89f448080925",
+    "official-rtl-1440-light.png": "386e9cfb20a750ce1c65d1b3308d02ff70a465cddc29a97f3cf9d48a9e5bfccc",
+    "official-first-1440-dark.png": "069b71dfb6eb9184f4e190bfaed748744ce3cd4eff6f10a21de66e3df7350907",
+    "official-grid-1440-dark.png": "203b7b2ae83cdced4d3d068b37b22ddf19688a17289b9cbcfc257a9d1ae45a92",
+    "official-axis-1440-dark.png": "eb74b61cf364ce9e6e9b330385ba6bfeb54e23dd2494fb988ef4c2fb6d28617d",
+    "official-tooltip-1440-dark.png": "229a0c18f246bb0968df33811f292bcfda2f87d0fbe021fa19b517486894e145",
+    "official-legend-1440-dark.png": "7477b0458ba39b6686d281c8e0dd2c73fce28304d9e442183e5995c0bb14c53c",
+    "official-anatomy-1440-dark.png": "68a0eb0b65bc7a424dcf71fb3334633a668aeff1b30a01bda4d3fe6894005e37",
+    "official-rtl-1440-dark.png": "1070a5de92759d5d6e8361a783de3c467f227a5925634f6c1e43f737b16c9a14",
+    "official-first-390-light.png": "3f967bf404221e7d530b20aa260e89ae2db04194dba70f1dceb178c957058cb9",
+    "official-grid-390-light.png": "0e6badb36403b869fd49299bd50f9f150c023bf164cdb8115ed7d4be41f72122",
+    "official-axis-390-light.png": "328d49564d92299f88c5c9686edc60de8c3372cded5dab959a6f1c8a8d2b3b86",
+    "official-tooltip-390-light.png": "4a7851fe50623b265add52062782d442430d63646c69c282dbf70f95901d6d68",
+    "official-legend-390-light.png": "4971dee7e8e709a357b59bd898d4f497c74d9bbb35082a0d10715aebf9788122",
+    "official-anatomy-390-light.png": "34d574f4e4a1fd3c3b8b05b44f52948e46aba6379180c0ebcbc4863b40a30dee",
+    "official-rtl-390-light.png": "adad52d8122d8ca1a0c9e8b7a1a87453365c180f5ae813e6495e5ac5df1ce3f9",
+    "official-first-390-dark.png": "35cac3801d4418c79f4422a582c8a8b6df3476b020fb1b773e97d439a702d863",
+    "official-grid-390-dark.png": "f60858dd224747178e3b721eab386032cc5263dcb7d64ffaf243ca39ac55e131",
+    "official-axis-390-dark.png": "5c0d42cd47aee96aa69d464ac0e331a15bc4b694d9f46222a6d76115b160daec",
+    "official-tooltip-390-dark.png": "17fe59fea5ec9d3ebd0b407060f4255ed514c0625ca87999facf14e141ac2ed7",
+    "official-legend-390-dark.png": "c3ffb4d7d53275f985d71fb334c03376108ea5d5c82491aa1f52e3b18c9b5129",
+    "official-anatomy-390-dark.png": "0b2580a6c3e96561f8cdf64ff780093ed0e3bd75649a80932637ec6af16cf97f",
+    "official-rtl-390-dark.png": "57c9a1d0f59a6532ad3cd6f5c6e3040daf53600d8640cb37c91d07285d98d424",
+    "official-desktop-light.png": "311c7d9df37cf221c178a8c8847c8d6906a92b993badc970acb2ddf64e229d29",
+    "official-desktop-dark.png": "4b4033681b727700ed30c8199995e70d7689a97189748891da709cba04cc9b77",
+    "official-phone-light.png": "72a92f7e1906f48b664b05a268b6dbe1a3d2b58218b7151c2803b18f0c446661",
+    "official-phone-dark.png": "74303b636a1111ae967f0c1ab7c98db0346fabcfe824c30d573e5c6337435bd6",
+    "local-desktop-light.png": "a80527f2ff9fe2e5e7dfe88358cf3e034b07690d6e23e887c1a0c6ba132c1ea6",
+    "local-desktop-dark.png": "3b3678edbfb130bcdc1d296d8144ccfaa25bc4eabcf6a0b1d4373e62df1f203a",
+    "local-phone-light.png": "69a7b4945f70462a9de330c0834c66e197472cb55c565b4617d50cac4442f54f",
+    "local-phone-dark.png": "794f468d49a5bd7aa7a2c0e9c7788a5d452e3a603a8d3b1b5e30cf86c6fcf0bb"
+  }
+}

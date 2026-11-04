@@ -99,7 +99,11 @@ class ComponentDocumentationTest {
                 }
             }
         rule.setContent {
-            CompositionLocalProvider(LocalClipboard provides clipboard, LocalDocNavigation provides navigation) {
+            CompositionLocalProvider(
+                LocalClipboard provides clipboard,
+                LocalDocNavigation provides navigation,
+                LocalCatalogViewportWidth provides 1440.dp,
+            ) {
                 Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                     Box(
                         Modifier.requiredSize(1440.dp, 900.dp),
@@ -191,7 +195,7 @@ class ComponentDocumentationTest {
             }
         val scroll = ScrollState(0)
         rule.setContent {
-            CompositionLocalProvider(LocalClipboard provides clipboard) {
+            CompositionLocalProvider(LocalClipboard provides clipboard, LocalCatalogViewportWidth provides 1440.dp) {
                 Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                     Box(Modifier.requiredSize(1440.dp, 768.dp)) {
                         ComponentDetailContent(alertDoc, scrollState = scroll)
@@ -222,7 +226,10 @@ class ComponentDocumentationTest {
                 }
             }
         rule.setContent {
-            CompositionLocalProvider(LocalDocNavigation provides navigation) {
+            CompositionLocalProvider(
+                LocalDocNavigation provides navigation,
+                LocalCatalogViewportWidth provides 1440.dp,
+            ) {
                 Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                     Box(Modifier.requiredSize(1440.dp, 768.dp)) {
                         ComponentDetailContent(alertDoc, scrollState = scroll)

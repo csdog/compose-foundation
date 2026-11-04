@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MessageScrollerScreenshotTest[jvm]" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-10-30T14:43:46.789Z" hostname="Apples-MacBook-Pro.local" time="0.32">
+  <properties/>
+  <testcase name="icon_override_light[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerScreenshotTest" time="0.049"/>
+  <testcase name="chat_panel_light[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerScreenshotTest" time="0.048"/>
+  <testcase name="button_start_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerScreenshotTest" time="0.017"/>
+  <testcase name="content_items_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerScreenshotTest" time="0.019"/>
+  <testcase name="viewport_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerScreenshotTest" time="0.018"/>
+  <testcase name="jump_to_bottom_button_light[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerScreenshotTest" time="0.016"/>
+  <testcase name="chat_panel_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerScreenshotTest" time="0.025"/>
+  <testcase name="short_content_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerScreenshotTest" time="0.017"/>
+  <testcase name="button_start_light[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerScreenshotTest" time="0.016"/>
+  <testcase name="content_items_light[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerScreenshotTest" time="0.019"/>
+  <testcase name="overflowing_content_settles_at_bottom_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerScreenshotTest" time="0.019"/>
+  <testcase name="short_content_light[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerScreenshotTest" time="0.017"/>
+  <testcase name="viewport_light[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerScreenshotTest" time="0.018"/>
+  <testcase name="overflowing_content_settles_at_bottom_light[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerScreenshotTest" time="0.021"/>
+  <system-out><![CDATA[Roborazzi: message_scroller_icon_override_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=68224, width=328, height=208) changed:false
+Roborazzi: message_scroller_chat_panel_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=177008, width=368, height=481) changed:false
+Roborazzi: message_scroller_button_start_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=7056, width=84, height=84) changed:false
+Roborazzi: message_scroller_content_items_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=81344, width=328, height=248) changed:false
+Roborazzi: message_scroller_viewport_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=81344, width=328, height=248) changed:false
+Roborazzi: message_scroller_button_visible_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=7056, width=84, height=84) changed:false
+Roborazzi: message_scroller_chat_panel_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=177008, width=368, height=481) changed:false
+Roborazzi: message_scroller_short_content_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=68224, width=328, height=208) changed:false
+Roborazzi: message_scroller_button_start_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=7056, width=84, height=84) changed:false
+Roborazzi: message_scroller_content_items_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=81344, width=328, height=248) changed:false
+Roborazzi: message_scroller_overflow_settles_at_bottom_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=68224, width=328, height=208) changed:false
+Roborazzi: message_scroller_short_content_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=68224, width=328, height=208) changed:false
+Roborazzi: message_scroller_viewport_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=81344, width=328, height=248) changed:false
+Roborazzi: message_scroller_overflow_settles_at_bottom_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=68224, width=328, height=208) changed:false
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,66 @@
+[
+  {
+    "width": 1440,
+    "theme": "light",
+    "lang": "en",
+    "file": "local-1440-light-rtl-en.png",
+    "y": 3987,
+    "hash": "#rtl"
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "lang": "he",
+    "file": "local-1440-light-rtl-he.png",
+    "y": 3987,
+    "hash": "#rtl"
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "lang": "en",
+    "file": "local-390-light-rtl-en.png",
+    "y": 4320,
+    "hash": "#rtl"
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "lang": "he",
+    "file": "local-390-light-rtl-he.png",
+    "y": 4320,
+    "hash": "#rtl"
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "lang": "en",
+    "file": "local-1440-dark-rtl-en.png",
+    "y": 3987,
+    "hash": "#rtl"
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "lang": "he",
+    "file": "local-1440-dark-rtl-he.png",
+    "y": 3987,
+    "hash": "#rtl"
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "lang": "en",
+    "file": "local-390-dark-rtl-en.png",
+    "y": 4320,
+    "hash": "#rtl"
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "lang": "he",
+    "file": "local-390-dark-rtl-he.png",
+    "y": 4320,
+    "hash": "#rtl"
+  }
+]

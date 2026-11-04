@@ -1,0 +1,55 @@
+{
+  "revision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "files": [
+    {
+      "file": "source/skeleton.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/content/docs/components/base/skeleton.mdx",
+      "sha256": "445325cbc6d390ee38c5a1f3ea38fa4eaaf610d4cc0618e7eb748238815cddee"
+    },
+    {
+      "file": "source/skeleton.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/bases/base/ui/skeleton.tsx",
+      "sha256": "8fcbad84e494a75484a0975221fb40f54c4a7d68f79cfc305cb158d1feb1badf"
+    },
+    {
+      "file": "source/skeleton-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/skeleton-demo.tsx",
+      "sha256": "fa5eeeb6df4fe7b82785d3919f32d5c28eab357f7818f61ea18045392f9362af"
+    },
+    {
+      "file": "source/skeleton-avatar.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/skeleton-avatar.tsx",
+      "sha256": "47a5204f14e2941fd94abfdb053cce738319b71ecbe1574497f16decc5dec251"
+    },
+    {
+      "file": "source/skeleton-card.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/skeleton-card.tsx",
+      "sha256": "30d81cfcd7d5ab9f35fef4e8be89dbb87776abecec6e7b78d887d4a55f5065ff"
+    },
+    {
+      "file": "source/skeleton-text.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/skeleton-text.tsx",
+      "sha256": "8171dc0a18496e63267abed7c5da0b21fa6e65986c8376d29f261546719b0fab"
+    },
+    {
+      "file": "source/skeleton-form.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/skeleton-form.tsx",
+      "sha256": "49ac8cf65ef29a5cadd75dbf507df747fb1adc64b4c10972e311f8a15cc42936"
+    },
+    {
+      "file": "source/skeleton-table.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/skeleton-table.tsx",
+      "sha256": "9527111993cfbf10bf769912f99a6e6f6deb922bb62557c86c6721660e1e9928"
+    },
+    {
+      "file": "source/skeleton-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/skeleton-rtl.tsx",
+      "sha256": "9c0b8453cd9d7315f1afce275a8bd424051573a72c3fd3dd9f2dc428d601af6c"
+    },
+    {
+      "file": "source/style-nova.css",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+    }
+  ]
+}

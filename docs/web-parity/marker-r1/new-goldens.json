@@ -1,0 +1,7 @@
+{
+  "scope": "Only these two new Nova baselines recorded; viewed both raw images then verified separately. No existing Marker golden refreshed.",
+  "files": {
+    "shadcn/core/src/jvmTest/snapshots/marker_nova_light.png": "3ae257a20f5b29e1e5752e61712e50114b408a7d7a074cbe20eda8b9e2382782",
+    "shadcn/core/src/jvmTest/snapshots/marker_nova_dark.png": "722db900faceb28968b38ad450098fa4cd7b631594c4c88b16e054ac28d35cde"
+  }
+}

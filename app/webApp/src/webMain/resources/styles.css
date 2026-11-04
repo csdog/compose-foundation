@@ -3,5 +3,15 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+}
+html {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+#compose-root {
+    position: fixed;
+    inset: 0;
     overflow: hidden;
+    display: grid;
+    place-items: center;
 }

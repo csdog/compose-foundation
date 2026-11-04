@@ -1,0 +1,10 @@
+{
+  "currentSha256": "6be17658efb684b73d54f3c1f98ec0b5113451b2254bc50a67e516b55e485c95",
+  "prepassSha256": "6a079fafd6d83fc19414a71bfcaa14dd55f14aab35ca4a9355ce5e12de5b13a4",
+  "active": "current-restored-byteexact",
+  "note": "Only Separator.kt replaced with exact pre-round bytes; all other current files unchanged; no API bridge needed.",
+  "postRestoreDocumentationOnlyChange": true,
+  "finalSourceSha256": "c8fd68975407ef2eaded0fc5c2326a87e5022fcad4affa1447c2de9943b3c6c2",
+  "runtimeAfterRestoreUnchanged": true,
+  "scopeNote": "Exact restoration verified before final tests; a later KDoc-only h-full/self-stretch wording correction changes final whole-file hash, not runtime source."
+}

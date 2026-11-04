@@ -55,7 +55,16 @@ fun CatalogSidebar(
             }
         }
     }
-    SidebarProvider(collapsible = SidebarCollapsible.None, fillMaxSize = false) {
+    SidebarProvider(
+        collapsible =
+            SidebarCollapsible.None,
+        fillMaxSize =
+        false,
+        mobile =
+        false,
+        shortcutEnabled =
+        false,
+    ) {
         LazyColumn(
             state = listState,
             modifier =

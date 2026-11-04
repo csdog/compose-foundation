@@ -1,0 +1,35 @@
+{
+  "workflow": "fecba595294822424c4edb77c6fd2e86",
+  "finalTests": [
+    {
+      "file": "TEST-com.toutiaoyan.compose.ui.components.popover.PopoverNovaLayoutTest.xml",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "file": "TEST-com.toutiaoyan.compose.ui.components.popover.PopoverNovaScreenshotTest.xml",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "file": "TEST-com.toutiaoyan.compose.ui.components.overlay.PopoverFocusTest.xml",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0
+    }
+  ],
+  "jsElapsedSeconds": 47.292,
+  "wasmElapsedSeconds": 24.485,
+  "legacy": "4 CHANGED before and after exact-this-round isolation, all four actuals identical; not pure HEAD.",
+  "checks": [
+    "core ktlint passed final run11",
+    "app shared ktlint passed run8; no app edits afterward"
+  ],
+  "diagnostics": [
+    "JS exit0 but emitted unresolved os/path diagnostics",
+    "Wasm exit0 with one webpack warning",
+    "known Text invisible-reference, AGP experimental, Gradle deprecation warnings"
+  ]
+}

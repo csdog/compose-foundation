@@ -1,0 +1,16 @@
+{
+  "count": 40,
+  "parentReviewed": true,
+  "method": "Eight original-pixel contact sheets in docs/web-parity/skeleton-r1/review-sheets; parent confirmed all visible and checked.",
+  "browserAcceptance": false,
+  "contactHashes": {
+    "1440-dark-0.png": "830f460e8146a56ad713a5c389edcd0f90e8129d268027f532661e0d2ea3ceaa",
+    "1440-dark-1.png": "4f0fd496e4789aea68e4f4031d5266e7859489bb68cacaa9ba0d7c5a0df5a8e1",
+    "1440-light-0.png": "22b79c513e7cb64a37bf4886f8f895f70c435de874b6fd0a9bebd8c6ea916e50",
+    "1440-light-1.png": "418547defb372f986c19b44d735c0401bf94e04e3558162b7d07c2dba0c390ed",
+    "390-dark-0.png": "d6a46c3fc81a67e2ecc7ceda7e41abe4feacbff32d6def162aef7b7f57c91a77",
+    "390-dark-1.png": "c9f4fd753c2eedf7b2d63a9b1aa0928c9190b8c841e203b55c5b655bfcc1c19a",
+    "390-light-0.png": "7409fcedbe4677aba26063311087f39016719594d40ef46acd1372dda482de38",
+    "390-light-1.png": "e546feb239d091c7d6926645d319e9f839ca88b2b1108c081b66aec483e18967"
+  }
+}

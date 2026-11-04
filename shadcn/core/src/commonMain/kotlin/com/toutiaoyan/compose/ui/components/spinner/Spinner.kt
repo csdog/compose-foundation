@@ -7,6 +7,8 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.StyleScope
+import androidx.compose.foundation.style.apply
 import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
@@ -24,6 +26,14 @@ import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.layout.LayoutModifier
+import androidx.compose.ui.layout.MeasureScope
+import androidx.compose.ui.layout.MeasureResult
+import androidx.compose.ui.layout.Measurable
+import androidx.compose.ui.layout.IntrinsicMeasurable
+import androidx.compose.ui.layout.IntrinsicMeasureScope
 import com.toutiaoyan.compose.tailwind.modifiers.animateSpin
 import com.toutiaoyan.compose.ui.theme.currentTheme
 
@@ -73,6 +83,15 @@ fun Spinner(
                 }
             }
         }
+    val dimensions = remember { SpinnerIntrinsicDimensions() }
+    val mergedStyle = rememberSpinnerStyle() then sizeStyle then style
+    val measuredStyle =
+        remember(mergedStyle, preferredSize) {
+            Style {
+                dimensions.reset(preferredSize ?: 16.dp)
+                SpinnerDimensionScope(this, dimensions).apply(mergedStyle)
+            }
+        }
     Canvas(
         modifier =
             modifier
@@ -83,8 +102,9 @@ fun Spinner(
                 }
                 .styleable(
                     styleState,
-                    rememberSpinnerStyle() then sizeStyle then style,
-                ),
+                    measuredStyle,
+                )
+                .then(SpinnerIntrinsicSizeHint(dimensions)),
     ) {
         // Lucide LoaderCircle: 24-unit viewBox, r=9, stroke=2, 288° sweep.
         // Scale the path and stroke together, keeping its ink inside the viewport.
@@ -100,4 +120,112 @@ fun Spinner(
             style = Stroke(width = 2f * unit, cap = StrokeCap.Round),
         )
     }
+}
+
+/** Declared Style dimensions are cached during Style evaluation, without snapshot state writes. */
+private class SpinnerIntrinsicDimensions {
+    var fallback = 16.dp
+    var width = 16.dp
+    var height = 16.dp
+    var minWidth = 0.dp
+    var minHeight = 0.dp
+    var maxWidth = Dp.Infinity
+    var maxHeight = Dp.Infinity
+
+    fun reset(side: Dp) {
+        fallback = side
+        width = side
+        height = side
+        minWidth = 0.dp
+        minHeight = 0.dp
+        maxWidth = Dp.Infinity
+        maxHeight = Dp.Infinity
+    }
+
+    fun width(): Dp {
+        val limit = maxWidth.coerceAtLeast(0.dp)
+        return width.coerceIn(minWidth.coerceIn(0.dp, limit), limit)
+    }
+
+    fun height(): Dp {
+        val limit = maxHeight.coerceAtLeast(0.dp)
+        return height.coerceIn(minHeight.coerceIn(0.dp, limit), limit)
+    }
+}
+
+/** Delegate all behavior to Foundation; only mirror dimension declarations for Canvas intrinsics. */
+private class SpinnerDimensionScope(
+    private val delegate: StyleScope,
+    private val dimensions: SpinnerIntrinsicDimensions,
+) : StyleScope by delegate {
+    override fun width(value: Dp) {
+        dimensions.width = value
+        delegate.width(value)
+    }
+
+    override fun height(value: Dp) {
+        dimensions.height = value
+        delegate.height(value)
+    }
+
+    override fun width(fraction: Float) {
+        dimensions.width = dimensions.fallback
+        delegate.width(fraction)
+    }
+
+    override fun height(fraction: Float) {
+        dimensions.height = dimensions.fallback
+        delegate.height(fraction)
+    }
+
+    override fun minWidth(value: Dp) {
+        dimensions.minWidth = value
+        delegate.minWidth(value)
+    }
+
+    override fun minHeight(value: Dp) {
+        dimensions.minHeight = value
+        delegate.minHeight(value)
+    }
+
+    override fun maxWidth(value: Dp) {
+        dimensions.maxWidth = value
+        delegate.maxWidth(value)
+    }
+
+    override fun maxHeight(value: Dp) {
+        dimensions.maxHeight = value
+        delegate.maxHeight(value)
+    }
+}
+
+/** Real measurement stays under Style/Modifier control; only the four intrinsic queries differ. */
+private data class SpinnerIntrinsicSizeHint(val dimensions: SpinnerIntrinsicDimensions) : LayoutModifier {
+    override fun MeasureScope.measure(
+        measurable: Measurable,
+        constraints: Constraints,
+    ): MeasureResult {
+        val child = measurable.measure(constraints)
+        return layout(child.width, child.height) { child.place(0, 0) }
+    }
+
+    override fun IntrinsicMeasureScope.minIntrinsicWidth(
+        measurable: IntrinsicMeasurable,
+        height: Int,
+    ): Int = dimensions.width().roundToPx()
+
+    override fun IntrinsicMeasureScope.maxIntrinsicWidth(
+        measurable: IntrinsicMeasurable,
+        height: Int,
+    ): Int = dimensions.width().roundToPx()
+
+    override fun IntrinsicMeasureScope.minIntrinsicHeight(
+        measurable: IntrinsicMeasurable,
+        width: Int,
+    ): Int = dimensions.height().roundToPx()
+
+    override fun IntrinsicMeasureScope.maxIntrinsicHeight(
+        measurable: IntrinsicMeasurable,
+        width: Int,
+    ): Int = dimensions.height().roundToPx()
 }

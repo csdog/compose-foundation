@@ -50,7 +50,7 @@ val navigationMenuDoc =
     ComponentDoc(
         id = "navigation-menu",
         title = "Navigation Menu",
-        description = "A horizontal top-level site navigation row where some items open a panel of related links.",
+        description = "A collection of links for navigating websites.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.navigationmenu.NavigationMenu
@@ -72,10 +72,65 @@ val navigationMenuDoc =
                 }
             }
             """.trimIndent(),
+        compositionCode =
+            """
+            NavigationMenu
+            └── NavigationMenuList
+                ├── NavigationMenuItem
+                │   ├── NavigationMenuTrigger
+                │   └── NavigationMenuContent
+                │       └── NavigationMenuLink
+                └── NavigationMenuItem
+                    └── NavigationMenuLink
+            """.trimIndent(),
+        apiSections =
+            listOf(
+                ComponentApiSection(
+                    "NavigationMenu",
+                    (
+                        "Controlled or uncontrolled root. Timing values are " +
+                            "milliseconds; skipDelayDuration is a retained Kotlin " +
+                            "extension."
+                    ),
+                    listOf(
+                        ApiProperty("value / defaultValue", "String?", "null"),
+                        ApiProperty("onValueChange", "((String?) -> Unit)?", "null"),
+                        ApiProperty("orientation", "NavigationMenuOrientation", "Horizontal"),
+                        ApiProperty("delayDuration / closeDelayDuration", "Int", "50 / 50"),
+                        ApiProperty("skipDelayDuration", "Int", "300"),
+                        ApiProperty("ariaLabel", "String?", "null"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "NavigationMenuTrigger / NavigationMenuLink",
+                    "Trigger includes the decorative chevron in Nova. Link invokes its action and requests menu close.",
+                    listOf(
+                        ApiProperty("modifier / style", "Modifier / Style", "Default"),
+                        ApiProperty("enabled / disabled", "Boolean", "true / false"),
+                        ApiProperty("active (Link)", "Boolean", "false"),
+                        ApiProperty("closeOnClick (Link)", "Boolean", "true"),
+                        ApiProperty("onClick (Link)", "() -> Unit", "Required"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "NavigationMenuContent",
+                    (
+                        "Popup content belongs to its nearest item. Nova uses " +
+                            "intrinsic content width and 4dp padding; set a width in the " +
+                            "content or caller Style."
+                    ),
+                    listOf(
+                        ApiProperty("modifier / style", "Modifier / Style", "Default"),
+                        ApiProperty("side", "PopupPlacement?", "Bottom; End for vertical menus"),
+                        ApiProperty("sideOffset / alignOffset", "Dp", "8.dp / 0.dp"),
+                        ApiProperty("dismissOnClickOutside", "Boolean", "true"),
+                    ),
+                ),
+            ),
         examples =
             listOf(
                 ComponentExample(
-                    title = "Default",
+                    title = "Native overview (Kotlin)",
                     code =
                         """
                         NavigationMenu {
@@ -781,4 +836,4 @@ val navigationMenuDoc =
                     },
                 ),
             ),
-    )
+    ).let { native -> native.copy(examples = navigationMenuOfficialExamples + native.examples) }

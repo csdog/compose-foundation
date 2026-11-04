@@ -1,0 +1,317 @@
+{
+  "command_fingerprints": {
+    "1e52515d48e7d401daddda0bcb741925e6f188c94d0a179529c8e4b5eaecbc81": 3,
+    "2bcf9df337b1407e2dd4daf460816c5df0607a18b5dfb01f4020382973a794fe": 1,
+    "4c9dfd61577cc7fa2d4f19cdb45eddbdf3b6bf9ca77ad4a132e21b7c5e65de73": 1,
+    "a81a355f21b1b0f34e81c766a09492a11f1e6222645b5b84f5b52814c73a2bd7": 1,
+    "aa27bb0f1712ff95e4bfaf984844cbdf2a8e5f20a77fd7a37e210e3ae86949e7": 1,
+    "b53d85f75cfe4d5b50bee2cf27f84e97fca9667a60014e02b069abeda541b3eb": 1,
+    "c4fa08df6a412fbe23ae03d0270fd2a06accb64cf409f8f44d5d8851cdd14dfc": 2,
+    "c6a8b9d896f49144933e772c3c9484d5177ee54f394c8bc251df40fec9cff0c5": 1,
+    "f41301856756953df2476db6ddbb41ba7d8bd39b33776d3d55c633a53bfe5a1c": 2
+  },
+  "failure_fingerprints": {
+    "09fd26b58255ac6e37b6acaedd62a8ba4203a41662e16b601d39683c53ceaec8": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:compileKotlinJvm' (registered in build file 'shadcn/core/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kotlin ...",
+      "occurrences": 1
+    },
+    "0d39897233d79dd1b1ce4cfdb28314011a456bea37ff4de52745b6f1010759db": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:compileKotlinJvm' (registered in build file 'shadcn/core/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kotlin ...",
+      "occurrences": 1
+    },
+    "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a": {
+      "excerpt": "Module not found: Error: Can't resolve 'path' in '/Users/cscs/IdeaProjects/angryecho/compose-foundation/build/js/packages/compose-foundation-app-webApp/kotlin'",
+      "occurrences": 2
+    },
+    "29d09c42c990857c427000204be480d0547202c544b2376cd2118c1a7167858d": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/ProgressExamplesTest.kt:130:33 Unresolved reference 'hasSetProgressAction'.",
+      "occurrences": 1
+    },
+    "4faff062b46cf1a26d506ca13295b4d31f143f4f8196a40f12b0ca1709fe06e9": {
+      "excerpt": "* What went wrong: Execution failed for task ':app:shared:compileTestKotlinJvm' (registered in build file 'app/shared/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kotli...",
+      "occurrences": 1
+    },
+    "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:jvmTest'. > There were failing tests. See the report at: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/reports/tests/jvmTest/index.html",
+      "occurrences": 2
+    },
+    "60c7d20863af4c903e6d08c11eb2d0e697ced6fbb0afb5b234040732d838ac69": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/progress/Progress.kt:142:52 Unresolved reference 'radius' on receiver of type 'ThemeData'.",
+      "occurrences": 1
+    },
+    "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4": {
+      "excerpt": "Module not found: Error: Can't resolve 'os' in '/Users/cscs/IdeaProjects/angryecho/compose-foundation/build/js/packages/compose-foundation-app-webApp/kotlin'",
+      "occurrences": 2
+    },
+    "f59357f1435a53281002616df019129aef8852a4aac6418bc4fb37f4ecff7e2c": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/progress/Progress.kt:142:39 Unresolved reference 'twRadius'.",
+      "occurrences": 1
+    },
+    "f8e4f44130a020664bd73103a9639c59cdd8f7a824cadd69f2fa85d442100649": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/ProgressExamplesTest.kt:130:33 Argument type mismatch: actual type is 'BigInteger', but 'SemanticsMatcher' was expected.",
+      "occurrences": 1
+    }
+  },
+  "failure_fingerprints_truncated_occurrences": 0,
+  "run_count": 13,
+  "runs": [
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *ProgressParityTest :shadcn:core:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.975,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "60c7d20863af4c903e6d08c11eb2d0e697ced6fbb0afb5b234040732d838ac69",
+        "0d39897233d79dd1b1ce4cfdb28314011a456bea37ff4de52745b6f1010759db"
+      ],
+      "log": "0001.log",
+      "question": "Do Progress parity semantics, geometry and animation tests pass with core formatting checks?",
+      "scope": "targeted",
+      "sequence": 1,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *ProgressParityTest :shadcn:core:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.189,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "f59357f1435a53281002616df019129aef8852a4aac6418bc4fb37f4ecff7e2c",
+        "09fd26b58255ac6e37b6acaedd62a8ba4203a41662e16b601d39683c53ceaec8"
+      ],
+      "log": "0002.log",
+      "question": "Do Progress semantics, geometry and animation tests pass after canonical radius correction?",
+      "scope": "targeted",
+      "sequence": 2,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *ProgressParityTest :shadcn:core:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 23.26,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0003.log",
+      "question": "Do Progress parity tests pass after restoring the required twRadius import?",
+      "scope": "targeted",
+      "sequence": 3,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *ProgressExamplesTest :app:shared:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 8.799,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "29d09c42c990857c427000204be480d0547202c544b2376cd2118c1a7167858d",
+        "f8e4f44130a020664bd73103a9639c59cdd8f7a824cadd69f2fa85d442100649",
+        "4faff062b46cf1a26d506ca13295b4d31f143f4f8196a40f12b0ca1709fe06e9"
+      ],
+      "log": "0004.log",
+      "question": "Do all Progress source recipes and catalog formatting checks pass?",
+      "scope": "targeted",
+      "sequence": 4,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:recordRoborazziJvm --tests *ProgressNovaScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.522,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0005.log",
+      "question": "Record only the new Progress Nova source-contract snapshots after core parity green?",
+      "scope": "targeted",
+      "sequence": 5,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *ProgressExamplesTest :app:shared:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 12.568,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0006.log",
+      "question": "Do Progress recipe interactions pass after replacing unsupported slider matcher?",
+      "scope": "targeted",
+      "sequence": 6,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests *ProgressNovaScreenshotTest --tests *ProgressParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.589,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0007.log",
+      "question": "Independently verify reviewed Nova Progress snapshots and parity cases?",
+      "scope": "targeted",
+      "sequence": 7,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests *ProgressScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.508,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0008.log",
+      "question": "Do the existing Progress snapshots retain or expose intentional source-contract differences?",
+      "scope": "targeted",
+      "sequence": 8,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests *ProgressScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 9.425,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0009.log",
+      "question": "Isolate existing Progress golden differences using exact prepass core and legacy fixture restoration?",
+      "scope": "targeted",
+      "sequence": 9,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests *ProgressParityTest --tests *ProgressNovaScreenshotTest :app:shared:jvmTest --tests *ProgressExamplesTest :shadcn:core:ktlintCheck :app:shared:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 21.869,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0010.log",
+      "question": "Do restored Progress sources, added aria-hidden value semantics, reviewed Nova goldens and all recipes pass final checks?",
+      "scope": "targeted",
+      "sequence": 10,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:jsBrowserDevelopmentWebpack --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 39.344,
+      "exit_status": 0,
+      "failure_fingerprints": [
+        "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4",
+        "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a"
+      ],
+      "log": "0011.log",
+      "question": "Does the final Progress source contract and catalog compile for JS webpack?",
+      "scope": "targeted",
+      "sequence": 11,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:wasmJsBrowserDevelopmentWebpack --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 18.67,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0012.log",
+      "question": "Does the final Progress contract and catalog compile for Wasm webpack independently?",
+      "scope": "targeted",
+      "sequence": 12,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "4f07c8bf4971834aa688e6aec6202d93e92b917c0b8e12fddf3c4a5ff4aaa0dd",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:jsBrowserDevelopmentWebpack :app:shared:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 26.683,
+      "exit_status": 0,
+      "failure_fingerprints": [
+        "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4",
+        "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a"
+      ],
+      "log": "0013.log",
+      "question": "Does final JS bundle and catalog formatting include the last Progress Usage33/max100 documentation edit?",
+      "scope": "targeted",
+      "sequence": 13,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    }
+  ],
+  "version": 1,
+  "warning_fingerprints": {
+    "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312": {
+      "excerpt": "w: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/text/Text.kt:5:16 Suppression of error 'INVISIBLE_REFERENCE' might compile and work, but the compiler behavior is UNSP...",
+      "occurrences": 5
+    },
+    "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4": {
+      "excerpt": "You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.",
+      "occurrences": 9
+    },
+    "4f07c8bf4971834aa688e6aec6202d93e92b917c0b8e12fddf3c4a5ff4aaa0dd": {
+      "excerpt": "webpack 5.108.1 compiled with 1 warning in 395 ms",
+      "occurrences": 1
+    },
+    "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2": {
+      "excerpt": "Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.",
+      "occurrences": 9
+    },
+    "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a": {
+      "excerpt": "WARNING: The option setting 'android.experimental.enableScreenshotTest=true' is experimental.",
+      "occurrences": 9
+    },
+    "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=UNSUPPORTED_PROJECT_OPTION_USE to the gradle.properties file to suppress this warning.",
+      "occurrences": 18
+    },
+    "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90": {
+      "excerpt": "WARNING: The option setting 'android.experimental.testSuiteSupport=true' is experimental.",
+      "occurrences": 9
+    }
+  },
+  "warning_fingerprints_truncated_occurrences": 0,
+  "workflow": "cdae9e9b9c41f7b60eb93da97d7f3fa5"
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ToastChromeParityTest[jvm]" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-30T22:57:40.074Z" hostname="Apples-MacBook-Pro.local" time="0.11">
+  <properties/>
+  <testcase name="errorUsesTheDestructiveGlyphInsteadOfAColoredDot[dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.toast.ToastChromeParityTest" time="0.022"/>
+  <testcase name="cardUsesPopoverFillAndSixteenPixelRoundCorners[dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.toast.ToastChromeParityTest" time="0.016"/>
+  <testcase name="defaultHasNoGlyphAndStatusAddsExactlySixteenPlusTwelve[dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.toast.ToastChromeParityTest" time="0.023"/>
+  <testcase name="errorUsesTheDestructiveGlyphInsteadOfAColoredDot[dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.toast.ToastChromeParityTest" time="0.017"/>
+  <testcase name="cardUsesPopoverFillAndSixteenPixelRoundCorners[dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.toast.ToastChromeParityTest" time="0.015"/>
+  <testcase name="defaultHasNoGlyphAndStatusAddsExactlySixteenPlusTwelve[dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.toast.ToastChromeParityTest" time="0.017"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

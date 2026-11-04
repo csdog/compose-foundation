@@ -1,0 +1,21 @@
+{
+  "comparison": "Committed baseline versus current render; exact pre-round Separator.kt reproduced byte-identical dark actual. Preexisting before this round; not pure HEAD attribution.",
+  "results": [
+    {
+      "name": "states",
+      "width": 145,
+      "height": 68,
+      "changedPixels": 20,
+      "bounds": [
+        70,
+        24,
+        70,
+        43
+      ],
+      "changes": {
+        "38,38,38 -> 34,34,34": 20
+      }
+    }
+  ],
+  "isolationEvidence": "verification/legacy-prepass/comparison.json"
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="NavigationMenuParityTest[jvm]" tests="13" skipped="0" failures="0" errors="0" timestamp="2026-10-30T16:40:01.726Z" hostname="Apples-MacBook-Pro.local" time="0.465">
+  <properties/>
+  <testcase name="selectingAPanelLinkClosesMenuAndRunsItsActionOnce[jvm]" classname="com.toutiaoyan.compose.ui.components.navigationmenu.NavigationMenuParityTest" time="0.08"/>
+  <testcase name="touchActivationTogglesAndDisabledTriggerDoesNotOpen[jvm]" classname="com.toutiaoyan.compose.ui.components.navigationmenu.NavigationMenuParityTest" time="0.053"/>
+  <testcase name="disablingTriggerCancelsPendingHoverOpen[jvm]" classname="com.toutiaoyan.compose.ui.components.navigationmenu.NavigationMenuParityTest" time="0.022"/>
+  <testcase name="linkCanRetainTheOpenPanelWhenCloseOnClickIsFalse[jvm]" classname="com.toutiaoyan.compose.ui.components.navigationmenu.NavigationMenuParityTest" time="0.043"/>
+  <testcase name="baseDefaultsWaitFiftyMillisecondsForOpenAndCloseWithoutStealingHover[jvm]" classname="com.toutiaoyan.compose.ui.components.navigationmenu.NavigationMenuParityTest" time="0.051"/>
+  <testcase name="anOldLeaveTimerCannotCloseANewerControlledItem[jvm]" classname="com.toutiaoyan.compose.ui.components.navigationmenu.NavigationMenuParityTest" time="0.041"/>
+  <testcase name="novaListDoesNotInsertGapsBetweenItems[jvm]" classname="com.toutiaoyan.compose.ui.components.navigationmenu.NavigationMenuParityTest" time="0.017"/>
+  <testcase name="novaOpenTriggerUsesHalfMutedAndHoverUsesMuted[jvm]" classname="com.toutiaoyan.compose.ui.components.navigationmenu.NavigationMenuParityTest" time="0.032"/>
+  <testcase name="novaTriggerHasSourceHeightAndDecorativeChevronSpace[jvm]" classname="com.toutiaoyan.compose.ui.components.navigationmenu.NavigationMenuParityTest" time="0.017"/>
+  <testcase name="keyboardEnterOpensAndEscapeClosesTheKeyboardPopup[jvm]" classname="com.toutiaoyan.compose.ui.components.navigationmenu.NavigationMenuParityTest" time="0.045"/>
+  <testcase name="pendingHoverOpenUsesLatestControlledCallback[jvm]" classname="com.toutiaoyan.compose.ui.components.navigationmenu.NavigationMenuParityTest" time="0.02"/>
+  <testcase name="triggerAccessibleNameComesFromTheVisibleLabelRatherThanTheInternalId[jvm]" classname="com.toutiaoyan.compose.ui.components.navigationmenu.NavigationMenuParityTest" time="0.016"/>
+  <testcase name="callerStyleOverridesTriggerDimensionsAndNovaPanelHasIntrinsicWidth[jvm]" classname="com.toutiaoyan.compose.ui.components.navigationmenu.NavigationMenuParityTest" time="0.028"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

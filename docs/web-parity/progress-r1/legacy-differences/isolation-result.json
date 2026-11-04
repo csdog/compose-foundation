@@ -1,0 +1,31 @@
+{
+  "tests": "4",
+  "failures": "4",
+  "scope": "Exact parent-installed prepass Progress.kt/Styles and original legacy manual-track fixture; new ProgressLayout remains unused.",
+  "actuals": [
+    {
+      "file": "progress_states_light_actual.png",
+      "currentSha256": "978d707597ae448d409d7a35e40c79bbd5e4134f160ed7e6e6f3fc40a4c0edd9",
+      "prepassSha256": "b12cb40daf9beb21a13227132c7907ab7a5299a3d7ad337027478694d52013b0",
+      "identical": false
+    },
+    {
+      "file": "progress_states_dark_actual.png",
+      "currentSha256": "b2a4c4ff9776c623c7d1a94895f5f66455d452eacdc5fa580aa000351d2e9778",
+      "prepassSha256": "3ab7f88ffc794cae86ad24e355a87828e1d52cab0fdfde7c49fe05df1b29ba6e",
+      "identical": false
+    },
+    {
+      "file": "progress_label_light_actual.png",
+      "currentSha256": "0a90b36f0b54e338f3ba0c78a657b7b5771015694cd6b2a109cb58b4cff72579",
+      "prepassSha256": "5423b1fc2111da76e03c47d844a7cba2bf42346e845f0ce10410fdb5850391bc",
+      "identical": false
+    },
+    {
+      "file": "progress_label_dark_actual.png",
+      "currentSha256": "6def3dc118239c6b4409070f40ca027a84d7b4b0d8ab22d94264c48477f927dc",
+      "prepassSha256": "74260789c3443cc07d739cbfc9841574ee2929c606004507adc4a8220f983a42",
+      "identical": false
+    }
+  ]
+}

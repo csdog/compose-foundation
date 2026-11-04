@@ -2,9 +2,15 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
+import androidx.compose.foundation.layout.size
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateListOf
+import com.toutiaoyan.compose.ui.components.messagescroller.*
+import com.toutiaoyan.compose.ui.components.icon.Icon
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -112,12 +118,22 @@ private fun composerKeyHandler(
         }
     }
 
-// Overrides MessageScroller's own text-glyph "↓" default with a real Lucide
+// Supplies Lucide to the legacy bare-root adapter; canonical Provider buttons
+// already use a stroked16dp arrow. The catalog
 // vector -- this library ships with no icon dependency of its own (see README), but the
 // catalog app already depends on icons-lucide-cmp for every other icon, so its own demos
 // shouldn't fall back to the library's placeholder glyph.
 private val DocMessageScrollerIcon: @Composable (rotationDegrees: Float) -> Unit = { rotationDegrees ->
-    DocIcon(Lucide.ArrowDown, modifier = Modifier.graphicsLayer(rotationZ = rotationDegrees))
+    Icon(
+        Lucide.ArrowDown,
+        contentDescription =
+        null,
+        modifier =
+            Modifier.size(16.dp).graphicsLayer(
+                rotationZ =
+                rotationDegrees,
+            ),
+    )
 }
 
 /** One row in the interactive demo's transcript -- [text] grows in place while [isUser] is false and streaming. */
@@ -145,340 +161,633 @@ val messageScrollerDoc =
     ComponentDoc(
         id = "message-scroller",
         title = "Message Scroller",
-        description =
-            "A chat-transcript scroll container that follows new messages to the bottom -- but only while " +
-                "the reader hasn't scrolled away -- with a floating jump-to-bottom button when they have.",
+        description = (
+            "A transcript viewport with turn anchors, saved opening " +
+                "positions, streaming follow, history preservation and message " +
+                "commands."
+        ),
+        usageImportsCode =
+            """
+            import androidx.compose.foundation.layout.*
+            import androidx.compose.runtime.*
+            import androidx.compose.ui.Modifier
+            import androidx.compose.ui.graphics.graphicsLayer
+            import androidx.compose.ui.unit.dp
+            import com.composables.icons.lucide.ArrowDown
+            import com.composables.icons.lucide.Lucide
+            import com.toutiaoyan.compose.ui.components.icon.Icon
+            import com.toutiaoyan.compose.ui.components.button.*
+            import com.toutiaoyan.compose.ui.components.bubble.*
+            import com.toutiaoyan.compose.ui.components.message.*
+            import com.toutiaoyan.compose.ui.components.messagescroller.*
+            import com.toutiaoyan.compose.ui.components.text.Text
+            import kotlinx.coroutines.launch
+            """.trimIndent(),
         usageCode =
             """
-            import com.toutiaoyan.compose.ui.components.*
-
-            // The default jump-to-bottom icon is a plain text glyph (this library ships no
-            // icon dependency of its own) -- pass a real vector via `icon` to override it.
-            MessageScroller(
-                modifier = Modifier.fillMaxSize(),
-                icon = { rotationDegrees -> DocIcon(Lucide.ArrowDown, modifier = Modifier.graphicsLayer(rotationZ = rotationDegrees)) },
-            ) {
-                messages.forEach { message ->
-                    Message(avatar = { MessageAvatar("AI") }) {
-                        Text { message.text }
-                    }
-                }
-            }
-            """.trimIndent(),
-        examples =
-            listOf(
-                ComponentExample(
-                    title = "Default",
-                    code =
-                        """
-                        // modifier must constrain the main-axis size (here: a fixed height) --
-                        // this composable fills whatever it's given.
-                        MessageScroller(
-                            modifier = Modifier.width(280.dp).height(200.dp),
-                            icon = { rotationDegrees -> DocIcon(Lucide.ArrowDown, modifier = Modifier.graphicsLayer(rotationZ = rotationDegrees)) },
-                        ) {
-                            repeat(10) { index ->
-                                Message(avatar = { MessageAvatar("AI") }) {
-                                    Text { "Message number ${'$'}index" }
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        MessageScroller(
-                            modifier = Modifier.width(280.dp).height(200.dp),
-                            icon = DocMessageScrollerIcon,
-                        ) {
-                            repeat(10) { index ->
-                                Message(avatar = { MessageAvatar("AI") }) {
-                                    Text { "Message number $index" }
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Content items",
-                    code =
-                        """
-                        MessageScroller(
-                            modifier = Modifier.width(280.dp).height(200.dp),
-                            icon = { rotationDegrees -> DocIcon(Lucide.ArrowDown, modifier = Modifier.graphicsLayer(rotationZ = rotationDegrees)) },
-                        ) {
-                            MessageScrollerContent(spacing = MessageScrollerDefaults.ContentSpacing) {
-                                MessageScrollerItem {
-                                    Message(avatar = { MessageAvatar("AI") }) { Text { "First" } }
-                                }
-                                MessageScrollerItem {
-                                    Message(avatar = { MessageAvatar("AI") }) { Text { "Second" } }
-                                }
-                                MessageScrollerItem {
-                                    Message(avatar = { MessageAvatar("AI") }) { Text { "Third" } }
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        MessageScroller(
-                            modifier = Modifier.width(280.dp).height(200.dp),
-                            icon = DocMessageScrollerIcon,
-                        ) {
-                            MessageScrollerContent(spacing = MessageScrollerDefaults.ContentSpacing) {
-                                MessageScrollerItem {
-                                    Message(avatar = { MessageAvatar("AI") }) { Text { "First" } }
-                                }
-                                MessageScrollerItem {
-                                    Message(avatar = { MessageAvatar("AI") }) { Text { "Second" } }
-                                }
-                                MessageScrollerItem {
-                                    Message(avatar = { MessageAvatar("AI") }) { Text { "Third" } }
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Official tree",
-                    code =
-                        """
-                        MessageScrollerProvider {
-                            MessageScroller(
-                                modifier = Modifier.width(280.dp).height(200.dp),
-                                icon = { rotationDegrees -> DocIcon(Lucide.ArrowDown, modifier = Modifier.graphicsLayer(rotationZ = rotationDegrees)) },
-                            ) {
-                                MessageScrollerViewport(contentDescription = MessageScrollerDefaults.ViewportLabel) {
-                                    MessageScrollerContent(spacing = MessageScrollerDefaults.ContentSpacing) {
-                                        MessageScrollerItem {
-                                            Message(avatar = { MessageAvatar("AI") }) { Text { "First" } }
-                                        }
-                                        MessageScrollerItem {
-                                            Message(avatar = { MessageAvatar("AI") }) { Text { "Second" } }
-                                        }
-                                        MessageScrollerItem {
-                                            Message(avatar = { MessageAvatar("AI") }) { Text { "Third" } }
-                                        }
+            MessageScrollerProvider {
+                MessageScroller(Modifier.width(320.dp).height(240.dp)) {
+                    MessageScrollerViewport {
+                        MessageScrollerContent {
+                            repeat(12) { index ->
+                                key(index) {
+                                    MessageScrollerItem(messageId = "message-" + index) {
+                                        Message { Bubble("Message " + (index + 1), variant = BubbleVariant.Ghost) }
                                     }
                                 }
                             }
                         }
-                        """.trimIndent(),
-                    preview = {
-                        MessageScrollerProvider {
+                    }
+                    MessageScrollerButton()
+                }
+            }
+            """.trimIndent(),
+        compositionCode =
+            """
+            MessageScrollerProvider
+            └── MessageScroller (BoxScope frame)
+                ├── MessageScrollerViewport (scroll owner)
+                │   └── MessageScrollerContent
+                │       └── MessageScrollerItem
+                └── MessageScrollerButton
+            """.trimIndent(),
+        beforeExamples =
+            listOf(
+                ComponentGuideSection(
+                    "Provider and standalone usage",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            (
+                                "Provider defaults to autoScroll=false, opening at End once, " +
+                                    "an 8dp edge threshold and 64dp previous-turn peek. Give every " +
+                                    "row a stable messageId and use key(id). Commands are suspend " +
+                                    "functions; launch them from your caller-owned coroutine scope."
+                            ),
+                        ),
+                        ComponentGuideBlock.Paragraph(
+                            (
+                                "Root content now uses BoxScope so viewport and controls are " +
+                                    "siblings. Without a Provider, the legacy standalone Root " +
+                                    "keeps its scrolling column and automatic end button, opting " +
+                                    "into following. This pass implements the engine; the eleven " +
+                                    "official page recipes are still being migrated."
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        apiSections =
+            listOf(
+                ComponentApiSection(
+                    "MessageScrollerProvider",
+                    (
+                        "Headless state owner; also accepts an explicitly remembered " +
+                            "state."
+                    ),
+                    listOf(
+                        ApiProperty("autoScroll", "Boolean", "false"),
+                        ApiProperty("defaultScrollPosition", "MessageScrollerPosition", "End"),
+                        ApiProperty(
+                            "scrollEdgeThreshold / scrollMargin / scrollPreviousItemPeek",
+                            "Dp",
+                            "8.dp / 0.dp / 64.dp",
+                        ),
+                        ApiProperty("state", "MessageScrollerState", "Optional hoisted overload"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "MessageScroller",
+                    (
+                        "Frame with BoxScope content. Canonical Provider use requires " +
+                            "explicit viewport and button."
+                    ),
+                    listOf(
+                        ApiProperty("modifier / style", "Modifier / Style", "Default"),
+                        ApiProperty("content", "@Composable BoxScope.() -> Unit", "Required"),
+                        ApiProperty("autoScrollThresholdPx", "Int", "64 (standalone adapter only)"),
+                        ApiProperty("button / icon", "Optional custom slots", "Standalone defaults"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "MessageScrollerViewport",
+                    "The real scrollable part; labelled and keyboard focusable.",
+                    listOf(
+                        ApiProperty("preserveScrollOnPrepend", "Boolean", "true"),
+                        ApiProperty("contentDescription", "String", "Messages"),
+                        ApiProperty("modifier / style", "Modifier / Style", "Default"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "MessageScrollerContent",
+                    (
+                        "Nova gap24dp; Rhea uses32dp. Defaults to polite live-region " +
+                            "semantics."
+                    ),
+                    listOf(
+                        ApiProperty("spacing", "Dp", "24.dp"),
+                        ApiProperty("modifier / style", "Modifier / Style", "Default"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "MessageScrollerItem",
+                    (
+                        "Stable row boundary for jumps, anchors, visibility and " +
+                            "history preservation."
+                    ),
+                    listOf(
+                        ApiProperty("messageId", "String?", "null"),
+                        ApiProperty("scrollAnchor", "Boolean", "false"),
+                        ApiProperty("modifier", "Modifier", "Default"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "MessageScrollerButton",
+                    (
+                        "BoxScope provider control; stateless visible/onClick overload " +
+                            "remains available."
+                    ),
+                    listOf(
+                        ApiProperty("direction", "MessageScrollerDirection", "End"),
+                        ApiProperty("behavior", "MessageScrollerScrollBehavior", "Smooth"),
+                        ApiProperty("modifier / style / icon", "Modifier / Style / slot", "Defaults"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "MessageScrollerState",
+                    (
+                        "Read with messageScrollerState(); expose edge and visibility " +
+                            "snapshots using the matching helpers."
+                    ),
+                    listOf(
+                        ApiProperty(
+                            "scrollToMessage",
+                            "suspend(id, align, behavior, scrollMargin) -> Boolean",
+                            "Start / Auto",
+                        ),
+                        ApiProperty("scrollToStart / scrollToEnd", "suspend(behavior) -> Boolean", "Auto"),
+                        ApiProperty("scrollable", "MessageScrollerScrollable", "start / end"),
+                        ApiProperty("visibility", "MessageScrollerVisibility", "currentAnchorId / visibleMessageIds"),
+                        ApiProperty("releaseFollowing", "() -> Unit", "User intent release"),
+                    ),
+                ),
+            ),
+        examples =
+            messageScrollerOfficialExamples +
+                listOf(
+                    ComponentExample(
+                        title = "Provider controls (Kotlin)",
+                        minPreviewHeight = 440.dp,
+                        code =
+                            """
+                            val rows = remember { mutableStateListOf("m3", "m4", "m5", "m6", "m7", "m8", "m9", "m10") }
+                            var next by remember { mutableIntStateOf(11) }
+                            var loaded by remember { mutableStateOf(false) }
+                            val state = rememberMessageScrollerState(autoScroll = true,
+                                defaultScrollPosition = MessageScrollerPosition.Start)
+                            val scope = rememberCoroutineScope()
+                            Column(Modifier.width(320.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    Button("Load earlier",
+                                        enabled = !loaded,
+                                        onClick = { rows.addAll(0,
+                                        listOf("m1",
+                                        "m2")); loaded = true })
+                                    Button("Append reply", onClick = { rows.add("m" + next); next++ })
+                                }
+                                MessageScrollerProvider(state) {
+                                    MessageScroller(Modifier.fillMaxWidth().height(240.dp)) {
+                                        MessageScrollerViewport {
+                                            MessageScrollerContent {
+                                                rows.forEach { id ->
+                                                    key(id) {
+                                                        MessageScrollerItem(messageId = id) {
+                                                            Box(Modifier.height(60.dp)) {
+                                                                Text { "Message " + id.removePrefix("m") }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        MessageScrollerButton()
+                                    }
+                                }
+                                Button("Jump to message 6", onClick = { scope.launch { state.scrollToMessage("m6") } })
+                                Text { "Visible: " + state.visibility.visibleMessageIds.joinToString() }
+                            }
+                            """.trimIndent(),
+                        preview = {
+                            val rows = remember { mutableStateListOf("m3", "m4", "m5", "m6", "m7", "m8", "m9", "m10") }
+                            var next by remember { mutableIntStateOf(11) }
+                            var loaded by remember { mutableStateOf(false) }
+                            val state =
+                                rememberMessageScrollerState(
+                                    autoScroll =
+                                    true,
+                                    defaultScrollPosition =
+                                        MessageScrollerPosition.Start,
+                                )
+                            val scope = rememberCoroutineScope()
+                            Column(Modifier.width(320.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    Button(
+                                        "Load earlier",
+                                        enabled =
+                                            !loaded,
+                                        onClick =
+                                            {
+                                                rows.addAll(
+                                                    0,
+                                                    listOf(
+                                                        "m1",
+                                                        "m2",
+                                                    ),
+                                                )
+                                                ; loaded =
+                                                    true
+                                            },
+                                    )
+                                    Button("Append reply", onClick = {
+                                        rows.add("m" + next)
+                                        next++
+                                    })
+                                }
+                                MessageScrollerProvider(state) {
+                                    MessageScroller(Modifier.fillMaxWidth().height(240.dp)) {
+                                        MessageScrollerViewport {
+                                            MessageScrollerContent {
+                                                rows.forEach { id ->
+                                                    key(id) {
+                                                        MessageScrollerItem(messageId = id) {
+                                                            Box(Modifier.height(60.dp)) {
+                                                                Text {
+                                                                    "Message " +
+                                                                        id.removePrefix("m")
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        MessageScrollerButton()
+                                    }
+                                }
+                                Button("Jump to message 6", onClick = { scope.launch { state.scrollToMessage("m6") } })
+                                Text { "Visible: " + state.visibility.visibleMessageIds.joinToString() }
+                            }
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Default",
+                        code =
+                            """
+                            // modifier must constrain the main-axis size (here: a fixed height) --
+                            // this composable fills whatever it's given.
+                            MessageScroller(
+                                modifier = Modifier.width(280.dp).height(200.dp),
+                                icon = { rotationDegrees -> Icon(Lucide.ArrowDown,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(16.dp).graphicsLayer(rotationZ = rotationDegrees)) },
+
+                            ) {
+                                repeat(10) { index ->
+                                    Message(avatar = { MessageAvatar("AI") }) {
+                                        Text { "Message number ${'$'}index" }
+                                    }
+                                }
+                            }
+                            """.trimIndent(),
+                        preview = {
                             MessageScroller(
                                 modifier = Modifier.width(280.dp).height(200.dp),
                                 icon = DocMessageScrollerIcon,
                             ) {
-                                MessageScrollerViewport(contentDescription = MessageScrollerDefaults.ViewportLabel) {
-                                    MessageScrollerContent(spacing = MessageScrollerDefaults.ContentSpacing) {
-                                        MessageScrollerItem {
-                                            Message(avatar = { MessageAvatar("AI") }) { Text { "First" } }
-                                        }
-                                        MessageScrollerItem {
-                                            Message(avatar = { MessageAvatar("AI") }) { Text { "Second" } }
-                                        }
-                                        MessageScrollerItem {
-                                            Message(avatar = { MessageAvatar("AI") }) { Text { "Third" } }
-                                        }
+                                repeat(10) { index ->
+                                    Message(avatar = { MessageAvatar("AI") }) {
+                                        Text { "Message number $index" }
                                     }
                                 }
                             }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default threshold",
-                    code =
-                        """
-                        MessageScroller(
-                            modifier = Modifier.width(280.dp).height(200.dp),
-                            autoScrollThresholdPx = 64,
-                            icon = { rotationDegrees -> DocIcon(Lucide.ArrowDown, modifier = Modifier.graphicsLayer(rotationZ = rotationDegrees)) },
-                        ) {
-                            repeat(10) { index ->
-                                Message(avatar = { MessageAvatar("AI") }) {
-                                    Text { "Message number ${'$'}index" }
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        MessageScroller(
-                            modifier = Modifier.width(280.dp).height(200.dp),
-                            autoScrollThresholdPx = 64,
-                            icon = DocMessageScrollerIcon,
-                        ) {
-                            repeat(10) { index ->
-                                Message(avatar = { MessageAvatar("AI") }) {
-                                    Text { "Message number $index" }
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Button",
-                    code =
-                        """
-                        MessageScroller(
-                            modifier = Modifier.width(280.dp).height(200.dp),
-                            icon = { rotationDegrees ->
-                                DocIcon(Lucide.ArrowDown, modifier = Modifier.graphicsLayer(rotationZ = rotationDegrees))
-                            },
-                            button = { visible, onClick ->
-                                MessageScrollerButton(
-                                    visible = visible,
-                                    onClick = onClick,
-                                    modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = twSpacing.md),
-                                    icon = { rotationDegrees ->
-                                        DocIcon(Lucide.ArrowDown, modifier = Modifier.graphicsLayer(rotationZ = rotationDegrees))
-                                    },
-                                )
-                            },
-                        ) {
-                            repeat(10) { index ->
-                                Message(avatar = { MessageAvatar("AI") }) {
-                                    Text { "Message number ${'$'}index" }
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        MessageScroller(
-                            modifier = Modifier.width(280.dp).height(200.dp),
-                            icon = DocMessageScrollerIcon,
-                            button = { visible, onClick ->
-                                MessageScrollerButton(
-                                    visible = visible,
-                                    onClick = onClick,
-                                    modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = twSpacing.md),
-                                    icon = DocMessageScrollerIcon,
-                                )
-                            },
-                        ) {
-                            repeat(10) { index ->
-                                Message(avatar = { MessageAvatar("AI") }) {
-                                    Text { "Message number $index" }
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Start button",
-                    code =
-                        """
-                        MessageScrollerButton(
-                            visible = true,
-                            onClick = {},
-                            direction = MessageScrollerDirection.Start,
-                            icon = { rotationDegrees ->
-                                DocIcon(Lucide.ArrowDown, modifier = Modifier.graphicsLayer(rotationZ = rotationDegrees))
-                            },
-                        )
-                        """.trimIndent(),
-                    preview = {
-                        MessageScrollerButton(
-                            visible = true,
-                            onClick = {},
-                            direction = MessageScrollerDirection.Start,
-                            icon = DocMessageScrollerIcon,
-                        )
-                    },
-                ),
-                ComponentExample(
-                    title = "Chat panel with streaming replies",
-                    code =
-                        """
-                        // Real shadcn's own message-scroller demo streams AI replies in with a
-                        // useChat()-driven typewriter effect -- growing message content is exactly
-                        // what exercises auto-scroll for real, not just a fixed transcript. This
-                        // reproduces that with a plain coroutine appending one character at a time.
-                        var messages by remember { mutableStateOf(listOf(ScrollerDemoMessage(0, "Hi! Ask me anything.", false))) }
-                        var nextId by remember { mutableIntStateOf(1) }
-                        var composerText by remember { mutableStateOf("") }
-                        var isStreaming by remember { mutableStateOf(false) }
-                        val coroutineScope = rememberCoroutineScope()
-
-                        fun send() {
-                            val prompt = composerText.ifBlank { return }
-                            composerText = ""
-                            messages = messages + ScrollerDemoMessage(nextId++, prompt, isUser = true)
-                            val replyId = nextId++
-                            val reply = demoReplies[replyId % demoReplies.size]
-                            messages = messages + ScrollerDemoMessage(replyId, "", isUser = false)
-                            isStreaming = true
-                            coroutineScope.launch {
-                                for (charCount in 1..reply.length) {
-                                    delay(18)
-                                    messages = messages.map {
-                                        if (it.id == replyId) it.copy(text = reply.take(charCount)) else it
-                                    }
-                                }
-                                isStreaming = false
-                            }
-                        }
-
-                        Card(modifier = Modifier.width(320.dp).height(420.dp)) {
-                            CardHeader("New Chat", description = "How can I help you today?")
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Content items",
+                        code =
+                            """
                             MessageScroller(
-                                modifier = Modifier.weight(1f),
-                                icon = { rotationDegrees -> DocIcon(Lucide.ArrowDown, modifier = Modifier.graphicsLayer(rotationZ = rotationDegrees)) },
+                                modifier = Modifier.width(280.dp).height(200.dp),
+                                icon = { rotationDegrees -> Icon(Lucide.ArrowDown,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(16.dp).graphicsLayer(rotationZ = rotationDegrees)) },
+
                             ) {
-                                messages.forEach { message ->
-                                    Message(
-                                        align = if (message.isUser) MessageAlign.End else MessageAlign.Start,
-                                        avatar = { MessageAvatar(if (message.isUser) "Me" else "AI") },
+                                MessageScrollerContent(spacing = MessageScrollerDefaults.ContentSpacing) {
+                                    MessageScrollerItem {
+                                        Message(avatar = { MessageAvatar("AI") }) { Text { "First" } }
+                                    }
+                                    MessageScrollerItem {
+                                        Message(avatar = { MessageAvatar("AI") }) { Text { "Second" } }
+                                    }
+                                    MessageScrollerItem {
+                                        Message(avatar = { MessageAvatar("AI") }) { Text { "Third" } }
+                                    }
+                                }
+                            }
+                            """.trimIndent(),
+                        preview = {
+                            MessageScroller(
+                                modifier = Modifier.width(280.dp).height(200.dp),
+                                icon = DocMessageScrollerIcon,
+                            ) {
+                                MessageScrollerContent(spacing = MessageScrollerDefaults.ContentSpacing) {
+                                    MessageScrollerItem {
+                                        Message(avatar = { MessageAvatar("AI") }) { Text { "First" } }
+                                    }
+                                    MessageScrollerItem {
+                                        Message(avatar = { MessageAvatar("AI") }) { Text { "Second" } }
+                                    }
+                                    MessageScrollerItem {
+                                        Message(avatar = { MessageAvatar("AI") }) { Text { "Third" } }
+                                    }
+                                }
+                            }
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Official tree",
+                        code =
+                            """
+                            MessageScrollerProvider {
+                                MessageScroller(
+                                    modifier = Modifier.width(280.dp).height(200.dp),
+                                    icon = { rotationDegrees -> Icon(Lucide.ArrowDown,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(16.dp).graphicsLayer(rotationZ = rotationDegrees)) },
+
+                                ) {
+                                    MessageScrollerViewport(contentDescription = MessageScrollerDefaults.ViewportLabel) {
+                                        MessageScrollerContent(spacing = MessageScrollerDefaults.ContentSpacing) {
+                                            MessageScrollerItem {
+                                                Message(avatar = { MessageAvatar("AI") }) { Text { "First" } }
+                                            }
+                                            MessageScrollerItem {
+                                                Message(avatar = { MessageAvatar("AI") }) { Text { "Second" } }
+                                            }
+                                            MessageScrollerItem {
+                                                Message(avatar = { MessageAvatar("AI") }) { Text { "Third" } }
+                                            }
+                                        }
+                                    }
+                                    MessageScrollerButton()
+                                }
+                            }
+                            """.trimIndent(),
+                        preview = {
+                            MessageScrollerProvider {
+                                MessageScroller(
+                                    modifier = Modifier.width(280.dp).height(200.dp),
+                                    icon = DocMessageScrollerIcon,
+                                ) {
+                                    MessageScrollerViewport(
+                                        contentDescription =
+                                            MessageScrollerDefaults.ViewportLabel,
                                     ) {
-                                        Bubble(align = if (message.isUser) MessageAlign.End else MessageAlign.Start) {
-                                            BubbleContent(
-                                                variant = if (message.isUser) BubbleVariant.Default else BubbleVariant.Muted,
-                                            ) {
-                                                if (message.text.isEmpty() && !message.isUser) {
-                                                    Text(textStyle = TextStyles.Muted, modifier = Modifier.shimmer()) { "Thinking…" }
-                                                } else {
-                                                    Text { message.text }
+                                        MessageScrollerContent(spacing = MessageScrollerDefaults.ContentSpacing) {
+                                            MessageScrollerItem {
+                                                Message(avatar = { MessageAvatar("AI") }) { Text { "First" } }
+                                            }
+                                            MessageScrollerItem {
+                                                Message(avatar = { MessageAvatar("AI") }) { Text { "Second" } }
+                                            }
+                                            MessageScrollerItem {
+                                                Message(avatar = { MessageAvatar("AI") }) { Text { "Third" } }
+                                            }
+                                        }
+                                    }
+                                    MessageScrollerButton()
+                                }
+                            }
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Default threshold",
+                        code =
+                            """
+                            MessageScroller(
+                                modifier = Modifier.width(280.dp).height(200.dp),
+                                autoScrollThresholdPx = 64,
+                                icon = { rotationDegrees -> Icon(Lucide.ArrowDown,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(16.dp).graphicsLayer(rotationZ = rotationDegrees)) },
+
+                            ) {
+                                repeat(10) { index ->
+                                    Message(avatar = { MessageAvatar("AI") }) {
+                                        Text { "Message number ${'$'}index" }
+                                    }
+                                }
+                            }
+                            """.trimIndent(),
+                        preview = {
+                            MessageScroller(
+                                modifier = Modifier.width(280.dp).height(200.dp),
+                                autoScrollThresholdPx = 64,
+                                icon = DocMessageScrollerIcon,
+                            ) {
+                                repeat(10) { index ->
+                                    Message(avatar = { MessageAvatar("AI") }) {
+                                        Text { "Message number $index" }
+                                    }
+                                }
+                            }
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Button",
+                        code =
+                            """
+                            MessageScroller(
+                                modifier = Modifier.width(280.dp).height(200.dp),
+                                icon = { rotationDegrees ->
+                                    Icon(Lucide.ArrowDown,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(16.dp).graphicsLayer(rotationZ = rotationDegrees))
+                                },
+                                button = { visible, onClick ->
+                                    MessageScrollerButton(
+                                        visible = visible,
+                                        onClick = onClick,
+                                        modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = twSpacing.md),
+                                        icon = { rotationDegrees ->
+                                            Icon(Lucide.ArrowDown,
+                                                contentDescription = null,
+                                                modifier = Modifier.size(16.dp).graphicsLayer(rotationZ = rotationDegrees))
+                                        },
+                                    )
+                                },
+                            ) {
+                                repeat(10) { index ->
+                                    Message(avatar = { MessageAvatar("AI") }) {
+                                        Text { "Message number ${'$'}index" }
+                                    }
+                                }
+                            }
+                            """.trimIndent(),
+                        preview = {
+                            MessageScroller(
+                                modifier = Modifier.width(280.dp).height(200.dp),
+                                icon = DocMessageScrollerIcon,
+                                button = { visible, onClick ->
+                                    MessageScrollerButton(
+                                        visible = visible,
+                                        onClick = onClick,
+                                        modifier =
+                                            Modifier.align(Alignment.BottomCenter).padding(
+                                                bottom =
+                                                    twSpacing.md,
+                                            ),
+                                        icon = DocMessageScrollerIcon,
+                                    )
+                                },
+                            ) {
+                                repeat(10) { index ->
+                                    Message(avatar = { MessageAvatar("AI") }) {
+                                        Text { "Message number $index" }
+                                    }
+                                }
+                            }
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Start button",
+                        code =
+                            """
+                            MessageScrollerButton(
+                                visible = true,
+                                onClick = {},
+                                direction = MessageScrollerDirection.Start,
+                                icon = { rotationDegrees ->
+                                    Icon(Lucide.ArrowDown,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(16.dp).graphicsLayer(rotationZ = rotationDegrees))
+                                },
+                            )
+                            """.trimIndent(),
+                        preview = {
+                            MessageScrollerButton(
+                                visible = true,
+                                onClick = {},
+                                direction = MessageScrollerDirection.Start,
+                                icon = DocMessageScrollerIcon,
+                            )
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Chat panel with streaming replies",
+                        code =
+                            """
+                            // Real shadcn's own message-scroller demo streams AI replies in with a
+                            // useChat()-driven typewriter effect -- growing message content is exactly
+                            // what exercises auto-scroll for real, not just a fixed transcript. This
+                            // reproduces that with a plain coroutine appending one character at a time.
+                            var messages by remember { mutableStateOf(listOf(ScrollerDemoMessage(0,
+                                "Hi! Ask me anything.",
+                                false))) }
+                            var nextId by remember { mutableIntStateOf(1) }
+                            var composerText by remember { mutableStateOf("") }
+                            var isStreaming by remember { mutableStateOf(false) }
+                            val coroutineScope = rememberCoroutineScope()
+
+                            fun send() {
+                                val prompt = composerText.ifBlank { return }
+                                composerText = ""
+                                messages = messages + ScrollerDemoMessage(nextId++, prompt, isUser = true)
+                                val replyId = nextId++
+                                val reply = demoReplies[replyId % demoReplies.size]
+                                messages = messages + ScrollerDemoMessage(replyId, "", isUser = false)
+                                isStreaming = true
+                                coroutineScope.launch {
+                                    for (charCount in 1..reply.length) {
+                                        delay(18)
+                                        messages = messages.map {
+                                            if (it.id == replyId) it.copy(text = reply.take(charCount)) else it
+                                        }
+                                    }
+                                    isStreaming = false
+                                }
+                            }
+
+                            Card(modifier = Modifier.width(320.dp).height(420.dp)) {
+                                CardHeader("New Chat", description = "How can I help you today?")
+                                MessageScroller(
+                                    modifier = Modifier.weight(1f),
+                                    icon = { rotationDegrees -> Icon(Lucide.ArrowDown,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(16.dp).graphicsLayer(rotationZ = rotationDegrees)) },
+
+                                ) {
+                                    messages.forEach { message ->
+                                        Message(
+                                            align = if (message.isUser) MessageAlign.End else MessageAlign.Start,
+                                            avatar = { MessageAvatar(if (message.isUser) "Me" else "AI") },
+                                        ) {
+                                            Bubble(align = if (message.isUser) MessageAlign.End else MessageAlign.Start) {
+                                                BubbleContent(
+                                                    variant = if (message.isUser) {
+                                                        BubbleVariant.Default
+                                                    } else {
+                                                        BubbleVariant.Muted
+                                                    },
+
+                                                ) {
+                                                    if (message.text.isEmpty() && !message.isUser) {
+                                                        Text(textStyle = TextStyles.Muted,
+                                                            modifier = Modifier.shimmer()) { "Thinking…" }
+                                                    } else {
+                                                        Text { message.text }
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
-                            }
-                            // The group owns the single border/focus ring; the inner field drops its own.
-                            InputGroup {
-                                Input(
-                                    value = composerText,
-                                    onValueChange = { composerText = it },
-                                    placeholder = "Message MessageScroller…",
-                                    singleLine = false,
-                                    modifier = Modifier.onPreviewKeyEvent { event ->
-                                        if (event.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
-                                        when {
-                                            event.key == Key.Enter && !event.isShiftPressed -> {
-                                                send(); true
+                                // The group owns the single border/focus ring; the inner field drops its own.
+                                InputGroup {
+                                    Input(
+                                        value = composerText,
+                                        onValueChange = { composerText = it },
+                                        placeholder = "Message MessageScroller…",
+                                        singleLine = false,
+                                        modifier = Modifier.onPreviewKeyEvent { event ->
+                                            if (event.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
+                                            when {
+                                                event.key == Key.Enter && !event.isShiftPressed -> {
+                                                    send(); true
+                                                }
+                                                event.key == Key.Tab && !event.isShiftPressed -> {
+                                                    focusManager.moveFocus(FocusDirection.Next); true
+                                                }
+                                                else -> false
                                             }
-                                            event.key == Key.Tab && !event.isShiftPressed -> {
-                                                focusManager.moveFocus(FocusDirection.Next); true
-                                            }
-                                            else -> false
+                                        },
+                                    )
+                                    InputGroupAddon(InputGroupAddonAlign.InlineEnd) {
+                                        InputGroupButton(
+                                            onClick = ::send,
+                                            variant = ButtonVariant.Default,
+                                            size = InputGroupButtonSize.IconSm,
+                                            enabled = composerText.isNotBlank() && !isStreaming,
+                                        ) {
+                                            DocIcon(Lucide.Send, tint = currentTheme.colors.primaryForeground)
                                         }
-                                    },
-                                )
-                                InputGroupAddon(InputGroupAddonAlign.InlineEnd) {
-                                    InputGroupButton(
-                                        onClick = ::send,
-                                        variant = ButtonVariant.Default,
-                                        size = InputGroupButtonSize.IconSm,
-                                        enabled = composerText.isNotBlank() && !isStreaming,
-                                    ) {
-                                        DocIcon(Lucide.Send, tint = currentTheme.colors.primaryForeground)
                                     }
                                 }
                             }
-                        }
-                        """.trimIndent(),
-                    preview = { InteractiveChatPanel() },
+                            """.trimIndent(),
+                        preview = { InteractiveChatPanel() },
+                    ),
                 ),
-            ),
     )
 
 @Composable
@@ -551,7 +860,12 @@ private fun InteractiveChatPanel() {
                 ) {
                     Bubble(align = if (message.isUser) MessageAlign.End else MessageAlign.Start) {
                         BubbleContent(
-                            variant = if (message.isUser) BubbleVariant.Default else BubbleVariant.Muted,
+                            variant =
+                                if (message.isUser) {
+                                    BubbleVariant.Default
+                                } else {
+                                    BubbleVariant.Muted
+                                },
                         ) {
                             if (message.text.isEmpty() && !message.isUser) {
                                 Text(textStyle = TextColors.Muted, modifier = Modifier.shimmer()) { "Thinking…" }

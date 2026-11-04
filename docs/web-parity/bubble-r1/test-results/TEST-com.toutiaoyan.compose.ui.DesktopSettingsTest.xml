@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.toutiaoyan.compose.ui.DesktopSettingsTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-30T08:57:25.434Z" hostname="Apples-MacBook-Pro.local" time="0.026">
+  <properties/>
+  <testcase name="trayPreferencesSurviveRestartAndKeepTheTwoOptionsIndependent" classname="com.toutiaoyan.compose.ui.DesktopSettingsTest" time="0.025"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

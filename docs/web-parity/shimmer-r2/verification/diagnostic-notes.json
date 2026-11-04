@@ -1,0 +1,6 @@
+{
+  "sandbox": "First invocation denied existing Gradle cache lock before compilation; normal cache escalation used.",
+  "oracleCorrection": "Initial dark test minimum captured background; corrected maximum before definitive 4-test RED. No production edit between those RED runs.",
+  "cacheCompileFix": "Parent cache refactor accidentally assigned List to val map; corrected to local colors List, no test oracle change.",
+  "legacyAttribution": "Both changed current actual PNG hashes exactly match the prior round exact-prepass isolation, so no new legacy PNG change was introduced this round. No baseline update."
+}

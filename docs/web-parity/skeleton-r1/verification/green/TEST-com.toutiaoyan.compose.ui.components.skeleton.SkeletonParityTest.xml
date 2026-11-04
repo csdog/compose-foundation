@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="SkeletonParityTest[jvm]" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-10-30T21:57:26.647Z" hostname="Apples-MacBook-Pro.local" time="0.617">
+  <properties/>
+  <testcase name="pulseDoesNotRecomposeItsConsumerEveryFrame[dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.skeleton.SkeletonParityTest" time="0.389"/>
+  <testcase name="explicitReplacementStyleOmitsDefaultChromeAndPulse[dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.skeleton.SkeletonParityTest" time="0.032"/>
+  <testcase name="pulseHasTwoSecondCycleAndHalfOpacityAtMidpoint[dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.skeleton.SkeletonParityTest" time="0.051"/>
+  <testcase name="chromeUsesMutedAndRoundedMdWithoutPulse[dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.skeleton.SkeletonParityTest" time="0.018"/>
+  <testcase name="callerStyleCanKeepChromeAndOverrideCircle[dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.skeleton.SkeletonParityTest" time="0.016"/>
+  <testcase name="pulseDoesNotRecomposeItsConsumerEveryFrame[dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.skeleton.SkeletonParityTest" time="0.025"/>
+  <testcase name="explicitReplacementStyleOmitsDefaultChromeAndPulse[dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.skeleton.SkeletonParityTest" time="0.019"/>
+  <testcase name="pulseHasTwoSecondCycleAndHalfOpacityAtMidpoint[dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.skeleton.SkeletonParityTest" time="0.034"/>
+  <testcase name="chromeUsesMutedAndRoundedMdWithoutPulse[dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.skeleton.SkeletonParityTest" time="0.015"/>
+  <testcase name="callerStyleCanKeepChromeAndOverrideCircle[dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.skeleton.SkeletonParityTest" time="0.015"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

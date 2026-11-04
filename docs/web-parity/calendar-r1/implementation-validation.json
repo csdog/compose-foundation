@@ -1,0 +1,452 @@
+{
+  "command_fingerprints": {
+    "279a6a6dbc988297cb119070eb05c941499cec48b82e60c7576ff10f3e447c2c": 1,
+    "285cea709b0c957aa0563a4b126193306803889cadc27b24b7c50430783a907a": 1,
+    "3671ad24e817d1c1c15832c8c33d151de05571925272af74c8a5e0ba79c5b332": 1,
+    "389af4e1901dcb9579defe1f3e1d4359098f10280dc46b8037ae3968a40fdeb6": 1,
+    "624da83188cecee530856873abd33738e3a7519eaf9b7de14d7b06b1901cb425": 1,
+    "781b328d696d2c7d1a54a6f010cf74fe9db57f6f7f5a4fd780d952d28c02d3f8": 1,
+    "92fb747caba650731b709c9e52281891515b0710a0466dcfa0f3d94a7011aec1": 1,
+    "afa78baace75bfe7d7953634ad4456d2264b53ced5b74195e8bbd2b78414840e": 1,
+    "b0cef7540edf5655ad37aa449d6d7e723983608a3bdfca53317d8a8e1d7ee629": 2,
+    "bcb7632be1d6ec54b5c4d2f8c977492dc0fe88fab454165cdbfd9bdbfd01e442": 1,
+    "c99ec6b1a7f2686e14ccfca340acfc2bc28fd8a9b1cb90a107e16afb17355541": 1,
+    "ea220db36f8a511e08562343ccdac0d3771051a2d25d43ba76ad8d895f6b9a88": 2
+  },
+  "failure_fingerprints": {
+    "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a": {
+      "excerpt": "Module not found: Error: Can't resolve 'path' in '/Users/cscs/IdeaProjects/angryecho/compose-foundation/build/js/packages/compose-foundation-app-webApp/kotlin'",
+      "occurrences": 7
+    },
+    "153c2c3f64588133e981b825f3dc2178d8bf79d81984bfd5467ab02a81b4a7e2": {
+      "excerpt": "* What went wrong: Execution failed for task ':app:shared:compileKotlinJvm' (registered in build file 'app/shared/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kotlin co...",
+      "occurrences": 1
+    },
+    "1b2ed13dc29b2d316d6a419c978be824300894f46a33d40fe4ab10f6f377b832": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/CalendarDoc.kt:245:60 No value passed for parameter 'value'.",
+      "occurrences": 1
+    },
+    "2a43e139cff4dd299c2d8d50438e0883af2ae210da7c97cc38d600a04163ab88": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/calendar/CalendarParityTest.kt:23:37 Cannot infer type for implicit value parameter 'it'. Specify it explicitly.",
+      "occurrences": 1
+    },
+    "2c0f3e8a96c79ff0918e2651f0a0c6ba454841c2bbc88572a920ce587c3f396e": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/CalendarDoc.kt:257:75 Function invocation 'width(...)' expected.",
+      "occurrences": 1
+    },
+    "3385a58fe3cf1843d68e9d865ebe31eee454e5cc46b75250b5bb507bbd757636": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/CalendarDoc.kt:248:75 None of the following candidates is applicable:",
+      "occurrences": 1
+    },
+    "4937144bdfbe852b6b5ef20ab9cca4a90a35ff272a6fe3eca22a3fa1bcd9d38f": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:compileTestKotlinJvm' (registered in build file 'shadcn/core/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kot...",
+      "occurrences": 1
+    },
+    "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4": {
+      "excerpt": "Module not found: Error: Can't resolve 'os' in '/Users/cscs/IdeaProjects/angryecho/compose-foundation/build/js/packages/compose-foundation-app-webApp/kotlin'",
+      "occurrences": 7
+    },
+    "78a7a09836d1b06646b46e9dbf0d5eb384b4eb8490713e87d2317a86303886be": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/calendar/Calendar.kt:1213:17 Unresolved reference 'hovered'.",
+      "occurrences": 1
+    },
+    "848f5f2560d9dcd1eba405bdd2bb262a92d4bf7a52de506eab0b555dc3a2b783": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:compileKotlinJvm' (registered in build file 'shadcn/core/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kotlin ...",
+      "occurrences": 1
+    },
+    "907883c480844ebd01ae1fb7d1b1aa7e8d1bdcc781ad2173ac071216dfc7ceb5": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/CalendarDoc.kt:248:75 Function invocation 'width(...)' expected.",
+      "occurrences": 1
+    },
+    "9604858603a5808ded3d678bd69701c370e58b539aa847b62d234c96830282d8": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/calendar/CalendarParityTest.kt:35:13 Overload resolution ambiguity between candidates:",
+      "occurrences": 1
+    },
+    "a758f711d5ccbeb62def72739f0826270b43dc09dcf3e19a3940a59030faa416": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/calendar/CalendarParityTest.kt:23:34 Cannot infer type for implicit value parameter 'it'. Specify it explicitly.",
+      "occurrences": 1
+    },
+    "b45c9608ad6ce42c0a4074fbb600c43f28068c86f007592141224e9977bc79b1": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/calendar/CalendarParityTest.kt:35:36 Cannot infer type for implicit value parameter 'it'. Specify it explicitly.",
+      "occurrences": 1
+    },
+    "d122d94161d65e04eaf5af63a7e99b4dd8ea667d44b14a4ff3d38bed45e3a0d7": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/CalendarDoc.kt:245:72 No parameter with name 'top' found.",
+      "occurrences": 1
+    },
+    "d315ea710075fefb13f3ebee10687eaa352a81fc3b24b7e1d8cfeaa97d59a653": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/calendar/CalendarParityTest.kt:23:13 Overload resolution ambiguity between candidates:",
+      "occurrences": 1
+    },
+    "dc4b88043b4608bab3ec0012527a35c3ddf05d18ba44fc8dceda0e12c19eac46": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/CalendarDoc.kt:252:85 No parameter with name 'top' found.",
+      "occurrences": 1
+    },
+    "ebce6ef62b17d2d23fd5207c8a6cc696c0838bfd8795ee9a7ef6f7f6be4104d9": {
+      "excerpt": "* What went wrong: Execution failed for task ':app:shared:compileKotlinJvm' (registered in build file 'app/shared/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kotlin co...",
+      "occurrences": 1
+    },
+    "f108a23671152c16780a0c9935ed7ffeb4d7a4a2335c19906c0a46ac80f518e3": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/calendar/CalendarParityTest.kt:35:33 Cannot infer type for implicit value parameter 'it'. Specify it explicitly.",
+      "occurrences": 1
+    },
+    "f9a143f6ab65ebc70c597c39476db5f8ef430ca7b33241f31c11b37addd4ba30": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/CalendarDoc.kt:257:75 None of the following candidates is applicable:",
+      "occurrences": 1
+    },
+    "fc4449618dff108018ac522558b6997ce13cf5677e2f902939ec33acf1ce0993": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/CalendarDoc.kt:252:73 No value passed for parameter 'value'.",
+      "occurrences": 1
+    }
+  },
+  "failure_fingerprints_truncated_occurrences": 0,
+  "run_count": 14,
+  "runs": [
+    {
+      "command": "./gradlew :shadcn:core:compileKotlinJvm --console=plain --no-scan",
+      "elapsed_seconds": 2.929,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "78a7a09836d1b06646b46e9dbf0d5eb384b4eb8490713e87d2317a86303886be",
+        "848f5f2560d9dcd1eba405bdd2bb262a92d4bf7a52de506eab0b555dc3a2b783"
+      ],
+      "log": "0001.log",
+      "question": "Does Calendar compile with configurable cell sizing, week-number gutters, custom day slots and native day-key scoping?",
+      "scope": "targeted",
+      "sequence": 1,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:compileKotlinJvm --console=plain --no-scan",
+      "elapsed_seconds": 11.805,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "1b2ed13dc29b2d316d6a419c978be824300894f46a33d40fe4ab10f6f377b832",
+        "d122d94161d65e04eaf5af63a7e99b4dd8ea667d44b14a4ff3d38bed45e3a0d7",
+        "fc4449618dff108018ac522558b6997ce13cf5677e2f902939ec33acf1ce0993",
+        "dc4b88043b4608bab3ec0012527a35c3ddf05d18ba44fc8dceda0e12c19eac46",
+        "ebce6ef62b17d2d23fd5207c8a6cc696c0838bfd8795ee9a7ef6f7f6be4104d9"
+      ],
+      "log": "0002.log",
+      "question": "Do the new Calendar recipes compile with real ranges, price slots, presets, booked-date styles and editable times?",
+      "scope": "targeted",
+      "sequence": 2,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *CalendarParityTest :app:shared:compileKotlinJvm --console=plain --no-scan",
+      "elapsed_seconds": 3.242,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "d315ea710075fefb13f3ebee10687eaa352a81fc3b24b7e1d8cfeaa97d59a653",
+        "a758f711d5ccbeb62def72739f0826270b43dc09dcf3e19a3940a59030faa416",
+        "2a43e139cff4dd299c2d8d50438e0883af2ae210da7c97cc38d600a04163ab88",
+        "9604858603a5808ded3d678bd69701c370e58b539aa847b62d234c96830282d8",
+        "f108a23671152c16780a0c9935ed7ffeb4d7a4a2335c19906c0a46ac80f518e3",
+        "b45c9608ad6ce42c0a4074fbb600c43f28068c86f007592141224e9977bc79b1",
+        "907883c480844ebd01ae1fb7d1b1aa7e8d1bdcc781ad2173ac071216dfc7ceb5",
+        "3385a58fe3cf1843d68e9d865ebe31eee454e5cc46b75250b5bb507bbd757636"
+      ],
+      "log": "0003.log",
+      "question": "Do Calendar geometry, week-number boundaries, custom day actions and header/day keyboard ownership regressions pass?",
+      "scope": "targeted",
+      "sequence": 3,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *CalendarParityTest :app:shared:compileKotlinJvm --console=plain --no-scan",
+      "elapsed_seconds": 8.219,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0004.log",
+      "question": "Do Calendar regression tests and recipes pass after disambiguating the single-date overload and footer DrawScope size?",
+      "scope": "targeted",
+      "sequence": 4,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *CalendarExamplesTest :shadcn:core:jvmTest --tests *CalendarParityTest --console=plain --no-scan",
+      "elapsed_seconds": 25.968,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0005.log",
+      "question": "Do Calendar catalog presets, booked-day exclusion, range prices and independently editable times work?",
+      "scope": "targeted",
+      "sequence": 5,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "b31efcef4b8f770b24a049cb9ba3982ffeb41d54a9dcda8120d66b790fb3b92d",
+        "dea1df736e1eaa22b569ded8dd89d42ff69f2af833de15035dd20f5bb096df9f",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution :app:webApp:jsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 50.915,
+      "exit_status": 0,
+      "failure_fingerprints": [
+        "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4",
+        "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a"
+      ],
+      "log": "0006.log",
+      "question": "Do JS and Wasm builds accept Calendar custom slot and week-number APIs and expose the fifteen updated recipes?",
+      "scope": "targeted",
+      "sequence": 6,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "2fb0ece640b7162f5d2a2a8c8bdd1799aef5caffffa78b71796f8517f4c35416",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *CalendarParityTest --tests *CalendarScreenshotTest --tests *DatePickerScreenshotTest --tests *SurfacesCompletionTest.calendar* --tests *SurfacesCompletionTest.hiddenOutsideDays* --tests *SurfacesNovaParityTest.calendar* -Proborazzi.test.record=true :app:shared:jvmTest --tests *CalendarExamplesTest --console=plain --no-scan",
+      "elapsed_seconds": 20.851,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0007.log",
+      "question": "Verify Calendar narrow-layout nowrap, existing localization and month bounds, and record only Calendar and DatePicker fixtures after geometry changes",
+      "scope": "targeted",
+      "sequence": 7,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *CalendarParityTest :app:shared:jvmTest --tests *CalendarExamplesTest :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution :app:webApp:jsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 32.149,
+      "exit_status": 0,
+      "failure_fingerprints": [
+        "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4",
+        "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a"
+      ],
+      "log": "0008.log",
+      "question": "Compile updated exported Calendar recipes and retain layout and interaction regressions after nowrap and weighted presets",
+      "scope": "targeted",
+      "sequence": 8,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "3d58dde8ec432b016135895c362b0ea53f2cc89d9a8dba2c3f70a8aec8a34783",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *CalendarParityTest --tests *CalendarScreenshotTest --tests *DatePickerScreenshotTest -Proborazzi.test.verify=true :app:shared:jvmTest --tests *CalendarExamplesTest :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution :app:webApp:jsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 24.564,
+      "exit_status": 0,
+      "failure_fingerprints": [
+        "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4",
+        "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a"
+      ],
+      "log": "0009.log",
+      "question": "Independently verify the 12 visually reviewed Calendar and DatePicker goldens and final exported recipe regression after formatting",
+      "scope": "targeted",
+      "sequence": 9,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "58f9f35932fa37816fccc1a843c4528c4eddfa69645e90155b819d32b85ad450",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *CalendarParityTest --tests *CalendarScreenshotTest --tests *DatePickerScreenshotTest -Proborazzi.test.verify=true :app:shared:jvmTest --tests *CalendarExamplesTest :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution :app:webApp:jsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 31.76,
+      "exit_status": 0,
+      "failure_fingerprints": [
+        "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4",
+        "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a"
+      ],
+      "log": "0010.log",
+      "question": "Verify official 1926-2026 dropdown limits, keyboard boundary behavior and unchanged goldens after adding real Arabic weekday labels",
+      "scope": "targeted",
+      "sequence": 10,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "47d6e662ea650a9654b8a495261a314ccb2d214e7f3ddb186bcdf3566bf3184e"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *CalendarScreenshotTest.nova_week_numbers* --tests *CalendarParityTest -Proborazzi.test.record=true :app:shared:jvmTest --tests *CalendarExamplesTest :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution :app:webApp:jsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 31.352,
+      "exit_status": 0,
+      "failure_fingerprints": [
+        "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4",
+        "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a"
+      ],
+      "log": "0011.log",
+      "question": "Record only the two week-number fixtures after matching zero-padded labels; verify fixed natural card widths and disabled date ink through existing interaction regressions",
+      "scope": "targeted",
+      "sequence": 11,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "adf0a2cb4282c098d5c630257c2ba4dbba6ac7dc4338dfa7f1a5770b57a8e8d3",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *CalendarScreenshotTest --tests *DatePickerScreenshotTest -Proborazzi.test.verify=true --console=plain --no-scan",
+      "elapsed_seconds": 7.707,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0012.log",
+      "question": "Independently pixel-verify zero-padded week numbers and the remaining Calendar/DatePicker baselines after final card sizing fixes",
+      "scope": "targeted",
+      "sequence": 12,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "b31efcef4b8f770b24a049cb9ba3982ffeb41d54a9dcda8120d66b790fb3b92d",
+        "dea1df736e1eaa22b569ded8dd89d42ff69f2af833de15035dd20f5bb096df9f",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *CalendarExamplesTest :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution :app:webApp:jsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 22.913,
+      "exit_status": 0,
+      "failure_fingerprints": [
+        "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4",
+        "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a"
+      ],
+      "log": "0013.log",
+      "question": "Does applying the existing Button fillWidth Style paint preset buttons across their weighted cells while preserving recipe callbacks and exports?",
+      "scope": "targeted",
+      "sequence": 13,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "adf0a2cb4282c098d5c630257c2ba4dbba6ac7dc4338dfa7f1a5770b57a8e8d3",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *CalendarParityTest --tests *CalendarScreenshotTest --tests *DatePickerScreenshotTest -Proborazzi.test.verify=true :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution :app:webApp:jsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 29.621,
+      "exit_status": 0,
+      "failure_fingerprints": [
+        "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4",
+        "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a"
+      ],
+      "log": "0014.log",
+      "question": "Verify the newly found no-today year-window anchoring regression without changing existing Calendar/DatePicker goldens",
+      "scope": "targeted",
+      "sequence": 14,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "f763fc8030392c310e3604ed0b0bc9ca2f55bf1f8d9a0f0b7093cd67e506db6c",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    }
+  ],
+  "version": 1,
+  "warning_fingerprints": {
+    "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312": {
+      "excerpt": "w: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/text/Text.kt:5:16 Suppression of error 'INVISIBLE_REFERENCE' might compile and work, but the compiler behavior is UNSP...",
+      "occurrences": 16
+    },
+    "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4": {
+      "excerpt": "You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.",
+      "occurrences": 12
+    },
+    "2fb0ece640b7162f5d2a2a8c8bdd1799aef5caffffa78b71796f8517f4c35416": {
+      "excerpt": "webpack 5.108.1 compiled with 1 warning in 478 ms",
+      "occurrences": 1
+    },
+    "3d58dde8ec432b016135895c362b0ea53f2cc89d9a8dba2c3f70a8aec8a34783": {
+      "excerpt": "webpack 5.108.1 compiled with 1 warning in 453 ms",
+      "occurrences": 1
+    },
+    "47d6e662ea650a9654b8a495261a314ccb2d214e7f3ddb186bcdf3566bf3184e": {
+      "excerpt": "webpack 5.108.1 compiled with 1 warning in 436 ms",
+      "occurrences": 1
+    },
+    "58f9f35932fa37816fccc1a843c4528c4eddfa69645e90155b819d32b85ad450": {
+      "excerpt": "webpack 5.108.1 compiled with 1 warning in 425 ms",
+      "occurrences": 1
+    },
+    "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2": {
+      "excerpt": "Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.",
+      "occurrences": 12
+    },
+    "adf0a2cb4282c098d5c630257c2ba4dbba6ac7dc4338dfa7f1a5770b57a8e8d3": {
+      "excerpt": "webpack 5.108.1 compiled with 1 warning in 465 ms",
+      "occurrences": 2
+    },
+    "b31efcef4b8f770b24a049cb9ba3982ffeb41d54a9dcda8120d66b790fb3b92d": {
+      "excerpt": "WARNING: *Important* Test suite support is experimental and subject to change",
+      "occurrences": 2
+    },
+    "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a": {
+      "excerpt": "WARNING: The option setting 'android.experimental.enableScreenshotTest=true' is experimental.",
+      "occurrences": 12
+    },
+    "dea1df736e1eaa22b569ded8dd89d42ff69f2af833de15035dd20f5bb096df9f": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=TEST_SUITE_SUPPORT_EXPERIMENTAL to the gradle.properties file to suppress this warning.",
+      "occurrences": 2
+    },
+    "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=UNSUPPORTED_PROJECT_OPTION_USE to the gradle.properties file to suppress this warning.",
+      "occurrences": 24
+    },
+    "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90": {
+      "excerpt": "WARNING: The option setting 'android.experimental.testSuiteSupport=true' is experimental.",
+      "occurrences": 12
+    },
+    "f763fc8030392c310e3604ed0b0bc9ca2f55bf1f8d9a0f0b7093cd67e506db6c": {
+      "excerpt": "webpack 5.108.1 compiled with 1 warning in 431 ms",
+      "occurrences": 1
+    }
+  },
+  "warning_fingerprints_truncated_occurrences": 0,
+  "workflow": "16ab941fb2ac3c262a4394912ffa1cd5"
+}

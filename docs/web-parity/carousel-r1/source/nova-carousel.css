@@ -1,0 +1,10 @@
+  /* MARK: Carousel */
+  .cn-carousel-previous {
+    @apply rounded-full;
+  }
+
+  .cn-carousel-next {
+    @apply rounded-full;
+  }
+
+  /* MARK: Chart */

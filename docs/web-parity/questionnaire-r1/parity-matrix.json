@@ -1,0 +1,68 @@
+{
+  "component": "questionnaire",
+  "complete": false,
+  "libraryVersion": "0.3.20",
+  "upstreamRevision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "sourceCount": 24,
+  "officialRecipes": {
+    "migrated": [
+      "demo"
+    ],
+    "pending": [
+      "multiple",
+      "freeform",
+      "skip",
+      "shortcuts",
+      "validation",
+      "controlled",
+      "resume",
+      "conditional",
+      "navigation-state",
+      "progress",
+      "animated",
+      "card",
+      "dialog"
+    ]
+  },
+  "implemented": [
+    "Nova automaticindicator and choicechrome/keyboardfocusstyle/checkedcheckboxsemantics",
+    "CSSinsets39px and literalpadding12x10 verified",
+    "responsive44px input/actions below640, 12/16progress,16/22title,14/20description/error,14/19.25choice",
+    "optionalrequiresanswerorexplicitskip, optional-lastskipSubmits, all-itemsvalidation",
+    "single fixed/freeform exclusion with draft preservation, payloadcollectionorder",
+    "selectedchoiceEnter, inputshortcut/focus, modified-keyguard, ArrowRightdoesnotSubmit",
+    "reactiveinitial/changedshortcuts and accepted/externalcontrolleditem",
+    "sourceDefault34data literals,3questions,shortcutletters,onSubmittoastpayload"
+  ],
+  "validation": {
+    "controllerTests": 10,
+    "nativeUiTests": 8,
+    "newNovaGoldens": 4,
+    "catalogTests": 16,
+    "ktlintChecks": 2,
+    "nativeRecipeCapturesReviewed": 36,
+    "nativeGoldensReviewed": 4,
+    "js": "exit0-25.620s-with-existing-webpack-os-path-diagnostics",
+    "wasm": "exit0-18.505s-one-webpackwarning",
+    "legacy": "selected4currentandprepassCHANGED, allactualhashesdifferent; mixedbaselineandintentionalrounddifferences; notrecorded",
+    "workflowFinished": true,
+    "legacyScope": "4of30 existing snapshots audited (default/choice_parts light/dark); other26 notrun this round"
+  },
+  "limitations": [
+    "mockWindowInfo1440/390 inside desktop1024x768scene; sourcepreviewfixtures—notrealmobilebrowser orcompletepage",
+    "nativeToastgraydot/360pxviewportcard/layout differsfromSonner, onlypayloadverified; Toastaudittodo",
+    "fractionalCSS19.25sp lineboxes and exactpalette requirebrowsercomparison"
+  ],
+  "remaining": [
+    "13officialrecipes",
+    "browserdesktop/mobilelight/dark",
+    "IMEcomposition/repeatedkeys/fullradiogrouphorizontalarrowsandcheckboxnavigation/keyboardmatrix",
+    "inheritedFieldSetdisabledpropagation and realassistivetree group/title/errorassociation",
+    "nativeemailandHTMLconstraintvalidation",
+    "dynamiccollection/reordering/removal/controlledanswers/reset/persistence/fullstatusmatrix",
+    "AnimatedVisibility visible=true enterlifecycle, motion/reducedmotion",
+    "titlewithoutdescription mb4, arbitraryslotdescriptionmarker offset, allStyleoverrides/largefonts",
+    "validationAttempted live revalidation after clearing an input or deselecting the last checkbox"
+  ],
+  "browserStatusReference": "../popover-r2/browser-status.json"
+}

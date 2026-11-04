@@ -22,11 +22,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
+import androidx.compose.foundation.style.rememberUpdatedStyleState
 import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -367,6 +368,7 @@ private class InputGroupAddonParentDataModifier(
 fun InputGroupAddon(
     align: InputGroupAddonAlign = InputGroupAddonAlign.InlineStart,
     modifier: Modifier = Modifier,
+    style: Style = Style,
     content: @Composable RowScope.() -> Unit,
 ) {
     val theme = currentTheme
@@ -379,39 +381,46 @@ fun InputGroupAddon(
     val spacing = twSpacing
     // py-1.5 ≈ 6dp; pl-3/pr-3 = spacing.md; keep xs gap to the control (long-value regression).
     val pad =
-        when (align) {
-            InputGroupAddonAlign.InlineStart ->
-                Modifier.padding(
-                    start = if (nova) 8.dp else spacing.md,
-                    end = if (nova) 0.dp else spacing.xs,
-                    top = 6.dp,
-                    bottom = 6.dp,
-                )
+        remember(align, nova, spacing) {
+            Style {
+                when (align) {
+                    InputGroupAddonAlign.InlineStart ->
+                        contentPadding(
+                            start = if (nova) 8.dp else spacing.md,
+                            end = if (nova) 0.dp else spacing.xs,
+                            top = 6.dp,
+                            bottom = 6.dp,
+                        )
 
-            InputGroupAddonAlign.InlineEnd ->
-                Modifier.padding(
-                    start = if (nova) 0.dp else spacing.xs,
-                    end = if (nova) 8.dp else spacing.md,
-                    top = 6.dp,
-                    bottom = 6.dp,
-                )
+                    InputGroupAddonAlign.InlineEnd ->
+                        contentPadding(
+                            start = if (nova) 0.dp else spacing.xs,
+                            end = if (nova) 8.dp else spacing.md,
+                            top = 6.dp,
+                            bottom = 6.dp,
+                        )
 
-            InputGroupAddonAlign.BlockStart ->
-                Modifier.padding(
-                    start = if (nova) 10.dp else spacing.md,
-                    end = if (nova) 10.dp else spacing.md,
-                    top = if (nova) 8.dp else spacing.md,
-                    bottom = if (nova) 6.dp else spacing.xs,
-                )
+                    InputGroupAddonAlign.BlockStart ->
+                        contentPadding(
+                            start = if (nova) 10.dp else spacing.md,
+                            end = if (nova) 10.dp else spacing.md,
+                            top = if (nova) 8.dp else spacing.md,
+                            bottom = if (nova) 6.dp else spacing.xs,
+                        )
 
-            InputGroupAddonAlign.BlockEnd ->
-                Modifier.padding(
-                    start = if (nova) 10.dp else spacing.md,
-                    end = if (nova) 10.dp else spacing.md,
-                    top = if (nova) 6.dp else spacing.xs,
-                    bottom = if (nova) 8.dp else spacing.md,
-                )
+                    InputGroupAddonAlign.BlockEnd ->
+                        contentPadding(
+                            start = if (nova) 10.dp else spacing.md,
+                            end = if (nova) 10.dp else spacing.md,
+                            top = if (nova) 6.dp else spacing.xs,
+                            bottom = if (nova) 8.dp else spacing.md,
+                        )
+                }
+            }
         }
+    val interaction = remember { MutableInteractionSource() }
+    val enabled = !LocalInputGroupDisabled.current
+    val styleState = rememberUpdatedStyleState(interaction) { it.isEnabled = enabled }
     val widthMod =
         if (align == InputGroupAddonAlign.BlockStart || align == InputGroupAddonAlign.BlockEnd) {
             Modifier.fillMaxWidth()
@@ -437,16 +446,13 @@ fun InputGroupAddon(
                 modifier
                     .then(InputGroupAddonParentDataModifier(align))
                     .then(widthMod)
-                    .then(pad)
                     .focusProperties { canFocus = false }
                     .clickable(
-                        interactionSource =
-                            remember {
-                                MutableInteractionSource()
-                            },
+                        interactionSource = interaction,
                         indication = null,
-                        enabled = !LocalInputGroupDisabled.current,
-                    ) { layoutState?.focusInput() },
+                        enabled = enabled,
+                    ) { layoutState?.focusInput() }
+                    .styleable(styleState, pad, style),
             verticalAlignment = Alignment.CenterVertically,
             // gap-2
             horizontalArrangement = Arrangement.spacedBy(spacing.sm),
@@ -461,8 +467,9 @@ fun InputGroupAddon(
     text: String,
     align: InputGroupAddonAlign = InputGroupAddonAlign.InlineStart,
     modifier: Modifier = Modifier,
+    style: Style = Style,
 ) {
-    InputGroupAddon(align = align, modifier = modifier) {
+    InputGroupAddon(align = align, modifier = modifier, style = style) {
         InputGroupText(text)
     }
 }

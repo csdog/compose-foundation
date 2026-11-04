@@ -1,0 +1,45 @@
+{
+  "revision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "files": [
+    {
+      "file": "source/tooltip.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/content/docs/components/base/tooltip.mdx",
+      "sha256": "04e47f5e1b8300ce162e00968760a4c5628feda1cf6682c363e230d176cd68a9"
+    },
+    {
+      "file": "source/tooltip.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/bases/base/ui/tooltip.tsx",
+      "sha256": "dc5ec917d8276af9d66e7c951b0608d67c149bcb311072166bc8ce67ee2b7488"
+    },
+    {
+      "file": "source/tooltip-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/tooltip-demo.tsx",
+      "sha256": "dfffd745f48178c6a1d35cac206ec87b902f09c25f16ad8288e20ed1fbfea606"
+    },
+    {
+      "file": "source/tooltip-sides.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/tooltip-sides.tsx",
+      "sha256": "b74fa2335fafddf37a8246b6b18bf34acfabca08376ef189fa4c16be81a4aaa9"
+    },
+    {
+      "file": "source/tooltip-keyboard.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/tooltip-keyboard.tsx",
+      "sha256": "53996e470b756ad3a0b2c36e8b84cb7ef60299a049f76a0888270bd78d99c550"
+    },
+    {
+      "file": "source/tooltip-disabled.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/tooltip-disabled.tsx",
+      "sha256": "1f24acffa00c35a82067829015dec40172bc319aed123e5e56e2ff8a3c9fee73"
+    },
+    {
+      "file": "source/tooltip-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/tooltip-rtl.tsx",
+      "sha256": "cbbfdf182d8468b77e3be64d6b0ad028eb5d4582b810c45e059273e8ea6a133d"
+    },
+    {
+      "file": "source/style-nova.css",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+    }
+  ]
+}

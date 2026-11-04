@@ -20,32 +20,112 @@ val paginationDoc =
     ComponentDoc(
         id = "pagination",
         title = "Pagination",
-        description = "Page-number navigation with Previous/Next controls and ellipsis gaps.",
+        description = "Pagination with page navigation, next and previous links.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.pagination.Pagination
             import com.toutiaoyan.compose.ui.components.pagination.PaginationContent
             import com.toutiaoyan.compose.ui.components.pagination.PaginationEllipsis
+            import com.toutiaoyan.compose.ui.components.pagination.PaginationItem
             import com.toutiaoyan.compose.ui.components.pagination.PaginationLink
             import com.toutiaoyan.compose.ui.components.pagination.PaginationNext
             import com.toutiaoyan.compose.ui.components.pagination.PaginationPrevious
 
-            var page by remember { mutableStateOf(1) }
-            Pagination(page = page, onPageChange = { page = it }, pageCount = 10) {
+            Pagination {
                 PaginationContent {
-                    PaginationPrevious()
-                    PaginationLink(page = 1)
-                    PaginationLink(page = 2)
-                    PaginationEllipsis()
-                    PaginationLink(page = 10)
-                    PaginationNext()
+                    PaginationItem { PaginationPrevious(onClick = {}) }
+                    PaginationItem { PaginationLink(1, onClick = {}) }
+                    PaginationItem { PaginationLink(2, isActive = true, onClick = {}) }
+                    PaginationItem { PaginationLink(3, onClick = {}) }
+                    PaginationItem { PaginationEllipsis() }
+                    PaginationItem { PaginationNext(onClick = {}) }
                 }
             }
             """.trimIndent(),
+        compositionCode =
+            """
+            Pagination
+            └── PaginationContent
+                ├── PaginationItem → PaginationPrevious
+                ├── PaginationItem → PaginationLink
+                ├── PaginationItem → PaginationEllipsis
+                └── PaginationItem → PaginationNext
+            """.trimIndent(),
+        apiSections =
+            listOf(
+                ComponentApiSection(
+                    "Pagination",
+                    (
+                        "Presentational root; optional controlled page/windowing are " +
+                            "Kotlin extensions."
+                    ),
+                    listOf(
+                        ApiProperty("modifier / style", "Modifier / Style", "Default"),
+                        ApiProperty("ariaLabel", "String", "pagination"),
+                        ApiProperty("page / onPageChange / pageCount", "Int? / callback? / Int?", "null"),
+                        ApiProperty("siblingCount / showEdges", "Int / Boolean", "1 / false"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "PaginationLink",
+                    (
+                        "Numeric label or caller-supplied content. Active links use " +
+                            "Outline, other links Ghost."
+                    ),
+                    listOf(
+                        ApiProperty("page", "Int", "Required"),
+                        ApiProperty("isActive / onClick", "Boolean? / callback?", "null (controlled context)"),
+                        ApiProperty("enabled / disabled", "Boolean", "true / false"),
+                        ApiProperty("size / style", "ButtonSize / Style", "Icon / Style"),
+                        ApiProperty("content", "Composable slot", "Optional overload for localized labels"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "PaginationPrevious / PaginationNext",
+                    (
+                        "Nova labels show from640dp, arrows mirror in RTL. Text=null " +
+                            "uses default Previous/Next; empty text requests icon-only " +
+                            "content."
+                    ),
+                    listOf(
+                        ApiProperty("onClick / enabled", "callback? / Boolean?", "null (controlled context)"),
+                        ApiProperty("text", "String?", "null (Nova default label; legacy no label)"),
+                        ApiProperty("style / ariaLabel", "Style / String?", "Default / English navigation label"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "PaginationContent / PaginationItem / PaginationEllipsis",
+                    (
+                        "Content arranges items; Nova ellipsis is decorative and " +
+                            "hidden from accessibility."
+                    ),
+                    listOf(
+                        ApiProperty("modifier", "Modifier", "Modifier"),
+                        ApiProperty("style (Content)", "Style", "Style"),
+                    ),
+                ),
+            ),
+        afterExamples =
+            listOf(
+                ComponentGuideSection(
+                    "Navigation callbacks (Kotlin)",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            (
+                                "The official examples use placeholder links and a literal " +
+                                    "active page2. Native examples keep that selection; provide " +
+                                    "onClick callbacks or the controlled page context for real " +
+                                    "navigation. Kotlin callbacks replace HTML href/render " +
+                                    "integration; native Button semantics are not HTML anchors."
+                            ),
+                        ),
+                    ),
+                ),
+            ),
         examples =
             listOf(
                 ComponentExample(
-                    title = "Default",
+                    title = "Controlled (Kotlin)",
                     code =
                         """
                         var page by remember { mutableStateOf(1) }
@@ -77,7 +157,7 @@ val paginationDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Simple",
+                    title = "Simple (Kotlin)",
                     code =
                         """
                         var page by remember { mutableStateOf(2) }
@@ -589,4 +669,4 @@ val paginationDoc =
                     },
                 ),
             ),
-    )
+    ).let { native -> native.copy(examples = paginationOfficialExamples + native.examples) }

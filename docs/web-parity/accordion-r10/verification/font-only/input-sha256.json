@@ -1,0 +1,10 @@
+{
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/accordion/Accordion.kt": "4b353fe8b5366dbce9c70a150ab789a47b82284e296cf8375a78e0636862db81",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/CatalogFonts.kt": "980254352ac1404db5d8bbe4061d17c638b0392c4cfa00663d29fc17621fef29",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/AccordionDoc.kt": "be9ed206d614b3396e5277390ca907dd67b21d1ef7f6286e2ef6e0fde2ee545d",
+  "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/AccordionRtlPreviewTest.kt": "d4c29de8a2eb5e916122198e83693b983844bd3d62fa99bf167e62526d4dc8c5",
+  "app/shared/src/commonMain/composeResources/font/catalog_arabic_regular.ttf": "65efad4885c590b640d9601b8cc6d9b66026e9ff74154ac600207600842c0f70",
+  "app/shared/src/commonMain/composeResources/font/catalog_hebrew_medium.ttf": "c9b8b3d2c0e2bc2feed9f871298af5371fe7857b62691fcfd07a2d750918beb6",
+  "app/shared/src/commonMain/composeResources/font/catalog_arabic_medium.ttf": "3fed0849ae477b5535bc2d4fb0acf59adbed07f9e844fe1e27219b6b32bc8932",
+  "app/shared/src/commonMain/composeResources/font/catalog_hebrew_regular.ttf": "a08f7f4028ebaa500c558b929c1954f23a95af975c034a9ee210924cd6fd42ca"
+}

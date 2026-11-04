@@ -17,8 +17,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
+import com.toutiaoyan.compose.ui.components.text.preserveTextCurrentColor
+import com.toutiaoyan.compose.ui.components.text.TextColorBrush
+import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -36,7 +40,6 @@ import androidx.compose.ui.graphics.LinearGradientShader
 import androidx.compose.ui.graphics.Shader
 import androidx.compose.ui.graphics.ShaderBrush
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.tooling.preview.Preview
@@ -57,8 +60,8 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 /**
- * Default highlight-band half-width, matching real shadcn/ui's
- * `--shimmer-spread: calc(3ch + 40px)` at a 16px root (3ch ≈ 24px).
+ * Fixed highlight-band half-width approximation. CSS uses `calc(3ch + 40px)`;
+ * this constant assumes 3ch ≈ 24dp and does not measure the actual font.
  */
 val DefaultShimmerSpread: Dp = 64.dp
 
@@ -82,16 +85,16 @@ const val DefaultShimmerAngleDegrees: Float = 20f
  *
  * Two forms:
  *
- * - **[Modifier.shimmer]** — `SrcAtop` overlay on already-drawn content (glyphs, icons,
- *   solid skeleton blocks, or a parent wrapping many bones).
+ * - **[Modifier.shimmer]** — an overlay extension for already-drawn glyphs, icons,
+ *   skeleton blocks or groups. Its white SrcAtop highlight is distinct from CSS text fill.
  * - **[rememberShimmerStyle] / [Style.shimmer]** — Style `contentBrush` with a moving
  *   `base → highlight → base` gradient, matching CSS `background-clip: text`. Use on
  *   [Text]; keep [Modifier.shimmer] for whole-card / solid-block sweeps.
  *
  * Usage:
  * ```
- * Text(textStyle = TextStyles.Muted, modifier = Modifier.shimmer()) { "Generating response…" }
- * Text(textStyle = TextStyles.Muted, style = rememberShimmerStyle()) { "Generating response…" }
+ * Text(textStyle = TextColors.Muted, modifier = Modifier.shimmer()) { "Generating response…" }
+ * Text(textStyle = TextColors.Muted, style = rememberShimmerStyle()) { "Generating response…" }
  * Skeleton(style = rememberSkeletonChrome(), modifier = Modifier.fillMaxWidth().height(16.dp).shimmer())
  * ```
  */
@@ -129,7 +132,7 @@ fun Modifier.shimmer(
                     shimmerBand(
                         width = size.width,
                         height = size.height,
-                        progress = progress,
+                        progress = progress.value,
                         spreadPx = spreadPx,
                         angleDegrees = angleDegrees,
                         sweepReverse = sweepReverse,
@@ -156,10 +159,12 @@ fun Modifier.shimmer(
  * (`base → highlight → base`), matching CSS `background-clip: text`.
  *
  * Prefer chaining onto a content-color style:
- * `textStyle = TextStyles.Muted, style = rememberShimmerStyle()`.
+ * `textStyle = TextColors.Muted, style = rememberShimmerStyle()`.
  *
- * [baseColor] defaults to `mutedForeground`. [color] is the sweeping highlight
- * (default white band, light/dark alpha via [defaultShimmerHighlight]).
+ * [baseColor] defaults to Text's actual currentColor at draw time. [color] overrides
+ * the highlight; otherwise light mode scales currentColor alpha to20%, and dark mode
+ * raises its OKLCH lightness/alpha according to the official CSS. Explicit highlight
+ * alpha is retained, and the middle stops use premultiplied OKLCH color mixing.
  */
 @Composable
 fun rememberShimmerStyle(
@@ -178,23 +183,29 @@ fun rememberShimmerStyle(
     val layoutDirection = LocalLayoutDirection.current
     val density = LocalDensity.current
     val spreadPx = with(density) { spread.toPx() }
-    val resolvedBase = baseColor ?: theme.colors.mutedForeground
-    val highlight = color ?: defaultShimmerHighlight(isLight = theme.isLight)
+    val highlight = color?.takeIf { it.isSpecified }
+    val resolvedBase = baseColor?.takeIf { it.isSpecified }
+    val colors = remember(highlight, theme.isLight) { ShimmerColorCache(highlight, dark = !theme.isLight) }
     val sweepReverse = reverse xor (layoutDirection == LayoutDirection.Rtl)
     val progress = rememberShimmerProgress(durationMillis = durationMillis, once = once)
 
-    // New brush each frame so ShaderBrush.applyTo recreates the shader (it caches by size
-    // on a single instance, and progress changes alone would not invalidate that cache).
-    val brush =
-        ShimmerContentBrush(
-            progress = progress,
-            spreadPx = spreadPx,
-            angleDegrees = angleDegrees,
-            sweepReverse = sweepReverse,
-            baseColor = resolvedBase,
-            highlightColor = highlight,
-        )
-    return Style { contentBrush(brush) }
+    // Style observes the animation in its own paint scope rather than the caller's
+    // composition. A new brush per resolved frame also avoids ShaderBrush's size cache.
+    return remember(progress, spreadPx, angleDegrees, sweepReverse, resolvedBase, colors) {
+        Style {
+            contentBrush(
+                ShimmerContentBrush(
+                    progress = progress.value,
+                    spreadPx = spreadPx,
+                    angleDegrees = angleDegrees,
+                    sweepReverse = sweepReverse,
+                    baseColor = resolvedBase,
+                    colorCache = colors,
+                    fallbackTextColor = Color.Unspecified,
+                ),
+            )
+        }
+    }
 }
 
 /** Chains [rememberShimmerStyle] onto this [Style], same pattern as other Style `then` merges. */
@@ -208,25 +219,15 @@ fun Style.shimmer(
     angleDegrees: Float = DefaultShimmerAngleDegrees,
     reverse: Boolean = false,
     once: Boolean = false,
-): Style =
-    this.then(
-        rememberShimmerStyle(
-            enabled = enabled,
-            color = color,
-            baseColor = baseColor,
-            durationMillis = durationMillis,
-            spread = spread,
-            angleDegrees = angleDegrees,
-            reverse = reverse,
-            once = once,
-        ),
-    )
+): Style {
+    val animation = rememberShimmerStyle(enabled, color, baseColor, durationMillis, spread, angleDegrees, reverse, once)
+    val source = this
+    return remember(source, animation) { (source then animation).preserveTextCurrentColor() }
+}
 
 /**
- * Default `--shimmer-color` when unset: a white highlight that stays visible on
- * both light and dark surfaces (real shadcn derives from `currentColor` and
- * brightens in dark mode; Compose overlays via [BlendMode.SrcAtop] instead of
- * replacing the fill, so a light band is the closest portable match).
+ * Highlight for the Modifier overlay extension. This is intentionally separate
+ * from the CSS text-fill colors resolved by [rememberShimmerStyle].
  */
 internal fun defaultShimmerHighlight(isLight: Boolean): Color =
     if (isLight) {
@@ -239,7 +240,7 @@ internal fun defaultShimmerHighlight(isLight: Boolean): Color =
 internal fun rememberShimmerProgress(
     durationMillis: Int,
     once: Boolean,
-): Float =
+): State<Float> =
     if (once) {
         val animatable = remember(durationMillis) { Animatable(0f) }
         LaunchedEffect(durationMillis) {
@@ -249,10 +250,10 @@ internal fun rememberShimmerProgress(
                 animationSpec = tween(durationMillis, easing = LinearEasing),
             )
         }
-        animatable.value
+        animatable.asState()
     } else {
         val transition = rememberInfiniteTransition(label = "shadcn-shimmer")
-        val value by transition.animateFloat(
+        transition.animateFloat(
             initialValue = 0f,
             targetValue = 1f,
             animationSpec =
@@ -261,7 +262,6 @@ internal fun rememberShimmerProgress(
                 ),
             label = "shadcn-shimmer-progress",
         )
-        value
     }
 
 internal data class ShimmerBand(
@@ -295,50 +295,41 @@ internal fun shimmerBand(
     )
 }
 
-internal fun resolveShimmerPeak(
-    base: Color,
-    highlight: Color,
-): Color {
-    if (highlight.alpha >= 0.99f) return highlight.copy(alpha = 1f)
-    val a = highlight.alpha
-    return Color(
-        red = base.red * (1f - a) + highlight.red * a,
-        green = base.green * (1f - a) + highlight.green * a,
-        blue = base.blue * (1f - a) + highlight.blue * a,
-        alpha = 1f,
-    )
-}
-
-/**
- * Size-aware moving gradient for [contentBrush] — text stays [baseColor] with a
- * [highlightColor] band sweeping through (CSS `background-clip: text`).
- */
+/** Size-aware CSS text brush; actual currentColor is supplied by Text's draw boundary. */
 @Immutable
 internal class ShimmerContentBrush(
     private val progress: Float,
     private val spreadPx: Float,
     private val angleDegrees: Float,
     private val sweepReverse: Boolean,
-    private val baseColor: Color,
-    private val highlightColor: Color,
-) : ShaderBrush() {
+    private val baseColor: Color?,
+    private val colorCache: ShimmerColorCache,
+    override val fallbackTextColor: Color,
+) : ShaderBrush(), TextColorBrush {
+    override fun resolveTextColor(color: Color): Brush = copyWithColor(baseColor ?: color, fallbackTextColor)
+
+    override fun withFallbackTextColor(color: Color): Brush =
+        if (color == fallbackTextColor) this else copyWithColor(baseColor, color)
+
+    private fun copyWithColor(
+        base: Color?,
+        fallback: Color,
+    ) = ShimmerContentBrush(
+        progress,
+        spreadPx,
+        angleDegrees,
+        sweepReverse,
+        base,
+        colorCache,
+        fallback,
+    )
+
     override fun createShader(size: Size): Shader {
-        val band =
-            shimmerBand(
-                width = size.width,
-                height = size.height,
-                progress = progress,
-                spreadPx = spreadPx,
-                angleDegrees = angleDegrees,
-                sweepReverse = sweepReverse,
-            )
-        val peak = resolveShimmerPeak(baseColor, highlightColor)
-        val mid = lerp(baseColor, peak, 0.5f)
+        val band = shimmerBand(size.width, size.height, progress, spreadPx, angleDegrees, sweepReverse)
         return LinearGradientShader(
             from = band.start,
             to = band.end,
-            colors = listOf(baseColor, mid, peak, mid, baseColor),
-            colorStops = listOf(0f, 0.25f, 0.5f, 0.75f, 1f),
+            colors = colorCache.colors(baseColor ?: fallbackTextColor.takeIf { it.isSpecified } ?: Color.Black),
         )
     }
 }

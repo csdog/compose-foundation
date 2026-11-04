@@ -1,0 +1,78 @@
+{
+  "upstreamRevision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "recipes": [
+    {
+      "title": "Default",
+      "implementation": "first-pass implemented",
+      "desktopLight": "pending browser recovery",
+      "desktopDark": "pending browser recovery",
+      "phoneLight": "pending browser recovery",
+      "phoneDark": "pending browser recovery"
+    },
+    {
+      "title": "Outline",
+      "implementation": "first-pass implemented",
+      "desktopLight": "pending browser recovery",
+      "desktopDark": "pending browser recovery",
+      "phoneLight": "pending browser recovery",
+      "phoneDark": "pending browser recovery"
+    },
+    {
+      "title": "Background",
+      "implementation": "first-pass implemented",
+      "desktopLight": "pending browser recovery",
+      "desktopDark": "pending browser recovery",
+      "phoneLight": "pending browser recovery",
+      "phoneDark": "pending browser recovery"
+    },
+    {
+      "title": "Avatar",
+      "implementation": "first-pass implemented",
+      "desktopLight": "pending browser recovery",
+      "desktopDark": "pending browser recovery",
+      "phoneLight": "pending browser recovery",
+      "phoneDark": "pending browser recovery"
+    },
+    {
+      "title": "Avatar Group",
+      "implementation": "first-pass implemented",
+      "desktopLight": "pending browser recovery",
+      "desktopDark": "pending browser recovery",
+      "phoneLight": "pending browser recovery",
+      "phoneDark": "pending browser recovery"
+    },
+    {
+      "title": "InputGroup",
+      "implementation": "first-pass implemented",
+      "desktopLight": "pending browser recovery",
+      "desktopDark": "pending browser recovery",
+      "phoneLight": "pending browser recovery",
+      "phoneDark": "pending browser recovery"
+    },
+    {
+      "title": "RTL",
+      "implementation": "first-pass implemented",
+      "desktopLight": "pending browser recovery",
+      "desktopDark": "pending browser recovery",
+      "phoneLight": "pending browser recovery",
+      "phoneDark": "pending browser recovery"
+    }
+  ],
+  "remaining": [
+    "Browser desktop/phone light/dark review for all seven recipes, including responsive inset and native Web link behavior",
+    "text-balance/text-pretty wrapping",
+    "Complete keyboard, focus and screen reader state matrix",
+    "EmptyTitle heading semantics and Learn More button semantics differ from upstream div/anchor",
+    "Arbitrary Style/shape overrides, constrained and large-content layouts",
+    "Legacy EmptyScreenshotTest: twelve changed and four missing, reproduced with HEAD in previous turn"
+  ],
+  "implementedThisPass": [
+    "Avatar and Avatar Group use bundled grayscale portraits at 48dp with native AvatarGroup overlap/ring",
+    "InputGroup search edits local state; real annotated support link",
+    "RTL English/Arabic/Hebrew copy and mirrored action order; exported code independent of catalog wrapper",
+    "Tabler original SVG path vectors replace Lucide approximations, with license retained",
+    "Learn More calls UriHandler and uses muted foreground; icons inherit button/addon color",
+    "Outline 768dp breakpoint controls 40/24dp preview inset",
+    "Six API sections and shared import preamble"
+  ]
+}

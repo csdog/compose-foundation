@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-10-31",
+  "taskSpace": 18,
+  "result": "Error: task space not found: 18",
+  "newTaskSpaceCreated": false,
+  "recreationApproval": "Existing asynchronous question unanswered; no new question sent",
+  "guide": "/Users/cscs/.agents/skills/ego-browser/SKILL.md -> ego-browser skill v2.2.0, same bytes as prior read guide",
+  "guideRequirement": "Never use a new TaskSpace to recover from a stuck, blocked, timed-out, or unexpected Page. Recover within the existing space; if it cannot continue, stop and ask the user.",
+  "browserMatrixComplete": false
+}

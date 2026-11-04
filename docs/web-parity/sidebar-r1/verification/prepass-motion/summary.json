@@ -1,0 +1,13 @@
+{
+  "suite": {
+    "name": "SidebarStateParityTest[jvm]",
+    "tests": "1",
+    "skipped": "0",
+    "failures": "1",
+    "errors": "0",
+    "timestamp": "2026-10-30T21:45:24.490Z",
+    "hostname": "Apples-MacBook-Pro.local",
+    "time": "0.418"
+  },
+  "failure": "java.lang.AssertionError: Expected linear half-width near128dp, actual=47.0"
+}

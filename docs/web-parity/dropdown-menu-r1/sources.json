@@ -1,0 +1,25 @@
+{
+  "revision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "target": "base-nova",
+  "docs": "https://ui.shadcn.com/docs/components/base/dropdown-menu",
+  "component": "https://github.com/shadcn-ui/ui/blob/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/bases/base/ui/dropdown-menu.tsx",
+  "examplesRoot": "https://github.com/shadcn-ui/ui/tree/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base",
+  "files": {
+    "dropdown-menu-avatar.tsx": "77d748e94061625e618028e25e05252db8499c82e1e5159e3d93fbbcdcee4916",
+    "dropdown-menu-basic.tsx": "2f627d8d53e59c91b5814c6c70ae022581f8f0be1c3fff36c00898ba91be9c5b",
+    "dropdown-menu-checkboxes-icons.tsx": "b50b08098653f6639e3a6225633662e4d57c47add8d8c38140d0fccbc74510b5",
+    "dropdown-menu-checkboxes.tsx": "a4b092f10b23689d1402350caeaf313574249580b8453ee70f125d82099cb46c",
+    "dropdown-menu-complex.tsx": "8acc550d9a2a70363879459640945da369123258eb76cbb105d07d9b5ee41ce0",
+    "dropdown-menu-demo.tsx": "1c06196af05a7e0a05b78d4fdec221b0f36ba24dfc570628b93303f8c0a4d4d1",
+    "dropdown-menu-destructive.tsx": "2362640f2c4d53dd50ac983b77b6b3e99a5031ff7d5bb774eadcf0f6df743f69",
+    "dropdown-menu-icons.tsx": "90533e248e0f66c68572980f38a5b8d726510c942a9eac272ae145c5d2a60391",
+    "dropdown-menu-radio-group.tsx": "52c09d7cef24efebecfe9f033fc54c53ecd8eb0d5a454fcf8f39853fc5a758aa",
+    "dropdown-menu-radio-icons.tsx": "8cf9c241b7383c102cb7d0bbe9daf31a5a86480bd245e0e9746de9825fe4ea27",
+    "dropdown-menu-rtl.tsx": "e007cdaedc052d900237da32d158613aef79370acb71e5fdf322bfa63059239e",
+    "dropdown-menu-shortcuts.tsx": "a23a4174f4e9b616331ef5b1d807f79f0fef5054c0c62d2dafc43e80a08f79d1",
+    "dropdown-menu-submenu.tsx": "0b9d631d545863f8342232a4b87f85a9fd076bc1351f33529eb4e958b6515ddc",
+    "dropdown-menu.mdx": "36e21a0f00fb6f808c5ce4af27353f9cbaac4f8d746ada2306f809114826d990",
+    "dropdown-menu.tsx": "18c1829679694a9b9850afcabf1158a80ec3624fb5e03d0d4b13339b729e0503",
+    "nova-dropdown-menu.css": "0e99ed69ae66588535087876166ae6d9b6ecb2ac0b50c2af52b5b75a199a8918"
+  }
+}

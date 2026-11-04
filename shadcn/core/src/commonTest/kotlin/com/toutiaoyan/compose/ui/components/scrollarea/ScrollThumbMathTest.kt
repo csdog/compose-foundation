@@ -57,4 +57,27 @@ class ScrollThumbMathTest {
         val delta = scrollDragDeltaToContentDelta(dragDeltaPx = 300f, maxValue = 600, travelPx = 300f)
         assertEquals(600f, delta)
     }
+
+    @Test fun minimumThumbStillStopsAtEndOfTrack() {
+        val length = scrollThumbLengthPx(100, 999900, 98f, 16f)
+        assertEquals(16f, length)
+        assertEquals(82f, scrollThumbOffsetPx(999900, 999900, 98f - length))
+    }
+
+    @Test fun thumbCannotExceedTinyTrack() {
+        assertEquals(8f, scrollThumbLengthPx(100, 1000, 8f, 16f))
+        assertEquals(0f, scrollThumbOffsetPx(10, 10, 0f))
+    }
+
+    @Test fun offsetClampsStaleScrollValueAfterContentShrinks() {
+        assertEquals(50f, scrollThumbOffsetPx(999, 10, 50f))
+        assertEquals(0f, scrollThumbOffsetPx(-20, 10, 50f))
+    }
+
+    @Test fun unavailableMetricsAndInvalidDragDoNotProduceNan() {
+        assertEquals(0f, scrollThumbLengthPx(0, 0, 0f, 16f))
+        assertEquals(98f, scrollThumbLengthPx(100, 0, 98f, 16f))
+        assertEquals(0f, scrollDragDeltaToContentDelta(Float.NaN, 100, 10f))
+        assertEquals(0f, scrollDragDeltaToContentDelta(20f, 100, Float.POSITIVE_INFINITY))
+    }
 }

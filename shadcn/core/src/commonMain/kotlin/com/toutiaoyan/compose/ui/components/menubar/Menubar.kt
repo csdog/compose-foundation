@@ -7,8 +7,8 @@ import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
@@ -18,7 +18,10 @@ import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +29,29 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
+import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.focus.*
+import com.toutiaoyan.compose.ui.components.contextmenu.LocalContextMenuNavigation
+import com.toutiaoyan.compose.ui.components.contextmenu.LocalContextMenuNova
+import com.toutiaoyan.compose.ui.components.contextmenu.LocalContextMenuLeadingSelectionIndicator
+import com.toutiaoyan.compose.ui.components.dropdownmenu.dropdownMenuInset
+import com.toutiaoyan.compose.ui.components.overlay.overlayTypography
+import com.toutiaoyan.compose.ui.styles.rememberMenuLabelStyle
+import androidx.compose.ui.input.key.*
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.unit.sp
+import com.toutiaoyan.compose.ui.tokens.StylePreset
+import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.theme.LocalContentColor
+import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
+import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenu
+import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuContent
+import com.toutiaoyan.compose.ui.components.dropdownmenu.dropdownMenuState
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -51,20 +77,38 @@ import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuSub
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuSubContent
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuSubScope
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuSubTrigger
-import com.toutiaoyan.compose.ui.components.overlay.AnchoredPopup
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextVariant
-import com.toutiaoyan.compose.ui.styles.rememberMenuPanelStyle
 import com.toutiaoyan.compose.ui.styles.rememberMinTouchTargetStyle
 import com.toutiaoyan.compose.ui.styles.rememberPressMotionStyle
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
 
-@Immutable
+internal class MenubarNavigation {
+    val triggers = linkedMapOf<String, FocusRequester>()
+    val disabled = mutableSetOf<String>()
+    var restoreFocus by mutableStateOf<String?>(null)
+    var focusLastFor: String? = null
+
+    fun move(
+        from: String,
+        delta: Int,
+        open: Boolean,
+        onOpenChange: (String?) -> Unit,
+    ) {
+        val values = triggers.keys.filter { it !in disabled }
+        if (values.isEmpty()) return
+        val next = values[(values.indexOf(from) + delta).mod(values.size)]
+        triggers[next]?.requestFocus()
+        if (open) onOpenChange(next)
+    }
+}
+
 internal class MenubarController(
     val openValue: String?,
     val onOpenChange: (String?) -> Unit,
     val modal: Boolean,
+    val navigation: MenubarNavigation,
 )
 
 private val LocalMenubar = staticCompositionLocalOf<MenubarController?> { null }
@@ -155,8 +199,19 @@ fun Menubar(
         if (!controlled) internalOpen = next
         onValueChange?.invoke(next)
     }
+    val navigation = remember { MenubarNavigation() }
     val controller =
-        MenubarController(openValue = openValue, onOpenChange = setOpen, modal = modal)
+        MenubarController(
+            openValue =
+            openValue,
+            onOpenChange =
+            setOpen,
+            modal =
+            modal,
+            navigation =
+            navigation,
+        )
+    val nova = currentTheme.activePreset == StylePreset.Nova
     val barStyleState = remember { MutableStyleState(MutableInteractionSource()) }
     CompositionLocalProvider(LocalMenubar provides controller) {
         Row(
@@ -173,6 +228,8 @@ fun Menubar(
                         barStyleState,
                         rememberMenubarStyle() then style,
                     ),
+            horizontalArrangement = Arrangement.spacedBy(if (nova) 2.dp else 0.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             MenubarScope().content()
         }
@@ -185,10 +242,14 @@ fun MenubarScope.MenubarMenu(
     value: String,
     content: @Composable MenubarMenuScope.() -> Unit,
 ) {
-    menubarController()
-    val scope = MenubarMenuScope(value)
-    CompositionLocalProvider(LocalMenubarMenu provides scope) {
-        Box { scope.content() }
+    val controller = menubarController()
+    val scope = remember(value) { MenubarMenuScope(value) }
+    DropdownMenu(
+        open = controller.openValue == value,
+        onOpenChange = { controller.onOpenChange(if (it) value else null) },
+        modal = controller.modal,
+    ) {
+        CompositionLocalProvider(LocalMenubarMenu provides scope) { scope.content() }
     }
 }
 
@@ -204,22 +265,80 @@ fun MenubarMenuScope.MenubarTrigger(
     val controller = menubarController()
     val resolvedEnabled = enabled && !disabled
     val isOpen = controller.openValue == value
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    val direction = LocalLayoutDirection.current
+    val focusRequester = remember { FocusRequester() }
+    val navigation = controller.navigation
+    val latestController by rememberUpdatedState(controller)
+    DisposableEffect(navigation, value) {
+        navigation.triggers[value] = focusRequester
+        onDispose {
+            navigation.triggers.remove(value)
+            navigation.disabled.remove(value)
+        }
+    }
+    SideEffect { if (resolvedEnabled) navigation.disabled.remove(value) else navigation.disabled.add(value) }
+    LaunchedEffect(isOpen, navigation.restoreFocus) {
+        if (!isOpen && navigation.restoreFocus == value) {
+            withFrameNanos { }
+            focusRequester.requestFocus()
+            navigation.restoreFocus = null
+        }
+    }
     val interactionSource = remember { MutableInteractionSource() }
     val isHovered by interactionSource.collectIsHoveredAsState()
-    LaunchedEffect(isHovered) {
-        if (resolvedEnabled && isHovered && controller.openValue != null) {
-            controller.onOpenChange(value)
+    LaunchedEffect(isHovered, resolvedEnabled) {
+        if (resolvedEnabled && isHovered && latestController.openValue != null) {
+            latestController.onOpenChange(value)
         }
     }
     val styleState = rememberUpdatedStyleState(interactionSource)
     val pressStyle = rememberPressMotionStyle()
-    val touchTargetStyle = rememberMinTouchTargetStyle()
+    val touchTargetStyle = if (nova) Style else rememberMinTouchTargetStyle()
     Box(
         modifier =
             modifier
+                .focusRequester(focusRequester)
+                .onPreviewKeyEvent { event ->
+                    if (event.type != KeyEventType.KeyDown || !resolvedEnabled) {
+                        false
+                    } else {
+                        when (event.key) {
+                            Key.DirectionRight, Key.DirectionLeft -> {
+                                val physical = if (event.key == Key.DirectionRight) 1 else -1
+                                navigation.move(
+                                    value,
+                                    if (direction == LayoutDirection.Rtl) -physical else physical,
+                                    controller.openValue != null,
+                                    controller.onOpenChange,
+                                )
+                                true
+                            }
+                            Key.MoveHome, Key.MoveEnd -> {
+                                val values = navigation.triggers.keys.filter { it !in navigation.disabled }
+                                val target =
+                                    if (event.key == Key.MoveHome) {
+                                        values.firstOrNull()
+                                    } else {
+                                        values.lastOrNull()
+                                    }
+                                if (target != null) {
+                                    navigation.triggers[target]?.requestFocus()
+                                    if (controller.openValue != null) controller.onOpenChange(target)
+                                }
+                                true
+                            }
+                            Key.DirectionDown, Key.DirectionUp -> {
+                                navigation.focusLastFor = if (event.key == Key.DirectionUp) value else null
+                                controller.onOpenChange(value)
+                                true
+                            }
+                            else -> false
+                        }
+                    }
+                }
                 .semantics {
                     role = Role.Button
-                    contentDescription = value
                     stateDescription = if (isOpen) "Expanded" else "Collapsed"
                     if (!resolvedEnabled) disabled()
                 }
@@ -230,6 +349,7 @@ fun MenubarMenuScope.MenubarTrigger(
                     enabled = resolvedEnabled,
                     role = Role.Button,
                     onClick = {
+                        navigation.focusLastFor = null
                         controller.onOpenChange(if (isOpen) null else value)
                     },
                 )
@@ -237,8 +357,20 @@ fun MenubarMenuScope.MenubarTrigger(
                     styleState,
                     touchTargetStyle then pressStyle then rememberMenubarTriggerStyle(isOpen) then style,
                 ),
+        contentAlignment = Alignment.Center,
     ) {
-        content()
+        CompositionLocalProvider(
+            LocalContentColor provides currentTheme.colors.foreground,
+            LocalDefaultTextStyle provides
+                if (nova) {
+                    TextStyle(
+                        fontSize = 14.sp, lineHeight = 20.sp, fontWeight = FontWeight.Medium,
+                        lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+                    )
+                } else {
+                    LocalDefaultTextStyle.current
+                },
+        ) { content() }
     }
 }
 
@@ -252,7 +384,14 @@ fun MenubarMenuScope.MenubarTrigger(
     style: Style = Style,
 ) {
     MenubarTrigger(modifier = modifier, enabled = enabled, disabled = disabled, style = style) {
-        Text(variant = TextVariant.BodySmall) { text }
+        Text(
+            variant =
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    TextVariant.BodyMedium
+                } else {
+                    TextVariant.BodySmall
+                },
+        ) { text }
     }
 }
 
@@ -268,37 +407,57 @@ fun MenubarMenuScope.MenubarContent(
     sideOffset: Dp = 8.dp,
     alignOffset: Dp = (-4).dp,
     dismissOnClickOutside: Boolean = true,
+    align: PopupAlign = PopupAlign.Start,
     content: @Composable DropdownMenuScope.() -> Unit,
 ) {
     val controller = menubarController()
-    val isOpen = controller.openValue == value
-    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    val scope =
-        remember(controller) {
-            DropdownMenuScope(onOpenChange = { if (!it) controller.onOpenChange(null) })
-        }
-    // Must share the [MenubarMenu] Box with [MenubarTrigger] so [AnchoredPopup]
-    // measures against the trigger, not an empty nested DropdownMenu Box.
-    MenubarPortal {
-        AnchoredPopup(
-            open = isOpen,
-            onDismissRequest = { controller.onOpenChange(null) },
-            offset = sideOffset,
-            alignOffset = alignOffset,
-            dismissOnClickOutside = dismissOnClickOutside,
-            focusable = controller.modal,
-        ) {
-            Column(
-                modifier =
-                    modifier.styleable(
-                        styleState,
-                        rememberMenuPanelStyle() then style,
-                    ),
-            ) {
-                scope.content()
+    val direction = LocalLayoutDirection.current
+    dropdownMenuState().DropdownMenuContent(
+        modifier =
+            modifier.onKeyEvent { event ->
+                if (event.type != KeyEventType.KeyDown) {
+                    false
+                } else {
+                    when (event.key) {
+                        Key.DirectionRight, Key.DirectionLeft -> {
+                            val physical = if (event.key == Key.DirectionRight) 1 else -1
+                            controller.navigation.move(
+                                value,
+                                if (direction == LayoutDirection.Rtl) -physical else physical,
+                                true,
+                                controller.onOpenChange,
+                            )
+                            true
+                        }
+                        else -> false
+                    }
+                }
+            }.onPreviewKeyEvent { event ->
+                if (event.type == KeyEventType.KeyDown && event.key == Key.Escape) {
+                    controller.navigation.restoreFocus = value
+                    controller.onOpenChange(null)
+                    true
+                } else {
+                    false
+                }
+            },
+        style = style,
+        sideOffset = sideOffset,
+        align = align,
+        alignOffset = alignOffset,
+        dismissOnClickOutside = dismissOnClickOutside,
+        content = {
+            val navigation = LocalContextMenuNavigation.current
+            LaunchedEffect(Unit) {
+                if (controller.navigation.focusLastFor == value) {
+                    withFrameNanos { }
+                    navigation?.items?.lastOrNull()?.requestFocus()
+                    controller.navigation.focusLastFor = null
+                }
             }
-        }
-    }
+            content()
+        },
+    )
 }
 
 /** Teleport host for [MenubarContent]. Matches shadcn's `MenubarPortal`. */
@@ -322,21 +481,40 @@ fun DropdownMenuScope.MenubarItem(
     onSelect: (() -> Boolean)? = null,
     textValue: String? = null,
     style: Style = Style,
+    content: (@Composable () -> Unit)? = null,
 ) {
-    DropdownMenuItem(
-        label = label,
-        onClick = onClick,
-        modifier = modifier,
-        enabled = enabled,
-        disabled = disabled,
-        destructive = destructive,
-        variant = variant,
-        shortcut = shortcut,
-        inset = inset,
-        onSelect = onSelect,
-        textValue = textValue,
-        style = style,
-    )
+    if (content == null) {
+        DropdownMenuItem(
+            label = label,
+            onClick = onClick,
+            modifier = modifier,
+            enabled = enabled,
+            disabled = disabled,
+            destructive = destructive,
+            variant = variant,
+            shortcut = shortcut,
+            inset = inset,
+            onSelect = onSelect,
+            textValue = textValue,
+            style = rememberMenubarItemStyle() then style,
+        )
+    } else {
+        DropdownMenuItem(
+            label = label,
+            onClick = onClick,
+            modifier = modifier,
+            enabled = enabled,
+            disabled = disabled,
+            destructive = destructive,
+            variant = variant,
+            shortcut = shortcut,
+            inset = inset,
+            onSelect = onSelect,
+            textValue = textValue,
+            style = rememberMenubarItemStyle() then style,
+            content = content,
+        )
+    }
 }
 
 /** Alias for [DropdownMenuLabel] matching shadcn's `MenubarLabel`. */
@@ -347,7 +525,18 @@ fun DropdownMenuScope.MenubarLabel(
     inset: Boolean = false,
     style: Style = Style,
 ) {
-    DropdownMenuLabel(text = text, modifier = modifier, inset = inset, style = style)
+    if (LocalContextMenuNova.current) {
+        val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+        Text(
+            modifier = modifier.styleable(styleState, rememberMenuLabelStyle() then style).dropdownMenuInset(inset),
+            textStyle =
+                overlayTypography(medium = true).copy(
+                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+                ),
+        ) { text }
+    } else {
+        DropdownMenuLabel(text = text, modifier = modifier, inset = inset, style = style)
+    }
 }
 
 @Composable
@@ -395,18 +584,20 @@ fun DropdownMenuScope.MenubarCheckboxItem(
     style: Style = Style,
     onCheckedChange: (Boolean) -> Unit,
 ) {
-    DropdownMenuCheckboxItem(
-        label = label,
-        checked = checked,
-        modifier = modifier,
-        enabled = enabled,
-        disabled = disabled,
-        indeterminate = indeterminate,
-        onSelect = onSelect,
-        textValue = textValue,
-        style = style,
-        onCheckedChange = onCheckedChange,
-    )
+    CompositionLocalProvider(LocalContextMenuLeadingSelectionIndicator provides true) {
+        DropdownMenuCheckboxItem(
+            label = label,
+            checked = checked,
+            modifier = modifier,
+            enabled = enabled,
+            disabled = disabled,
+            indeterminate = indeterminate,
+            onSelect = onSelect,
+            textValue = textValue,
+            style = rememberMenubarItemStyle() then style,
+            onCheckedChange = onCheckedChange,
+        )
+    }
 }
 
 /** Alias for [DropdownMenuRadioGroup] matching shadcn's `MenubarRadioGroup`. */
@@ -431,16 +622,18 @@ fun DropdownMenuRadioGroupScope.MenubarRadioItem(
     textValue: String? = null,
     style: Style = Style,
 ) {
-    DropdownMenuRadioItem(
-        value = value,
-        label = label,
-        modifier = modifier,
-        enabled = enabled,
-        disabled = disabled,
-        onSelect = onSelect,
-        textValue = textValue,
-        style = style,
-    )
+    CompositionLocalProvider(LocalContextMenuLeadingSelectionIndicator provides true) {
+        DropdownMenuRadioItem(
+            value = value,
+            label = label,
+            modifier = modifier,
+            enabled = enabled,
+            disabled = disabled,
+            onSelect = onSelect,
+            textValue = textValue,
+            style = rememberMenubarItemStyle() then style,
+        )
+    }
 }
 
 /** Alias for [DropdownMenuSub] matching shadcn's `MenubarSub`. */
@@ -477,7 +670,7 @@ fun DropdownMenuSubScope.MenubarSubTrigger(
         disabled = disabled,
         inset = inset,
         textValue = textValue,
-        style = style,
+        style = rememberMenubarItemStyle() then style,
     )
 }
 

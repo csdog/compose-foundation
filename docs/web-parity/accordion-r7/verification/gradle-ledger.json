@@ -1,0 +1,148 @@
+{
+  "command_fingerprints": {
+    "10b56af7390e4b6ffe2ce73e86edcd466793a76ababe24ea8701b29dd55a2898": 1,
+    "78f10f2a3369781d2e9cfd41d5daca288bebe1e285f5d51f0ef71648874e5b2a": 2,
+    "9ed3ebe973cb7d68c6d556f4ed339b4eb7722ca2262bd88d48e495fe8cf5121b": 1,
+    "b0dc99277f3eaa2bb5785934327e87fd190914d463d6f8185f90de5cad7c5c14": 1,
+    "cdcc1baf6fe1de67b6ef7e959b9aeb3b64646fa7e78dc1889e2f2a5144e7f5e2": 1
+  },
+  "failure_fingerprints": {
+    "6288e77ee5d20c255ff46889f1bdb0dadd10ada522d9316ea15ca0baa60fc5b3": {
+      "excerpt": "* What went wrong: Execution failed for task ':app:shared:jvmTest'. > There were failing tests. See the report at: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/reports/tests/jvmTest/index.html",
+      "occurrences": 1
+    }
+  },
+  "failure_fingerprints_truncated_occurrences": 0,
+  "run_count": 6,
+  "runs": [
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *AccordionPreviewFrameTest --tests *AccordionExtensionTest --console=plain --no-scan",
+      "elapsed_seconds": 0.111,
+      "exit_status": 1,
+      "failure_fingerprints": [],
+      "log": "0001.log",
+      "question": "Do the 24 Accordion preview sizing cases and 32 extension interaction cases pass with fixed top-aligned previews?",
+      "scope": "targeted",
+      "sequence": 1,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *AccordionPreviewFrameTest --tests *AccordionExtensionTest --console=plain --no-scan",
+      "elapsed_seconds": 16.941,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "6288e77ee5d20c255ff46889f1bdb0dadd10ada522d9316ea15ca0baa60fc5b3"
+      ],
+      "log": "0002.log",
+      "question": "Does authorized targeted Accordion validation run with access to the existing Gradle cache after the sandbox lock denial?",
+      "scope": "targeted",
+      "sequence": 2,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *AccordionExtensionTest --console=plain --no-scan",
+      "elapsed_seconds": 12.561,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0003.log",
+      "question": "Do all 32 real catalog extension cases pass after orientation changes only the navigation axis and no longer starves later items of width?",
+      "scope": "targeted",
+      "sequence": 3,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *AccordionPreviewFrameTest --tests *AccordionExamplesTest --tests *ChartPreviewFrameTest :shadcn:core:jvmTest --tests *AccordionNovaTest :app:shared:ktlintCheck :shadcn:core:ktlintCheck --console=plain --no-scan",
+      "elapsed_seconds": 16.233,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0004.log",
+      "question": "Do fixed Accordion frames, old real recipes, Chart preview centering, core navigation and both owning ktlint gates pass after the orientation fix?",
+      "scope": "targeted",
+      "sequence": 4,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 26.837,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0005.log",
+      "question": "Does the final fixed-height Accordion catalog and keyboard-axis implementation produce the development Wasm artifact for browser validation?",
+      "scope": "targeted",
+      "sequence": 5,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "fd48e59ce0241cfefdc041aa98cdcf9eb27ce8d675213c08275c139f63adc995"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *AccordionExtensionTest :app:shared:ktlintCheck --console=plain --no-scan",
+      "elapsed_seconds": 6.713,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0006.log",
+      "question": "Do strengthened horizontal-orientation visible body plus vertical geometry assertions pass in all 32 extension cases with shared ktlint?",
+      "scope": "targeted",
+      "sequence": 6,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    }
+  ],
+  "version": 1,
+  "warning_fingerprints": {
+    "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312": {
+      "excerpt": "w: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/text/Text.kt:5:16 Suppression of error 'INVISIBLE_REFERENCE' might compile and work, but the compiler behavior is UNSP...",
+      "occurrences": 2
+    },
+    "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4": {
+      "excerpt": "You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.",
+      "occurrences": 4
+    },
+    "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2": {
+      "excerpt": "Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.",
+      "occurrences": 4
+    },
+    "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a": {
+      "excerpt": "WARNING: The option setting 'android.experimental.enableScreenshotTest=true' is experimental.",
+      "occurrences": 4
+    },
+    "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=UNSUPPORTED_PROJECT_OPTION_USE to the gradle.properties file to suppress this warning.",
+      "occurrences": 8
+    },
+    "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90": {
+      "excerpt": "WARNING: The option setting 'android.experimental.testSuiteSupport=true' is experimental.",
+      "occurrences": 4
+    },
+    "fd48e59ce0241cfefdc041aa98cdcf9eb27ce8d675213c08275c139f63adc995": {
+      "excerpt": "webpack 5.108.1 compiled with 1 warning in 488 ms",
+      "occurrences": 1
+    }
+  },
+  "warning_fingerprints_truncated_occurrences": 0,
+  "workflow": "4fa26edf1f12a883a40a61ddb8513850"
+}

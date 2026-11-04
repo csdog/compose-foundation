@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ToastExamplesTest[jvm]" tests="24" skipped="0" failures="0" errors="0" timestamp="2026-10-30T23:00:20.942Z" hostname="Apples-MacBook-Pro.local" time="1.797">
+  <properties/>
+  <testcase name="promiseChangesOneLoadingNotificationToSuccess[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.605"/>
+  <testcase name="updatingAMessageUpdatesItsActionAndPriorityWithoutChangingId[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.06"/>
+  <testcase name="windowHostUsesSixteenPixelInsetsAndResponsiveWidth[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.052"/>
+  <testcase name="defaultCloseButtonRemovesTheNotification[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.041"/>
+  <testcase name="defaultUsesSourceMessageAndUndoClosesItsOwnId[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.041"/>
+  <testcase name="allFiveSourceTypesRenderAndErrorUsesUrgentAnnouncement[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.121"/>
+  <testcase name="promiseChangesOneLoadingNotificationToSuccess[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.076"/>
+  <testcase name="updatingAMessageUpdatesItsActionAndPriorityWithoutChangingId[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.04"/>
+  <testcase name="windowHostUsesSixteenPixelInsetsAndResponsiveWidth[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.039"/>
+  <testcase name="defaultCloseButtonRemovesTheNotification[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.033"/>
+  <testcase name="defaultUsesSourceMessageAndUndoClosesItsOwnId[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.035"/>
+  <testcase name="allFiveSourceTypesRenderAndErrorUsesUrgentAnnouncement[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.102"/>
+  <testcase name="promiseChangesOneLoadingNotificationToSuccess[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.061"/>
+  <testcase name="updatingAMessageUpdatesItsActionAndPriorityWithoutChangingId[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.035"/>
+  <testcase name="windowHostUsesSixteenPixelInsetsAndResponsiveWidth[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.031"/>
+  <testcase name="defaultCloseButtonRemovesTheNotification[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.03"/>
+  <testcase name="defaultUsesSourceMessageAndUndoClosesItsOwnId[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.031"/>
+  <testcase name="allFiveSourceTypesRenderAndErrorUsesUrgentAnnouncement[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.084"/>
+  <testcase name="promiseChangesOneLoadingNotificationToSuccess[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.057"/>
+  <testcase name="updatingAMessageUpdatesItsActionAndPriorityWithoutChangingId[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.036"/>
+  <testcase name="windowHostUsesSixteenPixelInsetsAndResponsiveWidth[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.031"/>
+  <testcase name="defaultCloseButtonRemovesTheNotification[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.029"/>
+  <testcase name="defaultUsesSourceMessageAndUndoClosesItsOwnId[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.032"/>
+  <testcase name="allFiveSourceTypesRenderAndErrorUsesUrgentAnnouncement[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToastExamplesTest" time="0.091"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

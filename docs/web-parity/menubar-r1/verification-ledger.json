@@ -1,0 +1,361 @@
+{
+  "command_fingerprints": {
+    "22c9f984f0c463326b7614e65cdf5b5a0eaa2e673a15401e86911b86a78b0adc": 1,
+    "261337189e1360f798b5f4434907ebff6f98b3b46695cd8b0031480100ecfe16": 3,
+    "2b7a0d318596f6109abf554403232ac81eed13557f903a0750293b1043be154d": 1,
+    "5d1d43efc412a75260ce0ea72fb38926b9091f898bae5203565765493bfbd255": 3,
+    "5d98a402c306380b0aaf4360c90926f6cc0bb796cbf8389bb2b9de6f95ec796d": 1,
+    "8c2efd5521b8039600c13cfe4e6ee7e8a0e99f9f8cdeff2b1e3e097fc85c5916": 2,
+    "8d40dbbd719d21a0e341513566f7941d98c69bfb46f7bdc986ea614160109a35": 1,
+    "b0c26a334423b81448e13d2cec3a99b837c4b3237a5c961ad082c215597fe785": 1,
+    "d9457ea3d2a293561829cedd45bd2ef264fa2ed767165bbf5663f270eefdf8d8": 1,
+    "d94debeff592949db9266319b78dc0036be1d15b467f0cf5f7a5930d769ff83d": 1,
+    "f35338c617d92b6655f162fb4596b220d4c9061d892831ac74e480cfdb43dcc8": 1,
+    "fa020b0aac5b2a21e50e3209ee9941f059086a532a58a28ca80a98a72a554b0c": 1
+  },
+  "failure_fingerprints": {
+    "19bb1bb6f4605c6ffc9faf38792013d14278cb2aba3f70ed41b7b4723955191e": {
+      "excerpt": "* What went wrong: Execution failed for task ':app:shared:compileKotlinJvm' (registered in build file 'app/shared/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kotlin co...",
+      "occurrences": 1
+    },
+    "22ef5db10e88433e362de41779283aec4b05d867cad20e1eeddf75232d9f0f6e": {
+      "excerpt": "* What went wrong: Execution failed for task ':app:webApp:compileProductionExecutableKotlinWasmJs' (registered in build file 'app/webApp/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWit...",
+      "occurrences": 1
+    },
+    "2d44ba5a7bfac481dc494a8ef064d59106814cfba4aebbe295aff492ba4ab44c": {
+      "excerpt": "e: java.lang.OutOfMemoryError: GC overhead limit exceeded",
+      "occurrences": 1
+    },
+    "31af8af6471c1a6465a4663bd3120198b2362a092aedb56170939c05bed1f224": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/toast/Toast.kt:78:1 org.jetbrains.kotlin.backend.common.CompilationException: Back-end: Please report this problem htt...",
+      "occurrences": 1
+    },
+    "397d351d4b7740b5e6dec41678742cae71848049e40fb6cd616acb5ea1fe09cd": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MenubarDoc.kt:888:60 Unresolved reference 'CircleHelp'.",
+      "occurrences": 1
+    },
+    "6288e77ee5d20c255ff46889f1bdb0dadd10ada522d9316ea15ca0baa60fc5b3": {
+      "excerpt": "* What went wrong: Execution failed for task ':app:shared:jvmTest'. > There were failing tests. See the report at: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/reports/tests/jvmTest/index.html",
+      "occurrences": 1
+    },
+    "d0fb3eaa196982ab4e6e1e362415dc735aeba17142e28502199a9581446bc79a": {
+      "excerpt": "* What went wrong: Execution failed for task ':app:webApp:compileProductionExecutableKotlinJs' (registered in build file 'app/webApp/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWor...",
+      "occurrences": 1
+    }
+  },
+  "failure_fingerprints_truncated_occurrences": 0,
+  "run_count": 17,
+  "runs": [
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *MenubarParityTest --tests *MenubarScreenshotTest --console=plain --no-scan",
+      "elapsed_seconds": 0.058,
+      "exit_status": 1,
+      "failure_fingerprints": [],
+      "log": "0001.log",
+      "question": "Do Menubar core behavior and existing snapshot capture tests pass after Nova geometry, shared dropdown context, and top-level keyboard navigation changes?",
+      "scope": "targeted",
+      "sequence": 1,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *MenubarParityTest --tests *MenubarScreenshotTest --console=plain --no-scan",
+      "elapsed_seconds": 14.292,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0002.log",
+      "question": "With normal Gradle cache access, do Menubar core behavior and existing snapshot capture tests pass after Nova geometry, shared dropdown context, and top-level keyboard navigation changes?",
+      "scope": "targeted",
+      "sequence": 2,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "1034eefb4d0ca6ffc0f809677ac8807d0b7fdf11d7651d70f64dd8b6a8ebe634",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *MenubarExamplesTest --console=plain --no-scan",
+      "elapsed_seconds": 2.844,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "397d351d4b7740b5e6dec41678742cae71848049e40fb6cd616acb5ea1fe09cd",
+        "19bb1bb6f4605c6ffc9faf38792013d14278cb2aba3f70ed41b7b4723955191e"
+      ],
+      "log": "0003.log",
+      "question": "Do six official Menubar catalog recipe tests pass after rebuilding examples and preserving supplemental recipes?",
+      "scope": "targeted",
+      "sequence": 3,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *MenubarExamplesTest --console=plain --no-scan",
+      "elapsed_seconds": 16.779,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "6288e77ee5d20c255ff46889f1bdb0dadd10ada522d9316ea15ca0baa60fc5b3"
+      ],
+      "log": "0004.log",
+      "question": "Do six Menubar catalog recipe tests pass after using installed CircleQuestionMark icon and asserting checkbox/radio keep-open behavior?",
+      "scope": "targeted",
+      "sequence": 4,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *MenubarParityTest --tests *MenubarScreenshotTest --console=plain --no-scan",
+      "elapsed_seconds": 2.892,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0005.log",
+      "question": "Do Menubar keyboard Home/End and initial-last behavior plus all existing core tests pass after parent added new coverage?",
+      "scope": "targeted",
+      "sequence": 5,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *MenubarExamplesTest --console=plain --no-scan",
+      "elapsed_seconds": 9.27,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0006.log",
+      "question": "Do six Menubar catalog examples expose real checkbox and radio states after shared DropdownMenu semantics correction?",
+      "scope": "targeted",
+      "sequence": 6,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *MenubarParityTest.labelUsesFourteenTwentyMediumAndCheckboxExposesIndeterminateState --console=plain --no-scan",
+      "elapsed_seconds": 2.812,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0007.log",
+      "question": "Does the new Menubar label typography and indeterminate checkbox semantics test pass after the focused shared menu and label fixes?",
+      "scope": "targeted",
+      "sequence": 7,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:recordRoborazziJvm --tests *MenubarParityTest.nova_light --tests *MenubarParityTest.nova_dark --tests *MenubarParityTest.menu_nova_light --tests *MenubarParityTest.menu_nova_dark --console=plain --no-scan",
+      "elapsed_seconds": 2.778,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0008.log",
+      "question": "Record only the four new Menubar Nova idle and open-panel light/dark baseline images for parent visual inspection; leave old Menubar goldens unchanged.",
+      "scope": "targeted",
+      "sequence": 8,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *MenubarParityTest.labelUsesFourteenTwentyMediumAndCheckboxExposesIndeterminateState --console=plain --no-scan",
+      "elapsed_seconds": 9.032,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0009.log",
+      "question": "Does Menubar label and indeterminate selection preserve exact28dp text inset after using a leading selection indicator only within Menubar aliases?",
+      "scope": "targeted",
+      "sequence": 9,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:recordRoborazziJvm --tests *MenubarParityTest.menu_nova_light --tests *MenubarParityTest.menu_nova_dark --tests *MenubarParityTest.selection_nova_light --tests *MenubarParityTest.selection_nova_dark --console=plain --no-scan",
+      "elapsed_seconds": 2.978,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0010.log",
+      "question": "Record only updated Menubar open-menu pair and new selection-indicator pair after official leading-indicator and row-radius corrections; leave accepted idle bars and old goldens unchanged.",
+      "scope": "targeted",
+      "sequence": 10,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests *MenubarParityTest --tests *MenubarScreenshotTest --console=plain --no-scan",
+      "elapsed_seconds": 3.272,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0011.log",
+      "question": "Do all15 Menubar parity tests independently verify six reviewed Nova goldens and do both existing Menubar screenshots still match?",
+      "scope": "targeted",
+      "sequence": 11,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *MenubarExamplesTest --tests *DropdownMenuExamplesTest.checkboxSelectionStaysOpenAndPersistsAfterReopening --tests *DropdownMenuExamplesTest.notificationIconsKeepIndependentCheckedStates --tests *DropdownMenuExamplesTest.paymentIconsSelectExactlyOneMethod --console=plain --no-scan",
+      "elapsed_seconds": 3.28,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0012.log",
+      "question": "Do final6 Menubar recipes and3 shared Dropdown checkbox/notification/payment selection regression tests pass after adding standard state semantics and Menubar-only leading indicators?",
+      "scope": "targeted",
+      "sequence": 12,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:ktlintCheck :shadcn:core:detekt :app:shared:ktlintCheck :app:shared:detekt :app:webApp:jsBrowserDistribution :app:webApp:wasmJsBrowserDistribution --console=plain --no-scan",
+      "elapsed_seconds": 187.707,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0013.log",
+      "question": "Do the four owning core/shared quality tasks and JS/Wasm web distributions pass after Menubar changes and shared selection semantics fixes?",
+      "scope": "targeted",
+      "sequence": 13,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *MenubarExamplesTest :app:shared:ktlintCheck :app:shared:detekt :app:webApp:jsBrowserDistribution :app:webApp:wasmJsBrowserDistribution --console=plain --no-scan",
+      "elapsed_seconds": 76.13,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "31af8af6471c1a6465a4663bd3120198b2362a092aedb56170939c05bed1f224",
+        "2d44ba5a7bfac481dc494a8ef064d59106814cfba4aebbe295aff492ba4ab44c",
+        "22ef5db10e88433e362de41779283aec4b05d867cad20e1eeddf75232d9f0f6e",
+        "d0fb3eaa196982ab4e6e1e362415dc735aeba17142e28502199a9581446bc79a"
+      ],
+      "log": "0014.log",
+      "question": "Do seven Menubar catalog tests and shared-owned quality plus JS/Wasm builds pass after matching upstream read-only literal checked/profile values?",
+      "scope": "targeted",
+      "sequence": 14,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:wasmJsBrowserDistribution --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 82.431,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0015.log",
+      "question": "Does Wasm distribution compile when built alone with one worker and no parallel tasks after the combined JS/Wasm run exhausted memory?",
+      "scope": "targeted",
+      "sequence": 15,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:jsBrowserDistribution --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 121.538,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0016.log",
+      "question": "Does JS distribution compile alone with one worker and no parallel tasks after isolated Wasm succeeded without heap or source changes?",
+      "scope": "targeted",
+      "sequence": 16,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:ktlintCheck :app:shared:detekt --console=plain --no-scan",
+      "elapsed_seconds": 0.751,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0017.log",
+      "question": "Do shared-only ktlintCheck and detekt pass independently for the final Menubar doc source after final7 app tests and isolated Web builds succeeded?",
+      "scope": "targeted",
+      "sequence": 17,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    }
+  ],
+  "version": 1,
+  "warning_fingerprints": {
+    "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312": {
+      "excerpt": "w: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/text/Text.kt:5:16 Suppression of error 'INVISIBLE_REFERENCE' might compile and work, but the compiler behavior is UNSP...",
+      "occurrences": 6
+    },
+    "1034eefb4d0ca6ffc0f809677ac8807d0b7fdf11d7651d70f64dd8b6a8ebe634": {
+      "excerpt": "w: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/menubar/MenubarParityTest.kt:32:13 Expression is unused.",
+      "occurrences": 1
+    },
+    "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4": {
+      "excerpt": "You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.",
+      "occurrences": 12
+    },
+    "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2": {
+      "excerpt": "Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.",
+      "occurrences": 12
+    },
+    "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a": {
+      "excerpt": "WARNING: The option setting 'android.experimental.enableScreenshotTest=true' is experimental.",
+      "occurrences": 12
+    },
+    "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=UNSUPPORTED_PROJECT_OPTION_USE to the gradle.properties file to suppress this warning.",
+      "occurrences": 24
+    },
+    "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90": {
+      "excerpt": "WARNING: The option setting 'android.experimental.testSuiteSupport=true' is experimental.",
+      "occurrences": 12
+    }
+  },
+  "warning_fingerprints_truncated_occurrences": 0,
+  "workflow": "82e54f3fb44b8e9d76066df6c063dac0"
+}

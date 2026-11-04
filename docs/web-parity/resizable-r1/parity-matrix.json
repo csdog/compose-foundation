@@ -1,0 +1,57 @@
+{
+  "component": "resizable",
+  "complete": false,
+  "libraryVersion": "0.3.21",
+  "upstreamRevision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "reactResizablePanelsVersion": "4.5.8",
+  "officialRecipes": {
+    "migrated": [
+      "default",
+      "vertical",
+      "handle",
+      "rtl"
+    ],
+    "browserAccepted": []
+  },
+  "implemented": [
+    "Nova hairline, 4x24 grip and rotated vertical grip, keyboard focus ring",
+    "Default range0..1, validated custom limits, endpoint layouts, finite drag inputs",
+    "Measured content extent excludes border and separator; current fraction is read per move",
+    "Mouse10dp and touch20dp hit regions routed by group without widening divider layout",
+    "Real mouse/touch, horizontal RTL physical drag, vertical drag, orientation-change cancellation",
+    "Keyboard5% arrows and Home/End, disabled input guards, accessible SetProgress",
+    "Nested split independence, source labels and three RTL languages, retained fractions across language changes",
+    "Copied recipe code generated from compiled previews; unique legacy example titles"
+  ],
+  "validation": {
+    "coreInteractionTests": 10,
+    "pureMathTests": 5,
+    "newNovaGoldens": 6,
+    "catalogTests": 16,
+    "ktlintChecks": 2,
+    "nativeRecipeCapturesReviewed": 36,
+    "nativeGoldensReviewed": 6,
+    "js": "exit0 in26.356s; unresolved webpack os/path diagnostics remain, not clean",
+    "wasm": "exit0 in18.278s with one webpack warning",
+    "legacy": "8 legacy screenshots:5 pass,3 dark CHANGED. Only divider RGB38->34 (120/120/160 pixels); no prepass isolation, causality open; no old baseline recorded.",
+    "workflowFinished": true,
+    "evidence": "verification/final-summary.json"
+  },
+  "limitations": [
+    "Catalog fixture uses mock WindowInfo1440/390 within real desktop1024x768 scene; not mobile browser evidence.",
+    "Native progress-range semantics are not proof of HTML separator role or assistive-technology equivalence.",
+    "RTL native behavior tested; exact upstream browser keyboard/pointer direction remains unverified.",
+    "Source min-height200 and h200 child translated as fixed200 and202dp native recipes; computed browser height still pending."
+  ],
+  "remaining": [
+    "Browser desktop/mobile light/dark complete page and interaction acceptance",
+    "Resize cursor on hover/drag (currently default pointer)",
+    "More than two sibling panels per group; collapse/Enter toggle; refs/controlled layout/persistence/double-click restore",
+    "F6 traversal across multiple separators (currently one separator per group); cross-group intersection hit testing",
+    "Full keyboard/assistive reading associations, non-primary pointers, cancellation/window exit matrix",
+    "All dynamic style overrides, font scaling, reduced-motion expectations and legacy baseline compatibility",
+    "Standalone handle expanded target outside its own bounds; group router target verified only for grouped handles",
+    "Attribute three legacy dark separator color differences before updating any baseline."
+  ],
+  "browserStatusReference": "../popover-r2/browser-status.json"
+}

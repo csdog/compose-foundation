@@ -1,0 +1,16 @@
+{
+  "columns": 3,
+  "rows": 3,
+  "order": [
+    "initial",
+    "required-error",
+    "multiple",
+    "last-selected",
+    "toast-multiple",
+    "freeform",
+    "toast-freeform",
+    "draft-fixed",
+    "toast-fixed"
+  ],
+  "note": "Original native Questionnaire pixels, no crop or resize;12px cell margin; mock WindowInfo1440/390 inside actual1024x768 desktop scene. Not browser/mobile OS evidence."
+}

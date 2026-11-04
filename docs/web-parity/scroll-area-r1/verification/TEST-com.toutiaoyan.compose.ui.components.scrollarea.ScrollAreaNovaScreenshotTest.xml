@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ScrollAreaNovaScreenshotTest[jvm]" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-30T19:44:55.989Z" hostname="Apples-MacBook-Pro.local" time="0.414">
+  <properties/>
+  <testcase name="horizontalDark[jvm]" classname="com.toutiaoyan.compose.ui.components.scrollarea.ScrollAreaNovaScreenshotTest" time="0.286"/>
+  <testcase name="verticalLight[jvm]" classname="com.toutiaoyan.compose.ui.components.scrollarea.ScrollAreaNovaScreenshotTest" time="0.033"/>
+  <testcase name="focusLight[jvm]" classname="com.toutiaoyan.compose.ui.components.scrollarea.ScrollAreaNovaScreenshotTest" time="0.029"/>
+  <testcase name="verticalDark[jvm]" classname="com.toutiaoyan.compose.ui.components.scrollarea.ScrollAreaNovaScreenshotTest" time="0.024"/>
+  <testcase name="horizontalLight[jvm]" classname="com.toutiaoyan.compose.ui.components.scrollarea.ScrollAreaNovaScreenshotTest" time="0.019"/>
+  <testcase name="focusDark[jvm]" classname="com.toutiaoyan.compose.ui.components.scrollarea.ScrollAreaNovaScreenshotTest" time="0.023"/>
+  <system-out><![CDATA[Roborazzi: scroll_area_nova_horizontal_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=80640, width=240, height=336) changed:false
+Roborazzi: scroll_area_nova_vertical_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=80640, width=240, height=336) changed:false
+Roborazzi: scroll_area_nova_focus_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=80640, width=240, height=336) changed:false
+Roborazzi: scroll_area_nova_vertical_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=80640, width=240, height=336) changed:false
+Roborazzi: scroll_area_nova_horizontal_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=80640, width=240, height=336) changed:false
+Roborazzi: scroll_area_nova_focus_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=80640, width=240, height=336) changed:false
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

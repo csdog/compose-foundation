@@ -23,6 +23,7 @@ import com.toutiaoyan.compose.ui.components.breadcrumb.BreadcrumbPage
 import com.toutiaoyan.compose.ui.components.breadcrumb.BreadcrumbSeparator
 import com.toutiaoyan.compose.ui.components.card.Card
 import com.toutiaoyan.compose.ui.components.sidebar.Sidebar
+import com.toutiaoyan.compose.ui.components.sidebar.SidebarContent
 import com.toutiaoyan.compose.ui.components.sidebar.SidebarCollapsible
 import com.toutiaoyan.compose.ui.components.sidebar.SidebarDefaults
 import com.toutiaoyan.compose.ui.components.sidebar.SidebarGroup
@@ -58,10 +59,11 @@ val sidebarDoc =
     ComponentDoc(
         id = "sidebar",
         title = "Sidebar",
-        description = "A collapsible side navigation rail with grouped menu sections and a main content inset.",
+        description = "A composable, themeable and customizable sidebar component.",
         usageCode =
             """
-            import com.toutiaoyan.compose.ui.components.*
+            import com.toutiaoyan.compose.ui.components.sidebar.*
+            import com.toutiaoyan.compose.ui.components.text.Text
 
             var open by remember { mutableStateOf(true) }
             SidebarProvider(open = open, onOpenChange = { open = it }) {
@@ -541,7 +543,7 @@ val sidebarDoc =
                     title = "Mobile sheet",
                     code =
                         """
-                        SidebarProvider(mobile = true, open = true) {
+                        SidebarProvider(mobile = true, openMobile = true) {
                             Sidebar { /* … */ }
                             SidebarInset { SidebarTrigger() }
                         }
@@ -550,8 +552,8 @@ val sidebarDoc =
                         var open by remember { mutableStateOf(true) }
                         var active by remember { mutableStateOf("home") }
                         SidebarProvider(
-                            open = open,
-                            onOpenChange = { open = it },
+                            openMobile = open,
+                            onOpenMobileChange = { open = it },
                             mobile = true,
                             modifier = Modifier.height(260.dp),
                         ) {
@@ -1058,9 +1060,11 @@ val sidebarDoc =
                                 SidebarHeader {
                                     Text { "Acme Inc" }
                                 }
-                                SidebarGroup(label = "Application") {
-                                    SidebarMenu(activeId = active, onItemClick = { active = it }) {
-                                        SidebarMenuItem("home", "Home")
+                                SidebarContent {
+                                    SidebarGroup(label = "Application") {
+                                        SidebarMenu(activeId = active, onItemClick = { active = it }) {
+                                            SidebarMenuItem("home", "Home")
+                                        }
                                     }
                                 }
                             }
@@ -1081,9 +1085,11 @@ val sidebarDoc =
                                 SidebarHeader {
                                     Text { "Acme Inc" }
                                 }
-                                SidebarGroup(label = "Application") {
-                                    SidebarMenu(activeId = active, onItemClick = { active = it }) {
-                                        SidebarMenuItem("home", "Home")
+                                SidebarContent {
+                                    SidebarGroup(label = "Application") {
+                                        SidebarMenu(activeId = active, onItemClick = { active = it }) {
+                                            SidebarMenuItem("home", "Home")
+                                        }
                                     }
                                 }
                             }
@@ -1105,9 +1111,11 @@ val sidebarDoc =
                             modifier = Modifier.height(260.dp),
                         ) {
                             Sidebar {
-                                SidebarGroup(label = "Application") {
-                                    SidebarMenu(activeId = active, onItemClick = { active = it }) {
-                                        SidebarMenuItem("home", "Home")
+                                SidebarContent {
+                                    SidebarGroup(label = "Application") {
+                                        SidebarMenu(activeId = active, onItemClick = { active = it }) {
+                                            SidebarMenuItem("home", "Home")
+                                        }
                                     }
                                 }
                                 SidebarFooter {
@@ -1128,9 +1136,11 @@ val sidebarDoc =
                             modifier = Modifier.height(260.dp),
                         ) {
                             Sidebar {
-                                SidebarGroup(label = "Application") {
-                                    SidebarMenu(activeId = active, onItemClick = { active = it }) {
-                                        SidebarMenuItem("home", "Home")
+                                SidebarContent {
+                                    SidebarGroup(label = "Application") {
+                                        SidebarMenu(activeId = active, onItemClick = { active = it }) {
+                                            SidebarMenuItem("home", "Home")
+                                        }
                                     }
                                 }
                                 SidebarFooter {

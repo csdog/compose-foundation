@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ShimmerCurrentColorTest[jvm]" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-10-30T21:10:48.343Z" hostname="Apples-MacBook-Pro.local" time="0.109">
+  <properties/>
+  <testcase name="ancestorColorChangeRepaintsWithoutRecomposingTextCaller[jvm]" classname="com.toutiaoyan.compose.ui.styles.ShimmerCurrentColorTest" time="0.017"/>
+  <testcase name="nearerExplicitTextColorOverridesOwnStyleShimmerColor[jvm]" classname="com.toutiaoyan.compose.ui.styles.ShimmerCurrentColorTest" time="0.017"/>
+  <testcase name="precedingOwnStyleColorCanChangeWhileAnimationClockIsPaused[jvm]" classname="com.toutiaoyan.compose.ui.styles.ShimmerCurrentColorTest" time="0.015"/>
+  <testcase name="explicitBaseParameterStillOverridesTextCurrentColor[jvm]" classname="com.toutiaoyan.compose.ui.styles.ShimmerCurrentColorTest" time="0.015"/>
+  <testcase name="styleShimmerRetainsItsPrecedingOwnColor[jvm]" classname="com.toutiaoyan.compose.ui.styles.ShimmerCurrentColorTest" time="0.015"/>
+  <testcase name="ancestorStyleColorIsCurrentColor[jvm]" classname="com.toutiaoyan.compose.ui.styles.ShimmerCurrentColorTest" time="0.014"/>
+  <testcase name="localContentColorIsCurrentColor[jvm]" classname="com.toutiaoyan.compose.ui.styles.ShimmerCurrentColorTest" time="0.015"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

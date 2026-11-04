@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="PopoverNovaLayoutTest[jvm]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-30T18:19:32.385Z" hostname="Apples-MacBook-Pro.local" time="0.151">
+  <properties/>
+  <testcase name="lightPanelSpacing[jvm]" classname="com.toutiaoyan.compose.ui.components.popover.PopoverNovaLayoutTest" time="0.039"/>
+  <testcase name="stringBodyKeepsTheFullTwentyPixelLineBox[jvm]" classname="com.toutiaoyan.compose.ui.components.popover.PopoverNovaLayoutTest" time="0.033"/>
+  <testcase name="callerCanOverridePanelWidth[jvm]" classname="com.toutiaoyan.compose.ui.components.popover.PopoverNovaLayoutTest" time="0.032"/>
+  <testcase name="novaHeaderUsesTwentyPixelLinesAndTwoPixelGap[jvm]" classname="com.toutiaoyan.compose.ui.components.popover.PopoverNovaLayoutTest" time="0.016"/>
+  <testcase name="darkPanelSpacing[jvm]" classname="com.toutiaoyan.compose.ui.components.popover.PopoverNovaLayoutTest" time="0.031"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

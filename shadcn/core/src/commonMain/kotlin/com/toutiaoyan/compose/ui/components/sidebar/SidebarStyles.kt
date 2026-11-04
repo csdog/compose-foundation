@@ -40,7 +40,21 @@ fun rememberSidebarContentStyle(): Style =
         Style {
             width(1f)
             height(1f)
-            contentPadding(spacing.sm)
+            contentPadding(0.dp)
+        }
+    }
+
+/** Padding belongs to each header/footer/group, rather than the entire panel. */
+@Composable
+internal fun rememberSidebarSectionStyle(): Style = rememberTheme { Style { contentPadding(spacing.sm) } }
+
+@Composable
+internal fun rememberSidebarMobileStyle(): Style =
+    rememberTheme {
+        Style {
+            width(SidebarDefaults.MobileWidth)
+            background(colors.sidebar)
+            contentPadding(0.dp)
         }
     }
 

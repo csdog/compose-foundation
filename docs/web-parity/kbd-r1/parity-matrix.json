@@ -1,0 +1,35 @@
+{
+  "status": "partial",
+  "target": "base-nova",
+  "recipes": [
+    "Default",
+    "Group",
+    "Button",
+    "Tooltip",
+    "Input Group",
+    "RTL"
+  ],
+  "implemented": [
+    "Nova 20dp height and minimum width, 4dp padding and gaps, 12/16 Medium typography",
+    "12dp inline icon default with explicit style override",
+    "Real Tooltip contrast context and live light/dark update",
+    "Legacy String lambda preserved; named content slot added",
+    "Inline paragraph key groups, editable search, actual tooltip previews, RTL language switch"
+  ],
+  "verified": {
+    "newCoreBehavior": 7,
+    "newCoreGoldenVerify": 4,
+    "oldKbdGoldenVerify": 2,
+    "appExamples": 6,
+    "quality": "core/shared ktlintCheck and detekt passed",
+    "web": "JS/Wasm distribution exit0; existing os/path webpack diagnostics retained"
+  },
+  "remaining": [
+    "Desktop/mobile light/dark browser comparison awaiting permission to recreate missing Ego task space",
+    "Inline paragraph baseline and responsive line wrapping in browser",
+    "Platform monospace versus site GeistMono metrics",
+    "Full selection, accessibility, custom interactive slot and touch matrix",
+    "Six legacy Tooltip goldens differ identically without provider; dedicated Tooltip audit pending"
+  ],
+  "oldTooltipGoldenFailures": 6
+}

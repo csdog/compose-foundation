@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ResizableInteractionTest[jvm]" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-10-30T19:28:00.788Z" hostname="Apples-MacBook-Pro.local" time="0.62">
+  <properties/>
+  <testcase name="rtlPhysicalRightDragShrinksTheLogicalFirstPanel[jvm]" classname="com.toutiaoyan.compose.ui.components.resizable.ResizableInteractionTest" time="0.391"/>
+  <testcase name="customDividerThicknessIsExcludedFromTheResizeDenominator[jvm]" classname="com.toutiaoyan.compose.ui.components.resizable.ResizableInteractionTest" time="0.024"/>
+  <testcase name="verticalKeysAndAccessibleAdjustmentUseTheSameLimits[jvm]" classname="com.toutiaoyan.compose.ui.components.resizable.ResizableInteractionTest" time="0.044"/>
+  <testcase name="coarseTouchTargetWorksNinePixelsAwayFromTheHairline[jvm]" classname="com.toutiaoyan.compose.ui.components.resizable.ResizableInteractionTest" time="0.024"/>
+  <testcase name="arrowKeysUseFivePercentAndHomeEndReachZeroAndFullWithoutWeightErrors[jvm]" classname="com.toutiaoyan.compose.ui.components.resizable.ResizableInteractionTest" time="0.031"/>
+  <testcase name="customLimitsClampTheInitialValueAndKeyboardExtremes[jvm]" classname="com.toutiaoyan.compose.ui.components.resizable.ResizableInteractionTest" time="0.022"/>
+  <testcase name="verticalMouseDragChangesOnlyTheVerticalSplit[jvm]" classname="com.toutiaoyan.compose.ui.components.resizable.ResizableInteractionTest" time="0.02"/>
+  <testcase name="disabledGroupCannotResizeAndHasNoAccessibleAdjustmentAction[jvm]" classname="com.toutiaoyan.compose.ui.components.resizable.ResizableInteractionTest" time="0.017"/>
+  <testcase name="mouseDragWorksFourPixelsAwayFromTheHairline[jvm]" classname="com.toutiaoyan.compose.ui.components.resizable.ResizableInteractionTest" time="0.019"/>
+  <testcase name="changingOrientationCancelsAnAlreadyPressedPointer[jvm]" classname="com.toutiaoyan.compose.ui.components.resizable.ResizableInteractionTest" time="0.026"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

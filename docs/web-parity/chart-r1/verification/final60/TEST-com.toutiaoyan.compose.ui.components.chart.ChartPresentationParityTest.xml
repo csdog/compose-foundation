@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ChartPresentationParityTest[jvm]" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-11-02T01:55:32.870Z" hostname="Apples-MacBook-Pro.local" time="0.247">
+  <properties/>
+  <testcase name="tooltipSeparatesNameFromFormattedNumber[jvm]" classname="com.toutiaoyan.compose.ui.components.chart.ChartPresentationParityTest" time="0.032"/>
+  <testcase name="emptyTooltipPayloadRendersNothing[jvm]" classname="com.toutiaoyan.compose.ui.components.chart.ChartPresentationParityTest" time="0.037"/>
+  <testcase name="legendUsesTwelvePixelTopGapAndNormalTwelveSixteenType[jvm]" classname="com.toutiaoyan.compose.ui.components.chart.ChartPresentationParityTest" time="0.026"/>
+  <testcase name="tooltipSupportsLabelValueAndWholeRowFormatters[jvm]" classname="com.toutiaoyan.compose.ui.components.chart.ChartPresentationParityTest" time="0.029"/>
+  <testcase name="inactiveTooltipDoesNotRenderItsPayload[jvm]" classname="com.toutiaoyan.compose.ui.components.chart.ChartPresentationParityTest" time="0.02"/>
+  <testcase name="hideIconKeepsTheFallbackColorSwatch[jvm]" classname="com.toutiaoyan.compose.ui.components.chart.ChartPresentationParityTest" time="0.023"/>
+  <testcase name="themeColorsFollowLiveThemeChanges[jvm]" classname="com.toutiaoyan.compose.ui.components.chart.ChartPresentationParityTest" time="0.024"/>
+  <testcase name="valueFormatterCanOverrideNumericPresentation[jvm]" classname="com.toutiaoyan.compose.ui.components.chart.ChartPresentationParityTest" time="0.019"/>
+  <testcase name="hideIconReplacesTheCustomIconWithTheSeriesSwatch[jvm]" classname="com.toutiaoyan.compose.ui.components.chart.ChartPresentationParityTest" time="0.037"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,7 @@
+{
+  "sourceJar": "/Users/cscs/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.ui/ui-text-desktop/1.12.2/c872a616837004b57ce6cc12aad5d0cfac359cf4/ui-text-desktop-1.12.2-sources.jar",
+  "jarSha256": "937ef4aa07ca3293fc8c217a5af52b4edda2ee1f6669b82095fc77efc192eeb2",
+  "file": "skikoMain/androidx/compose/ui/text/SkiaParagraph.skiko.kt",
+  "line": 277,
+  "excerpt": "    }\n\n    override fun isLineEllipsized(lineIndex: Int) = false\n\n    override fun getLineForOffset(offset: Int) ="
+}

@@ -1,0 +1,20 @@
+{
+  "revision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "target": "base-nova",
+  "docs": "https://ui.shadcn.com/docs/components/base/carousel",
+  "component": "https://github.com/shadcn-ui/ui/blob/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/bases/base/ui/carousel.tsx",
+  "examplesRoot": "https://github.com/shadcn-ui/ui/tree/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base",
+  "autoplay": "https://github.com/davidjerleke/embla-carousel/blob/v8.6.0/packages/embla-carousel-autoplay/src/components/Autoplay.ts",
+  "files": {
+    "carousel-api.tsx": "a72fcf98e4117e2eed0b859d45f56ba6ec7eddcd5eeb997dc335b7f252ea8ba8",
+    "carousel-demo.tsx": "bc546b88be83154786011ed53ddc1fddc22765f0fe81529472c668b27ce95d56",
+    "carousel-orientation.tsx": "0d32df9df5562cc7a935c0e91a98a56ae7966900ba216be4d675dd3e3046dee2",
+    "carousel-plugin.tsx": "8e53d358fac3660e212bf34e64865f6095d043d63ac8ff2e7c54fd8d92eeea63",
+    "carousel-rtl.tsx": "d75c442dcd542ab7b5fdbebc66c100140b2b06cd79852c7bc07729a8a784dc6a",
+    "carousel-size.tsx": "84eb7070085da0e5a5ad109991ddf2c498ad5908803bc9e109098cf350672e70",
+    "carousel-spacing.tsx": "80d540cf89a39ff47ef9e3530c3c4280e7992fef6229bf826c6ad2759c6f740e",
+    "carousel.mdx": "42e87e8c7fecc9f7f5fbb1786ca2bdd0af3e97af052529b8b31b07b0cdb2f07b",
+    "carousel.tsx": "d2c33f0ae6b64f5d6ba8d6ad467322008008621fff6b09e9f6d8e21011849123",
+    "embla-autoplay.ts": "9db1450d707a805fb2807d0dd4513f9cdc959795bbf3a0a11afed2b75c922b6f"
+  }
+}

@@ -1,0 +1,314 @@
+{
+  "command_fingerprints": {
+    "05e85ed93093b4d710936773ab5de6824994fd90b15503897e7ba44f9dc0b689": 1,
+    "0a02d72c8a4fa5fb296f812625e1387344570f4498033a9280916427d63260d6": 3,
+    "1c84e52ae2bde5b94f5bdf573d86310ede7f3c81f30f4ad7a4b61de2040eeae0": 1,
+    "2eb1cddeece95f85e4581b4b697940b00889ad38b8fff6184cee65e79ab9ba2c": 1,
+    "5d98a402c306380b0aaf4360c90926f6cc0bb796cbf8389bb2b9de6f95ec796d": 1,
+    "d9457ea3d2a293561829cedd45bd2ef264fa2ed767165bbf5663f270eefdf8d8": 1,
+    "f75dc25ea8af336bc559269ad9474f25e620739ad8dfbacf9354bd1c10654475": 4,
+    "ff7af2175d7ae9f300724924ab00f50421f6ff557fa1f6aeb3f79a2471a6675f": 4
+  },
+  "failure_fingerprints": {
+    "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:jvmTest'. > There were failing tests. See the report at: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/reports/tests/jvmTest/index.html",
+      "occurrences": 1
+    },
+    "6288e77ee5d20c255ff46889f1bdb0dadd10ada522d9316ea15ca0baa60fc5b3": {
+      "excerpt": "* What went wrong: Execution failed for task ':app:shared:jvmTest'. > There were failing tests. See the report at: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/reports/tests/jvmTest/index.html",
+      "occurrences": 5
+    }
+  },
+  "failure_fingerprints_truncated_occurrences": 0,
+  "run_count": 16,
+  "runs": [
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *NavigationMenuExamplesTest --tests *NavigationMenuResponsiveTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 0.056,
+      "exit_status": 1,
+      "failure_fingerprints": [],
+      "log": "0001.log",
+      "question": "Do the two official Navigation Menu recipes pass source text, URI actions, language selection and md/lg responsive tests in four viewport/theme modes?",
+      "scope": "targeted",
+      "sequence": 1,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *NavigationMenuExamplesTest --tests *NavigationMenuResponsiveTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 13.044,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "6288e77ee5d20c255ff46889f1bdb0dadd10ada522d9316ea15ca0baa60fc5b3"
+      ],
+      "log": "0002.log",
+      "question": "With normal Gradle cache access, do official Navigation Menu recipes pass18 targeted source, URI, language and responsive tests?",
+      "scope": "targeted",
+      "sequence": 2,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *defaultHasSourceLinksAndActionsCloseThePanel* --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 3.208,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "6288e77ee5d20c255ff46889f1bdb0dadd10ada522d9316ea15ca0baa60fc5b3"
+      ],
+      "log": "0003.log",
+      "question": "After waiting400ms for existing250ms popup and300ms chevron transitions, do the four Default recipe URI and close interactions pass?",
+      "scope": "targeted",
+      "sequence": 3,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *hoveringAPanelLinkKeepsItOpenUntilSelection* --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.692,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0004.log",
+      "question": "Does real pointer hover over a panel link reproduce the incorrect root close before selection, separating panel links from top-level links?",
+      "scope": "targeted",
+      "sequence": 4,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *hoveringAPanelLinkKeepsItOpenUntilSelection* --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.199,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0005.log",
+      "question": "Does a controlled onValueChange trace reveal a transient null request when hovering a panel link, even if content hover reopens it before final visibility assertion?",
+      "scope": "targeted",
+      "sequence": 5,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *hoveringAPanelLinkKeepsItOpenUntilSelection* --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 12.63,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0006.log",
+      "question": "Does restricting hover-dismiss to top-level navigation links eliminate the directly reproduced null then first transition for panel links?",
+      "scope": "targeted",
+      "sequence": 6,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *defaultHasSourceLinksAndActionsCloseThePanel* --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 10.155,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "6288e77ee5d20c255ff46889f1bdb0dadd10ada522d9316ea15ca0baa60fc5b3"
+      ],
+      "log": "0007.log",
+      "question": "With only the panel hover context guard fixed and the same settled actual-mouse input, do all four Default recipe URI actions and close states now pass?",
+      "scope": "targeted",
+      "sequence": 7,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *defaultHasSourceLinksAndActionsCloseThePanel* --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 9.669,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "6288e77ee5d20c255ff46889f1bdb0dadd10ada522d9316ea15ca0baa60fc5b3"
+      ],
+      "log": "0008.log",
+      "question": "Does explicit real mouse movement and32ms hover transfer before each Default trigger/link click restore actual URI and close actions, without semantic fallback?",
+      "scope": "targeted",
+      "sequence": 8,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *sourceLinkActionAndPointerControl* --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.817,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "6288e77ee5d20c255ff46889f1bdb0dadd10ada522d9316ea15ca0baa60fc5b3"
+      ],
+      "log": "0009.log",
+      "question": "Do exact matched popup link semantics invoke the expected URI callback when called directly, and what node bounds/config distinguish failed physical pointer routing?",
+      "scope": "targeted",
+      "sequence": 9,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *defaultHasSourceLinksAndActionsCloseThePanel* --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 10.15,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0010.log",
+      "question": "Does capturing the URI navigation dependency before the popup restore expected actual-mouse Default link URIs and close behavior in all four modes?",
+      "scope": "targeted",
+      "sequence": 10,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *NavigationMenuExamplesTest --tests *NavigationMenuResponsiveTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 4.963,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0011.log",
+      "question": "After verified navigation-boundary and panel-hover fixes, do all22 official Navigation Menu physical interaction, language, source-copy and responsive tests pass?",
+      "scope": "targeted",
+      "sequence": 11,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *NavigationMenuExamplesTest --tests *NavigationMenuResponsiveTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 11.479,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0012.log",
+      "question": "Do all18 final official Navigation Menu recipe and responsive tests pass after removing diagnostic-only controls and preserving real pointer input?",
+      "scope": "targeted",
+      "sequence": 12,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests *NavigationMenuParityTest --tests *NavigationMenuNovaScreenshotTest --tests *NavigationMenuScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 3.962,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0013.log",
+      "question": "Do all22 final Navigation Menu behaviors and existing seven Nova and legacy goldens independently verify after panel-vs-top-level hover context corrections?",
+      "scope": "targeted",
+      "sequence": 13,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:ktlintCheck :app:shared:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 19.695,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0014.log",
+      "question": "Do the two owning core and shared ktlint checks accept the final Navigation Menu recipe and hover-context fixes?",
+      "scope": "targeted",
+      "sequence": 14,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:jsBrowserDistribution --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 145.955,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0015.log",
+      "question": "Does the JS browser distribution compile both official Navigation Menu recipes and the verified panel hover context fix at0.3.16?",
+      "scope": "targeted",
+      "sequence": 15,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:wasmJsBrowserDistribution --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 94.324,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0016.log",
+      "question": "Does Wasm browser distribution independently compile the final two Navigation Menu recipes, hoisted navigation callbacks and panel-hover context correction?",
+      "scope": "targeted",
+      "sequence": 16,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    }
+  ],
+  "version": 1,
+  "warning_fingerprints": {
+    "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312": {
+      "excerpt": "w: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/text/Text.kt:5:16 Suppression of error 'INVISIBLE_REFERENCE' might compile and work, but the compiler behavior is UNSP...",
+      "occurrences": 4
+    },
+    "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4": {
+      "excerpt": "You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.",
+      "occurrences": 11
+    },
+    "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2": {
+      "excerpt": "Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.",
+      "occurrences": 11
+    },
+    "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a": {
+      "excerpt": "WARNING: The option setting 'android.experimental.enableScreenshotTest=true' is experimental.",
+      "occurrences": 11
+    },
+    "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=UNSUPPORTED_PROJECT_OPTION_USE to the gradle.properties file to suppress this warning.",
+      "occurrences": 22
+    },
+    "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90": {
+      "excerpt": "WARNING: The option setting 'android.experimental.testSuiteSupport=true' is experimental.",
+      "occurrences": 11
+    }
+  },
+  "warning_fingerprints_truncated_occurrences": 0,
+  "workflow": "9cdab9affab8d320a3439e3a6bb74045"
+}

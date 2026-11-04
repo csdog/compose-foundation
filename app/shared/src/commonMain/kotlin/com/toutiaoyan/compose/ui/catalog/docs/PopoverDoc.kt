@@ -27,17 +27,25 @@ val popoverDoc =
     ComponentDoc(
         id = "popover",
         title = "Popover",
-        description = "A click-triggered anchored panel for rich content.",
+        description = "Displays rich content in a portal, triggered by a button.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.popover.Popover
-                        import com.toutiaoyan.compose.ui.components.popover.PopoverContent
+            import com.toutiaoyan.compose.ui.components.popover.PopoverContent
             import com.toutiaoyan.compose.ui.components.popover.PopoverTrigger
+            import com.toutiaoyan.compose.ui.components.popover.PopoverHeader
+            import com.toutiaoyan.compose.ui.components.popover.PopoverTitle
+            import com.toutiaoyan.compose.ui.components.popover.PopoverDescription
+            import com.toutiaoyan.compose.ui.components.button.ButtonVariant
 
-            var open by remember { mutableStateOf(false) }
-            Popover(open = open, onOpenChange = { open = it }) {
-                PopoverTrigger("Open popover", variant = ButtonVariant.Outline)
-                PopoverContent("Place content for the popover here.")
+            Popover {
+                PopoverTrigger("Open Popover", variant = ButtonVariant.Outline)
+                PopoverContent {
+                    PopoverHeader {
+                        PopoverTitle("Title")
+                        PopoverDescription("Description text here.")
+                    }
+                }
             }
             """.trimIndent(),
         examples =
@@ -532,3 +540,4 @@ val popoverDoc =
                 ),
             ),
     )
+        .let { native -> native.copy(examples = popoverOfficialExamples + native.examples) }

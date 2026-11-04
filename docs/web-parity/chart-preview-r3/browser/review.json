@@ -1,0 +1,80 @@
+{
+  "date": "2026-11-02",
+  "spaceId": 4,
+  "url": "http://127.0.0.1:8765/chart?acceptance=preview-r3",
+  "newWasm": "2bca779a33ae63e2c8c7.wasm",
+  "matrix": {
+    "examples": [
+      "first",
+      "grid",
+      "axis",
+      "tooltip",
+      "legend"
+    ],
+    "widths": [
+      1440,
+      390
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "mobile": false
+  },
+  "review": {
+    "all20Reviewed": true,
+    "contactSheets": 8,
+    "newNative4Reviewed": true,
+    "sourceGeometry": "official-geometry.json",
+    "codeExpansion": "legend-code-expanded-390-light.png"
+  },
+  "confirmed": {
+    "fixedPreviewHeight": 320,
+    "desktopContentInsetStart": 48,
+    "mobileContentInsetStart": 0,
+    "desktopChartIn640Column": [
+      510,
+      286
+    ],
+    "phoneChartIn342Column": [
+      260,
+      200
+    ],
+    "sourceDesktopChart": [
+      509,
+      286
+    ],
+    "sourcePhoneChart": [
+      245,
+      200
+    ]
+  },
+  "remaining": [
+    "Global content width differs by1px desktop and15px phone; body scrollbar/global page alignment remains open.",
+    "Add Grid/Axis/Tooltip/Legend still use h2 instead of h3; full numbered Steps prose not yet present.",
+    "Header typography, exact bars/ticks/fonts, rich config/animation and complete accessibility remain on Chart main checklist."
+  ],
+  "sha256": {
+    "legend-code-expanded-390-light.png": "9bb05270d6494d28256d16b8a08e4aaf3a7d3bef41c2de32de46f28537cc3509",
+    "local-axis-1440-dark.png": "191856fc92dd1ef87ab75a861c62ed4864ec423a0b6a7e224b818cdb1d8ca0a7",
+    "local-axis-1440-light.png": "301294e835c2095410cfd98d984b1a7152227615c0168035a5696f087ec36318",
+    "local-axis-390-dark.png": "2f77068a001362653991e6842f83bd309ed9ed62d613e6469917c72be1350a98",
+    "local-axis-390-light.png": "bd726ee9c222227451ea3e8627a2e3e6bfe44111619183e0c46010b40d7d20aa",
+    "local-first-1440-dark.png": "4dd80e616881c863b4fd34ea6149c7b63fabd4ad2e434737bf5aa17e6e745e98",
+    "local-first-1440-light.png": "2c085326fe695e2bf88165bae6488e5b5b5081e965e1c34307ad1e79b41dc37b",
+    "local-first-390-dark.png": "850ad27c7e2e147546b70591a012000135cba7d65777c7b7a0d8130f0ac1d730",
+    "local-first-390-light.png": "953eb90c5d33437e3589dcbd4f9d3b2bbfd4504993fa45c55015868474385443",
+    "local-grid-1440-dark.png": "9fd0427ac98548e038503741cc36ce530b38797d161e54ef359ca57485623881",
+    "local-grid-1440-light.png": "e4797ece6b1fcfe2291da30eeb11780021385e45e7070eb2e56e3941e8256456",
+    "local-grid-390-dark.png": "62b6f43375c45610cfce57baaa53c9500d5322478e908ddf915cd0cd7d40460a",
+    "local-grid-390-light.png": "effaabad00d811ccfabe31981cad5cb942f4881f8cf35338cf906349d4cce20f",
+    "local-legend-1440-dark.png": "cfcb204bf74f8978c3e6855df1965164b1b7cadd2f7a0ca1229bb2e0c91fa8fb",
+    "local-legend-1440-light.png": "25591de2c0b7f874f974e5007008db8b0f722de092f39b260c468f5fa0a327ec",
+    "local-legend-390-dark.png": "b8cada5d27dc028fcaeece7031a9e6cbe0fda960689fdc36dc513174c0915a1f",
+    "local-legend-390-light.png": "232c604559e4f790f08d4bdf31475941f158ea40ca9ec107e610bab4aeeea325",
+    "local-tooltip-1440-dark.png": "f59a52de5e04105429dc01263f6bd5d7d5c5b9903bfd2e800a1638fa4815892e",
+    "local-tooltip-1440-light.png": "e296cde6556ff97682769b5d34c60fe0f3ec3a13c70f6a1efbd795d675e4688b",
+    "local-tooltip-390-dark.png": "4d90ed6a5c4b1adfe10774b7dbfc80247e003c6339d0003c4a6535fd7d1e7faf",
+    "local-tooltip-390-light.png": "37718e219a090fde4303e53e87c143d4efb5cd8fb517a713beef3287aac3427d"
+  }
+}

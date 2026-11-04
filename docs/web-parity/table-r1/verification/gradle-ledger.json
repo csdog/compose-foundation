@@ -1,0 +1,353 @@
+{
+  "command_fingerprints": {
+    "31933a3558c9fc318cbc7a53a27a5afff1cc2661dc287f7753966c64090ab236": 2,
+    "4c9dfd61577cc7fa2d4f19cdb45eddbdf3b6bf9ca77ad4a132e21b7c5e65de73": 1,
+    "7cd6c68112674af1f9fb0e5aef1be36199006636888d217f8f650c669ada22c1": 1,
+    "a81a355f21b1b0f34e81c766a09492a11f1e6222645b5b84f5b52814c73a2bd7": 1,
+    "b002d0c0ab0739226695585789466a14e11b563eb7c716a6e63cdcb9ba73ac3c": 5,
+    "b7a37539b327aa0138c55da15aa949a83729fdb423b45f116f9ee7aaa16a9745": 2,
+    "e70dda2cb0b6d3c2cb3bf7f4eb3be3603afba0b42e90e98621c0d31648c0b29e": 3
+  },
+  "failure_fingerprints": {
+    "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a": {
+      "excerpt": "Module not found: Error: Can't resolve 'path' in '/Users/cscs/IdeaProjects/angryecho/compose-foundation/build/js/packages/compose-foundation-app-webApp/kotlin'",
+      "occurrences": 1
+    },
+    "16a63e3169fe533c95d78fa557df2a06ea3e428402b6fb2b1e7217869829fb1f": {
+      "excerpt": "* What went wrong: Execution failed for task ':app:shared:compileKotlinJvm' (registered in build file 'app/shared/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kotlin co...",
+      "occurrences": 1
+    },
+    "17ef1a34479c0fa72283f2cd6756282008c0a4a561b34f17da69b738adc0eed9": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ApiReference.kt:20:34 Unresolved reference 'Modifier'.",
+      "occurrences": 1
+    },
+    "36cad612cf582d919bd555e4f2956c857341519e3bdf59ac4a37b4005afd1576": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:compileKotlinJvm' (registered in build file 'shadcn/core/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kotlin ...",
+      "occurrences": 1
+    },
+    "4593f2bfbffcb083cb5d5b5b6775b712795ce7939c0d08351358314a90cb8469": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/table/Table.kt:115:34 Unresolved reference 'constrainHeight' on receiver of type 'Constraints'.",
+      "occurrences": 1
+    },
+    "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:jvmTest'. > There were failing tests. See the report at: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/reports/tests/jvmTest/index.html",
+      "occurrences": 5
+    },
+    "6288e77ee5d20c255ff46889f1bdb0dadd10ada522d9316ea15ca0baa60fc5b3": {
+      "excerpt": "* What went wrong: Execution failed for task ':app:shared:jvmTest'. > There were failing tests. See the report at: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/reports/tests/jvmTest/index.html",
+      "occurrences": 2
+    },
+    "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4": {
+      "excerpt": "Module not found: Error: Can't resolve 'os' in '/Users/cscs/IdeaProjects/angryecho/compose-foundation/build/js/packages/compose-foundation-app-webApp/kotlin'",
+      "occurrences": 1
+    },
+    "8311ace123c198f4b726ffbe278e1d405a4955cafb83b80dbe2430bd1b315ae5": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/table/Table.kt:154:71 Unresolved reference 'interaction'.",
+      "occurrences": 1
+    },
+    "93eac771445673ddb223832f2b84ae17cc9e6e56228b268e9136338d778b1dbc": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/table/Table.kt:114:33 Unresolved reference 'constrainWidth' on receiver of type 'Constraints'.",
+      "occurrences": 1
+    },
+    "947a7af926d0d231fe4eccc4ecba40ac0ecdf37d88b52f56b3db793260b5b983": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ApiReference.kt:18:35 Unresolved reference 'Modifier'.",
+      "occurrences": 1
+    },
+    "9624ea3170a151a4af8dd58fbdd7200df059e25e4cce2dc8a9453b1556cdca33": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ApiReference.kt:25:46 Unresolved reference 'Modifier'.",
+      "occurrences": 1
+    },
+    "a49476081060c06707bb4085f25b964ef825fb9ac9be3303416d786ca05096ff": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ApiReference.kt:19:31 Unresolved reference 'Modifier'.",
+      "occurrences": 1
+    },
+    "c19ac1e93ac0de1480d5a9809b377d07903bf2c54490af63d3b9aabe86d4494a": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ApiReference.kt:26:46 Unresolved reference 'Modifier'.",
+      "occurrences": 1
+    },
+    "de0ec2dfd05abfd51b18b578ef739de449a154b5ba82f72a0f2ea370e27911b3": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ApiReference.kt:27:54 Unresolved reference 'Modifier'.",
+      "occurrences": 1
+    }
+  },
+  "failure_fingerprints_truncated_occurrences": 0,
+  "run_count": 15,
+  "runs": [
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *TableParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 0.056,
+      "exit_status": 1,
+      "failure_fingerprints": [],
+      "log": "0001.log",
+      "question": "Does original Table satisfy the ten source-backed caption, cell, hover, selected and footer parity cases?",
+      "scope": "targeted",
+      "sequence": 1,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *TableParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 3.128,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0002.log",
+      "question": "With existing Gradle cache access, does original Table satisfy the ten source-backed parity cases?",
+      "scope": "targeted",
+      "sequence": 2,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *TableParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.503,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "93eac771445673ddb223832f2b84ae17cc9e6e56228b268e9136338d778b1dbc",
+        "4593f2bfbffcb083cb5d5b5b6775b712795ce7939c0d08351358314a90cb8469",
+        "8311ace123c198f4b726ffbe278e1d405a4955cafb83b80dbe2430bd1b315ae5",
+        "36cad612cf582d919bd555e4f2956c857341519e3bdf59ac4a37b4005afd1576"
+      ],
+      "log": "0003.log",
+      "question": "Do the corrected Table primitives pass all ten source-backed geometry, caption, hover, selected and footer cases?",
+      "scope": "targeted",
+      "sequence": 3,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *TableParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 10.601,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0004.log",
+      "question": "After importing constraint helpers and sharing the TableRow hover interaction source, do all ten Table parity cases pass?",
+      "scope": "targeted",
+      "sequence": 4,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *TableParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 9.485,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0005.log",
+      "question": "With caption margin on an outer Box and text semantics on its inner content, do all ten Table parity cases pass?",
+      "scope": "targeted",
+      "sequence": 5,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *TableParityTest :app:shared:jvmTest --tests *TableExamplesTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 9.952,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0006.log",
+      "question": "Do Table primitive12 and migrated official example28 cases pass, including RTL selectors, action menus and built-in API reference scrolling?",
+      "scope": "targeted",
+      "sequence": 6,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "b59585b97c4f48e077609461ee317b581f085328b603aab7deca4c49e94b5d29",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *TableParityTest :app:shared:jvmTest --tests *TableExamplesTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 11.952,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "947a7af926d0d231fe4eccc4ecba40ac0ecdf37d88b52f56b3db793260b5b983",
+        "a49476081060c06707bb4085f25b964ef825fb9ac9be3303416d786ca05096ff",
+        "17ef1a34479c0fa72283f2cd6756282008c0a4a561b34f17da69b738adc0eed9",
+        "9624ea3170a151a4af8dd58fbdd7200df059e25e4cce2dc8a9453b1556cdca33",
+        "c19ac1e93ac0de1480d5a9809b377d07903bf2c54490af63d3b9aabe86d4494a",
+        "de0ec2dfd05abfd51b18b578ef739de449a154b5ba82f72a0f2ea370e27911b3",
+        "16a63e3169fe533c95d78fa557df2a06ea3e428402b6fb2b1e7217869829fb1f"
+      ],
+      "log": "0007.log",
+      "question": "After preserving trailing String lambda overload resolution and selected-over-hover styling, do core12 and official Table examples28 pass?",
+      "scope": "targeted",
+      "sequence": 7,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *TableExamplesTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 11.949,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "6288e77ee5d20c255ff46889f1bdb0dadd10ada522d9316ea15ca0baa60fc5b3"
+      ],
+      "log": "0008.log",
+      "question": "After restoring the API reference Modifier import, do all28 migrated Table example states and built-in scrolling cases pass?",
+      "scope": "targeted",
+      "sequence": 8,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *TableParityTest :app:shared:jvmTest --tests *TableExamplesTest :shadcn:core:ktlintCheck :app:shared:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 13.368,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "6288e77ee5d20c255ff46889f1bdb0dadd10ada522d9316ea15ca0baa60fc5b3"
+      ],
+      "log": "0009.log",
+      "question": "Does final Table42 matrix plus core/shared lint pass after caption semantics, paused exit timing, and physical-right alignment fixes?",
+      "scope": "targeted",
+      "sequence": 9,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *TableParityTest :app:shared:jvmTest --tests *TableExamplesTest :shadcn:core:ktlintCheck :app:shared:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 24.958,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0010.log",
+      "question": "Does final Table44 matrix and core/shared lint pass with a source-backed320ms popup settle and built-in horizontal overflow coverage?",
+      "scope": "targeted",
+      "sequence": 10,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests *TableScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.701,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0011.log",
+      "question": "Do existing Table light/dark screenshot goldens still verify after the intentional source-backed Table style and layout fixes, without recording baselines?",
+      "scope": "targeted",
+      "sequence": 11,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:jsBrowserDevelopmentWebpack --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 25.623,
+      "exit_status": 0,
+      "failure_fingerprints": [
+        "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4",
+        "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a"
+      ],
+      "log": "0012.log",
+      "question": "Does the final Table implementation and catalog compile and bundle on JS, and which existing webpack diagnostics remain?",
+      "scope": "targeted",
+      "sequence": 12,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:wasmJsBrowserDevelopmentWebpack --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 18.397,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0013.log",
+      "question": "Does the final Table implementation and catalog compile and bundle on Wasm, and which existing diagnostics remain?",
+      "scope": "targeted",
+      "sequence": 13,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "f81040af25ff2e6744eb7514d0a76c87c4fb63e402d5935bec8f175e75b97414"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests *TableScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.926,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0014.log",
+      "question": "With exact prepass Table runtime restored and new parity tests excluded, do original legacy2 goldens verify and which differences already existed?",
+      "scope": "targeted",
+      "sequence": 14,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *TableParityTest :app:shared:jvmTest --tests *TableExamplesTest :shadcn:core:ktlintCheck :app:shared:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 6.751,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0015.log",
+      "question": "After exact Table runtime restoration and stronger actual RTL position assertions, do final44 cases and core/shared lint pass?",
+      "scope": "targeted",
+      "sequence": 15,
+      "warning_fingerprints": []
+    }
+  ],
+  "version": 1,
+  "warning_fingerprints": {
+    "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312": {
+      "excerpt": "w: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/text/Text.kt:5:16 Suppression of error 'INVISIBLE_REFERENCE' might compile and work, but the compiler behavior is UNSP...",
+      "occurrences": 7
+    },
+    "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4": {
+      "excerpt": "You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.",
+      "occurrences": 5
+    },
+    "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2": {
+      "excerpt": "Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.",
+      "occurrences": 5
+    },
+    "b59585b97c4f48e077609461ee317b581f085328b603aab7deca4c49e94b5d29": {
+      "excerpt": "w: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/table/TableParityTest.kt:114:37 Expression is unused.",
+      "occurrences": 1
+    },
+    "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a": {
+      "excerpt": "WARNING: The option setting 'android.experimental.enableScreenshotTest=true' is experimental.",
+      "occurrences": 5
+    },
+    "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=UNSUPPORTED_PROJECT_OPTION_USE to the gradle.properties file to suppress this warning.",
+      "occurrences": 10
+    },
+    "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90": {
+      "excerpt": "WARNING: The option setting 'android.experimental.testSuiteSupport=true' is experimental.",
+      "occurrences": 5
+    },
+    "f81040af25ff2e6744eb7514d0a76c87c4fb63e402d5935bec8f175e75b97414": {
+      "excerpt": "webpack 5.108.1 compiled with 1 warning in 421 ms",
+      "occurrences": 1
+    }
+  },
+  "warning_fingerprints_truncated_occurrences": 0,
+  "workflow": "9a1bcd830e1d8bdbbf27eae75fdf48ab"
+}

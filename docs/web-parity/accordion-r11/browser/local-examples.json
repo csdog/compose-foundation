@@ -1,0 +1,434 @@
+[
+  {
+    "name": "default",
+    "width": 1440,
+    "theme": "light",
+    "file": "local-default-1440-light.png",
+    "backgroundPixel": [
+      255,
+      255,
+      255
+    ],
+    "initialPixel": [
+      255,
+      255,
+      255
+    ],
+    "fullDocumentReload": true,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "basic",
+    "width": 1440,
+    "theme": "light",
+    "file": "local-basic-1440-light.png",
+    "backgroundPixel": [
+      255,
+      255,
+      255
+    ],
+    "initialPixel": [
+      255,
+      255,
+      255
+    ],
+    "fullDocumentReload": false,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "multiple",
+    "width": 1440,
+    "theme": "light",
+    "file": "local-multiple-1440-light.png",
+    "backgroundPixel": [
+      255,
+      255,
+      255
+    ],
+    "initialPixel": [
+      255,
+      255,
+      255
+    ],
+    "fullDocumentReload": false,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "disabled",
+    "width": 1440,
+    "theme": "light",
+    "file": "local-disabled-1440-light.png",
+    "backgroundPixel": [
+      255,
+      255,
+      255
+    ],
+    "initialPixel": [
+      255,
+      255,
+      255
+    ],
+    "fullDocumentReload": false,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "borders",
+    "width": 1440,
+    "theme": "light",
+    "file": "local-borders-1440-light.png",
+    "backgroundPixel": [
+      255,
+      255,
+      255
+    ],
+    "initialPixel": [
+      255,
+      255,
+      255
+    ],
+    "fullDocumentReload": false,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "card",
+    "width": 1440,
+    "theme": "light",
+    "file": "local-card-1440-light.png",
+    "backgroundPixel": [
+      255,
+      255,
+      255
+    ],
+    "initialPixel": [
+      255,
+      255,
+      255
+    ],
+    "fullDocumentReload": false,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "default",
+    "width": 1440,
+    "theme": "dark",
+    "file": "local-default-1440-dark.png",
+    "backgroundPixel": [
+      10,
+      10,
+      10
+    ],
+    "initialPixel": [
+      255,
+      255,
+      255
+    ],
+    "fullDocumentReload": true,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "basic",
+    "width": 1440,
+    "theme": "dark",
+    "file": "local-basic-1440-dark.png",
+    "backgroundPixel": [
+      10,
+      10,
+      10
+    ],
+    "initialPixel": [
+      10,
+      10,
+      10
+    ],
+    "fullDocumentReload": false,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "multiple",
+    "width": 1440,
+    "theme": "dark",
+    "file": "local-multiple-1440-dark.png",
+    "backgroundPixel": [
+      10,
+      10,
+      10
+    ],
+    "initialPixel": [
+      10,
+      10,
+      10
+    ],
+    "fullDocumentReload": false,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "disabled",
+    "width": 1440,
+    "theme": "dark",
+    "file": "local-disabled-1440-dark.png",
+    "backgroundPixel": [
+      10,
+      10,
+      10
+    ],
+    "initialPixel": [
+      10,
+      10,
+      10
+    ],
+    "fullDocumentReload": false,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "borders",
+    "width": 1440,
+    "theme": "dark",
+    "file": "local-borders-1440-dark.png",
+    "backgroundPixel": [
+      10,
+      10,
+      10
+    ],
+    "initialPixel": [
+      10,
+      10,
+      10
+    ],
+    "fullDocumentReload": false,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "card",
+    "width": 1440,
+    "theme": "dark",
+    "file": "local-card-1440-dark.png",
+    "backgroundPixel": [
+      10,
+      10,
+      10
+    ],
+    "initialPixel": [
+      10,
+      10,
+      10
+    ],
+    "fullDocumentReload": false,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "default",
+    "width": 390,
+    "theme": "light",
+    "file": "local-default-390-light.png",
+    "backgroundPixel": [
+      255,
+      255,
+      255
+    ],
+    "initialPixel": [
+      255,
+      255,
+      255
+    ],
+    "fullDocumentReload": true,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "basic",
+    "width": 390,
+    "theme": "light",
+    "file": "local-basic-390-light.png",
+    "backgroundPixel": [
+      255,
+      255,
+      255
+    ],
+    "initialPixel": [
+      255,
+      255,
+      255
+    ],
+    "fullDocumentReload": false,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "multiple",
+    "width": 390,
+    "theme": "light",
+    "file": "local-multiple-390-light.png",
+    "backgroundPixel": [
+      255,
+      255,
+      255
+    ],
+    "initialPixel": [
+      255,
+      255,
+      255
+    ],
+    "fullDocumentReload": false,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "disabled",
+    "width": 390,
+    "theme": "light",
+    "file": "local-disabled-390-light.png",
+    "backgroundPixel": [
+      255,
+      255,
+      255
+    ],
+    "initialPixel": [
+      255,
+      255,
+      255
+    ],
+    "fullDocumentReload": false,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "borders",
+    "width": 390,
+    "theme": "light",
+    "file": "local-borders-390-light.png",
+    "backgroundPixel": [
+      255,
+      255,
+      255
+    ],
+    "initialPixel": [
+      255,
+      255,
+      255
+    ],
+    "fullDocumentReload": false,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "card",
+    "width": 390,
+    "theme": "light",
+    "file": "local-card-390-light.png",
+    "backgroundPixel": [
+      255,
+      255,
+      255
+    ],
+    "initialPixel": [
+      255,
+      255,
+      255
+    ],
+    "fullDocumentReload": false,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "default",
+    "width": 390,
+    "theme": "dark",
+    "file": "local-default-390-dark.png",
+    "backgroundPixel": [
+      10,
+      10,
+      10
+    ],
+    "initialPixel": [
+      255,
+      255,
+      255
+    ],
+    "fullDocumentReload": true,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "basic",
+    "width": 390,
+    "theme": "dark",
+    "file": "local-basic-390-dark.png",
+    "backgroundPixel": [
+      10,
+      10,
+      10
+    ],
+    "initialPixel": [
+      10,
+      10,
+      10
+    ],
+    "fullDocumentReload": false,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "multiple",
+    "width": 390,
+    "theme": "dark",
+    "file": "local-multiple-390-dark.png",
+    "backgroundPixel": [
+      10,
+      10,
+      10
+    ],
+    "initialPixel": [
+      10,
+      10,
+      10
+    ],
+    "fullDocumentReload": false,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "disabled",
+    "width": 390,
+    "theme": "dark",
+    "file": "local-disabled-390-dark.png",
+    "backgroundPixel": [
+      10,
+      10,
+      10
+    ],
+    "initialPixel": [
+      10,
+      10,
+      10
+    ],
+    "fullDocumentReload": false,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "borders",
+    "width": 390,
+    "theme": "dark",
+    "file": "local-borders-390-dark.png",
+    "backgroundPixel": [
+      10,
+      10,
+      10
+    ],
+    "initialPixel": [
+      10,
+      10,
+      10
+    ],
+    "fullDocumentReload": false,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  },
+  {
+    "name": "card",
+    "width": 390,
+    "theme": "dark",
+    "file": "local-card-390-dark.png",
+    "backgroundPixel": [
+      10,
+      10,
+      10
+    ],
+    "initialPixel": [
+      10,
+      10,
+      10
+    ],
+    "fullDocumentReload": false,
+    "appWasm": "289f86cde9386ed91695.wasm"
+  }
+]

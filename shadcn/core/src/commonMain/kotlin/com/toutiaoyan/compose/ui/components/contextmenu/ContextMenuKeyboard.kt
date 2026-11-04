@@ -7,9 +7,13 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.input.key.*
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.LineHeightStyle
 import com.toutiaoyan.compose.ui.components.overlay.overlayTypography
 
 internal val LocalContextMenuNova = staticCompositionLocalOf { false }
+
+// Menubar selection marks occupy the leading slot; DropdownMenu marks are trailing.
+internal val LocalContextMenuLeadingSelectionIndicator = staticCompositionLocalOf { false }
 
 internal class ContextMenuNavigation {
     val items = mutableStateListOf<FocusRequester>()
@@ -75,7 +79,9 @@ internal fun contextMenuTypography(
     label: Boolean = false,
 ): TextStyle =
     if (LocalContextMenuNova.current) {
-        overlayTypography(if (label) 12 else 14, if (label) 16 else 20, medium = label, muted = label).merge(fallback)
+        overlayTypography(if (label) 12 else 14, if (label) 16 else 20, medium = label, muted = label)
+            .copy(lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None))
+            .merge(fallback)
     } else {
         fallback
     }

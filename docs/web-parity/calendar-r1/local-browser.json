@@ -1,0 +1,722 @@
+[
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "default",
+    "file": "local-desktop-light-default.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "basic",
+    "file": "local-desktop-light-basic.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "range-calendar",
+    "file": "local-desktop-light-range-calendar.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "month-and-year-selector",
+    "file": "local-desktop-light-month-and-year-selector.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "presets",
+    "file": "local-desktop-light-presets.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "date-and-time-picker",
+    "file": "local-desktop-light-date-and-time-picker.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "booked-dates",
+    "file": "local-desktop-light-booked-dates.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "custom-cell-size",
+    "file": "local-desktop-light-custom-cell-size.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "week-numbers",
+    "file": "local-desktop-light-week-numbers.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "rtl",
+    "file": "local-desktop-light-rtl.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "multiple",
+    "file": "local-desktop-light-multiple.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "disabled",
+    "file": "local-desktop-light-disabled.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "week-starts-on-monday",
+    "file": "local-desktop-light-week-starts-on-monday.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "hide-outside-days",
+    "file": "local-desktop-light-hide-outside-days.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "month-bounds",
+    "file": "local-desktop-light-month-bounds.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "default",
+    "file": "local-desktop-dark-default.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "basic",
+    "file": "local-desktop-dark-basic.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "range-calendar",
+    "file": "local-desktop-dark-range-calendar.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "month-and-year-selector",
+    "file": "local-desktop-dark-month-and-year-selector.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "presets",
+    "file": "local-desktop-dark-presets.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "date-and-time-picker",
+    "file": "local-desktop-dark-date-and-time-picker.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "booked-dates",
+    "file": "local-desktop-dark-booked-dates.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "custom-cell-size",
+    "file": "local-desktop-dark-custom-cell-size.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "week-numbers",
+    "file": "local-desktop-dark-week-numbers.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "rtl",
+    "file": "local-desktop-dark-rtl.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "multiple",
+    "file": "local-desktop-dark-multiple.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "disabled",
+    "file": "local-desktop-dark-disabled.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "week-starts-on-monday",
+    "file": "local-desktop-dark-week-starts-on-monday.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "hide-outside-days",
+    "file": "local-desktop-dark-hide-outside-days.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "month-bounds",
+    "file": "local-desktop-dark-month-bounds.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "default",
+    "file": "local-phone-dark-default.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "basic",
+    "file": "local-phone-dark-basic.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "range-calendar",
+    "file": "local-phone-dark-range-calendar.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "month-and-year-selector",
+    "file": "local-phone-dark-month-and-year-selector.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "presets",
+    "file": "local-phone-dark-presets.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "date-and-time-picker",
+    "file": "local-phone-dark-date-and-time-picker.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "booked-dates",
+    "file": "local-phone-dark-booked-dates.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "custom-cell-size",
+    "file": "local-phone-dark-custom-cell-size.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "week-numbers",
+    "file": "local-phone-dark-week-numbers.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "rtl",
+    "file": "local-phone-dark-rtl.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "multiple",
+    "file": "local-phone-dark-multiple.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "disabled",
+    "file": "local-phone-dark-disabled.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "week-starts-on-monday",
+    "file": "local-phone-dark-week-starts-on-monday.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "hide-outside-days",
+    "file": "local-phone-dark-hide-outside-days.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "month-bounds",
+    "file": "local-phone-dark-month-bounds.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "default",
+    "file": "local-phone-light-default.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "basic",
+    "file": "local-phone-light-basic.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "range-calendar",
+    "file": "local-phone-light-range-calendar.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "month-and-year-selector",
+    "file": "local-phone-light-month-and-year-selector.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "presets",
+    "file": "local-phone-light-presets.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "date-and-time-picker",
+    "file": "local-phone-light-date-and-time-picker.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "booked-dates",
+    "file": "local-phone-light-booked-dates.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "custom-cell-size",
+    "file": "local-phone-light-custom-cell-size.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "week-numbers",
+    "file": "local-phone-light-week-numbers.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "rtl",
+    "file": "local-phone-light-rtl.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "multiple",
+    "file": "local-phone-light-multiple.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "disabled",
+    "file": "local-phone-light-disabled.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "week-starts-on-monday",
+    "file": "local-phone-light-week-starts-on-monday.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "hide-outside-days",
+    "file": "local-phone-light-hide-outside-days.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "month-bounds",
+    "file": "local-phone-light-month-bounds.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  }
+]

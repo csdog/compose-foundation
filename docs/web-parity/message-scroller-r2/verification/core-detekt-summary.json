@@ -1,0 +1,1567 @@
+{
+  "module": ":shadcn:core",
+  "task": "detektMetadataCommonMain",
+  "total": 10731,
+  "changedFiles": {
+    "Tabs.kt": {
+      "count": 54,
+      "rules": {
+        "LongParameterList": 6,
+        "LongMethod": 1,
+        "CyclomaticComplexMethod": 1,
+        "ImportOrdering": 1,
+        "Indentation": 43,
+        "ReturnCount": 2
+      },
+      "findings": [
+        {
+          "line": "186",
+          "column": "9",
+          "rule": "LongParameterList",
+          "message": "The function Tabs(selected: String?, onSelectedChange: ((String) -> Unit)?, modifier: Modifier, defaultValue: String, orientation: TabsOrientation, activationMode: TabsActivationMode, loop: Boolean, style: Style, value: String?, onValueChange: ((String) -> Unit)?, content: @Composable TabsScope.() -> Unit) has too many parameters. The current threshold is set to 6."
+        },
+        {
+          "line": "235",
+          "column": "23",
+          "rule": "LongParameterList",
+          "message": "The function TabsList(modifier: Modifier, variant: TabsListVariant, style: Style, contentDescription: String?, indicator: @Composable BoxScope.() -> Unit, content: @Composable TabsListScope.() -> Unit) has too many parameters. The current threshold is set to 6."
+        },
+        {
+          "line": "354",
+          "column": "30",
+          "rule": "LongParameterList",
+          "message": "The function TabsTrigger(value: String, modifier: Modifier, enabled: Boolean, disabled: Boolean, style: Style, content: @Composable () -> Unit) has too many parameters. The current threshold is set to 6."
+        },
+        {
+          "line": "428",
+          "column": "30",
+          "rule": "LongParameterList",
+          "message": "The function TabsTrigger(value: String, label: String, modifier: Modifier, enabled: Boolean, disabled: Boolean, style: Style) has too many parameters. The current threshold is set to 6."
+        },
+        {
+          "line": "454",
+          "column": "26",
+          "rule": "LongParameterList",
+          "message": "The function TabsContent(value: String, modifier: Modifier, style: Style, enter: EnterTransition, exit: ExitTransition, forceMount: Boolean, keepMounted: Boolean?, content: @Composable () -> Unit) has too many parameters. The current threshold is set to 6."
+        },
+        {
+          "line": "486",
+          "column": "26",
+          "rule": "LongParameterList",
+          "message": "The function TabsContent(value: String, text: String, modifier: Modifier, style: Style, enter: EnterTransition, exit: ExitTransition, forceMount: Boolean, keepMounted: Boolean?) has too many parameters. The current threshold is set to 6."
+        },
+        {
+          "line": "354",
+          "column": "19",
+          "rule": "LongMethod",
+          "message": "The function TabsTrigger is too long (61). The maximum length is 60."
+        },
+        {
+          "line": "509",
+          "column": "13",
+          "rule": "CyclomaticComplexMethod",
+          "message": "The function handleTabsKey appears to be too complex based on Cyclomatic Complexity (complexity: 21). Defined complexity threshold for methods is set to '15'"
+        },
+        {
+          "line": "5",
+          "column": "1",
+          "rule": "ImportOrdering",
+          "message": "Imports must be ordered in lexicographic order without any empty lines in-between with \"java\", \"javax\", \"kotlin\" and aliases in the end"
+        },
+        {
+          "line": "255",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "256",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "257",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "258",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "259",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "260",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "261",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "262",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "263",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "264",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "265",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "266",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "267",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "268",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "341",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 8)"
+        },
+        {
+          "line": "342",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "343",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "344",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "345",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "346",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "392",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 8)"
+        },
+        {
+          "line": "393",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "394",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "395",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "396",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "397",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "398",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "399",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "400",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "401",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "402",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "403",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "404",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "405",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "406",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "407",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "408",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "409",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "414",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "415",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "416",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "417",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "418",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "290",
+          "column": "23",
+          "rule": "ReturnCount",
+          "message": "Function TabsIndicator has 3 return statements which exceeds the limit of 2."
+        },
+        {
+          "line": "509",
+          "column": "13",
+          "rule": "ReturnCount",
+          "message": "Function handleTabsKey has 14 return statements which exceeds the limit of 2."
+        }
+      ]
+    },
+    "MessageScrollerState.kt": {
+      "count": 14,
+      "rules": {
+        "LongParameterList": 1,
+        "LongMethod": 1,
+        "CyclomaticComplexMethod": 1,
+        "NestedBlockDepth": 1,
+        "TooManyFunctions": 1,
+        "ComplexCondition": 3,
+        "NoWildcardImports": 1,
+        "Indentation": 1,
+        "ImportOrdering": 1,
+        "ReturnCount": 2,
+        "WildcardImport": 1
+      },
+      "findings": [
+        {
+          "line": "50",
+          "column": "35",
+          "rule": "LongParameterList",
+          "message": "The function messageScrollerTarget(top: Int, height: Int, viewport: Int, position: Int, margin: Int, align: MessageScrollerScrollAlign, paddingStart: Int, paddingEnd: Int) has too many parameters. The current threshold is set to 6."
+        },
+        {
+          "line": "363",
+          "column": "26",
+          "rule": "LongMethod",
+          "message": "The function reconcileLayout is too long (106). The maximum length is 60."
+        },
+        {
+          "line": "363",
+          "column": "26",
+          "rule": "CyclomaticComplexMethod",
+          "message": "The function reconcileLayout appears to be too complex based on Cyclomatic Complexity (complexity: 49). Defined complexity threshold for methods is set to '15'"
+        },
+        {
+          "line": "363",
+          "column": "26",
+          "rule": "NestedBlockDepth",
+          "message": "Function reconcileLayout is nested too deeply."
+        },
+        {
+          "line": "78",
+          "column": "7",
+          "rule": "TooManyFunctions",
+          "message": "Class 'MessageScrollerState' with '21' functions detected. Defined threshold inside classes is set to '11'"
+        },
+        {
+          "line": "249",
+          "column": "17",
+          "rule": "ComplexCondition",
+          "message": "This condition is too complex (4). Defined complexity threshold for conditions is set to '4'"
+        },
+        {
+          "line": "416",
+          "column": "13",
+          "rule": "ComplexCondition",
+          "message": "This condition is too complex (5). Defined complexity threshold for conditions is set to '4'"
+        },
+        {
+          "line": "427",
+          "column": "13",
+          "rule": "ComplexCondition",
+          "message": "This condition is too complex (5). Defined complexity threshold for conditions is set to '4'"
+        },
+        {
+          "line": "5",
+          "column": "1",
+          "rule": "NoWildcardImports",
+          "message": "Wildcard import"
+        },
+        {
+          "line": "436",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 24)"
+        },
+        {
+          "line": "3",
+          "column": "1",
+          "rule": "ImportOrdering",
+          "message": "Imports must be ordered in lexicographic order without any empty lines in-between with \"java\", \"javax\", \"kotlin\" and aliases in the end"
+        },
+        {
+          "line": "315",
+          "column": "17",
+          "rule": "ReturnCount",
+          "message": "Function scrollToMessage has 3 return statements which exceeds the limit of 2."
+        },
+        {
+          "line": "363",
+          "column": "26",
+          "rule": "ReturnCount",
+          "message": "Function reconcileLayout has 8 return statements which exceeds the limit of 2."
+        },
+        {
+          "line": "5",
+          "column": "1",
+          "rule": "WildcardImport",
+          "message": "androidx.compose.runtime.* is a wildcard import. Replace it with fully qualified imports."
+        }
+      ]
+    },
+    "MessageScroller.kt": {
+      "count": 136,
+      "rules": {
+        "LongParameterList": 3,
+        "LongMethod": 2,
+        "CyclomaticComplexMethod": 1,
+        "TooManyFunctions": 1,
+        "Indentation": 109,
+        "ImportOrdering": 1,
+        "NoWildcardImports": 3,
+        "WildcardImport": 3,
+        "MagicNumber": 11,
+        "MayBeConst": 2
+      },
+      "findings": [
+        {
+          "line": "162",
+          "column": "20",
+          "rule": "LongParameterList",
+          "message": "The function MessageScroller(modifier: Modifier, style: Style, autoScrollThresholdPx: Int, icon: @Composable (rotationDegrees: Float) -> Unit, button: (@Composable BoxScope.(isVisible: Boolean, onClick: () -> Unit) -> Unit)?, content: @Composable BoxScope.() -> Unit) has too many parameters. The current threshold is set to 6."
+        },
+        {
+          "line": "374",
+          "column": "28",
+          "rule": "LongParameterList",
+          "message": "The function MessageScrollerProvider(autoScroll: Boolean, defaultScrollPosition: MessageScrollerPosition, scrollEdgeThreshold: Dp, scrollMargin: Dp, scrollPreviousItemPeek: Dp, content: @Composable () -> Unit) has too many parameters. The current threshold is set to 6."
+        },
+        {
+          "line": "488",
+          "column": "26",
+          "rule": "LongParameterList",
+          "message": "The function MessageScrollerButton(visible: Boolean, onClick: () -> Unit, modifier: Modifier, style: Style, direction: MessageScrollerDirection, icon: @Composable (rotationDegrees: Float) -> Unit) has too many parameters. The current threshold is set to 6."
+        },
+        {
+          "line": "230",
+          "column": "13",
+          "rule": "LongMethod",
+          "message": "The function ScrollerViewport is too long (81). The maximum length is 60."
+        },
+        {
+          "line": "488",
+          "column": "5",
+          "rule": "LongMethod",
+          "message": "The function MessageScrollerButton is too long (74). The maximum length is 60."
+        },
+        {
+          "line": "230",
+          "column": "13",
+          "rule": "CyclomaticComplexMethod",
+          "message": "The function ScrollerViewport appears to be too complex based on Cyclomatic Complexity (complexity: 17). Defined complexity threshold for methods is set to '15'"
+        },
+        {
+          "line": "3",
+          "column": "1",
+          "rule": "TooManyFunctions",
+          "message": "File '/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/messagescroller/MessageScroller.kt' with '13' functions detected. Defined threshold inside files is set to '11'"
+        },
+        {
+          "line": "257",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 8)"
+        },
+        {
+          "line": "258",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "259",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "260",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "261",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "262",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "263",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "264",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "265",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "266",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "267",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "268",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "269",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "270",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "271",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "272",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "273",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "274",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "275",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "276",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "277",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "278",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "279",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "280",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "281",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "282",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "283",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "284",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "285",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "286",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (44) (should be 40)"
+        },
+        {
+          "line": "287",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (48) (should be 44)"
+        },
+        {
+          "line": "288",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (52) (should be 48)"
+        },
+        {
+          "line": "289",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (48) (should be 44)"
+        },
+        {
+          "line": "290",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (52) (should be 48)"
+        },
+        {
+          "line": "291",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (48) (should be 44)"
+        },
+        {
+          "line": "292",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (52) (should be 48)"
+        },
+        {
+          "line": "293",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (48) (should be 44)"
+        },
+        {
+          "line": "294",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (44) (should be 40)"
+        },
+        {
+          "line": "295",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (48) (should be 44)"
+        },
+        {
+          "line": "296",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (52) (should be 48)"
+        },
+        {
+          "line": "297",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (48) (should be 44)"
+        },
+        {
+          "line": "298",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (52) (should be 48)"
+        },
+        {
+          "line": "299",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (48) (should be 44)"
+        },
+        {
+          "line": "300",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (52) (should be 48)"
+        },
+        {
+          "line": "301",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (48) (should be 44)"
+        },
+        {
+          "line": "302",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (44) (should be 40)"
+        },
+        {
+          "line": "303",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (48) (should be 44)"
+        },
+        {
+          "line": "304",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (44) (should be 40)"
+        },
+        {
+          "line": "305",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (40) (should be 36)"
+        },
+        {
+          "line": "306",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (36) (should be 32)"
+        },
+        {
+          "line": "307",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "308",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "309",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "310",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "311",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "312",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "313",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "314",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "315",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "316",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "317",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "347",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 8)"
+        },
+        {
+          "line": "348",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "349",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "350",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "351",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "352",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "353",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 8)"
+        },
+        {
+          "line": "354",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "444",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 8)"
+        },
+        {
+          "line": "445",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "446",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "468",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 8)"
+        },
+        {
+          "line": "469",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "470",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 8)"
+        },
+        {
+          "line": "507",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 8)"
+        },
+        {
+          "line": "508",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "509",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "511",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (12) (should be 8)"
+        },
+        {
+          "line": "512",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "513",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "534",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (16) (should be 12)"
+        },
+        {
+          "line": "535",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "536",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "537",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "538",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "539",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "540",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "541",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "542",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "543",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "544",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "545",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (32) (should be 28)"
+        },
+        {
+          "line": "546",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (28) (should be 24)"
+        },
+        {
+          "line": "547",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "548",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "549",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "550",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "551",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "552",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "553",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "554",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "555",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "556",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "557",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "558",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "563",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (20) (should be 16)"
+        },
+        {
+          "line": "564",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "565",
+          "column": "1",
+          "rule": "Indentation",
+          "message": "Unexpected indentation (24) (should be 20)"
+        },
+        {
+          "line": "4",
+          "column": "1",
+          "rule": "ImportOrdering",
+          "message": "Imports must be ordered in lexicographic order without any empty lines in-between with \"java\", \"javax\", \"kotlin\" and aliases in the end"
+        },
+        {
+          "line": "41",
+          "column": "1",
+          "rule": "NoWildcardImports",
+          "message": "Wildcard import"
+        },
+        {
+          "line": "49",
+          "column": "1",
+          "rule": "NoWildcardImports",
+          "message": "Wildcard import"
+        },
+        {
+          "line": "50",
+          "column": "1",
+          "rule": "NoWildcardImports",
+          "message": "Wildcard import"
+        },
+        {
+          "line": "41",
+          "column": "1",
+          "rule": "WildcardImport",
+          "message": "androidx.compose.ui.input.pointer.* is a wildcard import. Replace it with fully qualified imports."
+        },
+        {
+          "line": "49",
+          "column": "1",
+          "rule": "WildcardImport",
+          "message": "androidx.compose.ui.input.key.* is a wildcard import. Replace it with fully qualified imports."
+        },
+        {
+          "line": "50",
+          "column": "1",
+          "rule": "WildcardImport",
+          "message": "androidx.compose.ui.input.nestedscroll.* is a wildcard import. Replace it with fully qualified imports."
+        },
+        {
+          "line": "499",
+          "column": "51",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "499",
+          "column": "62",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "500",
+          "column": "51",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "500",
+          "column": "61",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "507",
+          "column": "37",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "508",
+          "column": "31",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "509",
+          "column": "30",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "511",
+          "column": "38",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "512",
+          "column": "32",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "513",
+          "column": "31",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "568",
+          "column": "81",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "366",
+          "column": "9",
+          "rule": "MayBeConst",
+          "message": "ViewportLabel can be a `const val`."
+        },
+        {
+          "line": "369",
+          "column": "9",
+          "rule": "MayBeConst",
+          "message": "PreserveScrollOnPrepend can be a `const val`."
+        }
+      ]
+    },
+    "TabsStyles.kt": {
+      "count": 1,
+      "rules": {
+        "ImportOrdering": 1
+      },
+      "findings": [
+        {
+          "line": "5",
+          "column": "1",
+          "rule": "ImportOrdering",
+          "message": "Imports must be ordered in lexicographic order without any empty lines in-between with \"java\", \"javax\", \"kotlin\" and aliases in the end"
+        }
+      ]
+    },
+    "MessageScrollerArrow.kt": {
+      "count": 12,
+      "rules": {
+        "MagicNumber": 12
+      },
+      "findings": [
+        {
+          "line": "31",
+          "column": "63",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "31",
+          "column": "68",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "38",
+          "column": "20",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "38",
+          "column": "25",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "39",
+          "column": "20",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "39",
+          "column": "25",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "40",
+          "column": "20",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "40",
+          "column": "25",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "41",
+          "column": "20",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "41",
+          "column": "25",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "42",
+          "column": "20",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        },
+        {
+          "line": "42",
+          "column": "24",
+          "rule": "MagicNumber",
+          "message": "This expression contains a magic number. Consider defining it to a well named constant."
+        }
+      ]
+    }
+  },
+  "otherFiles": {
+    "Shimmer.kt": 46,
+    "ScrollFade.kt": 7,
+    "NavigationMenu.kt": 52,
+    "SidebarStyles.kt": 1,
+    "Sidebar.kt": 205,
+    "DrawerContent.kt": 22,
+    "Drawer.kt": 6,
+    "DrawerClose.kt": 19,
+    "Pagination.kt": 80,
+    "Tooltip.kt": 16,
+    "Calendar.kt": 150,
+    "CalendarLocale.kt": 4,
+    "Card.kt": 15,
+    "Trace.kt": 21,
+    "ButtonGroup.kt": 20,
+    "RadioButton.kt": 53,
+    "Empty.kt": 50,
+    "Menubar.kt": 123,
+    "Progress.kt": 22,
+    "CodeBlock.kt": 17,
+    "CodeBlockContent.kt": 24,
+    "CodeBlockCopyButton.kt": 26,
+    "Input.kt": 39,
+    "DropdownMenu.kt": 271,
+    "Alert.kt": 57,
+    "Accordion.kt": 132,
+    "AttachmentLayout.kt": 4,
+    "Attachment.kt": 106,
+    "ToggleGroup.kt": 24,
+    "Toast.kt": 38,
+    "Chart.kt": 27,
+    "Chip.kt": 13,
+    "Checkbox.kt": 69,
+    "Label.kt": 3,
+    "ContextMenu.kt": 109,
+    "Slider.kt": 117,
+    "Message.kt": 46,
+    "Stepper.kt": 37,
+    "Field.kt": 72,
+    "Carousel.kt": 35,
+    "Bubble.kt": 40,
+    "LazyScrollArea.kt": 8,
+    "ScrollThumb.kt": 11,
+    "ScrollArea.kt": 13,
+    "Combobox.kt": 156,
+    "Questionnaire.kt": 117,
+    "InputOTP.kt": 71,
+    "Toggle.kt": 33,
+    "Dialog.kt": 91,
+    "Popover.kt": 46,
+    "Textarea.kt": 2,
+    "ButtonStyles.kt": 35,
+    "Button.kt": 57,
+    "Table.kt": 32,
+    "Collapsible.kt": 37,
+    "Item.kt": 49,
+    "ItemStyles.kt": 2,
+    "AvatarImage.kt": 4,
+    "Switch.kt": 54,
+    "HoverCard.kt": 46,
+    "Resizable.kt": 31,
+    "Command.kt": 97,
+    "Text.kt": 6,
+    "Select.kt": 163,
+    "Icon.kt": 5,
+    "Sheet.kt": 40,
+    "AnchoredPopup.kt": 8,
+    "PopupPositionProvider.kt": 1,
+    "TeleportPrimitive.kt": 71,
+    "AlertDialog.kt": 21,
+    "InputGroup.kt": 57,
+    "BadgeStyles.kt": 4,
+    "Badge.kt": 7,
+    "Theme.kt": 1,
+    "SwipeGesture.kt": 2,
+    "BaseColor.kt": 247,
+    "RippleIndication.kt": 7,
+    "FocusRing.kt": 1,
+    "Border.kt": 8,
+    "MenuStyles.kt": 1,
+    "CssStyleable.kt": 2,
+    "NavigationMenuStyles.kt": 1,
+    "KbdStyles.kt": 5,
+    "Kbd.kt": 20,
+    "DrawerHeader.kt": 3,
+    "DrawerOverlay.kt": 8,
+    "DrawerStyles.kt": 2,
+    "DrawerIndentHost.kt": 1,
+    "DrawerSwipeHandle.kt": 16,
+    "CalendarStyles.kt": 1,
+    "CardStyles.kt": 1,
+    "ButtonGroupStyles.kt": 1,
+    "GroupCorners.kt": 2,
+    "RadioButtonStyles.kt": 1,
+    "MenubarStyles.kt": 1,
+    "InputStyles.kt": 1,
+    "AccordionStyles.kt": 1,
+    "Skeleton.kt": 4,
+    "AttachmentStyles.kt": 1,
+    "AttachmentGroupSnap.kt": 3,
+    "Separator.kt": 12,
+    "ToggleGroupStyles.kt": 1,
+    "ToastStyles.kt": 1,
+    "ChipStyles.kt": 2,
+    "CheckboxStyles.kt": 1,
+    "ContextMenuKeyboard.kt": 11,
+    "SliderStyles.kt": 1,
+    "MessageStyles.kt": 1,
+    "Spinner.kt": 14,
+    "ComboboxStyles.kt": 1,
+    "ToggleStyles.kt": 1,
+    "DialogStyles.kt": 2,
+    "PopoverStyles.kt": 1,
+    "CollapsibleStyles.kt": 1,
+    "Avatar.kt": 28,
+    "AvatarStyles.kt": 2,
+    "SwitchStyles.kt": 2,
+    "HoverCardStyles.kt": 1,
+    "CommandStyles.kt": 1,
+    "SelectStyles.kt": 1,
+    "Breadcrumb.kt": 44,
+    "Marker.kt": 32,
+    "MarkerStyles.kt": 1,
+    "SheetStyles.kt": 1,
+    "OverlayHost.kt": 3,
+    "OverlayFocus.kt": 3,
+    "StylePreset.kt": 104,
+    "Res.kt": 38,
+    "ExpectResourceCollectors.kt": 1,
+    "BounceIndication.kt": 1,
+    "RememberTheme.kt": 1,
+    "CopyToClipboard.kt": 2,
+    "ProgressStyles.kt": 1,
+    "AlertStyles.kt": 1,
+    "SeparatorStyles.kt": 1,
+    "ChartStyles.kt": 1,
+    "AnchoredSwipe2D.kt": 1,
+    "PressedScale.kt": 1,
+    "DisabledDim.kt": 1,
+    "DrawerSnapPoint.kt": 1,
+    "BubbleColors.kt": 38,
+    "ScrollAreaStyles.kt": 1,
+    "LazyScrollMetrics.kt": 1,
+    "ArrowDown.kt": 14,
+    "Menu.kt": 24,
+    "ChevronUp.kt": 8,
+    "Joy.kt": 340,
+    "PageFacingUp.kt": 282,
+    "FramedPicture.kt": 316,
+    "ThumbsDown.kt": 316,
+    "OpenMailbox.kt": 103,
+    "Cry.kt": 193,
+    "ThumbsUp.kt": 324,
+    "Grinning.kt": 66,
+    "CheckMark.kt": 78,
+    "Hundred.kt": 327,
+    "OfficeBuilding.kt": 357,
+    "Package.kt": 268,
+    "Heart.kt": 51,
+    "Clap.kt": 531,
+    "SlightlySmiling.kt": 57,
+    "Pushpin.kt": 88,
+    "Astonished.kt": 21,
+    "Warning.kt": 84,
+    "LoudlyCrying.kt": 246,
+    "PrayHands.kt": 230,
+    "Man.kt": 373,
+    "Chair.kt": 302,
+    "Fire.kt": 141,
+    "Tada.kt": 497,
+    "Herb.kt": 281,
+    "CrossMark.kt": 79,
+    "NovaControls.kt": 98,
+    "Check.kt": 10,
+    "ChevronRight.kt": 8,
+    "X.kt": 16,
+    "MoreHorizontal.kt": 78,
+    "ChevronDown.kt": 8
+  },
+  "otherTopRules": {
+    "MagicNumber": 6515,
+    "Indentation": 3340,
+    "LongParameterList": 244,
+    "ImportOrdering": 110,
+    "LongMethod": 66,
+    "CyclomaticComplexMethod": 62,
+    "TooManyFunctions": 35,
+    "ReturnCount": 25,
+    "NoWildcardImports": 23,
+    "WildcardImport": 23
+  },
+  "otherFilesCount": 178,
+  "otherFindingsCount": 10514
+}

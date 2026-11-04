@@ -1,35 +1,40 @@
 @file:OptIn(androidx.compose.foundation.style.ExperimentalFoundationStyleApi::class)
 
 package com.toutiaoyan.compose.ui.components.bubble
+
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.style.MutableStyleState
-import androidx.compose.foundation.style.Style
-import androidx.compose.foundation.style.styleable
-import androidx.compose.foundation.style.then
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.remember
+import androidx.compose.foundation.style.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.shadow.Shadow
+import androidx.compose.ui.layout.layout
+import androidx.compose.ui.semantics.*
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.toutiaoyan.compose.ui.theme.LocalContentColor
 import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.components.message.TrackMessagePart
 import com.toutiaoyan.compose.ui.components.message.MessageAlign
+import com.toutiaoyan.compose.ui.components.message.LocalMessageAlign
 import com.toutiaoyan.compose.ui.components.text.Text
+import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
 import com.toutiaoyan.compose.ui.tokens.Colors
+import com.toutiaoyan.compose.ui.styles.cssStyleable
+import com.toutiaoyan.compose.ui.styles.focusVisible
+import com.toutiaoyan.compose.ui.utils.rememberTheme
 import com.toutiaoyan.compose.tailwind.core.twRadius
-import com.toutiaoyan.compose.tailwind.core.twSpacing
+import kotlin.math.roundToInt
 
 /** Part of shadcn's "AI Elements" family: the visual treatment of a [BubbleContent] box. */
 sealed interface BubbleVariant {
@@ -61,77 +66,74 @@ fun BubbleVariant.contentColor(colors: Colors): Color =
     when (this) {
         BubbleVariant.Default -> colors.primaryForeground
         BubbleVariant.Secondary -> colors.secondaryForeground
-        BubbleVariant.Muted -> colors.mutedForeground
+        BubbleVariant.Muted -> colors.foreground
         BubbleVariant.Outline -> colors.foreground
         BubbleVariant.Ghost -> colors.foreground
         BubbleVariant.Destructive -> colors.destructive
         BubbleVariant.Tinted -> colors.foreground
     }
 
+private val LocalBubbleVariant = compositionLocalOf<BubbleVariant> { BubbleVariant.Default }
+
 @Composable
-private fun BubbleVariant.rememberStyle(): Style {
-    val theme = currentTheme
-    val colors = theme.colors
-    val shapes = twRadius
-    val foreground = contentColor(colors)
-
-    return remember(this, colors, shapes, foreground, theme.isDark) {
-        when (this) {
-            BubbleVariant.Default ->
-                Style {
-                    background(colors.primary)
-                    contentColor(foreground)
-                    shape(RoundedCornerShape(shapes.xl))
+private fun BubbleVariant.rememberStyle(interactive: Boolean): Style =
+    rememberTheme(this, interactive) {
+        val variant = this@rememberStyle
+        Style {
+            fontSize(14.sp)
+            lineHeight(22.75.sp)
+            shape(if (variant == BubbleVariant.Ghost) RectangleShape else RoundedCornerShape(twRadius.xl))
+            borderWidth(1.dp)
+            borderColor(if (variant == BubbleVariant.Outline) colors.border else Color.Transparent)
+            contentPadding(
+                horizontal = if (variant == BubbleVariant.Ghost) 0.dp else 12.dp,
+                vertical = if (variant == BubbleVariant.Ghost) 0.dp else 8.dp,
+            )
+            contentColor(variant.contentColor(colors))
+            background(
+                when (variant) {
+                    BubbleVariant.Default -> colors.primary
+                    BubbleVariant.Secondary -> colors.secondary
+                    BubbleVariant.Muted -> colors.muted
+                    BubbleVariant.Outline -> colors.background
+                    BubbleVariant.Ghost -> Color.Transparent
+                    BubbleVariant.Destructive -> colors.destructive.copy(alpha = if (isDark) 0.2f else 0.1f)
+                    BubbleVariant.Tinted -> bubbleTintedColor(colors.primary, isDark)
+                },
+            )
+            if (interactive) {
+                animate(
+                    toSpec = tween(150, easing = FastOutSlowInEasing),
+                    fromSpec = tween(150, easing = FastOutSlowInEasing),
+                ) {
+                    hovered {
+                        background(
+                            when (variant) {
+                                BubbleVariant.Default -> colors.primary.copy(alpha = 0.8f)
+                                BubbleVariant.Secondary -> bubbleHoverMix(colors.secondary, colors.foreground)
+                                BubbleVariant.Muted -> bubbleHoverMix(colors.muted, colors.foreground)
+                                BubbleVariant.Outline ->
+                                    if (isDark) {
+                                        colors.input.copy(
+                                            alpha = colors.input.alpha * 0.3f,
+                                        )
+                                    } else {
+                                        colors.muted
+                                    }
+                                BubbleVariant.Ghost -> colors.muted.copy(alpha = if (isDark) 0.5f else 1f)
+                                BubbleVariant.Destructive -> colors.destructive.copy(alpha = if (isDark) 0.3f else 0.2f)
+                                BubbleVariant.Tinted -> bubbleTintedColor(colors.primary, isDark, hovered = true)
+                            },
+                        )
+                    }
                 }
-
-            BubbleVariant.Secondary ->
-                Style {
-                    background(colors.secondary)
-                    contentColor(foreground)
-                    shape(RoundedCornerShape(shapes.xl))
+                focusVisible {
+                    borderColor(colors.ring)
+                    dropShadow(Shadow(radius = 0.dp, spread = 3.dp, color = colors.ring.copy(alpha = 0.5f)))
                 }
-
-            BubbleVariant.Muted ->
-                Style {
-                    background(colors.muted)
-                    contentColor(foreground)
-                    shape(RoundedCornerShape(shapes.xl))
-                }
-
-            BubbleVariant.Outline ->
-                Style {
-                    background(colors.background)
-                    contentColor(foreground)
-                    borderWidth(1.dp)
-                    borderColor(colors.border)
-                    shape(RoundedCornerShape(shapes.xl))
-                }
-
-            BubbleVariant.Ghost ->
-                Style {
-                    contentColor(foreground)
-                }
-
-            BubbleVariant.Destructive ->
-                Style {
-                    background(colors.destructive.copy(alpha = 0.1f))
-                    contentColor(foreground)
-                    shape(RoundedCornerShape(shapes.xl))
-                }
-
-            // Official `oklch(from var(--primary) 0.93 …)` / dark `0.3` — alpha wash, not a
-            // full oklch chroma rewrite (Compose has no `oklch(from …)` primitive).
-            BubbleVariant.Tinted ->
-                Style {
-                    background(
-                        colors.primary.copy(alpha = if (theme.isDark) 0.3f else 0.12f),
-                    )
-                    contentColor(foreground)
-                    shape(RoundedCornerShape(shapes.xl))
-                }
+            }
         }
     }
-}
 
 /**
  * A single chat message bubble, part of shadcn's "AI Elements" family. Matches real
@@ -161,18 +163,30 @@ fun ColumnScope.Bubble(
     modifier: Modifier = Modifier,
     style: Style = Style,
     align: MessageAlign = MessageAlign.Start,
+    variant: BubbleVariant = BubbleVariant.Default,
     content: @Composable BoxScope.() -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Box(
-        modifier =
-            modifier
-                .align(if (align == MessageAlign.End) Alignment.End else Alignment.Start)
-                .fillMaxWidth(0.8f)
-                .styleable(styleState, style),
-        contentAlignment = if (align == MessageAlign.End) Alignment.TopEnd else Alignment.TopStart,
-        content = content,
-    )
+    if (variant == BubbleVariant.Ghost) TrackMessagePart(ghost = true)
+    val end = align == MessageAlign.End || LocalMessageAlign.current == MessageAlign.End
+    CompositionLocalProvider(LocalBubbleVariant provides variant) {
+        Box(
+            modifier =
+                modifier.align(if (end) Alignment.End else Alignment.Start)
+                    .layout { measurable, constraints ->
+                        val maximum =
+                            if (!constraints.hasBoundedWidth || variant == BubbleVariant.Ghost) {
+                                constraints.maxWidth
+                            } else {
+                                (constraints.maxWidth * 0.8f).toInt()
+                            }
+                        val child = measurable.measure(constraints.copy(minWidth = 0, maxWidth = maximum))
+                        layout(child.width, child.height) { child.placeRelative(0, 0) }
+                    }.styleable(styleState, style),
+            contentAlignment = if (end) Alignment.TopEnd else Alignment.TopStart,
+            content = content,
+        )
+    }
 }
 
 /** String-body overload of [Bubble]. */
@@ -184,7 +198,7 @@ fun ColumnScope.Bubble(
     style: Style = Style,
     align: MessageAlign = MessageAlign.Start,
 ) {
-    Bubble(modifier = modifier, style = style, align = align) {
+    Bubble(modifier = modifier, style = style, align = align, variant = variant) {
         BubbleContent(text, variant = variant)
     }
 }
@@ -199,7 +213,7 @@ fun BubbleGroup(
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Column(
         modifier = modifier.styleable(styleState, style),
-        verticalArrangement = Arrangement.spacedBy(twSpacing.sm),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
         content = content,
     )
 }
@@ -208,22 +222,45 @@ fun BubbleGroup(
 @Composable
 fun BubbleContent(
     modifier: Modifier = Modifier,
-    variant: BubbleVariant = BubbleVariant.Default,
+    variant: BubbleVariant? = null,
     style: Style = Style,
+    onClick: (() -> Unit)? = null,
+    enabled: Boolean = true,
     content: @Composable () -> Unit,
 ) {
-    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val resolved = variant ?: LocalBubbleVariant.current
+    val interaction = remember { MutableInteractionSource() }
+    val styleState = remember { MutableStyleState(interaction) }
+    val textStyle =
+        TextStyle(
+            fontSize = 14.sp,
+            lineHeight = 22.75.sp,
+            letterSpacing = 0.sp,
+            lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+        )
+    val interactiveModifier =
+        if (onClick == null) {
+            Modifier
+        } else {
+            Modifier
+                .hoverable(interaction, enabled)
+                .clickable(
+                    interactionSource = interaction,
+                    indication = null,
+                    enabled = enabled,
+                    role = Role.Button,
+                    onClick = onClick,
+                )
+        }
     Box(
         modifier =
-            modifier
-                .styleable(styleState, variant.rememberStyle(), style)
-                .padding(horizontal = twSpacing.md, vertical = twSpacing.sm),
+            modifier.then(interactiveModifier)
+                .cssStyleable(styleState, resolved.rememberStyle(onClick != null && enabled) then style),
     ) {
         CompositionLocalProvider(
-            LocalContentColor provides variant.contentColor(currentTheme.colors),
-        ) {
-            content()
-        }
+            LocalContentColor provides resolved.contentColor(currentTheme.colors),
+            LocalDefaultTextStyle provides textStyle,
+        ) { content() }
     }
 }
 
@@ -232,10 +269,12 @@ fun BubbleContent(
 fun BubbleContent(
     text: String,
     modifier: Modifier = Modifier,
-    variant: BubbleVariant = BubbleVariant.Default,
+    variant: BubbleVariant? = null,
     style: Style = Style,
+    onClick: (() -> Unit)? = null,
+    enabled: Boolean = true,
 ) {
-    BubbleContent(modifier = modifier, variant = variant, style = style) {
+    BubbleContent(modifier = modifier, variant = variant, style = style, onClick = onClick, enabled = enabled) {
         Text { text }
     }
 }
@@ -257,33 +296,46 @@ fun BoxScope.BubbleReactions(
     alignment: Alignment? = null,
     content: @Composable () -> Unit,
 ) {
-    val theme = currentTheme
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val reactionsStyle =
-        remember(theme) {
+        rememberTheme {
             Style {
-                background(theme.colors.muted)
-                shape(RoundedCornerShape(twRadius.full))
+                shape(RoundedCornerShape(50))
+                background(colors.muted)
+                contentColor(colors.foreground)
+                contentPadding(horizontal = 6.dp, vertical = 2.dp)
+                dropShadow(Shadow(radius = 0.dp, spread = 3.dp, color = colors.card))
             }
         }
     val resolvedAlignment =
-        alignment
-            ?: when {
-                side == BubbleReactionsSide.Top && align == MessageAlign.Start -> Alignment.TopStart
-                side == BubbleReactionsSide.Top -> Alignment.TopEnd
-                align == MessageAlign.Start -> Alignment.BottomStart
-                else -> Alignment.BottomEnd
-            }
-    val yOffset = if (side == BubbleReactionsSide.Top) -twSpacing.sm else twSpacing.sm
-    Row(
-        modifier =
-            modifier
-                .align(resolvedAlignment)
-                .offset(y = yOffset)
-                .styleable(styleState, reactionsStyle then style)
-                .padding(horizontal = twSpacing.xs, vertical = twSpacing.xs2),
-        horizontalArrangement = Arrangement.spacedBy(twSpacing.xs2),
-    ) {
-        content()
+        alignment ?: when {
+            side == BubbleReactionsSide.Top && align == MessageAlign.Start -> Alignment.TopStart
+            side == BubbleReactionsSide.Top -> Alignment.TopEnd
+            align == MessageAlign.Start -> Alignment.BottomStart
+            else -> Alignment.BottomEnd
+        }
+    Box(Modifier.matchParentSize()) {
+        Row(
+            modifier =
+                modifier.align(resolvedAlignment)
+                    .wrapContentSize(align = resolvedAlignment, unbounded = true)
+                    .layout { measurable, constraints ->
+                        val child = measurable.measure(constraints)
+                        val y = (child.height * 0.75f).roundToInt() * if (side == BubbleReactionsSide.Top) -1 else 1
+                        val x = (if (align == MessageAlign.Start) 12.dp else (-12).dp).roundToPx()
+                        layout(child.width, child.height) { child.placeRelative(x, y) }
+                    }.cssStyleable(styleState, reactionsStyle then style),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            CompositionLocalProvider(
+                LocalContentColor provides currentTheme.colors.foreground,
+                LocalDefaultTextStyle provides
+                    TextStyle(
+                        fontSize = 14.sp, lineHeight = 20.sp,
+                        lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+                    ),
+            ) { content() }
+        }
     }
 }

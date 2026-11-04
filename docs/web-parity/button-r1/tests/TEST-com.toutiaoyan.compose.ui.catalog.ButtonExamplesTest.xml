@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ButtonExamplesTest[jvm]" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-04T01:28:02.015Z" hostname="Apples-MacBook-Pro.local" time="1.447">
+  <properties/>
+  <testcase name="recipesShowOfficialLabelsSizesAndLoadingState[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonExamplesTest" time="0.686"/>
+  <testcase name="rtlLanguageSwitchesRestoreDirectionAndLoadingButtonsRemainDisabled[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonExamplesTest" time="0.255"/>
+  <testcase name="recipesShowOfficialLabelsSizesAndLoadingState[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonExamplesTest" time="0.059"/>
+  <testcase name="rtlLanguageSwitchesRestoreDirectionAndLoadingButtonsRemainDisabled[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonExamplesTest" time="0.118"/>
+  <testcase name="recipesShowOfficialLabelsSizesAndLoadingState[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonExamplesTest" time="0.05"/>
+  <testcase name="rtlLanguageSwitchesRestoreDirectionAndLoadingButtonsRemainDisabled[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonExamplesTest" time="0.116"/>
+  <testcase name="recipesShowOfficialLabelsSizesAndLoadingState[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonExamplesTest" time="0.049"/>
+  <testcase name="rtlLanguageSwitchesRestoreDirectionAndLoadingButtonsRemainDisabled[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonExamplesTest" time="0.11"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

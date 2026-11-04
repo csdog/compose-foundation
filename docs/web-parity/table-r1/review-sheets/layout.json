@@ -1,0 +1,16 @@
+{
+  "names": [
+    "default",
+    "footer",
+    "actions",
+    "rtl-arabic",
+    "rtl-english",
+    "rtl-hebrew"
+  ],
+  "columns": 2,
+  "rows": 3,
+  "cellWidth": 616,
+  "cellHeight": 420,
+  "padding": 12,
+  "note": "Original native pixels on theme background, no resize/crop. WindowInfo1440/390 inside actualJVMdesktop scene; not browser/phoneOS."
+}

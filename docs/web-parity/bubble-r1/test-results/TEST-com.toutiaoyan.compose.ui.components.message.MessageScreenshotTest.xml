@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MessageScreenshotTest[jvm]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-30T08:50:09.431Z" hostname="Apples-MacBook-Pro.local" time="0.074">
+  <properties/>
+  <testcase name="conversation_with_bubbles_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.message.MessageScreenshotTest" time="0.042"/>
+  <testcase name="conversation_with_bubbles_light[jvm]" classname="com.toutiaoyan.compose.ui.components.message.MessageScreenshotTest" time="0.032"/>
+  <system-out><![CDATA[Roborazzi: message_conversation_with_bubbles_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=130544, width=328, height=398) changed:false
+Roborazzi: message_conversation_with_bubbles_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=130544, width=328, height=398) changed:false
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

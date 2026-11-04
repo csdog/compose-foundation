@@ -1,0 +1,109 @@
+{
+  "status": "partial; component stays unchecked",
+  "target": "base-nova",
+  "officialPreview": "MDX and recipes use base-rhea; Content gap Nova24/Rhea32, root inline TSX. Native library targets Nova.",
+  "sourceRevision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "officialRecipes": [
+    {
+      "source": "message-scroller-demo.tsx",
+      "status": "source archived; official recipe migration and browser verification pending"
+    },
+    {
+      "source": "message-scroller-anchoring.tsx",
+      "status": "source archived; official recipe migration and browser verification pending"
+    },
+    {
+      "source": "message-scroller-group-chat.tsx",
+      "status": "source archived; official recipe migration and browser verification pending"
+    },
+    {
+      "source": "message-scroller-previous-context.tsx",
+      "status": "Native recipe migrated and four width/theme combinations tested/viewed in r3; browser and remaining-state verification pending."
+    },
+    {
+      "source": "message-scroller-streaming.tsx",
+      "status": "source archived; official recipe migration and browser verification pending"
+    },
+    {
+      "source": "message-scroller-opening-position.tsx",
+      "status": "Native recipe migrated and four width/theme combinations tested/viewed in r2; browser verification pending."
+    },
+    {
+      "source": "message-scroller-load-history.tsx",
+      "status": "Native recipe migrated and four width/theme combinations tested/viewed in r3; browser and remaining-state verification pending."
+    },
+    {
+      "source": "message-scroller-animation.tsx",
+      "status": "source archived; official recipe migration and browser verification pending"
+    },
+    {
+      "source": "message-scroller-commands.tsx",
+      "status": "Native recipe migrated and four width/theme combinations tested/viewed in r2; browser verification pending."
+    },
+    {
+      "source": "message-scroller-visibility.tsx",
+      "status": "Native recipe migrated and four width/theme combinations tested/viewed in r3; browser and remaining-state verification pending."
+    },
+    {
+      "source": "message-scroller-scrollable.tsx",
+      "status": "Native recipe migrated and four width/theme combinations tested/viewed in r2; browser verification pending."
+    }
+  ],
+  "nativeExamples": "Six official recipes precede supplemental native examples. Interim first preview is Context; actual official Default/chat still pending.",
+  "implemented": [
+    "Provider defaults autoScroll=false, opening End, edge8dp, margin0, previous peek64dp; opt-in following re-arms at real edge",
+    "Root is BoxScope frame, Viewport owns native scroll, Content defaults Nova24dp gap and polite liveRegion, Item registers IDs/anchors; explicit sibling Button",
+    "One-shot opening Start/End/LastAnchor, single-new-turn anchor/spacer, streaming spacer consumption and >0-to0 handoff, multi-anchor following",
+    "Suspend Start/End/Message commands with Auto/Smooth and four alignments, Dp margin override, content and row padding measurement",
+    "Prepend and earlier-row reflow preserve reading position; disable flag, current-anchor and visible-message queries excluding peek band and anonymous IDs",
+    "Nova28dp floating Button with16dp Lucide stroked arrow, disabled/unfocusable/hidden semantics during exit, style/theme caching, old bare-root adapter retained",
+    "Layout callbacks cache plain geometry; conflated channel reconciles after a frame. Each correction has a structured child job so native mutation cancellation cannot detach controller.",
+    "Each command has caller-owned nested coroutineScope and revision-protected cleanup. Pointer/key/wheel intent cancels waiting spacer-frame jump; later command supersedes earlier without stale mode cleanup.",
+    "Version0.3.13 reflects BoxScope API and canonical scroll ownership; seven API sections and primary usage updated",
+    "Initial-position cancellation reveals transcript in finally; pendingScroll no longer leaves Viewport alpha0. Added regression reproduces original stuck-transparent state before fix."
+  ],
+  "migration": [
+    "Root receiver ColumnScope -> BoxScope. Under Provider, put Content inside Viewport and add explicit sibling MessageScrollerButton.",
+    "ContentSpacing default32 ->24dp matches Nova gap-6. Pass32.dp explicitly for previous/Rhea spacing.",
+    "Standalone Viewport/Content/Item available; bare Root preserves old automatic Column scrolling and default button, thresholdPx adapter retained."
+  ],
+  "remaining": [
+    "Five exact official recipes still need migration: demo/default, anchoring, group-chat, streaming, animation. All six migrated recipes still require browser full-state verification.",
+    "Desktop/mobile x light/dark browser visuals and interactions pending permission to recreate missing original Ego goal space18.",
+    "Pending scrollToMessage when the transcript has zero items is unsupported. Upstream queues an unknown ID only when itemCount===0; unknown IDs after items exist still returnfalse.",
+    "HTML region/log and aria-relevant=additions, busy and screenreader semantics not fully mapped; polite liveRegion alone is not equivalent.",
+    "Thin scrollbar, stable scrollbar gutter, overscroll containment, browser content-visibility/virtualization are not ported.",
+    "Arbitrary nested wrappers/multiple viewports, transformed coordinates, padding/min-full, selection preservation, row reorder/unmount and first-frame pending-position matrix still need verification.",
+    "Button render/children/variant/size forwarded APIs differ; native icon/style/behavior supported. Nova/Rhea preview-specific nested component styles differ.",
+    "Full keyboard editable-child handling, accessibility, RTL, dynamic theme, font scale, custom Style and gesture transition matrix remain unverified.",
+    "In-flight viewport unmount/remount, initial LastAnchor spacer cancellation and full first-frame visibility transitions still need broader coverage."
+  ],
+  "verification": {
+    "sourceFilesHashed": 42,
+    "red": "UserInput correction detached controller; pending spacer-frame jump moved0->536 after pointerdown. Native active smooth interruption already passed. Exact XML retained in verification directory once copied. Initial End opening interrupted by UserInput additionally reproduced mounted=true/pendingScroll=true, keeping alpha0.",
+    "final": "Final independent core56/56, app3/3, owning four quality checks, JS and Wasm passed after opening-cancellation fix. No source changed after final checks.",
+    "coreIndependentVerify": {
+      "total": 56,
+      "behavior": 25,
+      "newGoldens": 2,
+      "pureFunctions": 15,
+      "oldGoldens": 14
+    },
+    "appExamples": 3,
+    "owningQuality": "Historical r1 task exits only: default Detekt was later found to analyze zero sources. r2 actual commonMain analysis failed; see r2 and r3 matrices. r1 test results retain their recorded scope.",
+    "web": {
+      "js": {
+        "run": "0028",
+        "exit": 0,
+        "seconds": 134.683
+      },
+      "wasm": {
+        "run": "0029",
+        "exit": 0,
+        "seconds": 92.767
+      },
+      "mode": "Separate --no-parallel --max-workers=1, project heap/config unchanged. Existing Text.kt warning retained; absent historical os/path fingerprint is not proof of remediation."
+    }
+  },
+  "followUp": "../message-scroller-r3/parity-matrix.json"
+}

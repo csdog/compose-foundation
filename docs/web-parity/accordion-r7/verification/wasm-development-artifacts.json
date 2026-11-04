@@ -1,0 +1,42 @@
+{
+  "directory": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/webApp/build/dist/wasmJs/developmentExecutable",
+  "seconds": 26.837,
+  "exit": 0,
+  "warnings": 1,
+  "files": {
+    "658820f72b4617efb380.wasm": {
+      "bytes": 8648883,
+      "mtime": "2026-11-02T10:27:36.601908",
+      "sha256": "08e904ec38a6a81a4809a853acf68022f83905286827e804e88b262c37f2954d"
+    },
+    "webApp.js": {
+      "bytes": 3674354,
+      "mtime": "2026-11-02T10:27:36.604008",
+      "sha256": "b282da7b2040ed3d92f41183e060d6851804cea1b32aa9ebd4a732996850c7c9"
+    },
+    "index.html": {
+      "bytes": 1022,
+      "mtime": "2026-11-02T10:27:36.596518",
+      "sha256": "af3ef9f81953e35cb4386036fbf85958c91909d0dbfa1dd176400c05355a6ea7"
+    },
+    "styles.css": {
+      "bytes": 102,
+      "mtime": "2026-11-02T10:27:36.596852",
+      "sha256": "adeed4cf2e4f76faf945f1f0adf8a05fce135eb43b383a06ee336aa936ff9e5c"
+    },
+    "4519defb97ff747d2e8d.wasm": {
+      "bytes": 42428628,
+      "mtime": "2026-11-02T10:27:36.638793",
+      "sha256": "53441dfb6bb0f00c3e3ec35f2ac62a0a06f24d06ca88ebd0cb4ad944794f8381"
+    },
+    "favicon.svg": {
+      "bytes": 1088,
+      "mtime": "2026-11-02T10:27:36.597505",
+      "sha256": "96db1090214e1fe55051ecf0e2f54de39be7075c48c57d7a16be355c608b13ca"
+    }
+  },
+  "moduleAssets": {
+    "./kotlin/compose-foundation-app-webApp.wasm": "4519defb97ff747d2e8d.wasm",
+    "./kotlin/skiko.wasm": "658820f72b4617efb380.wasm"
+  }
+}

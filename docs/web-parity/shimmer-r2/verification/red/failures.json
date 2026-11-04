@@ -1,0 +1,18 @@
+[
+  {
+    "test": "darkDefaultPeakUsesRelativeOklchLightness[jvm]",
+    "message": "java.lang.AssertionError: Relative OKLCH L+0.4/min0.8 should visibly brighten, actual=0.45490196"
+  },
+  {
+    "test": "defaultBaseIsTheActualTextColor[jvm]",
+    "message": "java.lang.AssertionError: Expected value to be true."
+  },
+  {
+    "test": "lightDefaultPeakUsesCurrentColorAtTwentyPercentAlpha[jvm]",
+    "message": "java.lang.AssertionError: Black at20% alpha over white should be pale, actual=0.47843137"
+  },
+  {
+    "test": "explicitTranslucentPeakKeepsItsAlphaInsteadOfCompositingOverBase[jvm]",
+    "message": "java.lang.AssertionError: Half-blue peak must reveal white surface, not become opaque purple: 0.0"
+  }
+]

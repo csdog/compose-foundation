@@ -1,0 +1,35 @@
+{
+  "revision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "files": [
+    {
+      "file": "source/toast.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/content/docs/components/base/toast.mdx",
+      "sha256": "282db7dad6c7a9abf562aa998f89cf9088e136868fbea9d41fd06ef9615f2ecc"
+    },
+    {
+      "file": "source/toast.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/bases/base/ui/toast.tsx",
+      "sha256": "7109c9718288d39c49fe62e5a55a19a63a56ab60e950619df64d30d63564c0b9"
+    },
+    {
+      "file": "source/toast-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/toast-demo.tsx",
+      "sha256": "a59ce6cb148570f2352395943b0801b3c674b528166841ef30ba14c3abda548b"
+    },
+    {
+      "file": "source/toast-types.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/toast-types.tsx",
+      "sha256": "3701d095cce2403c244eed822d55a38168be4f7d349d9e87643226e0f1eaf6d1"
+    },
+    {
+      "file": "source/toast-promise.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/toast-promise.tsx",
+      "sha256": "89eb816749682e650a247d6a14a43b55e3bc1f1151c9ca116c8d9fff9624b0ff"
+    },
+    {
+      "file": "source/style-nova.css",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+    }
+  ]
+}

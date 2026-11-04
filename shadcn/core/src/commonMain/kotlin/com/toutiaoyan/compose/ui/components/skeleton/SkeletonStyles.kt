@@ -2,6 +2,9 @@
 
 package com.toutiaoyan.compose.ui.components.skeleton
 
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.runtime.remember
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
@@ -30,10 +33,14 @@ fun rememberSkeletonChrome(): Style =
 /** `animate-pulse` — opacity `1 ↔ 0.5`. */
 @Composable
 fun rememberSkeletonPulse(): Style {
-    val pulseAlpha = TwAnimate.rememberPulse()
-    return rememberTheme(pulseAlpha) {
-        Style { alpha(pulseAlpha) }
-    }
+    val pulseAlpha =
+        rememberInfiniteTransition(label = "skeleton-pulse").animateFloat(
+            initialValue = 1f,
+            targetValue = 0.5f,
+            animationSpec = TwAnimate.pulse,
+            label = "skeleton-opacity",
+        )
+    return remember(pulseAlpha) { Style { alpha(pulseAlpha.value) } }
 }
 
 /** `rounded-md` + fill + `animate-pulse` — full default class set. */

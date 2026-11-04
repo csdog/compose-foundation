@@ -1,0 +1,30 @@
+[
+  {
+    "name": "TabsBehaviorParityTest[jvm]",
+    "tests": "12",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "TabsChromeParityTest[jvm]",
+    "tests": "8",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "TabsNovaParityTest[jvm]",
+    "tests": "2",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "TabsExamplesTest[jvm]",
+    "tests": "36",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  }
+]

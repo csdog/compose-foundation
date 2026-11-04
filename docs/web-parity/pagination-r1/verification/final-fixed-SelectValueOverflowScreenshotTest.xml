@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="SelectValueOverflowScreenshotTest[jvm]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-30T17:57:59.495Z" hostname="Apples-MacBook-Pro.local" time="0.034">
+  <properties/>
+  <testcase name="dark[jvm]" classname="com.toutiaoyan.compose.ui.components.select.SelectValueOverflowScreenshotTest" time="0.018"/>
+  <testcase name="light[jvm]" classname="com.toutiaoyan.compose.ui.components.select.SelectValueOverflowScreenshotTest" time="0.016"/>
+  <system-out><![CDATA[Roborazzi: select_nova_value_ellipsis_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=12768, width=168, height=76) changed:false
+Roborazzi: select_nova_value_ellipsis_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=12768, width=168, height=76) changed:false
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

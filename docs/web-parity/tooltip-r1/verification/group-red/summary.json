@@ -1,0 +1,17 @@
+{
+  "name": "TooltipBehaviorParityTest[jvm]",
+  "tests": "2",
+  "failures": "2",
+  "errors": "0",
+  "skipped": "0",
+  "failedCases": [
+    {
+      "name": "newlyHoveredSiblingClosesTheFocusedTooltipWithoutStealingFocus[jvm]",
+      "message": "java.lang.AssertionError: Failed: assertDoesNotExist.\nReason: Did not expect any node but found '1' node that satisfies: (Text + InputText + EditableText contains 'First details' (ignoreCase: false))\nNode found:\nNode #23 at (l=14.0, t=66.0, r=87.0, b=82.0)px\nText = '[First details]'\nActions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]\nHas 1 sibling\n"
+    },
+    {
+      "name": "newlyOpenedSiblingClosesThePreviousHover[jvm]",
+      "message": "java.lang.AssertionError: Failed: assertDoesNotExist.\nReason: Did not expect any node but found '1' node that satisfies: (Text + InputText + EditableText contains 'First details' (ignoreCase: false))\nNode found:\nNode #54 at (l=14.0, t=66.0, r=87.0, b=82.0)px\nText = '[First details]'\nActions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]\nHas 1 sibling\n"
+    }
+  ]
+}

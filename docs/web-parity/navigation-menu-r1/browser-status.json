@@ -1,0 +1,7 @@
+{
+  "originalTaskSpace": 18,
+  "freshReadOnlyCheck": "2026-10-31 ego-browser with normal desktop access returned task space not found:18.",
+  "guideVersion": "2.2.0",
+  "matrixPerformed": false,
+  "action": "Existing permission-to-recreate question unanswered; no new space, claim/adoption, navigation or usertab takeover."
+}

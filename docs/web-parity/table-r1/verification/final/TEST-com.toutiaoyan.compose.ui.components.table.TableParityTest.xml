@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TableParityTest[jvm]" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-10-30T22:12:32.245Z" hostname="Apples-MacBook-Pro.local" time="0.802">
+  <properties/>
+  <testcase name="overflowingColumnsExposeHorizontalScrollAndCanReachLastCell[dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.445"/>
+  <testcase name="physicalRightAndLogicalEndAreDistinctInRtl[dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.024"/>
+  <testcase name="stringLambdaAndComposableCellSlotsBothWork[dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.068"/>
+  <testcase name="headerIsFortyAndBodyUsesFourteenTwentyWithEightPixelPadding[dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.024"/>
+  <testcase name="rowIsTransparentAndHoverUsesMutedAtHalfAlpha[dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.025"/>
+  <testcase name="selectedStateIsExposedToAccessibility[dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.019"/>
+  <testcase name="captionDeclaredFirstRendersBelowRowsWithSixteenPixelMargin[dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.021"/>
+  <testcase name="footerIsHalfMutedWithATopRuleAndNoTrailingRule[dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.018"/>
+  <testcase name="overflowingColumnsExposeHorizontalScrollAndCanReachLastCell[dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.029"/>
+  <testcase name="physicalRightAndLogicalEndAreDistinctInRtl[dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.018"/>
+  <testcase name="stringLambdaAndComposableCellSlotsBothWork[dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.021"/>
+  <testcase name="headerIsFortyAndBodyUsesFourteenTwentyWithEightPixelPadding[dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.018"/>
+  <testcase name="rowIsTransparentAndHoverUsesMutedAtHalfAlpha[dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.018"/>
+  <testcase name="selectedStateIsExposedToAccessibility[dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.017"/>
+  <testcase name="captionDeclaredFirstRendersBelowRowsWithSixteenPixelMargin[dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.017"/>
+  <testcase name="footerIsHalfMutedWithATopRuleAndNoTrailingRule[dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.017"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

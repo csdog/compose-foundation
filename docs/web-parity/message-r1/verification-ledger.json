@@ -1,0 +1,287 @@
+{
+  "command_fingerprints": {
+    "1701029e6a34a5a9af96644466f25da8bd5af4b98bce0364977a55b0b932ca8c": 1,
+    "5d98a402c306380b0aaf4360c90926f6cc0bb796cbf8389bb2b9de6f95ec796d": 1,
+    "94d4c4b8d98da44aaefbee452bafd81a4875aba09691c9237cc6a0ce98b796b1": 1,
+    "99ce004b62df16e505c93e28245f41109fe1ae6e98eb1ef52074726ba40a3133": 2,
+    "9ff1fd91c07beee63b54b57ae607a9f1d69ebdcd9bbbfc42976a2d3467952489": 3,
+    "b33c3f76062d40ba49bb18ec719f688aa4c97819f4fb10b0cd382c387b79397d": 1,
+    "d9457ea3d2a293561829cedd45bd2ef264fa2ed767165bbf5663f270eefdf8d8": 1,
+    "dc74d69b2f8b6e7288d656e7733ecf77640759e4949e7053f79f6b0685b079d5": 1,
+    "e58cd3c2124e6069cb84133b2421dcc30afb11d56ee045c380a6505c1db50e6e": 1
+  },
+  "failure_fingerprints": {
+    "069a489c49bcc0e235dbcdab0578a89a0365c641f1bc5049ed114577791141e8": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MessageDoc.kt:744:45 Unresolved reference 'Icon'.",
+      "occurrences": 1
+    },
+    "233db594a0e3bc10d87bda397bd2cba702f6c7ffb364276779134f343077810a": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MessageDoc.kt:911:49 Unresolved reference 'Icon'.",
+      "occurrences": 1
+    },
+    "4d7e3a4c1b584a361ba37ed28a4129302c98996db36ed02073c2968dc1b5a6f5": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MessageDoc.kt:796:49 Unresolved reference 'Icon'.",
+      "occurrences": 1
+    },
+    "4eaa0fcb9e87d9e36d4bdb39617381a79e001e80608501dee3bd89903663043c": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MessageDoc.kt:895:59 Unresolved reference 'Icon'.",
+      "occurrences": 1
+    },
+    "53dd21bcd8794576aa1d901faa37ceabb1ead8c09fff20aae1c6b3c9b6c2fff9": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/message/MessageStyles.kt:35:21 None of the following candidates is applicable:",
+      "occurrences": 1
+    },
+    "68cc6a11c5abe07f95b815384cc73e88635f22b22642dd8595dd5f6a9a616151": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MessageDoc.kt:760:45 Unresolved reference 'Icon'.",
+      "occurrences": 1
+    },
+    "a5175657aee83c473dc06558c284fe3352f4b51bc09ee7335316ac874125bc15": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:compileKotlinJvm' (registered in build file 'shadcn/core/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kotlin ...",
+      "occurrences": 1
+    },
+    "d929739185660930a84841ada1ef6144465f0d6f7f97f21e0ef706f5a8a96bcb": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MessageDoc.kt:728:45 Unresolved reference 'Icon'.",
+      "occurrences": 1
+    },
+    "ffed148f1907d2e8ec6d23ac0f3eaa6c2603efe489ba2128821b36af7cd69d66": {
+      "excerpt": "* What went wrong: Execution failed for task ':app:shared:compileKotlinJvm' (registered in build file 'app/shared/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kotlin co...",
+      "occurrences": 1
+    }
+  },
+  "failure_fingerprints_truncated_occurrences": 0,
+  "run_count": 12,
+  "runs": [
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *MessageParityTest --tests *MessageScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 0.058,
+      "exit_status": 1,
+      "failure_fingerprints": [],
+      "log": "0001.log",
+      "question": "Does Message Nova layout and metadata behavior pass its owning core tests while preserving existing captures?",
+      "scope": "targeted",
+      "sequence": 1,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *MessageParityTest --tests *MessageScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 5.378,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "53dd21bcd8794576aa1d901faa37ceabb1ead8c09fff20aae1c6b3c9b6c2fff9",
+        "a5175657aee83c473dc06558c284fe3352f4b51bc09ee7335316ac874125bc15"
+      ],
+      "log": "0002.log",
+      "question": "With normal Gradle cache access, does Message Nova layout and metadata behavior pass its owning core tests while preserving existing captures?",
+      "scope": "targeted",
+      "sequence": 2,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *MessageParityTest --tests *MessageScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 14.81,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0003.log",
+      "question": "After correcting metadata contentPadding overload, do Message parity and existing screenshot capture tests compile and pass?",
+      "scope": "targeted",
+      "sequence": 3,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *MessageExamplesTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 3.409,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "d929739185660930a84841ada1ef6144465f0d6f7f97f21e0ef706f5a8a96bcb",
+        "069a489c49bcc0e235dbcdab0578a89a0365c641f1bc5049ed114577791141e8",
+        "68cc6a11c5abe07f95b815384cc73e88635f22b22642dd8595dd5f6a9a616151",
+        "4d7e3a4c1b584a361ba37ed28a4129302c98996db36ed02073c2968dc1b5a6f5",
+        "4eaa0fcb9e87d9e36d4bdb39617381a79e001e80608501dee3bd89903663043c",
+        "233db594a0e3bc10d87bda397bd2cba702f6c7ffb364276779134f343077810a",
+        "ffed148f1907d2e8ec6d23ac0f3eaa6c2603efe489ba2128821b36af7cd69d66"
+      ],
+      "log": "0004.log",
+      "question": "Do the six official Message examples compile with packaged avatar resources and pass their functional contracts?",
+      "scope": "targeted",
+      "sequence": 4,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *MessageParityTest --tests *MessageScreenshotTest --tests *BubbleParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 3.24,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0005.log",
+      "question": "Do extended Message Nova layout, RTL, clip, and ghost contracts pass together with existing Message and Bubble captures?",
+      "scope": "targeted",
+      "sequence": 5,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *MessageExamplesTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 16.649,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0006.log",
+      "question": "After supplying the missing Icon import, do the six official Message catalog recipe contracts pass?",
+      "scope": "targeted",
+      "sequence": 6,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:recordRoborazziJvm --tests *MessageParityTest.nova_light --tests *MessageParityTest.nova_dark --tests *MessageParityTest.ghost_nova_light --tests *MessageParityTest.ghost_nova_dark --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.846,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0007.log",
+      "question": "Record only the four new Message Nova and ghost fixtures for parent visual review, without updating any existing golden.",
+      "scope": "targeted",
+      "sequence": 7,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests *MessageParityTest --tests *MessageScreenshotTest --tests *BubbleParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 3.028,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0008.log",
+      "question": "After parent visual acceptance of four new Message fixtures, do Message behavior, all new and existing Message goldens, and directly affected Bubble regression goldens verify independently?",
+      "scope": "targeted",
+      "sequence": 8,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:ktlintCheck :shadcn:core:detekt :app:shared:ktlintCheck :app:shared:detekt --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 17.35,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0009.log",
+      "question": "Do the owning core and catalog ktlint and detekt checks pass after Message API, layout, ghost tracking, examples, and resource updates?",
+      "scope": "targeted",
+      "sequence": 9,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:jsBrowserDistribution --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 144.246,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0010.log",
+      "question": "Does the Message catalog build its JS browser distribution with single-worker serial compilation to avoid the previously confirmed concurrent compiler memory pressure?",
+      "scope": "targeted",
+      "sequence": 10,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:wasmJsBrowserDistribution --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 93.383,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0011.log",
+      "question": "Does the Message catalog build its WasmJS browser distribution independently with serial single-worker compilation after JS completed?",
+      "scope": "targeted",
+      "sequence": 11,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *MessageParityTest.legacyRowScopeContentCallStillUsesTheWeightedBridge :shadcn:core:ktlintCheck :shadcn:core:detekt :app:shared:ktlintCheck :app:shared:detekt :app:shared:compileKotlinJvm --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 23.696,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0012.log",
+      "question": "Does the old RowScope.MessageContent trailing-lambda call retain weighted layout, and do owning quality plus catalog compilation remain clean after the test and exported-code whitespace edit?",
+      "scope": "targeted",
+      "sequence": 12,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    }
+  ],
+  "version": 1,
+  "warning_fingerprints": {
+    "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312": {
+      "excerpt": "w: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/text/Text.kt:5:16 Suppression of error 'INVISIBLE_REFERENCE' might compile and work, but the compiler behavior is UNSP...",
+      "occurrences": 4
+    },
+    "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4": {
+      "excerpt": "You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.",
+      "occurrences": 9
+    },
+    "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2": {
+      "excerpt": "Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.",
+      "occurrences": 9
+    },
+    "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a": {
+      "excerpt": "WARNING: The option setting 'android.experimental.enableScreenshotTest=true' is experimental.",
+      "occurrences": 9
+    },
+    "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=UNSUPPORTED_PROJECT_OPTION_USE to the gradle.properties file to suppress this warning.",
+      "occurrences": 18
+    },
+    "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90": {
+      "excerpt": "WARNING: The option setting 'android.experimental.testSuiteSupport=true' is experimental.",
+      "occurrences": 9
+    }
+  },
+  "warning_fingerprints_truncated_occurrences": 0,
+  "workflow": "4b43c16d65e5732f0dd421346d943de8"
+}

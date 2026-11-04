@@ -1,0 +1,65 @@
+{
+  "component": "scroll-fade",
+  "complete": false,
+  "libraryVersion": "0.3.23",
+  "upstreamRevision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "officialRecipes": {
+    "migrated": [
+      "default",
+      "overflow",
+      "horizontal",
+      "edge",
+      "size",
+      "none",
+      "rtl"
+    ],
+    "sourcePresets": {
+      "firstSix": "base-rhea",
+      "rtl": "base-nova"
+    },
+    "browserAccepted": []
+  },
+  "implemented": [
+    "Default min(12% viewport,40dp),96dp ease-in-out scroll reveal; typed length/fraction/per-edge options and no-fade",
+    "Physical Top/Bottom/Left/Right and logical Start/End/Both with reading-direction-aware gradients",
+    "Single CSS-compatible mask gradient and color-stop fixup for overlapping/oversized fades; RTL direction preserves logical stop order",
+    "Offscreen DstIn alpha mask, draw/cache phase position reads, no caller recomposition in real-touch fixture",
+    "Viewport mask placement documented; invalid old methodname removed from copy code",
+    "Seven source recipes, exact labels/translations,320maxwidth,40dp tiles,6dp gaps/padding,correct source heights",
+    "Generic Tailwind radius uses global baseRadius ladder10/18 bydefault ratherthan Rhea componentpersonality18/26",
+    "MessageScroller mask placed before verticalScroll;Attachment5arg capped configuration preserved and pixel-tested withoutAttachmentedits",
+    "Six newNova goldens and four intentionally corrected old baseline images reviewed and independently verified"
+  ],
+  "validation": {
+    "mathTests": 13,
+    "nativePixelAndInteractionTests": 14,
+    "newNovaGoldens": 6,
+    "correctedLegacyScrollFadeGoldens": 2,
+    "messageScrollerDependencyTestsIncludingTwoCorrectedGoldens": 29,
+    "catalogTests": 28,
+    "total": 92,
+    "ktlintChecks": 2,
+    "nativeRecipeCapturesReviewed": 64,
+    "allFinalCaptureHashesMatchReviewed": true,
+    "oldBaselineUpdates": "Only2ScrollFade fixtures corrected to measuredmidpoint/viewportmask and2MessageScrollerproviderNova fixedalpha. Beforeimages/hashessaved; no blanket re-record.",
+    "js": "exit0 in21.569s; samewebpackos/pathdiagnostics, notclean",
+    "wasm": "exit0 in18.178s;onewebpackwarning",
+    "workflowFinished": true,
+    "evidence": "verification/final-summary.json",
+    "sourceHashesMatch": 14
+  },
+  "limitations": [
+    "MockWindowInfo1440/390 inside actualdesktop1024x768scene is not mobile/browser/page acceptance.",
+    "Native alpha rendering is always scroll-aware; upstream unsupported-browser static fallback is not selected by browser capability.",
+    "Default40/96dp assumes standard CSS4px spacing unit; automatic customunitSpacing/rem mapping remains open.",
+    "Caption recipe parameters accept caller mono font; live catalog uses GeistMono while copied functions default to platformMonospace."
+  ],
+  "remaining": [
+    "Actual website/local desktop/mobile light/dark page and full-state comparison",
+    "Exact browser physical-x timeline semantics for Left/Right in RTL, overscroll/rubberband and high-resolution touchpad",
+    "Runtime theme/fontscale/density/orientation/config/enable-toggle matrices and accessibility reading/focus/keyboard variations",
+    "CSS unsupported-scroll-timeline fallback mapping, custom spacing units and compound mask intersection",
+    "Full MessageScroller web/statusmatrix remains tracked in its own rounds; this round fixes only sharedmask placement/dependencyrasters"
+  ],
+  "browserStatusReference": "../popover-r2/browser-status.json"
+}

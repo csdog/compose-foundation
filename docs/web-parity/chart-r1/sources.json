@@ -1,0 +1,60 @@
+{
+  "revision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "files": [
+    {
+      "file": "source/chart.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/content/docs/components/base/chart.mdx",
+      "sha256": "2d2a256a5fa2f2dd71faabde8f78108910d65a864fc708d015880bd7d45b2043"
+    },
+    {
+      "file": "source/chart.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/bases/base/ui/chart.tsx",
+      "sha256": "cdaa7c2e82aaf7b233c4764cf506cd9912aa1a49d5a02d4fd2f9a8c134687877"
+    },
+    {
+      "file": "source/chart-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/chart-demo.tsx",
+      "sha256": "7d43821bc8556c7264b2d632afb6d5b4668b9fe169df958c72ed0f161ce74989"
+    },
+    {
+      "file": "source/chart-example.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/chart-example.tsx",
+      "sha256": "6399bac7205d2f4e750bcde19a0d794ab466d3f29080fc861e0ded1da7e14313"
+    },
+    {
+      "file": "source/chart-example-grid.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/chart-example-grid.tsx",
+      "sha256": "6f96ddf8058aa475578bf7e902382e46560aed3f7da8a017e0406238c8187a3d"
+    },
+    {
+      "file": "source/chart-example-axis.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/chart-example-axis.tsx",
+      "sha256": "452ff0a2d6ea2d63c8b13901687018b6ba0e6b4ea6eb7a5940342b020d450510"
+    },
+    {
+      "file": "source/chart-example-tooltip.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/chart-example-tooltip.tsx",
+      "sha256": "f2c1aec10a7d4a4c691ac3cb29a571a742a8e30e3e9ab66afdc03193c99df970"
+    },
+    {
+      "file": "source/chart-example-legend.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/chart-example-legend.tsx",
+      "sha256": "72332f904caedaa24ec929f9a50983ae44e3ed841a7c3790136fc1e5cca229b8"
+    },
+    {
+      "file": "source/chart-tooltip.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/chart-tooltip.tsx",
+      "sha256": "62c2676cc479f95765245e25a38f62ce5e10cd600dbbbda5ad32f413dad849f3"
+    },
+    {
+      "file": "source/chart-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/chart-rtl.tsx",
+      "sha256": "95695b4475abd49751c0cf596d166fcf4294b75f3a9ca71182dfb4f8a63ee86d"
+    },
+    {
+      "file": "source/style-nova.css",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+    }
+  ]
+}

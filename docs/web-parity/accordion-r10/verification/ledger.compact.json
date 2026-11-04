@@ -1,0 +1,129 @@
+{
+  "command_fingerprints": {
+    "10b56af7390e4b6ffe2ce73e86edcd466793a76ababe24ea8701b29dd55a2898": 1,
+    "9596741e1892ca1ba6bc95a83bfe05abddb956ad01d28c819b446111390555a5": 1,
+    "db04d6eceda030f5181133dc31f5daa1f987f010ae03a83763162c9fdf907267": 3
+  },
+  "failure_fingerprints": {
+    "26cbb0b8fd72fe0237878ec29fe3851b13b6c96448674ad18a36d3b2a0df7754": {
+      "excerpt": "* What went wrong: Execution failed for task ':app:shared:compileKotlinJvm' (registered in build file 'app/shared/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kotlin co...",
+      "occurrences": 1
+    },
+    "433200d9208a6f726e1e2e7af16d2c8493d59bff89ce3aa7251dc8515433f8e6": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/AccordionDoc.kt:514:47 Cannot access 'val LocalTheme: ProvidableCompositionLocal<ThemeData>': it is internal in 'com....",
+      "occurrences": 1
+    },
+    "6288e77ee5d20c255ff46889f1bdb0dadd10ada522d9316ea15ca0baa60fc5b3": {
+      "excerpt": "* What went wrong: Execution failed for task ':app:shared:jvmTest'. > There were failing tests. See the report at: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/reports/tests/jvmTest/index.html",
+      "occurrences": 1
+    }
+  },
+  "failure_fingerprints_truncated_occurrences": 0,
+  "run_count": 5,
+  "runs": [
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *AccordionRtlPreviewTest --console=plain --no-scan",
+      "elapsed_seconds": 3.446,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "433200d9208a6f726e1e2e7af16d2c8493d59bff89ce3aa7251dc8515433f8e6",
+        "26cbb0b8fd72fe0237878ec29fe3851b13b6c96448674ad18a36d3b2a0df7754"
+      ],
+      "log": "0001.log",
+      "question": "Does the actual Accordion RTL preview retain expected geometry with bundled Noto Arabic and Hebrew before any line-height changes?",
+      "scope": "targeted",
+      "sequence": 1,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *AccordionRtlPreviewTest --console=plain --no-scan",
+      "elapsed_seconds": 12.395,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "6288e77ee5d20c255ff46889f1bdb0dadd10ada522d9316ea15ca0baa60fc5b3"
+      ],
+      "log": "0002.log",
+      "question": "With public scoped Theme and exact42px trigger assertion, does bundled Noto Arabic expose extra padding under current Fixed line-height mode?",
+      "scope": "targeted",
+      "sequence": 2,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *AccordionRtlPreviewTest --console=plain --no-scan",
+      "elapsed_seconds": 11.567,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0003.log",
+      "question": "Does explicit Tight20px Nova line-height remove Noto Arabic extra padding while preserving all four RTL language and toolbar interactions?",
+      "scope": "targeted",
+      "sequence": 3,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *AccordionNovaTest :app:shared:jvmTest --tests *AccordionRtlPreviewTest --tests *AccordionExamplesTest --tests *AccordionPreviewFrameTest --tests *BreadcrumbExamplesTest :shadcn:core:ktlintCheck :app:shared:ktlintCheck --console=plain --no-scan",
+      "elapsed_seconds": 12.799,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0004.log",
+      "question": "Do Nova Accordion geometry/keyboard regressions and actual catalog RTL/frame/shared-toolbar tests pass after scoped Noto fonts and tight line-height, with owning lint checks?",
+      "scope": "targeted",
+      "sequence": 4,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 21.372,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0005.log",
+      "question": "Does the final scoped Noto font and tight line-height source produce a fresh Wasm development executable for browser parity review?",
+      "scope": "targeted",
+      "sequence": 5,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "e188beefcdbd2ab71bae7c7ed22dcee36f8295fa6c62e57e8346bed8cadeab42"
+      ]
+    }
+  ],
+  "version": 1,
+  "warning_fingerprints": {
+    "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312": {
+      "excerpt": "w: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/text/Text.kt:5:16 Suppression of error 'INVISIBLE_REFERENCE' might compile and work, but the compiler behavior is UNSP...",
+      "occurrences": 2
+    },
+    "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4": {
+      "excerpt": "You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.",
+      "occurrences": 1
+    },
+    "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2": {
+      "excerpt": "Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.",
+      "occurrences": 1
+    },
+    "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a": {
+      "excerpt": "WARNING: The option setting 'android.experimental.enableScreenshotTest=true' is experimental.",
+      "occurrences": 1
+    },
+    "e188beefcdbd2ab71bae7c7ed22dcee36f8295fa6c62e57e8346bed8cadeab42": {
+      "excerpt": "webpack 5.108.1 compiled with 1 warning in 459 ms",
+      "occurrences": 1
+    },
+    "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=UNSUPPORTED_PROJECT_OPTION_USE to the gradle.properties file to suppress this warning.",
+      "occurrences": 2
+    },
+    "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90": {
+      "excerpt": "WARNING: The option setting 'android.experimental.testSuiteSupport=true' is experimental.",
+      "occurrences": 1
+    }
+  },
+  "warning_fingerprints_truncated_occurrences": 0,
+  "workflow": "87494f2706abf29ae7100dc29d1cc4bf"
+}

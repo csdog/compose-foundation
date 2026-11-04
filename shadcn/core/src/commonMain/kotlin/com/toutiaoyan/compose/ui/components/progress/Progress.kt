@@ -2,6 +2,7 @@
 
 package com.toutiaoyan.compose.ui.components.progress
 import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
@@ -10,12 +11,9 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
@@ -33,15 +31,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.layout
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
-import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.progressBarRangeInfo
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.semantics.hideFromAccessibility
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.unit.sp
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.tailwind.core.twRadius
-import com.toutiaoyan.compose.tailwind.core.twSpacing
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextColors
 import com.toutiaoyan.compose.ui.components.text.TextVariant
@@ -51,7 +55,7 @@ private val LocalProgressValue = staticCompositionLocalOf<Float?> { null }
 
 private val LocalProgressIndeterminate = staticCompositionLocalOf { false }
 
-/** Animated fill of the nearest [Progress]. */
+/** Logical fraction of the nearest [Progress]; indicator width animates independently. */
 class ProgressState(val value: Float)
 
 /** Reads the nearest [Progress]. */
@@ -68,18 +72,19 @@ fun progressState(): ProgressState {
  * A linear progress bar. Matches base-nova `progress.tsx` /
  * `.cn-progress-track` (`h-1 w-full rounded-full bg-muted`, indicator `bg-primary`).
  *
- * Track chrome is Style-driven — override with [style]. Indicator width stays animated via Modifier.
+ * [style] applies to the root. The content slot adds labels or other content;
+ * the root always appends its track, matching the official component.
+ * Use standalone [ProgressTrack] and [ProgressIndicator] for a custom track.
  *
  * Usage:
  * ```
  * Progress(value = 0.6f)
- * Progress(value = 0.6f) { ProgressTrack { ProgressIndicator() } }
+ * Progress(value = 0.6f) { ProgressLabel("Upload"); ProgressValue() }
  * Progress(value = 0f, indeterminate = true)
  * Progress(value = 60f, max = 100f)
  * Progress(value = 0.56f) {
  *     ProgressLabel("Upload progress")
  *     ProgressValue()
- *     ProgressTrack()
  * }
  * ```
  */
@@ -91,34 +96,33 @@ fun Progress(
     indeterminate: Boolean = false,
     getValueLabel: ((Float) -> String)? = null,
     style: Style = Style,
-    content: (@Composable ColumnScope.() -> Unit)? = null,
+    content: (@Composable () -> Unit)? = null,
 ) {
-    val fraction = if (max <= 0f) 0f else (value / max).coerceIn(0f, 1f)
-    val animatedValue by animateFloatAsState(fraction, label = "progress")
+    val fraction = if (!max.isFinite() || max <= 0f || value.isNaN()) 0f else (value / max).coerceIn(0f, 1f)
+    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val semanticsModifier =
-        Modifier.semantics {
+        Modifier.semantics(mergeDescendants = true) {
             progressBarRangeInfo =
-                ProgressBarRangeInfo(
-                    current = animatedValue,
-                    range = 0f..1f,
-                    steps = 0,
-                )
-            if (getValueLabel != null) {
-                contentDescription = getValueLabel(animatedValue)
+                if (indeterminate) {
+                    ProgressBarRangeInfo.Indeterminate
+                } else {
+                    ProgressBarRangeInfo(
+                        current = fraction,
+                        range = 0f..1f,
+                        steps = 0,
+                    )
+                }
+            if (getValueLabel != null && !indeterminate) {
+                stateDescription = getValueLabel(fraction)
             }
         }
     CompositionLocalProvider(
-        LocalProgressValue provides animatedValue,
+        LocalProgressValue provides fraction,
         LocalProgressIndeterminate provides indeterminate,
     ) {
-        if (content != null) {
-            Column(
-                modifier = modifier.then(semanticsModifier),
-                verticalArrangement = Arrangement.spacedBy(twSpacing.sm),
-                content = content,
-            )
-        } else {
-            ProgressTrack(modifier = modifier.then(semanticsModifier), style = style)
+        ProgressRootLayout(modifier.then(semanticsModifier).styleable(styleState, Style { width(1f) } then style)) {
+            content?.invoke()
+            ProgressTrack()
         }
     }
 }
@@ -139,7 +143,7 @@ fun ProgressTrack(
             modifier.styleable(
                 styleState,
                 rememberProgressTrackStyle() then style,
-            ),
+            ).clip(RoundedCornerShape(twRadius.full)),
         content = content,
     )
 }
@@ -155,7 +159,17 @@ fun ProgressLabel(
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Text(
         variant = TextVariant.BodySmall,
-        textStyle = TextStyle(fontWeight = FontWeight.Medium),
+        textStyle =
+            if (currentTheme.activePreset == StylePreset.Nova) {
+                TextStyle(
+                    fontSize = 14.sp,
+                    lineHeight = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+                )
+            } else {
+                TextStyle(fontWeight = FontWeight.Medium)
+            },
         modifier = modifier.styleable(styleState, style),
     ) { text }
 }
@@ -169,11 +183,24 @@ fun ProgressValue(
 ) {
     val state = progressState()
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    val label = text ?: "${(state.value * 100f).roundToInt()}%"
+    val label = text ?: if (LocalProgressIndeterminate.current) "" else "${(state.value * 100f).roundToInt()}%"
     Text(
         variant = TextVariant.BodySmall,
-        textStyle = TextColors.Muted,
-        modifier = modifier.styleable(styleState, style),
+        textStyle =
+            if (currentTheme.activePreset == StylePreset.Nova) {
+                TextColors.Muted.copy(
+                    fontSize = 14.sp,
+                    lineHeight = 20.sp,
+                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+                )
+            } else {
+                TextColors.Muted
+            },
+        modifier =
+            modifier.semantics { hideFromAccessibility() }.layoutId(ProgressValueLayoutId).styleable(
+                styleState,
+                style,
+            ),
     ) { label }
 }
 
@@ -210,17 +237,27 @@ fun BoxScope.ProgressIndicator(
                         .fillMaxHeight()
                         .width(barWidth)
                         .offset(x = travel * slide - barWidth)
-                        .background(currentTheme.colors.primary, RoundedCornerShape(twRadius.full)),
+                        .background(currentTheme.colors.primary),
             )
         }
     } else {
+        val animatedValue =
+            animateFloatAsState(
+                if (value.isNaN()) 0f else value.coerceIn(0f, 1f),
+                animationSpec = tween(150, easing = FastOutSlowInEasing),
+                label = "progress-width",
+            )
         Box(
             modifier =
                 modifier
                     .fillMaxHeight()
-                    .fillMaxWidth(value)
+                    .layout { measurable, constraints ->
+                        val width = (constraints.maxWidth * animatedValue.value).roundToInt()
+                        val fill = measurable.measure(constraints.copy(minWidth = width, maxWidth = width))
+                        layout(fill.width, fill.height) { fill.placeRelative(0, 0) }
+                    }
                     .align(Alignment.CenterStart)
-                    .background(currentTheme.colors.primary, RoundedCornerShape(twRadius.full)),
+                    .background(currentTheme.colors.primary),
         )
     }
 }

@@ -1,0 +1,44 @@
+{
+  "suite": {
+    "name": "SidebarStateParityTest[jvm]",
+    "tests": "6",
+    "skipped": "0",
+    "failures": "5",
+    "errors": "0",
+    "timestamp": "2026-10-30T21:28:41.921Z",
+    "hostname": "Apples-MacBook-Pro.local",
+    "time": "0.775"
+  },
+  "cases": [
+    {
+      "name": "controlledCallbackAndPersistenceUseLatestClosures[jvm]",
+      "status": "FAILED",
+      "message": "java.lang.AssertionError: expected:<[change:1:false, persist:1:false]> but was:<[change:0:false, persist:0:false]>"
+    },
+    {
+      "name": "offcanvasReachesZeroAfterTwoHundredMilliseconds[jvm]",
+      "status": "PASS",
+      "message": null
+    },
+    {
+      "name": "nonCollapsiblePanelDoesNotForceContextDesktopOpenToTrue[jvm]",
+      "status": "FAILED",
+      "message": "java.lang.AssertionError: Expected value to be false."
+    },
+    {
+      "name": "togglingMobileDoesNotChangeDesktopOpen[jvm]",
+      "status": "FAILED",
+      "message": "java.lang.AssertionError: Desktop open must remain independent of the phone drawer"
+    },
+    {
+      "name": "mobileStartsClosedEvenWhenDesktopDefaultsOpen[jvm]",
+      "status": "FAILED",
+      "message": "java.lang.AssertionError: Failed: assertDoesNotExist.\nReason: Did not expect any node but found '1' node that satisfies: (TestTag = 'mobile-content')\nNode found:\nNode #40 at (l=8.0, t=8.0, r=279.0, b=24.0)px, Tag: 'mobile-content'\nText = '[Mobile navigation]'\nActions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]\n"
+    },
+    {
+      "name": "offcanvasKeepsRememberedContentWhileClosed[jvm]",
+      "status": "FAILED",
+      "message": "java.lang.AssertionError: Failed: assertExists.\nReason: Expected exactly '1' node but could not find any node that satisfies: (TestTag = 'field')\n"
+    }
+  ]
+}

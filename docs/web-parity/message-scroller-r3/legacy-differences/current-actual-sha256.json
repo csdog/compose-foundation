@@ -1,0 +1,12 @@
+{
+  "input_group_states_light": "3e6205ade60dd45632e3eccda7c8c95758e3833c3e76ad737f33094187453750",
+  "input_group_states_dark": "db3116c284257d0e416dddee460b2fce4fe80501ac92c9a5081dded6433e27a3",
+  "input_group_bottom_bar_light": "516681c2e23c62a262e1802eaa90df5ab6d9d3f249eb4c8475c775f594b030b3",
+  "input_group_bottom_bar_dark": "367bcb4217d31f619d3c195c77d7b658d9113c7aadfb9be8d27965b2546faa56",
+  "input_group_long_value_light": "178e1bc89104f712608cdc1f4465d2d738af95cef457743a2715575a978a8913",
+  "input_group_long_value_dark": "b5e0dd7863b89d6b30f2a52667f1e97e071d65eb7839e4584089654744fbf708",
+  "chat_panel_layout_light": "17454791dec2dcc8bf17ca73b8b4d7fb6c7c52d8591e521d16f755350ffd6a35",
+  "chat_panel_layout_dark": "e16e6cdfd1b7bacbf614e8b3627749b41e5f4bf8e648a02f13f8add2c3f689fe",
+  "preview_composer_single_line_focused_light": "fcd0eab70b2e9ae0ecaaf10901b3e0f2e21ad928952f74d3bbe9904a619006df",
+  "preview_composer_two_line_focused_light": "5bf0dea686e94f4120c7b7cffbfc115048b34601f043024b2a9595464d31386b"
+}

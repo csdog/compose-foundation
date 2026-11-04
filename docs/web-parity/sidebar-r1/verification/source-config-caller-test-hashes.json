@@ -1,0 +1,14 @@
+{
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/sidebar/Sidebar.kt": "07a18be9ddc5a2d325ba1648b122cfa7620538f965210e8ad3a244be11e22490",
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/sidebar/SidebarStyles.kt": "dfa4a51a0c68cf19e50befadeb8c832d5dd3086455dbb4cc1eaec4cfb291a654",
+  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/sidebar/SidebarStateParityTest.kt": "8fe50616f3b6913d0555901af8d9c781b1184616596c2bec598c82fb4cfc6827",
+  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/sidebar/SidebarResponsiveStateTest.kt": "e693086300252e4ef672d8c44d4666bd46a4f893079488e3fe2c768faf7fa046",
+  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/sidebar/SidebarMobileParityTest.kt": "1ce59013248d4d51d5c6aae8dcff9c310693d42113e547ae23e924418423fe9b",
+  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/sidebar/SidebarBorderParityTest.kt": "f13453a95535b365b2cb9685a3e0c2a9f34bf72c4e9b183a3542cba7fc53719e",
+  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/sidebar/SidebarScreenshotTest.kt": "05381cffc3429fa3d764d79cb47272982ebd19d294ce0f975a2d847031084d65",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/SidebarDoc.kt": "f1d7b6f2d7facb60ce5a239d5bbb65119154178232ded9f7fa83b3980b5c58e9",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/CatalogSidebar.kt": "214574abff95790593df1e776c25660d92fde7b7ada99be679d8b0c3b2377e28",
+  "gradle.properties": "941d732cac3b07fa69a90d110a6075f0376ebc3e5206f455029c29aaaca35e94",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/DocInstallation.kt": "449b16ee42825957abac16d571fba8543fdae9bcc43f30e04e5a096ea2798ec5",
+  "gradle/libs.versions.toml": "acd62a8ddc0d2a87e0546971f57228af5f28448c16bb9db97f06dd71c3979c8a"
+}

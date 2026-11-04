@@ -1,6 +1,6 @@
 # Web 页面与 shadcn/ui 对齐计划
 
-更新：2026-10-29。执行进度见 [shadcn-web-progress.md](shadcn-web-progress.md)。
+更新：2026-11-04。执行进度见 [shadcn-web-progress.md](shadcn-web-progress.md)。
 
 ## 目标与基准
 
@@ -87,3 +87,15 @@ Code Block 的受限高度滚动、下载示例与 Trace 的完整工具调用�
 
 全局骨架完成、逐组件清单关闭、适用交互回归通过，且两种主题与三个基准宽度均有
 修改后本地页面证据。历史 Tick、源码注释和编译成功不能单独作为视觉完成证明。
+
+2026-11-04 执行补充：组件文档七宽度水平几何、CSS 断点及文档/浏览器滚动基础桥接见 [page-layout-r1](web-parity/page-layout-r1/README.md)。P1/P3 仍需完成垂直节奏、描述换行、目录/代码细节、完整弹层滚动锁与触摸/辅助技术矩阵；不将水平布局通过等同全页完成。
+
+
+### 2026-11-04 Badge 复查增量
+
+七个官方 docs 示例及方向/字体/颜色已补齐；组件扩展 href/invalid/图标逻辑边距，修复 Spinner 固有尺寸造成的换行。23项定向测试与最终四种显示组合截图证据见 [badge-r1](web-parity/badge-r1/README.md)。后续仍需原生链接语义、完整交互与辅助技术、共享页面和代码区收尾；保持进度清单未勾选，不把当前覆盖等同于全站完成。
+
+
+### 2026-11-04 Button 增量与 checkpoint
+
+继续复查Button，补公开逻辑图标边距、Size/Rounded/Spinner/RTL配方及Arabic行框，17项定向测试和七组四象限对照见 [button-r1](web-parity/button-r1/README.md)。As Link、完整Group菜单、Tabler图形及状态矩阵继续留在同一目标内；本轮不标记整个组件或全站完成。提交hook接入可选compact wrapper，保留全部既有门禁，以便将跨轮累积改动落为checkpoint。

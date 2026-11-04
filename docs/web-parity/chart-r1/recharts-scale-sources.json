@@ -1,0 +1,15 @@
+{
+  "revision": "v3.3.0",
+  "files": [
+    {
+      "file": "source/recharts-getNiceTickValues.ts",
+      "url": "https://raw.githubusercontent.com/recharts/recharts/v3.3.0/src/util/scale/getNiceTickValues.ts",
+      "sha256": "745ee632d7d257a280310686274db5cb264257ab5b0d388ecb62a883650cbe94"
+    },
+    {
+      "file": "source/recharts-LICENSE",
+      "url": "https://raw.githubusercontent.com/recharts/recharts/v3.3.0/LICENSE",
+      "sha256": "2d3aa48a8d1d3b93093680e8e68d3a64cfb590c3ade377ffcaefc69dac7c2ce5"
+    }
+  ]
+}

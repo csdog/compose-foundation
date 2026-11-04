@@ -1,0 +1,11 @@
+{
+  "method": "Restore only Marker.kt and MarkerStyles.kt to HEAD; verify five existing goldens. Restore current sources afterward.",
+  "headPassed": 4,
+  "headChanged": [
+    "marker_separator_dark"
+  ],
+  "separatorDarkActualSha256": "83d481f4edd6bf7bccb45f6c7cf48fb8c14f3613b08543ab63d54319f4127459",
+  "separatorDarkMatchesCurrent": true,
+  "borderLight": "Passed with HEAD; current implementation introduced regression. Corrected MarkerIcon alignment to Center only in Nova, preserving TopStart in other presets. Stale border_light_actual from earlier failed run was NOT counted as reproduction.",
+  "currentSourceRestored": true
+}

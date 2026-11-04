@@ -1,0 +1,8 @@
+{
+  "goalTaskSpace": 18,
+  "found": false,
+  "observation": "Fresh Ego read-only check this pass: taskSpace(18) not found. Only user-owned spaces0,1,3 available.",
+  "action": "Did not claim user-owned spaces, adopt tabs or create a replacement. Existing recreation question still pending.",
+  "rule": "ego-browser guide2.2.0: Never use a new TaskSpace to recover from a stuck, blocked, timed-out, or unexpected Page; if it cannot continue, stop and ask the user.",
+  "matrixPerformed": false
+}

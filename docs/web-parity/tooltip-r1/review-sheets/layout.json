@@ -1,0 +1,389 @@
+{
+  "sheets": [
+    {
+      "file": "1440-light.png",
+      "columns": 2,
+      "cellWidth": 648,
+      "cellHeight": 289,
+      "frames": [
+        {
+          "name": "default",
+          "crop": {
+            "left": 443,
+            "top": 320,
+            "right": 583,
+            "bottom": 419
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "side-left",
+          "crop": {
+            "left": 259,
+            "top": 349,
+            "right": 653,
+            "bottom": 419
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "side-top",
+          "crop": {
+            "left": 371,
+            "top": 320,
+            "right": 653,
+            "bottom": 419
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "side-bottom",
+          "crop": {
+            "left": 371,
+            "top": 349,
+            "right": 653,
+            "bottom": 448
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "side-right",
+          "crop": {
+            "left": 371,
+            "top": 349,
+            "right": 765,
+            "bottom": 419
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "keyboard",
+          "crop": {
+            "left": 434,
+            "top": 318,
+            "right": 591,
+            "bottom": 417
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "disabled",
+          "crop": {
+            "left": 375,
+            "top": 320,
+            "right": 651,
+            "bottom": 416
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "rtl-arabic-inline-start",
+          "crop": {
+            "left": 200,
+            "top": 210,
+            "right": 824,
+            "bottom": 475
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        }
+      ]
+    },
+    {
+      "file": "1440-dark.png",
+      "columns": 2,
+      "cellWidth": 648,
+      "cellHeight": 289,
+      "frames": [
+        {
+          "name": "default",
+          "crop": {
+            "left": 443,
+            "top": 320,
+            "right": 583,
+            "bottom": 419
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "side-left",
+          "crop": {
+            "left": 259,
+            "top": 349,
+            "right": 653,
+            "bottom": 419
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "side-top",
+          "crop": {
+            "left": 371,
+            "top": 320,
+            "right": 653,
+            "bottom": 419
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "side-bottom",
+          "crop": {
+            "left": 371,
+            "top": 349,
+            "right": 653,
+            "bottom": 448
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "side-right",
+          "crop": {
+            "left": 371,
+            "top": 349,
+            "right": 765,
+            "bottom": 419
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "keyboard",
+          "crop": {
+            "left": 434,
+            "top": 318,
+            "right": 591,
+            "bottom": 417
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "disabled",
+          "crop": {
+            "left": 375,
+            "top": 320,
+            "right": 651,
+            "bottom": 416
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "rtl-arabic-inline-start",
+          "crop": {
+            "left": 200,
+            "top": 210,
+            "right": 824,
+            "bottom": 475
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        }
+      ]
+    },
+    {
+      "file": "390-light.png",
+      "columns": 2,
+      "cellWidth": 430,
+      "cellHeight": 209,
+      "frames": [
+        {
+          "name": "default",
+          "crop": {
+            "left": 443,
+            "top": 320,
+            "right": 583,
+            "bottom": 419
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "side-left",
+          "crop": {
+            "left": 259,
+            "top": 349,
+            "right": 653,
+            "bottom": 419
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "side-top",
+          "crop": {
+            "left": 371,
+            "top": 320,
+            "right": 653,
+            "bottom": 419
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "side-bottom",
+          "crop": {
+            "left": 371,
+            "top": 349,
+            "right": 653,
+            "bottom": 448
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "side-right",
+          "crop": {
+            "left": 371,
+            "top": 349,
+            "right": 765,
+            "bottom": 419
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "keyboard",
+          "crop": {
+            "left": 434,
+            "top": 318,
+            "right": 591,
+            "bottom": 417
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "disabled",
+          "crop": {
+            "left": 375,
+            "top": 320,
+            "right": 651,
+            "bottom": 416
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "rtl-arabic-inline-start",
+          "crop": {
+            "left": 325,
+            "top": 290,
+            "right": 731,
+            "bottom": 475
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        }
+      ]
+    },
+    {
+      "file": "390-dark.png",
+      "columns": 2,
+      "cellWidth": 430,
+      "cellHeight": 209,
+      "frames": [
+        {
+          "name": "default",
+          "crop": {
+            "left": 443,
+            "top": 320,
+            "right": 583,
+            "bottom": 419
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "side-left",
+          "crop": {
+            "left": 259,
+            "top": 349,
+            "right": 653,
+            "bottom": 419
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "side-top",
+          "crop": {
+            "left": 371,
+            "top": 320,
+            "right": 653,
+            "bottom": 419
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "side-bottom",
+          "crop": {
+            "left": 371,
+            "top": 349,
+            "right": 653,
+            "bottom": 448
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "side-right",
+          "crop": {
+            "left": 371,
+            "top": 349,
+            "right": 765,
+            "bottom": 419
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "keyboard",
+          "crop": {
+            "left": 434,
+            "top": 318,
+            "right": 591,
+            "bottom": 417
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "disabled",
+          "crop": {
+            "left": 375,
+            "top": 320,
+            "right": 651,
+            "bottom": 416
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        },
+        {
+          "name": "rtl-arabic-inline-start",
+          "crop": {
+            "left": 325,
+            "top": 290,
+            "right": 731,
+            "bottom": 475
+          },
+          "originalWidth": 1024,
+          "originalHeight": 768
+        }
+      ]
+    }
+  ],
+  "note": "Native screenshot derivatives: only empty background cropped around all non-background pixels with16px padding; no resizing. Full32 native frames retained separately. Simulated window widths inside1024x768 JVM window, not browser or phone acceptance."
+}

@@ -1,0 +1,562 @@
+[
+  {
+    "file": "local-basic-1440-dark.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "local-basic-1440-light.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "local-basic-390-dark.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "local-basic-390-light.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "local-borders-1440-dark.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "local-borders-1440-light.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "local-borders-390-dark.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "local-borders-390-light.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "local-card-1440-dark.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "local-card-1440-light.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "local-card-390-dark.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "local-card-390-light.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "local-default-1440-dark.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "local-default-1440-light.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "local-default-390-dark.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "local-default-390-light.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "local-disabled-1440-dark.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "local-disabled-1440-light.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "local-disabled-390-dark.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "local-disabled-390-light.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "local-multiple-1440-dark.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "local-multiple-1440-light.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "local-multiple-390-dark.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "local-multiple-390-light.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "local-multiple-all-open-1440-dark.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "local-multiple-all-open-1440-light.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "local-multiple-all-open-390-dark.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "local-multiple-all-open-390-light.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "official-basic-1440-dark.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "official-basic-1440-light.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "official-basic-390-dark.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "official-basic-390-light.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "official-borders-1440-dark.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "official-borders-1440-light.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "official-borders-390-dark.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "official-borders-390-light.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "official-card-1440-dark.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "official-card-1440-light.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "official-card-390-dark.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "official-card-390-light.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "official-default-1440-dark.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "official-default-1440-light.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "official-default-390-dark.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "official-default-390-light.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "official-disabled-1440-dark.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "official-disabled-1440-light.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "official-disabled-390-dark.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "official-disabled-390-light.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "official-multiple-1440-dark.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "official-multiple-1440-light.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "official-multiple-390-dark.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "official-multiple-390-light.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "official-multiple-all-open-1440-dark.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "official-multiple-all-open-1440-light.png",
+    "width": 1440,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  {
+    "file": "official-multiple-all-open-390-dark.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "file": "official-multiple-all-open-390-light.png",
+    "width": 390,
+    "height": 1000,
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  }
+]

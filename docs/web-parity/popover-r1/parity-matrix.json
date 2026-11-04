@@ -1,0 +1,28 @@
+{
+  "component": "popover",
+  "complete": false,
+  "sourceRevision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "checks": {
+    "novaPanelGeometry": "native-geometry5-passed-browser-pending",
+    "novaTypographyAndRing": "native-two-theme-rasters-reviewed-and-independently-verified-browser-pending",
+    "defaultRecipe": "pending-four-input-320dp-demo",
+    "basicRecipe": "pending",
+    "alignmentRecipe": "pending-three-160dp-popups-small-buttons",
+    "formRecipe": "pending-256dp-horizontal-fields",
+    "rtlRecipe": "pending-three-languages-physical-and-logical-sides",
+    "defaultModality": "known-difference-current-true-upstream-false",
+    "initialAndFinalFocus": "pending-source-and-real-interaction-audit",
+    "animation": "known-unverified-shared-transitions-vs-official-100ms",
+    "controlledAndNested": "pending",
+    "browserDesktopMobileLightDark": "blocked-pending-replacement-taskspace-approval"
+  },
+  "validation": {
+    "nativePassed": 9,
+    "legacyChanged": 4,
+    "legacyIsolation": "all4actual-sha256-identical-before-this-round",
+    "ktlintChecksPassed": 2,
+    "js": "exit0-47.292s-existing-webpack-os-path-diagnostics",
+    "wasm": "exit0-24.485s-one-webpack-warning",
+    "workflowFinished": true
+  }
+}

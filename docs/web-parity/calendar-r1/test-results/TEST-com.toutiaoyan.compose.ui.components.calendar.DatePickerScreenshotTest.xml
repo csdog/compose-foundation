@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DatePickerScreenshotTest[jvm]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-30T09:35:12.550Z" hostname="Apples-MacBook-Pro.local" time="0.202">
+  <properties/>
+  <testcase name="states_light[jvm]" classname="com.toutiaoyan.compose.ui.components.calendar.DatePickerScreenshotTest" time="0.107"/>
+  <testcase name="states_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.calendar.DatePickerScreenshotTest" time="0.095"/>
+  <system-out><![CDATA[Roborazzi: date_picker_states_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=786432, width=1024, height=768) changed:false
+Roborazzi: date_picker_states_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=786432, width=1024, height=768) changed:false
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

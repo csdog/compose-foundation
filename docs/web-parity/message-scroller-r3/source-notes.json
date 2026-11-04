@@ -1,0 +1,10 @@
+{
+  "manifest": "../message-scroller-r1/sources.json",
+  "sourceFilesHashed": 42,
+  "facts": [
+    "createChat.get(2) clones the first two messages, not two user/assistant turns. next returns the next scripted user message.",
+    "sleep1000 is the leading before-start delay; lowerEvents splits text with regex \\S+\\s* and delays35ms before each delta.",
+    "History shows last5 of10, loads all once, has no user anchors, uses an anonymous End of Conversation marker; reset changes Root key while retaining Provider state.",
+    "Visibility uses four original user IDs, margin12, an exterior36px outline trigger at right-48, and a256px panel with physical Left side and offset-28. Narrow-layout trigger cropping remains open."
+  ]
+}

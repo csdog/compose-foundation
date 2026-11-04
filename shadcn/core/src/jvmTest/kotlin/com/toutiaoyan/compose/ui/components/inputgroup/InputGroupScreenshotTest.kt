@@ -204,12 +204,12 @@ class InputGroupScreenshotTest : ScreenshotTest() {
      * on the field itself.
      */
     private fun focused(darkTheme: Boolean) {
-        snapshotFocused("input_group_focused", focusTag = "ig", darkTheme = darkTheme) {
+        snapshotFocused("input_group_focused", focusTag = "focused-input", darkTheme = darkTheme) {
             InputGroup(modifier = Modifier.width(260.dp).testTag("ig")) {
                 InputGroupAddon(InputGroupAddonAlign.InlineStart) {
                     InputGroupText("$")
                 }
-                Input(value = "0.00", onValueChange = {})
+                Input(value = "0.00", onValueChange = {}, modifier = Modifier.testTag("focused-input"))
             }
         }
     }

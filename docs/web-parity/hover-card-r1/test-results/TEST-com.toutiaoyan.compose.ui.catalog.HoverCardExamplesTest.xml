@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="HoverCardExamplesTest[jvm]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-30T12:16:00.919Z" hostname="Apples-MacBook-Pro.local" time="2.437">
+  <properties/>
+  <testcase name="fourPhysicalSideExamplesUseTheirOwnCopy[jvm]" classname="com.toutiaoyan.compose.ui.catalog.HoverCardExamplesTest" time="1.644"/>
+  <testcase name="officialRecipesAndApiSectionsAreComplete[jvm]" classname="com.toutiaoyan.compose.ui.catalog.HoverCardExamplesTest" time="0.017"/>
+  <testcase name="defaultShowsTheActualNextjsPreview[jvm]" classname="com.toutiaoyan.compose.ui.catalog.HoverCardExamplesTest" time="0.159"/>
+  <testcase name="rtlExamplesTranslateTheProductAndOfferBothLogicalSides[jvm]" classname="com.toutiaoyan.compose.ui.catalog.HoverCardExamplesTest" time="0.537"/>
+  <testcase name="controlledExamplePublishesItsOpenState[jvm]" classname="com.toutiaoyan.compose.ui.catalog.HoverCardExamplesTest" time="0.077"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

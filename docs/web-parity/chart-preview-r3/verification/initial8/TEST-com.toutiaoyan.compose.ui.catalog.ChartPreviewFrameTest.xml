@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ChartPreviewFrameTest[jvm]" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-02T02:16:07.159Z" hostname="Apples-MacBook-Pro.local" time="1.072">
+  <properties/>
+  <testcase name="firstStageUsesFixedPreviewHeightAndDesktopOnlyStepInset[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartPreviewFrameTest" time="0.613"/>
+  <testcase name="expandingFixedPreviewSourceKeepsMountedState[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartPreviewFrameTest" time="0.17"/>
+  <testcase name="firstStageUsesFixedPreviewHeightAndDesktopOnlyStepInset[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartPreviewFrameTest" time="0.037"/>
+  <testcase name="expandingFixedPreviewSourceKeepsMountedState[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartPreviewFrameTest" time="0.07"/>
+  <testcase name="firstStageUsesFixedPreviewHeightAndDesktopOnlyStepInset[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartPreviewFrameTest" time="0.028"/>
+  <testcase name="expandingFixedPreviewSourceKeepsMountedState[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartPreviewFrameTest" time="0.061"/>
+  <testcase name="firstStageUsesFixedPreviewHeightAndDesktopOnlyStepInset[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartPreviewFrameTest" time="0.027"/>
+  <testcase name="expandingFixedPreviewSourceKeepsMountedState[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartPreviewFrameTest" time="0.062"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

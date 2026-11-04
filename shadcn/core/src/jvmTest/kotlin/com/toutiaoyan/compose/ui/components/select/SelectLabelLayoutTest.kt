@@ -108,4 +108,31 @@ class SelectLabelLayoutTest : ScreenshotTest() {
         composeRule.onNodeWithTag("long option").assertHeightIsEqualTo(28.dp)
         composeRule.onNodeWithTag("panel").assertWidthIsEqualTo(144.dp)
     }
+
+    @Test fun novaSelectedValueStaysSingleLineInNarrowSmallTrigger() {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Select(value = "Hebrew (עברית)", onValueChange = {}) {
+                SelectTrigger(Modifier.width(144.dp).testTag("small trigger"), size = SelectSize.Sm)
+            }
+        }
+        val layouts = mutableListOf<TextLayoutResult>()
+        composeRule.onNodeWithText("Hebrew (עברית)", useUnmergedTree = true)
+            .performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(layouts) }
+        assertEquals(1, layouts.single().lineCount)
+        composeRule.onNodeWithTag("small trigger").assertHeightIsEqualTo(28.dp).assertWidthIsEqualTo(144.dp)
+    }
+
+    @Test fun novaLongSelectedValueHasSingleConstrainedLine() {
+        val label = "A very long selected language value that cannot fit in a small trigger"
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Select(value = label, onValueChange = {}) {
+                SelectTrigger(Modifier.width(120.dp).testTag("long trigger"), size = SelectSize.Sm)
+            }
+        }
+        val layouts = mutableListOf<TextLayoutResult>()
+        composeRule.onNodeWithText(label, useUnmergedTree = true)
+            .performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(layouts) }
+        assertEquals(1, layouts.single().lineCount)
+        composeRule.onNodeWithTag("long trigger").assertWidthIsEqualTo(120.dp).assertHeightIsEqualTo(28.dp)
+    }
 }

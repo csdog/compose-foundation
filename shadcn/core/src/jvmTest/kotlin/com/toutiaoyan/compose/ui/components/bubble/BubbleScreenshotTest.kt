@@ -129,4 +129,29 @@ class BubbleScreenshotTest : ScreenshotTest() {
 
     @Test
     fun reactions_top_dark() = reactionsTop(darkTheme = true)
+
+    private fun nova(dark: Boolean) =
+        snapshot(
+            "bubble_nova",
+            darkTheme = dark,
+            stylePreset = com.toutiaoyan.compose.ui.tokens.StylePreset.Nova,
+        ) {
+            androidx.compose.foundation.layout.Column(
+                Modifier.width(384.dp),
+                verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(32.dp),
+            ) {
+                Bubble("Hey there! what's up?", align = MessageAlign.End)
+                Bubble(variant = BubbleVariant.Muted) {
+                    BubbleContent("Hey! Want to see chat bubbles?")
+                    BubbleReactions { Text { "👍" } }
+                }
+                Bubble("This is tinted.", variant = BubbleVariant.Tinted, align = MessageAlign.End)
+                Bubble("A destructive message.", variant = BubbleVariant.Destructive)
+                Bubble("Ghost content can use the full conversation row.", variant = BubbleVariant.Ghost)
+            }
+        }
+
+    @Test fun nova_light() = nova(false)
+
+    @Test fun nova_dark() = nova(true)
 }

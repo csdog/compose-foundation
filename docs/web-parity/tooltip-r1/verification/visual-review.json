@@ -1,0 +1,25 @@
+{
+  "nativeFrames": 32,
+  "reviewSheets": 4,
+  "allViewed": true,
+  "simulatedWidths": [
+    1440,
+    390
+  ],
+  "nativeWindow": [
+    1024,
+    768
+  ],
+  "themeModes": [
+    "light",
+    "dark"
+  ],
+  "fullFramesPreserved": true,
+  "reviewDerivatives": "Crop empty background only, retain all UI with16px padding, no scale; exact crop offsets in review-sheets/layout.json.",
+  "observations": [
+    "Chip/arrow/type, four sides, shortcut keycap and disabled wrapper viewed in both modes.",
+    "Focus ring remains real keyboard focus.",
+    "Phone-width RTL tooltip can leave the constrained preview because the actual native popup window is1024px; this does not prove phone collisions."
+  ],
+  "browserAcceptance": false
+}

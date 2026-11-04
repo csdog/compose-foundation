@@ -3,8 +3,14 @@
 package com.toutiaoyan.compose.ui.components.navigationmenu
 
 import com.toutiaoyan.compose.ui.utils.keyboardInputMode
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.foundation.focusable
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -16,6 +22,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
@@ -25,6 +32,8 @@ import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,7 +42,25 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.PointerType
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import com.toutiaoyan.compose.ui.components.icon.Icon
+import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
+import com.toutiaoyan.compose.ui.icons.NovaChevronRight
+import com.toutiaoyan.compose.ui.theme.LocalContentColor
+import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.semantics.Role
@@ -63,6 +90,7 @@ internal class NavigationMenuController(
     val orientation: NavigationMenuOrientation,
     val delayDuration: Int,
     val skipDelayDuration: Int,
+    val closeDelayDuration: Int,
     private val lastCloseMark: () -> TimeSource.Monotonic.ValueTimeMark?,
     private val onClosed: () -> Unit,
 ) {
@@ -110,9 +138,14 @@ class NavigationMenuListScope internal constructor()
 
 class NavigationMenuItemScope internal constructor(
     val value: String,
-)
+) {
+    internal var keyboardOpened by mutableStateOf(false)
+    internal val triggerFocus = FocusRequester()
+    internal var triggerMounted = false
+}
 
 private val LocalNavigationMenuItem = staticCompositionLocalOf<NavigationMenuItemScope?> { null }
+private val LocalNavigationMenuPanel = staticCompositionLocalOf { false }
 
 /** Reads the nearest [NavigationMenuItem] scope. */
 @Composable
@@ -161,12 +194,13 @@ fun navigationMenuItemState(): NavigationMenuItemScope =
 fun NavigationMenu(
     modifier: Modifier = Modifier,
     orientation: NavigationMenuOrientation = NavigationMenuOrientation.Horizontal,
-    delayDuration: Int = 0,
+    delayDuration: Int = 50,
     skipDelayDuration: Int = 300,
     value: String? = null,
     onValueChange: ((String?) -> Unit)? = null,
     defaultValue: String? = null,
     ariaLabel: String? = null,
+    closeDelayDuration: Int = 50,
     content: @Composable NavigationMenuScope.() -> Unit,
 ) {
     var lastCloseMark by remember { mutableStateOf<TimeSource.Monotonic.ValueTimeMark?>(null) }
@@ -187,10 +221,11 @@ fun NavigationMenu(
             orientation = orientation,
             delayDuration = delayDuration.coerceAtLeast(0),
             skipDelayDuration = skipDelayDuration.coerceAtLeast(0),
+            closeDelayDuration = closeDelayDuration.coerceAtLeast(0),
             lastCloseMark = { lastCloseMark },
             onClosed = { lastCloseMark = TimeSource.Monotonic.markNow() },
         )
-    CompositionLocalProvider(LocalNavigationMenu provides controller) {
+    CompositionLocalProvider(LocalNavigationMenu provides controller, LocalNavigationMenuPanel provides false) {
         Box(
             modifier =
                 if (ariaLabel != null) {
@@ -214,17 +249,18 @@ fun NavigationMenuScope.NavigationMenuList(
     val controller = navigationMenuController()
     val rootStyleState = remember { MutableStyleState(MutableInteractionSource()) }
     val listModifier = modifier.styleable(rootStyleState, style)
+    val gap = if (currentTheme.activePreset == StylePreset.Nova) 0.dp else twSpacing.xs
     if (controller.orientation == NavigationMenuOrientation.Vertical) {
         Column(
             modifier = listModifier,
-            verticalArrangement = Arrangement.spacedBy(twSpacing.xs),
+            verticalArrangement = Arrangement.spacedBy(gap),
         ) {
             NavigationMenuListScope().content()
         }
     } else {
         Row(
             modifier = listModifier,
-            horizontalArrangement = Arrangement.spacedBy(twSpacing.xs),
+            horizontalArrangement = Arrangement.spacedBy(gap),
         ) {
             NavigationMenuListScope().content()
         }
@@ -249,22 +285,30 @@ fun NavigationMenuListScope.NavigationMenuItem(
     content: @Composable NavigationMenuItemScope.() -> Unit,
 ) {
     val controller = navigationMenuController()
-    val scope = NavigationMenuItemScope(value)
+    val scope = remember(value) { NavigationMenuItemScope(value) }
     var triggerHovered by remember { mutableStateOf(false) }
     var contentHovered by remember { mutableStateOf(false) }
     var hoverArmed by remember { mutableStateOf(false) }
     val hovered = triggerHovered || contentHovered
-    LaunchedEffect(hovered, controller.delayDuration, controller.skipDelayDuration) {
+    val latestController by rememberUpdatedState(controller)
+    LaunchedEffect(
+        hovered,
+        value,
+        controller.delayDuration,
+        controller.skipDelayDuration,
+        controller.closeDelayDuration,
+    ) {
         if (hovered) {
             val skip = controller.shouldSkipDelay()
             if (!skip && controller.delayDuration > 0) {
                 delay(controller.delayDuration.toLong())
             }
             hoverArmed = true
-            controller.onOpenChange(value)
+            if (latestController.openValue != value) scope.keyboardOpened = false
+            latestController.onOpenChange(value)
         } else if (hoverArmed) {
-            delay(100)
-            if (controller.openValue == value) controller.onOpenChange(null)
+            delay(controller.closeDelayDuration.toLong())
+            if (latestController.openValue == value) latestController.onOpenChange(null)
             hoverArmed = false
         }
     }
@@ -298,24 +342,62 @@ fun NavigationMenuItemScope.NavigationMenuTrigger(
     val controller = navigationMenuController()
     val isOpen = controller.openValue == value
     val hover = LocalNavigationMenuItemHover.current
+    DisposableEffect(this) {
+        triggerMounted = true
+        onDispose { triggerMounted = false }
+    }
     val resolvedEnabled = enabled && !disabled
+    var stickyHoverPress by remember { mutableStateOf(false) }
+    var triggerHovered by remember { mutableStateOf(false) }
+    LaunchedEffect(isOpen) {
+        stickyHoverPress = isOpen && triggerHovered
+        if (stickyHoverPress) {
+            delay(500)
+            stickyHoverPress = false
+        }
+    }
     NavMenuHitTarget(
-        modifier = modifier,
+        modifier =
+            modifier.focusRequester(triggerFocus).onPreviewKeyEvent {
+                if (it.type == KeyEventType.KeyDown && it.key == Key.Escape && isOpen) {
+                    controller.onOpenChange(null)
+                    true
+                } else {
+                    false
+                }
+            },
         open = isOpen,
         expanded = isOpen,
         enabled = resolvedEnabled,
         style = style,
-        label = value,
-        onClick = { hovered ->
-            if (hovered) {
+        onClick = { hovered, keyboard, expandedOnPress ->
+            keyboardOpened = keyboard
+            if (hovered && stickyHoverPress) {
                 controller.onOpenChange(value)
             } else {
-                controller.onOpenChange(if (isOpen) null else value)
+                controller.onOpenChange(if (expandedOnPress ?: isOpen) null else value)
             }
         },
-        onHoverChange = { hover?.onTriggerHoverChange(it) },
-        content = content,
-    )
+        onHoverChange = {
+            triggerHovered = it
+            hover?.onTriggerHoverChange(it)
+        },
+    ) {
+        if (currentTheme.activePreset == StylePreset.Nova) {
+            val rotation = animateFloatAsState(if (isOpen) 180f else 0f, tween(300), label = "navigation chevron")
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                content()
+                Icon(
+                    NovaChevronRight,
+                    modifier =
+                        Modifier.padding(start = 4.dp).offset(y = 1.dp).size(12.dp)
+                            .graphicsLayer { rotationZ = 90f + rotation.value },
+                )
+            }
+        } else {
+            content()
+        }
+    }
 }
 
 /** String-label overload of [NavigationMenuTrigger]. */
@@ -333,7 +415,11 @@ fun NavigationMenuItemScope.NavigationMenuTrigger(
         disabled = disabled,
         style = style,
     ) {
-        Text(variant = TextVariant.BodySmall) { text }
+        if (currentTheme.activePreset == StylePreset.Nova) {
+            Text(maxLines = 1) { text }
+        } else {
+            Text(variant = TextVariant.BodySmall) { text }
+        }
     }
 }
 
@@ -350,15 +436,23 @@ fun NavigationMenuItemScope.NavigationMenuContent(
     exit: ExitTransition = PopupTransitions.Exit,
     content: @Composable () -> Unit,
 ) {
+    val foreground = currentTheme.colors.popoverForeground
     val controller = navigationMenuController()
     val isOpen = controller.openValue == value
+    val panelFocus = remember { FocusRequester() }
+    LaunchedEffect(isOpen) {
+        if (!isOpen && keyboardOpened) {
+            if (controller.openValue == null && triggerMounted) triggerFocus.requestFocus()
+            keyboardOpened = false
+        }
+    }
     val panelStyleState = remember { MutableStyleState(MutableInteractionSource()) }
     val hover = LocalNavigationMenuItemHover.current
     val hoverSource = remember { MutableInteractionSource() }
     val contentHovered by hoverSource.collectIsHoveredAsState()
-    LaunchedEffect(contentHovered) {
-        hover?.onContentHoverChange(contentHovered)
-    }
+    val latestHover by rememberUpdatedState(hover)
+    LaunchedEffect(contentHovered) { latestHover?.onContentHoverChange(contentHovered) }
+    DisposableEffect(Unit) { onDispose { latestHover?.onContentHoverChange(false) } }
     val placement =
         side
             ?: if (controller.orientation == NavigationMenuOrientation.Vertical) {
@@ -373,20 +467,40 @@ fun NavigationMenuItemScope.NavigationMenuContent(
         offset = sideOffset,
         alignOffset = alignOffset,
         dismissOnClickOutside = dismissOnClickOutside,
+        focusable = keyboardOpened && isOpen,
         enter = enter,
         exit = exit,
     ) {
+        LaunchedEffect(isOpen, keyboardOpened) {
+            if (isOpen && keyboardOpened) {
+                withFrameNanos { }
+                panelFocus.requestFocus()
+            }
+        }
         NavigationMenuPositioner {
             Box(
                 modifier =
                     modifier
+                        .onPreviewKeyEvent {
+                            if (it.type == KeyEventType.KeyDown && it.key == Key.Escape && isOpen) {
+                                controller.onOpenChange(null)
+                                true
+                            } else {
+                                false
+                            }
+                        }
+                        .focusRequester(panelFocus)
+                        .focusable(enabled = keyboardOpened && isOpen)
                         .hoverable(hoverSource)
                         .styleable(
                             panelStyleState,
                             rememberNavMenuPanelStyle() then style,
                         ),
             ) {
-                content()
+                CompositionLocalProvider(
+                    LocalNavigationMenuPanel provides true,
+                    LocalContentColor provides foreground,
+                ) { content() }
             }
         }
     }
@@ -456,19 +570,23 @@ fun NavigationMenuItemScope.NavigationMenuLink(
     disabled: Boolean = false,
     active: Boolean = false,
     style: Style = Style,
+    closeOnClick: Boolean = true,
     content: @Composable () -> Unit,
 ) {
     val controller = navigationMenuController()
+    val inPanel = LocalNavigationMenuPanel.current
     NavMenuHitTarget(
         modifier = modifier,
         open = active,
         active = active,
         enabled = enabled && !disabled,
         style = style,
-        label = value,
-        onClick = { onClick() },
+        onClick = { _, _, _ ->
+            onClick()
+            if (closeOnClick) controller.onOpenChange(null)
+        },
         onHoverChange = { hovered ->
-            if (hovered && controller.openValue != null) {
+            if (hovered && !inPanel && controller.openValue != null) {
                 controller.onOpenChange(null)
             }
         },
@@ -486,6 +604,7 @@ fun NavigationMenuItemScope.NavigationMenuLink(
     disabled: Boolean = false,
     active: Boolean = false,
     style: Style = Style,
+    closeOnClick: Boolean = true,
 ) {
     NavigationMenuLink(
         onClick = onClick,
@@ -494,8 +613,13 @@ fun NavigationMenuItemScope.NavigationMenuLink(
         disabled = disabled,
         active = active,
         style = style,
+        closeOnClick = closeOnClick,
     ) {
-        Text(variant = TextVariant.BodySmall) { text }
+        if (currentTheme.activePreset == StylePreset.Nova) {
+            Text(maxLines = 1) { text }
+        } else {
+            Text(variant = TextVariant.BodySmall) { text }
+        }
     }
 }
 
@@ -533,8 +657,7 @@ private fun NavMenuHitTarget(
     modifier: Modifier,
     open: Boolean,
     style: Style,
-    label: String,
-    onClick: (hovered: Boolean) -> Unit,
+    onClick: (hovered: Boolean, keyboard: Boolean, expandedOnPress: Boolean?) -> Unit,
     onHoverChange: (Boolean) -> Unit,
     enabled: Boolean = true,
     expanded: Boolean? = null,
@@ -543,18 +666,44 @@ private fun NavMenuHitTarget(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isHovered by interactionSource.collectIsHoveredAsState()
-    LaunchedEffect(isHovered) {
-        if (enabled) onHoverChange(isHovered)
-    }
-    val styleState = rememberUpdatedStyleState(interactionSource)
+    var lastPointerType by remember { mutableStateOf(PointerType.Unknown) }
+    var keyboardActivation by remember { mutableStateOf(false) }
+    var expandedOnPress by remember { mutableStateOf<Boolean?>(null) }
+    val latestExpanded by rememberUpdatedState(expanded)
+    val latestHoverChange by rememberUpdatedState(onHoverChange)
+    LaunchedEffect(isHovered, enabled) { latestHoverChange(isHovered && enabled) }
+    DisposableEffect(Unit) { onDispose { latestHoverChange(false) } }
+    val styleState = rememberUpdatedStyleState(interactionSource) { it.isEnabled = enabled }
     val pressStyle = rememberPressMotionStyle()
     val touchTargetStyle = rememberMinTouchTargetStyle()
+    val theme = currentTheme
+    val nova = theme.activePreset == StylePreset.Nova
+    val labelStyle =
+        if (nova) {
+            TextStyle(
+                fontFamily = theme.fontFamily,
+                fontSize = 14.sp,
+                lineHeight = 20.sp,
+                fontWeight = if (expanded != null) FontWeight.Medium else FontWeight.Normal,
+                letterSpacing = 0.sp,
+            )
+        } else {
+            TextStyle.Default
+        }
+    val itemStyle =
+        if (expanded != null) {
+            rememberNavMenuItemStyle(open)
+        } else {
+            rememberNavMenuLinkStyle(
+                active,
+                LocalNavigationMenuPanel.current,
+            )
+        }
     Box(
         modifier =
             modifier
                 .semantics {
                     role = Role.Button
-                    contentDescription = label
                     if (expanded != null) {
                         stateDescription = if (expanded) "Expanded" else "Collapsed"
                     }
@@ -563,18 +712,43 @@ private fun NavMenuHitTarget(
                 }
                 .hoverable(interactionSource, enabled = enabled)
                 .keyboardInputMode()
+                .onPreviewKeyEvent {
+                    if (it.type == KeyEventType.KeyDown) {
+                        lastPointerType = PointerType.Unknown
+                        expandedOnPress = null
+                        if (it.key == Key.Enter || it.key == Key.Spacebar) keyboardActivation = true
+                    }
+                    false
+                }
+                .pointerInput(Unit) {
+                    awaitPointerEventScope {
+                        while (true) {
+                            val event = awaitPointerEvent(PointerEventPass.Initial)
+                            event.changes.firstOrNull { it.pressed && !it.previousPressed }?.let {
+                                lastPointerType = it.type
+                                expandedOnPress = latestExpanded
+                                keyboardActivation = false
+                            }
+                        }
+                    }
+                }
                 .clickable(
                     interactionSource = interactionSource,
                     indication = null,
                     enabled = enabled,
                     role = Role.Button,
-                    onClick = { onClick(isHovered) },
+                    onClick = {
+                        val expandedAtDown = expandedOnPress
+                        expandedOnPress = null
+                        onClick(isHovered && lastPointerType == PointerType.Mouse, keyboardActivation, expandedAtDown)
+                    },
                 )
                 .styleable(
                     styleState,
-                    touchTargetStyle then pressStyle then rememberNavMenuItemStyle(open) then style,
+                    touchTargetStyle then (if (nova) Style else pressStyle) then itemStyle then style,
                 ),
+        contentAlignment = Alignment.Center,
     ) {
-        content()
+        CompositionLocalProvider(LocalDefaultTextStyle provides labelStyle) { content() }
     }
 }

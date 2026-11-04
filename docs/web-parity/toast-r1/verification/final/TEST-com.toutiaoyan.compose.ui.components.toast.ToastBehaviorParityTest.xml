@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ToastBehaviorParityTest[jvm]" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-30T22:57:39.352Z" hostname="Apples-MacBook-Pro.local" time="0.72">
+  <properties/>
+  <testcase name="actionDoesNotImplicitlyCloseTheToast[jvm]" classname="com.toutiaoyan.compose.ui.components.toast.ToastBehaviorParityTest" time="0.493"/>
+  <testcase name="limitedMessagesStillRunTheirTimeouts[jvm]" classname="com.toutiaoyan.compose.ui.components.toast.ToastBehaviorParityTest" time="0.047"/>
+  <testcase name="replacingTheManagerDoesNotReuseAnOldIdsDeadline[jvm]" classname="com.toutiaoyan.compose.ui.components.toast.ToastBehaviorParityTest" time="0.04"/>
+  <testcase name="updatingAMessageRestartsItsTimeout[jvm]" classname="com.toutiaoyan.compose.ui.components.toast.ToastBehaviorParityTest" time="0.056"/>
+  <testcase name="managerUsesFiveSecondDefaultTimeout[jvm]" classname="com.toutiaoyan.compose.ui.components.toast.ToastBehaviorParityTest" time="0.012"/>
+  <testcase name="defaultRendererHasCloseToastControl[jvm]" classname="com.toutiaoyan.compose.ui.components.toast.ToastBehaviorParityTest" time="0.023"/>
+  <testcase name="zeroTimeoutIsPersistentAndVisible[jvm]" classname="com.toutiaoyan.compose.ui.components.toast.ToastBehaviorParityTest" time="0.026"/>
+  <testcase name="explicitActionCanCloseItsOwnId[jvm]" classname="com.toutiaoyan.compose.ui.components.toast.ToastBehaviorParityTest" time="0.022"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

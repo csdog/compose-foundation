@@ -1,0 +1,34 @@
+{
+  "controlRevision": "df92e50d",
+  "controlActualSha256": "ac4a737eb2f60c9cebfdc699b559786b55ac396b41b90c65b87f057ae1bdbb24",
+  "currentActualSha256": "ac4a737eb2f60c9cebfdc699b559786b55ac396b41b90c65b87f057ae1bdbb24",
+  "oldGoldenSha256": "b4436f66e8d0ac03837ffe195a0cafc2289aba0ce259ff7af280b4d664210b42",
+  "byteIdenticalControl": true,
+  "changedPixels": 150,
+  "imageSize": [
+    470,
+    100
+  ],
+  "differenceBounds": [
+    181,
+    24,
+    240,
+    43
+  ],
+  "mainPixelChange": {
+    "old": [
+      38,
+      38,
+      38,
+      255
+    ],
+    "current": [
+      34,
+      34,
+      34,
+      255
+    ]
+  },
+  "officialBorder": "lab(100 0 0 /0.1)",
+  "updatedGolden": "only badge_nova_parity_dark.png; light and four Vega references unchanged"
+}

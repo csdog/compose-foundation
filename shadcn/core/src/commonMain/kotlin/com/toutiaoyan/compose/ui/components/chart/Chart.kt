@@ -4,6 +4,11 @@ package com.toutiaoyan.compose.ui.components.chart
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,28 +29,40 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.layout.layout
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.unit.sp
+import com.toutiaoyan.compose.ui.theme.Theme
+import com.toutiaoyan.compose.ui.theme.LocalContentColor
+import com.toutiaoyan.compose.ui.styles.cssStyleable
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.components.text.Text
-import com.toutiaoyan.compose.ui.components.text.TextVariant
-import com.toutiaoyan.compose.ui.components.text.TextColors
-import com.toutiaoyan.compose.tailwind.core.twSpacing
 
 /**
  * One labeled, colored data series in a chart. Mirrors real shadcn/ui's `chart.tsx`
- * `ChartConfig` (a `Record<dataKey, { label, color }>`) -- since there is no Compose
- * Multiplatform equivalent of Recharts (the library `chart.tsx` itself wraps), the
+ * `ChartConfig` (a `Record<dataKey, { label, color }>`) -- this Kotlin implementation uses Canvas instead of the web Recharts renderer; the
  * actual bars/lines here are drawn directly via [Canvas] rather than delegated to a
  * charting library, but the config-driven series-to-color/label mapping is the same
  * shape as the real API.
  */
-data class ChartSeries(val label: String, val color: Color)
+data class ChartSeries(
+    val label: String,
+    val color: Color,
+    val icon: (@Composable () -> Unit)? = null,
+    val theme: ChartThemeColors? = null,
+)
+
+/** Light/dark series colors; theme colors take precedence over the fallback color. */
+data class ChartThemeColors(val light: Color, val dark: Color)
+
+@Composable
+internal fun ChartSeries.resolvedColor(): Color = theme?.let { if (Theme.isDark) it.dark else it.light } ?: color
 
 /** dataKey -> series config, matching real shadcn's `ChartConfig`. */
 typealias ChartConfig = Map<String, ChartSeries>
@@ -88,8 +105,8 @@ object ChartContainerDefaults {
  * Fixed aspect-ratio frame for chart content, matching real shadcn's `ChartContainer`
  * (`aspect-video` by default). [accessibilityLayer] adds a generic "Chart" label when
  * [ariaLabel] is omitted (default false).
- * Pass [initialDimension] ([ChartContainerDefaults.InitialDimension]) for Recharts'
- * 320×200 first-paint size instead of 16:9.
+ * [initialDimension] is an unmeasured-width fallback, not a permanent size override.
+ * A measured parent width/height always takes precedence, matching ResponsiveContainer.
  */
 @Composable
 fun ChartContainer(
@@ -104,11 +121,32 @@ fun ChartContainer(
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val resolvedLabel = ariaLabel ?: if (accessibilityLayer) "Chart" else null
+    require(aspectRatio.isFinite() && aspectRatio > 0f) { "aspectRatio must be positive and finite" }
     val frame =
-        if (initialDimension != null) {
-            Modifier.size(initialDimension.width, initialDimension.height)
-        } else {
-            Modifier.fillMaxWidth().aspectRatio(aspectRatio)
+        Modifier.layout { measurable, constraints ->
+            val width =
+                if (constraints.hasBoundedWidth) {
+                    constraints.maxWidth
+                } else {
+                    (
+                        initialDimension?.width?.roundToPx()
+                            ?: constraints.minWidth
+                    ).coerceIn(
+                        constraints.minWidth,
+                        constraints.maxWidth,
+                    )
+                }
+            val naturalHeight =
+                if (!constraints.hasBoundedWidth &&
+                    initialDimension != null
+                ) {
+                    initialDimension.height.roundToPx()
+                } else {
+                    (width / aspectRatio).toInt()
+                }
+            val height = naturalHeight.coerceIn(constraints.minHeight, constraints.maxHeight)
+            val child = measurable.measure(androidx.compose.ui.unit.Constraints.fixed(width, height))
+            layout(width, height) { child.place(0, 0) }
         }
     ChartStyle(config = config) {
         Box(
@@ -153,30 +191,32 @@ fun ChartLegend(
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val alignPadding =
         when (verticalAlign) {
-            ChartLegendVerticalAlign.Top -> Modifier.padding(bottom = twSpacing.md)
-            ChartLegendVerticalAlign.Bottom -> Modifier.padding(top = twSpacing.md)
+            ChartLegendVerticalAlign.Top -> Modifier.padding(bottom = 12.dp)
+            ChartLegendVerticalAlign.Bottom -> Modifier.padding(top = 12.dp)
         }
     Row(
         modifier = modifier.fillMaxWidth().then(alignPadding).styleable(styleState, style),
-        horizontalArrangement = Arrangement.Center,
+        horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Row(horizontalArrangement = Arrangement.spacedBy(twSpacing.md)) {
-            resolved.values.forEach { series ->
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(twSpacing.xs),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    if (!hideIcon) {
-                        Box(
-                            modifier =
-                                Modifier.styleable(
-                                    remember { MutableStyleState(MutableInteractionSource()) },
-                                    rememberChartLegendSwatchStyle(series.color),
-                                ),
-                        )
+        resolved.values.forEach { series ->
+            Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
+                if (series.icon != null && !hideIcon) {
+                    Box(Modifier.size(12.dp)) {
+                        CompositionLocalProvider(
+                            LocalContentColor provides
+                                currentTheme.colors.mutedForeground,
+                        ) { series.icon.invoke() }
                     }
-                    Text(variant = TextVariant.LabelSmall, textStyle = TextColors.Muted) { series.label }
+                } else {
+                    Box(
+                        Modifier.styleable(
+                            remember { MutableStyleState(MutableInteractionSource()) },
+                            rememberChartLegendSwatchStyle(series.resolvedColor()),
+                        ),
+                    )
                 }
+                Text(textStyle = chartTypography()) { series.label }
             }
         }
     }
@@ -200,92 +240,62 @@ fun ChartLegendContent(
     )
 }
 
-/** A grouped vertical bar chart -- one bar per series, per x-axis category. */
+/** Grouped bars with pointer selection and keyboard tooltip navigation. */
 @Composable
 fun BarChart(
     data: List<ChartPoint>,
     config: ChartConfig? = null,
     modifier: Modifier = Modifier,
     style: Style = Style,
+    showGrid: Boolean = true,
+    showXAxis: Boolean = true,
+    reversed: Boolean = false,
+    barRadius: androidx.compose.ui.unit.Dp = 4.dp,
+    defaultIndex: Int? = null,
+    accessibilityLayer: Boolean = true,
+    xAxisLabelFormatter: (String) -> String = { it },
+    maxAxisLabels: Int = Int.MAX_VALUE,
+    minTickGap: androidx.compose.ui.unit.Dp = 5.dp,
+    plotPadding: PaddingValues = PaddingValues(5.dp),
+    tooltip: (@Composable (ChartPoint) -> Unit)? = null,
 ) {
-    val resolved = resolveChartConfig(config)
-    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    val seriesKeys = resolved.keys.toList()
-    val maxValue = data.flatMap { it.values.values }.maxOrNull()?.coerceAtLeast(1f) ?: 1f
-    val gridColor = currentTheme.colors.border
-
-    Column(modifier = modifier.styleable(styleState, style)) {
-        Canvas(modifier = Modifier.fillMaxWidth().weight(1f)) {
-            drawGridlines(gridColor)
-            if (data.isEmpty() || seriesKeys.isEmpty()) return@Canvas
-
-            val groupWidth = size.width / data.size
-            val barGap = groupWidth * 0.15f
-            val barWidth = (groupWidth - barGap * 2) / seriesKeys.size
-
-            data.forEachIndexed { groupIndex, point ->
-                val groupStart = groupIndex * groupWidth + barGap
-                seriesKeys.forEachIndexed { seriesIndex, key ->
-                    val value = point.values[key] ?: 0f
-                    val barHeight = (value / maxValue) * size.height
-                    val left = groupStart + seriesIndex * barWidth
-                    drawRect(
-                        color = resolved.getValue(key).color,
-                        topLeft = Offset(left, size.height - barHeight),
-                        size = Size(barWidth * 0.85f, barHeight),
-                    )
-                }
-            }
-        }
-        ChartXAxisLabels(data.map { it.label })
-    }
+    val state = remember { MutableStyleState(MutableInteractionSource()) }
+    CartesianChart(
+        data, resolveChartConfig(config), modifier.styleable(state, style), false,
+        showGrid, showXAxis, reversed, barRadius, defaultIndex, accessibilityLayer,
+        xAxisLabelFormatter, maxAxisLabels, minTickGap, plotPadding, tooltip,
+    )
 }
 
-/** A multi-series line chart, one polyline per series key. */
+/** Multi-series lines share the same data, keyboard and tooltip contract as [BarChart]. */
 @Composable
 fun LineChart(
     data: List<ChartPoint>,
     config: ChartConfig? = null,
     modifier: Modifier = Modifier,
     style: Style = Style,
+    showGrid: Boolean = true,
+    showXAxis: Boolean = true,
+    reversed: Boolean = false,
+    defaultIndex: Int? = null,
+    accessibilityLayer: Boolean = true,
+    xAxisLabelFormatter: (String) -> String = { it },
+    maxAxisLabels: Int = Int.MAX_VALUE,
+    minTickGap: androidx.compose.ui.unit.Dp = 5.dp,
+    plotPadding: PaddingValues = PaddingValues(5.dp),
+    tooltip: (@Composable (ChartPoint) -> Unit)? = null,
 ) {
-    val resolved = resolveChartConfig(config)
-    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    val seriesKeys = resolved.keys.toList()
-    val maxValue = data.flatMap { it.values.values }.maxOrNull()?.coerceAtLeast(1f) ?: 1f
-    val gridColor = currentTheme.colors.border
-
-    Column(modifier = modifier.styleable(styleState, style)) {
-        Canvas(modifier = Modifier.fillMaxWidth().weight(1f)) {
-            drawGridlines(gridColor)
-            if (data.size < 2 || seriesKeys.isEmpty()) return@Canvas
-
-            val stepX = size.width / (data.size - 1)
-            seriesKeys.forEach { key ->
-                val points =
-                    data.mapIndexed { index, point ->
-                        val value = point.values[key] ?: 0f
-                        Offset(index * stepX, size.height - (value / maxValue) * size.height)
-                    }
-                for (i in 0 until points.lastIndex) {
-                    drawLine(
-                        color = resolved.getValue(key).color,
-                        start = points[i],
-                        end = points[i + 1],
-                        strokeWidth = 2.dp.toPx(),
-                        cap = StrokeCap.Round,
-                    )
-                }
-                points.forEach { drawCircle(color = resolved.getValue(key).color, radius = 3.dp.toPx(), center = it) }
-            }
-        }
-        ChartXAxisLabels(data.map { it.label })
-    }
+    val state = remember { MutableStyleState(MutableInteractionSource()) }
+    CartesianChart(
+        data, resolveChartConfig(config), modifier.styleable(state, style), true,
+        showGrid, showXAxis, reversed, 0.dp, defaultIndex, accessibilityLayer,
+        xAxisLabelFormatter, maxAxisLabels, minTickGap, plotPadding, tooltip,
+    )
 }
 
 /**
  * Hover overlay host for a chart. Matches shadcn's `ChartTooltip`.
- * Not wired into [BarChart] / [LineChart] by default.
+ * Pass a tooltip content slot to [BarChart] / [LineChart] to display it at the active datum.
  */
 @Composable
 fun ChartTooltip(
@@ -309,60 +319,115 @@ fun ChartTooltipContent(
     hideIndicator: Boolean = false,
     indicator: ChartIndicator = ChartIndicator.Dot,
     style: Style = Style,
+    active: Boolean = true,
+    labelFormatter: (String) -> String = { it },
+    valueFormatter: (Float) -> String = ::formatChartNumber,
+    formatter: (@Composable (key: String, value: Float) -> Unit)? = null,
 ) {
+    if (!active || values.isEmpty()) return
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val nestedLabel = values.size == 1 && indicator != ChartIndicator.Dot
+    val showLabel = !hideLabel && label.isNotEmpty()
     Column(
-        modifier = modifier.styleable(styleState, style),
-        verticalArrangement = Arrangement.spacedBy(twSpacing.xs2),
+        modifier =
+            modifier.widthIn(min = 128.dp).width(IntrinsicSize.Max)
+                .cssStyleable(styleState, rememberChartTooltipStyle(), style),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
-        if (!hideLabel) {
-            Text(variant = TextVariant.LabelSmall) { label }
+        if (showLabel && !nestedLabel) {
+            Text(
+                textStyle =
+                    chartTypography(
+                        weight =
+                            FontWeight.Medium,
+                    ),
+            ) {
+                labelFormatter(
+                    config[label]?.label
+                        ?: label,
+                )
+            }
         }
         values.forEach { (key, value) ->
-            val series = config[key] ?: return@forEach
+            val series = config[key]
             Row(
-                horizontalArrangement = Arrangement.spacedBy(twSpacing.xs),
+                Modifier.fillMaxWidth().height(IntrinsicSize.Min),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                if (!hideIndicator) {
-                    Box(
-                        modifier =
-                            Modifier.styleable(
-                                remember { MutableStyleState(MutableInteractionSource()) },
-                                rememberChartIndicatorStyle(series.color, indicator),
-                            ),
-                    )
-                }
-                Text(variant = TextVariant.LabelSmall, textStyle = TextColors.Muted) {
-                    "${series.label}: $value"
+                if (formatter != null) {
+                    formatter(key, value)
+                } else {
+                    if (series?.icon != null) {
+                        Box(Modifier.size(10.dp)) {
+                            CompositionLocalProvider(
+                                LocalContentColor provides
+                                    currentTheme.colors.mutedForeground,
+                            ) { series.icon.invoke() }
+                        }
+                    } else if (!hideIndicator) {
+                        ChartTooltipIndicator(series?.resolvedColor() ?: currentTheme.colors.foreground, indicator)
+                    }
+                    Row(
+                        Modifier.weight(1f),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = if (nestedLabel) Alignment.Bottom else Alignment.CenterVertically,
+                    ) {
+                        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                            if (showLabel && nestedLabel) {
+                                Text(
+                                    textStyle =
+                                        chartTypography(
+                                            weight =
+                                                FontWeight.Medium,
+                                        ),
+                                ) {
+                                    labelFormatter(
+                                        config[label]?.label
+                                            ?: label,
+                                    )
+                                }
+                            }
+                            Text(textStyle = chartTypography(color = currentTheme.colors.mutedForeground)) {
+                                series?.label ?: key
+                            }
+                        }
+                        Text(
+                            maxLines = 1,
+                            textStyle =
+                                chartTypography(
+                                    weight = FontWeight.Medium,
+                                    fontFamily = FontFamily.Monospace,
+                                ),
+                        ) { valueFormatter(value) }
+                    }
                 }
             }
         }
     }
 }
 
-private fun DrawScope.drawGridlines(color: Color) {
-    val lineCount = 4
-    for (i in 0..lineCount) {
-        val y = size.height * i / lineCount
-        drawLine(
-            color = color.copy(alpha = 0.5f),
-            start = Offset(0f, y),
-            end = Offset(size.width, y),
-            strokeWidth = 1.dp.toPx(),
-            cap = StrokeCap.Butt,
-        )
-    }
+/** English-style grouping for the default recipe; callers can supply locale-specific formatting. */
+fun formatChartNumber(value: Float): String {
+    val raw = value.toString().removeSuffix(".0")
+    if (!value.isFinite() || 'E' in raw || 'e' in raw) return raw
+    val sign = if (raw.startsWith("-")) "-" else ""
+    val unsigned = raw.removePrefix("-")
+    val integer = unsigned.substringBefore('.')
+    val fraction = if ('.' in unsigned) "." + unsigned.substringAfter('.') else ""
+    return sign + integer.reversed().chunked(3).joinToString(",").reversed() + fraction
 }
 
 @Composable
-private fun ChartXAxisLabels(labels: List<String>) {
-    Row(
-        modifier = Modifier.fillMaxWidth().padding(top = twSpacing.xs),
-        horizontalArrangement = Arrangement.SpaceBetween,
-    ) {
-        labels.forEach { label ->
-            Text(variant = TextVariant.LabelSmall, textStyle = TextColors.Muted) { label }
-        }
-    }
-}
+internal fun chartTypography(
+    color: Color = currentTheme.colors.foreground,
+    weight: FontWeight = FontWeight.Normal,
+    fontFamily: FontFamily? = null,
+) = TextStyle(
+    color = color,
+    fontSize = 12.sp,
+    lineHeight = 16.sp,
+    fontWeight = weight,
+    fontFamily = fontFamily ?: currentTheme.fontFamily,
+    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+)

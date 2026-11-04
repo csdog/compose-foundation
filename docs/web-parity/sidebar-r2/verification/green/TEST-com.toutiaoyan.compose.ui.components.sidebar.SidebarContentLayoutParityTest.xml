@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="SidebarContentLayoutParityTest[jvm]" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-30T21:51:03.466Z" hostname="Apples-MacBook-Pro.local" time="0.928">
+  <properties/>
+  <testcase name="paddingBelongsToHeaderAndFooterWhileContentHasNoGapOrPadding[mobile=false,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.sidebar.SidebarContentLayoutParityTest" time="0.444"/>
+  <testcase name="longNavigationScrollsWhileHeaderAndFooterStayInPlace[mobile=false,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.sidebar.SidebarContentLayoutParityTest" time="0.07"/>
+  <testcase name="paddingBelongsToHeaderAndFooterWhileContentHasNoGapOrPadding[mobile=false,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.sidebar.SidebarContentLayoutParityTest" time="0.027"/>
+  <testcase name="longNavigationScrollsWhileHeaderAndFooterStayInPlace[mobile=false,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.sidebar.SidebarContentLayoutParityTest" time="0.044"/>
+  <testcase name="paddingBelongsToHeaderAndFooterWhileContentHasNoGapOrPadding[mobile=true,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.sidebar.SidebarContentLayoutParityTest" time="0.107"/>
+  <testcase name="longNavigationScrollsWhileHeaderAndFooterStayInPlace[mobile=true,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.sidebar.SidebarContentLayoutParityTest" time="0.093"/>
+  <testcase name="paddingBelongsToHeaderAndFooterWhileContentHasNoGapOrPadding[mobile=true,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.sidebar.SidebarContentLayoutParityTest" time="0.049"/>
+  <testcase name="longNavigationScrollsWhileHeaderAndFooterStayInPlace[mobile=true,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.sidebar.SidebarContentLayoutParityTest" time="0.089"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

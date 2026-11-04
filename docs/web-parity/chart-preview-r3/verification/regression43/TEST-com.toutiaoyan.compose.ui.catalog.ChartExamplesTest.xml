@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ChartExamplesTest[jvm]" tests="32" skipped="0" failures="0" errors="0" timestamp="2026-11-02T02:16:28.135Z" hostname="Apples-MacBook-Pro.local" time="2.963">
+  <properties/>
+  <testcase name="tooltipFollowsKeyboardNavigationThroughActualMonthData[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.995"/>
+  <testcase name="interactiveDemoSwitchesTheActualSeriesAndKeepsPinnedTotals[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.187"/>
+  <testcase name="anatomyUsesGroupedNumbersAndTheResponsiveLineExample[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.065"/>
+  <testcase name="legendSharesConfigAndKeepsJuneData[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.048"/>
+  <testcase name="gridStepStillOmitsTheXAxis[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.029"/>
+  <testcase name="axisStepContainsAllSixSourceMonths[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.045"/>
+  <testcase name="rtlSwitchesThreeLanguagesAndReversesKeyboardDataOrder[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.356"/>
+  <testcase name="firstStepUsesTwoSeriesAndHasNoAxisLabelsYet[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.032"/>
+  <testcase name="tooltipFollowsKeyboardNavigationThroughActualMonthData[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.044"/>
+  <testcase name="interactiveDemoSwitchesTheActualSeriesAndKeepsPinnedTotals[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.09"/>
+  <testcase name="anatomyUsesGroupedNumbersAndTheResponsiveLineExample[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.038"/>
+  <testcase name="legendSharesConfigAndKeepsJuneData[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.036"/>
+  <testcase name="gridStepStillOmitsTheXAxis[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.022"/>
+  <testcase name="axisStepContainsAllSixSourceMonths[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.026"/>
+  <testcase name="rtlSwitchesThreeLanguagesAndReversesKeyboardDataOrder[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.203"/>
+  <testcase name="firstStepUsesTwoSeriesAndHasNoAxisLabelsYet[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.023"/>
+  <testcase name="tooltipFollowsKeyboardNavigationThroughActualMonthData[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.032"/>
+  <testcase name="interactiveDemoSwitchesTheActualSeriesAndKeepsPinnedTotals[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.062"/>
+  <testcase name="anatomyUsesGroupedNumbersAndTheResponsiveLineExample[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.026"/>
+  <testcase name="legendSharesConfigAndKeepsJuneData[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.037"/>
+  <testcase name="gridStepStillOmitsTheXAxis[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.02"/>
+  <testcase name="axisStepContainsAllSixSourceMonths[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.02"/>
+  <testcase name="rtlSwitchesThreeLanguagesAndReversesKeyboardDataOrder[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.157"/>
+  <testcase name="firstStepUsesTwoSeriesAndHasNoAxisLabelsYet[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.022"/>
+  <testcase name="tooltipFollowsKeyboardNavigationThroughActualMonthData[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.028"/>
+  <testcase name="interactiveDemoSwitchesTheActualSeriesAndKeepsPinnedTotals[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.051"/>
+  <testcase name="anatomyUsesGroupedNumbersAndTheResponsiveLineExample[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.03"/>
+  <testcase name="legendSharesConfigAndKeepsJuneData[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.029"/>
+  <testcase name="gridStepStillOmitsTheXAxis[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.018"/>
+  <testcase name="axisStepContainsAllSixSourceMonths[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.02"/>
+  <testcase name="rtlSwitchesThreeLanguagesAndReversesKeyboardDataOrder[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.145"/>
+  <testcase name="firstStepUsesTwoSeriesAndHasNoAxisLabelsYet[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ChartExamplesTest" time="0.021"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

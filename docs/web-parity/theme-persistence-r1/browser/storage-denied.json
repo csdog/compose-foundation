@@ -1,0 +1,61 @@
+{
+  "error": "SecurityError",
+  "inMemoryToggleWorks": true,
+  "reloadFollowsSystemWhenStorageDenied": true,
+  "hookRemoved": true,
+  "realPreferenceUnchanged": "dark",
+  "states": [
+    {
+      "file": "storage-denied-initial-light-390.png",
+      "dark": false,
+      "rgb": [
+        255,
+        255,
+        255
+      ],
+      "width": 390,
+      "height": 1000,
+      "origin": 1793590344001.7,
+      "systemDark": false
+    },
+    {
+      "file": "storage-denied-toggled-dark-390.png",
+      "dark": true,
+      "rgb": [
+        10,
+        10,
+        10
+      ],
+      "width": 390,
+      "height": 1000,
+      "origin": 1793590344001.7,
+      "systemDark": false
+    },
+    {
+      "file": "storage-denied-reload-light-390.png",
+      "dark": false,
+      "rgb": [
+        255,
+        255,
+        255
+      ],
+      "width": 390,
+      "height": 1000,
+      "origin": 1793590346509,
+      "systemDark": false
+    },
+    {
+      "file": "storage-restored-persisted-dark-1440.png",
+      "dark": true,
+      "rgb": [
+        10,
+        10,
+        10
+      ],
+      "width": 1440,
+      "height": 1000,
+      "origin": 1793590348781.2,
+      "systemDark": false
+    }
+  ]
+}

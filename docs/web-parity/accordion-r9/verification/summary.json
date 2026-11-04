@@ -1,0 +1,41 @@
+{
+  "round": "accordion-r9",
+  "workflow": "da3c943809abc60859e2a103023b34ba",
+  "initialFailure": "Four selector ambiguities from code panel matching answer substring; not runtime RED",
+  "regressionRed": {
+    "tests": 4,
+    "failures": 2,
+    "width": 390,
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "assertion": "Fixed preview must retain the natural height of every trigger",
+    "seconds": 6.071
+  },
+  "final": {
+    "uniqueTests": 34,
+    "coreAccordionExamples": 2,
+    "fixedPreviewFrames": 24,
+    "rtlPreview": 4,
+    "sharedBreadcrumb": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "sharedKtlint": "PASS",
+    "testsAndLintSeconds": 19.814,
+    "wasmDevelopmentDistribution": "PASS",
+    "wasmSeconds": 15.135,
+    "nativeRtlPngs": 12,
+    "nativeChangedVsPreliminary": 6,
+    "inputHashesChecked": 6,
+    "inputHashesChanged": []
+  },
+  "warnings": [
+    "Development webpack1 warning retained; no complete production build or golden suite claim"
+  ],
+  "workflowFinished": true,
+  "rawManagedLogsCleaned": true,
+  "finalInputHashesChecked": 6,
+  "finalInputHashesChanged": []
+}

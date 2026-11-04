@@ -1,0 +1,434 @@
+[
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "default",
+    "file": "local-desktop-light-default.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "variants",
+    "file": "local-desktop-light-variants.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "alignment",
+    "file": "local-desktop-light-alignment.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "bubble-group",
+    "file": "local-desktop-light-bubble-group.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "links-and-buttons",
+    "file": "local-desktop-light-links-and-buttons.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "reactions",
+    "file": "local-desktop-light-reactions.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "show-more-collapsible",
+    "file": "local-desktop-light-show-more-collapsible.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "tooltip",
+    "file": "local-desktop-light-tooltip.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "popover",
+    "file": "local-desktop-light-popover.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "default",
+    "file": "local-desktop-dark-default.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "variants",
+    "file": "local-desktop-dark-variants.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "alignment",
+    "file": "local-desktop-dark-alignment.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "bubble-group",
+    "file": "local-desktop-dark-bubble-group.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "links-and-buttons",
+    "file": "local-desktop-dark-links-and-buttons.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "reactions",
+    "file": "local-desktop-dark-reactions.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "show-more-collapsible",
+    "file": "local-desktop-dark-show-more-collapsible.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "tooltip",
+    "file": "local-desktop-dark-tooltip.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "popover",
+    "file": "local-desktop-dark-popover.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "default",
+    "file": "local-phone-dark-default.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "variants",
+    "file": "local-phone-dark-variants.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "alignment",
+    "file": "local-phone-dark-alignment.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "bubble-group",
+    "file": "local-phone-dark-bubble-group.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "links-and-buttons",
+    "file": "local-phone-dark-links-and-buttons.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "reactions",
+    "file": "local-phone-dark-reactions.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "show-more-collapsible",
+    "file": "local-phone-dark-show-more-collapsible.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "tooltip",
+    "file": "local-phone-dark-tooltip.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "popover",
+    "file": "local-phone-dark-popover.png",
+    "backgroundRgb": [
+      10,
+      10,
+      10
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "default",
+    "file": "local-phone-light-default.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "variants",
+    "file": "local-phone-light-variants.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "alignment",
+    "file": "local-phone-light-alignment.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "bubble-group",
+    "file": "local-phone-light-bubble-group.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "links-and-buttons",
+    "file": "local-phone-light-links-and-buttons.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "reactions",
+    "file": "local-phone-light-reactions.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "show-more-collapsible",
+    "file": "local-phone-light-show-more-collapsible.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "tooltip",
+    "file": "local-phone-light-tooltip.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "popover",
+    "file": "local-phone-light-popover.png",
+    "backgroundRgb": [
+      255,
+      255,
+      255
+    ],
+    "dpr": 2
+  }
+]

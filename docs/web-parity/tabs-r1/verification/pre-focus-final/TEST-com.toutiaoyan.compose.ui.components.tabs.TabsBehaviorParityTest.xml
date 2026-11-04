@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TabsBehaviorParityTest[jvm]" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-10-30T22:32:11.317Z" hostname="Apples-MacBook-Pro.local" time="0.845">
+  <properties/>
+  <testcase name="verticalHomeEndAndNonLoopingBoundaryWork[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.465"/>
+  <testcase name="tabExitsTheListThroughOneRovingEntry[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.049"/>
+  <testcase name="keyedReorderUsesCurrentVisualOrderForArrows[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.032"/>
+  <testcase name="controlledRefusalKeepsSelectionWhileFocusMoves[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.027"/>
+  <testcase name="keptPanelPreservesInputButTakesNoSpaceOrFocusWhenHidden[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.118"/>
+  <testcase name="rtlArrowDirectionIsReversed[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.025"/>
+  <testcase name="missingOrDisabledUncontrolledSelectionFallsBack[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.022"/>
+  <testcase name="uncontrolledRootInitiallySelectsFirstEnabledTab[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.019"/>
+  <testcase name="disabledTabIsSkippedAndManualActivationIsSeparate[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.025"/>
+  <testcase name="defaultKeyboardFocusRequiresExplicitActivation[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.022"/>
+  <testcase name="switchingPanelsRemovesOldContentWithoutAnImplicitFade[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.022"/>
+  <testcase name="savedSetterUsesLatestOwnerCallback[jvm]" classname="com.toutiaoyan.compose.ui.components.tabs.TabsBehaviorParityTest" time="0.017"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

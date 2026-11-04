@@ -1,0 +1,7 @@
+{
+  "url": "https://raw.githubusercontent.com/mui/base-ui/master/packages/react/src/utils/popups/delay-group/FloatingDelayGroup.tsx",
+  "path": "packages/react/src/utils/popups/delay-group/FloatingDelayGroup.tsx",
+  "sha256": "fbf3fa08e0d9f30578a7b1fc7e6f1cc534bf5168b874457396c1d38d50e34577",
+  "retrieved": "2026-10-31",
+  "note": "Primary upstream master fetched for group behavior; independent from pinned shadcn recipe revision."
+}

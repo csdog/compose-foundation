@@ -1,0 +1,306 @@
+@file:OptIn(androidx.compose.foundation.style.ExperimentalFoundationStyleApi::class)
+
+package com.toutiaoyan.compose.ui.catalog.docs
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.*
+import com.composables.icons.lucide.CircleAlert
+import com.composables.icons.lucide.CircleCheck
+import com.composables.icons.lucide.CircleDashed
+import com.composables.icons.lucide.Lucide
+import com.toutiaoyan.compose.ui.components.icon.Icon
+import com.toutiaoyan.compose.ui.components.navigationmenu.*
+import com.toutiaoyan.compose.ui.components.text.Text
+import com.toutiaoyan.compose.ui.components.text.TextColors
+
+// region shared
+private val navigationTranslations =
+    listOf(
+        mapOf(
+            "gettingStarted" to "Getting started",
+            "introduction" to "Introduction",
+            "introductionDesc" to "Re-usable components built with Tailwind CSS.",
+            "installation" to "Installation",
+            "installationDesc" to "How to install dependencies and structure your app.",
+            "typography" to "Typography",
+            "typographyDesc" to "Styles for headings, paragraphs, lists...etc",
+            "components" to "Components",
+            "alertDialog" to "Alert Dialog",
+            "alertDialogDesc" to (
+                "A modal dialog that interrupts the user with important " +
+                    "content and expects a response."
+            ),
+            "hoverCard" to "Hover Card",
+            "hoverCardDesc" to "For sighted users to preview content available behind a link.",
+            "progress" to "Progress",
+            "progressDesc" to (
+                "Displays an indicator showing the completion progress of a " +
+                    "task, typically displayed as a progress bar."
+            ),
+            "scrollArea" to "Scroll-area",
+            "scrollAreaDesc" to "Visually or semantically separates content.",
+            "tabs" to "Tabs",
+            "tabsDesc" to "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+            "tooltip" to "Tooltip",
+            "tooltipDesc" to (
+                "A popup that displays information related to an element when " +
+                    "the element receives keyboard focus or the mouse hovers over " +
+                    "it."
+            ),
+            "withIcon" to "With Icon",
+            "backlog" to "Backlog",
+            "toDo" to "To Do",
+            "done" to "Done",
+            "docs" to "Docs",
+        ),
+        mapOf(
+            "gettingStarted" to "البدء",
+            "introduction" to "مقدمة",
+            "introductionDesc" to "مكونات قابلة لإعادة الاستخدام مبنية باستخدام Tailwind CSS.",
+            "installation" to "التثبيت",
+            "installationDesc" to "كيفية تثبيت التبعيات وتنظيم تطبيقك.",
+            "typography" to "الطباعة",
+            "typographyDesc" to "أنماط للعناوين والفقرات والقوائم...إلخ",
+            "components" to "المكونات",
+            "alertDialog" to "حوار التنبيه",
+            "alertDialogDesc" to "حوار نافذة يقطع المستخدم بمحتوى مهم ويتوقع استجابة.",
+            "hoverCard" to "بطاقة التحويم",
+            "hoverCardDesc" to "للمستخدمين المبصرين لمعاينة المحتوى المتاح خلف الرابط.",
+            "progress" to "التقدم",
+            "progressDesc" to "يعرض مؤشرًا يوضح تقدم إتمام المهمة، عادةً يتم عرضه كشريط تقدم.",
+            "scrollArea" to "منطقة التمرير",
+            "scrollAreaDesc" to "يفصل المحتوى بصريًا أو دلاليًا.",
+            "tabs" to "التبويبات",
+            "tabsDesc" to (
+                "مجموعة من أقسام المحتوى المتعددة الطبقات—المعروفة بألواح " +
+                    "التبويب—التي يتم عرضها واحدة في كل مرة."
+            ),
+            "tooltip" to "تلميح",
+            "tooltipDesc" to (
+                "نافذة منبثقة تعرض معلومات متعلقة بعنصر عندما يتلقى العنصر " +
+                    "التركيز على لوحة المفاتيح أو عند تحويم الماوس فوقه."
+            ),
+            "withIcon" to "مع أيقونة",
+            "backlog" to "قائمة الانتظار",
+            "toDo" to "المهام",
+            "done" to "منجز",
+            "docs" to "الوثائق",
+        ),
+        mapOf(
+            "gettingStarted" to "התחלה",
+            "introduction" to "הקדמה",
+            "introductionDesc" to "רכיבים לשימוש חוזר שנבנו עם Tailwind CSS.",
+            "installation" to "התקנה",
+            "installationDesc" to "כיצד להתקין תלויות ולבנות את האפליקציה שלך.",
+            "typography" to "טיפוגרפיה",
+            "typographyDesc" to "סגנונות לכותרות, פסקאות, רשימות...וכו'",
+            "components" to "רכיבים",
+            "alertDialog" to "דיאלוג התראה",
+            "alertDialogDesc" to "דיאלוג מודאלי שמפריע למשתמש עם תוכן חשוב ומצפה לתגובה.",
+            "hoverCard" to "כרטיס ריחוף",
+            "hoverCardDesc" to "למשתמשים רואים כדי להציג תצוגה מקדימה של תוכן זמין מאחורי קישור.",
+            "progress" to "התקדמות",
+            "progressDesc" to "מציג אינדיקטור המציג את התקדמות ההשלמה של משימה, בדרך כלל מוצג כסרגל התקדמות.",
+            "scrollArea" to "אזור גלילה",
+            "scrollAreaDesc" to "מפריד תוכן חזותית או סמנטית.",
+            "tabs" to "כרטיסיות",
+            "tabsDesc" to "קבוצה של חלקי תוכן מרובדים—המכונים לוחות כרטיסיות—המוצגים אחד בכל פעם.",
+            "tooltip" to "טולטיפ",
+            "tooltipDesc" to "חלון קופץ המציג מידע הקשור לאלמנט כאשר האלמנט מקבל מיקוד מקלדת או כאשר העכבר מרחף מעליו.",
+            "withIcon" to "עם אייקון",
+            "backlog" to "רשימת המתנה",
+            "toDo" to "לעשות",
+            "done" to "הושלם",
+            "docs" to "תיעוד",
+        ),
+    )
+
+private val navigationComponentPaths =
+    listOf(
+        Triple("alertDialog", "alertDialogDesc", "/docs/primitives/alert-dialog"),
+        Triple("hoverCard", "hoverCardDesc", "/docs/primitives/hover-card"),
+        Triple("progress", "progressDesc", "/docs/primitives/progress"),
+        Triple("scrollArea", "scrollAreaDesc", "/docs/primitives/scroll-area"),
+        Triple("tabs", "tabsDesc", "/docs/primitives/tabs"),
+        Triple("tooltip", "tooltipDesc", "/docs/primitives/tooltip"),
+    )
+
+@Composable
+private fun NavigationMenuItemScope.NavigationRecipeLink(
+    title: String,
+    description: String,
+    href: String,
+    onNavigate: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    NavigationMenuLink(
+        onClick = { onNavigate("https://ui.shadcn.com" + href) },
+        modifier = modifier,
+    ) {
+        Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Text(textStyle = TextStyle(fontSize = 14.sp, lineHeight = 14.sp, fontWeight = FontWeight.Medium)) { title }
+            Text(maxLines = 2, overflow = TextOverflow.Ellipsis, textStyle = TextColors.Muted) { description }
+        }
+    }
+}
+
+@Composable
+private fun NavigationMenuRecipeBody(
+    words: Map<String, String>,
+    modifier: Modifier = Modifier,
+) {
+    val viewportWidth = with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
+    val medium = viewportWidth >= 768.dp
+    val componentWidth =
+        if (viewportWidth >= 1024.dp) {
+            600.dp
+        } else if (medium) {
+            500.dp
+        } else {
+            400.dp
+        }
+    val uriHandler = LocalUriHandler.current
+    NavigationMenu(modifier.testTag("navigation-recipe")) {
+        NavigationMenuList {
+            NavigationMenuItem("getting-started") {
+                NavigationMenuTrigger(words.getValue("gettingStarted"))
+                NavigationMenuContent(Modifier.testTag("navigation-start-panel")) {
+                    Column(Modifier.width(384.dp)) {
+                        listOf(
+                            Triple("introduction", "introductionDesc", "/docs"),
+                            Triple("installation", "installationDesc", "/docs/installation"),
+                            Triple("typography", "typographyDesc", "/docs/primitives/typography"),
+                        ).forEach { (title, description, href) ->
+                            NavigationRecipeLink(
+                                words.getValue(title),
+                                words.getValue(description),
+                                href,
+                                uriHandler::openUri,
+                                Modifier.fillMaxWidth(),
+                            )
+                        }
+                    }
+                }
+            }
+            if (medium) {
+                NavigationMenuItem("components") {
+                    NavigationMenuTrigger(words.getValue("components"))
+                    NavigationMenuContent(Modifier.testTag("navigation-components-panel")) {
+                        Column(Modifier.width(componentWidth), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            navigationComponentPaths.chunked(2).forEach { row ->
+                                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    row.forEach { (title, description, href) ->
+                                        NavigationRecipeLink(
+                                            words.getValue(title),
+                                            words.getValue(description),
+                                            href,
+                                            uriHandler::openUri,
+                                            Modifier.weight(1f),
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            NavigationMenuItem("with-icon") {
+                NavigationMenuTrigger(words.getValue("withIcon"))
+                NavigationMenuContent(Modifier.testTag("navigation-icons-panel")) {
+                    Column(Modifier.width(200.dp)) {
+                        listOf(
+                            Lucide.CircleAlert to "backlog",
+                            Lucide.CircleDashed to "toDo",
+                            Lucide.CircleCheck to "done",
+                        ).forEach {
+                                (
+                                    icon,
+                                    key,
+                                ),
+                            ->
+                            NavigationMenuLink(onClick = {}, modifier = Modifier.fillMaxWidth()) {
+                                Row(
+                                    Modifier.fillMaxWidth(),
+                                    verticalAlignment =
+                                        Alignment.CenterVertically,
+                                    horizontalArrangement =
+                                        Arrangement.spacedBy(8.dp),
+                                ) {
+                                    Icon(icon, Modifier.size(16.dp))
+                                    Text { words.getValue(key) }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            NavigationMenuItem("docs") {
+                NavigationMenuLink(
+                    words.getValue("docs"),
+                    onClick = { uriHandler.openUri("https://ui.shadcn.com/docs") },
+                    style = rememberNavMenuItemStyle(false),
+                )
+            }
+        }
+    }
+}
+// endregion shared
+
+// region default
+@Composable
+internal fun NavigationMenuDefaultRecipe(modifier: Modifier = Modifier) {
+    NavigationMenuRecipeBody(navigationTranslations[0], modifier)
+}
+// endregion default
+
+// region rtl
+@Composable
+internal fun NavigationMenuRtlRecipe(
+    language: Int = 1,
+    modifier: Modifier = Modifier,
+) {
+    CompositionLocalProvider(
+        LocalLayoutDirection provides
+            if (language == 0) {
+                LayoutDirection.Ltr
+            } else {
+                LayoutDirection.Rtl
+            },
+    ) {
+        NavigationMenuRecipeBody(navigationTranslations[language], modifier)
+    }
+}
+// endregion rtl
+
+internal val navigationMenuOfficialExamples =
+    listOf(
+        ComponentExample(
+            title = "Default",
+            code = navigationDefaultRecipeCode,
+            minPreviewHeight = 384.dp,
+            preview = { NavigationMenuDefaultRecipe() },
+        ),
+        ComponentExample(
+            title = "RTL",
+            code = navigationRtlRecipeCode,
+            minPreviewHeight = 384.dp,
+            previewPadding = 0.dp,
+            preview = {
+                var language by remember { mutableIntStateOf(1) }
+                RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
+                    NavigationMenuRtlRecipe(language)
+                }
+            },
+        ),
+    )

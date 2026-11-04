@@ -1,0 +1,11 @@
+{
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/sidebar/Sidebar.kt": "daa5b77e99c95622ca0aa97c1e8b860a48261d429b263f7570b334421b6915f9",
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/sidebar/SidebarStyles.kt": "bc7ceff58181763925d220f4ff0f31e156e952d038aea454958db31e853ecb58",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/SidebarDoc.kt": "254a2e56b937f5ab512a2a7a00ee3357f6460948cd2c4591210ea50072b3fd17",
+  "gradle.properties": "941d732cac3b07fa69a90d110a6075f0376ebc3e5206f455029c29aaaca35e94",
+  "gradle/libs.versions.toml": "acd62a8ddc0d2a87e0546971f57228af5f28448c16bb9db97f06dd71c3979c8a",
+  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/sidebar/SidebarContentLayoutParityTest.kt": "552eef61e5ae5def94f3eef1df5419623a67f53d136593d4f133184e41e65d81",
+  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/sidebar/SidebarMobileParityTest.kt": "1ce59013248d4d51d5c6aae8dcff9c310693d42113e547ae23e924418423fe9b",
+  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/sidebar/SidebarBorderParityTest.kt": "f13453a95535b365b2cb9685a3e0c2a9f34bf72c4e9b183a3542cba7fc53719e",
+  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/sidebar/SidebarStateParityTest.kt": "8fe50616f3b6913d0555901af8d9c781b1184616596c2bec598c82fb4cfc6827"
+}

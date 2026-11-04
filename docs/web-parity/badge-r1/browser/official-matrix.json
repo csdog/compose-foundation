@@ -1,0 +1,1166 @@
+[
+  {
+    "width": 1440,
+    "theme": "light",
+    "id": "default",
+    "file": "official-1440-light-default.png",
+    "metrics": {
+      "x": 393.5,
+      "w": 638,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Badge",
+          "w": 54.1015625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(0 0 0)",
+          "color": "lab(98.26 0 0)"
+        },
+        {
+          "text": "Secondary",
+          "w": 78.3046875,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(96.52 -0.0000298023 0.0000119209)",
+          "color": "lab(7.78201 -0.0000149012 0)"
+        },
+        {
+          "text": "Destructive",
+          "w": 83.265625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "oklab(0.57701 0.217634 0.112472 / 0.1)",
+          "color": "lab(48.4493 77.4328 61.5452)"
+        },
+        {
+          "text": "Outline",
+          "w": 58.9453125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(0 0 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "id": "variants",
+    "file": "official-1440-light-variants.png",
+    "metrics": {
+      "x": 393.5,
+      "w": 638,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Default",
+          "w": 59.125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(0 0 0)",
+          "color": "lab(98.26 0 0)"
+        },
+        {
+          "text": "Secondary",
+          "w": 78.3046875,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(96.52 -0.0000298023 0.0000119209)",
+          "color": "lab(7.78201 -0.0000149012 0)"
+        },
+        {
+          "text": "Destructive",
+          "w": 83.265625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "oklab(0.57701 0.217634 0.112472 / 0.1)",
+          "color": "lab(48.4493 77.4328 61.5452)"
+        },
+        {
+          "text": "Outline",
+          "w": 58.9453125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(0 0 0)"
+        },
+        {
+          "text": "Ghost",
+          "w": 51.4453125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(0 0 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "id": "with-icon",
+    "file": "official-1440-light-with-icon.png",
+    "metrics": {
+      "x": 393.5,
+      "w": 638,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Verified",
+          "w": 75.0390625,
+          "h": 20,
+          "padding": "2px 8px 2px 6px",
+          "bg": "lab(96.52 -0.0000298023 0.0000119209)",
+          "color": "lab(7.78201 -0.0000149012 0)"
+        },
+        {
+          "text": "Bookmark",
+          "w": 89.828125,
+          "h": 20,
+          "padding": "2px 6px 2px 8px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(0 0 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "id": "with-spinner",
+    "file": "official-1440-light-with-spinner.png",
+    "metrics": {
+      "x": 393.5,
+      "w": 638,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Deleting",
+          "w": 79.390625,
+          "h": 20,
+          "padding": "2px 8px 2px 6px",
+          "bg": "oklab(0.57701 0.217634 0.112472 / 0.1)",
+          "color": "lab(48.4493 77.4328 61.5452)"
+        },
+        {
+          "text": "Generating",
+          "w": 93.8046875,
+          "h": 20,
+          "padding": "2px 6px 2px 8px",
+          "bg": "lab(96.52 -0.0000298023 0.0000119209)",
+          "color": "lab(7.78201 -0.0000149012 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "id": "link",
+    "file": "official-1440-light-link.png",
+    "metrics": {
+      "x": 393.5,
+      "w": 638,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Open Link",
+          "w": 88.9375,
+          "h": 20,
+          "padding": "2px 6px 2px 8px",
+          "bg": "lab(0 0 0)",
+          "color": "lab(98.26 0 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "id": "custom-colors",
+    "file": "official-1440-light-custom-colors.png",
+    "metrics": {
+      "x": 393.5,
+      "w": 638,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Blue",
+          "w": 43.1953125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(96.492 -1.14644 -5.11479)",
+          "color": "lab(36.9089 35.0961 -85.6872)"
+        },
+        {
+          "text": "Green",
+          "w": 51.4765625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(98.1563 -5.60117 2.75915)",
+          "color": "lab(47.0329 -47.0239 31.4788)"
+        },
+        {
+          "text": "Sky",
+          "w": 39.0859375,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(97.3623 -2.33802 -4.13098)",
+          "color": "lab(41.6013 -9.10804 -42.5647)"
+        },
+        {
+          "text": "Purple",
+          "w": 54.328125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(97.1627 2.99937 -4.13398)",
+          "color": "lab(36.1758 69.8525 -80.0381)"
+        },
+        {
+          "text": "Red",
+          "w": 40.0859375,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(96.5005 4.18508 1.52328)",
+          "color": "lab(40.4273 67.2623 53.7441)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "id": "rtl",
+    "file": "official-1440-light-rtl.png",
+    "metrics": {
+      "x": 393.5,
+      "w": 638,
+      "h": 288,
+      "badges": [
+        {
+          "text": "شارة",
+          "w": 40.75,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(0 0 0)",
+          "color": "lab(98.26 0 0)"
+        },
+        {
+          "text": "ثانوي",
+          "w": 43.9765625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(96.52 -0.0000298023 0.0000119209)",
+          "color": "lab(7.78201 -0.0000149012 0)"
+        },
+        {
+          "text": "مدمر",
+          "w": 42.4765625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "oklab(0.57701 0.217634 0.112472 / 0.1)",
+          "color": "lab(48.4493 77.4328 61.5452)"
+        },
+        {
+          "text": "مخطط",
+          "w": 50.9921875,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(0 0 0)"
+        },
+        {
+          "text": "متحقق",
+          "w": 66.734375,
+          "h": 20,
+          "padding": "2px 6px 2px 8px",
+          "bg": "lab(96.52 -0.0000298023 0.0000119209)",
+          "color": "lab(7.78201 -0.0000149012 0)"
+        },
+        {
+          "text": "إشارة مرجعية",
+          "w": 96.0390625,
+          "h": 20,
+          "padding": "2px 8px 2px 6px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(0 0 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "id": "default",
+    "file": "official-390-light-default.png",
+    "metrics": {
+      "x": 25,
+      "w": 325,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Badge",
+          "w": 54.1015625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(0 0 0)",
+          "color": "lab(98.26 0 0)"
+        },
+        {
+          "text": "Secondary",
+          "w": 78.3046875,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(96.52 -0.0000298023 0.0000119209)",
+          "color": "lab(7.78201 -0.0000149012 0)"
+        },
+        {
+          "text": "Destructive",
+          "w": 83.265625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "oklab(0.57701 0.217634 0.112472 / 0.1)",
+          "color": "lab(48.4493 77.4328 61.5452)"
+        },
+        {
+          "text": "Outline",
+          "w": 58.9453125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(0 0 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "id": "variants",
+    "file": "official-390-light-variants.png",
+    "metrics": {
+      "x": 25,
+      "w": 325,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Default",
+          "w": 59.125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(0 0 0)",
+          "color": "lab(98.26 0 0)"
+        },
+        {
+          "text": "Secondary",
+          "w": 78.3046875,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(96.52 -0.0000298023 0.0000119209)",
+          "color": "lab(7.78201 -0.0000149012 0)"
+        },
+        {
+          "text": "Destructive",
+          "w": 83.265625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "oklab(0.57701 0.217634 0.112472 / 0.1)",
+          "color": "lab(48.4493 77.4328 61.5452)"
+        },
+        {
+          "text": "Outline",
+          "w": 58.9453125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(0 0 0)"
+        },
+        {
+          "text": "Ghost",
+          "w": 51.4453125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(0 0 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "id": "with-icon",
+    "file": "official-390-light-with-icon.png",
+    "metrics": {
+      "x": 25,
+      "w": 325,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Verified",
+          "w": 75.0390625,
+          "h": 20,
+          "padding": "2px 8px 2px 6px",
+          "bg": "lab(96.52 -0.0000298023 0.0000119209)",
+          "color": "lab(7.78201 -0.0000149012 0)"
+        },
+        {
+          "text": "Bookmark",
+          "w": 89.828125,
+          "h": 20,
+          "padding": "2px 6px 2px 8px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(0 0 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "id": "with-spinner",
+    "file": "official-390-light-with-spinner.png",
+    "metrics": {
+      "x": 25,
+      "w": 325,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Deleting",
+          "w": 79.390625,
+          "h": 20,
+          "padding": "2px 8px 2px 6px",
+          "bg": "oklab(0.57701 0.217634 0.112472 / 0.1)",
+          "color": "lab(48.4493 77.4328 61.5452)"
+        },
+        {
+          "text": "Generating",
+          "w": 93.8046875,
+          "h": 20,
+          "padding": "2px 6px 2px 8px",
+          "bg": "lab(96.52 -0.0000298023 0.0000119209)",
+          "color": "lab(7.78201 -0.0000149012 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "id": "link",
+    "file": "official-390-light-link.png",
+    "metrics": {
+      "x": 25,
+      "w": 325,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Open Link",
+          "w": 88.9375,
+          "h": 20,
+          "padding": "2px 6px 2px 8px",
+          "bg": "lab(0 0 0)",
+          "color": "lab(98.26 0 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "id": "custom-colors",
+    "file": "official-390-light-custom-colors.png",
+    "metrics": {
+      "x": 25,
+      "w": 325,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Blue",
+          "w": 43.1953125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(96.492 -1.14644 -5.11479)",
+          "color": "lab(36.9089 35.0961 -85.6872)"
+        },
+        {
+          "text": "Green",
+          "w": 51.4765625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(98.1563 -5.60117 2.75915)",
+          "color": "lab(47.0329 -47.0239 31.4788)"
+        },
+        {
+          "text": "Sky",
+          "w": 39.0859375,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(97.3623 -2.33802 -4.13098)",
+          "color": "lab(41.6013 -9.10804 -42.5647)"
+        },
+        {
+          "text": "Purple",
+          "w": 54.328125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(97.1627 2.99937 -4.13398)",
+          "color": "lab(36.1758 69.8525 -80.0381)"
+        },
+        {
+          "text": "Red",
+          "w": 40.0859375,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(96.5005 4.18508 1.52328)",
+          "color": "lab(40.4273 67.2623 53.7441)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "id": "rtl",
+    "file": "official-390-light-rtl.png",
+    "metrics": {
+      "x": 25,
+      "w": 325,
+      "h": 288,
+      "badges": [
+        {
+          "text": "شارة",
+          "w": 40.75,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(0 0 0)",
+          "color": "lab(98.26 0 0)"
+        },
+        {
+          "text": "ثانوي",
+          "w": 43.9765625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(96.52 -0.0000298023 0.0000119209)",
+          "color": "lab(7.78201 -0.0000149012 0)"
+        },
+        {
+          "text": "مدمر",
+          "w": 42.4765625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "oklab(0.57701 0.217634 0.112472 / 0.1)",
+          "color": "lab(48.4493 77.4328 61.5452)"
+        },
+        {
+          "text": "مخطط",
+          "w": 50.9921875,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(0 0 0)"
+        },
+        {
+          "text": "متحقق",
+          "w": 66.734375,
+          "h": 20,
+          "padding": "2px 6px 2px 8px",
+          "bg": "lab(96.52 -0.0000298023 0.0000119209)",
+          "color": "lab(7.78201 -0.0000149012 0)"
+        },
+        {
+          "text": "إشارة مرجعية",
+          "w": 96.0390625,
+          "h": 20,
+          "padding": "2px 8px 2px 6px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(0 0 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "id": "default",
+    "file": "official-1440-dark-default.png",
+    "metrics": {
+      "x": 393.5,
+      "w": 638,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Badge",
+          "w": 54.1015625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(90.952 0 -0.0000119209)",
+          "color": "lab(7.78201 -0.0000149012 0)"
+        },
+        {
+          "text": "Secondary",
+          "w": 78.3046875,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(15.204 0 -0.00000596046)",
+          "color": "lab(98.26 0 0)"
+        },
+        {
+          "text": "Destructive",
+          "w": 83.265625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "oklab(0.704006 0.176798 0.0722319 / 0.2)",
+          "color": "lab(63.7053 60.745 31.3109)"
+        },
+        {
+          "text": "Outline",
+          "w": 58.9453125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(98.26 0 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "id": "variants",
+    "file": "official-1440-dark-variants.png",
+    "metrics": {
+      "x": 393.5,
+      "w": 638,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Default",
+          "w": 59.125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(90.952 0 -0.0000119209)",
+          "color": "lab(7.78201 -0.0000149012 0)"
+        },
+        {
+          "text": "Secondary",
+          "w": 78.3046875,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(15.204 0 -0.00000596046)",
+          "color": "lab(98.26 0 0)"
+        },
+        {
+          "text": "Destructive",
+          "w": 83.265625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "oklab(0.704006 0.176798 0.0722319 / 0.2)",
+          "color": "lab(63.7053 60.745 31.3109)"
+        },
+        {
+          "text": "Outline",
+          "w": 58.9453125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(98.26 0 0)"
+        },
+        {
+          "text": "Ghost",
+          "w": 51.4453125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(98.26 0 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "id": "with-icon",
+    "file": "official-1440-dark-with-icon.png",
+    "metrics": {
+      "x": 393.5,
+      "w": 638,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Verified",
+          "w": 75.0390625,
+          "h": 20,
+          "padding": "2px 8px 2px 6px",
+          "bg": "lab(15.204 0 -0.00000596046)",
+          "color": "lab(98.26 0 0)"
+        },
+        {
+          "text": "Bookmark",
+          "w": 89.828125,
+          "h": 20,
+          "padding": "2px 6px 2px 8px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(98.26 0 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "id": "with-spinner",
+    "file": "official-1440-dark-with-spinner.png",
+    "metrics": {
+      "x": 393.5,
+      "w": 638,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Deleting",
+          "w": 79.390625,
+          "h": 20,
+          "padding": "2px 8px 2px 6px",
+          "bg": "oklab(0.704006 0.176798 0.0722319 / 0.2)",
+          "color": "lab(63.7053 60.745 31.3109)"
+        },
+        {
+          "text": "Generating",
+          "w": 93.8046875,
+          "h": 20,
+          "padding": "2px 6px 2px 8px",
+          "bg": "lab(15.204 0 -0.00000596046)",
+          "color": "lab(98.26 0 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "id": "link",
+    "file": "official-1440-dark-link.png",
+    "metrics": {
+      "x": 393.5,
+      "w": 638,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Open Link",
+          "w": 88.9375,
+          "h": 20,
+          "padding": "2px 6px 2px 8px",
+          "bg": "lab(90.952 0 -0.0000119209)",
+          "color": "lab(7.78201 -0.0000149012 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "id": "custom-colors",
+    "file": "official-1440-dark-custom-colors.png",
+    "metrics": {
+      "x": 393.5,
+      "w": 638,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Blue",
+          "w": 43.1953125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(15.6723 8.86232 -32.2945)",
+          "color": "lab(77.5052 -6.4629 -36.42)"
+        },
+        {
+          "text": "Green",
+          "w": 51.4765625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(15.6845 -20.4225 11.7249)",
+          "color": "lab(86.9953 -47.2691 25.0054)"
+        },
+        {
+          "text": "Sky",
+          "w": 39.0859375,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(17.8299 -5.31271 -21.1584)",
+          "color": "lab(80.3307 -20.2945 -31.385)"
+        },
+        {
+          "text": "Purple",
+          "w": 54.328125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(14.8253 38.9005 -44.5861)",
+          "color": "lab(78.3298 26.2195 -34.9499)"
+        },
+        {
+          "text": "Red",
+          "w": 40.0859375,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(13.003 29.04 16.7519)",
+          "color": "lab(76.5514 36.422 15.5335)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "id": "rtl",
+    "file": "official-1440-dark-rtl.png",
+    "metrics": {
+      "x": 393.5,
+      "w": 638,
+      "h": 288,
+      "badges": [
+        {
+          "text": "شارة",
+          "w": 40.75,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(90.952 0 -0.0000119209)",
+          "color": "lab(7.78201 -0.0000149012 0)"
+        },
+        {
+          "text": "ثانوي",
+          "w": 43.9765625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(15.204 0 -0.00000596046)",
+          "color": "lab(98.26 0 0)"
+        },
+        {
+          "text": "مدمر",
+          "w": 42.4765625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "oklab(0.704006 0.176798 0.0722319 / 0.2)",
+          "color": "lab(63.7053 60.745 31.3109)"
+        },
+        {
+          "text": "مخطط",
+          "w": 50.9921875,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(98.26 0 0)"
+        },
+        {
+          "text": "متحقق",
+          "w": 66.734375,
+          "h": 20,
+          "padding": "2px 6px 2px 8px",
+          "bg": "lab(15.204 0 -0.00000596046)",
+          "color": "lab(98.26 0 0)"
+        },
+        {
+          "text": "إشارة مرجعية",
+          "w": 96.0390625,
+          "h": 20,
+          "padding": "2px 8px 2px 6px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(98.26 0 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "id": "default",
+    "file": "official-390-dark-default.png",
+    "metrics": {
+      "x": 25,
+      "w": 325,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Badge",
+          "w": 54.1015625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(90.952 0 -0.0000119209)",
+          "color": "lab(7.78201 -0.0000149012 0)"
+        },
+        {
+          "text": "Secondary",
+          "w": 78.3046875,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(15.204 0 -0.00000596046)",
+          "color": "lab(98.26 0 0)"
+        },
+        {
+          "text": "Destructive",
+          "w": 83.265625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "oklab(0.704006 0.176798 0.0722319 / 0.2)",
+          "color": "lab(63.7053 60.745 31.3109)"
+        },
+        {
+          "text": "Outline",
+          "w": 58.9453125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(98.26 0 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "id": "variants",
+    "file": "official-390-dark-variants.png",
+    "metrics": {
+      "x": 25,
+      "w": 325,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Default",
+          "w": 59.125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(90.952 0 -0.0000119209)",
+          "color": "lab(7.78201 -0.0000149012 0)"
+        },
+        {
+          "text": "Secondary",
+          "w": 78.3046875,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(15.204 0 -0.00000596046)",
+          "color": "lab(98.26 0 0)"
+        },
+        {
+          "text": "Destructive",
+          "w": 83.265625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "oklab(0.704006 0.176798 0.0722319 / 0.2)",
+          "color": "lab(63.7053 60.745 31.3109)"
+        },
+        {
+          "text": "Outline",
+          "w": 58.9453125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(98.26 0 0)"
+        },
+        {
+          "text": "Ghost",
+          "w": 51.4453125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(98.26 0 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "id": "with-icon",
+    "file": "official-390-dark-with-icon.png",
+    "metrics": {
+      "x": 25,
+      "w": 325,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Verified",
+          "w": 75.0390625,
+          "h": 20,
+          "padding": "2px 8px 2px 6px",
+          "bg": "lab(15.204 0 -0.00000596046)",
+          "color": "lab(98.26 0 0)"
+        },
+        {
+          "text": "Bookmark",
+          "w": 89.828125,
+          "h": 20,
+          "padding": "2px 6px 2px 8px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(98.26 0 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "id": "with-spinner",
+    "file": "official-390-dark-with-spinner.png",
+    "metrics": {
+      "x": 25,
+      "w": 325,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Deleting",
+          "w": 79.390625,
+          "h": 20,
+          "padding": "2px 8px 2px 6px",
+          "bg": "oklab(0.704006 0.176798 0.0722319 / 0.2)",
+          "color": "lab(63.7053 60.745 31.3109)"
+        },
+        {
+          "text": "Generating",
+          "w": 93.8046875,
+          "h": 20,
+          "padding": "2px 6px 2px 8px",
+          "bg": "lab(15.204 0 -0.00000596046)",
+          "color": "lab(98.26 0 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "id": "link",
+    "file": "official-390-dark-link.png",
+    "metrics": {
+      "x": 25,
+      "w": 325,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Open Link",
+          "w": 88.9375,
+          "h": 20,
+          "padding": "2px 6px 2px 8px",
+          "bg": "lab(90.952 0 -0.0000119209)",
+          "color": "lab(7.78201 -0.0000149012 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "id": "custom-colors",
+    "file": "official-390-dark-custom-colors.png",
+    "metrics": {
+      "x": 25,
+      "w": 325,
+      "h": 288,
+      "badges": [
+        {
+          "text": "Blue",
+          "w": 43.1953125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(15.6723 8.86232 -32.2945)",
+          "color": "lab(77.5052 -6.4629 -36.42)"
+        },
+        {
+          "text": "Green",
+          "w": 51.4765625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(15.6845 -20.4225 11.7249)",
+          "color": "lab(86.9953 -47.2691 25.0054)"
+        },
+        {
+          "text": "Sky",
+          "w": 39.0859375,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(17.8299 -5.31271 -21.1584)",
+          "color": "lab(80.3307 -20.2945 -31.385)"
+        },
+        {
+          "text": "Purple",
+          "w": 54.328125,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(14.8253 38.9005 -44.5861)",
+          "color": "lab(78.3298 26.2195 -34.9499)"
+        },
+        {
+          "text": "Red",
+          "w": 40.0859375,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(13.003 29.04 16.7519)",
+          "color": "lab(76.5514 36.422 15.5335)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "id": "rtl",
+    "file": "official-390-dark-rtl.png",
+    "metrics": {
+      "x": 25,
+      "w": 325,
+      "h": 288,
+      "badges": [
+        {
+          "text": "شارة",
+          "w": 40.75,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(90.952 0 -0.0000119209)",
+          "color": "lab(7.78201 -0.0000149012 0)"
+        },
+        {
+          "text": "ثانوي",
+          "w": 43.9765625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "lab(15.204 0 -0.00000596046)",
+          "color": "lab(98.26 0 0)"
+        },
+        {
+          "text": "مدمر",
+          "w": 42.4765625,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "oklab(0.704006 0.176798 0.0722319 / 0.2)",
+          "color": "lab(63.7053 60.745 31.3109)"
+        },
+        {
+          "text": "مخطط",
+          "w": 50.9921875,
+          "h": 20,
+          "padding": "2px 8px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(98.26 0 0)"
+        },
+        {
+          "text": "متحقق",
+          "w": 66.734375,
+          "h": 20,
+          "padding": "2px 6px 2px 8px",
+          "bg": "lab(15.204 0 -0.00000596046)",
+          "color": "lab(98.26 0 0)"
+        },
+        {
+          "text": "إشارة مرجعية",
+          "w": 96.0390625,
+          "h": 20,
+          "padding": "2px 8px 2px 6px",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "lab(98.26 0 0)"
+        }
+      ]
+    }
+  }
+]

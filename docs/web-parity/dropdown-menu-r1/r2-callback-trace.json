@@ -1,0 +1,11 @@
+[
+  "POPUP_AUDIT root previous=false next=true controlled=true",
+  "POPUP_AUDIT visibility=true",
+  "POPUP_AUDIT visibility=false",
+  "POPUP_AUDIT outside dismiss",
+  "POPUP_AUDIT root previous=true next=false controlled=true",
+  "POPUP_AUDIT visibility=false",
+  "POPUP_AUDIT visibility=false",
+  "POPUP_AUDIT item Profile",
+  "POPUP_AUDIT root previous=false next=false controlled=true"
+]

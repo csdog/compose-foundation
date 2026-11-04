@@ -1,0 +1,38 @@
+[
+  {
+    "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/TooltipDoc.kt",
+    "sha256": "1565dfac387da9759add06646df1dff8c47a025e02c7b6f91a660bb0ac207ce4"
+  },
+  {
+    "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/TooltipRecipeCode.kt",
+    "sha256": "86a702450111ad46433431eae828cb16f45be1c097eb303c2a52abfe2a3156cd"
+  },
+  {
+    "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/TooltipRecipes.kt",
+    "sha256": "74b346403d794c955dcb77db99e9ec545ecdad6d5b7aab381cd7c8180f59c8a2"
+  },
+  {
+    "file": "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/TooltipExamplesTest.kt",
+    "sha256": "15682f02f70ce091350289b93ca03e5d8da347856820891171be72b98eacc0ee"
+  },
+  {
+    "file": "scripts/generate_tooltip_recipe_code.py",
+    "sha256": "fbcc2fecf160f49cabe2f4236f0da2e725facb63a4181ba4589954be71b4ff05"
+  },
+  {
+    "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/tooltip/Tooltip.kt",
+    "sha256": "2ff42d30d69881586b5ee06f547975446fbe45932cb944e1046d314be32df1e3"
+  },
+  {
+    "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/tooltip/TooltipStyles.kt",
+    "sha256": "84bde97ef1be88b312ea67913762022006c6871dea3e4782c38ea6158a73ed86"
+  },
+  {
+    "file": "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/tooltip/TooltipBehaviorParityTest.kt",
+    "sha256": "7013a673de0c54827659aac9ef39f23cbeb7277dbdccb459fcf54c4f6521d6d2"
+  },
+  {
+    "file": "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/tooltip/TooltipChromeParityTest.kt",
+    "sha256": "2afa444e42c73817cdec3f3f43ecb38d16d55c3cdb193a6f3de8a29f7c59c690"
+  }
+]

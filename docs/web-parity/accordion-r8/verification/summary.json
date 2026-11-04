@@ -1,0 +1,65 @@
+{
+  "round": "accordion-r8",
+  "scope": "Accordion horizontal focus order after vertical presentation alignment",
+  "workflow": "2a416cbfac253c0dc60b41040d7c1401",
+  "red": {
+    "horizontalSubset": {
+      "tests": 3,
+      "failures": 2
+    },
+    "unequalWidthsRtl": {
+      "tests": 1,
+      "failures": 1
+    },
+    "sourceBaseline": "red/Accordion.kt"
+  },
+  "final": {
+    "coreNova": {
+      "tests": 15,
+      "failures": 0,
+      "errors": 0
+    },
+    "appExtension": {
+      "tests": 32,
+      "failures": 0,
+      "errors": 0
+    },
+    "uniqueTests": 47,
+    "coreKtlint": "PASS",
+    "sharedKtlint": "PASS",
+    "wasmDevelopmentDistribution": "PASS",
+    "nativeHorizontalPngs": 8,
+    "nativeChangedVsR7": 0,
+    "inputHashesChecked": 10,
+    "inputHashesChanged": 0
+  },
+  "build": {
+    "testsAndLintSeconds": 19.674,
+    "wasmSeconds": 21.084,
+    "appWasm": "8a876a4ab770edcfebc1.wasm",
+    "skikoWasm": "658820f72b4617efb380.wasm"
+  },
+  "browserAcceptedByParent": {
+    "finalHorizontalKeyboardScreenshots": 4,
+    "widths": [
+      1440,
+      390
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "applicationWasmActuallyLoaded": true,
+    "sameHashTocClickVerified": true
+  },
+  "navigationConclusion": "Official does not automatically reanchor after resize; clicking the same-hash TOC entry reanchors both official and local pages. No navigation source edit in this round.",
+  "reusedEvidence": "R7 unchanged frame/source checks; eight fresh native horizontal PNGs are byte-identical to R7. Full 78-test/frame set not rerun.",
+  "warnings": [
+    "Existing experimental AGP screenshot/test-suite settings",
+    "Existing Text.kt INVISIBLE_REFERENCE suppression",
+    "Gradle 10 deprecations",
+    "Webpack development build completed with one warning"
+  ],
+  "workflowFinished": true,
+  "rawManagedLogsCleaned": true
+}

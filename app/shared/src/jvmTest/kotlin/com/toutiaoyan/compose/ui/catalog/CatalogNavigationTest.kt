@@ -4,6 +4,7 @@ import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -117,9 +118,11 @@ class CatalogNavigationTest {
                 apiProperties = listOf(ApiProperty("enabled", "Boolean", "true")),
             )
         rule.setContent {
-            Theme(minTouchTarget = null) {
-                Box(Modifier.requiredSize(1440.dp, 1000.dp)) {
-                    ComponentDetailContent(doc = doc, scrollState = scroll)
+            CompositionLocalProvider(LocalCatalogViewportWidth provides 1440.dp) {
+                Theme(minTouchTarget = null) {
+                    Box(Modifier.requiredSize(1440.dp, 1000.dp)) {
+                        ComponentDetailContent(doc = doc, scrollState = scroll)
+                    }
                 }
             }
         }

@@ -1,0 +1,80 @@
+{
+  "date": "2026-11-04",
+  "tests": [
+    {
+      "file": "docs/web-parity/badge-r1/tests/TEST-com.toutiaoyan.compose.ui.catalog.BadgeExamplesTest.xml",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "file": "docs/web-parity/badge-r1/tests/TEST-com.toutiaoyan.compose.ui.components.badge.BadgeExtendedApiTest.xml",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "file": "docs/web-parity/badge-r1/tests/TEST-com.toutiaoyan.compose.ui.components.badge.BadgeNovaParityTest.xml",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "file": "docs/web-parity/badge-r1/tests/TEST-com.toutiaoyan.compose.ui.components.spinner.SpinnerGeometryTest.xml",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "file": "docs/web-parity/badge-r1/tests/TEST-com.toutiaoyan.compose.ui.components.spinner.SpinnerIntrinsicSizeTest.xml",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "file": "docs/web-parity/badge-r1/tests/TEST-com.toutiaoyan.compose.ui.components.spinner.SpinnerScreenshotTest.xml",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0
+    }
+  ],
+  "independentTests": 23,
+  "failures": 0,
+  "explicitPixelVerify": [
+    "BadgeNovaParityTest (2 images)",
+    "SpinnerScreenshotTest (2 images)"
+  ],
+  "build": {
+    "wasm": "147fdb141f2a48920953.wasm",
+    "bytes": 42913062,
+    "sha256": "5b1c7a958ddac8860120771e3df9dd9b27dcc03ab3899e62cf5a6b1a4befce88",
+    "jsCompile": "passed",
+    "wasmDistribution": "passed",
+    "coreSharedKtlint": "passed",
+    "aggregateKtlintCheckDetekt": "exit 0; default detekt commonMain coverage remains incomplete"
+  },
+  "browser": {
+    "taskSpace": 1,
+    "viewportCSS": [
+      [
+        1440,
+        1000
+      ],
+      [
+        390,
+        1000
+      ]
+    ],
+    "deviceScaleFactor": 1,
+    "matrix": "7 examples x 2 widths x 2 themes for both official and final local build; all 56 reviewed",
+    "extraLanguages": "English and Hebrew x 2 widths x 2 themes for both pages; all 16 reviewed",
+    "localCanvasMenuSettlingMs": 220
+  },
+  "notClaimed": [
+    "Native HTML anchor semantics and browser link context menu",
+    "Full hover/pressed transition and accessibility matrix",
+    "All legacy Vega goldens passing",
+    "All common source detekt coverage",
+    "Overall site parity complete"
+  ]
+}

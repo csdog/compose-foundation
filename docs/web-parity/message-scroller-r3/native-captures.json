@@ -1,0 +1,33 @@
+{
+  "scope": "Compiled Desktop Compose fixture: width constraints432/360dp, 24dp padding -> card384/312dp; light/dark. Native scene1024x768, not OS/browser viewport. All20 final new images viewed. These are captures, not new screenshot baselines.",
+  "states": {
+    "context": "Initial first2 messages",
+    "context-complete": "After three scripted sends",
+    "history": "Initial last5 messages",
+    "visibility": "Initial last-anchor state",
+    "visibility-outline": "Panel-only crop256x148; does not prove popup collision on a phone browser viewport."
+  },
+  "knownVisualGap": "Exterior Visibility trigger mostly clipped by narrow capture boundary; upstream and browser comparison pending.",
+  "files": {
+    "context-360-dark.png": "3f0dea7d91db31a19bd788047ddb55a4d62205365fef5aea7735e0a52075d135",
+    "context-360-light.png": "d04e527ea9ea7c03e495bb53cd1b20900014f62a5211b6cbe5e4385b8b502c09",
+    "context-432-dark.png": "1f0b9121d69ff531f5fbced144158e4a168e3218deed18ff6cff0a55c6da1b39",
+    "context-432-light.png": "69c0696c6a7e0cffb5f995e972025c0743226b71195d21c8556e7cfae420c44d",
+    "context-complete-360-dark.png": "db771b64557678eed43f28b8c0febbe6832bf9cc779b007b17d070fa2e7447f3",
+    "context-complete-360-light.png": "26f5e2df01e39976bf271c6837f549a45af6eda5c8b79dd59c5e7232af5d6dc4",
+    "context-complete-432-dark.png": "811bbe36f98780ef5709a2776da46046ec6f8efe08d34296d77515387b7333c1",
+    "context-complete-432-light.png": "1ddb936a84961565f37046e3fb753842ed1188ac2d742a7dd3b593d8c33106e3",
+    "history-360-dark.png": "efd21570c758b02da6555d1b6abb997fa52f7b6c8804d2456fe8c4e3a379fc14",
+    "history-360-light.png": "008512ef7b67cbf217f7ad712c718b56171c5b3ff0bdaf3cdb14b68676a56e7f",
+    "history-432-dark.png": "bf1ab683f19ad4e12dd3fa4eeeea0649e26f155e5d925f92c84898a31fc541a0",
+    "history-432-light.png": "d8ffb290a34247475873a5c2100c74441607d4d941c44eaf2dbd9cb7015de3ce",
+    "visibility-360-dark.png": "f570c1876fda81913a96713c510105ab04ceb13c6eca7786d9aeb8fe99ae05d0",
+    "visibility-360-light.png": "7ea69e6f6d933a87d0a6a831f12c1670db68e20b025441528f83731d5b087b9e",
+    "visibility-432-dark.png": "2632f15ed721717cb1e6ce77f6db491cc3ab9bca547647bc3bfdfa32567c7d48",
+    "visibility-432-light.png": "7abddb852ebc540fdcad65e79629b8b4b43a26e766ce8cb9efc3e1fbe8d9fff1",
+    "visibility-outline-360-dark.png": "d69aa42c07d4aab55bcf5dbbbb063cbe13e64936df176a1994bdb00785d4a3b0",
+    "visibility-outline-360-light.png": "33da3a8f800ea903fd4e889cccfd7d95b297c059aa869eac0849261222cdda30",
+    "visibility-outline-432-dark.png": "5e5fbe68c197eabf27838c1fcecf39fc2132306569be56818d90de6d6b6f64b3",
+    "visibility-outline-432-light.png": "3518e3c1451299554bfef176023703a013f06022f65ba85f49258c8984737594"
+  }
+}

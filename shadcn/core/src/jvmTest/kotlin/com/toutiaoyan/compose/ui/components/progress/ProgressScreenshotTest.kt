@@ -36,7 +36,6 @@ class ProgressScreenshotTest : ScreenshotTest() {
                     ProgressLabel("Upload progress")
                     ProgressValue()
                 }
-                ProgressTrack()
             }
         }
     }

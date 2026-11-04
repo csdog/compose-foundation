@@ -1,0 +1,62 @@
+[
+  {
+    "name": "ShimmerCssColorTest[jvm]",
+    "tests": "4",
+    "skipped": "0",
+    "failures": "0",
+    "errors": "0",
+    "timestamp": "2026-10-30T21:10:48.231Z",
+    "hostname": "Apples-MacBook-Pro.local",
+    "time": "0.111"
+  },
+  {
+    "name": "ShimmerTextPaintTest[jvm]",
+    "tests": "12",
+    "skipped": "0",
+    "failures": "0",
+    "errors": "0",
+    "timestamp": "2026-10-30T21:10:48.454Z",
+    "hostname": "Apples-MacBook-Pro.local",
+    "time": "0.274"
+  },
+  {
+    "name": "ShimmerColorMathTest[jvm]",
+    "tests": "8",
+    "skipped": "0",
+    "failures": "0",
+    "errors": "0",
+    "timestamp": "2026-10-30T21:10:48.227Z",
+    "hostname": "Apples-MacBook-Pro.local",
+    "time": "0.004"
+  },
+  {
+    "name": "TextColorInheritanceTest[jvm]",
+    "tests": "1",
+    "skipped": "0",
+    "failures": "0",
+    "errors": "0",
+    "timestamp": "2026-10-30T21:10:48.188Z",
+    "hostname": "Apples-MacBook-Pro.local",
+    "time": "0.021"
+  },
+  {
+    "name": "ShimmerCurrentColorTest[jvm]",
+    "tests": "7",
+    "skipped": "0",
+    "failures": "0",
+    "errors": "0",
+    "timestamp": "2026-10-30T21:10:48.343Z",
+    "hostname": "Apples-MacBook-Pro.local",
+    "time": "0.109"
+  },
+  {
+    "name": "AttachmentStateTest[jvm]",
+    "tests": "5",
+    "skipped": "0",
+    "failures": "0",
+    "errors": "0",
+    "timestamp": "2026-10-30T21:10:47.344Z",
+    "hostname": "Apples-MacBook-Pro.local",
+    "time": "0.625"
+  }
+]

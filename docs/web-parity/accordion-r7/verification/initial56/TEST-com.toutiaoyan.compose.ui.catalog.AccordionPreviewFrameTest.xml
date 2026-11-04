@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AccordionPreviewFrameTest[jvm]" tests="24" skipped="0" failures="0" errors="0" timestamp="2026-11-02T02:24:21.411Z" hostname="Apples-MacBook-Pro.local" time="1.404">
+  <properties/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Default,viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.17"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Default,viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.064"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Default,viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.05"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Default,viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.047"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Basic,viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.055"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Basic,viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.057"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Basic,viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.046"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Basic,viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.045"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Multiple,viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.058"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Multiple,viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.055"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Multiple,viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.046"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Multiple,viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.045"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Disabled,viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.057"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Disabled,viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.052"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Disabled,viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.045"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Disabled,viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.042"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Borders,viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.053"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Borders,viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.05"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Borders,viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.073"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Borders,viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.04"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Card,viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.074"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Card,viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.067"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Card,viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.059"/>
+  <testcase name="contentStaysTopAlignedAndFrameDoesNotGrowWhenAnItemToggles[Card,viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionPreviewFrameTest" time="0.052"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

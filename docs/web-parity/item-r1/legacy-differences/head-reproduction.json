@@ -1,0 +1,18 @@
+{
+  "method": "Only Item.kt/ItemStyles.kt temporarily replaced with git HEAD; the new API test file temporarily outside source tree solely for HEAD test compilation. All three restored byte-for-byte afterward.",
+  "outcome": "Legacy 2 light pass, 2 dark changed. Dark border RGB38 to34 reproduced by original HEAD Item implementation.",
+  "files": [
+    {
+      "file": "item_states_dark_actual.png",
+      "currentSha256": "ee1924deeef69647727eaee0132c25d8d526deab74d236c9b5b21b5020a2217e",
+      "headSha256": "ee1924deeef69647727eaee0132c25d8d526deab74d236c9b5b21b5020a2217e",
+      "same": true
+    },
+    {
+      "file": "item_xs_dark_actual.png",
+      "currentSha256": "5579ef677471f2000441f270f125a8b6d7c40c1ad61937d4aaf59a5b1f1e2e8c",
+      "headSha256": "5579ef677471f2000441f270f125a8b6d7c40c1ad61937d4aaf59a5b1f1e2e8c",
+      "same": true
+    }
+  ]
+}

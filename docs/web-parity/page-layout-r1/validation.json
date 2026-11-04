@@ -1,0 +1,46 @@
+{
+  "date": "2026-11-04",
+  "workflow": "d27b01b76d0e1d243a9f610c4cbfbc37",
+  "finalRun": 23,
+  "tests": {
+    "CatalogDocumentLayoutTest": 14,
+    "CatalogDocumentScrollHostTest": 1,
+    "CatalogNavigationTest": 6,
+    "ComponentDocumentationTest": 7,
+    "totalDistinct": 28,
+    "failures": 0
+  },
+  "checks": [
+    ":app:shared:ktlintCheck",
+    ":app:webApp:ktlintCheck",
+    ":app:webApp:compileKotlinJs",
+    ":app:webApp:wasmJsBrowserDevelopmentExecutableDistribution"
+  ],
+  "result": "PASS",
+  "seconds": 2.635,
+  "application": {
+    "file": "5f6f08116629f8f0f6d7.wasm",
+    "bytes": 42877515,
+    "sha256": "03095b7897c614048c21a7ac1b45d9d52b6f3cb82af3bed2d604e7290b3cc140"
+  },
+  "matrixApplication": "43f9085a74ea83a741dc.wasm",
+  "warnings": [
+    "existing AGP experimental options",
+    "existing Gradle deprecated features",
+    "webpack 1 warning"
+  ],
+  "excluded": [
+    "3 temporary diagnostic subtree tests removed after isolation",
+    "pre-fix failed Create rendering",
+    "early screenshot while fonts had not settled"
+  ],
+  "browser": {
+    "matrix": "browser/matrix.json",
+    "finalInteractions": "browser/final-interactions.json",
+    "readiness": "Target Accordion visually confirmed before the final interaction run. Early height-only waits hit the initial Introduction transition and are excluded.",
+    "nativeScrollbarDrag": "Automated pointer drag produced scrollY=0, not accepted as passing.",
+    "history": "Stable same-document Create round trip preserves 800px."
+  },
+  "workflowFinished": true,
+  "wrapperRawLogsRemoved": true
+}

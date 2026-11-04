@@ -1,0 +1,23 @@
+{
+  "revision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "sourceManifest": "../dropdown-menu-r1/sources.json",
+  "livePage": "https://ui.shadcn.com/docs/components/base/dropdown-menu",
+  "inventory": [
+    "installation",
+    "usage",
+    "composition",
+    "basic",
+    "submenu",
+    "shortcuts",
+    "icons",
+    "checkboxes",
+    "checkboxes-icons",
+    "radio-group",
+    "radio-icons",
+    "destructive",
+    "avatar",
+    "complex",
+    "rtl",
+    "api-reference"
+  ]
+}

@@ -1,0 +1,484 @@
+{
+  "command_fingerprints": {
+    "00c5faebbcb22419d37cd0b1d2450b6be215c8ca1bf04fab4b6837d26eff96e2": 1,
+    "05e85ed93093b4d710936773ab5de6824994fd90b15503897e7ba44f9dc0b689": 2,
+    "2fd92df265038b310aa46542f12e16a845232eee4e840ce92fe166f0037e1467": 3,
+    "36b20338c9f41b7a26f734e8ce1fb55e8d5aa5d7aab58d0eae920c7d084d106e": 1,
+    "54e9b75203899e5e2527c6b456bd4159793cadf0902ec12de4e4fdeff206797c": 1,
+    "594022d197ad8be1d9a9e1bcd7b3347aa0be0a620df8526c7aeaeb0969056a52": 5,
+    "5d98a402c306380b0aaf4360c90926f6cc0bb796cbf8389bb2b9de6f95ec796d": 2,
+    "633b6188e55466e6556a306b52a62af2275feaafb3e25fae9322d2121f414aa6": 1,
+    "8b2bb4c5680111a6f56f73e1563a69838bc7b548507b163e998baeb037856287": 1,
+    "91f1f804c9e0086fdf824c21bb0811c044021e07b55062096dff538c2e759935": 1,
+    "93dae14b723ce4b19cbc694cff2f6979ce0ce12eaab9d7ad119336db3284c4e0": 1,
+    "d6865851daedea1b5a2dc823284605d3a4aa9a8656a06aad56f70a2c477d250c": 1,
+    "d9457ea3d2a293561829cedd45bd2ef264fa2ed767165bbf5663f270eefdf8d8": 2,
+    "da17e4c942081281efcca1db2279bb982eadbff8ccb60a1f102b0224a3d34bcf": 2
+  },
+  "failure_fingerprints": {
+    "048b0f55c4bb8e303648b4bafc59f13122698619d4939395aaa45d1a2cea5870": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:compileKotlinJvm' (registered in build file 'shadcn/core/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kotlin ...",
+      "occurrences": 1
+    },
+    "27b992006462e0b8c0219b4ff60d7a658efc75bf98feb405ab5a86c42861a42a": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/pagination/Pagination.kt:485:24 Overload resolution ambiguity between candidates:",
+      "occurrences": 1
+    },
+    "4b821798d2682d7bccfd3a0611fa9f06ae7bb38fba72bb70c1ccfae7a6834eda": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/NovaControls.kt:99:14 Conflicting declarations:",
+      "occurrences": 1
+    },
+    "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:jvmTest'. > There were failing tests. See the report at: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/reports/tests/jvmTest/index.html",
+      "occurrences": 7
+    },
+    "7b46263945db653eaca5d03aef39d52b968f30761d5bef3dee1c3a4d2eadecb8": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/pagination/PaginationStyles.kt:9:42 Unresolved reference 'contentPaddingStart'.",
+      "occurrences": 1
+    },
+    "bde3c32c7e7b10a0df481f538b551dd458edc01443d0b966ae72cd5bdf03c07b": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/pagination/PaginationStyles.kt:10:42 Unresolved reference 'contentPaddingEnd'.",
+      "occurrences": 1
+    },
+    "dd027ec33e8982d1501d7ab604162d4b26f5db3052556a520c57dfa9eb157596": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/breadcrumb/Breadcrumb.kt:289:14 Overload resolution ambiguity between candidates:",
+      "occurrences": 1
+    },
+    "f58bbc50e99454278a0a010bd2a0ccb94d3994d2dccf8e5f4a994e5ae17900d8": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/NovaControls.kt:87:14 Conflicting declarations:",
+      "occurrences": 1
+    }
+  },
+  "failure_fingerprints_truncated_occurrences": 0,
+  "run_count": 24,
+  "runs": [
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *PaginationParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 0.057,
+      "exit_status": 1,
+      "failure_fingerprints": [],
+      "log": "0001.log",
+      "question": "Do six Pagination parity regressions reproduce current Nova size, centering, labels, ellipsis, disabled ink and RTL differences?",
+      "scope": "targeted",
+      "sequence": 1,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *PaginationParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.889,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0002.log",
+      "question": "With normal Gradle cache access, do the six new Pagination regressions reproduce current Nova differences?",
+      "scope": "targeted",
+      "sequence": 2,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *PaginationParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.9,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "dd027ec33e8982d1501d7ab604162d4b26f5db3052556a520c57dfa9eb157596",
+        "27b992006462e0b8c0219b4ff60d7a658efc75bf98feb405ab5a86c42861a42a",
+        "7b46263945db653eaca5d03aef39d52b968f30761d5bef3dee1c3a4d2eadecb8",
+        "bde3c32c7e7b10a0df481f538b551dd458edc01443d0b966ae72cd5bdf03c07b",
+        "f58bbc50e99454278a0a010bd2a0ccb94d3994d2dccf8e5f4a994e5ae17900d8",
+        "4b821798d2682d7bccfd3a0611fa9f06ae7bb38fba72bb70c1ccfae7a6834eda",
+        "048b0f55c4bb8e303648b4bafc59f13122698619d4939395aaa45d1a2cea5870"
+      ],
+      "log": "0003.log",
+      "question": "Do the six Pagination parity regressions pass after Nova Button delegation, centering, responsive labels, ellipsis semantics and RTL fixes?",
+      "scope": "targeted",
+      "sequence": 3,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *PaginationParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 13.111,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0004.log",
+      "question": "Do six Pagination regressions pass after removing duplicate Nova glyph and invalid StyleScope member imports?",
+      "scope": "targeted",
+      "sequence": 4,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *PaginationParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 9.291,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0005.log",
+      "question": "Do eleven Pagination tests cover responsive control widths, slot/custom Style, separate touch chrome, controlled boundaries and keyboard rejection after the Nova changes?",
+      "scope": "targeted",
+      "sequence": 5,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *PaginationExamplesTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 25.133,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0006.log",
+      "question": "Do all sixteen official Pagination Default, Simple, Icons Only and RTL catalog tests pass across mocked desktop/mobile and light/dark modes?",
+      "scope": "targeted",
+      "sequence": 6,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "b31efcef4b8f770b24a049cb9ba3982ffeb41d54a9dcda8120d66b790fb3b92d",
+        "dea1df736e1eaa22b569ded8dd89d42ff69f2af833de15035dd20f5bb096df9f",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:recordRoborazziJvm --tests *PaginationNovaScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 3.705,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0007.log",
+      "question": "Can the four new Pagination Nova light/dark chrome and RTL screenshot fixtures be recorded without touching legacy baselines?",
+      "scope": "targeted",
+      "sequence": 7,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests *PaginationParityTest --tests *PaginationNovaScreenshotTest --tests *PaginationScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 3.301,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0008.log",
+      "question": "Do eleven Pagination behavior tests plus four reviewed new Nova and two unchanged legacy screenshot baselines independently verify?",
+      "scope": "targeted",
+      "sequence": 8,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests *PaginationScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 9.871,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0009.log",
+      "question": "Do both legacy Pagination screenshot differences reproduce with the exact pre-pass component and styles plus inert new-signature compile shims?",
+      "scope": "targeted",
+      "sequence": 9,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests *PaginationParityTest --tests *PaginationNovaScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 3.544,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0010.log",
+      "question": "After restoring current source byte-for-byte from legacy isolation, do all eleven Pagination behavior and four reviewed Nova golden tests independently verify?",
+      "scope": "targeted",
+      "sequence": 10,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *PaginationExamplesTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 0.526,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0011.log",
+      "question": "Do all sixteen official Pagination catalog interaction tests pass against the restored current implementation and API after isolation?",
+      "scope": "targeted",
+      "sequence": 11,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:ktlintCheck :app:shared:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 20.054,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0012.log",
+      "question": "Do both owning core and shared ktlint checks pass after the Pagination component API and four recipe migrations?",
+      "scope": "targeted",
+      "sequence": 12,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:jsBrowserDistribution --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 139.598,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0013.log",
+      "question": "Does the JS browser distribution compile the final Pagination core API, four official recipes and generated copy code?",
+      "scope": "targeted",
+      "sequence": 13,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:wasmJsBrowserDistribution --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 41.015,
+      "exit_status": 130,
+      "failure_fingerprints": [],
+      "interrupted_signal": 2,
+      "log": "0014.log",
+      "question": "Does the Wasm browser distribution independently compile the final Pagination API and all four official recipes after the successful JS build?",
+      "scope": "targeted",
+      "sequence": 14,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *novaSelectedValueStaysSingleLineInNarrowSmallTrigger* --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.885,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0015.log",
+      "question": "Does the Hebrew selected value wrap to multiple lines in a 144dp small Nova Select trigger before the source-backed nowrap fix?",
+      "scope": "targeted",
+      "sequence": 15,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *novaSelectedValueStaysSingleLineInNarrowSmallTrigger* --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 10.405,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0016.log",
+      "question": "Does the source-backed Nova SelectValue maxLines1/ellipsis fix keep the Hebrew selected value single-line and ellipsized in the narrow small trigger?",
+      "scope": "targeted",
+      "sequence": 16,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests *SelectLabelLayoutTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 3.322,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0017.log",
+      "question": "Do seven Select label tests independently verify Hebrew single-line layout, genuinely long-value ellipsis and existing Arabic label goldens after the Nova fix?",
+      "scope": "targeted",
+      "sequence": 17,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *novaSelectedValueEllipsizesWhenItReallyExceedsTriggerWidth* --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.521,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0018.log",
+      "question": "What actual text constraints, overflow setting and measured bounds explain the long Nova Select value missing its ellipsis?",
+      "scope": "targeted",
+      "sequence": 18,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:recordRoborazziJvm --tests *SelectValueOverflowScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.977,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0019.log",
+      "question": "Can only the two new Nova Select long-value light/dark raster goldens be recorded for visual ellipsis review without altering existing snapshots?",
+      "scope": "targeted",
+      "sequence": 19,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests *PaginationParityTest --tests *PaginationNovaScreenshotTest --tests *SelectLabelLayoutTest --tests *SelectValueOverflowScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 3.36,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0020.log",
+      "question": "Do all twenty-four scoped Pagination and Select label/overflow behavior and reviewed raster tests independently verify after the final single-line fix?",
+      "scope": "targeted",
+      "sequence": 20,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *PaginationExamplesTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 3.135,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0021.log",
+      "question": "Do sixteen official Pagination recipe interactions pass and recapture current Hebrew toolbar images after the final SelectValue single-line fix?",
+      "scope": "targeted",
+      "sequence": 21,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:ktlintCheck :app:shared:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 9.635,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0022.log",
+      "question": "Do both owning ktlint checks pass after the final Pagination and SelectValue fixes plus revised semantic/raster regressions?",
+      "scope": "targeted",
+      "sequence": 22,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :app:webApp:jsBrowserDistribution --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 133.971,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0023.log",
+      "question": "Does the final JS browser distribution compile Pagination and the corrected Nova SelectValue single-line/ellipsis implementation after all scoped regressions pass?",
+      "scope": "targeted",
+      "sequence": 23,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:wasmJsBrowserDistribution --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 94.374,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0024.log",
+      "question": "Does the final Wasm browser distribution independently compile current Pagination and the corrected SelectValue after final JS and all scoped tests pass?",
+      "scope": "targeted",
+      "sequence": 24,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    }
+  ],
+  "version": 1,
+  "warning_fingerprints": {
+    "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312": {
+      "excerpt": "w: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/text/Text.kt:5:16 Suppression of error 'INVISIBLE_REFERENCE' might compile and work, but the compiler behavior is UNSP...",
+      "occurrences": 9
+    },
+    "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4": {
+      "excerpt": "You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.",
+      "occurrences": 14
+    },
+    "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2": {
+      "excerpt": "Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.",
+      "occurrences": 14
+    },
+    "b31efcef4b8f770b24a049cb9ba3982ffeb41d54a9dcda8120d66b790fb3b92d": {
+      "excerpt": "WARNING: *Important* Test suite support is experimental and subject to change",
+      "occurrences": 1
+    },
+    "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a": {
+      "excerpt": "WARNING: The option setting 'android.experimental.enableScreenshotTest=true' is experimental.",
+      "occurrences": 15
+    },
+    "dea1df736e1eaa22b569ded8dd89d42ff69f2af833de15035dd20f5bb096df9f": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=TEST_SUITE_SUPPORT_EXPERIMENTAL to the gradle.properties file to suppress this warning.",
+      "occurrences": 1
+    },
+    "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=UNSUPPORTED_PROJECT_OPTION_USE to the gradle.properties file to suppress this warning.",
+      "occurrences": 30
+    },
+    "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90": {
+      "excerpt": "WARNING: The option setting 'android.experimental.testSuiteSupport=true' is experimental.",
+      "occurrences": 15
+    }
+  },
+  "warning_fingerprints_truncated_occurrences": 0,
+  "workflow": "bfc734f9bda624da26fdb16a8e573320"
+}

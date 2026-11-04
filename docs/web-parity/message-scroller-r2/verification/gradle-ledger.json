@@ -1,0 +1,798 @@
+{
+  "command_fingerprints": {
+    "101974431a3695178a26717c47d39427675fb85d6d458d6e76481b4bc0e0a171": 1,
+    "1427c4ff9b7e2578fe0553cc67e9bc8f3548750283a261fffbd03eb5d1616115": 1,
+    "3123b6e2815d97504b5b955a1aad3928411cc3b8e129c4e02283665d97d3fb5a": 2,
+    "3c3a57ff96a43fda3741e4a8d59ce4baa0c40c71cc64d78328f21f135a543189": 1,
+    "5a3869750cba206fd47d75cd44a3c54707771e0a5b02e245e33930ca0abdca4e": 7,
+    "5d98a402c306380b0aaf4360c90926f6cc0bb796cbf8389bb2b9de6f95ec796d": 1,
+    "687384ff430695f68fcdf7319c89a409846f4714682aaf2118e45dab1909210d": 1,
+    "717e14f390d40bc51824bc460f70d0fd2fe82f9ee20aa31980216ccfd3aaa3d8": 1,
+    "7b559575cadc6a7eeda8007b21624156ae0520720739f242100b03971e249998": 1,
+    "ce389ef8e11ff902e616edb679d51574673cd6dc40eaf31dba30aa0e6853242b": 1,
+    "d9457ea3d2a293561829cedd45bd2ef264fa2ed767165bbf5663f270eefdf8d8": 1,
+    "e58cd3c2124e6069cb84133b2421dcc30afb11d56ee045c380a6505c1db50e6e": 1,
+    "efa870c1fe5b38000a4a41972cba04f17f69793ae6700b9e1e3738bbc5867f0a": 2,
+    "f641b0bc5987954e3cbe307eda021be9b9b803b4defeef42a9664a3921fbb15f": 1
+  },
+  "failure_fingerprints": {
+    "10a96eec1ee62b79408c2292c20a6e788838f42a2dbed436b3341d3bb19908b1": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/MessageScrollerRecipesTest.kt:58:34 Unresolved reference 'testTag'.",
+      "occurrences": 1
+    },
+    "543337444997d652aaf31717bca58be342f295902af91ec1948f6c3abca7c967": {
+      "excerpt": "* What went wrong: Execution failed for task ':app:shared:compileTestKotlinJvm' (registered in build file 'app/shared/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kotli...",
+      "occurrences": 1
+    },
+    "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:jvmTest'. > There were failing tests. See the report at: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/reports/tests/jvmTest/index.html",
+      "occurrences": 4
+    },
+    "6288e77ee5d20c255ff46889f1bdb0dadd10ada522d9316ea15ca0baa60fc5b3": {
+      "excerpt": "* What went wrong: Execution failed for task ':app:shared:jvmTest'. > There were failing tests. See the report at: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/reports/tests/jvmTest/index.html",
+      "occurrences": 1
+    },
+    "6443ef2bf3c7c09b02c4b10b743584befbe18df83ba5fe0774411cef8b95754e": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/avatar/AvatarImage.kt:46:25: The function AvatarImage(model: Any?, contentDescription: String?, modifier: Modifier, imageLoader:...",
+      "occurrences": 1
+    },
+    "70954f23babcfb81bec3247e140de09024c3243b63cf02082b2208cfabfbd4eb": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/MessageScrollerRecipesTest.kt:32:30 Type argument for reified type parameter 'T' was inferred to the intersection of ['Compar...",
+      "occurrences": 1
+    },
+    "710f2aff99347923fb50ed82f4769bfb80db42710cd66f530160830f52ee7aaf": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/questionnaire/Questionnaire.kt:244:25: The constructor(value: String?, answers: Map<String, List<String>>, index: Int, count: In...",
+      "occurrences": 1
+    },
+    "89082d63aa1864bc596be7b70ee6aba448fe71b01eeac561fefccc8a46f6b24f": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/MessageScrollerRecipesTest.kt:32:71 Type argument for reified type parameter 'T' was inferred to the intersection of ['Compar...",
+      "occurrences": 1
+    },
+    "95986ec3e4ce357a6f744f1cf94e4991322fd0f5e1941f9a68a6c01fdb10b44a": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/MessageScrollerRecipesTest.kt:32:92 Type argument for reified type parameter 'T' was inferred to the intersection of ['Compar...",
+      "occurrences": 1
+    },
+    "b26771fed673edb4ac0537ccfce405b2bdce105a8fd3372581db99a91d337b8b": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/field/Field.kt:298:10: The function Field(label: String, modifier: Modifier, description: String?, error: String?, required: Boo...",
+      "occurrences": 1
+    },
+    "b40ffbd1b2c4901fb1711ab06a825a69632bd0e3abb01ea00ec5cb5309a5bb47": {
+      "excerpt": "* What went wrong: Execution failed for task ':app:shared:detektMetadataCommonMain' (registered by plugin 'io.gitlab.arturbosch.detekt'). > Analysis failed with 26557 weighted issues.",
+      "occurrences": 1
+    },
+    "b6791bd4537e05eccafa43e0edd995710a8d10a9f98c5808864379df9fd4d3fb": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:detektMetadataCommonMain' (registered by plugin 'io.gitlab.arturbosch.detekt'). > Analysis failed with 10731 weighted issues.",
+      "occurrences": 1
+    },
+    "f28ee4be8dcb6a448e61011ec761ce6d99e75c6b8d9ba95467b1620e6454e040": {
+      "excerpt": "e: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/MessageScrollerRecipesTest.kt:32:51 Type argument for reified type parameter 'T' was inferred to the intersection of ['Compar...",
+      "occurrences": 1
+    },
+    "fc18a3241ae1b5d6af2a151d175cdd775de37393269bd0ead8d2fef427e0a9a0": {
+      "excerpt": "* What went wrong: Execution failed for task ':app:shared:compileTestKotlinJvm' (registered in build file 'app/shared/build.gradle.kts'). > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork > Kotli...",
+      "occurrences": 1
+    }
+  },
+  "failure_fingerprints_truncated_occurrences": 0,
+  "run_count": 22,
+  "runs": [
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *MessageScrollerRecipesTest --tests *MessageScrollerExamplesTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 0.057,
+      "exit_status": 1,
+      "failure_fingerprints": [],
+      "log": "0001.log",
+      "question": "Do three official scroller recipe previews and existing controls compile and pass the scoped JVM interaction tests?",
+      "scope": "targeted",
+      "sequence": 1,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *MessageScrollerRecipesTest --tests *MessageScrollerExamplesTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 15.938,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "70954f23babcfb81bec3247e140de09024c3243b63cf02082b2208cfabfbd4eb",
+        "f28ee4be8dcb6a448e61011ec761ce6d99e75c6b8d9ba95467b1620e6454e040",
+        "89082d63aa1864bc596be7b70ee6aba448fe71b01eeac561fefccc8a46f6b24f",
+        "95986ec3e4ce357a6f744f1cf94e4991322fd0f5e1941f9a68a6c01fdb10b44a",
+        "543337444997d652aaf31717bca58be342f295902af91ec1948f6c3abca7c967"
+      ],
+      "log": "0002.log",
+      "question": "With normal Gradle cache access, do three official scroller previews and existing controls compile and pass scoped JVM tests?",
+      "scope": "targeted",
+      "sequence": 2,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *MessageScrollerRecipesTest --tests *MessageScrollerExamplesTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 275.668,
+      "exit_status": 130,
+      "failure_fingerprints": [],
+      "interrupted_signal": 2,
+      "log": "0003.log",
+      "question": "After explicit Any parameter arrays and upstream opening alignment, do scoped official recipe interactions and prior controls pass?",
+      "scope": "targeted",
+      "sequence": 3,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *MessageScrollerParityTest.shrinkingViewportKeepsTheExistingEndWithoutEnablingOutputFollowing --tests *MessageScrollerParityTest.shrinkingViewportPreservesAReaderWhoIsAwayFromTheEnd --tests *TabsNovaParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 9.985,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0004.log",
+      "question": "Do bounded viewport shrink regressions reproduce lost end anchoring while away-reader and corrected Nova tabs behave independently?",
+      "scope": "targeted",
+      "sequence": 4,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *MessageScrollerParityTest --tests *MessageScrollerTest --tests *TabsNovaParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 10.245,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0005.log",
+      "question": "Does viewport shrink preserve the prior edge without enabling output-follow, while complete scroller behavior and unmerged Nova tabs geometry stay green?",
+      "scope": "targeted",
+      "sequence": 5,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *MessageScrollerRecipesTest --tests *MessageScrollerExamplesTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 10.293,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "6288e77ee5d20c255ff46889f1bdb0dadd10ada522d9316ea15ca0baa60fc5b3"
+      ],
+      "log": "0006.log",
+      "question": "After the bounded core edge-resize fix, do all12 desktop/mobile light/dark recipe interactions and existing3 controls settle and pass?",
+      "scope": "targeted",
+      "sequence": 6,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *MessageScrollerRecipesTest --tests *MessageScrollerExamplesTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 7.811,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "10a96eec1ee62b79408c2292c20a6e788838f42a2dbed436b3341d3bb19908b1",
+        "fc18a3241ae1b5d6af2a151d175cdd775de37393269bd0ead8d2fef427e0a9a0"
+      ],
+      "log": "0007.log",
+      "question": "With the capture frame tag fixed, do all12 actual desktop/mobile light/dark interactions pass the viewport-resize fix?",
+      "scope": "targeted",
+      "sequence": 7,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *MessageScrollerRecipesTest --tests *MessageScrollerExamplesTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 3.818,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0008.log",
+      "question": "After importing testTag, do actual phone/desktop recipe interactions and existing controls pass with cropped evidence?",
+      "scope": "targeted",
+      "sequence": 8,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:recordRoborazziJvm --tests *TabsNovaParityTest.nova_light --tests *TabsNovaParityTest.nova_dark --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 3.049,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0009.log",
+      "question": "Record only two newly introduced expanded Nova Tabs goldens for parent visual review, leaving all legacy baselines untouched.",
+      "scope": "targeted",
+      "sequence": 9,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *TabsNovaParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 9.059,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0010.log",
+      "question": "Does Nova Tabs preserve source nowrap on narrow screens and dark active chrome while existing recipe interactions remain valid?",
+      "scope": "targeted",
+      "sequence": 10,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *TabsNovaParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 8.913,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0011.log",
+      "question": "Do source25dp Nova horizontal triggers keep narrow labels equal to their one-line peers without touching Vega?",
+      "scope": "targeted",
+      "sequence": 11,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *MessageScrollerRecipesTest --tests *MessageScrollerExamplesTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 4.093,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0012.log",
+      "question": "After native nowrap and final Nova tab metrics, do all12 scoped recipe interactions plus3 existing controls pass and refresh captures?",
+      "scope": "targeted",
+      "sequence": 12,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:recordRoborazziJvm --tests *TabsNovaParityTest.nova_light --tests *TabsNovaParityTest.nova_dark --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.193,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0013.log",
+      "question": "Re-record only the same two new Nova tab baselines after parent-rejected nowrap and dark chrome were fixed; legacy baselines stay untouched.",
+      "scope": "targeted",
+      "sequence": 13,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests *MessageScrollerParityTest --tests *MessageScrollerTest --tests *MessageScrollerScreenshotTest --tests *TabsNovaParityTest --tests *TabsScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 4.129,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0014.log",
+      "question": "After parent visual acceptance, do67 scoped scroller/tabs behavior and new plus legacy screenshot tests independently verify without recording?",
+      "scope": "targeted",
+      "sequence": 14,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests *TabsScreenshotTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 9.342,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0015.log",
+      "question": "With only Tabs production files restored to verified HEAD, do the same legacy golden differences persist, isolating preexisting track clipping?",
+      "scope": "targeted",
+      "sequence": 15,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:verifyRoborazziJvm --tests *MessageScrollerParityTest --tests *MessageScrollerTest --tests *MessageScrollerScreenshotTest --tests *TabsNovaParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 4.374,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0016.log",
+      "question": "With current Tabs restored, do62 owned scroller and Nova tests independently verify while three proven-preexisting legacy differences remain unchanged?",
+      "scope": "targeted",
+      "sequence": 16,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:ktlintCheck :shadcn:core:detekt :app:shared:ktlintCheck :app:shared:detekt --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 17.149,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0017.log",
+      "question": "Do core/shared owning ktlintCheck and detekt checks pass after native Tabs and scroller recipe fixes?",
+      "scope": "targeted",
+      "sequence": 17,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :app:webApp:jsBrowserDistribution --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 132.542,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0018.log",
+      "question": "Does JS distribution compile the new standalone recipe snippets and native tabs/scroller fixes with serial single-worker settings?",
+      "scope": "targeted",
+      "sequence": 18,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:wasmJsBrowserDistribution --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 94.281,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0019.log",
+      "question": "After JS success, does separate Wasm distribution compile all new recipe/native fixes under serial single-worker settings?",
+      "scope": "targeted",
+      "sequence": 19,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:help :app:shared:help --init-script /private/tmp/scroller-detekt-source-metadata.gradle --no-configuration-cache --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.197,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0020.log",
+      "question": "Which actual owning Detekt tasks contain the modified KMP commonMain files rather than reporting NO-SOURCE?",
+      "scope": "targeted",
+      "sequence": 20,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:detektMetadataCommonMain :app:shared:detektMetadataCommonMain --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 13.754,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "b26771fed673edb4ac0537ccfce405b2bdce105a8fd3372581db99a91d337b8b",
+        "710f2aff99347923fb50ed82f4769bfb80db42710cd66f530160830f52ee7aaf",
+        "6443ef2bf3c7c09b02c4b10b743584befbe18df83ba5fe0774411cef8b95754e",
+        "b6791bd4537e05eccafa43e0edd995710a8d10a9f98c5808864379df9fd4d3fb"
+      ],
+      "log": "0021.log",
+      "question": "Do actual detektMetadataCommonMain tasks analyze the changed KMP source successfully rather than default NO-SOURCE tasks?",
+      "scope": "targeted",
+      "sequence": 21,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "c0177500917a3d1b4e75d0f55318593d10034d20287f545067b5a011b41a9d62",
+        "fb3988f387cf07880e792f8da15697e6f3be4d409e4b3713d44349e1451f2f7e",
+        "ee15454f05a0ddec385ce8882730e5c4e95734793f77ce09eeedee3ebfc2cdfb",
+        "374c7a3cd7302962478976704c0008f8de5861b5330de3089540e850928504cd",
+        "fa51428c4b5f913295e62dc9ac6eb6c2357455349361ce837b2a5f7b15b7c347"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:detektMetadataCommonMain --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 40.144,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "b40ffbd1b2c4901fb1711ab06a825a69632bd0e3abb01ea00ec5cb5309a5bb47"
+      ],
+      "log": "0022.log",
+      "question": "What actual source-quality result does shared detektMetadataCommonMain produce, since core failure prevented it in the paired command?",
+      "scope": "targeted",
+      "sequence": 22,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    }
+  ],
+  "version": 1,
+  "warning_fingerprints": {
+    "0023565141b6489f2d0cf8844fc8b7eea2ab6e262775c8a7dd7e554c3d8139cf": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:20:38: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "02493b13fef384f1e4b5ad9f3acc225b0451f190cc3a404c314189a656585bbe": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:32:21: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "06ddb94759ab8797fe399340ead5dbaafe45431c1f5a187b6d2df98cfa4fbf40": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:30:29: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312": {
+      "excerpt": "w: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/text/Text.kt:5:16 Suppression of error 'INVISIBLE_REFERENCE' might compile and work, but the compiler behavior is UNSP...",
+      "occurrences": 8
+    },
+    "091817425db58384746ba599ec6f616944ab26ed54366557eca842f6a45210e7": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:39:58: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "0962da0b585d020f43e4750694b438b132134b5340dc59cfa4179636d2c09f51": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:33:45: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "0b4cfc930962c276048cc5ca961fc858f0b5e1cffca0aa44aa76138c09396eea": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:36:56: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "0ce2c988204ec6c93a2002cb3cc1f3238769b5d4b512349fbe7ba0c01c6eb5c3": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:31:29: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "11a521b28a318d408b1eb41af9c7d2ebc1ce246bdcb09e501301b09c8069df60": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:37:36: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "11ff0567cfc9f3130c580fff3e7e0e6255762e7d7002b430c0066c34bdf0b170": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:30:37: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "12600306acc6462b8f25951625a13c5b937a1267b6d9c2757fa4fdaf64f08617": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:38:20: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "13377dc4651b4797769459235ae2e0edeb156f90d727f8f6e19bd5c1c52c7d15": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:22:21: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "134876cead7531d2aa01777887f58cae30f3b46d7db742ed32f8c0dc452b65c2": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:39:45: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "13496ad2c47b44f968e570d9fbf224e829c6682faa61eced29d45bec6cdc5627": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:20:28: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "1be6dd7f99818a5dca3f0c736a8c2df8caf8f71b1d456ccde6ca633721c71357": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:41:20: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "242d8a5d299ac1a468068e974208dde7a65c742ab5bbc25ee11ca65243db0cc7": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:30:53: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "27128328a283d318d2d2a5577101dbe8553a88e430ae14c4f9117c21ebc486d1": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:39:37: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4": {
+      "excerpt": "You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.",
+      "occurrences": 11
+    },
+    "297d0e6dcbf9cebb1d0ff2af7aae25e9190bf2e5fe1a6815c4f26edc234bc3c1": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:31:45: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "31c7f5586133e8bd395af1ec5a035374399e9acaecf7ef936df5fce02e2b92eb": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:30:58: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "32afb5f7e3bc6ba8943a83af4faf1c65d74707515abea94fa18c0256bbb043a7": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:25:27: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "349915d37bbb66ad42b7014658b90573c2a2d67b84b32b0f46e80509642f576c": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:20:46: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "374c7a3cd7302962478976704c0008f8de5861b5330de3089540e850928504cd": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:19:27: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "44d5a427ec1adf336bc87af990053ef075927cd7cf117db1bc361f6c0f52ee18": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:39:29: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "48ecd9de990a597684b73902bf5f749c5384d2c6a093d494c6bdea4ef2b9e791": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:22:58: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "4b76ccff7f0c2c16f78df471e4f3a85920aded40d31128a9bb4e8361161fa466": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:37:51: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "4db777ff007d742ba1a8e93a3a4ff8abaa62c7bc49b6e82d2266dfb6f3ad5ede": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:36:36: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "534a7133c2dbac1e2e71530a7cfb5a98b240bb1bf62d9d2487874d6115eb2fb5": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:29:20: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "5426bdff6d16cde957df56d4070e07dae8273bd0c32a4e84ab58ab40ee8f12ea": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:24:47: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "58b1d0231e3e8ae57b8cdbad454a4e98cb50e6d800b05a945c4744d1593fa568": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:22:28: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "624063e0a9226ae8ac2df1adabaa1906a1628132a60dc09591e0c086be7df7ce": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:33:53: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2": {
+      "excerpt": "Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.",
+      "occurrences": 11
+    },
+    "67ae086319347b9f57ba5c5cc1c98378bc87a550b634f281442b3cc0baff25c6": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:35:28: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "685b54f60115d560dbe7f75324e3d865a8b2a4e28057a17046476c48fb11b01c": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:32:58: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "68c1804d0f02cc6d42453ddbb7fe59215dd9fb3c0d010560e558294d746e3ccd": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:28:38: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "68e23ea0f788f98d0767aae0ab57be30cfc2a3f37f050487878687d825becd29": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:39:53: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "697b187aaacc605db3374ff5926c4f92fdfb2aa2932b5a376c7eb006cd8c4316": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:24:21: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "6a0c14674b69cc75afb9f7b3f7f1f79a5962e606d1d6a37aea17127466760547": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:24:42: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "6e024c0f6dbd2c85dfed24817094803a224698fd3d446d51a2ea485b506b5bc3": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:31:53: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "6f379ad689ee3e788b1c5cde5148058b521e3e4ad4a8faf626a599c7139ad490": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:30:45: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "6feefc94883ab18bbb8959fa3f78cc81a1cbea95f61b7be343c8c490a7a46c9e": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:29:28: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "73e59e8d0bdf00ab5984395d297377160bad39e654797b75c0d50a07f195b730": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:31:61: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "7653da85c9bd1425a9151c155edb5007e7c4738dcf9838d061853f5a91256139": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:22:35: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "7ae86ebf1eaf52ec48b56eb1d13835cbd5295c8d3a90b328e8ce1fcdc2fda5ff": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:20:34: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "804576ee3a2ac2279426e4c6ab08fe6b9f8ac8c1871ae1a5f10f3cf50ccfcd2a": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:20:53: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "86b6687623cee208ede619b5519252e4a79f6cd4f3138de6efd0356a489b3861": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:40:29: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "87ccf795681b9091d6506f5726ae2b71e32de61ad4d4ab3557213b8567a4a3be": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:39:21: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "88e2456216907a7b622754f6a133a5a0b3b1c3d4a6deb15bb25ccc0778ed3dd6": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:33:29: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "8ae8e06e982d5a7399a4ce721fa313d6ed9dd8afe1625b93aa78bb79f4768da5": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:32:53: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "8c4856f7e833730f9ad97378adf5a83b7fb662a2b759786842bdcf0a13cd3949": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:24:34: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "8e36141b13406298c5261a8e40f480440d4e4fe682d724501601e29d3a3bae9f": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:33:37: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "936a3fef73718296d205a7d7765f61148482a33cda55093e2cd289e3933c696f": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:40:60: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "974421d81f851654f85c8fcbd914d99cb381bff653f04e08803058223f3ef23d": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:31:37: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "9d63463cc8d56c5ebdee12c6cb11443ecdae3fb8acc2dec98f7baa25776f634b": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:22:43: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "9f1073679c8e2b8e6a952b97ff3ff4a0c0180a0a959213f63bc98e378fcfc750": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:40:21: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "a19a9718121e4f86cd92d2b0ff10b68f077802b598fc7ab2c6fd806258abcbf2": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:36:51: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "a252fae3cade7ca833f9ae8955d01e07462caf0238cc80785cb77f6bb7b587b0": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:37:59: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "a4c342e5dc33f8d108518cc3896a922345b88ab777d0f3207372e479dd3d686c": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:24:26: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "ae0b01482a2486ddfe6508f4c71a4586643835faadf0a4504f8d8e47caf753bc": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:36:29: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "b003539fd74405e4fceef79f7d05d26d4f288435f2ca3391e3d57fa454b7d9be": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:37:44: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "b30262eb975cd294867745e5a5a2d629077e20b2f886026ba1b217d08cc03b08": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:23:28: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "b347a1036999e8ab7b5b787a5ee136438f2ffc1488c1ca7c11505fb128905f67": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:37:29: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "b47f1921fbd7cc1210ab7802bfaa6f04662c5b4130b16ecd200238c4323ab9a1": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:21:28: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "b6492952d29ac735e421af06611b0a9cf7e62d6032facd21084e21d8d49261f1": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:32:45: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "b84cd866b8a9aad6a908431ba41d5c6b5bbf53d7561563b0e69d7cb6f4822fd2": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:25:20: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "bf1a708308d7e0e0eafe2119d96357a9ff50074217d3e4d092a5decaee6e6d7f": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:31:21: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "c0177500917a3d1b4e75d0f55318593d10034d20287f545067b5a011b41a9d62": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/toast/Toast.kt:182:16: The function warning(title: String, description: String?, durationMillis: Long?, duration: Long?, actionL...",
+      "occurrences": 1
+    },
+    "c0c874b767fe59b38281e48971b99a6cbcc03a5e46fa27d65c4d8725e1db9baa": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:40:45: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a": {
+      "excerpt": "WARNING: The option setting 'android.experimental.enableScreenshotTest=true' is experimental.",
+      "occurrences": 11
+    },
+    "c7c7465e8eb3d0b09ed273cea05c1a5fcc67874d31597aa1ce6c3f1e825936f7": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:38:28: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "d0009bb0ad7ee7e920a169e11116a1f28d491598557f7b4433765dc171c98523": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:23:20: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "d08353641bacd1090756a06241c82d9f5679935a583332429547d0ad35ddb735": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:41:28: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "d1ea84562ff0be8d6bff1c680fe865adbd93f5033840449ba713b25c9b62a341": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:33:21: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "d3d8291be4dd705c96ab4b7ce31ee9bad0a08edb0cb47d860e79450f099443d5": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:22:50: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "d56bcc972fcd946140d755c060ccc6035b3c94f35e1c5c7ec3140262d1f9c8dd": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:33:61: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "d707eea575d136b3dd013f35637464552c47e5eaa9eb7a617610d930f02a85e5": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:21:20: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "d795fc838143d620ef4e30560efec47f854c75c600b80bbc1b9f7bb493912f46": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:35:20: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "d8461bd91bf55804ce54f05601afc7d9fcbeb4cf69c7227455730badbe88580c": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:24:55: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "d8644e9e926d07fd8b5595031e655d8c8bcb5f3c0a2ddcdf459d3907fadb3f7a": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:36:21: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "d90a2e68feeb848c7cfe114a72705f8386babc887de6b768928a0181320d996c": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:32:37: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=UNSUPPORTED_PROJECT_OPTION_USE to the gradle.properties file to suppress this warning.",
+      "occurrences": 22
+    },
+    "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90": {
+      "excerpt": "WARNING: The option setting 'android.experimental.testSuiteSupport=true' is experimental.",
+      "occurrences": 11
+    },
+    "eb657cc54e417ea97fe09384a15ae87df2130ff2b757fd83396fa1ebecd7325b": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:37:21: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "eddd07acf179df7bfb15d397f25317a5d53f1d51a1fd6c964ca3d6e8a687beb0": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:30:21: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "ee15454f05a0ddec385ce8882730e5c4e95734793f77ce09eeedee3ebfc2cdfb": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:19:20: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "f4bb8b8cbe47fe10063a54ab0468b6c2aa40c345345fdf170481fb4ab20f7efb": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:36:44: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "f6ed7943cc1a509fef7760ff103ffe2797381c163b40794fbd3927ed8beb299a": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:32:29: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "f86b19e7bcc547bf3da99125018725d8dde1148938250585a4cc16bf47f0e9c5": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:40:52: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "fa51428c4b5f913295e62dc9ac6eb6c2357455349361ce837b2a5f7b15b7c347": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:20:21: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "fb3988f387cf07880e792f8da15697e6f3be4d409e4b3713d44349e1451f2f7e": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:18:38: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    },
+    "ff6159f000fd82167972ced03ade2de6e2351df42787f44507ae725567ebfe50": {
+      "excerpt": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/icons/emoji/Warning.kt:40:37: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]",
+      "occurrences": 1
+    }
+  },
+  "warning_fingerprints_truncated_occurrences": 0,
+  "workflow": "865b40daf6301b5b3e2ddd5df81a9453"
+}

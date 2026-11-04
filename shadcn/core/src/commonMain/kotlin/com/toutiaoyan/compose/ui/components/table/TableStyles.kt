@@ -3,6 +3,7 @@
 package com.toutiaoyan.compose.ui.components.table
 
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
+import androidx.compose.foundation.style.hovered
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.contentPadding
 import androidx.compose.runtime.Composable
@@ -17,12 +18,9 @@ fun rememberTableRowStyle(
     rememberTheme(selected, footer) {
         Style {
             width(1f)
-            background(
-                when {
-                    selected || footer -> colors.muted
-                    else -> colors.background
-                },
-            )
-            contentPadding(vertical = spacing.sm, horizontal = 0.dp)
+            if (footer) background(colors.muted.copy(alpha = .5f))
+            hovered { background(colors.muted.copy(alpha = .5f)) }
+            if (selected) background(colors.muted)
+            contentPadding(0.dp)
         }
     }

@@ -1,0 +1,202 @@
+{
+  "command_fingerprints": {
+    "4c9dfd61577cc7fa2d4f19cdb45eddbdf3b6bf9ca77ad4a132e21b7c5e65de73": 1,
+    "56570f3a292ca747111b56a20f0c99acc6f5633f4b744afde2680b99dbccf461": 3,
+    "7a234dfe02f51a3f7a9bebedd18bf6e4384c4c70a1b3283c530e1a50c37d44b2": 1,
+    "9aad1eb8a6f505a638b7117d3a5d0a1b3954532fbf3d84a2fcc3e6df49a7d556": 1,
+    "a81a355f21b1b0f34e81c766a09492a11f1e6222645b5b84f5b52814c73a2bd7": 1,
+    "da52e5026fca41459680d267347900b6499a1813a8ea1427cafe4c84cfe42cb4": 1
+  },
+  "failure_fingerprints": {
+    "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a": {
+      "excerpt": "Module not found: Error: Can't resolve 'path' in '/Users/cscs/IdeaProjects/angryecho/compose-foundation/build/js/packages/compose-foundation-app-webApp/kotlin'",
+      "occurrences": 1
+    },
+    "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:jvmTest'. > There were failing tests. See the report at: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/reports/tests/jvmTest/index.html",
+      "occurrences": 1
+    },
+    "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4": {
+      "excerpt": "Module not found: Error: Can't resolve 'os' in '/Users/cscs/IdeaProjects/angryecho/compose-foundation/build/js/packages/compose-foundation-app-webApp/kotlin'",
+      "occurrences": 1
+    }
+  },
+  "failure_fingerprints_truncated_occurrences": 0,
+  "run_count": 8,
+  "runs": [
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *ToastBehaviorParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 0.059,
+      "exit_status": 1,
+      "failure_fingerprints": [],
+      "log": "0001.log",
+      "question": "Which original Toast behavior contracts fail against the Base UI defaults and dismissal semantics?",
+      "scope": "targeted",
+      "sequence": 1,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *ToastBehaviorParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 2.713,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0002.log",
+      "question": "With access to the existing Gradle cache, which original Toast behavior contracts fail?",
+      "scope": "targeted",
+      "sequence": 2,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *ToastBehaviorParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 13.836,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0003.log",
+      "question": "Do the five Toast behavior contracts pass after the Base UI defaults, persistent timer and action-dismissal fixes?",
+      "scope": "targeted",
+      "sequence": 3,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "6529fba48adbcf517ca4a792611b15d936480345d3792416ac2bdf8380dd8479"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *ToastBehaviorParityTest --tests *ToastManagerParityTest --tests *ToastChromeParityTest --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 13.565,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0004.log",
+      "question": "Do Toast behavior8, manager5 and chrome6 pass before the page example checks?",
+      "scope": "targeted",
+      "sequence": 4,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "b31efcef4b8f770b24a049cb9ba3982ffeb41d54a9dcda8120d66b790fb3b92d",
+        "dea1df736e1eaa22b569ded8dd89d42ff69f2af833de15035dd20f5bb096df9f",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *ToastExamplesTest :shadcn:core:ktlintCheck :app:shared:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 38.91,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0005.log",
+      "question": "Do Toast page examples24 and core/shared owning lint pass for the formatted sources?",
+      "scope": "targeted",
+      "sequence": 5,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:jsBrowserDevelopmentWebpack --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 24.801,
+      "exit_status": 0,
+      "failure_fingerprints": [
+        "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4",
+        "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a"
+      ],
+      "log": "0006.log",
+      "question": "Does the Toast implementation and its page compile for final JavaScript webpack, keeping any existing diagnostics explicit?",
+      "scope": "targeted",
+      "sequence": 6,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :app:webApp:wasmJsBrowserDevelopmentWebpack --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 18.861,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0007.log",
+      "question": "Does the final Toast implementation and page compile for Wasm webpack after the JavaScript run?",
+      "scope": "targeted",
+      "sequence": 7,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "f0849e5f9c9f26438df33f06b4976b80106ae7f9ad029b99f94a16850599f1a3"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *ToastExamplesTest :app:shared:ktlintCheck --no-parallel --max-workers=1 --console=plain --no-scan",
+      "elapsed_seconds": 22.646,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0008.log",
+      "question": "Do Toast page24 and shared lint still pass after correcting the legacy extension default examples?",
+      "scope": "targeted",
+      "sequence": 8,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    }
+  ],
+  "version": 1,
+  "warning_fingerprints": {
+    "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312": {
+      "excerpt": "w: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/text/Text.kt:5:16 Suppression of error 'INVISIBLE_REFERENCE' might compile and work, but the compiler behavior is UNSP...",
+      "occurrences": 5
+    },
+    "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4": {
+      "excerpt": "You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.",
+      "occurrences": 4
+    },
+    "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2": {
+      "excerpt": "Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.",
+      "occurrences": 4
+    },
+    "6529fba48adbcf517ca4a792611b15d936480345d3792416ac2bdf8380dd8479": {
+      "excerpt": "w: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/toast/ToastStatusIcons.kt:266:17 'when' is exhaustive so 'else' is redundant here.",
+      "occurrences": 1
+    },
+    "b31efcef4b8f770b24a049cb9ba3982ffeb41d54a9dcda8120d66b790fb3b92d": {
+      "excerpt": "WARNING: *Important* Test suite support is experimental and subject to change",
+      "occurrences": 1
+    },
+    "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a": {
+      "excerpt": "WARNING: The option setting 'android.experimental.enableScreenshotTest=true' is experimental.",
+      "occurrences": 4
+    },
+    "dea1df736e1eaa22b569ded8dd89d42ff69f2af833de15035dd20f5bb096df9f": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=TEST_SUITE_SUPPORT_EXPERIMENTAL to the gradle.properties file to suppress this warning.",
+      "occurrences": 1
+    },
+    "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=UNSUPPORTED_PROJECT_OPTION_USE to the gradle.properties file to suppress this warning.",
+      "occurrences": 8
+    },
+    "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90": {
+      "excerpt": "WARNING: The option setting 'android.experimental.testSuiteSupport=true' is experimental.",
+      "occurrences": 4
+    },
+    "f0849e5f9c9f26438df33f06b4976b80106ae7f9ad029b99f94a16850599f1a3": {
+      "excerpt": "webpack 5.108.1 compiled with 1 warning in 396 ms",
+      "occurrences": 1
+    }
+  },
+  "warning_fingerprints_truncated_occurrences": 0,
+  "workflow": "db834db2992e718b127c67b899d27eaa"
+}

@@ -20,11 +20,7 @@ val separatorDoc =
     ComponentDoc(
         id = "separator",
         title = "Separator",
-        description =
-            "A thin line for visually or semantically separating content. Matches real " +
-                "shadcn/ui: it has no built-in margin, so surrounding spacing is always the " +
-                "caller's responsibility -- via Arrangement.spacedBy or explicit padding, as " +
-                "shown in the examples below.",
+        description = "Visually or semantically separates content.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.separator.Separator
@@ -35,6 +31,28 @@ val separatorDoc =
                 Text { "Content below" }
             }
             """.trimIndent(),
+        beforeExamples =
+            listOf(
+                ComponentGuideSection(
+                    "Compose layout and semantics",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            (
+                                "For vertical separators in content-sized rows, use " +
+                                    "`Modifier.height(IntrinsicSize.Min)` on the Row. "
+                            ) +
+                                (
+                                    "Separators are semantic by default; pass `decorative = true` " +
+                                        "for a visual-only line. "
+                                ) +
+                                (
+                                    "Native Compose exposes a description and orientation, but " +
+                                        "does not currently provide the HTML separator role."
+                                ),
+                        ),
+                    ),
+                ),
+            ),
         examples =
             listOf(
                 ComponentExample(
@@ -43,8 +61,8 @@ val separatorDoc =
                         """
                         Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                                Text(typography = TextTypography.LabelLarge) { "Radix Primitives" }
-                                Text(textStyle = TextStyles.Muted) { "An open-source UI component library." }
+                                Text(variant = TextVariant.LabelLarge) { "Radix Primitives" }
+                                Text(textStyle = TextColors.Muted) { "An open-source UI component library." }
                             }
                             Separator()
                             Text { "Unstyled, accessible components for building high-quality design systems." }
@@ -72,7 +90,7 @@ val separatorDoc =
                     preview = { Separator(orientation = SeparatorOrientation.Horizontal) },
                 ),
                 ComponentExample(
-                    title = "Vertical",
+                    title = "Vertical (Kotlin)",
                     code = """Separator(orientation = SeparatorOrientation.Vertical)""",
                     preview = {
                         Row(modifier = Modifier.height(20.dp)) {
@@ -119,9 +137,9 @@ val separatorDoc =
                     preview = { Separator(decorative = true) },
                 ),
                 ComponentExample(
-                    title = "Default decorative",
-                    code = """Separator(decorative = true)""",
-                    preview = { Separator(decorative = true) },
+                    title = "Default semantics (Kotlin)",
+                    code = """Separator()""",
+                    preview = { Separator() },
                 ),
                 ComponentExample(
                     title = "With text",
@@ -156,3 +174,4 @@ val separatorDoc =
                 ),
             ),
     )
+        .let { native -> native.copy(examples = separatorOfficialExamples + native.examples) }

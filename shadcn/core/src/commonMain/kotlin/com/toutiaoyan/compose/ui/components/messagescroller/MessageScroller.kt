@@ -24,19 +24,40 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.rememberUpdatedStyleState
 import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.input.pointer.*
+import androidx.compose.runtime.snapshotFlow
+import androidx.compose.runtime.withFrameNanos
+import androidx.compose.foundation.focusable
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.key.*
+import androidx.compose.ui.input.nestedscroll.*
+import androidx.compose.ui.layout.layout
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.disabled
+import androidx.compose.ui.semantics.hideFromAccessibility
+import com.toutiaoyan.compose.ui.tokens.StylePreset
+import kotlinx.coroutines.coroutineScope
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -50,7 +71,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.icons.ArrowDown
+import com.toutiaoyan.compose.ui.icons.MessageScrollerArrow
 import com.toutiaoyan.compose.ui.components.icon.Icon
+import com.toutiaoyan.compose.ui.utils.rememberTheme
 import com.toutiaoyan.compose.ui.styles.focusRing
 import com.toutiaoyan.compose.ui.styles.rememberMinTouchTargetStyle
 import com.toutiaoyan.compose.ui.styles.rememberPressMotionStyle
@@ -58,7 +81,6 @@ import com.toutiaoyan.compose.ui.styles.scrollFade
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import kotlinx.coroutines.launch
 import com.toutiaoyan.compose.tailwind.core.twSpacing
-import com.toutiaoyan.compose.tailwind.core.twRadius
 
 /**
  * How close to the bottom (in px) the user has to already be, right before new content
@@ -77,10 +99,11 @@ enum class MessageScrollerDirection { Start, End }
 // [MessageScrollerButton]'s so overriding it once, at whichever level a caller is
 // already customizing, doesn't require redeclaring shadcn's own default glyph.
 private val DefaultMessageScrollerIcon: @Composable (rotationDegrees: Float) -> Unit = { rotationDegrees ->
+    val nova = currentTheme.activePreset == StylePreset.Nova
     Icon(
-        ArrowDown,
+        if (nova) MessageScrollerArrow else ArrowDown,
         tint = currentTheme.colors.foreground,
-        modifier = Modifier.graphicsLayer(rotationZ = rotationDegrees),
+        modifier = (if (nova) Modifier.size(16.dp) else Modifier).graphicsLayer(rotationZ = rotationDegrees),
     )
 }
 
@@ -123,17 +146,7 @@ internal fun shouldAutoScrollToBottom(
     return newMaxValue > previousMaxValue
 }
 
-/**
- * Whether a user-driven scroll (not one this component just commanded itself via
- * `animateScrollTo`) should release the "follow new messages" state. Matches real
- * shadcn's documented semantics: "Scrolling away from the live edge releases the view,
- * whether by wheel, touch, keyboard scroll keys, or dragging the scrollbar" -- and,
- * critically, release is **sticky**: it does not silently re-engage just because the
- * reader happens to scroll back within [thresholdPx] of the bottom. Re-engaging requires
- * an explicit action ([MessageScrollerButton] or `scrollToEnd()`), which is why this
- * function only ever returns `true` (a one-way transition) and callers should not use its
- * negation to resume following.
- */
+/** Legacy distance predicate. Provider intent/anchor/follow behavior is implemented by MessageScrollerState. */
 internal fun shouldReleaseFollowing(
     value: Int,
     maxValue: Int,
@@ -141,33 +154,9 @@ internal fun shouldReleaseFollowing(
 ): Boolean = !isMessageScrollerNearBottom(value, maxValue, thresholdPx)
 
 /**
- * A chat-transcript scroll container that follows new messages to the bottom -- but only
- * while the reader hasn't scrolled away to read history -- with a floating "jump to
- * bottom" button when they have. Part of shadcn's "AI Elements" family, matching real
- * shadcn/ui's `message-scroller.tsx` (a wrapper over the separate `@shadcn/react/
- * message-scroller` npm package there; reimplemented directly here on Compose's own
- * [ScrollState][androidx.compose.foundation.ScrollState], since no equivalent package
- * exists for Compose Multiplatform).
- *
- * The auto-scroll/button-visibility *decisions* ([shouldAutoScrollToBottom],
- * [isMessageScrollerNearBottom], [shouldReleaseFollowing]) are all plain functions with
- * no Compose dependency, unit tested directly (`MessageScrollerTest`) -- this
- * component has no drag gesture to avoid simulating live, but keeps the same "extract the
- * decision logic" discipline as the components that do.
- *
- * Usage:
- * ```
- * MessageScroller(modifier = Modifier.fillMaxSize()) {
- *     messages.forEach { Message(...) { ... } }
- * }
- * MessageScrollerProvider {
- *     MessageScroller {
- *         MessageScrollerViewport(contentDescription = MessageScrollerDefaults.ViewportLabel) {
- *             MessageScrollerContent { … }
- *         }
- *     }
- * }
- * ```
+ * Transcript frame. Inside a Provider, compose Viewport/Content/Item and an explicit
+ * Button; the viewport owns scrolling. The standalone legacy form keeps a scrolling
+ * column and an automatic end button, and opts into auto-follow for compatibility.
  */
 @Composable
 fun MessageScroller(
@@ -179,94 +168,250 @@ fun MessageScroller(
     // positioning/animation/chrome via a full [button] override. Ignored if [button] is
     // itself overridden, since that override owns its own icon.
     icon: @Composable (rotationDegrees: Float) -> Unit = DefaultMessageScrollerIcon,
-    button: @Composable BoxScope.(isVisible: Boolean, onClick: () -> Unit) -> Unit = defaultMessageScrollerButton(icon),
-    content: @Composable ColumnScope.() -> Unit,
+    button: (@Composable BoxScope.(isVisible: Boolean, onClick: () -> Unit) -> Unit)? = null,
+    content: @Composable BoxScope.() -> Unit,
 ) {
-    val scrollState = rememberScrollState()
-    val coroutineScope = rememberCoroutineScope()
-    var previousMaxValue by remember { mutableIntStateOf(0) }
-    // Sticky: only ever set back to true by an explicit jump-to-bottom, never by the
-    // reader passively scrolling back within range -- see shouldReleaseFollowing's doc.
-    var isFollowing by remember { mutableStateOf(true) }
-    // Distinguishes our own animateScrollTo from a real user gesture, so the release
-    // check below doesn't mistake the programmatic scroll it just triggered for the
-    // reader manually scrolling away.
-    var isProgrammaticScroll by remember { mutableStateOf(false) }
-
-    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-
-    fun jumpToEnd() {
-        coroutineScope.launch {
-            isProgrammaticScroll = true
-            isFollowing = true
-            scrollState.animateScrollTo(scrollState.maxValue)
-            isProgrammaticScroll = false
-        }
-    }
-
-    LaunchedEffect(scrollState.maxValue) {
-        val newMaxValue = scrollState.maxValue
-        if (shouldAutoScrollToBottom(isFollowing, previousMaxValue, newMaxValue)) {
-            isProgrammaticScroll = true
-            scrollState.animateScrollTo(newMaxValue)
-            isProgrammaticScroll = false
-        }
-        previousMaxValue = newMaxValue
-    }
-
-    LaunchedEffect(scrollState.value) {
-        val released =
-            !isProgrammaticScroll &&
-                shouldReleaseFollowing(scrollState.value, scrollState.maxValue, autoScrollThresholdPx)
-        if (released) {
-            isFollowing = false
-        }
-    }
-
-    Box(modifier = modifier.styleable(styleState, style)) {
-        Column(
-            modifier = Modifier.fillMaxSize().verticalScroll(scrollState).scrollFade(scrollState),
-            content = content,
+    val inherited = LocalMessageScrollerState.current
+    val density = LocalDensity.current
+    val state =
+        inherited ?: rememberMessageScrollerState(
+            autoScroll = true,
+            scrollEdgeThreshold = with(density) { autoScrollThresholdPx.toDp() },
         )
-        val nearBottom = isMessageScrollerNearBottom(scrollState.value, scrollState.maxValue, autoScrollThresholdPx)
-        button(this, scrollState.maxValue > 0 && !nearBottom, ::jumpToEnd)
+    val scope = rememberCoroutineScope()
+    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val owner = remember { Any() }
+    LaunchedEffect(state, owner) {
+        state.attach(owner)
+        try {
+            coroutineScope {
+                launch {
+                    snapshotFlow { state.scrollState.value to state.scrollState.maxValue }.collect {
+                        state.scrollChanged()
+                        state.invalidate()
+                    }
+                }
+                for (event in state.layouts) {
+                    withFrameNanos { }
+                    // User-input mutation cancels this correction, not the mounted controller.
+                    launch { state.reconcileLayout() }.join()
+                }
+            }
+        } finally {
+            state.detach(owner)
+        }
+    }
+    CompositionLocalProvider(
+        LocalMessageScrollerState provides
+            state,
+        LocalLegacyMessageScroller provides
+            (inherited == null),
+    ) {
+        Box(modifier = modifier.styleable(styleState, style).clipToBounds()) {
+            val root = this
+            if (inherited == null) {
+                ScrollerViewport(Modifier.fillMaxSize(), state) { content(root) }
+            } else {
+                content()
+            }
+            val renderButton = button ?: if (inherited == null) defaultMessageScrollerButton(icon) else null
+            renderButton?.invoke(
+                this,
+                state.scrollable.end,
+                { scope.launch { state.scrollToEnd(MessageScrollerScrollBehavior.Smooth) } },
+            )
+        }
     }
 }
 
+private val LocalLegacyMessageScroller = staticCompositionLocalOf { false }
+
+@Composable
+private fun ScrollerViewport(
+    modifier: Modifier,
+    state: MessageScrollerState,
+    content: @Composable ColumnScope.() ->
+    Unit,
+) {
+    val owner = remember { Any() }
+    DisposableEffect(state, owner) {
+        state.viewportAttached(owner)
+        onDispose { state.viewportDetached(owner) }
+    }
+    val scope = rememberCoroutineScope()
+    val density = LocalDensity.current
+    val connection =
+        remember(state) {
+            object : NestedScrollConnection {
+                override fun onPreScroll(
+                    available: Offset,
+                    source: NestedScrollSource,
+                ): Offset {
+                    if (source == NestedScrollSource.UserInput && available.y != 0f) state.releaseFollowing()
+                    return Offset.Zero
+                }
+            }
+        }
+    Column(
+        modifier =
+            modifier.onGloballyPositioned(state::viewportMeasured)
+                .nestedScroll(connection)
+                .pointerInput(state) {
+                    awaitPointerEventScope {
+                        while (true) {
+                            val event = awaitPointerEvent(PointerEventPass.Initial)
+                            if (event.type == PointerEventType.Scroll ||
+                                event.changes.any { it.changedToDownIgnoreConsumed() }
+                            ) {
+                                state.releaseFollowing()
+                            }
+                        }
+                    }
+                }
+                .onPreviewKeyEvent { event ->
+                    if (event.type == KeyEventType.KeyDown) state.releaseFollowing()
+                    false
+                }
+                .onKeyEvent { event ->
+                    if (event.type != KeyEventType.KeyDown) {
+                        false
+                    } else {
+                        when (event.key) {
+                            Key.DirectionUp, Key.DirectionDown, Key.PageUp, Key.PageDown, Key.MoveHome, Key.MoveEnd -> {
+                                scope.launch {
+                                    when (event.key) {
+                                        Key.MoveHome -> state.scrollToStart()
+                                        Key.MoveEnd -> state.scrollToEnd()
+                                        else -> {
+                                            val step =
+                                                if (event.key == Key.PageUp ||
+                                                    event.key == Key.PageDown
+                                                ) {
+                                                    state.scrollState.viewportSize
+                                                } else {
+                                                    with(density) { 40.dp.roundToPx() }
+                                                }
+                                            val delta =
+                                                if (event.key == Key.DirectionUp ||
+                                                    event.key == Key.PageUp
+                                                ) {
+                                                    -step
+                                                } else {
+                                                    step
+                                                }
+                                            state.scrollState.scrollTo(
+                                                (state.scrollState.value + delta).coerceAtLeast(0),
+                                            )
+                                        }
+                                    }
+                                }
+                                true
+                            }
+                            else -> false
+                        }
+                    }
+                }
+                .scrollFade(state.scrollState)
+                .verticalScroll(state.scrollState)
+                .graphicsLayer { alpha = if (state.pendingScroll) 0f else 1f }
+                .focusable(),
+    ) {
+        content()
+        Spacer(Modifier.layout { _, constraints -> layout(constraints.maxWidth, state.spacerHeight) { } })
+    }
+}
+
+/** Source composition part: reads the provider and floats above the viewport. */
+@Composable
+fun BoxScope.MessageScrollerButton(
+    modifier: Modifier = Modifier,
+    direction: MessageScrollerDirection = MessageScrollerDirection.End,
+    style: Style = Style,
+    behavior: MessageScrollerScrollBehavior = MessageScrollerScrollBehavior.Smooth,
+    icon: @Composable (rotationDegrees: Float) -> Unit = DefaultMessageScrollerIcon,
+) {
+    val state = messageScrollerState()
+    val scope = rememberCoroutineScope()
+    MessageScrollerButton(
+        visible = if (direction == MessageScrollerDirection.End) state.scrollable.end else state.scrollable.start,
+        onClick = {
+            scope.launch {
+                if (direction == MessageScrollerDirection.End) {
+                    state.scrollToEnd(behavior)
+                } else {
+                    state.scrollToStart(behavior)
+                }
+            }
+        },
+        modifier =
+            modifier.align(
+                if (direction == MessageScrollerDirection.End) {
+                    Alignment.BottomCenter
+                } else {
+                    Alignment.TopCenter
+                },
+            )
+                .padding(vertical = 16.dp),
+        direction = direction,
+        style = style,
+        icon = icon,
+    )
+}
+
 object MessageScrollerDefaults {
-    /** Official MessageScrollerContent `gap-8`. */
-    val ContentSpacing = 32.dp
+    /** Nova content gap-6; the official Rhea page uses gap-8 (32dp). */
+    val ContentSpacing = 24.dp
 
     /** Official Viewport `aria-label`. */
     val ViewportLabel = "Messages"
 
-    /** Official Viewport `preserveScrollOnPrepend`. Prepend-stability is not ported. */
+    /** Official Viewport default; stable row ids preserve the reading position. */
     val PreserveScrollOnPrepend = true
 }
 
-/**
- * Official `MessageScrollerProvider`. Identity wrapper so catalog trees match the docs
- * (`Provider > Root > Viewport > Content > Item`). Scroll still lives on [MessageScroller].
- */
+/** Headless state owner, matching upstream defaults. Legacy bare Root still opts into following. */
 @Composable
-fun MessageScrollerProvider(content: @Composable () -> Unit) {
-    content()
+fun MessageScrollerProvider(
+    autoScroll: Boolean = false,
+    defaultScrollPosition: MessageScrollerPosition = MessageScrollerPosition.End,
+    scrollEdgeThreshold: Dp = 8.dp,
+    scrollMargin: Dp = 0.dp,
+    scrollPreviousItemPeek: Dp = 64.dp,
+    content: @Composable () -> Unit,
+) {
+    val state =
+        rememberMessageScrollerState(
+            autoScroll,
+            defaultScrollPosition,
+            scrollEdgeThreshold,
+            scrollMargin,
+            scrollPreviousItemPeek,
+        )
+    MessageScrollerProvider(state, content)
+}
+
+/** Hoisted state variant; configure the state at its rememberMessageScrollerState call. */
+@Composable
+fun MessageScrollerProvider(
+    state: MessageScrollerState,
+    content: @Composable () -> Unit,
+) {
+    CompositionLocalProvider(LocalMessageScrollerState provides state, content = content)
 }
 
 /**
- * Official `MessageScrollerViewport`. Nested inside [MessageScroller]'s scrolling
- * column (Root still owns scroll). [contentDescription] defaults to
- * [MessageScrollerDefaults.ViewportLabel]. [preserveScrollOnPrepend] is accepted, not ported.
+ * The canonical scroll viewport, with native input and prepend preservation policy.
  */
-@Suppress("UNUSED_PARAMETER")
 @Composable
-fun ColumnScope.MessageScrollerViewport(
+fun MessageScrollerViewport(
     modifier: Modifier = Modifier,
     preserveScrollOnPrepend: Boolean = true,
     contentDescription: String = MessageScrollerDefaults.ViewportLabel,
     style: Style = Style,
     content: @Composable ColumnScope.() -> Unit,
 ) {
+    val state = messageScrollerState()
+    SideEffect { state.preserveOnPrepend = preserveScrollOnPrepend }
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val labeled =
         if (contentDescription.isNotEmpty()) {
@@ -274,43 +419,56 @@ fun ColumnScope.MessageScrollerViewport(
         } else {
             modifier.fillMaxWidth()
         }
-    Column(
-        modifier = labeled.styleable(styleState, style),
-        content = content,
-    )
+    if (LocalLegacyMessageScroller.current) {
+        Column(modifier = labeled.styleable(styleState, style), content = content)
+    } else {
+        ScrollerViewport(labeled.styleable(styleState, style).fillMaxSize(), state, content)
+    }
 }
 
 /**
- * Official `MessageScrollerContent` (`gap-8`). [spacing] defaults to
+ * Transcript content (Nova gap-6, with explicit spacing override). [spacing] defaults to
  * [MessageScrollerDefaults.ContentSpacing].
  */
 @Composable
-fun ColumnScope.MessageScrollerContent(
+fun MessageScrollerContent(
     modifier: Modifier = Modifier,
     spacing: Dp = MessageScrollerDefaults.ContentSpacing,
     style: Style = Style,
     content: @Composable ColumnScope.() -> Unit,
 ) {
+    val state = messageScrollerState()
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Column(
-        modifier = modifier.fillMaxWidth().styleable(styleState, style),
+        modifier =
+            Modifier.onGloballyPositioned(state::contentMeasured)
+                .then(modifier).fillMaxWidth().styleable(styleState, style)
+                .semantics { liveRegion = LiveRegionMode.Polite },
         verticalArrangement = Arrangement.spacedBy(spacing),
         content = content,
     )
 }
 
-/**
- * Official `MessageScrollerItem`. [scrollAnchor] is accepted to match the docs prop;
- * turn anchoring is not ported yet (default `false` is a no-op).
- */
-@Suppress("UNUSED_PARAMETER")
+/** Stable transcript row boundary, used by anchors, message commands and visibility. */
 @Composable
-fun ColumnScope.MessageScrollerItem(
+fun MessageScrollerItem(
     modifier: Modifier = Modifier,
     scrollAnchor: Boolean = false,
+    messageId: String? = null,
     content: @Composable () -> Unit,
 ) {
-    Box(modifier = modifier.fillMaxWidth()) { content() }
+    val state = messageScrollerState()
+    val token = remember { Any() }
+    DisposableEffect(state, token) {
+        state.itemAttached()
+        onDispose { state.removeItem(token) }
+    }
+    Box(
+        modifier =
+            Modifier.onGloballyPositioned {
+                state.itemMeasured(token, messageId, scrollAnchor, it)
+            }.then(modifier).fillMaxWidth(),
+    ) { content() }
 }
 
 /**
@@ -358,16 +516,17 @@ fun MessageScrollerButton(
         val interactionSource = remember { MutableInteractionSource() }
         val isHovered by interactionSource.collectIsHoveredAsState()
         val theme = currentTheme
-        val styleState = remember { MutableStyleState(interactionSource) }
+        val styleState = rememberUpdatedStyleState(interactionSource)
         val pressStyle = rememberPressMotionStyle()
-        val touchTargetStyle = rememberMinTouchTargetStyle()
+        val nova = theme.activePreset == StylePreset.Nova
+        val touchTargetStyle = if (nova) Style else rememberMinTouchTargetStyle()
         val buttonStyle =
-            remember(isHovered, theme) {
+            rememberTheme(isHovered) {
                 Style {
-                    background(if (isHovered) theme.colors.muted else theme.colors.background)
+                    background(if (isHovered) colors.muted else colors.background)
                     borderWidth(1.dp)
-                    borderColor(theme.colors.border)
-                    focusRing(RoundedCornerShape(twRadius.md))
+                    borderColor(colors.border)
+                    focusRing(RoundedCornerShape(radius.md))
                 }
             }
         Box(
@@ -375,6 +534,10 @@ fun MessageScrollerButton(
                 Modifier
                     .semantics {
                         role = Role.Button
+                        if (!visible) {
+                            disabled()
+                            hideFromAccessibility()
+                        }
                         contentDescription =
                             if (direction == MessageScrollerDirection.Start) {
                                 "Scroll to start"
@@ -382,12 +545,14 @@ fun MessageScrollerButton(
                                 "Scroll to end"
                             }
                     }
-                    .hoverable(interactionSource)
+                    .focusProperties { canFocus = visible }
+                    .hoverable(interactionSource, enabled = visible)
                     .keyboardInputMode()
                     .clickable(
                         interactionSource = interactionSource,
                         indication = null,
                         role = Role.Button,
+                        enabled = visible,
                         onClick = onClick,
                     )
                     .styleable(styleState, touchTargetStyle then pressStyle),
@@ -396,7 +561,7 @@ fun MessageScrollerButton(
             Box(
                 modifier =
                     Modifier
-                        .size(36.dp)
+                        .size(if (nova) 28.dp else 36.dp)
                         .styleable(styleState, buttonStyle then style),
                 contentAlignment = Alignment.Center,
             ) {

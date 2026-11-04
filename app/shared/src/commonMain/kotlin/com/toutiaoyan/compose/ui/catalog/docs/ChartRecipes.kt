@@ -1,0 +1,703 @@
+@file:OptIn(androidx.compose.foundation.style.ExperimentalFoundationStyleApi::class)
+
+package com.toutiaoyan.compose.ui.catalog.docs
+
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.border
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.vector.PathParser
+import androidx.compose.ui.platform.*
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.unit.*
+import com.toutiaoyan.compose.ui.components.chart.*
+import com.toutiaoyan.compose.ui.components.text.Text
+import com.toutiaoyan.compose.ui.theme.Theme
+import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.tokens.Accent
+import com.toutiaoyan.compose.ui.tokens.BaseColor
+
+// region shared
+private val chartRecipeLineHeight = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None)
+private val chartRecipeMonths = listOf("January", "February", "March", "April", "May", "June")
+private val chartRecipeData =
+    listOf(
+        ChartPoint("January", mapOf("desktop" to 186f, "mobile" to 80f)),
+        ChartPoint("February", mapOf("desktop" to 305f, "mobile" to 200f)),
+        ChartPoint("March", mapOf("desktop" to 237f, "mobile" to 120f)),
+        ChartPoint("April", mapOf("desktop" to 73f, "mobile" to 190f)),
+        ChartPoint("May", mapOf("desktop" to 209f, "mobile" to 130f)),
+        ChartPoint("June", mapOf("desktop" to 214f, "mobile" to 140f)),
+    )
+private val chartRecipeConfig =
+    mapOf(
+        "desktop" to ChartSeries("Desktop", Color(0xFF2563EB)),
+        "mobile" to ChartSeries("Mobile", Color(0xFF60A5FA)),
+    )
+
+@Composable
+private fun ChartFirstSteps(stage: Int) {
+    ChartContainer(
+        Modifier.fillMaxWidth().heightIn(
+            min =
+                200.dp,
+        ).testTag("chart-example"),
+        config =
+        chartRecipeConfig,
+    ) {
+        Column(Modifier.fillMaxSize()) {
+            BarChart(
+                chartRecipeData,
+                modifier = Modifier.weight(1f),
+                showGrid = stage >= 1,
+                showXAxis = stage >= 2,
+                xAxisLabelFormatter = { it.take(3) },
+                tooltip =
+                    if (stage >= 3) {
+                        { point ->
+                            ChartTooltipContent(
+                                point.label,
+                                chartRecipeConfig,
+                                point.values,
+                            )
+                        }
+                    } else {
+                        null
+                    },
+            )
+            if (stage >= 4) ChartLegendContent()
+        }
+    }
+}
+
+private val chartInteractiveData =
+    listOf(
+        ChartPoint("2024-04-01", mapOf("desktop" to 222f, "mobile" to 150f)),
+        ChartPoint("2024-04-02", mapOf("desktop" to 97f, "mobile" to 180f)),
+        ChartPoint("2024-04-03", mapOf("desktop" to 167f, "mobile" to 120f)),
+        ChartPoint("2024-04-04", mapOf("desktop" to 242f, "mobile" to 260f)),
+        ChartPoint("2024-04-05", mapOf("desktop" to 373f, "mobile" to 290f)),
+        ChartPoint("2024-04-06", mapOf("desktop" to 301f, "mobile" to 340f)),
+        ChartPoint("2024-04-07", mapOf("desktop" to 245f, "mobile" to 180f)),
+        ChartPoint("2024-04-08", mapOf("desktop" to 409f, "mobile" to 320f)),
+        ChartPoint("2024-04-09", mapOf("desktop" to 59f, "mobile" to 110f)),
+        ChartPoint("2024-04-10", mapOf("desktop" to 261f, "mobile" to 190f)),
+        ChartPoint("2024-04-11", mapOf("desktop" to 327f, "mobile" to 350f)),
+        ChartPoint("2024-04-12", mapOf("desktop" to 292f, "mobile" to 210f)),
+        ChartPoint("2024-04-13", mapOf("desktop" to 342f, "mobile" to 380f)),
+        ChartPoint("2024-04-14", mapOf("desktop" to 137f, "mobile" to 220f)),
+        ChartPoint("2024-04-15", mapOf("desktop" to 120f, "mobile" to 170f)),
+        ChartPoint("2024-04-16", mapOf("desktop" to 138f, "mobile" to 190f)),
+        ChartPoint("2024-04-17", mapOf("desktop" to 446f, "mobile" to 360f)),
+        ChartPoint("2024-04-18", mapOf("desktop" to 364f, "mobile" to 410f)),
+        ChartPoint("2024-04-19", mapOf("desktop" to 243f, "mobile" to 180f)),
+        ChartPoint("2024-04-20", mapOf("desktop" to 89f, "mobile" to 150f)),
+        ChartPoint("2024-04-21", mapOf("desktop" to 137f, "mobile" to 200f)),
+        ChartPoint("2024-04-22", mapOf("desktop" to 224f, "mobile" to 170f)),
+        ChartPoint("2024-04-23", mapOf("desktop" to 138f, "mobile" to 230f)),
+        ChartPoint("2024-04-24", mapOf("desktop" to 387f, "mobile" to 290f)),
+        ChartPoint("2024-04-25", mapOf("desktop" to 215f, "mobile" to 250f)),
+        ChartPoint("2024-04-26", mapOf("desktop" to 75f, "mobile" to 130f)),
+        ChartPoint("2024-04-27", mapOf("desktop" to 383f, "mobile" to 420f)),
+        ChartPoint("2024-04-28", mapOf("desktop" to 122f, "mobile" to 180f)),
+        ChartPoint("2024-04-29", mapOf("desktop" to 315f, "mobile" to 240f)),
+        ChartPoint("2024-04-30", mapOf("desktop" to 454f, "mobile" to 380f)),
+    )
+
+private val chartAnnotationPaths =
+    listOf(
+        (
+            "M173.928 21.13C115.811 44.938 58.751 45.773 0 " +
+                "26.141c4.227-4.386 7.82-2.715 10.567-1.88 21.133 5.64 42.9 " +
+                "6.266 64.457 7.101 31.066 1.253 60.441-5.848 89.183-17.335 " +
+                "1.268-.418 2.325-1.253 4.861-2.924-14.582-2.924-29.165 " +
+                "2.089-41.845-3.76.212-.835.212-1.879.423-2.714 9.51-.627 " +
+                "19.231-1.253 28.742-2.089 9.51-.835 18.808-1.88 28.318-2.506 " +
+                "6.974-.418 9.933 2.924 7.397 9.19-3.17 8.145-7.608 " +
+                "15.664-11.623 23.391-.423.836-1.057 1.88-1.902 " +
+                "2.298-2.325.835-4.65 1.044-7.186 " +
+                "1.67-.422-2.088-1.479-4.386-1.268-6.265.423-2.506 1.902-4.595 " +
+                "3.804-9.19Z"
+        ),
+        (
+            "M0 2.65c6.15-4.024 12.299-2.753 17.812-.847a115.56 115.56 0 0 " +
+                "1 21.84 10.59C70.4 32.727 88.849 61.744 96.483 97.54c1.908 " +
+                "9.108 2.544 18.639 3.817 29.017 8.481-4.871 12.934-14.402 " +
+                "21.416-19.909 1.061 4.236-1.06 6.989-2.756 9.319-6.998 " +
+                "9.531-14.207 19.062-21.63 28.382-3.604 4.448-6.36 " +
+                "4.871-10.177 1.059-8.058-7.837-12.935-17.368-14.42-28.382 " +
+                "0-.424.636-1.059 1.485-2.118 9.118 2.33 6.997 13.979 14.843 " +
+                "18.215 " +
+                "3.393-14.614.848-28.593-2.969-42.149-4.029-14.19-9.33-27.746" +
+                "-17.812-39.82-8.27-11.86-18.66-21.392-30.11-30.287C26.93 " +
+                "11.758 14.207 6.039 0 2.65Z"
+        ),
+        (
+            "M20.187 " +
+                "175c-4.439-2.109-7.186-2.531-8.032-4.008-3.17-5.484-6.763-10" +
+                ".968-8.454-17.084-5.073-16.242-4.439-32.694-1.057-49.146 " +
+                "5.707-28.053 18.388-52.942 34.24-76.565 1.692-2.531 " +
+                "3.171-5.063 4.862-7.805 0-.21-.211-.632-.634-1.265-4.65 " +
+                "1.265-9.511 2.53-14.161 " +
+                "3.585-2.537.422-5.496.422-8.032-.421-1.48-.422-3.593-2.742-3.593-4.219 " +
+                "0-1.898 1.48-4.218 2.747-5.906 1.057-1.054 2.96-1.265 " +
+                "4.65-1.687C35.406 7.315 48.088 3.729 60.98.776c10.99-2.53 " +
+                "14.584 1.055 13.95 11.812-.634 11.18-.846 22.358-1.268 " +
+                "33.326-.212 3.375-.846 6.96-1.268 " +
+                "10.757-8.878-4.007-8.878-4.007-12.048-38.177C47.03 33.259 " +
+                "38.153 49.289 29.91 65.741 21.667 82.193 16.17 99.49 13.212 " +
+                "117.84c-2.959 18.984.634 36.912 6.975 57.161Z"
+        ),
+    )
+
+@Composable
+private fun ChartAnnotationArrow(
+    index: Int,
+    modifier: Modifier,
+) {
+    val color = currentTheme.colors.foreground
+    val path = remember(index) { PathParser().parsePathString(chartAnnotationPaths[index]).toPath() }
+    val viewport = listOf(193f to 40f, 122f to 148f, 75f to 175f)[index]
+    Canvas(modifier) {
+        drawContext.canvas.save()
+        val scale = minOf(size.width / viewport.first, size.height / viewport.second)
+        drawContext.canvas.translate(
+            (size.width - viewport.first * scale) / 2,
+            (size.height - viewport.second * scale) / 2,
+        )
+        drawContext.canvas.scale(scale, scale)
+        drawPath(path, color)
+        drawContext.canvas.restore()
+    }
+}
+// endregion shared
+
+// region first
+@Composable
+internal fun ChartFirstRecipe() {
+    ChartFirstSteps(0)
+}
+// endregion first
+
+// region grid
+@Composable
+internal fun ChartGridRecipe() {
+    ChartFirstSteps(1)
+}
+// endregion grid
+
+// region axis
+@Composable
+internal fun ChartAxisRecipe() {
+    ChartFirstSteps(2)
+}
+// endregion axis
+
+// region tooltip
+@Composable
+internal fun ChartTooltipRecipe() {
+    ChartFirstSteps(3)
+}
+// endregion tooltip
+
+// region legend
+@Composable
+internal fun ChartLegendRecipe() {
+    ChartFirstSteps(4)
+}
+// endregion legend
+
+// region default
+@Composable
+internal fun ChartInteractiveRecipe() {
+    var active by remember { mutableStateOf("desktop") }
+    val dark = Theme.isDark
+    val palette = Accent.Blue.applyTo(if (dark) BaseColor.Neutral.dark else BaseColor.Neutral.light, dark)
+    val config =
+        mapOf(
+            "desktop" to ChartSeries("Desktop", palette.chart2),
+            "mobile" to ChartSeries("Mobile", palette.chart1),
+        )
+    val compact = LocalWindowInfo.current.containerSize.width < with(LocalDensity.current) { 640.dp.roundToPx() }
+    val colors = currentTheme.colors
+    val totals =
+        chartInteractiveData.flatMap { it.values.keys }.distinct().associateWith { key ->
+            chartInteractiveData.sumOf { (it.values[key] ?: 0f).toDouble() }.toFloat()
+        }
+    val heading: @Composable () -> Unit = {
+        Column(
+            Modifier.padding(
+                start = 24.dp,
+                end = 24.dp,
+                top = if (compact) 16.dp else 0.dp,
+                bottom = if (compact) 12.dp else 0.dp,
+            ),
+            verticalArrangement =
+                Arrangement.spacedBy(4.dp),
+        ) {
+            Text(
+                textStyle =
+                    TextStyle(
+                        lineHeightStyle = chartRecipeLineHeight,
+                        fontSize =
+                            15.sp,
+                        lineHeight =
+                            15.sp,
+                        fontWeight =
+                            FontWeight.SemiBold,
+                    ),
+            ) { "Bar Chart - Interactive" }
+            Text(
+                textStyle =
+                    TextStyle(
+                        lineHeightStyle =
+                        chartRecipeLineHeight,
+                        fontSize =
+                            14.sp,
+                        lineHeight =
+                            20.sp,
+                        color =
+                            colors.mutedForeground,
+                    ),
+            ) {
+                "Showing total visitors for the last 3 months"
+            }
+        }
+    }
+    val metrics: @Composable () -> Unit = {
+        Row(if (compact) Modifier.fillMaxWidth() else Modifier) {
+            config.entries.forEachIndexed { index, (key, series) ->
+                Column(
+                    (if (compact) Modifier.weight(1f) else Modifier)
+                        .background(
+                            if (active == key) {
+                                colors.muted.copy(
+                                    alpha =
+                                        colors.muted.alpha * .5f,
+                                )
+                            } else {
+                                Color.Transparent
+                            },
+                        )
+                        .drawBehind {
+                            if (compact) drawLine(colors.border, Offset.Zero, Offset(size.width, 0f), 1.dp.toPx())
+                            if (!compact ||
+                                index > 0
+                            ) {
+                                drawLine(
+                                    colors.border,
+                                    Offset.Zero,
+                                    Offset(
+                                        0f,
+                                        size.height,
+                                    ),
+                                    1.dp.toPx(),
+                                )
+                            }
+                        }
+                        .semantics { selected = active == key }
+                        .clickable(role = Role.Button) { active = key }
+                        .padding(horizontal = if (compact) 24.dp else 32.dp, vertical = if (compact) 16.dp else 24.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    Text(
+                        textStyle =
+                            TextStyle(
+                                lineHeightStyle = chartRecipeLineHeight,
+                                fontSize =
+                                    12.sp,
+                                lineHeight =
+                                    16.sp,
+                                color =
+                                    colors.mutedForeground,
+                            ),
+                    ) { series.label }
+                    Text(
+                        textStyle =
+                            TextStyle(
+                                lineHeightStyle = chartRecipeLineHeight,
+                                fontSize =
+                                    if (compact) {
+                                        18.sp
+                                    } else {
+                                        30.sp
+                                    },
+                                lineHeight =
+                                    if (compact) {
+                                        18.sp
+                                    } else {
+                                        30.sp
+                                    },
+                                fontWeight =
+                                    FontWeight.Bold,
+                            ),
+                    ) {
+                        formatChartNumber(totals.getValue(key))
+                    }
+                }
+            }
+        }
+    }
+    Column(
+        Modifier.fillMaxWidth().background(colors.card, RoundedCornerShape(14.dp)).testTag("chart-interactive"),
+    ) {
+        if (compact) {
+            heading()
+            metrics()
+        } else {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Box(Modifier.weight(1f)) { heading() }
+                metrics()
+            }
+        }
+        Box(Modifier.fillMaxWidth().height(1.dp).background(colors.border))
+        Spacer(Modifier.height(24.dp))
+        ChartContainer(
+            Modifier.fillMaxWidth().padding(
+                horizontal =
+                    if (compact) {
+                        8.dp
+                    } else {
+                        24.dp
+                    },
+                vertical =
+                    if (compact) {
+                        0.dp
+                    } else {
+                        24.dp
+                    },
+            ).height(250.dp),
+            config =
+            config,
+        ) {
+            BarChart(
+                chartInteractiveData,
+                config = mapOf(active to config.getValue(active)),
+                barRadius = 0.dp,
+                plotPadding = PaddingValues(horizontal = 12.dp),
+                minTickGap = 32.dp,
+                xAxisLabelFormatter = { "Apr " + it.takeLast(2).toInt() },
+                tooltip = { point ->
+                    ChartTooltipContent(
+                        "Apr ${point.label.takeLast(2).toInt()}, 2024",
+                        mapOf(
+                            active to
+                                config.getValue(active).copy(
+                                    label =
+                                        "Page Views",
+                                ),
+                        ),
+                        mapOf(active to point.values.getValue(active)),
+                        modifier = Modifier.width(150.dp),
+                    )
+                },
+            )
+        }
+        Spacer(Modifier.height(16.dp))
+    }
+}
+// endregion default
+
+// region rtl
+@Composable
+internal fun ChartRtlRecipe(language: Int = 1) {
+    val names =
+        listOf(
+            chartRecipeMonths + listOf("Desktop", "Mobile"),
+            listOf("يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "سطح المكتب", "الجوال"),
+            listOf("ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני", "מחשב", "נייד"),
+        )[language]
+    val colors = currentTheme.colors
+    val config =
+        mapOf(
+            "desktop" to
+                ChartSeries(
+                    names[6],
+                    colors.chart2,
+                ),
+            "mobile" to
+                ChartSeries(
+                    names[7],
+                    colors.chart1,
+                ),
+        )
+    val translated = chartRecipeData.mapIndexed { index, point -> point.copy(label = names[index]) }
+    CompositionLocalProvider(
+        LocalLayoutDirection provides
+            if (language == 0) {
+                LayoutDirection.Ltr
+            } else {
+                LayoutDirection.Rtl
+            },
+    ) {
+        ChartContainer(Modifier.fillMaxWidth().heightIn(min = 200.dp).testTag("chart-example"), config = config) {
+            Column(Modifier.fillMaxSize()) {
+                BarChart(
+                    translated,
+                    modifier = Modifier.weight(1f),
+                    reversed = language != 0,
+                    xAxisLabelFormatter = { it.take(3) },
+                    tooltip = { point -> ChartTooltipContent(point.label, config, point.values) },
+                )
+                ChartLegendContent()
+            }
+        }
+    }
+}
+// endregion rtl
+
+// region anatomy
+@Composable
+internal fun ChartTooltipAnatomyRecipe() {
+    val wide = LocalWindowInfo.current.containerSize.width >= with(LocalDensity.current) { 768.dp.roundToPx() }
+    val colors = currentTheme.colors
+    FlowRow(Modifier.widthIn(max = 448.dp), horizontalArrangement = Arrangement.Center) {
+        Box(Modifier.size(224.dp, 137.dp), contentAlignment = Alignment.Center) {
+            ChartTooltipContent(
+                "Page Views",
+                mapOf(
+                    "desktop" to
+                        ChartSeries(
+                            "Desktop",
+                            colors.chart1,
+                        ),
+                    "mobile" to
+                        ChartSeries(
+                            "Mobile",
+                            colors.chart2,
+                        ),
+                ),
+                mapOf("desktop" to 186f, "mobile" to 80f),
+                Modifier.width(128.dp),
+            )
+            Text(
+                Modifier.absoluteOffset(
+                    x =
+                        (-35).dp,
+                    y =
+                        45.dp,
+                ).align(Alignment.TopStart),
+                textStyle =
+                    TextStyle(
+                        fontSize =
+                            14.sp,
+                        fontWeight =
+                            FontWeight.Medium,
+                    ),
+            ) { "Label" }
+            ChartAnnotationArrow(0, Modifier.align(Alignment.TopStart).absoluteOffset(5.dp, 50.dp).size(50.dp, 12.dp))
+        }
+        Box(Modifier.size(224.dp, 137.dp), contentAlignment = Alignment.BottomCenter) {
+            ChartTooltipContent(
+                "Browser",
+                mapOf(
+                    "chrome" to
+                        ChartSeries(
+                            "Chrome",
+                            colors.chart3,
+                        ),
+                    "firefox" to
+                        ChartSeries(
+                            "Firefox",
+                            colors.chart4,
+                        ),
+                ),
+                mapOf(
+                    "chrome" to 1286f,
+                    "firefox" to 1000f,
+                ),
+                Modifier.width(128.dp),
+                hideLabel =
+                true,
+                indicator =
+                    ChartIndicator.Dashed,
+            )
+            Text(
+                Modifier.align(Alignment.TopStart).absoluteOffset(
+                    122.dp,
+                    0.dp,
+                ),
+                textStyle =
+                    TextStyle(
+                        fontSize =
+                            14.sp,
+                        fontWeight =
+                            FontWeight.Medium,
+                    ),
+            ) { "Name" }
+            ChartAnnotationArrow(
+                1,
+                Modifier.align(Alignment.TopStart).absoluteOffset(
+                    85.dp,
+                    10.dp,
+                ).size(
+                    35.dp,
+                    42.dp,
+                ).graphicsLayer {
+                    scaleX =
+                        -1f
+                },
+            )
+        }
+        if (wide) {
+            Box(Modifier.size(224.dp, 137.dp), contentAlignment = Alignment.Center) {
+                ChartTooltipContent(
+                    "Page Views",
+                    mapOf("desktop" to ChartSeries("Desktop", colors.chart3)),
+                    mapOf("desktop" to 12486f),
+                    Modifier.width(144.dp),
+                    indicator = ChartIndicator.Line,
+                )
+            }
+        }
+        Box(Modifier.size(224.dp, 137.dp), contentAlignment = Alignment.TopStart) {
+            ChartTooltipContent(
+                "Browser",
+                mapOf(
+                    "chrome" to
+                        ChartSeries(
+                            "Chrome",
+                            colors.chart1,
+                        ),
+                ),
+                mapOf("chrome" to 1286f),
+                Modifier.width(128.dp),
+                hideLabel =
+                true,
+            )
+            Text(
+                Modifier.absoluteOffset(
+                    50.dp,
+                    60.dp,
+                ),
+                textStyle =
+                    TextStyle(
+                        fontSize =
+                            14.sp,
+                        fontWeight =
+                            FontWeight.Medium,
+                    ),
+            ) { "Indicator" }
+            ChartAnnotationArrow(
+                2,
+                Modifier.absoluteOffset(
+                    30.dp,
+                    38.dp,
+                ).size(
+                    15.dp,
+                    34.dp,
+                ).graphicsLayer {
+                    rotationZ =
+                        -40f
+                },
+            )
+        }
+    }
+}
+// endregion anatomy
+
+internal val chartOfficialExamples =
+    listOf(
+        ComponentExample(
+            "Default",
+            code =
+            chartDefaultRecipeCode,
+            previewPadding =
+                0.dp,
+            hideCode = true,
+            preview =
+                { ChartInteractiveRecipe() },
+        ),
+        ComponentExample(
+            "Your First Chart",
+            previewHeight =
+                320.dp,
+            desktopPreviewInsetStart =
+                48.dp,
+            code =
+            chartFirstRecipeCode,
+            preview =
+                { ChartFirstRecipe() },
+        ),
+        ComponentExample(
+            "Add a Grid",
+            previewHeight =
+                320.dp,
+            desktopPreviewInsetStart =
+                48.dp,
+            code =
+            chartGridRecipeCode,
+            preview =
+                { ChartGridRecipe() },
+        ),
+        ComponentExample(
+            "Add an Axis",
+            previewHeight =
+                320.dp,
+            desktopPreviewInsetStart =
+                48.dp,
+            code =
+            chartAxisRecipeCode,
+            preview =
+                { ChartAxisRecipe() },
+        ),
+        ComponentExample(
+            "Add Tooltip",
+            previewHeight =
+                320.dp,
+            desktopPreviewInsetStart =
+                48.dp,
+            code =
+            chartTooltipRecipeCode,
+            preview =
+                { ChartTooltipRecipe() },
+        ),
+        ComponentExample(
+            "Add Legend",
+            previewHeight =
+                320.dp,
+            desktopPreviewInsetStart =
+                48.dp,
+            code =
+            chartLegendRecipeCode,
+            preview =
+                { ChartLegendRecipe() },
+        ),
+        ComponentExample(
+            "Tooltip",
+            code =
+            chartAnatomyRecipeCode,
+            hideCode =
+            true,
+            preview =
+                { ChartTooltipAnatomyRecipe() },
+        ),
+        ComponentExample("RTL", code = chartRtlRecipeCode, previewPadding = 0.dp, preview = {
+            var language by remember { mutableIntStateOf(1) }
+            RtlPreview(
+                language,
+                listOf(
+                    "English",
+                    "Arabic (العربية)",
+                    "Hebrew (עברית)",
+                ),
+                {
+                    language =
+                        it
+                },
+            ) { ChartRtlRecipe(language) }
+        }),
+    )

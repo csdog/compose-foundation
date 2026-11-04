@@ -16,26 +16,23 @@ import com.toutiaoyan.compose.tailwind.core.spacing
 val shimmerDoc =
     ComponentDoc(
         id = "shimmer",
-        title = "Shimmer",
-        description =
-            "A sweeping highlight for \"generating response\"/\"thinking\" text (and solid " +
-                "blocks) — Modifier.shimmer (SrcAtop overlay) or rememberShimmerStyle " +
-                "(contentBrush / background-clip:text), matching ui.shadcn.com/docs/utils/shimmer.",
+        title = "shimmer",
+        description = "Utilities for adding a shimmer effect to text elements.",
         usageCode =
             """
+            import com.toutiaoyan.compose.ui.components.text.Text
+            import com.toutiaoyan.compose.ui.components.text.TextColors
             import com.toutiaoyan.compose.ui.styles.rememberShimmerStyle
-            import com.toutiaoyan.compose.ui.styles.shimmer
 
-            Text(textStyle = TextStyles.Muted, modifier = Modifier.shimmer()) { "Generating response…" }
-            Text(textStyle = TextStyles.Muted, style = rememberShimmerStyle()) { "Generating response…" }
+            Text(textStyle = TextColors.Muted, style = rememberShimmerStyle()) { "Generating response…" }
             """.trimIndent(),
         examples =
             listOf(
                 ComponentExample(
-                    title = "Default (Modifier)",
+                    title = "Overlay (Kotlin)",
                     code =
                         """
-                        Text(textStyle = TextStyles.Muted, modifier = Modifier.shimmer()) { "Generating response…" }
+                        Text(textStyle = TextColors.Muted, modifier = Modifier.shimmer()) { "Generating response…" }
                         """.trimIndent(),
                     preview = {
                         Text(textStyle = TextColors.Muted, modifier = Modifier.shimmer()) {
@@ -47,7 +44,7 @@ val shimmerDoc =
                     title = "Style (contentBrush)",
                     code =
                         """
-                        Text(textStyle = TextStyles.Muted, style = rememberShimmerStyle()) { "Generating response…" }
+                        Text(textStyle = TextColors.Muted, style = rememberShimmerStyle()) { "Generating response…" }
                         """.trimIndent(),
                     preview = {
                         Text(textStyle = TextColors.Muted, style = rememberShimmerStyle()) {
@@ -59,9 +56,9 @@ val shimmerDoc =
                     title = "Duration / angle / spread",
                     code =
                         """
-                        Text(textStyle = TextStyles.Muted, modifier = Modifier.shimmer(durationMillis = 1000)) { "…" }
-                        Text(textStyle = TextStyles.Muted, modifier = Modifier.shimmer(angleDegrees = 45f)) { "…" }
-                        Text(textStyle = TextStyles.Muted, modifier = Modifier.shimmer(spread = 24.spacing.dp)) { "…" }
+                        Text(textStyle = TextColors.Muted, modifier = Modifier.shimmer(durationMillis = 1000)) { "…" }
+                        Text(textStyle = TextColors.Muted, modifier = Modifier.shimmer(angleDegrees = 45f)) { "…" }
+                        Text(textStyle = TextColors.Muted, modifier = Modifier.shimmer(spread = 24.spacing.dp)) { "…" }
                         """.trimIndent(),
                     preview = {
                         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -84,8 +81,8 @@ val shimmerDoc =
                     title = "Reverse / once",
                     code =
                         """
-                        Text(textStyle = TextStyles.Muted, modifier = Modifier.shimmer(reverse = true)) { "…" }
-                        Text(textStyle = TextStyles.Muted, modifier = Modifier.shimmer(once = true, durationMillis = 1100)) { "…" }
+                        Text(textStyle = TextColors.Muted, modifier = Modifier.shimmer(reverse = true)) { "…" }
+                        Text(textStyle = TextColors.Muted, modifier = Modifier.shimmer(once = true, durationMillis = 1100)) { "…" }
                         """.trimIndent(),
                     preview = {
                         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -102,3 +99,4 @@ val shimmerDoc =
                 ),
             ),
     )
+        .let { native -> native.copy(examples = shimmerOfficialExamples + native.examples) }

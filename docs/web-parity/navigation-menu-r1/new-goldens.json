@@ -1,0 +1,10 @@
+{
+  "scope": "Only four new Nova chrome fixtures (idle/open xlight/dark). Recorded, viewed, independently verified. Source-based chrome and3Getting started links; NOT full officialDefault/RTL or browser/mobile validation. No old Nav goldens recorded.",
+  "files": {
+    "navigation_menu_nova_idle_dark.png": "5d3117ba3fb38578e458a258a040324190fb10d987ede7f5d360596c705ea1f5",
+    "navigation_menu_nova_idle_light.png": "54c2bbae3259cd5308c16a40fdfe37c0c29b70b421bc5bb4dc3eb6ffeeda235c",
+    "navigation_menu_nova_open_dark.png": "39dce738471f96a6b0230aa5f350c3636b96e57f55aef5dd58627a02f37e2912",
+    "navigation_menu_nova_open_light.png": "ff313d58c09ebb3a51da1c8dbd9238ae016784850da14fba862994fffdb55abc"
+  },
+  "normalization": "Four matching docs/previews images derived with existing native-PNG normalizer formula: no crop/resize, opaque theme background,24px exterior padding. Popup originals include1024x768 scene beyond themed fixture. PythonPillow unavailable in system runtime; reused prior NodePNG helper."
+}

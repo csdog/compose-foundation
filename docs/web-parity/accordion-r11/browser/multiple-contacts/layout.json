@@ -1,0 +1,81 @@
+{
+  "sheets": [
+    {
+      "file": "multiple-all-open-1440-light.png",
+      "crops": [
+        {
+          "file": "official-multiple-all-open-1440-light.png",
+          "left": 392,
+          "top": 178,
+          "width": 640,
+          "height": 564
+        },
+        {
+          "file": "local-multiple-all-open-1440-light.png",
+          "left": 365,
+          "top": 150,
+          "width": 640,
+          "height": 564
+        }
+      ]
+    },
+    {
+      "file": "multiple-all-open-1440-dark.png",
+      "crops": [
+        {
+          "file": "official-multiple-all-open-1440-dark.png",
+          "left": 392,
+          "top": 178,
+          "width": 640,
+          "height": 564
+        },
+        {
+          "file": "local-multiple-all-open-1440-dark.png",
+          "left": 365,
+          "top": 150,
+          "width": 640,
+          "height": 564
+        }
+      ]
+    },
+    {
+      "file": "multiple-all-open-390-light.png",
+      "crops": [
+        {
+          "file": "official-multiple-all-open-390-light.png",
+          "left": 24,
+          "top": 179,
+          "width": 327,
+          "height": 564
+        },
+        {
+          "file": "local-multiple-all-open-390-light.png",
+          "left": 24,
+          "top": 350,
+          "width": 342,
+          "height": 564
+        }
+      ]
+    },
+    {
+      "file": "multiple-all-open-390-dark.png",
+      "crops": [
+        {
+          "file": "official-multiple-all-open-390-dark.png",
+          "left": 24,
+          "top": 179,
+          "width": 327,
+          "height": 564
+        },
+        {
+          "file": "local-multiple-all-open-390-dark.png",
+          "left": 24,
+          "top": 350,
+          "width": 342,
+          "height": 564
+        }
+      ]
+    }
+  ],
+  "note": "Source left/local right; original pixels, no resize. Explicit frame crops preserve fixed450px preview and code footer; scroll offsets differ."
+}

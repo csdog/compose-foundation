@@ -1,0 +1,16 @@
+{
+  "tailwindTransition": {
+    "url": "https://tailwindcss.com/docs/transition-property",
+    "checkedAt": "2026-10-31",
+    "defaultDurationMs": 150,
+    "defaultCubicBezier": [
+      0.4,
+      0,
+      0.2,
+      1
+    ],
+    "note": "Default documented timing; browser computed values remain unverified."
+  },
+  "browserStatusReference": "../popover-r2/browser-status.json",
+  "browserRecreationApproval": "existing question unanswered; no replacement created"
+}

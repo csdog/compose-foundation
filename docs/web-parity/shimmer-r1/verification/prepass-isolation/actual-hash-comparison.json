@@ -1,0 +1,18 @@
+[
+  {
+    "name": "shimmer_states_light",
+    "prepassActualSha256": "dae231f3788bb5ff1ac3ada453906646c311818bbb6cd3895ff8660ed16f51f7",
+    "currentActualSha256": "dae231f3788bb5ff1ac3ada453906646c311818bbb6cd3895ff8660ed16f51f7",
+    "baselineSha256": "861f6e0898e69de5b06fbd7ad3de106195a3091aa86f404fcdb1be626423bf20",
+    "prepassMatchesCurrentActual": true,
+    "prepassMatchesBaseline": false
+  },
+  {
+    "name": "text_color_inheritance_dark",
+    "prepassActualSha256": "fe626c9f4ad91ac13434f6ad03c83c5694f8fa9652a16c1d5356a6fe773e5704",
+    "currentActualSha256": "fe626c9f4ad91ac13434f6ad03c83c5694f8fa9652a16c1d5356a6fe773e5704",
+    "baselineSha256": "bc3cdac6c8819d1d83e6d891538c6b3ee152160a12bc83580194731f7b6f9f11",
+    "prepassMatchesCurrentActual": true,
+    "prepassMatchesBaseline": false
+  }
+]

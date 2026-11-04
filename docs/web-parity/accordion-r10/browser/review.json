@@ -1,0 +1,80 @@
+{
+  "date": "2026-11-02",
+  "spaceId": 4,
+  "appWasm": "a8c35a345ac9b9d12cfa.wasm",
+  "skikoWasm": "658820f72b4617efb380.wasm",
+  "matrix": {
+    "widths": [
+      1440,
+      390
+    ],
+    "height": 1000,
+    "languages": [
+      "ar",
+      "en",
+      "he"
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "realPhone": false
+  },
+  "acceptedScreenshots": [
+    "local-ar-1440-light.png",
+    "local-ar-1440-dark.png",
+    "local-ar-390-light.png",
+    "local-ar-390-dark.png",
+    "local-en-1440-light.png",
+    "local-en-1440-dark.png",
+    "local-en-390-light.png",
+    "local-en-390-dark.png",
+    "local-he-1440-light.png",
+    "local-he-1440-dark.png",
+    "local-he-390-light.png",
+    "local-he-390-dark.png"
+  ],
+  "extraInteractionScreenshots": [
+    "local-ar-third-open-390-dark.png",
+    "official-ar-third-open-390-dark.png"
+  ],
+  "all14VisuallyReviewed": true,
+  "native": {
+    "rtlCaptures": 12,
+    "fixedFrameCaptures": 48,
+    "all60VisuallyReviewed": true,
+    "frameChangedVsR7": 48,
+    "reviewMethod": "Four RTL and eight frame original-pixel contact sheets; originals preserved. Native desktop with simulated WindowInfo."
+  },
+  "sourceBaseline": "../accordion-r9/browser/review.json + official-matrix.json; unchanged same-source Noto DOM font family rechecked this round in official-fonts.json. Source third-answer interaction newly captured after waiting for settled42/62/42 trigger boxes.",
+  "method": "Local real pointer selections in item-aligned popup; wait for Arabic/Hebrew regular+medium resource completion. Local shallow/deep themes toggled from header after popup close. Desktop/body clipping and scripts visually checked; local third Arabic trigger clicked at390 dark, first answer closes and complete payment answer shows. Source analogous settled state checked.",
+  "resolved": [
+    "Web Arabic system fallback replaced with Noto Sans Arabic; Hebrew uses Noto Sans Hebrew.",
+    "Real Noto single-line trigger52→42px with tight20px line boxes.",
+    "Web390 Arabic third trigger visible in both themes and can be opened."
+  ],
+  "remaining": [
+    "Global narrow card width342 versus source327 changes wrapping.",
+    "Deep-theme glyph/weight appearance remains different despite explicit400/500 font faces.",
+    "Native Hebrew toolbar label ellipse remains; Web selected label complete.",
+    "Other six recipes need new browser geometry/overflow matrix after shared Nova line-box change; native48 reviewed but not used as browser proof.",
+    "Extension/style/dynamic-slot/assistive/touch matrices incomplete; manual theme reload persistence pending."
+  ],
+  "sha256": {
+    "local-ar-1440-light.png": "388978e19dc3aad8df2a5f66e12b6f7303a81735ce229cf85dd0fa2a193252e5",
+    "local-ar-1440-dark.png": "4b56834a120c257e0d2b734a1fea02ac71d20e06334246d2aafd24d6b5e4b55a",
+    "local-ar-390-light.png": "691d185c5515926dc694e40ab1423810ace369423978d02e65f8fb5d17dcbfc7",
+    "local-ar-390-dark.png": "e39a42677aff8da89d2bd5e23745cd9d9cb26549784cb4be1a36ba6cf2371354",
+    "local-en-1440-light.png": "36a7741f4f418ac3d86f79a9fa3f0b8a3ee83ca0d209058a65af4ef3f9720b2d",
+    "local-en-1440-dark.png": "184b46e2a5d2c72575ac4f2dfe04bd20a81a176a2322c070c669be2238465f2c",
+    "local-en-390-light.png": "fe018fb9d294605ad61b71e0f5ddba32afc721e0a99af29a0bdad24ff69ed872",
+    "local-en-390-dark.png": "0fdb6887adb08227353563f2d071bb476b90a9d0301e14c37a7974c6117728e3",
+    "local-he-1440-light.png": "f6065e55a6d6599926e8a29df27a9dad93402bdd7a699875848a218e8e326554",
+    "local-he-1440-dark.png": "b0325368b6091c3872c85a21a66f8aa4cb269a51dba40d54c7921264172cc8ed",
+    "local-he-390-light.png": "248d47ca9b62d4ed98b00181198af5516babdf66607d6dbc389eb03fc7645501",
+    "local-he-390-dark.png": "b07e235ca0bc3c0aea99cb84f3f82afa7937ec54dc733b46b56227aa6eabd2e1",
+    "local-ar-third-open-390-dark.png": "f71d0438219349e2e2170c1a9a2306baf6e0ac7a82cc0bcf0d0cbf2a8cd86b40",
+    "official-ar-third-open-390-dark.png": "ed10d0d783e439ee04c62002d6192927c6a6b84b7a1d962d3e74f176bc149ebd"
+  },
+  "themePixelsValidated": 14
+}

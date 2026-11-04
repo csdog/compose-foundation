@@ -1,0 +1,56 @@
+{
+  "date": "2026-11-02",
+  "spaceId": 4,
+  "appWasm": "42ea70f6b20f651c3bc8.wasm",
+  "skikoWasm": "658820f72b4617efb380.wasm",
+  "widths": [
+    1440,
+    390
+  ],
+  "height": 1000,
+  "realPhone": false,
+  "images": [
+    "persisted-dark-1440.png",
+    "persisted-dark-390.png",
+    "persisted-dark-chart-1440.png",
+    "persisted-light-1440.png",
+    "persisted-light-390.png",
+    "storage-denied-initial-light-390.png",
+    "storage-denied-reload-light-390.png",
+    "storage-denied-toggled-dark-390.png",
+    "storage-restored-persisted-dark-1440.png",
+    "system-dark-1440.png"
+  ],
+  "all10VisuallyReviewed": true,
+  "normalStates": 6,
+  "deniedStorageStates": 4,
+  "official": "official-reload.json confirms dark key/class survives a full document reload.",
+  "normalAssertions": [
+    "No saved preference follows emulated system dark without writing a manual value.",
+    "Explicit light overrides system dark after reload and desktop→narrow navigation.",
+    "Explicit dark overrides system light after reload.",
+    "Dark persists across full navigation Accordion→Chart→Accordion.",
+    "Chrome full reload origins differ for all six states; this is not same-document-only coverage."
+  ],
+  "deniedStorageAssertions": [
+    "Page-local injected getter throws SecurityError before app startup.",
+    "Read failure falls back to system light.",
+    "Manual toggle to dark still works in memory when write is denied.",
+    "With inaccessible storage reload returns to system light.",
+    "Injection removed; real saved dark value remains unchanged and is restored on reload."
+  ],
+  "implementationBoundary": "Storage emulation applied only to task page p2 through a temporary preload script; hook removed in finally, no storage keys deleted or unrelated browser preferences changed.",
+  "coverageBoundary": "Current Wasm build exercised in desktop Chromium (390 is narrow desktop viewport). JS target compiled, not separately runtime-tested. This does not prove every component visual state or add native preference persistence.",
+  "sha256": {
+    "persisted-dark-1440.png": "387894ea526870fea634ac938fbcdbe9225fd4a575bee08170b82bdb76829913",
+    "persisted-dark-390.png": "f93cadf6d6af8b4d44161f9eebd170f895b37890f33384b7566a648ed674e8c6",
+    "persisted-dark-chart-1440.png": "09a69796f723536537f557f65749eb606a74de7ba1febfd4d991dfd58c7d5ea3",
+    "persisted-light-1440.png": "10d721c27b3adf7b0bcdaae47530ff4cd70dbb9098f2907ffa806d4ba5f3ca8b",
+    "persisted-light-390.png": "d95029e474eab90a768dd73eb6718dca25490df99643bb0b0905d1e96f575765",
+    "storage-denied-initial-light-390.png": "d95029e474eab90a768dd73eb6718dca25490df99643bb0b0905d1e96f575765",
+    "storage-denied-reload-light-390.png": "d95029e474eab90a768dd73eb6718dca25490df99643bb0b0905d1e96f575765",
+    "storage-denied-toggled-dark-390.png": "6b1d609320832b4b617c2157ab8f9e0d4d34a92db6779ebf1a92c6d5861c4550",
+    "storage-restored-persisted-dark-1440.png": "387894ea526870fea634ac938fbcdbe9225fd4a575bee08170b82bdb76829913",
+    "system-dark-1440.png": "387894ea526870fea634ac938fbcdbe9225fd4a575bee08170b82bdb76829913"
+  }
+}

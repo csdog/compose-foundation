@@ -2,12 +2,34 @@
 
 package com.toutiaoyan.compose.ui.components.resizable
 import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.draggable
-import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.key.*
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalInputModeManager
+import androidx.compose.ui.input.InputMode
+import androidx.compose.ui.platform.LocalViewConfiguration
+import androidx.compose.ui.platform.ViewConfiguration
+import androidx.compose.ui.semantics.ProgressBarRangeInfo
+import androidx.compose.ui.semantics.progressBarRangeInfo
+import androidx.compose.ui.semantics.setProgress
+import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.DisposableEffect
+import com.toutiaoyan.compose.ui.utils.keyboardInputMode
+import com.toutiaoyan.compose.ui.styles.cssStyleable
+import kotlin.math.roundToInt
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.ui.zIndex
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,10 +51,13 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.semantics
 import com.toutiaoyan.compose.ui.components.text.Text
+import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 
 /**
  * The entire drag-to-resize calculation, as a plain function with no Compose dependency:
@@ -47,7 +72,7 @@ internal fun resizablePanelFraction(
     minFraction: Float,
     maxFraction: Float,
 ): Float {
-    if (containerExtentPx <= 0f) return currentFraction
+    if (!containerExtentPx.isFinite() || containerExtentPx <= 0f || !dragDeltaPx.isFinite()) return currentFraction
     return (currentFraction + dragDeltaPx / containerExtentPx).coerceIn(minFraction, maxFraction)
 }
 
@@ -64,6 +89,19 @@ class ResizableState(
 )
 
 private val LocalResizable = staticCompositionLocalOf<ResizableState?> { null }
+
+private class ResizableBounds(
+    val pointerRegion: ResizablePointerRegion,
+    val min: Float,
+    val max: Float,
+    val rtl: Boolean,
+    val disabled: Boolean,
+    val currentFraction: () -> Float,
+    val availableExtent: () -> Float,
+    val onHandleExtent: (Float) -> Unit,
+)
+
+private val LocalResizableBounds = staticCompositionLocalOf<ResizableBounds?> { null }
 
 /** Split of the nearest [ResizablePanelGroup]. Matches react-resizable-panels context. */
 @Composable
@@ -90,17 +128,8 @@ fun resizableState(): ResizableState =
  * }
  * ```
  *
- * Testing this: don't simulate a live drag gesture in Compose UI Test --
- * `performMouseInput`/`performTouchInput` drag simulations against a raw
- * `Modifier.draggable` have previously hung this project's JVM test worker outright
- * (see git history). Instead this is two separately-testable halves:
- * 1. [resizablePanelFraction] is the entire drag *math*, extracted as a plain pure
- *    function with no Compose dependency at all -- unit test it directly
- *    (`ResizablePanelGroupTest`) the same way [scrollDragDeltaToContentDelta]
- *    is tested for [ScrollArea].
- * 2. The *rendering* at a given split -- does `weight(fraction)` actually produce the
- *    right pixel proportions -- is covered by screenshot-testing fixed `initialFraction`
- *    values (e.g. 0.3, 0.5, 0.7) rather than dragging to reach them.
+ * Pointer capture, keyboard input and fixed layouts are tested separately. The handle
+ * uses a non-suspending pointer node so real mouse and touch gestures can be verified.
  */
 @Composable
 fun ResizablePanelGroup(
@@ -108,52 +137,87 @@ fun ResizablePanelGroup(
     style: Style = Style,
     orientation: Orientation = Orientation.Horizontal,
     initialFraction: Float = 0.5f,
-    minFraction: Float = 0.15f,
-    maxFraction: Float = 0.85f,
+    minFraction: Float = 0f,
+    maxFraction: Float = 1f,
     direction: Orientation? = null,
+    disabled: Boolean = false,
     content: @Composable (first: Modifier, second: Modifier, onHandleDrag: (Float) -> Unit) -> Unit,
 ) {
-    val resolvedOrientation = direction ?: orientation
-    var fraction by remember { mutableFloatStateOf(initialFraction) }
-    var containerExtentPx by remember { mutableFloatStateOf(0f) }
-    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-
-    val onHandleDrag: (Float) -> Unit = { delta ->
-        fraction = resizablePanelFraction(fraction, delta, containerExtentPx, minFraction, maxFraction)
+    require(
+        minFraction.isFinite() &&
+            maxFraction.isFinite() &&
+            minFraction in 0f..1f &&
+            maxFraction in minFraction..1f,
+    ) {
+        "Panel limits must satisfy0 <= minFraction <= maxFraction <=1"
     }
-    val state =
-        ResizableState(
-            fraction = fraction,
-            orientation = resolvedOrientation,
-            onHandleDrag = onHandleDrag,
+    val resolvedOrientation = direction ?: orientation
+    val rtl = resolvedOrientation == Orientation.Horizontal && LocalLayoutDirection.current == LayoutDirection.Rtl
+    var fraction by remember {
+        mutableFloatStateOf(
+            if (initialFraction.isFinite()) {
+                initialFraction.coerceIn(
+                    minFraction,
+                    maxFraction,
+                )
+            } else {
+                0.5f.coerceIn(
+                    minFraction,
+                    maxFraction,
+                )
+            },
         )
-
-    CompositionLocalProvider(LocalResizable provides state) {
+    }
+    val current = fraction.coerceIn(minFraction, maxFraction)
+    SideEffect { if (fraction != current) fraction = current }
+    var contentExtentPx by remember { mutableFloatStateOf(0f) }
+    var handleExtentPx by remember { mutableFloatStateOf(0f) }
+    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val extent = { (contentExtentPx - handleExtentPx).coerceAtLeast(0f) }
+    val onHandleDrag: (Float) -> Unit = { delta ->
+        if (!disabled) {
+            fraction =
+                resizablePanelFraction(
+                    fraction.coerceIn(minFraction, maxFraction),
+                    if (rtl) -delta else delta, extent(), minFraction, maxFraction,
+                )
+        }
+    }
+    val state = ResizableState(current, resolvedOrientation, onHandleDrag)
+    val region = remember { ResizablePointerRegion() }
+    val bounds =
+        ResizableBounds(
+            region,
+            minFraction,
+            maxFraction,
+            rtl,
+            disabled,
+            { fraction.coerceIn(minFraction, maxFraction) },
+            extent,
+            { handleExtentPx = it },
+        )
+    CompositionLocalProvider(LocalResizable provides state, LocalResizableBounds provides bounds) {
         if (resolvedOrientation == Orientation.Horizontal) {
             Row(
                 modifier =
-                    modifier
-                        .fillMaxSize()
-                        .onSizeChanged { containerExtentPx = it.width.toFloat() }
-                        .styleable(styleState, style),
+                    modifier.fillMaxSize().styleable(styleState, style)
+                        .onSizeChanged { contentExtentPx = it.width.toFloat() }.resizablePointerRouter(region),
             ) {
                 content(
-                    Modifier.fillMaxHeight().weight(fraction),
-                    Modifier.fillMaxHeight().weight(1f - fraction),
+                    Modifier.fillMaxHeight().weight(current.coerceAtLeast(0.000001f)),
+                    Modifier.fillMaxHeight().weight((1f - current).coerceAtLeast(0.000001f)),
                     onHandleDrag,
                 )
             }
         } else {
             Column(
                 modifier =
-                    modifier
-                        .fillMaxSize()
-                        .onSizeChanged { containerExtentPx = it.height.toFloat() }
-                        .styleable(styleState, style),
+                    modifier.fillMaxSize().styleable(styleState, style)
+                        .onSizeChanged { contentExtentPx = it.height.toFloat() }.resizablePointerRouter(region),
             ) {
                 content(
-                    Modifier.fillMaxWidth().weight(fraction),
-                    Modifier.fillMaxWidth().weight(1f - fraction),
+                    Modifier.fillMaxWidth().weight(current.coerceAtLeast(0.000001f)),
+                    Modifier.fillMaxWidth().weight((1f - current).coerceAtLeast(0.000001f)),
                     onHandleDrag,
                 )
             }
@@ -167,7 +231,7 @@ fun ResizablePanel(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
-    Box(modifier = modifier) {
+    Box(modifier = modifier.clipToBounds()) {
         content()
     }
 }
@@ -203,39 +267,135 @@ fun ResizableHandle(
                 "ResizableHandle needs onDrag= or a parent ResizablePanelGroup"
             }.onHandleDrag
     val resolvedOrientation = orientation ?: state?.orientation ?: Orientation.Horizontal
-    val dragState = rememberDraggableState(resolvedDrag)
     val horizontal = resolvedOrientation == Orientation.Horizontal
-    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val bounds = LocalResizableBounds.current
+    val resolvedDisabled = disabled || bounds?.disabled == true
+    val focus = remember { FocusRequester() }
+    val inputMode = LocalInputModeManager.current
+    val config = LocalViewConfiguration.current
+    val hitConfig =
+        remember(config) {
+            object : ViewConfiguration by config {
+                override val minimumTouchTargetSize = DpSize(20.dp, 20.dp)
+            }
+        }
+
+    val region = bounds?.pointerRegion ?: remember { ResizablePointerRegion() }
+    SideEffect {
+        if (region.horizontal != horizontal || resolvedDisabled) region.cancelGesture?.invoke()
+        region.horizontal = horizontal
+        region.enabled = !resolvedDisabled
+        region.onStart = {
+            inputMode.requestInputMode(InputMode.Touch)
+            if (state != null) focus.requestFocus()
+        }
+        region.onDelta = resolvedDrag
+    }
+    DisposableEffect(region) {
+        onDispose {
+            region.enabled = false
+            region.handle = null
+            region.cancelGesture?.invoke()
+        }
+    }
+
+    fun setFraction(target: Float): Boolean {
+        if (resolvedDisabled || state == null || bounds == null || !target.isFinite()) return false
+        val delta = (target.coerceIn(bounds.min, bounds.max) - bounds.currentFraction()) * bounds.availableExtent()
+        resolvedDrag(if (bounds.rtl) -delta else delta)
+        return true
+    }
+    val interactions = remember { MutableInteractionSource() }
+    val styleState = remember { MutableStyleState(interactions) }
     val gripStyleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Box(
-        modifier =
-            modifier
-                .semantics {
-                    contentDescription =
-                        if (horizontal) "Resize panels horizontally" else "Resize panels vertically"
-                    if (disabled) disabled()
-                }
-                .styleable(
-                    styleState,
-                    rememberResizableHandleStyle(horizontal) then style,
-                )
-                .then(
-                    if (disabled) {
-                        Modifier
+    CompositionLocalProvider(LocalViewConfiguration provides hitConfig) {
+        Box(
+            modifier =
+                modifier.zIndex(1f)
+                    .focusRequester(focus)
+                    .keyboardInputMode()
+                    .onPreviewKeyEvent { event ->
+                        if (resolvedDisabled || state == null || bounds == null || event.type != KeyEventType.KeyDown) {
+                            false
+                        } else {
+                            when (event.key) {
+                                Key.DirectionLeft -> {
+                                    if (horizontal) setFraction(bounds.currentFraction() - 0.05f)
+                                    true
+                                }
+                                Key.DirectionRight -> {
+                                    if (horizontal) setFraction(bounds.currentFraction() + 0.05f)
+                                    true
+                                }
+                                Key.DirectionUp -> {
+                                    if (!horizontal) setFraction(bounds.currentFraction() - 0.05f)
+                                    true
+                                }
+                                Key.DirectionDown -> {
+                                    if (!horizontal) setFraction(bounds.currentFraction() + 0.05f)
+                                    true
+                                }
+                                Key.MoveHome -> setFraction(bounds.min)
+                                Key.MoveEnd -> setFraction(bounds.max)
+                                Key.Enter, Key.NumPadEnter, Key.F6 -> true
+                                else -> false
+                            }
+                        }
+                    }
+                    .semantics {
+                        contentDescription =
+                            if (horizontal) {
+                                "Resize panels horizontally"
+                            } else {
+                                "Resize panels vertically"
+                            }
+                        if (resolvedDisabled) disabled()
+                        if (state != null && bounds != null) {
+                            progressBarRangeInfo = ProgressBarRangeInfo(state.fraction, bounds.min..bounds.max, 0)
+                            stateDescription = "${(state.fraction * 100).roundToInt()}%"
+                            if (!resolvedDisabled) setProgress { setFraction(it) }
+                        }
+                    }
+                    .cssStyleable(styleState, rememberResizableHandleStyle(horizontal) then style)
+                    .onSizeChanged {
+                        bounds?.onHandleExtent?.invoke(
+                            if (horizontal) {
+                                it.width.toFloat()
+                            } else {
+                                it.height.toFloat()
+                            },
+                        )
+                    }
+                    .focusable(enabled = !resolvedDisabled && state != null, interactionSource = interactions)
+                    .onGloballyPositioned { region.handle = it }
+                    .then(if (bounds == null) Modifier.resizablePointerRouter(region) else Modifier),
+            contentAlignment = Alignment.Center,
+        ) {
+            if (showGrip && withHandle) {
+                val nova = currentTheme.activePreset == StylePreset.Nova
+                val width =
+                    if (nova) {
+                        if (horizontal) 4.dp else 24.dp
                     } else {
-                        Modifier.draggable(state = dragState, orientation = resolvedOrientation)
-                    },
-                ),
-        contentAlignment = Alignment.Center,
-    ) {
-        if (showGrip && withHandle) {
-            Box(
-                modifier =
-                    Modifier.styleable(
-                        gripStyleState,
-                        rememberResizableGripStyle(horizontal),
-                    ),
-            )
+                        if (horizontal) 12.dp else 16.dp
+                    }
+                val height =
+                    if (nova) {
+                        if (horizontal) 24.dp else 4.dp
+                    } else {
+                        if (horizontal) 16.dp else 12.dp
+                    }
+                Box(
+                    modifier =
+                        Modifier.requiredSize(
+                            width,
+                            height,
+                        ).styleable(
+                            gripStyleState,
+                            rememberResizableGripStyle(horizontal),
+                        ),
+                )
+            }
         }
     }
 }

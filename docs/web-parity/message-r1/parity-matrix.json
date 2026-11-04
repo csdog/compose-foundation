@@ -1,0 +1,46 @@
+{
+  "status": "partial",
+  "target": "base-nova",
+  "officialPreview": "base-rhea theme-blue; Nova/Rhea Message CSS byte-identical",
+  "officialRecipes": [
+    "Default",
+    "Avatar",
+    "Group",
+    "Header and Footer",
+    "Actions",
+    "Attachment"
+  ],
+  "supplementalRecipesRetained": 7,
+  "implemented": [
+    "Optional avatar with no phantom gap; content10dp and row/group8dp gaps",
+    "Intrinsic min-width32px avatar slot with clipping and empty-height0 placeholder",
+    "Descendant footer presence translates avatar32dp; removal restores placement",
+    "Header/Footer12/16Medium muted and12dp horizontal padding; ghost bubble removes padding",
+    "DisposableEffect scoped registration, no snapshot writes during composition or measurement; sibling isolation and live ghost/theme tests",
+    "Standalone MessageContent modifier/style overload plus legacy RowScope bridge; version0.3.12",
+    "Six exact content recipes with original avatars, reused exact workspace image, blue accent within Nova; six API sections"
+  ],
+  "upstreamConflict": "MDX says Header stays start for both alignments; CSS content selector self-end applies to all direct data-slot children in end messages, including Header. Implement MDX Header-start; browser custom end-header comparison still pending.",
+  "remaining": [
+    "Desktop/mobile light/dark browser matrix pending task-space recreation permission",
+    "Nested Message/portal/arbitrary wrapper CSS descendant selectors versus nearest scoped registration",
+    "Arbitrary long unbroken strings, custom wrapped footers, shape/style/clip and font-scale responsive matrix",
+    "Message root owns content column rather than arbitrary freeform React child order; component API differences documented",
+    "Native HTML title tooltips on action buttons are not reproduced; full keyboard/touch/screenreader matrix pending",
+    "Preview keeps Nova nested Bubble/Attachment/button styles although official page uses Rhea; inherited Bubble/Attachment limitations remain",
+    "Action and download examples have no business handlers upstream; show controls without claiming clipboard/feedback/file export implementation",
+    "Initial mount/cancellation/reorder registration transition frames not visually verified"
+  ],
+  "verification": {
+    "messageBehavior": 10,
+    "newGoldenVerify": 4,
+    "oldMessageGoldenVerify": 7,
+    "bubbleBehaviorRegression": 7,
+    "appExamples": 6,
+    "quality": "Final four core/shared owning ktlint/detekt and shared JVM compilation passed",
+    "web": "JS and Wasm separately passed with --no-parallel --max-workers=1, unchanged heap/project config. Only subsequent change was exported code-example blank-line trailing-space removal, followed by final JVM/quality verification.",
+    "legacyBridgeOverload": "Focused1/1 passed: old trailing-lambda call retains weighted RowScope layout",
+    "totalPassed": 34,
+    "browser": "Fresh Ego check confirms missing space18; replacement permission still pending"
+  }
+}

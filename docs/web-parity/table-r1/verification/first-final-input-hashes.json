@@ -1,0 +1,14 @@
+{
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/table/Table.kt": "762f6345052acc19de8bf0e21009841cc934ba0ac533938bab58d2de41e300fc",
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/table/TableStyles.kt": "1ffe0c65b3ed1d6ea8ba5524b59f0c9c6e6f44ca3b6f8fd1029d371c23a39fdd",
+  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/table/TableParityTest.kt": "096d3b4e9e8c4d71bfeac92e2c900f247cf47eff00e1a128d826641aaedda412",
+  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/table/TableScreenshotTest.kt": "23d1b10ee84ce854e43240048d7d126e51944fc53a3964c9d3d01c7f0eae1dfc",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/TableDoc.kt": "549d56fb20348dbfb6af8d0c3c6cde4979df06f4c701ced64c3c90d04f6b68c9",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/TableRecipes.kt": "64c2aab20531a6e87ffe3308e9d90604cbda5b2038c6442dafb2351ae3179356",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/TableRecipeCode.kt": "311d07d0b079e767754d0a727216464ef0607ef7a3034209b707a0b6dab4e431",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ApiReference.kt": "762b0b615aa9ec3138e9bf4d4d5814811c5f808ccbb2127854f86cbe263173e9",
+  "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/TableExamplesTest.kt": "56b64e02850d948e0a584b40af3e6f339eac94552d8eb8ea0ded753f6efc4fca",
+  "scripts/generate_table_recipe_code.py": "858ad72d127a610f808a604056a19a814485c975403f2fb64a3e3883490714b1",
+  "gradle.properties": "941d732cac3b07fa69a90d110a6075f0376ebc3e5206f455029c29aaaca35e94",
+  "gradle/libs.versions.toml": "acd62a8ddc0d2a87e0546971f57228af5f28448c16bb9db97f06dd71c3979c8a"
+}

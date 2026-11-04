@@ -1,0 +1,730 @@
+[
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "icons",
+    "file": "official-desktop-light-icons.png",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "menu": {
+      "text": "ProfileBillingSettingsLog out",
+      "rect": {
+        "x": 684,
+        "y": 275,
+        "width": 128,
+        "height": 129,
+        "top": 275,
+        "right": 812,
+        "bottom": 404,
+        "left": 684
+      },
+      "availableHeight": "720.0152832062374px",
+      "scrollHeight": 129,
+      "clientHeight": 129
+    }
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "checkboxes-icons",
+    "file": "official-desktop-light-checkboxes-icons.png",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "menu": {
+      "text": "Notification PreferencesEmail notificationsSMS notificationsPush notifications",
+      "rect": {
+        "x": 660,
+        "y": 275,
+        "width": 192,
+        "height": 116,
+        "top": 275,
+        "right": 852,
+        "bottom": 391,
+        "left": 660
+      },
+      "availableHeight": "720.0152832062374px",
+      "scrollHeight": 116,
+      "clientHeight": 116
+    }
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "radio-icons",
+    "file": "official-desktop-light-radio-icons.png",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "menu": {
+      "text": "Select Payment MethodCredit CardPayPalBank Transfer",
+      "rect": {
+        "x": 646,
+        "y": 275,
+        "width": 224,
+        "height": 116,
+        "top": 275,
+        "right": 870,
+        "bottom": 391,
+        "left": 646
+      },
+      "availableHeight": "720.0152832062365px",
+      "scrollHeight": 116,
+      "clientHeight": 116
+    }
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "destructive",
+    "file": "official-desktop-light-destructive.png",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "menu": {
+      "text": "EditShareDelete",
+      "rect": {
+        "x": 676.5,
+        "y": 275,
+        "width": 128,
+        "height": 101,
+        "top": 275,
+        "right": 804.5,
+        "bottom": 376,
+        "left": 676.5
+      },
+      "availableHeight": "720.0152832062374px",
+      "scrollHeight": 101,
+      "clientHeight": 101
+    }
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "avatar",
+    "file": "official-desktop-light-avatar.png",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "menu": {
+      "text": "AccountBillingNotificationsSign Out",
+      "rect": {
+        "x": 600.5,
+        "y": 275,
+        "width": 128,
+        "height": 129,
+        "top": 275,
+        "right": 728.5,
+        "bottom": 404,
+        "left": 600.5
+      },
+      "availableHeight": "720.0152832062374px",
+      "scrollHeight": 129,
+      "clientHeight": 129
+    }
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "complex",
+    "file": "official-desktop-light-complex.png",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "menu": {
+      "text": "FileNew File⌘NNew Folder⇧⌘NOpen RecentSave⌘SExport⇧⌘EViewShow SidebarShow Status BarThemeAccountProfile⇧⌘PBillingSettingsHelp & SupportDocumentationSign Out⇧⌘Q",
+      "rect": {
+        "x": 652.5,
+        "y": 275,
+        "width": 176,
+        "height": 517,
+        "top": 275,
+        "right": 828.5,
+        "bottom": 792,
+        "left": 652.5
+      },
+      "availableHeight": "720.0152832062374px",
+      "scrollHeight": 517,
+      "clientHeight": 517
+    }
+  },
+  {
+    "form": "desktop",
+    "mode": "light",
+    "section": "rtl",
+    "file": "official-desktop-light-rtl.png",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "menu": {
+      "text": "الحسابالفريقالفريقدعوة المستخدمينفريق جديد⌘+Tعرضشريط الحالةشريط النشاطاللوحةالموضعأعلىأسفليمينيسارتسجيل الخروج",
+      "rect": {
+        "x": 612.5,
+        "y": 499,
+        "width": 144,
+        "height": 452,
+        "top": 499,
+        "right": 756.5,
+        "bottom": 951,
+        "left": 612.5
+      },
+      "availableHeight": "496.015388952301px",
+      "scrollHeight": 452,
+      "clientHeight": 452
+    }
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "icons",
+    "file": "official-desktop-dark-icons.png",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "menu": {
+      "text": "ProfileBillingSettingsLog out",
+      "rect": {
+        "x": 684,
+        "y": 275,
+        "width": 128,
+        "height": 129,
+        "top": 275,
+        "right": 812,
+        "bottom": 404,
+        "left": 684
+      },
+      "availableHeight": "720.0152832062374px",
+      "scrollHeight": 129,
+      "clientHeight": 129
+    }
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "checkboxes-icons",
+    "file": "official-desktop-dark-checkboxes-icons.png",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "menu": {
+      "text": "Notification PreferencesEmail notificationsSMS notificationsPush notifications",
+      "rect": {
+        "x": 660,
+        "y": 275,
+        "width": 192,
+        "height": 116,
+        "top": 275,
+        "right": 852,
+        "bottom": 391,
+        "left": 660
+      },
+      "availableHeight": "720.0152832062374px",
+      "scrollHeight": 116,
+      "clientHeight": 116
+    }
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "radio-icons",
+    "file": "official-desktop-dark-radio-icons.png",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "menu": {
+      "text": "Select Payment MethodCredit CardPayPalBank Transfer",
+      "rect": {
+        "x": 646,
+        "y": 275,
+        "width": 224,
+        "height": 116,
+        "top": 275,
+        "right": 870,
+        "bottom": 391,
+        "left": 646
+      },
+      "availableHeight": "720.0152832062365px",
+      "scrollHeight": 116,
+      "clientHeight": 116
+    }
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "destructive",
+    "file": "official-desktop-dark-destructive.png",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "menu": {
+      "text": "EditShareDelete",
+      "rect": {
+        "x": 676.5,
+        "y": 275,
+        "width": 128,
+        "height": 101,
+        "top": 275,
+        "right": 804.5,
+        "bottom": 376,
+        "left": 676.5
+      },
+      "availableHeight": "720.0152832062374px",
+      "scrollHeight": 101,
+      "clientHeight": 101
+    }
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "avatar",
+    "file": "official-desktop-dark-avatar.png",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "menu": {
+      "text": "AccountBillingNotificationsSign Out",
+      "rect": {
+        "x": 600.5,
+        "y": 275,
+        "width": 128,
+        "height": 129,
+        "top": 275,
+        "right": 728.5,
+        "bottom": 404,
+        "left": 600.5
+      },
+      "availableHeight": "720.0152832062374px",
+      "scrollHeight": 129,
+      "clientHeight": 129
+    }
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "complex",
+    "file": "official-desktop-dark-complex.png",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "menu": {
+      "text": "FileNew File⌘NNew Folder⇧⌘NOpen RecentSave⌘SExport⇧⌘EViewShow SidebarShow Status BarThemeAccountProfile⇧⌘PBillingSettingsHelp & SupportDocumentationSign Out⇧⌘Q",
+      "rect": {
+        "x": 652.5,
+        "y": 275,
+        "width": 176,
+        "height": 517,
+        "top": 275,
+        "right": 828.5,
+        "bottom": 792,
+        "left": 652.5
+      },
+      "availableHeight": "720.0152832062374px",
+      "scrollHeight": 517,
+      "clientHeight": 517
+    }
+  },
+  {
+    "form": "desktop",
+    "mode": "dark",
+    "section": "rtl",
+    "file": "official-desktop-dark-rtl.png",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "menu": {
+      "text": "الحسابالفريقالفريقدعوة المستخدمينفريق جديد⌘+Tعرضشريط الحالةشريط النشاطاللوحةالموضعأعلىأسفليمينيسارتسجيل الخروج",
+      "rect": {
+        "x": 612.5,
+        "y": 499,
+        "width": 144,
+        "height": 452,
+        "top": 499,
+        "right": 756.5,
+        "bottom": 951,
+        "left": 612.5
+      },
+      "availableHeight": "496.015388952301px",
+      "scrollHeight": 452,
+      "clientHeight": 452
+    }
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "icons",
+    "file": "official-phone-dark-icons.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "menu": {
+      "text": "ProfileBillingSettingsLog out",
+      "rect": {
+        "x": 159,
+        "y": 275,
+        "width": 128,
+        "height": 129,
+        "top": 275,
+        "right": 287,
+        "bottom": 404,
+        "left": 159
+      },
+      "availableHeight": "564.1487061245036px",
+      "scrollHeight": 129,
+      "clientHeight": 129
+    }
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "checkboxes-icons",
+    "file": "official-phone-dark-checkboxes-icons.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "menu": {
+      "text": "Notification PreferencesEmail notificationsSMS notificationsPush notifications",
+      "rect": {
+        "x": 135,
+        "y": 275,
+        "width": 192,
+        "height": 116,
+        "top": 275,
+        "right": 327,
+        "bottom": 391,
+        "left": 135
+      },
+      "availableHeight": "564.0002685543222px",
+      "scrollHeight": 116,
+      "clientHeight": 116
+    }
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "radio-icons",
+    "file": "official-phone-dark-radio-icons.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "menu": {
+      "text": "Select Payment MethodCredit CardPayPalBank Transfer",
+      "rect": {
+        "x": 121,
+        "y": 275,
+        "width": 224,
+        "height": 116,
+        "top": 275,
+        "right": 345,
+        "bottom": 391,
+        "left": 121
+      },
+      "availableHeight": "563.85183098414px",
+      "scrollHeight": 116,
+      "clientHeight": 116
+    }
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "destructive",
+    "file": "official-phone-dark-destructive.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "menu": {
+      "text": "EditShareDelete",
+      "rect": {
+        "x": 151.5,
+        "y": 275,
+        "width": 128,
+        "height": 101,
+        "top": 275,
+        "right": 279.5,
+        "bottom": 376,
+        "left": 151.5
+      },
+      "availableHeight": "564.2424561688301px",
+      "scrollHeight": 101,
+      "clientHeight": 101
+    }
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "avatar",
+    "file": "official-phone-dark-avatar.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "menu": {
+      "text": "AccountBillingNotificationsSign Out",
+      "rect": {
+        "x": 75.5,
+        "y": 275,
+        "width": 128,
+        "height": 129,
+        "top": 275,
+        "right": 203.5,
+        "bottom": 404,
+        "left": 75.5
+      },
+      "availableHeight": "564.1330811171177px",
+      "scrollHeight": 129,
+      "clientHeight": 129
+    }
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "complex",
+    "file": "official-phone-dark-complex.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "menu": {
+      "text": "FileNew File⌘NNew Folder⇧⌘NOpen RecentSave⌘SExport⇧⌘EViewShow SidebarShow Status BarThemeAccountProfile⇧⌘PBillingSettingsHelp & SupportDocumentationSign Out⇧⌘Q",
+      "rect": {
+        "x": 127.5,
+        "y": 275,
+        "width": 176,
+        "height": 517,
+        "top": 275,
+        "right": 303.5,
+        "bottom": 792,
+        "left": 127.5
+      },
+      "availableHeight": "564.0237060654055px",
+      "scrollHeight": 517,
+      "clientHeight": 517
+    }
+  },
+  {
+    "form": "phone",
+    "mode": "dark",
+    "section": "rtl",
+    "file": "official-phone-dark-rtl.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "menu": {
+      "text": "الحسابالفريقالفريقدعوة المستخدمينفريق جديد⌘+Tعرضشريط الحالةشريط النشاطاللوحةالموضعأعلىأسفليمينيسارتسجيل الخروج",
+      "rect": {
+        "x": 87.5,
+        "y": 339,
+        "width": 144,
+        "height": 452,
+        "top": 339,
+        "right": 231.5,
+        "bottom": 791,
+        "left": 87.5
+      },
+      "availableHeight": "499.91430075404844px",
+      "scrollHeight": 452,
+      "clientHeight": 452
+    }
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "icons",
+    "file": "official-phone-light-icons.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "menu": {
+      "text": "ProfileBillingSettingsLog out",
+      "rect": {
+        "x": 159,
+        "y": 275,
+        "width": 128,
+        "height": 129,
+        "top": 275,
+        "right": 287,
+        "bottom": 404,
+        "left": 159
+      },
+      "availableHeight": "564.1487061245036px",
+      "scrollHeight": 129,
+      "clientHeight": 129
+    }
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "checkboxes-icons",
+    "file": "official-phone-light-checkboxes-icons.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "menu": {
+      "text": "Notification PreferencesEmail notificationsSMS notificationsPush notifications",
+      "rect": {
+        "x": 135,
+        "y": 275,
+        "width": 192,
+        "height": 116,
+        "top": 275,
+        "right": 327,
+        "bottom": 391,
+        "left": 135
+      },
+      "availableHeight": "564.0002685543222px",
+      "scrollHeight": 116,
+      "clientHeight": 116
+    }
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "radio-icons",
+    "file": "official-phone-light-radio-icons.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "menu": {
+      "text": "Select Payment MethodCredit CardPayPalBank Transfer",
+      "rect": {
+        "x": 121,
+        "y": 275,
+        "width": 224,
+        "height": 116,
+        "top": 275,
+        "right": 345,
+        "bottom": 391,
+        "left": 121
+      },
+      "availableHeight": "563.85183098414px",
+      "scrollHeight": 116,
+      "clientHeight": 116
+    }
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "destructive",
+    "file": "official-phone-light-destructive.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "menu": {
+      "text": "EditShareDelete",
+      "rect": {
+        "x": 151.5,
+        "y": 275,
+        "width": 128,
+        "height": 101,
+        "top": 275,
+        "right": 279.5,
+        "bottom": 376,
+        "left": 151.5
+      },
+      "availableHeight": "564.2424561688301px",
+      "scrollHeight": 101,
+      "clientHeight": 101
+    }
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "avatar",
+    "file": "official-phone-light-avatar.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "menu": {
+      "text": "AccountBillingNotificationsSign Out",
+      "rect": {
+        "x": 75.5,
+        "y": 275,
+        "width": 128,
+        "height": 129,
+        "top": 275,
+        "right": 203.5,
+        "bottom": 404,
+        "left": 75.5
+      },
+      "availableHeight": "564.1330811171177px",
+      "scrollHeight": 129,
+      "clientHeight": 129
+    }
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "complex",
+    "file": "official-phone-light-complex.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "menu": {
+      "text": "FileNew File⌘NNew Folder⇧⌘NOpen RecentSave⌘SExport⇧⌘EViewShow SidebarShow Status BarThemeAccountProfile⇧⌘PBillingSettingsHelp & SupportDocumentationSign Out⇧⌘Q",
+      "rect": {
+        "x": 127.5,
+        "y": 275,
+        "width": 176,
+        "height": 517,
+        "top": 275,
+        "right": 303.5,
+        "bottom": 792,
+        "left": 127.5
+      },
+      "availableHeight": "564.0237060654055px",
+      "scrollHeight": 517,
+      "clientHeight": 517
+    }
+  },
+  {
+    "form": "phone",
+    "mode": "light",
+    "section": "rtl",
+    "file": "official-phone-light-rtl.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "menu": {
+      "text": "الحسابالفريقالفريقدعوة المستخدمينفريق جديد⌘+Tعرضشريط الحالةشريط النشاطاللوحةالموضعأعلىأسفليمينيسارتسجيل الخروج",
+      "rect": {
+        "x": 87.5,
+        "y": 339,
+        "width": 144,
+        "height": 452,
+        "top": 339,
+        "right": 231.5,
+        "bottom": 791,
+        "left": 87.5
+      },
+      "availableHeight": "499.91430075404844px",
+      "scrollHeight": 452,
+      "clientHeight": 452
+    }
+  }
+]

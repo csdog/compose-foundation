@@ -90,15 +90,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.tailwind.core.twSpacing
 import com.toutiaoyan.compose.ui.components.separator.Separator
-import com.toutiaoyan.compose.ui.components.separator.SeparatorOrientation
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextVariant
 import com.toutiaoyan.compose.ui.styles.rememberMinTouchTargetStyle
 import com.toutiaoyan.compose.ui.styles.rememberPressMotionStyle
 import com.toutiaoyan.compose.ui.theme.currentTheme
+
+// CSS line-height reserves20px even when the selected RTL font has taller metrics.
+private val novaAccordionLineHeight =
+    LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None, LineHeightStyle.Mode.Tight)
 
 enum class AccordionType { Single, Multiple }
 
@@ -222,14 +226,15 @@ class AccordionItemScope internal constructor(
  * ```
  *
  * Each item is separated by a bottom border (shadcn `border-b`). The chevron
- * rotates when open, and content expands/collapses with a height animation.
+ * switches between down/up glyphs, and content expands/collapses with a height animation.
  *
  * Pass [value] + [onValueChange] for controlled state; omit both (or pass
  * [defaultValue]) for uncontrolled. [type] is Radix `type` (`single` /
  * `multiple`); [multiple] is the official shadcn boolean alias (`true` →
  * Multiple, `false` → Single, omit to keep [type]). [collapsible] is Radix's
  * single-mode `collapsible` (can the open item be closed). [orientation] is
- * Radix `orientation` (vertical default).
+ * the keyboard navigation axis (vertical default). Like shadcn, the default
+ * visual layout stays vertically stacked for both orientations.
  * Arrow keys / Home / End move focus between triggers.
  *
  * Usage:
@@ -293,11 +298,8 @@ fun Accordion(
         LocalAccordionIcon provides icon,
         LocalAccordionNav provides navState,
     ) {
-        if (orientation == AccordionOrientation.Horizontal) {
-            Row(modifier = modifier.styleable(rootStyleState, style)) {
-                AccordionScope(controller).content()
-            }
-        } else if (currentTheme.activePreset == StylePreset.Nova) {
+        // shadcn's root remains flex-col for both keyboard orientations.
+        if (currentTheme.activePreset == StylePreset.Nova) {
             Layout(
                 modifier = modifier.styleable(rootStyleState, style),
                 content = { AccordionScope(controller).content() },
@@ -430,36 +432,24 @@ fun AccordionScope.AccordionItem(
             item.content()
         }
     }
-    if (controller.orientation == AccordionOrientation.Horizontal) {
-        Row(
-            modifier =
-                modifier.onGloballyPositioned {
-                    nav?.positions?.set(value, it.positionInParent())
-                }.styleable(styleState, style),
-        ) {
-            Column { itemContent() }
-            Separator(orientation = SeparatorOrientation.Vertical)
-        }
-    } else {
-        Column(
-            modifier =
-                modifier.layoutId(AccordionItemId(value)).onGloballyPositioned {
-                    nav?.positions?.set(value, it.positionInParent())
-                }.styleable(styleState, style),
-        ) {
-            itemContent()
-            val isNova = currentTheme.activePreset == StylePreset.Nova
-            Separator(
-                Modifier.layout { measurable, constraints ->
-                    val last = isNova && nav?.measuredOrder?.lastOrNull() == value
-                    val placeable =
-                        measurable.measure(
-                            if (last) constraints.copy(minHeight = 0, maxHeight = 0) else constraints,
-                        )
-                    layout(placeable.width, placeable.height) { if (!last) placeable.place(0, 0) }
-                },
-            )
-        }
+    Column(
+        modifier =
+            modifier.layoutId(AccordionItemId(value)).onGloballyPositioned {
+                nav?.positions?.set(value, it.positionInParent())
+            }.styleable(styleState, style),
+    ) {
+        itemContent()
+        val isNova = currentTheme.activePreset == StylePreset.Nova
+        Separator(
+            Modifier.layout { measurable, constraints ->
+                val last = isNova && nav?.measuredOrder?.lastOrNull() == value
+                val placeable =
+                    measurable.measure(
+                        if (last) constraints.copy(minHeight = 0, maxHeight = 0) else constraints,
+                    )
+                layout(placeable.width, placeable.height) { if (!last) placeable.place(0, 0) }
+            },
+        )
     }
 }
 
@@ -510,6 +500,7 @@ fun AccordionScope.AccordionItem(
                         fontSize = 14.sp,
                         lineHeight = 20.sp,
                         fontWeight = FontWeight.Normal,
+                        lineHeightStyle = novaAccordionLineHeight,
                     )
                 } else {
                     TextStyle.Default
@@ -654,6 +645,7 @@ fun AccordionItemScope.AccordionTrigger(
                         fontSize = 14.sp,
                         lineHeight = 20.sp,
                         fontWeight = FontWeight.Medium,
+                        lineHeightStyle = novaAccordionLineHeight,
                     )
                 } else {
                     TextStyle.Default
@@ -799,6 +791,7 @@ fun AccordionItemScope.AccordionContent(
                         fontSize = 14.sp,
                         lineHeight = 20.sp,
                         fontWeight = FontWeight.Normal,
+                        lineHeightStyle = novaAccordionLineHeight,
                     )
                 } else {
                     TextStyle.Default
@@ -817,15 +810,10 @@ private fun handleAccordionKey(
 ): Boolean {
     if (event.type != KeyEventType.KeyDown) return false
     val enabled =
+        // Both keyboard orientations share the vertically stacked shadcn layout.
+        // Current y positions preserve keyed order even when RTL items have different widths.
         nav.itemOrder.filter { nav.itemEnabled[it] != false }.sortedBy {
-            val position = nav.positions[it] ?: Offset.Zero
-            if (orientation == AccordionOrientation.Vertical) {
-                position.y
-            } else if (direction == LayoutDirection.Rtl) {
-                -position.x
-            } else {
-                position.x
-            }
+            nav.positions[it]?.y ?: 0f
         }
     if (enabled.isEmpty()) return false
     val idx = enabled.indexOf(current)

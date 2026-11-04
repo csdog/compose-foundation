@@ -1,0 +1,16 @@
+[
+  {
+    "name": "TabsBehaviorParityTest[jvm]",
+    "tests": "12",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "TabsExamplesTest[jvm]",
+    "tests": "32",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  }
+]

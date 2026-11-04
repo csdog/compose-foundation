@@ -7,6 +7,7 @@ import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.contentPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.utils.rememberTheme
 
 @Composable
@@ -16,6 +17,6 @@ fun rememberTooltipContentStyle(): Style =
             shape(RoundedCornerShape(radius.md))
             background(colors.foreground)
             contentColor(colors.background)
-            contentPadding(horizontal = spacing.md, vertical = spacing.xs)
+            contentPadding(horizontal = 12.dp, vertical = 6.dp)
         }
     }

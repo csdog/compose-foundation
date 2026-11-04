@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="HoverCardParityTest[jvm]" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-10-30T12:16:00.424Z" hostname="Apples-MacBook-Pro.local" time="3.137">
+  <properties/>
+  <testcase name="triggerTimingOverridesTheRootAndProvider[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardParityTest" time="1.208"/>
+  <testcase name="physicalAndLogicalSidesResolveSeparatelyInRtl[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardParityTest" time="0.02"/>
+  <testcase name="novaPanelHasNoLayoutBorderAndUsesTheOfficialTextLineBox[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardParityTest" time="0.076"/>
+  <testcase name="defaultOpenAndExternalOpenDoNotCloseOnIdleComposition[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardParityTest" time="0.126"/>
+  <testcase name="hoveringASeparateRootChildDoesNotActivateTheTrigger[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardParityTest" time="0.042"/>
+  <testcase name="nova_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardParityTest" time="1.184"/>
+  <testcase name="nova_light[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardParityTest" time="0.097"/>
+  <testcase name="keyboardFocusOpensAndEscapeClosesWithoutStealingFocus[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardParityTest" time="0.073"/>
+  <testcase name="disabledRootIgnoresThePointer[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardParityTest" time="0.038"/>
+  <testcase name="controlledRejectionDoesNotOpenOrRetryContinuously[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardParityTest" time="0.035"/>
+  <testcase name="aPendingOpenUsesTheLatestCallback[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardParityTest" time="0.057"/>
+  <testcase name="aTouchPressDoesNotOpenAPreview[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardParityTest" time="0.046"/>
+  <testcase name="enteringTheCardCancelsTheCloseTimer[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardParityTest" time="0.071"/>
+  <testcase name="baseDefaultsWaitSixHundredToOpenAndThreeHundredToClose[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardParityTest" time="0.058"/>
+  <system-out><![CDATA[Roborazzi: hover_card_nova_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=786432, width=1024, height=768) changed:false
+Roborazzi: hover_card_nova_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=786432, width=1024, height=768) changed:false
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

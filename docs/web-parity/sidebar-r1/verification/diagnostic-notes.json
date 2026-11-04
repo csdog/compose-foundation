@@ -1,0 +1,12 @@
+{
+  "initialSandboxFailure": "Initial wrapper lock access denial occurred before compilation; same targeted command proceeded with normal cache escalation.",
+  "initialRed": "Six original-API tests: five failed. Initial end-only motion test passed but did not establish settled initial width or midpoint coverage.",
+  "compileCorrection": "Strengthened motion test initially failed compilation because DpRect width extension was not imported; parent used right-left.",
+  "validMotionRed": "Under exact pre-pass sources, settled256dp initial width and96ms midpoint yielded47dp, outside linear96..160range. Same strengthened test passed under current200ms linear motion.",
+  "legacyScope": "Actual legacy class has17cases, not the initially estimated19. Current1PASS/16CHANGED. Prepass2PASS/15CHANGED.",
+  "legacyArtifactOrigin": "For verifiedPASS cases without renderedactualPNG, canonical golden is copied as comparison artifact; origins are explicit in actual-hash-comparison.json. This is not a claim that an unproduced rendered PNG hash was observed.",
+  "prepassDifferences": "Five comparison artifacts identical; ten desktop differences are200px or260px inward/removed border strips. Two mobile differences are contentp0/sidebar-background changes. Desktop palette changes precede this round.",
+  "restoration": "Parent restored all5 source/test files with exactSHA assertions. Final26command reused matching cached XML from earlier successfulruntime run; not a new runtime execution.",
+  "review": "Parent native image review not completed (last image output truncated). Native8review is false/pending; legacy3review not claimed.",
+  "noBaselineWrites": "No baseline was recorded or updated. No browser or full commit gate acceptance claimed."
+}

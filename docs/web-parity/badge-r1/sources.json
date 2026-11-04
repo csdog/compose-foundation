@@ -1,0 +1,51 @@
+{
+  "revision": "4aaea19d9cff3e0908e12a8c1d504b8c5ec34610",
+  "docs": "https://ui.shadcn.com/docs/components/base/badge",
+  "target": "base-nova",
+  "sources": [
+    {
+      "path": "apps/v4/content/docs/components/base/badge.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/4aaea19d9cff3e0908e12a8c1d504b8c5ec34610/apps/v4/content/docs/components/base/badge.mdx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/badge-example.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/4aaea19d9cff3e0908e12a8c1d504b8c5ec34610/apps/v4/registry/bases/base/examples/badge-example.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/badge.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/4aaea19d9cff3e0908e12a8c1d504b8c5ec34610/apps/v4/registry/bases/base/ui/badge.tsx"
+    },
+    {
+      "path": "apps/v4/registry/styles/style-nova.css",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/4aaea19d9cff3e0908e12a8c1d504b8c5ec34610/apps/v4/registry/styles/style-nova.css"
+    },
+    {
+      "path": "apps/v4/examples/base/badge-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/4aaea19d9cff3e0908e12a8c1d504b8c5ec34610/apps/v4/examples/base/badge-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/badge-variants.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/4aaea19d9cff3e0908e12a8c1d504b8c5ec34610/apps/v4/examples/base/badge-variants.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/badge-icon.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/4aaea19d9cff3e0908e12a8c1d504b8c5ec34610/apps/v4/examples/base/badge-icon.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/badge-spinner.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/4aaea19d9cff3e0908e12a8c1d504b8c5ec34610/apps/v4/examples/base/badge-spinner.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/badge-link.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/4aaea19d9cff3e0908e12a8c1d504b8c5ec34610/apps/v4/examples/base/badge-link.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/badge-colors.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/4aaea19d9cff3e0908e12a8c1d504b8c5ec34610/apps/v4/examples/base/badge-colors.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/badge-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/4aaea19d9cff3e0908e12a8c1d504b8c5ec34610/apps/v4/examples/base/badge-rtl.tsx"
+    }
+  ]
+}

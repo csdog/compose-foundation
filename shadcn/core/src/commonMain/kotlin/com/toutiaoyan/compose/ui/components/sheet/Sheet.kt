@@ -3,6 +3,8 @@
 package com.toutiaoyan.compose.ui.components.sheet
 
 import com.toutiaoyan.compose.ui.utils.keyboardInputMode
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.CubicBezierEasing
@@ -13,16 +15,21 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.unit.sp
+import com.toutiaoyan.compose.ui.styles.cssStyleable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
@@ -37,71 +44,97 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.LayoutDirection
+import com.toutiaoyan.compose.ui.components.overlay.OverlayFocusOwner
+import com.toutiaoyan.compose.ui.components.overlay.overlayTriggerFocus
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import com.toutiaoyan.compose.tailwind.core.twRadius
-import com.toutiaoyan.compose.tailwind.core.twSpacing
 import com.toutiaoyan.compose.ui.components.icon.Icon
 import com.toutiaoyan.compose.ui.components.icon.IconVariant
 import com.toutiaoyan.compose.ui.icons.X
-import com.toutiaoyan.compose.ui.styles.focusRing
-import com.toutiaoyan.compose.ui.styles.rememberMinTouchTargetStyle
-import com.toutiaoyan.compose.ui.styles.rememberPressMotionStyle
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.components.overlay.Content
 import com.toutiaoyan.compose.ui.components.overlay.Overlay
-import com.toutiaoyan.compose.ui.components.overlay.OverlayTransitions
 import com.toutiaoyan.compose.ui.components.overlay.TeleportPrimitive
 import com.toutiaoyan.compose.ui.components.overlay.TeleportPrimitiveScope
 import com.toutiaoyan.compose.ui.components.button.Button
 import com.toutiaoyan.compose.ui.components.button.ButtonSize
 import com.toutiaoyan.compose.ui.components.button.ButtonVariant
 import com.toutiaoyan.compose.ui.components.text.Text
-import com.toutiaoyan.compose.ui.components.text.TextColors
 import com.toutiaoyan.compose.ui.components.text.TextVariant
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
 
-/** Which edge a [Sheet] slides in from. */
-enum class SheetSide { Top, Bottom, Start, End }
+/** Physical screen edges, plus logical [Start] and [End] extensions that follow layout direction. */
+enum class SheetSide { Top, Bottom, Start, End, Left, Right }
 
 object SheetDefaults {
     /** Official Content `showCloseButton` default. */
     const val ShowCloseButton = true
 }
 
-/** Sheet / drawer slide easing — web `cubic-bezier(0.32, 0.72, 0, 1)`. */
-private val SheetSlideEasing = CubicBezierEasing(0.32f, 0.72f, 0f, 1f)
+internal fun SheetSide.physicalSide(direction: LayoutDirection): SheetSide =
+    when (this) {
+        SheetSide.Start -> if (direction == LayoutDirection.Ltr) SheetSide.Left else SheetSide.Right
+        SheetSide.End -> if (direction == LayoutDirection.Ltr) SheetSide.Right else SheetSide.Left
+        else -> this
+    }
 
-private fun sheetSlideTween() = tween<IntOffset>(500, easing = SheetSlideEasing)
+/** Tailwind w-3/4, with sm:max-w-sm applying from the 640px breakpoint. */
+internal fun sheetPanelWidth(viewportWidth: Dp): Dp =
+    if (viewportWidth < 640.dp) viewportWidth * .75f else minOf(viewportWidth * .75f, 384.dp)
 
-/** Edge-slide panel motion for [Sheet] (and drawer via [SheetSide]). */
+private val SheetSlideEasing = CubicBezierEasing(.42f, 0f, .58f, 1f)
+
+private fun sheetSlideTween() = tween<IntOffset>(200, easing = SheetSlideEasing)
+
+/** The Base UI popup fades over 200ms while moving 2.5rem from its resting edge. */
 object SheetTransitions {
-    fun enter(side: SheetSide): EnterTransition =
-        when (side) {
-            SheetSide.Top -> slideInVertically(sheetSlideTween()) { -it }
-            SheetSide.Bottom -> slideInVertically(sheetSlideTween()) { it }
-            SheetSide.Start -> slideInHorizontally(sheetSlideTween()) { -it }
-            SheetSide.End -> slideInHorizontally(sheetSlideTween()) { it }
-        }
+    fun enter(side: SheetSide): EnterTransition = enter(side, 40, LayoutDirection.Ltr)
 
-    fun exit(side: SheetSide): ExitTransition =
-        when (side) {
-            SheetSide.Top -> slideOutVertically(sheetSlideTween()) { -it }
-            SheetSide.Bottom -> slideOutVertically(sheetSlideTween()) { it }
-            SheetSide.Start -> slideOutHorizontally(sheetSlideTween()) { -it }
-            SheetSide.End -> slideOutHorizontally(sheetSlideTween()) { it }
-        }
+    fun exit(side: SheetSide): ExitTransition = exit(side, 40, LayoutDirection.Ltr)
+
+    internal fun enter(
+        side: SheetSide,
+        distance: Int,
+        direction: LayoutDirection,
+    ): EnterTransition =
+        fadeIn(tween(200, easing = SheetSlideEasing)) +
+            when (side.physicalSide(direction)) {
+                SheetSide.Top -> slideInVertically(sheetSlideTween()) { -distance }
+                SheetSide.Bottom -> slideInVertically(sheetSlideTween()) { distance }
+                SheetSide.Left -> slideInHorizontally(sheetSlideTween()) { -distance }
+                else -> slideInHorizontally(sheetSlideTween()) { distance }
+            }
+
+    internal fun exit(
+        side: SheetSide,
+        distance: Int,
+        direction: LayoutDirection,
+    ): ExitTransition =
+        fadeOut(tween(200, easing = SheetSlideEasing)) +
+            when (side.physicalSide(direction)) {
+                SheetSide.Top -> slideOutVertically(sheetSlideTween()) { -distance }
+                SheetSide.Bottom -> slideOutVertically(sheetSlideTween()) { distance }
+                SheetSide.Left -> slideOutHorizontally(sheetSlideTween()) { -distance }
+                else -> slideOutHorizontally(sheetSlideTween()) { distance }
+            }
+
+    val ScrimEnter: EnterTransition = fadeIn(tween(150))
+    val ScrimExit: ExitTransition = fadeOut(tween(150))
 }
 
 @Immutable
@@ -157,7 +190,7 @@ class SheetScope internal constructor(
  *     └── SheetFooter
  * ```
  *
- * Full-height + fixed-width for [SheetSide.Start]/[SheetSide.End]
+ * Full-height + responsive width for horizontal sides
  * (`w-3/4 sm:max-w-sm`), full-width + auto-height for [SheetSide.Top]/
  * [SheetSide.Bottom]. For the Base UI drawer with optional swipe handle
  * *with* swipe-to-dismiss, see
@@ -196,9 +229,11 @@ fun Sheet(
         onOpenChange?.invoke(next)
     }
     val controller = SheetController(open = isOpen, onOpenChange = setOpen, modal = modal)
-    CompositionLocalProvider(LocalSheet provides controller) {
-        Box(modifier = modifier) {
-            SheetScope(controller).content()
+    OverlayFocusOwner(open = isOpen, modal = modal) {
+        CompositionLocalProvider(LocalSheet provides controller) {
+            Box(modifier = modifier) {
+                SheetScope(controller).content()
+            }
         }
     }
 }
@@ -223,6 +258,7 @@ fun SheetScope.SheetTrigger(
     Box(
         modifier =
             modifier
+                .overlayTriggerFocus()
                 .semantics {
                     role = Role.Button
                     stateDescription = if (controller.open) "Expanded" else "Collapsed"
@@ -251,14 +287,24 @@ fun SheetScope.SheetTrigger(
     size: ButtonSize = ButtonSize.Md,
     style: Style = Style,
 ) {
-    SheetTrigger(modifier = modifier, enabled = enabled, disabled = disabled, style = style) {
-        Button(text, onClick = toggle, enabled = enabled, disabled = disabled, variant = variant, size = size)
-    }
+    Button(
+        text,
+        modifier =
+            modifier.overlayTriggerFocus().semantics {
+                stateDescription = if (open) "Expanded" else "Collapsed"
+            },
+        onClick = toggle,
+        enabled = enabled,
+        disabled = disabled,
+        variant = variant,
+        size = size,
+        style = style,
+    )
 }
 
 /**
  * The sliding panel of a [Sheet]. [side] is Radix `side` (`top` / `bottom` /
- * `left`/`start` / `right`/`end`); default [SheetSide.End] (= official `"right"`).
+ * `left`/`start` / `right`/`end`); default [SheetSide.Right] (= official `"right"`).
  * Enter/exit default to sliding from that edge; override [enter]/[exit]/[scrimEnter]/
  * [scrimExit] like Compose Unstyled. Official [showCloseButton] defaults to
  * [SheetDefaults.ShowCloseButton] (`true`). Composes internal Portal + Overlay.
@@ -266,7 +312,7 @@ fun SheetScope.SheetTrigger(
 @Composable
 fun SheetScope.SheetContent(
     modifier: Modifier = Modifier,
-    side: SheetSide = SheetSide.End,
+    side: SheetSide = SheetSide.Right,
     style: Style = Style,
     dismissOnClickOutside: Boolean = true,
     showCloseButton: Boolean = SheetDefaults.ShowCloseButton,
@@ -275,21 +321,27 @@ fun SheetScope.SheetContent(
     onInteractOutside: (() -> Boolean)? = null,
     enter: EnterTransition? = null,
     exit: ExitTransition? = null,
-    scrimEnter: EnterTransition = OverlayTransitions.ScrimEnter,
-    scrimExit: ExitTransition = OverlayTransitions.ScrimExit,
+    scrimEnter: EnterTransition = SheetTransitions.ScrimEnter,
+    scrimExit: ExitTransition = SheetTransitions.ScrimExit,
     closeIcon: @Composable () -> Unit = {
-        Icon(X, tint = currentTheme.colors.mutedForeground, variant = IconVariant.Small)
+        Icon(X, tint = currentTheme.colors.foreground, variant = IconVariant.Small)
     },
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    val resolvedEnter = enter ?: SheetTransitions.enter(side)
-    val resolvedExit = exit ?: SheetTransitions.exit(side)
+    val density = LocalDensity.current
+    val direction = LocalLayoutDirection.current
+    val viewportWidth = with(density) { LocalWindowInfo.current.containerSize.width.toDp() }
+    val distance = with(density) { 40.dp.roundToPx() }
+    val resolvedEnter = enter ?: SheetTransitions.enter(side, distance, direction)
+    val resolvedExit = exit ?: SheetTransitions.exit(side, distance, direction)
     val alignment =
         when (side) {
             SheetSide.Top -> Alignment.TopCenter
             SheetSide.Bottom -> Alignment.BottomCenter
             SheetSide.Start -> Alignment.CenterStart
             SheetSide.End -> Alignment.CenterEnd
+            SheetSide.Left -> AbsoluteAlignment.CenterLeft
+            SheetSide.Right -> AbsoluteAlignment.CenterRight
         }
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val controller = sheetController()
@@ -307,36 +359,52 @@ fun SheetScope.SheetContent(
                 "SheetContent panel must be used within SheetPortal { }"
             }
         modal.Content(contentAlignment = alignment, enter = resolvedEnter, exit = resolvedExit) {
-            // Official Start/End: w-3/4 sm:max-w-sm ≈ 320.dp.
-            val sizeModifier =
-                when (side) {
-                    SheetSide.Top, SheetSide.Bottom -> Modifier.fillMaxWidth()
-                    SheetSide.Start, SheetSide.End -> Modifier.fillMaxHeight().width(320.dp)
-                }
-            val panelModifier =
-                sizeModifier
-                    .then(modifier)
-                    .styleable(
-                        styleState,
-                        rememberSheetPanelStyle() then style,
-                    )
-            if (showCloseButton) {
-                Box(modifier = panelModifier) {
-                    Column(verticalArrangement = Arrangement.spacedBy(twSpacing.lg)) {
-                        content()
+            // Defaults live in Style so an explicit caller width (e.g. Sidebar) wins.
+            val panelSize =
+                Style {
+                    when (side) {
+                        SheetSide.Top, SheetSide.Bottom -> width(1f)
+                        else -> {
+                            width(sheetPanelWidth(viewportWidth))
+                            height(1f)
+                        }
                     }
+                }
+            val physicalSide = side.physicalSide(direction)
+            val border = currentTheme.colors.border
+            val panelModifier =
+                modifier.drawWithContent {
+                    drawContent()
+                    val stroke = 1.dp.toPx()
+                    when (physicalSide) {
+                        SheetSide.Left -> drawRect(border, Offset(size.width - stroke, 0f), Size(stroke, size.height))
+                        SheetSide.Right -> drawRect(border, Offset.Zero, Size(stroke, size.height))
+                        SheetSide.Top -> drawRect(border, Offset(0f, size.height - stroke), Size(size.width, stroke))
+                        else -> drawRect(border, Offset.Zero, Size(size.width, stroke))
+                    }
+                }.cssStyleable(styleState, rememberSheetPanelStyle() then panelSize then style).absolutePadding(
+                    left = if (physicalSide == SheetSide.Right) 1.dp else 0.dp,
+                    right = if (physicalSide == SheetSide.Left) 1.dp else 0.dp,
+                    top = if (physicalSide == SheetSide.Bottom) 1.dp else 0.dp,
+                    bottom = if (physicalSide == SheetSide.Top) 1.dp else 0.dp,
+                )
+            Box(modifier = panelModifier) {
+                SheetColumn(
+                    Modifier.fillMaxWidth().then(
+                        if (physicalSide == SheetSide.Left || physicalSide == SheetSide.Right) {
+                            Modifier.fillMaxHeight()
+                        } else {
+                            Modifier
+                        },
+                    ),
+                    content = content,
+                )
+                if (showCloseButton) {
                     SheetClose(
-                        modifier = Modifier.align(Alignment.TopEnd),
+                        modifier = Modifier.align(Alignment.TopEnd).offset(x = (-12).dp, y = 12.dp),
                         ariaLabel = closeAriaLabel,
                         icon = closeIcon,
                     )
-                }
-            } else {
-                Column(
-                    modifier = panelModifier,
-                    verticalArrangement = Arrangement.spacedBy(twSpacing.lg),
-                ) {
-                    content()
                 }
             }
         }
@@ -351,7 +419,7 @@ fun SheetScope.SheetContent(
     title: String,
     description: String? = null,
     modifier: Modifier = Modifier,
-    side: SheetSide = SheetSide.End,
+    side: SheetSide = SheetSide.Right,
     style: Style = Style,
     dismissOnClickOutside: Boolean = true,
     showCloseButton: Boolean = SheetDefaults.ShowCloseButton,
@@ -360,10 +428,10 @@ fun SheetScope.SheetContent(
     onInteractOutside: (() -> Boolean)? = null,
     enter: EnterTransition? = null,
     exit: ExitTransition? = null,
-    scrimEnter: EnterTransition = OverlayTransitions.ScrimEnter,
-    scrimExit: ExitTransition = OverlayTransitions.ScrimExit,
+    scrimEnter: EnterTransition = SheetTransitions.ScrimEnter,
+    scrimExit: ExitTransition = SheetTransitions.ScrimExit,
     closeIcon: @Composable () -> Unit = {
-        Icon(X, tint = currentTheme.colors.mutedForeground, variant = IconVariant.Small)
+        Icon(X, tint = currentTheme.colors.foreground, variant = IconVariant.Small)
     },
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -415,13 +483,13 @@ internal fun SheetPortal(
 /** Scrim — web `SheetOverlay` (not exported; composed by [SheetContent]). */
 @Composable
 internal fun SheetOverlay(
-    enter: EnterTransition = OverlayTransitions.ScrimEnter,
-    exit: ExitTransition = OverlayTransitions.ScrimExit,
+    enter: EnterTransition = SheetTransitions.ScrimEnter,
+    exit: ExitTransition = SheetTransitions.ScrimExit,
 ) {
     val modal =
         LocalSheetTeleportScope.current
             ?: error("SheetOverlay must be used within SheetPortal { }")
-    modal.Overlay(enter = enter, exit = exit)
+    modal.Overlay(color = Color.Black.copy(alpha = .1f), enter = enter, exit = exit)
 }
 
 /** Structural header slot matching shadcn's `SheetHeader`. */
@@ -432,9 +500,9 @@ fun SheetHeader(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Column(
-        modifier = modifier.styleable(styleState, style),
-        verticalArrangement = Arrangement.spacedBy(twSpacing.xs),
+    SheetColumn(
+        modifier = modifier.styleable(styleState, rememberSheetRegionStyle() then style),
+        gap = 2.dp,
     ) {
         content()
     }
@@ -471,7 +539,15 @@ fun SheetTitle(
 ) {
     Text(
         modifier = modifier.semantics { heading() },
-        variant = TextVariant.TitleMedium,
+        variant = TextVariant.TitleSmall,
+        textStyle =
+            TextStyle(
+                color = currentTheme.colors.foreground,
+                fontSize = 16.sp,
+                lineHeight = 24.sp,
+                fontWeight = FontWeight.Medium,
+                lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+            ),
         style = style,
         text = text,
     )
@@ -479,7 +555,7 @@ fun SheetTitle(
 
 @Composable
 fun SheetDescription(text: String) {
-    Text(variant = TextVariant.BodySmall, textStyle = TextColors.Muted) { text }
+    SheetDescription { text }
 }
 
 @Composable
@@ -492,24 +568,30 @@ fun SheetDescription(
 ) {
     Text(
         modifier = modifier,
-        variant = TextVariant.BodySmall,
-        textStyle = TextColors.Muted,
+        variant = TextVariant.BodyMedium,
+        textStyle =
+            TextStyle(
+                color = currentTheme.colors.mutedForeground,
+                fontSize = 14.sp,
+                lineHeight = 20.sp,
+                lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+            ),
         style = style,
         text = text,
     )
 }
 
-/** The action-button row at the bottom of a [Sheet], right-aligned. */
+/** Stacked actions at the bottom of a [Sheet], with automatic top margin, 16dp padding and 8dp gap. */
 @Composable
 fun SheetFooter(
     modifier: Modifier = Modifier,
     style: Style = Style,
-    content: @Composable RowScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Row(
-        modifier = modifier.styleable(styleState, style),
-        horizontalArrangement = Arrangement.spacedBy(twSpacing.sm, Alignment.End),
+    SheetColumn(
+        modifier = modifier.sheetAutoMargin().styleable(styleState, rememberSheetRegionStyle() then style),
+        gap = 8.dp,
     ) {
         content()
     }
@@ -522,40 +604,17 @@ fun SheetClose(
     disabled: Boolean = false,
     ariaLabel: String = "Close",
     icon: @Composable () -> Unit = {
-        Icon(X, tint = currentTheme.colors.mutedForeground, variant = IconVariant.Small)
+        Icon(X, tint = currentTheme.colors.foreground, variant = IconVariant.Small)
     },
 ) {
     val controller = sheetController()
-    val resolvedEnabled = !disabled
-    val interactionSource = remember { MutableInteractionSource() }
-    val styleState = remember { MutableStyleState(interactionSource) }
-    val pressStyle = rememberPressMotionStyle()
-    val touchTargetStyle = rememberMinTouchTargetStyle()
-    val closeButtonStyle =
-        remember {
-            Style {
-                focusRing(RoundedCornerShape(twRadius.sm))
-            }
-        }
-    Box(
-        modifier =
-            modifier
-                .then(if (resolvedEnabled) Modifier else Modifier.alpha(0.5f))
-                .semantics {
-                    role = Role.Button
-                    contentDescription = ariaLabel
-                    if (!resolvedEnabled) disabled()
-                }
-                .styleable(styleState, touchTargetStyle then closeButtonStyle then pressStyle)
-                .keyboardInputMode()
-                .clickable(
-                    interactionSource = interactionSource,
-                    indication = null,
-                    enabled = resolvedEnabled,
-                    role = Role.Button,
-                    onClick = { controller.onOpenChange(false) },
-                ),
-        contentAlignment = Alignment.Center,
+    Button(
+        modifier = modifier.size(28.dp),
+        onClick = { controller.onOpenChange(false) },
+        disabled = disabled,
+        variant = ButtonVariant.Ghost,
+        size = ButtonSize.IconSm,
+        label = ariaLabel,
     ) {
         icon()
     }

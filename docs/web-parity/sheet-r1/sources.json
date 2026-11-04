@@ -1,0 +1,50 @@
+{
+  "revision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "files": [
+    {
+      "file": "source/sheet.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/content/docs/components/base/sheet.mdx",
+      "sha256": "039bf46b0e5bc7a2b7a28831670c41775502b1cf6b40cae60148791892aa62e1"
+    },
+    {
+      "file": "source/sheet.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/bases/base/ui/sheet.tsx",
+      "sha256": "5816119da5f3468b0b91d2c65bcf6befe1d769b7867e236b9f18db83908581cb"
+    },
+    {
+      "file": "source/sheet-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/sheet-demo.tsx",
+      "sha256": "f1909656ba0d543433f92e8c05e7a794a5fcac01ac31145bebdb4d09faa5ab6b"
+    },
+    {
+      "file": "source/sheet-side.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/sheet-side.tsx",
+      "sha256": "6cf5c159aa8e8427a46027de4ce10c5c93333feb616c1b60b8ce43c321761e5c"
+    },
+    {
+      "file": "source/sheet-no-close-button.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/sheet-no-close-button.tsx",
+      "sha256": "ca9bad93ef78fae6bea625ba806a928a77ef8367fc70ee628eaa3e586c1b7003"
+    },
+    {
+      "file": "source/sheet-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/sheet-rtl.tsx",
+      "sha256": "4be67efdca43f6c8805db6f3100652601cdde913358c54d89ac6001b587522e8"
+    },
+    {
+      "file": "source/style-nova.css",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+    },
+    {
+      "file": "source/transform-rtl.ts",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/packages/registry/src/transformers/transform-rtl.ts",
+      "sha256": "4c1e542d2e23fec14442034f5dc32c21115848d386bc3c89baf63de2671e872c"
+    },
+    {
+      "file": "source/build-registry.mts",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/scripts/build-registry.mts",
+      "sha256": "806f31bd563510fed673e775c5e97972113cd7bc237743329805b6328296afb3"
+    }
+  ]
+}

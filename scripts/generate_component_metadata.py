@@ -88,6 +88,7 @@ PROPERTY_TYPES_BY_ID = {
     "alert": ["AlertVariant"],
     "badge": ["BadgeVariant"],
     "button": ["ButtonVariant", "ButtonSize"],
+    "pagination": ["ButtonSize"],
     "card": ["CardVariant", "CardSize"],
     "code-block": ["CodeBlockVariant", "CodeBlockSize", "CodeBlockLineVariant"],
     "trace": ["TraceStatus"],

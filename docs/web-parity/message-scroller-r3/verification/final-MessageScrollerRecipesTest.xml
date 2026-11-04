@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MessageScrollerRecipesTest[jvm]" tests="28" skipped="0" failures="0" errors="0" timestamp="2026-10-30T16:13:09.984Z" hostname="Apples-MacBook-Pro.local" time="7.268">
+  <properties/>
+  <testcase name="outlineTracksAndJumpsBetweenOriginalAnchoredTurns[width=432,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.258"/>
+  <testcase name="contextSendsAllRemainingTurnsThenDisablesSendUntilReset[width=432,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="1.038"/>
+  <testcase name="footerTracksTopMiddleAndBottomWithRealKeyboardScrolling[width=432,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.091"/>
+  <testcase name="loadingOriginalHistoryKeepsTheVisibleParagraphAndResetReopensAtEnd[width=432,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.111"/>
+  <testcase name="openingTabsRepositionTheSameSavedTranscriptAndCanRepeat[width=432,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.153"/>
+  <testcase name="jumpMenuClosesAndSmoothlyAlignsTheChosenOriginalTurn[width=432,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.156"/>
+  <testcase name="contextPeekStreamingControlsMenuAndResetUseTheRealConversation[width=432,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.447"/>
+  <testcase name="outlineTracksAndJumpsBetweenOriginalAnchoredTurns[width=432,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.145"/>
+  <testcase name="contextSendsAllRemainingTurnsThenDisablesSendUntilReset[width=432,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.865"/>
+  <testcase name="footerTracksTopMiddleAndBottomWithRealKeyboardScrolling[width=432,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.073"/>
+  <testcase name="loadingOriginalHistoryKeepsTheVisibleParagraphAndResetReopensAtEnd[width=432,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.088"/>
+  <testcase name="openingTabsRepositionTheSameSavedTranscriptAndCanRepeat[width=432,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.126"/>
+  <testcase name="jumpMenuClosesAndSmoothlyAlignsTheChosenOriginalTurn[width=432,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.141"/>
+  <testcase name="contextPeekStreamingControlsMenuAndResetUseTheRealConversation[width=432,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.421"/>
+  <testcase name="outlineTracksAndJumpsBetweenOriginalAnchoredTurns[width=360,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.124"/>
+  <testcase name="contextSendsAllRemainingTurnsThenDisablesSendUntilReset[width=360,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.712"/>
+  <testcase name="footerTracksTopMiddleAndBottomWithRealKeyboardScrolling[width=360,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.066"/>
+  <testcase name="loadingOriginalHistoryKeepsTheVisibleParagraphAndResetReopensAtEnd[width=360,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.081"/>
+  <testcase name="openingTabsRepositionTheSameSavedTranscriptAndCanRepeat[width=360,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.114"/>
+  <testcase name="jumpMenuClosesAndSmoothlyAlignsTheChosenOriginalTurn[width=360,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.126"/>
+  <testcase name="contextPeekStreamingControlsMenuAndResetUseTheRealConversation[width=360,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.35"/>
+  <testcase name="outlineTracksAndJumpsBetweenOriginalAnchoredTurns[width=360,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.125"/>
+  <testcase name="contextSendsAllRemainingTurnsThenDisablesSendUntilReset[width=360,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.72"/>
+  <testcase name="footerTracksTopMiddleAndBottomWithRealKeyboardScrolling[width=360,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.063"/>
+  <testcase name="loadingOriginalHistoryKeepsTheVisibleParagraphAndResetReopensAtEnd[width=360,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.077"/>
+  <testcase name="openingTabsRepositionTheSameSavedTranscriptAndCanRepeat[width=360,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.11"/>
+  <testcase name="jumpMenuClosesAndSmoothlyAlignsTheChosenOriginalTurn[width=360,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.121"/>
+  <testcase name="contextPeekStreamingControlsMenuAndResetUseTheRealConversation[width=360,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerRecipesTest" time="0.363"/>
+  <system-out><![CDATA[OUTLINE_PALETTE width=432 dark=false expected=-657931 actual=-657931
+OUTLINE_PALETTE width=432 dark=true expected=-14277082 actual=-14277082
+OUTLINE_PALETTE width=360 dark=false expected=-657931 actual=-657931
+OUTLINE_PALETTE width=360 dark=true expected=-14277082 actual=-14277082
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

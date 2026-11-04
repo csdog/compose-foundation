@@ -1,0 +1,114 @@
+{
+  "recipes": [
+    {
+      "title": "Default",
+      "sourceSaved": true,
+      "previewAndExportUpdated": true,
+      "browserFinalReview": "four quadrants: open and Escape visually checked; default outside/Profile also checked",
+      "officialBrowserCaptured": true
+    },
+    {
+      "title": "Basic",
+      "sourceSaved": true,
+      "previewAndExportUpdated": true,
+      "browserFinalReview": "four quadrants: open and Escape visually checked; default outside/Profile also checked",
+      "officialBrowserCaptured": true
+    },
+    {
+      "title": "Submenu",
+      "sourceSaved": true,
+      "previewAndExportUpdated": true,
+      "browserFinalReview": "four quadrants: open and Escape visually checked; default outside/Profile also checked",
+      "officialBrowserCaptured": true
+    },
+    {
+      "title": "Shortcuts",
+      "sourceSaved": true,
+      "previewAndExportUpdated": true,
+      "browserFinalReview": "four quadrants: open and Escape visually checked; default outside/Profile also checked",
+      "officialBrowserCaptured": true
+    },
+    {
+      "title": "Icons",
+      "sourceSaved": true,
+      "previewAndExportUpdated": false,
+      "browserFinalReview": "pending",
+      "officialBrowserCaptured": false
+    },
+    {
+      "title": "Checkboxes",
+      "sourceSaved": true,
+      "previewAndExportUpdated": true,
+      "browserFinalReview": "four quadrants: open and Escape visually checked; default outside/Profile also checked",
+      "officialBrowserCaptured": true
+    },
+    {
+      "title": "Checkboxes Icons",
+      "sourceSaved": true,
+      "previewAndExportUpdated": false,
+      "browserFinalReview": "pending",
+      "officialBrowserCaptured": false
+    },
+    {
+      "title": "Radio Group",
+      "sourceSaved": true,
+      "previewAndExportUpdated": true,
+      "browserFinalReview": "four quadrants: open and Escape visually checked; default outside/Profile also checked",
+      "officialBrowserCaptured": true
+    },
+    {
+      "title": "Radio Icons",
+      "sourceSaved": true,
+      "previewAndExportUpdated": false,
+      "browserFinalReview": "pending",
+      "officialBrowserCaptured": false
+    },
+    {
+      "title": "Destructive",
+      "sourceSaved": true,
+      "previewAndExportUpdated": false,
+      "browserFinalReview": "pending",
+      "officialBrowserCaptured": false
+    },
+    {
+      "title": "Avatar",
+      "sourceSaved": true,
+      "previewAndExportUpdated": false,
+      "browserFinalReview": "pending",
+      "officialBrowserCaptured": false
+    },
+    {
+      "title": "Complex",
+      "sourceSaved": true,
+      "previewAndExportUpdated": false,
+      "browserFinalReview": "pending",
+      "officialBrowserCaptured": false
+    },
+    {
+      "title": "RTL",
+      "sourceSaved": true,
+      "previewAndExportUpdated": false,
+      "browserFinalReview": "pending",
+      "officialBrowserCaptured": false
+    }
+  ],
+  "componentFollowups": [
+    "Web cached accessibility nodes persist after canvas visually closes; previous dismissal-failure classification corrected with visual/callback evidence",
+    "default panel anchor-width/min-width and submenu minimum widths",
+    "all disabled/hover/focus states and controlled rejection",
+    "nested pointer-to-keyboard promotion and focus return",
+    "remaining 7 official recipes and existing Kotlin API examples",
+    "Pointer opening focuses/highlights first row unlike official mouse-open preview; retain for focus behavior alignment",
+    "Nova disabled ordinary item double dim fixed and tested; other variants remain for full-state review"
+  ],
+  "menubarFollowup20261030": {
+    "scope": "Shared checkbox/radio standard semantics added during Menubar audit; leading selection indicator internal context defaults false, ordinary Dropdown retains trailing indicators.",
+    "evidence": "../menubar-r1/test-results/DropdownMenuExamplesTest-regression.xml",
+    "verified": [
+      "checkboxSelectionStaysOpenAndPersistsAfterReopening",
+      "notificationIconsKeepIndependentCheckedStates",
+      "paymentIconsSelectExactlyOneMethod"
+    ],
+    "browserMatrix": "Not re-run for this semantic change; does not close earlier accessibility gaps."
+  }
+}

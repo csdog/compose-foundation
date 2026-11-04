@@ -1,0 +1,8 @@
+[
+  "http://127.0.0.1:8765/658820f72b4617efb380.wasm",
+  "http://127.0.0.1:8765/a8c35a345ac9b9d12cfa.wasm",
+  "http://127.0.0.1:8765/composeResources/compose_foundation.app.shared.generated.resources/font/catalog_arabic_regular.ttf",
+  "http://127.0.0.1:8765/composeResources/compose_foundation.app.shared.generated.resources/font/catalog_arabic_medium.ttf",
+  "http://127.0.0.1:8765/composeResources/compose_foundation.app.shared.generated.resources/font/catalog_hebrew_regular.ttf",
+  "http://127.0.0.1:8765/composeResources/compose_foundation.app.shared.generated.resources/font/catalog_hebrew_medium.ttf"
+]

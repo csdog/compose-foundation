@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="PopoverNovaScreenshotTest[jvm]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-30T18:13:48.160Z" hostname="Apples-MacBook-Pro.local" time="0.423">
+  <properties/>
+  <testcase name="basicDark[jvm]" classname="com.toutiaoyan.compose.ui.components.popover.PopoverNovaScreenshotTest" time="0.354"/>
+  <testcase name="basicLight[jvm]" classname="com.toutiaoyan.compose.ui.components.popover.PopoverNovaScreenshotTest" time="0.069"/>
+  <system-out><![CDATA[Roborazzi: popover_nova_basic_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=786432, width=1024, height=768) changed:false
+Roborazzi: popover_nova_basic_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=786432, width=1024, height=768) changed:false
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

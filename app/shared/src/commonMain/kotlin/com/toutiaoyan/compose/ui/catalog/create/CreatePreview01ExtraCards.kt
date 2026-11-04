@@ -78,6 +78,8 @@ import com.toutiaoyan.compose.ui.components.select.SelectContent
 import com.toutiaoyan.compose.ui.components.separator.Separator
 import com.toutiaoyan.compose.ui.components.skeleton.Skeleton
 import com.toutiaoyan.compose.ui.components.slider.Slider
+import com.toutiaoyan.compose.ui.components.slider.SliderDefaults
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.components.switch.Switch
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextColors
@@ -274,6 +276,9 @@ private fun KitchenSliderRow(
     enabled: Boolean,
     onValueChange: (Float) -> Unit,
 ) {
+    val thumbSize =
+        if (currentTheme.activePreset == StylePreset.Nova) SliderDefaults.NovaThumbSize else SliderDefaults.ThumbSize
+    val sliderHeight = maxOf(thumbSize, currentTheme.minTouchTarget ?: 0.dp)
     Item(variant = ItemVariant.Muted) {
         ItemMedia(variant = ItemMediaVariant.Icon) { Icon(Lucide.RefreshCw, variant = IconVariant.Small) }
         ItemContent { ItemTitle(label) }
@@ -283,7 +288,9 @@ private fun KitchenSliderRow(
                 onValueChange = onValueChange,
                 valueRange = 0f..100f,
                 enabled = enabled,
-                modifier = Modifier.fillMaxWidth(),
+                // FlowRow queries both intrinsic axes before assigning this weighted action.
+                // The outer fill still uses its allocated width during real measurement.
+                modifier = Modifier.fillMaxWidth().width(120.dp).height(sliderHeight),
             )
         }
     }

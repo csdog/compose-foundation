@@ -1,0 +1,40 @@
+{
+  "date": "2026-11-02",
+  "spaceId": 4,
+  "url": "http://127.0.0.1:8765/chart?acceptance=axis-r2",
+  "newWasm": "75b3de24bd2874335b17.wasm",
+  "reproduction": "Load at1440 width, navigate First Chart, resize to390, navigate RTL. Old final60 last two Arabic ticks overlap and remain overlapping in the next capture.",
+  "outcome": "New build reproducing same steps has separated ticks; all12 RTL language/width/theme states and4 main-chart states reviewed.",
+  "nativeRed": false,
+  "viewport": {
+    "widths": [
+      1440,
+      390
+    ],
+    "height": 1000,
+    "mobile": false
+  },
+  "sourceCause": "Independent cached width estimates removed; selection and placement now use the same measured Text children. Exact underlying platform/font-cache trigger has not been isolated.",
+  "remaining": "Main narrow date tick selection differs from source at different effective plot width; header typography and preview/document layout remain open.",
+  "sha256": {
+    "after-english-1440-dark.png": "cc2f17829fda7803f55c353d548c44be5bb659182ef1cfc45b70c1c072b769c8",
+    "after-english-1440-light.png": "c9821e6ea9fdd81e83964b91de6cf80ab58fa9b86955ecf09a30751b2e66d8a9",
+    "after-english-390-dark.png": "ee4251ad212cc4e480619a8bd3b6c32f1c2347b674effd4af1451ddfa92876c0",
+    "after-english-390-light.png": "556a98abf0d16721df87fda751e7fc715a179eb9d730227c5573b1c85e34e068",
+    "after-hebrew-1440-dark.png": "5684971901574dca31311ae0044a80b430096ad557c64e637cf6f2437d1a22f5",
+    "after-hebrew-1440-light.png": "ce1507d7e50aff0393ea138c677a9a56f63ca6ae0006593e0028911b509ef3c9",
+    "after-hebrew-390-dark.png": "effcbf2392d584e4b868ed2e8900d7480c5484be012089a5669606f1b49bc011",
+    "after-hebrew-390-light.png": "483b1e603356a1b05d2b6e5eb9397b71892b7c08e5d4a791522d79e8fbcc637c",
+    "after-resize-1440-dark.png": "22f22eda3c1637ec84c36052d0a6181503dce8ef4b585c699b0295cb4b019537",
+    "after-resize-1440-light.png": "e683bc7808d85b3780ebd9d25ade55184e27fab670bce82b1a7579d3e7a654a6",
+    "after-resize-390-dark.png": "a20f407b2e03301ce17bf408ff8503cf053cf25e656d9e92ed55d73d260581fe",
+    "after-resize-390-light.png": "aa83a662c20d6b1772f1f0810e361b1a945f669a4112e6ac3d7c544f29af6aa1",
+    "before-initial-narrow.png": "ed382e1607bc09ba28770d85d5cee349813ee1a79642798c01d67e2102fca798",
+    "before-resize-settled.png": "034aea684545749b1cda440a6368a658c4973ecf44f90f87f645b14261626404",
+    "before-resize.png": "034aea684545749b1cda440a6368a658c4973ecf44f90f87f645b14261626404",
+    "main-1440-dark.png": "09a69796f723536537f557f65749eb606a74de7ba1febfd4d991dfd58c7d5ea3",
+    "main-1440-light.png": "a80527f2ff9fe2e5e7dfe88358cf3e034b07690d6e23e887c1a0c6ba132c1ea6",
+    "main-390-dark.png": "4dec88583d9ee998ffcee52b72b949cc2e361ed58543bfaf4450ea11775ce150",
+    "main-390-light.png": "794f468d49a5bd7aa7a2c0e9c7788a5d452e3a603a8d3b1b5e30cf86c6fcf0bb"
+  }
+}

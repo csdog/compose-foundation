@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ContextMenuScreenshotTest[jvm]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-30T11:00:23.288Z" hostname="Apples-MacBook-Pro.local" time="0.911">
+  <properties/>
+  <testcase name="idle_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.contextmenu.ContextMenuScreenshotTest" time="0.88"/>
+  <testcase name="idle_light[jvm]" classname="com.toutiaoyan.compose.ui.components.contextmenu.ContextMenuScreenshotTest" time="0.028"/>
+  <system-out><![CDATA[Roborazzi: context_menu_idle_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=36864, width=288, height=128) changed:false
+Roborazzi: context_menu_idle_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=36864, width=288, height=128) changed:false
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

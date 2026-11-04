@@ -1,0 +1,12 @@
+{
+  "tests": "12",
+  "failures": "1",
+  "errors": "0",
+  "skipped": "0",
+  "failuresDetail": [
+    {
+      "name": "keptPanelPreservesInputButTakesNoSpaceOrFocusWhenHidden[jvm]",
+      "message": "java.lang.AssertionError: Failed to perform isDisplayed check.\nReason: Expected exactly '1' node but could not find any node that satisfies: (TestTag = 'input')\nHowever, the unmerged tree contains '1' node that matches. Are you missing `useUnmergedNode = true` in your finder?\n"
+    }
+  ]
+}

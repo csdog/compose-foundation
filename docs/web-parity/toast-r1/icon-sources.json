@@ -1,0 +1,27 @@
+[
+  {
+    "artifact": "com.composables:icons-lucide-cmp-jvm:2.2.1:sources",
+    "entry": "commonMain/com/composables/icons/lucide/circle_check.kt",
+    "sha256": "e9a7a92e42d46266c661d97ab64a44ebb24ef2579f093d99491187ed170d3c24"
+  },
+  {
+    "artifact": "com.composables:icons-lucide-cmp-jvm:2.2.1:sources",
+    "entry": "commonMain/com/composables/icons/lucide/info.kt",
+    "sha256": "932c3facc32ece1aa01e184b514ac635f4eecd6dea6bfa32f8be5f08f1207efa"
+  },
+  {
+    "artifact": "com.composables:icons-lucide-cmp-jvm:2.2.1:sources",
+    "entry": "commonMain/com/composables/icons/lucide/triangle_alert.kt",
+    "sha256": "673c01775c143ec661cc8eeb125ef36b64bb1f0d5762f7c65806624ba6e68976"
+  },
+  {
+    "artifact": "com.composables:icons-lucide-cmp-jvm:2.2.1:sources",
+    "entry": "commonMain/com/composables/icons/lucide/octagon_x.kt",
+    "sha256": "212155d3ea917c83bd7acb9ce6f69ffb74048a634103d48a46ded377618644b1"
+  },
+  {
+    "artifact": "com.composables:icons-lucide-cmp-jvm:2.2.1:sources",
+    "entry": "commonMain/com/composables/icons/lucide/x.kt",
+    "sha256": "b297e9e038cdcdbf826b74607b0020de10f8cdac7161854cb7ea8e7c86af23ce"
+  }
+]

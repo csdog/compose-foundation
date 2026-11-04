@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CatalogThemePreferenceTest[jvm]" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-02T03:28:58.020Z" hostname="Apples-MacBook-Pro.local" time="0.277">
+  <properties/>
+  <testcase name="explicitChoicesArePublishedAndRestoredWhenTheApplicationIsRecreated[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogThemePreferenceTest" time="0.277"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

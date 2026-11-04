@@ -13,10 +13,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 
 /**
  * A thin dividing line. Matches real shadcn/ui's `separator.tsx`: `h-px w-full` when
- * horizontal, `h-full w-px` when vertical, painted with the `border` token.
+ * horizontal, `w-px self-stretch` when vertical, painted with the `border` token.
  *
  * Size / color live in Style — override with [style].
  *
@@ -27,14 +28,16 @@ import androidx.compose.ui.semantics.semantics
  * Separator(decorative = false)
  * ```
  *
- * [decorative] matches Radix `decorative` (default `true`): the line is visual-only.
- * Pass `false` to expose a "Separator" accessibility description.
+ * Base UI separators are semantic by default. [decorative] is a Compose/Radix extension:
+ * pass true to omit the default accessibility description. Native semantics exposes
+ * a description and orientation; Compose does not yet provide an ARIA separator role.
+ * Vertical separators require a bounded parent height; use IntrinsicSize.Min on an auto-height Row.
  */
 @Composable
 fun Separator(
     modifier: Modifier = Modifier,
     orientation: SeparatorOrientation = SeparatorOrientation.Horizontal,
-    decorative: Boolean = true,
+    decorative: Boolean = false,
     style: Style = Style,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
@@ -45,7 +48,15 @@ fun Separator(
                     if (decorative) {
                         Modifier
                     } else {
-                        Modifier.semantics { contentDescription = "Separator" }
+                        Modifier.semantics {
+                            contentDescription = "Separator"
+                            stateDescription =
+                                if (orientation == SeparatorOrientation.Horizontal) {
+                                    "Horizontal"
+                                } else {
+                                    "Vertical"
+                                }
+                        }
                     },
                 )
                 .styleable(

@@ -20,10 +20,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextColors
 import com.toutiaoyan.compose.ui.components.text.TextVariant
@@ -33,10 +39,10 @@ import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
 
 enum class EmptyVariant {
-    /** base-nova root: 1dp `border-dashed`. */
+    /** Unbordered base-nova root; legacy presets retain their dashed border. */
     Default,
 
-    /** Docs “Outline”: solid 1dp `border` (replaces dashed). */
+    /** Docs Outline: 1dp dashed border in Nova, solid border in legacy presets. */
     Outline,
 }
 
@@ -45,8 +51,8 @@ enum class EmptyVariant {
  * Empty (`gap-4 rounded-xl border-dashed p-6`, title `text-sm font-medium`).
  *
  * Outer padding is Style-driven — override with [style] (e.g. syncing card uses `p-4`).
- * [variant] [EmptyVariant.Default] draws a dashed border; [EmptyVariant.Outline] uses a
- * solid 1dp border instead.
+ * In Nova, [EmptyVariant.Default] has no visible border; [EmptyVariant.Outline] draws
+ * the docs’ dashed outline. Legacy presets preserve their existing border treatment.
  * [spacing] defaults to official `gap-4` ([EmptyDefaults.Spacing]).
  * Pass [padding] to overlay inset (`EmptyDefaults.MdPadding` = docs `md:p-12`);
  * default `null` keeps `p-6`.
@@ -76,15 +82,19 @@ fun Empty(
     style: Style = Style,
     content: @Composable ColumnScope.() -> Unit,
 ) {
+    val nova = currentTheme.activePreset == StylePreset.Nova
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     var composed = rememberEmptyStyle()
     if (padding != null) composed = composed then rememberEmptyPaddingStyle(padding)
     if (radius != null) composed = composed then rememberEmptyRadiusStyle(radius)
-    if (variant == EmptyVariant.Outline) composed = composed then rememberEmptyOutlineStyle()
+    if (variant == EmptyVariant.Outline && !nova) composed = composed then rememberEmptyOutlineStyle()
+    if (variant == EmptyVariant.Outline && nova) {
+        composed = composed then rememberEmptyPaddingStyle((padding ?: EmptyDefaults.Padding) + 1.dp)
+    }
     val corner = radius ?: EmptyDefaults.Radius
     val borderColor = rememberTheme { colors.border }
     val dashed =
-        if (variant == EmptyVariant.Default) {
+        if ((nova && variant == EmptyVariant.Outline) || (!nova && variant == EmptyVariant.Default)) {
             Modifier.emptyDashedBorder(color = borderColor, corner = corner)
         } else {
             Modifier
@@ -92,14 +102,15 @@ fun Empty(
     Column(
         modifier =
             modifier
+                .then(if (nova) dashed else Modifier)
                 .styleable(
                     styleState,
                     composed,
                     style,
                 )
-                .then(dashed),
+                .then(if (nova) Modifier else dashed),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(spacing),
+        verticalArrangement = Arrangement.spacedBy(spacing, if (nova) Alignment.CenterVertically else Alignment.Top),
         content = content,
     )
 }
@@ -145,7 +156,7 @@ fun ColumnScope.EmptyHeader(
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Column(
-        modifier = modifier.styleable(styleState, style),
+        modifier = modifier.styleable(styleState, rememberEmptySectionStyle(fill = false), style),
         horizontalAlignment = Alignment.CenterHorizontally,
         // Nova `cn-empty-header` `gap-2` = 8.dp
         verticalArrangement = Arrangement.spacedBy(twSpacing.sm),
@@ -234,7 +245,25 @@ fun EmptyTitle(
         textStyle =
             TextStyle(
                 fontWeight = FontWeight.Medium,
-                letterSpacing = (-0.025).sp,
+                fontSize =
+                    if (currentTheme.activePreset == StylePreset.Nova && variant == EmptyTitleDefaults.Official) {
+                        14.sp
+                    } else {
+                        TextUnit.Unspecified
+                    },
+                lineHeight =
+                    if (currentTheme.activePreset == StylePreset.Nova && variant == EmptyTitleDefaults.Official) {
+                        20.sp
+                    } else {
+                        TextUnit.Unspecified
+                    },
+                letterSpacing = if (currentTheme.activePreset == StylePreset.Nova) (-0.35).sp else (-0.025).sp,
+                lineHeightStyle =
+                    if (currentTheme.activePreset == StylePreset.Nova) {
+                        LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None)
+                    } else {
+                        null
+                    },
                 textAlign = TextAlign.Center,
             ),
     ) { text }
@@ -264,15 +293,40 @@ fun EmptyDescription(
         variant = TextVariant.BodyMedium,
         style = style,
         modifier = modifier.styleable(styleState, style),
-        textStyle =
-            TextColors.Muted.merge(
-                TextStyle(
-                    lineHeight = 22.sp,
-                    textAlign = TextAlign.Center,
-                ),
-            ),
+        textStyle = emptyDescriptionTextStyle(),
     ) { text }
 }
+
+/** Rich description text, including inline links, with the same Empty typography. */
+@Composable
+fun EmptyDescription(
+    text: AnnotatedString,
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+) {
+    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    Text(
+        modifier = modifier.styleable(styleState, style),
+        style = style,
+        textStyle = emptyDescriptionTextStyle(),
+    ) { text }
+}
+
+@Composable
+private fun emptyDescriptionTextStyle(): TextStyle =
+    TextColors.Muted.merge(
+        TextStyle(
+            fontSize = if (currentTheme.activePreset == StylePreset.Nova) 14.sp else TextUnit.Unspecified,
+            lineHeight = if (currentTheme.activePreset == StylePreset.Nova) 22.75.sp else 22.sp,
+            lineHeightStyle =
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None)
+                } else {
+                    null
+                },
+            textAlign = TextAlign.Center,
+        ),
+    )
 
 @Composable
 @JvmName("EmptyDescriptionLambda")
@@ -294,7 +348,7 @@ fun ColumnScope.EmptyContent(
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Column(
-        modifier = modifier.styleable(styleState, style),
+        modifier = modifier.styleable(styleState, rememberEmptySectionStyle(fill = true), style),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(spacing),
         content = content,
@@ -313,3 +367,16 @@ fun ColumnScope.EmptyContent(
         Text { text }
     }
 }
+
+@Composable
+private fun rememberEmptySectionStyle(fill: Boolean): Style =
+    rememberTheme(fill) {
+        if (theme.activePreset == StylePreset.Nova) {
+            Style {
+                maxWidth(384.dp)
+                if (fill) width(1f)
+            }
+        } else {
+            Style
+        }
+    }

@@ -12,7 +12,7 @@ class AccordionExamplesTest {
     @get:Rule val rule = createComposeRule()
 
     @Test fun basicRendersActualQuestionsAndSwitchesAnswer() {
-        val example = accordionDoc.examples.single { it.title == "Basic (official)" }
+        val example = accordionDoc.examples.single { it.title == "Basic" }
         rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
         rule.onNodeWithText("How do I reset my password?").assertIsDisplayed()
         rule.onNodeWithText("Can I change my subscription plan?").performClick()
@@ -22,7 +22,7 @@ class AccordionExamplesTest {
     }
 
     @Test fun multipleKeepsBothRealAnswersOpen() {
-        val example = accordionDoc.examples.single { it.title == "Multiple (official)" }
+        val example = accordionDoc.examples.single { it.title == "Multiple" }
         rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
         rule.onNodeWithText("Manage how you receive", substring = true).assertIsDisplayed()
         rule.onNodeWithText("Privacy & Security").performClick()

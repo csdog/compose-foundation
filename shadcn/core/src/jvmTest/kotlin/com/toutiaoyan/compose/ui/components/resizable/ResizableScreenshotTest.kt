@@ -16,11 +16,8 @@ import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextColors
 
 /**
- * Covers the *rendering* half of resizing -- does `weight(fraction)` actually produce the
- * right pane proportions -- via fixed `initialFraction` values instead of simulating a
- * live drag gesture (which has previously hung this project's JVM test worker, see
- * `resizablePanelFraction`'s doc comment). The drag *math* itself is unit tested directly
- * in `ResizablePanelGroupTest`, with no Compose/gesture involvement at all.
+ * Fixed-fraction rendering coverage for legacy examples. Real mouse/touch dragging,
+ * keyboard resizing and hit targets are covered separately by ResizableInteractionTest.
  */
 class ResizableScreenshotTest : ScreenshotTest() {
     private fun split(

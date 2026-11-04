@@ -8,19 +8,20 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.hovered
+import com.toutiaoyan.compose.ui.catalog.catalogViewportWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalWindowInfo
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,9 +47,13 @@ fun PreviewCodeSection(
     descriptionMarkdown: String? = null,
     headingAnchor: String? = null,
     previewBackground: (@Composable () -> Color)? = null,
+    hideCode: Boolean = false,
+    previewHeight: Dp? = null,
+    previewVerticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
+    desktopPreviewInsetStart: Dp = 0.dp,
     preview: @Composable () -> Unit,
 ) {
-    val mobile = LocalWindowInfo.current.containerSize.width < with(LocalDensity.current) { 640.dp.roundToPx() }
+    val mobile = catalogViewportWidth() < 640.dp
     val effectiveMinHeight = if (mobile) mobileMinPreviewHeight ?: minPreviewHeight else minPreviewHeight
     var showCode by remember(code) { mutableStateOf(false) }
     val shape = RoundedCornerShape(16.dp)
@@ -59,7 +64,8 @@ fun PreviewCodeSection(
         }
         descriptionMarkdown?.let { DocParagraph(it) }
         Column(
-            Modifier.fillMaxWidth().clip(shape)
+            Modifier.padding(start = if (mobile) 0.dp else desktopPreviewInsetStart)
+                .fillMaxWidth().clip(shape)
                 .border(1.dp, currentTheme.colors.border, shape)
                 .background(currentTheme.colors.background)
                 // CSS border-box reserves its border; Compose border only draws.
@@ -68,52 +74,76 @@ fun PreviewCodeSection(
             Box(
                 modifier =
                     Modifier.fillMaxWidth().background(previewBackground?.invoke() ?: colors.background)
-                        .heightIn(min = effectiveMinHeight).padding(previewPadding),
+                        .then(
+                            if (previewHeight != null) {
+                                Modifier.height(previewHeight)
+                            } else {
+                                Modifier.heightIn(
+                                    min =
+                                    effectiveMinHeight,
+                                )
+                            },
+                        ).padding(previewPadding),
                 contentAlignment = Alignment.Center,
             ) {
-                preview()
+                if (previewHeight != null) {
+                    // CSS flex centering allows the chart aspect ratio to exceed the padded
+                    // content box while keeping the complete preview at its fixed height.
+                    Box(
+                        Modifier.fillMaxHeight().wrapContentHeight(
+                            align =
+                            previewVerticalAlignment,
+                            unbounded =
+                            true,
+                        ),
+                    ) { preview() }
+                } else {
+                    preview()
+                }
             }
-            Box(Modifier.fillMaxWidth().height(1.dp).background(currentTheme.colors.border))
-            if (showCode) {
-                CodeBlock(
-                    code = code,
-                    modifier = Modifier.fillMaxWidth(),
-                    lineNumbers = true,
-                    maxHeight = 288.dp,
-                    shape = RectangleShape,
-                )
-            } else {
-                Box(Modifier.fillMaxWidth().height(108.dp).clip(RoundedCornerShape(0.dp))) {
+            if (!hideCode) {
+                Box(Modifier.fillMaxWidth().height(1.dp).background(currentTheme.colors.border))
+                if (showCode) {
                     CodeBlock(
-                        code = code.lineSequence().take(3).joinToString("\n"),
+                        code = code,
                         modifier = Modifier.fillMaxWidth(),
-                        showCopyButton = false,
                         lineNumbers = true,
+                        maxHeight = 288.dp,
                         shape = RectangleShape,
                     )
-                    Box(
-                        Modifier.matchParentSize().background(
-                            Brush.verticalGradient(
-                                listOf(
-                                    Color.Transparent,
-                                    docCodeBackground(currentTheme.isLight).copy(alpha = 0.6f),
-                                    docCodeBackground(currentTheme.isLight),
+                } else {
+                    Box(Modifier.fillMaxWidth().height(108.dp).clip(RoundedCornerShape(0.dp))) {
+                        CodeBlock(
+                            code = code.lineSequence().take(3).joinToString("\n"),
+                            modifier = Modifier.fillMaxWidth(),
+                            showCopyButton = false,
+                            lineNumbers = true,
+                            shape = RectangleShape,
+                        )
+                        Box(
+                            Modifier.matchParentSize().background(
+                                Brush.verticalGradient(
+                                    listOf(
+                                        Color.Transparent,
+                                        docCodeBackground(currentTheme.isLight).copy(alpha = 0.6f),
+                                        docCodeBackground(currentTheme.isLight),
+                                    ),
                                 ),
                             ),
-                        ),
-                    )
-                    Button(
-                        text = "View Code",
-                        onClick = { showCode = true },
-                        modifier = Modifier.align(Alignment.Center),
-                        variant = ButtonVariant.Outline,
-                        size = ButtonSize.Md,
-                        style =
-                            Style {
-                                background(colors.background)
-                                hovered { background(colors.muted) }
-                            },
-                    )
+                        )
+                        Button(
+                            text = "View Code",
+                            onClick = { showCode = true },
+                            modifier = Modifier.align(Alignment.Center),
+                            variant = ButtonVariant.Outline,
+                            size = ButtonSize.Md,
+                            style =
+                                Style {
+                                    background(colors.background)
+                                    hovered { background(colors.muted) }
+                                },
+                        )
+                    }
                 }
             }
         }

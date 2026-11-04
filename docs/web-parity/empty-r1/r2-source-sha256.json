@@ -1,0 +1,7 @@
+{
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/EmptyDoc.kt": "a8b71e1c8f97bbc87f11134e8f8670f504792f27d3b3ccb0a3d99601fe16aff5",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/EmptyAdditionalRecipes.kt": "31fc4dac7f0f032b5f862f5feaa97513e416ce1e4f60a13495c6d5d8bf908eef",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/EmptyRecipeIcons.kt": "34a841ac167cd2bb4401e09b23c0c87a785a309724d5d6ff5cc488f0876e411f",
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/empty/Empty.kt": "bcb8b0d8fc30ab605350b30431317c99985acd922bcd32739c31591f898a6952",
+  "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/EmptyExamplesTest.kt": "5575deb129ac6d610932fd2a3e0bc9f7068c1a46c09051325093e877e6aa9b99"
+}

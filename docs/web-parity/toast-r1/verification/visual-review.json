@@ -1,0 +1,20 @@
+{
+  "reviewedFrames": 40,
+  "reviewedSheets": 8,
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "simulatedWindowWidths": [
+    1440,
+    390
+  ],
+  "nativeSceneMaxWidth": 640,
+  "browserAcceptance": false,
+  "notes": [
+    "All frames viewed at original pixel size in contact sheets.",
+    "Viewport captures may clip external shadow; full scenes show it.",
+    "Updated action retains actual click/focus state.",
+    "No resize/crop in review sheets. Exact CSS multilayer shadow remains pending."
+  ]
+}

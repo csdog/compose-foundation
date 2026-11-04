@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TableParityTest[jvm]" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-10-30T22:07:01.555Z" hostname="Apples-MacBook-Pro.local" time="0.624">
+  <properties/>
+  <testcase name="headerIsFortyAndBodyUsesFourteenTwentyWithEightPixelPadding[dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.417"/>
+  <testcase name="rowIsTransparentAndHoverUsesMutedAtHalfAlpha[dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.039"/>
+  <testcase name="selectedStateIsExposedToAccessibility[dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.02"/>
+  <testcase name="captionDeclaredFirstRendersBelowRowsWithSixteenPixelMargin[dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.025"/>
+  <testcase name="footerIsHalfMutedWithATopRuleAndNoTrailingRule[dark=false][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.02"/>
+  <testcase name="headerIsFortyAndBodyUsesFourteenTwentyWithEightPixelPadding[dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.021"/>
+  <testcase name="rowIsTransparentAndHoverUsesMutedAtHalfAlpha[dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.021"/>
+  <testcase name="selectedStateIsExposedToAccessibility[dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.018"/>
+  <testcase name="captionDeclaredFirstRendersBelowRowsWithSixteenPixelMargin[dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.02"/>
+  <testcase name="footerIsHalfMutedWithATopRuleAndNoTrailingRule[dark=true][jvm]" classname="com.toutiaoyan.compose.ui.components.table.TableParityTest" time="0.02"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,70 @@
+{
+  "workflow": "cdc18220841c7bbde957bfd4e3ac3c4a",
+  "tests": {
+    "SidebarStateParityTest": 6,
+    "SidebarResponsiveStateTest": 8,
+    "SidebarMobileParityTest": 8,
+    "SidebarBorderParityTest": 4,
+    "totalIndependent": 26,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "restorationCheck": {
+      "exit": 0,
+      "seconds": 5.519,
+      "testResultsFromCache": true,
+      "note": "Earlier26runtimepass proven; exactcurrentgreenrestoration usedmatchingcachedXML."
+    }
+  },
+  "coreKtlint": "PASS",
+  "sharedKtlint": "PASS",
+  "sharedJvmCompile": {
+    "exit": 0,
+    "seconds": 18.779
+  },
+  "jsWebpack": {
+    "exit": 0,
+    "seconds": 36.868,
+    "unresolved": [
+      "os",
+      "path"
+    ],
+    "clean": false
+  },
+  "wasmWebpack": {
+    "exit": 0,
+    "seconds": 26.57,
+    "webpackWarnings": 1
+  },
+  "legacyGoldens": {
+    "cases": 17,
+    "passed": 1,
+    "changed": 16,
+    "missing": 0,
+    "prepass": {
+      "passed": 2,
+      "changed": 15
+    },
+    "currentVsPrepass": {
+      "identicalArtifacts": 5,
+      "desktopBorderOnlyDifferences": 10,
+      "mobileDifferences": 2,
+      "pixelEvidence": "prepass-isolation/current-vs-prepass-pixel-diffs.json"
+    },
+    "recorded": false
+  },
+  "nativeCaptureCount": 8,
+  "nativeReviewedByParent": false,
+  "nativeReviewStatus": "pending: parent image output truncated; do not claim completed visual review",
+  "sourceConfigCallerTestHashCount": 12,
+  "browserAcceptance": false,
+  "fullRepositoryCommitGate": "not run",
+  "remainingWarnings": [
+    "AGP experimental screenshot/test suite",
+    "Text.kt invisible-reference suppression",
+    "Gradle10 deprecated features",
+    "JS webpack os/path errors",
+    "Wasm onewebpackwarning"
+  ],
+  "scope": "Provider/mobile state and callbacks, retained offcanvas content,200mslinear motion and inward borders only; menu/page recipe parity remains open."
+}

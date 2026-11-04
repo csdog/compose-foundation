@@ -1,0 +1,105 @@
+{
+  "workflow": "9a0de86d5bfd53c1b6ca47a5a155e61f",
+  "currentInputReviewPending": false,
+  "checkpoints": [
+    {
+      "sequence": 1,
+      "status": "PASS",
+      "seconds": 5.3,
+      "scope": "Current-input cache reuse of original49 tests and owning lint"
+    },
+    {
+      "sequence": 2,
+      "status": "PASS",
+      "seconds": 216.618,
+      "scope": "Intermediate JS before nice-domain/header fix; not final source acceptance"
+    },
+    {
+      "sequence": 3,
+      "status": "PASS",
+      "seconds": 42.72,
+      "scope": "53 tests and owning lint at final53/input-hashes.json"
+    },
+    {
+      "sequence": 4,
+      "status": "PASS",
+      "seconds": 150.576,
+      "scope": "JS numeric-domain/header checkpoint; later axis/header fixes pending"
+    },
+    {
+      "sequence": 5,
+      "status": "PASS",
+      "scope": "Intermediate JS distribution before final axis/numeric fixes; not final production acceptance",
+      "seconds": 141.0
+    },
+    {
+      "sequence": 6,
+      "status": "FAIL",
+      "seconds": 21.52,
+      "scope": "Do measured full axis labels and final chart plot padding/header corrections pass axis4 scale4 presentation9 interaction8 catalog32 and both owning lint checks?"
+    },
+    {
+      "sequence": 7,
+      "status": "FAIL",
+      "seconds": 2.672,
+      "scope": "Is Apr30 overflow horizontal or vertical, and what measured constraints/font metrics cause it in the isolated Chart axis regression?"
+    },
+    {
+      "sequence": 8,
+      "status": "PASS",
+      "seconds": 2.214,
+      "scope": "Does Apr30 render its complete unellipsized single line within real node ink bounds after replacing the misleading paragraph-overflow flag assertion?"
+    },
+    {
+      "sequence": 9,
+      "status": "PASS",
+      "seconds": 5.982,
+      "scope": "Do all57 final Chart regressions and both owning lint checks pass with verified complete date-axis ink bounds?"
+    },
+    {
+      "sequence": 10,
+      "status": "PASS",
+      "seconds": 13.384,
+      "scope": "Does the final57 Chart axis and padding implementation compile for JS without repeating expensive production minification?"
+    },
+    {
+      "sequence": 11,
+      "status": "PASS",
+      "seconds": 29.655,
+      "scope": "Does the final57 Chart implementation build and synchronize its Wasm development executable for restored browser visual verification?"
+    },
+    {
+      "sequence": 12,
+      "status": "FAIL",
+      "seconds": 3.072,
+      "scope": "Do source-sized128 and144 tooltip cards preserve complete Chrome and nested-line numeric glyphs and RTL values before the layout fix?"
+    },
+    {
+      "sequence": 13,
+      "status": "PASS",
+      "seconds": 11.986,
+      "scope": "Do source-sized tooltip cards preserve complete numeric values after giving numbers priority and shrinking names, including actual RTL layout?"
+    },
+    {
+      "sequence": 14,
+      "status": "PASS",
+      "seconds": 16.427,
+      "scope": "Do final chart numeric-priority, hideCode metadata and header line-box fixes pass core28 catalog32 and both owning lint checks?"
+    },
+    {
+      "sequence": 15,
+      "status": "PASS",
+      "seconds": 12.912,
+      "scope": "Does final60 Chart numeric layout and hideCode metadata compile on JS before browser refresh?"
+    },
+    {
+      "sequence": 16,
+      "status": "PASS",
+      "seconds": 27.84,
+      "scope": "Does final60 Chart numeric-priority and code-panel metadata synchronize into the Wasm development browser bundle?"
+    }
+  ],
+  "legacyGoldens": "not verified or updated",
+  "browserAcceptance": "Parent-owned ongoing; no completion claim",
+  "reviewScope": "Native44 frames reviewed; browser example review remains ongoing"
+}

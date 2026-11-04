@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.toPixelMap
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import com.toutiaoyan.compose.ui.components.input.Input
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextLayoutResult
@@ -126,6 +127,63 @@ class AccordionNovaTest : ScreenshotTest() {
         composeRule.onNodeWithTag("a").assertIsFocused()
         composeRule.onNodeWithTag("a").performKeyInput { pressKey(Key.MoveEnd) }
         composeRule.onNodeWithTag("b").assertIsFocused()
+    }
+
+    @Test fun horizontalLtrReorderFollowsTheCurrentStack() {
+        assertHorizontalReorder(LayoutDirection.Ltr)
+    }
+
+    @Test fun horizontalRtlReorderFollowsTheCurrentStack() {
+        assertHorizontalReorder(LayoutDirection.Rtl)
+    }
+
+    @Test fun horizontalRtlUnequalWidthsUseStackOrder() {
+        assertHorizontalReorder(LayoutDirection.Rtl, unequalWidths = true)
+    }
+
+    private fun assertHorizontalReorder(
+        direction: LayoutDirection,
+        unequalWidths: Boolean = false,
+    ) {
+        var order by mutableStateOf(listOf("a", "b", "c"))
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            CompositionLocalProvider(LocalLayoutDirection provides direction) {
+                Accordion(orientation = AccordionOrientation.Horizontal) {
+                    order.forEach { value ->
+                        key(value) {
+                            AccordionItem(
+                                value,
+                                modifier =
+                                    if (unequalWidths) {
+                                        Modifier.width(
+                                            when (value) {
+                                                "a" ->
+                                                    160.dp
+                                                "b" ->
+                                                    240.dp
+                                                else
+                                                -> 200.dp
+                                            },
+                                        )
+                                    } else {
+                                        Modifier
+                                    },
+                            ) { AccordionTrigger(value, Modifier.testTag(value)) }
+                        }
+                    }
+                }
+            }
+        }
+        composeRule.runOnIdle { order = listOf("c", "b", "a") }
+        composeRule.onNodeWithTag("c").requestFocus()
+        composeRule.onNodeWithTag("c").performKeyInput {
+            pressKey(if (direction == LayoutDirection.Rtl) Key.DirectionLeft else Key.DirectionRight)
+        }
+        composeRule.onNodeWithTag("b").assertIsFocused()
+        composeRule.onNodeWithTag("b").performKeyInput { pressKey(Key.MoveHome) }
+        composeRule.onNodeWithTag("c").assertIsFocused()
+        composeRule.onNodeWithTag("c").performKeyInput { pressKey(Key.MoveEnd) }
+        composeRule.onNodeWithTag("a").assertIsFocused()
     }
 
     @Test fun cardNestedAccordionUsesThemeForeground() {

@@ -352,7 +352,7 @@ val catalogEntries: List<CatalogEntry> =
         CatalogEntry(route = RouteKey.ComponentDetail("shimmer"), title = "Shimmer", category = CatalogCategory.UTILS),
         CatalogEntry(
             route = RouteKey.ComponentDetail("scroll-fade"),
-            title = "Scroll Fade",
+            title = "scroll-fade",
             category = CatalogCategory.UTILS,
         ),
     )

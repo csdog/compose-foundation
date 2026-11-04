@@ -16,31 +16,53 @@ import com.toutiaoyan.compose.ui.styles.scrollFade
 val scrollFadeDoc =
     ComponentDoc(
         id = "scroll-fade",
-        title = "Scroll Fade",
+        title = "scroll-fade",
         description =
-            "A scroll-position-aware fade at the edges of a scrollable container, hinting overflow " +
-                "without a hard cut -- a modifier, not a standalone component.",
+            "Utilities for adding a fade effect to the edges of a scroll container.",
         usageCode =
             """
-            import com.toutiaoyan.compose.ui.styles.shadcnScrollFade
+            import com.toutiaoyan.compose.ui.styles.scrollFade
 
             val scrollState = rememberScrollState()
             Column(
-                modifier = Modifier.height(160.dp).verticalScroll(scrollState).shadcnScrollFade(scrollState),
+                modifier = Modifier.height(160.dp).scrollFade(scrollState).verticalScroll(scrollState),
             ) {
                 repeat(20) { Text { "Row ${'$'}it" } }
             }
             """.trimIndent(),
+        beforeExamples =
+            listOf(
+                ComponentGuideSection(
+                    "Usage",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            (
+                                "Place `scrollFade` before `verticalScroll` or " +
+                                    "`horizontalScroll` so the mask measures the viewport. "
+                            ) +
+                                (
+                                    "Put the background and border on an outer wrapper. The " +
+                                        "default depth is 12%, capped at 40.dp, "
+                                ) +
+                                (
+                                    "revealed over 96.dp of scrolling. Use `ScrollFadeEdge`, " +
+                                        "`ScrollFadeSize` or `enabled = false` "
+                                ) +
+                                "for single edges, custom lengths/percentages and no fade.",
+                        ),
+                    ),
+                ),
+            ),
         examples =
             listOf(
                 ComponentExample(
-                    title = "Default",
+                    title = "Rows (Kotlin)",
                     code =
                         """
                         val scrollState = rememberScrollState()
                         Column(
                             modifier = Modifier.width(240.dp).height(160.dp)
-                                .verticalScroll(scrollState).shadcnScrollFade(scrollState),
+                                .scrollFade(scrollState).verticalScroll(scrollState),
                         ) {
                             repeat(20) { index -> Text(modifier = Modifier.padding(vertical = 4.dp)) { "Row ${'$'}index" } }
                         }
@@ -52,8 +74,8 @@ val scrollFadeDoc =
                                 Modifier
                                     .width(240.dp)
                                     .height(160.dp)
-                                    .verticalScroll(scrollState)
-                                    .scrollFade(scrollState),
+                                    .scrollFade(scrollState)
+                                    .verticalScroll(scrollState),
                         ) {
                             repeat(20) { index ->
                                 Text(modifier = Modifier.padding(vertical = 4.dp)) { "Row $index" }
@@ -63,3 +85,4 @@ val scrollFadeDoc =
                 ),
             ),
     )
+        .let { native -> native.copy(examples = scrollFadeOfficialExamples + native.examples) }

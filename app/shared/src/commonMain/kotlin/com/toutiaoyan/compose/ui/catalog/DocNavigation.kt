@@ -8,6 +8,8 @@ data class DocLocation(
     val fragment: String,
     val revision: Int = 0,
     val animate: Boolean = false,
+    /** A history traversal to another route restores that route's existing ScrollState. */
+    val restoreScroll: Boolean = false,
 )
 
 interface DocNavigation {

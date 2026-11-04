@@ -1,5 +1,6 @@
 package com.toutiaoyan.compose.ui.catalog.docs
 
+import com.toutiaoyan.compose.ui.catalog.catalogViewportWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -23,8 +24,6 @@ import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.style.TextDecoration
 import com.toutiaoyan.compose.ui.catalog.LocalDocHeadingLinks
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
@@ -36,11 +35,7 @@ import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.theme.currentTheme
 
 @Composable
-private fun mobileDocs() =
-    LocalWindowInfo.current.containerSize.width <
-        with(LocalDensity.current) {
-            640.dp.roundToPx()
-        }
+private fun mobileDocs() = catalogViewportWidth() < 640.dp
 
 @Composable
 internal fun DocHeading(

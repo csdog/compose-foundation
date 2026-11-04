@@ -1,0 +1,10 @@
+{
+  "method": "Samecorrectedfocusfixture under current andprepass defaultcomponentbody; onlyinertstyleparams compile shim inprepass.",
+  "actualsByteIdentical": {
+    "input_group_focused_light": true,
+    "input_group_focused_dark": true
+  },
+  "all12DefaultImagesNowProvenIdenticalAcrossApiChange": true,
+  "currentComponentRestoredByteForByte": true,
+  "oldGoldensRecorded": false
+}

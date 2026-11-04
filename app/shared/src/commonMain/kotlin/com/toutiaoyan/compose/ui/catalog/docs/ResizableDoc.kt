@@ -22,7 +22,7 @@ val resizableDoc =
     ComponentDoc(
         id = "resizable",
         title = "Resizable",
-        description = "Two panes divided by a draggable handle.",
+        description = "Accessible resizable panel groups and layouts with keyboard support.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.resizable.ResizablePanelGroup
@@ -68,7 +68,7 @@ val resizableDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Vertical",
+                    title = "Vertical (Kotlin)",
                     code =
                         """
                         ResizablePanelGroup(
@@ -366,7 +366,7 @@ val resizableDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Handle",
+                    title = "Handle (Kotlin)",
                     code =
                         """
                         ResizablePanelGroup(modifier = Modifier.width(320.dp).height(120.dp)) { first, second, _ ->
@@ -421,3 +421,4 @@ val resizableDoc =
                 ),
             ),
     )
+        .let { native -> native.copy(examples = resizableOfficialExamples + native.examples) }

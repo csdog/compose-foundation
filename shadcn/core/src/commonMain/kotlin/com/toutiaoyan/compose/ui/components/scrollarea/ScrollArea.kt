@@ -27,6 +27,20 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.foundation.focusable
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.input.InputMode
+import androidx.compose.ui.input.key.*
+import androidx.compose.ui.platform.LocalInputModeManager
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.ui.utils.keyboardInputMode
+import com.toutiaoyan.compose.ui.styles.cssStyleable
+import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 
 enum class ScrollAreaOrientation { Vertical, Horizontal, Both }
 
@@ -46,15 +60,14 @@ fun scrollAreaState(): ScrollAreaState =
 
 /**
  * A scrollable region with a slim custom scrollbar thumb, matching real shadcn/ui's
- * `scroll-area.tsx` -- which is itself a custom Radix thumb, not the browser-native
- * scrollbar, so a hand-drawn thumb here is actually the correct parity match rather
- * than a simplification. The thumb is both a scroll indicator and directly draggable,
- * matching Radix's `ScrollAreaThumb`.
+ * `scroll-area.tsx`. The viewport uses Compose scrolling; the custom scrollbar supports
+ * direct dragging and track presses. Radix visibility policies remain optional extensions.
  *
  * [type] mirrors Radix `type` / `scrollHideDelay`: [ScrollType.Scroll] and
- * [ScrollType.Hover] carry their own hide delay; default is [ScrollType.Hover] (600ms).
+ * [ScrollType.Hover] carry their own hide delay; default is [ScrollType.Auto] (visible when overflowing), matching Base UI.
  * [dir] mirrors Radix `dir`: `null` inherits [androidx.compose.ui.platform.LocalLayoutDirection].
  *
+ * [viewportStyle] configures the inner viewport (for example matching a custom root shape).
  * For long lazy lists, use [LazyScrollArea] instead -- nesting a `LazyColumn` here
  * disables laziness and fights over the same-axis scroll gesture.
  *
@@ -73,9 +86,10 @@ fun ScrollArea(
     modifier: Modifier = Modifier,
     style: Style = Style,
     orientation: ScrollAreaOrientation = ScrollAreaOrientation.Vertical,
-    type: ScrollType = ScrollType.Hover(),
+    type: ScrollType = ScrollType.Auto,
     dir: ScrollDir? = null,
     scrollHideDelay: Int? = null,
+    viewportStyle: Style = Style,
     content: @Composable BoxScope.() -> Unit,
 ) {
     ProvideScrollDir(dir) {
@@ -84,6 +98,7 @@ fun ScrollArea(
             style = style,
             orientation = orientation,
             type = type.withHideDelay(scrollHideDelay),
+            viewportStyle = viewportStyle,
             content = content,
         )
     }
@@ -95,13 +110,14 @@ private fun ScrollAreaContent(
     style: Style,
     orientation: ScrollAreaOrientation,
     type: ScrollType,
+    viewportStyle: Style,
     content: @Composable BoxScope.() -> Unit,
 ) {
     val verticalState = rememberScrollState()
     val horizontalState = rememberScrollState()
     val scrollsVertically = orientation != ScrollAreaOrientation.Horizontal
     val scrollsHorizontally = orientation != ScrollAreaOrientation.Vertical
-    val areaState = ScrollAreaState(vertical = verticalState, horizontal = horizontalState)
+    val areaState = remember(verticalState, horizontalState) { ScrollAreaState(verticalState, horizontalState) }
 
     val hoverInteraction = remember { MutableInteractionSource() }
     val isHovered by hoverInteraction.collectIsHoveredAsState()
@@ -132,6 +148,8 @@ private fun ScrollAreaContent(
             hovering = isHovered,
         )
     val forceShowWhenEmpty = type is ScrollType.Always
+    val corner = if (currentTheme.activePreset == StylePreset.Nova) 10.dp else 6.dp
+    val dualAxis = scrollsVertically && scrollsHorizontally && verticalOverflowing && horizontalOverflowing
 
     CompositionLocalProvider(LocalScrollArea provides areaState) {
         Box(
@@ -141,6 +159,9 @@ private fun ScrollAreaContent(
                     .styleable(styleState, style),
         ) {
             ScrollAreaViewport(
+                verticalState = verticalState.takeIf { scrollsVertically },
+                horizontalState = horizontalState.takeIf { scrollsHorizontally },
+                style = viewportStyle,
                 modifier =
                     Modifier
                         .fillMaxSize()
@@ -158,7 +179,7 @@ private fun ScrollAreaContent(
                     visible = verticalVisible,
                     forceShowWhenEmpty = forceShowWhenEmpty,
                     interactionSource = verticalThumbInteraction,
-                    modifier = Modifier.align(Alignment.CenterEnd),
+                    modifier = Modifier.align(Alignment.CenterEnd).padding(bottom = if (dualAxis) corner else 0.dp),
                 )
             }
             if (scrollsHorizontally && scrollbarMayShow(type, horizontalOverflowing)) {
@@ -171,7 +192,7 @@ private fun ScrollAreaContent(
                     visible = horizontalVisible,
                     forceShowWhenEmpty = forceShowWhenEmpty,
                     interactionSource = horizontalThumbInteraction,
-                    modifier = Modifier.align(Alignment.BottomCenter),
+                    modifier = Modifier.align(Alignment.BottomCenter).padding(end = if (dualAxis) corner else 0.dp),
                 )
             }
         }
@@ -182,15 +203,59 @@ private fun ScrollAreaContent(
 @Composable
 internal fun ScrollAreaViewport(
     modifier: Modifier = Modifier,
+    style: Style = Style,
+    verticalState: ScrollState? = null,
+    horizontalState: ScrollState? = null,
     content: @Composable BoxScope.() -> Unit,
 ) {
     var focused by remember { mutableStateOf(false) }
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val inputMode = LocalInputModeManager.current
+    val step = with(LocalDensity.current) { 40.dp.toPx() }
+    val horizontalSign = if (LocalLayoutDirection.current == LayoutDirection.Rtl) -1f else 1f
+    val overflowing = (verticalState?.maxValue ?: 0) > 0 || (horizontalState?.maxValue ?: 0) > 0
     Box(
         modifier =
             modifier
-                .onFocusChanged { focused = it.hasFocus }
-                .styleable(styleState, rememberScrollAreaViewportStyle(focused)),
+                .testTag("scroll-area-viewport")
+                .keyboardInputMode()
+                .onFocusChanged { focused = it.isFocused }
+                .onKeyEvent { event ->
+                    if (!focused || event.type != KeyEventType.KeyDown ||
+                        event.isAltPressed || event.isCtrlPressed || event.isMetaPressed
+                    ) {
+                        return@onKeyEvent false
+                    }
+                    val state =
+                        when (event.key) {
+                            Key.DirectionLeft, Key.DirectionRight -> horizontalState
+                            else -> verticalState ?: horizontalState
+                        } ?: return@onKeyEvent false
+                    val delta =
+                        when (event.key) {
+                            Key.DirectionDown -> if (verticalState != null) step else return@onKeyEvent false
+                            Key.DirectionUp -> if (verticalState != null) -step else return@onKeyEvent false
+                            Key.DirectionLeft -> -step * horizontalSign
+                            Key.DirectionRight -> step * horizontalSign
+                            Key.PageDown -> state.viewportSize.toFloat()
+                            Key.PageUp -> -state.viewportSize.toFloat()
+                            Key.MoveHome -> -state.value.toFloat()
+                            Key.MoveEnd -> (state.maxValue - state.value).toFloat()
+                            Key.Spacebar -> state.viewportSize * if (event.isShiftPressed) -1f else 1f
+                            else -> return@onKeyEvent false
+                        }
+                    state.dispatchRawDelta(delta)
+                    true
+                }
+                .focusable(enabled = overflowing)
+                .cssStyleable(
+                    styleState,
+                    rememberScrollAreaViewportStyle(
+                        focused &&
+                            inputMode.inputMode == InputMode.Keyboard,
+                    ),
+                    style,
+                ),
         content = content,
     )
 }

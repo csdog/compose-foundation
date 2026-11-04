@@ -327,7 +327,7 @@
     {
       "id": "input",
       "title": "Input",
-      "description": "A text input component for forms and user data entry with built-in styling and accessibility features.",
+      "description": "Your API key is encrypted and stored securely.",
       "category": "core-primitives",
       "family": "field",
       "isNew": false,
@@ -521,7 +521,7 @@
     {
       "id": "code-block",
       "title": "Code Block",
-      "description": "Displays code, terminal output and diffs with an optional header, line numbers and a copy button.",
+      "description": "",
       "category": "data-display",
       "family": "text",
       "isNew": true,
@@ -1467,6 +1467,30 @@
           "stylePreset": "Vega"
         },
         {
+          "state": "nova_choices",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_nova_choices_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_choices",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_nova_choices_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_invalid",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_nova_invalid_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_invalid",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_nova_invalid_light.png",
+          "stylePreset": "Nova"
+        },
+        {
           "state": "reset",
           "theme": "dark",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/questionnaire_reset_dark.png",
@@ -1608,7 +1632,7 @@
     {
       "id": "avatar",
       "title": "Avatar",
-      "description": "A circular user/entity image container with an initials fallback.",
+      "description": "An image element with a fallback for representing the user.",
       "category": "data-display",
       "family": "text",
       "isNew": false,
@@ -1639,6 +1663,18 @@
           "stylePreset": "Vega"
         },
         {
+          "state": "nova",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/avatar_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/avatar_nova_light.png",
+          "stylePreset": "Nova"
+        },
+        {
           "state": "states",
           "theme": "dark",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/avatar_states_dark.png",
@@ -1655,7 +1691,7 @@
     {
       "id": "aspect-ratio",
       "title": "Aspect Ratio",
-      "description": "Constrains content to a fixed width/height ratio.",
+      "description": "Displays content within a desired ratio.",
       "category": "data-display",
       "family": "layout",
       "isNew": false,
@@ -1678,12 +1714,36 @@
     {
       "id": "separator",
       "title": "Separator",
-      "description": "A thin line for visually or semantically separating content. Matches real shadcn/ui: it has no built-in margin, so surrounding spacing is always the caller's responsibility -- via Arrangement.spacedBy or explicit padding, as shown in the examples below.",
+      "description": "Visually or semantically separates content.",
       "category": "data-display",
       "family": "layout",
       "isNew": false,
       "properties": {},
       "previews": [
+        {
+          "state": "nova_horizontal",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/separator_nova_horizontal_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_horizontal",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/separator_nova_horizontal_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_vertical",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/separator_nova_vertical_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_vertical",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/separator_nova_vertical_light.png",
+          "stylePreset": "Nova"
+        },
         {
           "state": "states",
           "theme": "dark",
@@ -1701,12 +1761,24 @@
     {
       "id": "kbd",
       "title": "Kbd",
-      "description": "A keyboard-shortcut label.",
+      "description": "Used to display textual user input from keyboard.",
       "category": "data-display",
       "family": "text",
       "isNew": false,
       "properties": {},
       "previews": [
+        {
+          "state": "nova",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/kbd_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/kbd_nova_light.png",
+          "stylePreset": "Nova"
+        },
         {
           "state": "states",
           "theme": "dark",
@@ -1718,13 +1790,25 @@
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/kbd_states_light.png",
           "stylePreset": "Vega"
+        },
+        {
+          "state": "tooltip_nova",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/kbd_tooltip_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "tooltip_nova",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/kbd_tooltip_nova_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
     {
       "id": "item",
       "title": "Item",
-      "description": "A single row in a list of interactive/informational rows.",
+      "description": "A versatile component for displaying content with media, title, description, and actions.",
       "category": "data-display",
       "family": "text",
       "isNew": false,
@@ -1746,6 +1830,18 @@
         ]
       },
       "previews": [
+        {
+          "state": "nova",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/item_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/item_nova_light.png",
+          "stylePreset": "Nova"
+        },
         {
           "state": "states",
           "theme": "dark",
@@ -1775,7 +1871,7 @@
     {
       "id": "empty",
       "title": "Empty",
-      "description": "A centered placeholder for an empty list, search result, or state.",
+      "description": "Use the Empty component to display an empty state.",
       "category": "data-display",
       "family": "text",
       "isNew": false,
@@ -1825,6 +1921,18 @@
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_media_default_light.png",
           "stylePreset": "Vega"
+        },
+        {
+          "state": "nova",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/empty_nova_light.png",
+          "stylePreset": "Nova"
         },
         {
           "state": "outline",
@@ -1891,7 +1999,7 @@
     {
       "id": "alert",
       "title": "Alert",
-      "description": "A short, prominent callout for important information.",
+      "description": "Displays a callout for user attention.",
       "category": "feedback",
       "family": "feedback",
       "isNew": false,
@@ -1927,6 +2035,42 @@
           "stylePreset": "Vega"
         },
         {
+          "state": "dialog_nova_default",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_nova_default_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "dialog_nova_default",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_nova_default_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "dialog_nova_media",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_nova_media_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "dialog_nova_media",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_nova_media_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "dialog_nova_small_media",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_nova_small_media_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "dialog_nova_small_media",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_nova_small_media_light.png",
+          "stylePreset": "Nova"
+        },
+        {
           "state": "dialog_states",
           "theme": "dark",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_states_dark.png",
@@ -1937,6 +2081,18 @@
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_states_light.png",
           "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_actions",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_nova_actions_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_actions",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_nova_actions_light.png",
+          "stylePreset": "Nova"
         },
         {
           "state": "states",
@@ -1955,7 +2111,7 @@
     {
       "id": "progress",
       "title": "Progress",
-      "description": "A linear progress bar.",
+      "description": "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
       "category": "feedback",
       "family": "feedback",
       "isNew": false,
@@ -1974,6 +2130,30 @@
           "stylePreset": "Vega"
         },
         {
+          "state": "nova_label",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/progress_nova_label_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_label",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/progress_nova_label_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_rtl",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/progress_nova_rtl_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_rtl",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/progress_nova_rtl_light.png",
+          "stylePreset": "Nova"
+        },
+        {
           "state": "states",
           "theme": "dark",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/progress_states_dark.png",
@@ -1990,7 +2170,7 @@
     {
       "id": "skeleton",
       "title": "Skeleton",
-      "description": "A placeholder block shown while content is loading (pulse by default; shimmer via Modifier).",
+      "description": "Use to show a placeholder while content is loading.",
       "category": "feedback",
       "family": "feedback",
       "isNew": false,
@@ -2036,7 +2216,7 @@
     {
       "id": "toast",
       "title": "Toast",
-      "description": "A stackable, auto-dismissing notification queue. Real shadcn/ui's sonner.tsx wraps the separate `sonner` npm library; since there's no Compose Multiplatform equivalent, ToastState + Toaster reimplement that queue directly.",
+      "description": "A succinct message that is displayed temporarily.",
       "category": "feedback",
       "family": "feedback",
       "isNew": false,
@@ -2106,7 +2286,7 @@
     {
       "id": "accordion",
       "title": "Accordion",
-      "description": "A vertically-stacked set of collapsible sections.",
+      "description": "A vertically stacked set of interactive headings that each reveal a section of content.",
       "category": "disclosure-and-navigation",
       "family": "disclosure",
       "isNew": false,
@@ -2153,7 +2333,7 @@
     {
       "id": "tabs",
       "title": "Tabs",
-      "description": "A segmented control with a sliding indicator for switching between related views.",
+      "description": "A set of layered sections of content, known as tab panels, displayed one at a time.",
       "category": "disclosure-and-navigation",
       "family": "selection",
       "isNew": false,
@@ -2178,6 +2358,18 @@
           "stylePreset": "Vega"
         },
         {
+          "state": "nova",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tabs_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tabs_nova_light.png",
+          "stylePreset": "Nova"
+        },
+        {
           "state": "states",
           "theme": "dark",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/tabs_states_dark.png",
@@ -2194,7 +2386,7 @@
     {
       "id": "breadcrumb",
       "title": "Breadcrumb",
-      "description": "A row of navigation links showing the current page's location in a hierarchy.",
+      "description": "Displays the path to the current resource using a hierarchy of links.",
       "category": "disclosure-and-navigation",
       "family": "disclosure",
       "isNew": false,
@@ -2205,6 +2397,18 @@
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/breadcrumb_ellipsis_light.png",
           "stylePreset": "Vega"
+        },
+        {
+          "state": "nova",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/breadcrumb_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/breadcrumb_nova_light.png",
+          "stylePreset": "Nova"
         },
         {
           "state": "states",
@@ -2223,7 +2427,7 @@
     {
       "id": "tooltip",
       "title": "Tooltip",
-      "description": "A small hover-triggered label for an interactive element.",
+      "description": "",
       "category": "overlays-and-navigation",
       "family": "overlay",
       "isNew": false,
@@ -2270,7 +2474,7 @@
     {
       "id": "popover",
       "title": "Popover",
-      "description": "A click-triggered anchored panel for rich content.",
+      "description": "Displays rich content in a portal, triggered by a button.",
       "category": "overlays-and-navigation",
       "family": "field",
       "isNew": false,
@@ -2289,6 +2493,18 @@
           "stylePreset": "Vega"
         },
         {
+          "state": "nova_basic",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/popover_nova_basic_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_basic",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/popover_nova_basic_light.png",
+          "stylePreset": "Nova"
+        },
+        {
           "state": "states",
           "theme": "dark",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/popover_states_dark.png",
@@ -2305,12 +2521,24 @@
     {
       "id": "hover-card",
       "title": "Hover Card",
-      "description": "A hover-triggered panel for richer preview content than a Tooltip.",
+      "description": "For sighted users to preview content available behind a link.",
       "category": "overlays-and-navigation",
       "family": "overlay",
       "isNew": false,
       "properties": {},
       "previews": [
+        {
+          "state": "nova",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/hover_card_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/hover_card_nova_light.png",
+          "stylePreset": "Nova"
+        },
         {
           "state": "trigger",
           "theme": "dark",
@@ -2328,12 +2556,24 @@
     {
       "id": "dropdown-menu",
       "title": "Dropdown Menu",
-      "description": "An anchored list of actions, optionally grouped under labels and separators.",
+      "description": "Displays a menu to the user \u2014 such as a set of actions or functions \u2014 triggered by a button.",
       "category": "overlays-and-navigation",
       "family": "field",
       "isNew": false,
       "properties": {},
       "previews": [
+        {
+          "state": "nova",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/dropdown_menu_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/dropdown_menu_nova_light.png",
+          "stylePreset": "Nova"
+        },
         {
           "state": "states",
           "theme": "dark",
@@ -2386,7 +2626,7 @@
     {
       "id": "dialog",
       "title": "Dialog",
-      "description": "A window overlaid on either the primary window or another dialog window, rendering the content underneath inert.",
+      "description": "Make changes to your profile here.",
       "category": "overlays-and-navigation",
       "family": "overlay",
       "isNew": false,
@@ -2439,7 +2679,7 @@
     {
       "id": "alert-dialog",
       "title": "Alert Dialog",
-      "description": "A Dialog that can't be dismissed by clicking outside -- requires an explicit choice.",
+      "description": "A modal dialog that interrupts the user with important content and expects a response.",
       "category": "overlays-and-navigation",
       "family": "overlay",
       "isNew": false,
@@ -2458,6 +2698,42 @@
           "stylePreset": "Vega"
         },
         {
+          "state": "nova_default",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_nova_default_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_default",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_nova_default_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_media",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_nova_media_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_media",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_nova_media_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_small_media",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_nova_small_media_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_small_media",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_nova_small_media_light.png",
+          "stylePreset": "Nova"
+        },
+        {
           "state": "states",
           "theme": "dark",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/alert_dialog_states_dark.png",
@@ -2474,7 +2750,7 @@
     {
       "id": "sheet",
       "title": "Sheet",
-      "description": "A modal panel that slides in from a screen edge.",
+      "description": "Make changes to your profile here.",
       "category": "overlays-and-navigation",
       "family": "overlay",
       "isNew": false,
@@ -2777,6 +3053,30 @@
           "stylePreset": "Vega"
         },
         {
+          "state": "nova_arabic_options",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/select_nova_arabic_options_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_arabic_options",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/select_nova_arabic_options_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_value_ellipsis",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/select_nova_value_ellipsis_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_value_ellipsis",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/select_nova_value_ellipsis_light.png",
+          "stylePreset": "Nova"
+        },
+        {
           "state": "placeholder",
           "theme": "dark",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/select_placeholder_dark.png",
@@ -2929,7 +3229,7 @@
     {
       "id": "menubar",
       "title": "Menubar",
-      "description": "A horizontal row of menu triggers, desktop-app style.",
+      "description": "",
       "category": "overlays-and-navigation",
       "family": "selection",
       "isNew": false,
@@ -2946,13 +3246,49 @@
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/menubar_idle_light.png",
           "stylePreset": "Vega"
+        },
+        {
+          "state": "menu_nova",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/menubar_menu_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "menu_nova",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/menubar_menu_nova_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/menubar_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/menubar_nova_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "selection_nova",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/menubar_selection_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "selection_nova",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/menubar_selection_nova_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
     {
       "id": "navigation-menu",
       "title": "Navigation Menu",
-      "description": "A horizontal top-level site navigation row where some items open a panel of related links.",
+      "description": "A collection of links for navigating websites.",
       "category": "overlays-and-navigation",
       "family": "selection",
       "isNew": false,
@@ -2975,13 +3311,37 @@
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/navigation_menu_item_focused_light.png",
           "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_idle",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/navigation_menu_nova_idle_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_idle",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/navigation_menu_nova_idle_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_open",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/navigation_menu_nova_open_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_open",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/navigation_menu_nova_open_light.png",
+          "stylePreset": "Nova"
         }
       ]
     },
     {
       "id": "table",
       "title": "Table",
-      "description": "A responsive data table with a bordered header and hairline row separators.",
+      "description": "A responsive table component.",
       "category": "data-and-layout",
       "family": "layout",
       "isNew": false,
@@ -3004,12 +3364,47 @@
     {
       "id": "pagination",
       "title": "Pagination",
-      "description": "Page-number navigation with Previous/Next controls and ellipsis gaps.",
+      "description": "Pagination with page navigation, next and previous links.",
       "category": "data-and-layout",
       "family": "layout",
       "isNew": false,
-      "properties": {},
+      "properties": {
+        "ButtonSize": [
+          "Xs",
+          "Sm",
+          "Md",
+          "Lg",
+          "Icon",
+          "IconXs",
+          "IconSm",
+          "IconLg"
+        ]
+      },
       "previews": [
+        {
+          "state": "nova_default",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/pagination_nova_default_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_default",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/pagination_nova_default_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_rtl",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/pagination_nova_rtl_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_rtl",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/pagination_nova_rtl_light.png",
+          "stylePreset": "Nova"
+        },
         {
           "state": "states",
           "theme": "dark",
@@ -3027,12 +3422,48 @@
     {
       "id": "scroll-area",
       "title": "Scroll Area",
-      "description": "A scrollable region with a slim custom scrollbar thumb instead of the native one. Use ScrollArea for short Column content; use LazyScrollArea for LazyColumn / LazyRow. Scrollbar visibility follows Radix ScrollType (Auto / Always / Scroll / Hover).",
+      "description": "Augments native scroll functionality for custom, cross-browser styling.",
       "category": "data-and-layout",
       "family": "layout",
       "isNew": false,
       "properties": {},
       "previews": [
+        {
+          "state": "nova_focus",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/scroll_area_nova_focus_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/scroll_area_nova_focus_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_horizontal",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/scroll_area_nova_horizontal_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_horizontal",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/scroll_area_nova_horizontal_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_vertical",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/scroll_area_nova_vertical_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_vertical",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/scroll_area_nova_vertical_light.png",
+          "stylePreset": "Nova"
+        },
         {
           "state": "states",
           "theme": "dark",
@@ -3050,7 +3481,7 @@
     {
       "id": "chart",
       "title": "Chart",
-      "description": "A config-driven bar/line chart. Real shadcn/ui's chart.tsx wraps Recharts; since there is no Compose Multiplatform equivalent, this draws directly via Canvas.",
+      "description": "Beautiful charts with configurable series, tooltips and legends.",
       "category": "data-and-layout",
       "family": "data",
       "isNew": false,
@@ -3109,7 +3540,7 @@
     {
       "id": "calendar",
       "title": "Calendar",
-      "description": "A single-month date picker grid with a highlighted selection and today marker.",
+      "description": "A calendar component that allows users to select a date or a range of dates.",
       "category": "data-and-layout",
       "family": "data",
       "isNew": false,
@@ -3126,6 +3557,42 @@
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/calendar_caption_dropdown_light.png",
           "stylePreset": "Vega"
+        },
+        {
+          "state": "nova",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/calendar_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/calendar_nova_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_range",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/calendar_nova_range_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_range",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/calendar_nova_range_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_week_numbers",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/calendar_nova_week_numbers_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_week_numbers",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/calendar_nova_week_numbers_light.png",
+          "stylePreset": "Nova"
         },
         {
           "state": "states",
@@ -3168,12 +3635,60 @@
     {
       "id": "carousel",
       "title": "Carousel",
-      "description": "A swipeable, snap-scrolling set of slides, built directly on Compose's own Pager.",
+      "description": "A carousel with motion and swipe, using Compose Pager.",
       "category": "data-and-layout",
       "family": "data",
       "isNew": false,
       "properties": {},
       "previews": [
+        {
+          "state": "nova_default",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/carousel_nova_default_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_default",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/carousel_nova_default_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_rtl",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/carousel_nova_rtl_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_rtl",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/carousel_nova_rtl_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_sizes",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/carousel_nova_sizes_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_sizes",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/carousel_nova_sizes_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_vertical",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/carousel_nova_vertical_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_vertical",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/carousel_nova_vertical_light.png",
+          "stylePreset": "Nova"
+        },
         {
           "state": "overlap_regression",
           "theme": "light",
@@ -3203,7 +3718,7 @@
     {
       "id": "resizable",
       "title": "Resizable",
-      "description": "Two panes divided by a draggable handle.",
+      "description": "Accessible resizable panel groups and layouts with keyboard support.",
       "category": "data-and-layout",
       "family": "layout",
       "isNew": false,
@@ -3214,6 +3729,42 @@
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_narrow_first_light.png",
           "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_nova_focus_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_focus",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_nova_focus_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_horizontal",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_nova_horizontal_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_horizontal",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_nova_horizontal_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_vertical",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_nova_vertical_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_vertical",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/resizable_nova_vertical_light.png",
+          "stylePreset": "Nova"
         },
         {
           "state": "sidebar_and_content",
@@ -3262,7 +3813,7 @@
     {
       "id": "sidebar",
       "title": "Sidebar",
-      "description": "A collapsible side navigation rail with grouped menu sections and a main content inset.",
+      "description": "A composable, themeable and customizable sidebar component.",
       "category": "data-and-layout",
       "family": "overlay",
       "isNew": false,
@@ -3375,7 +3926,7 @@
     {
       "id": "message",
       "title": "Message",
-      "description": "One chat-transcript row: avatar and content laid out side by side, mirrored for the sender's own messages.",
+      "description": "Displays a message in a conversation, with optional avatar, header, footer, and alignment.",
       "category": "ai-elements",
       "family": "ai",
       "isNew": false,
@@ -3406,10 +3957,34 @@
           "stylePreset": "Vega"
         },
         {
+          "state": "ghost_nova",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_ghost_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "ghost_nova",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_ghost_nova_light.png",
+          "stylePreset": "Nova"
+        },
+        {
           "state": "group",
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_group_light.png",
           "stylePreset": "Vega"
+        },
+        {
+          "state": "nova",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_nova_light.png",
+          "stylePreset": "Nova"
         },
         {
           "state": "scroller_button_start",
@@ -3472,6 +4047,18 @@
           "stylePreset": "Vega"
         },
         {
+          "state": "scroller_provider_nova",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_provider_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "scroller_provider_nova",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_provider_nova_light.png",
+          "stylePreset": "Nova"
+        },
+        {
           "state": "scroller_short_content",
           "theme": "dark",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_short_content_dark.png",
@@ -3512,7 +4099,7 @@
     {
       "id": "bubble",
       "title": "Bubble",
-      "description": "A single chat message bubble, self-aligned to the left or right of the transcript.",
+      "description": "",
       "category": "ai-elements",
       "family": "ai",
       "isNew": false,
@@ -3541,6 +4128,18 @@
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_conversation_with_reactions_light.png",
           "stylePreset": "Vega"
+        },
+        {
+          "state": "nova",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/bubble_nova_light.png",
+          "stylePreset": "Nova"
         },
         {
           "state": "reactions_top",
@@ -3583,7 +4182,7 @@
     {
       "id": "attachment",
       "title": "Attachment",
-      "description": "A file-attachment chip for a chat composer's upload tray, with upload/processing/error states.",
+      "description": "Displays a file or image attachment with media, metadata, upload state, and actions.",
       "category": "ai-elements",
       "family": "ai",
       "isNew": false,
@@ -3600,6 +4199,18 @@
           "theme": "light",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/attachment_composer_upload_tray_light.png",
           "stylePreset": "Vega"
+        },
+        {
+          "state": "nova_layout",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/attachment_nova_layout_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_layout",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/attachment_nova_layout_light.png",
+          "stylePreset": "Nova"
         },
         {
           "state": "states",
@@ -3630,7 +4241,7 @@
     {
       "id": "marker",
       "title": "Marker",
-      "description": "A labeled divider for a chat transcript, e.g. a date separator or a pinned-messages banner.",
+      "description": "Displays an inline status, system note, bordered row, or labeled separator in a conversation.",
       "category": "ai-elements",
       "family": "ai",
       "isNew": false,
@@ -3655,6 +4266,18 @@
           "stylePreset": "Vega"
         },
         {
+          "state": "nova",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/marker_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/marker_nova_light.png",
+          "stylePreset": "Nova"
+        },
+        {
           "state": "separator",
           "theme": "dark",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/marker_separator_dark.png",
@@ -3671,7 +4294,7 @@
     {
       "id": "message-scroller",
       "title": "Message Scroller",
-      "description": "A chat-transcript scroll container that follows new messages to the bottom -- but only while the reader hasn't scrolled away -- with a floating jump-to-bottom button when they have.",
+      "description": "How can I help you today?",
       "category": "ai-elements",
       "family": "ai",
       "isNew": false,
@@ -3738,6 +4361,18 @@
           "stylePreset": "Vega"
         },
         {
+          "state": "provider_nova",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_provider_nova_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "provider_nova",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_provider_nova_light.png",
+          "stylePreset": "Nova"
+        },
+        {
           "state": "short_content",
           "theme": "dark",
           "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/message_scroller_short_content_dark.png",
@@ -3766,7 +4401,7 @@
     {
       "id": "shimmer",
       "title": "Shimmer",
-      "description": "A sweeping highlight for \"generating response\"/\"thinking\" text (and solid blocks) \u2014 Modifier.shimmer (SrcAtop overlay) or rememberShimmerStyle (contentBrush / background-clip:text), matching ui.shadcn.com/docs/utils/shimmer.",
+      "description": "Utilities for adding a shimmer effect to text elements.",
       "category": "utils",
       "family": "utils",
       "isNew": false,
@@ -3788,13 +4423,49 @@
     },
     {
       "id": "scroll-fade",
-      "title": "Scroll Fade",
-      "description": "A scroll-position-aware fade at the edges of a scrollable container, hinting overflow without a hard cut -- a modifier, not a standalone component.",
+      "title": "scroll-fade",
+      "description": "Utilities for adding a fade effect to the edges of a scroll container.",
       "category": "utils",
       "family": "utils",
       "isNew": false,
       "properties": {},
       "previews": [
+        {
+          "state": "nova_end",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/scroll_fade_nova_end_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_end",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/scroll_fade_nova_end_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_middle",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/scroll_fade_nova_middle_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_middle",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/scroll_fade_nova_middle_light.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_start",
+          "theme": "dark",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/scroll_fade_nova_start_dark.png",
+          "stylePreset": "Nova"
+        },
+        {
+          "state": "nova_start",
+          "theme": "light",
+          "url": "https://raw.githubusercontent.com/ronjunevaldoz/shadcn-compose/main/docs/previews/scroll_fade_nova_start_light.png",
+          "stylePreset": "Nova"
+        },
         {
           "state": "states",
           "theme": "dark",

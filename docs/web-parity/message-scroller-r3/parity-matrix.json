@@ -1,0 +1,74 @@
+{
+  "status": "partial; Message Scroller stays unchecked",
+  "date": "2026-10-31",
+  "sources": "../message-scroller-r1/sources.json",
+  "sourceFilesHashed": 42,
+  "target": "base-nova; official examples use Rhea, known nested preset differences retained",
+  "recipes": [
+    {
+      "source": "message-scroller-previous-context.tsx",
+      "heading": "Keeping Context Visible",
+      "implemented": "Original8 messages, initial first2, margin24, peek64..128, scripted next-user preview with two-line ellipsis, send/reset/menu/slider. Leading1000ms wait then35ms per word+whitespace, busy controls disabled, all3 turns then exhausted state, keyed reset and structured cancellation.",
+      "remaining": "Browser full-state timing/layout, focus/assistive technology, text-balance and explicit tabular-nums font feature."
+    },
+    {
+      "source": "message-scroller-load-history.tsx",
+      "heading": "Loading Earlier Messages",
+      "implemented": "Original10 messages, initial last5, one load-all operation and disabled History Loaded button, real toast, anonymous marker, no anchors, prepend reading-position preservation, Root-only reset.",
+      "remaining": "Browser anchoring and toast layout; exported standalone fallback local Toaster differs from catalog window host unless caller supplies ToastState."
+    },
+    {
+      "source": "message-scroller-visibility.tsx",
+      "heading": "Tracking the Reader’s Position",
+      "implemented": "Original8 messages/four user anchors; margin12, source exterior outline trigger, current-location bars and256dp physical-left panel, focus/hover entry, smooth jump and selected row styling.",
+      "remaining": "Exterior trigger mostly clipped in narrow native captures; exact browser overflow/collision and touch-open behavior unverified. Compose selected semantics is not full aria-current=location equivalence."
+    }
+  ],
+  "dependenciesFixed": [
+    "InputGroupAddon exposes caller Style on both overloads; cached logical default insets and caller override precedence. Click/focus modifier precedes styleable so addon padding is clickable. Public version0.3.14.",
+    "Button original caller constraints now reach painted chrome using a single-child Layout; outer minimum touch target applied afterward. Full-width History footer paints full width;48dp touch target preserves28dp icon visual size. RED3 failures/1 pass -> GREEN4, existing Nova7 pass."
+  ],
+  "verification": {
+    "coreIndependentVerify": {
+      "total": 78,
+      "MessageScrollerParityTest": 29,
+      "MessageScrollerTest": 15,
+      "MessageScrollerScreenshotTest": 14,
+      "TabsNovaParityTest": 4,
+      "InputGroupAddonStyleTest": 5,
+      "ButtonCallerSizeTest": 4,
+      "ButtonNovaParityTest": 7
+    },
+    "catalog": {
+      "total": 31,
+      "parameterizedRecipes": 28,
+      "existingExamples": 3
+    },
+    "ktlint": "Two owning core/shared checks passed.",
+    "web": {
+      "JS": {
+        "exit": 0,
+        "seconds": 147.935
+      },
+      "Wasm": {
+        "exit": 0,
+        "seconds": 94.733
+      },
+      "mode": "Separate --no-parallel --max-workers=1."
+    },
+    "nativeReview": "20 final new captures inspected; four width/theme combinations for three initial states, context exhausted and outline panel. Not browser validation.",
+    "baselinesRecorded": false,
+    "inputGroupIsolation": "All12 legacy default images byte-identical with pre-Style implementation plus inert signature shim. Two old focus fixtures corrected to target editable field. Isolation preceded Button fix; not a claim that final Button source reverified all12 old images. Old goldens not refreshed. See legacy-differences.",
+    "paletteInvestigation": "An apparent white current-row highlight in an earlier phone-dark image was not separately archived and could not be reproduced. Test-only saved-PNG RGB assertions passed all4 cases alone and in full31-test order; expected dark#262626/light#f5f5f5. Final images inspected. No production theme fix or root-cause claim.",
+    "detekt": "Not rerun in r3. In r2 default tasks had zero sources; actual commonMain analysis failed core10731/app26557 findings. Cannot claim static analysis green.",
+    "evidence": "verification/ledger.json and final XML files"
+  },
+  "remaining": [
+    "Five recipes: Default/demo, Anchoring, Group Chat, Streaming, Animation. Interim first page preview is Context; actual Default/chat not migrated.",
+    "All six migrated recipes still require desktop/mobile x light/dark browser visual and complete interaction verification.",
+    "r1 primitive and r2 Tabs/text-balance/legacy/actual Detekt gaps remain open; see earlier matrices.",
+    "Editor excluded; Attachment remaining differences deferred."
+  ],
+  "next": "Navigation Menu is next unstarted component per user priority; keep five remaining recipes and all browser/primitive gaps visible.",
+  "commit": "No commit. Earlier whole-repository pre-commit was rejected by automatic approval review for quota; no hook bypass."
+}

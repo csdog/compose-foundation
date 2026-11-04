@@ -1,0 +1,7 @@
+{
+  "body": "auto",
+  "html": "auto",
+  "canvas": [],
+  "hovered": "DIV",
+  "limitation": "DOM query found no canvas; this extraction is not accepted as pointer-cursor verification."
+}

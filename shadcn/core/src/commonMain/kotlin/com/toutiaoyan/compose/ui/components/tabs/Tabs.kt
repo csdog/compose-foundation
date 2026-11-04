@@ -9,9 +9,21 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.collectIsHoveredAsState
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.unit.sp
+import com.toutiaoyan.compose.ui.theme.LocalContentColor
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.selection.selectableGroup
@@ -23,6 +35,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
@@ -43,6 +56,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -54,9 +68,17 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.ParentDataModifier
+import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.constrainWidth
+import androidx.compose.ui.unit.constrainHeight
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.disabled
@@ -66,14 +88,15 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.components.overlay.OverlayAnimMs
+import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.tokens.StylePreset
+import com.toutiaoyan.compose.ui.styles.cssStyleable
 import com.toutiaoyan.compose.ui.styles.rememberMinTouchTargetStyle
-import com.toutiaoyan.compose.ui.styles.rememberPressMotionStyle
 import kotlin.math.roundToInt
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextVariant
-import com.toutiaoyan.compose.ui.components.text.TextColors
-import com.toutiaoyan.compose.tailwind.core.twSpacing
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextOverflow
 
 @Immutable
 private data class TabsController(
@@ -82,6 +105,7 @@ private data class TabsController(
     val orientation: TabsOrientation,
     val activationMode: TabsActivationMode,
     val loop: Boolean,
+    val controlled: Boolean,
 )
 
 enum class TabsOrientation { Horizontal, Vertical }
@@ -96,6 +120,8 @@ private val LocalTabsListVariant = staticCompositionLocalOf { TabsListVariant.De
 
 private class TabsListState {
     var listCoordinates: LayoutCoordinates? = null
+    var focusedTab by mutableStateOf<String?>(null)
+    var hadRegisteredTabs = false
     val tabBounds = mutableStateMapOf<String, Rect>()
     val tabOrder = mutableStateListOf<String>()
     val tabEnabled = mutableStateMapOf<String, Boolean>()
@@ -185,7 +211,7 @@ fun Tabs(
     modifier: Modifier = Modifier,
     defaultValue: String = "",
     orientation: TabsOrientation = TabsOrientation.Horizontal,
-    activationMode: TabsActivationMode = TabsActivationMode.Automatic,
+    activationMode: TabsActivationMode = TabsActivationMode.Manual,
     loop: Boolean = true,
     style: Style = Style,
     value: String? = null,
@@ -196,36 +222,89 @@ fun Tabs(
     val resolvedSelected = value ?: selected
     val resolvedOnChange = onValueChange ?: onSelectedChange
     val current = resolvedSelected ?: internalSelected
-    val setSelected: (String) -> Unit = { next ->
-        if (resolvedSelected == null) internalSelected = next
-        resolvedOnChange?.invoke(next)
-    }
+    val controlled = rememberUpdatedState(resolvedSelected != null)
+    val latestSelected = rememberUpdatedState(current)
+    val latestChange = rememberUpdatedState(resolvedOnChange)
+    val setSelected: (String) -> Unit =
+        remember {
+            { next ->
+                val previous = if (controlled.value) latestSelected.value else internalSelected
+                if (next != previous) {
+                    if (!controlled.value) internalSelected = next
+                    latestChange.value?.invoke(next)
+                }
+            }
+        }
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     CompositionLocalProvider(
-        LocalTabs provides TabsController(current, setSelected, orientation, activationMode, loop),
+        LocalTabs provides
+            TabsController(
+                current,
+                setSelected,
+                orientation,
+                activationMode,
+                loop,
+                resolvedSelected != null,
+            ),
     ) {
-        if (orientation == TabsOrientation.Vertical) {
-            Row(
-                modifier = modifier.styleable(styleState, style),
-                horizontalArrangement = Arrangement.spacedBy(twSpacing.md),
-            ) {
-                TabsScope().content()
+        TabsLayout(modifier.styleable(styleState, style), orientation) { TabsScope().content() }
+    }
+}
+
+private object HiddenTabPanel : ParentDataModifier {
+    override fun Density.modifyParentData(parentData: Any?): Any = HiddenTabPanel
+}
+
+/** Hidden kept panels do not consume CSS gap or participate in placement/focus. */
+@Composable
+private fun TabsLayout(
+    modifier: Modifier,
+    orientation: TabsOrientation,
+    content: @Composable () -> Unit,
+) {
+    Layout(modifier = modifier, content = content) { children, constraints ->
+        val column = orientation == TabsOrientation.Horizontal
+        val gap = 8.dp.roundToPx()
+        val visible = children.filter { it.parentData !== HiddenTabPanel }
+        var used = 0
+        val placeables =
+            visible.mapIndexed { index, child ->
+                if (index > 0) used += gap
+                child.measure(
+                    if (column) {
+                        constraints.copy(minWidth = 0, minHeight = 0, maxHeight = Constraints.Infinity)
+                    } else {
+                        constraints.copy(
+                            minWidth = 0,
+                            minHeight = 0,
+                            maxWidth =
+                                if (constraints.hasBoundedWidth) {
+                                    (constraints.maxWidth - used).coerceAtLeast(0)
+                                } else {
+                                    Constraints.Infinity
+                                },
+                        )
+                    },
+                ).also { used += if (column) it.height else it.width }
             }
-        } else {
-            Column(
-                modifier = modifier.styleable(styleState, style),
-                verticalArrangement = Arrangement.spacedBy(twSpacing.md),
-            ) {
-                TabsScope().content()
+        val cross = placeables.maxOfOrNull { if (column) it.width else it.height } ?: 0
+        val width = constraints.constrainWidth(if (column) cross else used)
+        val height = constraints.constrainHeight(if (column) used else cross)
+        layout(width, height) {
+            var offset = 0
+            placeables.forEachIndexed { index, child ->
+                if (index > 0) offset += gap
+                child.placeRelative(if (column) 0 else offset, if (column) offset else 0)
+                offset += if (column) child.height else child.width
             }
         }
     }
 }
 
 /**
- * The muted track that holds triggers + a sliding [TabsIndicator] pill.
- * [variant] `Line` is official `variant="line"`: transparent list + 2.dp underline.
- * [indicator] defaults to [TabsIndicator]; pass `{}` to disable.
+ * The muted track holding tab triggers; the selected trigger paints its own chrome.
+ * [variant] `Line` uses the source's external 2dp underline.
+ * [indicator] is an optional project decoration slot and is empty by default.
  */
 @Composable
 fun TabsScope.TabsList(
@@ -233,14 +312,31 @@ fun TabsScope.TabsList(
     variant: TabsListVariant = TabsListVariant.Default,
     style: Style = Style,
     contentDescription: String? = null,
-    indicator: @Composable BoxScope.() -> Unit = { TabsIndicator() },
+    indicator: @Composable BoxScope.() -> Unit = {},
     content: @Composable TabsListScope.() -> Unit,
 ) {
     val listStyleState = remember { MutableStyleState(MutableInteractionSource()) }
     val listState = remember { TabsListState() }
     val vertical = LocalTabs.current?.orientation == TabsOrientation.Vertical
-    val itemGap = if (variant == TabsListVariant.Line) twSpacing.xs else twSpacing.xs2
+    val itemGap = if (variant == TabsListVariant.Line) 4.dp else 0.dp
     val listDescription = contentDescription
+    val tabs = checkNotNull(LocalTabs.current)
+    val registrations = listState.tabOrder.map { it to listState.tabEnabled[it] }
+    LaunchedEffect(registrations, tabs.selected, tabs.controlled) {
+        if (!tabs.controlled) {
+            val ready = registrations.isNotEmpty() && registrations.all { it.second != null }
+            if (ready || (registrations.isEmpty() && listState.hadRegisteredTabs)) {
+                if (ready) listState.hadRegisteredTabs = true
+                val enabled = registrations.filter { it.second == true }.map { it.first }
+                if (tabs.selected !in enabled) tabs.onSelectedChange(enabled.firstOrNull() ?: "")
+            }
+        }
+    }
+    LaunchedEffect(listState.focusedTab) {
+        listState.focusedTab?.takeIf { listState.tabEnabled[it] == true }?.let {
+            listState.requester(it).requestFocus()
+        }
+    }
 
     CompositionLocalProvider(
         LocalTabsListState provides listState,
@@ -262,10 +358,11 @@ fun TabsScope.TabsList(
                         listStyleState,
                         rememberTabsListStyle(variant, horizontal = !vertical) then style,
                     ),
+            contentAlignment = Alignment.Center,
         ) {
             indicator()
             if (vertical) {
-                Column(verticalArrangement = Arrangement.spacedBy(itemGap)) {
+                Column(Modifier.width(IntrinsicSize.Max), verticalArrangement = Arrangement.spacedBy(itemGap)) {
                     TabsListScope().content()
                 }
             } else {
@@ -365,8 +462,22 @@ fun TabsListScope.TabsTrigger(
         rememberUpdatedStyleState(interactionSource) {
             it.isEnabled = resolvedEnabled
         }
-    val pressStyle = rememberPressMotionStyle()
     val touchTargetStyle = rememberMinTouchTargetStyle()
+    val hovered by interactionSource.collectIsHoveredAsState()
+    val direction = LocalLayoutDirection.current
+    val colors = currentTheme.colors
+    val dark = currentTheme.isDark
+    val variant = LocalTabsListVariant.current
+    val enabledTabs = listState.tabOrder.filter { listState.tabEnabled[it] == true }
+    val focusEntry =
+        listState.focusedTab?.takeIf { it in enabledTabs }
+            ?: tabs.selected.takeIf { it in enabledTabs } ?: enabledTabs.firstOrNull()
+    val novaHorizontal = currentTheme.activePreset == StylePreset.Nova && tabs.orientation == TabsOrientation.Horizontal
+    val itemSizeStyle =
+        remember(novaHorizontal) {
+            // Nova list32 - padding6 - the trigger's explicit calc(100% - 1px).
+            if (novaHorizontal) Style { height(25.dp) } else Style
+        }
     val requester = listState.requester(value)
 
     DisposableEffect(value) {
@@ -380,8 +491,12 @@ fun TabsListScope.TabsTrigger(
     Box(
         modifier =
             modifier
+                .then(if (tabs.orientation == TabsOrientation.Vertical) Modifier.fillMaxWidth() else Modifier)
+                .onGloballyPositioned { listState.updateTabBounds(value, it) }
                 .keyboardInputMode()
                 .focusRequester(requester)
+                .focusProperties { canFocus = resolvedEnabled && value == focusEntry }
+                .onFocusChanged { if (it.isFocused) listState.focusedTab = value }
                 .semantics {
                     role = Role.Tab
                     this.selected = isSelected
@@ -392,23 +507,57 @@ fun TabsListScope.TabsTrigger(
                     indication = null,
                     enabled = resolvedEnabled,
                     role = Role.Tab,
-                    onClick = { tabs.onSelectedChange(value) },
+                    onClick = {
+                        listState.focusedTab = value
+                        tabs.onSelectedChange(value)
+                    },
                 )
-                .onPreviewKeyEvent { handleTabsKey(tabs, listState, value, it) }
-                .styleable(styleState, touchTargetStyle then pressStyle),
-        contentAlignment = Alignment.Center,
+                .onPreviewKeyEvent { handleTabsKey(tabs, listState, value, it, direction) }
+                .drawWithContent {
+                    drawContent()
+                    if (variant == TabsListVariant.Line && isSelected) {
+                        val thickness = 2.dp.toPx()
+                        if (tabs.orientation == TabsOrientation.Horizontal) {
+                            drawRect(
+                                colors.foreground,
+                                Offset(0f, size.height + 3.dp.toPx()),
+                                androidx.compose.ui.geometry.Size(size.width, thickness),
+                            )
+                        } else {
+                            val x = if (direction == LayoutDirection.Rtl) -4.dp.toPx() else size.width + 2.dp.toPx()
+                            drawRect(
+                                colors.foreground,
+                                Offset(x, 0f),
+                                androidx.compose.ui.geometry.Size(thickness, size.height),
+                            )
+                        }
+                    }
+                }
+                .cssStyleable(
+                    styleState,
+                    touchTargetStyle then
+                        rememberTabItemStyle(isSelected, variant) then itemSizeStyle then style,
+                ),
+        contentAlignment =
+            if (tabs.orientation == TabsOrientation.Vertical) {
+                Alignment.CenterStart
+            } else {
+                Alignment.Center
+            },
     ) {
-        Box(
-            modifier =
-                Modifier
-                    .onGloballyPositioned { listState.updateTabBounds(value, it) }
-                    .styleable(
-                        styleState,
-                        rememberTabItemStyle(isSelected) then style,
-                    ),
-            contentAlignment = Alignment.Center,
-        ) {
-            content()
+        val color =
+            when {
+                isSelected || hovered -> colors.foreground
+                dark -> colors.mutedForeground
+                else -> colors.foreground.copy(alpha = colors.foreground.alpha * .6f)
+            }
+        CompositionLocalProvider(LocalContentColor provides color) {
+            Row(
+                horizontalArrangement =
+                    Arrangement.spacedBy(6.dp),
+                verticalAlignment =
+                    Alignment.CenterVertically,
+            ) { content() }
         }
     }
 }
@@ -423,27 +572,34 @@ fun TabsListScope.TabsTrigger(
     disabled: Boolean = false,
     style: Style = Style,
 ) {
-    val tabs = LocalTabs.current
-    val isSelected = tabs?.selected == value
     TabsTrigger(value = value, modifier = modifier, enabled = enabled, disabled = disabled, style = style) {
         Text(
+            modifier = Modifier.wrapContentWidth(unbounded = true),
+            maxLines = 1,
+            overflow = TextOverflow.Visible,
             variant = TextVariant.LabelLarge,
-            textStyle = if (!isSelected) TextColors.Muted else TextStyle.Default,
+            textStyle =
+                TextStyle(
+                    fontSize = 14.sp,
+                    lineHeight = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+                ),
         ) { label }
     }
 }
 
 /**
- * Panel shown when [value] matches the selected tab. Defaults to a light fade;
- * override [enter]/[exit] like other shadcn overlay panels.
+ * Panel shown when [value] matches the selected tab, immediately by default.
+ * Explicit [enter]/[exit] transitions remain available as project extensions.
  */
 @Composable
 fun TabsScope.TabsContent(
     value: String,
     modifier: Modifier = Modifier,
     style: Style = Style,
-    enter: EnterTransition = fadeIn(tween(OverlayAnimMs)),
-    exit: ExitTransition = fadeOut(tween(OverlayAnimMs)),
+    enter: EnterTransition = EnterTransition.None,
+    exit: ExitTransition = ExitTransition.None,
     forceMount: Boolean = false,
     keepMounted: Boolean? = null,
     content: @Composable () -> Unit,
@@ -451,11 +607,29 @@ fun TabsScope.TabsContent(
     val tabs = checkNotNull(LocalTabs.current) { "TabsContent must be used inside Tabs" }
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val selected = tabs.selected == value
+    var panelHasFocus by remember { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
+    LaunchedEffect(selected) {
+        if (!selected && panelHasFocus) focusManager.clearFocus(force = true)
+    }
     val styled = modifier.styleable(styleState, style)
     if (keepMounted ?: forceMount) {
-        Box(modifier = if (selected) styled else Modifier.size(0.dp)) {
-            content()
+        Layout(
+            modifier =
+                (if (selected) styled else Modifier.then(HiddenTabPanel).clearAndSetSemantics {})
+                    .onFocusChanged { panelHasFocus = it.hasFocus }
+                    .focusProperties { onEnter = { if (!selected) cancelFocusChange() } }.focusGroup(),
+            content = { Box(if (selected) Modifier else styled) { content() } },
+        ) { children, constraints ->
+            if (selected) {
+                val child = children.single().measure(constraints)
+                layout(child.width, child.height) { child.placeRelative(0, 0) }
+            } else {
+                layout(0, 0) {}
+            }
         }
+    } else if (enter == EnterTransition.None && exit == ExitTransition.None) {
+        if (selected) Box(styled) { content() }
     } else {
         AnimatedVisibility(
             visible = selected,
@@ -475,8 +649,8 @@ fun TabsScope.TabsContent(
     text: String,
     modifier: Modifier = Modifier,
     style: Style = Style,
-    enter: EnterTransition = fadeIn(tween(OverlayAnimMs)),
-    exit: ExitTransition = fadeOut(tween(OverlayAnimMs)),
+    enter: EnterTransition = EnterTransition.None,
+    exit: ExitTransition = ExitTransition.None,
     forceMount: Boolean = false,
     keepMounted: Boolean? = null,
 ) {
@@ -498,9 +672,18 @@ private fun handleTabsKey(
     listState: TabsListState,
     current: String,
     event: KeyEvent,
+    direction: LayoutDirection,
 ): Boolean {
     if (event.type != KeyEventType.KeyDown) return false
-    val enabled = listState.tabOrder.filter { listState.tabEnabled[it] != false }
+    val enabled =
+        listState.tabOrder.filter { listState.tabEnabled[it] != false }.sortedBy {
+            val bounds = listState.tabBounds[it]
+            when {
+                tabs.orientation == TabsOrientation.Vertical -> bounds?.top ?: Float.MAX_VALUE
+                direction == LayoutDirection.Rtl -> -(bounds?.left ?: -Float.MAX_VALUE)
+                else -> bounds?.left ?: Float.MAX_VALUE
+            }
+        }
     if (enabled.isEmpty()) return false
     val idx = enabled.indexOf(current)
     if (idx < 0) return false
@@ -512,13 +695,35 @@ private fun handleTabsKey(
                 if (vertical) {
                     return false
                 } else {
-                    stepTab(enabled, idx, +1, last, tabs.loop) ?: return false
+                    stepTab(
+                        enabled,
+                        idx,
+                        if (direction == LayoutDirection.Rtl) {
+                            -1
+                        } else {
+                            1
+                        },
+                        last,
+                        tabs.loop,
+                    )
+                        ?: return false
                 }
             Key.DirectionLeft ->
                 if (vertical) {
                     return false
                 } else {
-                    stepTab(enabled, idx, -1, last, tabs.loop) ?: return false
+                    stepTab(
+                        enabled,
+                        idx,
+                        if (direction == LayoutDirection.Rtl) {
+                            1
+                        } else {
+                            -1
+                        },
+                        last,
+                        tabs.loop,
+                    )
+                        ?: return false
                 }
             Key.DirectionDown ->
                 if (!vertical) {
@@ -540,7 +745,7 @@ private fun handleTabsKey(
             }
             else -> return false
         }
-    listState.requester(next).requestFocus()
+    listState.focusedTab = next
     if (tabs.activationMode == TabsActivationMode.Automatic) {
         tabs.onSelectedChange(next)
     }

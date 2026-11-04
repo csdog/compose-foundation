@@ -1,0 +1,7 @@
+{
+  "method": "Restore exact pre-pass InputGroup.kt body saved before API addition. Add ONLY two unused style parameters to let new test source compile; old12 fixtures never use those parameters. No other source/test/token changes.",
+  "prePassSourceSha256": "54ad65b7d4eddd85ccef21c4e8093738a2b5491abc7bfaa25a64058f5259aef5",
+  "isolationSourceSha256": "d8f0152aa82c34fdd417c86f6c8ea242afc332abcff685704e08def88d03b90a",
+  "currentSourceBackup": "/private/tmp/scroller-context-inputgroup-current.kt",
+  "oldGoldensRecorded": false
+}

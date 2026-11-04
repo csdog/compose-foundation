@@ -1,0 +1,74 @@
+{
+  "command_fingerprints": {
+    "ae9ab31c5500e1e5e86854bff50b34245e285fbc8865042712326fdea2f4bc52": 3
+  },
+  "failure_fingerprints": {},
+  "failure_fingerprints_truncated_occurrences": 0,
+  "run_count": 3,
+  "runs": [
+    {
+      "command": "./gradlew :shadcn:core:ktlintCheck :shadcn:core:detekt :app:shared:ktlintCheck :app:shared:detekt --console=plain --no-scan",
+      "elapsed_seconds": 10.013,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0001.log",
+      "question": "Do Carousel core and catalog owning-module quality gates pass after the parent formatted the implementation and tests?",
+      "scope": "targeted",
+      "sequence": 1,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:ktlintCheck :shadcn:core:detekt :app:shared:ktlintCheck :app:shared:detekt --console=plain --no-scan",
+      "elapsed_seconds": 8.297,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0002.log",
+      "question": "Do final Carousel core and catalog module quality gates remain green after the parent reviewed baseline corrections and RTL preview clearance?",
+      "scope": "targeted",
+      "sequence": 2,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:ktlintCheck :shadcn:core:detekt :app:shared:ktlintCheck :app:shared:detekt --console=plain --no-scan",
+      "elapsed_seconds": 8.443,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0003.log",
+      "question": "Do owning-module quality gates pass after the final Carousel Card inset correction and centered-number regression assertion?",
+      "scope": "targeted",
+      "sequence": 3,
+      "warning_fingerprints": []
+    }
+  ],
+  "version": 1,
+  "warning_fingerprints": {
+    "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4": {
+      "excerpt": "You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.",
+      "occurrences": 1
+    },
+    "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2": {
+      "excerpt": "Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.",
+      "occurrences": 1
+    },
+    "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a": {
+      "excerpt": "WARNING: The option setting 'android.experimental.enableScreenshotTest=true' is experimental.",
+      "occurrences": 1
+    },
+    "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=UNSUPPORTED_PROJECT_OPTION_USE to the gradle.properties file to suppress this warning.",
+      "occurrences": 2
+    },
+    "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90": {
+      "excerpt": "WARNING: The option setting 'android.experimental.testSuiteSupport=true' is experimental.",
+      "occurrences": 1
+    }
+  },
+  "warning_fingerprints_truncated_occurrences": 0,
+  "workflow": "ed0955e6633f584557c56f22af573b43"
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ScrollAreaExamplesTest[jvm]" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-10-30T19:44:57.480Z" hostname="Apples-MacBook-Pro.local" time="1.44">
+  <properties/>
+  <testcase name="defaultHasSourceFrameFiftyTagsAndKeyboardReachesLastTag[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.53"/>
+  <testcase name="horizontalUsesOriginalArtworkDimensionsAndScrollsToThirdArtist[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.078"/>
+  <testcase name="rtlStartsArabicMovesScrollbarAndRetainsOffsetAcrossLanguages[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.244"/>
+  <testcase name="defaultHasSourceFrameFiftyTagsAndKeyboardReachesLastTag[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.041"/>
+  <testcase name="horizontalUsesOriginalArtworkDimensionsAndScrollsToThirdArtist[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.047"/>
+  <testcase name="rtlStartsArabicMovesScrollbarAndRetainsOffsetAcrossLanguages[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.122"/>
+  <testcase name="defaultHasSourceFrameFiftyTagsAndKeyboardReachesLastTag[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.032"/>
+  <testcase name="horizontalUsesOriginalArtworkDimensionsAndScrollsToThirdArtist[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.047"/>
+  <testcase name="rtlStartsArabicMovesScrollbarAndRetainsOffsetAcrossLanguages[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.11"/>
+  <testcase name="defaultHasSourceFrameFiftyTagsAndKeyboardReachesLastTag[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.031"/>
+  <testcase name="horizontalUsesOriginalArtworkDimensionsAndScrollsToThirdArtist[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.057"/>
+  <testcase name="rtlStartsArabicMovesScrollbarAndRetainsOffsetAcrossLanguages[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.097"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,12 @@
+[
+  {
+    "name": "ShimmerExamplesTest[jvm]",
+    "tests": "40",
+    "skipped": "0",
+    "failures": "0",
+    "errors": "0",
+    "timestamp": "2026-10-30T21:17:10.850Z",
+    "hostname": "Apples-MacBook-Pro.local",
+    "time": "1.676"
+  }
+]

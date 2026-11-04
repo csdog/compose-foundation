@@ -1,0 +1,52 @@
+{
+  "tests": [
+    {
+      "name": "ChartScaleParityTest[jvm]",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "ChartAxisParityTest[jvm]",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "ChartPresentationParityTest[jvm]",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "ChartNumericLayoutParityTest[jvm]",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "ChartInteractionParityTest[jvm]",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "ChartExamplesTest[jvm]",
+      "tests": 32,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "total": 64,
+  "failures": 0,
+  "errors": 0,
+  "wrapperSeconds": 25.594,
+  "coreKtlint": true,
+  "sharedKtlint": true
+}

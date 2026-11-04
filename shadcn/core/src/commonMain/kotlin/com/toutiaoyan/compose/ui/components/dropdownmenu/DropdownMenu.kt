@@ -3,11 +3,11 @@
 package com.toutiaoyan.compose.ui.components.dropdownmenu
 
 import com.toutiaoyan.compose.ui.components.contextmenu.LocalContextMenuNova
+import com.toutiaoyan.compose.ui.components.contextmenu.LocalContextMenuLeadingSelectionIndicator
 import com.toutiaoyan.compose.ui.components.contextmenu.LocalContextMenuNavigation
 import com.toutiaoyan.compose.ui.components.contextmenu.ContextMenuNavigation
 import com.toutiaoyan.compose.ui.components.contextmenu.contextMenuNavigation
 import com.toutiaoyan.compose.ui.components.contextmenu.contextMenuTypography
-import com.toutiaoyan.compose.ui.components.command.CommandShortcut
 import com.toutiaoyan.compose.ui.icons.NovaCheck
 import com.toutiaoyan.compose.ui.icons.NovaChevronRight
 import androidx.compose.ui.input.key.*
@@ -18,6 +18,8 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
@@ -39,6 +41,8 @@ import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.rememberUpdatedStyleState
 import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
@@ -50,15 +54,26 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.semantics.toggleableState
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.offset
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.toutiaoyan.compose.ui.components.icon.Icon
 import com.toutiaoyan.compose.ui.components.icon.IconVariant
@@ -94,6 +109,7 @@ internal class DropdownMenuController(
     val open: Boolean,
     val onOpenChange: (Boolean) -> Unit,
     val modal: Boolean,
+    val anchorBounds: () -> Rect,
 ) {
     fun toggle() = onOpenChange(!open)
 
@@ -121,7 +137,7 @@ fun dropdownMenuState(): DropdownMenuScope {
 
 /** Extra start padding so a plain row lines up with [DropdownMenuCheckboxItem] / RadioItem labels. Matches shadcn `inset`. */
 @Composable
-private fun Modifier.dropdownMenuInset(inset: Boolean): Modifier {
+internal fun Modifier.dropdownMenuInset(inset: Boolean): Modifier {
     val extra = if (LocalContextMenuNova.current) 22.dp else currentTheme.icons.smallSize + twSpacing.sm
     return if (inset) padding(start = extra) else this
 }
@@ -193,9 +209,21 @@ fun DropdownMenu(
         if (!controlled) internalOpen = next
         onOpenChange?.invoke(next)
     }
-    val controller = DropdownMenuController(open = isOpen, onOpenChange = setOpen, modal = modal)
+    val anchor = remember { mutableStateOf(Rect.Zero) }
+    val readAnchor = remember { { anchor.value } }
+    val controller =
+        DropdownMenuController(
+            open =
+            isOpen,
+            onOpenChange =
+            setOpen,
+            modal =
+            modal,
+            anchorBounds =
+            readAnchor,
+        )
     CompositionLocalProvider(LocalDropdownMenu provides controller) {
-        Box(modifier = modifier) {
+        Box(modifier = modifier.onGloballyPositioned { anchor.value = it.boundsInWindow() }) {
             DropdownMenuScope(onOpenChange = setOpen, open = isOpen).content()
         }
     }
@@ -300,14 +328,23 @@ fun DropdownMenuScope.DropdownMenuContent(
                 }
                 Column(
                     modifier =
-                        modifier.onPreviewKeyEvent {
+                        modifier.dropdownViewport(
+                            side
+                                ?: placement,
+                            sideOffset,
+                            controller.anchorBounds,
+                        ).onPreviewKeyEvent {
                             if (it.type == KeyEventType.KeyDown && it.key == Key.Escape) {
                                 controller.dismiss()
                                 true
                             } else {
                                 navigation.key(it)
                             }
-                        }.styleable(styleState, rememberMenuPanelStyle() then style),
+                        }.styleable(
+                            styleState,
+                            rememberMenuPanelStyle() then
+                                style,
+                        ).verticalScroll(rememberScrollState()),
                 ) {
                     scope.content()
                 }
@@ -355,7 +392,7 @@ fun DropdownMenuScope.DropdownMenuItem(
                         when {
                             destructive || variant == DropdownMenuItemVariant.Destructive ->
                                 TextStyle(color = currentTheme.colors.destructive)
-                            !(enabled && !disabled) -> TextColors.Muted
+                            !(enabled && !disabled) && !LocalContextMenuNova.current -> TextColors.Muted
                             else -> TextStyle(color = currentTheme.colors.popoverForeground)
                         },
                     ),
@@ -430,7 +467,15 @@ fun DropdownMenuShortcut(
     modifier: Modifier = Modifier,
 ) {
     if (LocalContextMenuNova.current) {
-        CommandShortcut(text, modifier)
+        Text(
+            variant = TextVariant.LabelSmall,
+            modifier = modifier,
+            textStyle =
+                contextMenuTypography(label = true).copy(
+                    fontWeight = androidx.compose.ui.text.font.FontWeight.Normal,
+                    letterSpacing = 0.1.em,
+                ),
+        ) { text }
         return
     }
     Text(
@@ -453,7 +498,7 @@ fun DropdownMenuShortcut(
 /**
  * A checkable row that does not dismiss the menu. Matches shadcn's
  * `DropdownMenuCheckboxItem`. [onSelect] is Radix `onSelect` (return true to
- * prevent checking/unchecking).
+ * prevent checking/unchecking). [leadingContent] supplies optional visuals before the label.
  */
 @Composable
 fun DropdownMenuScope.DropdownMenuCheckboxItem(
@@ -465,9 +510,11 @@ fun DropdownMenuScope.DropdownMenuCheckboxItem(
     indeterminate: Boolean = false,
     onSelect: (() -> Boolean)? = null,
     textValue: String? = null,
+    leadingContent: (@Composable () -> Unit)? = null,
     style: Style = Style,
     onCheckedChange: (Boolean) -> Unit,
 ) {
+    val leadingIndicator = LocalContextMenuNova.current && LocalContextMenuLeadingSelectionIndicator.current
     val resolvedEnabled = enabled && !disabled
     val interactionSource = remember { MutableInteractionSource() }
     val styleState =
@@ -481,6 +528,12 @@ fun DropdownMenuScope.DropdownMenuCheckboxItem(
             modifier.contextMenuNavigation(resolvedEnabled, label)
                 .semantics {
                     role = Role.Checkbox
+                    toggleableState =
+                        when {
+                            indeterminate -> ToggleableState.Indeterminate
+                            checked -> ToggleableState.On
+                            else -> ToggleableState.Off
+                        }
                     contentDescription = textValue ?: label
                     stateDescription =
                         when {
@@ -512,7 +565,8 @@ fun DropdownMenuScope.DropdownMenuCheckboxItem(
             LocalDropdownMenuItemChecked provides checked,
             LocalDropdownMenuItemIndeterminate provides indeterminate,
         ) {
-            if (!LocalContextMenuNova.current) DropdownMenuItemIndicator()
+            if (!LocalContextMenuNova.current || leadingIndicator) DropdownMenuItemIndicator()
+            leadingContent?.invoke()
             Text(
                 modifier = if (LocalContextMenuNova.current) Modifier.weight(1f) else Modifier,
                 variant = if (LocalContextMenuNova.current) TextVariant.BodyMedium else TextVariant.BodySmall,
@@ -526,13 +580,11 @@ fun DropdownMenuScope.DropdownMenuCheckboxItem(
                         Style
                     },
                 textStyle =
-                    if (!enabled) {
-                        TextColors.Muted
-                    } else {
-                        TextStyle(color = currentTheme.colors.popoverForeground)
-                    },
+                    contextMenuTypography(
+                        if (!enabled) TextColors.Muted else TextStyle(color = currentTheme.colors.popoverForeground),
+                    ),
             ) { label }
-            if (LocalContextMenuNova.current) DropdownMenuItemIndicator()
+            if (LocalContextMenuNova.current && !leadingIndicator) DropdownMenuItemIndicator()
         }
     }
 }
@@ -626,7 +678,7 @@ fun DropdownMenuScope.DropdownMenuRadioGroup(
 
 /**
  * One radio row. Must sit inside [DropdownMenuRadioGroup]. Matches shadcn's
- * `DropdownMenuRadioItem`.
+ * `DropdownMenuRadioItem`. [leadingContent] supplies optional visuals before the label.
  */
 @Composable
 fun DropdownMenuRadioGroupScope.DropdownMenuRadioItem(
@@ -637,12 +689,14 @@ fun DropdownMenuRadioGroupScope.DropdownMenuRadioItem(
     disabled: Boolean = false,
     onSelect: (() -> Boolean)? = null,
     textValue: String? = null,
+    leadingContent: (@Composable () -> Unit)? = null,
     style: Style = Style,
 ) {
     val radio =
         checkNotNull(LocalDropdownMenuRadio.current) {
             "DropdownMenuRadioItem must be used inside DropdownMenuRadioGroup { … }"
         }
+    val leadingIndicator = LocalContextMenuNova.current && LocalContextMenuLeadingSelectionIndicator.current
     val resolvedEnabled = enabled && !disabled
     val selected = radio.value == value
     val interactionSource = remember { MutableInteractionSource() }
@@ -657,6 +711,7 @@ fun DropdownMenuRadioGroupScope.DropdownMenuRadioItem(
             modifier.contextMenuNavigation(resolvedEnabled, label)
                 .semantics {
                     role = Role.RadioButton
+                    this.selected = selected
                     contentDescription = textValue ?: label
                     stateDescription = if (selected) "Selected" else "Not selected"
                     if (!resolvedEnabled) disabled()
@@ -677,9 +732,11 @@ fun DropdownMenuRadioGroupScope.DropdownMenuRadioItem(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(if (LocalContextMenuNova.current) 6.dp else twSpacing.sm),
     ) {
-        if (!LocalContextMenuNova.current) {
+        if (!LocalContextMenuNova.current || leadingIndicator) {
             DropdownMenuItemIndicator(contentAlignment = Alignment.Center) {
-                if (selected) {
+                if (selected && leadingIndicator) {
+                    Icon(NovaCheck, variant = IconVariant.Default, tint = currentTheme.colors.popoverForeground)
+                } else if (selected) {
                     Box(
                         modifier =
                             Modifier
@@ -689,6 +746,7 @@ fun DropdownMenuRadioGroupScope.DropdownMenuRadioItem(
                 }
             }
         }
+        leadingContent?.invoke()
         Text(
             modifier = if (LocalContextMenuNova.current) Modifier.weight(1f) else Modifier,
             variant = if (LocalContextMenuNova.current) TextVariant.BodyMedium else TextVariant.BodySmall,
@@ -702,13 +760,11 @@ fun DropdownMenuRadioGroupScope.DropdownMenuRadioItem(
                     Style
                 },
             textStyle =
-                if (!enabled) {
-                    TextColors.Muted
-                } else {
-                    TextStyle(color = currentTheme.colors.popoverForeground)
-                },
+                contextMenuTypography(
+                    if (!enabled) TextColors.Muted else TextStyle(color = currentTheme.colors.popoverForeground),
+                ),
         ) { label }
-        if (LocalContextMenuNova.current) {
+        if (LocalContextMenuNova.current && !leadingIndicator) {
             Box(Modifier.size(16.dp), contentAlignment = Alignment.Center) {
                 if (selected) {
                     Icon(
@@ -762,7 +818,20 @@ fun DropdownMenuSeparator(
     modifier: Modifier = Modifier,
     style: Style = Style,
 ) {
-    Separator(modifier = modifier, style = style)
+    val nova = LocalContextMenuNova.current
+    val spacing =
+        if (nova) {
+            Modifier.layout { measurable, constraints ->
+                val bleed = 4.dp.roundToPx()
+                val child = measurable.measure(constraints.offset(horizontal = bleed * 2))
+                layout((child.width - bleed * 2).coerceAtLeast(0), child.height) {
+                    child.placeRelative(-bleed, 0)
+                }
+            }.padding(vertical = 4.dp)
+        } else {
+            Modifier
+        }
+    Separator(modifier = modifier.then(spacing), style = style)
 }
 
 /** Groups related rows. Matches shadcn's `DropdownMenuGroup`. */
@@ -789,6 +858,9 @@ private class DropdownMenuSubController(
     val open: Boolean,
     val onOpenChange: (Boolean) -> Unit,
     val parentDismiss: () -> Unit,
+    val focusContent: Boolean,
+    val openFromKeyboard: () -> Unit,
+    val onChildOpenChange: (Any, Boolean) -> Unit,
     val onTriggerHoverChange: (Boolean) -> Unit,
     val onContentHoverChange: (Boolean) -> Unit,
 ) {
@@ -842,12 +914,28 @@ fun DropdownMenuScope.DropdownMenuSub(
     var triggerHovered by remember { mutableStateOf(false) }
     var contentHovered by remember { mutableStateOf(false) }
     var hoverArmed by remember { mutableStateOf(false) }
+    var focusContent by remember { mutableStateOf(defaultOpen || open == true) }
+    val openChildren = remember { mutableStateMapOf<Any, Unit>() }
+    val childOpenChange =
+        remember {
+            { token: Any, childOpen: Boolean ->
+                if (childOpen) openChildren[token] = Unit else openChildren.remove(token)
+                Unit
+            }
+        }
+    val parentChildOpenChange = LocalDropdownMenuSub.current?.onChildOpenChange
+    val childToken = remember { Any() }
+    DisposableEffect(isOpen, parentChildOpenChange) {
+        parentChildOpenChange?.invoke(childToken, isOpen)
+        onDispose { parentChildOpenChange?.invoke(childToken, false) }
+    }
     val hovered = triggerHovered || contentHovered
-    LaunchedEffect(hovered) {
+    val hasOpenChildren = openChildren.isNotEmpty()
+    LaunchedEffect(hovered, hasOpenChildren, focusContent) {
         if (hovered) {
             hoverArmed = true
             setOpen(true)
-        } else if (hoverArmed) {
+        } else if (hoverArmed && !hasOpenChildren && !focusContent) {
             delay(100)
             setOpen(false)
             hoverArmed = false
@@ -856,8 +944,17 @@ fun DropdownMenuScope.DropdownMenuSub(
     val controller =
         DropdownMenuSubController(
             open = isOpen,
-            onOpenChange = setOpen,
+            onOpenChange = { next ->
+                if (!next) focusContent = false
+                setOpen(next)
+            },
             parentDismiss = { dismiss() },
+            focusContent = focusContent,
+            openFromKeyboard = {
+                focusContent = true
+                setOpen(true)
+            },
+            onChildOpenChange = childOpenChange,
             onTriggerHoverChange = { triggerHovered = it },
             onContentHoverChange = { contentHovered = it },
         )
@@ -868,7 +965,7 @@ fun DropdownMenuScope.DropdownMenuSub(
     }
 }
 
-/** Row that opens [DropdownMenuSubContent]. Matches shadcn's `DropdownMenuSubTrigger`. */
+/** Row opening [DropdownMenuSubContent], with optional [leadingContent] before the label. */
 @Composable
 fun DropdownMenuSubScope.DropdownMenuSubTrigger(
     label: String,
@@ -877,6 +974,7 @@ fun DropdownMenuSubScope.DropdownMenuSubTrigger(
     disabled: Boolean = false,
     inset: Boolean = false,
     textValue: String? = null,
+    leadingContent: (@Composable () -> Unit)? = null,
     style: Style = Style,
 ) {
     val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
@@ -908,7 +1006,7 @@ fun DropdownMenuSubScope.DropdownMenuSubTrigger(
                         ) &&
                         resolvedEnabled
                     ) {
-                        controller.onOpenChange(true)
+                        controller.openFromKeyboard()
                         true
                     } else {
                         false
@@ -940,9 +1038,11 @@ fun DropdownMenuSubScope.DropdownMenuSubTrigger(
                 )
                 .dropdownMenuInset(inset),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = if (leadingContent == null) Arrangement.SpaceBetween else Arrangement.spacedBy(6.dp),
     ) {
+        leadingContent?.invoke()
         Text(
+            modifier = if (leadingContent == null) Modifier else Modifier.weight(1f),
             variant = if (LocalContextMenuNova.current) TextVariant.BodyMedium else TextVariant.BodySmall,
             style =
                 if (LocalContextMenuNova.current) {
@@ -954,11 +1054,9 @@ fun DropdownMenuSubScope.DropdownMenuSubTrigger(
                     Style
                 },
             textStyle =
-                if (!enabled) {
-                    TextColors.Muted
-                } else {
-                    TextStyle(color = currentTheme.colors.popoverForeground)
-                },
+                contextMenuTypography(
+                    if (!enabled) TextColors.Muted else TextStyle(color = currentTheme.colors.popoverForeground),
+                ),
         ) { label }
         Icon(
             if (LocalContextMenuNova.current) NovaChevronRight else ChevronRight,
@@ -1010,19 +1108,22 @@ fun DropdownMenuSubScope.DropdownMenuSubContent(
         align = align,
         alignOffset = alignOffset,
         dismissOnClickOutside = dismissOnClickOutside,
+        // Hover must not steal focus from the trigger and generate another hover exit.
+        // ArrowRight promotes this same panel to keyboard focus when requested.
+        focusable = controller.focusContent,
         enter = enter,
         exit = exit,
     ) {
         CompositionLocalProvider(LocalContextMenuNavigation provides if (contextNova) nav else null) {
-            LaunchedEffect(Unit) {
-                if (contextNova) {
+            LaunchedEffect(controller.focusContent) {
+                if (contextNova && controller.focusContent) {
                     androidx.compose.runtime.withFrameNanos { }
                     nav.items.firstOrNull()?.requestFocus()
                 }
             }
             Column(
                 modifier =
-                    modifier
+                    modifier.dropdownViewport(side ?: placement, sideOffset)
                         .onPreviewKeyEvent { event ->
                             if (contextNova &&
                                 event.type == KeyEventType.KeyDown &&
@@ -1044,10 +1145,50 @@ fun DropdownMenuSubScope.DropdownMenuSubContent(
                         .styleable(
                             styleState,
                             rememberMenuPanelStyle() then style,
-                        ),
+                        ).verticalScroll(rememberScrollState()),
             ) {
                 scope.content()
             }
         }
+    }
+}
+
+/** Anchor/window state is read during measurement, so scrolling does not recompose the menu. */
+@Composable
+private fun Modifier.dropdownViewport(
+    placement: PopupPlacement,
+    sideOffset: Dp,
+    anchorBounds: (() -> Rect)? = null,
+): Modifier {
+    val window = LocalWindowInfo.current
+    val density = LocalDensity.current
+    val margin = with(density) { 8.dp.roundToPx() }
+    val offset = with(density) { sideOffset.roundToPx() }
+    return layout { measurable, constraints ->
+        val height = window.containerSize.height
+        val anchor = anchorBounds?.invoke()
+        val available =
+            if (anchor != null && (placement == PopupPlacement.Top || placement == PopupPlacement.Bottom)) {
+                maxOf(anchor.top.toInt() - offset - margin, height - anchor.bottom.toInt() - offset - margin)
+            } else {
+                height - margin * 2
+            }
+        val limit = available.coerceAtLeast(1)
+        val child =
+            measurable.measure(
+                constraints.copy(
+                    minHeight =
+                        minOf(
+                            constraints.minHeight,
+                            limit,
+                        ),
+                    maxHeight =
+                        minOf(
+                            constraints.maxHeight,
+                            limit,
+                        ),
+                ),
+            )
+        layout(child.width, child.height) { child.placeRelative(0, 0) }
     }
 }

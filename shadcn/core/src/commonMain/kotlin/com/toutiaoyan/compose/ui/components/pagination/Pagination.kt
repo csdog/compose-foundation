@@ -7,6 +7,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
@@ -21,6 +22,17 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.semantics.hideFromAccessibility
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import com.toutiaoyan.compose.ui.tokens.StylePreset
+import com.toutiaoyan.compose.ui.icons.NovaChevronRight
+import com.toutiaoyan.compose.ui.icons.NovaEllipsis
+import com.toutiaoyan.compose.ui.components.button.Button
+import com.toutiaoyan.compose.ui.components.button.ButtonSize
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.semantics.contentDescription
@@ -142,13 +154,15 @@ fun Pagination(
         } else {
             null
         }
+    val nova = currentTheme.activePreset == StylePreset.Nova
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     CompositionLocalProvider(LocalPagination provides state) {
         Box(
             modifier =
                 modifier
                     .semantics { contentDescription = ariaLabel }
-                    .styleable(styleState, style),
+                    .styleable(styleState, rememberPaginationRootStyle() then style),
+            contentAlignment = if (nova) Alignment.Center else Alignment.TopStart,
         ) {
             PaginationScope().content()
         }
@@ -224,7 +238,14 @@ fun PaginationScope.PaginationContent(
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Row(
         modifier = modifier.styleable(styleState, style),
-        horizontalArrangement = Arrangement.spacedBy(twSpacing.xs2),
+        horizontalArrangement =
+            Arrangement.spacedBy(
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    2.dp
+                } else {
+                    twSpacing.xs2
+                },
+            ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         PaginationContentScope().content()
@@ -252,6 +273,30 @@ fun PaginationLink(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     disabled: Boolean = false,
+    size: ButtonSize = ButtonSize.Icon,
+    style: Style = Style,
+) {
+    PaginationLink(page, isActive, onClick, modifier, enabled, disabled, size, style) {
+        if (currentTheme.activePreset == StylePreset.Nova) {
+            Text(maxLines = 1) { page.toString() }
+        } else {
+            Text(variant = TextVariant.LabelLarge) { page.toString() }
+        }
+    }
+}
+
+/** Caller-provided link content, e.g. a localized page number. */
+@Composable
+fun PaginationLink(
+    page: Int,
+    isActive: Boolean? = null,
+    onClick: (() -> Unit)? = null,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    size: ButtonSize = ButtonSize.Icon,
+    style: Style = Style,
+    content: @Composable () -> Unit,
 ) {
     val state = LocalPagination.current
     val resolvedActive = isActive ?: (state != null && state.page == page)
@@ -262,8 +307,21 @@ fun PaginationLink(
                 "PaginationLink needs onClick= or Pagination(page, onPageChange)"
             }.onPageChange(page)
         }
+    if (currentTheme.activePreset == StylePreset.Nova) {
+        Button(
+            onClick = resolvedClick,
+            modifier = modifier.semantics { selected = resolvedActive },
+            enabled = resolvedEnabled,
+            variant = if (resolvedActive) ButtonVariant.Outline else ButtonVariant.Ghost,
+            size = size,
+            label = null,
+            style = style,
+            content = content,
+        )
+        return
+    }
     val interactionSource = remember { MutableInteractionSource() }
-    val styleState = rememberUpdatedStyleState(interactionSource)
+    val styleState = rememberUpdatedStyleState(interactionSource) { it.isEnabled = resolvedEnabled }
     val pressStyle = rememberPressMotionStyle()
     val touchTargetStyle = rememberMinTouchTargetStyle()
     val variantStyle =
@@ -295,16 +353,24 @@ fun PaginationLink(
             modifier =
                 Modifier.styleable(
                     styleState,
-                    rememberPaginationButtonStyle() then variantStyle,
+                    (
+                        if (size == ButtonSize.Icon) {
+                            rememberPaginationButtonStyle()
+                        } else {
+                            size.rememberStyle()
+                        }
+                    ) then
+                        variantStyle then
+                        style,
                 ),
             contentAlignment = Alignment.Center,
         ) {
-            Text(variant = TextVariant.LabelLarge) { page.toString() }
+            content()
         }
     }
 }
 
-/** Previous-page control. Matches shadcn's `PaginationPrevious` (`text` defaults off, like `sm:hidden`). */
+/** Previous-page control. Matches shadcn's `PaginationPrevious`; Nova hides the default text below640dp. */
 @Composable
 fun PaginationPrevious(
     onClick: (() -> Unit)? = null,
@@ -312,6 +378,8 @@ fun PaginationPrevious(
     enabled: Boolean? = null,
     disabled: Boolean = false,
     text: String? = null,
+    style: Style = Style,
+    ariaLabel: String? = null,
 ) {
     val state = LocalPagination.current
     PaginationControl(
@@ -324,7 +392,10 @@ fun PaginationPrevious(
                 }.goPrevious()
             },
         modifier = modifier,
-        text = text,
+        style = style,
+        ariaLabel = ariaLabel,
+        text = text ?: if (currentTheme.activePreset == StylePreset.Nova) "Previous" else null,
+        responsive = true,
     )
 }
 
@@ -336,6 +407,8 @@ fun PaginationFirst(
     enabled: Boolean? = null,
     disabled: Boolean = false,
     text: String? = null,
+    style: Style = Style,
+    ariaLabel: String? = null,
 ) {
     val state = LocalPagination.current
     PaginationControl(
@@ -348,6 +421,8 @@ fun PaginationFirst(
                 }.goFirst()
             },
         modifier = modifier,
+        style = style,
+        ariaLabel = ariaLabel,
         text = text,
         doubleChevron = true,
         defaultDescription = "Go to first page",
@@ -362,6 +437,8 @@ fun PaginationLast(
     enabled: Boolean? = null,
     disabled: Boolean = false,
     text: String? = null,
+    style: Style = Style,
+    ariaLabel: String? = null,
 ) {
     val state = LocalPagination.current
     PaginationControl(
@@ -374,13 +451,15 @@ fun PaginationLast(
                 }.goLast()
             },
         modifier = modifier,
+        style = style,
+        ariaLabel = ariaLabel,
         text = text,
         doubleChevron = true,
         defaultDescription = "Go to last page",
     )
 }
 
-/** Next-page control. Matches shadcn's `PaginationNext` (`text` defaults off, like `sm:hidden`). */
+/** Next-page control. Matches shadcn's `PaginationNext`; Nova hides the default text below640dp. */
 @Composable
 fun PaginationNext(
     onClick: (() -> Unit)? = null,
@@ -388,6 +467,8 @@ fun PaginationNext(
     enabled: Boolean? = null,
     disabled: Boolean = false,
     text: String? = null,
+    style: Style = Style,
+    ariaLabel: String? = null,
 ) {
     val state = LocalPagination.current
     PaginationControl(
@@ -400,22 +481,39 @@ fun PaginationNext(
                 }.goNext()
             },
         modifier = modifier,
-        text = text,
+        style = style,
+        ariaLabel = ariaLabel,
+        text = text ?: if (currentTheme.activePreset == StylePreset.Nova) "Next" else null,
+        responsive = true,
     )
 }
 
 /** Ellipsis gap between page ranges. Matches shadcn's `PaginationEllipsis`. */
 @Composable
 fun PaginationEllipsis(modifier: Modifier = Modifier) {
+    val nova = currentTheme.activePreset == StylePreset.Nova
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Box(
         modifier =
             modifier
-                .semantics { contentDescription = "More pages" }
+                .then(
+                    if (nova) {
+                        Modifier.clearAndSetSemantics { hideFromAccessibility() }
+                    } else {
+                        Modifier.semantics {
+                            contentDescription =
+                                "More pages"
+                        }
+                    },
+                )
                 .styleable(styleState, rememberPaginationButtonStyle()),
         contentAlignment = Alignment.Center,
     ) {
-        Icon(MoreHorizontal, tint = currentTheme.colors.mutedForeground)
+        if (nova) {
+            Icon(NovaEllipsis, Modifier.size(16.dp))
+        } else {
+            Icon(MoreHorizontal, tint = currentTheme.colors.mutedForeground)
+        }
     }
 }
 
@@ -428,7 +526,51 @@ private fun PaginationControl(
     text: String? = null,
     doubleChevron: Boolean = false,
     defaultDescription: String? = null,
+    style: Style = Style,
+    ariaLabel: String? = null,
+    responsive: Boolean = false,
 ) {
+    if (currentTheme.activePreset == StylePreset.Nova) {
+        val wide = LocalWindowInfo.current.containerSize.width >= with(LocalDensity.current) { 640.dp.roundToPx() }
+        val showLabel = !text.isNullOrEmpty() && (!responsive || wide)
+        val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+        val physicalLeft = pointingLeft != rtl
+        val description =
+            ariaLabel
+                ?: defaultDescription
+                ?: if (pointingLeft) {
+                    "Go to previous page"
+                } else {
+                    "Go to next page"
+                }
+        Button(
+            onClick = onClick,
+            modifier = modifier,
+            enabled = enabled,
+            variant = ButtonVariant.Ghost,
+            size = if (responsive || showLabel) ButtonSize.Md else ButtonSize.Icon,
+            label = description,
+            style = (if (responsive || showLabel) rememberPaginationControlStyle(pointingLeft) else Style) then style,
+        ) {
+            val glyph: @Composable () -> Unit = {
+                Icon(NovaChevronRight, Modifier.size(16.dp).rotate(if (physicalLeft) 180f else 0f))
+            }
+            val chevron: @Composable () -> Unit = {
+                if (doubleChevron) {
+                    Row(horizontalArrangement = Arrangement.spacedBy((-6).dp)) {
+                        glyph()
+                        glyph()
+                    }
+                } else {
+                    glyph()
+                }
+            }
+            if (pointingLeft) chevron()
+            if (showLabel) Text(maxLines = 1) { text.orEmpty() }
+            if (!pointingLeft) chevron()
+        }
+        return
+    }
     val interactionSource = remember { MutableInteractionSource() }
     val styleState =
         rememberUpdatedStyleState(interactionSource) {
@@ -462,7 +604,7 @@ private fun PaginationControl(
                 .semantics {
                     role = Role.Button
                     contentDescription =
-                        text
+                        ariaLabel ?: text
                             ?: defaultDescription
                             ?: if (pointingLeft) "Go to previous page" else "Go to next page"
                     if (!enabled) disabled()
@@ -482,7 +624,7 @@ private fun PaginationControl(
                 modifier =
                     Modifier.styleable(
                         styleState,
-                        rememberPaginationButtonStyle() then ButtonVariant.Ghost.rememberStyle(),
+                        rememberPaginationButtonStyle() then ButtonVariant.Ghost.rememberStyle() then style,
                     ),
                 contentAlignment = Alignment.Center,
             ) {
@@ -493,7 +635,7 @@ private fun PaginationControl(
                 modifier =
                     Modifier.styleable(
                         styleState,
-                        rememberPaginationLabeledButtonStyle() then ButtonVariant.Ghost.rememberStyle(),
+                        rememberPaginationLabeledButtonStyle() then ButtonVariant.Ghost.rememberStyle() then style,
                     ),
                 horizontalArrangement = Arrangement.spacedBy(twSpacing.sm),
                 verticalAlignment = Alignment.CenterVertically,

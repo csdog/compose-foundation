@@ -10,22 +10,26 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.width
-import com.toutiaoyan.compose.ui.components.select.Select
-import com.toutiaoyan.compose.ui.components.select.SelectTrigger
-import com.toutiaoyan.compose.ui.components.select.SelectContent
-import com.toutiaoyan.compose.ui.components.select.SelectItem
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.theme.Theme
+import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
+import com.toutiaoyan.compose.ui.catalog.catalogArabicFontFamily
+import com.toutiaoyan.compose.ui.catalog.catalogHebrewFontFamily
 import com.toutiaoyan.compose.ui.components.card.Card
 import com.toutiaoyan.compose.ui.components.card.CardContent
 import com.toutiaoyan.compose.ui.components.card.CardHeader
@@ -46,8 +50,9 @@ val accordionDoc =
             """
             import com.toutiaoyan.compose.ui.components.accordion.Accordion
             import com.toutiaoyan.compose.ui.components.accordion.AccordionContent
-                        import com.toutiaoyan.compose.ui.components.accordion.AccordionItem
+            import com.toutiaoyan.compose.ui.components.accordion.AccordionItem
             import com.toutiaoyan.compose.ui.components.accordion.AccordionTrigger
+            import com.toutiaoyan.compose.ui.components.accordion.AccordionType
 
             var value by remember { mutableStateOf(setOf("item-1")) }
             Accordion(type = AccordionType.Single, value = value, onValueChange = { value = it }) {
@@ -55,11 +60,23 @@ val accordionDoc =
                 AccordionItem("item-2", "Is it styled?", "Yes. It comes with default styles.")
             }
             """.trimIndent(),
+        examplesHeading = null,
+        compositionCode =
+            """
+            Accordion
+            ├── AccordionItem
+            │   ├── AccordionTrigger
+            │   └── AccordionContent
+            └── AccordionItem
+                ├── AccordionTrigger
+                └── AccordionContent
+            """.trimIndent(),
         examples =
             listOf(
                 ComponentExample(
                     title = "Default",
-                    minPreviewHeight = 300.dp,
+                    previewHeight = 300.dp,
+                    previewVerticalAlignment = Alignment.Top,
                     code =
                         """
                         var value by remember { mutableStateOf(setOf("item-1")) }
@@ -111,8 +128,12 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Basic (official)",
-                    minPreviewHeight = 300.dp,
+                    title = "Basic",
+                    descriptionMarkdown =
+                        "A basic accordion that shows one item at a time. The first " +
+                            "item is open by default.",
+                    previewHeight = 300.dp,
+                    previewVerticalAlignment = Alignment.Top,
                     code =
                         """
                         Accordion(
@@ -160,8 +181,12 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Multiple (official)",
-                    minPreviewHeight = 450.dp,
+                    title = "Multiple",
+                    descriptionMarkdown =
+                        "Use `AccordionType.Multiple` to allow multiple items to be " +
+                            "open at the same time.",
+                    previewHeight = 450.dp,
+                    previewVerticalAlignment = Alignment.Top,
                     code =
                         """
                         Accordion(
@@ -212,8 +237,12 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Disabled (official)",
-                    minPreviewHeight = 300.dp,
+                    title = "Disabled",
+                    descriptionMarkdown =
+                        "Use the `disabled` parameter on `AccordionItem` to disable " +
+                            "individual items.",
+                    previewHeight = 300.dp,
+                    previewVerticalAlignment = Alignment.Top,
                     code =
                         """
                         Accordion(
@@ -261,8 +290,12 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Borders (official)",
-                    minPreviewHeight = 300.dp,
+                    title = "Borders",
+                    descriptionMarkdown =
+                        "Add a border around the `Accordion` and keep separators " +
+                            "between `AccordionItem` elements.",
+                    previewHeight = 300.dp,
+                    previewVerticalAlignment = Alignment.Top,
                     code =
                         """
                         Column(Modifier.widthIn(max = 384.dp).fillMaxWidth().border(1.dp, currentTheme.colors.border, RoundedCornerShape(8.dp))) {
@@ -332,8 +365,11 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Card (official)",
-                    minPreviewHeight = 435.dp,
+                    title = "Card",
+                    descriptionMarkdown =
+                        "Wrap the `Accordion` in a `Card` component.",
+                    previewHeight = 435.dp,
+                    previewVerticalAlignment = Alignment.Top,
                     code =
                         """
                         Card(modifier = Modifier.widthIn(max = 384.dp).fillMaxWidth()) {
@@ -389,23 +425,26 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "RTL (official languages)",
+                    title = "RTL",
+                    descriptionMarkdown =
+                        "To enable RTL support in shadcn/ui, see the " +
+                            "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
+                    previewPadding = 0.dp,
+                    minPreviewHeight = 0.dp,
                     code =
                         """
                         var language by remember { mutableStateOf(1) }
-                        val labels = listOf("English", "Arabic (العربية)", "Hebrew (עברית)")
                         val translations = listOf(
                             listOf("How do I reset my password?", "Can I change my subscription plan?", "What payment methods do you accept?", "Click on 'Forgot Password' on the login page, enter your email address, and we'll send you a link to reset your password.", "Yes, you can upgrade or downgrade your plan at any time from your account settings. Changes will be reflected in your next billing cycle.", "We accept all major credit cards, PayPal, and bank transfers. All payments are processed securely through our payment partners."),
                             listOf("كيف يمكنني إعادة تعيين كلمة المرور؟", "هل يمكنني تغيير خطة الاشتراك الخاصة بي؟", "ما هي طرق الدفع التي تقبلونها؟", "انقر على 'نسيت كلمة المرور' في صفحة تسجيل الدخول، أدخل عنوان بريدك الإلكتروني، وسنرسل لك رابطًا لإعادة تعيين كلمة المرور. سينتهي صلاحية الرابط خلال 24 ساعة.", "نعم، يمكنك ترقية أو تخفيض خطتك في أي وقت من إعدادات حسابك. ستظهر التغييرات في دورة الفوترة التالية.", "نقبل جميع بطاقات الائتمان الرئيسية و PayPal والتحويلات المصرفية. تتم معالجة جميع المدفوعات بأمان من خلال شركاء الدفع لدينا."),
                             listOf("איך אני מאפס את הסיסמה שלי?", "האם אני יכול לשנות את תוכנית המנוי שלי?", "אילו אמצעי תשלום אתם מקבלים?", "לחץ על 'שכחתי סיסמה' בעמוד ההתחברות, הזן את כתובת האימייל שלך, ונשלח לך קישור לאיפוס הסיסמה. הקישור יפוג תוך 24 שעות.", "כן, אתה יכול לשדרג או להוריד את התוכנית שלך בכל עת מההגדרות של החשבון שלך. השינויים יבואו לידי ביטוי במחזור החיוב הבא.", "אנו מקבלים כרטיסי אשראי, PayPal והעברות בנקאיות.")
                         )
-                        Column(Modifier.widthIn(max = 384.dp).fillMaxWidth()) {
-                            Select(value = labels[language], onValueChange = { next -> language = labels.indexOf(next) }) {
-                                SelectTrigger(Modifier.width(180.dp))
-                                SelectContent { labels.forEach { SelectItem(it) } }
-                            }
+                        Column(Modifier.widthIn(max = 448.dp).fillMaxWidth()) {
                             CompositionLocalProvider(LocalLayoutDirection provides if (language == 0) LayoutDirection.Ltr else LayoutDirection.Rtl) {
-                                Accordion(defaultValue = setOf("item-1")) {
+                                Accordion(
+                                    defaultValue = setOf("item-1"),
+                                    modifier = Modifier.widthIn(max = 448.dp).fillMaxWidth(),
+                                ) {
                                     repeat(3) { index ->
                                         AccordionItem("item-${'$'}{index + 1}", translations[language][index], translations[language][index + 3])
                                     }
@@ -472,29 +511,53 @@ val accordionDoc =
                                     "אנו מקבלים כרטיסי אשראי, PayPal והעברות בנקאיות.",
                                 ),
                             )
-                        Column(Modifier.widthIn(max = 384.dp).fillMaxWidth()) {
-                            Select(value = labels[language], onValueChange = {
-                                    next ->
-                                language = labels.indexOf(next)
-                            }) {
-                                SelectTrigger(Modifier.width(180.dp))
-                                SelectContent { labels.forEach { SelectItem(it) } }
-                            }
-                            CompositionLocalProvider(
-                                LocalLayoutDirection provides
-                                    if (language == 0) {
-                                        LayoutDirection.Ltr
-                                    } else {
-                                        LayoutDirection.Rtl
-                                    },
+                        Column(Modifier.fillMaxWidth()) {
+                            RtlPreviewToolbar(language, labels, { language = it })
+                            Box(
+                                Modifier.fillMaxWidth().height(288.dp).padding(40.dp),
+                                contentAlignment = Alignment.TopCenter,
                             ) {
-                                Accordion(defaultValue = setOf("item-1")) {
-                                    repeat(3) { index ->
-                                        AccordionItem(
-                                            "item-${index + 1}",
-                                            translations[language][index],
-                                            translations[language][index + 3],
-                                        )
+                                // Match CSS overflow-visible: the fixed frame must not squeeze later items.
+                                Box(Modifier.fillMaxHeight().wrapContentHeight(Alignment.Top, unbounded = true)) {
+                                    val fontFamily =
+                                        when (language) {
+                                            1 -> catalogArabicFontFamily()
+                                            2 -> catalogHebrewFontFamily()
+                                            else -> currentTheme.fontFamily
+                                        }
+                                    CompositionLocalProvider(
+                                        LocalLayoutDirection provides
+                                            if (language == 0) {
+                                                LayoutDirection.Ltr
+                                            } else {
+                                                LayoutDirection.Rtl
+                                            },
+                                    ) {
+                                        val inherited = currentTheme
+                                        Theme(
+                                            preset = inherited.activePreset,
+                                            baseColor = inherited.activeBaseColor,
+                                            accent = inherited.activeAccent,
+                                            isDark = inherited.isDark,
+                                            baseRadius = inherited.baseRadius,
+                                            ring = inherited.ring,
+                                            unitSpacing = LocalUnitSpacing.current,
+                                            minTouchTarget = inherited.minTouchTarget,
+                                            fontFamily = fontFamily,
+                                        ) {
+                                            Accordion(
+                                                defaultValue = setOf("item-1"),
+                                                modifier = Modifier.widthIn(max = 448.dp).fillMaxWidth(),
+                                            ) {
+                                                repeat(3) { index ->
+                                                    AccordionItem(
+                                                        "item-${index + 1}",
+                                                        translations[language][index],
+                                                        translations[language][index + 3],
+                                                    )
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -502,7 +565,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Custom icon",
+                    title = "Kotlin extension: Custom icon",
                     code =
                         """
                         // Accordion's chevron is a plain glyph by default (this library
@@ -542,7 +605,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Multiple",
+                    title = "Kotlin extension: Multiple",
                     code =
                         """
                         var value by remember { mutableStateOf(setOf("item-1", "item-2")) }
@@ -566,7 +629,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Single",
+                    title = "Kotlin extension: Single",
                     code =
                         """
                         var value by remember { mutableStateOf(setOf("item-1")) }
@@ -588,7 +651,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default type",
+                    title = "Kotlin extension: Default type",
                     code =
                         """
                         var value by remember { mutableStateOf(setOf("item-1")) }
@@ -610,7 +673,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default multiple",
+                    title = "Kotlin extension: Default multiple",
                     code =
                         """
                         var value by remember { mutableStateOf(setOf("item-1")) }
@@ -642,7 +705,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Not collapsible",
+                    title = "Kotlin extension: Not collapsible",
                     code =
                         """
                         var value by remember { mutableStateOf(setOf("item-1")) }
@@ -674,7 +737,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Collapsible",
+                    title = "Kotlin extension: Collapsible",
                     code =
                         """
                         var value by remember { mutableStateOf(setOf("item-1")) }
@@ -706,7 +769,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default collapsible",
+                    title = "Kotlin extension: Default collapsible",
                     code =
                         """
                         var value by remember { mutableStateOf(setOf("item-1")) }
@@ -738,7 +801,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Disabled",
+                    title = "Kotlin extension: Disabled",
                     code =
                         """
                         var value by remember { mutableStateOf(setOf("item-1")) }
@@ -770,7 +833,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default disabled",
+                    title = "Kotlin extension: Default disabled",
                     code =
                         """
                         Accordion(defaultValue = "item-1") {
@@ -800,7 +863,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default value",
+                    title = "Kotlin extension: Default value",
                     code =
                         """
                         Accordion(defaultValue = "item-1") {
@@ -820,7 +883,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Horizontal",
+                    title = "Kotlin extension: Horizontal",
                     code =
                         """
                         var value by remember { mutableStateOf(setOf("item-1")) }
@@ -848,7 +911,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Vertical",
+                    title = "Kotlin extension: Vertical",
                     code =
                         """
                         var value by remember { mutableStateOf(setOf("item-1")) }
@@ -876,7 +939,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default orientation",
+                    title = "Kotlin extension: Default orientation",
                     code =
                         """
                         var value by remember { mutableStateOf(setOf("item-1")) }
@@ -904,7 +967,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "No loop",
+                    title = "Kotlin extension: No loop",
                     code =
                         """
                         var value by remember { mutableStateOf(setOf("item-1")) }
@@ -932,7 +995,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Loop",
+                    title = "Kotlin extension: Loop",
                     code =
                         """
                         var value by remember { mutableStateOf(setOf("item-1")) }
@@ -960,7 +1023,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default loop",
+                    title = "Kotlin extension: Default loop",
                     code =
                         """
                         var value by remember { mutableStateOf(setOf("item-1")) }
@@ -988,7 +1051,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Disabled accordion",
+                    title = "Kotlin extension: Disabled accordion",
                     code =
                         """
                         Accordion(type = AccordionType.Single, defaultValue = setOf("item-1"), disabled = true) {
@@ -1008,7 +1071,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Disabled trigger",
+                    title = "Kotlin extension: Disabled trigger",
                     code =
                         """
                         Accordion(type = AccordionType.Single, defaultValue = setOf("item-1")) {
@@ -1036,7 +1099,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Controlled value",
+                    title = "Kotlin extension: Controlled value",
                     code =
                         """
                         var value by remember { mutableStateOf("item-1") }
@@ -1058,7 +1121,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Multiple flag",
+                    title = "Kotlin extension: Multiple flag",
                     code =
                         """
                         var value by remember { mutableStateOf(setOf("item-1", "item-2")) }
@@ -1082,7 +1145,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Keep mounted",
+                    title = "Kotlin extension: Keep mounted",
                     code =
                         """
                         Accordion(defaultValue = setOf("item-1")) {
@@ -1102,7 +1165,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Not keep mounted",
+                    title = "Kotlin extension: Not keep mounted",
                     code =
                         """
                         Accordion(defaultValue = setOf("item-1")) {
@@ -1122,7 +1185,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default keep mounted",
+                    title = "Kotlin extension: Default keep mounted",
                     code =
                         """
                         Accordion(defaultValue = setOf("item-1")) {
@@ -1142,7 +1205,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Force mount",
+                    title = "Kotlin extension: Force mount",
                     code =
                         """
                         Accordion(defaultValue = setOf("item-1")) {
@@ -1162,7 +1225,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Not force mount",
+                    title = "Kotlin extension: Not force mount",
                     code =
                         """
                         Accordion(defaultValue = setOf("item-1")) {
@@ -1182,7 +1245,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default force mount",
+                    title = "Kotlin extension: Default force mount",
                     code =
                         """
                         Accordion(defaultValue = setOf("item-1")) {
@@ -1202,7 +1265,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Uncontrolled",
+                    title = "Kotlin extension: Uncontrolled",
                     code =
                         """
                         Accordion {
@@ -1224,7 +1287,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Content",
+                    title = "Kotlin extension: Content",
                     code =
                         """
                         Accordion {
@@ -1244,7 +1307,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Item",
+                    title = "Kotlin extension: Item",
                     code =
                         """
                         Accordion {
@@ -1262,7 +1325,7 @@ val accordionDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Trigger",
+                    title = "Kotlin extension: Trigger",
                     code =
                         """
                         Accordion {

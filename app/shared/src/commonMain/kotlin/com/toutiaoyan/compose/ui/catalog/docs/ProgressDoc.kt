@@ -21,17 +21,18 @@ val progressDoc =
     ComponentDoc(
         id = "progress",
         title = "Progress",
-        description = "A linear progress bar.",
+        description =
+            "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.progress.Progress
 
-            Progress(value = 0.6f)
+            Progress(value = 33f, max = 100f)
             """.trimIndent(),
         examples =
             listOf(
                 ComponentExample(
-                    title = "Default",
+                    title = "Static (Kotlin)",
                     code = "Progress(value = 0.6f, modifier = Modifier.width(240.dp))",
                     preview = { Progress(value = 0.6f, modifier = Modifier.width(240.dp)) },
                 ),
@@ -63,7 +64,6 @@ val progressDoc =
                                 ProgressLabel("Upload progress")
                                 ProgressValue()
                             }
-                            ProgressTrack()
                         }
                         """.trimIndent(),
                     preview = {
@@ -76,7 +76,6 @@ val progressDoc =
                                 ProgressLabel("Upload progress")
                                 ProgressValue()
                             }
-                            ProgressTrack()
                         }
                     },
                 ),
@@ -146,15 +145,16 @@ val progressDoc =
                     title = "Indicator",
                     code =
                         """
-                        Progress(value = 0.6f, modifier = Modifier.width(240.dp)) {
-                            ProgressTrack { ProgressIndicator() }
+                        ProgressTrack(modifier = Modifier.width(240.dp)) {
+                            ProgressIndicator(value = 0.6f)
                         }
                         """.trimIndent(),
                     preview = {
-                        Progress(value = 0.6f, modifier = Modifier.width(240.dp)) {
-                            ProgressTrack { ProgressIndicator() }
+                        ProgressTrack(modifier = Modifier.width(240.dp)) {
+                            ProgressIndicator(value = 0.6f)
                         }
                     },
                 ),
             ),
     )
+        .let { native -> native.copy(examples = progressOfficialExamples + native.examples) }

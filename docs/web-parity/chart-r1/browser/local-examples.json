@@ -1,0 +1,226 @@
+[
+  {
+    "name": "first",
+    "hash": "your-first-chart",
+    "width": 1440,
+    "theme": "light",
+    "file": "local-first-1440-light.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#your-first-chart"
+  },
+  {
+    "name": "grid",
+    "hash": "add-a-grid",
+    "width": 1440,
+    "theme": "light",
+    "file": "local-grid-1440-light.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#add-a-grid"
+  },
+  {
+    "name": "axis",
+    "hash": "add-an-axis",
+    "width": 1440,
+    "theme": "light",
+    "file": "local-axis-1440-light.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#add-an-axis"
+  },
+  {
+    "name": "tooltip",
+    "hash": "add-tooltip",
+    "width": 1440,
+    "theme": "light",
+    "file": "local-tooltip-1440-light.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#add-tooltip"
+  },
+  {
+    "name": "legend",
+    "hash": "add-legend",
+    "width": 1440,
+    "theme": "light",
+    "file": "local-legend-1440-light.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#add-legend"
+  },
+  {
+    "name": "anatomy",
+    "hash": "tooltip",
+    "width": 1440,
+    "theme": "light",
+    "file": "local-anatomy-1440-light.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#tooltip"
+  },
+  {
+    "name": "rtl",
+    "hash": "rtl",
+    "width": 1440,
+    "theme": "light",
+    "file": "local-rtl-1440-light.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#rtl"
+  },
+  {
+    "name": "first",
+    "hash": "your-first-chart",
+    "width": 1440,
+    "theme": "dark",
+    "file": "local-first-1440-dark.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#your-first-chart"
+  },
+  {
+    "name": "grid",
+    "hash": "add-a-grid",
+    "width": 1440,
+    "theme": "dark",
+    "file": "local-grid-1440-dark.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#add-a-grid"
+  },
+  {
+    "name": "axis",
+    "hash": "add-an-axis",
+    "width": 1440,
+    "theme": "dark",
+    "file": "local-axis-1440-dark.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#add-an-axis"
+  },
+  {
+    "name": "tooltip",
+    "hash": "add-tooltip",
+    "width": 1440,
+    "theme": "dark",
+    "file": "local-tooltip-1440-dark.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#add-tooltip"
+  },
+  {
+    "name": "legend",
+    "hash": "add-legend",
+    "width": 1440,
+    "theme": "dark",
+    "file": "local-legend-1440-dark.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#add-legend"
+  },
+  {
+    "name": "anatomy",
+    "hash": "tooltip",
+    "width": 1440,
+    "theme": "dark",
+    "file": "local-anatomy-1440-dark.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#tooltip"
+  },
+  {
+    "name": "rtl",
+    "hash": "rtl",
+    "width": 1440,
+    "theme": "dark",
+    "file": "local-rtl-1440-dark.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#rtl"
+  },
+  {
+    "name": "first",
+    "hash": "your-first-chart",
+    "width": 390,
+    "theme": "dark",
+    "file": "local-first-390-dark.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#your-first-chart"
+  },
+  {
+    "name": "grid",
+    "hash": "add-a-grid",
+    "width": 390,
+    "theme": "dark",
+    "file": "local-grid-390-dark.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#add-a-grid"
+  },
+  {
+    "name": "axis",
+    "hash": "add-an-axis",
+    "width": 390,
+    "theme": "dark",
+    "file": "local-axis-390-dark.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#add-an-axis"
+  },
+  {
+    "name": "tooltip",
+    "hash": "add-tooltip",
+    "width": 390,
+    "theme": "dark",
+    "file": "local-tooltip-390-dark.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#add-tooltip"
+  },
+  {
+    "name": "legend",
+    "hash": "add-legend",
+    "width": 390,
+    "theme": "dark",
+    "file": "local-legend-390-dark.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#add-legend"
+  },
+  {
+    "name": "anatomy",
+    "hash": "tooltip",
+    "width": 390,
+    "theme": "dark",
+    "file": "local-anatomy-390-dark.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#tooltip"
+  },
+  {
+    "name": "rtl",
+    "hash": "rtl",
+    "width": 390,
+    "theme": "dark",
+    "file": "local-rtl-390-dark.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#rtl"
+  },
+  {
+    "name": "first",
+    "hash": "your-first-chart",
+    "width": 390,
+    "theme": "light",
+    "file": "local-first-390-light.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#your-first-chart"
+  },
+  {
+    "name": "grid",
+    "hash": "add-a-grid",
+    "width": 390,
+    "theme": "light",
+    "file": "local-grid-390-light.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#add-a-grid"
+  },
+  {
+    "name": "axis",
+    "hash": "add-an-axis",
+    "width": 390,
+    "theme": "light",
+    "file": "local-axis-390-light.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#add-an-axis"
+  },
+  {
+    "name": "tooltip",
+    "hash": "add-tooltip",
+    "width": 390,
+    "theme": "light",
+    "file": "local-tooltip-390-light.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#add-tooltip"
+  },
+  {
+    "name": "legend",
+    "hash": "add-legend",
+    "width": 390,
+    "theme": "light",
+    "file": "local-legend-390-light.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#add-legend"
+  },
+  {
+    "name": "anatomy",
+    "hash": "tooltip",
+    "width": 390,
+    "theme": "light",
+    "file": "local-anatomy-390-light.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#tooltip"
+  },
+  {
+    "name": "rtl",
+    "hash": "rtl",
+    "width": 390,
+    "theme": "light",
+    "file": "local-rtl-390-light.png",
+    "url": "http://127.0.0.1:8765/chart?acceptance=final60#rtl"
+  }
+]

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MessageScrollerTest[jvm]" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-10-30T15:12:56.748Z" hostname="Apples-MacBook-Pro.local" time="0.001">
+  <properties/>
+  <testcase name="no_growth_never_auto_scrolls_even_while_following[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerTest" time="0.0"/>
+  <testcase name="shrinking_content_never_auto_scrolls[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerTest" time="0.0"/>
+  <testcase name="one_pixel_past_the_threshold_releases[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerTest" time="0.0"/>
+  <testcase name="at_the_very_bottom_does_not_release_following[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerTest" time="0.0"/>
+  <testcase name="no_scrollable_content_is_near_bottom[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerTest" time="0.0"/>
+  <testcase name="first_content_arriving_from_empty_auto_scrolls_while_following[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerTest" time="0.0"/>
+  <testcase name="exactly_at_threshold_is_near_bottom[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerTest" time="0.0"/>
+  <testcase name="scrolling_away_from_the_bottom_releases_following[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerTest" time="0.0"/>
+  <testcase name="scrolled_away_past_threshold_is_not_near_bottom[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerTest" time="0.0"/>
+  <testcase name="near_bottom_within_threshold_is_true[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerTest" time="0.0"/>
+  <testcase name="staying_near_the_bottom_does_not_release_following[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerTest" time="0.0"/>
+  <testcase name="exactly_at_the_release_threshold_does_not_release[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerTest" time="0.0"/>
+  <testcase name="content_growing_while_following_auto_scrolls[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerTest" time="0.0"/>
+  <testcase name="at_the_very_bottom_is_near_bottom[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerTest" time="0.0"/>
+  <testcase name="content_growing_while_released_does_not_yank_the_reader_back[jvm]" classname="com.toutiaoyan.compose.ui.components.messagescroller.MessageScrollerTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

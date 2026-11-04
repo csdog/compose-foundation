@@ -1,0 +1,212 @@
+{
+  "command_fingerprints": {
+    "166f8a56c512909e99f77d683c57f3ed7d9649d46c1f85576f598a266c8f2722": 1,
+    "1f400bbfd8867aad296e63957b66a4debc22d7ad8241ab196fa595977db02fbd": 1,
+    "8e1e1ad8c3206e42fa9a3bc37dd73213df4f523021624c5c21592c154b5f818f": 3,
+    "c028cfe6ee6e39f1c98e89afefdb500739fe53770c1807038cc7b81875b47287": 1,
+    "f100ff40eaa20f324143405cdf11edd4e15466489edc7b64bdc56718f1dbe11f": 1,
+    "f55b3191f261397e6c57f6414f412028ac076992bc903556c952df13fc49d0c9": 1
+  },
+  "failure_fingerprints": {
+    "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a": {
+      "excerpt": "Module not found: Error: Can't resolve 'path' in '/Users/cscs/IdeaProjects/angryecho/compose-foundation/build/js/packages/compose-foundation-app-webApp/kotlin'",
+      "occurrences": 1
+    },
+    "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25": {
+      "excerpt": "* What went wrong: Execution failed for task ':shadcn:core:jvmTest'. > There were failing tests. See the report at: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/reports/tests/jvmTest/index.html",
+      "occurrences": 4
+    },
+    "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4": {
+      "excerpt": "Module not found: Error: Can't resolve 'os' in '/Users/cscs/IdeaProjects/angryecho/compose-foundation/build/js/packages/compose-foundation-app-webApp/kotlin'",
+      "occurrences": 1
+    }
+  },
+  "failure_fingerprints_truncated_occurrences": 0,
+  "run_count": 8,
+  "runs": [
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *KbdParityTest.novaUses* --tests *KbdParityTest.groupText* --tests *KbdParityTest.contentSlot* --tests *KbdParityTest.existingString* --tests *KbdParityTest.keyInside* --tests *KbdParityTest.callerStyle* --tests *KbdParityTest.actualTooltip* :app:shared:jvmTest --tests *KbdExamplesTest --console=plain --no-scan",
+      "elapsed_seconds": 21.939,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0001.log",
+      "question": "Do Kbd Nova geometry, slot icons, string lambda compatibility, caller overrides, pointer pass-through, live Tooltip colors and six catalog recipes work?",
+      "scope": "targeted",
+      "sequence": 1,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "b31efcef4b8f770b24a049cb9ba3982ffeb41d54a9dcda8120d66b790fb3b92d",
+        "dea1df736e1eaa22b569ded8dd89d42ff69f2af833de15035dd20f5bb096df9f",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *KbdParityTest.novaUses* --tests *KbdParityTest.groupText* --tests *KbdParityTest.contentSlot* --tests *KbdParityTest.existingString* --tests *KbdParityTest.keyInside* --tests *KbdParityTest.callerStyle* --tests *KbdParityTest.actualTooltip* :app:shared:jvmTest --tests *KbdExamplesTest --console=plain --no-scan",
+      "elapsed_seconds": 14.257,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0002.log",
+      "question": "After fixing required-first content slot overload and px4 test geometry, do all seven Kbd behaviors and six source recipes pass?",
+      "scope": "targeted",
+      "sequence": 2,
+      "warning_fingerprints": [
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *KbdParityTest.novaUses* --console=plain --no-scan",
+      "elapsed_seconds": 2.773,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0003.log",
+      "question": "Does the Kbd geometry test pass with pixel-rounded single-glyph centering while keeping exact long-label px4 assertions?",
+      "scope": "targeted",
+      "sequence": 3,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *KbdParityTest.novaUses* --tests *KbdParityTest.groupText* --tests *KbdParityTest.contentSlot* --tests *KbdParityTest.existingString* --tests *KbdParityTest.keyInside* --tests *KbdParityTest.callerStyle* --tests *KbdParityTest.actualTooltip* :app:shared:jvmTest --tests *KbdExamplesTest --console=plain --no-scan",
+      "elapsed_seconds": 2.689,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0004.log",
+      "question": "After verified center rounding, do all seven Kbd core behaviors and six official catalog recipe tests pass?",
+      "scope": "targeted",
+      "sequence": 4,
+      "warning_fingerprints": []
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *KbdParityTest.nova_light --tests *KbdParityTest.nova_dark --tests *KbdParityTest.tooltip_light --tests *KbdParityTest.tooltip_dark -Proborazzi.test.record=true --console=plain --no-scan",
+      "elapsed_seconds": 2.92,
+      "exit_status": 0,
+      "failure_fingerprints": [],
+      "log": "0005.log",
+      "question": "Record only four new Kbd Nova and Tooltip color fixtures for parent visual inspection after all behaviors pass.",
+      "scope": "targeted",
+      "sequence": 5,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *KbdParityTest --tests *KbdScreenshotTest --tests *TooltipScreenshotTest -Proborazzi.test.verify=true :app:shared:jvmTest --tests *KbdExamplesTest :shadcn:core:ktlintCheck :shadcn:core:detekt :app:shared:ktlintCheck :app:shared:detekt :app:webApp:jsBrowserDevelopmentExecutableDistribution :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 10.979,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0006.log",
+      "question": "Do final Kbd behaviors and four new goldens independently verify without changing existing Kbd or Tooltip goldens, while all six catalog recipes, owning quality gates and Web distributions pass?",
+      "scope": "targeted",
+      "sequence": 6,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :app:shared:jvmTest --tests *KbdExamplesTest :shadcn:core:ktlintCheck :shadcn:core:detekt :app:shared:ktlintCheck :app:shared:detekt :app:webApp:jsBrowserDevelopmentExecutableDistribution :app:webApp:wasmJsBrowserDevelopmentExecutableDistribution --console=plain --no-scan",
+      "elapsed_seconds": 37.166,
+      "exit_status": 0,
+      "failure_fingerprints": [
+        "765860b7877250d7160821eeaf07a6c23e672611448fb25ae5127291f13e53b4",
+        "1234a4cc3551991dc341eb7f563f3956e3479491b14322e9d50b8a187daec52a"
+      ],
+      "log": "0007.log",
+      "question": "After Kbd core and existing Kbd goldens independently pass but legacy Tooltip goldens fail, do six catalog recipes, four owning quality gates and JS/Wasm distributions pass separately?",
+      "scope": "targeted",
+      "sequence": 7,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "3881a80a6ecba548a6fec7d9ca286f35bf501b35faba3b4c3ffbf6ddd5a67c9f",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    },
+    {
+      "command": "./gradlew :shadcn:core:jvmTest --tests *TooltipScreenshotTest -Proborazzi.test.verify=true --console=plain --no-scan",
+      "elapsed_seconds": 12.654,
+      "exit_status": 1,
+      "failure_fingerprints": [
+        "5e4100f42b7d8a021389720fa4f721db55d03ee3839a30f5662a25dddab63f25"
+      ],
+      "log": "0008.log",
+      "question": "With only the Tooltip content provider reverted and the unused marker retained for compilation, do legacy Tooltip six golden differences reproduce byte-for-byte?",
+      "scope": "targeted",
+      "sequence": 8,
+      "warning_fingerprints": [
+        "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a",
+        "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e",
+        "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90",
+        "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312",
+        "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2",
+        "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4"
+      ]
+    }
+  ],
+  "version": 1,
+  "warning_fingerprints": {
+    "0772b31e219ac5ae6ec1ef90d9811cd7535fd13444a522528676428de123f312": {
+      "excerpt": "w: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/text/Text.kt:5:16 Suppression of error 'INVISIBLE_REFERENCE' might compile and work, but the compiler behavior is UNSP...",
+      "occurrences": 5
+    },
+    "28f5e7b06d7f38f1d93a70833d82bc3e3809b49d7107b1db4350e58125bd7ba4": {
+      "excerpt": "You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.",
+      "occurrences": 6
+    },
+    "3881a80a6ecba548a6fec7d9ca286f35bf501b35faba3b4c3ffbf6ddd5a67c9f": {
+      "excerpt": "webpack 5.108.1 compiled with 1 warning in 401 ms",
+      "occurrences": 1
+    },
+    "63c0bf182d7ff74957dbadfc9e325e4478424c3ce798b38fd2d47ccf3a4852a2": {
+      "excerpt": "Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.",
+      "occurrences": 6
+    },
+    "b31efcef4b8f770b24a049cb9ba3982ffeb41d54a9dcda8120d66b790fb3b92d": {
+      "excerpt": "WARNING: *Important* Test suite support is experimental and subject to change",
+      "occurrences": 1
+    },
+    "c424de5a386c1b9213795588bbfb1129e194c8adc281d4548d8bbef692631f1a": {
+      "excerpt": "WARNING: The option setting 'android.experimental.enableScreenshotTest=true' is experimental.",
+      "occurrences": 6
+    },
+    "dea1df736e1eaa22b569ded8dd89d42ff69f2af833de15035dd20f5bb096df9f": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=TEST_SUITE_SUPPORT_EXPERIMENTAL to the gradle.properties file to suppress this warning.",
+      "occurrences": 1
+    },
+    "ead90bd6a62db5c5715cfd022642a042e9acb7655015237dc7bfd4689edd637e": {
+      "excerpt": "Add android.sync.suppressAgpWarnings=UNSUPPORTED_PROJECT_OPTION_USE to the gradle.properties file to suppress this warning.",
+      "occurrences": 12
+    },
+    "eaf6a2659d0cd0d5d7e739874f586c04f3cbe7617ef96c6547d81974adef6c90": {
+      "excerpt": "WARNING: The option setting 'android.experimental.testSuiteSupport=true' is experimental.",
+      "occurrences": 6
+    }
+  },
+  "warning_fingerprints_truncated_occurrences": 0,
+  "workflow": "acd31ae659e0c4125612cd039057bdc6"
+}

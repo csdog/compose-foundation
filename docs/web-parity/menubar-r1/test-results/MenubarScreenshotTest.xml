@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MenubarScreenshotTest[jvm]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-30T13:22:17.973Z" hostname="Apples-MacBook-Pro.local" time="0.038">
+  <properties/>
+  <testcase name="idle_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.menubar.MenubarScreenshotTest" time="0.019"/>
+  <testcase name="idle_light[jvm]" classname="com.toutiaoyan.compose.ui.components.menubar.MenubarScreenshotTest" time="0.019"/>
+  <system-out><![CDATA[Roborazzi: menubar_idle_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=13072, width=172, height=76) changed:false
+Roborazzi: menubar_idle_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=13072, width=172, height=76) changed:false
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

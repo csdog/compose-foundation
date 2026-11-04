@@ -3,7 +3,6 @@
 package com.toutiaoyan.compose.ui.components.contextmenu
 
 import androidx.compose.foundation.focusable
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.awaitLongPressOrCancellation
@@ -480,7 +479,7 @@ fun ContextMenuSeparator(
     style: Style = Style,
 ) {
     DropdownMenuSeparator(
-        modifier = modifier.then(if (LocalContextMenuNova.current) Modifier.padding(vertical = 4.dp) else Modifier),
+        modifier = modifier,
         style = style,
     )
 }

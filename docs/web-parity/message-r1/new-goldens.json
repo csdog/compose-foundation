@@ -1,0 +1,9 @@
+{
+  "scope": "Four new Message Nova and Ghost light/dark goldens only; raw images viewed then independent verify passed. Existing Message and MessageScroller golden files were already dirty before this pass and were not recorded here.",
+  "files": {
+    "shadcn/core/src/jvmTest/snapshots/message_nova_dark.png": "0b077b03dc76cd414cf4d9d95f510adb3d15e0a481900c93c4dce3afaf89aa58",
+    "shadcn/core/src/jvmTest/snapshots/message_nova_light.png": "bbf353beda2f297f9adb2cdbd7e6f0eb8d03ed3e498f406efb5f0b1d45173bcd",
+    "shadcn/core/src/jvmTest/snapshots/message_ghost_nova_light.png": "e65a65d55fa423823f48a68c8581366405c1c13583de6be9cff7f29a352b032a",
+    "shadcn/core/src/jvmTest/snapshots/message_ghost_nova_dark.png": "7e44995cfe0805fa6216b4c106ef8c735d505fcceabda86b74d71a44dd27a114"
+  }
+}

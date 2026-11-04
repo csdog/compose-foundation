@@ -1,0 +1,11 @@
+{
+  "scope": "Only4newPaginationNovaDefault/RTL+2newSelectValueellipsislight/dark goldens recorded, inspected, independentlyverified; legacyPagination2notrecorded, existingSelectArabic2verifiedunchanged.",
+  "files": {
+    "pagination_nova_default_dark.png": "d62b1fb9717a60c4bba63442823e02363ed06a7e53ec5a82e0a94a990b40d9ce",
+    "pagination_nova_default_light.png": "605c9717d1e6dc1fe7b89187262a65d1a5bf78aae429b617fcd3f59f1ed8cf1c",
+    "pagination_nova_rtl_dark.png": "43c07f6304234b0611c2fd0a8a4bf24acf00a10bacd7cdc00b9eb6f4f481831b",
+    "pagination_nova_rtl_light.png": "4affb76a9114a6d6dbc341f1a304d0eee75eceb15f2deae13845b9f346f2e09a",
+    "select_nova_value_ellipsis_dark.png": "5c67d8dfc7853d10c49bdcee0f1cf9c0e29acd4e903503ad905c280622078281",
+    "select_nova_value_ellipsis_light.png": "b5edf256ce4590b3407885a4ace4297acceb28e5e864a2f0e978256fcf5e8e8f"
+  }
+}

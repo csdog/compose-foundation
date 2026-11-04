@@ -1,0 +1,10 @@
+[
+  {
+    "file": "scroll_fade_states_light.png",
+    "sha256": "e3bd1f4b53affaf0350af2fc9839bad712dce497c7a9b420b32c962aa267ab80"
+  },
+  {
+    "file": "scroll_fade_states_dark.png",
+    "sha256": "c332f643b93c643992944e686dcd6031d9a94d110e455b9a6d51bfdf6bac224f"
+  }
+]

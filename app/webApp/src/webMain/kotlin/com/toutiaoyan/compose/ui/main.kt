@@ -3,6 +3,12 @@
 package com.toutiaoyan.compose.ui
 
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.ui.catalog.LocalCatalogViewportWidth
+import com.toutiaoyan.compose.ui.catalog.LocalDocumentScrollHost
+import kotlinx.browser.document
+import org.w3c.dom.HTMLElement
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -26,12 +32,35 @@ import kotlinx.coroutines.coroutineScope
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
-    ComposeViewport {
+    val initialDarkModeOverride = readThemePreference()
+    applyBrowserColorScheme(initialDarkModeOverride)
+    ComposeViewport("compose-root") {
+        var viewportWidth by remember { mutableStateOf(window.innerWidth.dp) }
+        DisposableEffect(Unit) {
+            val listener: (Event) -> Unit = { viewportWidth = window.innerWidth.dp }
+            window.addEventListener("resize", listener)
+            // Compose dispatches wheel input to its own scrollers (including popup content).
+            // Do not let an unconsumed wheel also scroll the browser document underneath it.
+            val container = checkNotNull(document.getElementById("compose-root"))
+            val wheelListener: (Event) -> Unit = { it.preventDefault() }
+            container.addEventListener("wheel", wheelListener)
+            onDispose {
+                window.removeEventListener("resize", listener)
+                container.removeEventListener("wheel", wheelListener)
+            }
+        }
+        val documentScrollHost = remember { BrowserDocumentScrollHost() }
         val searchRequests = remember { browserSearchRequests() }
         val docNavigation = remember { BrowserDocNavigation() }
-        CompositionLocalProvider(LocalDocNavigation provides docNavigation) {
+        CompositionLocalProvider(
+            LocalDocNavigation provides docNavigation,
+            LocalCatalogViewportWidth provides viewportWidth,
+            LocalDocumentScrollHost provides documentScrollHost,
+        ) {
             App(
                 searchRequests = searchRequests,
+                initialDarkModeOverride = initialDarkModeOverride,
+                onDarkModeOverrideChange = ::writeThemePreference,
                 onNavHostReady = { appRouter ->
                     navigateFromBrowser(appRouter)
                     bindAppRouterToBrowser(appRouter, docNavigation)
@@ -46,9 +75,13 @@ private suspend fun bindAppRouterToBrowser(
     docs: BrowserDocNavigation,
 ) {
     coroutineScope {
+        var committedPath = window.location.pathname
         window.onpopstate = {
+            // Router observers can already have reacted; compare committed browser paths.
+            val restoreScroll = window.location.pathname != committedPath
+            committedPath = window.location.pathname
             navigateFromBrowser(appRouter)
-            docs.sync()
+            docs.sync(restoreScroll = restoreScroll, force = restoreScroll)
         }
         val hashListener: (Event) -> Unit = { docs.sync() }
         window.addEventListener("hashchange", hashListener)
@@ -57,6 +90,7 @@ private suspend fun bindAppRouterToBrowser(
                 val path = route.path
                 if (window.location.pathname != path) {
                     window.history.pushState(null, "", path)
+                    committedPath = path
                 }
                 docs.sync()
             }
@@ -80,10 +114,11 @@ private class BrowserDocNavigation : DocNavigation {
     fun sync(
         animate: Boolean = false,
         force: Boolean = false,
+        restoreScroll: Boolean = false,
     ) {
         val next = browserDocLocation()
         if (force || next.componentId != location.componentId || next.fragment != location.fragment) {
-            location = next.copy(revision = location.revision + 1, animate = animate)
+            location = next.copy(revision = location.revision + 1, animate = animate, restoreScroll = restoreScroll)
         }
     }
 
@@ -120,3 +155,31 @@ private fun browserSearchRequests(): Flow<Unit> =
         window.addEventListener("keydown", listener, true)
         awaitClose { window.removeEventListener("keydown", listener, true) }
     }
+
+private const val ThemePreferenceKey = "compose-foundation.theme"
+
+private fun readThemePreference(): Boolean? =
+    runCatching {
+        when (window.localStorage.getItem(ThemePreferenceKey)) {
+            "dark" -> true
+            "light" -> false
+            else -> null
+        }
+    }.getOrNull()
+
+private fun writeThemePreference(isDark: Boolean) {
+    applyBrowserColorScheme(isDark)
+    // Private browsing policies can deny storage; the current in-memory choice still works.
+    runCatching { window.localStorage.setItem(ThemePreferenceKey, if (isDark) "dark" else "light") }
+}
+
+private fun applyBrowserColorScheme(isDark: Boolean?) {
+    (document.documentElement as? HTMLElement)?.style?.setProperty(
+        "color-scheme",
+        when (isDark) {
+            true -> "dark"
+            false -> "light"
+            null -> "light dark"
+        },
+    )
+}

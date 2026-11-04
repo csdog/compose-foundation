@@ -1,0 +1,926 @@
+[
+  {
+    "width": 390,
+    "clientWidth": 375,
+    "a": [
+      {
+        "tag": "DIV",
+        "cls": "typeset w-full flex-1 pb-16 *:data-[slot=alert]:first:mt-0 sm:pb-0",
+        "rect": {
+          "x": 24,
+          "w": 327
+        },
+        "padding": "0px 0px 64px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "mx-auto flex w-full max-w-160 min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-foreground md:px-0 lg:py-8 dark:text-foreground",
+        "rect": {
+          "x": 8,
+          "w": 359
+        },
+        "padding": "24px 16px",
+        "maxWidth": "640px"
+      },
+      {
+        "tag": "DIV",
+        "cls": "flex min-w-0 flex-1 flex-col",
+        "rect": {
+          "x": 8,
+          "w": 359
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full",
+        "rect": {
+          "x": 8,
+          "w": 359
+        },
+        "padding": "0px 0px 32px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "h-full w-full",
+        "rect": {
+          "x": 8,
+          "w": 359
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "group/sidebar-wrapper flex w-full has-data-[variant=inset]:bg-sidebar min-h-min flex-1 items-start px-0 [--top-spacing:0] lg:grid lg:grid-cols-[var(--sidebar-width)_minmax(0,1fr)] lg:[--top-spacing:calc(var(--spacing)*4)] 3xl:fixed:container 3xl:fixed:px-3",
+        "rect": {
+          "x": 8,
+          "w": 359
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "container-wrapper flex flex-1 flex-col px-2",
+        "rect": {
+          "x": 0,
+          "w": 375
+        },
+        "padding": "0px 8px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "MAIN",
+        "cls": "flex min-h-0 flex-1 flex-col",
+        "rect": {
+          "x": 0,
+          "w": 375
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "group/layout relative z-10 flex min-h-svh flex-col bg-background has-data-[slot=designer]:h-svh has-data-[slot=designer]:overflow-hidden",
+        "rect": {
+          "x": 0,
+          "w": 375
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "BODY",
+        "cls": "group/body overscroll-none antialiased [--footer-height:calc(var(--spacing)*14)] xl:[--footer-height:calc(var(--spacing)*24)] theme-default",
+        "rect": {
+          "x": 0,
+          "w": 375
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "HTML",
+        "cls": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] dark",
+        "rect": {
+          "x": 0,
+          "w": 375
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      }
+    ],
+    "sidebars": [
+      {
+        "display": "none",
+        "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        },
+        "borderRight": "0px"
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "clientWidth": 753,
+    "a": [
+      {
+        "tag": "DIV",
+        "cls": "typeset w-full flex-1 pb-16 *:data-[slot=alert]:first:mt-0 sm:pb-0",
+        "rect": {
+          "x": 56.5,
+          "w": 640
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "mx-auto flex w-full max-w-160 min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-foreground md:px-0 lg:py-8 dark:text-foreground",
+        "rect": {
+          "x": 56.5,
+          "w": 640
+        },
+        "padding": "24px 0px",
+        "maxWidth": "640px"
+      },
+      {
+        "tag": "DIV",
+        "cls": "flex min-w-0 flex-1 flex-col",
+        "rect": {
+          "x": 8,
+          "w": 737
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full",
+        "rect": {
+          "x": 8,
+          "w": 737
+        },
+        "padding": "0px 0px 32px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "h-full w-full",
+        "rect": {
+          "x": 8,
+          "w": 737
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "group/sidebar-wrapper flex w-full has-data-[variant=inset]:bg-sidebar min-h-min flex-1 items-start px-0 [--top-spacing:0] lg:grid lg:grid-cols-[var(--sidebar-width)_minmax(0,1fr)] lg:[--top-spacing:calc(var(--spacing)*4)] 3xl:fixed:container 3xl:fixed:px-3",
+        "rect": {
+          "x": 8,
+          "w": 737
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "container-wrapper flex flex-1 flex-col px-2",
+        "rect": {
+          "x": 0,
+          "w": 753
+        },
+        "padding": "0px 8px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "MAIN",
+        "cls": "flex min-h-0 flex-1 flex-col",
+        "rect": {
+          "x": 0,
+          "w": 753
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "group/layout relative z-10 flex min-h-svh flex-col bg-background has-data-[slot=designer]:h-svh has-data-[slot=designer]:overflow-hidden",
+        "rect": {
+          "x": 0,
+          "w": 753
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "BODY",
+        "cls": "group/body overscroll-none antialiased [--footer-height:calc(var(--spacing)*14)] xl:[--footer-height:calc(var(--spacing)*24)] theme-default",
+        "rect": {
+          "x": 0,
+          "w": 753
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "HTML",
+        "cls": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] dark",
+        "rect": {
+          "x": 0,
+          "w": 753
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      }
+    ],
+    "sidebars": [
+      {
+        "display": "none",
+        "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        },
+        "borderRight": "0px"
+      }
+    ]
+  },
+  {
+    "width": 900,
+    "clientWidth": 885,
+    "a": [
+      {
+        "tag": "DIV",
+        "cls": "typeset w-full flex-1 pb-16 *:data-[slot=alert]:first:mt-0 sm:pb-0",
+        "rect": {
+          "x": 122.5,
+          "w": 640
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "mx-auto flex w-full max-w-160 min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-foreground md:px-0 lg:py-8 dark:text-foreground",
+        "rect": {
+          "x": 122.5,
+          "w": 640
+        },
+        "padding": "24px 0px",
+        "maxWidth": "640px"
+      },
+      {
+        "tag": "DIV",
+        "cls": "flex min-w-0 flex-1 flex-col",
+        "rect": {
+          "x": 8,
+          "w": 869
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full",
+        "rect": {
+          "x": 8,
+          "w": 869
+        },
+        "padding": "0px 0px 32px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "h-full w-full",
+        "rect": {
+          "x": 8,
+          "w": 869
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "group/sidebar-wrapper flex w-full has-data-[variant=inset]:bg-sidebar min-h-min flex-1 items-start px-0 [--top-spacing:0] lg:grid lg:grid-cols-[var(--sidebar-width)_minmax(0,1fr)] lg:[--top-spacing:calc(var(--spacing)*4)] 3xl:fixed:container 3xl:fixed:px-3",
+        "rect": {
+          "x": 8,
+          "w": 869
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "container-wrapper flex flex-1 flex-col px-2",
+        "rect": {
+          "x": 0,
+          "w": 885
+        },
+        "padding": "0px 8px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "MAIN",
+        "cls": "flex min-h-0 flex-1 flex-col",
+        "rect": {
+          "x": 0,
+          "w": 885
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "group/layout relative z-10 flex min-h-svh flex-col bg-background has-data-[slot=designer]:h-svh has-data-[slot=designer]:overflow-hidden",
+        "rect": {
+          "x": 0,
+          "w": 885
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "BODY",
+        "cls": "group/body overscroll-none antialiased [--footer-height:calc(var(--spacing)*14)] xl:[--footer-height:calc(var(--spacing)*24)] theme-default",
+        "rect": {
+          "x": 0,
+          "w": 885
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "HTML",
+        "cls": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] dark",
+        "rect": {
+          "x": 0,
+          "w": 885
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      }
+    ],
+    "sidebars": [
+      {
+        "display": "none",
+        "r": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        },
+        "borderRight": "0px"
+      }
+    ]
+  },
+  {
+    "width": 1024,
+    "clientWidth": 1009,
+    "a": [
+      {
+        "tag": "DIV",
+        "cls": "typeset w-full flex-1 pb-16 *:data-[slot=alert]:first:mt-0 sm:pb-0",
+        "rect": {
+          "x": 328.5,
+          "w": 640
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "mx-auto flex w-full max-w-160 min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-foreground md:px-0 lg:py-8 dark:text-foreground",
+        "rect": {
+          "x": 328.5,
+          "w": 640
+        },
+        "padding": "32px 0px",
+        "maxWidth": "640px"
+      },
+      {
+        "tag": "DIV",
+        "cls": "flex min-w-0 flex-1 flex-col",
+        "rect": {
+          "x": 296,
+          "w": 705
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full",
+        "rect": {
+          "x": 296,
+          "w": 705
+        },
+        "padding": "0px 0px 32px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "h-full w-full",
+        "rect": {
+          "x": 296,
+          "w": 705
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "group/sidebar-wrapper flex w-full has-data-[variant=inset]:bg-sidebar min-h-min flex-1 items-start px-0 [--top-spacing:0] lg:grid lg:grid-cols-[var(--sidebar-width)_minmax(0,1fr)] lg:[--top-spacing:calc(var(--spacing)*4)] 3xl:fixed:container 3xl:fixed:px-3",
+        "rect": {
+          "x": 8,
+          "w": 993
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "container-wrapper flex flex-1 flex-col px-2",
+        "rect": {
+          "x": 0,
+          "w": 1009
+        },
+        "padding": "0px 8px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "MAIN",
+        "cls": "flex min-h-0 flex-1 flex-col",
+        "rect": {
+          "x": 0,
+          "w": 1009
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "group/layout relative z-10 flex min-h-svh flex-col bg-background has-data-[slot=designer]:h-svh has-data-[slot=designer]:overflow-hidden",
+        "rect": {
+          "x": 0,
+          "w": 1009
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "BODY",
+        "cls": "group/body overscroll-none antialiased [--footer-height:calc(var(--spacing)*14)] xl:[--footer-height:calc(var(--spacing)*24)] theme-default",
+        "rect": {
+          "x": 0,
+          "w": 1009
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "HTML",
+        "cls": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] dark",
+        "rect": {
+          "x": 0,
+          "w": 1009
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      }
+    ],
+    "sidebars": [
+      {
+        "display": "flex",
+        "r": {
+          "x": 8,
+          "y": 73.59375,
+          "width": 288,
+          "height": 840,
+          "top": 73.59375,
+          "right": 296,
+          "bottom": 913.59375,
+          "left": 8
+        },
+        "borderRight": "0px"
+      }
+    ]
+  },
+  {
+    "width": 1280,
+    "clientWidth": 1265,
+    "a": [
+      {
+        "tag": "DIV",
+        "cls": "typeset w-full flex-1 pb-16 *:data-[slot=alert]:first:mt-0 sm:pb-0",
+        "rect": {
+          "x": 312.5,
+          "w": 640
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "mx-auto flex w-full max-w-160 min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-foreground md:px-0 lg:py-8 dark:text-foreground",
+        "rect": {
+          "x": 312.5,
+          "w": 640
+        },
+        "padding": "32px 0px",
+        "maxWidth": "640px"
+      },
+      {
+        "tag": "DIV",
+        "cls": "flex min-w-0 flex-1 flex-col",
+        "rect": {
+          "x": 296,
+          "w": 673
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full",
+        "rect": {
+          "x": 296,
+          "w": 961
+        },
+        "padding": "0px 0px 32px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "h-full w-full",
+        "rect": {
+          "x": 296,
+          "w": 961
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "group/sidebar-wrapper flex w-full has-data-[variant=inset]:bg-sidebar min-h-min flex-1 items-start px-0 [--top-spacing:0] lg:grid lg:grid-cols-[var(--sidebar-width)_minmax(0,1fr)] lg:[--top-spacing:calc(var(--spacing)*4)] 3xl:fixed:container 3xl:fixed:px-3",
+        "rect": {
+          "x": 8,
+          "w": 1249
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "container-wrapper flex flex-1 flex-col px-2",
+        "rect": {
+          "x": 0,
+          "w": 1265
+        },
+        "padding": "0px 8px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "MAIN",
+        "cls": "flex min-h-0 flex-1 flex-col",
+        "rect": {
+          "x": 0,
+          "w": 1265
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "group/layout relative z-10 flex min-h-svh flex-col bg-background has-data-[slot=designer]:h-svh has-data-[slot=designer]:overflow-hidden",
+        "rect": {
+          "x": 0,
+          "w": 1265
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "BODY",
+        "cls": "group/body overscroll-none antialiased [--footer-height:calc(var(--spacing)*14)] xl:[--footer-height:calc(var(--spacing)*24)] theme-default",
+        "rect": {
+          "x": 0,
+          "w": 1265
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "HTML",
+        "cls": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] dark",
+        "rect": {
+          "x": 0,
+          "w": 1265
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      }
+    ],
+    "sidebars": [
+      {
+        "display": "flex",
+        "r": {
+          "x": 8,
+          "y": 73.59375,
+          "width": 288,
+          "height": 840,
+          "top": 73.59375,
+          "right": 296,
+          "bottom": 913.59375,
+          "left": 8
+        },
+        "borderRight": "0px"
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "clientWidth": 1425,
+    "a": [
+      {
+        "tag": "DIV",
+        "cls": "typeset w-full flex-1 pb-16 *:data-[slot=alert]:first:mt-0 sm:pb-0",
+        "rect": {
+          "x": 392.5,
+          "w": 640
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "mx-auto flex w-full max-w-160 min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-foreground md:px-0 lg:py-8 dark:text-foreground",
+        "rect": {
+          "x": 392.5,
+          "w": 640
+        },
+        "padding": "32px 0px",
+        "maxWidth": "640px"
+      },
+      {
+        "tag": "DIV",
+        "cls": "flex min-w-0 flex-1 flex-col",
+        "rect": {
+          "x": 296,
+          "w": 833
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full",
+        "rect": {
+          "x": 296,
+          "w": 1121
+        },
+        "padding": "0px 0px 32px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "h-full w-full",
+        "rect": {
+          "x": 296,
+          "w": 1121
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "group/sidebar-wrapper flex w-full has-data-[variant=inset]:bg-sidebar min-h-min flex-1 items-start px-0 [--top-spacing:0] lg:grid lg:grid-cols-[var(--sidebar-width)_minmax(0,1fr)] lg:[--top-spacing:calc(var(--spacing)*4)] 3xl:fixed:container 3xl:fixed:px-3",
+        "rect": {
+          "x": 8,
+          "w": 1409
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "container-wrapper flex flex-1 flex-col px-2",
+        "rect": {
+          "x": 0,
+          "w": 1425
+        },
+        "padding": "0px 8px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "MAIN",
+        "cls": "flex min-h-0 flex-1 flex-col",
+        "rect": {
+          "x": 0,
+          "w": 1425
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "group/layout relative z-10 flex min-h-svh flex-col bg-background has-data-[slot=designer]:h-svh has-data-[slot=designer]:overflow-hidden",
+        "rect": {
+          "x": 0,
+          "w": 1425
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "BODY",
+        "cls": "group/body overscroll-none antialiased [--footer-height:calc(var(--spacing)*14)] xl:[--footer-height:calc(var(--spacing)*24)] theme-default",
+        "rect": {
+          "x": 0,
+          "w": 1425
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "HTML",
+        "cls": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] dark",
+        "rect": {
+          "x": 0,
+          "w": 1425
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      }
+    ],
+    "sidebars": [
+      {
+        "display": "flex",
+        "r": {
+          "x": 8,
+          "y": 73.59375,
+          "width": 288,
+          "height": 840,
+          "top": 73.59375,
+          "right": 296,
+          "bottom": 913.59375,
+          "left": 8
+        },
+        "borderRight": "0px"
+      }
+    ]
+  },
+  {
+    "width": 1800,
+    "clientWidth": 1785,
+    "a": [
+      {
+        "tag": "DIV",
+        "cls": "typeset w-full flex-1 pb-16 *:data-[slot=alert]:first:mt-0 sm:pb-0",
+        "rect": {
+          "x": 572.5,
+          "w": 640
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "mx-auto flex w-full max-w-160 min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-foreground md:px-0 lg:py-8 dark:text-foreground",
+        "rect": {
+          "x": 572.5,
+          "w": 640
+        },
+        "padding": "32px 0px",
+        "maxWidth": "640px"
+      },
+      {
+        "tag": "DIV",
+        "cls": "flex min-w-0 flex-1 flex-col",
+        "rect": {
+          "x": 296,
+          "w": 1193
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full",
+        "rect": {
+          "x": 296,
+          "w": 1481
+        },
+        "padding": "0px 0px 32px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "h-full w-full",
+        "rect": {
+          "x": 296,
+          "w": 1481
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "group/sidebar-wrapper flex w-full has-data-[variant=inset]:bg-sidebar min-h-min flex-1 items-start px-0 [--top-spacing:0] lg:grid lg:grid-cols-[var(--sidebar-width)_minmax(0,1fr)] lg:[--top-spacing:calc(var(--spacing)*4)] 3xl:fixed:container 3xl:fixed:px-3",
+        "rect": {
+          "x": 8,
+          "w": 1769
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "container-wrapper flex flex-1 flex-col px-2",
+        "rect": {
+          "x": 0,
+          "w": 1785
+        },
+        "padding": "0px 8px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "MAIN",
+        "cls": "flex min-h-0 flex-1 flex-col",
+        "rect": {
+          "x": 0,
+          "w": 1785
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "DIV",
+        "cls": "group/layout relative z-10 flex min-h-svh flex-col bg-background has-data-[slot=designer]:h-svh has-data-[slot=designer]:overflow-hidden",
+        "rect": {
+          "x": 0,
+          "w": 1785
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "BODY",
+        "cls": "group/body overscroll-none antialiased [--footer-height:calc(var(--spacing)*14)] xl:[--footer-height:calc(var(--spacing)*24)] theme-default",
+        "rect": {
+          "x": 0,
+          "w": 1785
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      },
+      {
+        "tag": "HTML",
+        "cls": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] dark",
+        "rect": {
+          "x": 0,
+          "w": 1785
+        },
+        "padding": "0px",
+        "maxWidth": "none"
+      }
+    ],
+    "sidebars": [
+      {
+        "display": "flex",
+        "r": {
+          "x": 8,
+          "y": 73.59375,
+          "width": 288,
+          "height": 840,
+          "top": 73.59375,
+          "right": 296,
+          "bottom": 913.59375,
+          "left": 8
+        },
+        "borderRight": "0px"
+      }
+    ]
+  }
+]

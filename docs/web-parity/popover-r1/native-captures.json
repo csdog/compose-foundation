@@ -1,0 +1,21 @@
+{
+  "browserEvidence": false,
+  "captures": [
+    {
+      "file": "shadcn/core/src/jvmTest/snapshots/popover_nova_basic_light.png",
+      "theme": "light",
+      "sha256": "749474ad67d84d98c42052630b59fd966661e7998daeff65084260475ee1a385",
+      "reviewed": true,
+      "fixture": "360x180dp content surface plus24dp outer padding; desktop native Popup scene1024x768; not browser capture",
+      "state": "open Nova Basic body with Outline trigger and alignStart"
+    },
+    {
+      "file": "shadcn/core/src/jvmTest/snapshots/popover_nova_basic_dark.png",
+      "theme": "dark",
+      "sha256": "f4da5f4ef076ec64cab60cda84e77488e06b9c8fcf7a29e3de9337434e74543d",
+      "reviewed": true,
+      "fixture": "360x180dp content surface plus24dp outer padding; desktop native Popup scene1024x768; not browser capture",
+      "state": "open Nova Basic body with Outline trigger and alignStart"
+    }
+  ]
+}

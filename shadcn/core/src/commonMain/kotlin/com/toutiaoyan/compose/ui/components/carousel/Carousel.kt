@@ -11,6 +11,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.PageSize
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
+import com.toutiaoyan.compose.ui.tokens.StylePreset
+import com.toutiaoyan.compose.ui.icons.NovaChevronRight
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
@@ -31,6 +37,7 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
+import kotlinx.coroutines.CoroutineScope
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
@@ -62,6 +69,92 @@ private fun carouselState(state: PagerState?): PagerState =
 @Composable
 fun carouselApi(): PagerState = carouselState(null)
 
+private val LocalCarouselOrientation = staticCompositionLocalOf { Orientation.Horizontal }
+private val LocalCarouselRoot = staticCompositionLocalOf { false }
+
+/** Compound root: supplies state/orientation and captures keys from slides and controls. */
+@Composable
+fun CarouselRoot(
+    state: PagerState,
+    modifier: Modifier = Modifier,
+    orientation: Orientation = Orientation.Horizontal,
+    ariaLabel: String? = null,
+    content: @Composable BoxScope.() -> Unit,
+) {
+    val scope = rememberCoroutineScope()
+    CompositionLocalProvider(
+        LocalCarouselState provides
+            state,
+        LocalCarouselOrientation provides
+            orientation,
+        LocalCarouselRoot provides
+            true,
+    ) {
+        Box(
+            modifier.carouselKeys(state, scope).semantics {
+                role = Role.Carousel
+                if (ariaLabel != null) contentDescription = ariaLabel
+            },
+            content = content,
+        )
+    }
+}
+
+private fun Modifier.carouselKeys(
+    state: PagerState,
+    scope: CoroutineScope,
+): Modifier =
+    onPreviewKeyEvent { event ->
+        if (event.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
+        val delta =
+            when (event.key) {
+                Key.DirectionLeft -> -1
+                Key.DirectionRight -> 1
+                else -> return@onPreviewKeyEvent false
+            }
+        scope.scrollCarousel(state, delta)
+        true
+    }
+
+private fun CoroutineScope.scrollCarousel(
+    state: PagerState,
+    delta: Int,
+) {
+    if (state.pageCount == 0 ||
+        (
+            delta < 0 &&
+                !state.canScrollBackward
+        ) ||
+        (
+            delta > 0 &&
+                !state.canScrollForward
+        )
+    ) {
+        return
+    }
+    val target = (state.targetPage + delta).coerceIn(0, state.pageCount - 1)
+    launch { state.animateScrollToPage(target) }
+}
+
+@Composable
+private fun CarouselChevron(previous: Boolean) {
+    val vertical = LocalCarouselOrientation.current == Orientation.Vertical
+    val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+    val rotation =
+        if (vertical) {
+            if (previous) -90f else 90f
+        } else if (previous != rtl) {
+            180f
+        } else {
+            0f
+        }
+    Icon(
+        if (currentTheme.activePreset == StylePreset.Nova) NovaChevronRight else ChevronRight,
+        tint = currentTheme.colors.foreground,
+        modifier = Modifier.rotate(rotation),
+    )
+}
+
 /**
  * A snap-scrolling, swipeable item carousel. Real shadcn/ui's `carousel.tsx` wraps
  * `embla-carousel-react`; Compose Multiplatform's own [HorizontalPager]/[VerticalPager]
@@ -88,39 +181,22 @@ fun Carousel(
     state: PagerState,
     modifier: Modifier = Modifier,
     style: Style = Style,
-    orientation: Orientation = Orientation.Horizontal,
+    orientation: Orientation = LocalCarouselOrientation.current,
     ariaLabel: String? = null,
+    pageSize: PageSize = PageSize.Fill,
+    pageSpacing: Dp = 0.dp,
+    userScrollEnabled: Boolean = true,
     pageContent: @Composable (page: Int) -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val scope = rememberCoroutineScope()
+    val inRoot = LocalCarouselRoot.current
     val styledModifier =
         modifier
             .fillMaxSize()
-            .onPreviewKeyEvent { event ->
-                if (event.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
-                when (event.key) {
-                    Key.DirectionLeft -> {
-                        scope.launch {
-                            if (state.currentPage > 0) {
-                                state.animateScrollToPage(state.currentPage - 1)
-                            }
-                        }
-                        true
-                    }
-                    Key.DirectionRight -> {
-                        scope.launch {
-                            if (state.currentPage < state.pageCount - 1) {
-                                state.animateScrollToPage(state.currentPage + 1)
-                            }
-                        }
-                        true
-                    }
-                    else -> false
-                }
-            }
+            .then(if (inRoot) Modifier else Modifier.carouselKeys(state, scope))
             .semantics {
-                role = Role.Carousel
+                if (!inRoot) role = Role.Carousel
                 if (ariaLabel != null) {
                     contentDescription = ariaLabel
                 }
@@ -128,9 +204,35 @@ fun Carousel(
             .styleable(styleState, style)
     CompositionLocalProvider(LocalCarouselState provides state) {
         if (orientation == Orientation.Horizontal) {
-            HorizontalPager(state = state, modifier = styledModifier) { page -> pageContent(page) }
+            HorizontalPager(
+                state =
+                state,
+                modifier =
+                styledModifier,
+                pageSize =
+                pageSize,
+                pageSpacing =
+                pageSpacing,
+                userScrollEnabled =
+                userScrollEnabled,
+            ) { page ->
+                pageContent(page)
+            }
         } else {
-            VerticalPager(state = state, modifier = styledModifier) { page -> pageContent(page) }
+            VerticalPager(
+                state =
+                state,
+                modifier =
+                styledModifier,
+                pageSize =
+                pageSize,
+                pageSpacing =
+                pageSpacing,
+                userScrollEnabled =
+                userScrollEnabled,
+            ) { page ->
+                pageContent(page)
+            }
         }
     }
 }
@@ -141,19 +243,23 @@ fun Carousel(
  */
 @Composable
 fun CarouselContent(
-    state: PagerState,
+    state: PagerState? = null,
     modifier: Modifier = Modifier,
     style: Style = Style,
-    orientation: Orientation = Orientation.Horizontal,
+    orientation: Orientation = LocalCarouselOrientation.current,
     ariaLabel: String? = null,
+    pageSize: PageSize = PageSize.Fill,
+    pageSpacing: Dp = 0.dp,
+    userScrollEnabled: Boolean = true,
     pageContent: @Composable (page: Int) -> Unit,
 ) {
     Carousel(
-        state = state,
+        state = carouselState(state),
         modifier = modifier,
         style = style,
         orientation = orientation,
         ariaLabel = ariaLabel,
+        pageSize = pageSize, pageSpacing = pageSpacing, userScrollEnabled = userScrollEnabled,
         pageContent = pageContent,
     )
 }
@@ -188,45 +294,25 @@ fun CarouselPrevious(
     state: PagerState? = null,
     modifier: Modifier = Modifier,
     style: Style = Style,
-    // A self-generated ImageVector (ChevronRight rotated 180deg), not a third-party
-    // icon-set dependency (this library still takes none -- see README) -- a plain text
-    // glyph doesn't render on WasmJS (Skia has no browser emoji-font fallback). tint
-    // matches ButtonVariant.Outline's own contentColor (colors.foreground) since a plain
-    // Image never auto-inherits the Style API's ambient contentColor the way Text
-    // did. Override with any icon set (e.g. this repo's own demo app passes a real
-    // Lucide ChevronLeft here -- see CarouselDoc.kt).
-    icon: @Composable () -> Unit = {
-        Icon(ChevronRight, tint = currentTheme.colors.foreground, modifier = Modifier.rotate(180f))
-    },
+    icon: @Composable () -> Unit = { CarouselChevron(previous = true) },
     disabled: Boolean = false,
 ) {
     val resolved = carouselState(state)
     val scope = rememberCoroutineScope()
+    val buttonSize = if (currentTheme.activePreset == StylePreset.Nova) 28.dp else 32.dp
     Button(
-        onClick = { scope.launch { resolved.animateScrollToPage((resolved.currentPage - 1).coerceAtLeast(0)) } },
+        onClick = { scope.scrollCarousel(resolved, -1) },
         modifier = modifier,
-        enabled = resolved.currentPage > 0 && !disabled,
+        enabled = resolved.canScrollBackward && !disabled,
         variant = ButtonVariant.Outline,
         size = ButtonSize.Icon,
         label = "Previous slide",
-        // Real shadcn's CarouselPrevious/CarouselNext are `rounded-full` (not the
-        // standard button corner radius) AND smaller than the default icon-button size
-        // (`size-7`/`size-8` vs. ButtonSize.Icon's 36dp). width/height here -- not a
-        // separate `Modifier.size(32.dp)` on the button -- is the single source of
-        // truth for the button's size: this `style` param is applied last (see
-        // Button's `variant.rememberStyle() then size.rememberStyle(), style`
-        // chain, where a later style overrides a property an earlier one already set),
-        // so it cleanly overrides ButtonSize.Icon's 36dp rather than fighting an outer
-        // Modifier.size() for the final rendered size -- a real bug this component
-        // shipped with: the two competing sizing mechanisms let the button render at
-        // 36dp despite the (ignored) 32dp Modifier.size(), overflowing past its
-        // allocated slot and overlapping the carousel content it's offset right up
-        // against (see CarouselDoc.kt's `.offset(x = (-40).dp)`/`.offset(x = 40.dp)`).
+        // Nova uses icon-sm (28dp); other presets retain the existing 32dp chrome.
         style =
             Style {
                 shape(CircleShape)
-                width(32.dp)
-                height(32.dp)
+                width(buttonSize)
+                height(buttonSize)
             } then style,
     ) {
         icon()
@@ -239,39 +325,25 @@ fun CarouselNext(
     state: PagerState? = null,
     modifier: Modifier = Modifier,
     style: Style = Style,
-    // A self-generated ImageVector, not a third-party icon-set dependency (this library
-    // still takes none -- see README) -- a plain text glyph doesn't render on WasmJS
-    // (Skia has no browser emoji-font fallback). tint matches ButtonVariant.Outline's own
-    // contentColor (colors.foreground) since a plain Image never auto-inherits the Style
-    // API's ambient contentColor the way Text did. Override with any icon set (e.g.
-    // this repo's own demo app passes a real Lucide ChevronRight here -- see
-    // CarouselDoc.kt).
-    icon: @Composable () -> Unit = { Icon(ChevronRight, tint = currentTheme.colors.foreground) },
+    icon: @Composable () -> Unit = { CarouselChevron(previous = false) },
     disabled: Boolean = false,
 ) {
     val resolved = carouselState(state)
     val scope = rememberCoroutineScope()
-    val canScrollNext = resolved.currentPage < resolved.pageCount - 1
+    val canScrollNext = resolved.canScrollForward
+    val buttonSize = if (currentTheme.activePreset == StylePreset.Nova) 28.dp else 32.dp
     Button(
-        onClick = {
-            scope.launch {
-                resolved.animateScrollToPage(
-                    (resolved.currentPage + 1).coerceAtMost(resolved.pageCount - 1),
-                )
-            }
-        },
+        onClick = { scope.scrollCarousel(resolved, 1) },
         modifier = modifier,
         enabled = canScrollNext && !disabled,
         variant = ButtonVariant.Outline,
         size = ButtonSize.Icon,
         label = "Next slide",
-        // See CarouselPrevious's matching comment -- width/height here (not a
-        // separate Modifier.size(32.dp)) is the single source of truth for size.
         style =
             Style {
                 shape(CircleShape)
-                width(32.dp)
-                height(32.dp)
+                width(buttonSize)
+                height(buttonSize)
             } then style,
     ) {
         icon()

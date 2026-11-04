@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ScrollFadeExamplesTest[jvm]" tests="28" skipped="0" failures="0" errors="0" timestamp="2026-10-30T20:11:18.067Z" hostname="Apples-MacBook-Pro.local" time="4.102">
+  <properties/>
+  <testcase name="rtlContainsExactTranslationsAndKeepsItsPositionAcrossLanguageChanges[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.776"/>
+  <testcase name="defaultHasTwelveSourceTilesAndReachesBothEnds[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.138"/>
+  <testcase name="noFadeStillScrollsAndKeepsTheSourcePairOfExamples[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.137"/>
+  <testcase name="edgeExamplesKeepTheirFourIndependentScrollStatesAndCaptions[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.278"/>
+  <testcase name="explicitSizesPreserveSixteenAndNinetySixDepthExamples[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.173"/>
+  <testcase name="horizontalIncludesAllTwelveTagsAndScrollsToSecurity[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.064"/>
+  <testcase name="noOverflowKeepsAllThreeTilesCrispWithoutScrollRange[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.029"/>
+  <testcase name="rtlContainsExactTranslationsAndKeepsItsPositionAcrossLanguageChanges[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.191"/>
+  <testcase name="defaultHasTwelveSourceTilesAndReachesBothEnds[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.123"/>
+  <testcase name="noFadeStillScrollsAndKeepsTheSourcePairOfExamples[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.113"/>
+  <testcase name="edgeExamplesKeepTheirFourIndependentScrollStatesAndCaptions[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.248"/>
+  <testcase name="explicitSizesPreserveSixteenAndNinetySixDepthExamples[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.148"/>
+  <testcase name="horizontalIncludesAllTwelveTagsAndScrollsToSecurity[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.055"/>
+  <testcase name="noOverflowKeepsAllThreeTilesCrispWithoutScrollRange[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.027"/>
+  <testcase name="rtlContainsExactTranslationsAndKeepsItsPositionAcrossLanguageChanges[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.154"/>
+  <testcase name="defaultHasTwelveSourceTilesAndReachesBothEnds[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.111"/>
+  <testcase name="noFadeStillScrollsAndKeepsTheSourcePairOfExamples[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.103"/>
+  <testcase name="edgeExamplesKeepTheirFourIndependentScrollStatesAndCaptions[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.224"/>
+  <testcase name="explicitSizesPreserveSixteenAndNinetySixDepthExamples[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.14"/>
+  <testcase name="horizontalIncludesAllTwelveTagsAndScrollsToSecurity[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.05"/>
+  <testcase name="noOverflowKeepsAllThreeTilesCrispWithoutScrollRange[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.025"/>
+  <testcase name="rtlContainsExactTranslationsAndKeepsItsPositionAcrossLanguageChanges[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.146"/>
+  <testcase name="defaultHasTwelveSourceTilesAndReachesBothEnds[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.107"/>
+  <testcase name="noFadeStillScrollsAndKeepsTheSourcePairOfExamples[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.103"/>
+  <testcase name="edgeExamplesKeepTheirFourIndependentScrollStatesAndCaptions[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.224"/>
+  <testcase name="explicitSizesPreserveSixteenAndNinetySixDepthExamples[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.136"/>
+  <testcase name="horizontalIncludesAllTwelveTagsAndScrollsToSecurity[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.049"/>
+  <testcase name="noOverflowKeepsAllThreeTilesCrispWithoutScrollRange[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollFadeExamplesTest" time="0.025"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

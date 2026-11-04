@@ -1,0 +1,38 @@
+{
+  "workflow": "f8e11398530f9605afdaa4710334e501",
+  "tests": {
+    "tests": "15",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "1.194",
+    "timestamp": "2026-10-30T20:34:12.807Z"
+  },
+  "coreKtlint": "PASS",
+  "sharedJvmCompile": {
+    "exit": 0,
+    "seconds": 8.131
+  },
+  "jsWebpack": {
+    "exit": 0,
+    "seconds": 27.077,
+    "unresolved": [
+      "os",
+      "path"
+    ],
+    "clean": false
+  },
+  "wasmWebpack": {
+    "exit": 0,
+    "seconds": 18.453,
+    "webpackWarnings": 1
+  },
+  "oldGoldens": "neither verified nor recorded",
+  "nativeCaptureCount": 4,
+  "browserAcceptance": false,
+  "remainingWarnings": [
+    "AGP experimental screenshot/test suite",
+    "Text.kt invisible reference suppression",
+    "Gradle10 deprecated features"
+  ]
+}

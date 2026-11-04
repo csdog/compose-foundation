@@ -1,0 +1,28 @@
+{
+  "initialParallelDistribution": "run0013 succeeded along with four owning quality checks",
+  "finalDocOnlyParallelDistribution": "run0014 failed: JS GC-overhead OOM and Wasm backend exception at unchanged ToastTheme; app7 tests passed",
+  "isolation": {
+    "flags": [
+      "--no-parallel",
+      "--max-workers=1"
+    ],
+    "kotlinDaemonHeap": "3072M unchanged",
+    "gradleHeap": "4096M unchanged",
+    "wasm": {
+      "run": 15,
+      "exitCode": 0,
+      "durationSeconds": 82.431
+    },
+    "js": {
+      "run": 16,
+      "exitCode": 0,
+      "durationSeconds": 121.538
+    },
+    "finalSharedQuality": {
+      "run": 17,
+      "exitCode": 0
+    }
+  },
+  "conclusion": "Both distribution targets pass with constrained concurrency; no source or heap configuration changes required. Evidence is consistent with compiler-memory pressure during concurrent targets; default-parallel OOM risk remains documented.",
+  "legacyWebpackDiagnostics": "No os/path fingerprints captured in these final summaries; earlier findings are not treated as fixed solely because no fingerprint appeared."
+}

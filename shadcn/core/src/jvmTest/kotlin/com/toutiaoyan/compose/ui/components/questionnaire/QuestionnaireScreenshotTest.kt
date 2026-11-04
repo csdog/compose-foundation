@@ -456,7 +456,6 @@ class QuestionnaireScreenshotTest : ScreenshotTest() {
                                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                                 verticalAlignment = Alignment.Top,
                             ) {
-                                QuestionnaireChoiceInput()
                                 Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                                     QuestionnaireChoiceLabel("Tool call timeline")
                                     QuestionnaireChoiceDescription(
@@ -470,7 +469,6 @@ class QuestionnaireScreenshotTest : ScreenshotTest() {
                                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                                 verticalAlignment = Alignment.Top,
                             ) {
-                                QuestionnaireChoiceInput()
                                 Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                                     QuestionnaireChoiceLabel("Approval checkpoints")
                                     QuestionnaireChoiceDescription(

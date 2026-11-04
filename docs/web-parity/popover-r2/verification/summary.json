@@ -1,0 +1,53 @@
+{
+  "workflow": "e184f673e745cb000c5180bce8aef9b4",
+  "finalTests": [
+    {
+      "file": "TEST-com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest.xml",
+      "tests": 24,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "file": "TEST-com.toutiaoyan.compose.ui.components.overlay.PopoverFocusTest.xml",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "file": "TEST-com.toutiaoyan.compose.ui.components.popover.PopoverNovaLayoutTest.xml",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "file": "TEST-com.toutiaoyan.compose.ui.components.popover.PopoverNovaScreenshotTest.xml",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0
+    }
+  ],
+  "totalTests": 33,
+  "ktlint": {
+    "catalog": "passed-run7",
+    "core": "passed-run6"
+  },
+  "js": {
+    "exit": 0,
+    "seconds": 20.329,
+    "diagnostics": [
+      "webpack unresolved os",
+      "webpack unresolved path"
+    ]
+  },
+  "wasm": {
+    "exit": 0,
+    "seconds": 13.344,
+    "warnings": 1
+  },
+  "captures": 36,
+  "notes": [
+    "No legacy goldens recorded or legacy tests rerun this round.",
+    "Native mock viewport does not prove mobile browser behavior.",
+    "Core runtime unchanged from prior audited round."
+  ]
+}

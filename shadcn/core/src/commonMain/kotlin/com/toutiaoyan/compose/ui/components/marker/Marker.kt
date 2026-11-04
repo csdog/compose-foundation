@@ -9,12 +9,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,7 +24,14 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.theme.currentTheme
-import com.toutiaoyan.compose.ui.components.separator.Separator
+import com.toutiaoyan.compose.ui.components.icon.LocalInlineIconSize
+import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
+import com.toutiaoyan.compose.ui.theme.LocalContentColor
+import com.toutiaoyan.compose.ui.tokens.StylePreset
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.tailwind.core.twSpacing
 
@@ -46,6 +55,7 @@ fun Marker(
     style: Style = Style,
     content: @Composable RowScope.() -> Unit,
 ) {
+    val nova = currentTheme.activePreset == StylePreset.Nova
     val borderColor = currentTheme.colors.border
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val bottomBorderModifier =
@@ -53,8 +63,8 @@ fun Marker(
             Modifier.drawBehind {
                 drawLine(
                     color = borderColor,
-                    start = Offset(0f, size.height),
-                    end = Offset(size.width, size.height),
+                    start = Offset(0f, size.height - if (nova) 0.5.dp.toPx() else 0f),
+                    end = Offset(size.width, size.height - if (nova) 0.5.dp.toPx() else 0f),
                     strokeWidth = 1.dp.toPx(),
                 )
             }
@@ -70,12 +80,26 @@ fun Marker(
                     styleState,
                     variant.rememberStyle() then style,
                 ),
-        horizontalArrangement = Arrangement.spacedBy(twSpacing.sm),
+        horizontalArrangement = Arrangement.spacedBy(if (nova) 8.dp else twSpacing.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        if (variant == MarkerVariant.Separator) MarkerLine()
-        content()
-        if (variant == MarkerVariant.Separator) MarkerLine()
+        if (variant == MarkerVariant.Separator) MarkerLine(nova, leading = true)
+        CompositionLocalProvider(
+            LocalContentColor provides if (nova) currentTheme.colors.mutedForeground else LocalContentColor.current,
+            LocalInlineIconSize provides if (nova) 16.dp else LocalInlineIconSize.current,
+            LocalDefaultTextStyle provides
+                if (nova) {
+                    TextStyle(
+                        fontFamily = currentTheme.fontFamily,
+                        fontSize = 14.sp,
+                        lineHeight = 20.sp,
+                        lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+                    )
+                } else {
+                    LocalDefaultTextStyle.current
+                },
+        ) { content() }
+        if (variant == MarkerVariant.Separator) MarkerLine(nova)
     }
 }
 
@@ -93,8 +117,35 @@ fun Marker(
 }
 
 @Composable
-private fun RowScope.MarkerLine() {
-    Box(modifier = Modifier.weight(1f).height(1.dp).background(currentTheme.colors.border))
+private fun RowScope.MarkerLine(
+    nova: Boolean,
+    leading: Boolean = false,
+) {
+    Box(
+        modifier =
+            Modifier.weight(1f)
+                .then(
+                    if (nova) {
+                        Modifier.padding(
+                            start =
+                                if (leading) {
+                                    0.dp
+                                } else {
+                                    4.dp
+                                },
+                            end =
+                                if (leading) {
+                                    4.dp
+                                } else {
+                                    0.dp
+                                },
+                        )
+                    } else {
+                        Modifier
+                    },
+                )
+                .height(1.dp).background(currentTheme.colors.border),
+    )
 }
 
 /** An optional leading icon slot in a [Marker]. */
@@ -105,7 +156,25 @@ fun MarkerIcon(
     content: @Composable () -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Box(modifier = modifier.width(16.dp).styleable(styleState, style)) { content() }
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    val iconStyle =
+        remember(nova) {
+            if (nova) {
+                Style {
+                    width(16.dp)
+                    height(16.dp)
+                }
+            } else {
+                Style
+            }
+        }
+    Box(
+        modifier =
+            modifier
+                .then(if (nova) Modifier.clearAndSetSemantics {} else Modifier.width(16.dp))
+                .styleable(styleState, iconStyle then style),
+        contentAlignment = if (nova) Alignment.Center else Alignment.TopStart,
+    ) { content() }
 }
 
 /** The marker's label text/content. */

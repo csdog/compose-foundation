@@ -26,6 +26,7 @@ fun rememberTabsListStyle(
                 background(Color.Transparent)
                 // Official base still has `p-[3px]` on line lists.
                 contentPadding(spacing.xs2)
+                if (horizontal) height(32.dp)
             }
         } else {
             Style {
@@ -39,13 +40,37 @@ fun rememberTabsListStyle(
     }
 
 @Composable
-fun rememberTabItemStyle(selected: Boolean): Style =
-    rememberTheme(selected) {
+fun rememberTabItemStyle(
+    selected: Boolean,
+    variant: TabsListVariant = TabsListVariant.Default,
+): Style =
+    rememberTheme(selected, variant) {
         Style {
             shape(RoundedCornerShape(radius.md))
-            // Selected chrome lives on [rememberTabsIndicatorStyle] (sliding pill).
+            if (selected && variant == TabsListVariant.Default) {
+                if (theme.isDark && theme.activePreset == com.toutiaoyan.compose.ui.tokens.StylePreset.Nova) {
+                    background(colors.input.copy(alpha = colors.input.alpha * .3f))
+                } else {
+                    background(colors.background)
+                }
+            }
             focusRing(RoundedCornerShape(radius.md))
-            contentPadding(horizontal = spacing.md, vertical = spacing.xs)
+            if (theme.activePreset == com.toutiaoyan.compose.ui.tokens.StylePreset.Nova) {
+                contentPadding(horizontal = 6.dp, vertical = 2.dp)
+                borderWidth(1.dp)
+                borderColor(
+                    if (selected &&
+                        variant == TabsListVariant.Default &&
+                        theme.isDark
+                    ) {
+                        colors.input
+                    } else {
+                        Color.Transparent
+                    },
+                )
+            } else {
+                contentPadding(horizontal = spacing.md, vertical = spacing.xs)
+            }
             disabledDim()
         }
     }
@@ -61,7 +86,13 @@ fun rememberTabsIndicatorStyle(variant: TabsListVariant = TabsListVariant.Defaul
         } else {
             Style {
                 shape(RoundedCornerShape(radius.md))
-                background(colors.background)
+                if (theme.activePreset == com.toutiaoyan.compose.ui.tokens.StylePreset.Nova && theme.isDark) {
+                    background(colors.input.copy(alpha = colors.input.alpha * 0.3f))
+                    borderWidth(1.dp)
+                    borderColor(colors.input)
+                } else {
+                    background(colors.background)
+                }
             }
         }
     }

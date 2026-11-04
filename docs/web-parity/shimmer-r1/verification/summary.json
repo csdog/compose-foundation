@@ -1,0 +1,58 @@
+{
+  "workflow": "4d55cd521b602a42e2523cb448fad1af",
+  "tests": {
+    "ShimmerTextPaintTest": 12,
+    "TextColorInheritanceTest": 1,
+    "AttachmentStateTest": 5,
+    "totalIndependent": 18,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "finalRestorationCheck": {
+      "exit": 0,
+      "seconds": 18.25,
+      "testResultsFromCache": true,
+      "note": "18-tests runtime execution was proven before exact-source isolation; restored final command reused matching cached XML, except KDoc-only change."
+    }
+  },
+  "coreKtlint": "PASS",
+  "sharedKtlint": "PASS",
+  "jsWebpack": {
+    "exit": 0,
+    "seconds": 45.731,
+    "unresolved": [
+      "os",
+      "path"
+    ],
+    "clean": false
+  },
+  "wasmWebpack": {
+    "exit": 0,
+    "seconds": 24.917,
+    "webpackWarnings": 1
+  },
+  "legacyGoldens": {
+    "cases": 6,
+    "passed": 4,
+    "changed": 2,
+    "changedNames": [
+      "shimmer_states_light",
+      "text_color_inheritance_dark"
+    ],
+    "prepassIsolation": "Both changed actual PNGs byte-identical under exact prepass Text/Shimmer sources; therefore preexisting this round. See prepass-isolation/actual-hash-comparison.json.",
+    "recorded": false
+  },
+  "nativeCaptureCount": 6,
+  "nativeReviewedByParent": true,
+  "sourceConfigTestHashCount": 11,
+  "browserAcceptance": false,
+  "fullRepositoryCommitGate": "not run",
+  "remainingWarnings": [
+    "AGP experimental screenshot/test suite",
+    "Text.kt invisible-reference suppression",
+    "Gradle10 deprecated features",
+    "JS unresolved os/path",
+    "Wasm webpack1warning"
+  ],
+  "scope": "Text Style brush rendering and draw/Style phase progress reads fixed. CSS currentColor/OKLCH/alpha geometry/reduced-motion and official nine recipes remain pending."
+}

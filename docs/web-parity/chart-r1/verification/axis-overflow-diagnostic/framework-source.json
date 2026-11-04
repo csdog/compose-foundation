@@ -1,0 +1,21 @@
+{
+  "artifact": "org.jetbrains.compose.ui:ui-text:1.12.2:sources",
+  "entry": "commonMain/androidx/compose/ui/text/TextLayoutResult.kt",
+  "sha256": "96184e920dbd7d862ea046d3a7282df27d4d331fc36fe31f7eca7889daf9a681",
+  "lines": [
+    321,
+    326
+  ],
+  "formula": "didOverflowWidth = size.width < multiParagraph.width; hasVisualOverflow = didOverflowWidth || didOverflowHeight",
+  "observed": {
+    "sizeWidth": 39,
+    "sizeHeight": 16,
+    "lineRight": 38.4375,
+    "lineBottom": 15,
+    "inputMaxWidth": 320,
+    "inputMaxHeight": 30,
+    "didOverflowWidth": true,
+    "didOverflowHeight": false
+  },
+  "acceptedAssertion": "Single line, full visible end, no ellipsis, and rendered ink within actual node bounds"
+}

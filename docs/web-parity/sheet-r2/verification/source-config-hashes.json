@@ -1,0 +1,15 @@
+{
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/sheet/Sheet.kt": "5358d32bbfe8039485fb5c9a42ff19d71c7228191332be6caf19a6009f98394e",
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/sheet/SheetStyles.kt": "ac5af76de0dc7ea489ec48ff1da3e6641639e3dcf013731f08c07314c92283dd",
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/sheet/SheetColumn.kt": "55ac847275133edb5dcf4db998ca3baaae678a565188db7af6495bc8378bab63",
+  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/sheet/SheetParityTest.kt": "54c3c171fcc25bc6ca890d8b376d9bff31fe007983b6da0f0e4189446103fe66",
+  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/sheet/SheetLayoutTest.kt": "268954b9df3af3838018bbed657fd8112f309d9ceca7ca76ec5b5bb9b549c54b",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/SheetDoc.kt": "98617516e2c262900214c7cfc754f1018c9a6a691313114e301246b992ea5526",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/SheetRecipes.kt": "71b3165221c4078dd494c4786776e2be2ef1b27db5253df7d5ee8b456b347b7f",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/SheetRecipeCode.kt": "0c970ceee4472a0e4c291950dd5631c4af57166e892d53df3498e68165d3d4aa",
+  "scripts/generate_sheet_recipe_code.py": "c1f44e32f1719e7d1450289f2d5eddfb465e6b7da1137b6de605d5c3136498bb",
+  "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/SheetExamplesTest.kt": "20a6887b96676da5f0436e6fdb504a340c9c61afa39a02562c6e13fd243263b3",
+  "gradle.properties": "5a87874a3321cd91b24b939ef27f7e5a15f46a00279f28c881dfa0a8fd596f4a",
+  "gradle/libs.versions.toml": "acd62a8ddc0d2a87e0546971f57228af5f28448c16bb9db97f06dd71c3979c8a",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/DocInstallation.kt": "bb1b5cdc31ccda234b60801674f934747b0ea3c63126be6b421d65b7a881378c"
+}

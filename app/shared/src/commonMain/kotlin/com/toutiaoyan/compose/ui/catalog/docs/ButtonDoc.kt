@@ -2,24 +2,31 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
-import com.composables.icons.lucide.Lucide
-import com.composables.icons.lucide.Check
-import com.composables.icons.lucide.ArrowUp
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
 import androidx.compose.ui.unit.dp
-import com.toutiaoyan.compose.ui.components.button.Button
-import com.toutiaoyan.compose.ui.components.button.ButtonSize
-import com.toutiaoyan.compose.ui.components.button.ButtonVariant
-import com.toutiaoyan.compose.ui.components.icon.Icon
-import com.toutiaoyan.compose.ui.components.spinner.Spinner
-import com.toutiaoyan.compose.ui.components.text.Text
 
 val buttonDoc =
     ComponentDoc(
         id = "button",
         title = "Button",
         description = "Displays a button or a component that looks like a button.",
+        usageImportsCode = "import com.toutiaoyan.compose.ui.components.button.*",
+        usageCode = "Button(\"Button\", variant = ButtonVariant.Outline)",
+        compositionCode = "Button(onClick = { /* perform action */ }) { Text { \"Continue\" } }",
+        examplesHeading = null,
+        beforeExamples =
+            listOf(
+                ComponentGuideSection(
+                    "Cursor",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "Nova uses the default arrow cursor, following Tailwind v4. " +
+                                "Opt into a hand cursor with " +
+                                "`Modifier.pointerHoverIcon(PointerIcon.Hand, overrideDescendants = true)` " +
+                                "when your application needs it.",
+                        ),
+                    ),
+                ),
+            ),
         apiProperties =
             listOf(
                 ApiProperty("onClick", "() -> Unit", "{}"),
@@ -31,49 +38,50 @@ val buttonDoc =
                 ApiProperty("indication", "Indication?", "null"),
                 ApiProperty("label", "String?", "null"),
                 ApiProperty("style", "Style", "Style"),
+                ApiProperty("iconPlacement", "ButtonIconPlacement?", "null"),
                 ApiProperty("content", "@Composable () -> Unit", "required"),
             ),
-        usageCode =
-            """
-            import com.toutiaoyan.compose.ui.components.button.Button
-            import com.toutiaoyan.compose.ui.components.text.Text
-
-            Button("Continue", onClick = { /* ... */ })
-            """.trimIndent(),
         examples =
             listOf(
                 ComponentExample(
                     title = "Default",
                     code =
                         """
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Row(Modifier.wrapContentWidth(unbounded = true), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             Button("Button", variant = ButtonVariant.Outline)
-                            Button(onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Icon, label = "Submit") {
-                                Icon(Lucide.ArrowUp)
-                            }
+                            Button(variant = ButtonVariant.Outline, size = ButtonSize.Icon, label = "Submit") { Icon(Lucide.ArrowUp) }
                         }
                         """.trimIndent(),
-                    preview = {
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Button("Button", variant = ButtonVariant.Outline)
-                            Button(
-                                onClick = {},
-                                variant = ButtonVariant.Outline,
-                                size = ButtonSize.Icon,
-                                label = "Submit",
-                            ) {
-                                Icon(Lucide.ArrowUp)
+                    preview = { ButtonRecipe(0) },
+                ),
+                ComponentExample(
+                    title = "Size",
+                    descriptionMarkdown =
+                        "Use `size` to change the button dimensions. The four pairs stack " +
+                            "below 640dp.",
+                    code =
+                        """
+                        val pairs: @Composable () -> Unit = {
+                            listOf("Extra Small" to ButtonSize.Xs, "Small" to ButtonSize.Sm, "Default" to ButtonSize.Md, "Large" to ButtonSize.Lg).forEachIndexed { index, (label, size) ->
+                                Row(Modifier.wrapContentWidth(unbounded = true), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    Button(label, size = size, variant = ButtonVariant.Outline)
+                                    Button(size = listOf(ButtonSize.IconXs, ButtonSize.IconSm, ButtonSize.Icon, ButtonSize.IconLg)[index], variant = ButtonVariant.Outline, label = "Submit") { Icon(Lucide.ArrowUpRight) }
+                                }
                             }
                         }
-                    },
+                        val narrow = with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() < 640.dp }
+                        if (narrow) Column(verticalArrangement = Arrangement.spacedBy(32.dp)) { pairs() }
+                        else Row(horizontalArrangement = Arrangement.spacedBy(32.dp)) { pairs() }
+                        """.trimIndent(),
+                    preview = { ButtonRecipe(1) },
                 ),
                 ComponentExample(
                     title = "Default",
                     code =
                         """
-                        Button("Default", variant = ButtonVariant.Default)
+                        Button("Button")
                         """.trimIndent(),
-                    preview = { Button("Default", variant = ButtonVariant.Default) },
+                    preview = { ButtonRecipe(2) },
                 ),
                 ComponentExample(
                     title = "Outline",
@@ -81,7 +89,7 @@ val buttonDoc =
                         """
                         Button("Outline", variant = ButtonVariant.Outline)
                         """.trimIndent(),
-                    preview = { Button("Outline", variant = ButtonVariant.Outline) },
+                    preview = { ButtonRecipe(3) },
                 ),
                 ComponentExample(
                     title = "Secondary",
@@ -89,9 +97,7 @@ val buttonDoc =
                         """
                         Button("Secondary", variant = ButtonVariant.Secondary)
                         """.trimIndent(),
-                    preview = {
-                        Button("Secondary", variant = ButtonVariant.Secondary)
-                    },
+                    preview = { ButtonRecipe(4) },
                 ),
                 ComponentExample(
                     title = "Ghost",
@@ -99,7 +105,7 @@ val buttonDoc =
                         """
                         Button("Ghost", variant = ButtonVariant.Ghost)
                         """.trimIndent(),
-                    preview = { Button("Ghost", variant = ButtonVariant.Ghost) },
+                    preview = { ButtonRecipe(5) },
                 ),
                 ComponentExample(
                     title = "Destructive",
@@ -107,9 +113,7 @@ val buttonDoc =
                         """
                         Button("Destructive", variant = ButtonVariant.Destructive)
                         """.trimIndent(),
-                    preview = {
-                        Button("Destructive", variant = ButtonVariant.Destructive)
-                    },
+                    preview = { ButtonRecipe(6) },
                 ),
                 ComponentExample(
                     title = "Link",
@@ -117,96 +121,132 @@ val buttonDoc =
                         """
                         Button("Link", variant = ButtonVariant.Link)
                         """.trimIndent(),
-                    preview = { Button("Link", variant = ButtonVariant.Link) },
+                    preview = { ButtonRecipe(7) },
                 ),
                 ComponentExample(
-                    title = "With icon",
+                    title = "Icon",
                     code =
                         """
-                        // Icon needs no `tint` here -- it reads the same ambient content
-                        // color Button gives its text, so it matches automatically across
-                        // variants and light/dark themes.
-                        Button(onClick = {}) {
-                            Icon(Lucide.Check)
-                            Text { "Confirm" }
-                        }
+                        Button(variant = ButtonVariant.Outline, size = ButtonSize.Icon, label = "Upload") { Icon(Lucide.CircleFadingArrowUp) }
                         """.trimIndent(),
-                    preview = {
-                        Button(onClick = {}) {
-                            Icon(Lucide.Check)
-                            Text { "Confirm" }
-                        }
-                    },
+                    preview = { ButtonRecipe(8) },
                 ),
                 ComponentExample(
-                    title = "Icon sizes",
+                    title = "With Icon",
+                    descriptionMarkdown =
+                        "Set `iconPlacement` to `Start` or `End` for the matching logical " +
+                            "edge spacing.",
                     code =
                         """
-                        import com.toutiaoyan.compose.ui.components.button.ButtonSize
-
-                        Button(onClick = {}, size = ButtonSize.IconXs) { Icon(Lucide.Check) }
-                        Button(onClick = {}, size = ButtonSize.IconSm) { Icon(Lucide.Check) }
-                        Button(onClick = {}, size = ButtonSize.Icon) { Icon(Lucide.Check) }
-                        Button(onClick = {}, size = ButtonSize.IconLg) { Icon(Lucide.Check) }
-                        """.trimIndent(),
-                    preview = {
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Button(onClick = {}, size = ButtonSize.IconXs) { Icon(Lucide.Check) }
-                            Button(onClick = {}, size = ButtonSize.IconSm) { Icon(Lucide.Check) }
-                            Button(onClick = {}, size = ButtonSize.Icon) { Icon(Lucide.Check) }
-                            Button(onClick = {}, size = ButtonSize.IconLg) { Icon(Lucide.Check) }
+                        Row(Modifier.wrapContentWidth(unbounded = true), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Button(variant = ButtonVariant.Outline, iconPlacement = ButtonIconPlacement.Start) {
+                                Icon(Lucide.GitBranch)
+                                Text(maxLines = 1) { "New Branch" }
+                            }
+                            Button(variant = ButtonVariant.Outline, iconPlacement = ButtonIconPlacement.End) {
+                                Text(maxLines = 1) { "Fork" }
+                                Icon(Lucide.GitFork)
+                            }
                         }
-                    },
+                        """.trimIndent(),
+                    preview = { ButtonRecipe(9) },
                 ),
                 ComponentExample(
-                    title = "Sizes",
+                    title = "Rounded",
+                    descriptionMarkdown = "Override the component shape with `CircleShape` for fully rounded buttons.",
                     code =
                         """
-                        Button("Xs", size = ButtonSize.Xs)
-                        Button("Sm", size = ButtonSize.Sm)
-                        Button("Default", size = ButtonSize.Md)
-                        Button("Lg", size = ButtonSize.Lg)
-                        """.trimIndent(),
-                    preview = {
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Button("Xs", size = ButtonSize.Xs)
-                            Button("Sm", size = ButtonSize.Sm)
-                            Button("Default", size = ButtonSize.Md)
-                            Button("Lg", size = ButtonSize.Lg)
+                        Row(Modifier.wrapContentWidth(unbounded = true), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Button("Get Started", style = Style { shape(CircleShape) })
+                            Button(variant = ButtonVariant.Outline, size = ButtonSize.Icon, label = "Submit", style = Style { shape(CircleShape) }) { Icon(Lucide.ArrowUp) }
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Disabled",
-                    code =
-                        """
-                        Button("Disabled", disabled = true)
                         """.trimIndent(),
-                    preview = { Button("Disabled", disabled = true) },
+                    preview = { ButtonRecipe(10) },
                 ),
                 ComponentExample(
                     title = "Spinner",
+                    descriptionMarkdown =
+                        "Render `Spinner` inside the button and declare its logical icon " +
+                            "edge. Both loading buttons are disabled.",
                     code =
                         """
-                        Button(onClick = {}, disabled = true) {
-                            Spinner()
-                            Text { "Please wait" }
+                        Row(Modifier.wrapContentWidth(unbounded = true), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Button(variant = ButtonVariant.Outline, disabled = true, iconPlacement = ButtonIconPlacement.Start) {
+                                Spinner()
+                                Text(maxLines = 1) { "Generating" }
+                            }
+                            Button(variant = ButtonVariant.Secondary, disabled = true, iconPlacement = ButtonIconPlacement.Start) {
+                                Text(maxLines = 1) { "Downloading" }
+                                Spinner()
+                            }
                         }
                         """.trimIndent(),
-                    preview = {
-                        Button(onClick = {}, disabled = true) {
-                            Spinner()
-                            Text { "Please wait" }
-                        }
-                    },
+                    preview = { ButtonRecipe(11) },
                 ),
                 ComponentExample(
-                    title = "Accessible label",
+                    title = "Button Group",
+                    descriptionMarkdown =
+                        "Use `ButtonGroup` to group related actions. See the Button Group " +
+                            "documentation for the complete API.",
+                    code = buttonGroupDoc.examples.first().code,
+                    preview = { ButtonRecipe(12) },
+                ),
+                ComponentExample(
+                    title = "RTL",
+                    descriptionMarkdown =
+                        "Set `LocalLayoutDirection` and supply the appropriate font for " +
+                            "the language.",
+                    previewPadding = 0.dp,
                     code =
                         """
-                        Button("Save", onClick = {}, label = "Save")
+                        // Supply Noto Sans Arabic / Hebrew through Theme(fontFamily = ...) for these languages.
+                        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                            ButtonRtlFlow {
+                                Button("زر", variant = ButtonVariant.Outline)
+                                Button("حذف", variant = ButtonVariant.Destructive)
+                                Button(variant = ButtonVariant.Outline, iconPlacement = ButtonIconPlacement.End) {
+                                    Text(maxLines = 1) { "إرسال" }
+                                    Icon(Lucide.ArrowRight, modifier = Modifier.graphicsLayer { rotationZ = 180f })
+                                }
+                                Button(variant = ButtonVariant.Outline, size = ButtonSize.Icon, label = "Add") { Icon(Lucide.Plus) }
+                                Button(variant = ButtonVariant.Secondary, disabled = true, iconPlacement = ButtonIconPlacement.Start) {
+                                    Spinner()
+                                    Text(maxLines = 1) { "جاري التحميل" }
+                                }
+                            }
+                        }
+
+                        @Composable
+                        private fun ButtonRtlFlow(content: @Composable () -> Unit) {
+                            Layout(content = content) { measurables, constraints ->
+                                val gap = 8.dp.roundToPx()
+                                val children = measurables.map { it.measure(Constraints(maxHeight = constraints.maxHeight)) }
+                                val width = constraints.constrainWidth(children.sumOf { it.width } + gap * (children.size - 1).coerceAtLeast(0))
+                                var x = 0
+                                var y = 0
+                                var lineHeight = 0
+                                val positions = children.map { child ->
+                                    if (x > 0 && x + child.width > width) {
+                                        x = 0
+                                        y += lineHeight + gap
+                                        lineHeight = 0
+                                    }
+                                    val position = x to y
+                                    x += child.width + gap
+                                    lineHeight = maxOf(lineHeight, child.height)
+                                    position
+                                }
+                                layout(width, constraints.constrainHeight(y + lineHeight)) {
+                                    children.forEachIndexed { index, child ->
+                                        val (left, top) = positions[index]
+                                        child.placeRelative(left, top)
+                                    }
+                                }
+                            }
+                        }
+
                         """.trimIndent(),
-                    preview = { Button("Save", onClick = {}, label = "Save") },
+                    preview = { ButtonRtlRecipe() },
                 ),
             ),
     )

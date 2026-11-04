@@ -1,0 +1,23 @@
+{
+  "scope": "Only DropdownMenu.kt, ContextMenu.kt, ContextMenuKeyboard.kt temporarily replaced with HEAD; other working-tree changes retained. Restored after reproduction.",
+  "results": [
+    {
+      "name": "dropdown_menu_states_light",
+      "currentActualSha256": "16b9732921f71e5ae3bc33a39bf50d4755773f6f66961933a8432767ce138f7b",
+      "headMenuFilesActualSha256": "16b9732921f71e5ae3bc33a39bf50d4755773f6f66961933a8432767ce138f7b",
+      "identical": true
+    },
+    {
+      "name": "dropdown_menu_states_dark",
+      "currentActualSha256": "0dd1f584952323941caa51a8f5c4fd87bcc89cc73195e18727546703f6bad723",
+      "headMenuFilesActualSha256": "0dd1f584952323941caa51a8f5c4fd87bcc89cc73195e18727546703f6bad723",
+      "identical": true
+    },
+    {
+      "name": "menubar_idle_dark",
+      "currentActualSha256": "822ef92603b97e3d2bed126ccec0395df21d2fb79dbcccd0cd841f7e8db4e5f2",
+      "headMenuFilesActualSha256": "822ef92603b97e3d2bed126ccec0395df21d2fb79dbcccd0cd841f7e8db4e5f2",
+      "identical": true
+    }
+  ]
+}

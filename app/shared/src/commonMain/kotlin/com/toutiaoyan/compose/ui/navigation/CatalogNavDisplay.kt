@@ -8,6 +8,9 @@ import androidx.compose.foundation.focusable
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.contentPadding
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalDensity
+import com.toutiaoyan.compose.ui.catalog.LocalDocumentScrollHost
+import com.toutiaoyan.compose.ui.catalog.LocalCatalogViewportWidth
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.focus.FocusRequester
@@ -29,11 +32,10 @@ import kotlinx.coroutines.flow.emptyFlow
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.ui.Alignment
 import androidx.compose.runtime.Composable
@@ -64,7 +66,7 @@ import com.toutiaoyan.compose.ui.tokens.StylePreset
  * letter-by-letter instead of the layout adapting. Matches a typical phone-portrait
  * width plus a little headroom.
  */
-private val COMPACT_BREAKPOINT = 768.dp
+private val COMPACT_BREAKPOINT = 1024.dp
 
 // Matches App.kt's own outer Theme's baseRadius -- the nested content-pane
 // Theme below needs the same value so the content pane's shapes stay visually
@@ -110,6 +112,18 @@ fun CatalogNavDisplay(
     val isOnCreateRoute = current is RouteKey.Create
 
     val documentScrollStates = remember { mutableMapOf<String, ScrollState>() }
+    val activeDocumentScroll =
+        when (current) {
+            is RouteKey.ComponentDetail -> documentScrollStates.getOrPut(current.componentId) { ScrollState(0) }
+            RouteKey.Introduction -> documentScrollStates.getOrPut("introduction") { ScrollState(0) }
+            RouteKey.Create -> null
+        }
+    val documentHost = LocalDocumentScrollHost.current
+    val pixelsPerCssPixel = LocalDensity.current.density
+    LaunchedEffect(documentHost, activeDocumentScroll, pixelsPerCssPixel) {
+        documentHost?.bind(activeDocumentScroll, pixelsPerCssPixel)
+    }
+
     var drawerOpen by remember { mutableStateOf(false) }
     var searchOpen by remember { mutableStateOf(false) }
     val shellFocus = remember { FocusRequester() }
@@ -160,7 +174,7 @@ fun CatalogNavDisplay(
                     }
                 }.focusable(),
     ) {
-        val isCompact = maxWidth < COMPACT_BREAKPOINT
+        val isCompact = (LocalCatalogViewportWidth.current ?: maxWidth) < COMPACT_BREAKPOINT
 
         Column(modifier = Modifier.fillMaxSize()) {
             CatalogTopBar(
@@ -183,18 +197,17 @@ fun CatalogNavDisplay(
             // documentation font are shared with the outer chrome theme.
             CatalogContentTheme(stylePreset, baseColor, accent, isDarkMode) {
                 Box(modifier = Modifier.weight(1f).fillMaxSize(), contentAlignment = Alignment.TopCenter) {
-                    Row(modifier = Modifier.widthIn(max = 1536.dp).fillMaxSize()) {
+                    Row(
+                        modifier =
+                            Modifier
+                                .then(if (isOnCreateRoute) Modifier.widthIn(max = 1536.dp) else Modifier)
+                                .fillMaxSize()
+                                .padding(horizontal = if (isOnCreateRoute) 0.dp else 8.dp),
+                    ) {
                         if (!isCompact && !isOnCreateRoute) {
                             CatalogSidebar(
                                 currentRoute = current,
                                 onEntryClick = ::navigateTo,
-                            )
-                            Box(
-                                modifier =
-                                    Modifier
-                                        .width(1.dp)
-                                        .fillMaxHeight()
-                                        .background(currentTheme.colors.border),
                             )
                         }
                         Box(
@@ -210,7 +223,13 @@ fun CatalogNavDisplay(
                                 entryProvider =
                                     entryProvider {
                                         entry<RouteKey.Introduction> {
-                                            ComponentDetailScreen(componentId = "introduction")
+                                            ComponentDetailScreen(
+                                                componentId = "introduction",
+                                                scrollState =
+                                                    documentScrollStates.getOrPut(
+                                                        "introduction",
+                                                    ) { ScrollState(0) },
+                                            )
                                         }
                                         entry<RouteKey.ComponentDetail> { route ->
                                             ComponentDetailScreen(

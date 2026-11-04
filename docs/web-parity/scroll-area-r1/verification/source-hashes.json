@@ -1,0 +1,46 @@
+[
+  {
+    "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/scrollarea/LazyScrollArea.kt",
+    "sha256": "eb64537a7e6121b9055368753f456c5b1123f6c636e1d5a05d232aab8f6994de"
+  },
+  {
+    "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/scrollarea/LazyScrollMetrics.kt",
+    "sha256": "0259bb3065e50e60b01b759533045dcfec84552aeffcf119333e5a17cce9a03e"
+  },
+  {
+    "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/scrollarea/ScrollArea.kt",
+    "sha256": "4b8ae86ba27dffab2cdac82492cb12857fc1c6f04aa3c0124a61f51c9a41ec90"
+  },
+  {
+    "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/scrollarea/ScrollAreaStyles.kt",
+    "sha256": "8660868b43a71cec234f3413637510cb0963c9d556d72f131d50771c595fce2e"
+  },
+  {
+    "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/scrollarea/ScrollThumb.kt",
+    "sha256": "26041ab53881af22f918f0635dbd81ffb5bb3252679a0d9d502f88312d27ae72"
+  },
+  {
+    "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/scrollarea/ScrollThumbPointer.kt",
+    "sha256": "78689fb169b6b7377fd92f1a5f823a729cb8532366c2b17abc9b7d62373e1a69"
+  },
+  {
+    "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ScrollAreaDoc.kt",
+    "sha256": "13bc1de7ded3f46950ec85a3d400c1ede283af718749b1bbba5130f1f5d15523"
+  },
+  {
+    "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ScrollAreaRecipes.kt",
+    "sha256": "a1fa53b8579faa9629a31b93c6afcad00cbfa15f53b0b10d7f7ce892870cc8c5"
+  },
+  {
+    "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ScrollAreaRecipeCode.kt",
+    "sha256": "3fd4d919a2ea761e5611168dbe577bdd88303c4dcd2b78d353469d0ad29db05a"
+  },
+  {
+    "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/DocInstallation.kt",
+    "sha256": "f24258c97ea975a28e78b561be87c609c0ad3db380f44989ece37e1d4dca3984"
+  },
+  {
+    "file": "gradle.properties",
+    "sha256": "b8c8d0a1e302c5e8632637f028ad48f3fe1e1b4b30fd0984022c38e48a0034bf"
+  }
+]

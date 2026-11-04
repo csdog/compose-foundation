@@ -1,0 +1,82 @@
+{
+  "revision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "files": [
+    {
+      "file": "source/resizable.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/bases/base/ui/resizable.tsx",
+      "sha256": "7971b48619d5e322ca95e29b2a2ff72eacb95b730d1fcbdead94511dae056e83"
+    },
+    {
+      "file": "source/resizable.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/content/docs/components/base/resizable.mdx",
+      "sha256": "4d8a3f17dd10ecc0c97ef8e8a7fefd2062af5d3527b2a9d1143b13f15599d24b"
+    },
+    {
+      "file": "source/resizable-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/resizable-demo.tsx",
+      "sha256": "61ecdc315a40344562af9cc7f96250e9ba0b2f7f140a2be24d4d654bf657c733"
+    },
+    {
+      "file": "source/resizable-vertical.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/resizable-vertical.tsx",
+      "sha256": "eede13dbec1c352ebf363fa79751b94239dc95d99af1e4820ddd55991955dec7"
+    },
+    {
+      "file": "source/resizable-handle.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/resizable-handle.tsx",
+      "sha256": "57067dd190003a415c5022810c41a73608e7726d2c3d3236cc8580bf360882b8"
+    },
+    {
+      "file": "source/resizable-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/resizable-rtl.tsx",
+      "sha256": "5d55a5b2ded8dca429318429ad401d59040e501a9bb45cb86cbf62d4963f0c81"
+    },
+    {
+      "file": "source/shadcn-package.json",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/package.json",
+      "sha256": "f3692cbcc60e47d84859acecd97fbf0cf37358514b317fe05cd8be67ec98b1e9"
+    },
+    {
+      "file": "source/resizable-lock-excerpt.txt",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/pnpm-lock.yaml",
+      "sha256": "fb94629e30036befe9462e2ed6487f69353f88c09ae62083c7c9022de696daa6",
+      "fullSourceSha256": "5bb6003094e2aa696461b456ee600f4a617c529f29262c1ae2ffc91d149303fd",
+      "note": "Only exact dependency entries extracted from lockfile, not the entire lockfile."
+    },
+    {
+      "file": "source/r458-onDocumentKeyDown.ts",
+      "url": "https://raw.githubusercontent.com/bvaughn/react-resizable-panels/4.5.8/lib/global/event-handlers/onDocumentKeyDown.ts",
+      "sha256": "16b517268253326fd14a14e7618f85abbd4c78089f4fb111c79a515dc385397e"
+    },
+    {
+      "file": "source/r458-Group.tsx",
+      "url": "https://raw.githubusercontent.com/bvaughn/react-resizable-panels/4.5.8/lib/components/group/Group.tsx",
+      "sha256": "c6e2c671322c5e286061afe2846cc402a77f4c3e39d913f9e20690adf574bd86"
+    },
+    {
+      "file": "source/r458-Panel.tsx",
+      "url": "https://raw.githubusercontent.com/bvaughn/react-resizable-panels/4.5.8/lib/components/panel/Panel.tsx",
+      "sha256": "cb9521578bdeaece1f37206cfc5e5d4b130328388a8682e747fb70bacf2e3239"
+    },
+    {
+      "file": "source/r458-adjustLayoutForSeparator.ts",
+      "url": "https://raw.githubusercontent.com/bvaughn/react-resizable-panels/4.5.8/lib/global/utils/adjustLayoutForSeparator.ts",
+      "sha256": "0670a08791b249295ec5b243f0d9a22de10293836a9b2a701223ff16942a1a70"
+    },
+    {
+      "file": "source/r458-onDocumentPointerMove.ts",
+      "url": "https://raw.githubusercontent.com/bvaughn/react-resizable-panels/4.5.8/lib/global/event-handlers/onDocumentPointerMove.ts",
+      "sha256": "e41309ae176d58646a17e8dfe2210e3bc5248cc134b153deb3701ac0fc092cca"
+    },
+    {
+      "file": "source/r458-updateActiveHitRegion.ts",
+      "url": "https://raw.githubusercontent.com/bvaughn/react-resizable-panels/4.5.8/lib/global/utils/updateActiveHitRegion.ts",
+      "sha256": "0964c2eb4975478e58632fec1a0d64149d3144e4c729c4640e92299af7247d0a"
+    },
+    {
+      "file": "source/style-nova.css",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+    }
+  ]
+}

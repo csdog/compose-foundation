@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MessageScreenshotTest[jvm]" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-10-30T13:45:31.450Z" hostname="Apples-MacBook-Pro.local" time="0.161">
+  <properties/>
+  <testcase name="conversation_with_bubbles_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.message.MessageScreenshotTest" time="0.051"/>
+  <testcase name="end_aligned_light[jvm]" classname="com.toutiaoyan.compose.ui.components.message.MessageScreenshotTest" time="0.017"/>
+  <testcase name="conversation_with_bubbles_light[jvm]" classname="com.toutiaoyan.compose.ui.components.message.MessageScreenshotTest" time="0.028"/>
+  <testcase name="start_aligned_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.message.MessageScreenshotTest" time="0.017"/>
+  <testcase name="start_aligned_light[jvm]" classname="com.toutiaoyan.compose.ui.components.message.MessageScreenshotTest" time="0.016"/>
+  <testcase name="end_aligned_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.message.MessageScreenshotTest" time="0.015"/>
+  <testcase name="group_light[jvm]" classname="com.toutiaoyan.compose.ui.components.message.MessageScreenshotTest" time="0.017"/>
+  <system-out><![CDATA[Roborazzi: message_conversation_with_bubbles_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=130544, width=328, height=398) changed:false
+Roborazzi: message_end_aligned_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=26240, width=328, height=80) changed:false
+Roborazzi: message_conversation_with_bubbles_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=130544, width=328, height=398) changed:false
+Roborazzi: message_start_aligned_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=27552, width=328, height=84) changed:false
+Roborazzi: message_start_aligned_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=27552, width=328, height=84) changed:false
+Roborazzi: message_end_aligned_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=26240, width=328, height=80) changed:false
+Roborazzi: message_group_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=39688, width=328, height=121) changed:false
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

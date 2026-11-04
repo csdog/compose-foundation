@@ -1,0 +1,12 @@
+{
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ComponentDoc.kt": "49de717664a695b4893efdea697f86fd3394f64259c838eb2bdea79f995e3b6d",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/PreviewCodeSection.kt": "ef2a5272a4e8f30f370a6b15c2b8df266f719569920504d174668e8ecb722670",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/ComponentDetailScreen.kt": "0af0f7967335ac695dffb89b31f77dbc4b5b143c7caf3eb27586ac276318cd9e",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/AccordionDoc.kt": "fd9d57b6e13359661e459b743310888ebab04af12d56596ea97f980971202cda",
+  "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/AccordionPreviewFrameTest.kt": "8af468d2420f757aadcbc87fae7bd1b29ac249d2f262d86e4948612c88cb0a8b",
+  "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/AccordionExtensionTest.kt": "4c799ac8fec497e77fdd36c9678ba501e9a9aaad4d4f733205c3fad1385985a3",
+  "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/AccordionExamplesTest.kt": "fd8ef39626e8d70c6973b317f79e5cee6f6adcc590d9c56cd7e5ad4c2dd23fed",
+  "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/ChartPreviewFrameTest.kt": "75b5062178a52c5ee319fe6b0867d2d18bed5c5125df60de0e3de32b09471d43",
+  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/accordion/AccordionNovaTest.kt": "70a80b918064b45778cbef9d4a6d2ffd4c5c7ff4e17facc83ec8e96227a5c74f",
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/accordion/Accordion.kt": "4b353fe8b5366dbce9c70a150ab789a47b82284e296cf8375a78e0636862db81"
+}

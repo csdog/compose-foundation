@@ -1,0 +1,7 @@
+{
+  "nativeChanged": [],
+  "inputChanged": [
+    "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/TableExamplesTest.kt"
+  ],
+  "nativeCount": 24
+}

@@ -1,0 +1,128 @@
+[
+  {
+    "i": 0,
+    "preview": {
+      "x": 25,
+      "y": -2102.4140625,
+      "width": 325,
+      "height": 300
+    },
+    "accordion": {
+      "x": 65,
+      "y": -2062.4140625,
+      "width": 245,
+      "height": 218
+    },
+    "overflow": "visible",
+    "innerOverflow": "visible",
+    "parentOverflow": "hidden"
+  },
+  {
+    "i": 1,
+    "preview": {
+      "x": 25,
+      "y": -322.59375,
+      "width": 325,
+      "height": 300
+    },
+    "accordion": {
+      "x": 65,
+      "y": -282.59375,
+      "width": 245,
+      "height": 278
+    },
+    "overflow": "visible",
+    "innerOverflow": "visible",
+    "parentOverflow": "hidden"
+  },
+  {
+    "i": 2,
+    "preview": {
+      "x": 25,
+      "y": 303.0859375,
+      "width": 325,
+      "height": 450
+    },
+    "accordion": {
+      "x": 65,
+      "y": 343.0859375,
+      "width": 245,
+      "height": 478
+    },
+    "overflow": "visible",
+    "innerOverflow": "visible",
+    "parentOverflow": "hidden"
+  },
+  {
+    "i": 3,
+    "preview": {
+      "x": 25,
+      "y": 1078.765625,
+      "width": 325,
+      "height": 300
+    },
+    "accordion": {
+      "x": 65,
+      "y": 1118.765625,
+      "width": 245,
+      "height": 148
+    },
+    "overflow": "visible",
+    "innerOverflow": "visible",
+    "parentOverflow": "hidden"
+  },
+  {
+    "i": 4,
+    "preview": {
+      "x": 25,
+      "y": 1737.515625,
+      "width": 325,
+      "height": 300
+    },
+    "accordion": {
+      "x": 65,
+      "y": 1777.515625,
+      "width": 245,
+      "height": 320
+    },
+    "overflow": "visible",
+    "innerOverflow": "visible",
+    "parentOverflow": "hidden"
+  },
+  {
+    "i": 5,
+    "preview": {
+      "x": 25,
+      "y": 2330.125,
+      "width": 325,
+      "height": 435
+    },
+    "accordion": {
+      "x": 81,
+      "y": 2488.125,
+      "width": 213,
+      "height": 318
+    },
+    "overflow": "visible",
+    "innerOverflow": "visible",
+    "parentOverflow": "hidden"
+  },
+  {
+    "i": 6,
+    "preview": {
+      "x": 25,
+      "y": 3121.734375,
+      "width": 325,
+      "height": 288
+    },
+    "accordion": {
+      "x": 65,
+      "y": 3161.734375,
+      "width": 245,
+      "height": 258
+    },
+    "overflow": "visible",
+    "innerOverflow": "visible",
+    "parentOverflow": "hidden"
+  }
+]

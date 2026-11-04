@@ -1,0 +1,73 @@
+{
+  "workflow": "5b8266abb49162b453395c272d4f3b1f",
+  "tests": {
+    "ShimmerCssColorTest": 4,
+    "ShimmerColorMathTest": 8,
+    "ShimmerCurrentColorTest": 8,
+    "ShimmerTextPaintTest": 12,
+    "TextColorInheritanceTest": 1,
+    "AttachmentStateTest": 5,
+    "ShimmerExamplesTest": 40,
+    "totalIndependent": 78,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "redGreen": {
+    "initialOracle": "Initial dark test selected background minima; corrected to maxima before definitive RED. See red-initial vs red.",
+    "definitiveRed": {
+      "tests": 4,
+      "failures": 4
+    },
+    "green": {
+      "tests": 4,
+      "failures": 0
+    }
+  },
+  "coreKtlint": "PASS",
+  "sharedKtlint": "PASS",
+  "sharedJvmCompile": {
+    "exit": 0,
+    "seconds": 17.974
+  },
+  "jsWebpack": {
+    "exit": 0,
+    "seconds": 35.755,
+    "unresolved": [
+      "os",
+      "path"
+    ],
+    "clean": false
+  },
+  "wasmWebpack": {
+    "exit": 0,
+    "seconds": 18.911,
+    "webpackWarnings": 1
+  },
+  "legacyGoldens": {
+    "cases": 6,
+    "passed": 4,
+    "changed": 2,
+    "recorded": false,
+    "newBaselineRecorded": false,
+    "changedActualsByteIdenticalToPriorPrepass": true,
+    "evidence": "legacy-verify/prior-prepass-hash-comparison.json"
+  },
+  "sourceConfigGeneratorTestHashCount": 20,
+  "nativeCaptureCount": 44,
+  "nativeCaptureGroups": {
+    "core": 4,
+    "recipes": 40
+  },
+  "nativeReviewedByParent": true,
+  "browserAcceptance": false,
+  "fullRepositoryCommitGate": "not run",
+  "remainingWarnings": [
+    "AGP experimental screenshot/test suites",
+    "Text.kt invisible-reference suppression",
+    "Gradle10 deprecated features",
+    "JS unresolved os/path",
+    "Wasm webpack1warning"
+  ],
+  "scope": "CurrentColor/relative OKLCH and alpha-preserving native Style colors with nine recipe migrations. Browser gamut mapping, automatic reduced motion, font-relative/percentage spread and full motion/rendering matrix are not established."
+}

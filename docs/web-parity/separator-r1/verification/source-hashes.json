@@ -1,0 +1,46 @@
+[
+  {
+    "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/separator/Separator.kt",
+    "sha256": "c8fd68975407ef2eaded0fc5c2326a87e5022fcad4affa1447c2de9943b3c6c2"
+  },
+  {
+    "file": "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/separator/SeparatorStyles.kt",
+    "sha256": "34a1d541edddfe09a4b7c4571f4676ec38b8a6c473199f3126457e3800fc3125"
+  },
+  {
+    "file": "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/separator/SeparatorParityTest.kt",
+    "sha256": "6eedc6600ef79b187bc5becff4afee045284443360afb499403b94d5bb67fa55"
+  },
+  {
+    "file": "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/separator/SeparatorNovaScreenshotTest.kt",
+    "sha256": "8ad8724d47ddd215e375b33068deecbc32c532ed6a4ea3699c921d3984e516ee"
+  },
+  {
+    "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/SeparatorDoc.kt",
+    "sha256": "0f44bb02e017b16c4a11b40f5250a05b69f4cbe7e26fd6c28b9c964fdb7ca9f1"
+  },
+  {
+    "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/SeparatorRecipes.kt",
+    "sha256": "2abe9ca8b6f2613a8fd6473214dadf2d126744cf5dfb342140dba8f24aef2913"
+  },
+  {
+    "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/SeparatorRecipeCode.kt",
+    "sha256": "554e3a339787e9f5699015f9f0181d722d095443498d71ad4394df4534dc29c8"
+  },
+  {
+    "file": "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/SeparatorExamplesTest.kt",
+    "sha256": "1236398610c412434c07aef7e8947ec5e14b4018f0482e14a2cf7c42adb940b4"
+  },
+  {
+    "file": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/DocInstallation.kt",
+    "sha256": "7d6311f47d14bec44995a86cbf8205b2310339a88305649fbee988d83e8ac3fa"
+  },
+  {
+    "file": "gradle.properties",
+    "sha256": "4e174f92826cdfdb59d796683de7d6c6d748209706d54d002e051df97c1702d8"
+  },
+  {
+    "file": "scripts/generate_separator_recipe_code.py",
+    "sha256": "ce9baa5dfd2172257d3da42aafc25633807c99eb1381fb46b3024b96f34dd90d"
+  }
+]

@@ -1,0 +1,190 @@
+{
+  "directory": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/webApp/build/dist/wasmJs/developmentExecutable",
+  "files": {
+    "658820f72b4617efb380.wasm": {
+      "bytes": 8648883,
+      "mtime": "2026-11-02T10:10:22.815142",
+      "sha256": "08e904ec38a6a81a4809a853acf68022f83905286827e804e88b262c37f2954d"
+    },
+    "webApp.js": {
+      "bytes": 3674354,
+      "mtime": "2026-11-02T10:10:22.818377",
+      "sha256": "1a07d4b0e7c6962a26f36d8ea2a73b97c5f1c7328cf0e38903343dbbcb19e4dd"
+    },
+    "index.html": {
+      "bytes": 1022,
+      "mtime": "2026-11-02T10:10:22.808238",
+      "sha256": "af3ef9f81953e35cb4386036fbf85958c91909d0dbfa1dd176400c05355a6ea7"
+    },
+    "styles.css": {
+      "bytes": 102,
+      "mtime": "2026-11-02T10:10:22.808671",
+      "sha256": "adeed4cf2e4f76faf945f1f0adf8a05fce135eb43b383a06ee336aa936ff9e5c"
+    },
+    "75b3de24bd2874335b17.wasm": {
+      "bytes": 42827549,
+      "mtime": "2026-11-02T10:10:22.881742",
+      "sha256": "1002459a813f98ceac33120b59f3abda31df8bd67f70260445a67044aa2dd807"
+    },
+    "favicon.svg": {
+      "bytes": 1088,
+      "mtime": "2026-11-02T10:10:22.809290",
+      "sha256": "96db1090214e1fe55051ecf0e2f54de39be7075c48c57d7a16be355c608b13ca"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/drawable/avatar_pranathip.png": {
+      "bytes": 342294,
+      "mtime": "2026-11-02T10:10:22.786499",
+      "sha256": "8ad46d5c27e21a609660641caae555b945d2482c5c98dc96e19722db8310ed4c"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/drawable/avatar_shadcn.jpg": {
+      "bytes": 31007,
+      "mtime": "2026-11-02T10:10:22.787472",
+      "sha256": "513d06f542692036ff0bb17938f04b3efd60567ba2cae08049469d21f18e0524"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/drawable/scroll_area_art_2.jpg": {
+      "bytes": 36416,
+      "mtime": "2026-11-02T10:10:22.788477",
+      "sha256": "50ee61d57a99db54cf2cb7ed09accb8b02e13f8fec27f6afa6be93216f4a4f47"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/drawable/scroll_area_art_1.jpg": {
+      "bytes": 21222,
+      "mtime": "2026-11-02T10:10:22.789224",
+      "sha256": "2234e700a8d539373c70ae893f3da5cfad241b6ac44299d00c6b288dfe31ecc2"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/drawable/scroll_area_art_0.jpg": {
+      "bytes": 35948,
+      "mtime": "2026-11-02T10:10:22.790211",
+      "sha256": "fd6ad639cc66ba9bad917554b5d6686426e345b7d1c0b71a5416354d6195ecea"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/drawable/aspect_ratio_demo.png": {
+      "bytes": 17608,
+      "mtime": "2026-11-02T10:10:22.790788",
+      "sha256": "ceec6a90988a9da854aa0d76b8b2103a0c054936a723664660c85fc11192a6d0"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/drawable/attachment_workspace.jpg": {
+      "bytes": 90328,
+      "mtime": "2026-11-02T10:10:22.791652",
+      "sha256": "e935afc1f9e1c66d906f22118444d5f58de37197c966bf8e72e4d229c80f10d2"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/drawable/avatar_evilrabbit.png": {
+      "bytes": 10647,
+      "mtime": "2026-11-02T10:10:22.792225",
+      "sha256": "8dcdb391f1f8f6610d31a9a3e06733fec308be75732571ccc6d5ce634c695382"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/drawable/avatar_maxleiter.png": {
+      "bytes": 216590,
+      "mtime": "2026-11-02T10:10:22.793363",
+      "sha256": "3a31d3d0c3bb2074929755298773d14e53048a8a85abbc0c944fb19fc65106bf"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/drawable/item_song_2.png": {
+      "bytes": 1577,
+      "mtime": "2026-11-02T10:10:22.793799",
+      "sha256": "2f44b35e6f40d6959fbd1119564fbba13f5f8dfda7f1d23db537c4112eb27300"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/drawable/message_avatar_02.png": {
+      "bytes": 15326,
+      "mtime": "2026-11-02T10:10:22.794131",
+      "sha256": "a81ec3c7852f7d20e541c0083ca6b7ace3e239e925613b6f1d918bf1ba572270"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/drawable/message_avatar_03.png": {
+      "bytes": 14526,
+      "mtime": "2026-11-02T10:10:22.794557",
+      "sha256": "3115d8bbf2c714425b466397181076633d28d2c4e3a4063708f5fabf070a4c33"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/drawable/attachment_desk.jpg": {
+      "bytes": 112379,
+      "mtime": "2026-11-02T10:10:22.795304",
+      "sha256": "59e0257ed29190f2ae5cca22c884fd19c11737ce929308f3671baf40f463d87a"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/drawable/item_song_1.png": {
+      "bytes": 4002,
+      "mtime": "2026-11-02T10:10:22.795600",
+      "sha256": "f7b5c859174b8f896f9f2aa0d54f5f105066d5ecbcf895ebbe7ae9fec60d43c0"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/drawable/item_song_0.png": {
+      "bytes": 3994,
+      "mtime": "2026-11-02T10:10:22.795820",
+      "sha256": "c1f77de53db62704241aa518720b3013fe44fd3b096262083664051f03c5c540"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/drawable/item_model_1.jpg": {
+      "bytes": 91227,
+      "mtime": "2026-11-02T10:10:22.796744",
+      "sha256": "c620617c91975dc1c60edfc1c6c3bbffe25e5b4dbe60d9907cf4f042b7290339"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/drawable/message_avatar_10.png": {
+      "bytes": 5823,
+      "mtime": "2026-11-02T10:10:22.797219",
+      "sha256": "f3d8bf1fc6a80e70052daf44d139346b2a87b7a0c6f752970e351904ffbf8470"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/drawable/item_model_0.jpg": {
+      "bytes": 139579,
+      "mtime": "2026-11-02T10:10:22.798027",
+      "sha256": "b80998ae55c946ab3031a04123bb87a5527af7bd772666f36d76eabf8f55236e"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/drawable/item_model_2.jpg": {
+      "bytes": 55850,
+      "mtime": "2026-11-02T10:10:22.798834",
+      "sha256": "4c67406913bcdd10f89715587db9029a7e33606592b8639b2458d31139c60f5b"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/drawable/attachment_office.jpg": {
+      "bytes": 99240,
+      "mtime": "2026-11-02T10:10:22.799635",
+      "sha256": "728d22bedd02d85623d1d408ec4f1eb89c373c03e288ed9e4b6a4714fbb24b40"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/files/aspect_ratio_demo_source.txt": {
+      "bytes": 937,
+      "mtime": "2026-11-02T10:10:22.801524",
+      "sha256": "fc697ddead926d30a1373132ee28893375b1725808f95c8d7d59e93c2cd5a523"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/files/calendar_cjk_license.txt": {
+      "bytes": 4616,
+      "mtime": "2026-11-02T10:10:22.801823",
+      "sha256": "05554cd0c2fb82c2f7ac037c53bede6dabad9a0f365f9d9165953996bb7cd9ee"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/font/geist_mono_regular.ttf": {
+      "bytes": 149284,
+      "mtime": "2026-11-02T10:10:22.803396",
+      "sha256": "5a0de4b3d54ab272f76a1d8c84b7fb24c67bbec6591d5300e61c7bc10094b6c8"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/font/geist_semibold.ttf": {
+      "bytes": 127872,
+      "mtime": "2026-11-02T10:10:22.804607",
+      "sha256": "b9f52322d6d20a7ff1e7fe1310ff12ec851aebb83d24f8b4f1d4149298f489b2"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/font/geist_medium.ttf": {
+      "bytes": 127660,
+      "mtime": "2026-11-02T10:10:22.805181",
+      "sha256": "3a3b36f0d0b981f4857f7f00eeef4a5ee123605575d362ab31ee7c19e3d11f2f"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/font/calendar_cjk.ttf": {
+      "bytes": 19588,
+      "mtime": "2026-11-02T10:10:22.806022",
+      "sha256": "7605644c64d651f733c137e214e53fbb802a86b36b0a2d63bb6d3790e8991437"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/font/geist_bold.ttf": {
+      "bytes": 128824,
+      "mtime": "2026-11-02T10:10:22.806717",
+      "sha256": "3f21f02b827228c3f0c5fb230d027b5a1a263013618e8052bc1b3c5692812c88"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/font/geist_regular.ttf": {
+      "bytes": 126048,
+      "mtime": "2026-11-02T10:10:22.807420",
+      "sha256": "85a1c6b18a6b0a06dfe9fd4f6d6a5d4979f74ec861eaef4bc7868b5492b8a117"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/files/licenses/tabler-icons.txt": {
+      "bytes": 1073,
+      "mtime": "2026-11-02T10:10:22.800428",
+      "sha256": "b740a1d46122672da62833e97f7e7c8a13fa85cbc7445b584b297cc00dde93db"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/files/licenses/tabler-icons-LICENSE.txt": {
+      "bytes": 1073,
+      "mtime": "2026-11-02T10:10:22.800710",
+      "sha256": "d5a3f948ae5cb95bfc4d2f767ef2bf6a778815b0ddb2d1c48037744cf636518e"
+    },
+    "composeResources/compose_foundation.app.shared.generated.resources/files/licenses/lucide-icons.txt": {
+      "bytes": 3208,
+      "mtime": "2026-11-02T10:10:22.801304",
+      "sha256": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57"
+    }
+  }
+}

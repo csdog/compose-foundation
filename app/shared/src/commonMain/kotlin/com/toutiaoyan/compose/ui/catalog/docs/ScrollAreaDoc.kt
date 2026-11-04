@@ -25,9 +25,7 @@ val scrollAreaDoc =
         id = "scroll-area",
         title = "Scroll Area",
         description =
-            "A scrollable region with a slim custom scrollbar thumb instead of the native one. " +
-                "Use ScrollArea for short Column content; use LazyScrollArea for LazyColumn / LazyRow. " +
-                "Scrollbar visibility follows Radix ScrollType (Auto / Always / Scroll / Hover).",
+            "Augments native scroll functionality for custom, cross-browser styling.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.scrollarea.ScrollArea
@@ -35,7 +33,7 @@ val scrollAreaDoc =
             import com.toutiaoyan.compose.ui.components.scrollarea.ScrollType
             import com.toutiaoyan.compose.ui.components.scrollarea.ScrollDir
 
-            // Default: Hover (show while scrolling/hovering, hide after 600ms)
+            // Default: Auto (show when content overflows)
             ScrollArea(modifier = Modifier.height(200.dp)) {
                 Column { repeat(20) { Text { "Item ${'$'}it" } } }
             }
@@ -51,13 +49,32 @@ val scrollAreaDoc =
                 }
             }
             """.trimIndent(),
+        beforeExamples =
+            listOf(
+                ComponentGuideSection(
+                    "Compose customization",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "Use `style` for the root and `viewportStyle` for the scrolling viewport. " +
+                                (
+                                    "When setting a custom root shape, set the same shape on " +
+                                        "`viewportStyle` for its focus ring. "
+                                ) +
+                                (
+                                    "The default visibility is `ScrollType.Auto`; pass " +
+                                        "`ScrollType.Hover()` for hover-only controls."
+                                ),
+                        ),
+                    ),
+                ),
+            ),
         examples =
             listOf(
                 ComponentExample(
-                    title = "Hover (default)",
+                    title = "Hover (Kotlin)",
                     code =
                         """
-                        ScrollArea(modifier = Modifier.height(160.dp)) {
+                        ScrollArea(type = ScrollType.Hover(), modifier = Modifier.height(160.dp)) {
                             Column {
                                 repeat(20) { index ->
                                     Text(modifier = Modifier.padding(vertical = 6.dp)) { "Tag ${'$'}index" }
@@ -67,7 +84,7 @@ val scrollAreaDoc =
                         }
                         """.trimIndent(),
                     preview = {
-                        ScrollArea(modifier = Modifier.height(160.dp)) {
+                        ScrollArea(type = ScrollType.Hover(), modifier = Modifier.height(160.dp)) {
                             Column {
                                 repeat(20) { index ->
                                     Text(modifier = Modifier.padding(vertical = 6.dp)) { "Tag $index" }
@@ -312,7 +329,7 @@ val scrollAreaDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Horizontal",
+                    title = "Horizontal (Kotlin)",
                     code =
                         """
                         ScrollArea(
@@ -435,3 +452,4 @@ val scrollAreaDoc =
                 ),
             ),
     )
+        .let { native -> native.copy(examples = scrollAreaOfficialExamples + native.examples) }

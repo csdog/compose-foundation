@@ -1,0 +1,40 @@
+{
+  "tests": "28",
+  "failures": "8",
+  "errors": "0",
+  "skipped": "0",
+  "failuresDetail": [
+    {
+      "name": "actionsUseRealMenusAndDismissAfterSelection[viewport=1,440,dark=false][jvm]",
+      "message": "java.lang.AssertionError: Failed: assertDoesNotExist.\nReason: Did not expect any node but found '1' node that satisfies: (Text + InputText + EditableText contains 'Delete' (ignoreCase: false))\nNode found:\nNode #78 at (l=421.0, t=382.0, r=603.0, b=410.0)px\nContentDescription = '[Delete]'\nFocused = 'false'\nRole = 'Button'\nText = '[Delete]'\nActions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]\nMergeDescendants = 'true'\nHas 3 siblings\n"
+    },
+    {
+      "name": "defaultHasAllSevenInvoicesAndSourceFooter[viewport=1,440,dark=false][jvm]",
+      "message": "java.lang.AssertionError: Expected value to be true."
+    },
+    {
+      "name": "actionsUseRealMenusAndDismissAfterSelection[viewport=1,440,dark=true][jvm]",
+      "message": "java.lang.AssertionError: Failed: assertDoesNotExist.\nReason: Did not expect any node but found '1' node that satisfies: (Text + InputText + EditableText contains 'Delete' (ignoreCase: false))\nNode found:\nNode #727 at (l=421.0, t=382.0, r=603.0, b=410.0)px\nContentDescription = '[Delete]'\nFocused = 'false'\nRole = 'Button'\nText = '[Delete]'\nActions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]\nMergeDescendants = 'true'\nHas 3 siblings\n"
+    },
+    {
+      "name": "defaultHasAllSevenInvoicesAndSourceFooter[viewport=1,440,dark=true][jvm]",
+      "message": "java.lang.AssertionError: Expected value to be true."
+    },
+    {
+      "name": "actionsUseRealMenusAndDismissAfterSelection[viewport=390,dark=false][jvm]",
+      "message": "java.lang.AssertionError: Failed: assertDoesNotExist.\nReason: Did not expect any node but found '1' node that satisfies: (Text + InputText + EditableText contains 'Delete' (ignoreCase: false))\nNode found:\nNode #1376 at (l=171.0, t=382.0, r=353.0, b=410.0)px\nContentDescription = '[Delete]'\nFocused = 'false'\nRole = 'Button'\nText = '[Delete]'\nActions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]\nMergeDescendants = 'true'\nHas 3 siblings\n"
+    },
+    {
+      "name": "defaultHasAllSevenInvoicesAndSourceFooter[viewport=390,dark=false][jvm]",
+      "message": "java.lang.AssertionError: Expected value to be true."
+    },
+    {
+      "name": "actionsUseRealMenusAndDismissAfterSelection[viewport=390,dark=true][jvm]",
+      "message": "java.lang.AssertionError: Failed: assertDoesNotExist.\nReason: Did not expect any node but found '1' node that satisfies: (Text + InputText + EditableText contains 'Delete' (ignoreCase: false))\nNode found:\nNode #2025 at (l=171.0, t=382.0, r=353.0, b=410.0)px\nContentDescription = '[Delete]'\nFocused = 'false'\nRole = 'Button'\nText = '[Delete]'\nActions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]\nMergeDescendants = 'true'\nHas 3 siblings\n"
+    },
+    {
+      "name": "defaultHasAllSevenInvoicesAndSourceFooter[viewport=390,dark=true][jvm]",
+      "message": "java.lang.AssertionError: Expected value to be true."
+    }
+  ]
+}

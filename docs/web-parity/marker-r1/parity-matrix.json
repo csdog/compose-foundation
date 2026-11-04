@@ -1,0 +1,49 @@
+{
+  "status": "partial",
+  "target": "base-nova",
+  "officialPageStyle": "base-rhea",
+  "novaAndRheaMarkerRulesIdentical": true,
+  "officialRecipes": [
+    "Default",
+    "Variants",
+    "Status",
+    "Shimmer",
+    "Separator",
+    "Border",
+    "With Icon",
+    "Links and Buttons"
+  ],
+  "findings": [
+    "Previous page repeated pinned messages and omitted status/shimmer/links/buttons",
+    "Nova root lacked 14/20 muted typography, full width and min-height16",
+    "Separator hairlines lacked extra4dp margin beside8dp gap",
+    "MarkerIcon had width16 but no fixedheight or decorative accessibility hiding",
+    "Bottom border was centered on clipping boundary, leaving half stroke outside"
+  ],
+  "adaptations": [
+    "Polymorphic link/button represented by root Modifier.clickable and Role.Button; Compose has no Role.Link",
+    "Polite liveRegion for role=status; verify real platform screenreader separately",
+    "Stacked icon uses caller Column inside Marker root; root remains Row",
+    "Link opens official absolute URL rather than local in-page fragment"
+  ],
+  "remaining": [
+    "Browser desktop/mobile light/dark comparison pending missing task-space permission",
+    "Button/link hover and keyboard focus visuals not yet equivalent",
+    "Full custom Style color/shape and icon tint inheritance matrix",
+    "Long unbroken content and separator flex-none overflow behavior",
+    "Shimmer motion and reduced-motion policy versus upstream",
+    "Full keyboard/touch/screenreader and RTL matrix"
+  ],
+  "verification": {
+    "coreBehavior": 6,
+    "newNovaGoldenVerify": 2,
+    "appExamples": 5,
+    "oldGoldenVerifyPassed": 4,
+    "oldGoldenVerifyChanged": [
+      "marker_separator_dark"
+    ],
+    "legacyIsolation": "HEAD reproduces separator_dark byte-for-byte. border_light regression corrected by preserving legacy TopStart alignment; final old verify confirms border_light passes.",
+    "quality": "core/shared ktlintCheck and detekt passed",
+    "web": "JS/Wasm distributions exit0, preexisting webpack os/path fingerprints retained"
+  }
+}

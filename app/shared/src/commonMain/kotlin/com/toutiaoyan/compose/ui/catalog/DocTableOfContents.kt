@@ -81,8 +81,8 @@ internal fun DocTableOfContents(
     Column(
         modifier =
             Modifier.width(
-                224.dp,
-            ).fillMaxHeight().padding(top = 48.dp, end = 24.dp).verticalScroll(rememberScrollState()),
+                288.dp,
+            ).fillMaxHeight().padding(top = 32.dp, start = 48.dp, end = 48.dp).verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         Text(variant = TextVariant.BodyMedium, textStyle = currentTheme.typography.labelLarge) { "On This Page" }

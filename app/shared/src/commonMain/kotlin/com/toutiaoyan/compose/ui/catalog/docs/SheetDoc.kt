@@ -33,7 +33,10 @@ val sheetDoc =
     ComponentDoc(
         id = "sheet",
         title = "Sheet",
-        description = "A modal panel that slides in from a screen edge.",
+        description = (
+            "Extends the Dialog component to display content that " +
+                "complements the main content of the screen."
+        ),
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.sheet.Sheet
@@ -44,7 +47,6 @@ val sheetDoc =
             Sheet(open = open, onOpenChange = { open = it }) {
                 SheetTrigger("Open")
                 SheetContent {
-                    SheetClose()
                     SheetHeader("Edit profile", description = "Make changes to your profile here.")
                 }
             }
@@ -108,7 +110,7 @@ val sheetDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Side",
+                    title = "Side (Kotlin)",
                     code =
                         """
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -843,3 +845,4 @@ val sheetDoc =
                 ),
             ),
     )
+        .let { native -> native.copy(examples = sheetOfficialExamples + native.examples) }

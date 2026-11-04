@@ -1,0 +1,19 @@
+{
+  "sourceManifest": "sources.json",
+  "facts": [
+    "Official MDX has Default and RTL previews using base-nova, h-96 preview. Existing native overview is supplemental, not official Default.",
+    "Official Demo has Getting started3 links, hidden md:flex Components6 links (panel400/500/600px widths), With Icon3 links, Docs.",
+    "Nova list gap0, trigger36px/px10/py6/14px medium, icon12px and margin-start4/top1,300ms rotation. Open bg muted/50, hover/focus muted.",
+    "Content padding4px, intrinsic width, popup outer ring1 foreground10%, lg radius and shadow. Links use8px padding, normal14px, lg radius outside content/md inside.",
+    "BaseUI1.6.0 Root defaults delay50/closeDelay50, Link closes on click by default. Hover-open mouse click sticks only within500ms, then toggles; touch/keyboard must not stick forever.",
+    "Current KMP shared Positioner is passthrough; root-level shared viewport and dimensions/activation-direction transitions, root align and full keyboard/assistive technology remain open.",
+    "The exact BaseUI1.6.0 internals/constants.ts defines PATIENT_CLICK_THRESHOLD=500."
+  ],
+  "browser": {
+    "originalTaskSpace": 18,
+    "found": false,
+    "recreationPermission": "Existing question unanswered",
+    "matrixPerformed": false
+  },
+  "sourceFilesHashed": 10
+}

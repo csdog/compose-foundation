@@ -1,0 +1,21 @@
+{
+  "tests": 3,
+  "failures": 3,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 3.072,
+  "cases": [
+    {
+      "name": "fixedWidthBrowserValueKeepsItsLastDigit[jvm]",
+      "message": "java.lang.AssertionError: numeric values must not split across lines expected:<1> but was:<2>"
+    },
+    {
+      "name": "nestedLineLabelDoesNotWrapTheSixDigitValue[jvm]",
+      "message": "java.lang.AssertionError: numeric values must not split across lines expected:<1> but was:<2>"
+    },
+    {
+      "name": "arabicNameDoesNotTruncateTheNumericPayload[jvm]",
+      "message": "java.lang.AssertionError: numeric values must not split across lines expected:<1> but was:<2>"
+    }
+  ]
+}

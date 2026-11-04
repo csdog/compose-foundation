@@ -9,8 +9,6 @@ import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,6 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
@@ -34,6 +33,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.foundation.layout.widthIn
+import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -57,11 +68,14 @@ internal class TooltipController(
     val onContentHoverChange: (Boolean) -> Unit,
     val onTriggerDisabledChange: (Boolean) -> Unit,
     val disableHoverableContent: Boolean? = null,
+    val onDismissRequest: () -> Unit,
 )
+
+internal val LocalInsideTooltipContent = staticCompositionLocalOf { false }
 
 private val LocalTooltip = staticCompositionLocalOf<TooltipController?> { null }
 
-private val LocalTooltipDelayMillis = staticCompositionLocalOf { 0 }
+private val LocalTooltipDelayMillis = staticCompositionLocalOf { 600 }
 
 internal class TooltipProviderController(
     val delayMillis: Int,
@@ -69,6 +83,8 @@ internal class TooltipProviderController(
     val disableHoverableContent: Boolean,
 ) {
     var lastCloseMark: TimeSource.Monotonic.ValueTimeMark? = null
+    var activeTooltip by mutableStateOf<Any?>(null)
+    var closeActiveTooltip: (() -> Unit)? = null
 }
 
 private val LocalTooltipProvider = staticCompositionLocalOf<TooltipProviderController?> { null }
@@ -91,18 +107,17 @@ object TooltipDefaults {
 }
 
 /**
- * Provides hover delay for nested [Tooltip]s. Matches real shadcn's
- * `TooltipProvider` (`delayDuration` / `skipDelayDuration` /
- * `disableHoverableContent`); default `delayDuration` `0` is instant, same as
- * shadcn. [skipDelayMillis] defaults to Radix `300` (skip the open delay when
- * moving between tooltips). [disableHoverableContent] defaults `true` so the
- * portaled panel does not steal hover — Compose popups sit outside the trigger.
+ * Shared hover timing for nested [Tooltip]s. The Kotlin delayDuration and
+ * skipDelayDuration aliases map to Base UI delay and timeout respectively.
+ * Provider hover delay defaults to zero, matching shadcn. [skipDelayMillis] defaults to Base UI `400` (skip the open delay when
+ * moving between tooltips). [disableHoverableContent] defaults `false`. Focus opens immediately; provider
+ * delay applies only to hover. Safe-polygon pointer transfer remains pending.
  */
 @Composable
 fun TooltipProvider(
     delayMillis: Int = 0,
-    skipDelayMillis: Int = 300,
-    disableHoverableContent: Boolean = true,
+    skipDelayMillis: Int = 400,
+    disableHoverableContent: Boolean = false,
     delayDuration: Int? = null,
     skipDelayDuration: Int? = null,
     content: @Composable () -> Unit,
@@ -154,7 +169,7 @@ class TooltipScope internal constructor(
  * (composed inside Content).
  *
  * Real shadcn's [TooltipProvider] defaults `delayDuration` to 0 (instant); this
- * matches that unless a parent [TooltipProvider] sets a delay.
+ * uses that when a parent [TooltipProvider] is installed; without one, hover uses Base UI’s 600ms default.
  *
  * Usage:
  * ```
@@ -175,47 +190,75 @@ fun Tooltip(
     skipDelayMillis: Int? = null,
     skipDelayDuration: Int? = null,
     disableHoverableContent: Boolean? = null,
+    interactionSource: MutableInteractionSource? = null,
     content: @Composable TooltipScope.() -> Unit,
 ) {
-    val interactionSource = remember { MutableInteractionSource() }
-    val isHovered by interactionSource.collectIsHoveredAsState()
+    val defaultHoverSource = remember { MutableInteractionSource() }
+    val hoverSource = interactionSource ?: defaultHoverSource
+    val isHovered by hoverSource.collectIsHoveredAsState()
     var triggerFocused by remember { mutableStateOf(false) }
     var contentHovered by remember { mutableStateOf(false) }
     var triggerDisabled by remember { mutableStateOf(false) }
+    var dismissed by remember { mutableStateOf(false) }
+    var internalOpen by remember { mutableStateOf(false) }
+    var wasInteracting by remember { mutableStateOf(false) }
     var lastCloseMark by remember { mutableStateOf<TimeSource.Monotonic.ValueTimeMark?>(null) }
-    val isActive = !disabled && !triggerDisabled && (isHovered || triggerFocused || contentHovered)
-    val resolvedDelay = delayDuration ?: delayMillis ?: LocalTooltipDelayMillis.current
     val provider = LocalTooltipProvider.current
-    val resolvedSkip = skipDelayDuration ?: skipDelayMillis ?: provider?.skipDelayMillis ?: 0
-    val skipDelay =
-        resolvedSkip > 0 &&
-            (provider?.lastCloseMark ?: lastCloseMark)
-                ?.elapsedNow()
-                ?.inWholeMilliseconds
-                ?.let { it < resolvedSkip } == true
-    val effectiveDelay = if (skipDelay) 0 else resolvedDelay
-    var delayedOpen by remember { mutableStateOf(false) }
-    if (effectiveDelay > 0) {
-        LaunchedEffect(isActive, effectiveDelay) {
-            if (isActive) {
-                delay(effectiveDelay.toLong())
-                delayedOpen = true
-            } else {
-                delayedOpen = false
+    val token = remember { Any() }
+    val resolvedOpen = open ?: internalOpen
+    val latestOpen by rememberUpdatedState(resolvedOpen)
+    val latestOnOpenChange by rememberUpdatedState(onOpenChange)
+    val resolvedDelay = (delayDuration ?: delayMillis ?: LocalTooltipDelayMillis.current).coerceAtLeast(0)
+    val resolvedSkip = (skipDelayDuration ?: skipDelayMillis ?: provider?.skipDelayMillis ?: 0).coerceAtLeast(0)
+    val hasInteraction = isHovered || triggerFocused || contentHovered
+    val isActive = !disabled && !triggerDisabled && hasInteraction && !dismissed
+
+    fun requestOpen(value: Boolean) {
+        if (latestOpen != value) {
+            internalOpen = value
+            latestOnOpenChange?.invoke(value)
+        }
+    }
+
+    fun dismiss() {
+        dismissed = true
+        requestOpen(false)
+    }
+    LaunchedEffect(hasInteraction) {
+        if (!hasInteraction) dismissed = false
+    }
+    LaunchedEffect(isActive, triggerFocused, resolvedDelay, resolvedSkip, provider) {
+        val previousInteraction = wasInteracting
+        wasInteracting = isActive
+        if (isActive) {
+            val recentClose =
+                (provider?.lastCloseMark ?: lastCloseMark)
+                    ?.elapsedNow()?.inWholeMilliseconds?.let { it < resolvedSkip } == true
+            val instant = triggerFocused || provider?.activeTooltip != null || (resolvedSkip > 0 && recentClose)
+            if (!instant) delay(resolvedDelay.toLong())
+            requestOpen(true)
+        } else if (previousInteraction && !dismissed) {
+            requestOpen(false)
+        }
+    }
+    DisposableEffect(resolvedOpen, provider) {
+        if (resolvedOpen && provider != null) {
+            val closePrevious = if (provider.activeTooltip !== token) provider.closeActiveTooltip else null
+            provider.activeTooltip = token
+            provider.closeActiveTooltip = ::dismiss
+            closePrevious?.invoke()
+        }
+        onDispose {
+            if (resolvedOpen) {
+                val mark = TimeSource.Monotonic.markNow()
+                lastCloseMark = mark
+                provider?.lastCloseMark = mark
+                if (provider?.activeTooltip === token) {
+                    provider.activeTooltip = null
+                    provider.closeActiveTooltip = null
+                }
             }
         }
-    }
-    LaunchedEffect(isActive) {
-        if (!isActive) {
-            val mark = TimeSource.Monotonic.markNow()
-            lastCloseMark = mark
-            provider?.lastCloseMark = mark
-        }
-    }
-    val hoverOpen = if (effectiveDelay > 0) delayedOpen else isActive
-    val resolvedOpen = open ?: hoverOpen
-    LaunchedEffect(hoverOpen) {
-        onOpenChange?.invoke(hoverOpen)
     }
     val controller =
         TooltipController(
@@ -224,9 +267,20 @@ fun Tooltip(
             onContentHoverChange = { contentHovered = it },
             onTriggerDisabledChange = { triggerDisabled = it },
             disableHoverableContent = disableHoverableContent,
+            onDismissRequest = ::dismiss,
         )
     CompositionLocalProvider(LocalTooltip provides controller) {
-        Box(modifier = modifier.hoverable(interactionSource)) {
+        Box(
+            modifier =
+                modifier.hoverable(hoverSource).onPreviewKeyEvent { event ->
+                    if (resolvedOpen && event.key == Key.Escape && event.type == KeyEventType.KeyDown) {
+                        dismiss()
+                        true
+                    } else {
+                        false
+                    }
+                },
+        ) {
             TooltipScope(controller).content()
         }
     }
@@ -301,7 +355,7 @@ fun TooltipScope.TooltipContent(
     ) {
         Text(
             variant = TextVariant.LabelSmall,
-            textStyle = TextStyle(color = currentTheme.colors.background),
+            textStyle = tooltipTextStyle(),
         ) { text }
     }
 }
@@ -337,7 +391,7 @@ fun TooltipScope.TooltipContent(
     TooltipPortal {
         AnchoredPopup(
             open = controller.open,
-            onDismissRequest = {},
+            onDismissRequest = controller.onDismissRequest,
             placement = resolvedPlacement,
             offset = sideOffset,
             align = align,
@@ -349,6 +403,7 @@ fun TooltipScope.TooltipContent(
         ) {
             val chipModifier =
                 modifier
+                    .widthIn(max = 320.dp)
                     .then(if (hoverableContent) Modifier.hoverable(contentHoverSource) else Modifier)
                     .styleable(
                         styleState,
@@ -358,7 +413,12 @@ fun TooltipScope.TooltipContent(
                 placement = resolvedPlacement,
                 showArrow = showArrow,
                 chipModifier = chipModifier,
-                content = content,
+                content = {
+                    CompositionLocalProvider(
+                        LocalInsideTooltipContent provides true,
+                        LocalDefaultTextStyle provides tooltipTextStyle(),
+                    ) { content() }
+                },
             )
         }
     }
@@ -371,32 +431,27 @@ private fun TooltipBubble(
     chipModifier: Modifier,
     content: @Composable () -> Unit,
 ) {
-    val chip = @Composable { Box(modifier = chipModifier) { content() } }
-    if (!showArrow) {
-        chip()
-        return
-    }
-    when (placement) {
-        PopupPlacement.Top, PopupPlacement.Bottom ->
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                if (placement == PopupPlacement.Bottom) {
-                    TooltipArrow(modifier = Modifier.offset(y = TooltipDefaults.ArrowOverlap))
+    val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+    Box {
+        // Arrow overlays the chip; it must not alter popup size or the side offset.
+        if (showArrow) {
+            val alignment =
+                when (placement) {
+                    PopupPlacement.Top -> Alignment.BottomCenter
+                    PopupPlacement.Bottom -> Alignment.TopCenter
+                    PopupPlacement.Start -> if (rtl) Alignment.CenterStart else Alignment.CenterEnd
+                    PopupPlacement.End -> if (rtl) Alignment.CenterEnd else Alignment.CenterStart
                 }
-                chip()
-                if (placement == PopupPlacement.Top) {
-                    TooltipArrow(modifier = Modifier.offset(y = -TooltipDefaults.ArrowOverlap))
+            val arrowOffset =
+                when (placement) {
+                    PopupPlacement.Top -> Modifier.offset(y = 3.dp)
+                    PopupPlacement.Bottom -> Modifier.offset(y = (-3).dp)
+                    PopupPlacement.Start -> Modifier.offset(x = if (rtl) (-4).dp else 4.dp)
+                    PopupPlacement.End -> Modifier.offset(x = if (rtl) 4.dp else (-4).dp)
                 }
-            }
-        PopupPlacement.Start, PopupPlacement.End ->
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                if (placement == PopupPlacement.End) {
-                    TooltipArrow(modifier = Modifier.offset(x = TooltipDefaults.ArrowOverlap))
-                }
-                chip()
-                if (placement == PopupPlacement.Start) {
-                    TooltipArrow(modifier = Modifier.offset(x = -TooltipDefaults.ArrowOverlap))
-                }
-            }
+            TooltipArrow(Modifier.align(alignment).then(arrowOffset))
+        }
+        Box(modifier = chipModifier) { content() }
     }
 }
 
@@ -421,3 +476,13 @@ internal fun TooltipArrow(modifier: Modifier = Modifier) {
 internal fun TooltipPortal(content: @Composable () -> Unit) {
     content()
 }
+
+@Composable
+private fun tooltipTextStyle() =
+    TextStyle(
+        color = currentTheme.colors.background,
+        fontSize = 12.sp,
+        lineHeight = 16.sp,
+        fontWeight = FontWeight.Normal,
+        lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+    )

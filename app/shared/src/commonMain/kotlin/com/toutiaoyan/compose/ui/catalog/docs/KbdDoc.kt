@@ -2,59 +2,431 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
-import com.toutiaoyan.compose.ui.components.button.Button
-import com.toutiaoyan.compose.ui.components.button.ButtonVariant
-import com.toutiaoyan.compose.ui.components.kbd.Kbd
-import com.toutiaoyan.compose.ui.components.kbd.KbdGroup
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.InlineTextContent
+import androidx.compose.foundation.text.appendInlineContent
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.text.*
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.*
+import com.composables.icons.lucide.Lucide
+import com.composables.icons.lucide.Search
+import com.toutiaoyan.compose.ui.components.button.*
+import com.toutiaoyan.compose.ui.components.buttongroup.*
+import com.toutiaoyan.compose.ui.components.inputgroup.*
+import com.toutiaoyan.compose.ui.components.kbd.*
 import com.toutiaoyan.compose.ui.components.text.Text
+import com.toutiaoyan.compose.ui.components.tooltip.*
+import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 
 val kbdDoc =
     ComponentDoc(
         id = "kbd",
         title = "Kbd",
-        description = "A keyboard-shortcut label.",
-        usageCode =
+        description = "Used to display textual user input from keyboard.",
+        examplesHeading = null,
+        usageImportsCode =
             """
-            import com.toutiaoyan.compose.ui.components.kbd.Kbd
-
-            Kbd("⌘K")
+            import androidx.compose.foundation.Image
+            import androidx.compose.foundation.layout.*
+            import androidx.compose.foundation.text.InlineTextContent
+            import androidx.compose.foundation.text.appendInlineContent
+            import androidx.compose.runtime.*
+            import androidx.compose.ui.Alignment
+            import androidx.compose.ui.Modifier
+            import androidx.compose.ui.graphics.ColorFilter
+            import androidx.compose.ui.platform.LocalDensity
+            import androidx.compose.ui.platform.LocalLayoutDirection
+            import androidx.compose.ui.text.*
+            import androidx.compose.ui.text.font.FontWeight
+            import androidx.compose.ui.unit.*
+            import com.composables.icons.lucide.Lucide
+            import com.composables.icons.lucide.Search
+            import com.toutiaoyan.compose.ui.components.button.*
+            import com.toutiaoyan.compose.ui.components.buttongroup.*
+            import com.toutiaoyan.compose.ui.components.inputgroup.*
+            import com.toutiaoyan.compose.ui.components.kbd.*
+            import com.toutiaoyan.compose.ui.components.text.Text
+            import com.toutiaoyan.compose.ui.components.tooltip.*
+            import com.toutiaoyan.compose.ui.theme.currentTheme
+            import com.toutiaoyan.compose.ui.tokens.StylePreset
             """.trimIndent(),
+        usageCode = "Kbd(\"Ctrl\")",
+        compositionCode =
+            """
+            Kbd
+            KbdGroup
+            ├── Kbd
+            └── Kbd
+            """.trimIndent(),
+        apiSections =
+            listOf(
+                ComponentApiSection(
+                    "Kbd",
+                    (
+                        "A passive keycap. Use the content slot for icons or richer " +
+                            "labels; it does not register a keyboard shortcut."
+                    ),
+                    listOf(
+                        ApiProperty("text / content", "String / @Composable () -> Unit", "Required"),
+                        ApiProperty("modifier / style", "Modifier / Style", "Default"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "KbdGroup",
+                    (
+                        "Groups keycaps with a 4dp Nova gap and inherits the layout " +
+                            "direction."
+                    ),
+                    listOf(
+                        ApiProperty("content", "@Composable () -> Unit", "Required"),
+                        ApiProperty("modifier / style", "Modifier / Style", "Default"),
+                    ),
+                ),
+            ),
         examples =
             listOf(
                 ComponentExample(
-                    title = "Group",
+                    title = "Default",
+                    minPreviewHeight = 288.dp,
+                    mobileMinPreviewHeight = 288.dp,
+                    previewPadding = 40.dp,
                     code =
                         """
-                        KbdGroup {
-                            Kbd("Ctrl")
-                            Kbd("K")
+                        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                            KbdGroup { Kbd("⌘"); Kbd("⇧"); Kbd("⌥"); Kbd("⌃") }
+                            KbdGroup { Kbd("Ctrl"); Text { "+" }; Kbd("B") }
                         }
                         """.trimIndent(),
                     preview = {
-                        KbdGroup {
-                            Kbd("Ctrl")
-                            Kbd("K")
+                        Column(
+                            horizontalAlignment =
+                                Alignment.CenterHorizontally,
+                            verticalArrangement =
+                                Arrangement.spacedBy(16.dp),
+                        ) {
+                            KbdGroup {
+                                Kbd("⌘")
+                                Kbd("⇧")
+                                Kbd("⌥")
+                                Kbd("⌃")
+                            }
+                            KbdGroup {
+                                Kbd("Ctrl")
+                                Text { "+" }
+                                Kbd("B")
+                            }
                         }
                     },
                 ),
                 ComponentExample(
-                    title = "Single",
-                    code = "Kbd(\"⌘K\")",
-                    preview = { Kbd("⌘K") },
-                ),
-                ComponentExample(
-                    title = "In Button",
+                    title = "Group",
+                    descriptionMarkdown = "Group keycaps inside a sentence.",
+                    minPreviewHeight = 288.dp,
+                    mobileMinPreviewHeight = 288.dp,
+                    previewPadding = 40.dp,
                     code =
                         """
-                        Button(variant = ButtonVariant.Outline) {
-                            Text { "Search" }
-                            Kbd("⌘K")
+                        val theme = currentTheme
+                        val density = LocalDensity.current
+                        val measurer = rememberTextMeasurer()
+                        val nova = theme.activePreset == StylePreset.Nova
+                        val keys = listOf("Ctrl + B", "Ctrl + K")
+                        val keyStyle = if (nova) TextStyle(fontFamily = theme.fontFamily, fontSize = 12.sp, fontWeight = FontWeight.Medium)
+                            else theme.typography.labelSmall.copy(fontFamily = theme.fontFamily)
+                        val padding = if (nova) 8.dp else 4.dp
+                        val gap = if (nova) 4.dp else 2.dp
+                        val width = keys.map { key ->
+                            maxOf(20.dp, with(density) { measurer.measure(key, keyStyle, maxLines = 1).size.width.toDp() } + padding)
+                        }.reduce { total, next -> total + next } + gap
+                        val sentence = buildAnnotatedString {
+                            append("Use ")
+                            appendInlineContent("shortcuts", "Ctrl + B Ctrl + K")
+                            append(" to open the command palette")
+                        }
+                        Text(textStyle = TextStyle(fontSize = 14.sp, lineHeight = 20.sp, color = theme.colors.mutedForeground),
+                            inlineContent = mapOf("shortcuts" to InlineTextContent(
+                                Placeholder(with(density) { width.toSp() }, with(density) { 20.dp.toSp() }, PlaceholderVerticalAlign.TextCenter),
+                            ) { KbdGroup { keys.forEach { Kbd(it) } } }),
+                        ) { sentence }
+                        """.trimIndent(),
+                    preview = {
+                        val theme = currentTheme
+                        val density = LocalDensity.current
+                        val measurer = rememberTextMeasurer()
+                        val nova = theme.activePreset == StylePreset.Nova
+                        val keys = listOf("Ctrl + B", "Ctrl + K")
+                        val keyStyle =
+                            if (nova) {
+                                TextStyle(
+                                    fontFamily =
+                                        theme.fontFamily,
+                                    fontSize =
+                                        12.sp,
+                                    fontWeight =
+                                        FontWeight.Medium,
+                                )
+                            } else {
+                                theme.typography.labelSmall.copy(fontFamily = theme.fontFamily)
+                            }
+                        val padding = if (nova) 8.dp else 4.dp
+                        val gap = if (nova) 4.dp else 2.dp
+                        val width =
+                            keys.map { key ->
+                                maxOf(
+                                    20.dp,
+                                    with(density) {
+                                        measurer.measure(
+                                            key,
+                                            keyStyle,
+                                            maxLines =
+                                            1,
+                                        ).size.width.toDp()
+                                    } +
+                                        padding,
+                                )
+                            }.reduce { total, next -> total + next } + gap
+                        val sentence =
+                            buildAnnotatedString {
+                                append("Use ")
+                                appendInlineContent("shortcuts", "Ctrl + B Ctrl + K")
+                                append(" to open the command palette")
+                            }
+                        Text(
+                            textStyle =
+                                TextStyle(
+                                    fontSize =
+                                        14.sp,
+                                    lineHeight =
+                                        20.sp,
+                                    color =
+                                        theme.colors.mutedForeground,
+                                ),
+                            inlineContent =
+                                mapOf(
+                                    "shortcuts" to
+                                        InlineTextContent(
+                                            Placeholder(
+                                                with(density) { width.toSp() },
+                                                with(density) { 20.dp.toSp() },
+                                                PlaceholderVerticalAlign.TextCenter,
+                                            ),
+                                        ) { KbdGroup { keys.forEach { Kbd(it) } } },
+                                ),
+                        ) { sentence }
+                    },
+                ),
+                ComponentExample(
+                    title = "Button",
+                    descriptionMarkdown = "Display a keycap inside a button.",
+                    minPreviewHeight = 288.dp,
+                    mobileMinPreviewHeight = 288.dp,
+                    previewPadding = 40.dp,
+                    code =
+                        """
+                        Button(onClick = {}, variant = ButtonVariant.Outline) {
+                            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                Text { "Accept" }
+                                Kbd("⏎", modifier = Modifier.offset(x = 2.dp))
+                            }
                         }
                         """.trimIndent(),
                     preview = {
-                        Button(variant = ButtonVariant.Outline) {
-                            Text { "Search" }
-                            Kbd("⌘K")
+                        Button(onClick = {}, variant = ButtonVariant.Outline) {
+                            Row(
+                                verticalAlignment =
+                                    Alignment.CenterVertically,
+                                horizontalArrangement =
+                                    Arrangement.spacedBy(6.dp),
+                            ) {
+                                Text { "Accept" }
+                                Kbd("⏎", modifier = Modifier.offset(x = 2.dp))
+                            }
+                        }
+                    },
+                ),
+                ComponentExample(
+                    title = "Tooltip",
+                    descriptionMarkdown = "Display keyboard hints inside tooltips.",
+                    minPreviewHeight = 288.dp,
+                    mobileMinPreviewHeight = 288.dp,
+                    previewPadding = 40.dp,
+                    code =
+                        """
+                        ButtonGroup {
+                            Tooltip {
+                                TooltipTrigger {
+                                    Button("Save", onClick = {}, variant = ButtonVariant.Outline)
+                                }
+                                TooltipContent {
+                                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                        Text(textStyle = TextStyle(fontSize = 12.sp, color = currentTheme.colors.background)) { "Save Changes" }
+                                        Kbd("S")
+                                    }
+                                }
+                            }
+                            Tooltip {
+                                TooltipTrigger {
+                                    Button("Print", onClick = {}, variant = ButtonVariant.Outline)
+                                }
+                                TooltipContent {
+                                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                        Text(textStyle = TextStyle(fontSize = 12.sp, color = currentTheme.colors.background)) { "Print Document" }
+                                        KbdGroup { Kbd("Ctrl"); Kbd("P") }
+                                    }
+                                }
+                            }
+                        }
+                        """.trimIndent(),
+                    preview = {
+                        ButtonGroup {
+                            Tooltip {
+                                TooltipTrigger {
+                                    Button("Save", onClick = {}, variant = ButtonVariant.Outline)
+                                }
+                                TooltipContent {
+                                    Row(
+                                        verticalAlignment =
+                                            Alignment.CenterVertically,
+                                        horizontalArrangement =
+                                            Arrangement.spacedBy(6.dp),
+                                    ) {
+                                        Text(
+                                            textStyle =
+                                                TextStyle(
+                                                    fontSize =
+                                                        12.sp,
+                                                    color =
+                                                        currentTheme.colors.background,
+                                                ),
+                                        ) { "Save Changes" }
+                                        Kbd("S")
+                                    }
+                                }
+                            }
+                            Tooltip {
+                                TooltipTrigger {
+                                    Button("Print", onClick = {}, variant = ButtonVariant.Outline)
+                                }
+                                TooltipContent {
+                                    Row(
+                                        verticalAlignment =
+                                            Alignment.CenterVertically,
+                                        horizontalArrangement =
+                                            Arrangement.spacedBy(6.dp),
+                                    ) {
+                                        Text(
+                                            textStyle =
+                                                TextStyle(
+                                                    fontSize =
+                                                        12.sp,
+                                                    color =
+                                                        currentTheme.colors.background,
+                                                ),
+                                        ) { "Print Document" }
+                                        KbdGroup {
+                                            Kbd("Ctrl")
+                                            Kbd("P")
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                ),
+                ComponentExample(
+                    title = "Input Group",
+                    descriptionMarkdown = "Use keycaps in the trailing input addon.",
+                    minPreviewHeight = 288.dp,
+                    mobileMinPreviewHeight = 288.dp,
+                    previewPadding = 40.dp,
+                    code =
+                        """
+                        var query by remember { mutableStateOf("") }
+                        InputGroup(modifier = Modifier.widthIn(max = 320.dp).fillMaxWidth()) {
+                            InputGroupInput(query, { query = it }, placeholder = "Search...")
+                            InputGroupAddon {
+                                Image(Lucide.Search, null, Modifier.size(16.dp), colorFilter = ColorFilter.tint(currentTheme.colors.mutedForeground))
+                            }
+                            InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) { Kbd("⌘"); Kbd("K") }
+                        }
+                        """.trimIndent(),
+                    preview = {
+                        var query by remember { mutableStateOf("") }
+                        InputGroup(modifier = Modifier.widthIn(max = 320.dp).fillMaxWidth()) {
+                            InputGroupInput(query, { query = it }, placeholder = "Search...")
+                            InputGroupAddon {
+                                Image(
+                                    Lucide.Search,
+                                    null,
+                                    Modifier.size(16.dp),
+                                    colorFilter =
+                                        ColorFilter.tint(currentTheme.colors.mutedForeground),
+                                )
+                            }
+                            InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) {
+                                Kbd("⌘")
+                                Kbd("K")
+                            }
+                        }
+                    },
+                ),
+                ComponentExample(
+                    title = "RTL",
+                    descriptionMarkdown = "Key order follows the selected layout direction.",
+                    minPreviewHeight = 304.dp,
+                    mobileMinPreviewHeight = 304.dp,
+                    previewPadding = 0.dp,
+                    code =
+                        """
+                        // 0 English, 1 Arabic, 2 Hebrew. Connect this state to your language picker.
+                        var language by remember { mutableStateOf(1) }
+                        CompositionLocalProvider(LocalLayoutDirection provides if (language == 0) LayoutDirection.Ltr else LayoutDirection.Rtl) {
+                            Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                                KbdGroup { Kbd("⌘"); Kbd("⇧"); Kbd("⌥"); Kbd("⌃") }
+                                KbdGroup { Kbd("Ctrl"); Text { "+" }; Kbd("B") }
+                            }
+                        }
+                        """.trimIndent(),
+                    preview = {
+                        var language by remember { mutableStateOf(1) }
+                        RtlPreview(language, listOf("English", "العربية", "עברית"), { language = it }) {
+                            Box(Modifier.fillMaxWidth().height(240.dp), contentAlignment = Alignment.Center) {
+                                CompositionLocalProvider(
+                                    LocalLayoutDirection provides
+                                        if (language == 0) {
+                                            LayoutDirection.Ltr
+                                        } else {
+                                            LayoutDirection.Rtl
+                                        },
+                                ) {
+                                    Column(
+                                        horizontalAlignment =
+                                            Alignment.CenterHorizontally,
+                                        verticalArrangement =
+                                            Arrangement.spacedBy(16.dp),
+                                    ) {
+                                        KbdGroup {
+                                            Kbd("⌘")
+                                            Kbd("⇧")
+                                            Kbd("⌥")
+                                            Kbd("⌃")
+                                        }
+                                        KbdGroup {
+                                            Kbd("Ctrl")
+                                            Text { "+" }
+                                            Kbd("B")
+                                        }
+                                    }
+                                }
+                            }
                         }
                     },
                 ),

@@ -1,0 +1,1176 @@
+[
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detekt",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektAndroidDeviceTest",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektAndroidHostTest",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 1,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/androidHostTest"
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektAndroidMain",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 2,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/androidMainResourceCollectors/compose_foundation/app/shared/generated/resources/ActualResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/androidMain"
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektBaseline",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektBaselineAndroidDeviceTest",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektBaselineAndroidHostTest",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 1,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/androidHostTest"
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektBaselineAndroidMain",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 2,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/androidMainResourceCollectors/compose_foundation/app/shared/generated/resources/ActualResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/androidMain"
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektBaselineIosArm64Main",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 1,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/iosArm64MainResourceCollectors/compose_foundation/app/shared/generated/resources/ActualResourceCollectors.kt"
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektBaselineIosArm64Test",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektBaselineIosSimulatorArm64Main",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 1,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/iosSimulatorArm64MainResourceCollectors/compose_foundation/app/shared/generated/resources/ActualResourceCollectors.kt"
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektBaselineIosSimulatorArm64Test",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektBaselineJsMain",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 2,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/jsMainResourceCollectors/compose_foundation/app/shared/generated/resources/ActualResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/jsMain"
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektBaselineJsTest",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektBaselineJvmDev",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektBaselineJvmMain",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 3,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/jvmMainResourceCollectors/compose_foundation/app/shared/generated/resources/ActualResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/jvmMain"
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektBaselineJvmTest",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 31,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/jvmTest"
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektBaselineMetadataAppleMain",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektBaselineMetadataCommonMain",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 131,
+        "containsChanged": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MessageScrollerDoc.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MessageScrollerRecipeCode.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MessageScrollerRecipes.kt"
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/commonMainResourceAccessors/compose_foundation/app/shared/generated/resources/Drawable0.commonMain.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/commonMainResourceAccessors/compose_foundation/app/shared/generated/resources/Font0.commonMain.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/commonMainResourceCollectors/compose_foundation/app/shared/generated/resources/ExpectResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/commonResClass/compose_foundation/app/shared/generated/resources/Res.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain"
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektBaselineMetadataIosMain",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 2,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/iosMain"
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektBaselineMetadataMain",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 131,
+        "containsChanged": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MessageScrollerDoc.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MessageScrollerRecipeCode.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MessageScrollerRecipes.kt"
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/commonMainResourceAccessors/compose_foundation/app/shared/generated/resources/Drawable0.commonMain.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/commonMainResourceAccessors/compose_foundation/app/shared/generated/resources/Font0.commonMain.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/commonMainResourceCollectors/compose_foundation/app/shared/generated/resources/ExpectResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/commonResClass/compose_foundation/app/shared/generated/resources/Res.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain"
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektBaselineMetadataNativeMain",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektBaselineMetadataWebMain",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektBaselineWasmJsMain",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 2,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/wasmJsMainResourceCollectors/compose_foundation/app/shared/generated/resources/ActualResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/wasmJsMain"
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektBaselineWasmJsTest",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektGenerateConfig",
+        "type": "io.gitlab.arturbosch.detekt.DetektGenerateConfigTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektIosArm64Main",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 1,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/iosArm64MainResourceCollectors/compose_foundation/app/shared/generated/resources/ActualResourceCollectors.kt"
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektIosArm64Test",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektIosSimulatorArm64Main",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 1,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/iosSimulatorArm64MainResourceCollectors/compose_foundation/app/shared/generated/resources/ActualResourceCollectors.kt"
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektIosSimulatorArm64Test",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektJsMain",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 2,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/jsMainResourceCollectors/compose_foundation/app/shared/generated/resources/ActualResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/jsMain"
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektJsTest",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektJvmDev",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektJvmMain",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 3,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/jvmMainResourceCollectors/compose_foundation/app/shared/generated/resources/ActualResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/jvmMain"
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektJvmTest",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 31,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/jvmTest"
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektMetadataAppleMain",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektMetadataCommonMain",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 131,
+        "containsChanged": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MessageScrollerDoc.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MessageScrollerRecipeCode.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MessageScrollerRecipes.kt"
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/commonMainResourceAccessors/compose_foundation/app/shared/generated/resources/Drawable0.commonMain.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/commonMainResourceAccessors/compose_foundation/app/shared/generated/resources/Font0.commonMain.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/commonMainResourceCollectors/compose_foundation/app/shared/generated/resources/ExpectResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/commonResClass/compose_foundation/app/shared/generated/resources/Res.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain"
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektMetadataIosMain",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 2,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/iosMain"
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektMetadataMain",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 131,
+        "containsChanged": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MessageScrollerDoc.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MessageScrollerRecipeCode.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MessageScrollerRecipes.kt"
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/commonMainResourceAccessors/compose_foundation/app/shared/generated/resources/Drawable0.commonMain.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/commonMainResourceAccessors/compose_foundation/app/shared/generated/resources/Font0.commonMain.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/commonMainResourceCollectors/compose_foundation/app/shared/generated/resources/ExpectResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/commonResClass/compose_foundation/app/shared/generated/resources/Res.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain"
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektMetadataNativeMain",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektMetadataWebMain",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektWasmJsMain",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 2,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/generated/compose/resourceGenerator/kotlin/wasmJsMainResourceCollectors/compose_foundation/app/shared/generated/resources/ActualResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/wasmJsMain"
+        ]
+    },
+    {
+        "project": ":app:shared",
+        "task": ":app:shared:detektWasmJsTest",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detekt",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektAndroidDeviceTest",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektAndroidHostTest",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektAndroidMain",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 2,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/generated/compose/resourceGenerator/kotlin/androidMainResourceCollectors/com/toutiaoyan/compose/core/generated/resources/ActualResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/androidMain"
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektBaseline",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektBaselineAndroidDeviceTest",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektBaselineAndroidHostTest",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektBaselineAndroidMain",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 2,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/generated/compose/resourceGenerator/kotlin/androidMainResourceCollectors/com/toutiaoyan/compose/core/generated/resources/ActualResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/androidMain"
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektBaselineIosArm64Main",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 1,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/generated/compose/resourceGenerator/kotlin/iosArm64MainResourceCollectors/com/toutiaoyan/compose/core/generated/resources/ActualResourceCollectors.kt"
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektBaselineIosArm64Test",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektBaselineIosSimulatorArm64Main",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 1,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/generated/compose/resourceGenerator/kotlin/iosSimulatorArm64MainResourceCollectors/com/toutiaoyan/compose/core/generated/resources/ActualResourceCollectors.kt"
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektBaselineIosSimulatorArm64Test",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektBaselineJsMain",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 2,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/generated/compose/resourceGenerator/kotlin/jsMainResourceCollectors/com/toutiaoyan/compose/core/generated/resources/ActualResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jsMain"
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektBaselineJsTest",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektBaselineJvmDev",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektBaselineJvmMain",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 2,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/generated/compose/resourceGenerator/kotlin/jvmMainResourceCollectors/com/toutiaoyan/compose/core/generated/resources/ActualResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmMain"
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektBaselineJvmTest",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 124,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest"
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektBaselineMetadataAppleMain",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektBaselineMetadataCommonMain",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 221,
+        "containsChanged": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/messagescroller/MessageScrollerState.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/tabs/Tabs.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/tabs/TabsStyles.kt"
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/generated/compose/resourceGenerator/kotlin/commonMainResourceCollectors/com/toutiaoyan/compose/core/generated/resources/ExpectResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/generated/compose/resourceGenerator/kotlin/commonResClass/com/toutiaoyan/compose/core/generated/resources/Res.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain"
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektBaselineMetadataIosMain",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 1,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/iosMain"
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektBaselineMetadataMain",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 221,
+        "containsChanged": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/messagescroller/MessageScrollerState.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/tabs/Tabs.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/tabs/TabsStyles.kt"
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/generated/compose/resourceGenerator/kotlin/commonMainResourceCollectors/com/toutiaoyan/compose/core/generated/resources/ExpectResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/generated/compose/resourceGenerator/kotlin/commonResClass/com/toutiaoyan/compose/core/generated/resources/Res.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain"
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektBaselineMetadataNativeMain",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektBaselineMetadataWebMain",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektBaselineWasmJsMain",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 2,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/generated/compose/resourceGenerator/kotlin/wasmJsMainResourceCollectors/com/toutiaoyan/compose/core/generated/resources/ActualResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/wasmJsMain"
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektBaselineWasmJsTest",
+        "type": "io.gitlab.arturbosch.detekt.DetektCreateBaselineTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektGenerateConfig",
+        "type": "io.gitlab.arturbosch.detekt.DetektGenerateConfigTask_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektIosArm64Main",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 1,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/generated/compose/resourceGenerator/kotlin/iosArm64MainResourceCollectors/com/toutiaoyan/compose/core/generated/resources/ActualResourceCollectors.kt"
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektIosArm64Test",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektIosSimulatorArm64Main",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 1,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/generated/compose/resourceGenerator/kotlin/iosSimulatorArm64MainResourceCollectors/com/toutiaoyan/compose/core/generated/resources/ActualResourceCollectors.kt"
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektIosSimulatorArm64Test",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektJsMain",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 2,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/generated/compose/resourceGenerator/kotlin/jsMainResourceCollectors/com/toutiaoyan/compose/core/generated/resources/ActualResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jsMain"
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektJsTest",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektJvmDev",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektJvmMain",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 2,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/generated/compose/resourceGenerator/kotlin/jvmMainResourceCollectors/com/toutiaoyan/compose/core/generated/resources/ActualResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmMain"
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektJvmTest",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 124,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest"
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektMetadataAppleMain",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektMetadataCommonMain",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 221,
+        "containsChanged": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/messagescroller/MessageScrollerState.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/tabs/Tabs.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/tabs/TabsStyles.kt"
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/generated/compose/resourceGenerator/kotlin/commonMainResourceCollectors/com/toutiaoyan/compose/core/generated/resources/ExpectResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/generated/compose/resourceGenerator/kotlin/commonResClass/com/toutiaoyan/compose/core/generated/resources/Res.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain"
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektMetadataIosMain",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 1,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/iosMain"
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektMetadataMain",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 221,
+        "containsChanged": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/messagescroller/MessageScrollerState.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/tabs/Tabs.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/tabs/TabsStyles.kt"
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/generated/compose/resourceGenerator/kotlin/commonMainResourceCollectors/com/toutiaoyan/compose/core/generated/resources/ExpectResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/generated/compose/resourceGenerator/kotlin/commonResClass/com/toutiaoyan/compose/core/generated/resources/Res.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain"
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektMetadataNativeMain",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektMetadataWebMain",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektWasmJsMain",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 2,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/generated/compose/resourceGenerator/kotlin/wasmJsMainResourceCollectors/com/toutiaoyan/compose/core/generated/resources/ActualResourceCollectors.kt",
+            "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/wasmJsMain"
+        ]
+    },
+    {
+        "project": ":shadcn:core",
+        "task": ":shadcn:core:detektWasmJsTest",
+        "type": "io.gitlab.arturbosch.detekt.Detekt_Decorated",
+        "enabled": true,
+        "sourceCount": 0,
+        "containsChanged": [
+            
+        ],
+        "sourceRoots": [
+            
+        ]
+    }
+]
