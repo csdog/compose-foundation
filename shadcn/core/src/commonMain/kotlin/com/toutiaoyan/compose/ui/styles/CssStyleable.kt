@@ -42,8 +42,14 @@ internal fun Modifier.cssStyleable(
                 val target = this
                 var resolvedShape: Shape = RectangleShape
                 var resolvedShadows: List<Shadow> = emptyList()
+                var resolvedAlpha = 1f
                 val receiver =
                     object : StyleScope by target {
+                        override fun alpha(value: Float) {
+                            resolvedAlpha = value
+                            target.alpha(value)
+                        }
+
                         override fun shape(value: Shape) {
                             resolvedShape = value
                             target.shape(value)
@@ -62,11 +68,23 @@ internal fun Modifier.cssStyleable(
                         }
                     }
                 styles.forEach { style -> with(style) { receiver.applyStyle() } }
-                shadow.update(resolvedShape, resolvedShadows)
+                shadow.update(
+                    resolvedShape,
+                    if (resolvedAlpha == 1f) resolvedShadows else resolvedShadows.map { it.withOpacity(resolvedAlpha) },
+                )
             }
         }
     return then(CssShadowElement(shadow)).styleable(styleState, wrapped)
 }
+
+private fun Shadow.withOpacity(opacity: Float) =
+    Shadow(
+        radius = radius,
+        color = color,
+        spread = spread,
+        offset = offset,
+        alpha = alpha * opacity,
+    )
 
 private fun Shadow.transparent() =
     Shadow(

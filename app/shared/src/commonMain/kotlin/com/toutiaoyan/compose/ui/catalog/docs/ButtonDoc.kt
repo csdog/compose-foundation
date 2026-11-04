@@ -4,6 +4,22 @@ package com.toutiaoyan.compose.ui.catalog.docs
 
 import androidx.compose.ui.unit.dp
 
+private val buttonApiProperties =
+    listOf(
+        ApiProperty("onClick", "() -> Unit", "{}"),
+        ApiProperty("modifier", "Modifier", "Modifier"),
+        ApiProperty("enabled", "Boolean", "true"),
+        ApiProperty("disabled", "Boolean", "false"),
+        ApiProperty("variant", "ButtonVariant", "Default"),
+        ApiProperty("size", "ButtonSize", "Md"),
+        ApiProperty("indication", "Indication?", "null"),
+        ApiProperty("label", "String?", "null"),
+        ApiProperty("style", "Style", "Style"),
+        ApiProperty("iconPlacement", "ButtonIconPlacement?", "null"),
+        ApiProperty("invalid", "Boolean", "false"),
+        ApiProperty("content", "@Composable () -> Unit", "required"),
+    )
+
 val buttonDoc =
     ComponentDoc(
         id = "button",
@@ -27,19 +43,26 @@ val buttonDoc =
                     ),
                 ),
             ),
-        apiProperties =
+        apiProperties = buttonApiProperties,
+        apiSections =
             listOf(
-                ApiProperty("onClick", "() -> Unit", "{}"),
-                ApiProperty("modifier", "Modifier", "Modifier"),
-                ApiProperty("enabled", "Boolean", "true"),
-                ApiProperty("disabled", "Boolean", "false"),
-                ApiProperty("variant", "ButtonVariant", "Default"),
-                ApiProperty("size", "ButtonSize", "Md"),
-                ApiProperty("indication", "Indication?", "null"),
-                ApiProperty("label", "String?", "null"),
-                ApiProperty("style", "Style", "Style"),
-                ApiProperty("iconPlacement", "ButtonIconPlacement?", "null"),
-                ApiProperty("content", "@Composable () -> Unit", "required"),
+                ComponentApiSection(
+                    "Button",
+                    "An action control with button semantics. Invalid state exposes an error and " +
+                        "shows its border and ring even without focus; caller Style overrides remain last.",
+                    buttonApiProperties,
+                ),
+                ComponentApiSection(
+                    "buttonStyle",
+                    "Applies the same variant/size chrome to another composable without " +
+                        "assigning button semantics or a click handler. The caller owns link behavior and content.",
+                    listOf(
+                        ApiProperty("variant", "ButtonVariant", "Default"),
+                        ApiProperty("size", "ButtonSize", "Md"),
+                        ApiProperty("style", "Style", "Style"),
+                        ApiProperty("styleState", "StyleState?", "null"),
+                    ),
+                ),
             ),
         examples =
             listOf(
@@ -190,6 +213,15 @@ val buttonDoc =
                             "documentation for the complete API.",
                     code = buttonGroupDoc.examples.first().code,
                     preview = { ButtonRecipe(12) },
+                ),
+                ComponentExample(
+                    title = "As Link",
+                    descriptionMarkdown =
+                        "Use a LinkAnnotation URL and the public Button variant/size styles. " +
+                            "The link owns keyboard and accessibility behavior; padding is clickable too. " +
+                            "Do not use Button for links because it declares Role.Button.",
+                    code = buttonAsLinkCode,
+                    preview = { ButtonAsLinkRecipe() },
                 ),
                 ComponentExample(
                     title = "RTL",

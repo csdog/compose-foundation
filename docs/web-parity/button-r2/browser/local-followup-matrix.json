@@ -1,0 +1,46 @@
+{
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "width": 390,
+      "height": 1000
+    }
+  ],
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "sections": [
+    "as-link",
+    "button-group"
+  ],
+  "states": [
+    "closed",
+    "root-menu",
+    "Personal",
+    "Other",
+    "sub-Escape",
+    "root-Escape"
+  ],
+  "navigation": {
+    "mobileDarkLabel": {
+      "url": "http://127.0.0.1:8765/button#",
+      "y": 0
+    },
+    "desktopDarkLabel": "desktop-dark-link-navigation.json",
+    "desktopDarkPadding": "local-desktop-dark-padding-link.json",
+    "mobileLightPadding": "local-mobile-light-padding-link.json"
+  },
+  "observations": [
+    "submenu fixed 192dp versus official natural 101.5px; mobile overlap",
+    "pointer opening leaves first row highlighted while hovering another row",
+    "root trigger focus ring appearance still differs after Escape"
+  ],
+  "app": [
+    "http://127.0.0.1:8765/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8765/2b882580d2bca680a8c6.wasm"
+  ]
+}

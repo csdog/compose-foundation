@@ -12,6 +12,8 @@ import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toPixelMap
+import androidx.compose.ui.graphics.compositeOver
+import kotlin.test.assertEquals
 import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.input.InputModeManager
 import androidx.compose.ui.platform.LocalInputModeManager
@@ -142,5 +144,34 @@ class CssStyleableTest : ScreenshotTest() {
         assertTrue(matches(surface, pixel(10, 10)), "The triangle interior remains transparent")
         assertTrue(matches(surface, pixel(90, 35)), "The ring must not follow the old rounded-rectangle shape")
         assertTrue(!matches(surface, pixel(55, 20)), "The native shadow must follow the triangle's outer diagonal")
+    }
+
+    @Test fun styleOpacityAppliesToTheOuterShadowAsWellAsTheContent() {
+        var opacity by mutableStateOf(.5f)
+        composeRule.setContent {
+            Box(Modifier.background(Color.White).testTag("surface").padding(16.dp)) {
+                Box(
+                    Modifier.cssStyleable(
+                        null,
+                        Style {
+                            width(80.dp)
+                            height(40.dp)
+                            background(Color.Blue)
+                            dropShadow(Shadow(radius = 0.dp, spread = 3.dp, color = Color.Red))
+                            alpha(opacity)
+                        },
+                    ),
+                )
+            }
+        }
+        for (value in listOf(.5f, .25f, 1f)) {
+            composeRule.runOnIdle { opacity = value }
+            val pixels = composeRule.onNodeWithTag("surface").captureToImage().toPixelMap()
+            val shadow = Color.Red.copy(alpha = value).compositeOver(Color.White)
+            val fill = Color.Blue.copy(alpha = value).compositeOver(Color.White)
+            assertEquals(shadow.green, pixels[40, 14].green, .025f)
+            assertEquals(shadow.blue, pixels[40, 14].blue, .025f)
+            assertEquals(fill.red, pixels[40, 30].red, .025f)
+        }
     }
 }

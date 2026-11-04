@@ -1,0 +1,12 @@
+{
+  "theme": "dark",
+  "x": 679.640625,
+  "y": 251.125,
+  "width": 65.7109375,
+  "height": 32,
+  "background": "lab(90.952 0 -0.0000119209)",
+  "border": "oklab(0 0 0 / 0)",
+  "clip": "padding-box",
+  "ring": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklab(0 0 0 / 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+  "attr": "true"
+}

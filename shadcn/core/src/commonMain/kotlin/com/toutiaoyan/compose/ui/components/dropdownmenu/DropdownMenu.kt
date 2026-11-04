@@ -42,6 +42,12 @@ import androidx.compose.foundation.style.rememberUpdatedStyleState
 import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import com.toutiaoyan.compose.ui.components.contextmenu.MenuEscapeLayers
+import com.toutiaoyan.compose.ui.components.contextmenu.LocalMenuEscapeLayers
+import com.toutiaoyan.compose.ui.components.contextmenu.LocalMenuEscapeDepth
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -304,6 +310,7 @@ fun DropdownMenuScope.DropdownMenuContent(
             DropdownMenuScope(onOpenChange = controller.onOpenChange, open = controller.open)
         }
     val navigation = remember { ContextMenuNavigation() }
+    val escapeLayers = remember { MenuEscapeLayers() }
     val nova = currentTheme.activePreset == com.toutiaoyan.compose.ui.tokens.StylePreset.Nova
     DropdownMenuPortal {
         AnchoredPopup(
@@ -320,6 +327,8 @@ fun DropdownMenuScope.DropdownMenuContent(
         ) {
             CompositionLocalProvider(
                 LocalContextMenuNova provides nova,
+                LocalMenuEscapeLayers provides escapeLayers,
+                LocalMenuEscapeDepth provides 0,
                 LocalContextMenuNavigation provides navigation,
             ) {
                 LaunchedEffect(Unit) {
@@ -335,7 +344,7 @@ fun DropdownMenuScope.DropdownMenuContent(
                             controller.anchorBounds,
                         ).onPreviewKeyEvent {
                             if (it.type == KeyEventType.KeyDown && it.key == Key.Escape) {
-                                controller.dismiss()
+                                if (!escapeLayers.closeDeepest()) controller.dismiss()
                                 true
                             } else {
                                 navigation.key(it)
@@ -860,6 +869,8 @@ private class DropdownMenuSubController(
     val parentDismiss: () -> Unit,
     val focusContent: Boolean,
     val openFromKeyboard: () -> Unit,
+    val closeFromKeyboard: () -> Unit,
+    val triggerFocus: FocusRequester,
     val onChildOpenChange: (Any, Boolean) -> Unit,
     val onTriggerHoverChange: (Boolean) -> Unit,
     val onContentHoverChange: (Boolean) -> Unit,
@@ -911,6 +922,21 @@ fun DropdownMenuScope.DropdownMenuSub(
         if (!controlled) internalOpen = next
         onOpenChange?.invoke(next)
     }
+    val parentSub = LocalDropdownMenuSub.current
+    val escapeLayers = LocalMenuEscapeLayers.current
+    val depth = LocalMenuEscapeDepth.current + 1
+    val triggerFocus = remember { FocusRequester() }
+    var restoreFocus by remember { mutableStateOf(false) }
+    var hoverSuppressed by remember { mutableStateOf(false) }
+    LaunchedEffect(isOpen, restoreFocus) {
+        if (!isOpen && restoreFocus) {
+            // Allow the parent popup to regain keyboard focus before targeting its trigger.
+            androidx.compose.runtime.withFrameNanos { }
+            androidx.compose.runtime.withFrameNanos { }
+            triggerFocus.requestFocus()
+            restoreFocus = false
+        }
+    }
     var triggerHovered by remember { mutableStateOf(false) }
     var contentHovered by remember { mutableStateOf(false) }
     var hoverArmed by remember { mutableStateOf(false) }
@@ -931,8 +957,9 @@ fun DropdownMenuScope.DropdownMenuSub(
     }
     val hovered = triggerHovered || contentHovered
     val hasOpenChildren = openChildren.isNotEmpty()
-    LaunchedEffect(hovered, hasOpenChildren, focusContent) {
-        if (hovered) {
+    LaunchedEffect(hovered, hasOpenChildren, focusContent, hoverSuppressed) {
+        if (!hovered) hoverSuppressed = false
+        if (hovered && !hoverSuppressed) {
             hoverArmed = true
             setOpen(true)
         } else if (hoverArmed && !hasOpenChildren && !focusContent) {
@@ -945,22 +972,40 @@ fun DropdownMenuScope.DropdownMenuSub(
         DropdownMenuSubController(
             open = isOpen,
             onOpenChange = { next ->
-                if (!next) focusContent = false
+                if (!next) focusContent = false else hoverSuppressed = false
                 setOpen(next)
             },
             parentDismiss = { dismiss() },
             focusContent = focusContent,
             openFromKeyboard = {
+                hoverSuppressed = false
                 focusContent = true
                 setOpen(true)
             },
+            closeFromKeyboard = {
+                parentSub?.openFromKeyboard?.invoke()
+                hoverSuppressed = true
+                hoverArmed = false
+                focusContent = false
+                restoreFocus = true
+                setOpen(false)
+            },
+            triggerFocus = triggerFocus,
             onChildOpenChange = childOpenChange,
             onTriggerHoverChange = { triggerHovered = it },
             onContentHoverChange = { contentHovered = it },
         )
-    CompositionLocalProvider(LocalDropdownMenuSub provides controller) {
+    val closeCurrent by rememberUpdatedState(controller.closeFromKeyboard)
+    DisposableEffect(escapeLayers, depth, isOpen) {
+        val unregister = if (isOpen) escapeLayers?.register(depth) { closeCurrent() } else null
+        onDispose { unregister?.invoke() }
+    }
+    CompositionLocalProvider(
+        LocalDropdownMenuSub provides controller,
+        LocalMenuEscapeDepth provides depth,
+    ) {
         Box {
-            DropdownMenuSubScope(open = isOpen, onOpenChange = setOpen).content()
+            DropdownMenuSubScope(open = isOpen, onOpenChange = controller.onOpenChange).content()
         }
     }
 }
@@ -993,7 +1038,7 @@ fun DropdownMenuSubScope.DropdownMenuSubTrigger(
     val touchTargetStyle = if (LocalContextMenuNova.current) Style else rememberMinTouchTargetStyle()
     Row(
         modifier =
-            modifier.contextMenuNavigation(resolvedEnabled, label)
+            modifier.focusRequester(controller.triggerFocus).contextMenuNavigation(resolvedEnabled, label)
                 .fillMaxWidth()
                 .onPreviewKeyEvent { event ->
                     if (event.type == KeyEventType.KeyDown &&
@@ -1100,6 +1145,7 @@ fun DropdownMenuSubScope.DropdownMenuSubContent(
     val nav = remember { ContextMenuNavigation() }
     val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
     val contextNova = LocalContextMenuNova.current
+    val escapeLayers = LocalMenuEscapeLayers.current
     AnchoredPopup(
         open = controller.open,
         onDismissRequest = { controller.onOpenChange(false) },
@@ -1125,7 +1171,10 @@ fun DropdownMenuSubScope.DropdownMenuSubContent(
                 modifier =
                     modifier.dropdownViewport(side ?: placement, sideOffset)
                         .onPreviewKeyEvent { event ->
-                            if (contextNova &&
+                            if (event.type == KeyEventType.KeyDown && event.key == Key.Escape) {
+                                if (escapeLayers?.closeDeepest() != true) controller.closeFromKeyboard()
+                                true
+                            } else if (contextNova &&
                                 event.type == KeyEventType.KeyDown &&
                                 event.key == (
                                     if (rtl) {
@@ -1135,7 +1184,7 @@ fun DropdownMenuSubScope.DropdownMenuSubContent(
                                     }
                                 )
                             ) {
-                                controller.onOpenChange(false)
+                                if (escapeLayers?.closeDeepest() != true) controller.closeFromKeyboard()
                                 true
                             } else {
                                 contextNova && nav.key(event)

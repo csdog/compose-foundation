@@ -1,0 +1,14 @@
+{
+  "afterSub": {
+    "menus": [
+      "Mark as ReadArchiveSnoozeAdd to CalendarAdd to ListLabel As...Trash"
+    ],
+    "active": "Label As...",
+    "radio": 0
+  },
+  "afterRoot": {
+    "menus": 0,
+    "active": "More Options"
+  },
+  "note": "afterSub captured after exit animation completed; immediate two-RAF sample was transient."
+}

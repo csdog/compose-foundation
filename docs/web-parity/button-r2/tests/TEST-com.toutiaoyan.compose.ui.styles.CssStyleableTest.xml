@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CssStyleableTest[jvm]" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-04T02:30:06.673Z" hostname="Apples-MacBook-Pro.local" time="0.161">
+  <properties/>
+  <testcase name="styleOpacityAppliesToTheOuterShadowAsWellAsTheContent[jvm]" classname="com.toutiaoyan.compose.ui.styles.CssStyleableTest" time="0.025"/>
+  <testcase name="nativeOuterShadowFollowsTheFinalCallerProvidedGenericShape[jvm]" classname="com.toutiaoyan.compose.ui.styles.CssStyleableTest" time="0.025"/>
+  <testcase name="changingOnlyShadowColorRepaintsWithoutAnimationTicks[jvm]" classname="com.toutiaoyan.compose.ui.styles.CssStyleableTest" time="0.018"/>
+  <testcase name="inputFocusAndInvalidRingsDoNotTintTransparentInterior[jvm]" classname="com.toutiaoyan.compose.ui.styles.CssStyleableTest" time="0.091"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

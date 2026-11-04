@@ -34,7 +34,7 @@ class ButtonExamplesTest(private val width: Int, private val dark: Boolean) {
                         Modifier.requiredSize(
                             (if (width < 768) width - 65 else 638).dp,
                             400.dp,
-                        ).padding(if (index == 13) 0.dp else 40.dp),
+                        ).padding(if (index == 14) 0.dp else 40.dp),
                         contentAlignment = Alignment.Center,
                     ) {
                         key(index) { buttonDoc.examples[index].preview() }
@@ -57,6 +57,7 @@ class ButtonExamplesTest(private val width: Int, private val dark: Boolean) {
                 "Rounded",
                 "Spinner",
                 "Button Group",
+                "As Link",
                 "RTL",
             ),
             buttonDoc.examples.map {

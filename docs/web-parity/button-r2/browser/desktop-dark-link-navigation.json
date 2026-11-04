@@ -1,0 +1,16 @@
+{
+  "official": {
+    "hashTarget": "#",
+    "scrollTop": true
+  },
+  "local": {
+    "labelClick": {
+      "hashTarget": "#",
+      "scrollTop": true
+    }
+  },
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  }
+}

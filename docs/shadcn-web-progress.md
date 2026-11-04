@@ -107,7 +107,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - 手机 Sheet 沿用组件默认 320px 宽，官方导航尺寸及关闭按钮位置需进一步视觉核对。
 - API 参数表已补 Alert/Alert Dialog/Button/Badge/Card/Code Block/Trace/Input/Field/Label/Textarea/Checkbox/Radio Group/Switch/Toggle/Toggle Group/Slider/Input Group/Button Group/Input OTP/Select/Combobox；其余组件需逐项从 Kotlin 源码填写。
 - 目录已支持可读 URL fragment、刷新定位、浏览器前进/后退和重复点击同一章节；桌面与手机已验证 Alert。标题自身的 permalink 入口已在 Alert 验证；其他组件未据此视为复核完成，复杂重排后的滚动锚定仍待逐项核对。
-- Button 尚需补齐官方 Rounded/Button Group/As Link/RTL 等示例和 hover/focus/pressed 验收；
+- Button 十五组官方示例已基础移植；共享菜单宽度/碰撞/指针焦点、Tabler图形和 expanded/hover/pressed/完整辅助技术仍待验收，见 Button r2；
   含图标的非对称 padding 也需进一步检查。
 - Secondary hover 对其他有色 palette 的 OKLCH color-mix 精确性需单独校验。
 - Badge 尚需完整对照所有官方示例及交互状态，不能仅凭新增截图标为完成。
@@ -130,8 +130,8 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Badge (`badge`)：七个官方页面示例已补齐；桌面/手机浅深28组双方截图及英语/希伯来语8组双方截图已复查；补 href/invalid/逻辑图标边距与 Spinner 固有尺寸修复，23项定向测试通过。原生链接语义、完整交互/辅助技术和共享页面差异仍开放。[证据](web-parity/badge-r1/README.md)。
 - [ ] Breadcrumb (`breadcrumb`)：2026-10-30 七组官方配方、Composition/七个 API 小节已补；修正 6dp 换行列表、4dp item 间距、14dp 镜像描边分隔符、20/16dp 省略号及链接 hover。9 项组件/目录定向测试、四象限七组浏览器检查、JS/Wasm distribution 通过；连同 Avatar 共 31 项联合验证和 13 张像素基准通过。共享手机宽度导致的换行差异、链接/导航原生语义和焦点细节仍明确保留，详见 breadcrumb-r1。
 - [ ] Bubble (`bubble`)：2026-10-30 九组官方配方、Composition/四个 API 及可访问性指南已补；修正自然宽度/80% 上限、Ghost 全宽、字号行框、Muted/Tinted 颜色和反应行悬浮定位。17 项定向测试、16 张像素基准、JS/Wasm distribution、四象限首屏对照及静态检查通过。任意复杂槽位裁剪/多 Content 布局、按钮反应自动 padding、完整焦点及原生辅助技术矩阵仍待关闭，见 bubble-r1。
-- [ ] Button (`button`)：14组实际配方已整理，补Size配对/640dp响应、Rounded、Spinner、三语RTL与公开逻辑图标边距；修正Nova光标、Arabic20dp行框及加载/RTL自然宽度换行。17项定向测试、2张旧Nova基准显式verify、JS/Wasm与七组重点四象限对照通过。As Link、Group菜单/Tabler图形、invalid/expanded/pressed完整状态及共享页面差异仍开放。[证据](web-parity/button-r1/README.md)。
-- [ ] Button Group (`button-group`)：基础已验证（第六批）；连体接缝、嵌套图标按钮、默认菜单已修正，任意混合子项、纵向/尺寸矩阵及菜单完整图标待关闭。
+- [ ] Button (`button`)：十五组实际配方已补齐，新增公开 buttonStyle/invalid、As Link、完整默认Group菜单；修正Nova背景裁剪、阴影alpha与嵌套Escape。51项定向测试、两张有意更新Nova基准verify、JS/Wasm及两配方四象限56图已复查。子菜单宽度/手机碰撞/指针聚焦、Tabler图形、expanded/pressed及完整状态仍开放。[r1](web-parity/button-r1/README.md)、[r2](web-parity/button-r2/README.md)。
+- [ ] Button Group (`button-group`)：基础已验证（第六批）；本轮共用完整默认菜单，补图标、Other单选与状态保持及响应式Go Back。默认配方在Button页四象限已验；共享菜单宽度/碰撞/指针焦点、本页其他示例与混合子项/纵向/尺寸矩阵仍待关闭。见[Button r2](web-parity/button-r2/README.md)。
 - [ ] Calendar (`calendar`)：2026-10-30 完成首轮公历主要对照：15 组配方及源码、Composition/四组 API、预设/时间/已订日期/价格格/周数/RTL 已补。修正可变周数、日格/行距、真实焦点和键盘作用域、百年年份范围及月份边界；15 项功能/目录测试、12 张像素基准及 JS/Wasm 构建通过，十组官方与十五组本地四象限首屏已检查。波斯历、原生时间输入行为、caption 细节及完整辅助技术/交互矩阵仍保留，见 calendar-r1 和文末。
 - [ ] Card (`card`)：Nova 标题、描述、Action 与 Footer 已修复；Create 财务配方已补响应式摘要和真实铺满页脚，字体实际行高及 Image/RTL 等完整验收待完成；Carousel 对照另发现 Card 默认四向 padding 与官网仅 py-4 不同，目前在配方中显式覆盖，共享默认值待专项核对。
 - [ ] Carousel (`carousel`)：已完成首轮页面、七个官网配方及四象限浏览器对照；补齐 compound root、响应式多页、竖向、API、自动播放与 RTL，23 项定向测试通过。鼠标拖动、Embla options/loop/plugins 与完整状态仍待补齐，见 Carousel 首轮记录。
@@ -143,7 +143,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [x] Collapsible (`collapsible`)：第九批完成 Web 剩余项：外部收起回收内容焦点、keepMounted 状态保持/隐藏语义、动画中断反转。
 - [ ] Combobox (`combobox`)：基础已验证（第七批）；内联编辑、筛选/键盘提交/清空和默认示例已完成，多选 chips、完整辅助技术映射及复杂状态矩阵待关闭。
 - [x] Command (`command`)：第九批完成 Web 剩余项：长列表 Home/End 滚动跟随、不因初始高亮滚动页面、受控 value 拒绝未确认导航、IME 组合期间不提交。
-- [x] Context Menu (`context-menu`)：第九批完成 Web 剩余项：触发区域窗口坐标/边缘翻转、RTL 子菜单键、字母定位、触摸长按取消、Escape 后焦点恢复及非模态 host。
+- [ ] Context Menu (`context-menu`)：保留第九批窗口坐标/边缘翻转、RTL/字母定位、触摸取消与非模态host结果；本轮共享依赖复查发现Escape被根层提前消费，已补两层逐层关闭/恢复焦点，模态与非模态回归通过。面板宽度/ring/阴影、完整页面与四象限需重新验收，历史勾选撤回。见[Button r2](web-parity/button-r2/README.md)。
 - [x] Date Picker (`date-picker`)：第九批完成 Web 剩余项：本地时区、可配置 locale/周起始日/读屏日期、连续范围、多月换行、月界限、隐藏日期语义和真实键盘焦点；弹层显式初始焦点。
 - [x] Dialog (`dialog`)：第九批完成 Web 剩余项：4dp 背景模糊、初始焦点/Tab 闭环/恢复触发器、非模态背景交互与外部关闭；须在窗口根接入 OverlayHost。
 - [x] Drawer (`drawer`)：第九批完成 Web 剩余项：背景模糊和嵌套捕获、初始/恢复焦点、受控 snap 切换、真实顺序吸附、手势与外部关闭策略解耦；真机覆盖另列。
@@ -360,7 +360,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 
 - Toggle Group 尚未完成 Tab 单入口、按可视顺序动态重排、完整纵向 stretch/焦点矩阵。Arrow/Home/End 能力不表示全部 Base UI 复合焦点规则均已关闭。
 - Input Group 的 button/kbd 负 margin、全部组合下的禁用-opacity 与 focus-visible 输入来源区分、复杂多控件布局，仍待单独验收。特殊有色容器仍有前批记录的透明底色组合限制。
-- Button Group 混合任意原始 Button/Input/Select 还需显式 item/shape 组合；默认菜单条目图标与完整 Label As 内容未完全复刻。纵向混合布局及全部尺寸矩阵仍待核对。
+- Button Group 混合任意原始 Button/Input/Select 还需显式 item/shape 组合。默认菜单条目图标与完整 Label As 内容已在 Button r2 补齐；共享菜单尺寸/碰撞、纵向混合布局及全部尺寸矩阵仍待核对。
 - Slider 的多滑块完整无障碍标签与焦点顺序、动态增删时的焦点保留、垂直/反转/RTL 的完整手势矩阵仍待补齐。本批没有声称所有状态像素一致。
 - 旧 ButtonGroup 6、InputGroup 12、Slider 4 共 22 张快照失配，用原组件源码复现后实际渲染 SHA-256 全部一致，未重录旧基准。
   [机器证据](web-parity/groups-legacy-baseline-comparison.json)。对照中保留此前主题/Text/Input 修复；InputGroupLayoutState 仅作编译桥，原根组件不提供它。
@@ -2004,3 +2004,11 @@ Badge仍不勾选：原生HTML链接语义、完整hover/pressed/辅助技术、
 仍不勾选：As Link缺失（需真实链接语义，不能冒充Button）、Group More Options与完整菜单、Tabler图形、invalid/expanded/pressed/动态主题形状与辅助技术全矩阵、任意固有布局及共享排版差异均明确保留。Editor排除、Attachment后置。
 
 提交路径已接通：.git-hooks/pre-commit增加可选compact Gradle wrapper入口，保留原始ktlintFormat/ktlintCheck/detekt任务、默认开发者流程及git add-u。本批将之前累积的组件复核、共享Web布局、Badge/Button和已授权桌面示例改动集中整理为checkpoint；默认detekt公共源码覆盖限制仍存在，不将默认任务退出0当作完整静态分析。
+
+### Button：链接、错误绘制及嵌套菜单第二轮（2026-11-04）
+
+已补 As Link 和公开 Modifier.buttonStyle、Button.invalid，版本0.3.32；完整默认Group菜单在Button/Group两页共用。修正Nova bg-clip-padding及CSS阴影alpha，保留两代旧JVM入口。原生51项定向回归、两张有意更新Nova基准显式verify、core/shared ktlint与JS/Wasm构建通过。[来源、RED/GREEN、基准统计与完整缺口](web-parity/button-r2/README.md)。
+
+官网/本地两个重点配方桌面1440/手机390浅深各28张已目视复查；链接文字/填充区均能导航。菜单单选保持展开，Escape逐层关闭/焦点恢复已修复；两层Dropdown和模态/非模态Context有专门测试。浏览器仍见192dp子菜单宽于官网101.5px，手机夹边覆盖父菜单、指针双重高亮与根焦点环外观差异。按实际证据保留未完成，并撤回Context Menu历史勾选。Button expanded/pressed等完整状态、链接原生HTML能力、Group/Context完整页面及共享排版仍开放；Editor排除、Attachment后置。
+
+此前累积对齐与桌面图标/托盘设置已集中提交为491a06ee；本轮继续独立整理，不把已记录缺口重复标为完成。默认detekt公共源码覆盖限制仍存在。

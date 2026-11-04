@@ -316,6 +316,7 @@ fun ContextMenuScope.ContextMenuContent(
     val density = LocalDensity.current
     val nova = currentTheme.activePreset == StylePreset.Nova
     val navigation = remember { ContextMenuNavigation() }
+    val escapeLayers = remember { MenuEscapeLayers() }
     val point =
         remember(controller.lastPoint, sideOffset, alignOffset, density) {
             val sidePx = with(density) { sideOffset.roundToPx() }
@@ -341,6 +342,8 @@ fun ContextMenuScope.ContextMenuContent(
                     CompositionLocalProvider(
                         LocalContextMenuNova provides nova,
                         LocalContextMenuNavigation provides navigation,
+                        LocalMenuEscapeLayers provides escapeLayers,
+                        LocalMenuEscapeDepth provides 0,
                     ) {
                         LaunchedEffect(Unit) {
                             withFrameNanos { }
@@ -355,7 +358,7 @@ fun ContextMenuScope.ContextMenuContent(
                                     controller.onOpenChange(false)
                                 }.onPreviewKeyEvent {
                                     if (it.type == KeyEventType.KeyDown && it.key == Key.Escape) {
-                                        controller.onOpenChange(false)
+                                        if (!escapeLayers.closeDeepest()) controller.onOpenChange(false)
                                         true
                                     } else {
                                         navigation.key(it)

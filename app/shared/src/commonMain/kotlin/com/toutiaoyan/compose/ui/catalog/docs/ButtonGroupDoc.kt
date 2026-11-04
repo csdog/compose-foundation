@@ -15,16 +15,6 @@ import com.toutiaoyan.compose.ui.components.buttongroup.ButtonGroupSeparator
 import com.toutiaoyan.compose.ui.components.buttongroup.ButtonGroupText
 import com.toutiaoyan.compose.ui.components.buttongroup.rememberButtonGroupOutlineStyle
 
-import androidx.compose.foundation.style.contentPadding
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalWindowInfo
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.contentDescription
-import com.composables.icons.lucide.Lucide
-import com.composables.icons.lucide.ArrowLeft
-import com.composables.icons.lucide.ChevronDown
-import com.toutiaoyan.compose.ui.components.icon.Icon
 import com.toutiaoyan.compose.ui.components.dropdownmenu.*
 
 val buttonGroupDoc =
@@ -55,114 +45,8 @@ val buttonGroupDoc =
             listOf(
                 ComponentExample(
                     title = "Default",
-                    code =
-                        """
-                        ButtonGroup(spacing = 8.dp, contentDescription = "Message actions") {
-                            if (
-                                LocalWindowInfo.current.containerSize.width >=
-                                with(LocalDensity.current) { 640.dp.roundToPx() }
-                            ) {
-                                ButtonGroup {
-                                    ButtonGroupItem(onClick = {}, variant = ButtonVariant.Outline, modifier = Modifier.semantics { contentDescription = "Go Back" }, style = Style { width(32.dp); contentPadding(0.dp) }) { Icon(Lucide.ArrowLeft) }
-                                }
-                            }
-                            ButtonGroup {
-                                ButtonGroupItem("Archive", onClick = {}, variant = ButtonVariant.Outline)
-                                ButtonGroupItem("Report", onClick = {}, variant = ButtonVariant.Outline)
-                            }
-                            ButtonGroup {
-                                ButtonGroupItem("Snooze", onClick = {}, variant = ButtonVariant.Outline)
-                                DropdownMenu {
-                                    DropdownMenuTrigger {
-                                        ButtonGroupItem(onClick = toggle, variant = ButtonVariant.Outline, modifier = Modifier.semantics { contentDescription = "More Options" }, style = Style { width(32.dp); contentPadding(0.dp) }) { Icon(Lucide.ChevronDown) }
-                                    }
-                                    DropdownMenuContent {
-                                        DropdownMenuItem("Mark as Read", onClick = {})
-                                        DropdownMenuItem("Archive", onClick = {})
-                                        DropdownMenuSeparator()
-                                        DropdownMenuItem("Snooze", onClick = {})
-                                        DropdownMenuItem("Add to Calendar", onClick = {})
-                                        DropdownMenuItem("Add to List", onClick = {})
-                                        DropdownMenuSub {
-                                            DropdownMenuSubTrigger("Label As...")
-                                            DropdownMenuSubContent {
-                                                DropdownMenuItem("Personal", onClick = {})
-                                                DropdownMenuItem("Work", onClick = {})
-                                            }
-                                        }
-                                        DropdownMenuSeparator()
-                                        DropdownMenuItem("Trash", onClick = {}, variant = DropdownMenuItemVariant.Destructive)
-                                    }
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        ButtonGroup(spacing = 8.dp, contentDescription = "Message actions") {
-                            if (
-                                LocalWindowInfo.current.containerSize.width >=
-                                with(LocalDensity.current) { 640.dp.roundToPx() }
-                            ) {
-                                ButtonGroup {
-                                    ButtonGroupItem(
-                                        onClick = {},
-                                        variant = ButtonVariant.Outline,
-                                        modifier = Modifier.semantics { contentDescription = "Go Back" },
-                                        style =
-                                            Style {
-                                                width(32.dp)
-                                                contentPadding(0.dp)
-                                            },
-                                    ) { Icon(Lucide.ArrowLeft) }
-                                }
-                            }
-                            ButtonGroup {
-                                ButtonGroupItem("Archive", onClick = {}, variant = ButtonVariant.Outline)
-                                ButtonGroupItem("Report", onClick = {}, variant = ButtonVariant.Outline)
-                            }
-                            ButtonGroup {
-                                ButtonGroupItem("Snooze", onClick = {}, variant = ButtonVariant.Outline)
-                                DropdownMenu {
-                                    DropdownMenuTrigger {
-                                        ButtonGroupItem(
-                                            onClick = toggle,
-                                            variant = ButtonVariant.Outline,
-                                            modifier =
-                                                Modifier.semantics {
-                                                    contentDescription = "More Options"
-                                                },
-                                            style =
-                                                Style {
-                                                    width(32.dp)
-                                                    contentPadding(0.dp)
-                                                },
-                                        ) { Icon(Lucide.ChevronDown) }
-                                    }
-                                    DropdownMenuContent {
-                                        DropdownMenuItem("Mark as Read", onClick = {})
-                                        DropdownMenuItem("Archive", onClick = {})
-                                        DropdownMenuSeparator()
-                                        DropdownMenuItem("Snooze", onClick = {})
-                                        DropdownMenuItem("Add to Calendar", onClick = {})
-                                        DropdownMenuItem("Add to List", onClick = {})
-                                        DropdownMenuSub {
-                                            DropdownMenuSubTrigger("Label As...")
-                                            DropdownMenuSubContent {
-                                                DropdownMenuItem("Personal", onClick = {})
-                                                DropdownMenuItem("Work", onClick = {})
-                                            }
-                                        }
-                                        DropdownMenuSeparator()
-                                        DropdownMenuItem(
-                                            "Trash",
-                                            onClick = {},
-                                            variant = DropdownMenuItemVariant.Destructive,
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    },
+                    code = buttonGroupDefaultCode,
+                    preview = { ButtonGroupDefaultRecipe() },
                 ),
                 ComponentExample(
                     title = "Outline",

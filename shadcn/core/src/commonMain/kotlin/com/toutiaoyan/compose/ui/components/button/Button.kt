@@ -26,7 +26,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import com.toutiaoyan.compose.ui.styles.cssStyleable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.unit.constrainWidth
@@ -36,6 +35,9 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
+import androidx.compose.ui.semantics.error
+import androidx.compose.ui.graphics.shadow.Shadow
+import com.toutiaoyan.compose.ui.styles.border
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.disabled
@@ -104,6 +106,7 @@ fun Button(
     label: String? = null,
     style: Style = Style,
     iconPlacement: ButtonIconPlacement? = null,
+    invalid: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     val resolvedEnabled = enabled && !disabled && !LocalFieldSetDisabled.current
@@ -174,8 +177,27 @@ fun Button(
                 }
             }
         }
+    val invalidStyle =
+        rememberTheme(invalid) {
+            if (!invalid) {
+                Style
+            } else {
+                Style {
+                    border(colors.destructive.copy(alpha = if (isDark) 0.5f else 1f))
+                    if (ring.enabled) {
+                        dropShadow(
+                            Shadow(
+                                radius = 0.dp,
+                                spread = ring.width + ring.offset,
+                                color = colors.destructive.copy(alpha = if (isDark) 0.4f else 0.2f),
+                            ),
+                        )
+                    }
+                }
+            }
+        }
     val chromeStyle =
-        (variant.rememberStyle() then size.rememberStyle() then iconStyle then style).captureShape(
+        (variant.rememberStyle() then size.rememberStyle() then iconStyle then invalidStyle then style).captureShape(
             indicationShape,
         )
 
@@ -194,6 +216,7 @@ fun Button(
                     if (!resolvedEnabled) {
                         disabled()
                     }
+                    if (invalid) error("Invalid button")
                 }
                 .clickable(
                     interactionSource = interactionSource,
@@ -235,9 +258,10 @@ fun Button(
                 Box(
                     modifier =
                         Modifier
-                            .cssStyleable(
+                            .buttonCssStyleable(
                                 styleState,
                                 chromeStyle,
+                                nova = isNova,
                             )
                             .then(
                                 if (variant == ButtonVariant.Link) {
@@ -293,6 +317,7 @@ fun Button(
     label: String? = text,
     style: Style = Style,
     iconPlacement: ButtonIconPlacement? = null,
+    invalid: Boolean = false,
 ) {
     Button(
         onClick = onClick,
@@ -305,6 +330,7 @@ fun Button(
         label = label,
         style = style,
         iconPlacement = iconPlacement,
+        invalid = invalid,
     ) {
         Text(maxLines = 1) { text }
     }
@@ -365,3 +391,44 @@ fun Button(
     label: String? = text,
     style: Style = Style,
 ) = Button(text, onClick, modifier, enabled, disabled, variant, size, indication, label, style, iconPlacement = null)
+
+// Preserve the 0.3.31 entry points with the icon edge hint.
+@Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
+@OptIn(ExperimentalFoundationStyleApi::class)
+@Composable
+fun Button(
+    onClick: () -> Unit = {},
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    variant: ButtonVariant = ButtonVariant.Default,
+    size: ButtonSize = ButtonSize.Md,
+    indication: Indication? = null,
+    label: String? = null,
+    style: Style = Style,
+    iconPlacement: ButtonIconPlacement? = null,
+    content: @Composable () -> Unit,
+) = Button(
+    onClick, modifier, enabled, disabled, variant, size, indication, label, style, iconPlacement,
+    invalid = false, content = content,
+)
+
+@Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
+@OptIn(ExperimentalFoundationStyleApi::class)
+@Composable
+fun Button(
+    text: String,
+    onClick: () -> Unit = {},
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    variant: ButtonVariant = ButtonVariant.Default,
+    size: ButtonSize = ButtonSize.Md,
+    indication: Indication? = null,
+    label: String? = text,
+    style: Style = Style,
+    iconPlacement: ButtonIconPlacement? = null,
+) = Button(
+    text, onClick, modifier, enabled, disabled, variant, size, indication, label, style, iconPlacement,
+    invalid = false,
+)

@@ -99,3 +99,7 @@ Code Block 的受限高度滚动、下载示例与 Trace 的完整工具调用�
 ### 2026-11-04 Button 增量与 checkpoint
 
 继续复查Button，补公开逻辑图标边距、Size/Rounded/Spinner/RTL配方及Arabic行框，17项定向测试和七组四象限对照见 [button-r1](web-parity/button-r1/README.md)。As Link、完整Group菜单、Tabler图形及状态矩阵继续留在同一目标内；本轮不标记整个组件或全站完成。提交hook接入可选compact wrapper，保留全部既有门禁，以便将跨轮累积改动落为checkpoint。
+
+### 2026-11-04 Button 第二轮与菜单依赖复查
+
+补第十五组As Link、公开buttonStyle/invalid、Nova背景裁剪与阴影alpha，完整默认Group菜单及共享嵌套Escape。51项独立验证与两配方四象限56图见[Button r2](web-parity/button-r2/README.md)。浏览器暴露子菜单固定宽度/手机碰撞、指针高亮与根焦点环差异，继续保留；Context Menu历史勾选已撤回，需重新核对完整页面。后续按清单继续，优先尚未开始本轮页面与完整状态对照项；Editor排除、Attachment后置，不再将单个配方验证视为组件完成。

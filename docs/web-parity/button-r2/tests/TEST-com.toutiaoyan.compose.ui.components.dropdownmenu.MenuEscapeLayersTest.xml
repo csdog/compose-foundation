@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MenuEscapeLayersTest[jvm]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-04T02:30:05.420Z" hostname="Apples-MacBook-Pro.local" time="0.683">
+  <properties/>
+  <testcase name="escapeClosesOnlyTheDeepestOpenLayerAndRestoresEachTrigger[dropdown][jvm]" classname="com.toutiaoyan.compose.ui.components.dropdownmenu.MenuEscapeLayersTest" time="0.36"/>
+  <testcase name="escapeClosesOnlyTheDeepestOpenLayerAndRestoresEachTrigger[context-modal][jvm]" classname="com.toutiaoyan.compose.ui.components.dropdownmenu.MenuEscapeLayersTest" time="0.191"/>
+  <testcase name="escapeClosesOnlyTheDeepestOpenLayerAndRestoresEachTrigger[context-nonmodal][jvm]" classname="com.toutiaoyan.compose.ui.components.dropdownmenu.MenuEscapeLayersTest" time="0.131"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

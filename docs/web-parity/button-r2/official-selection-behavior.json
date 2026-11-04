@@ -1,0 +1,26 @@
+{
+  "menus": [
+    {
+      "text": "Mark as ReadArchiveSnoozeAdd to CalendarAdd to ListLabel As...Trash",
+      "display": "block"
+    },
+    {
+      "text": "PersonalWorkOther",
+      "display": "block"
+    }
+  ],
+  "radio": [
+    {
+      "text": "Personal",
+      "checked": "false"
+    },
+    {
+      "text": "Work",
+      "checked": "false"
+    },
+    {
+      "text": "Other",
+      "checked": "true"
+    }
+  ]
+}

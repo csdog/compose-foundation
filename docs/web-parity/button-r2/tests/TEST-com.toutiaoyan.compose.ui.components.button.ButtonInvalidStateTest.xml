@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ButtonInvalidStateTest[jvm]" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-04T02:30:04.374Z" hostname="Apples-MacBook-Pro.local" time="0.164">
+  <properties/>
+  <testcase name="invalidBorderAndRingAreVisibleWithoutFocusAndClearWithoutResizing[jvm]" classname="com.toutiaoyan.compose.ui.components.button.ButtonInvalidStateTest" time="0.054"/>
+  <testcase name="explicitStyleCanOverrideTheInvalidBorder[jvm]" classname="com.toutiaoyan.compose.ui.components.button.ButtonInvalidStateTest" time="0.027"/>
+  <testcase name="clippedBackgroundKeepsBrushAlphaShapeAndCallerDimensions[jvm]" classname="com.toutiaoyan.compose.ui.components.button.ButtonInvalidStateTest" time="0.063"/>
+  <testcase name="fractionalDensityUsesTheSameRoundedPaddingAndCeiledBorderAsStyleMeasurement[jvm]" classname="com.toutiaoyan.compose.ui.components.button.ButtonInvalidStateTest" time="0.02"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
