@@ -1,0 +1,4786 @@
+[
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "demo",
+    "url": "https://ui.shadcn.com/docs/components/base/empty",
+    "scrollY": 0,
+    "root": {
+      "x": 393.5,
+      "y": 328.25,
+      "width": 638,
+      "height": 261.5,
+      "top": 328.25,
+      "right": 1031.5,
+      "bottom": 589.75,
+      "left": 393.5
+    },
+    "parent": {
+      "x": 393.5,
+      "y": 267,
+      "width": 638,
+      "height": 384,
+      "top": 267,
+      "right": 1031.5,
+      "bottom": 651,
+      "left": 393.5
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "No Projects YetYou haven't created any projects yet. Get started by creating your first project.",
+        "rect": {
+          "x": 520.5,
+          "y": 352.25,
+          "width": 384,
+          "height": 121.5,
+          "top": 352.25,
+          "right": 904.5,
+          "bottom": 473.75,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 696.5,
+          "y": 352.25,
+          "width": 32,
+          "height": 32,
+          "top": 352.25,
+          "right": 728.5,
+          "bottom": 384.25,
+          "left": 696.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "No Projects Yet",
+        "rect": {
+          "x": 664.9453125,
+          "y": 400.25,
+          "width": 95.1015625,
+          "height": 20,
+          "top": 400.25,
+          "right": 760.046875,
+          "bottom": 420.25,
+          "left": 664.9453125
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "You haven't created any projects yet. Get started by creating your first project.",
+        "rect": {
+          "x": 520.5,
+          "y": 428.25,
+          "width": 384,
+          "height": 45.5,
+          "top": 428.25,
+          "right": 904.5,
+          "bottom": 473.75,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "Create ProjectImport Project",
+        "rect": {
+          "x": 520.5,
+          "y": 489.75,
+          "width": 384,
+          "height": 32,
+          "top": 489.75,
+          "right": 904.5,
+          "bottom": 521.75,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "Create Project",
+        "rect": {
+          "x": 592.6171875,
+          "y": 489.75,
+          "width": 116.125,
+          "height": 32,
+          "top": 489.75,
+          "right": 708.7421875,
+          "bottom": 521.75,
+          "left": 592.6171875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "button",
+        "text": "Import Project",
+        "rect": {
+          "x": 716.7421875,
+          "y": 489.75,
+          "width": 115.6328125,
+          "height": 32,
+          "top": 489.75,
+          "right": 832.375,
+          "bottom": 521.75,
+          "left": 716.7421875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "button",
+        "text": "Learn More ",
+        "rect": {
+          "x": 658.7890625,
+          "y": 537.75,
+          "width": 107.4140625,
+          "height": 28,
+          "top": 537.75,
+          "right": 766.203125,
+          "bottom": 565.75,
+          "left": 658.7890625
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.4px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "outline",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#outline",
+    "scrollY": 1854,
+    "root": {
+      "x": 433.5,
+      "y": 319.953125,
+      "width": 558,
+      "height": 215.5,
+      "top": 319.953125,
+      "right": 991.5,
+      "bottom": 535.453125,
+      "left": 433.5
+    },
+    "parent": {
+      "x": 393.5,
+      "y": 235.703125,
+      "width": 638,
+      "height": 384,
+      "top": 235.703125,
+      "right": 1031.5,
+      "bottom": 619.703125,
+      "left": 393.5
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "Cloud Storage EmptyUpload files to your cloud storage to access them anywhere.",
+        "rect": {
+          "x": 520.5,
+          "y": 344.953125,
+          "width": 384,
+          "height": 121.5,
+          "top": 344.953125,
+          "right": 904.5,
+          "bottom": 466.453125,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 696.5,
+          "y": 344.953125,
+          "width": 32,
+          "height": 32,
+          "top": 344.953125,
+          "right": 728.5,
+          "bottom": 376.953125,
+          "left": 696.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "Cloud Storage Empty",
+        "rect": {
+          "x": 646.359375,
+          "y": 392.953125,
+          "width": 132.2734375,
+          "height": 20,
+          "top": 392.953125,
+          "right": 778.6328125,
+          "bottom": 412.953125,
+          "left": 646.359375
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "Upload files to your cloud storage to access them anywhere.",
+        "rect": {
+          "x": 520.5,
+          "y": 420.953125,
+          "width": 384,
+          "height": 45.5,
+          "top": 420.953125,
+          "right": 904.5,
+          "bottom": 466.453125,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "Upload Files",
+        "rect": {
+          "x": 520.5,
+          "y": 482.453125,
+          "width": 384,
+          "height": 28,
+          "top": 482.453125,
+          "right": 904.5,
+          "bottom": 510.453125,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "Upload Files",
+        "rect": {
+          "x": 664.5546875,
+          "y": 482.453125,
+          "width": 95.890625,
+          "height": 28,
+          "top": 482.453125,
+          "right": 760.4453125,
+          "bottom": 510.453125,
+          "left": 664.5546875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "18.2857px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "background",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#background",
+    "scrollY": 2480,
+    "root": {
+      "x": 393.5,
+      "y": 235.703125,
+      "width": 638,
+      "height": 384,
+      "top": 235.703125,
+      "right": 1031.5,
+      "bottom": 619.703125,
+      "left": 393.5
+    },
+    "parent": {
+      "x": 393.5,
+      "y": 235.703125,
+      "width": 638,
+      "height": 384,
+      "top": 235.703125,
+      "right": 1031.5,
+      "bottom": 619.703125,
+      "left": 393.5
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "No NotificationsYou're all caught up. New notifications will appear here.",
+        "rect": {
+          "x": 552.5,
+          "y": 342.953125,
+          "width": 320,
+          "height": 121.5,
+          "top": 342.953125,
+          "right": 872.5,
+          "bottom": 464.453125,
+          "left": 552.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 696.5,
+          "y": 342.953125,
+          "width": 32,
+          "height": 32,
+          "top": 342.953125,
+          "right": 728.5,
+          "bottom": 374.953125,
+          "left": 696.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "No Notifications",
+        "rect": {
+          "x": 662.734375,
+          "y": 390.953125,
+          "width": 99.53125,
+          "height": 20,
+          "top": 390.953125,
+          "right": 762.265625,
+          "bottom": 410.953125,
+          "left": 662.734375
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "You're all caught up. New notifications will appear here.",
+        "rect": {
+          "x": 552.5,
+          "y": 418.953125,
+          "width": 320,
+          "height": 45.5,
+          "top": 418.953125,
+          "right": 872.5,
+          "bottom": 464.453125,
+          "left": 552.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "Refresh",
+        "rect": {
+          "x": 520.5,
+          "y": 480.453125,
+          "width": 384,
+          "height": 32,
+          "top": 480.453125,
+          "right": 904.5,
+          "bottom": 512.453125,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "Refresh",
+        "rect": {
+          "x": 666.0546875,
+          "y": 480.453125,
+          "width": 92.8828125,
+          "height": 32,
+          "top": 480.453125,
+          "right": 758.9375,
+          "bottom": 512.453125,
+          "left": 666.0546875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "avatar",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#avatar",
+    "scrollY": 3106,
+    "root": {
+      "x": 393.5,
+      "y": 312.953125,
+      "width": 638,
+      "height": 229.5,
+      "top": 312.953125,
+      "right": 1031.5,
+      "bottom": 542.453125,
+      "left": 393.5
+    },
+    "parent": {
+      "x": 393.5,
+      "y": 235.703125,
+      "width": 638,
+      "height": 384,
+      "top": 235.703125,
+      "right": 1031.5,
+      "bottom": 619.703125,
+      "left": 393.5
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "User OfflineThis user is currently offline. You can leave a message to notify them or try again later.",
+        "rect": {
+          "x": 520.5,
+          "y": 336.953125,
+          "width": 384,
+          "height": 137.5,
+          "top": 336.953125,
+          "right": 904.5,
+          "bottom": 474.453125,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 688.5,
+          "y": 336.953125,
+          "width": 48,
+          "height": 48,
+          "top": 336.953125,
+          "right": 736.5,
+          "bottom": 384.953125,
+          "left": 688.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar",
+        "text": "",
+        "rect": {
+          "x": 688.5,
+          "y": 336.953125,
+          "width": 48,
+          "height": 48,
+          "top": 336.953125,
+          "right": 736.5,
+          "bottom": 384.953125,
+          "left": 688.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar-image",
+        "text": "",
+        "rect": {
+          "x": 688.5,
+          "y": 336.953125,
+          "width": 48,
+          "height": 48,
+          "top": 336.953125,
+          "right": 736.5,
+          "bottom": 384.953125,
+          "left": 688.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "User Offline",
+        "rect": {
+          "x": 675.375,
+          "y": 400.953125,
+          "width": 74.25,
+          "height": 20,
+          "top": 400.953125,
+          "right": 749.625,
+          "bottom": 420.953125,
+          "left": 675.375
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "This user is currently offline. You can leave a message to notify them or try again later.",
+        "rect": {
+          "x": 520.5,
+          "y": 428.953125,
+          "width": 384,
+          "height": 45.5,
+          "top": 428.953125,
+          "right": 904.5,
+          "bottom": 474.453125,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "Leave Message",
+        "rect": {
+          "x": 520.5,
+          "y": 490.453125,
+          "width": 384,
+          "height": 28,
+          "top": 490.453125,
+          "right": 904.5,
+          "bottom": 518.453125,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "Leave Message",
+        "rect": {
+          "x": 655.0625,
+          "y": 490.453125,
+          "width": 114.875,
+          "height": 28,
+          "top": 490.453125,
+          "right": 769.9375,
+          "bottom": 518.453125,
+          "left": 655.0625
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "18.2857px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "avatar-group",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#avatar-group",
+    "scrollY": 3732,
+    "root": {
+      "x": 393.5,
+      "y": 324.328125,
+      "width": 638,
+      "height": 206.75,
+      "top": 324.328125,
+      "right": 1031.5,
+      "bottom": 531.078125,
+      "left": 393.5
+    },
+    "parent": {
+      "x": 393.5,
+      "y": 235.703125,
+      "width": 638,
+      "height": 384,
+      "top": 235.703125,
+      "right": 1031.5,
+      "bottom": 619.703125,
+      "left": 393.5
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "No Team MembersInvite your team to collaborate on this project.",
+        "rect": {
+          "x": 565.8515625,
+          "y": 348.328125,
+          "width": 293.2890625,
+          "height": 114.75,
+          "top": 348.328125,
+          "right": 859.140625,
+          "bottom": 463.078125,
+          "left": 565.8515625
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 648.4921875,
+          "y": 348.328125,
+          "width": 128,
+          "height": 48,
+          "top": 348.328125,
+          "right": 776.4921875,
+          "bottom": 396.328125,
+          "left": 648.4921875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar",
+        "text": "",
+        "rect": {
+          "x": 648.4921875,
+          "y": 348.328125,
+          "width": 48,
+          "height": 48,
+          "top": 348.328125,
+          "right": 696.4921875,
+          "bottom": 396.328125,
+          "left": 648.4921875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar-image",
+        "text": "",
+        "rect": {
+          "x": 648.4921875,
+          "y": 348.328125,
+          "width": 48,
+          "height": 48,
+          "top": 348.328125,
+          "right": 696.4921875,
+          "bottom": 396.328125,
+          "left": 648.4921875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar",
+        "text": "",
+        "rect": {
+          "x": 688.4921875,
+          "y": 348.328125,
+          "width": 48,
+          "height": 48,
+          "top": 348.328125,
+          "right": 736.4921875,
+          "bottom": 396.328125,
+          "left": 688.4921875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar-image",
+        "text": "",
+        "rect": {
+          "x": 688.4921875,
+          "y": 348.328125,
+          "width": 48,
+          "height": 48,
+          "top": 348.328125,
+          "right": 736.4921875,
+          "bottom": 396.328125,
+          "left": 688.4921875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar",
+        "text": "",
+        "rect": {
+          "x": 728.4921875,
+          "y": 348.328125,
+          "width": 48,
+          "height": 48,
+          "top": 348.328125,
+          "right": 776.4921875,
+          "bottom": 396.328125,
+          "left": 728.4921875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar-image",
+        "text": "",
+        "rect": {
+          "x": 728.4921875,
+          "y": 348.328125,
+          "width": 48,
+          "height": 48,
+          "top": 348.328125,
+          "right": 776.4921875,
+          "bottom": 396.328125,
+          "left": 728.4921875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "No Team Members",
+        "rect": {
+          "x": 654.21875,
+          "y": 412.328125,
+          "width": 116.546875,
+          "height": 20,
+          "top": 412.328125,
+          "right": 770.765625,
+          "bottom": 432.328125,
+          "left": 654.21875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "Invite your team to collaborate on this project.",
+        "rect": {
+          "x": 565.8515625,
+          "y": 440.328125,
+          "width": 293.2890625,
+          "height": 22.75,
+          "top": 440.328125,
+          "right": 859.140625,
+          "bottom": 463.078125,
+          "left": 565.8515625
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "Invite Members",
+        "rect": {
+          "x": 520.5,
+          "y": 479.078125,
+          "width": 384,
+          "height": 28,
+          "top": 479.078125,
+          "right": 904.5,
+          "bottom": 507.078125,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "Invite Members",
+        "rect": {
+          "x": 646.3828125,
+          "y": 479.078125,
+          "width": 132.234375,
+          "height": 28,
+          "top": 479.078125,
+          "right": 778.6171875,
+          "bottom": 507.078125,
+          "left": 646.3828125
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "18.2857px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "inputgroup",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#inputgroup",
+    "scrollY": 4358,
+    "root": {
+      "x": 393.5,
+      "y": 326.578125,
+      "width": 638,
+      "height": 202.25,
+      "top": 326.578125,
+      "right": 1031.5,
+      "bottom": 528.828125,
+      "left": 393.5
+    },
+    "parent": {
+      "x": 393.5,
+      "y": 235.703125,
+      "width": 638,
+      "height": 384,
+      "top": 235.703125,
+      "right": 1031.5,
+      "bottom": 619.703125,
+      "left": 393.5
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "404 - Not FoundThe page you're looking for doesn't exist. Try searching for what you need below.",
+        "rect": {
+          "x": 520.5,
+          "y": 350.578125,
+          "width": 384,
+          "height": 73.5,
+          "top": 350.578125,
+          "right": 904.5,
+          "bottom": 424.078125,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "404 - Not Found",
+        "rect": {
+          "x": 661.3515625,
+          "y": 350.578125,
+          "width": 102.296875,
+          "height": 20,
+          "top": 350.578125,
+          "right": 763.6484375,
+          "bottom": 370.578125,
+          "left": 661.3515625
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "The page you're looking for doesn't exist. Try searching for what you need below.",
+        "rect": {
+          "x": 520.5,
+          "y": 378.578125,
+          "width": 384,
+          "height": 45.5,
+          "top": 378.578125,
+          "right": 904.5,
+          "bottom": 424.078125,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "/Need help? Contact support",
+        "rect": {
+          "x": 520.5,
+          "y": 440.078125,
+          "width": 384,
+          "height": 64.75,
+          "top": 440.078125,
+          "right": 904.5,
+          "bottom": 504.828125,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "input-group",
+        "text": "/",
+        "rect": {
+          "x": 568.5,
+          "y": 440.078125,
+          "width": 288,
+          "height": 32,
+          "top": 440.078125,
+          "right": 856.5,
+          "bottom": 472.078125,
+          "left": 568.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "input-group-control",
+        "text": "",
+        "rect": {
+          "x": 593.5,
+          "y": 440.078125,
+          "width": 236.3984375,
+          "height": 32,
+          "top": 440.078125,
+          "right": 829.8984375,
+          "bottom": 472.078125,
+          "left": 593.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "input-group-addon",
+        "text": "",
+        "rect": {
+          "x": 569.5,
+          "y": 442.078125,
+          "width": 24,
+          "height": 28,
+          "top": 442.078125,
+          "right": 593.5,
+          "bottom": 470.078125,
+          "left": 569.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "input-group-addon",
+        "text": "/",
+        "rect": {
+          "x": 829.8984375,
+          "y": 440.078125,
+          "width": 28,
+          "height": 32,
+          "top": 440.078125,
+          "right": 857.8984375,
+          "bottom": 472.078125,
+          "left": 829.8984375
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "kbd",
+        "text": "/",
+        "rect": {
+          "x": 829.8984375,
+          "y": 446.078125,
+          "width": 20,
+          "height": 20,
+          "top": 446.078125,
+          "right": 849.8984375,
+          "bottom": 466.078125,
+          "left": 829.8984375
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "16px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "Need help? Contact support",
+        "rect": {
+          "x": 622.5078125,
+          "y": 482.078125,
+          "width": 179.984375,
+          "height": 22.75,
+          "top": 482.078125,
+          "right": 802.4921875,
+          "bottom": 504.828125,
+          "left": 622.5078125
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "rtl",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#rtl",
+    "scrollY": 4984,
+    "root": {
+      "x": 433.5,
+      "y": 324.328125,
+      "width": 558,
+      "height": 238.75,
+      "top": 324.328125,
+      "right": 991.5,
+      "bottom": 563.078125,
+      "left": 433.5
+    },
+    "parent": {
+      "x": 393.5,
+      "y": 299.703125,
+      "width": 638,
+      "height": 288,
+      "top": 299.703125,
+      "right": 1031.5,
+      "bottom": 587.703125,
+      "left": 393.5
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "لا توجد مشاريع بعدلم تقم بإنشاء أي مشاريع بعد. ابدأ بإنشاء مشروعك الأول.",
+        "rect": {
+          "x": 559.609375,
+          "y": 348.328125,
+          "width": 305.78125,
+          "height": 98.75,
+          "top": 348.328125,
+          "right": 865.390625,
+          "bottom": 447.078125,
+          "left": 559.609375
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 696.5,
+          "y": 348.328125,
+          "width": 32,
+          "height": 32,
+          "top": 348.328125,
+          "right": 728.5,
+          "bottom": 380.328125,
+          "left": 696.5
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "لا توجد مشاريع بعد",
+        "rect": {
+          "x": 668.328125,
+          "y": 396.328125,
+          "width": 88.3515625,
+          "height": 20,
+          "top": 396.328125,
+          "right": 756.6796875,
+          "bottom": 416.328125,
+          "left": 668.328125
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "لم تقم بإنشاء أي مشاريع بعد. ابدأ بإنشاء مشروعك الأول.",
+        "rect": {
+          "x": 559.609375,
+          "y": 424.328125,
+          "width": 305.78125,
+          "height": 22.75,
+          "top": 424.328125,
+          "right": 865.390625,
+          "bottom": 447.078125,
+          "left": 559.609375
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "إنشاء مشروعاستيراد مشروع",
+        "rect": {
+          "x": 520.5,
+          "y": 463.078125,
+          "width": 384,
+          "height": 32,
+          "top": 463.078125,
+          "right": 904.5,
+          "bottom": 495.078125,
+          "left": 520.5
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "إنشاء مشروع",
+        "rect": {
+          "x": 722.21875,
+          "y": 463.078125,
+          "width": 95.609375,
+          "height": 32,
+          "top": 463.078125,
+          "right": 817.828125,
+          "bottom": 495.078125,
+          "left": 722.21875
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "button",
+        "text": "استيراد مشروع",
+        "rect": {
+          "x": 607.1796875,
+          "y": 463.078125,
+          "width": 107.0390625,
+          "height": 32,
+          "top": 463.078125,
+          "right": 714.21875,
+          "bottom": 495.078125,
+          "left": 607.1796875
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "button",
+        "text": "تعرف على المزيد ",
+        "rect": {
+          "x": 651.7265625,
+          "y": 511.078125,
+          "width": 121.5546875,
+          "height": 28,
+          "top": 511.078125,
+          "right": 773.28125,
+          "bottom": 539.078125,
+          "left": 651.7265625
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "22.4px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "demo",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#",
+    "scrollY": 0,
+    "root": {
+      "x": 25,
+      "y": 324.140625,
+      "width": 325,
+      "height": 261.5,
+      "top": 324.140625,
+      "right": 350,
+      "bottom": 585.640625,
+      "left": 25
+    },
+    "parent": {
+      "x": 25,
+      "y": 262.890625,
+      "width": 325,
+      "height": 384,
+      "top": 262.890625,
+      "right": 350,
+      "bottom": 646.890625,
+      "left": 25
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "No Projects YetYou haven't created any projects yet. Get started by creating your first project.",
+        "rect": {
+          "x": 49,
+          "y": 348.140625,
+          "width": 277,
+          "height": 121.5,
+          "top": 348.140625,
+          "right": 326,
+          "bottom": 469.640625,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 171.5,
+          "y": 348.140625,
+          "width": 32,
+          "height": 32,
+          "top": 348.140625,
+          "right": 203.5,
+          "bottom": 380.140625,
+          "left": 171.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "No Projects Yet",
+        "rect": {
+          "x": 139.9453125,
+          "y": 396.140625,
+          "width": 95.1015625,
+          "height": 20,
+          "top": 396.140625,
+          "right": 235.046875,
+          "bottom": 416.140625,
+          "left": 139.9453125
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "You haven't created any projects yet. Get started by creating your first project.",
+        "rect": {
+          "x": 49,
+          "y": 424.140625,
+          "width": 277,
+          "height": 45.5,
+          "top": 424.140625,
+          "right": 326,
+          "bottom": 469.640625,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "Create ProjectImport Project",
+        "rect": {
+          "x": 49,
+          "y": 485.640625,
+          "width": 277,
+          "height": 32,
+          "top": 485.640625,
+          "right": 326,
+          "bottom": 517.640625,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "Create Project",
+        "rect": {
+          "x": 67.6171875,
+          "y": 485.640625,
+          "width": 116.125,
+          "height": 32,
+          "top": 485.640625,
+          "right": 183.7421875,
+          "bottom": 517.640625,
+          "left": 67.6171875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "button",
+        "text": "Import Project",
+        "rect": {
+          "x": 191.7421875,
+          "y": 485.640625,
+          "width": 115.6328125,
+          "height": 32,
+          "top": 485.640625,
+          "right": 307.375,
+          "bottom": 517.640625,
+          "left": 191.7421875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "button",
+        "text": "Learn More ",
+        "rect": {
+          "x": 133.7890625,
+          "y": 533.640625,
+          "width": 107.4140625,
+          "height": 28,
+          "top": 533.640625,
+          "right": 241.203125,
+          "bottom": 561.640625,
+          "left": 133.7890625
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.4px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "outline",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#outline",
+    "scrollY": 1941.5,
+    "root": {
+      "x": 49,
+      "y": 368.796875,
+      "width": 277,
+      "height": 215.5,
+      "top": 368.796875,
+      "right": 326,
+      "bottom": 584.296875,
+      "left": 49
+    },
+    "parent": {
+      "x": 25,
+      "y": 284.546875,
+      "width": 325,
+      "height": 384,
+      "top": 284.546875,
+      "right": 350,
+      "bottom": 668.546875,
+      "left": 25
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "Cloud Storage EmptyUpload files to your cloud storage to access them anywhere.",
+        "rect": {
+          "x": 74,
+          "y": 393.796875,
+          "width": 227,
+          "height": 121.5,
+          "top": 393.796875,
+          "right": 301,
+          "bottom": 515.296875,
+          "left": 74
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 171.5,
+          "y": 393.796875,
+          "width": 32,
+          "height": 32,
+          "top": 393.796875,
+          "right": 203.5,
+          "bottom": 425.796875,
+          "left": 171.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "Cloud Storage Empty",
+        "rect": {
+          "x": 121.359375,
+          "y": 441.796875,
+          "width": 132.2734375,
+          "height": 20,
+          "top": 441.796875,
+          "right": 253.6328125,
+          "bottom": 461.796875,
+          "left": 121.359375
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "Upload files to your cloud storage to access them anywhere.",
+        "rect": {
+          "x": 74,
+          "y": 469.796875,
+          "width": 227,
+          "height": 45.5,
+          "top": 469.796875,
+          "right": 301,
+          "bottom": 515.296875,
+          "left": 74
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "Upload Files",
+        "rect": {
+          "x": 74,
+          "y": 531.296875,
+          "width": 227,
+          "height": 28,
+          "top": 531.296875,
+          "right": 301,
+          "bottom": 559.296875,
+          "left": 74
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "Upload Files",
+        "rect": {
+          "x": 139.5546875,
+          "y": 531.296875,
+          "width": 95.890625,
+          "height": 28,
+          "top": 531.296875,
+          "right": 235.4453125,
+          "bottom": 559.296875,
+          "left": 139.5546875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "18.2857px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "background",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#background",
+    "scrollY": 2618,
+    "root": {
+      "x": 25,
+      "y": 317.7265625,
+      "width": 325,
+      "height": 384,
+      "top": 317.7265625,
+      "right": 350,
+      "bottom": 701.7265625,
+      "left": 25
+    },
+    "parent": {
+      "x": 25,
+      "y": 317.7265625,
+      "width": 325,
+      "height": 384,
+      "top": 317.7265625,
+      "right": 350,
+      "bottom": 701.7265625,
+      "left": 25
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "No NotificationsYou're all caught up. New notifications will appear here.",
+        "rect": {
+          "x": 49,
+          "y": 424.9765625,
+          "width": 277,
+          "height": 121.5,
+          "top": 424.9765625,
+          "right": 326,
+          "bottom": 546.4765625,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 171.5,
+          "y": 424.9765625,
+          "width": 32,
+          "height": 32,
+          "top": 424.9765625,
+          "right": 203.5,
+          "bottom": 456.9765625,
+          "left": 171.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "No Notifications",
+        "rect": {
+          "x": 137.734375,
+          "y": 472.9765625,
+          "width": 99.53125,
+          "height": 20,
+          "top": 472.9765625,
+          "right": 237.265625,
+          "bottom": 492.9765625,
+          "left": 137.734375
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "You're all caught up. New notifications will appear here.",
+        "rect": {
+          "x": 49,
+          "y": 500.9765625,
+          "width": 277,
+          "height": 45.5,
+          "top": 500.9765625,
+          "right": 326,
+          "bottom": 546.4765625,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "Refresh",
+        "rect": {
+          "x": 49,
+          "y": 562.4765625,
+          "width": 277,
+          "height": 32,
+          "top": 562.4765625,
+          "right": 326,
+          "bottom": 594.4765625,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "Refresh",
+        "rect": {
+          "x": 141.0546875,
+          "y": 562.4765625,
+          "width": 92.8828125,
+          "height": 32,
+          "top": 562.4765625,
+          "right": 233.9375,
+          "bottom": 594.4765625,
+          "left": 141.0546875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "avatar",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#avatar",
+    "scrollY": 3327.5,
+    "root": {
+      "x": 25,
+      "y": 362.0859375,
+      "width": 325,
+      "height": 229.5,
+      "top": 362.0859375,
+      "right": 350,
+      "bottom": 591.5859375,
+      "left": 25
+    },
+    "parent": {
+      "x": 25,
+      "y": 284.8359375,
+      "width": 325,
+      "height": 384,
+      "top": 284.8359375,
+      "right": 350,
+      "bottom": 668.8359375,
+      "left": 25
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "User OfflineThis user is currently offline. You can leave a message to notify them or try again later.",
+        "rect": {
+          "x": 49,
+          "y": 386.0859375,
+          "width": 277,
+          "height": 137.5,
+          "top": 386.0859375,
+          "right": 326,
+          "bottom": 523.5859375,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 163.5,
+          "y": 386.0859375,
+          "width": 48,
+          "height": 48,
+          "top": 386.0859375,
+          "right": 211.5,
+          "bottom": 434.0859375,
+          "left": 163.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar",
+        "text": "",
+        "rect": {
+          "x": 163.5,
+          "y": 386.0859375,
+          "width": 48,
+          "height": 48,
+          "top": 386.0859375,
+          "right": 211.5,
+          "bottom": 434.0859375,
+          "left": 163.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar-image",
+        "text": "",
+        "rect": {
+          "x": 163.5,
+          "y": 386.0859375,
+          "width": 48,
+          "height": 48,
+          "top": 386.0859375,
+          "right": 211.5,
+          "bottom": 434.0859375,
+          "left": 163.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "User Offline",
+        "rect": {
+          "x": 150.375,
+          "y": 450.0859375,
+          "width": 74.25,
+          "height": 20,
+          "top": 450.0859375,
+          "right": 224.625,
+          "bottom": 470.0859375,
+          "left": 150.375
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "This user is currently offline. You can leave a message to notify them or try again later.",
+        "rect": {
+          "x": 49,
+          "y": 478.0859375,
+          "width": 277,
+          "height": 45.5,
+          "top": 478.0859375,
+          "right": 326,
+          "bottom": 523.5859375,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "Leave Message",
+        "rect": {
+          "x": 49,
+          "y": 539.5859375,
+          "width": 277,
+          "height": 28,
+          "top": 539.5859375,
+          "right": 326,
+          "bottom": 567.5859375,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "Leave Message",
+        "rect": {
+          "x": 130.0625,
+          "y": 539.5859375,
+          "width": 114.875,
+          "height": 28,
+          "top": 539.5859375,
+          "right": 244.9375,
+          "bottom": 567.5859375,
+          "left": 130.0625
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "18.2857px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "avatar-group",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#avatar-group",
+    "scrollY": 4004.5,
+    "root": {
+      "x": 25,
+      "y": 394.765625,
+      "width": 325,
+      "height": 229.5,
+      "top": 394.765625,
+      "right": 350,
+      "bottom": 624.265625,
+      "left": 25
+    },
+    "parent": {
+      "x": 25,
+      "y": 317.515625,
+      "width": 325,
+      "height": 384,
+      "top": 317.515625,
+      "right": 350,
+      "bottom": 701.515625,
+      "left": 25
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "No Team MembersInvite your team to collaborate on this project.",
+        "rect": {
+          "x": 49,
+          "y": 418.765625,
+          "width": 277,
+          "height": 137.5,
+          "top": 418.765625,
+          "right": 326,
+          "bottom": 556.265625,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 123.5,
+          "y": 418.765625,
+          "width": 128,
+          "height": 48,
+          "top": 418.765625,
+          "right": 251.5,
+          "bottom": 466.765625,
+          "left": 123.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar",
+        "text": "",
+        "rect": {
+          "x": 123.5,
+          "y": 418.765625,
+          "width": 48,
+          "height": 48,
+          "top": 418.765625,
+          "right": 171.5,
+          "bottom": 466.765625,
+          "left": 123.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar-image",
+        "text": "",
+        "rect": {
+          "x": 123.5,
+          "y": 418.765625,
+          "width": 48,
+          "height": 48,
+          "top": 418.765625,
+          "right": 171.5,
+          "bottom": 466.765625,
+          "left": 123.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar",
+        "text": "",
+        "rect": {
+          "x": 163.5,
+          "y": 418.765625,
+          "width": 48,
+          "height": 48,
+          "top": 418.765625,
+          "right": 211.5,
+          "bottom": 466.765625,
+          "left": 163.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar-image",
+        "text": "",
+        "rect": {
+          "x": 163.5,
+          "y": 418.765625,
+          "width": 48,
+          "height": 48,
+          "top": 418.765625,
+          "right": 211.5,
+          "bottom": 466.765625,
+          "left": 163.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar",
+        "text": "",
+        "rect": {
+          "x": 203.5,
+          "y": 418.765625,
+          "width": 48,
+          "height": 48,
+          "top": 418.765625,
+          "right": 251.5,
+          "bottom": 466.765625,
+          "left": 203.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar-image",
+        "text": "",
+        "rect": {
+          "x": 203.5,
+          "y": 418.765625,
+          "width": 48,
+          "height": 48,
+          "top": 418.765625,
+          "right": 251.5,
+          "bottom": 466.765625,
+          "left": 203.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "No Team Members",
+        "rect": {
+          "x": 129.2265625,
+          "y": 482.765625,
+          "width": 116.546875,
+          "height": 20,
+          "top": 482.765625,
+          "right": 245.7734375,
+          "bottom": 502.765625,
+          "left": 129.2265625
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "Invite your team to collaborate on this project.",
+        "rect": {
+          "x": 49,
+          "y": 510.765625,
+          "width": 277,
+          "height": 45.5,
+          "top": 510.765625,
+          "right": 326,
+          "bottom": 556.265625,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "Invite Members",
+        "rect": {
+          "x": 49,
+          "y": 572.265625,
+          "width": 277,
+          "height": 28,
+          "top": 572.265625,
+          "right": 326,
+          "bottom": 600.265625,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "Invite Members",
+        "rect": {
+          "x": 121.3828125,
+          "y": 572.265625,
+          "width": 132.234375,
+          "height": 28,
+          "top": 572.265625,
+          "right": 253.6171875,
+          "bottom": 600.265625,
+          "left": 121.3828125
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "18.2857px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "inputgroup",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#inputgroup",
+    "scrollY": 4714,
+    "root": {
+      "x": 25,
+      "y": 408.5703125,
+      "width": 325,
+      "height": 202.25,
+      "top": 408.5703125,
+      "right": 350,
+      "bottom": 610.8203125,
+      "left": 25
+    },
+    "parent": {
+      "x": 25,
+      "y": 317.6953125,
+      "width": 325,
+      "height": 384,
+      "top": 317.6953125,
+      "right": 350,
+      "bottom": 701.6953125,
+      "left": 25
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "404 - Not FoundThe page you're looking for doesn't exist. Try searching for what you need below.",
+        "rect": {
+          "x": 49,
+          "y": 432.5703125,
+          "width": 277,
+          "height": 73.5,
+          "top": 432.5703125,
+          "right": 326,
+          "bottom": 506.0703125,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "404 - Not Found",
+        "rect": {
+          "x": 136.3515625,
+          "y": 432.5703125,
+          "width": 102.296875,
+          "height": 20,
+          "top": 432.5703125,
+          "right": 238.6484375,
+          "bottom": 452.5703125,
+          "left": 136.3515625
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "The page you're looking for doesn't exist. Try searching for what you need below.",
+        "rect": {
+          "x": 49,
+          "y": 460.5703125,
+          "width": 277,
+          "height": 45.5,
+          "top": 460.5703125,
+          "right": 326,
+          "bottom": 506.0703125,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "/Need help? Contact support",
+        "rect": {
+          "x": 49,
+          "y": 522.0703125,
+          "width": 277,
+          "height": 64.75,
+          "top": 522.0703125,
+          "right": 326,
+          "bottom": 586.8203125,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "input-group",
+        "text": "/",
+        "rect": {
+          "x": 49,
+          "y": 522.0703125,
+          "width": 277,
+          "height": 32,
+          "top": 522.0703125,
+          "right": 326,
+          "bottom": 554.0703125,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "input-group-control",
+        "text": "",
+        "rect": {
+          "x": 74,
+          "y": 522.0703125,
+          "width": 225.3984375,
+          "height": 32,
+          "top": 522.0703125,
+          "right": 299.3984375,
+          "bottom": 554.0703125,
+          "left": 74
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "24px",
+        "weight": "400"
+      },
+      {
+        "slot": "input-group-addon",
+        "text": "",
+        "rect": {
+          "x": 50,
+          "y": 524.0703125,
+          "width": 24,
+          "height": 28,
+          "top": 524.0703125,
+          "right": 74,
+          "bottom": 552.0703125,
+          "left": 50
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "input-group-addon",
+        "text": "/",
+        "rect": {
+          "x": 299.3984375,
+          "y": 522.0703125,
+          "width": 28,
+          "height": 32,
+          "top": 522.0703125,
+          "right": 327.3984375,
+          "bottom": 554.0703125,
+          "left": 299.3984375
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "kbd",
+        "text": "/",
+        "rect": {
+          "x": 299.3984375,
+          "y": 528.0703125,
+          "width": 20,
+          "height": 20,
+          "top": 528.0703125,
+          "right": 319.3984375,
+          "bottom": 548.0703125,
+          "left": 299.3984375
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "16px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "Need help? Contact support",
+        "rect": {
+          "x": 97.5078125,
+          "y": 564.0703125,
+          "width": 179.984375,
+          "height": 22.75,
+          "top": 564.0703125,
+          "right": 277.4921875,
+          "bottom": 586.8203125,
+          "left": 97.5078125
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "rtl",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#rtl",
+    "scrollY": 5423.5,
+    "root": {
+      "x": 65,
+      "y": 362.0546875,
+      "width": 245,
+      "height": 261.5,
+      "top": 362.0546875,
+      "right": 310,
+      "bottom": 623.5546875,
+      "left": 65
+    },
+    "parent": {
+      "x": 25,
+      "y": 348.8046875,
+      "width": 325,
+      "height": 288,
+      "top": 348.8046875,
+      "right": 350,
+      "bottom": 636.8046875,
+      "left": 25
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "لا توجد مشاريع بعدلم تقم بإنشاء أي مشاريع بعد. ابدأ بإنشاء مشروعك الأول.",
+        "rect": {
+          "x": 89,
+          "y": 386.0546875,
+          "width": 197,
+          "height": 121.5,
+          "top": 386.0546875,
+          "right": 286,
+          "bottom": 507.5546875,
+          "left": 89
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 171.5,
+          "y": 386.0546875,
+          "width": 32,
+          "height": 32,
+          "top": 386.0546875,
+          "right": 203.5,
+          "bottom": 418.0546875,
+          "left": 171.5
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "لا توجد مشاريع بعد",
+        "rect": {
+          "x": 143.328125,
+          "y": 434.0546875,
+          "width": 88.3515625,
+          "height": 20,
+          "top": 434.0546875,
+          "right": 231.6796875,
+          "bottom": 454.0546875,
+          "left": 143.328125
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "لم تقم بإنشاء أي مشاريع بعد. ابدأ بإنشاء مشروعك الأول.",
+        "rect": {
+          "x": 89,
+          "y": 462.0546875,
+          "width": 197,
+          "height": 45.5,
+          "top": 462.0546875,
+          "right": 286,
+          "bottom": 507.5546875,
+          "left": 89
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "إنشاء مشروعاستيراد مشروع",
+        "rect": {
+          "x": 89,
+          "y": 523.5546875,
+          "width": 197,
+          "height": 32,
+          "top": 523.5546875,
+          "right": 286,
+          "bottom": 555.5546875,
+          "left": 89
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "إنشاء مشروع",
+        "rect": {
+          "x": 197.2109375,
+          "y": 523.5546875,
+          "width": 95.609375,
+          "height": 32,
+          "top": 523.5546875,
+          "right": 292.8203125,
+          "bottom": 555.5546875,
+          "left": 197.2109375
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "button",
+        "text": "استيراد مشروع",
+        "rect": {
+          "x": 82.171875,
+          "y": 523.5546875,
+          "width": 107.0390625,
+          "height": 32,
+          "top": 523.5546875,
+          "right": 189.2109375,
+          "bottom": 555.5546875,
+          "left": 82.171875
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "button",
+        "text": "تعرف على المزيد ",
+        "rect": {
+          "x": 126.7265625,
+          "y": 571.5546875,
+          "width": 121.5546875,
+          "height": 28,
+          "top": 571.5546875,
+          "right": 248.28125,
+          "bottom": 599.5546875,
+          "left": 126.7265625
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "22.4px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "demo",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#",
+    "scrollY": 0,
+    "root": {
+      "x": 393.5,
+      "y": 328.25,
+      "width": 638,
+      "height": 261.5,
+      "top": 328.25,
+      "right": 1031.5,
+      "bottom": 589.75,
+      "left": 393.5
+    },
+    "parent": {
+      "x": 393.5,
+      "y": 267,
+      "width": 638,
+      "height": 384,
+      "top": 267,
+      "right": 1031.5,
+      "bottom": 651,
+      "left": 393.5
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "No Projects YetYou haven't created any projects yet. Get started by creating your first project.",
+        "rect": {
+          "x": 520.5,
+          "y": 352.25,
+          "width": 384,
+          "height": 121.5,
+          "top": 352.25,
+          "right": 904.5,
+          "bottom": 473.75,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 696.5,
+          "y": 352.25,
+          "width": 32,
+          "height": 32,
+          "top": 352.25,
+          "right": 728.5,
+          "bottom": 384.25,
+          "left": 696.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "No Projects Yet",
+        "rect": {
+          "x": 664.9453125,
+          "y": 400.25,
+          "width": 95.1015625,
+          "height": 20,
+          "top": 400.25,
+          "right": 760.046875,
+          "bottom": 420.25,
+          "left": 664.9453125
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "You haven't created any projects yet. Get started by creating your first project.",
+        "rect": {
+          "x": 520.5,
+          "y": 428.25,
+          "width": 384,
+          "height": 45.5,
+          "top": 428.25,
+          "right": 904.5,
+          "bottom": 473.75,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "Create ProjectImport Project",
+        "rect": {
+          "x": 520.5,
+          "y": 489.75,
+          "width": 384,
+          "height": 32,
+          "top": 489.75,
+          "right": 904.5,
+          "bottom": 521.75,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "Create Project",
+        "rect": {
+          "x": 592.6171875,
+          "y": 489.75,
+          "width": 116.125,
+          "height": 32,
+          "top": 489.75,
+          "right": 708.7421875,
+          "bottom": 521.75,
+          "left": 592.6171875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "button",
+        "text": "Import Project",
+        "rect": {
+          "x": 716.7421875,
+          "y": 489.75,
+          "width": 115.6328125,
+          "height": 32,
+          "top": 489.75,
+          "right": 832.375,
+          "bottom": 521.75,
+          "left": 716.7421875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "button",
+        "text": "Learn More ",
+        "rect": {
+          "x": 658.7890625,
+          "y": 537.75,
+          "width": 107.4140625,
+          "height": 28,
+          "top": 537.75,
+          "right": 766.203125,
+          "bottom": 565.75,
+          "left": 658.7890625
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.4px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "outline",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#outline",
+    "scrollY": 1854,
+    "root": {
+      "x": 433.5,
+      "y": 319.953125,
+      "width": 558,
+      "height": 215.5,
+      "top": 319.953125,
+      "right": 991.5,
+      "bottom": 535.453125,
+      "left": 433.5
+    },
+    "parent": {
+      "x": 393.5,
+      "y": 235.703125,
+      "width": 638,
+      "height": 384,
+      "top": 235.703125,
+      "right": 1031.5,
+      "bottom": 619.703125,
+      "left": 393.5
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "Cloud Storage EmptyUpload files to your cloud storage to access them anywhere.",
+        "rect": {
+          "x": 520.5,
+          "y": 344.953125,
+          "width": 384,
+          "height": 121.5,
+          "top": 344.953125,
+          "right": 904.5,
+          "bottom": 466.453125,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 696.5,
+          "y": 344.953125,
+          "width": 32,
+          "height": 32,
+          "top": 344.953125,
+          "right": 728.5,
+          "bottom": 376.953125,
+          "left": 696.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "Cloud Storage Empty",
+        "rect": {
+          "x": 646.359375,
+          "y": 392.953125,
+          "width": 132.2734375,
+          "height": 20,
+          "top": 392.953125,
+          "right": 778.6328125,
+          "bottom": 412.953125,
+          "left": 646.359375
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "Upload files to your cloud storage to access them anywhere.",
+        "rect": {
+          "x": 520.5,
+          "y": 420.953125,
+          "width": 384,
+          "height": 45.5,
+          "top": 420.953125,
+          "right": 904.5,
+          "bottom": 466.453125,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "Upload Files",
+        "rect": {
+          "x": 520.5,
+          "y": 482.453125,
+          "width": 384,
+          "height": 28,
+          "top": 482.453125,
+          "right": 904.5,
+          "bottom": 510.453125,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "Upload Files",
+        "rect": {
+          "x": 664.5546875,
+          "y": 482.453125,
+          "width": 95.890625,
+          "height": 28,
+          "top": 482.453125,
+          "right": 760.4453125,
+          "bottom": 510.453125,
+          "left": 664.5546875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "18.2857px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "background",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#background",
+    "scrollY": 2480,
+    "root": {
+      "x": 393.5,
+      "y": 235.703125,
+      "width": 638,
+      "height": 384,
+      "top": 235.703125,
+      "right": 1031.5,
+      "bottom": 619.703125,
+      "left": 393.5
+    },
+    "parent": {
+      "x": 393.5,
+      "y": 235.703125,
+      "width": 638,
+      "height": 384,
+      "top": 235.703125,
+      "right": 1031.5,
+      "bottom": 619.703125,
+      "left": 393.5
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "No NotificationsYou're all caught up. New notifications will appear here.",
+        "rect": {
+          "x": 552.5,
+          "y": 342.953125,
+          "width": 320,
+          "height": 121.5,
+          "top": 342.953125,
+          "right": 872.5,
+          "bottom": 464.453125,
+          "left": 552.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 696.5,
+          "y": 342.953125,
+          "width": 32,
+          "height": 32,
+          "top": 342.953125,
+          "right": 728.5,
+          "bottom": 374.953125,
+          "left": 696.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "No Notifications",
+        "rect": {
+          "x": 662.734375,
+          "y": 390.953125,
+          "width": 99.53125,
+          "height": 20,
+          "top": 390.953125,
+          "right": 762.265625,
+          "bottom": 410.953125,
+          "left": 662.734375
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "You're all caught up. New notifications will appear here.",
+        "rect": {
+          "x": 552.5,
+          "y": 418.953125,
+          "width": 320,
+          "height": 45.5,
+          "top": 418.953125,
+          "right": 872.5,
+          "bottom": 464.453125,
+          "left": 552.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "Refresh",
+        "rect": {
+          "x": 520.5,
+          "y": 480.453125,
+          "width": 384,
+          "height": 32,
+          "top": 480.453125,
+          "right": 904.5,
+          "bottom": 512.453125,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "Refresh",
+        "rect": {
+          "x": 666.0546875,
+          "y": 480.453125,
+          "width": 92.8828125,
+          "height": 32,
+          "top": 480.453125,
+          "right": 758.9375,
+          "bottom": 512.453125,
+          "left": 666.0546875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "avatar",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#avatar",
+    "scrollY": 3106,
+    "root": {
+      "x": 393.5,
+      "y": 312.953125,
+      "width": 638,
+      "height": 229.5,
+      "top": 312.953125,
+      "right": 1031.5,
+      "bottom": 542.453125,
+      "left": 393.5
+    },
+    "parent": {
+      "x": 393.5,
+      "y": 235.703125,
+      "width": 638,
+      "height": 384,
+      "top": 235.703125,
+      "right": 1031.5,
+      "bottom": 619.703125,
+      "left": 393.5
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "User OfflineThis user is currently offline. You can leave a message to notify them or try again later.",
+        "rect": {
+          "x": 520.5,
+          "y": 336.953125,
+          "width": 384,
+          "height": 137.5,
+          "top": 336.953125,
+          "right": 904.5,
+          "bottom": 474.453125,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 688.5,
+          "y": 336.953125,
+          "width": 48,
+          "height": 48,
+          "top": 336.953125,
+          "right": 736.5,
+          "bottom": 384.953125,
+          "left": 688.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar",
+        "text": "",
+        "rect": {
+          "x": 688.5,
+          "y": 336.953125,
+          "width": 48,
+          "height": 48,
+          "top": 336.953125,
+          "right": 736.5,
+          "bottom": 384.953125,
+          "left": 688.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar-image",
+        "text": "",
+        "rect": {
+          "x": 688.5,
+          "y": 336.953125,
+          "width": 48,
+          "height": 48,
+          "top": 336.953125,
+          "right": 736.5,
+          "bottom": 384.953125,
+          "left": 688.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "User Offline",
+        "rect": {
+          "x": 675.375,
+          "y": 400.953125,
+          "width": 74.25,
+          "height": 20,
+          "top": 400.953125,
+          "right": 749.625,
+          "bottom": 420.953125,
+          "left": 675.375
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "This user is currently offline. You can leave a message to notify them or try again later.",
+        "rect": {
+          "x": 520.5,
+          "y": 428.953125,
+          "width": 384,
+          "height": 45.5,
+          "top": 428.953125,
+          "right": 904.5,
+          "bottom": 474.453125,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "Leave Message",
+        "rect": {
+          "x": 520.5,
+          "y": 490.453125,
+          "width": 384,
+          "height": 28,
+          "top": 490.453125,
+          "right": 904.5,
+          "bottom": 518.453125,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "Leave Message",
+        "rect": {
+          "x": 655.0625,
+          "y": 490.453125,
+          "width": 114.875,
+          "height": 28,
+          "top": 490.453125,
+          "right": 769.9375,
+          "bottom": 518.453125,
+          "left": 655.0625
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "18.2857px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "avatar-group",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#avatar-group",
+    "scrollY": 3732,
+    "root": {
+      "x": 393.5,
+      "y": 324.328125,
+      "width": 638,
+      "height": 206.75,
+      "top": 324.328125,
+      "right": 1031.5,
+      "bottom": 531.078125,
+      "left": 393.5
+    },
+    "parent": {
+      "x": 393.5,
+      "y": 235.703125,
+      "width": 638,
+      "height": 384,
+      "top": 235.703125,
+      "right": 1031.5,
+      "bottom": 619.703125,
+      "left": 393.5
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "No Team MembersInvite your team to collaborate on this project.",
+        "rect": {
+          "x": 565.8515625,
+          "y": 348.328125,
+          "width": 293.2890625,
+          "height": 114.75,
+          "top": 348.328125,
+          "right": 859.140625,
+          "bottom": 463.078125,
+          "left": 565.8515625
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 648.4921875,
+          "y": 348.328125,
+          "width": 128,
+          "height": 48,
+          "top": 348.328125,
+          "right": 776.4921875,
+          "bottom": 396.328125,
+          "left": 648.4921875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar",
+        "text": "",
+        "rect": {
+          "x": 648.4921875,
+          "y": 348.328125,
+          "width": 48,
+          "height": 48,
+          "top": 348.328125,
+          "right": 696.4921875,
+          "bottom": 396.328125,
+          "left": 648.4921875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar-image",
+        "text": "",
+        "rect": {
+          "x": 648.4921875,
+          "y": 348.328125,
+          "width": 48,
+          "height": 48,
+          "top": 348.328125,
+          "right": 696.4921875,
+          "bottom": 396.328125,
+          "left": 648.4921875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar",
+        "text": "",
+        "rect": {
+          "x": 688.4921875,
+          "y": 348.328125,
+          "width": 48,
+          "height": 48,
+          "top": 348.328125,
+          "right": 736.4921875,
+          "bottom": 396.328125,
+          "left": 688.4921875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar-image",
+        "text": "",
+        "rect": {
+          "x": 688.4921875,
+          "y": 348.328125,
+          "width": 48,
+          "height": 48,
+          "top": 348.328125,
+          "right": 736.4921875,
+          "bottom": 396.328125,
+          "left": 688.4921875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar",
+        "text": "",
+        "rect": {
+          "x": 728.4921875,
+          "y": 348.328125,
+          "width": 48,
+          "height": 48,
+          "top": 348.328125,
+          "right": 776.4921875,
+          "bottom": 396.328125,
+          "left": 728.4921875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar-image",
+        "text": "",
+        "rect": {
+          "x": 728.4921875,
+          "y": 348.328125,
+          "width": 48,
+          "height": 48,
+          "top": 348.328125,
+          "right": 776.4921875,
+          "bottom": 396.328125,
+          "left": 728.4921875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "No Team Members",
+        "rect": {
+          "x": 654.21875,
+          "y": 412.328125,
+          "width": 116.546875,
+          "height": 20,
+          "top": 412.328125,
+          "right": 770.765625,
+          "bottom": 432.328125,
+          "left": 654.21875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "Invite your team to collaborate on this project.",
+        "rect": {
+          "x": 565.8515625,
+          "y": 440.328125,
+          "width": 293.2890625,
+          "height": 22.75,
+          "top": 440.328125,
+          "right": 859.140625,
+          "bottom": 463.078125,
+          "left": 565.8515625
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "Invite Members",
+        "rect": {
+          "x": 520.5,
+          "y": 479.078125,
+          "width": 384,
+          "height": 28,
+          "top": 479.078125,
+          "right": 904.5,
+          "bottom": 507.078125,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "Invite Members",
+        "rect": {
+          "x": 646.3828125,
+          "y": 479.078125,
+          "width": 132.234375,
+          "height": 28,
+          "top": 479.078125,
+          "right": 778.6171875,
+          "bottom": 507.078125,
+          "left": 646.3828125
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "18.2857px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "inputgroup",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#inputgroup",
+    "scrollY": 4358,
+    "root": {
+      "x": 393.5,
+      "y": 326.578125,
+      "width": 638,
+      "height": 202.25,
+      "top": 326.578125,
+      "right": 1031.5,
+      "bottom": 528.828125,
+      "left": 393.5
+    },
+    "parent": {
+      "x": 393.5,
+      "y": 235.703125,
+      "width": 638,
+      "height": 384,
+      "top": 235.703125,
+      "right": 1031.5,
+      "bottom": 619.703125,
+      "left": 393.5
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "404 - Not FoundThe page you're looking for doesn't exist. Try searching for what you need below.",
+        "rect": {
+          "x": 520.5,
+          "y": 350.578125,
+          "width": 384,
+          "height": 73.5,
+          "top": 350.578125,
+          "right": 904.5,
+          "bottom": 424.078125,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "404 - Not Found",
+        "rect": {
+          "x": 661.3515625,
+          "y": 350.578125,
+          "width": 102.296875,
+          "height": 20,
+          "top": 350.578125,
+          "right": 763.6484375,
+          "bottom": 370.578125,
+          "left": 661.3515625
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "The page you're looking for doesn't exist. Try searching for what you need below.",
+        "rect": {
+          "x": 520.5,
+          "y": 378.578125,
+          "width": 384,
+          "height": 45.5,
+          "top": 378.578125,
+          "right": 904.5,
+          "bottom": 424.078125,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "/Need help? Contact support",
+        "rect": {
+          "x": 520.5,
+          "y": 440.078125,
+          "width": 384,
+          "height": 64.75,
+          "top": 440.078125,
+          "right": 904.5,
+          "bottom": 504.828125,
+          "left": 520.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "input-group",
+        "text": "/",
+        "rect": {
+          "x": 568.5,
+          "y": 440.078125,
+          "width": 288,
+          "height": 32,
+          "top": 440.078125,
+          "right": 856.5,
+          "bottom": 472.078125,
+          "left": 568.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "input-group-control",
+        "text": "",
+        "rect": {
+          "x": 593.5,
+          "y": 440.078125,
+          "width": 236.3984375,
+          "height": 32,
+          "top": 440.078125,
+          "right": 829.8984375,
+          "bottom": 472.078125,
+          "left": 593.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "input-group-addon",
+        "text": "",
+        "rect": {
+          "x": 569.5,
+          "y": 442.078125,
+          "width": 24,
+          "height": 28,
+          "top": 442.078125,
+          "right": 593.5,
+          "bottom": 470.078125,
+          "left": 569.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "input-group-addon",
+        "text": "/",
+        "rect": {
+          "x": 829.8984375,
+          "y": 440.078125,
+          "width": 28,
+          "height": 32,
+          "top": 440.078125,
+          "right": 857.8984375,
+          "bottom": 472.078125,
+          "left": 829.8984375
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "kbd",
+        "text": "/",
+        "rect": {
+          "x": 829.8984375,
+          "y": 446.078125,
+          "width": 20,
+          "height": 20,
+          "top": 446.078125,
+          "right": 849.8984375,
+          "bottom": 466.078125,
+          "left": 829.8984375
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "16px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "Need help? Contact support",
+        "rect": {
+          "x": 622.5078125,
+          "y": 482.078125,
+          "width": 179.984375,
+          "height": 22.75,
+          "top": 482.078125,
+          "right": 802.4921875,
+          "bottom": 504.828125,
+          "left": 622.5078125
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "rtl",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#rtl",
+    "scrollY": 4984,
+    "root": {
+      "x": 433.5,
+      "y": 324.328125,
+      "width": 558,
+      "height": 238.75,
+      "top": 324.328125,
+      "right": 991.5,
+      "bottom": 563.078125,
+      "left": 433.5
+    },
+    "parent": {
+      "x": 393.5,
+      "y": 299.703125,
+      "width": 638,
+      "height": 288,
+      "top": 299.703125,
+      "right": 1031.5,
+      "bottom": 587.703125,
+      "left": 393.5
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "لا توجد مشاريع بعدلم تقم بإنشاء أي مشاريع بعد. ابدأ بإنشاء مشروعك الأول.",
+        "rect": {
+          "x": 559.609375,
+          "y": 348.328125,
+          "width": 305.78125,
+          "height": 98.75,
+          "top": 348.328125,
+          "right": 865.390625,
+          "bottom": 447.078125,
+          "left": 559.609375
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 696.5,
+          "y": 348.328125,
+          "width": 32,
+          "height": 32,
+          "top": 348.328125,
+          "right": 728.5,
+          "bottom": 380.328125,
+          "left": 696.5
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "26.25px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "لا توجد مشاريع بعد",
+        "rect": {
+          "x": 668.328125,
+          "y": 396.328125,
+          "width": 88.3515625,
+          "height": 20,
+          "top": 396.328125,
+          "right": 756.6796875,
+          "bottom": 416.328125,
+          "left": 668.328125
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "لم تقم بإنشاء أي مشاريع بعد. ابدأ بإنشاء مشروعك الأول.",
+        "rect": {
+          "x": 559.609375,
+          "y": 424.328125,
+          "width": 305.78125,
+          "height": 22.75,
+          "top": 424.328125,
+          "right": 865.390625,
+          "bottom": 447.078125,
+          "left": 559.609375
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "إنشاء مشروعاستيراد مشروع",
+        "rect": {
+          "x": 520.5,
+          "y": 463.078125,
+          "width": 384,
+          "height": 32,
+          "top": 463.078125,
+          "right": 904.5,
+          "bottom": 495.078125,
+          "left": 520.5
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "إنشاء مشروع",
+        "rect": {
+          "x": 722.21875,
+          "y": 463.078125,
+          "width": 95.609375,
+          "height": 32,
+          "top": 463.078125,
+          "right": 817.828125,
+          "bottom": 495.078125,
+          "left": 722.21875
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "button",
+        "text": "استيراد مشروع",
+        "rect": {
+          "x": 607.1796875,
+          "y": 463.078125,
+          "width": 107.0390625,
+          "height": 32,
+          "top": 463.078125,
+          "right": 714.21875,
+          "bottom": 495.078125,
+          "left": 607.1796875
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "button",
+        "text": "تعرف على المزيد ",
+        "rect": {
+          "x": 651.7265625,
+          "y": 511.078125,
+          "width": 121.5546875,
+          "height": 28,
+          "top": 511.078125,
+          "right": 773.28125,
+          "bottom": 539.078125,
+          "left": 651.7265625
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "22.4px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "demo",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#",
+    "scrollY": 0,
+    "root": {
+      "x": 25,
+      "y": 324.140625,
+      "width": 325,
+      "height": 261.5,
+      "top": 324.140625,
+      "right": 350,
+      "bottom": 585.640625,
+      "left": 25
+    },
+    "parent": {
+      "x": 25,
+      "y": 262.890625,
+      "width": 325,
+      "height": 384,
+      "top": 262.890625,
+      "right": 350,
+      "bottom": 646.890625,
+      "left": 25
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "No Projects YetYou haven't created any projects yet. Get started by creating your first project.",
+        "rect": {
+          "x": 49,
+          "y": 348.140625,
+          "width": 277,
+          "height": 121.5,
+          "top": 348.140625,
+          "right": 326,
+          "bottom": 469.640625,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 171.5,
+          "y": 348.140625,
+          "width": 32,
+          "height": 32,
+          "top": 348.140625,
+          "right": 203.5,
+          "bottom": 380.140625,
+          "left": 171.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "No Projects Yet",
+        "rect": {
+          "x": 139.9453125,
+          "y": 396.140625,
+          "width": 95.1015625,
+          "height": 20,
+          "top": 396.140625,
+          "right": 235.046875,
+          "bottom": 416.140625,
+          "left": 139.9453125
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "You haven't created any projects yet. Get started by creating your first project.",
+        "rect": {
+          "x": 49,
+          "y": 424.140625,
+          "width": 277,
+          "height": 45.5,
+          "top": 424.140625,
+          "right": 326,
+          "bottom": 469.640625,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "Create ProjectImport Project",
+        "rect": {
+          "x": 49,
+          "y": 485.640625,
+          "width": 277,
+          "height": 32,
+          "top": 485.640625,
+          "right": 326,
+          "bottom": 517.640625,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "Create Project",
+        "rect": {
+          "x": 67.6171875,
+          "y": 485.640625,
+          "width": 116.125,
+          "height": 32,
+          "top": 485.640625,
+          "right": 183.7421875,
+          "bottom": 517.640625,
+          "left": 67.6171875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "button",
+        "text": "Import Project",
+        "rect": {
+          "x": 191.7421875,
+          "y": 485.640625,
+          "width": 115.6328125,
+          "height": 32,
+          "top": 485.640625,
+          "right": 307.375,
+          "bottom": 517.640625,
+          "left": 191.7421875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "button",
+        "text": "Learn More ",
+        "rect": {
+          "x": 133.7890625,
+          "y": 533.640625,
+          "width": 107.4140625,
+          "height": 28,
+          "top": 533.640625,
+          "right": 241.203125,
+          "bottom": 561.640625,
+          "left": 133.7890625
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.4px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "outline",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#outline",
+    "scrollY": 1941.5,
+    "root": {
+      "x": 49,
+      "y": 368.796875,
+      "width": 277,
+      "height": 215.5,
+      "top": 368.796875,
+      "right": 326,
+      "bottom": 584.296875,
+      "left": 49
+    },
+    "parent": {
+      "x": 25,
+      "y": 284.546875,
+      "width": 325,
+      "height": 384,
+      "top": 284.546875,
+      "right": 350,
+      "bottom": 668.546875,
+      "left": 25
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "Cloud Storage EmptyUpload files to your cloud storage to access them anywhere.",
+        "rect": {
+          "x": 74,
+          "y": 393.796875,
+          "width": 227,
+          "height": 121.5,
+          "top": 393.796875,
+          "right": 301,
+          "bottom": 515.296875,
+          "left": 74
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 171.5,
+          "y": 393.796875,
+          "width": 32,
+          "height": 32,
+          "top": 393.796875,
+          "right": 203.5,
+          "bottom": 425.796875,
+          "left": 171.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "Cloud Storage Empty",
+        "rect": {
+          "x": 121.359375,
+          "y": 441.796875,
+          "width": 132.2734375,
+          "height": 20,
+          "top": 441.796875,
+          "right": 253.6328125,
+          "bottom": 461.796875,
+          "left": 121.359375
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "Upload files to your cloud storage to access them anywhere.",
+        "rect": {
+          "x": 74,
+          "y": 469.796875,
+          "width": 227,
+          "height": 45.5,
+          "top": 469.796875,
+          "right": 301,
+          "bottom": 515.296875,
+          "left": 74
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "Upload Files",
+        "rect": {
+          "x": 74,
+          "y": 531.296875,
+          "width": 227,
+          "height": 28,
+          "top": 531.296875,
+          "right": 301,
+          "bottom": 559.296875,
+          "left": 74
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "Upload Files",
+        "rect": {
+          "x": 139.5546875,
+          "y": 531.296875,
+          "width": 95.890625,
+          "height": 28,
+          "top": 531.296875,
+          "right": 235.4453125,
+          "bottom": 559.296875,
+          "left": 139.5546875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "18.2857px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "background",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#background",
+    "scrollY": 2618,
+    "root": {
+      "x": 25,
+      "y": 317.7265625,
+      "width": 325,
+      "height": 384,
+      "top": 317.7265625,
+      "right": 350,
+      "bottom": 701.7265625,
+      "left": 25
+    },
+    "parent": {
+      "x": 25,
+      "y": 317.7265625,
+      "width": 325,
+      "height": 384,
+      "top": 317.7265625,
+      "right": 350,
+      "bottom": 701.7265625,
+      "left": 25
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "No NotificationsYou're all caught up. New notifications will appear here.",
+        "rect": {
+          "x": 49,
+          "y": 424.9765625,
+          "width": 277,
+          "height": 121.5,
+          "top": 424.9765625,
+          "right": 326,
+          "bottom": 546.4765625,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 171.5,
+          "y": 424.9765625,
+          "width": 32,
+          "height": 32,
+          "top": 424.9765625,
+          "right": 203.5,
+          "bottom": 456.9765625,
+          "left": 171.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "No Notifications",
+        "rect": {
+          "x": 137.734375,
+          "y": 472.9765625,
+          "width": 99.53125,
+          "height": 20,
+          "top": 472.9765625,
+          "right": 237.265625,
+          "bottom": 492.9765625,
+          "left": 137.734375
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "You're all caught up. New notifications will appear here.",
+        "rect": {
+          "x": 49,
+          "y": 500.9765625,
+          "width": 277,
+          "height": 45.5,
+          "top": 500.9765625,
+          "right": 326,
+          "bottom": 546.4765625,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "Refresh",
+        "rect": {
+          "x": 49,
+          "y": 562.4765625,
+          "width": 277,
+          "height": 32,
+          "top": 562.4765625,
+          "right": 326,
+          "bottom": 594.4765625,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "Refresh",
+        "rect": {
+          "x": 141.0546875,
+          "y": 562.4765625,
+          "width": 92.8828125,
+          "height": 32,
+          "top": 562.4765625,
+          "right": 233.9375,
+          "bottom": 594.4765625,
+          "left": 141.0546875
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "avatar",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#avatar",
+    "scrollY": 3327.5,
+    "root": {
+      "x": 25,
+      "y": 362.0859375,
+      "width": 325,
+      "height": 229.5,
+      "top": 362.0859375,
+      "right": 350,
+      "bottom": 591.5859375,
+      "left": 25
+    },
+    "parent": {
+      "x": 25,
+      "y": 284.8359375,
+      "width": 325,
+      "height": 384,
+      "top": 284.8359375,
+      "right": 350,
+      "bottom": 668.8359375,
+      "left": 25
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "User OfflineThis user is currently offline. You can leave a message to notify them or try again later.",
+        "rect": {
+          "x": 49,
+          "y": 386.0859375,
+          "width": 277,
+          "height": 137.5,
+          "top": 386.0859375,
+          "right": 326,
+          "bottom": 523.5859375,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 163.5,
+          "y": 386.0859375,
+          "width": 48,
+          "height": 48,
+          "top": 386.0859375,
+          "right": 211.5,
+          "bottom": 434.0859375,
+          "left": 163.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar",
+        "text": "",
+        "rect": {
+          "x": 163.5,
+          "y": 386.0859375,
+          "width": 48,
+          "height": 48,
+          "top": 386.0859375,
+          "right": 211.5,
+          "bottom": 434.0859375,
+          "left": 163.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar-image",
+        "text": "",
+        "rect": {
+          "x": 163.5,
+          "y": 386.0859375,
+          "width": 48,
+          "height": 48,
+          "top": 386.0859375,
+          "right": 211.5,
+          "bottom": 434.0859375,
+          "left": 163.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "User Offline",
+        "rect": {
+          "x": 150.375,
+          "y": 450.0859375,
+          "width": 74.25,
+          "height": 20,
+          "top": 450.0859375,
+          "right": 224.625,
+          "bottom": 470.0859375,
+          "left": 150.375
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "This user is currently offline. You can leave a message to notify them or try again later.",
+        "rect": {
+          "x": 49,
+          "y": 478.0859375,
+          "width": 277,
+          "height": 45.5,
+          "top": 478.0859375,
+          "right": 326,
+          "bottom": 523.5859375,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "Leave Message",
+        "rect": {
+          "x": 49,
+          "y": 539.5859375,
+          "width": 277,
+          "height": 28,
+          "top": 539.5859375,
+          "right": 326,
+          "bottom": 567.5859375,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "Leave Message",
+        "rect": {
+          "x": 130.0625,
+          "y": 539.5859375,
+          "width": 114.875,
+          "height": 28,
+          "top": 539.5859375,
+          "right": 244.9375,
+          "bottom": 567.5859375,
+          "left": 130.0625
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "18.2857px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "avatar-group",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#avatar-group",
+    "scrollY": 4004.5,
+    "root": {
+      "x": 25,
+      "y": 394.765625,
+      "width": 325,
+      "height": 229.5,
+      "top": 394.765625,
+      "right": 350,
+      "bottom": 624.265625,
+      "left": 25
+    },
+    "parent": {
+      "x": 25,
+      "y": 317.515625,
+      "width": 325,
+      "height": 384,
+      "top": 317.515625,
+      "right": 350,
+      "bottom": 701.515625,
+      "left": 25
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "No Team MembersInvite your team to collaborate on this project.",
+        "rect": {
+          "x": 49,
+          "y": 418.765625,
+          "width": 277,
+          "height": 137.5,
+          "top": 418.765625,
+          "right": 326,
+          "bottom": 556.265625,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 123.5,
+          "y": 418.765625,
+          "width": 128,
+          "height": 48,
+          "top": 418.765625,
+          "right": 251.5,
+          "bottom": 466.765625,
+          "left": 123.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar",
+        "text": "",
+        "rect": {
+          "x": 123.5,
+          "y": 418.765625,
+          "width": 48,
+          "height": 48,
+          "top": 418.765625,
+          "right": 171.5,
+          "bottom": 466.765625,
+          "left": 123.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar-image",
+        "text": "",
+        "rect": {
+          "x": 123.5,
+          "y": 418.765625,
+          "width": 48,
+          "height": 48,
+          "top": 418.765625,
+          "right": 171.5,
+          "bottom": 466.765625,
+          "left": 123.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar",
+        "text": "",
+        "rect": {
+          "x": 163.5,
+          "y": 418.765625,
+          "width": 48,
+          "height": 48,
+          "top": 418.765625,
+          "right": 211.5,
+          "bottom": 466.765625,
+          "left": 163.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar-image",
+        "text": "",
+        "rect": {
+          "x": 163.5,
+          "y": 418.765625,
+          "width": 48,
+          "height": 48,
+          "top": 418.765625,
+          "right": 211.5,
+          "bottom": 466.765625,
+          "left": 163.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar",
+        "text": "",
+        "rect": {
+          "x": 203.5,
+          "y": 418.765625,
+          "width": 48,
+          "height": 48,
+          "top": 418.765625,
+          "right": 251.5,
+          "bottom": 466.765625,
+          "left": 203.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "avatar-image",
+        "text": "",
+        "rect": {
+          "x": 203.5,
+          "y": 418.765625,
+          "width": 48,
+          "height": 48,
+          "top": 418.765625,
+          "right": 251.5,
+          "bottom": 466.765625,
+          "left": 203.5
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "No Team Members",
+        "rect": {
+          "x": 129.2265625,
+          "y": 482.765625,
+          "width": 116.546875,
+          "height": 20,
+          "top": 482.765625,
+          "right": 245.7734375,
+          "bottom": 502.765625,
+          "left": 129.2265625
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "Invite your team to collaborate on this project.",
+        "rect": {
+          "x": 49,
+          "y": 510.765625,
+          "width": 277,
+          "height": 45.5,
+          "top": 510.765625,
+          "right": 326,
+          "bottom": 556.265625,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "Invite Members",
+        "rect": {
+          "x": 49,
+          "y": 572.265625,
+          "width": 277,
+          "height": 28,
+          "top": 572.265625,
+          "right": 326,
+          "bottom": 600.265625,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "Invite Members",
+        "rect": {
+          "x": 121.3828125,
+          "y": 572.265625,
+          "width": 132.234375,
+          "height": 28,
+          "top": 572.265625,
+          "right": 253.6171875,
+          "bottom": 600.265625,
+          "left": 121.3828125
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "18.2857px",
+        "weight": "500"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "inputgroup",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#inputgroup",
+    "scrollY": 4714,
+    "root": {
+      "x": 25,
+      "y": 408.5703125,
+      "width": 325,
+      "height": 202.25,
+      "top": 408.5703125,
+      "right": 350,
+      "bottom": 610.8203125,
+      "left": 25
+    },
+    "parent": {
+      "x": 25,
+      "y": 317.6953125,
+      "width": 325,
+      "height": 384,
+      "top": 317.6953125,
+      "right": 350,
+      "bottom": 701.6953125,
+      "left": 25
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "404 - Not FoundThe page you're looking for doesn't exist. Try searching for what you need below.",
+        "rect": {
+          "x": 49,
+          "y": 432.5703125,
+          "width": 277,
+          "height": 73.5,
+          "top": 432.5703125,
+          "right": 326,
+          "bottom": 506.0703125,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "404 - Not Found",
+        "rect": {
+          "x": 136.3515625,
+          "y": 432.5703125,
+          "width": 102.296875,
+          "height": 20,
+          "top": 432.5703125,
+          "right": 238.6484375,
+          "bottom": 452.5703125,
+          "left": 136.3515625
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "The page you're looking for doesn't exist. Try searching for what you need below.",
+        "rect": {
+          "x": 49,
+          "y": 460.5703125,
+          "width": 277,
+          "height": 45.5,
+          "top": 460.5703125,
+          "right": 326,
+          "bottom": 506.0703125,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "/Need help? Contact support",
+        "rect": {
+          "x": 49,
+          "y": 522.0703125,
+          "width": 277,
+          "height": 64.75,
+          "top": 522.0703125,
+          "right": 326,
+          "bottom": 586.8203125,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "input-group",
+        "text": "/",
+        "rect": {
+          "x": 49,
+          "y": 522.0703125,
+          "width": 277,
+          "height": 32,
+          "top": 522.0703125,
+          "right": 326,
+          "bottom": 554.0703125,
+          "left": 49
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "input-group-control",
+        "text": "",
+        "rect": {
+          "x": 74,
+          "y": 522.0703125,
+          "width": 225.3984375,
+          "height": 32,
+          "top": 522.0703125,
+          "right": 299.3984375,
+          "bottom": 554.0703125,
+          "left": 74
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "24px",
+        "weight": "400"
+      },
+      {
+        "slot": "input-group-addon",
+        "text": "",
+        "rect": {
+          "x": 50,
+          "y": 524.0703125,
+          "width": 24,
+          "height": 28,
+          "top": 524.0703125,
+          "right": 74,
+          "bottom": 552.0703125,
+          "left": 50
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "input-group-addon",
+        "text": "/",
+        "rect": {
+          "x": 299.3984375,
+          "y": 522.0703125,
+          "width": 28,
+          "height": 32,
+          "top": 522.0703125,
+          "right": 327.3984375,
+          "bottom": 554.0703125,
+          "left": 299.3984375
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "kbd",
+        "text": "/",
+        "rect": {
+          "x": 299.3984375,
+          "y": 528.0703125,
+          "width": 20,
+          "height": 20,
+          "top": 528.0703125,
+          "right": 319.3984375,
+          "bottom": 548.0703125,
+          "left": 299.3984375
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "16px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "Need help? Contact support",
+        "rect": {
+          "x": 97.5078125,
+          "y": 564.0703125,
+          "width": 179.984375,
+          "height": 22.75,
+          "top": 564.0703125,
+          "right": 277.4921875,
+          "bottom": 586.8203125,
+          "left": 97.5078125
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "rtl",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#rtl",
+    "scrollY": 5423.5,
+    "root": {
+      "x": 65,
+      "y": 362.0546875,
+      "width": 245,
+      "height": 261.5,
+      "top": 362.0546875,
+      "right": 310,
+      "bottom": 623.5546875,
+      "left": 65
+    },
+    "parent": {
+      "x": 25,
+      "y": 348.8046875,
+      "width": 325,
+      "height": 288,
+      "top": 348.8046875,
+      "right": 350,
+      "bottom": 636.8046875,
+      "left": 25
+    },
+    "slots": [
+      {
+        "slot": "empty-header",
+        "text": "لا توجد مشاريع بعدلم تقم بإنشاء أي مشاريع بعد. ابدأ بإنشاء مشروعك الأول.",
+        "rect": {
+          "x": 89,
+          "y": 386.0546875,
+          "width": 197,
+          "height": 121.5,
+          "top": 386.0546875,
+          "right": 286,
+          "bottom": 507.5546875,
+          "left": 89
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-icon",
+        "text": "",
+        "rect": {
+          "x": 171.5,
+          "y": 386.0546875,
+          "width": 32,
+          "height": 32,
+          "top": 386.0546875,
+          "right": 203.5,
+          "bottom": 418.0546875,
+          "left": 171.5
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "33.075px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-title",
+        "text": "لا توجد مشاريع بعد",
+        "rect": {
+          "x": 143.328125,
+          "y": 434.0546875,
+          "width": 88.3515625,
+          "height": 20,
+          "top": 434.0546875,
+          "right": 231.6796875,
+          "bottom": 454.0546875,
+          "left": 143.328125
+        },
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "empty-description",
+        "text": "لم تقم بإنشاء أي مشاريع بعد. ابدأ بإنشاء مشروعك الأول.",
+        "rect": {
+          "x": 89,
+          "y": 462.0546875,
+          "width": 197,
+          "height": 45.5,
+          "top": 462.0546875,
+          "right": 286,
+          "bottom": 507.5546875,
+          "left": 89
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "22.75px",
+        "weight": "400"
+      },
+      {
+        "slot": "empty-content",
+        "text": "إنشاء مشروعاستيراد مشروع",
+        "rect": {
+          "x": 89,
+          "y": 523.5546875,
+          "width": 197,
+          "height": 32,
+          "top": 523.5546875,
+          "right": 286,
+          "bottom": 555.5546875,
+          "left": 89
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "20px",
+        "weight": "400"
+      },
+      {
+        "slot": "button",
+        "text": "إنشاء مشروع",
+        "rect": {
+          "x": 197.2109375,
+          "y": 523.5546875,
+          "width": 95.609375,
+          "height": 32,
+          "top": 523.5546875,
+          "right": 292.8203125,
+          "bottom": 555.5546875,
+          "left": 197.2109375
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "button",
+        "text": "استيراد مشروع",
+        "rect": {
+          "x": 82.171875,
+          "y": 523.5546875,
+          "width": 107.0390625,
+          "height": 32,
+          "top": 523.5546875,
+          "right": 189.2109375,
+          "bottom": 555.5546875,
+          "left": 82.171875
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "20px",
+        "weight": "500"
+      },
+      {
+        "slot": "button",
+        "text": "تعرف على المزيد ",
+        "rect": {
+          "x": 126.7265625,
+          "y": 571.5546875,
+          "width": 121.5546875,
+          "height": 28,
+          "top": 571.5546875,
+          "right": 248.28125,
+          "bottom": 599.5546875,
+          "left": 126.7265625
+        },
+        "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "line": "22.4px",
+        "weight": "500"
+      }
+    ]
+  }
+]

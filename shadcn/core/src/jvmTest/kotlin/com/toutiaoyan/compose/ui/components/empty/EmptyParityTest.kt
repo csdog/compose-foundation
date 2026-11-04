@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.style.Style
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.*
 import androidx.compose.ui.text.TextLayoutResult
@@ -76,6 +77,13 @@ class EmptyParityTest : ScreenshotTest() {
         val root = composeRule.onNodeWithTag("root").fetchSemanticsNode().boundsInRoot
         val title = composeRule.onNodeWithText("Centered").fetchSemanticsNode().boundsInRoot
         assertEquals(root.center.y, title.center.y, 1f)
+    }
+
+    @Test fun novaTitleDoesNotIntroduceAnUnrequestedHeading() {
+        setThemedContent(stylePreset = StylePreset.Nova) { EmptyTitle("No Projects Yet") }
+        composeRule.onNodeWithText(
+            "No Projects Yet",
+        ).assert(SemanticsMatcher.keyNotDefined(SemanticsProperties.Heading))
     }
 
     private fun nova(dark: Boolean) {

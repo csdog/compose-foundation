@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.style.Style
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.graphics.Color
@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.text.TextStyle
 import com.composables.icons.lucide.*
 import com.toutiaoyan.compose.ui.components.button.*
 import com.toutiaoyan.compose.ui.components.empty.*
@@ -32,6 +31,24 @@ val emptyDoc =
         examplesHeading = null,
         usageImportsCode =
             """
+            import androidx.compose.foundation.gestures.detectTapGestures
+            import androidx.compose.foundation.hoverable
+            import androidx.compose.foundation.interaction.*
+            import androidx.compose.foundation.style.contentPadding
+            import androidx.compose.foundation.style.rememberUpdatedStyleState
+            import androidx.compose.foundation.text.selection.DisableSelection
+            import androidx.compose.ui.semantics.*
+            import androidx.compose.ui.focus.*
+            import androidx.compose.ui.input.InputMode
+            import androidx.compose.ui.input.key.onPreviewKeyEvent
+            import androidx.compose.ui.input.pointer.*
+            import androidx.compose.ui.platform.LocalInputModeManager
+            import com.toutiaoyan.compose.ui.theme.Theme
+            import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
+            import org.jetbrains.compose.resources.Font
+            import androidx.compose.ui.text.font.FontFamily
+            import androidx.compose.ui.text.font.FontWeight
+            import androidx.compose.ui.text.style.LineHeightStyle
             import androidx.compose.foundation.Image
             import androidx.compose.foundation.border
             import androidx.compose.foundation.layout.*
@@ -186,20 +203,14 @@ val emptyDoc =
                                     Button("Import Project", onClick = {}, variant = ButtonVariant.Outline)
                                 }
                             }
-                            val uri = LocalUriHandler.current
-                            Button(onClick = { uri.openUri("#") }, variant = ButtonVariant.Link, size = ButtonSize.Sm) {
-                                Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
-                                    Text(textStyle = TextStyle(color = currentTheme.colors.mutedForeground)) { "Learn More" }
-                                    EmptyRecipeGlyph(Lucide.ArrowUpRight, tint = currentTheme.colors.mutedForeground)
-                                }
-                            }
+                            EmptyLearnMore("Learn More")
                         }
 
                         @Composable
                         private fun EmptyRecipeGlyph(image: ImageVector, tint: Color = Color.Unspecified) {
                             Image(image, null, Modifier.size(16.dp), colorFilter = ColorFilter.tint(if (tint.isSpecified) tint else LocalContentColor.current.takeIf { it.isSpecified } ?: currentTheme.colors.foreground))
                         }
-                        """.trimIndent() + "\n\n" + emptyMediaIconCode,
+                        """.trimIndent() + "\n\n" + emptyMediaIconCode + "\n\n" + emptyLearnMoreCode,
                     preview = {
                         Empty(modifier = Modifier.fillMaxWidth().heightIn(min = 384.dp)) {
                             EmptyHeader {
@@ -218,24 +229,7 @@ val emptyDoc =
                                     Button("Import Project", onClick = {}, variant = ButtonVariant.Outline)
                                 }
                             }
-                            val uri = LocalUriHandler.current
-                            Button(onClick = { uri.openUri("#") }, variant = ButtonVariant.Link, size = ButtonSize.Sm) {
-                                Row(
-                                    horizontalArrangement =
-                                        Arrangement.spacedBy(6.dp),
-                                    verticalAlignment =
-                                        Alignment.CenterVertically,
-                                ) {
-                                    Text(
-                                        textStyle =
-                                            TextStyle(
-                                                color =
-                                                    currentTheme.colors.mutedForeground,
-                                            ),
-                                    ) { "Learn More" }
-                                    EmptyRecipeGlyph(Lucide.ArrowUpRight, tint = currentTheme.colors.mutedForeground)
-                                }
-                            }
+                            EmptyLearnMore("Learn More")
                         }
                     },
                 ),
@@ -247,14 +241,15 @@ val emptyDoc =
                     previewPadding = 0.dp,
                     code =
                         """
-                        Empty(modifier = Modifier.fillMaxWidth().heightIn(min = 384.dp).padding(if (LocalWindowInfo.current.containerSize.width >= with(LocalDensity.current) { 768.dp.roundToPx() }) 40.dp else 24.dp), variant = EmptyVariant.Outline) {
-                            EmptyHeader {
-                                EmptyMedia(variant = EmptyMediaVariant.Icon) { EmptyRecipeGlyph(EmptyCloud) }
-                                EmptyTitle("Cloud Storage Empty")
-                                EmptyDescription("Upload files to your cloud storage to access them anywhere.")
-                            }
-                            EmptyContent {
-                                Button("Upload Files", onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Sm)
+                        val inset = if (LocalWindowInfo.current.containerSize.width >= with(LocalDensity.current) { 768.dp.roundToPx() }) 40.dp else 24.dp
+                        Box(Modifier.fillMaxWidth().heightIn(min = 384.dp).padding(inset), contentAlignment = Alignment.Center) {
+                            Empty(variant = EmptyVariant.Outline) {
+                                EmptyHeader {
+                                    EmptyMedia(variant = EmptyMediaVariant.Icon) { EmptyRecipeGlyph(EmptyCloud) }
+                                    EmptyTitle("Cloud Storage Empty")
+                                    EmptyDescription("Upload files to your cloud storage to access them anywhere.")
+                                }
+                                EmptyContent { Button("Upload Files", onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Sm) }
                             }
                         }
 
@@ -263,40 +258,7 @@ val emptyDoc =
                             Image(image, null, Modifier.size(16.dp), colorFilter = ColorFilter.tint(if (tint.isSpecified) tint else LocalContentColor.current.takeIf { it.isSpecified } ?: currentTheme.colors.foreground))
                         }
                         """.trimIndent() + "\n\n" + emptyMediaIconCode,
-                    preview = {
-                        Empty(
-                            modifier =
-                                Modifier.fillMaxWidth().heightIn(
-                                    min =
-                                        384.dp,
-                                ).padding(
-                                    if (
-                                        LocalWindowInfo.current.containerSize.width >=
-                                        with(LocalDensity.current) { 768.dp.roundToPx() }
-                                    ) {
-                                        40.dp
-                                    } else {
-                                        24.dp
-                                    },
-                                ),
-                            variant =
-                                EmptyVariant.Outline,
-                        ) {
-                            EmptyHeader {
-                                EmptyMedia(variant = EmptyMediaVariant.Icon) { EmptyRecipeGlyph(EmptyCloud) }
-                                EmptyTitle("Cloud Storage Empty")
-                                EmptyDescription("Upload files to your cloud storage to access them anywhere.")
-                            }
-                            EmptyContent {
-                                Button(
-                                    "Upload Files",
-                                    onClick = {},
-                                    variant = ButtonVariant.Outline,
-                                    size = ButtonSize.Sm,
-                                )
-                            }
-                        }
-                    },
+                    preview = { EmptyOutlineRecipe() },
                 ),
                 ComponentExample(
                     title = "Background",
@@ -389,4 +351,28 @@ private fun EmptyRecipeGlyph(
                 },
             ),
     )
+}
+
+@Composable
+private fun EmptyOutlineRecipe() {
+    val inset =
+        if (LocalWindowInfo.current.containerSize.width >=
+            with(LocalDensity.current) {
+                768.dp.roundToPx()
+            }
+        ) {
+            40.dp
+        } else {
+            24.dp
+        }
+    Box(Modifier.fillMaxWidth().heightIn(min = 384.dp).padding(inset), contentAlignment = Alignment.Center) {
+        Empty(modifier = Modifier.testTag("empty-outline-root"), variant = EmptyVariant.Outline) {
+            EmptyHeader {
+                EmptyMedia(variant = EmptyMediaVariant.Icon) { EmptyRecipeGlyph(EmptyCloud) }
+                EmptyTitle("Cloud Storage Empty")
+                EmptyDescription("Upload files to your cloud storage to access them anywhere.")
+            }
+            EmptyContent { Button("Upload Files", onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Sm) }
+        }
+    }
 }

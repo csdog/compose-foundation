@@ -125,7 +125,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [x] Dialog (`dialog`)：第九批完成 Web 剩余项：4dp 背景模糊、初始焦点/Tab 闭环/恢复触发器、非模态背景交互与外部关闭；须在窗口根接入 OverlayHost。
 - [x] Drawer (`drawer`)：第九批完成 Web 剩余项：背景模糊和嵌套捕获、初始/恢复焦点、受控 snap 切换、真实顺序吸附、手势与外部关闭策略解耦；真机覆盖另列。
 - [ ] Dropdown Menu (`dropdown-menu`)：官网13个配方已全部移植，图标槽位、Complex/RTL、章节顺序和导出代码已补齐。21项定向测试通过；新增七配方四象限共28个展开/Escape画面验证通过。手机长菜单可滚动，默认宽度、指针聚焦、阴影/ring、完整状态及可访问树同步仍待关闭，详见文末。
-- [ ] Empty (`empty`)：官网七配方已全部基础移植，头像/灰度/外描组、搜索输入、真实说明链接和三语RTL已补；12项定向测试通过（含两张Nova独立verify），所属模块质量检查通过。浏览器四象限仍待授权恢复，旧截图12changed/4missing、平衡换行与完整状态仍保留。
+- [ ] Empty (`empty`)：七组官网/本地桌面窄屏浅深各28静态图，加搜索8图/三语12图已复查。修正Outline自然高度、RTL 288正文/40inset/Noto/行框及LearnMore URL+官网button角色，支持链接实际回页首。25项回归、两张既有Nova显式verify、JS/Wasm通过，无基准刷新。平衡换行、字重/图形/共享页面、HTML原生链接与完整状态仍开放；历史旧图矩阵未重验。[证据](web-parity/empty-r2/README.md)。
 - [ ] Field (`field`)：Nova 间距/字号、448 响应式阈值、嵌套 disabled、支付表单示例已补；choice-card、嵌套组及完整 RTL 待核对。
 - [ ] Hover Card (`hover-card`)：官网Default/Basic/Sides/RTL已移植，Trigger定时/键盘焦点、Nova面板及物理/逻辑side已补。12项行为、4项新旧截图独立verify、5项配方共21项通过，所属模块检查通过；浏览器四象限和完整状态仍待关闭，详见文末。
 - [ ] Input (`input`)：32 高、14/16 响应式字号、dark/disabled/invalid/focus 已修正；复杂组合与全状态矩阵待关闭。
@@ -169,6 +169,16 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Empty：浏览器四象限、Outline高度及RTL（2026-11-04）
+
+<!-- progress-created: 2026-11-04; order: 126 -->
+
+浏览器恢复授权已生效，沿用专用空间1完成七组官网/本地桌面1440/窄屏390浅深各28静态图，另各8搜索与12三语图，24拼图已逐组复查。[实现、来源、测试与明确缺口](web-parity/empty-r2/README.md)。
+
+Outline不再把384dp最小高压到虚线框本身；RTL改64工具栏+288正文/40inset和Noto字体，Nova标题/描述Tight完整行框并移除额外heading。LearnMore保留官网真实a[href=#]的button角色及URL annotation，一个焦点，文字/内边距/Enter单次激活；14dp图标、4dp gap和逻辑end inset按实时CSS修正。Contact support接目录#导航，四象限均实测返回页首。版本0.3.34。
+
+核心7+目录18共25项通过，两张既有Nova基准显式verify，core/shared ktlint与JS/Wasm构建通过，无基准刷新。头像当前URL新下载与本地文件逐字节一致，不凭目视差异改裁切。平衡/pretty换行、字重与头像缓存/缩放采样、页面说明/排版、原生HTML链接能力和辅助技术/完整状态仍保留；历史旧Vega十二changed/四missing矩阵本轮未重验。Empty保持未勾选，Editor排除，Attachment后置。
 
 ### Card：六组官方配方、分区布局与长单行文字（2026-11-04）
 

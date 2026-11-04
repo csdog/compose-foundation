@@ -4,67 +4,67 @@
     {
       "title": "Default",
       "implementation": "first-pass implemented",
-      "desktopLight": "pending browser recovery",
-      "desktopDark": "pending browser recovery",
-      "phoneLight": "pending browser recovery",
-      "phoneDark": "pending browser recovery"
+      "desktopLight": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md",
+      "desktopDark": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md",
+      "phoneLight": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md",
+      "phoneDark": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md"
     },
     {
       "title": "Outline",
       "implementation": "first-pass implemented",
-      "desktopLight": "pending browser recovery",
-      "desktopDark": "pending browser recovery",
-      "phoneLight": "pending browser recovery",
-      "phoneDark": "pending browser recovery"
+      "desktopLight": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md",
+      "desktopDark": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md",
+      "phoneLight": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md",
+      "phoneDark": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md"
     },
     {
       "title": "Background",
       "implementation": "first-pass implemented",
-      "desktopLight": "pending browser recovery",
-      "desktopDark": "pending browser recovery",
-      "phoneLight": "pending browser recovery",
-      "phoneDark": "pending browser recovery"
+      "desktopLight": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md",
+      "desktopDark": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md",
+      "phoneLight": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md",
+      "phoneDark": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md"
     },
     {
       "title": "Avatar",
       "implementation": "first-pass implemented",
-      "desktopLight": "pending browser recovery",
-      "desktopDark": "pending browser recovery",
-      "phoneLight": "pending browser recovery",
-      "phoneDark": "pending browser recovery"
+      "desktopLight": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md",
+      "desktopDark": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md",
+      "phoneLight": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md",
+      "phoneDark": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md"
     },
     {
       "title": "Avatar Group",
       "implementation": "first-pass implemented",
-      "desktopLight": "pending browser recovery",
-      "desktopDark": "pending browser recovery",
-      "phoneLight": "pending browser recovery",
-      "phoneDark": "pending browser recovery"
+      "desktopLight": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md",
+      "desktopDark": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md",
+      "phoneLight": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md",
+      "phoneDark": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md"
     },
     {
       "title": "InputGroup",
       "implementation": "first-pass implemented",
-      "desktopLight": "pending browser recovery",
-      "desktopDark": "pending browser recovery",
-      "phoneLight": "pending browser recovery",
-      "phoneDark": "pending browser recovery"
+      "desktopLight": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md",
+      "desktopDark": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md",
+      "phoneLight": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md",
+      "phoneDark": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md"
     },
     {
       "title": "RTL",
       "implementation": "first-pass implemented",
-      "desktopLight": "pending browser recovery",
-      "desktopDark": "pending browser recovery",
-      "phoneLight": "pending browser recovery",
-      "phoneDark": "pending browser recovery"
+      "desktopLight": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md",
+      "desktopDark": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md",
+      "phoneLight": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md",
+      "phoneDark": "browser reviewed in empty-r2; explicit remaining differences in empty-r2/README.md"
     }
   ],
   "remaining": [
-    "Browser desktop/phone light/dark review for all seven recipes, including responsive inset and native Web link behavior",
-    "text-balance/text-pretty wrapping",
-    "Complete keyboard, focus and screen reader state matrix",
-    "EmptyTitle heading semantics and Learn More button semantics differ from upstream div/anchor",
-    "Arbitrary Style/shape overrides, constrained and large-content layouts",
-    "Legacy EmptyScreenshotTest: twelve changed and four missing, reproduced with HEAD in previous turn"
+    "text-balance/text-pretty wrapping and font weight/line breaks",
+    "Browser glyph/image sampling and exact chrome pixels",
+    "Shared page descriptions, inline code, RTL guide and vertical rhythm",
+    "Native HTML link capabilities, complete keyboard/focus/screen-reader/touch matrix",
+    "Arbitrary Style/shape, constrained and large content layouts",
+    "Legacy screenshot matrix last isolated as 12 changed/4 missing; not rerun in empty-r2"
   ],
   "implementedThisPass": [
     "Avatar and Avatar Group use bundled grayscale portraits at 48dp with native AvatarGroup overlap/ring",
@@ -74,5 +74,6 @@
     "Learn More calls UriHandler and uses muted foreground; icons inherit button/addon color",
     "Outline 768dp breakpoint controls 40/24dp preview inset",
     "Six API sections and shared import preamble"
-  ]
+  ],
+  "browserFollowup": "../empty-r2/README.md"
 }

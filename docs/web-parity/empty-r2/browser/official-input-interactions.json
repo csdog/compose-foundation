@@ -1,0 +1,34 @@
+[
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#",
+    "scrollY": 0,
+    "input": ""
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#",
+    "scrollY": 0,
+    "input": ""
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#",
+    "scrollY": 0,
+    "input": ""
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "url": "https://ui.shadcn.com/docs/components/base/empty#",
+    "scrollY": 0,
+    "input": ""
+  }
+]

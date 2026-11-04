@@ -1,0 +1,14 @@
+{
+  "liveDocs": "https://ui.shadcn.com/docs/components/base/empty",
+  "pinnedSourceManifest": "../empty-r1/sources.json",
+  "liveGeometry": "browser/official-matrix.json",
+  "liveLinkRoles": "browser/official-link-roles.json",
+  "avatarFreshDownload": {
+    "url": "https://github.com/shadcn.png",
+    "local": "app/shared/src/commonMain/composeResources/drawable/avatar_shadcn.jpg",
+    "bytes": 31007,
+    "sha256": "513d06f542692036ff0bb17938f04b3efd60567ba2cae08049469d21f18e0524",
+    "freshDownloadMatchesBundled": true,
+    "browserCachedResponseBytes": "not extracted; not asserted identical"
+  }
+}

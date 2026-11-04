@@ -1,0 +1,242 @@
+[
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "lang": "he",
+    "scrollY": 5048,
+    "root": {
+      "x": 433.5,
+      "y": 248.953125,
+      "width": 558,
+      "height": 261.5,
+      "top": 248.953125,
+      "right": 991.5,
+      "bottom": 510.453125,
+      "left": 433.5
+    },
+    "text": "אין פרויקטים עדייןעדיין לא יצרת פרויקטים. התחל על ידי יצירת הפרויקט הראשון שלך.צור פרויקטייבא פרויקטלמד עוד ",
+    "direction": "rtl",
+    "font": "\"Noto Sans Hebrew\", \"Noto Sans Hebrew Fallback\""
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "lang": "en",
+    "scrollY": 5048,
+    "root": {
+      "x": 433.5,
+      "y": 248.953125,
+      "width": 558,
+      "height": 261.5,
+      "top": 248.953125,
+      "right": 991.5,
+      "bottom": 510.453125,
+      "left": 433.5
+    },
+    "text": "No Projects YetYou haven't created any projects yet. Get started by creating your first project.Create ProjectImport ProjectLearn More ",
+    "direction": "ltr",
+    "font": "Geist, \"Geist Fallback\""
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "lang": "ar",
+    "scrollY": 5048,
+    "root": {
+      "x": 433.5,
+      "y": 260.328125,
+      "width": 558,
+      "height": 238.75,
+      "top": 260.328125,
+      "right": 991.5,
+      "bottom": 499.078125,
+      "left": 433.5
+    },
+    "text": "لا توجد مشاريع بعدلم تقم بإنشاء أي مشاريع بعد. ابدأ بإنشاء مشروعك الأول.إنشاء مشروعاستيراد مشروعتعرف على المزيد ",
+    "direction": "rtl",
+    "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\""
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "lang": "he",
+    "scrollY": 5487.5,
+    "root": {
+      "x": 65,
+      "y": 286.6796875,
+      "width": 245,
+      "height": 284.25,
+      "top": 286.6796875,
+      "right": 310,
+      "bottom": 570.9296875,
+      "left": 65
+    },
+    "text": "אין פרויקטים עדייןעדיין לא יצרת פרויקטים. התחל על ידי יצירת הפרויקט הראשון שלך.צור פרויקטייבא פרויקטלמד עוד ",
+    "direction": "rtl",
+    "font": "\"Noto Sans Hebrew\", \"Noto Sans Hebrew Fallback\""
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "lang": "en",
+    "scrollY": 5487.5,
+    "root": {
+      "x": 65,
+      "y": 286.6796875,
+      "width": 245,
+      "height": 284.25,
+      "top": 286.6796875,
+      "right": 310,
+      "bottom": 570.9296875,
+      "left": 65
+    },
+    "text": "No Projects YetYou haven't created any projects yet. Get started by creating your first project.Create ProjectImport ProjectLearn More ",
+    "direction": "ltr",
+    "font": "Geist, \"Geist Fallback\""
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "lang": "ar",
+    "scrollY": 5487.5,
+    "root": {
+      "x": 65,
+      "y": 298.0546875,
+      "width": 245,
+      "height": 261.5,
+      "top": 298.0546875,
+      "right": 310,
+      "bottom": 559.5546875,
+      "left": 65
+    },
+    "text": "لا توجد مشاريع بعدلم تقم بإنشاء أي مشاريع بعد. ابدأ بإنشاء مشروعك الأول.إنشاء مشروعاستيراد مشروعتعرف على المزيد ",
+    "direction": "rtl",
+    "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\""
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "lang": "he",
+    "scrollY": 5048,
+    "root": {
+      "x": 433.5,
+      "y": 248.953125,
+      "width": 558,
+      "height": 261.5,
+      "top": 248.953125,
+      "right": 991.5,
+      "bottom": 510.453125,
+      "left": 433.5
+    },
+    "text": "אין פרויקטים עדייןעדיין לא יצרת פרויקטים. התחל על ידי יצירת הפרויקט הראשון שלך.צור פרויקטייבא פרויקטלמד עוד ",
+    "direction": "rtl",
+    "font": "\"Noto Sans Hebrew\", \"Noto Sans Hebrew Fallback\""
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "lang": "en",
+    "scrollY": 5048,
+    "root": {
+      "x": 433.5,
+      "y": 248.953125,
+      "width": 558,
+      "height": 261.5,
+      "top": 248.953125,
+      "right": 991.5,
+      "bottom": 510.453125,
+      "left": 433.5
+    },
+    "text": "No Projects YetYou haven't created any projects yet. Get started by creating your first project.Create ProjectImport ProjectLearn More ",
+    "direction": "ltr",
+    "font": "Geist, \"Geist Fallback\""
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "lang": "ar",
+    "scrollY": 5048,
+    "root": {
+      "x": 433.5,
+      "y": 260.328125,
+      "width": 558,
+      "height": 238.75,
+      "top": 260.328125,
+      "right": 991.5,
+      "bottom": 499.078125,
+      "left": 433.5
+    },
+    "text": "لا توجد مشاريع بعدلم تقم بإنشاء أي مشاريع بعد. ابدأ بإنشاء مشروعك الأول.إنشاء مشروعاستيراد مشروعتعرف على المزيد ",
+    "direction": "rtl",
+    "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\""
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "lang": "he",
+    "scrollY": 5487.5,
+    "root": {
+      "x": 65,
+      "y": 286.6796875,
+      "width": 245,
+      "height": 284.25,
+      "top": 286.6796875,
+      "right": 310,
+      "bottom": 570.9296875,
+      "left": 65
+    },
+    "text": "אין פרויקטים עדייןעדיין לא יצרת פרויקטים. התחל על ידי יצירת הפרויקט הראשון שלך.צור פרויקטייבא פרויקטלמד עוד ",
+    "direction": "rtl",
+    "font": "\"Noto Sans Hebrew\", \"Noto Sans Hebrew Fallback\""
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "lang": "en",
+    "scrollY": 5487.5,
+    "root": {
+      "x": 65,
+      "y": 286.6796875,
+      "width": 245,
+      "height": 284.25,
+      "top": 286.6796875,
+      "right": 310,
+      "bottom": 570.9296875,
+      "left": 65
+    },
+    "text": "No Projects YetYou haven't created any projects yet. Get started by creating your first project.Create ProjectImport ProjectLearn More ",
+    "direction": "ltr",
+    "font": "Geist, \"Geist Fallback\""
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "lang": "ar",
+    "scrollY": 5487.5,
+    "root": {
+      "x": 65,
+      "y": 298.0546875,
+      "width": 245,
+      "height": 261.5,
+      "top": 298.0546875,
+      "right": 310,
+      "bottom": 559.5546875,
+      "left": 65
+    },
+    "text": "لا توجد مشاريع بعدلم تقم بإنشاء أي مشاريع بعد. ابدأ بإنشاء مشروعك الأول.إنشاء مشروعاستيراد مشروعتعرف على المزيد ",
+    "direction": "rtl",
+    "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\""
+  }
+]

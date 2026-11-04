@@ -1,0 +1,260 @@
+{
+  "app": [
+    "http://127.0.0.1:8765/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8765/7f97a9c3d53c9282b288.wasm"
+  ],
+  "captures": [
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "demo",
+      "scrollY": 0,
+      "url": "http://127.0.0.1:8765/empty",
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "outline",
+      "scrollY": 3014,
+      "url": "http://127.0.0.1:8765/empty#outline",
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "background",
+      "scrollY": 3642,
+      "url": "http://127.0.0.1:8765/empty#background",
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "avatar",
+      "scrollY": 4270,
+      "url": "http://127.0.0.1:8765/empty#avatar",
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "avatar-group",
+      "scrollY": 4898,
+      "url": "http://127.0.0.1:8765/empty#avatar-group",
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "inputgroup",
+      "scrollY": 5526,
+      "url": "http://127.0.0.1:8765/empty#inputgroup",
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "rtl",
+      "scrollY": 6154,
+      "url": "http://127.0.0.1:8765/empty#rtl",
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "demo",
+      "scrollY": 0,
+      "url": "http://127.0.0.1:8765/empty#",
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "outline",
+      "scrollY": 3056,
+      "url": "http://127.0.0.1:8765/empty#outline",
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "background",
+      "scrollY": 3730,
+      "url": "http://127.0.0.1:8765/empty#background",
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "avatar",
+      "scrollY": 4404,
+      "url": "http://127.0.0.1:8765/empty#avatar",
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "avatar-group",
+      "scrollY": 5045,
+      "url": "http://127.0.0.1:8765/empty#avatar-group",
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "inputgroup",
+      "scrollY": 5719,
+      "url": "http://127.0.0.1:8765/empty#inputgroup",
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "rtl",
+      "scrollY": 6393,
+      "url": "http://127.0.0.1:8765/empty#rtl",
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "demo",
+      "scrollY": 0,
+      "url": "http://127.0.0.1:8765/empty#",
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "outline",
+      "scrollY": 3014,
+      "url": "http://127.0.0.1:8765/empty#outline",
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "background",
+      "scrollY": 3642,
+      "url": "http://127.0.0.1:8765/empty#background",
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "avatar",
+      "scrollY": 4270,
+      "url": "http://127.0.0.1:8765/empty#avatar",
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "avatar-group",
+      "scrollY": 4898,
+      "url": "http://127.0.0.1:8765/empty#avatar-group",
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "inputgroup",
+      "scrollY": 5526,
+      "url": "http://127.0.0.1:8765/empty#inputgroup",
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "rtl",
+      "scrollY": 6154,
+      "url": "http://127.0.0.1:8765/empty#rtl",
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "demo",
+      "scrollY": 0,
+      "url": "http://127.0.0.1:8765/empty#",
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "outline",
+      "scrollY": 3056,
+      "url": "http://127.0.0.1:8765/empty#outline",
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "background",
+      "scrollY": 3730,
+      "url": "http://127.0.0.1:8765/empty#background",
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "avatar",
+      "scrollY": 4404,
+      "url": "http://127.0.0.1:8765/empty#avatar",
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "avatar-group",
+      "scrollY": 5045,
+      "url": "http://127.0.0.1:8765/empty#avatar-group",
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "inputgroup",
+      "scrollY": 5719,
+      "url": "http://127.0.0.1:8765/empty#inputgroup",
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "rtl",
+      "scrollY": 6393,
+      "url": "http://127.0.0.1:8765/empty#rtl",
+      "theme": "light"
+    }
+  ]
+}

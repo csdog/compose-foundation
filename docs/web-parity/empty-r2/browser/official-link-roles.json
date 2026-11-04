@@ -1,0 +1,23 @@
+{
+  "links": [
+    {
+      "text": "Learn More ",
+      "tag": "A",
+      "role": "button",
+      "href": "#"
+    },
+    {
+      "text": "Contact support",
+      "tag": "A",
+      "role": null,
+      "href": "#"
+    },
+    {
+      "text": "تعرف على المزيد ",
+      "tag": "A",
+      "role": "button",
+      "href": "#"
+    }
+  ],
+  "keyboardObserved": "Arabic Learn More actual focused anchor: Space scrolled outer document; Enter navigated # and scrollY=0."
+}

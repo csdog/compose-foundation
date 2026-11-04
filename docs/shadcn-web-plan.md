@@ -109,3 +109,7 @@ Code Block 的受限高度滚动、下载示例与 Trace 的完整工具调用�
 六组官网配方、公开CardImage、Nova分区inset/完整行框、Label等字号行框及Button长单行文字已补，93项联合回归与四象限浏览器证据见[Card r1](web-parity/card-r1/README.md)。Card保留未完成：滚动条/边框占位、字重和换行、Select浏览器键盘初始焦点、共享页面/代码及完整交互矩阵。后续继续按清单推进，Editor排除、Attachment后置。
 
 进度文档的历史记录按创建日期倒序；同日沿用原追加顺序倒序并持久化，编辑记录不改变创建顺序。使用 `python3 scripts/sort_progress_records.py` 维护，不编造历史精确时刻。
+
+### 2026-11-04 Empty 浏览器跟进
+
+恢复授权后完成七配方四象限及搜索/三语实际浏览器对照；修复Outline过高、RTL布局/字体/完整行框和LearnMore带URL的button角色。25项回归、两张既有Nova像素校验及JS/Wasm通过，见[Empty r2](web-parity/empty-r2/README.md)。仍留平衡换行、字体/图像采样、共享文档说明与原生HTML/辅助技术完整矩阵；继续按清单推进缺少浏览器证据的组件，不据本轮覆盖勾选全组件。

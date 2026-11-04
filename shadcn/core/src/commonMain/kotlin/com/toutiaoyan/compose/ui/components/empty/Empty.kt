@@ -241,7 +241,16 @@ fun EmptyTitle(
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Text(
         variant = variant,
-        modifier = modifier.semantics { heading() }.styleable(styleState, style),
+        modifier =
+            modifier.then(
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    Modifier
+                } else {
+                    Modifier.semantics {
+                        heading()
+                    }
+                },
+            ).styleable(styleState, style),
         textStyle =
             TextStyle(
                 fontWeight = FontWeight.Medium,
@@ -260,7 +269,11 @@ fun EmptyTitle(
                 letterSpacing = if (currentTheme.activePreset == StylePreset.Nova) (-0.35).sp else (-0.025).sp,
                 lineHeightStyle =
                     if (currentTheme.activePreset == StylePreset.Nova) {
-                        LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None)
+                        LineHeightStyle(
+                            LineHeightStyle.Alignment.Center,
+                            LineHeightStyle.Trim.None,
+                            LineHeightStyle.Mode.Tight,
+                        )
                     } else {
                         null
                     },
@@ -320,7 +333,11 @@ private fun emptyDescriptionTextStyle(): TextStyle =
             lineHeight = if (currentTheme.activePreset == StylePreset.Nova) 22.75.sp else 22.sp,
             lineHeightStyle =
                 if (currentTheme.activePreset == StylePreset.Nova) {
-                    LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None)
+                    LineHeightStyle(
+                        LineHeightStyle.Alignment.Center,
+                        LineHeightStyle.Trim.None,
+                        LineHeightStyle.Mode.Tight,
+                    )
                 } else {
                     null
                 },

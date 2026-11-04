@@ -125,7 +125,7 @@ class EmptyExamplesTest {
         rule.onNodeWithText("No Projects Yet").assertIsDisplayed()
         assertTrue(left("Create Project") < left("Import Project"))
         rule.onNodeWithContentDescription("Preview language").performClick()
-        rule.onNodeWithText("עברית").performClick()
+        rule.onNodeWithText("Hebrew (עברית)").performClick()
         rule.onNodeWithText("אין פרויקטים עדיין").assertIsDisplayed()
         assertTrue(left("צור פרויקט") > left("ייבא פרויקט"))
     }

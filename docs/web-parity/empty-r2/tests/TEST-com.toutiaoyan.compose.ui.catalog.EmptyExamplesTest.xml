@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="EmptyExamplesTest[jvm]" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-04T04:59:19.161Z" hostname="Apples-MacBook-Pro.local" time="0.421">
+  <properties/>
+  <testcase name="searchInputKeepsEditsAndTheSupportTextIsAnActualLink[jvm]" classname="com.toutiaoyan.compose.ui.catalog.EmptyExamplesTest" time="0.131"/>
+  <testcase name="defaultLearnMoreFollowsTheLink[jvm]" classname="com.toutiaoyan.compose.ui.catalog.EmptyExamplesTest" time="0.033"/>
+  <testcase name="avatarGroupOverlapsThreeRealPhotosByEightPixels[jvm]" classname="com.toutiaoyan.compose.ui.catalog.EmptyExamplesTest" time="0.046"/>
+  <testcase name="rtlPickerChangesTheActualCopyAndButtonOrder[jvm]" classname="com.toutiaoyan.compose.ui.catalog.EmptyExamplesTest" time="0.175"/>
+  <testcase name="allSevenOfficialRecipesAppearInOrder[jvm]" classname="com.toutiaoyan.compose.ui.catalog.EmptyExamplesTest" time="0.014"/>
+  <testcase name="avatarUsesTheBundledFortyEightPixelPhoto[jvm]" classname="com.toutiaoyan.compose.ui.catalog.EmptyExamplesTest" time="0.022"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
