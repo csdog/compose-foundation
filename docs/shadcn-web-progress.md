@@ -126,14 +126,14 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [x] Date Picker (`date-picker`)：第九批完成 Web 剩余项：本地时区、可配置 locale/周起始日/读屏日期、连续范围、多月换行、月界限、隐藏日期语义和真实键盘焦点；弹层显式初始焦点。
 - [x] Dialog (`dialog`)：第九批完成 Web 剩余项：4dp 背景模糊、初始焦点/Tab 闭环/恢复触发器、非模态背景交互与外部关闭；须在窗口根接入 OverlayHost。
 - [x] Drawer (`drawer`)：第九批完成 Web 剩余项：背景模糊和嵌套捕获、初始/恢复焦点、受控 snap 切换、真实顺序吸附、手势与外部关闭策略解耦；真机覆盖另列。
-- [ ] Dropdown Menu (`dropdown-menu`)：官网13个配方已全部移植，图标槽位、Complex/RTL、章节顺序和导出代码已补齐。21项定向测试通过；新增七配方四象限共28个展开/Escape画面验证通过。手机长菜单可滚动，默认宽度、指针聚焦、阴影/ring、完整状态及可访问树同步仍待关闭，详见文末。
+- [ ] Dropdown Menu (`dropdown-menu`)：官网13个配方已全部移植，图标槽位、Complex/RTL、章节顺序和导出代码已补齐。21项定向测试通过；新增七配方四象限共28个展开/Escape画面验证通过。手机长菜单可滚动，默认宽度、指针聚焦、阴影/ring、完整状态及可访问树同步仍待关闭，详见文末。Item r2实测发现指针打开后本地立即聚焦首项，官网首个ArrowDown才聚焦首项，仍待专轮修正。
 - [ ] Empty (`empty`)：七组官网/本地桌面窄屏浅深各28静态图，加搜索8图/三语12图已复查。修正Outline自然高度、RTL 288正文/40inset/Noto/行框及LearnMore URL+官网button角色，支持链接实际回页首。25项回归、两张既有Nova显式verify、JS/Wasm通过，无基准刷新。平衡换行、字重/图形/共享页面、HTML原生链接与完整状态仍开放；历史旧图矩阵未重验。[证据](web-parity/empty-r2/README.md)。
 - [ ] Field (`field`)：Nova 间距/字号、448 响应式阈值、嵌套 disabled、支付表单示例已补；choice-card、嵌套组及完整 RTL 待核对。
 - [ ] Hover Card (`hover-card`)：四官方配方桌面/手机浅深已保存关闭和Default/Basic展开证据，三个方向单例已确认，连续切换/重载与本地三语完整Web矩阵仍待补；补实际Trigger锚点、键盘失焦立即关闭、Nova 5dp避让/手机垂直fallback、RTL 320正文/Noto完整行框及Sides亚像素换行。44项回归、4张显式像素verify、lint和JS/Wasm通过；仅两张Nova基准按5px平移更新。safe polygon、多Trigger/嵌套宿主、全局Escape、实际翻转动画及完整辅助技术仍开放。[证据](web-parity/hover-card-r2/README.md)。
 - [ ] Input (`input`)：32 高、14/16 响应式字号、dark/disabled/invalid/focus 已修正；复杂组合与全状态矩阵待关闭。
 - [ ] Input Group (`input-group`)：基础已验证（第六、七批）；32dp 布局、附件聚焦、禁用/错误和单行按钮附件已修正，button/kbd 负 margin、复杂多控件与完整焦点矩阵待关闭。
 - [ ] Input OTP (`input-otp`)：基础已验证（第七批）；连体格、分组、编辑/粘贴/密码语义和默认示例已完成，光标闪烁、invalid API、完整 IME/自动填码矩阵待关闭。
-- [ ] Item (`item`)：官网11配方和10个API部分已基础移植；Nova尺寸/媒体/透明border、Header/Footer换行、列表间距/语义、href与固定内容列已补。23项定向验证及所属模块检查通过；浏览器四象限、HTML链接语义/target、完整状态仍保留，详见文末。
+- [ ] Item (`item`)：11配方与10个API部分已基础移植；r2修默认标题自然换行/显式maxLines、Nova Xs菜单上下文padding及单一RTL正文。Item/Spinner共51项常规测试和6张像素verify通过；四组合浏览器证据见[item-r2](web-parity/item-r2/README.md)。窄屏Header的min-content溢出、Web同页链接/target、菜单初始焦点、共享排版与完整动态/辅助技术仍未关闭。
 - [ ] Kbd (`kbd`)：六官网配方已完成桌面/窄屏浅深静态、Tooltip/输入及三语对照；修正RTL单一288dp正文/完整语言标签、Button尾部键帽位置和遗漏TooltipProvider造成的600ms延迟。24项常规测试、lint/JS/Wasm通过；显式旧图4通过、2张Tooltip失配保留。附件专用圆角/负margin、ButtonGroup嵌套边框、字形及完整动态/辅助技术仍开放，见[kbd-r2](web-parity/kbd-r2/README.md)。
 - [ ] Label (`label`)：基础14 Medium、disabled和点击聚焦已修正；Card依赖复查补Nova等字号/行高的外层行框，Arabic单行14dp/两行28dp，Vega两张既有基准未变；桌面/窄屏标签点击实际聚焦已验。任意字体/emoji/分数行高、复杂Field及辅助技术矩阵仍待关闭，见[Card r1](web-parity/card-r1/README.md)。
 - [ ] Marker (`marker`)：八官网配方已完成桌面/窄屏浅深对照，修复自然预览高度、本页链接及文字/图标hover，补说明与完整复制代码；30项常规测试通过，旧图6/7通过且906像素历史差异未变。共享Toast位置、焦点/原生链接能力、表格/代码栏及完整动态/辅助技术仍开放，见[Marker r2](web-parity/marker-r2/README.md)。
@@ -171,6 +171,14 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Item：标题自然换行、菜单上下文与RTL页面（2026-11-04）
+
+<!-- progress-created: 2026-11-04; order: 135 -->
+
+对照固定上游与真实DOM：普通ItemTitle的flex使类名line-clamp-1不生效，改为默认自然换行，公开maxLines保留Image配方显式单行；Nova Xs在DropdownMenuContent内默认padding0，修三个人员条目换行，保留调用者Style覆盖。RTL重构为单一288dp正文/40dp inset、完整三语及同源公开代码，版本0.3.38。
+
+标题一项、菜单四组合四项先RED后GREEN；Item36+Spinner依赖15共51项常规测试通过，六张既有像素显式verify均通过，未刷新golden；core/shared ktlint和JS/Wasm通过，11输入摘要一致。官网和最终本地四组合静态及交互图与采样诊断见[item-r2](web-parity/item-r2/README.md)。窄屏Header的CSS min-content溢出、同页链接/target、本地菜单初始焦点及共享排版/动态/辅助技术仍开放；错误语言坐标与空白采样帧隔离，不计通过。Item不勾选；Editor排除、Attachment后置，整站继续。
 
 ### Web画布：滚动条宽度切换触发精确重测（2026-11-04）
 

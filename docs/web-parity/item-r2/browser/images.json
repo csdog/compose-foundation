@@ -1,0 +1,556 @@
+{
+  "counts": {
+    "official": 68,
+    "local": 68
+  },
+  "extraNavigationEvidence": [
+    "official-link-navigated.png",
+    "local-link-before.png"
+  ],
+  "images": [
+    {
+      "file": "official-desktop-light-demo.png",
+      "sha256": "557f80dcfb020a5908a279ab52fc2ac66ec9c34ad4df4f489b31bc1279ede86a"
+    },
+    {
+      "file": "official-desktop-light-variant.png",
+      "sha256": "3fd5fc3e9fe804cfcb5da1779587b2f39a3f4ae0d62956223014425c571029f0"
+    },
+    {
+      "file": "official-desktop-light-size.png",
+      "sha256": "ee62f632620f7a6ce7014b4cb7a6cc12b680355015752983a1f7cf8186858393"
+    },
+    {
+      "file": "official-desktop-light-icon.png",
+      "sha256": "5629e2bef57a9c3844db0ea012290892a7fcc7e8d50f0ee98fb96bdcb821b397"
+    },
+    {
+      "file": "official-desktop-light-avatar.png",
+      "sha256": "c6db2e3b21b12d398007e6a8a61e55550b9f449b3f0fda9e2fc35fb6ebb664a1"
+    },
+    {
+      "file": "official-desktop-light-image.png",
+      "sha256": "fdedb9d090d8a03216e10da28c4a45c237aadfaab78f24f3261fb9bec1257466"
+    },
+    {
+      "file": "official-desktop-light-group.png",
+      "sha256": "9fadef4e9d8ea61e696513f1be514934b2c8b123aeb7c9c5e6936e313f2400c3"
+    },
+    {
+      "file": "official-desktop-light-header.png",
+      "sha256": "793d43f68a2b37141dc0e1c55737f38062566a85606f331387f5543f78083b4f"
+    },
+    {
+      "file": "official-desktop-light-link.png",
+      "sha256": "d3694da7a8e38adb2464dcfeea5a44421c3fc68878e2fbff909f2a1d4b529c13"
+    },
+    {
+      "file": "official-desktop-light-dropdown.png",
+      "sha256": "e9e37a4c90c5d22dab2b6247d2d61557e8c1a00c33ff2383515c4e500cf3da25"
+    },
+    {
+      "file": "official-desktop-light-rtl.png",
+      "sha256": "fcff3dfffbb506c58b21e8c6adef181f0b02a178c03d2061a5de220edf6a9b8a"
+    },
+    {
+      "file": "official-desktop-light-menu-open.png",
+      "sha256": "32470701f1307ccffd94fa96d17e5a01c89d4d44bbfbda51cb6479c3724ff049"
+    },
+    {
+      "file": "official-desktop-light-menu-keyboard.png",
+      "sha256": "235954a73b779dc0256c81bd80ab9e584f831c383c70c59aeca0864a24766a59"
+    },
+    {
+      "file": "official-desktop-light-menu-selected.png",
+      "sha256": "daff0248212eb6f014984bf0e2ad2e6139484327874b1403050f17f44a2f627b"
+    },
+    {
+      "file": "official-desktop-light-rtl-english.png",
+      "sha256": "2a31dc59b2103e609f0f964f50b6b1832ea9864b95db00827b32ce0c02dd6aab"
+    },
+    {
+      "file": "official-desktop-light-rtl-hebrew.png",
+      "sha256": "293a212795ef12c98457f52ac988f1f2573c50c37be061571168dddcbe3b7457"
+    },
+    {
+      "file": "official-desktop-light-rtl-arabic.png",
+      "sha256": "bc47501d2d9bdd92ba4cc80ee7235956604689583eb5c0124f047ecd923bff3c"
+    },
+    {
+      "file": "official-mobile-light-demo.png",
+      "sha256": "f387e50007e9b4fac9caf37a77c2eb945584bc17ee08a7a5ab0045b3f472bcb3"
+    },
+    {
+      "file": "official-mobile-light-variant.png",
+      "sha256": "70d2636672cc05c07449b4443ba3ec2a88d2dcf1d009c718fba4e4c1f75e32d5"
+    },
+    {
+      "file": "official-mobile-light-size.png",
+      "sha256": "52cd3643a7ddbece6191eb61f5265c297acf988a1bb1c8654b7f9d7908604e25"
+    },
+    {
+      "file": "official-mobile-light-icon.png",
+      "sha256": "34f5ca8aad1afef4be05635d57727be1284c492f30b6b0eadb73b7459cb6cf7a"
+    },
+    {
+      "file": "official-mobile-light-avatar.png",
+      "sha256": "bd9a0df7c396ca63e71bc84e391c90dc8b321a9732adaeba612764d015079c69"
+    },
+    {
+      "file": "official-mobile-light-image.png",
+      "sha256": "65f6355d6cdc6222cd3b9172043c11cc1d29edd109a25e04b22c3d8b0e318a91"
+    },
+    {
+      "file": "official-mobile-light-group.png",
+      "sha256": "80a50b073125de339ae0bab29d85dcd1cb06f9fcad67d61255e5eb748ab18c66"
+    },
+    {
+      "file": "official-mobile-light-header.png",
+      "sha256": "ec60b3e117f1f3025fa2888119fd6f961d3762af2939cfe41bffb194df19374c"
+    },
+    {
+      "file": "official-mobile-light-link.png",
+      "sha256": "08e909e3c3f2eb0c72e17e5bb63cf7d6ce5558fdbb19538726730f4c24d27cdd"
+    },
+    {
+      "file": "official-mobile-light-dropdown.png",
+      "sha256": "4b434da4132eba768d720f5638ccef6063ff7517f7f4f5047d83c534e20e2626"
+    },
+    {
+      "file": "official-mobile-light-rtl.png",
+      "sha256": "c66c4218d0545ee39a74e254ef257266e58978deac27ef925b20ff0e969d061b"
+    },
+    {
+      "file": "official-mobile-light-menu-open.png",
+      "sha256": "55fe4c2cfd0fe6d12b0de9ecdc3f2f252facdf28d60a78017ddb85679ed1dbe3"
+    },
+    {
+      "file": "official-mobile-light-menu-keyboard.png",
+      "sha256": "81bc5d9044e1a15d990d80af5be2e4cade89450c759c7ab21f772d4566169699"
+    },
+    {
+      "file": "official-mobile-light-menu-selected.png",
+      "sha256": "d1380e75e08167a78629e327dcf3ae2c189a30119a4e3211366158f32a0f2dc5"
+    },
+    {
+      "file": "official-mobile-light-rtl-english.png",
+      "sha256": "e804743fe2c7096048b28b1f510ea446a065aa653ccfaad535f23ea5a938a437"
+    },
+    {
+      "file": "official-mobile-light-rtl-hebrew.png",
+      "sha256": "0f216762c962fdcb0793444c9807f5d78d744163d6eab4b43aef7d1219c55ffa"
+    },
+    {
+      "file": "official-mobile-light-rtl-arabic.png",
+      "sha256": "c66c4218d0545ee39a74e254ef257266e58978deac27ef925b20ff0e969d061b"
+    },
+    {
+      "file": "official-desktop-dark-demo.png",
+      "sha256": "90de718be3f3e3d0a7d3ccf50e165dc57ea4c7c37616f21790a963f9b4b86d2a"
+    },
+    {
+      "file": "official-desktop-dark-variant.png",
+      "sha256": "c5a4a66ba9d6f9a9a2d97e0cad167ad1c8f79010441c4b1afef2aebb78e92424"
+    },
+    {
+      "file": "official-desktop-dark-size.png",
+      "sha256": "655b1ead4c81f6241f5b5f0d9f8b36e522c583f16975fc4e6ef8b92fb66319d1"
+    },
+    {
+      "file": "official-desktop-dark-icon.png",
+      "sha256": "136fb008672806dbc18174de77ce17ee262bb63141810d5c6bc39e29189a0895"
+    },
+    {
+      "file": "official-desktop-dark-avatar.png",
+      "sha256": "739d551fec2e1e8633f971a4a26256d344b43c36018a4f4d8421243c3872261f"
+    },
+    {
+      "file": "official-desktop-dark-image.png",
+      "sha256": "2062052fae5c9fb6c4b04e8e2e102e6c7dfac7721cc8ccd29dc21ec7a5972cf2"
+    },
+    {
+      "file": "official-desktop-dark-group.png",
+      "sha256": "fde418e5e11167b3d096a8e837d8d0aa4011601dd87b62b16767beacba52b4c5"
+    },
+    {
+      "file": "official-desktop-dark-header.png",
+      "sha256": "2146f6ed4e9aa422bd54c44b8da545df24f89aed7401223694c69e46523053a4"
+    },
+    {
+      "file": "official-desktop-dark-link.png",
+      "sha256": "d03abc9f0072ee37fc93bb9cd04ff495355d17fe6bab3e23c316746f356a34c3"
+    },
+    {
+      "file": "official-desktop-dark-dropdown.png",
+      "sha256": "5e69eb68706911f04350a81c894b6b51ca575851307d053a0c08ef44d677565f"
+    },
+    {
+      "file": "official-desktop-dark-rtl.png",
+      "sha256": "5895ac632ff30c1ff6419822254658a73c2415c4771e9e617d85e5898f064229"
+    },
+    {
+      "file": "official-desktop-dark-menu-open.png",
+      "sha256": "e5fdc339c5e1a11d506fa62c5f77a8077e9e2d0da94126905d80e70c91fd7756"
+    },
+    {
+      "file": "official-desktop-dark-menu-keyboard.png",
+      "sha256": "0cffd468395169dd59189776a1580b9b60048a60991deea0d6b89790ee8f6c12"
+    },
+    {
+      "file": "official-desktop-dark-menu-selected.png",
+      "sha256": "c88a3a2dd228fb0418cd17fa67e57dd642a45fce28dcbd2493922e6fcb168ac7"
+    },
+    {
+      "file": "official-desktop-dark-rtl-english.png",
+      "sha256": "c6e398a67a1eda3f10c32c8dc4a87a79ecf28c9c8c53c5d8b5e5617afb3613bf"
+    },
+    {
+      "file": "official-desktop-dark-rtl-hebrew.png",
+      "sha256": "8fdf6d38ce43caa0d1afd46f2dfb93c2d2679c3eb018762e3cb8d671e23c2727"
+    },
+    {
+      "file": "official-desktop-dark-rtl-arabic.png",
+      "sha256": "86e0762769df69e325e04b649794c0aecb8a500ab6fe125447feb24d331a81e8"
+    },
+    {
+      "file": "official-mobile-dark-demo.png",
+      "sha256": "c54285477d2ec44830cc5eb89820737aed15f10efbdab3881730c174b417ee5d"
+    },
+    {
+      "file": "official-mobile-dark-variant.png",
+      "sha256": "1fc0b99694caafdc8a92815c82d707a23f81319d9069db334c68db589d51f8ad"
+    },
+    {
+      "file": "official-mobile-dark-size.png",
+      "sha256": "066b5283036e7e4675d588a2dd8e4e42ef94651683fc925792212029e4972177"
+    },
+    {
+      "file": "official-mobile-dark-icon.png",
+      "sha256": "50418ea14370059a1b61b435ccb0cf5d02b9c4b7b575327fdd76f5f26e7753b7"
+    },
+    {
+      "file": "official-mobile-dark-avatar.png",
+      "sha256": "47d2bd476007c325de98255ab2c74e87a978bf2dbbb1dc5a38f9f9d51f273345"
+    },
+    {
+      "file": "official-mobile-dark-image.png",
+      "sha256": "32b2d36e50f99345aa34ae366a616d04592e50b1f00cb8d88293214cb81c3b65"
+    },
+    {
+      "file": "official-mobile-dark-group.png",
+      "sha256": "df694e756966ba10344f488f891af2ba02676c0c470a043ea7efba2242aa0275"
+    },
+    {
+      "file": "official-mobile-dark-header.png",
+      "sha256": "f70e5b92e75f0c257fe8188f0e0fd23fb85e8903ff1ef69e5a91838ecd7f6207"
+    },
+    {
+      "file": "official-mobile-dark-link.png",
+      "sha256": "0f2e42ac7ecf1ca6aaeba3c00cb8bbdf5ff09fad18717643ed984d5ded72a2c4"
+    },
+    {
+      "file": "official-mobile-dark-dropdown.png",
+      "sha256": "5b6220c77cce147fc6615388f49c93096054843614284d3bc24e31e4aa83755a"
+    },
+    {
+      "file": "official-mobile-dark-rtl.png",
+      "sha256": "95387f67da61e5a76781e7dcc3037dde6f00591a1b3b9007d84478c5bac234dd"
+    },
+    {
+      "file": "official-mobile-dark-menu-open.png",
+      "sha256": "ee3f0fc9d045e293b4969d4aa06f4bea0050895603f549f51e52e48ab7f20708"
+    },
+    {
+      "file": "official-mobile-dark-menu-keyboard.png",
+      "sha256": "7fe7a3911dc499b5980e2bef45377d69ed477c0a123cc6fe9023c0f12627c559"
+    },
+    {
+      "file": "official-mobile-dark-menu-selected.png",
+      "sha256": "40bcf54b3fe81171890501370958941c4438fb03909ece0d2060a41b1492fd68"
+    },
+    {
+      "file": "official-mobile-dark-rtl-english.png",
+      "sha256": "6e47e772af732c5c95b4e56903a266b152021a923f01ca2ab5a8af2aad34958f"
+    },
+    {
+      "file": "official-mobile-dark-rtl-hebrew.png",
+      "sha256": "f8610e272d3f0a3095c0d9fb59c0428df881af09da22af64cb28bbbf711623db"
+    },
+    {
+      "file": "official-mobile-dark-rtl-arabic.png",
+      "sha256": "95387f67da61e5a76781e7dcc3037dde6f00591a1b3b9007d84478c5bac234dd"
+    },
+    {
+      "file": "local-desktop-light-demo.png",
+      "sha256": "9c86de3462854ec1dc69a2e37dd74456130afe474dc9aabda92fb2834e3ba9d0"
+    },
+    {
+      "file": "local-desktop-light-variant.png",
+      "sha256": "a9607ccc6a7b3f3f0919d5620e4f2dbc64b965bc826e3580f1c90bafd7c4782c"
+    },
+    {
+      "file": "local-desktop-light-size.png",
+      "sha256": "4922a63c08ffd4d7c9572765145ae7bebeb2f21107e957923c7894c063e9022f"
+    },
+    {
+      "file": "local-desktop-light-icon.png",
+      "sha256": "4be6d8768162059b825e912216fcafcd0d4b0fce88f79411c1387b1a4650a6d7"
+    },
+    {
+      "file": "local-desktop-light-avatar.png",
+      "sha256": "125d21aa5cf506455cfa9a12c959b0c878d97e7b023ca8e469434c43277cec98"
+    },
+    {
+      "file": "local-desktop-light-image.png",
+      "sha256": "7fb598524aeea16ffc7bdcd73c1df7dbced387ae7260df5bbb1ac851f82f4960"
+    },
+    {
+      "file": "local-desktop-light-group.png",
+      "sha256": "c203d02e8bc1d0c817e274eb629c37e1c90e404e61e4d7620099a457547c9c4b"
+    },
+    {
+      "file": "local-desktop-light-header.png",
+      "sha256": "22494d00e5d438f421288b586656f941595972f5dba4923e35194343eff9bdec"
+    },
+    {
+      "file": "local-desktop-light-link.png",
+      "sha256": "79d536a9fda8611358fab9751ee7c8af0debd0a5308e7c5b88741418b7178d99"
+    },
+    {
+      "file": "local-desktop-light-dropdown.png",
+      "sha256": "1caabb653eace420b01ea4a6333d10d12fcb2899640c3e551c0a725b988e61ba"
+    },
+    {
+      "file": "local-desktop-light-rtl.png",
+      "sha256": "008a482eaa3fa7c2e9ac106d1b51bdec5228d29df2b70a3b746264b228fd6a5e"
+    },
+    {
+      "file": "local-desktop-light-menu-open.png",
+      "sha256": "d43a9fdaefc6b9a4c53e063351e8e0bfec1d5e61f68e078f16eefc3433076456"
+    },
+    {
+      "file": "local-desktop-light-menu-keyboard.png",
+      "sha256": "dedd31211edae7d7961de1bb987181d1714d7ad6202e82ba25b039780c233c43"
+    },
+    {
+      "file": "local-desktop-light-menu-selected.png",
+      "sha256": "72e4f2e477f2c7bcdc9d9bdc6eb2c5609f9bfbd61238c2456e972b5e7c160fbb"
+    },
+    {
+      "file": "local-desktop-light-rtl-english.png",
+      "sha256": "ed1c7c606f9e6b8fc128599111f1783ea6ccf9c5a9d8986ddbc0e606603ab2ce"
+    },
+    {
+      "file": "local-desktop-light-rtl-hebrew.png",
+      "sha256": "4d0ad52112c64289084fe5914fdf192c3b968d4f176cdb8c3867d9e7f635234f"
+    },
+    {
+      "file": "local-desktop-light-rtl-arabic.png",
+      "sha256": "08fe468feda77c0b5802f6f044b6814d7002897e9b867ead00a33e46675827a2"
+    },
+    {
+      "file": "local-mobile-light-demo.png",
+      "sha256": "a540a991bdfaa1a8768cbbd522e6e42c62dc68a47328a703b147db60e49330f2"
+    },
+    {
+      "file": "local-mobile-light-variant.png",
+      "sha256": "393ae7484e5193f5725720c67b5a56b30f36372dbf2d5a1e0ee375613ef4addb"
+    },
+    {
+      "file": "local-mobile-light-size.png",
+      "sha256": "b4b4dec22814b1a11c401fac080ac29596a5461808016180224561a4a3eabb9b"
+    },
+    {
+      "file": "local-mobile-light-icon.png",
+      "sha256": "0a8e913e01a6ad7ca1428edaa31ed16c55d45341db9a8baa95bdae01d32ebb5e"
+    },
+    {
+      "file": "local-mobile-light-avatar.png",
+      "sha256": "6b3d58544fc76cfaee10aa13c9e8ce5708e48180193e54a274e1683b9900b2e1"
+    },
+    {
+      "file": "local-mobile-light-image.png",
+      "sha256": "88dce33cffdc59f651e8e648d96901b9e83eb5010790df44dda07b38ddb785bb"
+    },
+    {
+      "file": "local-mobile-light-group.png",
+      "sha256": "5d53d8ba9dbf944ad4a9e6d3391065d20d860a84c0d2aab2e3326cb42cdcf5f0"
+    },
+    {
+      "file": "local-mobile-light-header.png",
+      "sha256": "b860f99d0290d5b151dac2d63b65036c2d1fb8b2b7a2de9054e370909fb06496"
+    },
+    {
+      "file": "local-mobile-light-link.png",
+      "sha256": "8a01a3cd79c0d1e9ad4e5d0b72467d475dee88a7744621e9ef5b89cb9074671a"
+    },
+    {
+      "file": "local-mobile-light-dropdown.png",
+      "sha256": "0fe819a8d1db27ae82791204e484f5ba19539e7f0d3e56a25ed0640204c11967"
+    },
+    {
+      "file": "local-mobile-light-rtl.png",
+      "sha256": "9698470e711f3f9370e8309080387b331e7a5a92642ba46019698f1956e70cf8"
+    },
+    {
+      "file": "local-mobile-light-menu-open.png",
+      "sha256": "e02429305ffe6cec79b49b4d1c4426c141552128f09795ee095921d1eaa5589c"
+    },
+    {
+      "file": "local-mobile-light-menu-keyboard.png",
+      "sha256": "501e2b45585aeff139aab09575e5b6ef6d07a7ccce8c6f97191a6147c7930550"
+    },
+    {
+      "file": "local-mobile-light-menu-selected.png",
+      "sha256": "6edd17cda1974dea20c5e54a78f811c9b11f4fcb5d2067f2a272b392484ea90f"
+    },
+    {
+      "file": "local-mobile-light-rtl-english.png",
+      "sha256": "3217575d434168f9a703ff7bbafa877efdf5feb6541d3b3d6ccad6932db84fec"
+    },
+    {
+      "file": "local-mobile-light-rtl-hebrew.png",
+      "sha256": "27232084b3aa87c5de68a33662c113561d1769fbf4db63b5daedd01af373d438"
+    },
+    {
+      "file": "local-mobile-light-rtl-arabic.png",
+      "sha256": "189e8ccc1309a85f2cb2b78ecad90f4257ee1d528196e51b26e7383f76120426"
+    },
+    {
+      "file": "local-desktop-dark-demo.png",
+      "sha256": "59cd371e6a48f28b866339f9c2f73af16f1c6d9bd867cd37c41a576ed9507ca8"
+    },
+    {
+      "file": "local-desktop-dark-variant.png",
+      "sha256": "5e4fa2069b0b66a02224a459739dc841d97ae5b0c3421bf5325fbb264ba547c5"
+    },
+    {
+      "file": "local-desktop-dark-size.png",
+      "sha256": "e093409f1586829a26548df80136c85ecfb8b099ef911cd91ea4fd10c02f4211"
+    },
+    {
+      "file": "local-desktop-dark-icon.png",
+      "sha256": "c7eff425e66ed90d113365f665cdc57a053fb4bd74b08ef661f0781421efacd3"
+    },
+    {
+      "file": "local-desktop-dark-avatar.png",
+      "sha256": "733571a3f0e3c5ab816d312aa89f345cfa152c29abec1f0ac202d94330a63bd0"
+    },
+    {
+      "file": "local-desktop-dark-image.png",
+      "sha256": "31d6af906e37f2433ebc09d3402beaf8d564f93a7eae005edd0c094d2683dfdb"
+    },
+    {
+      "file": "local-desktop-dark-group.png",
+      "sha256": "5276ed5eb5183c6f0022d768b96162e43e28f20d0e02a87333c3f9e12b098814"
+    },
+    {
+      "file": "local-desktop-dark-header.png",
+      "sha256": "963c63a61ed9b12855d20d139f62a9ba3f13d1e84b1f560299c56c7287f739f7"
+    },
+    {
+      "file": "local-desktop-dark-link.png",
+      "sha256": "156f5938d0a839095164deac14f1a2fa9ce2bd439bdd250e1c8673701aafe3bb"
+    },
+    {
+      "file": "local-desktop-dark-dropdown.png",
+      "sha256": "0bafffab23fe3588607386eeee6c0f13139cb59852115a7ec1b47ba96ae725f9"
+    },
+    {
+      "file": "local-desktop-dark-rtl.png",
+      "sha256": "49067b15eb56580191f414ecd7ee96c2a7efb823e278d7625aed1e3844775f35"
+    },
+    {
+      "file": "local-desktop-dark-menu-open.png",
+      "sha256": "69455b8281b91ba86c2ef3ed60568542158f5f840318ed02343cd872b1133bcf"
+    },
+    {
+      "file": "local-desktop-dark-menu-keyboard.png",
+      "sha256": "137eafb3a76812b12ebcdf1104e7cd080f73bcd6566672cf1e83433001b69d73"
+    },
+    {
+      "file": "local-desktop-dark-menu-selected.png",
+      "sha256": "29f8eb886a7bacc97de335214c17e5de415577533c5401dcf1226bf9aa63dd03"
+    },
+    {
+      "file": "local-desktop-dark-rtl-english.png",
+      "sha256": "c381b89f7f2d158e47eb7313aa3e4d59927b36c5c5b17e5377020d994965d2bc"
+    },
+    {
+      "file": "local-desktop-dark-rtl-hebrew.png",
+      "sha256": "8e481569b2c3733a5ac56eb095d0f80b3f8535bd1358a90b2e79c7219ca0c9b1"
+    },
+    {
+      "file": "local-desktop-dark-rtl-arabic.png",
+      "sha256": "a460595c5a207ba938e0f60126c89904d0c8d71f8c2dc2a6e9209a5d3b58a23b"
+    },
+    {
+      "file": "local-mobile-dark-demo.png",
+      "sha256": "0fa5e6b3d785e3d8be2d419bf0b220b24813aa572008d46aaa99fea73287d0be"
+    },
+    {
+      "file": "local-mobile-dark-variant.png",
+      "sha256": "154ed99644cb4cf465a2a3d25830940cc82afe59372fa22a3249f6361c0b1787"
+    },
+    {
+      "file": "local-mobile-dark-size.png",
+      "sha256": "8ea86a98c00a2a50be3f0a1d09029c97ec4f26a93ead30b6836c79374c8588e4"
+    },
+    {
+      "file": "local-mobile-dark-icon.png",
+      "sha256": "454a8e64e5e148b489e7d446ceafb4935904259e97d134c2b83b24a5f685a8d6"
+    },
+    {
+      "file": "local-mobile-dark-avatar.png",
+      "sha256": "6dd62ce3c56f9c0c90a0a421da1c38a287b8403b3bab85ef06ea970a2d83857f"
+    },
+    {
+      "file": "local-mobile-dark-image.png",
+      "sha256": "ef2963286b67b9a9e37ae3817d42a240b76b2656a87db252a3f4c46c3813b438"
+    },
+    {
+      "file": "local-mobile-dark-group.png",
+      "sha256": "a162c1614793999ce30e46744ffc972482e7364a16beec3efbd69f42a9e8b7c9"
+    },
+    {
+      "file": "local-mobile-dark-header.png",
+      "sha256": "61dde58c1d1c414814be5de6daf83fd1b2ea9d8f5a216335fffb393d59101cdd"
+    },
+    {
+      "file": "local-mobile-dark-link.png",
+      "sha256": "07cdb4bb0e1abcf8f28ead9d1062515bcc1e68d2b9e6c43e1e50bf49cf747c96"
+    },
+    {
+      "file": "local-mobile-dark-dropdown.png",
+      "sha256": "d0d99461c83b54a1c190df2d65519d9f06f1ece9d8a4177a65e1836b586dd684"
+    },
+    {
+      "file": "local-mobile-dark-rtl.png",
+      "sha256": "4c46ee9ce07893f782e52e612fc104c35806d816c9f118c0acdccacf37af22a8"
+    },
+    {
+      "file": "local-mobile-dark-menu-open.png",
+      "sha256": "a6353948f5f013c97ab788b1904634c5a5240055c0fdd2651d0f20680a03ed33"
+    },
+    {
+      "file": "local-mobile-dark-menu-keyboard.png",
+      "sha256": "90f86fd108646f497104e6d6f75f177b26da35834503479e0f04d2e171f5fc59"
+    },
+    {
+      "file": "local-mobile-dark-menu-selected.png",
+      "sha256": "3fda69a2e071439c9f099aa59935844f289ea7d800f2190c5061185b7351bff8"
+    },
+    {
+      "file": "local-mobile-dark-rtl-english.png",
+      "sha256": "abea1c67ab2833963e9c846a0f229cca6669d3a7eb17318b6f5a0d24260f09e7"
+    },
+    {
+      "file": "local-mobile-dark-rtl-hebrew.png",
+      "sha256": "7aa4b0d8c743d81bacdb9c7882f4b729b5e8ab68bd54fbd3f7a1fc783aa406d5"
+    },
+    {
+      "file": "local-mobile-dark-rtl-arabic.png",
+      "sha256": "5f12e3f35c5169d718b7a9235f62cbe34d5767a4f7d94704e7bc20fe6b772f16"
+    }
+  ]
+}

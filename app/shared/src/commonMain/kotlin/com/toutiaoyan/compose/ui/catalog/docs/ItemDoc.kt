@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.Style
-import androidx.compose.foundation.style.contentPadding
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,7 +16,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
-import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.*
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
@@ -163,6 +162,7 @@ val itemDoc =
                     listOf(
                         ApiProperty("text", "String / AnnotatedString", "Required"),
                         ApiProperty("textStyle", "TextStyle", "Default"),
+                        ApiProperty("maxLines", "Int", "Int.MAX_VALUE; use 1 for ellipsis"),
                         ApiProperty("modifier / style", "Modifier / Style", "Default"),
                     ),
                 ),
@@ -547,7 +547,7 @@ val itemDoc =
                                         ItemTitle(buildAnnotatedString {
                                             append(song[0] + " - ")
                                             withStyle(SpanStyle(color = muted)) { append(song[2]) }
-                                        })
+                                        }, maxLines = 1)
                                         ItemDescription(song[1])
                                     }
                                     ItemContent(fill = false) { ItemDescription(song[3], textStyle = TextStyle(textAlign = TextAlign.Center)) }
@@ -585,6 +585,7 @@ val itemDoc =
                                                 append(song[0] + " - ")
                                                 withStyle(SpanStyle(color = muted)) { append(song[2]) }
                                             },
+                                            maxLines = 1,
                                         )
                                         ItemDescription(song[1])
                                     }
@@ -804,7 +805,7 @@ val itemDoc =
                                 DropdownMenuGroup {
                                     listOf("shadcn", "maxleiter", "evilrabbit").forEach { user ->
                                         DropdownMenuItem(label = user, onClick = {}) {
-                                            Item(size = ItemSize.Xs, style = Style { contentPadding(8.dp) }) {
+                                            Item(size = ItemSize.Xs) {
                                                 ItemMedia { ItemDemoPhoto(user, size = 26.dp) }
                                                 ItemContent(spacing = 0.dp) {
                                                     ItemTitle(user)
@@ -856,7 +857,7 @@ val itemDoc =
                                 DropdownMenuGroup {
                                     listOf("shadcn", "maxleiter", "evilrabbit").forEach { user ->
                                         DropdownMenuItem(label = user, onClick = {}) {
-                                            Item(size = ItemSize.Xs, style = Style { contentPadding(8.dp) }) {
+                                            Item(size = ItemSize.Xs) {
                                                 ItemMedia { ItemDemoPhoto(user, size = 26.dp) }
                                                 ItemContent(spacing = 0.dp) {
                                                     ItemTitle(user)
@@ -880,102 +881,23 @@ val itemDoc =
                 ),
                 ComponentExample(
                     title = "RTL",
-                    descriptionMarkdown = "Set the layout direction for the selected language.",
+                    descriptionMarkdown = "Switch the preview language to change the copy and layout direction.",
                     minPreviewHeight = 352.dp,
                     mobileMinPreviewHeight = 352.dp,
                     previewPadding = 0.dp,
-                    code =
-                        """
-                        // 0 English, 1 Arabic, 2 Hebrew. Connect this state to your language picker.
-                        var language by remember { mutableStateOf(1) }
-                        val t = itemTranslations[language]
-                        CompositionLocalProvider(LocalLayoutDirection provides if (language == 0) LayoutDirection.Ltr else LayoutDirection.Rtl) {
-                            Column(Modifier.widthIn(max = 448.dp).fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(24.dp)) {
-                                Item(variant = ItemVariant.Outline) {
-                                    ItemContent { ItemTitle(t.getValue("basicItem")); ItemDescription(t.getValue("basicItemDesc")) }
-                                    ItemActions { Button(t.getValue("action"), onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Sm) }
-                                }
-                                Item(variant = ItemVariant.Outline, size = ItemSize.Sm, href = "#") {
-                                    ItemMedia { ItemDemoGlyph(Lucide.BadgeCheck, 20.dp) }
-                                    ItemContent { ItemTitle(t.getValue("verifiedTitle")) }
-                                    ItemActions { ItemDemoGlyph(Lucide.ChevronRight) }
-                                }
-                            }
-                        }
-
-                        @Composable
-                        private fun ItemDemoGlyph(image: ImageVector, size: Dp = 16.dp) {
-                            val color = LocalContentColor.current.takeIf { it.isSpecified } ?: currentTheme.colors.foreground
-                            Image(image, null, Modifier.size(size), colorFilter = ColorFilter.tint(color))
-                        }
-
-                        private val itemTranslations = listOf(
-                            mapOf(
-                                "basicItem" to "Basic Item",
-                                "basicItemDesc" to "A simple item with title and description.",
-                                "action" to "Action",
-                                "verifiedTitle" to "Your profile has been verified."
-                            ),
-                            mapOf(
-                                "basicItem" to "عنصر أساسي",
-                                "basicItemDesc" to "عنصر بسيط يحتوي على عنوان ووصف.",
-                                "action" to "إجراء",
-                                "verifiedTitle" to "تم التحقق من ملفك الشخصي."
-                            ),
-                            mapOf(
-                                "basicItem" to "פריט בסיסי",
-                                "basicItemDesc" to "פריט פשוט עם כותרת ותיאור.",
-                                "action" to "פעולה",
-                                "verifiedTitle" to "הפרופיל שלך אומת."
-                            )
-                        )
-                        """.trimIndent(),
+                    code = itemRtlRecipeCode,
                     preview = {
-                        var language by remember { mutableStateOf(1) }
-                        RtlPreview(language, listOf("English", "العربية", "עברית"), { language = it }) {
-                            Box(Modifier.fillMaxWidth().heightIn(min = 288.dp), contentAlignment = Alignment.Center) {
-                                val t = itemTranslations[language]
-                                CompositionLocalProvider(
-                                    LocalLayoutDirection provides
-                                        if (language == 0) {
-                                            LayoutDirection.Ltr
-                                        } else {
-                                            LayoutDirection.Rtl
-                                        },
-                                ) {
-                                    Column(
-                                        Modifier.widthIn(
-                                            max =
-                                                448.dp,
-                                        ).fillMaxWidth(),
-                                        verticalArrangement =
-                                            Arrangement.spacedBy(24.dp),
-                                    ) {
-                                        Item(variant = ItemVariant.Outline) {
-                                            ItemContent {
-                                                ItemTitle(t.getValue("basicItem"))
-                                                ItemDescription(t.getValue("basicItemDesc"))
-                                            }
-                                            ItemActions {
-                                                Button(
-                                                    t.getValue("action"),
-                                                    onClick =
-                                                        {},
-                                                    variant =
-                                                        ButtonVariant.Outline,
-                                                    size =
-                                                        ButtonSize.Sm,
-                                                )
-                                            }
-                                        }
-                                        Item(variant = ItemVariant.Outline, size = ItemSize.Sm, href = "#") {
-                                            ItemMedia { ItemDemoGlyph(Lucide.BadgeCheck, 20.dp) }
-                                            ItemContent { ItemTitle(t.getValue("verifiedTitle")) }
-                                            ItemActions { ItemDemoGlyph(Lucide.ChevronRight) }
-                                        }
-                                    }
-                                }
-                            }
+                        var language by remember { mutableIntStateOf(1) }
+                        Column(Modifier.fillMaxWidth()) {
+                            RtlPreviewToolbar(
+                                language,
+                                listOf("English", "Arabic (العربية)", "Hebrew (עברית)"),
+                                { language = it },
+                            )
+                            Box(
+                                Modifier.testTag("item-rtl-body").fillMaxWidth().heightIn(min = 288.dp).padding(40.dp),
+                                contentAlignment = Alignment.Center,
+                            ) { ItemRtlRecipe(language) }
                         }
                     },
                 ),
@@ -1018,25 +940,3 @@ private fun ItemDemoPhoto(
         AvatarFallback(if (user == "evilrabbit") "ER" else user.take(1))
     }
 }
-
-private val itemTranslations =
-    listOf(
-        mapOf(
-            "basicItem" to "Basic Item",
-            "basicItemDesc" to "A simple item with title and description.",
-            "action" to "Action",
-            "verifiedTitle" to "Your profile has been verified.",
-        ),
-        mapOf(
-            "basicItem" to "عنصر أساسي",
-            "basicItemDesc" to "عنصر بسيط يحتوي على عنوان ووصف.",
-            "action" to "إجراء",
-            "verifiedTitle" to "تم التحقق من ملفك الشخصي.",
-        ),
-        mapOf(
-            "basicItem" to "פריט בסיסי",
-            "basicItemDesc" to "פריט פשוט עם כותרת ותיאור.",
-            "action" to "פעולה",
-            "verifiedTitle" to "הפרופיל שלך אומת.",
-        ),
-    )

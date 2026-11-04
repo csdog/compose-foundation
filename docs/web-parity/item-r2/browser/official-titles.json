@@ -1,0 +1,434 @@
+[
+  {
+    "text": "Basic Item",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "rect": {
+      "x": 78,
+      "y": 357.2109375,
+      "width": 68.671875,
+      "height": 19.25,
+      "top": 357.2109375,
+      "right": 146.671875,
+      "bottom": 376.4609375,
+      "left": 78
+    },
+    "display": "flex",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "Your profile has been verified.",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "rect": {
+      "x": 108,
+      "y": 468.4609375,
+      "width": 163,
+      "height": 38.5,
+      "top": 468.4609375,
+      "right": 271,
+      "bottom": 506.9609375,
+      "left": 108
+    },
+    "display": "flex",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "Default Variant",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "rect": {
+      "x": 104,
+      "y": 2871.34375,
+      "width": 98.1171875,
+      "height": 19.25,
+      "top": 2871.34375,
+      "right": 202.1171875,
+      "bottom": 2890.59375,
+      "left": 104
+    },
+    "display": "flex",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "Outline Variant",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "rect": {
+      "x": 104,
+      "y": 2982.59375,
+      "width": 97.90625,
+      "height": 19.25,
+      "top": 2982.59375,
+      "right": 201.90625,
+      "bottom": 3001.84375,
+      "left": 104
+    },
+    "display": "flex",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "Muted Variant",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "rect": {
+      "x": 104,
+      "y": 3093.84375,
+      "width": 92.125,
+      "height": 19.25,
+      "top": 3093.84375,
+      "right": 196.125,
+      "bottom": 3113.09375,
+      "left": 104
+    },
+    "display": "flex",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "Default Size",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "rect": {
+      "x": 104,
+      "y": 3597.0234375,
+      "width": 79.4921875,
+      "height": 19.25,
+      "top": 3597.0234375,
+      "right": 183.4921875,
+      "bottom": 3616.2734375,
+      "left": 104
+    },
+    "display": "flex",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "Small Size",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "rect": {
+      "x": 104,
+      "y": 3708.2734375,
+      "width": 68.4453125,
+      "height": 19.25,
+      "top": 3708.2734375,
+      "right": 172.4453125,
+      "bottom": 3727.5234375,
+      "left": 104
+    },
+    "display": "flex",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "Extra Small Size",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "rect": {
+      "x": 100,
+      "y": 3817.5234375,
+      "width": 106.4375,
+      "height": 19.25,
+      "top": 3817.5234375,
+      "right": 206.4375,
+      "bottom": 3836.7734375,
+      "left": 100
+    },
+    "display": "flex",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "Security Alert",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "rect": {
+      "x": 104,
+      "y": 4320.8828125,
+      "width": 89.8671875,
+      "height": 19.25,
+      "top": 4320.8828125,
+      "right": 193.8671875,
+      "bottom": 4340.1328125,
+      "left": 104
+    },
+    "display": "flex",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "Evil Rabbit",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "rect": {
+      "x": 128,
+      "y": 4869.3125,
+      "width": 69.5703125,
+      "height": 19.25,
+      "top": 4869.3125,
+      "right": 197.5703125,
+      "bottom": 4888.5625,
+      "left": 128
+    },
+    "display": "flex",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "No Team Members",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "rect": {
+      "x": 120,
+      "y": 4980.5625,
+      "width": 111.921875,
+      "height": 38.5,
+      "top": 4980.5625,
+      "right": 231.921875,
+      "bottom": 5019.0625,
+      "left": 120
+    },
+    "display": "flex",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "Midnight City Lights - Electric Nights",
+    "classes": "w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4 line-clamp-1",
+    "rect": {
+      "x": 128,
+      "y": 5476.4921875,
+      "width": 129.1640625,
+      "height": 19.25,
+      "top": 5476.4921875,
+      "right": 257.1640625,
+      "bottom": 5495.7421875,
+      "left": 128
+    },
+    "display": "flow-root",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "Coffee Shop Conversations - Urban Stories",
+    "classes": "w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4 line-clamp-1",
+    "rect": {
+      "x": 128,
+      "y": 5558.7421875,
+      "width": 128.4609375,
+      "height": 19.25,
+      "top": 5558.7421875,
+      "right": 256.4609375,
+      "bottom": 5577.9921875,
+      "left": 128
+    },
+    "display": "flow-root",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "Digital Rain - Binary Beats",
+    "classes": "w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4 line-clamp-1",
+    "rect": {
+      "x": 128,
+      "y": 5640.9921875,
+      "width": 128.390625,
+      "height": 19.25,
+      "top": 5640.9921875,
+      "right": 256.390625,
+      "bottom": 5660.2421875,
+      "left": 128
+    },
+    "display": "flow-root",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "shadcn",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "rect": {
+      "x": 120,
+      "y": 6063.1015625,
+      "width": 47.703125,
+      "height": 19.25,
+      "top": 6063.1015625,
+      "right": 167.703125,
+      "bottom": 6082.3515625,
+      "left": 120
+    },
+    "display": "flex",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "maxleiter",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "rect": {
+      "x": 120,
+      "y": 6145.3515625,
+      "width": 61.5234375,
+      "height": 19.25,
+      "top": 6145.3515625,
+      "right": 181.5234375,
+      "bottom": 6164.6015625,
+      "left": 120
+    },
+    "display": "flex",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "evilrabbit",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "rect": {
+      "x": 120,
+      "y": 6269.6015625,
+      "width": 61.1328125,
+      "height": 19.25,
+      "top": 6269.6015625,
+      "right": 181.1328125,
+      "bottom": 6288.8515625,
+      "left": 120
+    },
+    "display": "flex",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "v0-1.5-sm",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "rect": {
+      "x": 78,
+      "y": 6885.7734375,
+      "width": 66.09375,
+      "height": 19.25,
+      "top": 6885.7734375,
+      "right": 144.09375,
+      "bottom": 6905.0234375,
+      "left": 78
+    },
+    "display": "flex",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "v0-1.5-lg",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "rect": {
+      "x": 165,
+      "y": 6885.7734375,
+      "width": 58.6875,
+      "height": 19.25,
+      "top": 6885.7734375,
+      "right": 223.6875,
+      "bottom": 6905.0234375,
+      "left": 165
+    },
+    "display": "flex",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "v0-2.0-mini",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "rect": {
+      "x": 252,
+      "y": 6871.3359375,
+      "width": 60.984375,
+      "height": 38.5,
+      "top": 6871.3359375,
+      "right": 312.984375,
+      "bottom": 6909.8359375,
+      "left": 252
+    },
+    "display": "flex",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "Visit our documentation",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "rect": {
+      "x": 78,
+      "y": 7496.5859375,
+      "width": 156.03125,
+      "height": 19.25,
+      "top": 7496.5859375,
+      "right": 234.03125,
+      "bottom": 7515.8359375,
+      "left": 78
+    },
+    "display": "flex",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "External resource",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "rect": {
+      "x": 78,
+      "y": 7599.8359375,
+      "width": 114.8984375,
+      "height": 19.25,
+      "top": 7599.8359375,
+      "right": 192.8984375,
+      "bottom": 7619.0859375,
+      "left": 78
+    },
+    "display": "flex",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "عنصر أساسي",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "rect": {
+      "x": 220.3203125,
+      "y": 8953.984375,
+      "width": 76.6796875,
+      "height": 19.25,
+      "top": 8953.984375,
+      "right": 297,
+      "bottom": 8973.234375,
+      "left": 220.3203125
+    },
+    "display": "flex",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  },
+  {
+    "text": "تم التحقق من ملفك الشخصي.",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "rect": {
+      "x": 104,
+      "y": 9065.234375,
+      "width": 163,
+      "height": 38.5,
+      "top": 9065.234375,
+      "right": 267,
+      "bottom": 9103.734375,
+      "left": 104
+    },
+    "display": "flex",
+    "clamp": "1",
+    "overflow": "hidden",
+    "whiteSpace": "normal"
+  }
+]

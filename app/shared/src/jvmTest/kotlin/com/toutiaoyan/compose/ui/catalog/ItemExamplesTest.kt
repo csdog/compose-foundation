@@ -157,7 +157,7 @@ class ItemExamplesTest {
         rule.onNodeWithText("English").performClick()
         assertTrue(left("Action") > left("Basic Item"))
         rule.onNodeWithContentDescription("Preview language").performClick()
-        rule.onNodeWithText("עברית").performClick()
+        rule.onNodeWithText("Hebrew (עברית)").performClick()
         rule.onNodeWithText("פריט בסיסי").assertIsDisplayed()
         assertTrue(left("פעולה") < left("פריט בסיסי"))
         rule.onNodeWithText("הפרופיל שלך אומת.").performClick()

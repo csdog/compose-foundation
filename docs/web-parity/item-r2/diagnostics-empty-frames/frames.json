@@ -1,0 +1,10 @@
+{
+  "frames": [
+    "local-desktop-light-image.png",
+    "local-mobile-dark-avatar.png",
+    "local-desktop-light-dropdown.png",
+    "local-desktop-dark-dropdown.png",
+    "local-desktop-dark-icon.png"
+  ],
+  "note": "Earlier static acquisition; empty captures excluded from final acceptance and recaptured. Root dimensions alone did not establish painted content."
+}

@@ -1,0 +1,12 @@
+{
+  "officialBefore": "https://ui.shadcn.com/docs/components/base/item#link",
+  "officialAfter": "https://ui.shadcn.com/docs/components/base/item#",
+  "officialScroll": 0,
+  "localBefore": "http://127.0.0.1:8765/item#link",
+  "outcome": {
+    "popup": true,
+    "label": "p3",
+    "url": "http://127.0.0.1:8765/item#",
+    "parentAfter": "http://127.0.0.1:8765/item#link"
+  }
+}

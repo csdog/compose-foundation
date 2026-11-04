@@ -124,6 +124,8 @@ internal class DropdownMenuController(
 
 private val LocalDropdownMenu = staticCompositionLocalOf<DropdownMenuController?> { null }
 
+internal val LocalDropdownMenuContent = staticCompositionLocalOf { false }
+
 internal val LocalDropdownMenuItemChecked = staticCompositionLocalOf<Boolean?> { null }
 
 internal val LocalDropdownMenuItemIndeterminate = staticCompositionLocalOf { false }
@@ -326,6 +328,7 @@ fun DropdownMenuScope.DropdownMenuContent(
             exit = exit,
         ) {
             CompositionLocalProvider(
+                LocalDropdownMenuContent provides true,
                 LocalContextMenuNova provides nova,
                 LocalMenuEscapeLayers provides escapeLayers,
                 LocalMenuEscapeDepth provides 0,

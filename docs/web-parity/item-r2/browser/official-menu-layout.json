@@ -1,0 +1,427 @@
+[
+  {
+    "slot": "dropdown-menu-group",
+    "text": "shadcnshadcn@vercel.commaxleitermaxleiter@vercel.comevilrabbitevilrabbit@vercel.com",
+    "classes": "",
+    "padding": "0px",
+    "font": "16px / 24px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 568,
+      "y": 299,
+      "width": 184,
+      "height": 123.75,
+      "top": 299,
+      "right": 752,
+      "bottom": 422.75,
+      "left": 568
+    }
+  },
+  {
+    "slot": "dropdown-menu-item",
+    "text": "shadcnshadcn@vercel.com",
+    "classes": "group/dropdown-menu-item relative flex cursor-default items-center gap-1.5 rounded-md px-1.5 py-1 text-sm outline-hidden select-none focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-inset:pl-7 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 data-[variant=destructive]:focus:text-destructive dark:data-[variant=destructive]:focus:bg-destructive/20 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-destructive",
+    "padding": "4px 6px",
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 568,
+      "y": 299,
+      "width": 184,
+      "height": 41.25,
+      "top": 299,
+      "right": 752,
+      "bottom": 340.25,
+      "left": 568
+    }
+  },
+  {
+    "slot": "item",
+    "text": "shadcnshadcn@vercel.com",
+    "classes": "group/item flex flex-wrap items-center rounded-lg border text-sm transition-colors duration-100 outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [a]:transition-colors [a]:hover:bg-muted border-transparent gap-2 in-data-[slot=dropdown-menu-content]:p-0 w-full p-2",
+    "padding": "0px",
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 574,
+      "y": 303,
+      "width": 172,
+      "height": 33.25,
+      "top": 303,
+      "right": 746,
+      "bottom": 336.25,
+      "left": 574
+    }
+  },
+  {
+    "slot": "item-media",
+    "text": "",
+    "classes": "flex shrink-0 items-center justify-center gap-2 group-has-data-[slot=item-description]/item:translate-y-0.5 group-has-data-[slot=item-description]/item:self-start [&_svg]:pointer-events-none bg-transparent",
+    "padding": "0px",
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 575,
+      "y": 306,
+      "width": 26,
+      "height": 26,
+      "top": 306,
+      "right": 601,
+      "bottom": 332,
+      "left": 575
+    }
+  },
+  {
+    "slot": "avatar",
+    "text": "",
+    "classes": "group/avatar relative flex shrink-0 rounded-full select-none after:absolute after:inset-0 after:rounded-full after:border after:border-border after:mix-blend-darken data-[size=lg]:size-10 data-[size=sm]:size-6 dark:after:mix-blend-lighten size-[--spacing(6.5)]",
+    "padding": "0px",
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 575,
+      "y": 306,
+      "width": 26,
+      "height": 26,
+      "top": 306,
+      "right": 601,
+      "bottom": 332,
+      "left": 575
+    }
+  },
+  {
+    "slot": "avatar-image",
+    "text": "",
+    "classes": "aspect-square size-full rounded-full object-cover grayscale",
+    "padding": "0px",
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 575,
+      "y": 306,
+      "width": 26,
+      "height": 26,
+      "top": 306,
+      "right": 601,
+      "bottom": 332,
+      "left": 575
+    }
+  },
+  {
+    "slot": "item-content",
+    "text": "shadcnshadcn@vercel.com",
+    "classes": "flex flex-1 flex-col group-data-[size=xs]/item:gap-0 [&+[data-slot=item-content]]:flex-none gap-0",
+    "padding": "0px",
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 609,
+      "y": 304,
+      "width": 136,
+      "height": 31.25,
+      "top": 304,
+      "right": 745,
+      "bottom": 335.25,
+      "left": 609
+    }
+  },
+  {
+    "slot": "item-title",
+    "text": "shadcn",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "padding": "0px",
+    "font": "500 14px / 19.25px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 609,
+      "y": 304,
+      "width": 47.703125,
+      "height": 19.25,
+      "top": 304,
+      "right": 656.703125,
+      "bottom": 323.25,
+      "left": 609
+    }
+  },
+  {
+    "slot": "item-description",
+    "text": "shadcn@vercel.com",
+    "classes": "line-clamp-2 text-left text-sm font-normal text-muted-foreground group-data-[size=xs]/item:text-xs [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary leading-none",
+    "padding": "0px",
+    "font": "12px / 12px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 609,
+      "y": 323.25,
+      "width": 136,
+      "height": 12,
+      "top": 323.25,
+      "right": 745,
+      "bottom": 335.25,
+      "left": 609
+    }
+  },
+  {
+    "slot": "dropdown-menu-item",
+    "text": "maxleitermaxleiter@vercel.com",
+    "classes": "group/dropdown-menu-item relative flex cursor-default items-center gap-1.5 rounded-md px-1.5 py-1 text-sm outline-hidden select-none focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-inset:pl-7 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 data-[variant=destructive]:focus:text-destructive dark:data-[variant=destructive]:focus:bg-destructive/20 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-destructive",
+    "padding": "4px 6px",
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 568,
+      "y": 340.25,
+      "width": 184,
+      "height": 41.25,
+      "top": 340.25,
+      "right": 752,
+      "bottom": 381.5,
+      "left": 568
+    }
+  },
+  {
+    "slot": "item",
+    "text": "maxleitermaxleiter@vercel.com",
+    "classes": "group/item flex flex-wrap items-center rounded-lg border text-sm transition-colors duration-100 outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [a]:transition-colors [a]:hover:bg-muted border-transparent gap-2 in-data-[slot=dropdown-menu-content]:p-0 w-full p-2",
+    "padding": "0px",
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 574,
+      "y": 344.25,
+      "width": 172,
+      "height": 33.25,
+      "top": 344.25,
+      "right": 746,
+      "bottom": 377.5,
+      "left": 574
+    }
+  },
+  {
+    "slot": "item-media",
+    "text": "",
+    "classes": "flex shrink-0 items-center justify-center gap-2 group-has-data-[slot=item-description]/item:translate-y-0.5 group-has-data-[slot=item-description]/item:self-start [&_svg]:pointer-events-none bg-transparent",
+    "padding": "0px",
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 575,
+      "y": 347.25,
+      "width": 26,
+      "height": 26,
+      "top": 347.25,
+      "right": 601,
+      "bottom": 373.25,
+      "left": 575
+    }
+  },
+  {
+    "slot": "avatar",
+    "text": "",
+    "classes": "group/avatar relative flex shrink-0 rounded-full select-none after:absolute after:inset-0 after:rounded-full after:border after:border-border after:mix-blend-darken data-[size=lg]:size-10 data-[size=sm]:size-6 dark:after:mix-blend-lighten size-[--spacing(6.5)]",
+    "padding": "0px",
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 575,
+      "y": 347.25,
+      "width": 26,
+      "height": 26,
+      "top": 347.25,
+      "right": 601,
+      "bottom": 373.25,
+      "left": 575
+    }
+  },
+  {
+    "slot": "avatar-image",
+    "text": "",
+    "classes": "aspect-square size-full rounded-full object-cover grayscale",
+    "padding": "0px",
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 575,
+      "y": 347.25,
+      "width": 26,
+      "height": 26,
+      "top": 347.25,
+      "right": 601,
+      "bottom": 373.25,
+      "left": 575
+    }
+  },
+  {
+    "slot": "item-content",
+    "text": "maxleitermaxleiter@vercel.com",
+    "classes": "flex flex-1 flex-col group-data-[size=xs]/item:gap-0 [&+[data-slot=item-content]]:flex-none gap-0",
+    "padding": "0px",
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 609,
+      "y": 345.25,
+      "width": 136,
+      "height": 31.25,
+      "top": 345.25,
+      "right": 745,
+      "bottom": 376.5,
+      "left": 609
+    }
+  },
+  {
+    "slot": "item-title",
+    "text": "maxleiter",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "padding": "0px",
+    "font": "500 14px / 19.25px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 609,
+      "y": 345.25,
+      "width": 61.5234375,
+      "height": 19.25,
+      "top": 345.25,
+      "right": 670.5234375,
+      "bottom": 364.5,
+      "left": 609
+    }
+  },
+  {
+    "slot": "item-description",
+    "text": "maxleiter@vercel.com",
+    "classes": "line-clamp-2 text-left text-sm font-normal text-muted-foreground group-data-[size=xs]/item:text-xs [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary leading-none",
+    "padding": "0px",
+    "font": "12px / 12px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 609,
+      "y": 364.5,
+      "width": 136,
+      "height": 12,
+      "top": 364.5,
+      "right": 745,
+      "bottom": 376.5,
+      "left": 609
+    }
+  },
+  {
+    "slot": "dropdown-menu-item",
+    "text": "evilrabbitevilrabbit@vercel.com",
+    "classes": "group/dropdown-menu-item relative flex cursor-default items-center gap-1.5 rounded-md px-1.5 py-1 text-sm outline-hidden select-none focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-inset:pl-7 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 data-[variant=destructive]:focus:text-destructive dark:data-[variant=destructive]:focus:bg-destructive/20 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-destructive",
+    "padding": "4px 6px",
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 568,
+      "y": 381.5,
+      "width": 184,
+      "height": 41.25,
+      "top": 381.5,
+      "right": 752,
+      "bottom": 422.75,
+      "left": 568
+    }
+  },
+  {
+    "slot": "item",
+    "text": "evilrabbitevilrabbit@vercel.com",
+    "classes": "group/item flex flex-wrap items-center rounded-lg border text-sm transition-colors duration-100 outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [a]:transition-colors [a]:hover:bg-muted border-transparent gap-2 in-data-[slot=dropdown-menu-content]:p-0 w-full p-2",
+    "padding": "0px",
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 574,
+      "y": 385.5,
+      "width": 172,
+      "height": 33.25,
+      "top": 385.5,
+      "right": 746,
+      "bottom": 418.75,
+      "left": 574
+    }
+  },
+  {
+    "slot": "item-media",
+    "text": "",
+    "classes": "flex shrink-0 items-center justify-center gap-2 group-has-data-[slot=item-description]/item:translate-y-0.5 group-has-data-[slot=item-description]/item:self-start [&_svg]:pointer-events-none bg-transparent",
+    "padding": "0px",
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 575,
+      "y": 388.5,
+      "width": 26,
+      "height": 26,
+      "top": 388.5,
+      "right": 601,
+      "bottom": 414.5,
+      "left": 575
+    }
+  },
+  {
+    "slot": "avatar",
+    "text": "",
+    "classes": "group/avatar relative flex shrink-0 rounded-full select-none after:absolute after:inset-0 after:rounded-full after:border after:border-border after:mix-blend-darken data-[size=lg]:size-10 data-[size=sm]:size-6 dark:after:mix-blend-lighten size-[--spacing(6.5)]",
+    "padding": "0px",
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 575,
+      "y": 388.5,
+      "width": 26,
+      "height": 26,
+      "top": 388.5,
+      "right": 601,
+      "bottom": 414.5,
+      "left": 575
+    }
+  },
+  {
+    "slot": "avatar-image",
+    "text": "",
+    "classes": "aspect-square size-full rounded-full object-cover grayscale",
+    "padding": "0px",
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 575,
+      "y": 388.5,
+      "width": 26,
+      "height": 26,
+      "top": 388.5,
+      "right": 601,
+      "bottom": 414.5,
+      "left": 575
+    }
+  },
+  {
+    "slot": "item-content",
+    "text": "evilrabbitevilrabbit@vercel.com",
+    "classes": "flex flex-1 flex-col group-data-[size=xs]/item:gap-0 [&+[data-slot=item-content]]:flex-none gap-0",
+    "padding": "0px",
+    "font": "14px / 20px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 609,
+      "y": 386.5,
+      "width": 136,
+      "height": 31.25,
+      "top": 386.5,
+      "right": 745,
+      "bottom": 417.75,
+      "left": 609
+    }
+  },
+  {
+    "slot": "item-title",
+    "text": "evilrabbit",
+    "classes": "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+    "padding": "0px",
+    "font": "500 14px / 19.25px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 609,
+      "y": 386.5,
+      "width": 61.1328125,
+      "height": 19.25,
+      "top": 386.5,
+      "right": 670.1328125,
+      "bottom": 405.75,
+      "left": 609
+    }
+  },
+  {
+    "slot": "item-description",
+    "text": "evilrabbit@vercel.com",
+    "classes": "line-clamp-2 text-left text-sm font-normal text-muted-foreground group-data-[size=xs]/item:text-xs [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary leading-none",
+    "padding": "0px",
+    "font": "12px / 12px Geist, \"Geist Fallback\"",
+    "rect": {
+      "x": 609,
+      "y": 405.75,
+      "width": 136,
+      "height": 12,
+      "top": 405.75,
+      "right": 745,
+      "bottom": 417.75,
+      "left": 609
+    }
+  }
+]

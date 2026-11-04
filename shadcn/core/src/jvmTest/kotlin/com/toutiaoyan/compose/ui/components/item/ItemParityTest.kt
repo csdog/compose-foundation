@@ -194,7 +194,7 @@ class ItemParityTest : ScreenshotTest() {
         assertEquals("", opened)
     }
 
-    @Test fun titleAndDescriptionUseTheOfficialLineClamps() {
+    @Test fun titleWrapsAndDescriptionKeepsTwoLines() {
         setThemedContent(stylePreset = StylePreset.Nova) {
             Item(Modifier.width(150.dp)) {
                 ItemContent {
@@ -221,15 +221,30 @@ class ItemParityTest : ScreenshotTest() {
                     "more than the two allowed lines of available width."
             ),
         ).performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(description) }
-        assertEquals(1, title.single().lineCount)
-        assertEquals(1, title.single().layoutInput.maxLines)
-        assertEquals(androidx.compose.ui.text.style.TextOverflow.Ellipsis, title.single().layoutInput.overflow)
+        assertTrue(title.single().lineCount > 1)
+        assertEquals(Int.MAX_VALUE, title.single().layoutInput.maxLines)
+        assertEquals(androidx.compose.ui.text.style.TextOverflow.Clip, title.single().layoutInput.overflow)
         assertEquals(124, title.single().layoutInput.constraints.maxWidth)
-        assertTrue(title.single().hasVisualOverflow)
+        assertFalse(title.single().hasVisualOverflow)
         assertEquals(2, description.single().lineCount)
         assertEquals(2, description.single().layoutInput.maxLines)
         assertEquals(androidx.compose.ui.text.style.TextOverflow.Ellipsis, description.single().layoutInput.overflow)
         assertTrue(description.single().hasVisualOverflow)
+    }
+
+    @Test fun explicitSingleLineTitleKeepsTheImageRecipeClamp() {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Item(Modifier.width(150.dp)) {
+                ItemContent { ItemTitle("A very long title that cannot fit in one line", maxLines = 1) }
+            }
+        }
+        val results = mutableListOf<TextLayoutResult>()
+        composeRule.onNodeWithText("A very long title that cannot fit in one line")
+            .performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(results) }
+        assertEquals(1, results.single().lineCount)
+        assertEquals(1, results.single().layoutInput.maxLines)
+        assertEquals(androidx.compose.ui.text.style.TextOverflow.Ellipsis, results.single().layoutInput.overflow)
+        assertTrue(results.single().hasVisualOverflow)
     }
 
     private fun nova(dark: Boolean) {
@@ -250,7 +265,7 @@ class ItemParityTest : ScreenshotTest() {
                 }
                 Item(Modifier.width(150.dp), variant = ItemVariant.Outline) {
                     ItemContent {
-                        ItemTitle("A very long title that cannot fit in one line")
+                        ItemTitle("A very long title that cannot fit in one line", maxLines = 1)
                         ItemDescription(
                             (
                                 "A long description with several words that should take many " +

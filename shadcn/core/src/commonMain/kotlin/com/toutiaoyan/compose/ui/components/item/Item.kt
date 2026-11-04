@@ -388,7 +388,8 @@ fun ItemTitle(
     modifier: Modifier = Modifier,
     style: Style = Style,
     textStyle: TextStyle = TextStyle.Default,
-) = ItemTitle(AnnotatedString(text), modifier, style, textStyle)
+    maxLines: Int = Int.MAX_VALUE,
+) = ItemTitle(AnnotatedString(text), modifier, style, textStyle, maxLines)
 
 @Composable
 fun ItemTitle(
@@ -396,14 +397,15 @@ fun ItemTitle(
     modifier: Modifier = Modifier,
     style: Style = Style,
     textStyle: TextStyle = TextStyle.Default,
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     val nova = currentTheme.activePreset == StylePreset.Nova
     Text(
         modifier = if (nova) modifier else modifier.semantics { heading() },
         variant = TextVariant.LabelLarge,
         style = style,
-        maxLines = if (nova) 1 else Int.MAX_VALUE,
-        overflow = if (nova) TextOverflow.Ellipsis else TextOverflow.Clip,
+        maxLines = maxLines,
+        overflow = if (maxLines == Int.MAX_VALUE) TextOverflow.Clip else TextOverflow.Ellipsis,
         textStyle =
             (
                 if (nova) {

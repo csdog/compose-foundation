@@ -1,0 +1,38 @@
+[
+  {
+    "file": "TEST-com.toutiaoyan.compose.ui.catalog.ItemExamplesTest.xml",
+    "tests": 8,
+    "failures": 0,
+    "errors": 0
+  },
+  {
+    "file": "TEST-com.toutiaoyan.compose.ui.catalog.ItemPageLayoutTest.xml",
+    "tests": 12,
+    "failures": 0,
+    "errors": 0
+  },
+  {
+    "file": "TEST-com.toutiaoyan.compose.ui.catalog.SpinnerExamplesTest.xml",
+    "tests": 7,
+    "failures": 0,
+    "errors": 0
+  },
+  {
+    "file": "TEST-com.toutiaoyan.compose.ui.catalog.SpinnerViewportTest.xml",
+    "tests": 8,
+    "failures": 0,
+    "errors": 0
+  },
+  {
+    "file": "TEST-com.toutiaoyan.compose.ui.components.item.ItemParityTest.xml",
+    "tests": 12,
+    "failures": 0,
+    "errors": 0
+  },
+  {
+    "file": "TEST-com.toutiaoyan.compose.ui.components.item.ItemScreenshotTest.xml",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0
+  }
+]

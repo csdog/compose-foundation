@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.tailwind.core.twSpacing
 import com.toutiaoyan.compose.ui.tokens.StylePreset
+import com.toutiaoyan.compose.ui.components.dropdownmenu.LocalDropdownMenuContent
 import com.toutiaoyan.compose.ui.styles.border
 import com.toutiaoyan.compose.ui.styles.focusRing
 import com.toutiaoyan.compose.ui.theme.currentTheme
@@ -24,10 +25,14 @@ enum class ItemSize { Default, Sm, Xs }
 @Composable
 fun ItemVariant.rememberStyle(size: ItemSize = ItemSize.Default): Style {
     val variant = this
-    return rememberTheme(variant, size) {
+    val inDropdown = LocalDropdownMenuContent.current
+    return rememberTheme(variant, size, inDropdown) {
         val nova = theme.activePreset == StylePreset.Nova
+        val compactDropdown = nova && size == ItemSize.Xs && inDropdown
         val padH =
-            if (nova) {
+            if (compactDropdown) {
+                0.dp
+            } else if (nova) {
                 if (size == ItemSize.Xs) 10.dp else 12.dp
             } else {
                 when (size) {
@@ -36,7 +41,9 @@ fun ItemVariant.rememberStyle(size: ItemSize = ItemSize.Default): Style {
                 }
             }
         val padV =
-            if (nova) {
+            if (compactDropdown) {
+                0.dp
+            } else if (nova) {
                 if (size == ItemSize.Xs) 8.dp else 10.dp
             } else {
                 when (size) {

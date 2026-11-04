@@ -1,0 +1,286 @@
+[
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "step": "keyboard-menu",
+    "dom": {
+      "active": "shadcnshadcn@vercel.com",
+      "items": [
+        {
+          "text": "shadcnshadcn@vercel.com",
+          "highlighted": true,
+          "rect": {
+            "x": 568,
+            "y": 299,
+            "width": 184,
+            "height": 41.25,
+            "top": 299,
+            "right": 752,
+            "bottom": 340.25,
+            "left": 568
+          }
+        },
+        {
+          "text": "maxleitermaxleiter@vercel.com",
+          "highlighted": false,
+          "rect": {
+            "x": 568,
+            "y": 340.25,
+            "width": 184,
+            "height": 41.25,
+            "top": 340.25,
+            "right": 752,
+            "bottom": 381.5,
+            "left": 568
+          }
+        },
+        {
+          "text": "evilrabbitevilrabbit@vercel.com",
+          "highlighted": false,
+          "rect": {
+            "x": 568,
+            "y": 381.5,
+            "width": 184,
+            "height": 41.25,
+            "top": 381.5,
+            "right": 752,
+            "bottom": 422.75,
+            "left": 568
+          }
+        }
+      ]
+    }
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "step": "rtl-english"
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "step": "rtl-hebrew"
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "step": "rtl-arabic"
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "step": "keyboard-menu",
+    "dom": {
+      "active": "shadcnshadcn@vercel.com",
+      "items": [
+        {
+          "text": "shadcnshadcn@vercel.com",
+          "highlighted": true,
+          "rect": {
+            "x": 43,
+            "y": 303.5,
+            "width": 184,
+            "height": 41.25,
+            "top": 303.5,
+            "right": 227,
+            "bottom": 344.75,
+            "left": 43
+          }
+        },
+        {
+          "text": "maxleitermaxleiter@vercel.com",
+          "highlighted": false,
+          "rect": {
+            "x": 43,
+            "y": 344.75,
+            "width": 184,
+            "height": 41.25,
+            "top": 344.75,
+            "right": 227,
+            "bottom": 386,
+            "left": 43
+          }
+        },
+        {
+          "text": "evilrabbitevilrabbit@vercel.com",
+          "highlighted": false,
+          "rect": {
+            "x": 43,
+            "y": 386,
+            "width": 184,
+            "height": 41.25,
+            "top": 386,
+            "right": 227,
+            "bottom": 427.25,
+            "left": 43
+          }
+        }
+      ]
+    }
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "step": "rtl-english"
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "step": "rtl-hebrew"
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "step": "rtl-arabic"
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "step": "keyboard-menu",
+    "dom": {
+      "active": "shadcnshadcn@vercel.com",
+      "items": [
+        {
+          "text": "shadcnshadcn@vercel.com",
+          "highlighted": true,
+          "rect": {
+            "x": 568,
+            "y": 299,
+            "width": 184,
+            "height": 41.25,
+            "top": 299,
+            "right": 752,
+            "bottom": 340.25,
+            "left": 568
+          }
+        },
+        {
+          "text": "maxleitermaxleiter@vercel.com",
+          "highlighted": false,
+          "rect": {
+            "x": 568,
+            "y": 340.25,
+            "width": 184,
+            "height": 41.25,
+            "top": 340.25,
+            "right": 752,
+            "bottom": 381.5,
+            "left": 568
+          }
+        },
+        {
+          "text": "evilrabbitevilrabbit@vercel.com",
+          "highlighted": false,
+          "rect": {
+            "x": 568,
+            "y": 381.5,
+            "width": 184,
+            "height": 41.25,
+            "top": 381.5,
+            "right": 752,
+            "bottom": 422.75,
+            "left": 568
+          }
+        }
+      ]
+    }
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "step": "rtl-english"
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "step": "rtl-hebrew"
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "step": "rtl-arabic"
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "step": "keyboard-menu",
+    "dom": {
+      "active": "shadcnshadcn@vercel.com",
+      "items": [
+        {
+          "text": "shadcnshadcn@vercel.com",
+          "highlighted": true,
+          "rect": {
+            "x": 43,
+            "y": 303.5,
+            "width": 184,
+            "height": 41.25,
+            "top": 303.5,
+            "right": 227,
+            "bottom": 344.75,
+            "left": 43
+          }
+        },
+        {
+          "text": "maxleitermaxleiter@vercel.com",
+          "highlighted": false,
+          "rect": {
+            "x": 43,
+            "y": 344.75,
+            "width": 184,
+            "height": 41.25,
+            "top": 344.75,
+            "right": 227,
+            "bottom": 386,
+            "left": 43
+          }
+        },
+        {
+          "text": "evilrabbitevilrabbit@vercel.com",
+          "highlighted": false,
+          "rect": {
+            "x": 43,
+            "y": 386,
+            "width": 184,
+            "height": 41.25,
+            "top": 386,
+            "right": 227,
+            "bottom": 427.25,
+            "left": 43
+          }
+        }
+      ]
+    }
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "step": "rtl-english"
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "step": "rtl-hebrew"
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "step": "rtl-arabic"
+  }
+]
