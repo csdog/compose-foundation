@@ -1,0 +1,12 @@
+[
+  {
+    "file": "PreviewCardPositioner.tsx",
+    "url": "https://raw.githubusercontent.com/mui/base-ui/v1.6.0/packages/react/src/preview-card/positioner/PreviewCardPositioner.tsx",
+    "sha256": "14cc4e1bac9d259b1e0d65a7cddb73b0205e6fd43148bf0e8bc1804d0c1e2c04"
+  },
+  {
+    "file": "useAnchorPositioning.ts",
+    "url": "https://raw.githubusercontent.com/mui/base-ui/v1.6.0/packages/react/src/utils/useAnchorPositioning.ts",
+    "sha256": "48e7b3cc2fc857f5a52bfe30fddabcd3e12939fc555269a0f0dc9bcda6429ee7"
+  }
+]

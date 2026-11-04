@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="HoverCardPositioningTest[jvm]" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-04T05:43:04.970Z" hostname="Apples-MacBook-Pro.local" time="0.001">
+  <properties/>
+  <testcase name="horizontalPlacementIsRetainedWhenThereIsRoom[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardPositioningTest" time="0.0"/>
+  <testcase name="crossAxisRespectsFivePixelViewportInset[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardPositioningTest" time="0.0"/>
+  <testcase name="horizontalBothSidesUnavailableFallsBackBelow[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardPositioningTest" time="0.0"/>
+  <testcase name="bottomCollisionFlipsAbove[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardPositioningTest" time="0.0"/>
+  <testcase name="rtlStartEndAndCenterOffsetsFollowTheLogicalCrossAxis[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardPositioningTest" time="0.0"/>
+  <testcase name="topCollisionFlipsBelow[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardPositioningTest" time="0.0"/>
+  <testcase name="explicitTriggerAnchorRetainsPlatformInsetNormalization[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardPositioningTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

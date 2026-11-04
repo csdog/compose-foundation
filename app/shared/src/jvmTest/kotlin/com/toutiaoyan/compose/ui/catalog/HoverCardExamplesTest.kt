@@ -88,7 +88,7 @@ class HoverCardExamplesTest {
         rule.onNodeWithText("Inline End").performMouseInput { exit(delayMillis = 0) }
         rule.mainClock.advanceTimeBy(400)
         rule.onNodeWithContentDescription("Preview language").performClick()
-        rule.onNodeWithText("עברית").performClick()
+        rule.onNodeWithText("Hebrew (עברית)").performClick()
         rule.onNodeWithText("תחילת השורה").assertIsDisplayed()
         hover("סוף השורה", "אוזניות אלחוטיות")
         rule.onNodeWithText("99.99 $").assertIsDisplayed()

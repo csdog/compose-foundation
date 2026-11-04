@@ -1,6 +1,6 @@
 package com.toutiaoyan.compose.ui.catalog.docs
 
-internal const val CatalogLibraryVersion = "0.3.34"
+internal const val CatalogLibraryVersion = "0.3.35"
 internal const val CatalogLibraryModule = "com.toutiaoyan.compose:ui"
 internal val catalogInstallationCode =
     """

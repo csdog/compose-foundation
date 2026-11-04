@@ -1,0 +1,684 @@
+{
+  "status": "not accepted as all-directions verification; screenshots may show stale popup or absent popup",
+  "selectedEvidence": [
+    "local-mobile-dark-rtl-ar-inline-end.png",
+    "local-mobile-light-rtl-ar-inline-start.png",
+    "local-desktop-dark-rtl-ar-bottom.png",
+    "local-desktop-dark-rtl-ar-top.png"
+  ],
+  "attempts": [
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "demo-open",
+      "trigger": {
+        "x": 713,
+        "y": 434
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 0,
+      "url": "http://127.0.0.1:8765/hover-card#",
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "basic-open",
+      "trigger": {
+        "x": 713,
+        "y": 268
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 2278.5,
+      "url": "http://127.0.0.1:8765/hover-card#basic",
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "sides-left",
+      "trigger": {
+        "x": 614,
+        "y": 284
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 2799.5,
+      "url": "http://127.0.0.1:8765/hover-card#sides",
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "sides-top",
+      "trigger": {
+        "x": 669,
+        "y": 284
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 2799.5,
+      "url": "http://127.0.0.1:8765/hover-card#sides",
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "sides-bottom",
+      "trigger": {
+        "x": 735,
+        "y": 284
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 2799.5,
+      "url": "http://127.0.0.1:8765/hover-card#sides",
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "sides-right",
+      "trigger": {
+        "x": 807,
+        "y": 284
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 2799.5,
+      "url": "http://127.0.0.1:8765/hover-card#sides",
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "rtl-ar-left",
+      "trigger": {
+        "x": 801,
+        "y": 350
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3352.5,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "rtl-ar-top",
+      "trigger": {
+        "x": 746,
+        "y": 350
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3352.5,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "rtl-ar-bottom",
+      "trigger": {
+        "x": 686,
+        "y": 350
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3352.5,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "rtl-ar-right",
+      "trigger": {
+        "x": 626,
+        "y": 350
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3352.5,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "rtl-ar-inline-start",
+      "trigger": {
+        "x": 761,
+        "y": 398
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3352.5,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "rtl-ar-inline-end",
+      "trigger": {
+        "x": 665,
+        "y": 398
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3352.5,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "demo-open",
+      "trigger": {
+        "x": 187,
+        "y": 457
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 0,
+      "url": "http://127.0.0.1:8765/hover-card#",
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "basic-open",
+      "trigger": {
+        "x": 187,
+        "y": 275
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 2506,
+      "url": "http://127.0.0.1:8765/hover-card#basic",
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "sides-left",
+      "trigger": {
+        "x": 89,
+        "y": 291
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3034.5,
+      "url": "http://127.0.0.1:8765/hover-card#sides",
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "sides-top",
+      "trigger": {
+        "x": 144,
+        "y": 291
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3034.5,
+      "url": "http://127.0.0.1:8765/hover-card#sides",
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "sides-bottom",
+      "trigger": {
+        "x": 210,
+        "y": 291
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3034.5,
+      "url": "http://127.0.0.1:8765/hover-card#sides",
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "sides-right",
+      "trigger": {
+        "x": 282,
+        "y": 291
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3034.5,
+      "url": "http://127.0.0.1:8765/hover-card#sides",
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "rtl-ar-left",
+      "trigger": {
+        "x": 276,
+        "y": 397
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3595,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "rtl-ar-top",
+      "trigger": {
+        "x": 221,
+        "y": 397
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3595,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "rtl-ar-bottom",
+      "trigger": {
+        "x": 161,
+        "y": 397
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3595,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "rtl-ar-right",
+      "trigger": {
+        "x": 101,
+        "y": 397
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3595,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "rtl-ar-inline-start",
+      "trigger": {
+        "x": 235,
+        "y": 445
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3595,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "rtl-ar-inline-end",
+      "trigger": {
+        "x": 139,
+        "y": 445
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3595,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "demo-open",
+      "trigger": {
+        "x": 713,
+        "y": 434
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 0,
+      "url": "http://127.0.0.1:8765/hover-card#",
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "basic-open",
+      "trigger": {
+        "x": 713,
+        "y": 268
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 2278.5,
+      "url": "http://127.0.0.1:8765/hover-card#basic",
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "sides-left",
+      "trigger": {
+        "x": 614,
+        "y": 284
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 2799.5,
+      "url": "http://127.0.0.1:8765/hover-card#sides",
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "sides-top",
+      "trigger": {
+        "x": 669,
+        "y": 284
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 2799.5,
+      "url": "http://127.0.0.1:8765/hover-card#sides",
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "sides-bottom",
+      "trigger": {
+        "x": 735,
+        "y": 284
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 2799.5,
+      "url": "http://127.0.0.1:8765/hover-card#sides",
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "sides-right",
+      "trigger": {
+        "x": 807,
+        "y": 284
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 2799.5,
+      "url": "http://127.0.0.1:8765/hover-card#sides",
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "rtl-ar-left",
+      "trigger": {
+        "x": 801,
+        "y": 350
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3352.5,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "rtl-ar-top",
+      "trigger": {
+        "x": 746,
+        "y": 350
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3352.5,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "rtl-ar-bottom",
+      "trigger": {
+        "x": 686,
+        "y": 350
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3352.5,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "rtl-ar-right",
+      "trigger": {
+        "x": 626,
+        "y": 350
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3352.5,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "rtl-ar-inline-start",
+      "trigger": {
+        "x": 761,
+        "y": 398
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3352.5,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "rtl-ar-inline-end",
+      "trigger": {
+        "x": 665,
+        "y": 398
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3352.5,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "demo-open",
+      "trigger": {
+        "x": 187,
+        "y": 457
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 0,
+      "url": "http://127.0.0.1:8765/hover-card#",
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "basic-open",
+      "trigger": {
+        "x": 187,
+        "y": 275
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 2506,
+      "url": "http://127.0.0.1:8765/hover-card#basic",
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "sides-left",
+      "trigger": {
+        "x": 89,
+        "y": 291
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3034.5,
+      "url": "http://127.0.0.1:8765/hover-card#sides",
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "sides-top",
+      "trigger": {
+        "x": 144,
+        "y": 291
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3034.5,
+      "url": "http://127.0.0.1:8765/hover-card#sides",
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "sides-bottom",
+      "trigger": {
+        "x": 210,
+        "y": 291
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3034.5,
+      "url": "http://127.0.0.1:8765/hover-card#sides",
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "sides-right",
+      "trigger": {
+        "x": 282,
+        "y": 291
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3034.5,
+      "url": "http://127.0.0.1:8765/hover-card#sides",
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "rtl-ar-left",
+      "trigger": {
+        "x": 276,
+        "y": 397
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3595,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "rtl-ar-top",
+      "trigger": {
+        "x": 221,
+        "y": 397
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3595,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "rtl-ar-bottom",
+      "trigger": {
+        "x": 161,
+        "y": 397
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3595,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "rtl-ar-right",
+      "trigger": {
+        "x": 101,
+        "y": 397
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3595,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "rtl-ar-inline-start",
+      "trigger": {
+        "x": 235,
+        "y": 445
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3595,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "rtl-ar-inline-end",
+      "trigger": {
+        "x": 139,
+        "y": 445
+      },
+      "pointerMethod": "CDP Input.dispatchMouseEvent (wrapper move unreliable)",
+      "scrollY": 3595,
+      "url": "http://127.0.0.1:8765/hover-card#rtl",
+      "theme": "light"
+    }
+  ],
+  "supersededStaticEvidence": "../../browser/local-isolated-matrix.json"
+}

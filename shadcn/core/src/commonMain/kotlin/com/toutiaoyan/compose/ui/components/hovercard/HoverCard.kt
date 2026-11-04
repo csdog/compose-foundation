@@ -27,7 +27,7 @@ import androidx.compose.foundation.style.styleable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.rememberUpdatedState
@@ -37,6 +37,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.unit.round
+import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.platform.LocalInputModeManager
@@ -68,8 +72,9 @@ import kotlinx.coroutines.delay
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
 
-@Immutable
+@Stable
 internal class HoverCardController(
+    val anchor: HoverCardAnchor,
     val open: Boolean,
     val onOpenChange: (Boolean) -> Unit,
     val onContentHoverChange: (Boolean) -> Unit,
@@ -171,6 +176,8 @@ fun HoverCard(
         if (!controlled) internalOpen = next
         onOpenChange?.invoke(next)
     }
+    val anchor = remember { HoverCardAnchor() }
+    var closeForFocusLoss by remember { mutableStateOf(false) }
     var triggerHovered by remember { mutableStateOf(false) }
     var triggerFocused by remember { mutableStateOf(false) }
     var contentHovered by remember { mutableStateOf(false) }
@@ -179,15 +186,17 @@ fun HoverCard(
     var triggerCloseDelay by remember { mutableStateOf<Int?>(null) }
     val keyboard = LocalInputModeManager.current.inputMode == InputMode.Keyboard
     val isActive =
-        !disabled && !triggerDisabled &&
+        !disabled && !triggerDisabled && !closeForFocusLoss &&
             (triggerHovered || (triggerFocused && keyboard) || (contentHovered && !disableHoverableContent))
     val resolvedDelay = triggerOpenDelay ?: openDelay ?: delayMillis ?: LocalHoverCardDelayMillis.current
     val resolvedClose = triggerCloseDelay ?: closeDelay ?: closeDelayMillis ?: LocalHoverCardCloseDelayMillis.current
     val latestSetOpen by rememberUpdatedState(setOpen)
     val latestOpen by rememberUpdatedState(isOpen)
     var hasBeenActive by remember { mutableStateOf(false) }
-    LaunchedEffect(isActive, resolvedDelay, resolvedClose) {
-        if (isActive) {
+    LaunchedEffect(isActive, resolvedDelay, resolvedClose, closeForFocusLoss) {
+        if (closeForFocusLoss) {
+            if (latestOpen) latestSetOpen(false)
+        } else if (isActive) {
             hasBeenActive = true
             if (resolvedDelay > 0) delay(resolvedDelay.toLong())
             if (!latestOpen) latestSetOpen(true)
@@ -198,12 +207,20 @@ fun HoverCard(
     }
     val controller =
         HoverCardController(
+            anchor = anchor,
             open = isOpen,
             onOpenChange = setOpen,
             onContentHoverChange = { contentHovered = it },
             onTriggerDisabledChange = { triggerDisabled = it },
-            onTriggerHoverChange = { triggerHovered = it },
-            onTriggerFocusChange = { triggerFocused = it },
+            onTriggerHoverChange = {
+                if (it && !triggerHovered) closeForFocusLoss = false
+                triggerHovered = it
+            },
+            onTriggerFocusChange = {
+                if (triggerFocused && !it) closeForFocusLoss = true
+                if (it) closeForFocusLoss = false
+                triggerFocused = it
+            },
             onTriggerDelayChange = { opening, closing ->
                 triggerOpenDelay = opening
                 triggerCloseDelay = closing
@@ -212,7 +229,10 @@ fun HoverCard(
     CompositionLocalProvider(LocalHoverCard provides controller) {
         Box(
             modifier =
-                modifier.onPreviewKeyEvent {
+                modifier.onGloballyPositioned {
+                    val bounds = it.boundsInWindow()
+                    anchor.root = IntRect(bounds.topLeft.round(), bounds.bottomRight.round())
+                }.onPreviewKeyEvent {
                     if (it.key == Key.Escape && it.type == KeyEventType.KeyDown && isOpen) {
                         setOpen(false)
                         true
@@ -254,6 +274,10 @@ fun HoverCardScope.HoverCardTrigger(
     Box(
         modifier =
             modifier
+                .onGloballyPositioned {
+                    val bounds = it.boundsInWindow()
+                    controller.anchor.trigger = IntRect(bounds.topLeft.round(), bounds.bottomRight.round())
+                }
                 .hoverable(interactionSource, enabled = !disabled)
                 .onFocusChanged { controller.onTriggerFocusChange(it.hasFocus) }
                 .semantics { stateDescription = if (controller.open) "Expanded" else "Collapsed" },
@@ -304,8 +328,9 @@ fun HoverCardScope.HoverCardContent(
         onDispose { controller.onContentHoverChange(false) }
     }
     HoverCardPortal {
-        AnchoredPopup(
+        HoverCardPopup(
             open = controller.open,
+            anchor = controller.anchor,
             onDismissRequest = {
                 if (dismissOnClickOutside) controller.onOpenChange(false)
             },
@@ -314,7 +339,6 @@ fun HoverCardScope.HoverCardContent(
             align = align,
             alignOffset = alignOffset,
             dismissOnClickOutside = dismissOnClickOutside,
-            focusable = false,
             enter = enter,
             exit = exit,
         ) {
@@ -339,6 +363,7 @@ fun HoverCardScope.HoverCardContent(
                                     LineHeightStyle(
                                         LineHeightStyle.Alignment.Center,
                                         LineHeightStyle.Trim.None,
+                                        LineHeightStyle.Mode.Tight,
                                     ),
                             )
                         } else {

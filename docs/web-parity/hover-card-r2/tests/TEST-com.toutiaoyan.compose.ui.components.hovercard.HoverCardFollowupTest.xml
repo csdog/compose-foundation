@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="HoverCardFollowupTest[jvm]" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-04T05:43:04.802Z" hostname="Apples-MacBook-Pro.local" time="0.167">
+  <properties/>
+  <testcase name="movingTriggerInsideFixedRootRepositionsOpenPopup[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardFollowupTest" time="0.039"/>
+  <testcase name="additionalRootContentDoesNotMoveThePopupAnchor[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardFollowupTest" time="0.033"/>
+  <testcase name="focusingContentDoesNotDismissItAndLeavingContentClosesImmediately[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardFollowupTest" time="0.05"/>
+  <testcase name="keyboardBlurClosesWithoutWaitingForHoverCloseDelay[jvm]" classname="com.toutiaoyan.compose.ui.components.hovercard.HoverCardFollowupTest" time="0.045"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-04",
+  "officialFinalCaptures": 80,
+  "localClosedCaptures": 16,
+  "localDefaultBasicOpenCaptures": 8,
+  "localIsolatedSideCaptures": 3,
+  "localFinalCaptures": 27,
+  "fullBrowserMatrixPassed": false,
+  "acceptedScope": [
+    "four viewport/theme closed recipes",
+    "Default/Basic open states",
+    "isolated desktop-light Left/Top and mobile-light Left: expected physical placement and 5px/bottom fallback"
+  ],
+  "notAccepted": [
+    "continuous direction-switch batch: absent or previous popup remains in some images; retained only as diagnostics",
+    "complete Hebrew/English local Web matrix not captured",
+    "fresh reload geometry wait: actual desktop Sides scroll2823 vs warm2799.5; typography/anchor stabilization diagnosis pending"
+  ],
+  "pointerMethod": "Ego wrapper and raw CDP attempts recorded; isolated CDP mobile Left succeeds, which does not prove every batch failure is wrapper-only",
+  "themeDynamic": false,
+  "touch": false
+}

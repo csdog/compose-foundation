@@ -1,0 +1,1938 @@
+[
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "demo-closed",
+    "scrollY": 0,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#",
+    "popup": []
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "demo-open",
+    "scrollY": 0,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#",
+    "popup": [
+      {
+        "text": "@nextjsThe React Framework – created and maintained by @vercel.Joined December 2021",
+        "rect": {
+          "x": 589,
+          "y": 447,
+          "width": 256,
+          "height": 104,
+          "top": 447,
+          "right": 845,
+          "bottom": 551,
+          "left": 589
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "basic-closed",
+    "scrollY": 2145,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#basic",
+    "popup": []
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "basic-open",
+    "scrollY": 2145,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#basic",
+    "popup": [
+      {
+        "text": "@nextjsThe React Framework – created and maintained by @vercel.Joined December 2021",
+        "rect": {
+          "x": 589,
+          "y": 311,
+          "width": 256,
+          "height": 104,
+          "top": 311,
+          "right": 845,
+          "bottom": 415,
+          "left": 589
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "sides-closed",
+    "scrollY": 2666,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#sides",
+    "popup": []
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "sides-left",
+    "scrollY": 2666,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#sides",
+    "popup": [
+      {
+        "text": "Hover CardThis hover card appears on the left side of the trigger.",
+        "rect": {
+          "x": 330,
+          "y": 269,
+          "width": 256,
+          "height": 84,
+          "top": 269,
+          "right": 586,
+          "bottom": 353,
+          "left": 330
+        },
+        "side": "left",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "sides-top",
+    "scrollY": 2666,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#sides",
+    "popup": [
+      {
+        "text": "Hover CardThis hover card appears on the top side of the trigger.",
+        "rect": {
+          "x": 545,
+          "y": 203,
+          "width": 256,
+          "height": 84,
+          "top": 203,
+          "right": 801,
+          "bottom": 287,
+          "left": 545
+        },
+        "side": "top",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "sides-bottom",
+    "scrollY": 2666,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#sides",
+    "popup": [
+      {
+        "text": "Hover CardThis hover card appears on the bottom side of the trigger.",
+        "rect": {
+          "x": 611,
+          "y": 327,
+          "width": 256,
+          "height": 84,
+          "top": 327,
+          "right": 867,
+          "bottom": 411,
+          "left": 611
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "sides-right",
+    "scrollY": 2666,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#sides",
+    "popup": [
+      {
+        "text": "Hover CardThis hover card appears on the right side of the trigger.",
+        "rect": {
+          "x": 839,
+          "y": 269,
+          "width": 256,
+          "height": 84,
+          "top": 269,
+          "right": 1095,
+          "bottom": 353,
+          "left": 839
+        },
+        "side": "right",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "rtl-closed",
+    "scrollY": 3151.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": []
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "rtl-ar-left",
+    "scrollY": 3151.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 517,
+          "y": 411.5,
+          "width": 256,
+          "height": 64,
+          "top": 411.5,
+          "right": 773,
+          "bottom": 475.5,
+          "left": 517
+        },
+        "side": "left",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "rtl-ar-top",
+    "scrollY": 3151.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 621,
+          "y": 355.5,
+          "width": 256,
+          "height": 64,
+          "top": 355.5,
+          "right": 877,
+          "bottom": 419.5,
+          "left": 621
+        },
+        "side": "top",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "rtl-ar-bottom",
+    "scrollY": 3151.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 562,
+          "y": 459.5,
+          "width": 256,
+          "height": 64,
+          "top": 459.5,
+          "right": 818,
+          "bottom": 523.5,
+          "left": 562
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "rtl-ar-right",
+    "scrollY": 3151.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 654,
+          "y": 411.5,
+          "width": 256,
+          "height": 64,
+          "top": 411.5,
+          "right": 910,
+          "bottom": 475.5,
+          "left": 654
+        },
+        "side": "right",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "rtl-ar-inline-start",
+    "scrollY": 3151.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 809,
+          "y": 459.5,
+          "width": 256,
+          "height": 64,
+          "top": 459.5,
+          "right": 1065,
+          "bottom": 523.5,
+          "left": 809
+        },
+        "side": "inline-start",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "rtl-ar-inline-end",
+    "scrollY": 3151.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 360,
+          "y": 459.5,
+          "width": 256,
+          "height": 64,
+          "top": 459.5,
+          "right": 616,
+          "bottom": 523.5,
+          "left": 360
+        },
+        "side": "inline-end",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "rtl-he-inline-start",
+    "scrollY": 3151.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "אוזניות אלחוטיות99.99 $",
+        "rect": {
+          "x": 818,
+          "y": 459.5,
+          "width": 256,
+          "height": 64,
+          "top": 459.5,
+          "right": 1074,
+          "bottom": 523.5,
+          "left": 818
+        },
+        "side": "inline-start",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "rtl-he-inline-end",
+    "scrollY": 3151.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "אוזניות אלחוטיות99.99 $",
+        "rect": {
+          "x": 351,
+          "y": 459.5,
+          "width": 256,
+          "height": 64,
+          "top": 459.5,
+          "right": 607,
+          "bottom": 523.5,
+          "left": 351
+        },
+        "side": "inline-end",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "rtl-en-inline-start",
+    "scrollY": 3151.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "Wireless Headphones$99.99",
+        "rect": {
+          "x": 358,
+          "y": 459.5,
+          "width": 256,
+          "height": 64,
+          "top": 459.5,
+          "right": 614,
+          "bottom": 523.5,
+          "left": 358
+        },
+        "side": "inline-start",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "rtl-en-inline-end",
+    "scrollY": 3151.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "Wireless Headphones$99.99",
+        "rect": {
+          "x": 811,
+          "y": 459.5,
+          "width": 256,
+          "height": 64,
+          "top": 459.5,
+          "right": 1067,
+          "bottom": 523.5,
+          "left": 811
+        },
+        "side": "inline-end",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "demo-closed",
+    "scrollY": 0,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#",
+    "popup": []
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "demo-open",
+    "scrollY": 0,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#",
+    "popup": [
+      {
+        "text": "@nextjsThe React Framework – created and maintained by @vercel.Joined December 2021",
+        "rect": {
+          "x": 64,
+          "y": 443,
+          "width": 256,
+          "height": 104,
+          "top": 443,
+          "right": 320,
+          "bottom": 547,
+          "left": 64
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "basic-closed",
+    "scrollY": 2417,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#basic",
+    "popup": []
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "basic-open",
+    "scrollY": 2417,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#basic",
+    "popup": [
+      {
+        "text": "@nextjsThe React Framework – created and maintained by @vercel.Joined December 2021",
+        "rect": {
+          "x": 64,
+          "y": 316,
+          "width": 256,
+          "height": 104,
+          "top": 316,
+          "right": 320,
+          "bottom": 420,
+          "left": 64
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "sides-closed",
+    "scrollY": 2944.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#sides",
+    "popup": []
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "sides-left",
+    "scrollY": 2944.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#sides",
+    "popup": [
+      {
+        "text": "Hover CardThis hover card appears on the left side of the trigger.",
+        "rect": {
+          "x": 5,
+          "y": 331.5,
+          "width": 256,
+          "height": 84,
+          "top": 331.5,
+          "right": 261,
+          "bottom": 415.5,
+          "left": 5
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "sides-top",
+    "scrollY": 2944.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#sides",
+    "popup": [
+      {
+        "text": "Hover CardThis hover card appears on the top side of the trigger.",
+        "rect": {
+          "x": 20,
+          "y": 207.5,
+          "width": 256,
+          "height": 84,
+          "top": 207.5,
+          "right": 276,
+          "bottom": 291.5,
+          "left": 20
+        },
+        "side": "top",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "sides-bottom",
+    "scrollY": 2944.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#sides",
+    "popup": [
+      {
+        "text": "Hover CardThis hover card appears on the bottom side of the trigger.",
+        "rect": {
+          "x": 86,
+          "y": 331.5,
+          "width": 256,
+          "height": 84,
+          "top": 331.5,
+          "right": 342,
+          "bottom": 415.5,
+          "left": 86
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "sides-right",
+    "scrollY": 2944.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#sides",
+    "popup": [
+      {
+        "text": "Hover CardThis hover card appears on the right side of the trigger.",
+        "rect": {
+          "x": 114,
+          "y": 331.5,
+          "width": 256,
+          "height": 84,
+          "top": 331.5,
+          "right": 370,
+          "bottom": 415.5,
+          "left": 114
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "rtl-closed",
+    "scrollY": 3504.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": []
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "rtl-ar-left",
+    "scrollY": 3504.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 113,
+          "y": 440.5,
+          "width": 256,
+          "height": 64,
+          "top": 440.5,
+          "right": 369,
+          "bottom": 504.5,
+          "left": 113
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "rtl-ar-top",
+    "scrollY": 3504.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 96,
+          "y": 336.5,
+          "width": 256,
+          "height": 64,
+          "top": 336.5,
+          "right": 352,
+          "bottom": 400.5,
+          "left": 96
+        },
+        "side": "top",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "rtl-ar-bottom",
+    "scrollY": 3504.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 37,
+          "y": 440.5,
+          "width": 256,
+          "height": 64,
+          "top": 440.5,
+          "right": 293,
+          "bottom": 504.5,
+          "left": 37
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "rtl-ar-right",
+    "scrollY": 3504.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 6,
+          "y": 440.5,
+          "width": 256,
+          "height": 64,
+          "top": 440.5,
+          "right": 262,
+          "bottom": 504.5,
+          "left": 6
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "rtl-ar-inline-start",
+    "scrollY": 3504.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 112,
+          "y": 488.5,
+          "width": 256,
+          "height": 64,
+          "top": 488.5,
+          "right": 368,
+          "bottom": 552.5,
+          "left": 112
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "rtl-ar-inline-end",
+    "scrollY": 3504.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 16,
+          "y": 488.5,
+          "width": 256,
+          "height": 64,
+          "top": 488.5,
+          "right": 272,
+          "bottom": 552.5,
+          "left": 16
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "rtl-he-inline-start",
+    "scrollY": 3504.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "אוזניות אלחוטיות99.99 $",
+        "rect": {
+          "x": 112,
+          "y": 508.5,
+          "width": 256,
+          "height": 64,
+          "top": 508.5,
+          "right": 368,
+          "bottom": 572.5,
+          "left": 112
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "rtl-he-inline-end",
+    "scrollY": 3504.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "אוזניות אלחוטיות99.99 $",
+        "rect": {
+          "x": 6,
+          "y": 508.5,
+          "width": 256,
+          "height": 64,
+          "top": 508.5,
+          "right": 262,
+          "bottom": 572.5,
+          "left": 6
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "rtl-en-inline-start",
+    "scrollY": 3504.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "Wireless Headphones$99.99",
+        "rect": {
+          "x": 16,
+          "y": 488.5,
+          "width": 256,
+          "height": 64,
+          "top": 488.5,
+          "right": 272,
+          "bottom": 552.5,
+          "left": 16
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "rtl-en-inline-end",
+    "scrollY": 3504.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "Wireless Headphones$99.99",
+        "rect": {
+          "x": 114,
+          "y": 488.5,
+          "width": 256,
+          "height": 64,
+          "top": 488.5,
+          "right": 370,
+          "bottom": 552.5,
+          "left": 114
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "demo-closed",
+    "scrollY": 0,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#",
+    "popup": []
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "demo-open",
+    "scrollY": 0,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#",
+    "popup": [
+      {
+        "text": "@nextjsThe React Framework – created and maintained by @vercel.Joined December 2021",
+        "rect": {
+          "x": 589,
+          "y": 447,
+          "width": 256,
+          "height": 104,
+          "top": 447,
+          "right": 845,
+          "bottom": 551,
+          "left": 589
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "basic-closed",
+    "scrollY": 2145,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#basic",
+    "popup": []
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "basic-open",
+    "scrollY": 2145,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#basic",
+    "popup": [
+      {
+        "text": "@nextjsThe React Framework – created and maintained by @vercel.Joined December 2021",
+        "rect": {
+          "x": 589,
+          "y": 311,
+          "width": 256,
+          "height": 104,
+          "top": 311,
+          "right": 845,
+          "bottom": 415,
+          "left": 589
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "sides-closed",
+    "scrollY": 2666,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#sides",
+    "popup": []
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "sides-left",
+    "scrollY": 2666,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#sides",
+    "popup": [
+      {
+        "text": "Hover CardThis hover card appears on the left side of the trigger.",
+        "rect": {
+          "x": 330,
+          "y": 269,
+          "width": 256,
+          "height": 84,
+          "top": 269,
+          "right": 586,
+          "bottom": 353,
+          "left": 330
+        },
+        "side": "left",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "sides-top",
+    "scrollY": 2666,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#sides",
+    "popup": [
+      {
+        "text": "Hover CardThis hover card appears on the top side of the trigger.",
+        "rect": {
+          "x": 545,
+          "y": 203,
+          "width": 256,
+          "height": 84,
+          "top": 203,
+          "right": 801,
+          "bottom": 287,
+          "left": 545
+        },
+        "side": "top",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "sides-bottom",
+    "scrollY": 2666,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#sides",
+    "popup": [
+      {
+        "text": "Hover CardThis hover card appears on the bottom side of the trigger.",
+        "rect": {
+          "x": 611,
+          "y": 327,
+          "width": 256,
+          "height": 84,
+          "top": 327,
+          "right": 867,
+          "bottom": 411,
+          "left": 611
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "sides-right",
+    "scrollY": 2666,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#sides",
+    "popup": [
+      {
+        "text": "Hover CardThis hover card appears on the right side of the trigger.",
+        "rect": {
+          "x": 839,
+          "y": 269,
+          "width": 256,
+          "height": 84,
+          "top": 269,
+          "right": 1095,
+          "bottom": 353,
+          "left": 839
+        },
+        "side": "right",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "rtl-closed",
+    "scrollY": 3151.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": []
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "rtl-ar-left",
+    "scrollY": 3151.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 517,
+          "y": 411.5,
+          "width": 256,
+          "height": 64,
+          "top": 411.5,
+          "right": 773,
+          "bottom": 475.5,
+          "left": 517
+        },
+        "side": "left",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "rtl-ar-top",
+    "scrollY": 3151.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 621,
+          "y": 355.5,
+          "width": 256,
+          "height": 64,
+          "top": 355.5,
+          "right": 877,
+          "bottom": 419.5,
+          "left": 621
+        },
+        "side": "top",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "rtl-ar-bottom",
+    "scrollY": 3151.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 562,
+          "y": 459.5,
+          "width": 256,
+          "height": 64,
+          "top": 459.5,
+          "right": 818,
+          "bottom": 523.5,
+          "left": 562
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "rtl-ar-right",
+    "scrollY": 3151.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 654,
+          "y": 411.5,
+          "width": 256,
+          "height": 64,
+          "top": 411.5,
+          "right": 910,
+          "bottom": 475.5,
+          "left": 654
+        },
+        "side": "right",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "rtl-ar-inline-start",
+    "scrollY": 3151.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 809,
+          "y": 459.5,
+          "width": 256,
+          "height": 64,
+          "top": 459.5,
+          "right": 1065,
+          "bottom": 523.5,
+          "left": 809
+        },
+        "side": "inline-start",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "rtl-ar-inline-end",
+    "scrollY": 3151.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 360,
+          "y": 459.5,
+          "width": 256,
+          "height": 64,
+          "top": 459.5,
+          "right": 616,
+          "bottom": 523.5,
+          "left": 360
+        },
+        "side": "inline-end",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "rtl-he-inline-start",
+    "scrollY": 3151.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "אוזניות אלחוטיות99.99 $",
+        "rect": {
+          "x": 818,
+          "y": 459.5,
+          "width": 256,
+          "height": 64,
+          "top": 459.5,
+          "right": 1074,
+          "bottom": 523.5,
+          "left": 818
+        },
+        "side": "inline-start",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "rtl-he-inline-end",
+    "scrollY": 3151.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "אוזניות אלחוטיות99.99 $",
+        "rect": {
+          "x": 351,
+          "y": 459.5,
+          "width": 256,
+          "height": 64,
+          "top": 459.5,
+          "right": 607,
+          "bottom": 523.5,
+          "left": 351
+        },
+        "side": "inline-end",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "rtl-en-inline-start",
+    "scrollY": 3151.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "Wireless Headphones$99.99",
+        "rect": {
+          "x": 358,
+          "y": 459.5,
+          "width": 256,
+          "height": 64,
+          "top": 459.5,
+          "right": 614,
+          "bottom": 523.5,
+          "left": 358
+        },
+        "side": "inline-start",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "rtl-en-inline-end",
+    "scrollY": 3151.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "Wireless Headphones$99.99",
+        "rect": {
+          "x": 811,
+          "y": 459.5,
+          "width": 256,
+          "height": 64,
+          "top": 459.5,
+          "right": 1067,
+          "bottom": 523.5,
+          "left": 811
+        },
+        "side": "inline-end",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "demo-closed",
+    "scrollY": 0,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#",
+    "popup": []
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "demo-open",
+    "scrollY": 0,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#",
+    "popup": [
+      {
+        "text": "@nextjsThe React Framework – created and maintained by @vercel.Joined December 2021",
+        "rect": {
+          "x": 64,
+          "y": 443,
+          "width": 256,
+          "height": 104,
+          "top": 443,
+          "right": 320,
+          "bottom": 547,
+          "left": 64
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "basic-closed",
+    "scrollY": 2417,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#basic",
+    "popup": []
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "basic-open",
+    "scrollY": 2417,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#basic",
+    "popup": [
+      {
+        "text": "@nextjsThe React Framework – created and maintained by @vercel.Joined December 2021",
+        "rect": {
+          "x": 64,
+          "y": 316,
+          "width": 256,
+          "height": 104,
+          "top": 316,
+          "right": 320,
+          "bottom": 420,
+          "left": 64
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "sides-closed",
+    "scrollY": 2944.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#sides",
+    "popup": []
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "sides-left",
+    "scrollY": 2944.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#sides",
+    "popup": [
+      {
+        "text": "Hover CardThis hover card appears on the left side of the trigger.",
+        "rect": {
+          "x": 5,
+          "y": 331.5,
+          "width": 256,
+          "height": 84,
+          "top": 331.5,
+          "right": 261,
+          "bottom": 415.5,
+          "left": 5
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "sides-top",
+    "scrollY": 2944.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#sides",
+    "popup": [
+      {
+        "text": "Hover CardThis hover card appears on the top side of the trigger.",
+        "rect": {
+          "x": 20,
+          "y": 207.5,
+          "width": 256,
+          "height": 84,
+          "top": 207.5,
+          "right": 276,
+          "bottom": 291.5,
+          "left": 20
+        },
+        "side": "top",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "sides-bottom",
+    "scrollY": 2944.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#sides",
+    "popup": [
+      {
+        "text": "Hover CardThis hover card appears on the bottom side of the trigger.",
+        "rect": {
+          "x": 86,
+          "y": 331.5,
+          "width": 256,
+          "height": 84,
+          "top": 331.5,
+          "right": 342,
+          "bottom": 415.5,
+          "left": 86
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "sides-right",
+    "scrollY": 2944.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#sides",
+    "popup": [
+      {
+        "text": "Hover CardThis hover card appears on the right side of the trigger.",
+        "rect": {
+          "x": 114,
+          "y": 331.5,
+          "width": 256,
+          "height": 84,
+          "top": 331.5,
+          "right": 370,
+          "bottom": 415.5,
+          "left": 114
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "rtl-closed",
+    "scrollY": 3504.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": []
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "rtl-ar-left",
+    "scrollY": 3504.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 113,
+          "y": 440.5,
+          "width": 256,
+          "height": 64,
+          "top": 440.5,
+          "right": 369,
+          "bottom": 504.5,
+          "left": 113
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "rtl-ar-top",
+    "scrollY": 3504.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 96,
+          "y": 336.5,
+          "width": 256,
+          "height": 64,
+          "top": 336.5,
+          "right": 352,
+          "bottom": 400.5,
+          "left": 96
+        },
+        "side": "top",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "rtl-ar-bottom",
+    "scrollY": 3504.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 37,
+          "y": 440.5,
+          "width": 256,
+          "height": 64,
+          "top": 440.5,
+          "right": 293,
+          "bottom": 504.5,
+          "left": 37
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "rtl-ar-right",
+    "scrollY": 3504.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 6,
+          "y": 440.5,
+          "width": 256,
+          "height": 64,
+          "top": 440.5,
+          "right": 262,
+          "bottom": 504.5,
+          "left": 6
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "rtl-ar-inline-start",
+    "scrollY": 3504.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 112,
+          "y": 488.5,
+          "width": 256,
+          "height": 64,
+          "top": 488.5,
+          "right": 368,
+          "bottom": 552.5,
+          "left": 112
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "rtl-ar-inline-end",
+    "scrollY": 3504.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "سماعات لاسلكية٩٩.٩٩ $",
+        "rect": {
+          "x": 16,
+          "y": 488.5,
+          "width": 256,
+          "height": 64,
+          "top": 488.5,
+          "right": 272,
+          "bottom": 552.5,
+          "left": 16
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "rtl-he-inline-start",
+    "scrollY": 3504.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "אוזניות אלחוטיות99.99 $",
+        "rect": {
+          "x": 112,
+          "y": 508.5,
+          "width": 256,
+          "height": 64,
+          "top": 508.5,
+          "right": 368,
+          "bottom": 572.5,
+          "left": 112
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "rtl-he-inline-end",
+    "scrollY": 3504.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "אוזניות אלחוטיות99.99 $",
+        "rect": {
+          "x": 6,
+          "y": 508.5,
+          "width": 256,
+          "height": 64,
+          "top": 508.5,
+          "right": 262,
+          "bottom": 572.5,
+          "left": 6
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "rtl"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "rtl-en-inline-start",
+    "scrollY": 3504.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "Wireless Headphones$99.99",
+        "rect": {
+          "x": 16,
+          "y": 488.5,
+          "width": 256,
+          "height": 64,
+          "top": 488.5,
+          "right": 272,
+          "bottom": 552.5,
+          "left": 16
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "rtl-en-inline-end",
+    "scrollY": 3504.5,
+    "url": "https://ui.shadcn.com/docs/components/base/hover-card#rtl",
+    "popup": [
+      {
+        "text": "Wireless Headphones$99.99",
+        "rect": {
+          "x": 114,
+          "y": 488.5,
+          "width": 256,
+          "height": 64,
+          "top": 488.5,
+          "right": 370,
+          "bottom": 552.5,
+          "left": 114
+        },
+        "side": "bottom",
+        "align": "center",
+        "font": "Geist, \"Geist Fallback\"",
+        "line": "20px",
+        "direction": "ltr"
+      }
+    ]
+  }
+]

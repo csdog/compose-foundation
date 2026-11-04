@@ -127,7 +127,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Dropdown Menu (`dropdown-menu`)：官网13个配方已全部移植，图标槽位、Complex/RTL、章节顺序和导出代码已补齐。21项定向测试通过；新增七配方四象限共28个展开/Escape画面验证通过。手机长菜单可滚动，默认宽度、指针聚焦、阴影/ring、完整状态及可访问树同步仍待关闭，详见文末。
 - [ ] Empty (`empty`)：七组官网/本地桌面窄屏浅深各28静态图，加搜索8图/三语12图已复查。修正Outline自然高度、RTL 288正文/40inset/Noto/行框及LearnMore URL+官网button角色，支持链接实际回页首。25项回归、两张既有Nova显式verify、JS/Wasm通过，无基准刷新。平衡换行、字重/图形/共享页面、HTML原生链接与完整状态仍开放；历史旧图矩阵未重验。[证据](web-parity/empty-r2/README.md)。
 - [ ] Field (`field`)：Nova 间距/字号、448 响应式阈值、嵌套 disabled、支付表单示例已补；choice-card、嵌套组及完整 RTL 待核对。
-- [ ] Hover Card (`hover-card`)：官网Default/Basic/Sides/RTL已移植，Trigger定时/键盘焦点、Nova面板及物理/逻辑side已补。12项行为、4项新旧截图独立verify、5项配方共21项通过，所属模块检查通过；浏览器四象限和完整状态仍待关闭，详见文末。
+- [ ] Hover Card (`hover-card`)：四官方配方桌面/手机浅深已保存关闭和Default/Basic展开证据，三个方向单例已确认，连续切换/重载与本地三语完整Web矩阵仍待补；补实际Trigger锚点、键盘失焦立即关闭、Nova 5dp避让/手机垂直fallback、RTL 320正文/Noto完整行框及Sides亚像素换行。44项回归、4张显式像素verify、lint和JS/Wasm通过；仅两张Nova基准按5px平移更新。safe polygon、多Trigger/嵌套宿主、全局Escape、实际翻转动画及完整辅助技术仍开放。[证据](web-parity/hover-card-r2/README.md)。
 - [ ] Input (`input`)：32 高、14/16 响应式字号、dark/disabled/invalid/focus 已修正；复杂组合与全状态矩阵待关闭。
 - [ ] Input Group (`input-group`)：基础已验证（第六、七批）；32dp 布局、附件聚焦、禁用/错误和单行按钮附件已修正，button/kbd 负 margin、复杂多控件与完整焦点矩阵待关闭。
 - [ ] Input OTP (`input-otp`)：基础已验证（第七批）；连体格、分组、编辑/粘贴/密码语义和默认示例已完成，光标闪烁、invalid API、完整 IME/自动填码矩阵待关闭。
@@ -169,6 +169,14 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Hover Card：浏览器跟进、触发器锚点与窄屏避让（2026-11-04）
+
+<!-- progress-created: 2026-11-04; order: 127 -->
+
+用户授权恢复专用验收空间后，对照官网四官方配方Default/Basic/Sides/RTL，读取实时DOM并补读Base UI 1.6.0定位源码。Root与Trigger坐标分开记录且只在Popup测量阶段消费；修正额外Root内容推开弹层，以及键盘失焦沿用hover closeDelay。Nova补5dp窗口边距、空间不足时垂直fallback、RTL逻辑交叉轴。RTL正文320dp、40dp inset、完整语言标签/Noto字体与20dp行框；Sides使用字形亚像素advance决定换行，解决245dp内宽因逐项ceil为246px导致手机3+1排列，保留完整按钮绘制和点击区域。
+
+核心27+目录17共44项通过，四张既有像素verify通过；只更新两张Nova基准/发布预览，平移对齐后面板内容RGBA一致，Vega未改。core/shared lint、JS/Wasm通过，最终构建、XML、浏览器对照与剩余差异见[hover-card-r2](web-parity/hover-card-r2/README.md)。公共版本0.3.35。浏览器仅接受16张关闭、8张Default/Basic展开和3张单独方向图；连续批量切换异常、重载几何偏移及本地三语完整Web矩阵未通过，异常图隔离保留。safe polygon/选字保护、多Trigger和任意嵌套宿主、Root外Escape、完整滚动裁切与实际翻转动画原点仍保留，不将静态位置修正视为完整组件完成。Hover Card保持未勾选；Editor排除、Attachment后置。
 
 ### Empty：浏览器四象限、Outline高度及RTL（2026-11-04）
 

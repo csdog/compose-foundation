@@ -113,3 +113,7 @@ Code Block 的受限高度滚动、下载示例与 Trace 的完整工具调用�
 ### 2026-11-04 Empty 浏览器跟进
 
 恢复授权后完成七配方四象限及搜索/三语实际浏览器对照；修复Outline过高、RTL布局/字体/完整行框和LearnMore带URL的button角色。25项回归、两张既有Nova像素校验及JS/Wasm通过，见[Empty r2](web-parity/empty-r2/README.md)。仍留平衡换行、字体/图像采样、共享文档说明与原生HTML/辅助技术完整矩阵；继续按清单推进缺少浏览器证据的组件，不据本轮覆盖勾选全组件。
+
+### 2026-11-04 Hover Card 浏览器跟进
+
+四官方配方和官网三语方向已读取，本地完整方向/三语Web矩阵及连续切换/重载稳定性仍待关闭；补Trigger锚点、焦点失焦关闭、Nova窗口避让、RTL行框与窄屏Sides亚像素换行。44项回归及四张显式像素verify、JS/Wasm通过。两张Nova基准仅因5dp边距更新，Vega未改；详见[hover-card-r2](web-parity/hover-card-r2/README.md)。仍保留safe polygon、选字保护、多Trigger/嵌套宿主、全局Escape、实际翻转动画及完整辅助技术差异，清单不提前勾选。Editor排除、Attachment后置。
