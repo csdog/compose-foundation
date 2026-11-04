@@ -1,0 +1,122 @@
+[
+  {
+    "side": "local-before",
+    "w": 767,
+    "theme": "light",
+    "scrollY": 1851,
+    "app": [
+      "http://127.0.0.1:8765/658820f72b4617efb380.wasm",
+      "http://127.0.0.1:8765/5e37ca2bae65c009208a.wasm"
+    ]
+  },
+  {
+    "side": "local-before",
+    "w": 768,
+    "theme": "light",
+    "scrollY": 1851,
+    "app": [
+      "http://127.0.0.1:8765/658820f72b4617efb380.wasm",
+      "http://127.0.0.1:8765/5e37ca2bae65c009208a.wasm"
+    ]
+  },
+  {
+    "side": "official",
+    "w": 767,
+    "theme": "light",
+    "help": [
+      {
+        "display": "none",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      }
+    ]
+  },
+  {
+    "side": "official",
+    "w": 768,
+    "theme": "light",
+    "help": [
+      {
+        "display": "flex",
+        "rect": {
+          "x": 469.8125,
+          "y": 288.125,
+          "width": 83.921875,
+          "height": 20,
+          "top": 288.125,
+          "right": 553.734375,
+          "bottom": 308.125,
+          "left": 469.8125
+        }
+      }
+    ]
+  },
+  {
+    "side": "local-before",
+    "w": 767,
+    "theme": "dark",
+    "scrollY": 1851,
+    "app": [
+      "http://127.0.0.1:8765/658820f72b4617efb380.wasm",
+      "http://127.0.0.1:8765/5e37ca2bae65c009208a.wasm"
+    ]
+  },
+  {
+    "side": "local-before",
+    "w": 768,
+    "theme": "dark",
+    "scrollY": 1851,
+    "app": [
+      "http://127.0.0.1:8765/658820f72b4617efb380.wasm",
+      "http://127.0.0.1:8765/5e37ca2bae65c009208a.wasm"
+    ]
+  },
+  {
+    "side": "official",
+    "w": 767,
+    "theme": "dark",
+    "help": [
+      {
+        "display": "none",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      }
+    ]
+  },
+  {
+    "side": "official",
+    "w": 768,
+    "theme": "dark",
+    "help": [
+      {
+        "display": "flex",
+        "rect": {
+          "x": 469.8125,
+          "y": 288.125,
+          "width": 83.921875,
+          "height": 20,
+          "top": 288.125,
+          "right": 553.734375,
+          "bottom": 308.125,
+          "left": 469.8125
+        }
+      }
+    ]
+  }
+]

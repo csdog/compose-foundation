@@ -1,0 +1,222 @@
+[
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "demo",
+    "url": "https://ui.shadcn.com/docs/components/base/separator",
+    "scrollY": 0,
+    "spinners": [],
+    "inputs": [],
+    "buttons": []
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "vertical",
+    "url": "https://ui.shadcn.com/docs/components/base/separator#vertical",
+    "scrollY": 1052.5,
+    "spinners": [],
+    "inputs": [],
+    "buttons": []
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "menu",
+    "url": "https://ui.shadcn.com/docs/components/base/separator#menu",
+    "scrollY": 1582.5,
+    "spinners": [],
+    "inputs": [],
+    "buttons": []
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "list",
+    "url": "https://ui.shadcn.com/docs/components/base/separator#list",
+    "scrollY": 2112.5,
+    "spinners": [],
+    "inputs": [],
+    "buttons": []
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "rtl",
+    "url": "https://ui.shadcn.com/docs/components/base/separator#rtl",
+    "scrollY": 2543.5,
+    "spinners": [],
+    "inputs": [],
+    "buttons": []
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "demo",
+    "url": "https://ui.shadcn.com/docs/components/base/separator#",
+    "scrollY": 0,
+    "spinners": [],
+    "inputs": [],
+    "buttons": []
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "vertical",
+    "url": "https://ui.shadcn.com/docs/components/base/separator#vertical",
+    "scrollY": 1056,
+    "spinners": [],
+    "inputs": [],
+    "buttons": []
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "menu",
+    "url": "https://ui.shadcn.com/docs/components/base/separator#menu",
+    "scrollY": 1636.5,
+    "spinners": [],
+    "inputs": [],
+    "buttons": []
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "list",
+    "url": "https://ui.shadcn.com/docs/components/base/separator#list",
+    "scrollY": 2217,
+    "spinners": [],
+    "inputs": [],
+    "buttons": []
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "rtl",
+    "url": "https://ui.shadcn.com/docs/components/base/separator#rtl",
+    "scrollY": 2766,
+    "spinners": [],
+    "inputs": [],
+    "buttons": []
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "demo",
+    "url": "https://ui.shadcn.com/docs/components/base/separator#",
+    "scrollY": 0,
+    "spinners": [],
+    "inputs": [],
+    "buttons": []
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "vertical",
+    "url": "https://ui.shadcn.com/docs/components/base/separator#vertical",
+    "scrollY": 1052.5,
+    "spinners": [],
+    "inputs": [],
+    "buttons": []
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "menu",
+    "url": "https://ui.shadcn.com/docs/components/base/separator#menu",
+    "scrollY": 1582.5,
+    "spinners": [],
+    "inputs": [],
+    "buttons": []
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "list",
+    "url": "https://ui.shadcn.com/docs/components/base/separator#list",
+    "scrollY": 2112.5,
+    "spinners": [],
+    "inputs": [],
+    "buttons": []
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "rtl",
+    "url": "https://ui.shadcn.com/docs/components/base/separator#rtl",
+    "scrollY": 2543.5,
+    "spinners": [],
+    "inputs": [],
+    "buttons": []
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "demo",
+    "url": "https://ui.shadcn.com/docs/components/base/separator#",
+    "scrollY": 0,
+    "spinners": [],
+    "inputs": [],
+    "buttons": []
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "vertical",
+    "url": "https://ui.shadcn.com/docs/components/base/separator#vertical",
+    "scrollY": 1056,
+    "spinners": [],
+    "inputs": [],
+    "buttons": []
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "menu",
+    "url": "https://ui.shadcn.com/docs/components/base/separator#menu",
+    "scrollY": 1636.5,
+    "spinners": [],
+    "inputs": [],
+    "buttons": []
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "list",
+    "url": "https://ui.shadcn.com/docs/components/base/separator#list",
+    "scrollY": 2217,
+    "spinners": [],
+    "inputs": [],
+    "buttons": []
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "rtl",
+    "url": "https://ui.shadcn.com/docs/components/base/separator#rtl",
+    "scrollY": 2766,
+    "spinners": [],
+    "inputs": [],
+    "buttons": []
+  }
+]

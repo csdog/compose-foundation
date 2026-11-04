@@ -1,0 +1,188 @@
+{
+  "app": [
+    "http://127.0.0.1:8765/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8765/5e37ca2bae65c009208a.wasm"
+  ],
+  "captures": [
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "demo",
+      "url": "http://127.0.0.1:8765/separator",
+      "scrollY": 0,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "vertical",
+      "url": "http://127.0.0.1:8765/separator#vertical",
+      "scrollY": 1361,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "menu",
+      "url": "http://127.0.0.1:8765/separator#menu",
+      "scrollY": 1851,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "list",
+      "url": "http://127.0.0.1:8765/separator#list",
+      "scrollY": 2341,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "rtl",
+      "url": "http://127.0.0.1:8765/separator#rtl",
+      "scrollY": 2831,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "demo",
+      "url": "http://127.0.0.1:8765/separator#",
+      "scrollY": 0,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "vertical",
+      "url": "http://127.0.0.1:8765/separator#vertical",
+      "scrollY": 1615,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "menu",
+      "url": "http://127.0.0.1:8765/separator#menu",
+      "scrollY": 2111,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "list",
+      "url": "http://127.0.0.1:8765/separator#list",
+      "scrollY": 2607,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "rtl",
+      "url": "http://127.0.0.1:8765/separator#rtl",
+      "scrollY": 3103,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "demo",
+      "url": "http://127.0.0.1:8765/separator#",
+      "scrollY": 0,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "vertical",
+      "url": "http://127.0.0.1:8765/separator#vertical",
+      "scrollY": 1361,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "menu",
+      "url": "http://127.0.0.1:8765/separator#menu",
+      "scrollY": 1851,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "list",
+      "url": "http://127.0.0.1:8765/separator#list",
+      "scrollY": 2341,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "rtl",
+      "url": "http://127.0.0.1:8765/separator#rtl",
+      "scrollY": 2831,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "demo",
+      "url": "http://127.0.0.1:8765/separator#",
+      "scrollY": 0,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "vertical",
+      "url": "http://127.0.0.1:8765/separator#vertical",
+      "scrollY": 1615,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "menu",
+      "url": "http://127.0.0.1:8765/separator#menu",
+      "scrollY": 2111,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "list",
+      "url": "http://127.0.0.1:8765/separator#list",
+      "scrollY": 2607,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "rtl",
+      "url": "http://127.0.0.1:8765/separator#rtl",
+      "scrollY": 3103,
+      "theme": "dark"
+    }
+  ]
+}

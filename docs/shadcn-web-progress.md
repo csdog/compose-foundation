@@ -148,7 +148,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Scroll Area (`scroll-area`)：已迁移官网 Tags/三幅照片横向/三语RTL配方；Nova轨道、thumb端点、轨道点击及滚轮、键盘、双轴corner和Lazy拖动已补，49项定向验证与两个ktlint通过，JS/Wasm退出0但仍有诊断。浏览器、任意Root形状继承及完整状态仍开放。
 - [ ] Scroll Fade (`scroll-fade`)：七组官网配方、12%/40dp/96dp规则、逐边/尺寸/none、RTL停点及MessageScroller视口遮罩顺序已补；92项定向验证和两个ktlint通过。浏览器四象限、CSS fallback与完整状态仍开放，详见文末。
 - [ ] Select (`select`)：基础已验证（第七批）；默认水果示例、选中行定位、键盘/焦点和错误状态已修正，已按官网固定弹层宽度补 Nova 标签不收缩/不换行及 6dp 间距，长标签与希伯来语菜单项回归通过，本轮另补SelectValue当前值单行/省略、窄触发器不再换行裁剪；复杂碰撞/长列表滚动、键入搜索、动态重排与完整 RTL 待关闭。Card浏览器复查观察到指针打开语言菜单后Home/End滚动页面，键盘初始焦点仍需专项核对。
-- [ ] Separator (`separator`)：官网五配方、Nova文本/间距与768dp响应式Menu已移植；默认语义及方向描述、自适应竖线调用方式已修正，32项定向验证及两模块ktlint通过，JS/Wasm退出0但仍有诊断。平台role差异、浏览器四象限及完整状态仍开放，详见文末。
+- [ ] Separator (`separator`)：官网五配方桌面/窄屏浅深、三语与767/768断点已对照；移除十个重复旧示例，补说明/API和公共代码导出，RTL改Noto/单一288正文/40inset/20行框，Menu接CSS视口桥接。44项常规测试、lint/JS/Wasm通过；显式6图5通过，旧暗色20像素actual与r1一致。共享排版/字形、平台role及完整动态/辅助技术仍开放，见[separator-r2](web-parity/separator-r2/README.md)。
 - [ ] Sheet (`sheet`)：官网四配方及三语RTL已迁移；响应式宽度、动画/焦点、Nova单侧border与shadow、Header/Footer/正文权重和RTL关闭按钮已补。55项定向验证及core/shared两个ktlint通过；浏览器四象限、旧基准审计和完整状态矩阵仍开放，详见文末。
 - [ ] Shimmer (`shimmer`)：已修复Style绘制/重组、实际currentColor、浅深高光alpha/OKLCH及九组官网配方；78项定向验证和core/shared两个ktlint通过。字体spread、自动减弱动态、色域/采样误差及浏览器完整矩阵仍开放，详见文末。
 - [ ] Sidebar (`sidebar`)：已核对官网来源并补桌面/移动端独立状态、响应式切换、Offcanvas内容保留/200ms动画、移动面板与内侧边框；内容滚动及Header/Footer/Group间距也已补齐，34项定向验证及两个ktlint通过。官网配方、浏览器四象限及完整状态矩阵仍待完成，详见 sidebar-r1/r2。
@@ -169,6 +169,14 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Separator：五配方页面、RTL字体与CSS视口断点（2026-11-04）
+
+<!-- progress-created: 2026-11-04; order: 131 -->
+
+继续优先尚无完整本轮浏览器页面对照的组件。删除五官网配方后追加的十个重复旧示例，补Vertical/Menu/List说明、Composition与真实Kotlin API，竖线约束/语义扩展集中说明。RTL采用Noto Arabic/Hebrew和Tight20dp行框，正文统一288dp/40dp inset；导出包含公共字体资源及调用入口，不依赖目录helper/测试标签。Menu使用CSS完整视口的768dp阈值，修复滚动条画布宽度导致的断点偏移。
+
+核心14+目录30共44项常规测试通过；显式六张截图五通过，旧Vega暗色20像素actual与r1记录逐字节一致，未刷新。目录ktlint与JS/Wasm通过。官网/最终本地各20静态、8三语及4断点图，错误语言坐标与热态旧边界空白帧隔离说明，详见[separator-r2](web-parity/separator-r2/README.md)。共享排版/换行/字形、平台role和完整动态/辅助技术仍开放，Separator保持未勾选；Editor排除、Attachment后置。
 
 ### Kbd：页面四种显示组合、RTL正文与提示延迟（2026-11-04）
 

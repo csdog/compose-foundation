@@ -19,6 +19,11 @@ import com.toutiaoyan.compose.ui.components.separator.Separator
 import com.toutiaoyan.compose.ui.components.separator.SeparatorOrientation
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.theme.Theme
+import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
+import com.toutiaoyan.compose.ui.catalog.catalogViewportWidth
+import com.toutiaoyan.compose.ui.catalog.catalogArabicFontFamily
+import com.toutiaoyan.compose.ui.catalog.catalogHebrewFontFamily
 
 // region shared
 @Composable
@@ -47,7 +52,12 @@ private fun SeparatorRecipeText(
                         currentTheme.colors.foreground
                     },
                 fontWeight = if (medium)FontWeight.Medium else FontWeight.Normal,
-                lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+                lineHeightStyle =
+                    LineHeightStyle(
+                        LineHeightStyle.Alignment.Center,
+                        LineHeightStyle.Trim.None,
+                        LineHeightStyle.Mode.Tight,
+                    ),
             ),
     ) { value }
 }
@@ -108,8 +118,10 @@ internal fun SeparatorVerticalRecipe() {
 
 // region menu
 @Composable
-internal fun SeparatorMenuRecipe() {
-    val desktop = LocalWindowInfo.current.containerSize.width >= with(LocalDensity.current) { 768.dp.roundToPx() }
+internal fun SeparatorMenuRecipe(
+    viewportWidth: Dp = with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() },
+) {
+    val desktop = viewportWidth >= 768.dp
     Row(
         Modifier.height(IntrinsicSize.Min).testTag("separator-example"),
         verticalAlignment = Alignment.CenterVertically,
@@ -172,15 +184,24 @@ internal fun SeparatorRtlRecipe(language: Int = 1) {
             ),
             "הבסיס למערכת העיצוב שלך" to "סט של רכיבים מעוצבים בצורה יפה שאתה יכול להתאים אישית, להרחיב ולבנות עליהם.",
         )
+    val inherited = currentTheme
+    val font =
+        when (language) {
+            1 -> catalogArabicFontFamily()
+            2 -> catalogHebrewFontFamily()
+            else -> inherited.fontFamily
+        }
     CompositionLocalProvider(
-        LocalLayoutDirection provides
-            if (language == 0) {
-                LayoutDirection.Ltr
-            } else {
-                LayoutDirection.Rtl
-            },
+        LocalLayoutDirection provides if (language == 0) LayoutDirection.Ltr else LayoutDirection.Rtl,
     ) {
-        SeparatorIntro(text[language].first, text[language].second)
+        Theme(
+            preset = inherited.activePreset, baseColor = inherited.activeBaseColor,
+            accent = inherited.activeAccent, isDark = inherited.isDark, baseRadius = inherited.baseRadius,
+            ring = inherited.ring, unitSpacing = LocalUnitSpacing.current,
+            minTouchTarget = inherited.minTouchTarget, fontFamily = font,
+        ) {
+            SeparatorIntro(text[language].first, text[language].second)
+        }
     }
 }
 // endregion rtl
@@ -188,19 +209,41 @@ internal fun SeparatorRtlRecipe(language: Int = 1) {
 internal val separatorOfficialExamples =
     listOf(
         ComponentExample("Default", code = separatorDefaultRecipeCode, preview = { SeparatorDefaultRecipe() }),
-        ComponentExample("Vertical", code = separatorVerticalRecipeCode, preview = { SeparatorVerticalRecipe() }),
-        ComponentExample("Menu", code = separatorMenuRecipeCode, preview = { SeparatorMenuRecipe() }),
-        ComponentExample("List", code = separatorListRecipeCode, preview = { SeparatorListRecipe() }),
-        ComponentExample("RTL", code = separatorRtlRecipeCode, previewPadding = 0.dp, preview = {
-            var language by remember { mutableIntStateOf(1) }
-            RtlPreview(
-                language,
-                listOf(
-                    "English",
-                    "Arabic (العربية)",
-                    "Hebrew (עברית)",
-                ),
-                { language = it },
-            ) { SeparatorRtlRecipe(language) }
-        }),
+        ComponentExample(
+            "Vertical",
+            code = separatorVerticalRecipeCode,
+            descriptionMarkdown = "Set orientation to Vertical to create a vertical separator.",
+            preview = { SeparatorVerticalRecipe() },
+        ),
+        ComponentExample(
+            "Menu",
+            code = separatorMenuRecipeCode,
+            descriptionMarkdown = "Use vertical separators to divide groups of content in a menu.",
+            preview = { SeparatorMenuRecipe(catalogViewportWidth()) },
+        ),
+        ComponentExample(
+            "List",
+            code = separatorListRecipeCode,
+            descriptionMarkdown = "Use separators to divide items in a list.",
+            preview = { SeparatorListRecipe() },
+        ),
+        ComponentExample(
+            "RTL",
+            code = separatorRtlRecipeCode,
+            previewPadding = 0.dp,
+            preview = {
+                var language by remember { mutableIntStateOf(1) }
+                Column(Modifier.fillMaxWidth()) {
+                    RtlPreviewToolbar(
+                        language,
+                        listOf("English", "Arabic (العربية)", "Hebrew (עברית)"),
+                        { language = it },
+                    )
+                    Box(
+                        Modifier.testTag("separator-rtl-body").fillMaxWidth().heightIn(min = 288.dp).padding(40.dp),
+                        contentAlignment = Alignment.Center,
+                    ) { SeparatorRtlRecipe(language) }
+                }
+            },
+        ),
     )

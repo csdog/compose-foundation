@@ -1,0 +1,7 @@
+{
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/SeparatorDoc.kt": "9b42830a5ce979f43339df2f6da4d3ecc2e5b7b405e88c1bb7b7e54456e18e12",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/SeparatorRecipeCode.kt": "f1764dc1eb821d9ded3e0e7a268fe5dcb2e3ea3cbc7b1d51be4d861766eabae9",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/SeparatorRecipes.kt": "3e4c5dd0d773ef7c0cdc6e0a84981f8529b1d7f87a1ef107ff9e1ff3f8ebdf80",
+  "scripts/generate_separator_recipe_code.py": "61bfd5e8d27f77d021789841dd1c0f2874f15356eaa7842d0b6457bdf219fba0",
+  "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/SeparatorPageTest.kt": "5074b0a34dfcb8c0123585899bcb4558c9d2554616d261bab0eb15137370713b"
+}

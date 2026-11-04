@@ -1,0 +1,130 @@
+{
+  "headings": [
+    {
+      "id": "installation",
+      "text": "Installation#"
+    },
+    {
+      "id": "usage",
+      "text": "Usage#"
+    },
+    {
+      "id": "vertical",
+      "text": "Vertical#"
+    },
+    {
+      "id": "menu",
+      "text": "Menu#"
+    },
+    {
+      "id": "list",
+      "text": "List#"
+    },
+    {
+      "id": "rtl",
+      "text": "RTL#"
+    },
+    {
+      "id": "api-reference",
+      "text": "API Reference#"
+    }
+  ],
+  "separators": [
+    {
+      "role": "none",
+      "orientation": null,
+      "w": "1px",
+      "h": "16px"
+    },
+    {
+      "role": "none",
+      "orientation": null,
+      "w": "1px",
+      "h": "16px"
+    },
+    {
+      "role": "none",
+      "orientation": null,
+      "w": "1px",
+      "h": "16px"
+    },
+    {
+      "role": "none",
+      "orientation": null,
+      "w": "1px",
+      "h": "16px"
+    },
+    {
+      "role": "none",
+      "orientation": null,
+      "w": "1px",
+      "h": "16px"
+    },
+    {
+      "role": "none",
+      "orientation": null,
+      "w": "1px",
+      "h": "20px"
+    },
+    {
+      "role": "separator",
+      "orientation": "horizontal",
+      "w": "384px",
+      "h": "1px"
+    },
+    {
+      "role": "separator",
+      "orientation": "vertical",
+      "w": "1px",
+      "h": "20px"
+    },
+    {
+      "role": "separator",
+      "orientation": "vertical",
+      "w": "1px",
+      "h": "20px"
+    },
+    {
+      "role": "separator",
+      "orientation": "vertical",
+      "w": "1px",
+      "h": "40px"
+    },
+    {
+      "role": "separator",
+      "orientation": "vertical",
+      "w": "1px",
+      "h": "40px"
+    },
+    {
+      "role": "separator",
+      "orientation": "horizontal",
+      "w": "384px",
+      "h": "1px"
+    },
+    {
+      "role": "separator",
+      "orientation": "horizontal",
+      "w": "384px",
+      "h": "1px"
+    },
+    {
+      "role": "separator",
+      "orientation": "horizontal",
+      "w": "384px",
+      "h": "1px"
+    }
+  ],
+  "arabic": [
+    {
+      "cls": "",
+      "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+      "lang": ""
+    },
+    {
+      "cls": "flex max-w-sm flex-col gap-4 text-sm",
+      "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+      "lang": ""
+    }
+  ]
+}

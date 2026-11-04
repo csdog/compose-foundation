@@ -14,7 +14,6 @@ internal val separatorDefaultRecipeCode =
     import androidx.compose.ui.platform.LocalLayoutDirection
     import androidx.compose.ui.platform.LocalWindowInfo
     import androidx.compose.ui.platform.LocalDensity
-    import androidx.compose.ui.platform.testTag
     import androidx.compose.ui.text.TextStyle
     import androidx.compose.ui.text.font.FontWeight
     import androidx.compose.ui.text.style.LineHeightStyle
@@ -23,6 +22,11 @@ internal val separatorDefaultRecipeCode =
     import com.toutiaoyan.compose.ui.components.separator.SeparatorOrientation
     import com.toutiaoyan.compose.ui.components.text.Text
     import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.ui.theme.Theme
+    import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
+    import androidx.compose.ui.text.font.FontFamily
+    import compose_foundation.app.shared.generated.resources.*
+    import org.jetbrains.compose.resources.Font
 
     @Composable
     private fun SeparatorRecipeText(
@@ -50,7 +54,12 @@ internal val separatorDefaultRecipeCode =
                             currentTheme.colors.foreground
                         },
                     fontWeight = if (medium)FontWeight.Medium else FontWeight.Normal,
-                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+                    lineHeightStyle =
+                        LineHeightStyle(
+                            LineHeightStyle.Alignment.Center,
+                            LineHeightStyle.Trim.None,
+                            LineHeightStyle.Mode.Tight,
+                        ),
                 ),
         ) { value }
     }
@@ -61,7 +70,7 @@ internal val separatorDefaultRecipeCode =
         description: String,
     ) {
         Column(
-            Modifier.widthIn(max = 384.dp).fillMaxWidth().testTag("separator-example"),
+            Modifier.widthIn(max = 384.dp).fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -77,17 +86,19 @@ internal val separatorDefaultRecipeCode =
                 )
                 SeparatorRecipeText(subtitle, muted = true)
             }
-            Separator(modifier = Modifier.testTag("separator-line"))
+            Separator(modifier = Modifier)
             SeparatorRecipeText(description)
         }
     }
 
     @Composable
-    internal fun SeparatorDefaultRecipe() =
+    fun SeparatorDefaultRecipe() =
         SeparatorIntro(
             "The Foundation for your Design System",
             "A set of beautifully designed components that you can customize, extend, and build on.",
         )
+
+    SeparatorDefaultRecipe()
     """.trimIndent()
 
 internal val separatorVerticalRecipeCode =
@@ -103,7 +114,6 @@ internal val separatorVerticalRecipeCode =
     import androidx.compose.ui.platform.LocalLayoutDirection
     import androidx.compose.ui.platform.LocalWindowInfo
     import androidx.compose.ui.platform.LocalDensity
-    import androidx.compose.ui.platform.testTag
     import androidx.compose.ui.text.TextStyle
     import androidx.compose.ui.text.font.FontWeight
     import androidx.compose.ui.text.style.LineHeightStyle
@@ -112,6 +122,11 @@ internal val separatorVerticalRecipeCode =
     import com.toutiaoyan.compose.ui.components.separator.SeparatorOrientation
     import com.toutiaoyan.compose.ui.components.text.Text
     import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.ui.theme.Theme
+    import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
+    import androidx.compose.ui.text.font.FontFamily
+    import compose_foundation.app.shared.generated.resources.*
+    import org.jetbrains.compose.resources.Font
 
     @Composable
     private fun SeparatorRecipeText(
@@ -139,7 +154,12 @@ internal val separatorVerticalRecipeCode =
                             currentTheme.colors.foreground
                         },
                     fontWeight = if (medium)FontWeight.Medium else FontWeight.Normal,
-                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+                    lineHeightStyle =
+                        LineHeightStyle(
+                            LineHeightStyle.Alignment.Center,
+                            LineHeightStyle.Trim.None,
+                            LineHeightStyle.Mode.Tight,
+                        ),
                 ),
         ) { value }
     }
@@ -150,7 +170,7 @@ internal val separatorVerticalRecipeCode =
         description: String,
     ) {
         Column(
-            Modifier.widthIn(max = 384.dp).fillMaxWidth().testTag("separator-example"),
+            Modifier.widthIn(max = 384.dp).fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -166,25 +186,27 @@ internal val separatorVerticalRecipeCode =
                 )
                 SeparatorRecipeText(subtitle, muted = true)
             }
-            Separator(modifier = Modifier.testTag("separator-line"))
+            Separator(modifier = Modifier)
             SeparatorRecipeText(description)
         }
     }
 
     @Composable
-    internal fun SeparatorVerticalRecipe() {
+    fun SeparatorVerticalRecipe() {
         Row(
-            Modifier.height(20.dp).testTag("separator-example"),
+            Modifier.height(20.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             SeparatorRecipeText("Blog")
-            Separator(orientation = SeparatorOrientation.Vertical, modifier = Modifier.testTag("separator-first"))
+            Separator(orientation = SeparatorOrientation.Vertical, modifier = Modifier)
             SeparatorRecipeText("Docs")
-            Separator(orientation = SeparatorOrientation.Vertical, modifier = Modifier.testTag("separator-second"))
+            Separator(orientation = SeparatorOrientation.Vertical, modifier = Modifier)
             SeparatorRecipeText("Source")
         }
     }
+
+    SeparatorVerticalRecipe()
     """.trimIndent()
 
 internal val separatorMenuRecipeCode =
@@ -200,7 +222,6 @@ internal val separatorMenuRecipeCode =
     import androidx.compose.ui.platform.LocalLayoutDirection
     import androidx.compose.ui.platform.LocalWindowInfo
     import androidx.compose.ui.platform.LocalDensity
-    import androidx.compose.ui.platform.testTag
     import androidx.compose.ui.text.TextStyle
     import androidx.compose.ui.text.font.FontWeight
     import androidx.compose.ui.text.style.LineHeightStyle
@@ -209,6 +230,11 @@ internal val separatorMenuRecipeCode =
     import com.toutiaoyan.compose.ui.components.separator.SeparatorOrientation
     import com.toutiaoyan.compose.ui.components.text.Text
     import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.ui.theme.Theme
+    import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
+    import androidx.compose.ui.text.font.FontFamily
+    import compose_foundation.app.shared.generated.resources.*
+    import org.jetbrains.compose.resources.Font
 
     @Composable
     private fun SeparatorRecipeText(
@@ -236,7 +262,12 @@ internal val separatorMenuRecipeCode =
                             currentTheme.colors.foreground
                         },
                     fontWeight = if (medium)FontWeight.Medium else FontWeight.Normal,
-                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+                    lineHeightStyle =
+                        LineHeightStyle(
+                            LineHeightStyle.Alignment.Center,
+                            LineHeightStyle.Trim.None,
+                            LineHeightStyle.Mode.Tight,
+                        ),
                 ),
         ) { value }
     }
@@ -247,7 +278,7 @@ internal val separatorMenuRecipeCode =
         description: String,
     ) {
         Column(
-            Modifier.widthIn(max = 384.dp).fillMaxWidth().testTag("separator-example"),
+            Modifier.widthIn(max = 384.dp).fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -263,16 +294,18 @@ internal val separatorMenuRecipeCode =
                 )
                 SeparatorRecipeText(subtitle, muted = true)
             }
-            Separator(modifier = Modifier.testTag("separator-line"))
+            Separator(modifier = Modifier)
             SeparatorRecipeText(description)
         }
     }
 
     @Composable
-    internal fun SeparatorMenuRecipe() {
-        val desktop = LocalWindowInfo.current.containerSize.width >= with(LocalDensity.current) { 768.dp.roundToPx() }
+    fun SeparatorMenuRecipe(
+        viewportWidth: Dp = with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() },
+    ) {
+        val desktop = viewportWidth >= 768.dp
         Row(
-            Modifier.height(IntrinsicSize.Min).testTag("separator-example"),
+            Modifier.height(IntrinsicSize.Min),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(if (desktop)16.dp else 8.dp),
         ) {
@@ -280,13 +313,13 @@ internal val separatorMenuRecipeCode =
                 SeparatorRecipeText("Settings", medium = true)
                 SeparatorRecipeText("Manage preferences", muted = true, small = true)
             }
-            Separator(orientation = SeparatorOrientation.Vertical, modifier = Modifier.testTag("separator-first"))
+            Separator(orientation = SeparatorOrientation.Vertical, modifier = Modifier)
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 SeparatorRecipeText("Account", medium = true)
                 SeparatorRecipeText("Profile & security", muted = true, small = true)
             }
             if (desktop) {
-                Separator(orientation = SeparatorOrientation.Vertical, modifier = Modifier.testTag("separator-second"))
+                Separator(orientation = SeparatorOrientation.Vertical, modifier = Modifier)
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     SeparatorRecipeText("Help", medium = true)
                     SeparatorRecipeText("Support & docs", muted = true, small = true)
@@ -294,6 +327,8 @@ internal val separatorMenuRecipeCode =
             }
         }
     }
+
+    SeparatorMenuRecipe()
     """.trimIndent()
 
 internal val separatorListRecipeCode =
@@ -309,7 +344,6 @@ internal val separatorListRecipeCode =
     import androidx.compose.ui.platform.LocalLayoutDirection
     import androidx.compose.ui.platform.LocalWindowInfo
     import androidx.compose.ui.platform.LocalDensity
-    import androidx.compose.ui.platform.testTag
     import androidx.compose.ui.text.TextStyle
     import androidx.compose.ui.text.font.FontWeight
     import androidx.compose.ui.text.style.LineHeightStyle
@@ -318,6 +352,11 @@ internal val separatorListRecipeCode =
     import com.toutiaoyan.compose.ui.components.separator.SeparatorOrientation
     import com.toutiaoyan.compose.ui.components.text.Text
     import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.ui.theme.Theme
+    import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
+    import androidx.compose.ui.text.font.FontFamily
+    import compose_foundation.app.shared.generated.resources.*
+    import org.jetbrains.compose.resources.Font
 
     @Composable
     private fun SeparatorRecipeText(
@@ -345,7 +384,12 @@ internal val separatorListRecipeCode =
                             currentTheme.colors.foreground
                         },
                     fontWeight = if (medium)FontWeight.Medium else FontWeight.Normal,
-                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+                    lineHeightStyle =
+                        LineHeightStyle(
+                            LineHeightStyle.Alignment.Center,
+                            LineHeightStyle.Trim.None,
+                            LineHeightStyle.Mode.Tight,
+                        ),
                 ),
         ) { value }
     }
@@ -356,7 +400,7 @@ internal val separatorListRecipeCode =
         description: String,
     ) {
         Column(
-            Modifier.widthIn(max = 384.dp).fillMaxWidth().testTag("separator-example"),
+            Modifier.widthIn(max = 384.dp).fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -372,15 +416,15 @@ internal val separatorListRecipeCode =
                 )
                 SeparatorRecipeText(subtitle, muted = true)
             }
-            Separator(modifier = Modifier.testTag("separator-line"))
+            Separator(modifier = Modifier)
             SeparatorRecipeText(description)
         }
     }
 
     @Composable
-    internal fun SeparatorListRecipe() {
+    fun SeparatorListRecipe() {
         Column(
-            Modifier.widthIn(max = 384.dp).fillMaxWidth().testTag("separator-example"),
+            Modifier.widthIn(max = 384.dp).fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             (1..3).forEach { index ->
@@ -392,10 +436,12 @@ internal val separatorListRecipeCode =
                     SeparatorRecipeText("Item ${'$'}index")
                     SeparatorRecipeText("Value ${'$'}index", muted = true)
                 }
-                if (index < 3)Separator(modifier = Modifier.testTag("separator-list-${'$'}index"))
+                if (index < 3)Separator(modifier = Modifier)
             }
         }
     }
+
+    SeparatorListRecipe()
     """.trimIndent()
 
 internal val separatorRtlRecipeCode =
@@ -411,7 +457,6 @@ internal val separatorRtlRecipeCode =
     import androidx.compose.ui.platform.LocalLayoutDirection
     import androidx.compose.ui.platform.LocalWindowInfo
     import androidx.compose.ui.platform.LocalDensity
-    import androidx.compose.ui.platform.testTag
     import androidx.compose.ui.text.TextStyle
     import androidx.compose.ui.text.font.FontWeight
     import androidx.compose.ui.text.style.LineHeightStyle
@@ -420,6 +465,11 @@ internal val separatorRtlRecipeCode =
     import com.toutiaoyan.compose.ui.components.separator.SeparatorOrientation
     import com.toutiaoyan.compose.ui.components.text.Text
     import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.ui.theme.Theme
+    import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
+    import androidx.compose.ui.text.font.FontFamily
+    import compose_foundation.app.shared.generated.resources.*
+    import org.jetbrains.compose.resources.Font
 
     @Composable
     private fun SeparatorRecipeText(
@@ -447,7 +497,12 @@ internal val separatorRtlRecipeCode =
                             currentTheme.colors.foreground
                         },
                     fontWeight = if (medium)FontWeight.Medium else FontWeight.Normal,
-                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+                    lineHeightStyle =
+                        LineHeightStyle(
+                            LineHeightStyle.Alignment.Center,
+                            LineHeightStyle.Trim.None,
+                            LineHeightStyle.Mode.Tight,
+                        ),
                 ),
         ) { value }
     }
@@ -458,7 +513,7 @@ internal val separatorRtlRecipeCode =
         description: String,
     ) {
         Column(
-            Modifier.widthIn(max = 384.dp).fillMaxWidth().testTag("separator-example"),
+            Modifier.widthIn(max = 384.dp).fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -474,13 +529,13 @@ internal val separatorRtlRecipeCode =
                 )
                 SeparatorRecipeText(subtitle, muted = true)
             }
-            Separator(modifier = Modifier.testTag("separator-line"))
+            Separator(modifier = Modifier)
             SeparatorRecipeText(description)
         }
     }
 
     @Composable
-    internal fun SeparatorRtlRecipe(language: Int = 1) {
+    fun SeparatorRtlRecipe(language: Int = 1) {
         val text =
             listOf(
                 "The Foundation for your Design System" to (
@@ -493,15 +548,28 @@ internal val separatorRtlRecipeCode =
                 ),
                 "הבסיס למערכת העיצוב שלך" to "סט של רכיבים מעוצבים בצורה יפה שאתה יכול להתאים אישית, להרחיב ולבנות עליהם.",
             )
+        val inherited = currentTheme
+        val font =
+            when (language) {
+                1 -> FontFamily(Font(Res.font.catalog_arabic_regular, FontWeight.Normal),
+            Font(Res.font.catalog_arabic_medium, FontWeight.Medium))
+                2 -> FontFamily(Font(Res.font.catalog_hebrew_regular, FontWeight.Normal),
+            Font(Res.font.catalog_hebrew_medium, FontWeight.Medium))
+                else -> inherited.fontFamily
+            }
         CompositionLocalProvider(
-            LocalLayoutDirection provides
-                if (language == 0) {
-                    LayoutDirection.Ltr
-                } else {
-                    LayoutDirection.Rtl
-                },
+            LocalLayoutDirection provides if (language == 0) LayoutDirection.Ltr else LayoutDirection.Rtl,
         ) {
-            SeparatorIntro(text[language].first, text[language].second)
+            Theme(
+                preset = inherited.activePreset, baseColor = inherited.activeBaseColor,
+                accent = inherited.activeAccent, isDark = inherited.isDark, baseRadius = inherited.baseRadius,
+                ring = inherited.ring, unitSpacing = LocalUnitSpacing.current,
+                minTouchTarget = inherited.minTouchTarget, fontFamily = font,
+            ) {
+                SeparatorIntro(text[language].first, text[language].second)
+            }
         }
     }
+
+    SeparatorRtlRecipe()
     """.trimIndent()

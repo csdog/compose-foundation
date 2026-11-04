@@ -1,0 +1,52 @@
+{
+  "date": "2026-11-04",
+  "regularTests": {
+    "core": 14,
+    "catalog": 30,
+    "total": 44
+  },
+  "explicitPixelVerify": {
+    "total": 6,
+    "passed": 5,
+    "failed": 1,
+    "failedName": "separator_states_dark",
+    "pixelsChanged": 20,
+    "actualByteIdenticalToR1": true,
+    "refreshed": false
+  },
+  "checks": [
+    "app ktlintCheck",
+    "JS development distribution",
+    "Wasm development distribution"
+  ],
+  "artifact": {
+    "file": "14bb8406988c01fe3e72.wasm",
+    "bytes": 43553221,
+    "sha256": "0b505f372a6762477c86ed364ff70b7e69f5e129ffcf8e33890f6dad75cf8662"
+  },
+  "browser": {
+    "space": 1,
+    "widths": [
+      1440,
+      390,
+      767,
+      768
+    ],
+    "height": 1000,
+    "dpr": 1,
+    "touch": false,
+    "officialScreenshots": 32,
+    "localScreenshots": 32,
+    "beforeLocalScreenshots": 24,
+    "finalReviewSheets": 14,
+    "allFinalReviewSheetsInspected": true,
+    "incorrectLanguageFramesIsolated": 8,
+    "phoneMenuSamplingCorrected": true
+  },
+  "fullComponentComplete": false,
+  "scopeLimits": [
+    "native HTML separator role/aria-orientation not equivalent",
+    "Default detekt does not analyze commonMain",
+    "Full dynamic theme/shape/font/density and accessibility matrix open"
+  ]
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="SeparatorNovaScreenshotTest[jvm]" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-04T08:01:35.028Z" hostname="Apples-MacBook-Pro.local" time="0.504">
+  <properties/>
+  <testcase name="horizontalDark[jvm]" classname="com.toutiaoyan.compose.ui.components.separator.SeparatorNovaScreenshotTest" time="0.437"/>
+  <testcase name="verticalLight[jvm]" classname="com.toutiaoyan.compose.ui.components.separator.SeparatorNovaScreenshotTest" time="0.023"/>
+  <testcase name="verticalDark[jvm]" classname="com.toutiaoyan.compose.ui.components.separator.SeparatorNovaScreenshotTest" time="0.022"/>
+  <testcase name="horizontalLight[jvm]" classname="com.toutiaoyan.compose.ui.components.separator.SeparatorNovaScreenshotTest" time="0.021"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
