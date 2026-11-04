@@ -1,0 +1,224 @@
+{
+  "app": [
+    "http://127.0.0.1:8765/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8765/e3cb8a2d32ed55f173f7.wasm"
+  ],
+  "captures": [
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "demo",
+      "url": "http://127.0.0.1:8765/kbd",
+      "scrollY": 0,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "group",
+      "url": "http://127.0.0.1:8765/kbd#group",
+      "scrollY": 1842,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "button",
+      "url": "http://127.0.0.1:8765/kbd#button",
+      "scrollY": 2374,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "tooltip",
+      "url": "http://127.0.0.1:8765/kbd#tooltip",
+      "scrollY": 2906,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "input-group",
+      "url": "http://127.0.0.1:8765/kbd#input-group",
+      "scrollY": 3438,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "rtl",
+      "url": "http://127.0.0.1:8765/kbd#rtl",
+      "scrollY": 3970,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "demo",
+      "url": "http://127.0.0.1:8765/kbd#",
+      "scrollY": 0,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "group",
+      "url": "http://127.0.0.1:8765/kbd#group",
+      "scrollY": 1884,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "button",
+      "url": "http://127.0.0.1:8765/kbd#button",
+      "scrollY": 2429,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "tooltip",
+      "url": "http://127.0.0.1:8765/kbd#tooltip",
+      "scrollY": 2974,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "input-group",
+      "url": "http://127.0.0.1:8765/kbd#input-group",
+      "scrollY": 3519,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "rtl",
+      "url": "http://127.0.0.1:8765/kbd#rtl",
+      "scrollY": 4097,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "demo",
+      "url": "http://127.0.0.1:8765/kbd#",
+      "scrollY": 0,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "group",
+      "url": "http://127.0.0.1:8765/kbd#group",
+      "scrollY": 1842,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "button",
+      "url": "http://127.0.0.1:8765/kbd#button",
+      "scrollY": 2374,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "tooltip",
+      "url": "http://127.0.0.1:8765/kbd#tooltip",
+      "scrollY": 2906,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "input-group",
+      "url": "http://127.0.0.1:8765/kbd#input-group",
+      "scrollY": 3438,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "rtl",
+      "url": "http://127.0.0.1:8765/kbd#rtl",
+      "scrollY": 3970,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "demo",
+      "url": "http://127.0.0.1:8765/kbd#",
+      "scrollY": 0,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "group",
+      "url": "http://127.0.0.1:8765/kbd#group",
+      "scrollY": 1884,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "button",
+      "url": "http://127.0.0.1:8765/kbd#button",
+      "scrollY": 2429,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "tooltip",
+      "url": "http://127.0.0.1:8765/kbd#tooltip",
+      "scrollY": 2974,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "input-group",
+      "url": "http://127.0.0.1:8765/kbd#input-group",
+      "scrollY": 3519,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "rtl",
+      "url": "http://127.0.0.1:8765/kbd#rtl",
+      "scrollY": 4097,
+      "theme": "dark"
+    }
+  ]
+}

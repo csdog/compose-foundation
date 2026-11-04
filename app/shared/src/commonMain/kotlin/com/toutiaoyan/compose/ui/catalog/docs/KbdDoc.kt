@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.*
@@ -34,29 +35,30 @@ val kbdDoc =
         examplesHeading = null,
         usageImportsCode =
             """
-            import androidx.compose.foundation.Image
-            import androidx.compose.foundation.layout.*
-            import androidx.compose.foundation.text.InlineTextContent
-            import androidx.compose.foundation.text.appendInlineContent
-            import androidx.compose.runtime.*
-            import androidx.compose.ui.Alignment
-            import androidx.compose.ui.Modifier
-            import androidx.compose.ui.graphics.ColorFilter
+                        import androidx.compose.foundation.Image
+                        import androidx.compose.foundation.layout.*
+                        import androidx.compose.foundation.text.InlineTextContent
+                        import androidx.compose.foundation.text.appendInlineContent
+                        import androidx.compose.runtime.*
+                        import androidx.compose.ui.Alignment
+                        import androidx.compose.ui.Modifier
+                        import androidx.compose.ui.graphics.ColorFilter
+                        import androidx.compose.ui.platform.testTag
             import androidx.compose.ui.platform.LocalDensity
-            import androidx.compose.ui.platform.LocalLayoutDirection
-            import androidx.compose.ui.text.*
-            import androidx.compose.ui.text.font.FontWeight
-            import androidx.compose.ui.unit.*
-            import com.composables.icons.lucide.Lucide
-            import com.composables.icons.lucide.Search
-            import com.toutiaoyan.compose.ui.components.button.*
-            import com.toutiaoyan.compose.ui.components.buttongroup.*
-            import com.toutiaoyan.compose.ui.components.inputgroup.*
-            import com.toutiaoyan.compose.ui.components.kbd.*
-            import com.toutiaoyan.compose.ui.components.text.Text
-            import com.toutiaoyan.compose.ui.components.tooltip.*
-            import com.toutiaoyan.compose.ui.theme.currentTheme
-            import com.toutiaoyan.compose.ui.tokens.StylePreset
+                        import androidx.compose.ui.platform.LocalLayoutDirection
+                        import androidx.compose.ui.text.*
+                        import androidx.compose.ui.text.font.FontWeight
+                        import androidx.compose.ui.unit.*
+                        import com.composables.icons.lucide.Lucide
+                        import com.composables.icons.lucide.Search
+                        import com.toutiaoyan.compose.ui.components.button.*
+                        import com.toutiaoyan.compose.ui.components.buttongroup.*
+                        import com.toutiaoyan.compose.ui.components.inputgroup.*
+                        import com.toutiaoyan.compose.ui.components.kbd.*
+                        import com.toutiaoyan.compose.ui.components.text.Text
+                        import com.toutiaoyan.compose.ui.components.tooltip.*
+                        import com.toutiaoyan.compose.ui.theme.currentTheme
+                        import com.toutiaoyan.compose.ui.tokens.StylePreset
             """.trimIndent(),
         usageCode = "Kbd(\"Ctrl\")",
         compositionCode =
@@ -128,7 +130,7 @@ val kbdDoc =
                 ),
                 ComponentExample(
                     title = "Group",
-                    descriptionMarkdown = "Group keycaps inside a sentence.",
+                    descriptionMarkdown = "Use the `KbdGroup` component to group keyboard keys together.",
                     minPreviewHeight = 288.dp,
                     mobileMinPreviewHeight = 288.dp,
                     previewPadding = 40.dp,
@@ -225,13 +227,15 @@ val kbdDoc =
                 ),
                 ComponentExample(
                     title = "Button",
-                    descriptionMarkdown = "Display a keycap inside a button.",
+                    descriptionMarkdown =
+                        "Use the `Kbd` component inside a `Button` to display a keyboard " +
+                            "key inside a button.",
                     minPreviewHeight = 288.dp,
                     mobileMinPreviewHeight = 288.dp,
                     previewPadding = 40.dp,
                     code =
                         """
-                        Button(onClick = {}, variant = ButtonVariant.Outline) {
+                        Button(onClick = {}, variant = ButtonVariant.Outline, iconPlacement = ButtonIconPlacement.End) {
                             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                                 Text { "Accept" }
                                 Kbd("⏎", modifier = Modifier.offset(x = 2.dp))
@@ -239,7 +243,7 @@ val kbdDoc =
                         }
                         """.trimIndent(),
                     preview = {
-                        Button(onClick = {}, variant = ButtonVariant.Outline) {
+                        Button(onClick = {}, variant = ButtonVariant.Outline, iconPlacement = ButtonIconPlacement.End) {
                             Row(
                                 verticalAlignment =
                                     Alignment.CenterVertically,
@@ -254,86 +258,92 @@ val kbdDoc =
                 ),
                 ComponentExample(
                     title = "Tooltip",
-                    descriptionMarkdown = "Display keyboard hints inside tooltips.",
+                    descriptionMarkdown =
+                        "Use the `Kbd` component inside a `Tooltip` to display a tooltip " +
+                            "with a keyboard key.",
                     minPreviewHeight = 288.dp,
                     mobileMinPreviewHeight = 288.dp,
                     previewPadding = 40.dp,
                     code =
                         """
-                        ButtonGroup {
-                            Tooltip {
-                                TooltipTrigger {
-                                    Button("Save", onClick = {}, variant = ButtonVariant.Outline)
-                                }
-                                TooltipContent {
-                                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                                        Text(textStyle = TextStyle(fontSize = 12.sp, color = currentTheme.colors.background)) { "Save Changes" }
-                                        Kbd("S")
+                        TooltipProvider {
+                            ButtonGroup {
+                                Tooltip {
+                                    TooltipTrigger {
+                                        Button("Save", onClick = {}, variant = ButtonVariant.Outline)
+                                    }
+                                    TooltipContent {
+                                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                            Text(textStyle = TextStyle(fontSize = 12.sp, color = currentTheme.colors.background)) { "Save Changes" }
+                                            Kbd("S")
+                                        }
                                     }
                                 }
-                            }
-                            Tooltip {
-                                TooltipTrigger {
-                                    Button("Print", onClick = {}, variant = ButtonVariant.Outline)
-                                }
-                                TooltipContent {
-                                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                                        Text(textStyle = TextStyle(fontSize = 12.sp, color = currentTheme.colors.background)) { "Print Document" }
-                                        KbdGroup { Kbd("Ctrl"); Kbd("P") }
+                                Tooltip {
+                                    TooltipTrigger {
+                                        Button("Print", onClick = {}, variant = ButtonVariant.Outline)
+                                    }
+                                    TooltipContent {
+                                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                            Text(textStyle = TextStyle(fontSize = 12.sp, color = currentTheme.colors.background)) { "Print Document" }
+                                            KbdGroup { Kbd("Ctrl"); Kbd("P") }
+                                        }
                                     }
                                 }
                             }
                         }
                         """.trimIndent(),
                     preview = {
-                        ButtonGroup {
-                            Tooltip {
-                                TooltipTrigger {
-                                    Button("Save", onClick = {}, variant = ButtonVariant.Outline)
-                                }
-                                TooltipContent {
-                                    Row(
-                                        verticalAlignment =
-                                            Alignment.CenterVertically,
-                                        horizontalArrangement =
-                                            Arrangement.spacedBy(6.dp),
-                                    ) {
-                                        Text(
-                                            textStyle =
-                                                TextStyle(
-                                                    fontSize =
-                                                        12.sp,
-                                                    color =
-                                                        currentTheme.colors.background,
-                                                ),
-                                        ) { "Save Changes" }
-                                        Kbd("S")
+                        TooltipProvider {
+                            ButtonGroup {
+                                Tooltip {
+                                    TooltipTrigger {
+                                        Button("Save", onClick = {}, variant = ButtonVariant.Outline)
+                                    }
+                                    TooltipContent {
+                                        Row(
+                                            verticalAlignment =
+                                                Alignment.CenterVertically,
+                                            horizontalArrangement =
+                                                Arrangement.spacedBy(6.dp),
+                                        ) {
+                                            Text(
+                                                textStyle =
+                                                    TextStyle(
+                                                        fontSize =
+                                                            12.sp,
+                                                        color =
+                                                            currentTheme.colors.background,
+                                                    ),
+                                            ) { "Save Changes" }
+                                            Kbd("S")
+                                        }
                                     }
                                 }
-                            }
-                            Tooltip {
-                                TooltipTrigger {
-                                    Button("Print", onClick = {}, variant = ButtonVariant.Outline)
-                                }
-                                TooltipContent {
-                                    Row(
-                                        verticalAlignment =
-                                            Alignment.CenterVertically,
-                                        horizontalArrangement =
-                                            Arrangement.spacedBy(6.dp),
-                                    ) {
-                                        Text(
-                                            textStyle =
-                                                TextStyle(
-                                                    fontSize =
-                                                        12.sp,
-                                                    color =
-                                                        currentTheme.colors.background,
-                                                ),
-                                        ) { "Print Document" }
-                                        KbdGroup {
-                                            Kbd("Ctrl")
-                                            Kbd("P")
+                                Tooltip {
+                                    TooltipTrigger {
+                                        Button("Print", onClick = {}, variant = ButtonVariant.Outline)
+                                    }
+                                    TooltipContent {
+                                        Row(
+                                            verticalAlignment =
+                                                Alignment.CenterVertically,
+                                            horizontalArrangement =
+                                                Arrangement.spacedBy(6.dp),
+                                        ) {
+                                            Text(
+                                                textStyle =
+                                                    TextStyle(
+                                                        fontSize =
+                                                            12.sp,
+                                                        color =
+                                                            currentTheme.colors.background,
+                                                    ),
+                                            ) { "Print Document" }
+                                            KbdGroup {
+                                                Kbd("Ctrl")
+                                                Kbd("P")
+                                            }
                                         }
                                     }
                                 }
@@ -343,7 +353,9 @@ val kbdDoc =
                 ),
                 ComponentExample(
                     title = "Input Group",
-                    descriptionMarkdown = "Use keycaps in the trailing input addon.",
+                    descriptionMarkdown =
+                        "Use the `Kbd` component inside an `InputGroupAddon` to display a " +
+                            "keyboard key inside an input group.",
                     minPreviewHeight = 288.dp,
                     mobileMinPreviewHeight = 288.dp,
                     previewPadding = 40.dp,
@@ -380,7 +392,9 @@ val kbdDoc =
                 ),
                 ComponentExample(
                     title = "RTL",
-                    descriptionMarkdown = "Key order follows the selected layout direction.",
+                    descriptionMarkdown =
+                        "To enable RTL support, provide `LocalLayoutDirection` using a " +
+                            "`CompositionLocalProvider`.",
                     minPreviewHeight = 304.dp,
                     mobileMinPreviewHeight = 304.dp,
                     previewPadding = 0.dp,
@@ -397,8 +411,16 @@ val kbdDoc =
                         """.trimIndent(),
                     preview = {
                         var language by remember { mutableStateOf(1) }
-                        RtlPreview(language, listOf("English", "العربية", "עברית"), { language = it }) {
-                            Box(Modifier.fillMaxWidth().height(240.dp), contentAlignment = Alignment.Center) {
+                        Column(Modifier.fillMaxWidth()) {
+                            RtlPreviewToolbar(
+                                language,
+                                listOf("English", "Arabic (العربية)", "Hebrew (עברית)"),
+                                { language = it },
+                            )
+                            Box(
+                                Modifier.testTag("kbd-rtl-body").fillMaxWidth().heightIn(min = 288.dp).padding(40.dp),
+                                contentAlignment = Alignment.Center,
+                            ) {
                                 CompositionLocalProvider(
                                     LocalLayoutDirection provides
                                         if (language == 0) {

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="KbdScreenshotTest[jvm]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-04T07:42:32.533Z" hostname="Apples-MacBook-Pro.local" time="0.041">
+  <properties/>
+  <testcase name="states_light[jvm]" classname="com.toutiaoyan.compose.ui.components.kbd.KbdScreenshotTest" time="0.021"/>
+  <testcase name="states_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.kbd.KbdScreenshotTest" time="0.02"/>
+  <system-out><![CDATA[Roborazzi: kbd_states_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=6528, width=96, height=68) changed:false
+Roborazzi: kbd_states_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=6528, width=96, height=68) changed:false
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="KbdViewportTest[jvm]" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-04T07:52:33.132Z" hostname="Apples-MacBook-Pro.local" time="0.527">
+  <properties/>
+  <testcase name="rtlBodyHasOne288PixelFrameAndLanguagePickerMirrorsKeys[1,440-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.KbdViewportTest" time="0.169"/>
+  <testcase name="rtlBodyHasOne288PixelFrameAndLanguagePickerMirrorsKeys[1,440-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.KbdViewportTest" time="0.13"/>
+  <testcase name="rtlBodyHasOne288PixelFrameAndLanguagePickerMirrorsKeys[390-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.KbdViewportTest" time="0.12"/>
+  <testcase name="rtlBodyHasOne288PixelFrameAndLanguagePickerMirrorsKeys[390-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.KbdViewportTest" time="0.108"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

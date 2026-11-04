@@ -132,7 +132,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Input Group (`input-group`)：基础已验证（第六、七批）；32dp 布局、附件聚焦、禁用/错误和单行按钮附件已修正，button/kbd 负 margin、复杂多控件与完整焦点矩阵待关闭。
 - [ ] Input OTP (`input-otp`)：基础已验证（第七批）；连体格、分组、编辑/粘贴/密码语义和默认示例已完成，光标闪烁、invalid API、完整 IME/自动填码矩阵待关闭。
 - [ ] Item (`item`)：官网11配方和10个API部分已基础移植；Nova尺寸/媒体/透明border、Header/Footer换行、列表间距/语义、href与固定内容列已补。23项定向验证及所属模块检查通过；浏览器四象限、HTML链接语义/target、完整状态仍保留，详见文末。
-- [ ] Kbd (`kbd`)：六组官方配方、Nova尺寸/排版/Tooltip对比度及新内容slot已补齐；19项定向验证通过，浏览器桌面/手机浅深及完整状态矩阵待验。见 Kbd 本轮记录。
+- [ ] Kbd (`kbd`)：六官网配方已完成桌面/窄屏浅深静态、Tooltip/输入及三语对照；修正RTL单一288dp正文/完整语言标签、Button尾部键帽位置和遗漏TooltipProvider造成的600ms延迟。24项常规测试、lint/JS/Wasm通过；显式旧图4通过、2张Tooltip失配保留。附件专用圆角/负margin、ButtonGroup嵌套边框、字形及完整动态/辅助技术仍开放，见[kbd-r2](web-parity/kbd-r2/README.md)。
 - [ ] Label (`label`)：基础14 Medium、disabled和点击聚焦已修正；Card依赖复查补Nova等字号/行高的外层行框，Arabic单行14dp/两行28dp，Vega两张既有基准未变；桌面/窄屏标签点击实际聚焦已验。任意字体/emoji/分数行高、复杂Field及辅助技术矩阵仍待关闭，见[Card r1](web-parity/card-r1/README.md)。
 - [ ] Marker (`marker`)：已读取官方八配方与 Nova/Rhea 相同样式规则；八组本地示例和 Nova 基础排版/间距/装饰图标语义已实现；13项新增定向验证通过，旧图4/5通过，浏览器及完整状态待验。
 - [ ] Menubar (`menubar`)：已读取官方六配方并开始修复；Nova栏样式、菜单上下文/滚动/键盘、选择语义和六组示例已补齐；27项定向验证通过，浏览器及完整状态仍待核验。
@@ -169,6 +169,14 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Kbd：页面四种显示组合、RTL正文与提示延迟（2026-11-04）
+
+<!-- progress-created: 2026-11-04; order: 130 -->
+
+按优先尚无本轮完整页面浏览器对照推进Kbd。复核六组官网配方及固定上游源码，RTL去除共享RtlPreview叠加的高度/padding，改成单一288dp正文与40dp inset，语言标签补完整。Button预览/导出声明尾部图标位置，保留键帽2dp偏移；补五组行为说明。浏览器500ms采样发现示例遗漏TooltipProvider，沿用了未配置时600ms延迟；补官网默认0ms Provider及32ms语义可见回归，早期未展开采样隔离保留。
+
+核心13+目录11共24项常规测试通过，app ktlint与JS/Wasm构建通过。旧图显式verify六张中四张通过，Tooltip浅深各2468像素差异，核心/原测试/配置与起始HEAD一致，actual/compare及输入摘要保留且不刷新。官网与最终本地各24静态、12提示/输入和8语言补充图，见[kbd-r2](web-parity/kbd-r2/README.md)。InputGroup附件直接kbd的圆角/负margin、Tooltip内侧组合边框/特殊padding、字形/换行、共享页面和完整动态/辅助技术仍开放，Kbd保持未勾选；Editor排除、Attachment后置。
 
 ### Spinner：八官方配方、自定义视觉与旋转重组（2026-11-04）
 

@@ -1,0 +1,310 @@
+[
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "tooltip-save",
+    "scrollY": 2378,
+    "tooltip": [
+      {
+        "text": "Save Changes S",
+        "rect": {
+          "x": 625,
+          "y": 290,
+          "width": 122.546875,
+          "height": 32,
+          "top": 290,
+          "right": 747.546875,
+          "bottom": 322,
+          "left": 625
+        },
+        "caps": [
+          {
+            "text": "S",
+            "color": "lab(100 0 0)",
+            "bg": "oklab(0.999998 -0.00000980496 0.0000234246 / 0.2)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "tooltip-print",
+    "scrollY": 2378,
+    "tooltip": [
+      {
+        "text": "Print Document CtrlP",
+        "rect": {
+          "x": 658,
+          "y": 290,
+          "width": 163.0390625,
+          "height": 32,
+          "top": 290,
+          "right": 821.0390625,
+          "bottom": 322,
+          "left": 658
+        },
+        "caps": [
+          {
+            "text": "CtrlP",
+            "color": "lab(100 0 0)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Ctrl",
+            "color": "lab(100 0 0)",
+            "bg": "oklab(0.999998 -0.00000980496 0.0000234246 / 0.2)"
+          },
+          {
+            "text": "P",
+            "color": "lab(100 0 0)",
+            "bg": "oklab(0.999998 -0.00000980496 0.0000234246 / 0.2)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "input-typed",
+    "scrollY": 2934,
+    "value": "Components",
+    "focused": "INPUT"
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "tooltip-save",
+    "scrollY": 2573.5,
+    "tooltip": [
+      {
+        "text": "Save Changes S",
+        "rect": {
+          "x": 100,
+          "y": 345.5,
+          "width": 122.546875,
+          "height": 32,
+          "top": 345.5,
+          "right": 222.546875,
+          "bottom": 377.5,
+          "left": 100
+        },
+        "caps": [
+          {
+            "text": "S",
+            "color": "lab(100 0 0)",
+            "bg": "oklab(0.999998 -0.00000980496 0.0000234246 / 0.2)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "tooltip-print",
+    "scrollY": 2573.5,
+    "tooltip": [
+      {
+        "text": "Print Document CtrlP",
+        "rect": {
+          "x": 133,
+          "y": 345.5,
+          "width": 163.0390625,
+          "height": 32,
+          "top": 345.5,
+          "right": 296.0390625,
+          "bottom": 377.5,
+          "left": 133
+        },
+        "caps": [
+          {
+            "text": "CtrlP",
+            "color": "lab(100 0 0)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Ctrl",
+            "color": "lab(100 0 0)",
+            "bg": "oklab(0.999998 -0.00000980496 0.0000234246 / 0.2)"
+          },
+          {
+            "text": "P",
+            "color": "lab(100 0 0)",
+            "bg": "oklab(0.999998 -0.00000980496 0.0000234246 / 0.2)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "input-typed",
+    "scrollY": 3187,
+    "value": "Components",
+    "focused": "INPUT"
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "tooltip-save",
+    "scrollY": 2378,
+    "tooltip": [
+      {
+        "text": "Save Changes S",
+        "rect": {
+          "x": 625,
+          "y": 290,
+          "width": 122.546875,
+          "height": 32,
+          "top": 290,
+          "right": 747.546875,
+          "bottom": 322,
+          "left": 625
+        },
+        "caps": [
+          {
+            "text": "S",
+            "color": "lab(2.75381 0 0)",
+            "bg": "oklab(0.145 -0.00000143796 0.00000340492 / 0.1)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "tooltip-print",
+    "scrollY": 2378,
+    "tooltip": [
+      {
+        "text": "Print Document CtrlP",
+        "rect": {
+          "x": 658,
+          "y": 290,
+          "width": 163.0390625,
+          "height": 32,
+          "top": 290,
+          "right": 821.0390625,
+          "bottom": 322,
+          "left": 658
+        },
+        "caps": [
+          {
+            "text": "CtrlP",
+            "color": "lab(2.75381 0 0)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Ctrl",
+            "color": "lab(2.75381 0 0)",
+            "bg": "oklab(0.145 -0.00000143796 0.00000340492 / 0.1)"
+          },
+          {
+            "text": "P",
+            "color": "lab(2.75381 0 0)",
+            "bg": "oklab(0.145 -0.00000143796 0.00000340492 / 0.1)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "input-typed",
+    "scrollY": 2934,
+    "value": "Components",
+    "focused": "INPUT"
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "tooltip-save",
+    "scrollY": 2573.5,
+    "tooltip": [
+      {
+        "text": "Save Changes S",
+        "rect": {
+          "x": 100,
+          "y": 345.5,
+          "width": 122.546875,
+          "height": 32,
+          "top": 345.5,
+          "right": 222.546875,
+          "bottom": 377.5,
+          "left": 100
+        },
+        "caps": [
+          {
+            "text": "S",
+            "color": "lab(2.75381 0 0)",
+            "bg": "oklab(0.145 -0.00000143796 0.00000340492 / 0.1)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "tooltip-print",
+    "scrollY": 2573.5,
+    "tooltip": [
+      {
+        "text": "Print Document CtrlP",
+        "rect": {
+          "x": 133,
+          "y": 345.5,
+          "width": 163.0390625,
+          "height": 32,
+          "top": 345.5,
+          "right": 296.0390625,
+          "bottom": 377.5,
+          "left": 133
+        },
+        "caps": [
+          {
+            "text": "CtrlP",
+            "color": "lab(2.75381 0 0)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Ctrl",
+            "color": "lab(2.75381 0 0)",
+            "bg": "oklab(0.145 -0.00000143796 0.00000340492 / 0.1)"
+          },
+          {
+            "text": "P",
+            "color": "lab(2.75381 0 0)",
+            "bg": "oklab(0.145 -0.00000143796 0.00000340492 / 0.1)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "input-typed",
+    "scrollY": 3187,
+    "value": "Components",
+    "focused": "INPUT"
+  }
+]

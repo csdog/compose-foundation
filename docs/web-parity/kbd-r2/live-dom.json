@@ -1,0 +1,163 @@
+{
+  "url": "https://ui.shadcn.com/docs/components/base/kbd#rtl",
+  "caps": [
+    {
+      "text": "⌘",
+      "width": "20px",
+      "height": "20px",
+      "radius": "6px",
+      "font": "Geist, \"Geist Fallback\"",
+      "fontSize": "12px"
+    },
+    {
+      "text": "⇧",
+      "width": "20px",
+      "height": "20px",
+      "radius": "6px",
+      "font": "Geist, \"Geist Fallback\"",
+      "fontSize": "12px"
+    },
+    {
+      "text": "⌥",
+      "width": "20px",
+      "height": "20px",
+      "radius": "6px",
+      "font": "Geist, \"Geist Fallback\"",
+      "fontSize": "12px"
+    },
+    {
+      "text": "⌃",
+      "width": "20px",
+      "height": "20px",
+      "radius": "6px",
+      "font": "Geist, \"Geist Fallback\"",
+      "fontSize": "12px"
+    },
+    {
+      "text": "Ctrl",
+      "width": "29.2031px",
+      "height": "20px",
+      "radius": "6px",
+      "font": "Geist, \"Geist Fallback\"",
+      "fontSize": "12px"
+    },
+    {
+      "text": "B",
+      "width": "20px",
+      "height": "20px",
+      "radius": "6px",
+      "font": "Geist, \"Geist Fallback\"",
+      "fontSize": "12px"
+    },
+    {
+      "text": "Ctrl + B",
+      "width": "50.0234px",
+      "height": "20px",
+      "radius": "6px",
+      "font": "Geist, \"Geist Fallback\"",
+      "fontSize": "12px"
+    },
+    {
+      "text": "Ctrl + K",
+      "width": "49.6484px",
+      "height": "20px",
+      "radius": "6px",
+      "font": "Geist, \"Geist Fallback\"",
+      "fontSize": "12px"
+    },
+    {
+      "text": "⏎",
+      "width": "21.125px",
+      "height": "20px",
+      "radius": "6px",
+      "font": "Geist, \"Geist Fallback\"",
+      "fontSize": "12px"
+    },
+    {
+      "text": "⌘",
+      "width": "20px",
+      "height": "20px",
+      "radius": "5px",
+      "font": "Geist, \"Geist Fallback\"",
+      "fontSize": "12px"
+    },
+    {
+      "text": "K",
+      "width": "20px",
+      "height": "20px",
+      "radius": "5px",
+      "font": "Geist, \"Geist Fallback\"",
+      "fontSize": "12px"
+    },
+    {
+      "text": "⌘",
+      "width": "20px",
+      "height": "20px",
+      "radius": "6px",
+      "font": "Geist, \"Geist Fallback\"",
+      "fontSize": "12px"
+    },
+    {
+      "text": "⇧",
+      "width": "20px",
+      "height": "20px",
+      "radius": "6px",
+      "font": "Geist, \"Geist Fallback\"",
+      "fontSize": "12px"
+    },
+    {
+      "text": "⌥",
+      "width": "20px",
+      "height": "20px",
+      "radius": "6px",
+      "font": "Geist, \"Geist Fallback\"",
+      "fontSize": "12px"
+    },
+    {
+      "text": "⌃",
+      "width": "20px",
+      "height": "20px",
+      "radius": "6px",
+      "font": "Geist, \"Geist Fallback\"",
+      "fontSize": "12px"
+    },
+    {
+      "text": "Ctrl",
+      "width": "29.2031px",
+      "height": "20px",
+      "radius": "6px",
+      "font": "Geist, \"Geist Fallback\"",
+      "fontSize": "12px"
+    },
+    {
+      "text": "B",
+      "width": "20px",
+      "height": "20px",
+      "radius": "6px",
+      "font": "Geist, \"Geist Fallback\"",
+      "fontSize": "12px"
+    }
+  ],
+  "addons": [
+    {
+      "class": "flex h-auto cursor-text items-center justify-center gap-2 py-1.5 text-sm font-medium text-muted-foreground select-none group-data-[disabled=true]/input-group:opacity-50 [&>kbd]:rounded-[calc(var(--radius)-5px)] [&>svg:not([class*='size-'])]:size-4 order-first pl-2 has-[>button]:ml-[-0.3rem] has-[>kbd]:ml-[-0.15rem]"
+    },
+    {
+      "class": "flex h-auto cursor-text items-center justify-center gap-2 py-1.5 text-sm font-medium text-muted-foreground select-none group-data-[disabled=true]/input-group:opacity-50 [&>kbd]:rounded-[calc(var(--radius)-5px)] [&>svg:not([class*='size-'])]:size-4 order-last pr-2 has-[>button]:mr-[-0.3rem] has-[>kbd]:mr-[-0.15rem]"
+    }
+  ],
+  "rtlChildren": [
+    {
+      "class": "flex h-16 items-center border-b px-4",
+      "height": "64px"
+    },
+    {
+      "class": "",
+      "height": "288px"
+    },
+    {
+      "class": "relative overflow-hidden **:data-[slot=copy-button]:right-4 **:data-[slot=copy-button]:hidden data-[mobile-code-visible=true]:**:data-[slot=copy-button]:flex [&_[data-rehype-pretty-code-figure]]:m-0! [&_[data-rehype-pretty-code-figure]]:rounded-t-none [&_[data-rehype-pretty-code-figure]]:border-t [&_pre]:max-h-72",
+      "height": "108.5px"
+    }
+  ]
+}

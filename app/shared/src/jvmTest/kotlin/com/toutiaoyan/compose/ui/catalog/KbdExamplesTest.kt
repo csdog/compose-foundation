@@ -96,7 +96,19 @@ class KbdExamplesTest {
         rule.onNodeWithText("English").performClick()
         assertTrue(left("⌘") < left("⌃"))
         rule.onNodeWithContentDescription("Preview language").performClick()
-        rule.onNodeWithText("עברית").performClick()
+        rule.onNodeWithText("Hebrew (עברית)").performClick()
         assertTrue(left("⌘") > left("⌃"))
+    }
+
+    @Test fun tooltipProviderOpensOnHoverBeforeTheUnprovided600MillisDelay() {
+        show("Tooltip")
+        rule.mainClock.autoAdvance = false
+        rule.onNodeWithText("Save").performMouseInput {
+            enter(center)
+            moveTo(center)
+        }
+        rule.mainClock.advanceTimeBy(32)
+        rule.waitForIdle()
+        rule.onNodeWithText("Save Changes").assertExists()
     }
 }

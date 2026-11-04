@@ -1,0 +1,26 @@
+[
+  {
+    "file": "TEST-com.toutiaoyan.compose.ui.components.kbd.KbdParityTest.xml",
+    "tests": 11,
+    "failures": 0,
+    "errors": 0
+  },
+  {
+    "file": "TEST-com.toutiaoyan.compose.ui.components.kbd.KbdScreenshotTest.xml",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0
+  },
+  {
+    "file": "TEST-com.toutiaoyan.compose.ui.catalog.KbdViewportTest.xml",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0
+  },
+  {
+    "file": "TEST-com.toutiaoyan.compose.ui.catalog.KbdExamplesTest.xml",
+    "tests": 7,
+    "failures": 0,
+    "errors": 0
+  }
+]

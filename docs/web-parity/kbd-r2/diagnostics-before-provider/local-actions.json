@@ -1,0 +1,104 @@
+{
+  "app": [
+    "http://127.0.0.1:8765/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8765/813dc89fe865f5ebf7e7.wasm"
+  ],
+  "captures": [
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "tooltip-save",
+      "url": "http://127.0.0.1:8765/kbd#tooltip",
+      "scrollY": 2933
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "tooltip-print",
+      "url": "http://127.0.0.1:8765/kbd#tooltip",
+      "scrollY": 2933
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "input-typed",
+      "url": "http://127.0.0.1:8765/kbd#input-group",
+      "scrollY": 3465
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "tooltip-save",
+      "url": "http://127.0.0.1:8765/kbd#tooltip",
+      "scrollY": 3100
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "tooltip-print",
+      "url": "http://127.0.0.1:8765/kbd#tooltip",
+      "scrollY": 3100
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "input-typed",
+      "url": "http://127.0.0.1:8765/kbd#input-group",
+      "scrollY": 3711
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "tooltip-save",
+      "url": "http://127.0.0.1:8765/kbd#tooltip",
+      "scrollY": 2933
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "tooltip-print",
+      "url": "http://127.0.0.1:8765/kbd#tooltip",
+      "scrollY": 2933
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "input-typed",
+      "url": "http://127.0.0.1:8765/kbd#input-group",
+      "scrollY": 3465
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "tooltip-save",
+      "url": "http://127.0.0.1:8765/kbd#tooltip",
+      "scrollY": 3100
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "tooltip-print",
+      "url": "http://127.0.0.1:8765/kbd#tooltip",
+      "scrollY": 3100
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "input-typed",
+      "url": "http://127.0.0.1:8765/kbd#input-group",
+      "scrollY": 3711
+    }
+  ]
+}

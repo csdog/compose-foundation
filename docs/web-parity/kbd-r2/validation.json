@@ -1,0 +1,51 @@
+{
+  "date": "2026-11-04",
+  "regularTests": {
+    "core": 13,
+    "catalog": 11,
+    "total": 24
+  },
+  "explicitPixelVerify": {
+    "total": 6,
+    "passed": 4,
+    "failed": 2,
+    "failedNames": [
+      "kbd_tooltip_nova_light",
+      "kbd_tooltip_nova_dark"
+    ],
+    "pixelsChangedEach": 2468,
+    "refreshed": false
+  },
+  "artifact": {
+    "file": "5e37ca2bae65c009208a.wasm",
+    "bytes": 43572425,
+    "sha256": "78d49352a315fb5774e0d998109ed2a49b29f48bc374f13dda004216a25f9a80"
+  },
+  "checks": [
+    ":app:shared:ktlintCheck",
+    ":app:webApp:jsBrowserDevelopmentExecutableDistribution",
+    ":app:webApp:wasmJsBrowserDevelopmentExecutableDistribution"
+  ],
+  "browser": {
+    "space": 1,
+    "widths": [
+      1440,
+      390
+    ],
+    "height": 1000,
+    "dpr": 1,
+    "touch": false,
+    "fullComponentComplete": false,
+    "officialScreenshots": 44,
+    "localScreenshots": 44,
+    "beforeLocalScreenshots": 24,
+    "diagnosticBeforeProviderScreenshots": 8,
+    "finalReviewSheets": 16,
+    "finalReviewSheetsInspected": true
+  },
+  "limitations": [
+    "Default detekt sourceCount=0 for commonMain; no full static-analysis coverage claimed",
+    "Existing AGP/Gradle/Text/webpack diagnostics retained",
+    "Legacy Tooltip screenshot differences remain open"
+  ]
+}
