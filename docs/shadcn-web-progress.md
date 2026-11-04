@@ -154,7 +154,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Sidebar (`sidebar`)：已核对官网来源并补桌面/移动端独立状态、响应式切换、Offcanvas内容保留/200ms动画、移动面板与内侧边框；内容滚动及Header/Footer/Group间距也已补齐，34项定向验证及两个ktlint通过。官网配方、浏览器四象限及完整状态矩阵仍待完成，详见 sidebar-r1/r2。
 - [ ] Skeleton (`skeleton`)：七组官网配方及三语RTL已迁移，Shimmer扩展复制代码已统一；脉冲Style逐帧重组49次问题已修复。50项定向测试、两项旧截图验证及core/shared ktlint通过，40张原生截图已检查。浏览器四象限及完整状态验收仍开放，见 skeleton-r1。
 - [ ] Slider (`slider`)：基础已验证（第六批）；Create Payout 静态 Progress 已换为真实 50..10000/step50 Slider，金额和键盘 Home/End 已回归；12dp Nova 滑块、填充/尺寸、键盘步进和 commit 已修正，多滑块标签、动态焦点与完整竖向/反转/RTL 手势矩阵待关闭。
-- [ ] Spinner (`spinner`)：已补内容色与行内尺寸继承；Attachment 第二轮按官网 LoaderCircle SVG 修正弧线半径、笔画及 sweep，验证实际绘制尺寸和 Style 覆盖，并显式验证浅深像素基准。Spinner 页面完整示例与交互复核仍待关闭。
+- [ ] Spinner (`spinner`)：八官方配方、自定义图形slot及旋转读取阶段已修正；22项测试、既有两图verify、lint与JS/Wasm通过。四种显示组合及三语/演示按钮已对照；共享排版、Empty换行、Item字体、完整动态及读屏矩阵仍待关闭，见Spinner第一轮。
 - [ ] Stepper (`stepper`)：项目扩展，检查一致性。
 - [ ] Switch (`switch`)：Nova 轨道/滑块尺寸、暗色滑块、150ms 位移、错误 ring 和标签焦点已修正；复杂组合及完整状态矩阵待关闭。
 - [ ] Table (`table`)：已补caption-bottom、Header40dp、单元格14/20与p8、行hover/selected、Footer半透明顶线、内容槽和横向溢出；四组官网数据/交互配方及三语RTL已加入。44项定向测试和core/shared ktlint通过，24张原生图已检查；共享自动列宽/跨列、希伯来字体及浏览器完整矩阵仍开放，详见 table-r1。
@@ -169,6 +169,16 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Spinner：八官方配方、自定义视觉与旋转重组（2026-11-04）
+
+<!-- progress-created: 2026-11-04; order: 129 -->
+
+固定上游文档、组件及八配方并对照实时页面，替换旧六个重复基础示例。首屏恢复320dp付款Item，另补八射线Customization、12/16/24/32尺寸、禁用Sm按钮、行内Badge、禁用输入但仍启用Send、Empty/Cancel和三语RTL。Send/Cancel按官网保持无业务回调；导出为完整公共Kotlin组合。浏览器发现自定义图形未指定内容色时不可见，已补主题前景回退及真实墨迹断言。
+
+公共Spinner新增兼容的content重载，尺寸、角度及加载说明由根统一负责；TwAnimate新增状态形式，角度读取延后到graphicsLayer，修复256ms内调用方多重组16次。原Float API、1秒线性旋转、LoaderCircle几何和尺寸覆盖保持。版本0.3.37。
+
+核心7+目录15共22项通过，两张既有Spinner基准显式verify零变化，未刷新。三模块ktlint与JS/Wasm构建通过。官网/本地各32静态、8三语补充、8演示按钮动作对照及剩余差异详见[spinner-r1](web-parity/spinner-r1/README.md)。页面排版/说明缺口、Empty换行、Item字体、完整动态及辅助技术仍开放，Spinner保持未勾选；Editor排除、Attachment后置。
 
 ### Checkbox：八官方配方、Field依赖与四种显示组合（2026-11-04）
 

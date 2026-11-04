@@ -1,0 +1,74 @@
+[
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "lang": "he",
+    "url": "http://127.0.0.1:8765/spinner#rtl",
+    "scrollY": 4964,
+    "theme": "dark"
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "lang": "en",
+    "url": "http://127.0.0.1:8765/spinner#rtl",
+    "scrollY": 4964,
+    "theme": "dark"
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "lang": "he",
+    "url": "http://127.0.0.1:8765/spinner#rtl",
+    "scrollY": 5145,
+    "theme": "dark"
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "lang": "en",
+    "url": "http://127.0.0.1:8765/spinner#rtl",
+    "scrollY": 5145,
+    "theme": "dark"
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "lang": "he",
+    "url": "http://127.0.0.1:8765/spinner#rtl",
+    "scrollY": 4964,
+    "theme": "light"
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "lang": "en",
+    "url": "http://127.0.0.1:8765/spinner#rtl",
+    "scrollY": 4964,
+    "theme": "light"
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "lang": "he",
+    "url": "http://127.0.0.1:8765/spinner#rtl",
+    "scrollY": 5145,
+    "theme": "light"
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "lang": "en",
+    "url": "http://127.0.0.1:8765/spinner#rtl",
+    "scrollY": 5145,
+    "theme": "light"
+  }
+]

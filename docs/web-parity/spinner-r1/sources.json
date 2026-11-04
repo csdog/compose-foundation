@@ -1,0 +1,55 @@
+{
+  "revision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "files": {
+    "spinner.mdx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/content/docs/components/base/spinner.mdx",
+      "sha256": "98c7f77cc0e6f359a23f97a569d965bc76e23e4b5d6ebdaa7a80701cc61865d6"
+    },
+    "spinner.tsx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/bases/base/ui/spinner.tsx",
+      "sha256": "494f71fd2733709d0e43be44e3353d9df215b370137af0195251cbdfdcc9e17b"
+    },
+    "spinner-demo.tsx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/spinner-demo.tsx",
+      "sha256": "b03276e58d55e0c3c3a9a693ad235d9241d910f1496c76d585fbd354df3cce07"
+    },
+    "spinner-size.tsx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/spinner-size.tsx",
+      "sha256": "7223c2224fc9046bf9967378a511b0347446c44bde663c5aa1717b395233819f"
+    },
+    "spinner-button.tsx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/spinner-button.tsx",
+      "sha256": "686aaf5aca0bd7d2a80041abf18dd868ab04f5919954bcb96a448b3c3c816ab3"
+    },
+    "spinner-badge.tsx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/spinner-badge.tsx",
+      "sha256": "c491ade855393ed60432db7c82a07ad47973a0e3350992c2f565f2688e3fc134"
+    },
+    "spinner-input-group.tsx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/spinner-input-group.tsx",
+      "sha256": "251873610e1e3ae811fe1c9968f9b4c937f84ceb0bc2b49ba4360ce320cecf4e"
+    },
+    "spinner-empty.tsx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/spinner-empty.tsx",
+      "sha256": "ad90307a58a4a9b0b556b97b9263ac211261f4ff4261df4151ea253c1a96baf1"
+    },
+    "spinner-custom.tsx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/spinner-custom.tsx",
+      "sha256": "dc53a72966ce9a8bbf60d75dc2980a8609ad4f87e631bab8c167091f3a5c26fa"
+    },
+    "spinner-rtl.tsx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/spinner-rtl.tsx",
+      "sha256": "46d292204de33280f5e4324c6cb9a51c78382d8bcf187df12775a602d882aa11"
+    }
+  },
+  "discoveryOnly": {
+    "spinner-color.tsx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/spinner-color.tsx",
+      "error": "HTTP Error 404: Not Found"
+    },
+    "spinner-item.tsx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/spinner-item.tsx",
+      "error": "HTTP Error 404: Not Found"
+    }
+  }
+}

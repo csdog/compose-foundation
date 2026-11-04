@@ -62,4 +62,23 @@ class SpinnerIntrinsicSizeTest {
         rule.onNodeWithTag("spinner").assertWidthIsEqualTo(32.dp).assertHeightIsEqualTo(32.dp)
         rule.onNodeWithTag("row").assertWidthIsEqualTo(42.dp)
     }
+
+    @Test fun customVisualFillsTheSizedRootAndKeepsOneLoadingAnnouncement() {
+        rule.setContent {
+            Theme(preset = StylePreset.Nova) {
+                Spinner(Modifier.size(32.dp).testTag("spinner"), label = "Saving") {
+                    Box(Modifier.fillMaxSize().testTag("custom"))
+                }
+            }
+        }
+        rule.onNodeWithTag("spinner").assertWidthIsEqualTo(32.dp).assertHeightIsEqualTo(32.dp)
+        rule.onNodeWithTag("custom").assertWidthIsEqualTo(32.dp).assertHeightIsEqualTo(32.dp)
+        rule.onAllNodesWithContentDescription("Saving").assertCountEquals(1)
+        rule.onNodeWithTag("spinner").assert(
+            SemanticsMatcher.expectValue(
+                androidx.compose.ui.semantics.SemanticsProperties.LiveRegion,
+                androidx.compose.ui.semantics.LiveRegionMode.Polite,
+            ),
+        )
+    }
 }

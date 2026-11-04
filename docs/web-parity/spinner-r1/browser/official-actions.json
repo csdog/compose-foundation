@@ -1,0 +1,170 @@
+[
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "input-group",
+    "action": "send-clicked",
+    "url": "https://ui.shadcn.com/docs/components/base/spinner#input-group",
+    "scrollY": 3804.5,
+    "loading": 16,
+    "inputs": [
+      {
+        "value": "",
+        "disabled": true
+      },
+      {
+        "value": "",
+        "disabled": true
+      }
+    ],
+    "sendDisabled": false
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "empty",
+    "action": "cancel-clicked",
+    "url": "https://ui.shadcn.com/docs/components/base/spinner#empty",
+    "scrollY": 4293.5,
+    "loading": 16,
+    "inputs": [
+      {
+        "value": "",
+        "disabled": true
+      },
+      {
+        "value": "",
+        "disabled": true
+      }
+    ],
+    "sendDisabled": false
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "input-group",
+    "action": "send-clicked",
+    "url": "https://ui.shadcn.com/docs/components/base/spinner#input-group",
+    "scrollY": 4276.5,
+    "loading": 16,
+    "inputs": [
+      {
+        "value": "",
+        "disabled": true
+      },
+      {
+        "value": "",
+        "disabled": true
+      }
+    ],
+    "sendDisabled": false
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "empty",
+    "action": "cancel-clicked",
+    "url": "https://ui.shadcn.com/docs/components/base/spinner#empty",
+    "scrollY": 4772.5,
+    "loading": 16,
+    "inputs": [
+      {
+        "value": "",
+        "disabled": true
+      },
+      {
+        "value": "",
+        "disabled": true
+      }
+    ],
+    "sendDisabled": false
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "input-group",
+    "action": "send-clicked",
+    "url": "https://ui.shadcn.com/docs/components/base/spinner#input-group",
+    "scrollY": 3804.5,
+    "loading": 16,
+    "inputs": [
+      {
+        "value": "",
+        "disabled": true
+      },
+      {
+        "value": "",
+        "disabled": true
+      }
+    ],
+    "sendDisabled": false
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "empty",
+    "action": "cancel-clicked",
+    "url": "https://ui.shadcn.com/docs/components/base/spinner#empty",
+    "scrollY": 4293.5,
+    "loading": 16,
+    "inputs": [
+      {
+        "value": "",
+        "disabled": true
+      },
+      {
+        "value": "",
+        "disabled": true
+      }
+    ],
+    "sendDisabled": false
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "input-group",
+    "action": "send-clicked",
+    "url": "https://ui.shadcn.com/docs/components/base/spinner#input-group",
+    "scrollY": 4276.5,
+    "loading": 16,
+    "inputs": [
+      {
+        "value": "",
+        "disabled": true
+      },
+      {
+        "value": "",
+        "disabled": true
+      }
+    ],
+    "sendDisabled": false
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "empty",
+    "action": "cancel-clicked",
+    "url": "https://ui.shadcn.com/docs/components/base/spinner#empty",
+    "scrollY": 4772.5,
+    "loading": 16,
+    "inputs": [
+      {
+        "value": "",
+        "disabled": true
+      },
+      {
+        "value": "",
+        "disabled": true
+      }
+    ],
+    "sendDisabled": false
+  }
+]

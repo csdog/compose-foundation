@@ -1,0 +1,14 @@
+{
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/DocInstallation.kt": "45f6a3a3c30fae75f119bd4fd18b12c75ccfda925cbcb95288f0f857b10ac1e9",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/SpinnerDoc.kt": "c1e193ca90768d38572df1534bec7f40b4484cd14e29a8ecb7e7ef4781b19afe",
+  "gradle.properties": "4d84169d34b4527b046da6b269c9baae9248bd6ca7c473c17eeb25db45ca1d78",
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/spinner/Spinner.kt": "dd37bed6967b482395451e440425ca79b0fd52fadda10c7af1284ebfdf3adf4f",
+  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/spinner/SpinnerIntrinsicSizeTest.kt": "1e9b863e83cf4d471bb9646e6cb74cf4e0e56d56089ef35cbcbd5225b173a0f2",
+  "tailwind/core/src/commonMain/kotlin/com/toutiaoyan/compose/tailwind/core/TwAnimate.kt": "bea58bc3d1e4953a94be705b6cfaaa018e41741af58d9b27dcd95030386923e1",
+  "tailwind/core/src/commonMain/kotlin/com/toutiaoyan/compose/tailwind/modifiers/Animation.kt": "09eea27a5783da27869261261e520345116307efc7859c08f656b2820ad5f0fb",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/SpinnerExampleCode.kt": "e8646880e022d5c6767a940bcddcd394d691200b94bfebc977ff88818f19fa63",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/SpinnerRecipes.kt": "51eae076093f57b6f11db233b42a27a6c5a8df47564093702b977ed108a0bbe9",
+  "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/SpinnerExamplesTest.kt": "898a25f52ad59cb3fe01ffe782677903f3ebaf40e06ccd4d6fd593e1d43f8986",
+  "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/SpinnerViewportTest.kt": "3cc7b63c119242a1c03abfaed1e8c9e86bbd9a6c258864300baa0178ddecdd9e",
+  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/spinner/SpinnerMotionTest.kt": "33ab97ec82b465f9c63065d537623dbc9ca7f3fee47f9d22622cf62d5ed3bffd"
+}

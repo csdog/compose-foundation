@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="SpinnerViewportTest[jvm]" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-04T07:28:41.373Z" hostname="Apples-MacBook-Pro.local" time="0.664">
+  <properties/>
+  <testcase name="languageChangesMirrorMediaAndPreserveLoading[1,440-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.SpinnerViewportTest" time="0.224"/>
+  <testcase name="badgeKeepsThreeTwelvePixelSpinnersOnOneLine[1,440-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.SpinnerViewportTest" time="0.023"/>
+  <testcase name="languageChangesMirrorMediaAndPreserveLoading[1,440-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.SpinnerViewportTest" time="0.127"/>
+  <testcase name="badgeKeepsThreeTwelvePixelSpinnersOnOneLine[1,440-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.SpinnerViewportTest" time="0.018"/>
+  <testcase name="languageChangesMirrorMediaAndPreserveLoading[390-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.SpinnerViewportTest" time="0.118"/>
+  <testcase name="badgeKeepsThreeTwelvePixelSpinnersOnOneLine[390-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.SpinnerViewportTest" time="0.019"/>
+  <testcase name="languageChangesMirrorMediaAndPreserveLoading[390-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.SpinnerViewportTest" time="0.117"/>
+  <testcase name="badgeKeepsThreeTwelvePixelSpinnersOnOneLine[390-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.SpinnerViewportTest" time="0.017"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -3,6 +3,9 @@
 package com.toutiaoyan.compose.ui.components.spinner
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Alignment
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
@@ -64,6 +67,34 @@ fun Spinner(
     style: Style = Style,
 ) {
     val color = LocalContentColor.current.takeIf { it.isSpecified } ?: currentTheme.colors.foreground
+    Spinner(modifier, size, label, style) {
+        Canvas(Modifier.fillMaxSize()) {
+            // Lucide LoaderCircle: 24-unit viewBox, r=9, stroke=2, 288° sweep.
+            // Scale the path and stroke together, keeping its ink inside the viewport.
+            val unit = this.size.minDimension / 24f
+            val diameter = 18f * unit
+            drawArc(
+                color = color,
+                startAngle = 0f,
+                sweepAngle = 288f,
+                useCenter = false,
+                topLeft = Offset((this.size.width - diameter) / 2f, (this.size.height - diameter) / 2f),
+                size = Size(diameter, diameter),
+                style = Stroke(width = 2f * unit, cap = StrokeCap.Round),
+            )
+        }
+    }
+}
+
+/** Customize the visual while retaining spinner sizing, animation and loading announcements. */
+@Composable
+fun Spinner(
+    modifier: Modifier = Modifier,
+    size: SpinnerSize = SpinnerSize.Default,
+    label: String = "Loading",
+    style: Style = Style,
+    content: @Composable () -> Unit,
+) {
     val inlineSize = LocalInlineIconSize.current
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val preferredSize =
@@ -92,7 +123,7 @@ fun Spinner(
                 SpinnerDimensionScope(this, dimensions).apply(mergedStyle)
             }
         }
-    Canvas(
+    Box(
         modifier =
             modifier
                 .animateSpin()
@@ -105,21 +136,8 @@ fun Spinner(
                     measuredStyle,
                 )
                 .then(SpinnerIntrinsicSizeHint(dimensions)),
-    ) {
-        // Lucide LoaderCircle: 24-unit viewBox, r=9, stroke=2, 288° sweep.
-        // Scale the path and stroke together, keeping its ink inside the viewport.
-        val unit = this.size.minDimension / 24f
-        val diameter = 18f * unit
-        drawArc(
-            color = color,
-            startAngle = 0f,
-            sweepAngle = 288f,
-            useCenter = false,
-            topLeft = Offset((this.size.width - diameter) / 2f, (this.size.height - diameter) / 2f),
-            size = Size(diameter, diameter),
-            style = Stroke(width = 2f * unit, cap = StrokeCap.Round),
-        )
-    }
+        contentAlignment = Alignment.Center,
+    ) { content() }
 }
 
 /** Declared Style dimensions are cached during Style evaluation, without snapshot state writes. */

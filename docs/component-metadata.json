@@ -2193,7 +2193,7 @@
     {
       "id": "spinner",
       "title": "Spinner",
-      "description": "A spinning loading indicator.",
+      "description": "An indicator that can be used to show a loading state.",
       "category": "feedback",
       "family": "feedback",
       "isNew": false,

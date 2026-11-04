@@ -9,6 +9,7 @@ import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 
 /**
@@ -90,18 +91,21 @@ object TwAnimate {
         val alpha: Float,
     )
 
-    /** Running `animate-spin` value: degrees `0f → 360f`. */
+    /** Running spin state; defer `.value` reads to layout/draw for frame-rate consumers. */
     @Composable
-    fun rememberSpin(label: String = "animate-spin"): Float {
+    fun rememberSpinState(label: String = "animate-spin"): State<Float> {
         val transition = rememberInfiniteTransition(label = label)
-        val degrees by transition.animateFloat(
+        return transition.animateFloat(
             initialValue = 0f,
             targetValue = 360f,
             animationSpec = spin,
             label = label,
         )
-        return degrees
     }
+
+    /** Value-form driver retained for callers that render the angle in composition. */
+    @Composable
+    fun rememberSpin(label: String = "animate-spin"): Float = rememberSpinState(label).value
 
     /** Running `animate-pulse` value: opacity `1f → 0.5f`. */
     @Composable

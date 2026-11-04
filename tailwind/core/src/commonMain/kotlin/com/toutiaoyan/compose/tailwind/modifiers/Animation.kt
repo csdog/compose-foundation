@@ -17,8 +17,8 @@ import com.toutiaoyan.compose.tailwind.core.TwAnimate
  */
 @Composable
 fun Modifier.animateSpin(): Modifier {
-    val degrees = TwAnimate.rememberSpin()
-    return this.graphicsLayer { rotationZ = degrees }
+    val degrees = TwAnimate.rememberSpinState()
+    return this.graphicsLayer { rotationZ = degrees.value }
 }
 
 /**

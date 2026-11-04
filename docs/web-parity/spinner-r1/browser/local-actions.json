@@ -1,0 +1,104 @@
+{
+  "app": [
+    "http://127.0.0.1:8765/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8765/e3cb8a2d32ed55f173f7.wasm"
+  ],
+  "captures": [
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "input-group",
+      "action": "send-clicked",
+      "x": 908,
+      "y": 310,
+      "url": "http://127.0.0.1:8765/spinner#input-group",
+      "scrollY": 3978,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "empty",
+      "action": "cancel-clicked",
+      "x": 712,
+      "y": 327,
+      "url": "http://127.0.0.1:8765/spinner#empty",
+      "scrollY": 4468,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "input-group",
+      "action": "send-clicked",
+      "x": 284,
+      "y": 314,
+      "url": "http://127.0.0.1:8765/spinner#input-group",
+      "scrollY": 4124,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "empty",
+      "action": "cancel-clicked",
+      "x": 188,
+      "y": 354,
+      "url": "http://127.0.0.1:8765/spinner#empty",
+      "scrollY": 4620,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "input-group",
+      "action": "send-clicked",
+      "x": 908,
+      "y": 310,
+      "url": "http://127.0.0.1:8765/spinner#input-group",
+      "scrollY": 3978,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "empty",
+      "action": "cancel-clicked",
+      "x": 712,
+      "y": 327,
+      "url": "http://127.0.0.1:8765/spinner#empty",
+      "scrollY": 4468,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "input-group",
+      "action": "send-clicked",
+      "x": 284,
+      "y": 314,
+      "url": "http://127.0.0.1:8765/spinner#input-group",
+      "scrollY": 4124,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "empty",
+      "action": "cancel-clicked",
+      "x": 188,
+      "y": 354,
+      "url": "http://127.0.0.1:8765/spinner#empty",
+      "scrollY": 4620,
+      "theme": "dark"
+    }
+  ]
+}

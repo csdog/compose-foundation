@@ -1,0 +1,296 @@
+{
+  "app": [
+    "http://127.0.0.1:8765/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8765/e3cb8a2d32ed55f173f7.wasm"
+  ],
+  "captures": [
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "demo",
+      "url": "http://127.0.0.1:8765/spinner#",
+      "scrollY": 0,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "customization",
+      "url": "http://127.0.0.1:8765/spinner#customization",
+      "scrollY": 1934,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "size",
+      "url": "http://127.0.0.1:8765/spinner#size",
+      "scrollY": 2466,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "button",
+      "url": "http://127.0.0.1:8765/spinner#button",
+      "scrollY": 2998,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "badge",
+      "url": "http://127.0.0.1:8765/spinner#badge",
+      "scrollY": 3488,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "input-group",
+      "url": "http://127.0.0.1:8765/spinner#input-group",
+      "scrollY": 3978,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "empty",
+      "url": "http://127.0.0.1:8765/spinner#empty",
+      "scrollY": 4468,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "rtl",
+      "url": "http://127.0.0.1:8765/spinner#rtl",
+      "scrollY": 4964,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "demo",
+      "url": "http://127.0.0.1:8765/spinner#",
+      "scrollY": 0,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "customization",
+      "url": "http://127.0.0.1:8765/spinner#customization",
+      "scrollY": 1976,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "size",
+      "url": "http://127.0.0.1:8765/spinner#size",
+      "scrollY": 2554,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "button",
+      "url": "http://127.0.0.1:8765/spinner#button",
+      "scrollY": 3132,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "badge",
+      "url": "http://127.0.0.1:8765/spinner#badge",
+      "scrollY": 3628,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "input-group",
+      "url": "http://127.0.0.1:8765/spinner#input-group",
+      "scrollY": 4124,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "empty",
+      "url": "http://127.0.0.1:8765/spinner#empty",
+      "scrollY": 4620,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "rtl",
+      "url": "http://127.0.0.1:8765/spinner#rtl",
+      "scrollY": 5145,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "demo",
+      "url": "http://127.0.0.1:8765/spinner#",
+      "scrollY": 0,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "customization",
+      "url": "http://127.0.0.1:8765/spinner#customization",
+      "scrollY": 1934,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "size",
+      "url": "http://127.0.0.1:8765/spinner#size",
+      "scrollY": 2466,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "button",
+      "url": "http://127.0.0.1:8765/spinner#button",
+      "scrollY": 2998,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "badge",
+      "url": "http://127.0.0.1:8765/spinner#badge",
+      "scrollY": 3488,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "input-group",
+      "url": "http://127.0.0.1:8765/spinner#input-group",
+      "scrollY": 3978,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "empty",
+      "url": "http://127.0.0.1:8765/spinner#empty",
+      "scrollY": 4468,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "rtl",
+      "url": "http://127.0.0.1:8765/spinner#rtl",
+      "scrollY": 4964,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "demo",
+      "url": "http://127.0.0.1:8765/spinner#",
+      "scrollY": 0,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "customization",
+      "url": "http://127.0.0.1:8765/spinner#customization",
+      "scrollY": 1976,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "size",
+      "url": "http://127.0.0.1:8765/spinner#size",
+      "scrollY": 2554,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "button",
+      "url": "http://127.0.0.1:8765/spinner#button",
+      "scrollY": 3132,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "badge",
+      "url": "http://127.0.0.1:8765/spinner#badge",
+      "scrollY": 3628,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "input-group",
+      "url": "http://127.0.0.1:8765/spinner#input-group",
+      "scrollY": 4124,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "empty",
+      "url": "http://127.0.0.1:8765/spinner#empty",
+      "scrollY": 4620,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "rtl",
+      "url": "http://127.0.0.1:8765/spinner#rtl",
+      "scrollY": 5145,
+      "theme": "dark"
+    }
+  ]
+}
