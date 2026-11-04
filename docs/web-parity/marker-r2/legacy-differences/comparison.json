@@ -1,0 +1,11 @@
+{
+  "actual": "shadcn/core/build/outputs/roborazzi/marker_separator_dark_actual.png",
+  "dimensions": [
+    1024,
+    64
+  ],
+  "changedPixels": 906,
+  "actualSha256": "83d481f4edd6bf7bccb45f6c7cf48fb8c14f3613b08543ab63d54319f4127459",
+  "r1ActualSha256": "83d481f4edd6bf7bccb45f6c7cf48fb8c14f3613b08543ab63d54319f4127459",
+  "actualByteIdenticalToR1": true
+}

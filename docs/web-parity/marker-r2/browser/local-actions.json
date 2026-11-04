@@ -1,0 +1,188 @@
+{
+  "app": [
+    "http://127.0.0.1:8765/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8765/3337221b4d395fb838fd.wasm"
+  ],
+  "captures": [
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "link-hover",
+      "url": "http://127.0.0.1:8765/marker#links-and-buttons",
+      "scrollY": 5191,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "button-hover",
+      "url": "http://127.0.0.1:8765/marker#links-and-buttons",
+      "scrollY": 5191,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "toast-click",
+      "url": "http://127.0.0.1:8765/marker#links-and-buttons",
+      "scrollY": 5191,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "toast-enter",
+      "url": "http://127.0.0.1:8765/marker#links-and-buttons",
+      "scrollY": 5191,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "link-navigated",
+      "url": "http://127.0.0.1:8765/marker#links-and-buttons",
+      "scrollY": 5191,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "link-hover",
+      "url": "http://127.0.0.1:8765/marker#links-and-buttons",
+      "scrollY": 5922,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "button-hover",
+      "url": "http://127.0.0.1:8765/marker#links-and-buttons",
+      "scrollY": 5922,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "toast-click",
+      "url": "http://127.0.0.1:8765/marker#links-and-buttons",
+      "scrollY": 5922,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "toast-enter",
+      "url": "http://127.0.0.1:8765/marker#links-and-buttons",
+      "scrollY": 5922,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "link-navigated",
+      "url": "http://127.0.0.1:8765/marker#links-and-buttons",
+      "scrollY": 5922,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "link-hover",
+      "url": "http://127.0.0.1:8765/marker#links-and-buttons",
+      "scrollY": 5191,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "button-hover",
+      "url": "http://127.0.0.1:8765/marker#links-and-buttons",
+      "scrollY": 5191,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "toast-click",
+      "url": "http://127.0.0.1:8765/marker#links-and-buttons",
+      "scrollY": 5191,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "toast-enter",
+      "url": "http://127.0.0.1:8765/marker#links-and-buttons",
+      "scrollY": 5191,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "link-navigated",
+      "url": "http://127.0.0.1:8765/marker#links-and-buttons",
+      "scrollY": 5191,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "link-hover",
+      "url": "http://127.0.0.1:8765/marker#links-and-buttons",
+      "scrollY": 5922,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "button-hover",
+      "url": "http://127.0.0.1:8765/marker#links-and-buttons",
+      "scrollY": 5922,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "toast-click",
+      "url": "http://127.0.0.1:8765/marker#links-and-buttons",
+      "scrollY": 5922,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "toast-enter",
+      "url": "http://127.0.0.1:8765/marker#links-and-buttons",
+      "scrollY": 5922,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "link-navigated",
+      "url": "http://127.0.0.1:8765/marker#links-and-buttons",
+      "scrollY": 5922,
+      "theme": "dark"
+    }
+  ]
+}

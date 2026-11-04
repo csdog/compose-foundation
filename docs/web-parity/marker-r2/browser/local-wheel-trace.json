@@ -1,0 +1,34 @@
+[
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "requested": -300,
+    "before": 5791,
+    "after": 5191
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "requested": 339.5,
+    "before": 5243,
+    "after": 5922
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "requested": 300,
+    "before": 4591,
+    "after": 5191
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "requested": 339.5,
+    "before": 5243,
+    "after": 5922
+  }
+]

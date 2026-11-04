@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MarkerExamplesTest[jvm]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-04T08:41:30.144Z" hostname="Apples-MacBook-Pro.local" time="0.743">
+  <properties/>
+  <testcase name="linksAndButtonsPerformTheirActualActions[jvm]" classname="com.toutiaoyan.compose.ui.catalog.MarkerExamplesTest" time="0.637"/>
+  <testcase name="statusRowsAnnounceUpdatesWithoutExposingDecorativeLoadingLabels[jvm]" classname="com.toutiaoyan.compose.ui.catalog.MarkerExamplesTest" time="0.032"/>
+  <testcase name="defaultContainsAllFourConversationMarkers[jvm]" classname="com.toutiaoyan.compose.ui.catalog.MarkerExamplesTest" time="0.033"/>
+  <testcase name="allEightOfficialRecipesAndAllThreeApiPartsArePresent[jvm]" classname="com.toutiaoyan.compose.ui.catalog.MarkerExamplesTest" time="0.014"/>
+  <testcase name="stackedIconExampleKeepsTheLabelBelowTheIconRow[jvm]" classname="com.toutiaoyan.compose.ui.catalog.MarkerExamplesTest" time="0.024"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,45 @@
+{
+  "revision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "files": {
+    "marker.mdx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/content/docs/components/base/marker.mdx",
+      "sha256": "07de1e2fabcbb7380f491bbd24cd1bede3a0bea1533a76120a1c1a1672caf611"
+    },
+    "marker.tsx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/bases/base/ui/marker.tsx",
+      "sha256": "f7daf3c6f9ae5eee31820cd9576d6df3d30b7f348beb9fe4372704812e76384e"
+    },
+    "marker-demo.tsx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/marker-demo.tsx",
+      "sha256": "8ed6935873331a057de89d9fbcff6722158fe10863122421320a15ce30ee9337"
+    },
+    "marker-variants.tsx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/marker-variants.tsx",
+      "sha256": "59c617b087cdfe7b6441c4ac47161bcc143eee75b437989a964e5c1f8d7e685b"
+    },
+    "marker-status.tsx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/marker-status.tsx",
+      "sha256": "f183e5ab8d6aaa8b47ee089615cd988a8607a11048f0895515157e7dbd89f430"
+    },
+    "marker-shimmer.tsx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/marker-shimmer.tsx",
+      "sha256": "e23ac1532a81a2877ba731c98ff19dfe236bd2a6b16885f8fcce4fc73bc6f8fc"
+    },
+    "marker-separator.tsx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/marker-separator.tsx",
+      "sha256": "c549add518588fecf4e046249e4e1e37dd921eb6e127616f3ecf7aef72cd9aa4"
+    },
+    "marker-border.tsx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/marker-border.tsx",
+      "sha256": "a2db1a707835bf1848513de1ecfc5b52e4ada038fca2de3132eab95f21b370e0"
+    },
+    "marker-icon.tsx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/marker-icon.tsx",
+      "sha256": "0eb8ffb5d8eca5f5219bbf564064acf48e1a84a0609f9fd266de9f463cb96b29"
+    },
+    "marker-link-button.tsx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/marker-link-button.tsx",
+      "sha256": "c55adadbd046297c806040980de0d042c8ca605ae2364532dfc569415cdc89ac"
+    }
+  }
+}

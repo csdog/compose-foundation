@@ -85,8 +85,8 @@ class MarkerExamplesTest {
 
     @Test fun linksAndButtonsPerformTheirActualActions() {
         show("Links and Buttons")
-        rule.onNodeWithText("View the pull request").performClick()
-        assertEquals("https://ui.shadcn.com/docs/components/base/marker#links-and-buttons", opened)
+        rule.onNodeWithTag("marker-link").performTouchInput { click(center) }
+        assertEquals("#links-and-buttons", opened)
         rule.onNodeWithText("Revert this change").performClick()
         rule.onNodeWithText("You clicked the revert button").assertIsDisplayed()
     }

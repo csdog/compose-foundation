@@ -2,15 +2,11 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.*
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.composables.icons.lucide.*
 import com.toutiaoyan.compose.ui.components.icon.Icon
@@ -28,15 +24,12 @@ val markerDoc =
         examplesHeading = null,
         usageImportsCode =
             """
-            import androidx.compose.foundation.clickable
             import androidx.compose.foundation.layout.*
             import androidx.compose.runtime.*
             import androidx.compose.ui.Alignment
             import androidx.compose.ui.Modifier
-            import androidx.compose.ui.platform.LocalUriHandler
             import androidx.compose.ui.semantics.*
             import androidx.compose.ui.text.TextStyle
-            import androidx.compose.ui.text.style.TextDecoration
             import androidx.compose.ui.unit.dp
             import com.composables.icons.lucide.*
             import com.toutiaoyan.compose.ui.components.icon.Icon
@@ -93,10 +86,53 @@ val markerDoc =
                     ),
                 ),
             ),
+        beforeExamples =
+            listOf(
+                ComponentGuideSection(
+                    "Features",
+                    listOf(
+                        ComponentGuideBlock.Bullets(
+                            listOf(
+                                "Inline, bordered row, and labeled separator variants.",
+                                "Decorative icons are hidden from assistive technology.",
+                                "Compose links and actions using the marker content and modifier.",
+                                "Pair streaming status text with the shimmer utility.",
+                                "Customize each part through Modifier and Style.",
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        afterExamples =
+            listOf(
+                ComponentGuideSection(
+                    "Accessibility",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "Use a polite live region for progress updates. A label should describe the state " +
+                                "without relying on the spinner or decorative icon. Compose " +
+                                "liveRegion and URL annotations " +
+                                "are platform adaptations; they are not a native HTML role=status " +
+                                "or anchor DOM element.",
+                        ),
+                        ComponentGuideBlock.Bullets(
+                            listOf(
+                                "Separator and border variants are presentational; meaningful " +
+                                    "section headings remain the caller's responsibility.",
+                                "Keep icons decorative and put the message in MarkerContent.",
+                                "Use a real link annotation for navigation, and a button role for " +
+                                    "actions; test keyboard activation.",
+                            ),
+                        ),
+                    ),
+                ),
+            ),
         examples =
             listOf(
                 ComponentExample(
                     title = "Default",
+                    minPreviewHeight = 0.dp,
+                    mobileMinPreviewHeight = 0.dp,
                     previewPadding = 40.dp,
                     code =
                         """
@@ -153,6 +189,10 @@ val markerDoc =
                 ),
                 ComponentExample(
                     title = "Variants",
+                    descriptionMarkdown =
+                        "Use variant to switch between an inline marker, bordered row, and labeled separator.",
+                    minPreviewHeight = 0.dp,
+                    mobileMinPreviewHeight = 0.dp,
                     previewPadding = 40.dp,
                     code =
                         """
@@ -197,6 +237,10 @@ val markerDoc =
                 ),
                 ComponentExample(
                     title = "Status",
+                    descriptionMarkdown =
+                        "Use a polite live region and a Spinner for streaming or in-progress status updates.",
+                    minPreviewHeight = 0.dp,
+                    mobileMinPreviewHeight = 0.dp,
                     previewPadding = 40.dp,
                     code =
                         """
@@ -250,6 +294,10 @@ val markerDoc =
                 ),
                 ComponentExample(
                     title = "Shimmer",
+                    descriptionMarkdown =
+                        "Apply rememberShimmerStyle to MarkerContent text for an animated streaming effect.",
+                    minPreviewHeight = 0.dp,
+                    mobileMinPreviewHeight = 0.dp,
                     previewPadding = 40.dp,
                     code =
                         """
@@ -299,6 +347,10 @@ val markerDoc =
                 ),
                 ComponentExample(
                     title = "Separator",
+                    descriptionMarkdown =
+                        "Use the separator variant for labeled dividers, such as dates or section breaks.",
+                    minPreviewHeight = 0.dp,
+                    mobileMinPreviewHeight = 0.dp,
                     previewPadding = 40.dp,
                     code =
                         """
@@ -343,6 +395,10 @@ val markerDoc =
                 ),
                 ComponentExample(
                     title = "Border",
+                    descriptionMarkdown =
+                        "Use the border variant to separate status rows while keeping their default alignment.",
+                    minPreviewHeight = 0.dp,
+                    mobileMinPreviewHeight = 0.dp,
                     previewPadding = 40.dp,
                     code =
                         """
@@ -393,6 +449,10 @@ val markerDoc =
                 ),
                 ComponentExample(
                     title = "With Icon",
+                    descriptionMarkdown =
+                        "Use MarkerIcon alongside the content, or stack the icon and content in a Column.",
+                    minPreviewHeight = 0.dp,
+                    mobileMinPreviewHeight = 0.dp,
                     previewPadding = 40.dp,
                     code =
                         """
@@ -457,82 +517,12 @@ val markerDoc =
                 ),
                 ComponentExample(
                     title = "Links and Buttons",
+                    minPreviewHeight = 0.dp,
+                    mobileMinPreviewHeight = 0.dp,
                     previewPadding = 40.dp,
-                    code =
-                        """
-                        val uriHandler = LocalUriHandler.current
-                        val toasts = rememberToastState()
-                        Column(
-                            Modifier.widthIn(max = 384.dp).fillMaxWidth().padding(vertical = 48.dp),
-                            verticalArrangement = Arrangement.spacedBy(32.dp),
-                        ) {
-                            Marker(modifier = Modifier.clickable {
-                                uriHandler.openUri(
-                                    "https://ui.shadcn.com/docs/components/base/marker#links-and-buttons",
-                                )
-                            }) {
-                                MarkerIcon { Icon(Lucide.GitBranch, contentDescription = null) }
-                                MarkerContent {
-                                    Text(textStyle = TextStyle(textDecoration = TextDecoration.Underline)) {
-                                        "View the pull request"
-                                    }
-                                }
-                            }
-                            Marker(modifier = Modifier.clickable(role = Role.Button) {
-                                toasts.show("You clicked the revert button")
-                            }) {
-                                MarkerIcon { Icon(Lucide.RotateCcw, contentDescription = null) }
-                                MarkerContent("Revert this change")
-                            }
-                        }
-                        Toaster(state = toasts)
-                        """.trimIndent(),
-                    preview = {
-                        val uriHandler = LocalUriHandler.current
-                        val toasts = rememberToastState()
-                        Column(
-                            Modifier.widthIn(
-                                max =
-                                    384.dp,
-                            ).fillMaxWidth().padding(
-                                vertical =
-                                    48.dp,
-                            ),
-                            verticalArrangement =
-                                Arrangement.spacedBy(32.dp),
-                        ) {
-                            Marker(
-                                modifier =
-                                    Modifier.clickable {
-                                        uriHandler.openUri(
-                                            "https://ui.shadcn.com/docs/components/base/marker#links-and-buttons",
-                                        )
-                                    },
-                            ) {
-                                MarkerIcon { Icon(Lucide.GitBranch, contentDescription = null) }
-                                MarkerContent {
-                                    Text(
-                                        textStyle =
-                                            TextStyle(
-                                                textDecoration =
-                                                    TextDecoration.Underline,
-                                            ),
-                                    ) { "View the pull request" }
-                                }
-                            }
-                            Marker(
-                                modifier =
-                                    Modifier.clickable(
-                                        role =
-                                            Role.Button,
-                                    ) { toasts.show("You clicked the revert button") },
-                            ) {
-                                MarkerIcon { Icon(Lucide.RotateCcw, contentDescription = null) }
-                                MarkerContent("Revert this change")
-                            }
-                        }
-                        Toaster(state = toasts)
-                    },
+                    descriptionMarkdown = "Render markers as links or buttons to make them interactive.",
+                    code = markerActionCode,
+                    preview = { MarkerActionsRecipe() },
                 ),
             ),
     )

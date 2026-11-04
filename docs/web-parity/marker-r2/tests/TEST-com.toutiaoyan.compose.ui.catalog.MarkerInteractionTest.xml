@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MarkerInteractionTest[jvm]" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-11-04T09:06:27.795Z" hostname="Apples-MacBook-Pro.local" time="0.928">
+  <properties/>
+  <testcase name="hoverChangesBothTheTextAndTheIconToForeground[1,440-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MarkerInteractionTest" time="0.536"/>
+  <testcase name="rootPointerAndEnterActivateTheLocalAnnotatedLinkExactlyOnce[1,440-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MarkerInteractionTest" time="0.09"/>
+  <testcase name="textAndDecorativeIconEachActivateTheLinkOnce[1,440-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MarkerInteractionTest" time="0.029"/>
+  <testcase name="hoverChangesBothTheTextAndTheIconToForeground[1,440-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MarkerInteractionTest" time="0.039"/>
+  <testcase name="rootPointerAndEnterActivateTheLocalAnnotatedLinkExactlyOnce[1,440-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MarkerInteractionTest" time="0.035"/>
+  <testcase name="textAndDecorativeIconEachActivateTheLinkOnce[1,440-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MarkerInteractionTest" time="0.025"/>
+  <testcase name="hoverChangesBothTheTextAndTheIconToForeground[390-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MarkerInteractionTest" time="0.032"/>
+  <testcase name="rootPointerAndEnterActivateTheLocalAnnotatedLinkExactlyOnce[390-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MarkerInteractionTest" time="0.031"/>
+  <testcase name="textAndDecorativeIconEachActivateTheLinkOnce[390-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MarkerInteractionTest" time="0.025"/>
+  <testcase name="hoverChangesBothTheTextAndTheIconToForeground[390-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MarkerInteractionTest" time="0.031"/>
+  <testcase name="rootPointerAndEnterActivateTheLocalAnnotatedLinkExactlyOnce[390-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MarkerInteractionTest" time="0.029"/>
+  <testcase name="textAndDecorativeIconEachActivateTheLinkOnce[390-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.MarkerInteractionTest" time="0.022"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

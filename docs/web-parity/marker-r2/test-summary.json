@@ -1,0 +1,26 @@
+[
+  {
+    "file": "TEST-com.toutiaoyan.compose.ui.components.marker.MarkerParityTest.xml",
+    "tests": 8,
+    "failures": 0,
+    "errors": 0
+  },
+  {
+    "file": "TEST-com.toutiaoyan.compose.ui.components.marker.MarkerScreenshotTest.xml",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0
+  },
+  {
+    "file": "TEST-com.toutiaoyan.compose.ui.catalog.MarkerInteractionTest.xml",
+    "tests": 12,
+    "failures": 0,
+    "errors": 0
+  },
+  {
+    "file": "TEST-com.toutiaoyan.compose.ui.catalog.MarkerExamplesTest.xml",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0
+  }
+]

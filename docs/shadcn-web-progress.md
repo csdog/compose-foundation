@@ -134,7 +134,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Item (`item`)：官网11配方和10个API部分已基础移植；Nova尺寸/媒体/透明border、Header/Footer换行、列表间距/语义、href与固定内容列已补。23项定向验证及所属模块检查通过；浏览器四象限、HTML链接语义/target、完整状态仍保留，详见文末。
 - [ ] Kbd (`kbd`)：六官网配方已完成桌面/窄屏浅深静态、Tooltip/输入及三语对照；修正RTL单一288dp正文/完整语言标签、Button尾部键帽位置和遗漏TooltipProvider造成的600ms延迟。24项常规测试、lint/JS/Wasm通过；显式旧图4通过、2张Tooltip失配保留。附件专用圆角/负margin、ButtonGroup嵌套边框、字形及完整动态/辅助技术仍开放，见[kbd-r2](web-parity/kbd-r2/README.md)。
 - [ ] Label (`label`)：基础14 Medium、disabled和点击聚焦已修正；Card依赖复查补Nova等字号/行高的外层行框，Arabic单行14dp/两行28dp，Vega两张既有基准未变；桌面/窄屏标签点击实际聚焦已验。任意字体/emoji/分数行高、复杂Field及辅助技术矩阵仍待关闭，见[Card r1](web-parity/card-r1/README.md)。
-- [ ] Marker (`marker`)：已读取官方八配方与 Nova/Rhea 相同样式规则；八组本地示例和 Nova 基础排版/间距/装饰图标语义已实现；13项新增定向验证通过，旧图4/5通过，浏览器及完整状态待验。
+- [ ] Marker (`marker`)：八官网配方已完成桌面/窄屏浅深对照，修复自然预览高度、本页链接及文字/图标hover，补说明与完整复制代码；30项常规测试通过，旧图6/7通过且906像素历史差异未变。共享Toast位置、焦点/原生链接能力、表格/代码栏及完整动态/辅助技术仍开放，见[Marker r2](web-parity/marker-r2/README.md)。
 - [ ] Menubar (`menubar`)：已读取官方六配方并开始修复；Nova栏样式、菜单上下文/滚动/键盘、选择语义和六组示例已补齐；27项定向验证通过，浏览器及完整状态仍待核验。
 - [ ] Message (`message`)：六配方、头像/Footer/ghost布局、元信息排版和API补齐；34项定向验证通过，浏览器四象限及完整状态仍待核验。
 - [ ] Message Scroller (`message-scroller`)：真实滚动原语及官网6/11配方已迁移；本轮新增Previous Context、Load History、Visibility，核心78项独立验证、目录31项通过。InputGroupAddon Style与Button调用方尺寸绘制问题已修复，公共版本0.3.14。其余5配方、浏览器四象限、窄屏目录触发器裁剪及原语遗留仍保留；真实公共源码Detekt未通过，详见文末。
@@ -161,7 +161,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Tabs (`tabs`)：六组官网配方、四面板与三语RTL已迁移；默认Manual、单Tab入口/RTL键盘/动态顺序、隐藏面板状态与焦点、选中chrome及透明focus阴影已修正。58项定向测试、core/shared ktlint通过，44张原生图已检查；150ms颜色过渡、辅助技术及浏览器完整矩阵仍开放，详见 tabs-r1。
 - [ ] Text (`text`)：项目扩展，检查一致性。
 - [ ] Textarea (`textarea`)：64 最小高、上下 8 内边距、顶部对齐、内容自增高已补；完整组合矩阵待关闭。
-- [ ] Toast (`toast`)：本轮进行中，已对照固定上游 Base UI Toast 源码，补 Default/Types/Promise 配方及管理器、图标和卡片样式；43项定向测试通过，堆叠/手势/动效和浏览器四象限仍待验。见 Toast 本轮记录。
+- [ ] Toast (`toast`)：本轮进行中，已对照固定上游 Base UI Toast 源码，补 Default/Types/Promise 配方及管理器、图标和卡片样式；43项定向测试通过，堆叠/手势/动效和浏览器四象限仍待验。见 Toast 本轮记录。 Marker r2浏览器补查确认共享Toaster仍位于预览内部，与官网窗口顶部位置不同，需在Toast专轮修正。
 - [ ] Toggle (`toggle`)：Nova 字重/行内图标/间距/选中/小号圆角已修正，新增兼容 invalid 重载；非对称图标内边距、完整 hover/pressed 矩阵待关闭。
 - [ ] Toggle Group (`toggle-group`)：基础已验证（第六批）；连体样式、单选取消和方向键焦点已修正，Tab 单入口、动态重排与完整纵向矩阵待关闭。
 - [ ] Tooltip (`tooltip`)：本轮进行中，已对照八份固定上游源码，接入五组官方配方并修计时、Escape、排版及箭头占位；30项定向测试及core/shared ktlint通过，32张原生图已检查；动效/剩余交互与浏览器矩阵待验。见 Tooltip 本轮记录。
@@ -169,6 +169,14 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Marker：自然预览高度、本页链接与悬停反馈（2026-11-04）
+
+<!-- progress-created: 2026-11-04; order: 132 -->
+
+按优先尚无本轮完整页面浏览器对照推进Marker。八官网配方改为随内容自然展开，补Features、六组说明与Accessibility；链接由外部官网改为本页#links-and-buttons，文字URL annotation拥有键盘语义、整行指针区域扩展到图标/空白，避免重复激活。链接/按钮hover同时更新文字和图标颜色，按钮触发真实Toast并去除演示波纹。公开复制代码同源生成，不改变公共Marker API或版本。
+
+核心13+既有目录5+新增四组合交互12共30项常规测试通过；显式旧图7张中6张通过，暗色separator906像素actual与r1逐字节相同，未刷新。目录ktlint和JS/Wasm通过。官网/最终本地各32静态+20交互图，经16张拼图复查；四种组合真实滚轮后点击均更新锚点，早期history设置的诊断图隔离。详见[marker-r2](web-parity/marker-r2/README.md)。共享Toaster仍在预览内而非官网窗口顶部，焦点外观/完整原生链接、Variants表格/代码面板及动态/辅助技术仍待关闭；Marker保持未勾选，Editor排除、Attachment后置。
 
 ### Separator：五配方页面、RTL字体与CSS视口断点（2026-11-04）
 
