@@ -13,14 +13,22 @@ import androidx.compose.ui.unit.sp
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.layout.FirstBaseline
+import androidx.compose.ui.layout.LastBaseline
+import androidx.compose.ui.layout.AlignmentLine
+import androidx.compose.ui.layout.layout
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.constrainHeight
 import androidx.compose.ui.Modifier
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextColors
 import com.toutiaoyan.compose.ui.components.text.TextVariant
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.TextStyle
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
+import kotlin.math.roundToInt
 
 /**
  * A form-field label. Purely presentational -- Compose has no HTML `for` attribute
@@ -60,18 +68,27 @@ internal fun LabelImpl(
             theme.typography.labelLarge.copy(
                 lineHeight = if (fieldLabel) 19.25.sp else 14.sp,
                 letterSpacing = 0.sp,
+                lineHeightStyle =
+                    LineHeightStyle(
+                        LineHeightStyle.Alignment.Center,
+                        LineHeightStyle.Trim.None,
+                        LineHeightStyle.Mode.Tight,
+                    ),
             )
         } else {
             TextStyle.Default
         }
+    val textModifier = if (nova) Modifier.labelLineBox(typography.lineHeight) else Modifier
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Row(modifier = modifier.alpha(if (nova && disabled) 0.5f else 1f).styleable(styleState, style)) {
         Text(
+            modifier = textModifier,
             variant = TextVariant.LabelLarge,
             textStyle = if (!nova && disabled) TextColors.Muted else typography,
         ) { text }
         if (required) {
             Text(
+                modifier = textModifier,
                 variant = TextVariant.LabelLarge,
                 textStyle = typography.copy(color = currentTheme.colors.destructive),
             ) { " *" }
@@ -91,3 +108,24 @@ fun Label(
 ) {
     Label(text = text(), modifier = modifier, required = required, disabled = disabled, style = style)
 }
+
+// Compose 1.12.2's Skia ParagraphBuilder uses font ascent/descent at the boundaries
+// when lineHeight <= fontSize, even with Tight. Keep the CSS line boxes and center
+// the ink within them; baseline distance preserves wrapping and explicit newlines.
+private fun Modifier.labelLineBox(lineHeight: TextUnit): Modifier =
+    layout { measurable, constraints ->
+        val child = measurable.measure(constraints)
+        val first = child[FirstBaseline]
+        val last = child[LastBaseline]
+        val target =
+            if (first != AlignmentLine.Unspecified && last != AlignmentLine.Unspecified) {
+                // Baselines are integer pixels; infer the count before rounding the total
+                // height so fractional line heights do not accumulate one pixel per line.
+                val linePixels = lineHeight.toPx()
+                val lines = ((last - first) / linePixels).roundToInt() + 1
+                constraints.constrainHeight((linePixels * lines).roundToInt())
+            } else {
+                child.height
+            }
+        layout(child.width, target) { child.placeRelative(0, (target - child.height) / 2) }
+    }

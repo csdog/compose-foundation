@@ -1,0 +1,42 @@
+[
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "interaction": "mouse 20px, ArrowRight+Space 24px, ArrowRight+Space 32px, Home+Space 16px, Space again keeps 16px",
+    "input": "typed alice@example.com; visual review in screenshots; native tests assert retained value",
+    "url": "http://127.0.0.1:8765/card#spacing",
+    "scrollY": 2385,
+    "theme": "dark"
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "interaction": "mouse 20px, ArrowRight+Space 24px, ArrowRight+Space 32px, Home+Space 16px, Space again keeps 16px",
+    "input": "typed alice@example.com; visual review in screenshots; native tests assert retained value",
+    "url": "http://127.0.0.1:8765/card#spacing",
+    "scrollY": 2513,
+    "theme": "dark"
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "interaction": "mouse 20px, ArrowRight+Space 24px, ArrowRight+Space 32px, Home+Space 16px, Space again keeps 16px",
+    "input": "typed alice@example.com; visual review in screenshots; native tests assert retained value",
+    "url": "http://127.0.0.1:8765/card#spacing",
+    "scrollY": 2385,
+    "theme": "light"
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "interaction": "mouse 20px, ArrowRight+Space 24px, ArrowRight+Space 32px, Home+Space 16px, Space again keeps 16px",
+    "input": "typed alice@example.com; visual review in screenshots; native tests assert retained value",
+    "url": "http://127.0.0.1:8765/card#spacing",
+    "scrollY": 2513,
+    "theme": "light"
+  }
+]

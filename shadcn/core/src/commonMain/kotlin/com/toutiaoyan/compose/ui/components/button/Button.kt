@@ -10,6 +10,7 @@ import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.StyleScope
@@ -255,6 +256,15 @@ fun Button(
                     },
                 LocalTextDecoration provides linkDecoration,
             ) {
+                val feedback =
+                    if (variant == ButtonVariant.Link) {
+                        Modifier
+                    } else {
+                        Modifier.graphicsLayer {
+                            shape = indicationShape.value
+                            clip = clipIndication
+                        }.indication(interactionSource, resolvedIndication)
+                    }
                 Box(
                     modifier =
                         Modifier
@@ -263,17 +273,7 @@ fun Button(
                                 chromeStyle,
                                 nova = isNova,
                             )
-                            .then(
-                                if (variant == ButtonVariant.Link) {
-                                    Modifier
-                                } else {
-                                    // Keep focus rings and shadows on the outer chrome; clip only feedback/content.
-                                    Modifier.graphicsLayer {
-                                        shape = indicationShape.value
-                                        clip = clipIndication
-                                    }.indication(interactionSource, resolvedIndication)
-                                },
-                            ),
+                            .then(if (isNova) Modifier else feedback),
                     contentAlignment = Alignment.Center,
                 ) {
                     Row(
@@ -285,6 +285,11 @@ fun Button(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         content()
+                    }
+                    if (isNova && variant != ButtonVariant.Link) {
+                        // CSS buttons allow content overflow. Clip only the decorative feedback;
+                        // it neither changes measurement nor adds another interactive target.
+                        Box(Modifier.matchParentSize().then(feedback))
                     }
                 }
             }
@@ -332,7 +337,15 @@ fun Button(
         iconPlacement = iconPlacement,
         invalid = invalid,
     ) {
-        Text(maxLines = 1) { text }
+        Text(
+            modifier =
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    Modifier.wrapContentWidth(unbounded = true)
+                } else {
+                    Modifier
+                },
+            maxLines = 1,
+        ) { text }
     }
 }
 

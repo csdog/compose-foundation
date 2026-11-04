@@ -48,6 +48,7 @@ fun CardVariant.rememberStyle(): Style {
                         contentColor(foreground)
                         if (theme.activePreset != StylePreset.Nova) border(colors.border)
                         shape(RoundedCornerShape(radius.xl))
+                        if (theme.activePreset == StylePreset.Nova) clip()
                         contentPadding(spacing.lg)
                     }
 
@@ -56,6 +57,7 @@ fun CardVariant.rememberStyle(): Style {
                         background(colors.card)
                         contentColor(foreground)
                         shape(RoundedCornerShape(radius.xl))
+                        if (theme.activePreset == StylePreset.Nova) clip()
                         contentPadding(spacing.lg)
                     }
 
@@ -64,6 +66,7 @@ fun CardVariant.rememberStyle(): Style {
                         background(colors.muted)
                         contentColor(foreground)
                         shape(RoundedCornerShape(radius.xl))
+                        if (theme.activePreset == StylePreset.Nova) clip()
                         contentPadding(spacing.lg)
                     }
             }
@@ -100,5 +103,11 @@ fun CardSize.headerSpacing(): Dp =
 @Composable
 fun CardSize.rememberSpacingStyle(spacing: Dp): Style =
     rememberTheme(this, spacing) {
-        Style { contentPadding(spacing) }
+        Style {
+            if (theme.activePreset == StylePreset.Nova) {
+                contentPadding(horizontal = 0.dp, vertical = spacing)
+            } else {
+                contentPadding(spacing)
+            }
+        }
     }

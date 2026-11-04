@@ -1,0 +1,123 @@
+[
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "lang": "he",
+    "method": "pointer opens select and chooses visible option; keyboard Home/End browser gap recorded separately",
+    "url": "http://127.0.0.1:8765/card#rtl",
+    "scrollY": 4592,
+    "theme": "dark"
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "lang": "en",
+    "method": "pointer opens select and chooses visible option; keyboard Home/End browser gap recorded separately",
+    "url": "http://127.0.0.1:8765/card#rtl",
+    "scrollY": 4592,
+    "theme": "dark"
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "lang": "ar",
+    "method": "pointer opens select and chooses visible option; keyboard Home/End browser gap recorded separately",
+    "url": "http://127.0.0.1:8765/card#rtl",
+    "scrollY": 4592,
+    "theme": "dark"
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "lang": "he",
+    "method": "pointer opens select and chooses visible option; keyboard Home/End browser gap recorded separately",
+    "url": "http://127.0.0.1:8765/card#rtl",
+    "scrollY": 5005,
+    "theme": "dark"
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "lang": "en",
+    "method": "pointer opens select and chooses visible option; keyboard Home/End browser gap recorded separately",
+    "url": "http://127.0.0.1:8765/card#rtl",
+    "scrollY": 5005,
+    "theme": "dark"
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "lang": "ar",
+    "method": "pointer opens select and chooses visible option; keyboard Home/End browser gap recorded separately",
+    "url": "http://127.0.0.1:8765/card#rtl",
+    "scrollY": 5005,
+    "theme": "dark"
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "lang": "he",
+    "method": "pointer opens select and chooses visible option; keyboard Home/End browser gap recorded separately",
+    "url": "http://127.0.0.1:8765/card#rtl",
+    "scrollY": 4592,
+    "theme": "light"
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "lang": "en",
+    "method": "pointer opens select and chooses visible option; keyboard Home/End browser gap recorded separately",
+    "url": "http://127.0.0.1:8765/card#rtl",
+    "scrollY": 4592,
+    "theme": "light"
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "lang": "ar",
+    "method": "pointer opens select and chooses visible option; keyboard Home/End browser gap recorded separately",
+    "url": "http://127.0.0.1:8765/card#rtl",
+    "scrollY": 4592,
+    "theme": "light"
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "lang": "he",
+    "method": "pointer opens select and chooses visible option; keyboard Home/End browser gap recorded separately",
+    "url": "http://127.0.0.1:8765/card#rtl",
+    "scrollY": 5005,
+    "theme": "light",
+    "captureNote": "Retried separately using screenshot-grounded current Arabic popup; Hebrew confirmed visually."
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "lang": "en",
+    "method": "pointer opens select and chooses visible option; keyboard Home/End browser gap recorded separately",
+    "url": "http://127.0.0.1:8765/card#rtl",
+    "scrollY": 5005,
+    "theme": "light"
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "lang": "ar",
+    "method": "pointer opens select and chooses visible option; keyboard Home/End browser gap recorded separately",
+    "url": "http://127.0.0.1:8765/card#rtl",
+    "scrollY": 5005,
+    "theme": "light"
+  }
+]

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ButtonFollowupRecipesTest[jvm]" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-11-04T04:23:11.049Z" hostname="Apples-MacBook-Pro.local" time="1.078">
+  <properties/>
+  <testcase name="linkHasOneKeyboardStopAndEnterActivatesIt[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonFollowupRecipesTest" time="0.06"/>
+  <testcase name="styledLinkHasUrlAnnotationAndClickingLabelOrPaddingOpensExactlyOnce[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonFollowupRecipesTest" time="0.032"/>
+  <testcase name="messageActionsMenuHasAllActionsAndKeepsRadioSelectionAfterReopening[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonFollowupRecipesTest" time="0.256"/>
+  <testcase name="linkHasOneKeyboardStopAndEnterActivatesIt[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonFollowupRecipesTest" time="0.025"/>
+  <testcase name="styledLinkHasUrlAnnotationAndClickingLabelOrPaddingOpensExactlyOnce[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonFollowupRecipesTest" time="0.02"/>
+  <testcase name="messageActionsMenuHasAllActionsAndKeepsRadioSelectionAfterReopening[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonFollowupRecipesTest" time="0.208"/>
+  <testcase name="linkHasOneKeyboardStopAndEnterActivatesIt[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonFollowupRecipesTest" time="0.024"/>
+  <testcase name="styledLinkHasUrlAnnotationAndClickingLabelOrPaddingOpensExactlyOnce[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonFollowupRecipesTest" time="0.021"/>
+  <testcase name="messageActionsMenuHasAllActionsAndKeepsRadioSelectionAfterReopening[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonFollowupRecipesTest" time="0.198"/>
+  <testcase name="linkHasOneKeyboardStopAndEnterActivatesIt[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonFollowupRecipesTest" time="0.024"/>
+  <testcase name="styledLinkHasUrlAnnotationAndClickingLabelOrPaddingOpensExactlyOnce[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonFollowupRecipesTest" time="0.02"/>
+  <testcase name="messageActionsMenuHasAllActionsAndKeepsRadioSelectionAfterReopening[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonFollowupRecipesTest" time="0.19"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

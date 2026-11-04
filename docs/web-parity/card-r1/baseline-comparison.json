@@ -1,0 +1,112 @@
+[
+  {
+    "theme": "light",
+    "oldSize": [
+      432,
+      354
+    ],
+    "newSize": [
+      432,
+      376
+    ],
+    "changedPixelsWithPageColorPadding": 35949,
+    "comparisonCanvas": [
+      432,
+      376
+    ],
+    "bounds": [
+      23,
+      24,
+      409,
+      353
+    ],
+    "oldSha256": "5cb175888bf7a05f453986f318f355eeae019ac1817189f76503a0db485cc915",
+    "newSha256": "2f0f8b4cb7798e48fb899b3cd1e55f0e7a7e491f9808e4eafefd87bb04bd83a0",
+    "reason": "outside ring + content clipping + complete CSS title/description/body line boxes; prior Button padding-box change is visible in this consumer"
+  },
+  {
+    "theme": "dark",
+    "oldSize": [
+      432,
+      354
+    ],
+    "newSize": [
+      432,
+      376
+    ],
+    "changedPixelsWithPageColorPadding": 123585,
+    "comparisonCanvas": [
+      432,
+      376
+    ],
+    "bounds": [
+      23,
+      24,
+      409,
+      353
+    ],
+    "oldSha256": "ce55b3614e1638377bb3fd42a0b563b6cefa6e161d6d0bbcfff245322912920c",
+    "newSha256": "cb810c3ab88c7c8d1889a8a88341283751fe383ab34ab1a062e85034fa02d509",
+    "reason": "outside ring + content clipping + complete CSS title/description/body line boxes; prior Button padding-box change is visible in this consumer"
+  },
+  {
+    "name": "button_nova_parity_light.png",
+    "oldSize": [
+      540,
+      128
+    ],
+    "newSize": [
+      540,
+      128
+    ],
+    "changedPixels": 2,
+    "bounds": [
+      33,
+      45,
+      84,
+      85
+    ],
+    "newSha256": "8e29b995b834e4f6c3b3f131c3568604558e7e9bc8ddb54d9bfdcdbb66f46bf5",
+    "classification": "2 edge pixels from letting content overflow while clipping only feedback"
+  },
+  {
+    "name": "button_nova_parity_dark.png",
+    "oldSize": [
+      540,
+      128
+    ],
+    "newSize": [
+      540,
+      128
+    ],
+    "changedPixels": 2,
+    "bounds": [
+      33,
+      45,
+      84,
+      85
+    ],
+    "newSha256": "27bd36182630b610c274bbc3f5f93109f6f5bc70d4c5f7a6ddfbe15c1e473829",
+    "classification": "2 edge pixels from letting content overflow while clipping only feedback"
+  },
+  {
+    "name": "ripple_circle_ring_light.png",
+    "oldSize": [
+      80,
+      80
+    ],
+    "newSize": [
+      80,
+      80
+    ],
+    "changedPixels": 1318,
+    "bounds": [
+      20,
+      20,
+      60,
+      60
+    ],
+    "newSha256": "7908e228408fe51ef7d9158f192b8494e503d47bc0ea67ca95fcac23973b5452",
+    "classification": "pre-existing mismatch, HEAD Button control byte-identical"
+  }
+]

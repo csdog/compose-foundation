@@ -289,7 +289,7 @@ internal fun ComponentDetailContent(
                                 Column(verticalArrangement = Arrangement.spacedBy(48.dp)) {
                                     additionalExamples.forEachIndexed { exampleIndex, example ->
                                         PreviewCodeSection(
-                                            code = example.code, title = example.title,
+                                            code = example.code, title = example.title.takeIf { example.showHeading },
                                             modifier =
                                                 Modifier.fillMaxWidth().docAnchor(
                                                     anchors,
@@ -436,7 +436,11 @@ internal fun docSections(doc: ComponentDoc): List<DocSection> =
         if (doc.examples.size > 1) {
             doc.examplesHeading?.let { add(DocSection("examples", it)) }
             doc.examples.drop(1).forEachIndexed { index, example ->
-                add(DocSection("example-$index", example.title, nested = doc.examplesHeading != null))
+                if (example.showHeading) {
+                    add(
+                        DocSection("example-$index", example.title, nested = doc.examplesHeading != null),
+                    )
+                }
             }
         }
         doc.afterExamples.forEachIndexed { index, section ->

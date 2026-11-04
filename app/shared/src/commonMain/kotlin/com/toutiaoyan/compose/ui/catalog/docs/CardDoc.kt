@@ -2,429 +2,171 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.style.fillWidth
-import androidx.compose.foundation.style.Style
-import androidx.compose.foundation.layout.widthIn
-import com.toutiaoyan.compose.ui.components.input.InputType
-import androidx.compose.foundation.layout.width
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.toutiaoyan.compose.ui.components.button.Button
-import com.toutiaoyan.compose.ui.components.button.ButtonSize
-import com.toutiaoyan.compose.ui.components.button.ButtonVariant
-import com.toutiaoyan.compose.ui.components.card.Card
-import com.toutiaoyan.compose.ui.components.card.CardAction
-import com.toutiaoyan.compose.ui.components.card.CardContent
-import com.toutiaoyan.compose.ui.components.card.CardDefaults
-import com.toutiaoyan.compose.ui.components.card.CardDescription
-import com.toutiaoyan.compose.ui.components.card.CardFooter
-import com.toutiaoyan.compose.ui.components.card.CardHeader
-import com.toutiaoyan.compose.ui.components.card.CardSize
-import com.toutiaoyan.compose.ui.components.card.CardTitle
-import com.toutiaoyan.compose.ui.components.card.CardVariant
-import com.toutiaoyan.compose.ui.components.field.Field
-import com.toutiaoyan.compose.ui.components.field.FieldLabel
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.style.contentPadding
-import com.toutiaoyan.compose.ui.components.field.FieldGroup
-import com.toutiaoyan.compose.ui.components.text.Text
-import com.toutiaoyan.compose.ui.components.input.Input
 
 val cardDoc =
     ComponentDoc(
         id = "card",
         title = "Card",
         description = "Displays a card with header, content, and footer.",
+        usageImportsCode = "import com.toutiaoyan.compose.ui.components.card.*",
         usageCode =
             """
-            import com.toutiaoyan.compose.ui.components.card.Card
-            import com.toutiaoyan.compose.ui.components.card.CardContent
-            import com.toutiaoyan.compose.ui.components.card.CardDescription
-            import com.toutiaoyan.compose.ui.components.card.CardHeader
-            import com.toutiaoyan.compose.ui.components.card.CardTitle
-
             Card {
-                CardHeader("Account", description = "Manage your settings")
-                CardContent("Card body content")
+                CardHeader {
+                    CardTitle("Card Title")
+                    CardDescription("Card Description")
+                    CardAction { Text { "Card Action" } }
+                }
+                CardContent { Text { "Card Content" } }
+                CardFooter { Text { "Card Footer" } }
             }
             """.trimIndent(),
-        apiProperties =
+        compositionCode =
+            """
+            Card
+            ├── CardHeader
+            │   ├── CardTitle
+            │   ├── CardDescription
+            │   └── CardAction
+            ├── CardContent
+            └── CardFooter
+            """.trimIndent(),
+        examplesHeading = null,
+        apiSections =
             listOf(
-                ApiProperty("variant", "CardVariant", "Default"),
-                ApiProperty("size", "CardSize", "Default"),
-                ApiProperty("spacing", "Dp?", "null (16.dp / 12.dp for Sm)"),
+                ComponentApiSection(
+                    "Card",
+                    "Root container. Nova uses vertical inset and a shared spacing token; Header/Content " +
+                        "own horizontal inset, and Footer owns its padding. A first CardImage removes the " +
+                        "default top inset; a Footer removes the default bottom inset. Explicit caller Style " +
+                        "padding wins. Filled and Elevated are Kotlin extensions.",
+                    listOf(
+                        ApiProperty("modifier", "Modifier", "Modifier"),
+                        ApiProperty("variant", "CardVariant", "Default"),
+                        ApiProperty("size", "CardSize", "Default"),
+                        ApiProperty("spacing", "Dp?", "null (16.dp / 12.dp for Sm)"),
+                        ApiProperty("style", "Style", "Style"),
+                        ApiProperty("content", "@Composable ColumnScope.() -> Unit", "Required"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "CardHeader",
+                    "Title, description, and optional action. Nova places the action at the logical end; " +
+                        "modifier and Style customize the section.",
+                    listOf(
+                        ApiProperty("modifier", "Modifier", "Modifier"),
+                        ApiProperty("style", "Style", "Style"),
+                        ApiProperty("content", "@Composable ColumnScope.() -> Unit", "Required"),
+                        ApiProperty("title / description", "String / String?", "Convenience overload"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "CardTitle",
+                    "Card title with heading semantics. String and annotated-string overloads share the " +
+                        "current card size.",
+                    listOf(
+                        ApiProperty("text", "String or () -> String/AnnotatedString", "Required"),
+                        ApiProperty("modifier", "Modifier", "Modifier"),
+                        ApiProperty("style", "Style", "Style"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "CardDescription",
+                    "Helper text below the title.",
+                    listOf(
+                        ApiProperty("text", "String or () -> String/AnnotatedString", "Required"),
+                        ApiProperty("modifier", "Modifier", "Modifier"),
+                        ApiProperty("style", "Style", "Style"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "CardAction",
+                    "Caller-provided action at the logical end of a Nova header.",
+                    listOf(
+                        ApiProperty("modifier", "Modifier", "Modifier"),
+                        ApiProperty("content", "@Composable () -> Unit", "Required"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "CardContent",
+                    "Main body. Override horizontal padding with Style for edge-to-edge content.",
+                    listOf(
+                        ApiProperty("modifier", "Modifier", "Modifier"),
+                        ApiProperty("style", "Style", "Style"),
+                        ApiProperty("content", "@Composable ColumnScope.() -> Unit", "Required"),
+                        ApiProperty("text", "String", "Convenience overload"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "CardFooter",
+                    "Actions and secondary content at the bottom. The footer keeps its full measured " +
+                        "bounds; the card root removes its default bottom inset.",
+                    listOf(
+                        ApiProperty("modifier", "Modifier", "Modifier"),
+                        ApiProperty("style", "Style", "Style"),
+                        ApiProperty("content", "@Composable RowScope.() -> Unit", "Required"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "CardImage",
+                    "Kotlin image region corresponding to a leading HTML image. Supply the painter, " +
+                        "description, aspect ratio, and overlays in the slot; a first image removes the root " +
+                        "top inset.",
+                    listOf(
+                        ApiProperty("modifier", "Modifier", "Modifier"),
+                        ApiProperty("content", "@Composable BoxScope.() -> Unit", "Required"),
+                    ),
+                ),
             ),
         examples =
             listOf(
-                ComponentExample(
-                    title = "Default",
-                    code =
-                        """
-                        Card(modifier = Modifier.widthIn(max = 384.dp)) {
-                            CardHeader {
-                                CardTitle("Login to your account")
-                                CardDescription("Enter your email below to login to your account")
-                                CardAction { Button("Sign Up", variant = ButtonVariant.Link) }
-                            }
-                            CardContent {
-                                FieldGroup {
-                                    Field("Email") { Input(email, { email = it }, placeholder = "m@example.com") }
-                                    Field("Password") { Input(password, { password = it }, type = InputType.Password) }
-                                }
-                            }
-                            CardFooter {
-                                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                    Button("Login", style = Style { fillWidth() })
-                                    Button("Login with Google", variant = ButtonVariant.Outline, style = Style { fillWidth() })
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var email by remember { mutableStateOf("") }
-                        var password by remember { mutableStateOf("") }
-                        Card(modifier = Modifier.widthIn(max = 384.dp)) {
-                            CardHeader {
-                                CardTitle("Login to your account")
-                                CardDescription("Enter your email below to login to your account")
-                                CardAction { Button("Sign Up", variant = ButtonVariant.Link) }
-                            }
-                            CardContent {
-                                FieldGroup {
-                                    Field("Email") { Input(email, { email = it }, placeholder = "m@example.com") }
-                                    Field {
-                                        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                                            FieldLabel("Password")
-                                            Button(
-                                                "Forgot your password?",
-                                                variant = ButtonVariant.Link,
-                                                size = ButtonSize.Sm,
-                                                style =
-                                                    Style {
-                                                        height(20.dp)
-                                                        contentPadding(0.dp)
-                                                    },
-                                            )
-                                        }
-                                        Input(password, { password = it }, type = InputType.Password)
-                                    }
-                                }
-                            }
-                            CardFooter {
-                                Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                    Button("Login", style = Style { fillWidth() })
-                                    Button(
-                                        "Login with Google",
-                                        variant = ButtonVariant.Outline,
-                                        style = Style { fillWidth() },
-                                    )
-                                }
-                            }
-                        }
-                    },
+                cardExample(0, "Default", 480),
+                cardExample(
+                    1,
+                    "Size",
+                    384,
+                    "Use the `size = CardSize.Sm` parameter to set the size of the card to small. " +
+                        "The small size variant uses smaller spacing.",
                 ),
-                ComponentExample(
-                    title = "Create an account",
-                    code =
-                        """
-                        var email by remember { mutableStateOf("") }
-                        var password by remember { mutableStateOf("") }
-                        Card(modifier = Modifier.width(320.dp)) {
-                            CardHeader(
-                                "Create an account",
-                                description = "Enter your email below to create your account",
-                            )
-                            CardContent {
-                                FieldGroup {
-                                    Field("Email", required = true) {
-                                        Input(
-                                            value = email,
-                                            onValueChange = { email = it },
-                                            placeholder = "m@example.com",
-                                        )
-                                    }
-                                    Field("Password", required = true) {
-                                        Input(value = password, onValueChange = { password = it })
-                                    }
-                                }
-                            }
-                            Column(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalArrangement = Arrangement.spacedBy(8.dp),
-                            ) {
-                                Button("Create account", onClick = {}, modifier = Modifier.fillMaxWidth())
-                                Button(
-                                    "Sign up with Google",
-                                    onClick = {},
-                                    variant = ButtonVariant.Outline,
-                                    modifier = Modifier.fillMaxWidth(),
-                                )
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var email by remember { mutableStateOf("") }
-                        var password by remember { mutableStateOf("") }
-                        Card(modifier = Modifier.width(320.dp)) {
-                            CardHeader(
-                                "Create an account",
-                                description = "Enter your email below to create your account",
-                            )
-                            CardContent {
-                                FieldGroup {
-                                    Field("Email", required = true) {
-                                        Input(
-                                            value = email,
-                                            onValueChange = { email = it },
-                                            placeholder = "m@example.com",
-                                        )
-                                    }
-                                    Field("Password", required = true) {
-                                        Input(value = password, onValueChange = { password = it })
-                                    }
-                                }
-                            }
-                            Column(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalArrangement = Arrangement.spacedBy(8.dp),
-                            ) {
-                                Button("Create account", onClick = {}, modifier = Modifier.fillMaxWidth())
-                                Button(
-                                    "Sign up with Google",
-                                    onClick = {},
-                                    variant = ButtonVariant.Outline,
-                                    modifier = Modifier.fillMaxWidth(),
-                                )
-                            }
-                        }
-                    },
+                cardExample(
+                    2,
+                    "Spacing",
+                    544,
+                    "In addition to the `size` parameter, you can use the `spacing` parameter to control " +
+                        "the spacing between sections and the inset of card parts.",
                 ),
-                ComponentExample(
-                    title = "Filled",
-                    code =
-                        """
-                        Card(variant = CardVariant.Filled) {
-                            Text { "Filled card" }
-                        }
-                        """.trimIndent(),
-                    preview = { Card(variant = CardVariant.Filled) { Text { "Filled card" } } },
+                cardExample(
+                    3,
+                    "Edge to Edge",
+                    384,
+                    "Use `contentPadding(0.dp)` on `CardContent` to make content go edge to edge while " +
+                        "keeping it aligned with the card inset. When the edge-to-edge content sits above a " +
+                        "footer, reclaim the section gap with the layout modifier shown below.",
                 ),
-                ComponentExample(
-                    title = "Default variant",
-                    code =
-                        """
-                        Card(variant = CardVariant.Default) {
-                            Text { "Default card" }
-                        }
-                        """.trimIndent(),
-                    preview = { Card(variant = CardVariant.Default) { Text { "Default card" } } },
-                ),
-                ComponentExample(
-                    title = "Default size",
-                    code =
-                        """
-                        Card(size = CardSize.Default) {
-                            CardHeader("Default card", description = "Default padding.")
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Card(size = CardSize.Default) {
-                            CardHeader("Default card", description = "Default padding.")
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Size",
-                    code =
-                        """
-                        Card(size = CardSize.Sm) {
-                            CardHeader("Small card", description = "Tighter section gap than the default size.")
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Card(size = CardSize.Sm) {
-                            CardHeader("Small card", description = "Tighter section gap than the default size.")
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Spacing",
-                    code =
-                        """
-                        Card(spacing = 32.dp, modifier = Modifier.width(320.dp)) {
-                            CardHeader("Terms of Service", description = "Official --card-spacing overlay.")
-                            CardContent("Gap and inset share one token when spacing is set.")
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Card(spacing = 32.dp, modifier = Modifier.width(320.dp)) {
-                            CardHeader("Terms of Service", description = "Official --card-spacing overlay.")
-                            CardContent("Gap and inset share one token when spacing is set.")
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Small spacing",
-                    code =
-                        """
-                        Card(spacing = CardDefaults.SmSpacing, modifier = Modifier.width(320.dp)) {
-                            CardHeader("Small Card", description = "Official size=sm --card-spacing (12dp).")
-                            CardContent("Use this when you want compact inset, not only a tighter gap.")
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Card(spacing = CardDefaults.SmSpacing, modifier = Modifier.width(320.dp)) {
-                            CardHeader("Small Card", description = "Official size=sm --card-spacing (12dp).")
-                            CardContent("Use this when you want compact inset, not only a tighter gap.")
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Action",
-                    code =
-                        """
-                        Card(modifier = Modifier.width(320.dp)) {
-                            CardHeader {
-                                CardTitle("Account")
-                                CardDescription("Manage your settings")
-                                CardAction {
-                                    Button("Edit", onClick = {}, size = ButtonSize.Sm, variant = ButtonVariant.Outline)
-                                }
-                            }
-                            CardContent("Card body content")
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Card(modifier = Modifier.width(320.dp)) {
-                            CardHeader {
-                                CardTitle("Account")
-                                CardDescription("Manage your settings")
-                                CardAction {
-                                    Button("Edit", onClick = {}, size = ButtonSize.Sm, variant = ButtonVariant.Outline)
-                                }
-                            }
-                            CardContent("Card body content")
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Footer",
-                    code =
-                        """
-                        Card(modifier = Modifier.width(320.dp)) {
-                            CardHeader {
-                                CardTitle("Account")
-                                CardDescription("Manage your settings")
-                            }
-                            CardContent("Card body content")
-                            CardFooter {
-                                Button("Cancel", onClick = {}, variant = ButtonVariant.Outline)
-                                Button("Save", onClick = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Card(modifier = Modifier.width(320.dp)) {
-                            CardHeader {
-                                CardTitle("Account")
-                                CardDescription("Manage your settings")
-                            }
-                            CardContent("Card body content")
-                            CardFooter {
-                                Button("Cancel", onClick = {}, variant = ButtonVariant.Outline)
-                                Button("Save", onClick = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Title",
-                    code =
-                        """
-                        Card(modifier = Modifier.width(320.dp)) {
-                            CardHeader {
-                                CardTitle("Account")
-                                CardDescription("Manage your settings")
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Card(modifier = Modifier.width(320.dp)) {
-                            CardHeader {
-                                CardTitle("Account")
-                                CardDescription("Manage your settings")
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Description",
-                    code =
-                        """
-                        Card(modifier = Modifier.width(320.dp)) {
-                            CardHeader {
-                                CardTitle("Account")
-                                CardDescription("Manage your settings")
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Card(modifier = Modifier.width(320.dp)) {
-                            CardHeader {
-                                CardTitle("Account")
-                                CardDescription("Manage your settings")
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Content",
-                    code =
-                        """
-                        Card(modifier = Modifier.width(320.dp)) {
-                            CardHeader {
-                                CardTitle("Account")
-                                CardDescription("Manage your settings")
-                            }
-                            CardContent("Card body content")
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Card(modifier = Modifier.width(320.dp)) {
-                            CardHeader {
-                                CardTitle("Account")
-                                CardDescription("Manage your settings")
-                            }
-                            CardContent("Card body content")
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Header",
-                    code =
-                        """
-                        Card(modifier = Modifier.width(320.dp)) {
-                            CardHeader {
-                                CardTitle("Account")
-                                CardDescription("Manage your settings")
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Card(modifier = Modifier.width(320.dp)) {
-                            CardHeader {
-                                CardTitle("Account")
-                                CardDescription("Manage your settings")
-                            }
-                        }
-                    },
+                cardExample(4, "Image", 512, "Add an image before the card header to create a card with an image."),
+                cardExample(
+                    5,
+                    "RTL",
+                    544,
+                    "To enable RTL support in your app, see the " +
+                        "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
                 ),
             ),
     )
+
+private fun cardExample(
+    index: Int,
+    title: String,
+    height: Int,
+    description: String? = null,
+) = ComponentExample(
+    title = title,
+    code = cardRecipeCode(index),
+    previewHeight = height.dp,
+    minPreviewHeight = height.dp,
+    previewPadding = if (index == 5) 0.dp else 40.dp,
+    descriptionMarkdown = description,
+    showHeading = index != 3,
+    preview = { CardRecipe(index) },
+)

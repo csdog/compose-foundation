@@ -1,0 +1,5234 @@
+[
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "demo",
+    "file": "official-desktop-dark-demo.png",
+    "scrollY": 0,
+    "preview": {
+      "x": 393.5,
+      "y": 267,
+      "width": 638,
+      "height": 480,
+      "top": 267,
+      "right": 1031.5,
+      "bottom": 747,
+      "left": 393.5
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 520.5,
+          "y": 328.5,
+          "width": 384,
+          "height": 357,
+          "top": 328.5,
+          "right": 904.5,
+          "bottom": 685.5,
+          "left": 520.5
+        },
+        "padding": "16px 0px 0px",
+        "gap": "16px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 520.5,
+          "y": 344.5,
+          "width": 384,
+          "height": 66,
+          "top": 344.5,
+          "right": 904.5,
+          "bottom": 410.5,
+          "left": 520.5
+        },
+        "padding": "0px 16px",
+        "gap": "4px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 536.5,
+          "y": 344.5,
+          "width": 274.8515625,
+          "height": 22,
+          "top": 344.5,
+          "right": 811.3515625,
+          "bottom": 366.5,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 16px / 22px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 536.5,
+          "y": 370.5,
+          "width": 274.8515625,
+          "height": 40,
+          "top": 370.5,
+          "right": 811.3515625,
+          "bottom": 410.5,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-action",
+        "rect": {
+          "x": 815.3515625,
+          "y": 344.5,
+          "width": 73.1484375,
+          "height": 32,
+          "top": 344.5,
+          "right": 888.5,
+          "bottom": 376.5,
+          "left": 815.3515625
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 815.3515625,
+          "y": 344.5,
+          "width": 73.1484375,
+          "height": 32,
+          "top": 344.5,
+          "right": 888.5,
+          "bottom": 376.5,
+          "left": 815.3515625
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-content",
+        "rect": {
+          "x": 520.5,
+          "y": 426.5,
+          "width": 384,
+          "height": 138,
+          "top": 426.5,
+          "right": 904.5,
+          "bottom": 564.5,
+          "left": 520.5
+        },
+        "padding": "0px 16px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 536.5,
+          "y": 426.5,
+          "width": 352,
+          "height": 14,
+          "top": 426.5,
+          "right": 888.5,
+          "bottom": 440.5,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 536.5,
+          "y": 448.5,
+          "width": 352,
+          "height": 32,
+          "top": 448.5,
+          "right": 888.5,
+          "bottom": 480.5,
+          "left": 536.5
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 536.5,
+          "y": 507.5,
+          "width": 64.0234375,
+          "height": 14,
+          "top": 507.5,
+          "right": 600.5234375,
+          "bottom": 521.5,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 536.5,
+          "y": 532.5,
+          "width": 352,
+          "height": 32,
+          "top": 532.5,
+          "right": 888.5,
+          "bottom": 564.5,
+          "left": 536.5
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 520.5,
+          "y": 580.5,
+          "width": 384,
+          "height": 105,
+          "top": 580.5,
+          "right": 904.5,
+          "bottom": 685.5,
+          "left": 520.5
+        },
+        "padding": "16px",
+        "gap": "8px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 536.5,
+          "y": 597.5,
+          "width": 352,
+          "height": 32,
+          "top": 597.5,
+          "right": 888.5,
+          "bottom": 629.5,
+          "left": 536.5
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 536.5,
+          "y": 637.5,
+          "width": 352,
+          "height": 32,
+          "top": 637.5,
+          "right": 888.5,
+          "bottom": 669.5,
+          "left": 536.5
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "size",
+    "file": "official-desktop-dark-size.png",
+    "scrollY": 2101,
+    "preview": {
+      "x": 393.5,
+      "y": 190.546875,
+      "width": 638,
+      "height": 384,
+      "top": 190.546875,
+      "right": 1031.5,
+      "bottom": 574.546875,
+      "left": 393.5
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 552.5,
+          "y": 252.421875,
+          "width": 320,
+          "height": 260.25,
+          "top": 252.421875,
+          "right": 872.5,
+          "bottom": 512.671875,
+          "left": 552.5
+        },
+        "padding": "12px 0px 0px",
+        "gap": "12px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 552.5,
+          "y": 264.421875,
+          "width": 320,
+          "height": 43.25,
+          "top": 264.421875,
+          "right": 872.5,
+          "bottom": 307.671875,
+          "left": 552.5
+        },
+        "padding": "0px 12px",
+        "gap": "4px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 564.5,
+          "y": 264.421875,
+          "width": 296,
+          "height": 19.25,
+          "top": 264.421875,
+          "right": 860.5,
+          "bottom": 283.671875,
+          "left": 564.5
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 14px / 19.25px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 564.5,
+          "y": 287.671875,
+          "width": 296,
+          "height": 20,
+          "top": 287.671875,
+          "right": 860.5,
+          "bottom": 307.671875,
+          "left": 564.5
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-content",
+        "rect": {
+          "x": 552.5,
+          "y": 319.671875,
+          "width": 320,
+          "height": 92,
+          "top": 319.671875,
+          "right": 872.5,
+          "bottom": 411.671875,
+          "left": 552.5
+        },
+        "padding": "0px 12px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 552.5,
+          "y": 423.671875,
+          "width": 320,
+          "height": 89,
+          "top": 423.671875,
+          "right": 872.5,
+          "bottom": 512.671875,
+          "left": 552.5
+        },
+        "padding": "12px",
+        "gap": "8px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 564.5,
+          "y": 436.671875,
+          "width": 296,
+          "height": 28,
+          "top": 436.671875,
+          "right": 860.5,
+          "bottom": 464.671875,
+          "left": 564.5
+        },
+        "padding": "0px 10px",
+        "gap": "4px",
+        "font": "500 12.8px / 18.2857px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 564.5,
+          "y": 472.671875,
+          "width": 296,
+          "height": 28,
+          "top": 472.671875,
+          "right": 860.5,
+          "bottom": 500.671875,
+          "left": 564.5
+        },
+        "padding": "0px 10px",
+        "gap": "4px",
+        "font": "500 12.8px / 18.2857px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "spacing",
+    "file": "official-desktop-dark-spacing.png",
+    "scrollY": 2753,
+    "preview": {
+      "x": 393.5,
+      "y": 190.796875,
+      "width": 638,
+      "height": 544,
+      "top": 190.796875,
+      "right": 1031.5,
+      "bottom": 734.796875,
+      "left": 393.5
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 520.5,
+          "y": 306.296875,
+          "width": 384,
+          "height": 357,
+          "top": 306.296875,
+          "right": 904.5,
+          "bottom": 663.296875,
+          "left": 520.5
+        },
+        "padding": "16px 0px 0px",
+        "gap": "16px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 520.5,
+          "y": 322.296875,
+          "width": 384,
+          "height": 66,
+          "top": 322.296875,
+          "right": 904.5,
+          "bottom": 388.296875,
+          "left": 520.5
+        },
+        "padding": "0px 16px",
+        "gap": "4px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 536.5,
+          "y": 322.296875,
+          "width": 274.8515625,
+          "height": 22,
+          "top": 322.296875,
+          "right": 811.3515625,
+          "bottom": 344.296875,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 16px / 22px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 536.5,
+          "y": 348.296875,
+          "width": 274.8515625,
+          "height": 40,
+          "top": 348.296875,
+          "right": 811.3515625,
+          "bottom": 388.296875,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-action",
+        "rect": {
+          "x": 815.3515625,
+          "y": 322.296875,
+          "width": 73.1484375,
+          "height": 32,
+          "top": 322.296875,
+          "right": 888.5,
+          "bottom": 354.296875,
+          "left": 815.3515625
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 815.3515625,
+          "y": 322.296875,
+          "width": 73.1484375,
+          "height": 32,
+          "top": 322.296875,
+          "right": 888.5,
+          "bottom": 354.296875,
+          "left": 815.3515625
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-content",
+        "rect": {
+          "x": 520.5,
+          "y": 404.296875,
+          "width": 384,
+          "height": 138,
+          "top": 404.296875,
+          "right": 904.5,
+          "bottom": 542.296875,
+          "left": 520.5
+        },
+        "padding": "0px 16px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 536.5,
+          "y": 404.296875,
+          "width": 352,
+          "height": 14,
+          "top": 404.296875,
+          "right": 888.5,
+          "bottom": 418.296875,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 536.5,
+          "y": 426.296875,
+          "width": 352,
+          "height": 32,
+          "top": 426.296875,
+          "right": 888.5,
+          "bottom": 458.296875,
+          "left": 536.5
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 536.5,
+          "y": 485.296875,
+          "width": 64.0234375,
+          "height": 14,
+          "top": 485.296875,
+          "right": 600.5234375,
+          "bottom": 499.296875,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 536.5,
+          "y": 510.296875,
+          "width": 352,
+          "height": 32,
+          "top": 510.296875,
+          "right": 888.5,
+          "bottom": 542.296875,
+          "left": 536.5
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 520.5,
+          "y": 558.296875,
+          "width": 384,
+          "height": 105,
+          "top": 558.296875,
+          "right": 904.5,
+          "bottom": 663.296875,
+          "left": 520.5
+        },
+        "padding": "16px",
+        "gap": "8px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 536.5,
+          "y": 575.296875,
+          "width": 352,
+          "height": 32,
+          "top": 575.296875,
+          "right": 888.5,
+          "bottom": 607.296875,
+          "left": 536.5
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 536.5,
+          "y": 615.296875,
+          "width": 352,
+          "height": 32,
+          "top": 615.296875,
+          "right": 888.5,
+          "bottom": 647.296875,
+          "left": 536.5
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "edge",
+    "file": "official-desktop-dark-edge.png",
+    "scrollY": 3541,
+    "preview": {
+      "x": 393.5,
+      "y": 200.046875,
+      "width": 638,
+      "height": 384,
+      "top": 200.046875,
+      "right": 1031.5,
+      "bottom": 584.046875,
+      "left": 393.5
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 520.5,
+          "y": 224.546875,
+          "width": 384,
+          "height": 335,
+          "top": 224.546875,
+          "right": 904.5,
+          "bottom": 559.546875,
+          "left": 520.5
+        },
+        "padding": "16px 0px 0px",
+        "gap": "16px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 520.5,
+          "y": 240.546875,
+          "width": 384,
+          "height": 46,
+          "top": 240.546875,
+          "right": 904.5,
+          "bottom": 286.546875,
+          "left": 520.5
+        },
+        "padding": "0px 16px",
+        "gap": "4px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 536.5,
+          "y": 240.546875,
+          "width": 352,
+          "height": 22,
+          "top": 240.546875,
+          "right": 888.5,
+          "bottom": 262.546875,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 16px / 22px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 536.5,
+          "y": 266.546875,
+          "width": 352,
+          "height": 20,
+          "top": 266.546875,
+          "right": 888.5,
+          "bottom": 286.546875,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-content",
+        "rect": {
+          "x": 520.5,
+          "y": 302.546875,
+          "width": 384,
+          "height": 192,
+          "top": 302.546875,
+          "right": 904.5,
+          "bottom": 494.546875,
+          "left": 520.5
+        },
+        "padding": "0px 16px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 520.5,
+          "y": 494.546875,
+          "width": 384,
+          "height": 65,
+          "top": 494.546875,
+          "right": 904.5,
+          "bottom": 559.546875,
+          "left": 520.5
+        },
+        "padding": "16px",
+        "gap": "8px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 740.5,
+          "y": 511.546875,
+          "width": 71.390625,
+          "height": 32,
+          "top": 511.546875,
+          "right": 811.890625,
+          "bottom": 543.546875,
+          "left": 740.5
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 819.890625,
+          "y": 511.546875,
+          "width": 68.609375,
+          "height": 32,
+          "top": 511.546875,
+          "right": 888.5,
+          "bottom": 543.546875,
+          "left": 819.890625
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "image",
+    "file": "official-desktop-dark-image.png",
+    "scrollY": 4202.5,
+    "preview": {
+      "x": 393.5,
+      "y": 164.546875,
+      "width": 638,
+      "height": 512,
+      "top": 164.546875,
+      "right": 1031.5,
+      "bottom": 676.546875,
+      "left": 393.5
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 520.5,
+          "y": 231.046875,
+          "width": 384,
+          "height": 379,
+          "top": 231.046875,
+          "right": 904.5,
+          "bottom": 610.046875,
+          "left": 520.5
+        },
+        "padding": "0px",
+        "gap": "16px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 520.5,
+          "y": 463.046875,
+          "width": 384,
+          "height": 66,
+          "top": 463.046875,
+          "right": 904.5,
+          "bottom": 529.046875,
+          "left": 520.5
+        },
+        "padding": "0px 16px",
+        "gap": "4px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-action",
+        "rect": {
+          "x": 820.3359375,
+          "y": 463.046875,
+          "width": 68.1640625,
+          "height": 21,
+          "top": 463.046875,
+          "right": 888.5,
+          "bottom": 484.046875,
+          "left": 820.3359375
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "badge",
+        "rect": {
+          "x": 820.3359375,
+          "y": 464.046875,
+          "width": 68.1640625,
+          "height": 20,
+          "top": 464.046875,
+          "right": 888.5,
+          "bottom": 484.046875,
+          "left": 820.3359375
+        },
+        "padding": "2px 8px",
+        "gap": "4px",
+        "font": "500 12px / 16px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 536.5,
+          "y": 463.046875,
+          "width": 279.8359375,
+          "height": 22,
+          "top": 463.046875,
+          "right": 816.3359375,
+          "bottom": 485.046875,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 16px / 22px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 536.5,
+          "y": 489.046875,
+          "width": 279.8359375,
+          "height": 40,
+          "top": 489.046875,
+          "right": 816.3359375,
+          "bottom": 529.046875,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 520.5,
+          "y": 545.046875,
+          "width": 384,
+          "height": 65,
+          "top": 545.046875,
+          "right": 904.5,
+          "bottom": 610.046875,
+          "left": 520.5
+        },
+        "padding": "16px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 536.5,
+          "y": 562.046875,
+          "width": 352,
+          "height": 32,
+          "top": 562.046875,
+          "right": 888.5,
+          "bottom": 594.046875,
+          "left": 536.5
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "rtl",
+    "file": "official-desktop-dark-rtl.png",
+    "scrollY": 4956.5,
+    "preview": {
+      "x": 393.5,
+      "y": 228.546875,
+      "width": 638,
+      "height": 480,
+      "top": 228.546875,
+      "right": 1031.5,
+      "bottom": 708.546875,
+      "left": 393.5
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 520.5,
+          "y": 290.046875,
+          "width": 384,
+          "height": 357,
+          "top": 290.046875,
+          "right": 904.5,
+          "bottom": 647.046875,
+          "left": 520.5
+        },
+        "padding": "16px 0px 0px",
+        "gap": "16px",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 520.5,
+          "y": 306.046875,
+          "width": 384,
+          "height": 66,
+          "top": 306.046875,
+          "right": 904.5,
+          "bottom": 372.046875,
+          "left": 520.5
+        },
+        "padding": "0px 16px",
+        "gap": "4px",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 635.5546875,
+          "y": 306.046875,
+          "width": 252.9453125,
+          "height": 22,
+          "top": 306.046875,
+          "right": 888.5,
+          "bottom": 328.046875,
+          "left": 635.5546875
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 16px / 22px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 635.5546875,
+          "y": 332.046875,
+          "width": 252.9453125,
+          "height": 40,
+          "top": 332.046875,
+          "right": 888.5,
+          "bottom": 372.046875,
+          "left": 635.5546875
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-action",
+        "rect": {
+          "x": 536.5,
+          "y": 306.046875,
+          "width": 95.0546875,
+          "height": 32,
+          "top": 306.046875,
+          "right": 631.5546875,
+          "bottom": 338.046875,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 536.5,
+          "y": 306.046875,
+          "width": 95.0546875,
+          "height": 32,
+          "top": 306.046875,
+          "right": 631.5546875,
+          "bottom": 338.046875,
+          "left": 536.5
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-content",
+        "rect": {
+          "x": 520.5,
+          "y": 388.046875,
+          "width": 384,
+          "height": 138,
+          "top": 388.046875,
+          "right": 904.5,
+          "bottom": 526.046875,
+          "left": 520.5
+        },
+        "padding": "0px 16px",
+        "gap": "normal",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 536.5,
+          "y": 388.046875,
+          "width": 352,
+          "height": 14,
+          "top": 388.046875,
+          "right": 888.5,
+          "bottom": 402.046875,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 536.5,
+          "y": 410.046875,
+          "width": 352,
+          "height": 32,
+          "top": 410.046875,
+          "right": 888.5,
+          "bottom": 442.046875,
+          "left": 536.5
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 826.0625,
+          "y": 469.046875,
+          "width": 62.4375,
+          "height": 14,
+          "top": 469.046875,
+          "right": 888.5,
+          "bottom": 483.046875,
+          "left": 826.0625
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 536.5,
+          "y": 494.046875,
+          "width": 352,
+          "height": 32,
+          "top": 494.046875,
+          "right": 888.5,
+          "bottom": 526.046875,
+          "left": 536.5
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 520.5,
+          "y": 542.046875,
+          "width": 384,
+          "height": 105,
+          "top": 542.046875,
+          "right": 904.5,
+          "bottom": 647.046875,
+          "left": 520.5
+        },
+        "padding": "16px",
+        "gap": "8px",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 536.5,
+          "y": 559.046875,
+          "width": 352,
+          "height": 32,
+          "top": 559.046875,
+          "right": 888.5,
+          "bottom": 591.046875,
+          "left": 536.5
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 536.5,
+          "y": 599.046875,
+          "width": 352,
+          "height": 32,
+          "top": 599.046875,
+          "right": 888.5,
+          "bottom": 631.046875,
+          "left": 536.5
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "demo",
+    "file": "official-mobile-dark-demo.png",
+    "scrollY": 0,
+    "preview": {
+      "x": 25,
+      "y": 262.890625,
+      "width": 325,
+      "height": 480,
+      "top": 262.890625,
+      "right": 350,
+      "bottom": 742.890625,
+      "left": 25
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 65,
+          "y": 303.390625,
+          "width": 245,
+          "height": 399,
+          "top": 303.390625,
+          "right": 310,
+          "bottom": 702.390625,
+          "left": 65
+        },
+        "padding": "16px 0px 0px",
+        "gap": "16px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 65,
+          "y": 319.390625,
+          "width": 245,
+          "height": 108,
+          "top": 319.390625,
+          "right": 310,
+          "bottom": 427.390625,
+          "left": 65
+        },
+        "padding": "0px 16px",
+        "gap": "4px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 81,
+          "y": 319.390625,
+          "width": 135.8515625,
+          "height": 44,
+          "top": 319.390625,
+          "right": 216.8515625,
+          "bottom": 363.390625,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 16px / 22px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 81,
+          "y": 367.390625,
+          "width": 135.8515625,
+          "height": 60,
+          "top": 367.390625,
+          "right": 216.8515625,
+          "bottom": 427.390625,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-action",
+        "rect": {
+          "x": 220.8515625,
+          "y": 319.390625,
+          "width": 73.1484375,
+          "height": 32,
+          "top": 319.390625,
+          "right": 294,
+          "bottom": 351.390625,
+          "left": 220.8515625
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 220.8515625,
+          "y": 319.390625,
+          "width": 73.1484375,
+          "height": 32,
+          "top": 319.390625,
+          "right": 294,
+          "bottom": 351.390625,
+          "left": 220.8515625
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-content",
+        "rect": {
+          "x": 65,
+          "y": 443.390625,
+          "width": 245,
+          "height": 138,
+          "top": 443.390625,
+          "right": 310,
+          "bottom": 581.390625,
+          "left": 65
+        },
+        "padding": "0px 16px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 81,
+          "y": 443.390625,
+          "width": 213,
+          "height": 14,
+          "top": 443.390625,
+          "right": 294,
+          "bottom": 457.390625,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 81,
+          "y": 465.390625,
+          "width": 213,
+          "height": 32,
+          "top": 465.390625,
+          "right": 294,
+          "bottom": 497.390625,
+          "left": 81
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "16px / 24px Geist, \"Geist Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 81,
+          "y": 524.390625,
+          "width": 64.0234375,
+          "height": 14,
+          "top": 524.390625,
+          "right": 145.0234375,
+          "bottom": 538.390625,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 81,
+          "y": 549.390625,
+          "width": 213,
+          "height": 32,
+          "top": 549.390625,
+          "right": 294,
+          "bottom": 581.390625,
+          "left": 81
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "16px / 24px Geist, \"Geist Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 65,
+          "y": 597.390625,
+          "width": 245,
+          "height": 105,
+          "top": 597.390625,
+          "right": 310,
+          "bottom": 702.390625,
+          "left": 65
+        },
+        "padding": "16px",
+        "gap": "8px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 81,
+          "y": 614.390625,
+          "width": 213,
+          "height": 32,
+          "top": 614.390625,
+          "right": 294,
+          "bottom": 646.390625,
+          "left": 81
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 81,
+          "y": 654.390625,
+          "width": 213,
+          "height": 32,
+          "top": 654.390625,
+          "right": 294,
+          "bottom": 686.390625,
+          "left": 81
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "size",
+    "file": "official-mobile-dark-size.png",
+    "scrollY": 2186.5,
+    "preview": {
+      "x": 25,
+      "y": 248.2109375,
+      "width": 325,
+      "height": 384,
+      "top": 248.2109375,
+      "right": 350,
+      "bottom": 632.2109375,
+      "left": 25
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 65,
+          "y": 270.0859375,
+          "width": 245,
+          "height": 340.25,
+          "top": 270.0859375,
+          "right": 310,
+          "bottom": 610.3359375,
+          "left": 65
+        },
+        "padding": "12px 0px 0px",
+        "gap": "12px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 65,
+          "y": 282.0859375,
+          "width": 245,
+          "height": 63.25,
+          "top": 282.0859375,
+          "right": 310,
+          "bottom": 345.3359375,
+          "left": 65
+        },
+        "padding": "0px 12px",
+        "gap": "4px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 77,
+          "y": 282.0859375,
+          "width": 221,
+          "height": 19.25,
+          "top": 282.0859375,
+          "right": 298,
+          "bottom": 301.3359375,
+          "left": 77
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 14px / 19.25px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 77,
+          "y": 305.3359375,
+          "width": 221,
+          "height": 40,
+          "top": 305.3359375,
+          "right": 298,
+          "bottom": 345.3359375,
+          "left": 77
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-content",
+        "rect": {
+          "x": 65,
+          "y": 357.3359375,
+          "width": 245,
+          "height": 152,
+          "top": 357.3359375,
+          "right": 310,
+          "bottom": 509.3359375,
+          "left": 65
+        },
+        "padding": "0px 12px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 65,
+          "y": 521.3359375,
+          "width": 245,
+          "height": 89,
+          "top": 521.3359375,
+          "right": 310,
+          "bottom": 610.3359375,
+          "left": 65
+        },
+        "padding": "12px",
+        "gap": "8px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 77,
+          "y": 534.3359375,
+          "width": 221,
+          "height": 28,
+          "top": 534.3359375,
+          "right": 298,
+          "bottom": 562.3359375,
+          "left": 77
+        },
+        "padding": "0px 10px",
+        "gap": "4px",
+        "font": "500 12.8px / 18.2857px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 77,
+          "y": 570.3359375,
+          "width": 221,
+          "height": 28,
+          "top": 570.3359375,
+          "right": 298,
+          "bottom": 598.3359375,
+          "left": 77
+        },
+        "padding": "0px 10px",
+        "gap": "4px",
+        "font": "500 12.8px / 18.2857px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "spacing",
+    "file": "official-mobile-dark-spacing.png",
+    "scrollY": 2896,
+    "preview": {
+      "x": 25,
+      "y": 314.53125,
+      "width": 325,
+      "height": 544,
+      "top": 314.53125,
+      "right": 350,
+      "bottom": 858.53125,
+      "left": 25
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 65,
+          "y": 409.03125,
+          "width": 245,
+          "height": 399,
+          "top": 409.03125,
+          "right": 310,
+          "bottom": 808.03125,
+          "left": 65
+        },
+        "padding": "16px 0px 0px",
+        "gap": "16px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 65,
+          "y": 425.03125,
+          "width": 245,
+          "height": 108,
+          "top": 425.03125,
+          "right": 310,
+          "bottom": 533.03125,
+          "left": 65
+        },
+        "padding": "0px 16px",
+        "gap": "4px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 81,
+          "y": 425.03125,
+          "width": 135.8515625,
+          "height": 44,
+          "top": 425.03125,
+          "right": 216.8515625,
+          "bottom": 469.03125,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 16px / 22px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 81,
+          "y": 473.03125,
+          "width": 135.8515625,
+          "height": 60,
+          "top": 473.03125,
+          "right": 216.8515625,
+          "bottom": 533.03125,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-action",
+        "rect": {
+          "x": 220.8515625,
+          "y": 425.03125,
+          "width": 73.1484375,
+          "height": 32,
+          "top": 425.03125,
+          "right": 294,
+          "bottom": 457.03125,
+          "left": 220.8515625
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 220.8515625,
+          "y": 425.03125,
+          "width": 73.1484375,
+          "height": 32,
+          "top": 425.03125,
+          "right": 294,
+          "bottom": 457.03125,
+          "left": 220.8515625
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-content",
+        "rect": {
+          "x": 65,
+          "y": 549.03125,
+          "width": 245,
+          "height": 138,
+          "top": 549.03125,
+          "right": 310,
+          "bottom": 687.03125,
+          "left": 65
+        },
+        "padding": "0px 16px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 81,
+          "y": 549.03125,
+          "width": 213,
+          "height": 14,
+          "top": 549.03125,
+          "right": 294,
+          "bottom": 563.03125,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 81,
+          "y": 571.03125,
+          "width": 213,
+          "height": 32,
+          "top": 571.03125,
+          "right": 294,
+          "bottom": 603.03125,
+          "left": 81
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "16px / 24px Geist, \"Geist Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 81,
+          "y": 630.03125,
+          "width": 64.0234375,
+          "height": 14,
+          "top": 630.03125,
+          "right": 145.0234375,
+          "bottom": 644.03125,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 81,
+          "y": 655.03125,
+          "width": 213,
+          "height": 32,
+          "top": 655.03125,
+          "right": 294,
+          "bottom": 687.03125,
+          "left": 81
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "16px / 24px Geist, \"Geist Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 65,
+          "y": 703.03125,
+          "width": 245,
+          "height": 105,
+          "top": 703.03125,
+          "right": 310,
+          "bottom": 808.03125,
+          "left": 65
+        },
+        "padding": "16px",
+        "gap": "8px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 81,
+          "y": 720.03125,
+          "width": 213,
+          "height": 32,
+          "top": 720.03125,
+          "right": 294,
+          "bottom": 752.03125,
+          "left": 81
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 81,
+          "y": 760.03125,
+          "width": 213,
+          "height": 32,
+          "top": 760.03125,
+          "right": 294,
+          "bottom": 792.03125,
+          "left": 81
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "edge",
+    "file": "official-mobile-dark-edge.png",
+    "scrollY": 3993.5,
+    "preview": {
+      "x": 25,
+      "y": 200.09375,
+      "width": 325,
+      "height": 384,
+      "top": 200.09375,
+      "right": 350,
+      "bottom": 584.09375,
+      "left": 25
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 65,
+          "y": 214.59375,
+          "width": 245,
+          "height": 355,
+          "top": 214.59375,
+          "right": 310,
+          "bottom": 569.59375,
+          "left": 65
+        },
+        "padding": "16px 0px 0px",
+        "gap": "16px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 65,
+          "y": 230.59375,
+          "width": 245,
+          "height": 66,
+          "top": 230.59375,
+          "right": 310,
+          "bottom": 296.59375,
+          "left": 65
+        },
+        "padding": "0px 16px",
+        "gap": "4px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 81,
+          "y": 230.59375,
+          "width": 213,
+          "height": 22,
+          "top": 230.59375,
+          "right": 294,
+          "bottom": 252.59375,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 16px / 22px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 81,
+          "y": 256.59375,
+          "width": 213,
+          "height": 40,
+          "top": 256.59375,
+          "right": 294,
+          "bottom": 296.59375,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-content",
+        "rect": {
+          "x": 65,
+          "y": 312.59375,
+          "width": 245,
+          "height": 192,
+          "top": 312.59375,
+          "right": 310,
+          "bottom": 504.59375,
+          "left": 65
+        },
+        "padding": "0px 16px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 65,
+          "y": 504.59375,
+          "width": 245,
+          "height": 65,
+          "top": 504.59375,
+          "right": 310,
+          "bottom": 569.59375,
+          "left": 65
+        },
+        "padding": "16px",
+        "gap": "8px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 146,
+          "y": 521.59375,
+          "width": 71.390625,
+          "height": 32,
+          "top": 521.59375,
+          "right": 217.390625,
+          "bottom": 553.59375,
+          "left": 146
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 225.390625,
+          "y": 521.59375,
+          "width": 68.609375,
+          "height": 32,
+          "top": 521.59375,
+          "right": 294,
+          "bottom": 553.59375,
+          "left": 225.390625
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "image",
+    "file": "official-mobile-dark-image.png",
+    "scrollY": 4655,
+    "preview": {
+      "x": 25,
+      "y": 215.203125,
+      "width": 325,
+      "height": 512,
+      "top": 215.203125,
+      "right": 350,
+      "bottom": 727.203125,
+      "left": 25
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 65,
+          "y": 289.796875,
+          "width": 245,
+          "height": 362.8125,
+          "top": 289.796875,
+          "right": 310,
+          "bottom": 652.609375,
+          "left": 65
+        },
+        "padding": "0px",
+        "gap": "16px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 65,
+          "y": 443.609375,
+          "width": 245,
+          "height": 128,
+          "top": 443.609375,
+          "right": 310,
+          "bottom": 571.609375,
+          "left": 65
+        },
+        "padding": "0px 16px",
+        "gap": "4px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-action",
+        "rect": {
+          "x": 225.8359375,
+          "y": 443.609375,
+          "width": 68.1640625,
+          "height": 21,
+          "top": 443.609375,
+          "right": 294,
+          "bottom": 464.609375,
+          "left": 225.8359375
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "badge",
+        "rect": {
+          "x": 225.8359375,
+          "y": 444.609375,
+          "width": 68.1640625,
+          "height": 20,
+          "top": 444.609375,
+          "right": 294,
+          "bottom": 464.609375,
+          "left": 225.8359375
+        },
+        "padding": "2px 8px",
+        "gap": "4px",
+        "font": "500 12px / 16px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 81,
+          "y": 443.609375,
+          "width": 140.8359375,
+          "height": 44,
+          "top": 443.609375,
+          "right": 221.8359375,
+          "bottom": 487.609375,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 16px / 22px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 81,
+          "y": 491.609375,
+          "width": 140.8359375,
+          "height": 80,
+          "top": 491.609375,
+          "right": 221.8359375,
+          "bottom": 571.609375,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 65,
+          "y": 587.609375,
+          "width": 245,
+          "height": 65,
+          "top": 587.609375,
+          "right": 310,
+          "bottom": 652.609375,
+          "left": 65
+        },
+        "padding": "16px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 81,
+          "y": 604.609375,
+          "width": 213,
+          "height": 32,
+          "top": 604.609375,
+          "right": 294,
+          "bottom": 636.609375,
+          "left": 81
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "rtl",
+    "file": "official-mobile-dark-rtl.png",
+    "scrollY": 5459.5,
+    "preview": {
+      "x": 25,
+      "y": 279.3125,
+      "width": 325,
+      "height": 480,
+      "top": 279.3125,
+      "right": 350,
+      "bottom": 759.3125,
+      "left": 25
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 65,
+          "y": 309.8125,
+          "width": 245,
+          "height": 419,
+          "top": 309.8125,
+          "right": 310,
+          "bottom": 728.8125,
+          "left": 65
+        },
+        "padding": "16px 0px 0px",
+        "gap": "16px",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 65,
+          "y": 325.8125,
+          "width": 245,
+          "height": 128,
+          "top": 325.8125,
+          "right": 310,
+          "bottom": 453.8125,
+          "left": 65
+        },
+        "padding": "0px 16px",
+        "gap": "4px",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 180.0546875,
+          "y": 325.8125,
+          "width": 113.9453125,
+          "height": 44,
+          "top": 325.8125,
+          "right": 294,
+          "bottom": 369.8125,
+          "left": 180.0546875
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 16px / 22px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 180.0546875,
+          "y": 373.8125,
+          "width": 113.9453125,
+          "height": 80,
+          "top": 373.8125,
+          "right": 294,
+          "bottom": 453.8125,
+          "left": 180.0546875
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-action",
+        "rect": {
+          "x": 81,
+          "y": 325.8125,
+          "width": 95.0546875,
+          "height": 32,
+          "top": 325.8125,
+          "right": 176.0546875,
+          "bottom": 357.8125,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 81,
+          "y": 325.8125,
+          "width": 95.0546875,
+          "height": 32,
+          "top": 325.8125,
+          "right": 176.0546875,
+          "bottom": 357.8125,
+          "left": 81
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-content",
+        "rect": {
+          "x": 65,
+          "y": 469.8125,
+          "width": 245,
+          "height": 138,
+          "top": 469.8125,
+          "right": 310,
+          "bottom": 607.8125,
+          "left": 65
+        },
+        "padding": "0px 16px",
+        "gap": "normal",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 81,
+          "y": 469.8125,
+          "width": 213,
+          "height": 14,
+          "top": 469.8125,
+          "right": 294,
+          "bottom": 483.8125,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 81,
+          "y": 491.8125,
+          "width": 213,
+          "height": 32,
+          "top": 491.8125,
+          "right": 294,
+          "bottom": 523.8125,
+          "left": 81
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "16px / 24px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 231.5625,
+          "y": 550.8125,
+          "width": 62.4375,
+          "height": 14,
+          "top": 550.8125,
+          "right": 294,
+          "bottom": 564.8125,
+          "left": 231.5625
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 81,
+          "y": 575.8125,
+          "width": 213,
+          "height": 32,
+          "top": 575.8125,
+          "right": 294,
+          "bottom": 607.8125,
+          "left": 81
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "16px / 24px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 65,
+          "y": 623.8125,
+          "width": 245,
+          "height": 105,
+          "top": 623.8125,
+          "right": 310,
+          "bottom": 728.8125,
+          "left": 65
+        },
+        "padding": "16px",
+        "gap": "8px",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 81,
+          "y": 640.8125,
+          "width": 213,
+          "height": 32,
+          "top": 640.8125,
+          "right": 294,
+          "bottom": 672.8125,
+          "left": 81
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 81,
+          "y": 680.8125,
+          "width": 213,
+          "height": 32,
+          "top": 680.8125,
+          "right": 294,
+          "bottom": 712.8125,
+          "left": 81
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "demo",
+    "file": "official-desktop-light-demo.png",
+    "scrollY": 0,
+    "preview": {
+      "x": 393.5,
+      "y": 267,
+      "width": 638,
+      "height": 480,
+      "top": 267,
+      "right": 1031.5,
+      "bottom": 747,
+      "left": 393.5
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 520.5,
+          "y": 328.5,
+          "width": 384,
+          "height": 357,
+          "top": 328.5,
+          "right": 904.5,
+          "bottom": 685.5,
+          "left": 520.5
+        },
+        "padding": "16px 0px 0px",
+        "gap": "16px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 520.5,
+          "y": 344.5,
+          "width": 384,
+          "height": 66,
+          "top": 344.5,
+          "right": 904.5,
+          "bottom": 410.5,
+          "left": 520.5
+        },
+        "padding": "0px 16px",
+        "gap": "4px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 536.5,
+          "y": 344.5,
+          "width": 274.8515625,
+          "height": 22,
+          "top": 344.5,
+          "right": 811.3515625,
+          "bottom": 366.5,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 16px / 22px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 536.5,
+          "y": 370.5,
+          "width": 274.8515625,
+          "height": 40,
+          "top": 370.5,
+          "right": 811.3515625,
+          "bottom": 410.5,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-action",
+        "rect": {
+          "x": 815.3515625,
+          "y": 344.5,
+          "width": 73.1484375,
+          "height": 32,
+          "top": 344.5,
+          "right": 888.5,
+          "bottom": 376.5,
+          "left": 815.3515625
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 815.3515625,
+          "y": 344.5,
+          "width": 73.1484375,
+          "height": 32,
+          "top": 344.5,
+          "right": 888.5,
+          "bottom": 376.5,
+          "left": 815.3515625
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-content",
+        "rect": {
+          "x": 520.5,
+          "y": 426.5,
+          "width": 384,
+          "height": 138,
+          "top": 426.5,
+          "right": 904.5,
+          "bottom": 564.5,
+          "left": 520.5
+        },
+        "padding": "0px 16px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 536.5,
+          "y": 426.5,
+          "width": 352,
+          "height": 14,
+          "top": 426.5,
+          "right": 888.5,
+          "bottom": 440.5,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 536.5,
+          "y": 448.5,
+          "width": 352,
+          "height": 32,
+          "top": 448.5,
+          "right": 888.5,
+          "bottom": 480.5,
+          "left": 536.5
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 536.5,
+          "y": 507.5,
+          "width": 64.0234375,
+          "height": 14,
+          "top": 507.5,
+          "right": 600.5234375,
+          "bottom": 521.5,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 536.5,
+          "y": 532.5,
+          "width": 352,
+          "height": 32,
+          "top": 532.5,
+          "right": 888.5,
+          "bottom": 564.5,
+          "left": 536.5
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 520.5,
+          "y": 580.5,
+          "width": 384,
+          "height": 105,
+          "top": 580.5,
+          "right": 904.5,
+          "bottom": 685.5,
+          "left": 520.5
+        },
+        "padding": "16px",
+        "gap": "8px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 536.5,
+          "y": 597.5,
+          "width": 352,
+          "height": 32,
+          "top": 597.5,
+          "right": 888.5,
+          "bottom": 629.5,
+          "left": 536.5
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 536.5,
+          "y": 637.5,
+          "width": 352,
+          "height": 32,
+          "top": 637.5,
+          "right": 888.5,
+          "bottom": 669.5,
+          "left": 536.5
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "size",
+    "file": "official-desktop-light-size.png",
+    "scrollY": 2101,
+    "preview": {
+      "x": 393.5,
+      "y": 190.546875,
+      "width": 638,
+      "height": 384,
+      "top": 190.546875,
+      "right": 1031.5,
+      "bottom": 574.546875,
+      "left": 393.5
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 552.5,
+          "y": 252.421875,
+          "width": 320,
+          "height": 260.25,
+          "top": 252.421875,
+          "right": 872.5,
+          "bottom": 512.671875,
+          "left": 552.5
+        },
+        "padding": "12px 0px 0px",
+        "gap": "12px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 552.5,
+          "y": 264.421875,
+          "width": 320,
+          "height": 43.25,
+          "top": 264.421875,
+          "right": 872.5,
+          "bottom": 307.671875,
+          "left": 552.5
+        },
+        "padding": "0px 12px",
+        "gap": "4px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 564.5,
+          "y": 264.421875,
+          "width": 296,
+          "height": 19.25,
+          "top": 264.421875,
+          "right": 860.5,
+          "bottom": 283.671875,
+          "left": 564.5
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 14px / 19.25px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 564.5,
+          "y": 287.671875,
+          "width": 296,
+          "height": 20,
+          "top": 287.671875,
+          "right": 860.5,
+          "bottom": 307.671875,
+          "left": 564.5
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-content",
+        "rect": {
+          "x": 552.5,
+          "y": 319.671875,
+          "width": 320,
+          "height": 92,
+          "top": 319.671875,
+          "right": 872.5,
+          "bottom": 411.671875,
+          "left": 552.5
+        },
+        "padding": "0px 12px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 552.5,
+          "y": 423.671875,
+          "width": 320,
+          "height": 89,
+          "top": 423.671875,
+          "right": 872.5,
+          "bottom": 512.671875,
+          "left": 552.5
+        },
+        "padding": "12px",
+        "gap": "8px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 564.5,
+          "y": 436.671875,
+          "width": 296,
+          "height": 28,
+          "top": 436.671875,
+          "right": 860.5,
+          "bottom": 464.671875,
+          "left": 564.5
+        },
+        "padding": "0px 10px",
+        "gap": "4px",
+        "font": "500 12.8px / 18.2857px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 564.5,
+          "y": 472.671875,
+          "width": 296,
+          "height": 28,
+          "top": 472.671875,
+          "right": 860.5,
+          "bottom": 500.671875,
+          "left": 564.5
+        },
+        "padding": "0px 10px",
+        "gap": "4px",
+        "font": "500 12.8px / 18.2857px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "spacing",
+    "file": "official-desktop-light-spacing.png",
+    "scrollY": 2753,
+    "preview": {
+      "x": 393.5,
+      "y": 190.796875,
+      "width": 638,
+      "height": 544,
+      "top": 190.796875,
+      "right": 1031.5,
+      "bottom": 734.796875,
+      "left": 393.5
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 520.5,
+          "y": 306.296875,
+          "width": 384,
+          "height": 357,
+          "top": 306.296875,
+          "right": 904.5,
+          "bottom": 663.296875,
+          "left": 520.5
+        },
+        "padding": "16px 0px 0px",
+        "gap": "16px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 520.5,
+          "y": 322.296875,
+          "width": 384,
+          "height": 66,
+          "top": 322.296875,
+          "right": 904.5,
+          "bottom": 388.296875,
+          "left": 520.5
+        },
+        "padding": "0px 16px",
+        "gap": "4px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 536.5,
+          "y": 322.296875,
+          "width": 274.8515625,
+          "height": 22,
+          "top": 322.296875,
+          "right": 811.3515625,
+          "bottom": 344.296875,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 16px / 22px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 536.5,
+          "y": 348.296875,
+          "width": 274.8515625,
+          "height": 40,
+          "top": 348.296875,
+          "right": 811.3515625,
+          "bottom": 388.296875,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-action",
+        "rect": {
+          "x": 815.3515625,
+          "y": 322.296875,
+          "width": 73.1484375,
+          "height": 32,
+          "top": 322.296875,
+          "right": 888.5,
+          "bottom": 354.296875,
+          "left": 815.3515625
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 815.3515625,
+          "y": 322.296875,
+          "width": 73.1484375,
+          "height": 32,
+          "top": 322.296875,
+          "right": 888.5,
+          "bottom": 354.296875,
+          "left": 815.3515625
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-content",
+        "rect": {
+          "x": 520.5,
+          "y": 404.296875,
+          "width": 384,
+          "height": 138,
+          "top": 404.296875,
+          "right": 904.5,
+          "bottom": 542.296875,
+          "left": 520.5
+        },
+        "padding": "0px 16px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 536.5,
+          "y": 404.296875,
+          "width": 352,
+          "height": 14,
+          "top": 404.296875,
+          "right": 888.5,
+          "bottom": 418.296875,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 536.5,
+          "y": 426.296875,
+          "width": 352,
+          "height": 32,
+          "top": 426.296875,
+          "right": 888.5,
+          "bottom": 458.296875,
+          "left": 536.5
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 536.5,
+          "y": 485.296875,
+          "width": 64.0234375,
+          "height": 14,
+          "top": 485.296875,
+          "right": 600.5234375,
+          "bottom": 499.296875,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 536.5,
+          "y": 510.296875,
+          "width": 352,
+          "height": 32,
+          "top": 510.296875,
+          "right": 888.5,
+          "bottom": 542.296875,
+          "left": 536.5
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 520.5,
+          "y": 558.296875,
+          "width": 384,
+          "height": 105,
+          "top": 558.296875,
+          "right": 904.5,
+          "bottom": 663.296875,
+          "left": 520.5
+        },
+        "padding": "16px",
+        "gap": "8px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 536.5,
+          "y": 575.296875,
+          "width": 352,
+          "height": 32,
+          "top": 575.296875,
+          "right": 888.5,
+          "bottom": 607.296875,
+          "left": 536.5
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 536.5,
+          "y": 615.296875,
+          "width": 352,
+          "height": 32,
+          "top": 615.296875,
+          "right": 888.5,
+          "bottom": 647.296875,
+          "left": 536.5
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "edge",
+    "file": "official-desktop-light-edge.png",
+    "scrollY": 3541,
+    "preview": {
+      "x": 393.5,
+      "y": 200.046875,
+      "width": 638,
+      "height": 384,
+      "top": 200.046875,
+      "right": 1031.5,
+      "bottom": 584.046875,
+      "left": 393.5
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 520.5,
+          "y": 224.546875,
+          "width": 384,
+          "height": 335,
+          "top": 224.546875,
+          "right": 904.5,
+          "bottom": 559.546875,
+          "left": 520.5
+        },
+        "padding": "16px 0px 0px",
+        "gap": "16px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 520.5,
+          "y": 240.546875,
+          "width": 384,
+          "height": 46,
+          "top": 240.546875,
+          "right": 904.5,
+          "bottom": 286.546875,
+          "left": 520.5
+        },
+        "padding": "0px 16px",
+        "gap": "4px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 536.5,
+          "y": 240.546875,
+          "width": 352,
+          "height": 22,
+          "top": 240.546875,
+          "right": 888.5,
+          "bottom": 262.546875,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 16px / 22px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 536.5,
+          "y": 266.546875,
+          "width": 352,
+          "height": 20,
+          "top": 266.546875,
+          "right": 888.5,
+          "bottom": 286.546875,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-content",
+        "rect": {
+          "x": 520.5,
+          "y": 302.546875,
+          "width": 384,
+          "height": 192,
+          "top": 302.546875,
+          "right": 904.5,
+          "bottom": 494.546875,
+          "left": 520.5
+        },
+        "padding": "0px 16px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 520.5,
+          "y": 494.546875,
+          "width": 384,
+          "height": 65,
+          "top": 494.546875,
+          "right": 904.5,
+          "bottom": 559.546875,
+          "left": 520.5
+        },
+        "padding": "16px",
+        "gap": "8px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 740.5,
+          "y": 511.546875,
+          "width": 71.390625,
+          "height": 32,
+          "top": 511.546875,
+          "right": 811.890625,
+          "bottom": 543.546875,
+          "left": 740.5
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 819.890625,
+          "y": 511.546875,
+          "width": 68.609375,
+          "height": 32,
+          "top": 511.546875,
+          "right": 888.5,
+          "bottom": 543.546875,
+          "left": 819.890625
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "image",
+    "file": "official-desktop-light-image.png",
+    "scrollY": 4202.5,
+    "preview": {
+      "x": 393.5,
+      "y": 164.546875,
+      "width": 638,
+      "height": 512,
+      "top": 164.546875,
+      "right": 1031.5,
+      "bottom": 676.546875,
+      "left": 393.5
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 520.5,
+          "y": 231.046875,
+          "width": 384,
+          "height": 379,
+          "top": 231.046875,
+          "right": 904.5,
+          "bottom": 610.046875,
+          "left": 520.5
+        },
+        "padding": "0px",
+        "gap": "16px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 520.5,
+          "y": 463.046875,
+          "width": 384,
+          "height": 66,
+          "top": 463.046875,
+          "right": 904.5,
+          "bottom": 529.046875,
+          "left": 520.5
+        },
+        "padding": "0px 16px",
+        "gap": "4px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-action",
+        "rect": {
+          "x": 820.3359375,
+          "y": 463.046875,
+          "width": 68.1640625,
+          "height": 21,
+          "top": 463.046875,
+          "right": 888.5,
+          "bottom": 484.046875,
+          "left": 820.3359375
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "badge",
+        "rect": {
+          "x": 820.3359375,
+          "y": 464.046875,
+          "width": 68.1640625,
+          "height": 20,
+          "top": 464.046875,
+          "right": 888.5,
+          "bottom": 484.046875,
+          "left": 820.3359375
+        },
+        "padding": "2px 8px",
+        "gap": "4px",
+        "font": "500 12px / 16px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 536.5,
+          "y": 463.046875,
+          "width": 279.8359375,
+          "height": 22,
+          "top": 463.046875,
+          "right": 816.3359375,
+          "bottom": 485.046875,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 16px / 22px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 536.5,
+          "y": 489.046875,
+          "width": 279.8359375,
+          "height": 40,
+          "top": 489.046875,
+          "right": 816.3359375,
+          "bottom": 529.046875,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 520.5,
+          "y": 545.046875,
+          "width": 384,
+          "height": 65,
+          "top": 545.046875,
+          "right": 904.5,
+          "bottom": 610.046875,
+          "left": 520.5
+        },
+        "padding": "16px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 536.5,
+          "y": 562.046875,
+          "width": 352,
+          "height": 32,
+          "top": 562.046875,
+          "right": 888.5,
+          "bottom": 594.046875,
+          "left": 536.5
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "rtl",
+    "file": "official-desktop-light-rtl.png",
+    "scrollY": 4956.5,
+    "preview": {
+      "x": 393.5,
+      "y": 228.546875,
+      "width": 638,
+      "height": 480,
+      "top": 228.546875,
+      "right": 1031.5,
+      "bottom": 708.546875,
+      "left": 393.5
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 520.5,
+          "y": 290.046875,
+          "width": 384,
+          "height": 357,
+          "top": 290.046875,
+          "right": 904.5,
+          "bottom": 647.046875,
+          "left": 520.5
+        },
+        "padding": "16px 0px 0px",
+        "gap": "16px",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 520.5,
+          "y": 306.046875,
+          "width": 384,
+          "height": 66,
+          "top": 306.046875,
+          "right": 904.5,
+          "bottom": 372.046875,
+          "left": 520.5
+        },
+        "padding": "0px 16px",
+        "gap": "4px",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 635.5546875,
+          "y": 306.046875,
+          "width": 252.9453125,
+          "height": 22,
+          "top": 306.046875,
+          "right": 888.5,
+          "bottom": 328.046875,
+          "left": 635.5546875
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 16px / 22px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 635.5546875,
+          "y": 332.046875,
+          "width": 252.9453125,
+          "height": 40,
+          "top": 332.046875,
+          "right": 888.5,
+          "bottom": 372.046875,
+          "left": 635.5546875
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-action",
+        "rect": {
+          "x": 536.5,
+          "y": 306.046875,
+          "width": 95.0546875,
+          "height": 32,
+          "top": 306.046875,
+          "right": 631.5546875,
+          "bottom": 338.046875,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 536.5,
+          "y": 306.046875,
+          "width": 95.0546875,
+          "height": 32,
+          "top": 306.046875,
+          "right": 631.5546875,
+          "bottom": 338.046875,
+          "left": 536.5
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-content",
+        "rect": {
+          "x": 520.5,
+          "y": 388.046875,
+          "width": 384,
+          "height": 138,
+          "top": 388.046875,
+          "right": 904.5,
+          "bottom": 526.046875,
+          "left": 520.5
+        },
+        "padding": "0px 16px",
+        "gap": "normal",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 536.5,
+          "y": 388.046875,
+          "width": 352,
+          "height": 14,
+          "top": 388.046875,
+          "right": 888.5,
+          "bottom": 402.046875,
+          "left": 536.5
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 536.5,
+          "y": 410.046875,
+          "width": 352,
+          "height": 32,
+          "top": 410.046875,
+          "right": 888.5,
+          "bottom": 442.046875,
+          "left": 536.5
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 826.0625,
+          "y": 469.046875,
+          "width": 62.4375,
+          "height": 14,
+          "top": 469.046875,
+          "right": 888.5,
+          "bottom": 483.046875,
+          "left": 826.0625
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 536.5,
+          "y": 494.046875,
+          "width": 352,
+          "height": 32,
+          "top": 494.046875,
+          "right": 888.5,
+          "bottom": 526.046875,
+          "left": 536.5
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 520.5,
+          "y": 542.046875,
+          "width": 384,
+          "height": 105,
+          "top": 542.046875,
+          "right": 904.5,
+          "bottom": 647.046875,
+          "left": 520.5
+        },
+        "padding": "16px",
+        "gap": "8px",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 536.5,
+          "y": 559.046875,
+          "width": 352,
+          "height": 32,
+          "top": 559.046875,
+          "right": 888.5,
+          "bottom": 591.046875,
+          "left": 536.5
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 536.5,
+          "y": 599.046875,
+          "width": 352,
+          "height": 32,
+          "top": 599.046875,
+          "right": 888.5,
+          "bottom": 631.046875,
+          "left": 536.5
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "demo",
+    "file": "official-mobile-light-demo.png",
+    "scrollY": 0,
+    "preview": {
+      "x": 25,
+      "y": 262.890625,
+      "width": 325,
+      "height": 480,
+      "top": 262.890625,
+      "right": 350,
+      "bottom": 742.890625,
+      "left": 25
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 65,
+          "y": 303.390625,
+          "width": 245,
+          "height": 399,
+          "top": 303.390625,
+          "right": 310,
+          "bottom": 702.390625,
+          "left": 65
+        },
+        "padding": "16px 0px 0px",
+        "gap": "16px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 65,
+          "y": 319.390625,
+          "width": 245,
+          "height": 108,
+          "top": 319.390625,
+          "right": 310,
+          "bottom": 427.390625,
+          "left": 65
+        },
+        "padding": "0px 16px",
+        "gap": "4px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 81,
+          "y": 319.390625,
+          "width": 135.8515625,
+          "height": 44,
+          "top": 319.390625,
+          "right": 216.8515625,
+          "bottom": 363.390625,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 16px / 22px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 81,
+          "y": 367.390625,
+          "width": 135.8515625,
+          "height": 60,
+          "top": 367.390625,
+          "right": 216.8515625,
+          "bottom": 427.390625,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-action",
+        "rect": {
+          "x": 220.8515625,
+          "y": 319.390625,
+          "width": 73.1484375,
+          "height": 32,
+          "top": 319.390625,
+          "right": 294,
+          "bottom": 351.390625,
+          "left": 220.8515625
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 220.8515625,
+          "y": 319.390625,
+          "width": 73.1484375,
+          "height": 32,
+          "top": 319.390625,
+          "right": 294,
+          "bottom": 351.390625,
+          "left": 220.8515625
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-content",
+        "rect": {
+          "x": 65,
+          "y": 443.390625,
+          "width": 245,
+          "height": 138,
+          "top": 443.390625,
+          "right": 310,
+          "bottom": 581.390625,
+          "left": 65
+        },
+        "padding": "0px 16px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 81,
+          "y": 443.390625,
+          "width": 213,
+          "height": 14,
+          "top": 443.390625,
+          "right": 294,
+          "bottom": 457.390625,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 81,
+          "y": 465.390625,
+          "width": 213,
+          "height": 32,
+          "top": 465.390625,
+          "right": 294,
+          "bottom": 497.390625,
+          "left": 81
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "16px / 24px Geist, \"Geist Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 81,
+          "y": 524.390625,
+          "width": 64.0234375,
+          "height": 14,
+          "top": 524.390625,
+          "right": 145.0234375,
+          "bottom": 538.390625,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 81,
+          "y": 549.390625,
+          "width": 213,
+          "height": 32,
+          "top": 549.390625,
+          "right": 294,
+          "bottom": 581.390625,
+          "left": 81
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "16px / 24px Geist, \"Geist Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 65,
+          "y": 597.390625,
+          "width": 245,
+          "height": 105,
+          "top": 597.390625,
+          "right": 310,
+          "bottom": 702.390625,
+          "left": 65
+        },
+        "padding": "16px",
+        "gap": "8px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 81,
+          "y": 614.390625,
+          "width": 213,
+          "height": 32,
+          "top": 614.390625,
+          "right": 294,
+          "bottom": 646.390625,
+          "left": 81
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 81,
+          "y": 654.390625,
+          "width": 213,
+          "height": 32,
+          "top": 654.390625,
+          "right": 294,
+          "bottom": 686.390625,
+          "left": 81
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "size",
+    "file": "official-mobile-light-size.png",
+    "scrollY": 2186.5,
+    "preview": {
+      "x": 25,
+      "y": 248.2109375,
+      "width": 325,
+      "height": 384,
+      "top": 248.2109375,
+      "right": 350,
+      "bottom": 632.2109375,
+      "left": 25
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 65,
+          "y": 270.0859375,
+          "width": 245,
+          "height": 340.25,
+          "top": 270.0859375,
+          "right": 310,
+          "bottom": 610.3359375,
+          "left": 65
+        },
+        "padding": "12px 0px 0px",
+        "gap": "12px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 65,
+          "y": 282.0859375,
+          "width": 245,
+          "height": 63.25,
+          "top": 282.0859375,
+          "right": 310,
+          "bottom": 345.3359375,
+          "left": 65
+        },
+        "padding": "0px 12px",
+        "gap": "4px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 77,
+          "y": 282.0859375,
+          "width": 221,
+          "height": 19.25,
+          "top": 282.0859375,
+          "right": 298,
+          "bottom": 301.3359375,
+          "left": 77
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 14px / 19.25px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 77,
+          "y": 305.3359375,
+          "width": 221,
+          "height": 40,
+          "top": 305.3359375,
+          "right": 298,
+          "bottom": 345.3359375,
+          "left": 77
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-content",
+        "rect": {
+          "x": 65,
+          "y": 357.3359375,
+          "width": 245,
+          "height": 152,
+          "top": 357.3359375,
+          "right": 310,
+          "bottom": 509.3359375,
+          "left": 65
+        },
+        "padding": "0px 12px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 65,
+          "y": 521.3359375,
+          "width": 245,
+          "height": 89,
+          "top": 521.3359375,
+          "right": 310,
+          "bottom": 610.3359375,
+          "left": 65
+        },
+        "padding": "12px",
+        "gap": "8px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 77,
+          "y": 534.3359375,
+          "width": 221,
+          "height": 28,
+          "top": 534.3359375,
+          "right": 298,
+          "bottom": 562.3359375,
+          "left": 77
+        },
+        "padding": "0px 10px",
+        "gap": "4px",
+        "font": "500 12.8px / 18.2857px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 77,
+          "y": 570.3359375,
+          "width": 221,
+          "height": 28,
+          "top": 570.3359375,
+          "right": 298,
+          "bottom": 598.3359375,
+          "left": 77
+        },
+        "padding": "0px 10px",
+        "gap": "4px",
+        "font": "500 12.8px / 18.2857px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "spacing",
+    "file": "official-mobile-light-spacing.png",
+    "scrollY": 2896,
+    "preview": {
+      "x": 25,
+      "y": 314.53125,
+      "width": 325,
+      "height": 544,
+      "top": 314.53125,
+      "right": 350,
+      "bottom": 858.53125,
+      "left": 25
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 65,
+          "y": 409.03125,
+          "width": 245,
+          "height": 399,
+          "top": 409.03125,
+          "right": 310,
+          "bottom": 808.03125,
+          "left": 65
+        },
+        "padding": "16px 0px 0px",
+        "gap": "16px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 65,
+          "y": 425.03125,
+          "width": 245,
+          "height": 108,
+          "top": 425.03125,
+          "right": 310,
+          "bottom": 533.03125,
+          "left": 65
+        },
+        "padding": "0px 16px",
+        "gap": "4px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 81,
+          "y": 425.03125,
+          "width": 135.8515625,
+          "height": 44,
+          "top": 425.03125,
+          "right": 216.8515625,
+          "bottom": 469.03125,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 16px / 22px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 81,
+          "y": 473.03125,
+          "width": 135.8515625,
+          "height": 60,
+          "top": 473.03125,
+          "right": 216.8515625,
+          "bottom": 533.03125,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-action",
+        "rect": {
+          "x": 220.8515625,
+          "y": 425.03125,
+          "width": 73.1484375,
+          "height": 32,
+          "top": 425.03125,
+          "right": 294,
+          "bottom": 457.03125,
+          "left": 220.8515625
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 220.8515625,
+          "y": 425.03125,
+          "width": 73.1484375,
+          "height": 32,
+          "top": 425.03125,
+          "right": 294,
+          "bottom": 457.03125,
+          "left": 220.8515625
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-content",
+        "rect": {
+          "x": 65,
+          "y": 549.03125,
+          "width": 245,
+          "height": 138,
+          "top": 549.03125,
+          "right": 310,
+          "bottom": 687.03125,
+          "left": 65
+        },
+        "padding": "0px 16px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 81,
+          "y": 549.03125,
+          "width": 213,
+          "height": 14,
+          "top": 549.03125,
+          "right": 294,
+          "bottom": 563.03125,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 81,
+          "y": 571.03125,
+          "width": 213,
+          "height": 32,
+          "top": 571.03125,
+          "right": 294,
+          "bottom": 603.03125,
+          "left": 81
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "16px / 24px Geist, \"Geist Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 81,
+          "y": 630.03125,
+          "width": 64.0234375,
+          "height": 14,
+          "top": 630.03125,
+          "right": 145.0234375,
+          "bottom": 644.03125,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 81,
+          "y": 655.03125,
+          "width": 213,
+          "height": 32,
+          "top": 655.03125,
+          "right": 294,
+          "bottom": 687.03125,
+          "left": 81
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "16px / 24px Geist, \"Geist Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 65,
+          "y": 703.03125,
+          "width": 245,
+          "height": 105,
+          "top": 703.03125,
+          "right": 310,
+          "bottom": 808.03125,
+          "left": 65
+        },
+        "padding": "16px",
+        "gap": "8px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 81,
+          "y": 720.03125,
+          "width": 213,
+          "height": 32,
+          "top": 720.03125,
+          "right": 294,
+          "bottom": 752.03125,
+          "left": 81
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 81,
+          "y": 760.03125,
+          "width": 213,
+          "height": 32,
+          "top": 760.03125,
+          "right": 294,
+          "bottom": 792.03125,
+          "left": 81
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "edge",
+    "file": "official-mobile-light-edge.png",
+    "scrollY": 3993.5,
+    "preview": {
+      "x": 25,
+      "y": 200.09375,
+      "width": 325,
+      "height": 384,
+      "top": 200.09375,
+      "right": 350,
+      "bottom": 584.09375,
+      "left": 25
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 65,
+          "y": 214.59375,
+          "width": 245,
+          "height": 355,
+          "top": 214.59375,
+          "right": 310,
+          "bottom": 569.59375,
+          "left": 65
+        },
+        "padding": "16px 0px 0px",
+        "gap": "16px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 65,
+          "y": 230.59375,
+          "width": 245,
+          "height": 66,
+          "top": 230.59375,
+          "right": 310,
+          "bottom": 296.59375,
+          "left": 65
+        },
+        "padding": "0px 16px",
+        "gap": "4px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 81,
+          "y": 230.59375,
+          "width": 213,
+          "height": 22,
+          "top": 230.59375,
+          "right": 294,
+          "bottom": 252.59375,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 16px / 22px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 81,
+          "y": 256.59375,
+          "width": 213,
+          "height": 40,
+          "top": 256.59375,
+          "right": 294,
+          "bottom": 296.59375,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-content",
+        "rect": {
+          "x": 65,
+          "y": 312.59375,
+          "width": 245,
+          "height": 192,
+          "top": 312.59375,
+          "right": 310,
+          "bottom": 504.59375,
+          "left": 65
+        },
+        "padding": "0px 16px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 65,
+          "y": 504.59375,
+          "width": 245,
+          "height": 65,
+          "top": 504.59375,
+          "right": 310,
+          "bottom": 569.59375,
+          "left": 65
+        },
+        "padding": "16px",
+        "gap": "8px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 146,
+          "y": 521.59375,
+          "width": 71.390625,
+          "height": 32,
+          "top": 521.59375,
+          "right": 217.390625,
+          "bottom": 553.59375,
+          "left": 146
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 225.390625,
+          "y": 521.59375,
+          "width": 68.609375,
+          "height": 32,
+          "top": 521.59375,
+          "right": 294,
+          "bottom": 553.59375,
+          "left": 225.390625
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "image",
+    "file": "official-mobile-light-image.png",
+    "scrollY": 4655,
+    "preview": {
+      "x": 25,
+      "y": 215.203125,
+      "width": 325,
+      "height": 512,
+      "top": 215.203125,
+      "right": 350,
+      "bottom": 727.203125,
+      "left": 25
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 65,
+          "y": 289.796875,
+          "width": 245,
+          "height": 362.8125,
+          "top": 289.796875,
+          "right": 310,
+          "bottom": 652.609375,
+          "left": 65
+        },
+        "padding": "0px",
+        "gap": "16px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 65,
+          "y": 443.609375,
+          "width": 245,
+          "height": 128,
+          "top": 443.609375,
+          "right": 310,
+          "bottom": 571.609375,
+          "left": 65
+        },
+        "padding": "0px 16px",
+        "gap": "4px",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-action",
+        "rect": {
+          "x": 225.8359375,
+          "y": 443.609375,
+          "width": 68.1640625,
+          "height": 21,
+          "top": 443.609375,
+          "right": 294,
+          "bottom": 464.609375,
+          "left": 225.8359375
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "badge",
+        "rect": {
+          "x": 225.8359375,
+          "y": 444.609375,
+          "width": 68.1640625,
+          "height": 20,
+          "top": 444.609375,
+          "right": 294,
+          "bottom": 464.609375,
+          "left": 225.8359375
+        },
+        "padding": "2px 8px",
+        "gap": "4px",
+        "font": "500 12px / 16px Geist, \"Geist Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 81,
+          "y": 443.609375,
+          "width": 140.8359375,
+          "height": 44,
+          "top": 443.609375,
+          "right": 221.8359375,
+          "bottom": 487.609375,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 16px / 22px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 81,
+          "y": 491.609375,
+          "width": 140.8359375,
+          "height": 80,
+          "top": 491.609375,
+          "right": 221.8359375,
+          "bottom": 571.609375,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 65,
+          "y": 587.609375,
+          "width": 245,
+          "height": 65,
+          "top": 587.609375,
+          "right": 310,
+          "bottom": 652.609375,
+          "left": 65
+        },
+        "padding": "16px",
+        "gap": "normal",
+        "font": "14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 81,
+          "y": 604.609375,
+          "width": 213,
+          "height": 32,
+          "top": 604.609375,
+          "right": 294,
+          "bottom": 636.609375,
+          "left": 81
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "rtl",
+    "file": "official-mobile-light-rtl.png",
+    "scrollY": 5459.5,
+    "preview": {
+      "x": 25,
+      "y": 279.3125,
+      "width": 325,
+      "height": 480,
+      "top": 279.3125,
+      "right": 350,
+      "bottom": 759.3125,
+      "left": 25
+    },
+    "parts": [
+      {
+        "slot": "card",
+        "rect": {
+          "x": 65,
+          "y": 309.8125,
+          "width": 245,
+          "height": 419,
+          "top": 309.8125,
+          "right": 310,
+          "bottom": 728.8125,
+          "left": 65
+        },
+        "padding": "16px 0px 0px",
+        "gap": "16px",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "hidden",
+        "filter": "none"
+      },
+      {
+        "slot": "card-header",
+        "rect": {
+          "x": 65,
+          "y": 325.8125,
+          "width": 245,
+          "height": 128,
+          "top": 325.8125,
+          "right": 310,
+          "bottom": 453.8125,
+          "left": 65
+        },
+        "padding": "0px 16px",
+        "gap": "4px",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-title",
+        "rect": {
+          "x": 180.0546875,
+          "y": 325.8125,
+          "width": 113.9453125,
+          "height": 44,
+          "top": 325.8125,
+          "right": 294,
+          "bottom": 369.8125,
+          "left": 180.0546875
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "500 16px / 22px Geist, \"Geist Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-description",
+        "rect": {
+          "x": 180.0546875,
+          "y": 373.8125,
+          "width": 113.9453125,
+          "height": 80,
+          "top": 373.8125,
+          "right": 294,
+          "bottom": 453.8125,
+          "left": 180.0546875
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-action",
+        "rect": {
+          "x": 81,
+          "y": 325.8125,
+          "width": 95.0546875,
+          "height": 32,
+          "top": 325.8125,
+          "right": 176.0546875,
+          "bottom": 357.8125,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "normal",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 81,
+          "y": 325.8125,
+          "width": 95.0546875,
+          "height": 32,
+          "top": 325.8125,
+          "right": 176.0546875,
+          "bottom": 357.8125,
+          "left": 81
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "card-content",
+        "rect": {
+          "x": 65,
+          "y": 469.8125,
+          "width": 245,
+          "height": 138,
+          "top": 469.8125,
+          "right": 310,
+          "bottom": 607.8125,
+          "left": 65
+        },
+        "padding": "0px 16px",
+        "gap": "normal",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 81,
+          "y": 469.8125,
+          "width": 213,
+          "height": 14,
+          "top": 469.8125,
+          "right": 294,
+          "bottom": 483.8125,
+          "left": 81
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 81,
+          "y": 491.8125,
+          "width": 213,
+          "height": 32,
+          "top": 491.8125,
+          "right": 294,
+          "bottom": 523.8125,
+          "left": 81
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "16px / 24px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "label",
+        "rect": {
+          "x": 231.5625,
+          "y": 550.8125,
+          "width": 62.4375,
+          "height": 14,
+          "top": 550.8125,
+          "right": 294,
+          "bottom": 564.8125,
+          "left": 231.5625
+        },
+        "padding": "0px",
+        "gap": "8px",
+        "font": "500 14px / 14px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "input",
+        "rect": {
+          "x": 81,
+          "y": 575.8125,
+          "width": 213,
+          "height": 32,
+          "top": 575.8125,
+          "right": 294,
+          "bottom": 607.8125,
+          "left": 81
+        },
+        "padding": "4px 10px",
+        "gap": "normal",
+        "font": "16px / 24px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "clip",
+        "filter": "none"
+      },
+      {
+        "slot": "card-footer",
+        "rect": {
+          "x": 65,
+          "y": 623.8125,
+          "width": 245,
+          "height": 105,
+          "top": 623.8125,
+          "right": 310,
+          "bottom": 728.8125,
+          "left": 65
+        },
+        "padding": "16px",
+        "gap": "8px",
+        "font": "14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 81,
+          "y": 640.8125,
+          "width": 213,
+          "height": 32,
+          "top": 640.8125,
+          "right": 294,
+          "bottom": 672.8125,
+          "left": 81
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      },
+      {
+        "slot": "button",
+        "rect": {
+          "x": 81,
+          "y": 680.8125,
+          "width": 213,
+          "height": 32,
+          "top": 680.8125,
+          "right": 294,
+          "bottom": 712.8125,
+          "left": 81
+        },
+        "padding": "0px 10px",
+        "gap": "6px",
+        "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+        "overflow": "visible",
+        "filter": "none"
+      }
+    ]
+  }
+]

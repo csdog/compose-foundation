@@ -103,3 +103,9 @@ Code Block 的受限高度滚动、下载示例与 Trace 的完整工具调用�
 ### 2026-11-04 Button 第二轮与菜单依赖复查
 
 补第十五组As Link、公开buttonStyle/invalid、Nova背景裁剪与阴影alpha，完整默认Group菜单及共享嵌套Escape。51项独立验证与两配方四象限56图见[Button r2](web-parity/button-r2/README.md)。浏览器暴露子菜单固定宽度/手机碰撞、指针高亮与根焦点环差异，继续保留；Context Menu历史勾选已撤回，需重新核对完整页面。后续按清单继续，优先尚未开始本轮页面与完整状态对照项；Editor排除、Attachment后置，不再将单个配方验证视为组件完成。
+
+### 2026-11-04 Card 首轮与记录维护
+
+六组官网配方、公开CardImage、Nova分区inset/完整行框、Label等字号行框及Button长单行文字已补，93项联合回归与四象限浏览器证据见[Card r1](web-parity/card-r1/README.md)。Card保留未完成：滚动条/边框占位、字重和换行、Select浏览器键盘初始焦点、共享页面/代码及完整交互矩阵。后续继续按清单推进，Editor排除、Attachment后置。
+
+进度文档的历史记录按创建日期倒序；同日沿用原追加顺序倒序并持久化，编辑记录不改变创建顺序。使用 `python3 scripts/sort_progress_records.py` 维护，不编造历史精确时刻。

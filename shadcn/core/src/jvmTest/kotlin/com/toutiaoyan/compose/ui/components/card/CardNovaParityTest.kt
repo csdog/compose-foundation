@@ -64,6 +64,9 @@ class CardNovaParityTest : ScreenshotTest() {
         assertEquals(card.bottom, footer.bottom)
         assertEquals(bounds("title").top, bounds("action").top)
         assertTrue(bounds("description").right < bounds("action").left)
+        composeRule.onNodeWithTag("title").assertHeightIsEqualTo(22.dp)
+        composeRule.onNodeWithTag("description").assertHeightIsEqualTo(20.dp)
+        composeRule.onNodeWithText("Footer").assertHeightIsEqualTo(20.dp)
         val text = mutableListOf<TextLayoutResult>()
         composeRule.onNodeWithTag("title").performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(text) }
         assertEquals(16.sp, text.single().layoutInput.style.fontSize)

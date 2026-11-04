@@ -1,0 +1,100 @@
+[
+  {
+    "theme": "light",
+    "oldSize": [
+      432,
+      354
+    ],
+    "newSize": [
+      432,
+      354
+    ],
+    "changedPixels": 356,
+    "onlyOneChannelStep": 114,
+    "oldBody": [
+      255,
+      255,
+      255
+    ],
+    "newBody": [
+      255,
+      255,
+      255
+    ],
+    "officialBody": [
+      255,
+      255,
+      255
+    ],
+    "oldFooter": [
+      250,
+      250,
+      250
+    ],
+    "newFooter": [
+      250,
+      250,
+      250
+    ],
+    "bounds": [
+      24,
+      24,
+      408,
+      330
+    ],
+    "officialFooter": [
+      250,
+      250,
+      250
+    ]
+  },
+  {
+    "theme": "dark",
+    "oldSize": [
+      432,
+      354
+    ],
+    "newSize": [
+      432,
+      354
+    ],
+    "changedPixels": 105975,
+    "onlyOneChannelStep": 104835,
+    "oldBody": [
+      24,
+      24,
+      24
+    ],
+    "newBody": [
+      23,
+      23,
+      23
+    ],
+    "officialBody": [
+      23,
+      23,
+      23
+    ],
+    "oldFooter": [
+      31,
+      31,
+      31
+    ],
+    "newFooter": [
+      30,
+      30,
+      30
+    ],
+    "bounds": [
+      24,
+      24,
+      408,
+      330
+    ],
+    "officialFooter": [
+      30,
+      30,
+      30
+    ]
+  }
+]

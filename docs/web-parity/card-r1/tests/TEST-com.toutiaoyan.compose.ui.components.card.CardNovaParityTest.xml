@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CardNovaParityTest[jvm]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-04T04:22:55.575Z" hostname="Apples-MacBook-Pro.local" time="0.137">
+  <properties/>
+  <testcase name="darkMatrix[jvm]" classname="com.toutiaoyan.compose.ui.components.card.CardNovaParityTest" time="0.041"/>
+  <testcase name="nestedSmallCardDoesNotChangeOuterTypography[jvm]" classname="com.toutiaoyan.compose.ui.components.card.CardNovaParityTest" time="0.019"/>
+  <testcase name="footerBleedsToRootEdgesAndActionSharesTheTitleRow[jvm]" classname="com.toutiaoyan.compose.ui.components.card.CardNovaParityTest" time="0.019"/>
+  <testcase name="headerCanMeasureInAnUnboundedHorizontalContainer[jvm]" classname="com.toutiaoyan.compose.ui.components.card.CardNovaParityTest" time="0.031"/>
+  <testcase name="lightMatrix[jvm]" classname="com.toutiaoyan.compose.ui.components.card.CardNovaParityTest" time="0.027"/>
+  <system-out><![CDATA[Roborazzi: card_nova_parity_dark.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=162432, width=432, height=376) changed:false
+Roborazzi: card_nova_parity_light.png The differ result :ComparisonResult(pixelDifferences=0, pixelCount=162432, width=432, height=376) changed:false
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

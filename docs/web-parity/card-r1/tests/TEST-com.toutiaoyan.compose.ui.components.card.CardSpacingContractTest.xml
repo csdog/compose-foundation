@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CardSpacingContractTest[jvm]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-04T04:22:55.714Z" hostname="Apples-MacBook-Pro.local" time="0.117">
+  <properties/>
+  <testcase name="firstImageAndFooterKeepFullBoundsAndExplicitPaddingWinsEvenAtTheDefaultValue[jvm]" classname="com.toutiaoyan.compose.ui.components.card.CardSpacingContractTest" time="0.023"/>
+  <testcase name="nestedPartsDoNotRemoveOuterInsetAndCallerHeightIsRespected[jvm]" classname="com.toutiaoyan.compose.ui.components.card.CardSpacingContractTest" time="0.018"/>
+  <testcase name="rootHasOnlyVerticalInsetWhilePartsFollowDynamicSpacingInBothDirections[jvm]" classname="com.toutiaoyan.compose.ui.components.card.CardSpacingContractTest" time="0.042"/>
+  <testcase name="footerHasNoImplicitGapAndCallersCanComposeTheirOwnSpacing[jvm]" classname="com.toutiaoyan.compose.ui.components.card.CardSpacingContractTest" time="0.017"/>
+  <testcase name="sectionStyleOverridesInsetAndRootClipsOverflowAtItsRoundedCorners[jvm]" classname="com.toutiaoyan.compose.ui.components.card.CardSpacingContractTest" time="0.017"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

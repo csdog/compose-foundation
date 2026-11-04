@@ -1,0 +1,8 @@
+{
+  "control": "Button.kt from ef3b0e71, all other current inputs unchanged",
+  "currentSha256": "7908e228408fe51ef7d9158f192b8494e503d47bc0ea67ca95fcac23973b5452",
+  "controlSha256": "7908e228408fe51ef7d9158f192b8494e503d47bc0ea67ca95fcac23973b5452",
+  "byteIdentical": true,
+  "result": "existing golden mismatch, not introduced by button nowrap/feedback separation",
+  "finalButtonRestoredSha256": "8fd298cf405fa55a8878796149f6ff37f47171d3ddb11f896de226bdc775b844"
+}

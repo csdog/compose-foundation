@@ -19,6 +19,7 @@ data class ComponentExample(
     val previewVerticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
     /** Steps keep their content inset on desktop and use the full column below640px. */
     val desktopPreviewInsetStart: Dp = 0.dp,
+    val showHeading: Boolean = true,
     val preview: @Composable () -> Unit,
 )
 
