@@ -1,0 +1,152 @@
+{
+  "app": [
+    "http://127.0.0.1:8765/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8765/2d1272c1f071676161fc.wasm"
+  ],
+  "captures": [
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "demo",
+      "url": "http://127.0.0.1:8765/progress",
+      "scrollY": 0,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "label",
+      "url": "http://127.0.0.1:8765/progress#label",
+      "scrollY": 1656,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "controlled",
+      "url": "http://127.0.0.1:8765/progress#controlled",
+      "scrollY": 2188,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "rtl",
+      "url": "http://127.0.0.1:8765/progress#rtl",
+      "scrollY": 2720,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "demo",
+      "url": "http://127.0.0.1:8765/progress#",
+      "scrollY": 0,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "label",
+      "url": "http://127.0.0.1:8765/progress#label",
+      "scrollY": 1749,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "controlled",
+      "url": "http://127.0.0.1:8765/progress#controlled",
+      "scrollY": 2327,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "rtl",
+      "url": "http://127.0.0.1:8765/progress#rtl",
+      "scrollY": 2905,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "demo",
+      "url": "http://127.0.0.1:8765/progress#",
+      "scrollY": 0,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "label",
+      "url": "http://127.0.0.1:8765/progress#label",
+      "scrollY": 1656,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "controlled",
+      "url": "http://127.0.0.1:8765/progress#controlled",
+      "scrollY": 2188,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "rtl",
+      "url": "http://127.0.0.1:8765/progress#rtl",
+      "scrollY": 2720,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "demo",
+      "url": "http://127.0.0.1:8765/progress#",
+      "scrollY": 0,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "label",
+      "url": "http://127.0.0.1:8765/progress#label",
+      "scrollY": 1749,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "controlled",
+      "url": "http://127.0.0.1:8765/progress#controlled",
+      "scrollY": 2327,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "rtl",
+      "url": "http://127.0.0.1:8765/progress#rtl",
+      "scrollY": 2905,
+      "theme": "dark"
+    }
+  ]
+}

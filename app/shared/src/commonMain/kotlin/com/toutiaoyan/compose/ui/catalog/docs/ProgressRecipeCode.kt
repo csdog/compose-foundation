@@ -8,25 +8,33 @@ internal val progressDefaultRecipeCode =
 
     import androidx.compose.foundation.layout.*
     import androidx.compose.runtime.*
+    import androidx.compose.ui.Alignment
     import androidx.compose.ui.Modifier
     import androidx.compose.ui.platform.LocalLayoutDirection
-    import androidx.compose.ui.platform.testTag
     import androidx.compose.ui.unit.*
     import com.toutiaoyan.compose.ui.components.progress.*
+    import com.toutiaoyan.compose.ui.theme.Theme
+    import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
     import com.toutiaoyan.compose.ui.components.slider.Slider
     import kotlinx.coroutines.delay
+    import androidx.compose.ui.text.font.FontFamily
+    import compose_foundation.app.shared.generated.resources.*
+    import org.jetbrains.compose.resources.Font
 
     // Progress keeps the Kotlin fraction API; these source recipes explicitly use max100.
 
     @Composable
-    internal fun ProgressDefaultRecipe() {
+    fun ProgressDefaultRecipe() {
         var progress by remember { mutableFloatStateOf(13f) }
         LaunchedEffect(Unit) {
             delay(500)
             progress = 66f
         }
-        Progress(progress, max = 100f, modifier = Modifier.fillMaxWidth(0.6f).testTag("progress-recipe"))
+        Progress(progress, max = 100f, modifier = Modifier.fillMaxWidth(0.6f))
     }
+
+    ProgressDefaultRecipe()
     """.trimIndent()
 
 internal val progressLabelRecipeCode =
@@ -36,23 +44,31 @@ internal val progressLabelRecipeCode =
 
     import androidx.compose.foundation.layout.*
     import androidx.compose.runtime.*
+    import androidx.compose.ui.Alignment
     import androidx.compose.ui.Modifier
     import androidx.compose.ui.platform.LocalLayoutDirection
-    import androidx.compose.ui.platform.testTag
     import androidx.compose.ui.unit.*
     import com.toutiaoyan.compose.ui.components.progress.*
+    import com.toutiaoyan.compose.ui.theme.Theme
+    import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
     import com.toutiaoyan.compose.ui.components.slider.Slider
     import kotlinx.coroutines.delay
+    import androidx.compose.ui.text.font.FontFamily
+    import compose_foundation.app.shared.generated.resources.*
+    import org.jetbrains.compose.resources.Font
 
     // Progress keeps the Kotlin fraction API; these source recipes explicitly use max100.
 
     @Composable
-    internal fun ProgressLabelRecipe() {
-        Progress(56f, max = 100f, modifier = Modifier.widthIn(max = 384.dp).fillMaxWidth().testTag("progress-recipe")) {
+    fun ProgressLabelRecipe() {
+        Progress(56f, max = 100f, modifier = Modifier.widthIn(max = 384.dp).fillMaxWidth()) {
             ProgressLabel("Upload progress")
             ProgressValue()
         }
     }
+
+    ProgressLabelRecipe()
     """.trimIndent()
 
 internal val progressControlledRecipeCode =
@@ -62,38 +78,46 @@ internal val progressControlledRecipeCode =
 
     import androidx.compose.foundation.layout.*
     import androidx.compose.runtime.*
+    import androidx.compose.ui.Alignment
     import androidx.compose.ui.Modifier
     import androidx.compose.ui.platform.LocalLayoutDirection
-    import androidx.compose.ui.platform.testTag
     import androidx.compose.ui.unit.*
     import com.toutiaoyan.compose.ui.components.progress.*
+    import com.toutiaoyan.compose.ui.theme.Theme
+    import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
     import com.toutiaoyan.compose.ui.components.slider.Slider
     import kotlinx.coroutines.delay
+    import androidx.compose.ui.text.font.FontFamily
+    import compose_foundation.app.shared.generated.resources.*
+    import org.jetbrains.compose.resources.Font
 
     // Progress keeps the Kotlin fraction API; these source recipes explicitly use max100.
 
     @Composable
-    internal fun ProgressControlledRecipe() {
+    fun ProgressControlledRecipe() {
         var value by remember { mutableFloatStateOf(50f) }
         Column(
             Modifier.widthIn(
                 max =
                     384.dp,
-            ).fillMaxWidth().testTag("progress-controlled"),
+            ).fillMaxWidth(),
             verticalArrangement =
                 Arrangement.spacedBy(16.dp),
         ) {
-            Progress(value, max = 100f, modifier = Modifier.fillMaxWidth().testTag("progress-recipe"))
+            Progress(value, max = 100f, modifier = Modifier.fillMaxWidth())
             Slider(
                 value,
                 onValueChange = { value = it },
                 min = 0f,
                 max = 100f,
                 step = 1f,
-                modifier = Modifier.fillMaxWidth().testTag("progress-slider"),
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }
+
+    ProgressControlledRecipe()
     """.trimIndent()
 
 internal val progressRtlRecipeCode =
@@ -103,19 +127,34 @@ internal val progressRtlRecipeCode =
 
     import androidx.compose.foundation.layout.*
     import androidx.compose.runtime.*
+    import androidx.compose.ui.Alignment
     import androidx.compose.ui.Modifier
     import androidx.compose.ui.platform.LocalLayoutDirection
-    import androidx.compose.ui.platform.testTag
     import androidx.compose.ui.unit.*
     import com.toutiaoyan.compose.ui.components.progress.*
+    import com.toutiaoyan.compose.ui.theme.Theme
+    import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
     import com.toutiaoyan.compose.ui.components.slider.Slider
     import kotlinx.coroutines.delay
+    import androidx.compose.ui.text.font.FontFamily
+    import compose_foundation.app.shared.generated.resources.*
+    import org.jetbrains.compose.resources.Font
 
     // Progress keeps the Kotlin fraction API; these source recipes explicitly use max100.
 
     @Composable
-    internal fun ProgressRtlRecipe(language: Int = 1) {
+    fun ProgressRtlRecipe(language: Int = 1) {
         val labels = listOf("Upload progress", "تقدم الرفع", "התקדמות העלאה")
+        val inherited = currentTheme
+        val font =
+            when (language) {
+                1 -> FontFamily(Font(Res.font.catalog_arabic_regular, FontWeight.Normal),
+            Font(Res.font.catalog_arabic_medium, FontWeight.Medium))
+                2 -> FontFamily(Font(Res.font.catalog_hebrew_regular, FontWeight.Normal),
+            Font(Res.font.catalog_hebrew_medium, FontWeight.Medium))
+                else -> inherited.fontFamily
+            }
         CompositionLocalProvider(
             LocalLayoutDirection provides
                 if (language == 0) {
@@ -124,10 +163,23 @@ internal val progressRtlRecipeCode =
                     LayoutDirection.Rtl
                 },
         ) {
-            Progress(56f, max = 100f, modifier = Modifier.widthIn(max = 384.dp).fillMaxWidth().testTag("progress-recipe")) {
-                ProgressLabel(labels[language])
-                ProgressValue(if (language == 1) "٥٦%" else "56%")
+            Theme(
+                preset = inherited.activePreset, baseColor = inherited.activeBaseColor,
+                accent = inherited.activeAccent, isDark = inherited.isDark, baseRadius = inherited.baseRadius,
+                ring = inherited.ring, unitSpacing = LocalUnitSpacing.current,
+                minTouchTarget = inherited.minTouchTarget, fontFamily = font,
+            ) {
+                Progress(
+                    56f,
+                    max = 100f,
+                    modifier = Modifier.widthIn(max = 384.dp).fillMaxWidth(),
+                ) {
+                    ProgressLabel(labels[language])
+                    ProgressValue(if (language == 1) "٥٦%" else "56%")
+                }
             }
         }
     }
+
+    ProgressRtlRecipe()
     """.trimIndent()

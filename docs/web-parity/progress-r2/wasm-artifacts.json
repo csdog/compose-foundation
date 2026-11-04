@@ -1,0 +1,12 @@
+[
+  {
+    "file": "658820f72b4617efb380.wasm",
+    "bytes": 8648883,
+    "sha256": "08e904ec38a6a81a4809a853acf68022f83905286827e804e88b262c37f2954d"
+  },
+  {
+    "file": "2d1272c1f071676161fc.wasm",
+    "bytes": 43567384,
+    "sha256": "b57c44a1cd46b1a52cf3143ee4e3ce753961c6cd9fa09359e883225cff2cc3fd"
+  }
+]

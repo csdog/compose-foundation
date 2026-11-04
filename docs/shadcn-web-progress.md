@@ -79,6 +79,8 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 
 ## 尚未关闭的页面差异
 
+- Progress r2发现初载/快速视口切换时，根表面曾发生989.578/961.531px高度缩放、顶部空白偏移或RTL空白帧；重排/等待后恢复不等于已修复，详见[诊断与验收边界](web-parity/progress-r2/README.md)。
+
 - 顶栏仅显示本项目真实存在的导航；官方其他产品页面没有伪造本地入口。
 - 侧栏与官方仍有栏目内容、渐隐边界、选中项宽度和细微尺寸差异；当前项目扩展单独列出。
 - 手机 Sheet 沿用组件默认 320px 宽，官方导航尺寸及关闭按钮位置需进一步视觉核对。
@@ -141,7 +143,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Navigation Menu (`navigation-menu`)：官网Default/三语RTL的内容、真实导航、图标及768/1024媒体查询已移植，75条文案逐字核对；本轮修复面板链接悬停关闭/重开及Popup导航依赖作用域，公共版本0.3.16。核心22项独立验证、目录18项及两个ktlint通过；共享视口/Root align、浏览器及完整状态仍开放，详见文末。
 - [ ] Pagination (`pagination`)：官网Default/Simple/Icons Only/三语RTL已移植；Nova32dp/2dp间隔、响应式文字、RTL箭头、禁用及省略号语义已补，新增内容slot/size/style并修正Select当前值换行，版本0.3.17。核心24、目录16及两个ktlint通过，JS/Wasm成功；旧Vega2图预存失配，浏览器及完整状态仍待关闭，详见文末。
 - [ ] Popover (`popover`)：本轮已核对官网来源，修正 Nova 面板间距、圆角、阴影细环与完整行高；原生9项、两项ktlint与JS/Wasm已验证。五组官网配方已迁移，原生24项示例交互已过；默认非模态与焦点行为、动画及浏览器完整状态矩阵仍待完成。
-- [ ] Progress (`progress`)：本轮已对照官网来源，修正自动轨道、标签/数值横向换行、Nova字号、端点裁剪及进度语义；四组官网配方已迁移。原生29项验证通过，浏览器/完整样式与可访问性矩阵仍待完成。
+- [ ] Progress (`progress`)：四官网配方桌面/窄屏浅深静态、三语和受控键盘已对照；移除十二重复预览，补Composition/说明/真实API，RTL统一288正文/40inset与Noto字体。41常规项、Nova四图显式verify、JS/Wasm通过；旧Vega四图actual与r1一致。共享初载/resize缩放/空白、排版/代码顺序、原生语义和完整交互仍开放；官网轨道点击未生效有可信事件诊断，不计通过。[证据](web-parity/progress-r2/README.md)。
 - [ ] Questionnaire (`questionnaire`)：本轮修正 Nova 选项图形/间距/字号、导航与验证、单选输入互斥、提交顺序和受控更新；官网 Default 三题流程已迁移。原生38项通过；其余13组官网配方及浏览器/完整状态矩阵待完成。
 - [ ] Radio Group (`radio-group`)：Nova 间距/错误状态、方向键循环、跳过 disabled、RTL/Home/End 已补；Tab 单入口、动态重排和完整矩阵待关闭。
 - [ ] Resizable (`resizable`)：官网四配方与三语 RTL 已迁移；Nova 分隔线/grip、0..100%范围、真实鼠标/触摸命中、键盘调节及嵌套比例已补。37项定向验证和两个ktlint通过；浏览器四象限、多面板/resize光标及完整状态仍待完成。
@@ -169,6 +171,14 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Progress：四配方页面、RTL字体与真实浏览器交互（2026-11-04）
+
+<!-- progress-created: 2026-11-04; order: 133 -->
+
+继续优先缺少本轮完整页面浏览器对照的组件。删除四官方配方后十二个重复参数预览，扩展能力合并到Kotlin指南/API；补Composition、Label/Controlled/RTL说明及公共完整复制代码。RTL改为单一288dp正文/40dp inset和Noto Arabic/Hebrew，保留完整语言标签、方向及数字格式，不改变公共组件或版本。
+
+核心13+目录28共41项常规测试、目录ktlint及JS/Wasm通过；Nova四图显式verify通过，旧Vega四图仍失配且actual与r1逐字节相同，未刷新。官网/最终本地各16静态+28交互图，经12张最终拼图复查，受控Home/End/Left和三语切换已实测。本地点击约四分之一轨道填充约24%；官网轨道点击未变化，可信指针事件/命中记录保留，不计对齐通过。发现共享初载/resize缩放与空白偏移、一次RTL空白和250ms中间过渡帧，诊断图隔离，延长等待后重拍但不声称相关路径已修复。详见[progress-r2](web-parity/progress-r2/README.md)。共享排版/Composition顺序、原生语义、完整手势/动态/辅助技术及旧图差异仍开放，Progress不勾选；Editor排除、Attachment后置。
 
 ### Marker：自然预览高度、本页链接与悬停反馈（2026-11-04）
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ProgressParityTest[jvm]" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-11-04T09:18:52.842Z" hostname="Apples-MacBook-Pro.local" time="0.24">
+  <properties/>
+  <testcase name="rootStyleControlsBothTheLabelRowAndTrack[jvm]" classname="com.toutiaoyan.compose.ui.components.progress.ProgressParityTest" time="0.03"/>
+  <testcase name="invalidAndOutOfRangeNumbersCannotProduceInvalidRangeSemantics[jvm]" classname="com.toutiaoyan.compose.ui.components.progress.ProgressParityTest" time="0.05"/>
+  <testcase name="accessibilityAndDisplayedValueUpdateWithoutWaitingForTheFillAnimation[jvm]" classname="com.toutiaoyan.compose.ui.components.progress.ProgressParityTest" time="0.038"/>
+  <testcase name="customValueDescriptionDoesNotReplaceTheAccessibleLabel[jvm]" classname="com.toutiaoyan.compose.ui.components.progress.ProgressParityTest" time="0.018"/>
+  <testcase name="rtlMirrorsTheAutoMarginAndFillsFromTheRight[jvm]" classname="com.toutiaoyan.compose.ui.components.progress.ProgressParityTest" time="0.022"/>
+  <testcase name="narrowHeadersWrapAndKeepTheValueAtTheLogicalEnd[jvm]" classname="com.toutiaoyan.compose.ui.components.progress.ProgressParityTest" time="0.017"/>
+  <testcase name="visibleValueIsHiddenFromAccessibilityLikeBaseUiValue[jvm]" classname="com.toutiaoyan.compose.ui.components.progress.ProgressParityTest" time="0.018"/>
+  <testcase name="labelAndValueShareOneRowWithAnAutomaticTrackTwelvePixelsBelow[jvm]" classname="com.toutiaoyan.compose.ui.components.progress.ProgressParityTest" time="0.021"/>
+  <testcase name="indeterminateHasNoFabricatedPercentage[jvm]" classname="com.toutiaoyan.compose.ui.components.progress.ProgressParityTest" time="0.026"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

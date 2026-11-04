@@ -1,0 +1,147 @@
+[
+  {
+    "mode": "desktop-light",
+    "state": "pointer-quarter",
+    "sampleY": 281,
+    "trackX": 521,
+    "trackWidth": 384,
+    "filledPixels": 92,
+    "fraction": 0.24
+  },
+  {
+    "mode": "desktop-light",
+    "state": "key-home",
+    "sampleY": 281,
+    "trackX": 521,
+    "trackWidth": 384,
+    "filledPixels": 0,
+    "fraction": 0.0
+  },
+  {
+    "mode": "desktop-light",
+    "state": "key-end",
+    "sampleY": 281,
+    "trackX": 521,
+    "trackWidth": 384,
+    "filledPixels": 384,
+    "fraction": 1.0
+  },
+  {
+    "mode": "desktop-light",
+    "state": "key-left",
+    "sampleY": 281,
+    "trackX": 521,
+    "trackWidth": 384,
+    "filledPixels": 380,
+    "fraction": 0.99
+  },
+  {
+    "mode": "mobile-light",
+    "state": "pointer-quarter",
+    "sampleY": 327,
+    "trackX": 65,
+    "trackWidth": 245,
+    "filledPixels": 59,
+    "fraction": 0.241
+  },
+  {
+    "mode": "mobile-light",
+    "state": "key-home",
+    "sampleY": 327,
+    "trackX": 65,
+    "trackWidth": 245,
+    "filledPixels": 0,
+    "fraction": 0.0
+  },
+  {
+    "mode": "mobile-light",
+    "state": "key-end",
+    "sampleY": 327,
+    "trackX": 65,
+    "trackWidth": 245,
+    "filledPixels": 245,
+    "fraction": 1.0
+  },
+  {
+    "mode": "mobile-light",
+    "state": "key-left",
+    "sampleY": 327,
+    "trackX": 65,
+    "trackWidth": 245,
+    "filledPixels": 243,
+    "fraction": 0.992
+  },
+  {
+    "mode": "desktop-dark",
+    "state": "pointer-quarter",
+    "sampleY": 281,
+    "trackX": 521,
+    "trackWidth": 384,
+    "filledPixels": 92,
+    "fraction": 0.24,
+    "settleWaitMs": 1000
+  },
+  {
+    "mode": "desktop-dark",
+    "state": "key-home",
+    "sampleY": 281,
+    "trackX": 521,
+    "trackWidth": 384,
+    "filledPixels": 0,
+    "fraction": 0.0
+  },
+  {
+    "mode": "desktop-dark",
+    "state": "key-end",
+    "sampleY": 281,
+    "trackX": 521,
+    "trackWidth": 384,
+    "filledPixels": 384,
+    "fraction": 1.0
+  },
+  {
+    "mode": "desktop-dark",
+    "state": "key-left",
+    "sampleY": 281,
+    "trackX": 521,
+    "trackWidth": 384,
+    "filledPixels": 380,
+    "fraction": 0.99
+  },
+  {
+    "mode": "mobile-dark",
+    "state": "pointer-quarter",
+    "sampleY": 327,
+    "trackX": 65,
+    "trackWidth": 245,
+    "filledPixels": 59,
+    "fraction": 0.241
+  },
+  {
+    "mode": "mobile-dark",
+    "state": "key-home",
+    "sampleY": 327,
+    "trackX": 65,
+    "trackWidth": 245,
+    "filledPixels": 0,
+    "fraction": 0.0
+  },
+  {
+    "mode": "mobile-dark",
+    "state": "key-end",
+    "sampleY": 327,
+    "trackX": 65,
+    "trackWidth": 245,
+    "filledPixels": 245,
+    "fraction": 1.0
+  },
+  {
+    "mode": "mobile-dark",
+    "state": "key-left",
+    "sampleY": 327,
+    "trackX": 65,
+    "trackWidth": 245,
+    "filledPixels": 243,
+    "fraction": 0.992
+  }
+]

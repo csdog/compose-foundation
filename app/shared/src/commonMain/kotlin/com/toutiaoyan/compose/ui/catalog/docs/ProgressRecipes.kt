@@ -4,11 +4,17 @@ package com.toutiaoyan.compose.ui.catalog.docs
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.*
 import com.toutiaoyan.compose.ui.components.progress.*
+import com.toutiaoyan.compose.ui.theme.Theme
+import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
+import com.toutiaoyan.compose.ui.catalog.catalogArabicFontFamily
+import com.toutiaoyan.compose.ui.catalog.catalogHebrewFontFamily
 import com.toutiaoyan.compose.ui.components.slider.Slider
 import kotlinx.coroutines.delay
 
@@ -67,6 +73,13 @@ internal fun ProgressControlledRecipe() {
 @Composable
 internal fun ProgressRtlRecipe(language: Int = 1) {
     val labels = listOf("Upload progress", "تقدم الرفع", "התקדמות העלאה")
+    val inherited = currentTheme
+    val font =
+        when (language) {
+            1 -> catalogArabicFontFamily()
+            2 -> catalogHebrewFontFamily()
+            else -> inherited.fontFamily
+        }
     CompositionLocalProvider(
         LocalLayoutDirection provides
             if (language == 0) {
@@ -75,9 +88,20 @@ internal fun ProgressRtlRecipe(language: Int = 1) {
                 LayoutDirection.Rtl
             },
     ) {
-        Progress(56f, max = 100f, modifier = Modifier.widthIn(max = 384.dp).fillMaxWidth().testTag("progress-recipe")) {
-            ProgressLabel(labels[language])
-            ProgressValue(if (language == 1) "٥٦%" else "56%")
+        Theme(
+            preset = inherited.activePreset, baseColor = inherited.activeBaseColor,
+            accent = inherited.activeAccent, isDark = inherited.isDark, baseRadius = inherited.baseRadius,
+            ring = inherited.ring, unitSpacing = LocalUnitSpacing.current,
+            minTouchTarget = inherited.minTouchTarget, fontFamily = font,
+        ) {
+            Progress(
+                56f,
+                max = 100f,
+                modifier = Modifier.widthIn(max = 384.dp).fillMaxWidth().testTag("progress-recipe"),
+            ) {
+                ProgressLabel(labels[language])
+                ProgressValue(if (language == 1) "٥٦%" else "56%")
+            }
         }
     }
 }
@@ -86,12 +110,37 @@ internal fun ProgressRtlRecipe(language: Int = 1) {
 internal val progressOfficialExamples =
     listOf(
         ComponentExample("Default", code = progressDefaultRecipeCode, preview = { ProgressDefaultRecipe() }),
-        ComponentExample("Label", code = progressLabelRecipeCode, preview = { ProgressLabelRecipe() }),
-        ComponentExample("Controlled", code = progressControlledRecipeCode, preview = { ProgressControlledRecipe() }),
-        ComponentExample("RTL", code = progressRtlRecipeCode, previewPadding = 0.dp, preview = {
-            var language by remember { mutableIntStateOf(1) }
-            RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
-                ProgressRtlRecipe(language)
-            }
-        }),
+        ComponentExample(
+            "Label",
+            code = progressLabelRecipeCode,
+            descriptionMarkdown = "Use ProgressLabel and ProgressValue to add a label and value display.",
+            preview = { ProgressLabelRecipe() },
+        ),
+        ComponentExample(
+            "Controlled",
+            code = progressControlledRecipeCode,
+            descriptionMarkdown = "A progress bar that can be controlled by a slider.",
+            preview = { ProgressControlledRecipe() },
+        ),
+        ComponentExample(
+            "RTL",
+            code = progressRtlRecipeCode,
+            previewPadding = 0.dp,
+            descriptionMarkdown =
+                "Switch the preview language to change the label, number format and layout direction.",
+            preview = {
+                var language by remember { mutableIntStateOf(1) }
+                Column(Modifier.fillMaxWidth()) {
+                    RtlPreviewToolbar(
+                        language,
+                        listOf("English", "Arabic (العربية)", "Hebrew (עברית)"),
+                        { language = it },
+                    )
+                    Box(
+                        Modifier.testTag("progress-rtl-body").fillMaxWidth().heightIn(min = 288.dp).padding(40.dp),
+                        contentAlignment = Alignment.Center,
+                    ) { ProgressRtlRecipe(language) }
+                }
+            },
+        ),
     )

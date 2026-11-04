@@ -1,0 +1,238 @@
+{
+  "app": [
+    "http://127.0.0.1:8765/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8765/2d1272c1f071676161fc.wasm"
+  ],
+  "geometries": [
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "root": {
+        "x": 0,
+        "y": 0,
+        "width": 1425,
+        "height": 1000,
+        "top": 0,
+        "right": 1425,
+        "bottom": 1000,
+        "left": 0
+      },
+      "surface": {
+        "x": 0,
+        "y": 5.2109375,
+        "width": 1425,
+        "height": 989.578125,
+        "top": 5.2109375,
+        "right": 1425,
+        "bottom": 994.7890625,
+        "left": 0
+      }
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "root": {
+        "x": 0,
+        "y": 0,
+        "width": 375,
+        "height": 1000,
+        "top": 0,
+        "right": 375,
+        "bottom": 1000,
+        "left": 0
+      },
+      "surface": {
+        "x": 0,
+        "y": 19.234375,
+        "width": 375,
+        "height": 961.53125,
+        "top": 19.234375,
+        "right": 375,
+        "bottom": 980.765625,
+        "left": 0
+      }
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "root": {
+        "x": 0,
+        "y": 0,
+        "width": 1425,
+        "height": 1000,
+        "top": 0,
+        "right": 1425,
+        "bottom": 1000,
+        "left": 0
+      },
+      "surface": {
+        "x": 0,
+        "y": 5.2109375,
+        "width": 1425,
+        "height": 989.578125,
+        "top": 5.2109375,
+        "right": 1425,
+        "bottom": 994.7890625,
+        "left": 0
+      }
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "root": {
+        "x": 0,
+        "y": 0,
+        "width": 375,
+        "height": 1000,
+        "top": 0,
+        "right": 375,
+        "bottom": 1000,
+        "left": 0
+      },
+      "surface": {
+        "x": 0,
+        "y": 19.234375,
+        "width": 375,
+        "height": 961.53125,
+        "top": 19.234375,
+        "right": 375,
+        "bottom": 980.765625,
+        "left": 0
+      }
+    }
+  ],
+  "captures": [
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "step": "pointer-quarter",
+      "x": 617,
+      "y": 305
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "step": "home"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "step": "end"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "step": "left"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "step": "rtl-arabic"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "step": "pointer-quarter",
+      "x": 126,
+      "y": 351
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "step": "home"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "step": "end"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "step": "left"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "step": "rtl-arabic"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "step": "pointer-quarter",
+      "x": 617,
+      "y": 305
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "step": "home"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "step": "end"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "step": "left"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "step": "rtl-arabic"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "step": "pointer-quarter",
+      "x": 126,
+      "y": 351
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "step": "home"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "step": "end"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "step": "left"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "step": "rtl-arabic"
+    }
+  ]
+}

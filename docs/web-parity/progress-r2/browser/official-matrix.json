@@ -1,0 +1,7202 @@
+[
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "demo",
+    "url": "https://ui.shadcn.com/docs/components/base/progress",
+    "scrollY": 0,
+    "rootClass": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] light",
+    "progress": [
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "66",
+        "text": "x",
+        "rect": {
+          "x": 545.1015625,
+          "y": 433,
+          "width": 334.796875,
+          "height": 4,
+          "top": 433,
+          "right": 879.8984375,
+          "bottom": 437,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "334.797px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 545.1015625,
+          "y": 433,
+          "width": 334.796875,
+          "height": 4,
+          "top": 433,
+          "right": 879.8984375,
+          "bottom": 437,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "334.797px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 545.1015625,
+          "y": 433,
+          "width": 220.9609375,
+          "height": 4,
+          "top": 433,
+          "right": 766.0625,
+          "bottom": 437,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "220.961px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "Upload progress56%x",
+        "rect": {
+          "x": 520.5,
+          "y": 1991.953125,
+          "width": 384,
+          "height": 36,
+          "top": 1991.953125,
+          "right": 904.5,
+          "bottom": 2027.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "36px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "Upload progress",
+        "rect": {
+          "x": 520.5,
+          "y": 1991.953125,
+          "width": 107.671875,
+          "height": 20,
+          "top": 1991.953125,
+          "right": 628.171875,
+          "bottom": 2011.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "20px",
+          "width": "107.672px",
+          "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "56%",
+        "rect": {
+          "x": 876.46875,
+          "y": 1991.953125,
+          "width": 28.03125,
+          "height": 20,
+          "top": 1991.953125,
+          "right": 904.5,
+          "bottom": 2011.953125,
+          "left": 876.46875
+        },
+        "css": {
+          "height": "20px",
+          "width": "28.0312px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(48.496 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 2023.953125,
+          "width": 384,
+          "height": 4,
+          "top": 2023.953125,
+          "right": 904.5,
+          "bottom": 2027.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 2023.953125,
+          "width": 215.0390625,
+          "height": 4,
+          "top": 2023.953125,
+          "right": 735.5390625,
+          "bottom": 2027.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "215.039px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "50",
+        "text": "x",
+        "rect": {
+          "x": 520.5,
+          "y": 2527.953125,
+          "width": 384,
+          "height": 4,
+          "top": 2527.953125,
+          "right": 904.5,
+          "bottom": 2531.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 2527.953125,
+          "width": 384,
+          "height": 4,
+          "top": 2527.953125,
+          "right": 904.5,
+          "bottom": 2531.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 2527.953125,
+          "width": 192,
+          "height": 4,
+          "top": 2527.953125,
+          "right": 712.5,
+          "bottom": 2531.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "192px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "تقدم الرفع٥٦%x",
+        "rect": {
+          "x": 520.5,
+          "y": 3115.953125,
+          "width": 384,
+          "height": 36,
+          "top": 3115.953125,
+          "right": 904.5,
+          "bottom": 3151.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "36px",
+          "width": "384px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "تقدم الرفع",
+        "rect": {
+          "x": 847.9921875,
+          "y": 3115.953125,
+          "width": 56.5078125,
+          "height": 20,
+          "top": 3115.953125,
+          "right": 904.5,
+          "bottom": 3135.953125,
+          "left": 847.9921875
+        },
+        "css": {
+          "height": "20px",
+          "width": "56.5078px",
+          "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "٥٦%",
+        "rect": {
+          "x": 520.5,
+          "y": 3115.953125,
+          "width": 27.6640625,
+          "height": 20,
+          "top": 3115.953125,
+          "right": 548.1640625,
+          "bottom": 3135.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "20px",
+          "width": "27.6641px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(48.496 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 3147.953125,
+          "width": 384,
+          "height": 4,
+          "top": 3147.953125,
+          "right": 904.5,
+          "bottom": 3151.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 689.4609375,
+          "y": 3147.953125,
+          "width": 215.0390625,
+          "height": 4,
+          "top": 3147.953125,
+          "right": 904.5,
+          "bottom": 3151.953125,
+          "left": 689.4609375
+        },
+        "css": {
+          "height": "4px",
+          "width": "215.039px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      }
+    ],
+    "headers": [
+      {
+        "id": "",
+        "text": "Progress"
+      },
+      {
+        "id": "installation",
+        "text": "Installation#"
+      },
+      {
+        "id": "usage",
+        "text": "Usage#"
+      },
+      {
+        "id": "composition",
+        "text": "Composition#"
+      },
+      {
+        "id": "with-label-and-value",
+        "text": "With label and value#"
+      },
+      {
+        "id": "label",
+        "text": "Label#"
+      },
+      {
+        "id": "controlled",
+        "text": "Controlled#"
+      },
+      {
+        "id": "rtl",
+        "text": "RTL#"
+      },
+      {
+        "id": "api-reference",
+        "text": "API Reference#"
+      }
+    ],
+    "app": []
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "label",
+    "url": "https://ui.shadcn.com/docs/components/base/progress#label",
+    "scrollY": 1694,
+    "rootClass": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] light",
+    "progress": [
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "66",
+        "text": "x",
+        "rect": {
+          "x": 545.1015625,
+          "y": -1261,
+          "width": 334.796875,
+          "height": 4,
+          "top": -1261,
+          "right": 879.8984375,
+          "bottom": -1257,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "334.797px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 545.1015625,
+          "y": -1261,
+          "width": 334.796875,
+          "height": 4,
+          "top": -1261,
+          "right": 879.8984375,
+          "bottom": -1257,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "334.797px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 545.1015625,
+          "y": -1261,
+          "width": 220.9609375,
+          "height": 4,
+          "top": -1261,
+          "right": 766.0625,
+          "bottom": -1257,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "220.961px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "Upload progress56%x",
+        "rect": {
+          "x": 520.5,
+          "y": 297.953125,
+          "width": 384,
+          "height": 36,
+          "top": 297.953125,
+          "right": 904.5,
+          "bottom": 333.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "36px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "Upload progress",
+        "rect": {
+          "x": 520.5,
+          "y": 297.953125,
+          "width": 107.671875,
+          "height": 20,
+          "top": 297.953125,
+          "right": 628.171875,
+          "bottom": 317.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "20px",
+          "width": "107.672px",
+          "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "56%",
+        "rect": {
+          "x": 876.46875,
+          "y": 297.953125,
+          "width": 28.03125,
+          "height": 20,
+          "top": 297.953125,
+          "right": 904.5,
+          "bottom": 317.953125,
+          "left": 876.46875
+        },
+        "css": {
+          "height": "20px",
+          "width": "28.0312px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(48.496 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 329.953125,
+          "width": 384,
+          "height": 4,
+          "top": 329.953125,
+          "right": 904.5,
+          "bottom": 333.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 329.953125,
+          "width": 215.0390625,
+          "height": 4,
+          "top": 329.953125,
+          "right": 735.5390625,
+          "bottom": 333.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "215.039px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "50",
+        "text": "x",
+        "rect": {
+          "x": 520.5,
+          "y": 833.953125,
+          "width": 384,
+          "height": 4,
+          "top": 833.953125,
+          "right": 904.5,
+          "bottom": 837.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 833.953125,
+          "width": 384,
+          "height": 4,
+          "top": 833.953125,
+          "right": 904.5,
+          "bottom": 837.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 833.953125,
+          "width": 192,
+          "height": 4,
+          "top": 833.953125,
+          "right": 712.5,
+          "bottom": 837.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "192px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "تقدم الرفع٥٦%x",
+        "rect": {
+          "x": 520.5,
+          "y": 1421.953125,
+          "width": 384,
+          "height": 36,
+          "top": 1421.953125,
+          "right": 904.5,
+          "bottom": 1457.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "36px",
+          "width": "384px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "تقدم الرفع",
+        "rect": {
+          "x": 847.9921875,
+          "y": 1421.953125,
+          "width": 56.5078125,
+          "height": 20,
+          "top": 1421.953125,
+          "right": 904.5,
+          "bottom": 1441.953125,
+          "left": 847.9921875
+        },
+        "css": {
+          "height": "20px",
+          "width": "56.5078px",
+          "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "٥٦%",
+        "rect": {
+          "x": 520.5,
+          "y": 1421.953125,
+          "width": 27.6640625,
+          "height": 20,
+          "top": 1421.953125,
+          "right": 548.1640625,
+          "bottom": 1441.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "20px",
+          "width": "27.6641px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(48.496 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 1453.953125,
+          "width": 384,
+          "height": 4,
+          "top": 1453.953125,
+          "right": 904.5,
+          "bottom": 1457.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 689.4609375,
+          "y": 1453.953125,
+          "width": 215.0390625,
+          "height": 4,
+          "top": 1453.953125,
+          "right": 904.5,
+          "bottom": 1457.953125,
+          "left": 689.4609375
+        },
+        "css": {
+          "height": "4px",
+          "width": "215.039px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      }
+    ],
+    "headers": [
+      {
+        "id": "",
+        "text": "Progress"
+      },
+      {
+        "id": "installation",
+        "text": "Installation#"
+      },
+      {
+        "id": "usage",
+        "text": "Usage#"
+      },
+      {
+        "id": "composition",
+        "text": "Composition#"
+      },
+      {
+        "id": "with-label-and-value",
+        "text": "With label and value#"
+      },
+      {
+        "id": "label",
+        "text": "Label#"
+      },
+      {
+        "id": "controlled",
+        "text": "Controlled#"
+      },
+      {
+        "id": "rtl",
+        "text": "RTL#"
+      },
+      {
+        "id": "api-reference",
+        "text": "API Reference#"
+      }
+    ],
+    "app": []
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "controlled",
+    "url": "https://ui.shadcn.com/docs/components/base/progress#controlled",
+    "scrollY": 2224,
+    "rootClass": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] light",
+    "progress": [
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "66",
+        "text": "x",
+        "rect": {
+          "x": 545.1015625,
+          "y": -1791,
+          "width": 334.796875,
+          "height": 4,
+          "top": -1791,
+          "right": 879.8984375,
+          "bottom": -1787,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "334.797px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 545.1015625,
+          "y": -1791,
+          "width": 334.796875,
+          "height": 4,
+          "top": -1791,
+          "right": 879.8984375,
+          "bottom": -1787,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "334.797px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 545.1015625,
+          "y": -1791,
+          "width": 220.9609375,
+          "height": 4,
+          "top": -1791,
+          "right": 766.0625,
+          "bottom": -1787,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "220.961px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "Upload progress56%x",
+        "rect": {
+          "x": 520.5,
+          "y": -232.046875,
+          "width": 384,
+          "height": 36,
+          "top": -232.046875,
+          "right": 904.5,
+          "bottom": -196.046875,
+          "left": 520.5
+        },
+        "css": {
+          "height": "36px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "Upload progress",
+        "rect": {
+          "x": 520.5,
+          "y": -232.046875,
+          "width": 107.671875,
+          "height": 20,
+          "top": -232.046875,
+          "right": 628.171875,
+          "bottom": -212.046875,
+          "left": 520.5
+        },
+        "css": {
+          "height": "20px",
+          "width": "107.672px",
+          "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "56%",
+        "rect": {
+          "x": 876.46875,
+          "y": -232.046875,
+          "width": 28.03125,
+          "height": 20,
+          "top": -232.046875,
+          "right": 904.5,
+          "bottom": -212.046875,
+          "left": 876.46875
+        },
+        "css": {
+          "height": "20px",
+          "width": "28.0312px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(48.496 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": -200.046875,
+          "width": 384,
+          "height": 4,
+          "top": -200.046875,
+          "right": 904.5,
+          "bottom": -196.046875,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": -200.046875,
+          "width": 215.0390625,
+          "height": 4,
+          "top": -200.046875,
+          "right": 735.5390625,
+          "bottom": -196.046875,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "215.039px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "50",
+        "text": "x",
+        "rect": {
+          "x": 520.5,
+          "y": 303.953125,
+          "width": 384,
+          "height": 4,
+          "top": 303.953125,
+          "right": 904.5,
+          "bottom": 307.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 303.953125,
+          "width": 384,
+          "height": 4,
+          "top": 303.953125,
+          "right": 904.5,
+          "bottom": 307.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 303.953125,
+          "width": 192,
+          "height": 4,
+          "top": 303.953125,
+          "right": 712.5,
+          "bottom": 307.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "192px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "تقدم الرفع٥٦%x",
+        "rect": {
+          "x": 520.5,
+          "y": 891.953125,
+          "width": 384,
+          "height": 36,
+          "top": 891.953125,
+          "right": 904.5,
+          "bottom": 927.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "36px",
+          "width": "384px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "تقدم الرفع",
+        "rect": {
+          "x": 847.9921875,
+          "y": 891.953125,
+          "width": 56.5078125,
+          "height": 20,
+          "top": 891.953125,
+          "right": 904.5,
+          "bottom": 911.953125,
+          "left": 847.9921875
+        },
+        "css": {
+          "height": "20px",
+          "width": "56.5078px",
+          "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "٥٦%",
+        "rect": {
+          "x": 520.5,
+          "y": 891.953125,
+          "width": 27.6640625,
+          "height": 20,
+          "top": 891.953125,
+          "right": 548.1640625,
+          "bottom": 911.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "20px",
+          "width": "27.6641px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(48.496 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 923.953125,
+          "width": 384,
+          "height": 4,
+          "top": 923.953125,
+          "right": 904.5,
+          "bottom": 927.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 689.4609375,
+          "y": 923.953125,
+          "width": 215.0390625,
+          "height": 4,
+          "top": 923.953125,
+          "right": 904.5,
+          "bottom": 927.953125,
+          "left": 689.4609375
+        },
+        "css": {
+          "height": "4px",
+          "width": "215.039px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      }
+    ],
+    "headers": [
+      {
+        "id": "",
+        "text": "Progress"
+      },
+      {
+        "id": "installation",
+        "text": "Installation#"
+      },
+      {
+        "id": "usage",
+        "text": "Usage#"
+      },
+      {
+        "id": "composition",
+        "text": "Composition#"
+      },
+      {
+        "id": "with-label-and-value",
+        "text": "With label and value#"
+      },
+      {
+        "id": "label",
+        "text": "Label#"
+      },
+      {
+        "id": "controlled",
+        "text": "Controlled#"
+      },
+      {
+        "id": "rtl",
+        "text": "RTL#"
+      },
+      {
+        "id": "api-reference",
+        "text": "API Reference#"
+      }
+    ],
+    "app": []
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "rtl",
+    "url": "https://ui.shadcn.com/docs/components/base/progress#rtl",
+    "scrollY": 2655,
+    "rootClass": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] light",
+    "progress": [
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "66",
+        "text": "x",
+        "rect": {
+          "x": 545.1015625,
+          "y": -2222,
+          "width": 334.796875,
+          "height": 4,
+          "top": -2222,
+          "right": 879.8984375,
+          "bottom": -2218,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "334.797px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 545.1015625,
+          "y": -2222,
+          "width": 334.796875,
+          "height": 4,
+          "top": -2222,
+          "right": 879.8984375,
+          "bottom": -2218,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "334.797px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 545.1015625,
+          "y": -2222,
+          "width": 220.9609375,
+          "height": 4,
+          "top": -2222,
+          "right": 766.0625,
+          "bottom": -2218,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "220.961px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "Upload progress56%x",
+        "rect": {
+          "x": 520.5,
+          "y": -663.046875,
+          "width": 384,
+          "height": 36,
+          "top": -663.046875,
+          "right": 904.5,
+          "bottom": -627.046875,
+          "left": 520.5
+        },
+        "css": {
+          "height": "36px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "Upload progress",
+        "rect": {
+          "x": 520.5,
+          "y": -663.046875,
+          "width": 107.671875,
+          "height": 20,
+          "top": -663.046875,
+          "right": 628.171875,
+          "bottom": -643.046875,
+          "left": 520.5
+        },
+        "css": {
+          "height": "20px",
+          "width": "107.672px",
+          "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "56%",
+        "rect": {
+          "x": 876.46875,
+          "y": -663.046875,
+          "width": 28.03125,
+          "height": 20,
+          "top": -663.046875,
+          "right": 904.5,
+          "bottom": -643.046875,
+          "left": 876.46875
+        },
+        "css": {
+          "height": "20px",
+          "width": "28.0312px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(48.496 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": -631.046875,
+          "width": 384,
+          "height": 4,
+          "top": -631.046875,
+          "right": 904.5,
+          "bottom": -627.046875,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": -631.046875,
+          "width": 215.0390625,
+          "height": 4,
+          "top": -631.046875,
+          "right": 735.5390625,
+          "bottom": -627.046875,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "215.039px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "50",
+        "text": "x",
+        "rect": {
+          "x": 520.5,
+          "y": -127.046875,
+          "width": 384,
+          "height": 4,
+          "top": -127.046875,
+          "right": 904.5,
+          "bottom": -123.046875,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": -127.046875,
+          "width": 384,
+          "height": 4,
+          "top": -127.046875,
+          "right": 904.5,
+          "bottom": -123.046875,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": -127.046875,
+          "width": 192,
+          "height": 4,
+          "top": -127.046875,
+          "right": 712.5,
+          "bottom": -123.046875,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "192px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "تقدم الرفع٥٦%x",
+        "rect": {
+          "x": 520.5,
+          "y": 460.953125,
+          "width": 384,
+          "height": 36,
+          "top": 460.953125,
+          "right": 904.5,
+          "bottom": 496.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "36px",
+          "width": "384px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "تقدم الرفع",
+        "rect": {
+          "x": 847.9921875,
+          "y": 460.953125,
+          "width": 56.5078125,
+          "height": 20,
+          "top": 460.953125,
+          "right": 904.5,
+          "bottom": 480.953125,
+          "left": 847.9921875
+        },
+        "css": {
+          "height": "20px",
+          "width": "56.5078px",
+          "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "٥٦%",
+        "rect": {
+          "x": 520.5,
+          "y": 460.953125,
+          "width": 27.6640625,
+          "height": 20,
+          "top": 460.953125,
+          "right": 548.1640625,
+          "bottom": 480.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "20px",
+          "width": "27.6641px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(48.496 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 492.953125,
+          "width": 384,
+          "height": 4,
+          "top": 492.953125,
+          "right": 904.5,
+          "bottom": 496.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 689.4609375,
+          "y": 492.953125,
+          "width": 215.0390625,
+          "height": 4,
+          "top": 492.953125,
+          "right": 904.5,
+          "bottom": 496.953125,
+          "left": 689.4609375
+        },
+        "css": {
+          "height": "4px",
+          "width": "215.039px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      }
+    ],
+    "headers": [
+      {
+        "id": "",
+        "text": "Progress"
+      },
+      {
+        "id": "installation",
+        "text": "Installation#"
+      },
+      {
+        "id": "usage",
+        "text": "Usage#"
+      },
+      {
+        "id": "composition",
+        "text": "Composition#"
+      },
+      {
+        "id": "with-label-and-value",
+        "text": "With label and value#"
+      },
+      {
+        "id": "label",
+        "text": "Label#"
+      },
+      {
+        "id": "controlled",
+        "text": "Controlled#"
+      },
+      {
+        "id": "rtl",
+        "text": "RTL#"
+      },
+      {
+        "id": "api-reference",
+        "text": "API Reference#"
+      }
+    ],
+    "app": []
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "demo",
+    "url": "https://ui.shadcn.com/docs/components/base/progress#",
+    "scrollY": 0,
+    "rootClass": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] light",
+    "progress": [
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "66",
+        "text": "x",
+        "rect": {
+          "x": 114,
+          "y": 430.0859375,
+          "width": 147,
+          "height": 4,
+          "top": 430.0859375,
+          "right": 261,
+          "bottom": 434.0859375,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "147px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 114,
+          "y": 430.0859375,
+          "width": 147,
+          "height": 4,
+          "top": 430.0859375,
+          "right": 261,
+          "bottom": 434.0859375,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "147px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 114,
+          "y": 430.0859375,
+          "width": 97.015625,
+          "height": 4,
+          "top": 430.0859375,
+          "right": 211.015625,
+          "bottom": 434.0859375,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "97.0156px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "Upload progress56%x",
+        "rect": {
+          "x": 65,
+          "y": 2206.375,
+          "width": 245,
+          "height": 36,
+          "top": 2206.375,
+          "right": 310,
+          "bottom": 2242.375,
+          "left": 65
+        },
+        "css": {
+          "height": "36px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "Upload progress",
+        "rect": {
+          "x": 65,
+          "y": 2206.375,
+          "width": 107.671875,
+          "height": 20,
+          "top": 2206.375,
+          "right": 172.671875,
+          "bottom": 2226.375,
+          "left": 65
+        },
+        "css": {
+          "height": "20px",
+          "width": "107.672px",
+          "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "56%",
+        "rect": {
+          "x": 281.96875,
+          "y": 2206.375,
+          "width": 28.03125,
+          "height": 20,
+          "top": 2206.375,
+          "right": 310,
+          "bottom": 2226.375,
+          "left": 281.96875
+        },
+        "css": {
+          "height": "20px",
+          "width": "28.0312px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(48.496 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 2238.375,
+          "width": 245,
+          "height": 4,
+          "top": 2238.375,
+          "right": 310,
+          "bottom": 2242.375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 2238.375,
+          "width": 137.1953125,
+          "height": 4,
+          "top": 2238.375,
+          "right": 202.1953125,
+          "bottom": 2242.375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "137.195px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "50",
+        "text": "x",
+        "rect": {
+          "x": 65,
+          "y": 2792.984375,
+          "width": 245,
+          "height": 4,
+          "top": 2792.984375,
+          "right": 310,
+          "bottom": 2796.984375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 2792.984375,
+          "width": 245,
+          "height": 4,
+          "top": 2792.984375,
+          "right": 310,
+          "bottom": 2796.984375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 2792.984375,
+          "width": 122.5,
+          "height": 4,
+          "top": 2792.984375,
+          "right": 187.5,
+          "bottom": 2796.984375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "122.5px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "تقدم الرفع٥٦%x",
+        "rect": {
+          "x": 65,
+          "y": 3431.59375,
+          "width": 245,
+          "height": 36,
+          "top": 3431.59375,
+          "right": 310,
+          "bottom": 3467.59375,
+          "left": 65
+        },
+        "css": {
+          "height": "36px",
+          "width": "245px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "تقدم الرفع",
+        "rect": {
+          "x": 253.4921875,
+          "y": 3431.59375,
+          "width": 56.5078125,
+          "height": 20,
+          "top": 3431.59375,
+          "right": 310,
+          "bottom": 3451.59375,
+          "left": 253.4921875
+        },
+        "css": {
+          "height": "20px",
+          "width": "56.5078px",
+          "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "٥٦%",
+        "rect": {
+          "x": 65,
+          "y": 3431.59375,
+          "width": 27.6640625,
+          "height": 20,
+          "top": 3431.59375,
+          "right": 92.6640625,
+          "bottom": 3451.59375,
+          "left": 65
+        },
+        "css": {
+          "height": "20px",
+          "width": "27.6641px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(48.496 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 3463.59375,
+          "width": 245,
+          "height": 4,
+          "top": 3463.59375,
+          "right": 310,
+          "bottom": 3467.59375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 172.8046875,
+          "y": 3463.59375,
+          "width": 137.1953125,
+          "height": 4,
+          "top": 3463.59375,
+          "right": 310,
+          "bottom": 3467.59375,
+          "left": 172.8046875
+        },
+        "css": {
+          "height": "4px",
+          "width": "137.195px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      }
+    ],
+    "headers": [
+      {
+        "id": "",
+        "text": "Progress"
+      },
+      {
+        "id": "installation",
+        "text": "Installation#"
+      },
+      {
+        "id": "usage",
+        "text": "Usage#"
+      },
+      {
+        "id": "composition",
+        "text": "Composition#"
+      },
+      {
+        "id": "with-label-and-value",
+        "text": "With label and value#"
+      },
+      {
+        "id": "label",
+        "text": "Label#"
+      },
+      {
+        "id": "controlled",
+        "text": "Controlled#"
+      },
+      {
+        "id": "rtl",
+        "text": "RTL#"
+      },
+      {
+        "id": "api-reference",
+        "text": "API Reference#"
+      }
+    ],
+    "app": []
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "label",
+    "url": "https://ui.shadcn.com/docs/components/base/progress#label",
+    "scrollY": 1826.5,
+    "rootClass": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] light",
+    "progress": [
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "66",
+        "text": "x",
+        "rect": {
+          "x": 114,
+          "y": -1396.4140625,
+          "width": 147,
+          "height": 4,
+          "top": -1396.4140625,
+          "right": 261,
+          "bottom": -1392.4140625,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "147px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 114,
+          "y": -1396.4140625,
+          "width": 147,
+          "height": 4,
+          "top": -1396.4140625,
+          "right": 261,
+          "bottom": -1392.4140625,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "147px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 114,
+          "y": -1396.4140625,
+          "width": 97.015625,
+          "height": 4,
+          "top": -1396.4140625,
+          "right": 211.015625,
+          "bottom": -1392.4140625,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "97.0156px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "Upload progress56%x",
+        "rect": {
+          "x": 65,
+          "y": 379.875,
+          "width": 245,
+          "height": 36,
+          "top": 379.875,
+          "right": 310,
+          "bottom": 415.875,
+          "left": 65
+        },
+        "css": {
+          "height": "36px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "Upload progress",
+        "rect": {
+          "x": 65,
+          "y": 379.875,
+          "width": 107.671875,
+          "height": 20,
+          "top": 379.875,
+          "right": 172.671875,
+          "bottom": 399.875,
+          "left": 65
+        },
+        "css": {
+          "height": "20px",
+          "width": "107.672px",
+          "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "56%",
+        "rect": {
+          "x": 281.96875,
+          "y": 379.875,
+          "width": 28.03125,
+          "height": 20,
+          "top": 379.875,
+          "right": 310,
+          "bottom": 399.875,
+          "left": 281.96875
+        },
+        "css": {
+          "height": "20px",
+          "width": "28.0312px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(48.496 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 411.875,
+          "width": 245,
+          "height": 4,
+          "top": 411.875,
+          "right": 310,
+          "bottom": 415.875,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 411.875,
+          "width": 137.1953125,
+          "height": 4,
+          "top": 411.875,
+          "right": 202.1953125,
+          "bottom": 415.875,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "137.195px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "50",
+        "text": "x",
+        "rect": {
+          "x": 65,
+          "y": 966.484375,
+          "width": 245,
+          "height": 4,
+          "top": 966.484375,
+          "right": 310,
+          "bottom": 970.484375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 966.484375,
+          "width": 245,
+          "height": 4,
+          "top": 966.484375,
+          "right": 310,
+          "bottom": 970.484375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 966.484375,
+          "width": 122.5,
+          "height": 4,
+          "top": 966.484375,
+          "right": 187.5,
+          "bottom": 970.484375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "122.5px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "تقدم الرفع٥٦%x",
+        "rect": {
+          "x": 65,
+          "y": 1605.09375,
+          "width": 245,
+          "height": 36,
+          "top": 1605.09375,
+          "right": 310,
+          "bottom": 1641.09375,
+          "left": 65
+        },
+        "css": {
+          "height": "36px",
+          "width": "245px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "تقدم الرفع",
+        "rect": {
+          "x": 253.4921875,
+          "y": 1605.09375,
+          "width": 56.5078125,
+          "height": 20,
+          "top": 1605.09375,
+          "right": 310,
+          "bottom": 1625.09375,
+          "left": 253.4921875
+        },
+        "css": {
+          "height": "20px",
+          "width": "56.5078px",
+          "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "٥٦%",
+        "rect": {
+          "x": 65,
+          "y": 1605.09375,
+          "width": 27.6640625,
+          "height": 20,
+          "top": 1605.09375,
+          "right": 92.6640625,
+          "bottom": 1625.09375,
+          "left": 65
+        },
+        "css": {
+          "height": "20px",
+          "width": "27.6641px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(48.496 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 1637.09375,
+          "width": 245,
+          "height": 4,
+          "top": 1637.09375,
+          "right": 310,
+          "bottom": 1641.09375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 172.8046875,
+          "y": 1637.09375,
+          "width": 137.1953125,
+          "height": 4,
+          "top": 1637.09375,
+          "right": 310,
+          "bottom": 1641.09375,
+          "left": 172.8046875
+        },
+        "css": {
+          "height": "4px",
+          "width": "137.195px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      }
+    ],
+    "headers": [
+      {
+        "id": "",
+        "text": "Progress"
+      },
+      {
+        "id": "installation",
+        "text": "Installation#"
+      },
+      {
+        "id": "usage",
+        "text": "Usage#"
+      },
+      {
+        "id": "composition",
+        "text": "Composition#"
+      },
+      {
+        "id": "with-label-and-value",
+        "text": "With label and value#"
+      },
+      {
+        "id": "label",
+        "text": "Label#"
+      },
+      {
+        "id": "controlled",
+        "text": "Controlled#"
+      },
+      {
+        "id": "rtl",
+        "text": "RTL#"
+      },
+      {
+        "id": "api-reference",
+        "text": "API Reference#"
+      }
+    ],
+    "app": []
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "controlled",
+    "url": "https://ui.shadcn.com/docs/components/base/progress#controlled",
+    "scrollY": 2440.5,
+    "rootClass": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] light",
+    "progress": [
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "66",
+        "text": "x",
+        "rect": {
+          "x": 114,
+          "y": -2010.4140625,
+          "width": 147,
+          "height": 4,
+          "top": -2010.4140625,
+          "right": 261,
+          "bottom": -2006.4140625,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "147px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 114,
+          "y": -2010.4140625,
+          "width": 147,
+          "height": 4,
+          "top": -2010.4140625,
+          "right": 261,
+          "bottom": -2006.4140625,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "147px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 114,
+          "y": -2010.4140625,
+          "width": 97.015625,
+          "height": 4,
+          "top": -2010.4140625,
+          "right": 211.015625,
+          "bottom": -2006.4140625,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "97.0156px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "Upload progress56%x",
+        "rect": {
+          "x": 65,
+          "y": -234.125,
+          "width": 245,
+          "height": 36,
+          "top": -234.125,
+          "right": 310,
+          "bottom": -198.125,
+          "left": 65
+        },
+        "css": {
+          "height": "36px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "Upload progress",
+        "rect": {
+          "x": 65,
+          "y": -234.125,
+          "width": 107.671875,
+          "height": 20,
+          "top": -234.125,
+          "right": 172.671875,
+          "bottom": -214.125,
+          "left": 65
+        },
+        "css": {
+          "height": "20px",
+          "width": "107.672px",
+          "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "56%",
+        "rect": {
+          "x": 281.96875,
+          "y": -234.125,
+          "width": 28.03125,
+          "height": 20,
+          "top": -234.125,
+          "right": 310,
+          "bottom": -214.125,
+          "left": 281.96875
+        },
+        "css": {
+          "height": "20px",
+          "width": "28.0312px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(48.496 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": -202.125,
+          "width": 245,
+          "height": 4,
+          "top": -202.125,
+          "right": 310,
+          "bottom": -198.125,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": -202.125,
+          "width": 137.1953125,
+          "height": 4,
+          "top": -202.125,
+          "right": 202.1953125,
+          "bottom": -198.125,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "137.195px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "50",
+        "text": "x",
+        "rect": {
+          "x": 65,
+          "y": 352.484375,
+          "width": 245,
+          "height": 4,
+          "top": 352.484375,
+          "right": 310,
+          "bottom": 356.484375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 352.484375,
+          "width": 245,
+          "height": 4,
+          "top": 352.484375,
+          "right": 310,
+          "bottom": 356.484375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 352.484375,
+          "width": 122.5,
+          "height": 4,
+          "top": 352.484375,
+          "right": 187.5,
+          "bottom": 356.484375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "122.5px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "تقدم الرفع٥٦%x",
+        "rect": {
+          "x": 65,
+          "y": 991.09375,
+          "width": 245,
+          "height": 36,
+          "top": 991.09375,
+          "right": 310,
+          "bottom": 1027.09375,
+          "left": 65
+        },
+        "css": {
+          "height": "36px",
+          "width": "245px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "تقدم الرفع",
+        "rect": {
+          "x": 253.4921875,
+          "y": 991.09375,
+          "width": 56.5078125,
+          "height": 20,
+          "top": 991.09375,
+          "right": 310,
+          "bottom": 1011.09375,
+          "left": 253.4921875
+        },
+        "css": {
+          "height": "20px",
+          "width": "56.5078px",
+          "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "٥٦%",
+        "rect": {
+          "x": 65,
+          "y": 991.09375,
+          "width": 27.6640625,
+          "height": 20,
+          "top": 991.09375,
+          "right": 92.6640625,
+          "bottom": 1011.09375,
+          "left": 65
+        },
+        "css": {
+          "height": "20px",
+          "width": "27.6641px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(48.496 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 1023.09375,
+          "width": 245,
+          "height": 4,
+          "top": 1023.09375,
+          "right": 310,
+          "bottom": 1027.09375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 172.8046875,
+          "y": 1023.09375,
+          "width": 137.1953125,
+          "height": 4,
+          "top": 1023.09375,
+          "right": 310,
+          "bottom": 1027.09375,
+          "left": 172.8046875
+        },
+        "css": {
+          "height": "4px",
+          "width": "137.195px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      }
+    ],
+    "headers": [
+      {
+        "id": "",
+        "text": "Progress"
+      },
+      {
+        "id": "installation",
+        "text": "Installation#"
+      },
+      {
+        "id": "usage",
+        "text": "Usage#"
+      },
+      {
+        "id": "composition",
+        "text": "Composition#"
+      },
+      {
+        "id": "with-label-and-value",
+        "text": "With label and value#"
+      },
+      {
+        "id": "label",
+        "text": "Label#"
+      },
+      {
+        "id": "controlled",
+        "text": "Controlled#"
+      },
+      {
+        "id": "rtl",
+        "text": "RTL#"
+      },
+      {
+        "id": "api-reference",
+        "text": "API Reference#"
+      }
+    ],
+    "app": []
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "rtl",
+    "url": "https://ui.shadcn.com/docs/components/base/progress#rtl",
+    "scrollY": 2989,
+    "rootClass": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] light",
+    "progress": [
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "66",
+        "text": "x",
+        "rect": {
+          "x": 114,
+          "y": -2558.9140625,
+          "width": 147,
+          "height": 4,
+          "top": -2558.9140625,
+          "right": 261,
+          "bottom": -2554.9140625,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "147px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 114,
+          "y": -2558.9140625,
+          "width": 147,
+          "height": 4,
+          "top": -2558.9140625,
+          "right": 261,
+          "bottom": -2554.9140625,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "147px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 114,
+          "y": -2558.9140625,
+          "width": 97.015625,
+          "height": 4,
+          "top": -2558.9140625,
+          "right": 211.015625,
+          "bottom": -2554.9140625,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "97.0156px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "Upload progress56%x",
+        "rect": {
+          "x": 65,
+          "y": -782.625,
+          "width": 245,
+          "height": 36,
+          "top": -782.625,
+          "right": 310,
+          "bottom": -746.625,
+          "left": 65
+        },
+        "css": {
+          "height": "36px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "Upload progress",
+        "rect": {
+          "x": 65,
+          "y": -782.625,
+          "width": 107.671875,
+          "height": 20,
+          "top": -782.625,
+          "right": 172.671875,
+          "bottom": -762.625,
+          "left": 65
+        },
+        "css": {
+          "height": "20px",
+          "width": "107.672px",
+          "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "56%",
+        "rect": {
+          "x": 281.96875,
+          "y": -782.625,
+          "width": 28.03125,
+          "height": 20,
+          "top": -782.625,
+          "right": 310,
+          "bottom": -762.625,
+          "left": 281.96875
+        },
+        "css": {
+          "height": "20px",
+          "width": "28.0312px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(48.496 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": -750.625,
+          "width": 245,
+          "height": 4,
+          "top": -750.625,
+          "right": 310,
+          "bottom": -746.625,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": -750.625,
+          "width": 137.1953125,
+          "height": 4,
+          "top": -750.625,
+          "right": 202.1953125,
+          "bottom": -746.625,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "137.195px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "50",
+        "text": "x",
+        "rect": {
+          "x": 65,
+          "y": -196.015625,
+          "width": 245,
+          "height": 4,
+          "top": -196.015625,
+          "right": 310,
+          "bottom": -192.015625,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": -196.015625,
+          "width": 245,
+          "height": 4,
+          "top": -196.015625,
+          "right": 310,
+          "bottom": -192.015625,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": -196.015625,
+          "width": 122.5,
+          "height": 4,
+          "top": -196.015625,
+          "right": 187.5,
+          "bottom": -192.015625,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "122.5px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "تقدم الرفع٥٦%x",
+        "rect": {
+          "x": 65,
+          "y": 442.59375,
+          "width": 245,
+          "height": 36,
+          "top": 442.59375,
+          "right": 310,
+          "bottom": 478.59375,
+          "left": 65
+        },
+        "css": {
+          "height": "36px",
+          "width": "245px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "تقدم الرفع",
+        "rect": {
+          "x": 253.4921875,
+          "y": 442.59375,
+          "width": 56.5078125,
+          "height": 20,
+          "top": 442.59375,
+          "right": 310,
+          "bottom": 462.59375,
+          "left": 253.4921875
+        },
+        "css": {
+          "height": "20px",
+          "width": "56.5078px",
+          "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "٥٦%",
+        "rect": {
+          "x": 65,
+          "y": 442.59375,
+          "width": 27.6640625,
+          "height": 20,
+          "top": 442.59375,
+          "right": 92.6640625,
+          "bottom": 462.59375,
+          "left": 65
+        },
+        "css": {
+          "height": "20px",
+          "width": "27.6641px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(48.496 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 474.59375,
+          "width": 245,
+          "height": 4,
+          "top": 474.59375,
+          "right": 310,
+          "bottom": 478.59375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "all",
+          "background": "lab(96.52 -0.0000298023 0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 172.8046875,
+          "y": 474.59375,
+          "width": 137.1953125,
+          "height": 4,
+          "top": 474.59375,
+          "right": 310,
+          "bottom": 478.59375,
+          "left": 172.8046875
+        },
+        "css": {
+          "height": "4px",
+          "width": "137.195px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(0 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(0 0 0)"
+        }
+      }
+    ],
+    "headers": [
+      {
+        "id": "",
+        "text": "Progress"
+      },
+      {
+        "id": "installation",
+        "text": "Installation#"
+      },
+      {
+        "id": "usage",
+        "text": "Usage#"
+      },
+      {
+        "id": "composition",
+        "text": "Composition#"
+      },
+      {
+        "id": "with-label-and-value",
+        "text": "With label and value#"
+      },
+      {
+        "id": "label",
+        "text": "Label#"
+      },
+      {
+        "id": "controlled",
+        "text": "Controlled#"
+      },
+      {
+        "id": "rtl",
+        "text": "RTL#"
+      },
+      {
+        "id": "api-reference",
+        "text": "API Reference#"
+      }
+    ],
+    "app": []
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "demo",
+    "url": "https://ui.shadcn.com/docs/components/base/progress#",
+    "scrollY": 0,
+    "rootClass": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] dark",
+    "progress": [
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "66",
+        "text": "x",
+        "rect": {
+          "x": 545.1015625,
+          "y": 433,
+          "width": 334.796875,
+          "height": 4,
+          "top": 433,
+          "right": 879.8984375,
+          "bottom": 437,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "334.797px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 545.1015625,
+          "y": 433,
+          "width": 334.796875,
+          "height": 4,
+          "top": 433,
+          "right": 879.8984375,
+          "bottom": 437,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "334.797px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 545.1015625,
+          "y": 433,
+          "width": 220.9609375,
+          "height": 4,
+          "top": 433,
+          "right": 766.0625,
+          "bottom": 437,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "220.961px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "Upload progress56%x",
+        "rect": {
+          "x": 520.5,
+          "y": 1991.953125,
+          "width": 384,
+          "height": 36,
+          "top": 1991.953125,
+          "right": 904.5,
+          "bottom": 2027.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "36px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "Upload progress",
+        "rect": {
+          "x": 520.5,
+          "y": 1991.953125,
+          "width": 107.671875,
+          "height": 20,
+          "top": 1991.953125,
+          "right": 628.171875,
+          "bottom": 2011.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "20px",
+          "width": "107.672px",
+          "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "56%",
+        "rect": {
+          "x": 876.46875,
+          "y": 1991.953125,
+          "width": 28.03125,
+          "height": 20,
+          "top": 1991.953125,
+          "right": 904.5,
+          "bottom": 2011.953125,
+          "left": 876.46875
+        },
+        "css": {
+          "height": "20px",
+          "width": "28.0312px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(66.128 -0.0000298023 0.0000119209)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 2023.953125,
+          "width": 384,
+          "height": 4,
+          "top": 2023.953125,
+          "right": 904.5,
+          "bottom": 2027.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 2023.953125,
+          "width": 215.0390625,
+          "height": 4,
+          "top": 2023.953125,
+          "right": 735.5390625,
+          "bottom": 2027.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "215.039px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "50",
+        "text": "x",
+        "rect": {
+          "x": 520.5,
+          "y": 2527.953125,
+          "width": 384,
+          "height": 4,
+          "top": 2527.953125,
+          "right": 904.5,
+          "bottom": 2531.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 2527.953125,
+          "width": 384,
+          "height": 4,
+          "top": 2527.953125,
+          "right": 904.5,
+          "bottom": 2531.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 2527.953125,
+          "width": 192,
+          "height": 4,
+          "top": 2527.953125,
+          "right": 712.5,
+          "bottom": 2531.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "192px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "تقدم الرفع٥٦%x",
+        "rect": {
+          "x": 520.5,
+          "y": 3115.953125,
+          "width": 384,
+          "height": 36,
+          "top": 3115.953125,
+          "right": 904.5,
+          "bottom": 3151.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "36px",
+          "width": "384px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "تقدم الرفع",
+        "rect": {
+          "x": 847.9921875,
+          "y": 3115.953125,
+          "width": 56.5078125,
+          "height": 20,
+          "top": 3115.953125,
+          "right": 904.5,
+          "bottom": 3135.953125,
+          "left": 847.9921875
+        },
+        "css": {
+          "height": "20px",
+          "width": "56.5078px",
+          "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "٥٦%",
+        "rect": {
+          "x": 520.5,
+          "y": 3115.953125,
+          "width": 27.6640625,
+          "height": 20,
+          "top": 3115.953125,
+          "right": 548.1640625,
+          "bottom": 3135.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "20px",
+          "width": "27.6641px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(66.128 -0.0000298023 0.0000119209)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 3147.953125,
+          "width": 384,
+          "height": 4,
+          "top": 3147.953125,
+          "right": 904.5,
+          "bottom": 3151.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 689.4609375,
+          "y": 3147.953125,
+          "width": 215.0390625,
+          "height": 4,
+          "top": 3147.953125,
+          "right": 904.5,
+          "bottom": 3151.953125,
+          "left": 689.4609375
+        },
+        "css": {
+          "height": "4px",
+          "width": "215.039px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      }
+    ],
+    "headers": [
+      {
+        "id": "",
+        "text": "Progress"
+      },
+      {
+        "id": "installation",
+        "text": "Installation#"
+      },
+      {
+        "id": "usage",
+        "text": "Usage#"
+      },
+      {
+        "id": "composition",
+        "text": "Composition#"
+      },
+      {
+        "id": "with-label-and-value",
+        "text": "With label and value#"
+      },
+      {
+        "id": "label",
+        "text": "Label#"
+      },
+      {
+        "id": "controlled",
+        "text": "Controlled#"
+      },
+      {
+        "id": "rtl",
+        "text": "RTL#"
+      },
+      {
+        "id": "api-reference",
+        "text": "API Reference#"
+      }
+    ],
+    "app": []
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "label",
+    "url": "https://ui.shadcn.com/docs/components/base/progress#label",
+    "scrollY": 1694,
+    "rootClass": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] dark",
+    "progress": [
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "66",
+        "text": "x",
+        "rect": {
+          "x": 545.1015625,
+          "y": -1261,
+          "width": 334.796875,
+          "height": 4,
+          "top": -1261,
+          "right": 879.8984375,
+          "bottom": -1257,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "334.797px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 545.1015625,
+          "y": -1261,
+          "width": 334.796875,
+          "height": 4,
+          "top": -1261,
+          "right": 879.8984375,
+          "bottom": -1257,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "334.797px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 545.1015625,
+          "y": -1261,
+          "width": 220.9609375,
+          "height": 4,
+          "top": -1261,
+          "right": 766.0625,
+          "bottom": -1257,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "220.961px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "Upload progress56%x",
+        "rect": {
+          "x": 520.5,
+          "y": 297.953125,
+          "width": 384,
+          "height": 36,
+          "top": 297.953125,
+          "right": 904.5,
+          "bottom": 333.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "36px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "Upload progress",
+        "rect": {
+          "x": 520.5,
+          "y": 297.953125,
+          "width": 107.671875,
+          "height": 20,
+          "top": 297.953125,
+          "right": 628.171875,
+          "bottom": 317.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "20px",
+          "width": "107.672px",
+          "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "56%",
+        "rect": {
+          "x": 876.46875,
+          "y": 297.953125,
+          "width": 28.03125,
+          "height": 20,
+          "top": 297.953125,
+          "right": 904.5,
+          "bottom": 317.953125,
+          "left": 876.46875
+        },
+        "css": {
+          "height": "20px",
+          "width": "28.0312px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(66.128 -0.0000298023 0.0000119209)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 329.953125,
+          "width": 384,
+          "height": 4,
+          "top": 329.953125,
+          "right": 904.5,
+          "bottom": 333.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 329.953125,
+          "width": 215.0390625,
+          "height": 4,
+          "top": 329.953125,
+          "right": 735.5390625,
+          "bottom": 333.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "215.039px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "50",
+        "text": "x",
+        "rect": {
+          "x": 520.5,
+          "y": 833.953125,
+          "width": 384,
+          "height": 4,
+          "top": 833.953125,
+          "right": 904.5,
+          "bottom": 837.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 833.953125,
+          "width": 384,
+          "height": 4,
+          "top": 833.953125,
+          "right": 904.5,
+          "bottom": 837.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 833.953125,
+          "width": 192,
+          "height": 4,
+          "top": 833.953125,
+          "right": 712.5,
+          "bottom": 837.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "192px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "تقدم الرفع٥٦%x",
+        "rect": {
+          "x": 520.5,
+          "y": 1421.953125,
+          "width": 384,
+          "height": 36,
+          "top": 1421.953125,
+          "right": 904.5,
+          "bottom": 1457.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "36px",
+          "width": "384px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "تقدم الرفع",
+        "rect": {
+          "x": 847.9921875,
+          "y": 1421.953125,
+          "width": 56.5078125,
+          "height": 20,
+          "top": 1421.953125,
+          "right": 904.5,
+          "bottom": 1441.953125,
+          "left": 847.9921875
+        },
+        "css": {
+          "height": "20px",
+          "width": "56.5078px",
+          "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "٥٦%",
+        "rect": {
+          "x": 520.5,
+          "y": 1421.953125,
+          "width": 27.6640625,
+          "height": 20,
+          "top": 1421.953125,
+          "right": 548.1640625,
+          "bottom": 1441.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "20px",
+          "width": "27.6641px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(66.128 -0.0000298023 0.0000119209)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 1453.953125,
+          "width": 384,
+          "height": 4,
+          "top": 1453.953125,
+          "right": 904.5,
+          "bottom": 1457.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 689.4609375,
+          "y": 1453.953125,
+          "width": 215.0390625,
+          "height": 4,
+          "top": 1453.953125,
+          "right": 904.5,
+          "bottom": 1457.953125,
+          "left": 689.4609375
+        },
+        "css": {
+          "height": "4px",
+          "width": "215.039px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      }
+    ],
+    "headers": [
+      {
+        "id": "",
+        "text": "Progress"
+      },
+      {
+        "id": "installation",
+        "text": "Installation#"
+      },
+      {
+        "id": "usage",
+        "text": "Usage#"
+      },
+      {
+        "id": "composition",
+        "text": "Composition#"
+      },
+      {
+        "id": "with-label-and-value",
+        "text": "With label and value#"
+      },
+      {
+        "id": "label",
+        "text": "Label#"
+      },
+      {
+        "id": "controlled",
+        "text": "Controlled#"
+      },
+      {
+        "id": "rtl",
+        "text": "RTL#"
+      },
+      {
+        "id": "api-reference",
+        "text": "API Reference#"
+      }
+    ],
+    "app": []
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "controlled",
+    "url": "https://ui.shadcn.com/docs/components/base/progress#controlled",
+    "scrollY": 2224,
+    "rootClass": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] dark",
+    "progress": [
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "66",
+        "text": "x",
+        "rect": {
+          "x": 545.1015625,
+          "y": -1791,
+          "width": 334.796875,
+          "height": 4,
+          "top": -1791,
+          "right": 879.8984375,
+          "bottom": -1787,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "334.797px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 545.1015625,
+          "y": -1791,
+          "width": 334.796875,
+          "height": 4,
+          "top": -1791,
+          "right": 879.8984375,
+          "bottom": -1787,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "334.797px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 545.1015625,
+          "y": -1791,
+          "width": 220.9609375,
+          "height": 4,
+          "top": -1791,
+          "right": 766.0625,
+          "bottom": -1787,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "220.961px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "Upload progress56%x",
+        "rect": {
+          "x": 520.5,
+          "y": -232.046875,
+          "width": 384,
+          "height": 36,
+          "top": -232.046875,
+          "right": 904.5,
+          "bottom": -196.046875,
+          "left": 520.5
+        },
+        "css": {
+          "height": "36px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "Upload progress",
+        "rect": {
+          "x": 520.5,
+          "y": -232.046875,
+          "width": 107.671875,
+          "height": 20,
+          "top": -232.046875,
+          "right": 628.171875,
+          "bottom": -212.046875,
+          "left": 520.5
+        },
+        "css": {
+          "height": "20px",
+          "width": "107.672px",
+          "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "56%",
+        "rect": {
+          "x": 876.46875,
+          "y": -232.046875,
+          "width": 28.03125,
+          "height": 20,
+          "top": -232.046875,
+          "right": 904.5,
+          "bottom": -212.046875,
+          "left": 876.46875
+        },
+        "css": {
+          "height": "20px",
+          "width": "28.0312px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(66.128 -0.0000298023 0.0000119209)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": -200.046875,
+          "width": 384,
+          "height": 4,
+          "top": -200.046875,
+          "right": 904.5,
+          "bottom": -196.046875,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": -200.046875,
+          "width": 215.0390625,
+          "height": 4,
+          "top": -200.046875,
+          "right": 735.5390625,
+          "bottom": -196.046875,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "215.039px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "50",
+        "text": "x",
+        "rect": {
+          "x": 520.5,
+          "y": 303.953125,
+          "width": 384,
+          "height": 4,
+          "top": 303.953125,
+          "right": 904.5,
+          "bottom": 307.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 303.953125,
+          "width": 384,
+          "height": 4,
+          "top": 303.953125,
+          "right": 904.5,
+          "bottom": 307.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 303.953125,
+          "width": 192,
+          "height": 4,
+          "top": 303.953125,
+          "right": 712.5,
+          "bottom": 307.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "192px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "تقدم الرفع٥٦%x",
+        "rect": {
+          "x": 520.5,
+          "y": 891.953125,
+          "width": 384,
+          "height": 36,
+          "top": 891.953125,
+          "right": 904.5,
+          "bottom": 927.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "36px",
+          "width": "384px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "تقدم الرفع",
+        "rect": {
+          "x": 847.9921875,
+          "y": 891.953125,
+          "width": 56.5078125,
+          "height": 20,
+          "top": 891.953125,
+          "right": 904.5,
+          "bottom": 911.953125,
+          "left": 847.9921875
+        },
+        "css": {
+          "height": "20px",
+          "width": "56.5078px",
+          "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "٥٦%",
+        "rect": {
+          "x": 520.5,
+          "y": 891.953125,
+          "width": 27.6640625,
+          "height": 20,
+          "top": 891.953125,
+          "right": 548.1640625,
+          "bottom": 911.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "20px",
+          "width": "27.6641px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(66.128 -0.0000298023 0.0000119209)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 923.953125,
+          "width": 384,
+          "height": 4,
+          "top": 923.953125,
+          "right": 904.5,
+          "bottom": 927.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 689.4609375,
+          "y": 923.953125,
+          "width": 215.0390625,
+          "height": 4,
+          "top": 923.953125,
+          "right": 904.5,
+          "bottom": 927.953125,
+          "left": 689.4609375
+        },
+        "css": {
+          "height": "4px",
+          "width": "215.039px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      }
+    ],
+    "headers": [
+      {
+        "id": "",
+        "text": "Progress"
+      },
+      {
+        "id": "installation",
+        "text": "Installation#"
+      },
+      {
+        "id": "usage",
+        "text": "Usage#"
+      },
+      {
+        "id": "composition",
+        "text": "Composition#"
+      },
+      {
+        "id": "with-label-and-value",
+        "text": "With label and value#"
+      },
+      {
+        "id": "label",
+        "text": "Label#"
+      },
+      {
+        "id": "controlled",
+        "text": "Controlled#"
+      },
+      {
+        "id": "rtl",
+        "text": "RTL#"
+      },
+      {
+        "id": "api-reference",
+        "text": "API Reference#"
+      }
+    ],
+    "app": []
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "rtl",
+    "url": "https://ui.shadcn.com/docs/components/base/progress#rtl",
+    "scrollY": 2655,
+    "rootClass": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] dark",
+    "progress": [
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "66",
+        "text": "x",
+        "rect": {
+          "x": 545.1015625,
+          "y": -2222,
+          "width": 334.796875,
+          "height": 4,
+          "top": -2222,
+          "right": 879.8984375,
+          "bottom": -2218,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "334.797px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 545.1015625,
+          "y": -2222,
+          "width": 334.796875,
+          "height": 4,
+          "top": -2222,
+          "right": 879.8984375,
+          "bottom": -2218,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "334.797px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 545.1015625,
+          "y": -2222,
+          "width": 220.9609375,
+          "height": 4,
+          "top": -2222,
+          "right": 766.0625,
+          "bottom": -2218,
+          "left": 545.1015625
+        },
+        "css": {
+          "height": "4px",
+          "width": "220.961px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "Upload progress56%x",
+        "rect": {
+          "x": 520.5,
+          "y": -663.046875,
+          "width": 384,
+          "height": 36,
+          "top": -663.046875,
+          "right": 904.5,
+          "bottom": -627.046875,
+          "left": 520.5
+        },
+        "css": {
+          "height": "36px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "Upload progress",
+        "rect": {
+          "x": 520.5,
+          "y": -663.046875,
+          "width": 107.671875,
+          "height": 20,
+          "top": -663.046875,
+          "right": 628.171875,
+          "bottom": -643.046875,
+          "left": 520.5
+        },
+        "css": {
+          "height": "20px",
+          "width": "107.672px",
+          "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "56%",
+        "rect": {
+          "x": 876.46875,
+          "y": -663.046875,
+          "width": 28.03125,
+          "height": 20,
+          "top": -663.046875,
+          "right": 904.5,
+          "bottom": -643.046875,
+          "left": 876.46875
+        },
+        "css": {
+          "height": "20px",
+          "width": "28.0312px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(66.128 -0.0000298023 0.0000119209)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": -631.046875,
+          "width": 384,
+          "height": 4,
+          "top": -631.046875,
+          "right": 904.5,
+          "bottom": -627.046875,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": -631.046875,
+          "width": 215.0390625,
+          "height": 4,
+          "top": -631.046875,
+          "right": 735.5390625,
+          "bottom": -627.046875,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "215.039px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "50",
+        "text": "x",
+        "rect": {
+          "x": 520.5,
+          "y": -127.046875,
+          "width": 384,
+          "height": 4,
+          "top": -127.046875,
+          "right": 904.5,
+          "bottom": -123.046875,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": -127.046875,
+          "width": 384,
+          "height": 4,
+          "top": -127.046875,
+          "right": 904.5,
+          "bottom": -123.046875,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": -127.046875,
+          "width": 192,
+          "height": 4,
+          "top": -127.046875,
+          "right": 712.5,
+          "bottom": -123.046875,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "192px",
+          "font": "15px / 26.25px Geist, \"Geist Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "تقدم الرفع٥٦%x",
+        "rect": {
+          "x": 520.5,
+          "y": 460.953125,
+          "width": 384,
+          "height": 36,
+          "top": 460.953125,
+          "right": 904.5,
+          "bottom": 496.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "36px",
+          "width": "384px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "تقدم الرفع",
+        "rect": {
+          "x": 847.9921875,
+          "y": 460.953125,
+          "width": 56.5078125,
+          "height": 20,
+          "top": 460.953125,
+          "right": 904.5,
+          "bottom": 480.953125,
+          "left": 847.9921875
+        },
+        "css": {
+          "height": "20px",
+          "width": "56.5078px",
+          "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "٥٦%",
+        "rect": {
+          "x": 520.5,
+          "y": 460.953125,
+          "width": 27.6640625,
+          "height": 20,
+          "top": 460.953125,
+          "right": 548.1640625,
+          "bottom": 480.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "20px",
+          "width": "27.6641px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(66.128 -0.0000298023 0.0000119209)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 520.5,
+          "y": 492.953125,
+          "width": 384,
+          "height": 4,
+          "top": 492.953125,
+          "right": 904.5,
+          "bottom": 496.953125,
+          "left": 520.5
+        },
+        "css": {
+          "height": "4px",
+          "width": "384px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 689.4609375,
+          "y": 492.953125,
+          "width": 215.0390625,
+          "height": 4,
+          "top": 492.953125,
+          "right": 904.5,
+          "bottom": 496.953125,
+          "left": 689.4609375
+        },
+        "css": {
+          "height": "4px",
+          "width": "215.039px",
+          "font": "15px / 26.25px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "26.25px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      }
+    ],
+    "headers": [
+      {
+        "id": "",
+        "text": "Progress"
+      },
+      {
+        "id": "installation",
+        "text": "Installation#"
+      },
+      {
+        "id": "usage",
+        "text": "Usage#"
+      },
+      {
+        "id": "composition",
+        "text": "Composition#"
+      },
+      {
+        "id": "with-label-and-value",
+        "text": "With label and value#"
+      },
+      {
+        "id": "label",
+        "text": "Label#"
+      },
+      {
+        "id": "controlled",
+        "text": "Controlled#"
+      },
+      {
+        "id": "rtl",
+        "text": "RTL#"
+      },
+      {
+        "id": "api-reference",
+        "text": "API Reference#"
+      }
+    ],
+    "app": []
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "demo",
+    "url": "https://ui.shadcn.com/docs/components/base/progress#",
+    "scrollY": 0,
+    "rootClass": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] dark",
+    "progress": [
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "66",
+        "text": "x",
+        "rect": {
+          "x": 114,
+          "y": 430.0859375,
+          "width": 147,
+          "height": 4,
+          "top": 430.0859375,
+          "right": 261,
+          "bottom": 434.0859375,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "147px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 114,
+          "y": 430.0859375,
+          "width": 147,
+          "height": 4,
+          "top": 430.0859375,
+          "right": 261,
+          "bottom": 434.0859375,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "147px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 114,
+          "y": 430.0859375,
+          "width": 97.015625,
+          "height": 4,
+          "top": 430.0859375,
+          "right": 211.015625,
+          "bottom": 434.0859375,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "97.0156px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "Upload progress56%x",
+        "rect": {
+          "x": 65,
+          "y": 2206.375,
+          "width": 245,
+          "height": 36,
+          "top": 2206.375,
+          "right": 310,
+          "bottom": 2242.375,
+          "left": 65
+        },
+        "css": {
+          "height": "36px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "Upload progress",
+        "rect": {
+          "x": 65,
+          "y": 2206.375,
+          "width": 107.671875,
+          "height": 20,
+          "top": 2206.375,
+          "right": 172.671875,
+          "bottom": 2226.375,
+          "left": 65
+        },
+        "css": {
+          "height": "20px",
+          "width": "107.672px",
+          "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "56%",
+        "rect": {
+          "x": 281.96875,
+          "y": 2206.375,
+          "width": 28.03125,
+          "height": 20,
+          "top": 2206.375,
+          "right": 310,
+          "bottom": 2226.375,
+          "left": 281.96875
+        },
+        "css": {
+          "height": "20px",
+          "width": "28.0312px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(66.128 -0.0000298023 0.0000119209)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 2238.375,
+          "width": 245,
+          "height": 4,
+          "top": 2238.375,
+          "right": 310,
+          "bottom": 2242.375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 2238.375,
+          "width": 137.1953125,
+          "height": 4,
+          "top": 2238.375,
+          "right": 202.1953125,
+          "bottom": 2242.375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "137.195px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "50",
+        "text": "x",
+        "rect": {
+          "x": 65,
+          "y": 2792.984375,
+          "width": 245,
+          "height": 4,
+          "top": 2792.984375,
+          "right": 310,
+          "bottom": 2796.984375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 2792.984375,
+          "width": 245,
+          "height": 4,
+          "top": 2792.984375,
+          "right": 310,
+          "bottom": 2796.984375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 2792.984375,
+          "width": 122.5,
+          "height": 4,
+          "top": 2792.984375,
+          "right": 187.5,
+          "bottom": 2796.984375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "122.5px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "تقدم الرفع٥٦%x",
+        "rect": {
+          "x": 65,
+          "y": 3431.59375,
+          "width": 245,
+          "height": 36,
+          "top": 3431.59375,
+          "right": 310,
+          "bottom": 3467.59375,
+          "left": 65
+        },
+        "css": {
+          "height": "36px",
+          "width": "245px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "تقدم الرفع",
+        "rect": {
+          "x": 253.4921875,
+          "y": 3431.59375,
+          "width": 56.5078125,
+          "height": 20,
+          "top": 3431.59375,
+          "right": 310,
+          "bottom": 3451.59375,
+          "left": 253.4921875
+        },
+        "css": {
+          "height": "20px",
+          "width": "56.5078px",
+          "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "٥٦%",
+        "rect": {
+          "x": 65,
+          "y": 3431.59375,
+          "width": 27.6640625,
+          "height": 20,
+          "top": 3431.59375,
+          "right": 92.6640625,
+          "bottom": 3451.59375,
+          "left": 65
+        },
+        "css": {
+          "height": "20px",
+          "width": "27.6641px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(66.128 -0.0000298023 0.0000119209)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 3463.59375,
+          "width": 245,
+          "height": 4,
+          "top": 3463.59375,
+          "right": 310,
+          "bottom": 3467.59375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 172.8046875,
+          "y": 3463.59375,
+          "width": 137.1953125,
+          "height": 4,
+          "top": 3463.59375,
+          "right": 310,
+          "bottom": 3467.59375,
+          "left": 172.8046875
+        },
+        "css": {
+          "height": "4px",
+          "width": "137.195px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      }
+    ],
+    "headers": [
+      {
+        "id": "",
+        "text": "Progress"
+      },
+      {
+        "id": "installation",
+        "text": "Installation#"
+      },
+      {
+        "id": "usage",
+        "text": "Usage#"
+      },
+      {
+        "id": "composition",
+        "text": "Composition#"
+      },
+      {
+        "id": "with-label-and-value",
+        "text": "With label and value#"
+      },
+      {
+        "id": "label",
+        "text": "Label#"
+      },
+      {
+        "id": "controlled",
+        "text": "Controlled#"
+      },
+      {
+        "id": "rtl",
+        "text": "RTL#"
+      },
+      {
+        "id": "api-reference",
+        "text": "API Reference#"
+      }
+    ],
+    "app": []
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "label",
+    "url": "https://ui.shadcn.com/docs/components/base/progress#label",
+    "scrollY": 1826.5,
+    "rootClass": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] dark",
+    "progress": [
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "66",
+        "text": "x",
+        "rect": {
+          "x": 114,
+          "y": -1396.4140625,
+          "width": 147,
+          "height": 4,
+          "top": -1396.4140625,
+          "right": 261,
+          "bottom": -1392.4140625,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "147px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 114,
+          "y": -1396.4140625,
+          "width": 147,
+          "height": 4,
+          "top": -1396.4140625,
+          "right": 261,
+          "bottom": -1392.4140625,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "147px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 114,
+          "y": -1396.4140625,
+          "width": 97.015625,
+          "height": 4,
+          "top": -1396.4140625,
+          "right": 211.015625,
+          "bottom": -1392.4140625,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "97.0156px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "Upload progress56%x",
+        "rect": {
+          "x": 65,
+          "y": 379.875,
+          "width": 245,
+          "height": 36,
+          "top": 379.875,
+          "right": 310,
+          "bottom": 415.875,
+          "left": 65
+        },
+        "css": {
+          "height": "36px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "Upload progress",
+        "rect": {
+          "x": 65,
+          "y": 379.875,
+          "width": 107.671875,
+          "height": 20,
+          "top": 379.875,
+          "right": 172.671875,
+          "bottom": 399.875,
+          "left": 65
+        },
+        "css": {
+          "height": "20px",
+          "width": "107.672px",
+          "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "56%",
+        "rect": {
+          "x": 281.96875,
+          "y": 379.875,
+          "width": 28.03125,
+          "height": 20,
+          "top": 379.875,
+          "right": 310,
+          "bottom": 399.875,
+          "left": 281.96875
+        },
+        "css": {
+          "height": "20px",
+          "width": "28.0312px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(66.128 -0.0000298023 0.0000119209)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 411.875,
+          "width": 245,
+          "height": 4,
+          "top": 411.875,
+          "right": 310,
+          "bottom": 415.875,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 411.875,
+          "width": 137.1953125,
+          "height": 4,
+          "top": 411.875,
+          "right": 202.1953125,
+          "bottom": 415.875,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "137.195px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "50",
+        "text": "x",
+        "rect": {
+          "x": 65,
+          "y": 966.484375,
+          "width": 245,
+          "height": 4,
+          "top": 966.484375,
+          "right": 310,
+          "bottom": 970.484375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 966.484375,
+          "width": 245,
+          "height": 4,
+          "top": 966.484375,
+          "right": 310,
+          "bottom": 970.484375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 966.484375,
+          "width": 122.5,
+          "height": 4,
+          "top": 966.484375,
+          "right": 187.5,
+          "bottom": 970.484375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "122.5px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "تقدم الرفع٥٦%x",
+        "rect": {
+          "x": 65,
+          "y": 1605.09375,
+          "width": 245,
+          "height": 36,
+          "top": 1605.09375,
+          "right": 310,
+          "bottom": 1641.09375,
+          "left": 65
+        },
+        "css": {
+          "height": "36px",
+          "width": "245px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "تقدم الرفع",
+        "rect": {
+          "x": 253.4921875,
+          "y": 1605.09375,
+          "width": 56.5078125,
+          "height": 20,
+          "top": 1605.09375,
+          "right": 310,
+          "bottom": 1625.09375,
+          "left": 253.4921875
+        },
+        "css": {
+          "height": "20px",
+          "width": "56.5078px",
+          "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "٥٦%",
+        "rect": {
+          "x": 65,
+          "y": 1605.09375,
+          "width": 27.6640625,
+          "height": 20,
+          "top": 1605.09375,
+          "right": 92.6640625,
+          "bottom": 1625.09375,
+          "left": 65
+        },
+        "css": {
+          "height": "20px",
+          "width": "27.6641px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(66.128 -0.0000298023 0.0000119209)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 1637.09375,
+          "width": 245,
+          "height": 4,
+          "top": 1637.09375,
+          "right": 310,
+          "bottom": 1641.09375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 172.8046875,
+          "y": 1637.09375,
+          "width": 137.1953125,
+          "height": 4,
+          "top": 1637.09375,
+          "right": 310,
+          "bottom": 1641.09375,
+          "left": 172.8046875
+        },
+        "css": {
+          "height": "4px",
+          "width": "137.195px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      }
+    ],
+    "headers": [
+      {
+        "id": "",
+        "text": "Progress"
+      },
+      {
+        "id": "installation",
+        "text": "Installation#"
+      },
+      {
+        "id": "usage",
+        "text": "Usage#"
+      },
+      {
+        "id": "composition",
+        "text": "Composition#"
+      },
+      {
+        "id": "with-label-and-value",
+        "text": "With label and value#"
+      },
+      {
+        "id": "label",
+        "text": "Label#"
+      },
+      {
+        "id": "controlled",
+        "text": "Controlled#"
+      },
+      {
+        "id": "rtl",
+        "text": "RTL#"
+      },
+      {
+        "id": "api-reference",
+        "text": "API Reference#"
+      }
+    ],
+    "app": []
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "controlled",
+    "url": "https://ui.shadcn.com/docs/components/base/progress#controlled",
+    "scrollY": 2440.5,
+    "rootClass": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] dark",
+    "progress": [
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "66",
+        "text": "x",
+        "rect": {
+          "x": 114,
+          "y": -2010.4140625,
+          "width": 147,
+          "height": 4,
+          "top": -2010.4140625,
+          "right": 261,
+          "bottom": -2006.4140625,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "147px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 114,
+          "y": -2010.4140625,
+          "width": 147,
+          "height": 4,
+          "top": -2010.4140625,
+          "right": 261,
+          "bottom": -2006.4140625,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "147px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 114,
+          "y": -2010.4140625,
+          "width": 97.015625,
+          "height": 4,
+          "top": -2010.4140625,
+          "right": 211.015625,
+          "bottom": -2006.4140625,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "97.0156px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "Upload progress56%x",
+        "rect": {
+          "x": 65,
+          "y": -234.125,
+          "width": 245,
+          "height": 36,
+          "top": -234.125,
+          "right": 310,
+          "bottom": -198.125,
+          "left": 65
+        },
+        "css": {
+          "height": "36px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "Upload progress",
+        "rect": {
+          "x": 65,
+          "y": -234.125,
+          "width": 107.671875,
+          "height": 20,
+          "top": -234.125,
+          "right": 172.671875,
+          "bottom": -214.125,
+          "left": 65
+        },
+        "css": {
+          "height": "20px",
+          "width": "107.672px",
+          "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "56%",
+        "rect": {
+          "x": 281.96875,
+          "y": -234.125,
+          "width": 28.03125,
+          "height": 20,
+          "top": -234.125,
+          "right": 310,
+          "bottom": -214.125,
+          "left": 281.96875
+        },
+        "css": {
+          "height": "20px",
+          "width": "28.0312px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(66.128 -0.0000298023 0.0000119209)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": -202.125,
+          "width": 245,
+          "height": 4,
+          "top": -202.125,
+          "right": 310,
+          "bottom": -198.125,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": -202.125,
+          "width": 137.1953125,
+          "height": 4,
+          "top": -202.125,
+          "right": 202.1953125,
+          "bottom": -198.125,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "137.195px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "50",
+        "text": "x",
+        "rect": {
+          "x": 65,
+          "y": 352.484375,
+          "width": 245,
+          "height": 4,
+          "top": 352.484375,
+          "right": 310,
+          "bottom": 356.484375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 352.484375,
+          "width": 245,
+          "height": 4,
+          "top": 352.484375,
+          "right": 310,
+          "bottom": 356.484375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 352.484375,
+          "width": 122.5,
+          "height": 4,
+          "top": 352.484375,
+          "right": 187.5,
+          "bottom": 356.484375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "122.5px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "تقدم الرفع٥٦%x",
+        "rect": {
+          "x": 65,
+          "y": 991.09375,
+          "width": 245,
+          "height": 36,
+          "top": 991.09375,
+          "right": 310,
+          "bottom": 1027.09375,
+          "left": 65
+        },
+        "css": {
+          "height": "36px",
+          "width": "245px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "تقدم الرفع",
+        "rect": {
+          "x": 253.4921875,
+          "y": 991.09375,
+          "width": 56.5078125,
+          "height": 20,
+          "top": 991.09375,
+          "right": 310,
+          "bottom": 1011.09375,
+          "left": 253.4921875
+        },
+        "css": {
+          "height": "20px",
+          "width": "56.5078px",
+          "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "٥٦%",
+        "rect": {
+          "x": 65,
+          "y": 991.09375,
+          "width": 27.6640625,
+          "height": 20,
+          "top": 991.09375,
+          "right": 92.6640625,
+          "bottom": 1011.09375,
+          "left": 65
+        },
+        "css": {
+          "height": "20px",
+          "width": "27.6641px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(66.128 -0.0000298023 0.0000119209)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 1023.09375,
+          "width": 245,
+          "height": 4,
+          "top": 1023.09375,
+          "right": 310,
+          "bottom": 1027.09375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 172.8046875,
+          "y": 1023.09375,
+          "width": 137.1953125,
+          "height": 4,
+          "top": 1023.09375,
+          "right": 310,
+          "bottom": 1027.09375,
+          "left": 172.8046875
+        },
+        "css": {
+          "height": "4px",
+          "width": "137.195px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      }
+    ],
+    "headers": [
+      {
+        "id": "",
+        "text": "Progress"
+      },
+      {
+        "id": "installation",
+        "text": "Installation#"
+      },
+      {
+        "id": "usage",
+        "text": "Usage#"
+      },
+      {
+        "id": "composition",
+        "text": "Composition#"
+      },
+      {
+        "id": "with-label-and-value",
+        "text": "With label and value#"
+      },
+      {
+        "id": "label",
+        "text": "Label#"
+      },
+      {
+        "id": "controlled",
+        "text": "Controlled#"
+      },
+      {
+        "id": "rtl",
+        "text": "RTL#"
+      },
+      {
+        "id": "api-reference",
+        "text": "API Reference#"
+      }
+    ],
+    "app": []
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "rtl",
+    "url": "https://ui.shadcn.com/docs/components/base/progress#rtl",
+    "scrollY": 2989,
+    "rootClass": "HGtJha_variable VB9uPW_variable -5hxnG_variable -KZrLG_variable bpro2a_variable [--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)] dark",
+    "progress": [
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "66",
+        "text": "x",
+        "rect": {
+          "x": 114,
+          "y": -2558.9140625,
+          "width": 147,
+          "height": 4,
+          "top": -2558.9140625,
+          "right": 261,
+          "bottom": -2554.9140625,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "147px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 114,
+          "y": -2558.9140625,
+          "width": 147,
+          "height": 4,
+          "top": -2558.9140625,
+          "right": 261,
+          "bottom": -2554.9140625,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "147px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 114,
+          "y": -2558.9140625,
+          "width": 97.015625,
+          "height": 4,
+          "top": -2558.9140625,
+          "right": 211.015625,
+          "bottom": -2554.9140625,
+          "left": 114
+        },
+        "css": {
+          "height": "4px",
+          "width": "97.0156px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "Upload progress56%x",
+        "rect": {
+          "x": 65,
+          "y": -782.625,
+          "width": 245,
+          "height": 36,
+          "top": -782.625,
+          "right": 310,
+          "bottom": -746.625,
+          "left": 65
+        },
+        "css": {
+          "height": "36px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "Upload progress",
+        "rect": {
+          "x": 65,
+          "y": -782.625,
+          "width": 107.671875,
+          "height": 20,
+          "top": -782.625,
+          "right": 172.671875,
+          "bottom": -762.625,
+          "left": 65
+        },
+        "css": {
+          "height": "20px",
+          "width": "107.672px",
+          "font": "500 14px / 20px Geist, \"Geist Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "56%",
+        "rect": {
+          "x": 281.96875,
+          "y": -782.625,
+          "width": 28.03125,
+          "height": 20,
+          "top": -782.625,
+          "right": 310,
+          "bottom": -762.625,
+          "left": 281.96875
+        },
+        "css": {
+          "height": "20px",
+          "width": "28.0312px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(66.128 -0.0000298023 0.0000119209)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": -750.625,
+          "width": 245,
+          "height": 4,
+          "top": -750.625,
+          "right": 310,
+          "bottom": -746.625,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": -750.625,
+          "width": 137.1953125,
+          "height": 4,
+          "top": -750.625,
+          "right": 202.1953125,
+          "bottom": -746.625,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "137.195px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "50",
+        "text": "x",
+        "rect": {
+          "x": 65,
+          "y": -196.015625,
+          "width": 245,
+          "height": 4,
+          "top": -196.015625,
+          "right": 310,
+          "bottom": -192.015625,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": -196.015625,
+          "width": 245,
+          "height": 4,
+          "top": -196.015625,
+          "right": 310,
+          "bottom": -192.015625,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": -196.015625,
+          "width": 122.5,
+          "height": 4,
+          "top": -196.015625,
+          "right": 187.5,
+          "bottom": -192.015625,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "122.5px",
+          "font": "18.9px / 33.075px Geist, \"Geist Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      },
+      {
+        "slot": "progress",
+        "role": "progressbar",
+        "value": "56",
+        "text": "تقدم الرفع٥٦%x",
+        "rect": {
+          "x": 65,
+          "y": 442.59375,
+          "width": 245,
+          "height": 36,
+          "top": 442.59375,
+          "right": 310,
+          "bottom": 478.59375,
+          "left": 65
+        },
+        "css": {
+          "height": "36px",
+          "width": "245px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-label",
+        "role": "presentation",
+        "value": null,
+        "text": "تقدم الرفع",
+        "rect": {
+          "x": 253.4921875,
+          "y": 442.59375,
+          "width": 56.5078125,
+          "height": 20,
+          "top": 442.59375,
+          "right": 310,
+          "bottom": 462.59375,
+          "left": 253.4921875
+        },
+        "css": {
+          "height": "20px",
+          "width": "56.5078px",
+          "font": "500 14px / 20px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "20px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-value",
+        "role": null,
+        "value": null,
+        "text": "٥٦%",
+        "rect": {
+          "x": 65,
+          "y": 442.59375,
+          "width": 27.6640625,
+          "height": 20,
+          "top": 442.59375,
+          "right": 92.6640625,
+          "bottom": 462.59375,
+          "left": 65
+        },
+        "css": {
+          "height": "20px",
+          "width": "27.6641px",
+          "font": "",
+          "lineHeight": "20px",
+          "color": "lab(66.128 -0.0000298023 0.0000119209)",
+          "transition": "all",
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      },
+      {
+        "slot": "progress-track",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 65,
+          "y": 474.59375,
+          "width": 245,
+          "height": 4,
+          "top": 474.59375,
+          "right": 310,
+          "bottom": 478.59375,
+          "left": 65
+        },
+        "css": {
+          "height": "4px",
+          "width": "245px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "all",
+          "background": "lab(15.204 0 -0.00000596046)"
+        }
+      },
+      {
+        "slot": "progress-indicator",
+        "role": null,
+        "value": null,
+        "text": "",
+        "rect": {
+          "x": 172.8046875,
+          "y": 474.59375,
+          "width": 137.1953125,
+          "height": 4,
+          "top": 474.59375,
+          "right": 310,
+          "bottom": 478.59375,
+          "left": 172.8046875
+        },
+        "css": {
+          "height": "4px",
+          "width": "137.195px",
+          "font": "18.9px / 33.075px \"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+          "lineHeight": "33.075px",
+          "color": "lab(98.26 0 0)",
+          "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+          "background": "lab(90.952 0 -0.0000119209)"
+        }
+      }
+    ],
+    "headers": [
+      {
+        "id": "",
+        "text": "Progress"
+      },
+      {
+        "id": "installation",
+        "text": "Installation#"
+      },
+      {
+        "id": "usage",
+        "text": "Usage#"
+      },
+      {
+        "id": "composition",
+        "text": "Composition#"
+      },
+      {
+        "id": "with-label-and-value",
+        "text": "With label and value#"
+      },
+      {
+        "id": "label",
+        "text": "Label#"
+      },
+      {
+        "id": "controlled",
+        "text": "Controlled#"
+      },
+      {
+        "id": "rtl",
+        "text": "RTL#"
+      },
+      {
+        "id": "api-reference",
+        "text": "API Reference#"
+      }
+    ],
+    "app": []
+  }
+]

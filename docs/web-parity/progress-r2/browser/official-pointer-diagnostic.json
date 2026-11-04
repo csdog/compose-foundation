@@ -1,0 +1,58 @@
+{
+  "rect": {
+    "x": 520.5,
+    "y": 323.953125,
+    "width": 384,
+    "height": 4,
+    "top": 323.953125,
+    "right": 904.5,
+    "bottom": 327.953125,
+    "left": 520.5
+  },
+  "events": [
+    {
+      "type": "pointerdown",
+      "x": 616.5,
+      "y": 325.953125,
+      "buttons": 1,
+      "button": 0,
+      "primary": true,
+      "trusted": true,
+      "target": "<div data-orientation=\"horizontal\" data-base-ui-slider-indicator=\"\" style=\"position: relative; height: inherit; --start-position: 50%; inset-inline-st"
+    },
+    {
+      "type": "mousedown",
+      "x": 616,
+      "y": 325,
+      "buttons": 1,
+      "button": 0,
+      "trusted": true,
+      "target": "<div data-orientation=\"horizontal\" data-base-ui-slider-indicator=\"\" style=\"position: relative; height: inherit; --start-position: 50%; inset-inline-st"
+    },
+    {
+      "type": "pointerup",
+      "x": 616.5,
+      "y": 325.953125,
+      "buttons": 0,
+      "button": 0,
+      "primary": true,
+      "trusted": true,
+      "target": "<div data-orientation=\"horizontal\" data-base-ui-slider-indicator=\"\" style=\"position: relative; height: inherit; --start-position: 50%; inset-inline-st"
+    },
+    {
+      "type": "mouseup",
+      "x": 616,
+      "y": 325,
+      "buttons": 0,
+      "button": 0,
+      "trusted": true,
+      "target": "<div data-orientation=\"horizontal\" data-base-ui-slider-indicator=\"\" style=\"position: relative; height: inherit; --start-position: 50%; inset-inline-st"
+    }
+  ],
+  "values": [
+    "66",
+    "56",
+    "50",
+    "56"
+  ]
+}

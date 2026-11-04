@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-04",
+  "regularTests": 41,
+  "explicitPixelVerify": {
+    "novaPassed": 4,
+    "legacyFailed": 4,
+    "allLegacyActualsByteIdenticalR1": true,
+    "goldensRefreshed": false
+  },
+  "browser": {
+    "space": 1,
+    "widths": [
+      1440,
+      390
+    ],
+    "height": 1000,
+    "dpr": 1,
+    "touch": false,
+    "officialMainPngs": 44,
+    "localMainPngs": 44,
+    "reviewedFinalSheets": 12,
+    "sourcePointerAttemptPassed": false,
+    "initialLoadAndResizeComplete": false
+  },
+  "fullComponentComplete": false
+}

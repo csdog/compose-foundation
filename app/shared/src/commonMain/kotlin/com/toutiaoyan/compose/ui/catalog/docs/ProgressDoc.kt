@@ -2,159 +2,100 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.width
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.toutiaoyan.compose.ui.components.progress.Progress
-import com.toutiaoyan.compose.ui.components.progress.ProgressIndicator
-import com.toutiaoyan.compose.ui.components.progress.ProgressLabel
-import com.toutiaoyan.compose.ui.components.progress.ProgressTrack
-import com.toutiaoyan.compose.ui.components.progress.ProgressValue
-import com.toutiaoyan.compose.ui.components.text.Text
-
 val progressDoc =
     ComponentDoc(
         id = "progress",
         title = "Progress",
         description =
             "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-        usageCode =
+        usageImportsCode =
+            "import androidx.compose.foundation.layout.*\n" +
+                "import androidx.compose.ui.Modifier\n" +
+                "import androidx.compose.ui.unit.dp\n" +
+                "import com.toutiaoyan.compose.ui.components.progress.*",
+        usageCode = "Progress(value = 33f, max = 100f)",
+        examplesHeading = null,
+        compositionCode =
             """
-            import com.toutiaoyan.compose.ui.components.progress.Progress
-
-            Progress(value = 33f, max = 100f)
+            Progress(value = 56f, max = 100f, modifier = Modifier.widthIn(max = 384.dp).fillMaxWidth()) {
+                ProgressLabel("Upload progress")
+                ProgressValue()
+            }
+            // Progress appends ProgressTrack and ProgressIndicator after the content.
             """.trimIndent(),
-        examples =
+        beforeExamples =
             listOf(
-                ComponentExample(
-                    title = "Static (Kotlin)",
-                    code = "Progress(value = 0.6f, modifier = Modifier.width(240.dp))",
-                    preview = { Progress(value = 0.6f, modifier = Modifier.width(240.dp)) },
-                ),
-                ComponentExample(
-                    title = "Default max",
-                    code = "Progress(value = 0.6f, max = 1f, modifier = Modifier.width(240.dp))",
-                    preview = { Progress(value = 0.6f, max = 1f, modifier = Modifier.width(240.dp)) },
-                ),
-                ComponentExample(
-                    title = "Empty",
-                    code = "Progress(value = 0f, modifier = Modifier.width(240.dp))",
-                    preview = { Progress(value = 0f, modifier = Modifier.width(240.dp)) },
-                ),
-                ComponentExample(
-                    title = "Complete",
-                    code = "Progress(value = 1f, modifier = Modifier.width(240.dp))",
-                    preview = { Progress(value = 1f, modifier = Modifier.width(240.dp)) },
-                ),
-                ComponentExample(
-                    title = "Label and value",
-                    code =
-                        """
-                        Progress(value = 0.56f, modifier = Modifier.width(240.dp)) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                ProgressLabel("Upload progress")
-                                ProgressValue()
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Progress(value = 0.56f, modifier = Modifier.width(240.dp)) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                ProgressLabel("Upload progress")
-                                ProgressValue()
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "With label",
-                    code =
-                        """
-                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Text { "Uploading 60%" }
-                            Progress(value = 0.6f, modifier = Modifier.width(240.dp))
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Text { "Uploading 60%" }
-                            Progress(value = 0.6f, modifier = Modifier.width(240.dp))
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Indeterminate",
-                    code = "Progress(value = 0f, indeterminate = true, modifier = Modifier.width(240.dp))",
-                    preview = {
-                        Progress(value = 0f, indeterminate = true, modifier = Modifier.width(240.dp))
-                    },
-                ),
-                ComponentExample(
-                    title = "Default indeterminate",
-                    code = "Progress(value = 0.6f, indeterminate = false, modifier = Modifier.width(240.dp))",
-                    preview = {
-                        Progress(value = 0.6f, indeterminate = false, modifier = Modifier.width(240.dp))
-                    },
-                ),
-                ComponentExample(
-                    title = "Max",
-                    code = "Progress(value = 60f, max = 100f, modifier = Modifier.width(240.dp))",
-                    preview = {
-                        Progress(value = 60f, max = 100f, modifier = Modifier.width(240.dp))
-                    },
-                ),
-                ComponentExample(
-                    title = "Value label",
-                    code =
-                        """
-                        Progress(
-                            value = 0.6f,
-                            modifier = Modifier.width(240.dp),
-                            getValueLabel = { "${'$'}{(it * 100).toInt()} percent" },
-                        )
-                        """.trimIndent(),
-                    preview = {
-                        Progress(
-                            value = 0.6f,
-                            modifier = Modifier.width(240.dp),
-                            getValueLabel = { "${(it * 100).toInt()} percent" },
-                        )
-                    },
-                ),
-                ComponentExample(
-                    title = "Default getValueLabel",
-                    code = "Progress(value = 0.6f, getValueLabel = null, modifier = Modifier.width(240.dp))",
-                    preview = {
-                        Progress(value = 0.6f, getValueLabel = null, modifier = Modifier.width(240.dp))
-                    },
-                ),
-                ComponentExample(
-                    title = "Indicator",
-                    code =
-                        """
-                        ProgressTrack(modifier = Modifier.width(240.dp)) {
-                            ProgressIndicator(value = 0.6f)
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        ProgressTrack(modifier = Modifier.width(240.dp)) {
-                            ProgressIndicator(value = 0.6f)
-                        }
-                    },
+                ComponentGuideSection(
+                    "With label and value",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "Use ProgressLabel and ProgressValue to add a label and value display.",
+                        ),
+                        ComponentGuideBlock.Code(
+                            "Progress\n├── ProgressLabel\n├── ProgressValue\n" +
+                                "└── ProgressTrack\n    └── ProgressIndicator",
+                            "text",
+                        ),
+                    ),
+                    level = 3,
                 ),
             ),
+        afterExamples =
+            listOf(
+                ComponentGuideSection(
+                    "Kotlin conventions and accessibility",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "Kotlin uses a fraction by default: Progress(0.6f) is 60%. " +
+                                "The official recipes pass max = 100f explicitly. Use indeterminate = true " +
+                                "for unknown progress; ProgressValue then omits the percentage. " +
+                                "Compose exposes a normalized progress range and hides the duplicate value text. " +
+                                "Native HTML naming, min/null/format/render props and screen-reader behavior " +
+                                "are not equivalent APIs.",
+                        ),
+                        ComponentGuideBlock.Code(
+                            """
+                            Progress(value = 0f, indeterminate = true)
+                            Progress(value = 0.6f, getValueLabel = { "${'$'}{(it * 100).toInt()} percent" })
+                            ProgressTrack(Modifier.width(240.dp)) { ProgressIndicator(value = 0.6f) }
+                            """.trimIndent(),
+                        ),
+                    ),
+                ),
+            ),
+        apiSections =
+            listOf(
+                ComponentApiSection(
+                    "Progress",
+                    "A controlled progress root that appends its track after the optional content.",
+                    listOf(
+                        ApiProperty("value", "Float", "required"),
+                        ApiProperty("max", "Float", "1f"),
+                        ApiProperty("indeterminate", "Boolean", "false"),
+                        ApiProperty("getValueLabel", "((Float) -> String)?", "null"),
+                        ApiProperty("modifier / style", "Modifier / Style", "default"),
+                        ApiProperty("content", "(@Composable () -> Unit)?", "null"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "ProgressLabel / ProgressValue",
+                    "Label text and optional formatted value read the nearest Progress. " +
+                        "Value is decorative to accessibility.",
+                    listOf(
+                        ApiProperty("ProgressLabel.text", "String", "required"),
+                        ApiProperty("ProgressValue.text", "String?", "null (percentage)"),
+                        ApiProperty("modifier / style", "Modifier / Style", "default"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "ProgressTrack / ProgressIndicator",
+                    "Use a standalone track and indicator when supplying your own track layout.",
+                    listOf(
+                        ApiProperty("ProgressTrack.content", "@Composable BoxScope.() -> Unit", "ProgressIndicator()"),
+                        ApiProperty("ProgressIndicator.value", "Float", "nearest Progress fraction"),
+                        ApiProperty("ProgressIndicator.indeterminate", "Boolean", "nearest Progress or false"),
+                    ),
+                ),
+            ),
+        examples = progressOfficialExamples,
     )
-        .let { native -> native.copy(examples = progressOfficialExamples + native.examples) }

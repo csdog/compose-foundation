@@ -1,0 +1,378 @@
+[
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "step": "pointer-quarter-attempt",
+    "value": "99",
+    "passed": false,
+    "expected": "value near25",
+    "observedUnchanged": true
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "step": "home",
+    "value": "0"
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "step": "end",
+    "value": "100"
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "step": "left",
+    "value": "99"
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "step": "rtl-english",
+    "dom": {
+      "dir": "ltr",
+      "text": "Upload progress56%x",
+      "font": "Geist, \"Geist Fallback\"",
+      "rect": {
+        "x": 520.5,
+        "y": 460.953125,
+        "width": 384,
+        "height": 36,
+        "top": 460.953125,
+        "right": 904.5,
+        "bottom": 496.953125,
+        "left": 520.5
+      }
+    }
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "step": "rtl-hebrew",
+    "dom": {
+      "dir": "rtl",
+      "text": "התקדמות העלאה56%x",
+      "font": "\"Noto Sans Hebrew\", \"Noto Sans Hebrew Fallback\"",
+      "rect": {
+        "x": 520.5,
+        "y": 460.953125,
+        "width": 384,
+        "height": 36,
+        "top": 460.953125,
+        "right": 904.5,
+        "bottom": 496.953125,
+        "left": 520.5
+      }
+    }
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "step": "rtl-arabic",
+    "dom": {
+      "dir": "rtl",
+      "text": "تقدم الرفع٥٦%x",
+      "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+      "rect": {
+        "x": 520.5,
+        "y": 460.953125,
+        "width": 384,
+        "height": 36,
+        "top": 460.953125,
+        "right": 904.5,
+        "bottom": 496.953125,
+        "left": 520.5
+      }
+    }
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "step": "pointer-quarter-attempt",
+    "value": "99",
+    "passed": false,
+    "expected": "value near25",
+    "observedUnchanged": true
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "step": "home",
+    "value": "0"
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "step": "end",
+    "value": "100"
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "step": "left",
+    "value": "99"
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "step": "rtl-english",
+    "dom": {
+      "dir": "ltr",
+      "text": "Upload progress56%x",
+      "font": "Geist, \"Geist Fallback\"",
+      "rect": {
+        "x": 65,
+        "y": 442.59375,
+        "width": 245,
+        "height": 36,
+        "top": 442.59375,
+        "right": 310,
+        "bottom": 478.59375,
+        "left": 65
+      }
+    }
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "step": "rtl-hebrew",
+    "dom": {
+      "dir": "rtl",
+      "text": "התקדמות העלאה56%x",
+      "font": "\"Noto Sans Hebrew\", \"Noto Sans Hebrew Fallback\"",
+      "rect": {
+        "x": 65,
+        "y": 442.59375,
+        "width": 245,
+        "height": 36,
+        "top": 442.59375,
+        "right": 310,
+        "bottom": 478.59375,
+        "left": 65
+      }
+    }
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "step": "rtl-arabic",
+    "dom": {
+      "dir": "rtl",
+      "text": "تقدم الرفع٥٦%x",
+      "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+      "rect": {
+        "x": 65,
+        "y": 442.59375,
+        "width": 245,
+        "height": 36,
+        "top": 442.59375,
+        "right": 310,
+        "bottom": 478.59375,
+        "left": 65
+      }
+    }
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "step": "pointer-quarter-attempt",
+    "value": "99",
+    "passed": false,
+    "expected": "value near25",
+    "observedUnchanged": true
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "step": "home",
+    "value": "0"
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "step": "end",
+    "value": "100"
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "step": "left",
+    "value": "99"
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "step": "rtl-english",
+    "dom": {
+      "dir": "ltr",
+      "text": "Upload progress56%x",
+      "font": "Geist, \"Geist Fallback\"",
+      "rect": {
+        "x": 520.5,
+        "y": 460.953125,
+        "width": 384,
+        "height": 36,
+        "top": 460.953125,
+        "right": 904.5,
+        "bottom": 496.953125,
+        "left": 520.5
+      }
+    }
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "step": "rtl-hebrew",
+    "dom": {
+      "dir": "rtl",
+      "text": "התקדמות העלאה56%x",
+      "font": "\"Noto Sans Hebrew\", \"Noto Sans Hebrew Fallback\"",
+      "rect": {
+        "x": 520.5,
+        "y": 460.953125,
+        "width": 384,
+        "height": 36,
+        "top": 460.953125,
+        "right": 904.5,
+        "bottom": 496.953125,
+        "left": 520.5
+      }
+    }
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "step": "rtl-arabic",
+    "dom": {
+      "dir": "rtl",
+      "text": "تقدم الرفع٥٦%x",
+      "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+      "rect": {
+        "x": 520.5,
+        "y": 460.953125,
+        "width": 384,
+        "height": 36,
+        "top": 460.953125,
+        "right": 904.5,
+        "bottom": 496.953125,
+        "left": 520.5
+      }
+    }
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "step": "pointer-quarter-attempt",
+    "value": "99",
+    "passed": false,
+    "expected": "value near25",
+    "observedUnchanged": true
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "step": "home",
+    "value": "0"
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "step": "end",
+    "value": "100"
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "step": "left",
+    "value": "99"
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "step": "rtl-english",
+    "dom": {
+      "dir": "ltr",
+      "text": "Upload progress56%x",
+      "font": "Geist, \"Geist Fallback\"",
+      "rect": {
+        "x": 65,
+        "y": 442.59375,
+        "width": 245,
+        "height": 36,
+        "top": 442.59375,
+        "right": 310,
+        "bottom": 478.59375,
+        "left": 65
+      }
+    }
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "step": "rtl-hebrew",
+    "dom": {
+      "dir": "rtl",
+      "text": "התקדמות העלאה56%x",
+      "font": "\"Noto Sans Hebrew\", \"Noto Sans Hebrew Fallback\"",
+      "rect": {
+        "x": 65,
+        "y": 442.59375,
+        "width": 245,
+        "height": 36,
+        "top": 442.59375,
+        "right": 310,
+        "bottom": 478.59375,
+        "left": 65
+      }
+    }
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "step": "rtl-arabic",
+    "dom": {
+      "dir": "rtl",
+      "text": "تقدم الرفع٥٦%x",
+      "font": "\"Noto Sans Arabic\", \"Noto Sans Arabic Fallback\"",
+      "rect": {
+        "x": 65,
+        "y": 442.59375,
+        "width": 245,
+        "height": 36,
+        "top": 442.59375,
+        "right": 310,
+        "bottom": 478.59375,
+        "left": 65
+      }
+    }
+  }
+]

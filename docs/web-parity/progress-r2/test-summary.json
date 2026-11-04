@@ -1,0 +1,26 @@
+[
+  {
+    "file": "TEST-com.toutiaoyan.compose.ui.catalog.ProgressExamplesTest.xml",
+    "tests": 16,
+    "failures": 0,
+    "errors": 0
+  },
+  {
+    "file": "TEST-com.toutiaoyan.compose.ui.catalog.ProgressPageLayoutTest.xml",
+    "tests": 12,
+    "failures": 0,
+    "errors": 0
+  },
+  {
+    "file": "TEST-com.toutiaoyan.compose.ui.components.progress.ProgressNovaScreenshotTest.xml",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0
+  },
+  {
+    "file": "TEST-com.toutiaoyan.compose.ui.components.progress.ProgressParityTest.xml",
+    "tests": 9,
+    "failures": 0,
+    "errors": 0
+  }
+]
