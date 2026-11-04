@@ -8,6 +8,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
+import com.toutiaoyan.compose.ui.components.field.LocalField
+import com.toutiaoyan.compose.ui.components.field.FieldChild
+import com.toutiaoyan.compose.ui.components.field.fieldChild
 import androidx.compose.foundation.selection.triStateToggleable
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
@@ -156,6 +159,7 @@ fun Checkbox(
     Box(
         modifier =
             modifier
+                .then(if (LocalField.current != null) Modifier.fieldChild(FieldChild.Checkbox) else Modifier)
                 .semantics {
                     if (invalid) error("Invalid selection")
                     if (label.isNotEmpty()) {

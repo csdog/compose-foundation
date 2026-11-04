@@ -2,196 +2,128 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import com.toutiaoyan.compose.ui.components.checkbox.Checkbox
-import com.toutiaoyan.compose.ui.components.field.Field
-import com.toutiaoyan.compose.ui.components.field.FieldDescription
-import com.toutiaoyan.compose.ui.components.field.FieldLabel
-import com.toutiaoyan.compose.ui.components.field.FieldOrientation
+import androidx.compose.ui.unit.dp
 
 val checkboxDoc =
     ComponentDoc(
-        id = "checkbox",
-        title = "Checkbox",
-        description = "A tri-state input control: unchecked, checked, or indeterminate.",
-        usageCode =
-            """
-            import com.toutiaoyan.compose.ui.components.checkbox.Checkbox
-
-            var checked by remember { mutableStateOf(false) }
-            Checkbox(checked = checked, onCheckedChange = { checked = it }, text = "Accept terms")
-            """.trimIndent(),
-        apiProperties =
+        id = "checkbox", title = "Checkbox",
+        description = "A control that allows the user to toggle between checked and not checked.",
+        examplesHeading = null,
+        usageImportsCode = checkboxImports,
+        usageCode = "Checkbox()",
+        compositionCode = "Checkbox()",
+        beforeExamples =
             listOf(
-                ApiProperty("checked", "Boolean?", "null"),
-                ApiProperty("defaultChecked", "Boolean", "false"),
-                ApiProperty("indeterminate", "Boolean", "false"),
-                ApiProperty("invalid", "Boolean", "false"),
-                ApiProperty("disabled", "Boolean", "false"),
+                ComponentGuideSection(
+                    "Checked State",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "Use `defaultChecked` for uncontrolled checkboxes, or `checked` " +
+                                "and `onCheckedChange` to control the state.",
+                        ),
+                        ComponentGuideBlock.Code(
+                            "var checked by remember { mutableStateOf(false) " +
+                                "}\nCheckbox(checked = checked, onCheckedChange = { checked = it })",
+                        ),
+                    ),
+                ),
+            ),
+        apiSections =
+            listOf(
+                ComponentApiSection(
+                    "Checkbox",
+                    "Controlled or uncontrolled checkbox; `indeterminate` represents a mixed state.",
+                    listOf(
+                        ApiProperty("checked / defaultChecked", "Boolean? / Boolean", "null / false"),
+                        ApiProperty("onCheckedChange", "((Boolean) -> Unit)?", "null"),
+                        ApiProperty("indeterminate / invalid / disabled / required", "Boolean", "false"),
+                        ApiProperty("label", "String", "empty"),
+                        ApiProperty("modifier / style", "Modifier / Style", "default"),
+                    ),
+                ),
             ),
         examples =
             listOf(
                 ComponentExample(
-                    title = "Default",
-                    code =
-                        """
-                        var checked by remember { mutableStateOf(false) }
-                        Checkbox("Accept terms and conditions", checked = checked, onCheckedChange = { checked = it })
-                        """.trimIndent(),
+                    "Default",
+                    checkboxCode(
+                        "default",
+                    ),
+                    minPreviewHeight = 320.dp,
+                    mobileMinPreviewHeight = 320.dp,
                     preview = {
-                        var checked by remember { mutableStateOf(false) }
-                        Checkbox("Accept terms and conditions", checked = checked, onCheckedChange = { checked = it })
+                        CheckboxDefaultRecipe()
                     },
                 ),
                 ComponentExample(
-                    title = "With label",
-                    code =
-                        """
-                        var checked by remember { mutableStateOf(false) }
-                        Checkbox(checked = checked, onCheckedChange = { checked = it }, text = "Accept terms")
-                        """.trimIndent(),
+                    "Invalid State",
+                    checkboxCode(
+                        "invalid",
+                    ),
+                    descriptionMarkdown =
+                        "Set `invalid` on both the checkbox and the field wrapper to show " +
+                            "the invalid styles.",
                     preview = {
-                        var checked by remember { mutableStateOf(false) }
-                        Checkbox(checked = checked, onCheckedChange = { checked = it }, text = "Accept terms")
+                        CheckboxInvalidRecipe()
                     },
                 ),
                 ComponentExample(
-                    title = "With text",
-                    code =
-                        """
-                        var checked by remember { mutableStateOf(true) }
-                        Field(orientation = FieldOrientation.Horizontal) {
-                            Checkbox(checked = checked, onCheckedChange = { checked = it })
-                            Column {
-                                FieldLabel("Accept terms and conditions")
-                                FieldDescription(
-                                    "By clicking this checkbox, you agree to the terms and conditions.",
-                                )
-                            }
-                        }
-                        """.trimIndent(),
+                    "Basic",
+                    checkboxCode(
+                        "basic",
+                    ),
+                    descriptionMarkdown =
+                        "Pair the checkbox with `Field` and `FieldLabel` for proper " +
+                            "layout and labeling.",
                     preview = {
-                        var checked by remember { mutableStateOf(true) }
-                        Field(orientation = FieldOrientation.Horizontal) {
-                            Checkbox(checked = checked, onCheckedChange = { checked = it })
-                            Column {
-                                FieldLabel("Accept terms and conditions")
-                                FieldDescription(
-                                    "By clicking this checkbox, you agree to the terms and conditions.",
-                                )
-                            }
-                        }
+                        CheckboxBasicRecipe()
                     },
                 ),
                 ComponentExample(
-                    title = "Indeterminate",
-                    code = """Checkbox(checked = false, indeterminate = true, onCheckedChange = {})""",
-                    preview = { Checkbox(checked = false, indeterminate = true, onCheckedChange = {}) },
-                ),
-                ComponentExample(
-                    title = "Default indeterminate",
-                    code = """Checkbox(checked = false, indeterminate = false, onCheckedChange = {})""",
-                    preview = { Checkbox(checked = false, indeterminate = false, onCheckedChange = {}) },
-                ),
-                ComponentExample(
-                    title = "Disabled",
-                    code = """Checkbox(checked = true, onCheckedChange = null, disabled = true)""",
-                    preview = { Checkbox(checked = true, onCheckedChange = null, disabled = true) },
-                ),
-                ComponentExample(
-                    title = "Default disabled",
-                    code = """Checkbox(checked = false, onCheckedChange = {}, disabled = false)""",
-                    preview = { Checkbox(checked = false, onCheckedChange = {}, disabled = false) },
-                ),
-                ComponentExample(
-                    title = "Invalid",
-                    code =
-                        """
-                        var checked by remember { mutableStateOf(false) }
-                        Checkbox(
-                            checked = checked,
-                            onCheckedChange = { checked = it },
-                            text = "Accept terms and conditions",
-                            invalid = true,
-                        )
-                        """.trimIndent(),
+                    "Description",
+                    checkboxCode(
+                        "description",
+                    ),
+                    descriptionMarkdown = "Use `FieldContent` and `FieldDescription` for helper text.",
                     preview = {
-                        var checked by remember { mutableStateOf(false) }
-                        Checkbox(
-                            checked = checked,
-                            onCheckedChange = { checked = it },
-                            text = "Accept terms and conditions",
-                            invalid = true,
-                        )
+                        CheckboxDescriptionRecipe()
                     },
                 ),
                 ComponentExample(
-                    title = "Default invalid",
-                    code =
-                        """
-                        var checked by remember { mutableStateOf(false) }
-                        Checkbox(
-                            checked = checked,
-                            onCheckedChange = { checked = it },
-                            text = "Accept terms and conditions",
-                            invalid = false,
-                        )
-                        """.trimIndent(),
+                    "Disabled",
+                    checkboxCode(
+                        "disabled",
+                    ),
+                    descriptionMarkdown =
+                        "Use `disabled` on the checkbox and field to prevent interaction " +
+                            "and show disabled styles.",
                     preview = {
-                        var checked by remember { mutableStateOf(false) }
-                        Checkbox(
-                            checked = checked,
-                            onCheckedChange = { checked = it },
-                            text = "Accept terms and conditions",
-                            invalid = false,
-                        )
+                        CheckboxDisabledRecipe()
                     },
                 ),
                 ComponentExample(
-                    title = "With description",
-                    code =
-                        """
-                        var checked by remember { mutableStateOf(true) }
-                        Checkbox(
-                            checked = checked,
-                            onCheckedChange = { checked = it },
-                            text = "Accept terms and conditions",
-                            description = "By clicking this checkbox, you agree to the terms.",
-                        )
-                        """.trimIndent(),
+                    "Group",
+                    checkboxCode(
+                        "group",
+                    ),
+                    descriptionMarkdown = "Use multiple fields to create a checkbox list.",
                     preview = {
-                        var checked by remember { mutableStateOf(true) }
-                        Checkbox(
-                            checked = checked,
-                            onCheckedChange = { checked = it },
-                            text = "Accept terms and conditions",
-                            description = "By clicking this checkbox, you agree to the terms.",
-                        )
+                        CheckboxGroupRecipe()
                     },
                 ),
+                ComponentExample("Table", checkboxCode("table"), preview = { CheckboxTableRecipe() }),
                 ComponentExample(
-                    title = "Uncontrolled",
-                    code = """Checkbox(text = "Accept terms", defaultChecked = true)""",
-                    preview = { Checkbox(text = "Accept terms", defaultChecked = true) },
-                ),
-                ComponentExample(
-                    title = "Default checked",
-                    code = """Checkbox(text = "Accept terms", defaultChecked = false)""",
-                    preview = { Checkbox(text = "Accept terms", defaultChecked = false) },
-                ),
-                ComponentExample(
-                    title = "Required",
-                    code = """Checkbox(text = "Accept terms", required = true)""",
-                    preview = { Checkbox(text = "Accept terms", required = true) },
-                ),
-                ComponentExample(
-                    title = "Default required",
-                    code = """Checkbox(text = "Accept terms", required = false)""",
-                    preview = { Checkbox(text = "Accept terms", required = false) },
+                    "RTL",
+                    checkboxCode(
+                        "rtl",
+                    ),
+                    previewPadding = 0.dp,
+                    descriptionMarkdown =
+                        "To enable RTL support in your app, see the [RTL configuration " +
+                            "guide](https://ui.shadcn.com/docs/rtl).",
+                    preview = {
+                        CheckboxRtlRecipe()
+                    },
                 ),
             ),
     )

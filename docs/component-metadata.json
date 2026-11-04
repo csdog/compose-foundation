@@ -635,7 +635,7 @@
     {
       "id": "checkbox",
       "title": "Checkbox",
-      "description": "A tri-state input control: unchecked, checked, or indeterminate.",
+      "description": "A control that allows the user to toggle between checked and not checked.",
       "category": "forms-and-inputs",
       "family": "selection",
       "isNew": false,

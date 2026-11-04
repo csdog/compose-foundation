@@ -1,0 +1,50 @@
+[
+  {
+    "theme": "dark",
+    "step": "before",
+    "scrollY": 2826,
+    "url": "http://127.0.0.1:8765/checkbox#basic"
+  },
+  {
+    "theme": "dark",
+    "step": "label-click",
+    "scrollY": 2826,
+    "url": "http://127.0.0.1:8765/checkbox#basic"
+  },
+  {
+    "theme": "dark",
+    "step": "space-1",
+    "scrollY": 2826,
+    "url": "http://127.0.0.1:8765/checkbox#basic"
+  },
+  {
+    "theme": "dark",
+    "step": "space-2",
+    "scrollY": 2826,
+    "url": "http://127.0.0.1:8765/checkbox#basic"
+  },
+  {
+    "theme": "light",
+    "step": "before",
+    "scrollY": 2826,
+    "url": "http://127.0.0.1:8765/checkbox#basic"
+  },
+  {
+    "theme": "light",
+    "step": "label-click",
+    "scrollY": 2826,
+    "url": "http://127.0.0.1:8765/checkbox#basic"
+  },
+  {
+    "theme": "light",
+    "step": "space-1",
+    "scrollY": 2826,
+    "url": "http://127.0.0.1:8765/checkbox#basic"
+  },
+  {
+    "theme": "light",
+    "step": "space-2",
+    "scrollY": 2826,
+    "url": "http://127.0.0.1:8765/checkbox#basic"
+  }
+]

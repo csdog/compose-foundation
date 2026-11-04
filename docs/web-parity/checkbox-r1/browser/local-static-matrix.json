@@ -1,0 +1,296 @@
+{
+  "app": [
+    "http://127.0.0.1:8765/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8765/c1c6449440a65ce996e1.wasm"
+  ],
+  "captures": [
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "demo",
+      "url": "http://127.0.0.1:8765/checkbox#",
+      "scrollY": 0,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "invalid-state",
+      "url": "http://127.0.0.1:8765/checkbox#invalid-state",
+      "scrollY": 2079,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "basic",
+      "url": "http://127.0.0.1:8765/checkbox#basic",
+      "scrollY": 2611,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "description",
+      "url": "http://127.0.0.1:8765/checkbox#description",
+      "scrollY": 3143,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "disabled",
+      "url": "http://127.0.0.1:8765/checkbox#disabled",
+      "scrollY": 3675,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "group",
+      "url": "http://127.0.0.1:8765/checkbox#group",
+      "scrollY": 4207,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "table",
+      "url": "http://127.0.0.1:8765/checkbox#table",
+      "scrollY": 4739,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-dark",
+      "w": 1440,
+      "t": "dark",
+      "id": "rtl",
+      "url": "http://127.0.0.1:8765/checkbox#rtl",
+      "scrollY": 5229,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "demo",
+      "url": "http://127.0.0.1:8765/checkbox#",
+      "scrollY": 0,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "invalid-state",
+      "url": "http://127.0.0.1:8765/checkbox#invalid-state",
+      "scrollY": 2215,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "basic",
+      "url": "http://127.0.0.1:8765/checkbox#basic",
+      "scrollY": 2826,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "description",
+      "url": "http://127.0.0.1:8765/checkbox#description",
+      "scrollY": 3437,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "disabled",
+      "url": "http://127.0.0.1:8765/checkbox#disabled",
+      "scrollY": 4015,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "group",
+      "url": "http://127.0.0.1:8765/checkbox#group",
+      "scrollY": 4626,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "table",
+      "url": "http://127.0.0.1:8765/checkbox#table",
+      "scrollY": 5204,
+      "theme": "dark"
+    },
+    {
+      "n": "mobile-dark",
+      "w": 390,
+      "t": "dark",
+      "id": "rtl",
+      "url": "http://127.0.0.1:8765/checkbox#rtl",
+      "scrollY": 5700,
+      "theme": "dark"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "demo",
+      "url": "http://127.0.0.1:8765/checkbox#",
+      "scrollY": 0,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "invalid-state",
+      "url": "http://127.0.0.1:8765/checkbox#invalid-state",
+      "scrollY": 2079,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "basic",
+      "url": "http://127.0.0.1:8765/checkbox#basic",
+      "scrollY": 2611,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "description",
+      "url": "http://127.0.0.1:8765/checkbox#description",
+      "scrollY": 3143,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "disabled",
+      "url": "http://127.0.0.1:8765/checkbox#disabled",
+      "scrollY": 3675,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "group",
+      "url": "http://127.0.0.1:8765/checkbox#group",
+      "scrollY": 4207,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "table",
+      "url": "http://127.0.0.1:8765/checkbox#table",
+      "scrollY": 4739,
+      "theme": "light"
+    },
+    {
+      "n": "desktop-light",
+      "w": 1440,
+      "t": "light",
+      "id": "rtl",
+      "url": "http://127.0.0.1:8765/checkbox#rtl",
+      "scrollY": 5229,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "demo",
+      "url": "http://127.0.0.1:8765/checkbox#",
+      "scrollY": 0,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "invalid-state",
+      "url": "http://127.0.0.1:8765/checkbox#invalid-state",
+      "scrollY": 2215,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "basic",
+      "url": "http://127.0.0.1:8765/checkbox#basic",
+      "scrollY": 2826,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "description",
+      "url": "http://127.0.0.1:8765/checkbox#description",
+      "scrollY": 3437,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "disabled",
+      "url": "http://127.0.0.1:8765/checkbox#disabled",
+      "scrollY": 4015,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "group",
+      "url": "http://127.0.0.1:8765/checkbox#group",
+      "scrollY": 4626,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "table",
+      "url": "http://127.0.0.1:8765/checkbox#table",
+      "scrollY": 5204,
+      "theme": "light"
+    },
+    {
+      "n": "mobile-light",
+      "w": 390,
+      "t": "light",
+      "id": "rtl",
+      "url": "http://127.0.0.1:8765/checkbox#rtl",
+      "scrollY": 5700,
+      "theme": "light"
+    }
+  ]
+}

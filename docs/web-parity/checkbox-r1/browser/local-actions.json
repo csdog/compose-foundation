@@ -1,0 +1,186 @@
+[
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "demo-label-checked",
+    "url": "http://127.0.0.1:8765/checkbox#",
+    "scrollY": 0,
+    "theme": "dark"
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "demo-card-checked",
+    "url": "http://127.0.0.1:8765/checkbox#",
+    "scrollY": 0,
+    "theme": "dark"
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "basic-space-checked",
+    "url": "http://127.0.0.1:8765/checkbox#basic",
+    "scrollY": 2611,
+    "theme": "dark"
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "table-all-checked",
+    "url": "http://127.0.0.1:8765/checkbox#table",
+    "scrollY": 4739,
+    "theme": "dark"
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "id": "table-one-unchecked",
+    "url": "http://127.0.0.1:8765/checkbox#table",
+    "scrollY": 4739,
+    "theme": "dark"
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "demo-label-checked",
+    "url": "http://127.0.0.1:8765/checkbox#",
+    "scrollY": 0,
+    "theme": "dark"
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "demo-card-checked",
+    "url": "http://127.0.0.1:8765/checkbox#",
+    "scrollY": 0,
+    "theme": "dark"
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "basic-space-checked",
+    "url": "http://127.0.0.1:8765/checkbox#basic",
+    "scrollY": 2826,
+    "theme": "dark",
+    "selectedFrameFromTrace": "space-1",
+    "note": "Replaced initial off-state batch image with visually reviewed checked frame; trace retains before/click/key transitions."
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "table-all-checked",
+    "url": "http://127.0.0.1:8765/checkbox#table",
+    "scrollY": 5204,
+    "theme": "dark"
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "id": "table-one-unchecked",
+    "url": "http://127.0.0.1:8765/checkbox#table",
+    "scrollY": 5204,
+    "theme": "dark"
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "demo-label-checked",
+    "url": "http://127.0.0.1:8765/checkbox#",
+    "scrollY": 0,
+    "theme": "light"
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "demo-card-checked",
+    "url": "http://127.0.0.1:8765/checkbox#",
+    "scrollY": 0,
+    "theme": "light"
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "basic-space-checked",
+    "url": "http://127.0.0.1:8765/checkbox#basic",
+    "scrollY": 2611,
+    "theme": "light"
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "table-all-checked",
+    "url": "http://127.0.0.1:8765/checkbox#table",
+    "scrollY": 4739,
+    "theme": "light"
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "id": "table-one-unchecked",
+    "url": "http://127.0.0.1:8765/checkbox#table",
+    "scrollY": 4739,
+    "theme": "light"
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "demo-label-checked",
+    "url": "http://127.0.0.1:8765/checkbox#",
+    "scrollY": 0,
+    "theme": "light"
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "demo-card-checked",
+    "url": "http://127.0.0.1:8765/checkbox#",
+    "scrollY": 0,
+    "theme": "light"
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "basic-space-checked",
+    "url": "http://127.0.0.1:8765/checkbox#basic",
+    "scrollY": 2826,
+    "theme": "light",
+    "selectedFrameFromTrace": "space-2",
+    "note": "Replaced initial off-state batch image with visually reviewed checked frame; trace retains before/click/key transitions."
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "table-all-checked",
+    "url": "http://127.0.0.1:8765/checkbox#table",
+    "scrollY": 5204,
+    "theme": "light"
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "id": "table-one-unchecked",
+    "url": "http://127.0.0.1:8765/checkbox#table",
+    "scrollY": 5204,
+    "theme": "light"
+  }
+]

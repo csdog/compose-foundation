@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CheckboxParityTest[jvm]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-04T06:25:04.432Z" hostname="Apples-MacBook-Pro.local" time="0.541">
+  <properties/>
+  <testcase name="descriptionAlignsTheControlWithTheFirstLine[jvm]" classname="com.toutiaoyan.compose.ui.components.checkbox.CheckboxParityTest" time="0.433"/>
+  <testcase name="convenienceLabelTogglesOnceAndDisabledFieldPreventsBothTargets[jvm]" classname="com.toutiaoyan.compose.ui.components.checkbox.CheckboxParityTest" time="0.044"/>
+  <testcase name="indeterminateSpaceSelectsOnceAndControlledRejectionIsRespected[jvm]" classname="com.toutiaoyan.compose.ui.components.checkbox.CheckboxParityTest" time="0.062"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

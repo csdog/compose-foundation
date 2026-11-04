@@ -117,3 +117,7 @@ Code Block 的受限高度滚动、下载示例与 Trace 的完整工具调用�
 ### 2026-11-04 Hover Card 浏览器跟进
 
 四官方配方和官网三语方向已读取，本地完整方向/三语Web矩阵及连续切换/重载稳定性仍待关闭；补Trigger锚点、焦点失焦关闭、Nova窗口避让、RTL行框与窄屏Sides亚像素换行。44项回归及四张显式像素verify、JS/Wasm通过。两张Nova基准仅因5dp边距更新，Vega未改；详见[hover-card-r2](web-parity/hover-card-r2/README.md)。仍保留safe polygon、选字保护、多Trigger/嵌套宿主、全局Escape、实际翻转动画及完整辅助技术差异，清单不提前勾选。Editor排除、Attachment后置。
+
+### 2026-11-04 Checkbox 首轮页面与状态
+
+八个官方配方和导出代码已补，Field说明对齐/完整行框、整卡FieldLabel、Group legend布局与Table联动已修。20项定向验证、两模块lint和JS/Wasm通过，官网/本地各61张主对照已复查；旧Vega6项失配已用HEAD隔离，未刷新。列宽/滚动条、字体/换行/焦点绘制、CSS命中区及原生表单和完整状态保留，详见[checkbox-r1](web-parity/checkbox-r1/README.md)。继续优先尚未完整对照的组件；Editor排除、Attachment后置，清单不提前勾选。

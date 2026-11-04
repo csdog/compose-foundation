@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.ui.graphics.Color
 import com.toutiaoyan.compose.ui.utils.rememberTheme
+import com.toutiaoyan.compose.ui.components.field.LocalFieldLabelChoice
 import com.toutiaoyan.compose.ui.styles.border
 import com.toutiaoyan.compose.ui.styles.disabledDim
 import com.toutiaoyan.compose.ui.styles.focusRing
@@ -38,7 +39,13 @@ fun rememberCheckboxStyle(): Style =
                 background(colors.primary)
                 borderColor(colors.primary)
             }
-            focusRing(RoundedCornerShape(if (theme.activePreset == StylePreset.Nova) 4.dp else radius.xs))
+            val controlShape = RoundedCornerShape(if (theme.activePreset == StylePreset.Nova) 4.dp else radius.xs)
+            if (theme.activePreset == StylePreset.Nova && LocalFieldLabelChoice.currentValue) {
+                // The wrapping label owns the focus-visible ring, as in group-has-focus-visible/field-label.
+                shape(controlShape)
+            } else {
+                focusRing(controlShape)
+            }
             disabledDim()
         }
     }

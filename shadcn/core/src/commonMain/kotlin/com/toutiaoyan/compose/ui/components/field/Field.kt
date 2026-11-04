@@ -27,10 +27,12 @@ import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.components.label.LabelImpl
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import com.toutiaoyan.compose.tailwind.core.TwBreakpoint
@@ -97,11 +99,23 @@ fun FieldSet(
     modifier: Modifier = Modifier,
     style: Style = Style,
     disabled: Boolean = false,
+    legendVariant: FieldLegendVariant = FieldLegendVariant.Legend,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    FieldSet(modifier = modifier, style = style, disabled = disabled) {
-        FieldLegend(legend)
-        content()
+    if (currentTheme.activePreset == StylePreset.Nova && legendVariant == FieldLegendVariant.Label) {
+        // HTML legend sits outside the fieldset body's flex gap.
+        val state = remember { MutableStyleState(MutableInteractionSource()) }
+        CompositionLocalProvider(LocalFieldSetDisabled provides (disabled || LocalFieldSetDisabled.current)) {
+            Column(modifier.fillMaxWidth().styleable(state, style)) {
+                FieldLegend(legend, variant = legendVariant)
+                FieldSet(content = content)
+            }
+        }
+    } else {
+        FieldSet(modifier = modifier, style = style, disabled = disabled) {
+            FieldLegend(legend, variant = legendVariant)
+            content()
+        }
     }
 }
 
@@ -140,6 +154,12 @@ fun FieldLegend(
                     fontWeight = FontWeight.Medium,
                     fontSize = if (variant == FieldLegendVariant.Legend) 16.sp else 14.sp,
                     lineHeight = if (variant == FieldLegendVariant.Legend) 24.sp else 20.sp,
+                    lineHeightStyle =
+                        LineHeightStyle(
+                            LineHeightStyle.Alignment.Center,
+                            LineHeightStyle.Trim.None,
+                            LineHeightStyle.Mode.Tight,
+                        ),
                 )
             } else {
                 TextStyle(fontWeight = FontWeight.Medium)
@@ -164,6 +184,7 @@ fun FieldLegend(
 fun FieldGroup(
     modifier: Modifier = Modifier,
     style: Style = Style,
+    spacing: Dp? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
@@ -171,7 +192,7 @@ fun FieldGroup(
         modifier = modifier.fillMaxWidth().styleable(styleState, style),
         verticalArrangement =
             Arrangement.spacedBy(
-                if (currentTheme.activePreset == StylePreset.Nova) 20.dp else 7.spacing.dp,
+                spacing ?: if (currentTheme.activePreset == StylePreset.Nova) 20.dp else 7.spacing.dp,
             ),
         content = content,
     )
@@ -194,7 +215,7 @@ class FieldState(
     val invalid: Boolean,
 )
 
-private val LocalField = staticCompositionLocalOf<FieldState?> { null }
+internal val LocalField = staticCompositionLocalOf<FieldState?> { null }
 
 /** Reads the nearest [Field]. Matches shadcn `useFieldContext` / `data-invalid`. */
 @Composable
@@ -248,14 +269,18 @@ fun Field(
         }
 
         FieldOrientation.Horizontal -> {
-            Row(
-                modifier = modifier.fillMaxWidth().styleable(styleState, style),
-                horizontalArrangement =
-                    Arrangement.spacedBy(
-                        if (currentTheme.activePreset == StylePreset.Nova) 8.dp else twSpacing.md,
-                    ),
-                verticalAlignment = Alignment.CenterVertically,
-            ) { body() }
+            if (currentTheme.activePreset == StylePreset.Nova) {
+                FieldHorizontalLayout(modifier.fillMaxWidth().styleable(styleState, style)) { body() }
+            } else {
+                Row(
+                    modifier = modifier.fillMaxWidth().styleable(styleState, style),
+                    horizontalArrangement =
+                        Arrangement.spacedBy(
+                            if (currentTheme.activePreset == StylePreset.Nova) 8.dp else twSpacing.md,
+                        ),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) { body() }
+            }
         }
 
         FieldOrientation.Responsive -> {
@@ -268,14 +293,18 @@ fun Field(
                             TwBreakpoint.md
                         }
                 if (horizontal) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth().styleable(styleState, style),
-                        horizontalArrangement =
-                            Arrangement.spacedBy(
-                                if (currentTheme.activePreset == StylePreset.Nova) 8.dp else twSpacing.md,
-                            ),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) { body() }
+                    if (currentTheme.activePreset == StylePreset.Nova) {
+                        FieldHorizontalLayout(Modifier.fillMaxWidth().styleable(styleState, style)) { body() }
+                    } else {
+                        Row(
+                            modifier = Modifier.fillMaxWidth().styleable(styleState, style),
+                            horizontalArrangement =
+                                Arrangement.spacedBy(
+                                    if (currentTheme.activePreset == StylePreset.Nova) 8.dp else twSpacing.md,
+                                ),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) { body() }
+                    }
                 } else {
                     Column(
                         modifier = Modifier.fillMaxWidth().styleable(styleState, style),
@@ -337,7 +366,10 @@ fun FieldContent(
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Column(
-        modifier = modifier.styleable(styleState, style),
+        modifier =
+            modifier.then(
+                if (LocalField.current != null) Modifier.fieldChild(FieldChild.Content) else Modifier,
+            ).styleable(styleState, style),
         verticalArrangement =
             Arrangement.spacedBy(
                 if (currentTheme.activePreset == StylePreset.Nova) 2.dp else 1.5.spacing.dp,
@@ -387,13 +419,28 @@ fun FieldTitle(
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Text(
-        modifier = modifier.semantics { heading() }.styleable(styleState, style),
+        modifier =
+            modifier.then(
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    Modifier
+                } else {
+                    Modifier.semantics {
+                        heading()
+                    }
+                },
+            ).styleable(styleState, style),
         variant = TextVariant.BodySmall,
         textStyle =
             if (currentTheme.activePreset == StylePreset.Nova) {
                 currentTheme.typography.bodyMedium.copy(
                     fontWeight = FontWeight.Medium,
-                    lineHeight = 19.25.sp,
+                    lineHeight = 20.sp,
+                    lineHeightStyle =
+                        LineHeightStyle(
+                            LineHeightStyle.Alignment.Center,
+                            LineHeightStyle.Trim.None,
+                            LineHeightStyle.Mode.Tight,
+                        ),
                 )
             } else {
                 TextStyle(fontWeight = FontWeight.Medium)
@@ -424,8 +471,14 @@ fun FieldDescription(
         variant = TextVariant.BodySmall,
         textStyle =
             if (currentTheme.activePreset == StylePreset.Nova) {
-                currentTheme.typography.bodyMedium.merge(
-                    TextColors.Muted,
+                currentTheme.typography.bodyMedium.merge(TextColors.Muted).copy(
+                    lineHeight = 21.sp,
+                    lineHeightStyle =
+                        LineHeightStyle(
+                            LineHeightStyle.Alignment.Center,
+                            LineHeightStyle.Trim.None,
+                            LineHeightStyle.Mode.Tight,
+                        ),
                 )
             } else {
                 TextColors.Muted

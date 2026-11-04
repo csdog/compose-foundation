@@ -1,0 +1,15 @@
+{
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/CheckboxDoc.kt": "91807f237fdeb68620eb39511b41c842e16d57bb9c734c93fe1c401390f8c669",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/CheckboxExampleCode.kt": "75a7e12f050a1aa4a083008a5de5daa8c0dc5fc91b2206f99186290dadf39ea1",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/CheckboxRecipes.kt": "08b8b7dc47546eae33ca3ad115b9cc5a5ba410ff03c1f46312813bec340bdcfa",
+  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/DocInstallation.kt": "808618210027aa881a8e7125f80db9ffddf85567bc2182a04e03ae22c6570d30",
+  "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/CheckboxExamplesTest.kt": "8a5915ae0fa61049d0b0d4f1a7a18d02d0d5a09cd03ae84d80a82be7ec00f2f8",
+  "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/CheckboxViewportTest.kt": "19cb59b89a41799a592807335dc6a77f8416c4b2bfcad7f29f16ae83bdb4f611",
+  "gradle.properties": "dd82f9d5a8d741869d42162c07458c31c71b9f15f67eb3a98ff6c0359f2da93e",
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/checkbox/Checkbox.kt": "fc19b210d83fbae93c0ffc2023894b0d0bdb6664535448c33efb37832bd75a71",
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/checkbox/CheckboxStyles.kt": "399bb1d177bdeb7387a9cc8799c23af507ac580e8ee1c57dd01abfd113efa580",
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/field/Field.kt": "bf1535c5db483e10d3150650beafa8685b6f815b82c08cb288e9d7618fcec50d",
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/field/FieldHorizontalLayout.kt": "a073592e0491ea8b335a9b6c05f8342f6ad1ca5e966555b7244008c4a611429d",
+  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/field/FieldLabelContent.kt": "59f3d5cd8a51db31ea79140525b7575e5dd93b6494eee620a03562f9fe010212",
+  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/checkbox/CheckboxParityTest.kt": "90fbb51b317282323e35457404821dd354cd221298db21cef4d63ef83656c277"
+}

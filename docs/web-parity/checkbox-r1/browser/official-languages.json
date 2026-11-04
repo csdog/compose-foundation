@@ -1,0 +1,66 @@
+[
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "lang": "he",
+    "url": "https://ui.shadcn.com/docs/components/base/checkbox#rtl",
+    "scrollY": 4590.5
+  },
+  {
+    "n": "desktop-light",
+    "w": 1440,
+    "t": "light",
+    "lang": "en",
+    "url": "https://ui.shadcn.com/docs/components/base/checkbox#rtl",
+    "scrollY": 4590.5
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "lang": "he",
+    "url": "https://ui.shadcn.com/docs/components/base/checkbox#rtl",
+    "scrollY": 5100.5
+  },
+  {
+    "n": "mobile-light",
+    "w": 390,
+    "t": "light",
+    "lang": "en",
+    "url": "https://ui.shadcn.com/docs/components/base/checkbox#rtl",
+    "scrollY": 5100.5
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "lang": "he",
+    "url": "https://ui.shadcn.com/docs/components/base/checkbox#rtl",
+    "scrollY": 4590.5
+  },
+  {
+    "n": "desktop-dark",
+    "w": 1440,
+    "t": "dark",
+    "lang": "en",
+    "url": "https://ui.shadcn.com/docs/components/base/checkbox#rtl",
+    "scrollY": 4590.5
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "lang": "he",
+    "url": "https://ui.shadcn.com/docs/components/base/checkbox#rtl",
+    "scrollY": 5100.5
+  },
+  {
+    "n": "mobile-dark",
+    "w": 390,
+    "t": "dark",
+    "lang": "en",
+    "url": "https://ui.shadcn.com/docs/components/base/checkbox#rtl",
+    "scrollY": 5100.5
+  }
+]

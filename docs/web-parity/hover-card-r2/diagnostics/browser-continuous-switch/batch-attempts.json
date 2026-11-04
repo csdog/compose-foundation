@@ -680,5 +680,5 @@
       "theme": "light"
     }
   ],
-  "supersededStaticEvidence": "../../browser/local-isolated-matrix.json"
+  "supersededStaticEvidence": "../../browser/capture-review.json"
 }

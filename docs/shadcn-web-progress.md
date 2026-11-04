@@ -115,7 +115,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Code Block (`code-block`)：已补公开组合组件、编号/差异行/换行/复制与目录页；扩展示例及完整状态矩阵待验收。
 - [ ] Trace (`trace`)：已补公开状态行、折叠详情、键盘/受控回归与目录页；官方复杂工具调用示例待补。
 - [ ] Chart (`chart`)：本页八组官方配方已迁移，补真实tooltip/键盘选点、系列切换、主题/图标、响应尺寸、数值域与日期轴修复。最新64项定向测试、两模块ktlint通过；44原生图一致，追加16张Web图复查。缩放后阿语轴重叠已修，官网/本地Mobile键盘180确认。五步骤320高及桌面48/手机0缩进已补，本轮51项app测试和20图复查通过。标题层级/Steps正文、窄屏日期刻度和动效/完整交互仍待补齐，详见chart-r1、chart-axis-r2及chart-preview-r3。
-- [ ] Checkbox (`checkbox`)：Nova 4dp 圆角、input 底色/边框、错误 ring、标签点击和控件焦点已修正；复杂组合与完整状态矩阵待关闭。
+- [ ] Checkbox (`checkbox`)：官网八配方及完整导出已补，移除反向Default重复；补Group、Table、三语RTL及整卡FieldLabel。修正Field说明顶对齐/1dp偏移、21dp说明/20dp标题与legend完整行框、label legend正文间隔，整卡hover/键盘焦点与单次激活。20项定向回归、lint和JS/Wasm通过，官网/本地各61张主对照与手机Space过程已复查。旧Vega6图失配已HEAD隔离，未刷新；列宽/滚动条、字重/换行/焦点绘制、CSS命中区与完整原生表单/辅助技术仍开放。[证据](web-parity/checkbox-r1/README.md)。
 - [ ] Chip (`chip`)：项目扩展，检查一致性。
 - [x] Collapsible (`collapsible`)：第九批完成 Web 剩余项：外部收起回收内容焦点、keepMounted 状态保持/隐藏语义、动画中断反转。
 - [ ] Combobox (`combobox`)：基础已验证（第七批）；内联编辑、筛选/键盘提交/清空和默认示例已完成，多选 chips、完整辅助技术映射及复杂状态矩阵待关闭。
@@ -169,6 +169,16 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Checkbox：八官方配方、Field依赖与四种显示组合（2026-11-04）
+
+<!-- progress-created: 2026-11-04; order: 128 -->
+
+按优先未做本轮完整页面对照的组件推进Checkbox。读取固定上游组件/Field/Nova源码和八配方，并核对实时DOM。目录恢复Default四独立控件、Invalid State、Basic、Description、Disabled、Group、Table、RTL及真实公共代码导出；表格使用官网人物/初始Sarah选择，全选与逐行切换时部分选中的表头保持未选中。
+
+公共Field测量阶段识别FieldContent/Checkbox，Nova说明顶对齐与1dp控制偏移，普通横向保持居中，Vega原Row路径保留。DOM纠正最初2dp推断，FieldDescription为14/21、FieldTitle14/20，legend完整行框由18恢复20。新增FieldLabel整卡slot、FieldGroup spacing及FieldSet label legend重载：自然宽居中，legend不纳入正文flex间隔。整卡内边距/内部控制各只触发一次、聚焦真实控制，键盘外环与hover覆盖选中底色按CSS实现。版本0.3.36。
+
+核心5+目录3+四种显示组合12共20项通过，所属lint与JS/Wasm通过。官网/本地各61张主对照（32静态、20交互、8三语补充、1整卡键盘），另保留手机Space8张诊断过程；16张对照拼图与原图已复查。手机初次Space批次截到off状态，已按逐步实际状态替换，错误帧隔离，不按文件名认定通过。旧Vega八图仅两浅色通过，六项失配通过临时HEAD旧实现完整复现，12张actual/compare逐字节一致，未刷新基准。列宽/原生滚动条、字重/换行/焦点绘制、CSS伪元素命中区、原生表单/读屏与完整动态状态仍保留，详见[checkbox-r1](web-parity/checkbox-r1/README.md)。Checkbox保持未勾选，Editor排除、Attachment后置。
 
 ### Hover Card：浏览器跟进、触发器锚点与窄屏避让（2026-11-04）
 
