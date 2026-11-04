@@ -1,0 +1,58 @@
+[
+  {
+    "width": 1440,
+    "dpr": 2,
+    "root": {
+      "x": 0,
+      "y": 0,
+      "width": 1425,
+      "height": 1000,
+      "top": 0,
+      "right": 1425,
+      "bottom": 1000,
+      "left": 0
+    },
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 1425,
+      "height": 1000,
+      "top": 0,
+      "right": 1425,
+      "bottom": 1000,
+      "left": 0
+    },
+    "bitmap": [
+      2850,
+      2000
+    ]
+  },
+  {
+    "width": 390,
+    "dpr": 2,
+    "root": {
+      "x": 0,
+      "y": 0,
+      "width": 375,
+      "height": 1000,
+      "top": 0,
+      "right": 375,
+      "bottom": 1000,
+      "left": 0
+    },
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 375,
+      "height": 1000,
+      "top": 0,
+      "right": 375,
+      "bottom": 1000,
+      "left": 0
+    },
+    "bitmap": [
+      750,
+      2000
+    ]
+  }
+]

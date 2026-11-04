@@ -1,0 +1,7 @@
+{
+  "artifact": "org.jetbrains.compose.ui:ui:1.12.2:sources",
+  "jarSha256": "24ffda111c0b65df33c746265cbf6afef7c8ad9b285cf037e1b5a56e3d4fec2b",
+  "path": "webMain/androidx/compose/ui/window/ComposeWindowInternal.web.kt",
+  "excerpt": "DefaultWindowState class; listens window resize and resolution changes, reads viewportContainer.clientWidth/clientHeight",
+  "sourceSha256": "71b07e442148c60d2b8ae8fc1427e630f9bcde75da28f819f803f95275fce8cf"
+}

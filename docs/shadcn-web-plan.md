@@ -31,6 +31,7 @@ Geist 来源：`vercel/geist-font@b5d164a0c066c2c9bfcd5ab65dd8244551f0ac06`；
 - 默认展示 Base UI / Nova / Neutral / 基础圆角 10，确保预览设置与上游一致。
 - 基础视口：1440×1000、1095×687、390×844；浅色与深色各一轮。
 - 使用当前工作树启动本地 Web，不能拿线上旧版本冒充修改后的验收结果。
+- 初载、滚动条显示/隐藏及窗口重排后，先确认Canvas的CSS原点/尺寸与根容器一致，bitmap尺寸等于CSS尺寸×DPR，再采集组件尺寸/点击证据；[根因修复与29状态回归](web-parity/viewport-scroll-r1/README.md)。
 
 ## P1：全站文档骨架
 

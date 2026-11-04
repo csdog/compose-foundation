@@ -26,13 +26,20 @@ internal class BrowserDocumentScrollHost : DocumentScrollHost {
         coroutineScope {
             val root = document.documentElement as HTMLElement
             val body = checkNotNull(document.body)
+
+            fun setDocumentOverflow(value: String) {
+                val previousWidth = root.clientWidth
+                root.style.overflowY = value
+                // ComposeViewport observes window resize, not scrollbar-driven container resizing.
+                if (root.clientWidth != previousWidth) window.dispatchEvent(Event("resize"))
+            }
             if (state == null) {
-                root.style.overflowY = "hidden"
+                setDocumentOverflow("hidden")
                 body.style.height = "100%"
                 window.scrollTo(0.0, 0.0)
                 awaitCancellation()
             }
-            root.style.overflowY = "scroll"
+            setDocumentOverflow("scroll")
             // A fresh ScrollState has no measured extent yet. Do not overwrite a restored position
             // with the browser's previous route position while waiting for the first measurement.
             snapshotFlow { state.maxValue }.first { it != Int.MAX_VALUE }

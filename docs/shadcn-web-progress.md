@@ -79,7 +79,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 
 ## 尚未关闭的页面差异
 
-- Progress r2发现初载/快速视口切换时，根表面曾发生989.578/961.531px高度缩放、顶部空白偏移或RTL空白帧；重排/等待后恢复不等于已修复，详见[诊断与验收边界](web-parity/progress-r2/README.md)。
+- Progress r2发现的滚动条宽度变更导致Canvas初载缩放/居中偏移已修复：显示/隐藏滚动条实际改变clientWidth时通知Compose重测，29组浏览器几何/导航/高密度验证通过。历史图保留，逐帧绘制时序及其余组件状态不据此自动完成，见[viewport-scroll-r1](web-parity/viewport-scroll-r1/README.md)。
 
 - 顶栏仅显示本项目真实存在的导航；官方其他产品页面没有伪造本地入口。
 - 侧栏与官方仍有栏目内容、渐隐边界、选中项宽度和细微尺寸差异；当前项目扩展单独列出。
@@ -143,7 +143,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Navigation Menu (`navigation-menu`)：官网Default/三语RTL的内容、真实导航、图标及768/1024媒体查询已移植，75条文案逐字核对；本轮修复面板链接悬停关闭/重开及Popup导航依赖作用域，公共版本0.3.16。核心22项独立验证、目录18项及两个ktlint通过；共享视口/Root align、浏览器及完整状态仍开放，详见文末。
 - [ ] Pagination (`pagination`)：官网Default/Simple/Icons Only/三语RTL已移植；Nova32dp/2dp间隔、响应式文字、RTL箭头、禁用及省略号语义已补，新增内容slot/size/style并修正Select当前值换行，版本0.3.17。核心24、目录16及两个ktlint通过，JS/Wasm成功；旧Vega2图预存失配，浏览器及完整状态仍待关闭，详见文末。
 - [ ] Popover (`popover`)：本轮已核对官网来源，修正 Nova 面板间距、圆角、阴影细环与完整行高；原生9项、两项ktlint与JS/Wasm已验证。五组官网配方已迁移，原生24项示例交互已过；默认非模态与焦点行为、动画及浏览器完整状态矩阵仍待完成。
-- [ ] Progress (`progress`)：四官网配方桌面/窄屏浅深静态、三语和受控键盘已对照；移除十二重复预览，补Composition/说明/真实API，RTL统一288正文/40inset与Noto字体。41常规项、Nova四图显式verify、JS/Wasm通过；旧Vega四图actual与r1一致。共享初载/resize缩放/空白、排版/代码顺序、原生语义和完整交互仍开放；官网轨道点击未生效有可信事件诊断，不计通过。[证据](web-parity/progress-r2/README.md)。
+- [ ] Progress (`progress`)：四官网配方桌面/窄屏浅深静态、三语和受控键盘已对照；移除十二重复预览，补Composition/说明/真实API，RTL统一288正文/40inset与Noto字体。41常规项、Nova四图显式verify、JS/Wasm通过；旧Vega四图actual与r1一致。共享初载缩放根因已在[viewport-scroll-r1](web-parity/viewport-scroll-r1/README.md)修复；绘制时序/排版/代码顺序、原生语义和完整交互仍开放；官网轨道点击未生效有可信事件诊断，不计通过。[证据](web-parity/progress-r2/README.md)。
 - [ ] Questionnaire (`questionnaire`)：本轮修正 Nova 选项图形/间距/字号、导航与验证、单选输入互斥、提交顺序和受控更新；官网 Default 三题流程已迁移。原生38项通过；其余13组官网配方及浏览器/完整状态矩阵待完成。
 - [ ] Radio Group (`radio-group`)：Nova 间距/错误状态、方向键循环、跳过 disabled、RTL/Home/End 已补；Tab 单入口、动态重排和完整矩阵待关闭。
 - [ ] Resizable (`resizable`)：官网四配方与三语 RTL 已迁移；Nova 分隔线/grip、0..100%范围、真实鼠标/触摸命中、键盘调节及嵌套比例已补。37项定向验证和两个ktlint通过；浏览器四象限、多面板/resize光标及完整状态仍待完成。
@@ -171,6 +171,14 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Web画布：滚动条宽度切换触发精确重测（2026-11-04）
+
+<!-- progress-created: 2026-11-04; order: 134 -->
+
+Progress r2发现的初载缩放已定位到实际Compose 1.12.2依赖源码：DefaultWindowState只监听窗口resize/像素密度变化，文档host显示经典滚动条改变了可用宽度却没有触发重测，bitmap1440×1000被CSS显示为1425×989.578并居中。BrowserDocumentScrollHost现比较overflow修改前后clientWidth，仅实际变化时发送resize通知，文档与Create两方向均处理；未修改内部DOM/CSS、公共组件或版本。
+
+Web ktlint、JS/Wasm及既有滚动绑定/缓存测试1项通过。真实新产物浏览器19个初载/锚点/七宽度重排状态、四组合Create/Back8状态及DPR2两尺寸共29项尺寸验证通过，全部图像已通过8拼图和2张高密度原图复查；返回精确恢复缓存scrollY。见[viewport-scroll-r1](web-parity/viewport-scroll-r1/README.md)。验证覆盖Canvas bitmap/CSS/root原点与尺寸，不扩张为逐帧性能、所有字体排版或全部组件完成；历史浏览器图不自动升级为最新产物验收。继续优先缺少本轮完整页面对照的组件，Editor排除、Attachment后置。
 
 ### Progress：四配方页面、RTL字体与真实浏览器交互（2026-11-04）
 

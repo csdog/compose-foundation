@@ -2,6 +2,8 @@
 
 2026-11-04，对照[官网 Progress](https://ui.shadcn.com/docs/components/base/progress)。固定上游 `96da9cc7f1aa10580a3741664e2a77c721206c00` 的文档、组件、四配方及 Nova 样式、Base UI Value 共八份源码重新请求并逐一核对摘要，见 [sources.json](sources.json) 和 [source](source)。当前官网实际 DOM/尺寸/字体/150ms cubic-bezier 过渡保存在 [official-matrix](browser/official-matrix.json)，不凭过往测试继承浏览器完成状态。
 
+后续：[滚动条触发画布重测](../viewport-scroll-r1/README.md)已修复本轮发现的初载缩放根因，原始诊断与本轮边界仍保留。
+
 ## 本轮修改
 
 - 页面仅保留 Default、Label、Controlled、RTL 四个官网配方，删除末尾十二个重复参数预览；Kotlin 的 fraction/max、indeterminate、自定义值说明和独立 Track/Indicator 能力合并到指南及实际 API 表，不删除公共能力。
