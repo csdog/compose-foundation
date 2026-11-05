@@ -102,7 +102,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 
 - [ ] Accordion (`accordion`)：官网七组配方已逐轮对照；已修固定预览、Horizontal竖排与动态导航、RTL工具栏/Noto字体及20px行框，并补五组行为说明。r11常规六例48张新四象限浏览器图与Multiple全展开8图已复查，37项目录验证通过；共享Web主题持久化、七宽度水平布局已关闭，原生滚动基础桥接已验证。r12把过期342dp窄宽夹具校正到官网实际327dp/245dp内宽，补`multiple = true`文案、Kotlin扩展标题及Base UI API Reference，并完成99项聚焦回归；浏览器四象限仍未在新空间重跑。仍留字形/描述换行/垂直间距、代码面板细节、原生Hebrew标签，以及扩展API/Style/动态slot/辅助技术/触摸矩阵；见[页面布局新记录](web-parity/page-layout-r1/README.md)、[r12记录](web-parity/accordion-r12/README.md)、[组件记录](web-parity/accordion-r11/README.md)及r7–r10。
 - [ ] Alert (`alert`)：九组示例四象限、Composition/四个 Kotlin API 小节、说明/源码导出及新目录跳转已验证；共享 focus-visible、说明弹层焦点、URL/标题锚点、代码框/内联背景已验证；操作区默认定位及多按钮调用者布局四象限已补验。r10用当前官网重新确认官方六配方顺序，四条Kotlin专有配方明确加前缀，并修复Copy Page遗漏显式examplesHeading；28项聚焦测试和Wasm构建通过，浏览器仍待新空间复核。全文法、超高操作/任意复杂槽位、窗口重排、辅助技术及细微排版仍待关闭，见[Alert r10](web-parity/alert-r10/README.md)。
-- [ ] Alert Dialog (`alert-dialog`)：官方七组预览、Composition/Kotlin API 已补；Media 桌面两列/手机与 Small 居中、24dp 图标、三语两尺寸切换及 Settings 链接已验证；56 项定向测试与六张 Nova 像素基准通过，桌面/手机浅深矩阵已检查。共用深色 input/border 令牌已在共享主题复核中修正；正文换行/字重及阿拉伯语回退字体、无障碍映射与四张旧 Vega 基准失配仍待关闭。
+- [ ] Alert Dialog (`alert-dialog`)：官方七组预览、Composition/Kotlin API 已补；Media 桌面两列/手机与 Small 居中、24dp 图标、三语两尺寸切换及 Settings 链接已验证；56 项定向测试与六张 Nova 像素基准通过，桌面/手机浅深矩阵已检查。r3重新读取当前官网，校正Basic、Small with Media和Destructive三段说明并使用当前Kotlin API名称；28项聚焦回归及Wasm构建通过，浏览器仍待新空间复核。共用深色 input/border 令牌已在共享主题复核中修正；正文换行/字重及阿拉伯语回退字体、无障碍映射与四张旧 Vega 基准失配仍待关闭，见[Alert Dialog r3](web-parity/alert-dialog-r3/README.md)。
 - [x] Aspect Ratio (`aspect-ratio`)：Default/Square/Portrait/三语 RTL 组件复核完成；固定 caption 20dp 行框并修正 Nova Select 真实 Arabic 字体选项高度。三种宽度、浅深色、语言切换及展开代码保留状态已验证；53 项功能/布局测试、四张像素基准通过。色域/整数测量适配及共享页面剩余差异见文末第二轮记录，不代表全站 P1/P3 或 Select 已完成。
 - [ ] Attachment (`attachment`)：六组示例、Nova布局、Group吸附/键盘/渐隐/约束、整卡焦点和onClick hover，以及Features/Accessibility指南、目录/导出已补。第七轮按官网当前SVG修正FileSearch；实际标题14px/500字重和约148px排版字宽已验证，未调粗字体。26项目录回归、JS/Wasm构建通过；旧Vega、字形像素观感、自定义overlay hover、颜色过渡与原生辅助技术仍待关闭。按用户要求暂停逐轮细化，剩余项合并到后续统一处理；第八轮 hover 动画只有定向测试通过，尚未完成浏览器验收。证据见attachment-r2至attachment-r8。
 - [ ] Avatar (`avatar`)：2026-10-30 首轮主要差异已补：真实图片、九组官方配方与额外 Fallback、Composition/六个 Kotlin API 小节；修正 fallback 字号、外圈、图标徽标、RTL 徽标及绿色令牌，补齐菜单键盘导航。9 项测试、JS/Wasm distribution 和四象限浏览器检查通过。混合尺寸分组计数、图片混合边框、菜单完整焦点/像素矩阵等保留明确后续项，见文末及 avatar-r1。
@@ -171,6 +171,16 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Alert Dialog：当前七配方说明与页面顺序（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 139 -->
+
+重新读取当前UI官网、Base组件和七个官方配方，配方顺序仍为Default、Basic、Small、Media、Small with Media、Destructive、RTL，本地结构一致。Basic、Small with Media和Destructive三段说明已经落后：现分别按官网补标题/描述/按钮结构、`DialogSize.Sm`与`AlertDialogMedia`组合，以及`AlertDialogAction`破坏性操作语义；Settings当前页占位说明保留。
+
+页面顺序与说明映射新增精确断言。AlertDialog页面、Media、核心Nova、旧截图及文档导出共28项聚焦测试通过；Wasm开发distribution15.947s退出0并保留1条Webpack warning，全仓ktlint/detekt通过。来源、测试XML和构建摘要见[alert-dialog-r3](web-parity/alert-dialog-r3/README.md)。
+
+当前Ego仍无compose-foundation TaskSpace，只有用户空间和无关Product Hunt委派空间；未创建替代空间或接管标签。因此没有新的浅深桌面/手机浏览器验证，Alert Dialog保持未勾选；正文换行、Arabic回退字体、辅助技术及四张旧Vega差异继续开放。Editor排除、Attachment后置。
 
 ### Alert：官方配方边界与 Copy Page 标题导出（2026-11-05）
 

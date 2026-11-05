@@ -1,0 +1,40 @@
+{
+  "date": "2026-11-05",
+  "officialRecipeOrder": [
+    "Default",
+    "Basic",
+    "Small",
+    "Media",
+    "Small with Media",
+    "Destructive",
+    "RTL"
+  ],
+  "changes": [
+    "Aligned the Basic explanation with the official page",
+    "Aligned the Small with Media explanation with the official page",
+    "Aligned the Destructive explanation to AlertDialogAction",
+    "Added exact description assertions to the page-order regression"
+  ],
+  "tests": {
+    "total": 28,
+    "failures": 0,
+    "suites": {
+      "AlertDialogExamplesTest": 5,
+      "ComponentDocumentationTest": 8,
+      "AlertDialogNovaTest": 4,
+      "AlertDialogMediaTest": 3,
+      "AlertDialogScreenshotTest": 4,
+      "AlertDialogMediaScreenshotTest": 4
+    }
+  },
+  "wasmDevelopmentBuild": {
+    "exitStatus": 0,
+    "elapsedSeconds": 15.947,
+    "appWasmSha256": "0a444bf1c94e5c1343b0a105d4c379b4582596e4d07a9ae7131a1a30d5387a46",
+    "warning": "webpack compiled with one warning"
+  },
+  "browser": {
+    "rerun": false,
+    "reason": "No owned compose-foundation Ego TaskSpace is available; unrelated user/delegated spaces were not claimed and no replacement space was created."
+  }
+}

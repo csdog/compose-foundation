@@ -196,6 +196,26 @@ class AlertDialogExamplesTest {
                 it.title
             },
         )
+        assertEquals(
+            mapOf(
+                "Basic" to
+                    "A basic alert dialog with a title, description, and cancel and continue buttons.",
+                "Small with Media" to
+                    (
+                        "Use `size = DialogSize.Sm` to make the alert dialog smaller and " +
+                            "`AlertDialogMedia` to add a media element such as an icon or image."
+                    ),
+                "Destructive" to
+                    (
+                        "Use `AlertDialogAction` to add a destructive action button to the " +
+                            "alert dialog. The Settings link is a current-page placeholder, " +
+                            "as in the upstream example."
+                    ),
+            ),
+            alertDialogDoc.examples
+                .filter { it.title in setOf("Basic", "Small with Media", "Destructive") }
+                .associate { it.title to it.descriptionMarkdown },
+        )
         val text = componentPageMarkdown(alertDialogDoc)
         assertContains(text, "AlertDialogMedia (optional)")
         assertContains(text, "DialogSize.Sm")

@@ -295,7 +295,7 @@ val alertDialogDoc =
                 confirmationExample("Default", null, defaultConfirmation),
                 confirmationExample(
                     "Basic",
-                    "A basic alert dialog that requires a response from the user.",
+                    "A basic alert dialog with a title, description, and cancel and continue buttons.",
                     defaultConfirmation.copy(
                         description = (
                             "This action cannot be undone. This will permanently delete " +
@@ -322,15 +322,16 @@ val alertDialogDoc =
                 ),
                 confirmationExample(
                     "Small with Media",
-                    "Combine `size = DialogSize.Sm` with `AlertDialogMedia` for a compact media dialog.",
+                    "Use `size = DialogSize.Sm` to make the alert dialog smaller and " +
+                        "`AlertDialogMedia` to add a media element such as an icon or image.",
                     smallConfirmation.copy(icon = Lucide.Bluetooth, iconName = "Bluetooth"),
                 ),
                 confirmationExample(
                     "Destructive",
                     (
-                        "Use the destructive button variant to indicate a destructive " +
-                            "action. The Settings link is a current-page placeholder, as " +
-                            "in the upstream example."
+                        "Use `AlertDialogAction` to add a destructive action button to the " +
+                            "alert dialog. The Settings link is a current-page placeholder, " +
+                            "as in the upstream example."
                     ),
                     AlertDialogExampleContent(
                         "Delete Chat",
