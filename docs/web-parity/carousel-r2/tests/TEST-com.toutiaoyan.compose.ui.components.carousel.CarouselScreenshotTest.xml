@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CarouselScreenshotTest[jvm]" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-11-05T03:37:03.802Z" hostname="Apples-MacBook-Pro.local" time="0.285">
+  <properties/>
+  <testcase name="nova_vertical_light[jvm]" classname="com.toutiaoyan.compose.ui.components.carousel.CarouselScreenshotTest" time="0.039"/>
+  <testcase name="nova_default_light[jvm]" classname="com.toutiaoyan.compose.ui.components.carousel.CarouselScreenshotTest" time="0.025"/>
+  <testcase name="overlap_regression_light[jvm]" classname="com.toutiaoyan.compose.ui.components.carousel.CarouselScreenshotTest" time="0.024"/>
+  <testcase name="nova_default_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.carousel.CarouselScreenshotTest" time="0.022"/>
+  <testcase name="nova_rtl_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.carousel.CarouselScreenshotTest" time="0.024"/>
+  <testcase name="nova_vertical_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.carousel.CarouselScreenshotTest" time="0.024"/>
+  <testcase name="states_light[jvm]" classname="com.toutiaoyan.compose.ui.components.carousel.CarouselScreenshotTest" time="0.024"/>
+  <testcase name="nova_rtl_light[jvm]" classname="com.toutiaoyan.compose.ui.components.carousel.CarouselScreenshotTest" time="0.022"/>
+  <testcase name="previous_isolated_size_light[jvm]" classname="com.toutiaoyan.compose.ui.components.carousel.CarouselScreenshotTest" time="0.016"/>
+  <testcase name="nova_sizes_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.carousel.CarouselScreenshotTest" time="0.022"/>
+  <testcase name="nova_sizes_light[jvm]" classname="com.toutiaoyan.compose.ui.components.carousel.CarouselScreenshotTest" time="0.023"/>
+  <testcase name="states_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.carousel.CarouselScreenshotTest" time="0.02"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

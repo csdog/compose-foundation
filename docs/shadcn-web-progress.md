@@ -113,7 +113,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Button Group (`button-group`)：基础已验证（第六批）；默认配方、完整菜单、图标、单选状态与响应式Go Back已验证。r2读取当前官网，页面已从旧13参数示例切换为Default、Orientation、Size、Nested、Separator、Split、Input、Input Group、Dropdown Menu、Select、Popover、RTL十二组实际配方；`ButtonGroupItem`新增`size`参数，42项聚焦测试及Wasm构建通过。共享菜单宽度/碰撞、混合子项形状、role=group语义、浏览器与完整状态矩阵仍待关闭，见[button-group-r2](web-parity/button-group-r2/README.md)。
 - [ ] Calendar (`calendar`)：2026-10-30 完成首轮公历主要对照：15 组实现、Composition/四组 API、预设/时间/已订日期/价格格/周数/RTL 已补。r2再次读取当前官网，官方十配方顺序一致，额外Multiple/Disabled/周起始/隐藏外部日期/月份范围已明确加`Kotlin extension:`前缀；35项聚焦测试及Wasm构建通过，浏览器仍待新空间复核。波斯历、原生时间输入行为、caption 细节及完整辅助技术/交互矩阵仍保留，见[calendar-r2](web-parity/calendar-r2/README.md)及calendar-r1。
 - [ ] Card (`card`)：六组官方示例与完整导出代码已补；Nova垂直根padding、分区水平inset、满宽Footer及公开CardImage已修正，调用方Style优先。93项联合回归、11图像素校验、JS/Wasm通过；官网/本地各56张四象限静态/交互图已复查。原生滚动条、1px边框占位、字体字重/换行、共享Select浏览器键盘及全状态仍开放。[证据](web-parity/card-r1/README.md)。
-- [ ] Carousel (`carousel`)：已完成首轮页面、七个官网配方及四象限浏览器对照；补齐 compound root、响应式多页、竖向、API、自动播放与 RTL，23 项定向测试通过。鼠标拖动、Embla options/loop/plugins 与完整状态仍待补齐，见 Carousel 首轮记录。
+- [ ] Carousel (`carousel`)：当前官网仍为Default、Sizes、Spacing、Orientation、API、Plugins、RTL七配方；r2确认组件、MDX与七示例相对首轮固定版本字节一致。修复Plugins悬停/拖动结束后不恢复自动播放、各配方未使用公开`CarouselItem`的问题，并把点指示器明确标为Kotlin extension；24项聚焦测试、全仓lint/detekt及JS/Wasm通过，浏览器仍待新空间复核。Embla任意options/plugins、loop、浏览器拖动/动态主题和完整辅助技术仍开放，见[carousel-r2](web-parity/carousel-r2/README.md)及首轮记录。
 - [ ] Code Block (`code-block`)：已补公开组合组件、编号/差异行/换行/复制与目录页；扩展示例及完整状态矩阵待验收。
 - [ ] Trace (`trace`)：已补公开状态行、折叠详情、键盘/受控回归与目录页；官方复杂工具调用示例待补。
 - [ ] Chart (`chart`)：本页八组官方配方已迁移，补真实tooltip/键盘选点、系列切换、主题/图标、响应尺寸、数值域与日期轴修复。最新64项定向测试、两模块ktlint通过；44原生图一致，追加16张Web图复查。缩放后阿语轴重叠已修，官网/本地Mobile键盘180确认。五步骤320高及桌面48/手机0缩进已补，本轮51项app测试和20图复查通过。标题层级/Steps正文、窄屏日期刻度和动效/完整交互仍待补齐，详见chart-r1、chart-axis-r2及chart-preview-r3。
@@ -171,6 +171,18 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Carousel：自动播放恢复、CarouselItem 与当前页面边界（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 148 -->
+
+当前官网仍为Default、Sizes、Spacing、Orientation、API、Plugins、RTL七组官方配方，点指示器是本地Kotlin扩展。当前shadcn/ui `main`为`8a353667`；组件、MDX与七份示例的SHA-256均与首轮`96da9cc7`归档一致，没有新增官方页面结构。
+
+Plugins配方原先遇到hover或拖动即永久停止自动播放，与官网`onMouseEnter=stop`、`onMouseLeave=reset`不一致；现改为hover与drag都结束后恢复，并补充纯状态生命周期回归。渲染及导出代码现统一使用公开`CarouselItem`包裹页面，不再直接放裸`Box`；Compose无法直接表达`aria-roledescription`，API文档要求通过slide级`contentDescription`补充位置语义。额外点分页标题改为`Kotlin extension: With dot indicators`。
+
+页面7项、核心parity5项、截图12项共24项通过；全仓ktlint/detekt通过。Wasm开发distribution21.609s退出0并有1条Webpack warning；JS开发distribution48.496s退出0但保留既有`os`/`path`解析诊断。来源、XML与构建摘要见[carousel-r2](web-parity/carousel-r2/README.md)。
+
+当前Ego仍无compose-foundation TaskSpace，只有用户空间与无关Product Hunt委派空间；未创建替代空间或接管标签，因此没有新的浅深桌面/手机浏览器验证。Carousel保持未勾选；Embla完整options/plugins对象、loop、浏览器拖动/hover、动态主题字体、任意宿主尺寸、完整焦点/辅助技术与状态组合继续开放。Editor排除、Attachment后置。
 
 ### Card：当前源码复核与 Kotlin 扩展边界（2026-11-05）
 

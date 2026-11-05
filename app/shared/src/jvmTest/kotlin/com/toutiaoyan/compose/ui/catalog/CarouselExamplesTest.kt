@@ -13,6 +13,7 @@ import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.catalog.docs.CarouselAutoplay
+import com.toutiaoyan.compose.ui.catalog.docs.carouselAutoplayEnabledWhileIdle
 import com.toutiaoyan.compose.ui.catalog.docs.carouselDoc
 import com.toutiaoyan.compose.ui.components.carousel.Carousel
 import com.toutiaoyan.compose.ui.components.overlay.OverlayHost
@@ -95,8 +96,20 @@ class CarouselExamplesTest {
         rule.runOnIdle { assertEquals(1, state.settledPage) }
     }
 
+    @Test fun autoplayResumesOnlyAfterHoverAndDragBothEnd() {
+        assertTrue(carouselAutoplayEnabledWhileIdle(hovered = false, dragged = false))
+        assertFalse(carouselAutoplayEnabledWhileIdle(hovered = true, dragged = false))
+        assertFalse(carouselAutoplayEnabledWhileIdle(hovered = false, dragged = true))
+        assertFalse(carouselAutoplayEnabledWhileIdle(hovered = true, dragged = true))
+        assertTrue(carouselAutoplayEnabledWhileIdle(hovered = false, dragged = false))
+    }
+
     @Test fun examplesAndExportedRecipesCoverTheOfficialPatterns() {
         assertEquals(8, carouselDoc.examples.size)
+        assertEquals(
+            "Kotlin extension: With dot indicators",
+            carouselDoc.examples.last().title,
+        )
         assertTrue(carouselDoc.examples.none { it.code.contains("TextTypography") })
 
         fun code(title: String) = carouselDoc.examples.single { it.title == title }.code
@@ -104,6 +117,8 @@ class CarouselExamplesTest {
         assertTrue(code("API").contains("state.settledPage"))
         assertTrue(code("Plugins").contains("delay(2000)"))
         assertTrue(code("Plugins").contains("Modifier.hoverable(hover)"))
+        assertTrue(code("Plugins").contains("playing = !hovered && !dragged"))
+        assertTrue(code("Default").contains("CarouselItem(Modifier.fillMaxSize())"))
         assertTrue(code("RTL").contains("LocalLayoutDirection provides"))
         assertTrue(code("RTL").contains("٠١٢٣٤٥٦٧٨٩"))
     }

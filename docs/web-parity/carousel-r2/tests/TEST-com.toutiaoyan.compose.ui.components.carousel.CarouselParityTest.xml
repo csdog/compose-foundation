@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CarouselParityTest[jvm]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-05T03:37:02.815Z" hostname="Apples-MacBook-Pro.local" time="0.984">
+  <properties/>
+  <testcase name="shrinkingDataClampsThePageAndUpdatesBothControls[jvm]" classname="com.toutiaoyan.compose.ui.components.carousel.CarouselParityTest" time="0.736"/>
+  <testcase name="rtlRetainsLogicalNextAndPrevious[jvm]" classname="com.toutiaoyan.compose.ui.components.carousel.CarouselParityTest" time="0.074"/>
+  <testcase name="partialSlidesDisableNextAtTheActualEndAndCanReturn[jvm]" classname="com.toutiaoyan.compose.ui.components.carousel.CarouselParityTest" time="0.095"/>
+  <testcase name="emptyCarouselDisablesBothNavigationButtons[jvm]" classname="com.toutiaoyan.compose.ui.components.carousel.CarouselParityTest" time="0.021"/>
+  <testcase name="rootKeysWorkWhenANavigationControlHasFocus[jvm]" classname="com.toutiaoyan.compose.ui.components.carousel.CarouselParityTest" time="0.055"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

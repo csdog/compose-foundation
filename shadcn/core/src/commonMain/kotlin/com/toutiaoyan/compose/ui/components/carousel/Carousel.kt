@@ -264,7 +264,13 @@ fun CarouselContent(
     )
 }
 
-/** One slide inside [CarouselContent]. Matches shadcn's `CarouselItem`. */
+/**
+ * One slide inside [CarouselContent]. Matches shadcn's `CarouselItem` slot.
+ *
+ * Compose has no `aria-roledescription`; pass a slide-specific
+ * `contentDescription` through [modifier] when the surrounding content needs a
+ * stable screen-reader position such as "Slide 1 of 5".
+ */
 @Composable
 fun CarouselItem(
     modifier: Modifier = Modifier,

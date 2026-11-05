@@ -44,7 +44,7 @@ private val carouselTitles =
         "API",
         "Plugins",
         "RTL",
-        "With dot indicators",
+        "Kotlin extension: With dot indicators",
     )
 
 val carouselDoc =
@@ -111,10 +111,10 @@ val carouselDoc =
                                     "boundaries and suspend scroll functions."
                             )
                             "Plugins" -> (
-                                "Advance every two seconds. Like the official stop/reset " +
-                                    "recipe, hover or a drag stops autoplay."
+                                "Advance every two seconds. Hover or dragging pauses autoplay; " +
+                                    "leaving the carousel or releasing the drag resumes it."
                             )
-                            "With dot indicators" -> (
+                            "Kotlin extension: With dot indicators" -> (
                                 "An additional Kotlin recipe; the official component does not " +
                                     "provide pagination dots."
                             )
@@ -229,8 +229,9 @@ val carouselDoc =
                 ComponentApiSection(
                     "CarouselItem / CarouselDots",
                     (
-                        "Caller content for a slide; optional Kotlin pagination " +
-                            "extension."
+                        "CarouselItem wraps caller content for one slide. Compose does not expose " +
+                            "aria-roledescription, so pass a slide-specific contentDescription in its " +
+                            "modifier. CarouselDots is an optional Kotlin pagination extension."
                     ),
                     listOf(
                         ApiProperty("content", "@Composable BoxScope.() -> Unit", "Required on CarouselItem"),
@@ -303,7 +304,7 @@ private fun CarouselRecipe(
     val hovered by hover.collectIsHoveredAsState()
     val dragged by state.interactionSource.collectIsDraggedAsState()
     var playing by remember { mutableStateOf(true) }
-    LaunchedEffect(hovered, dragged) { if (hovered || dragged) playing = false }
+    LaunchedEffect(hovered, dragged) { playing = carouselAutoplayEnabledWhileIdle(hovered, dragged) }
     if (title == "Plugins") CarouselAutoplay(state, playing)
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         CarouselRoot(
@@ -316,7 +317,9 @@ private fun CarouselRecipe(
                 pageSize = PageSize.Fixed(if (vertical) 131.dp else pageWidth),
                 pageSpacing = gap,
             ) { page ->
-                Box(Modifier.fillMaxSize().semantics { contentDescription = "Slide ${page + 1} of 5" }) {
+                CarouselItem(
+                    Modifier.fillMaxSize().semantics { contentDescription = "Slide ${page + 1} of 5" },
+                ) {
                     Card(
                         Modifier.fillMaxWidth().padding(if (title == "API") 1.dp else 4.dp),
                         style = Style { contentPadding(horizontal = 0.dp, vertical = 16.dp) },
@@ -411,9 +414,16 @@ private fun CarouselRecipe(
                     ),
             ) { "Slide ${state.settledPage + 1} of ${state.pageCount}" }
         }
-        if (title == "With dot indicators") CarouselDots(state, Modifier.padding(top = 12.dp))
+        if (title == "Kotlin extension: With dot indicators") {
+            CarouselDots(state, Modifier.padding(top = 12.dp))
+        }
     }
 }
+
+internal fun carouselAutoplayEnabledWhileIdle(
+    hovered: Boolean,
+    dragged: Boolean,
+): Boolean = !hovered && !dragged
 
 @Composable
 internal fun CarouselAutoplay(
@@ -498,7 +508,7 @@ private fun carouselCode(title: String): String {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             CarouselRoot(state, Modifier.width(width).height($height), orientation = $axis, ariaLabel = "Slides") {
                 CarouselContent(pageSize = PageSize.Fixed($pageSize), pageSpacing = gap) { page ->
-                    Box(Modifier.fillMaxSize()) {
+                    CarouselItem(Modifier.fillMaxSize()) {
                         Card(Modifier.fillMaxWidth().padding($padding.dp),
                         style = Style { contentPadding(horizontal = 0.dp, vertical = 16.dp) },
                     ) {
@@ -526,7 +536,7 @@ private fun carouselCode(title: String): String {
                         "of \" + state.pageCount }\n}"
                 ),
             )
-        "With dot indicators" ->
+        "Kotlin extension: With dot indicators" ->
             body.replace(
                 "\n    }\n}",
                 (
@@ -580,7 +590,7 @@ private val carouselAutoplayCode: String
         val hovered by hover.collectIsHoveredAsState()
         val dragged by state.interactionSource.collectIsDraggedAsState()
         var playing by remember { mutableStateOf(true) }
-        LaunchedEffect(hovered, dragged) { if (hovered || dragged) playing = false }
+        LaunchedEffect(hovered, dragged) { playing = !hovered && !dragged }
         val scope = rememberCoroutineScope()
         LaunchedEffect(state, playing) {
             if (playing) while (isActive) {
