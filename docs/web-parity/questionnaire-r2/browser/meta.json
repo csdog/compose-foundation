@@ -1,0 +1,158 @@
+{
+  "slug": "questionnaire",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/questionnaire",
+  "localUrl": "http://127.0.0.1:8775/questionnaire",
+  "capturedAt": "2026-11-05T05:10:42.791Z",
+  "app": [
+    "http://127.0.0.1:8775/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8775/afd5a5c537062da19b46.wasm"
+  ],
+  "officialDom": {
+    "title": "Questionnaire",
+    "description": "Copy PagePreviousNext",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "Installation#"
+      },
+      {
+        "tag": "H2",
+        "text": "Usage#"
+      },
+      {
+        "tag": "H2",
+        "text": "Composition#"
+      },
+      {
+        "tag": "H2",
+        "text": "Server Rendering#"
+      },
+      {
+        "tag": "H2",
+        "text": "Multiple Selection#"
+      },
+      {
+        "tag": "H2",
+        "text": "Freeform Answer#"
+      },
+      {
+        "tag": "H2",
+        "text": "Explicit Skip#"
+      },
+      {
+        "tag": "H2",
+        "text": "Shortcuts#"
+      },
+      {
+        "tag": "H2",
+        "text": "Custom Validation#"
+      },
+      {
+        "tag": "H2",
+        "text": "Controlled#"
+      },
+      {
+        "tag": "H2",
+        "text": "Resume#"
+      },
+      {
+        "tag": "H2",
+        "text": "Conditional Items#"
+      },
+      {
+        "tag": "H2",
+        "text": "Navigation State#"
+      },
+      {
+        "tag": "H2",
+        "text": "Custom Progress#"
+      },
+      {
+        "tag": "H2",
+        "text": "Animated Items#"
+      },
+      {
+        "tag": "H2",
+        "text": "Card#"
+      },
+      {
+        "tag": "H2",
+        "text": "Dialog#"
+      },
+      {
+        "tag": "H2",
+        "text": "Accessibility#"
+      },
+      {
+        "tag": "H2",
+        "text": "Unstyled#"
+      },
+      {
+        "tag": "H2",
+        "text": "API Reference#"
+      }
+    ],
+    "tabs": [
+      "Command",
+      "Manual",
+      "pnpm",
+      "npm",
+      "yarn",
+      "bun"
+    ],
+    "examples": 14,
+    "toc": [],
+    "bodyWidth": {
+      "x": 0,
+      "y": 64,
+      "width": 1080,
+      "height": 14977.140625,
+      "top": 64,
+      "right": 1080,
+      "bottom": 15041.140625,
+      "left": 0
+    },
+    "clientWidth": 1080,
+    "scrollHeight": 15041
+  },
+  "local": {
+    "desktop-light": {
+      "url": "http://127.0.0.1:8775/questionnaire",
+      "theme": "light",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(14849.5px + 100vh)"
+    },
+    "desktop-dark": {
+      "url": "http://127.0.0.1:8775/questionnaire",
+      "theme": "dark",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(14849.5px + 100vh)"
+    },
+    "phone-light": {
+      "url": "http://127.0.0.1:8775/questionnaire",
+      "theme": "light",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(17944.5px + 100vh)"
+    },
+    "phone-dark": {
+      "url": "http://127.0.0.1:8775/questionnaire",
+      "theme": "dark",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(17944.5px + 100vh)"
+    }
+  },
+  "files": {
+    "official-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/questionnaire-r2/browser/official-desktop-light.png",
+    "local-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/questionnaire-r2/browser/local-desktop-light.png",
+    "official-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/questionnaire-r2/browser/official-desktop-dark.png",
+    "local-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/questionnaire-r2/browser/local-desktop-dark.png",
+    "official-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/questionnaire-r2/browser/official-phone-light.png",
+    "local-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/questionnaire-r2/browser/local-phone-light.png",
+    "official-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/questionnaire-r2/browser/official-phone-dark.png",
+    "local-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/questionnaire-r2/browser/local-phone-dark.png"
+  }
+}

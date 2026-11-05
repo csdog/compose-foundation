@@ -3,24 +3,36 @@
 package com.toutiaoyan.compose.ui.catalog.docs
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.components.card.Card
+import com.toutiaoyan.compose.ui.components.card.CardAction
 import com.toutiaoyan.compose.ui.components.card.CardContent
 import com.toutiaoyan.compose.ui.components.card.CardFooter
 import com.toutiaoyan.compose.ui.components.card.CardHeader
+import com.toutiaoyan.compose.ui.components.card.CardTitle
+import com.toutiaoyan.compose.ui.components.card.CardDescription
 import com.toutiaoyan.compose.ui.components.dialog.Dialog
 import com.toutiaoyan.compose.ui.components.dialog.DialogContent
+import com.toutiaoyan.compose.ui.components.dialog.DialogDescription
 import com.toutiaoyan.compose.ui.components.dialog.DialogFooter
 import com.toutiaoyan.compose.ui.components.dialog.DialogHeader
+import com.toutiaoyan.compose.ui.components.dialog.DialogTitle
 import com.toutiaoyan.compose.ui.components.dialog.DialogTrigger
 import com.toutiaoyan.compose.ui.components.input.InputType
 import com.toutiaoyan.compose.ui.components.questionnaire.Questionnaire
@@ -38,49 +50,822 @@ import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireNext
 import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnairePrevious
 import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireProgress
 import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireReset
+import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireShortcuts
 import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireSkip
 import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireSubmit
-import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireShortcuts
-import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireChoiceDefinition
-import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireInputDefinition
-import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition
 import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireTitle
 import com.toutiaoyan.compose.ui.components.questionnaire.questionnaireState
+import com.toutiaoyan.compose.ui.components.select.Select
+import com.toutiaoyan.compose.ui.components.select.SelectContent
+import com.toutiaoyan.compose.ui.components.select.SelectItem
+import com.toutiaoyan.compose.ui.components.select.SelectSize
+import com.toutiaoyan.compose.ui.components.select.SelectTrigger
 
 private val questionnaireCollection =
     listOf(
-        QuestionnaireItemDefinition(
-            name = "prototype",
+        com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition(
+            name = "direction",
             required = true,
             prompt = "What should we prototype next?",
             description = "Choose a direction or write your own.",
             choices =
                 listOf(
-                    QuestionnaireChoiceDefinition(
+                    com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireChoiceDefinition(
                         "delegation",
                         "Delegation",
                         "Show how work moves to a specialist.",
                     ),
-                    QuestionnaireChoiceDefinition(
+                    com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireChoiceDefinition(
                         "questions",
                         "Question prompts",
                         "Show choices while the interface waits.",
                     ),
-                    QuestionnaireChoiceDefinition("both", "Both together"),
+                    com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireChoiceDefinition(
+                        "both",
+                        "Both together",
+                    ),
                 ),
-            input = QuestionnaireInputDefinition(placeholder = "Type another answer…"),
+            input =
+                com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireInputDefinition(
+                    "Another answer",
+                    "Type another answer…",
+                ),
         ),
-        QuestionnaireItemDefinition(
+        com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition(
             name = "detail",
             prompt = "How much detail should it include?",
             description = "Skip this if you are not sure yet.",
             choices =
                 listOf(
-                    QuestionnaireChoiceDefinition("focused", "Focused"),
-                    QuestionnaireChoiceDefinition("complete", "Complete flow"),
+                    com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireChoiceDefinition(
+                        "focused",
+                        "Focused",
+                    ),
+                    com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireChoiceDefinition(
+                        "complete",
+                        "Complete flow",
+                    ),
                 ),
         ),
     )
+
+private fun contentWidth() = Modifier.widthIn(max = 448.dp).fillMaxWidth()
+
+@Composable
+private fun MultipleSelectionPreview() {
+    Questionnaire(modifier = contentWidth(), onSubmit = { }) {
+        QuestionnaireProgress()
+        QuestionnaireItem("context", required = true, multiple = true) {
+            QuestionnaireTitle("What context should the agent inspect?")
+            QuestionnaireDescription("Select every source that may affect the implementation.")
+            QuestionnaireChoices {
+                QuestionnaireChoice("source", "Relevant source files")
+                QuestionnaireChoice("tests", "Existing tests")
+                QuestionnaireChoice("docs", "Architecture documentation")
+                QuestionnaireChoice("history", "Recent commit history")
+            }
+            QuestionnaireError()
+        }
+        QuestionnaireActions { QuestionnaireSubmit("Share context") }
+    }
+}
+
+@Composable
+private fun FreeformAnswerPreview() {
+    Questionnaire(modifier = contentWidth(), onSubmit = { }) {
+        QuestionnaireProgress()
+        QuestionnaireItem("approach", required = true) {
+            QuestionnaireTitle("How should the agent approach this refactor?")
+            QuestionnaireDescription("Choose a strategy or write a more specific instruction.")
+            QuestionnaireChoices {
+                QuestionnaireChoice("incremental", "Make the smallest safe change")
+                QuestionnaireChoice("module", "Refactor one module at a time")
+                QuestionnaireChoice("rewrite", "Replace the implementation completely")
+                QuestionnaireInput(
+                    placeholder = "Describe another approach…",
+                    contentDescription = "Another refactoring approach",
+                )
+            }
+            QuestionnaireError()
+        }
+        QuestionnaireActions { QuestionnaireSubmit("Use this approach") }
+    }
+}
+
+@Composable
+private fun ExplicitSkipPreview() {
+    Questionnaire(
+        modifier = contentWidth(),
+        items =
+            listOf(
+                com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition("task", required = true),
+                com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition("constraints"),
+                com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition("review", required = true),
+            ),
+        onSubmit = { },
+    ) {
+        QuestionnaireProgress()
+        QuestionnaireItem("task", required = true) {
+            QuestionnaireTitle("What kind of change is this?")
+            QuestionnaireDescription("Choose the category that best describes the work.")
+            QuestionnaireChoices {
+                QuestionnaireChoice("feature", "New feature")
+                QuestionnaireChoice("fix", "Bug fix")
+                QuestionnaireChoice("refactor", "Refactor")
+            }
+            QuestionnaireError()
+        }
+        QuestionnaireItem("constraints") {
+            QuestionnaireTitle("Are there any implementation constraints?")
+            QuestionnaireDescription("Answer if needed, or intentionally skip this question.")
+            QuestionnaireChoices {
+                QuestionnaireChoice("no-dependencies", "Do not add dependencies")
+                QuestionnaireChoice("no-migrations", "Do not change the database")
+                QuestionnaireChoice("preserve-api", "Preserve the public API")
+                QuestionnaireInput(
+                    placeholder = "Describe another constraint…",
+                    contentDescription = "Another implementation constraint",
+                )
+            }
+        }
+        QuestionnaireItem("review", required = true) {
+            QuestionnaireTitle("How should the work be reviewed?")
+            QuestionnaireDescription("Choose the checks the agent should complete before handoff.")
+            QuestionnaireChoices {
+                QuestionnaireChoice("tests", "Run the test suite")
+                QuestionnaireChoice("diff", "Review the final diff")
+                QuestionnaireChoice("both", "Tests and diff review")
+            }
+            QuestionnaireError()
+        }
+        QuestionnaireActions {
+            QuestionnairePrevious()
+            QuestionnaireSkip()
+            QuestionnaireNext("Next")
+            QuestionnaireSubmit("Submit brief")
+        }
+    }
+}
+
+@Composable
+private fun ShortcutsPreview() {
+    val labels = listOf("No shortcuts", "Letters", "Numbers")
+    val modes =
+        listOf(
+            QuestionnaireShortcuts.None,
+            QuestionnaireShortcuts.Letters,
+            QuestionnaireShortcuts.Numbers,
+        )
+    var modeIndex by remember { mutableStateOf(1) }
+    Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.End) {
+        Select(value = labels[modeIndex], onValueChange = { label -> modeIndex = labels.indexOf(label) }) {
+            SelectTrigger(Modifier.width(160.dp), size = SelectSize.Sm, accessibilityLabel = "Shortcut style")
+            SelectContent { labels.forEach { SelectItem(it) } }
+        }
+        Spacer(Modifier.height(8.dp))
+        QuestionnaireListShortcuts(modes[modeIndex])
+    }
+}
+
+@Composable
+private fun QuestionnaireListShortcuts(shortcuts: QuestionnaireShortcuts) {
+    Questionnaire(
+        modifier = contentWidth(),
+        items =
+            listOf(
+                com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition("action", required = true),
+            ),
+        shortcuts = shortcuts,
+        onSubmit = { },
+    ) {
+        QuestionnaireItem("action", required = true) {
+            QuestionnaireTitle("What should the agent do next?")
+            QuestionnaireDescription("Use the displayed shortcut or navigate with the keyboard.")
+            QuestionnaireChoices {
+                QuestionnaireChoice("inspect", "Inspect the implementation")
+                QuestionnaireChoice("tests", "Run the relevant tests")
+                QuestionnaireChoice("patch", "Prepare the patch")
+            }
+            QuestionnaireError()
+        }
+        QuestionnaireActions { QuestionnaireSubmit("Confirm action") }
+    }
+}
+
+@Composable
+private fun CustomValidationPreview() {
+    var item by remember { mutableStateOf("detail") }
+    var errors by remember { mutableStateOf<Map<String, String>>(emptyMap()) }
+    val definitions =
+        listOf(
+            com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition("detail", required = true),
+            com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition("audience", required = true),
+        )
+    Questionnaire(
+        modifier = contentWidth(),
+        item = item,
+        onItemChange = { item = it },
+        items = definitions,
+        onSubmit = { answers ->
+            val detail = answers["detail"]?.firstOrNull()
+            val audience = answers["audience"]?.firstOrNull()
+            val next =
+                if (audience == "public" && detail == "summary") {
+                    mapOf("detail" to "Public answers need enough context. Choose a complete answer.")
+                } else {
+                    emptyMap()
+                }
+            errors = next
+            if (next.isNotEmpty()) item = "detail"
+        },
+    ) {
+        Card(Modifier.fillMaxWidth()) {
+            QuestionnaireItem(
+                "detail",
+                required = true,
+                invalid = errors.containsKey("detail"),
+            ) {
+                CardHeader {
+                    QuestionnaireTitle("How much detail should the answer include?")
+                    QuestionnaireDescription("Choose the response depth.")
+                    CardAction {
+                        QuestionnaireProgress { state -> "${state.current} / ${state.total}" }
+                    }
+                }
+                CardContent {
+                    QuestionnaireChoices {
+                        QuestionnaireChoice("summary", "Concise summary")
+                        QuestionnaireChoice("complete", "Complete answer")
+                    }
+                    QuestionnaireError(text = errors["detail"])
+                }
+            }
+            QuestionnaireItem(
+                "audience",
+                required = true,
+                invalid = errors.containsKey("audience"),
+            ) {
+                CardHeader {
+                    QuestionnaireTitle("Who will read the answer?")
+                    QuestionnaireDescription("Public answers require complete context.")
+                    CardAction {
+                        QuestionnaireProgress { state -> "${state.current} / ${state.total}" }
+                    }
+                }
+                CardContent {
+                    QuestionnaireChoices {
+                        QuestionnaireChoice("team", "My team")
+                        QuestionnaireChoice("public", "Public audience")
+                    }
+                    QuestionnaireError(text = errors["audience"])
+                }
+            }
+            CardFooter {
+                QuestionnaireActions {
+                    QuestionnairePrevious()
+                    QuestionnaireNext("Next")
+                    QuestionnaireSubmit("Validate answers")
+                }
+            }
+        }
+    }
+}
+
+private class Checkpoint(val name: String, val label: String)
+
+private val checkpoints =
+    listOf(
+        Checkpoint("scope", "Change scope"),
+        Checkpoint("checks", "Verification"),
+        Checkpoint("output", "Final output"),
+    )
+
+@Composable
+private fun ControlledPreview() {
+    var item by remember { mutableStateOf("scope") }
+    val label = checkpoints.firstOrNull { it.name == item }?.label ?: item
+    Questionnaire(
+            modifier = Modifier.widthIn(max = 448.dp).fillMaxWidth(),
+            item = item,
+            onItemChange = { item = it },
+            items =
+                checkpoints.map {
+                    com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition(it.name, required = true)
+                },
+            onSubmit = { },
+        ) {
+            QuestionnaireProgress { state -> "Checkpoint ${state.current} of ${state.total}: $label" }
+            QuestionnaireItem("scope", required = true) {
+                QuestionnaireTitle("What may the agent change?")
+                QuestionnaireDescription("The host stores the active checkpoint while Questionnaire navigates.")
+                QuestionnaireChoices {
+                    QuestionnaireChoice("component", "Only the target component")
+                    QuestionnaireChoice("tests", "Component and related tests")
+                    QuestionnaireChoice("feature", "The complete feature area")
+                }
+                QuestionnaireError()
+            }
+            QuestionnaireItem("checks", required = true) {
+                QuestionnaireTitle("Which verification level should it use?")
+                QuestionnaireChoices {
+                    QuestionnaireChoice("targeted", "Targeted tests")
+                    QuestionnaireChoice("package", "Package tests and typecheck")
+                    QuestionnaireChoice("full", "Full workspace verification")
+                }
+                QuestionnaireError()
+            }
+            QuestionnaireItem("output", required = true) {
+                QuestionnaireTitle("What should the agent return when finished?")
+                QuestionnaireChoices {
+                    QuestionnaireChoice("summary", "Concise summary")
+                    QuestionnaireChoice("diff", "Summary with changed files")
+                    QuestionnaireChoice("handoff", "Detailed implementation handoff")
+                }
+                QuestionnaireError()
+            }
+            QuestionnaireActions {
+                QuestionnairePrevious()
+                QuestionnaireNext("Next")
+                QuestionnaireSubmit("Save workflow")
+            }
+        }
+}
+
+@Composable
+private fun ResumePreview() {
+    Questionnaire(
+        modifier = contentWidth(),
+        items =
+            listOf(
+                com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition("change", required = true),
+                com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition(
+                    "verification",
+                    required = true,
+                    multiple = true,
+                ),
+                com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition("notes"),
+            ),
+        defaultItem = "verification",
+        onSubmit = { },
+    ) {
+        QuestionnaireProgress()
+        QuestionnaireItem("change", required = true) {
+            QuestionnaireTitle("What kind of migration is this?")
+            QuestionnaireDescription("This answer was saved during the previous session.")
+            QuestionnaireChoices {
+                QuestionnaireChoice("incremental", "Incremental migration", defaultChecked = true)
+                QuestionnaireChoice("cutover", "Single cutover")
+            }
+            QuestionnaireError()
+        }
+        QuestionnaireItem("verification", required = true, multiple = true) {
+            QuestionnaireTitle("How should the migration be verified?")
+            QuestionnaireDescription("These checks were selected during the previous session.")
+            QuestionnaireChoices {
+                QuestionnaireChoice("tests", "Run migration tests", defaultChecked = true)
+                QuestionnaireChoice("typecheck", "Run the typecheck", defaultChecked = true)
+                QuestionnaireChoice("manual", "Perform a manual smoke test")
+            }
+            QuestionnaireError()
+        }
+        QuestionnaireItem("notes") {
+            QuestionnaireTitle("Anything else the agent should remember?")
+            QuestionnaireDescription("This note was saved with the draft.")
+            QuestionnaireInput(
+                placeholder = "Additional notes",
+                contentDescription = "Saved migration note",
+                defaultValue = "Keep the existing public API stable.",
+            )
+        }
+        QuestionnaireActions {
+            QuestionnaireReset()
+            QuestionnairePrevious()
+            QuestionnaireNext("Next")
+            QuestionnaireSubmit("Update draft")
+        }
+    }
+}
+
+@Composable
+private fun ConditionalItemsPreview() {
+    var runtime by remember { mutableStateOf("local") }
+    Questionnaire(modifier = contentWidth(), defaultItem = "runtime", onSubmit = { }) {
+        QuestionnaireProgress()
+        QuestionnaireItem("runtime", required = true) {
+            QuestionnaireTitle("Where should the agent run?")
+            QuestionnaireDescription("Cloud runs add an environment question to this flow.")
+            QuestionnaireChoices {
+                QuestionnaireChoice(
+                    "local",
+                    "Local workspace",
+                    checked = runtime == "local",
+                    onCheckedChange = { if (it) runtime = "local" },
+                )
+                QuestionnaireChoice(
+                    "cloud",
+                    "Cloud workspace",
+                    checked = runtime == "cloud",
+                    onCheckedChange = { if (it) runtime = "cloud" },
+                )
+            }
+            QuestionnaireError()
+        }
+        QuestionnaireItem("environment", required = true, disabled = runtime != "cloud") {
+            QuestionnaireTitle("Which cloud environment should it use?")
+            QuestionnaireChoices {
+                QuestionnaireChoice("preview", "Preview")
+                QuestionnaireChoice("staging", "Staging")
+                QuestionnaireChoice("isolated", "Isolated sandbox")
+            }
+            QuestionnaireError()
+        }
+        QuestionnaireItem("approval", required = true) {
+            QuestionnaireTitle("When should the agent request approval?")
+            QuestionnaireChoices {
+                QuestionnaireChoice("writes", "Before writing files")
+                QuestionnaireChoice("commands", "Before running commands")
+                QuestionnaireChoice("sensitive", "Only for sensitive actions")
+            }
+            QuestionnaireError()
+        }
+        QuestionnaireActions {
+            QuestionnairePrevious()
+            QuestionnaireNext("Next")
+            QuestionnaireSubmit("Save execution plan")
+        }
+    }
+}
+
+@Composable
+private fun NavigationStatePreview() {
+    Questionnaire(
+        modifier = contentWidth(),
+        items =
+            listOf(
+                com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition(
+                    "permission",
+                    required = true,
+                ),
+                com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition(
+                    "verification",
+                    required = true,
+                ),
+            ),
+        onSubmit = { },
+    ) {
+        val state = questionnaireState()
+        QuestionnaireProgress()
+        QuestionnaireItem("permission", required = true) {
+            QuestionnaireTitle("What may the agent modify?")
+            QuestionnaireDescription("Next is intentionally disabled until an answer is selected.")
+            QuestionnaireChoices {
+                QuestionnaireChoice("files", "Project files")
+                QuestionnaireChoice("tests", "Project files and tests")
+                QuestionnaireChoice("config", "Files, tests, and configuration")
+            }
+            QuestionnaireError()
+        }
+        QuestionnaireItem("verification", required = true) {
+            QuestionnaireTitle("What must pass before completion?")
+            QuestionnaireChoices {
+                QuestionnaireChoice("tests", "Tests")
+                QuestionnaireChoice("types", "Tests and types")
+                QuestionnaireChoice("all", "Tests, types, and visual QA")
+            }
+            QuestionnaireError()
+        }
+        QuestionnaireActions {
+            QuestionnairePrevious()
+            QuestionnaireNext(
+                enabled = state.status != QuestionnaireItemStatus.Unanswered,
+                text = "Next",
+            )
+            QuestionnaireSubmit(
+                enabled = state.status != QuestionnaireItemStatus.Unanswered,
+                text = "Save permissions",
+            )
+        }
+    }
+}
+
+@Composable
+private fun CustomProgressPreview() {
+    Questionnaire(
+        modifier = contentWidth(),
+        items =
+            listOf("scope", "strategy", "tests", "delivery").map {
+                com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition(it, required = true)
+            },
+        defaultItem = "scope",
+        onSubmit = { },
+    ) {
+        QuestionnaireProgress { state -> "Checkpoint ${state.current} of ${state.total}" }
+        QuestionnaireItem("scope", required = true) {
+            QuestionnaireTitle("How large is the change?")
+            QuestionnaireChoices {
+                QuestionnaireChoice("small", "Small patch")
+                QuestionnaireChoice("medium", "Feature-sized change")
+                QuestionnaireChoice("large", "Cross-package change")
+            }
+            QuestionnaireError()
+        }
+        QuestionnaireItem("strategy", required = true) {
+            QuestionnaireTitle("How should commits be organized?")
+            QuestionnaireChoices {
+                QuestionnaireChoice("single", "Single commit")
+                QuestionnaireChoice("logical", "Logical commits")
+                QuestionnaireChoice("squash", "Squash before review")
+            }
+            QuestionnaireError()
+        }
+        QuestionnaireItem("tests", required = true) {
+            QuestionnaireTitle("Which tests should run?")
+            QuestionnaireChoices {
+                QuestionnaireChoice("targeted", "Targeted tests")
+                QuestionnaireChoice("package", "Package suite")
+                QuestionnaireChoice("workspace", "Full workspace")
+            }
+            QuestionnaireError()
+        }
+        QuestionnaireItem("delivery", required = true) {
+            QuestionnaireTitle("How should the work be delivered?")
+            QuestionnaireChoices {
+                QuestionnaireChoice("patch", "Patch only")
+                QuestionnaireChoice("commit", "Committed locally")
+                QuestionnaireChoice("branch", "Push a review branch")
+            }
+            QuestionnaireError()
+        }
+        QuestionnaireActions {
+            QuestionnairePrevious()
+            QuestionnaireNext("Next")
+            QuestionnaireSubmit("Finish plan")
+        }
+    }
+}
+
+@Composable
+private fun AnimatedItemsPreview() {
+    Questionnaire(
+        modifier = contentWidth(),
+        defaultItem = "task",
+        animate = true,
+        items =
+            listOf("task", "review", "delivery").map {
+                com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition(it, required = true)
+            },
+        onSubmit = { },
+    ) {
+        QuestionnaireProgress()
+        QuestionnaireItem("task", required = true) {
+            QuestionnaireTitle("What should the agent do?")
+            QuestionnaireDescription("Choose the task for this run.")
+            QuestionnaireChoices {
+                QuestionnaireChoice("implement", "Implement the requested change")
+                QuestionnaireChoice("debug", "Debug the current behavior")
+                QuestionnaireChoice("review", "Review the implementation")
+            }
+            QuestionnaireError()
+        }
+        QuestionnaireItem("review", required = true) {
+            QuestionnaireTitle("How should the work be reviewed?")
+            QuestionnaireDescription("Select the verification depth.")
+            QuestionnaireChoices {
+                QuestionnaireChoice("targeted", "Targeted checks")
+                QuestionnaireChoice("complete", "Complete test suite")
+                QuestionnaireChoice("manual", "Tests and manual QA")
+            }
+            QuestionnaireError()
+        }
+        QuestionnaireItem("delivery", required = true) {
+            QuestionnaireTitle("How should the result be delivered?")
+            QuestionnaireDescription("Choose the final handoff format.")
+            QuestionnaireChoices {
+                QuestionnaireChoice("summary", "Concise summary")
+                QuestionnaireChoice("diff", "Summary and changed files")
+                QuestionnaireChoice("handoff", "Detailed review handoff")
+            }
+            QuestionnaireError()
+        }
+        QuestionnaireActions {
+            QuestionnairePrevious()
+            QuestionnaireNext("Next")
+            QuestionnaireSubmit("Save workflow")
+        }
+    }
+}
+
+@Composable
+private fun CardPreview() {
+    Questionnaire(modifier = contentWidth(), defaultItem = "task", shortcuts = QuestionnaireShortcuts.Numbers, onSubmit = { }) {
+        Card(Modifier.fillMaxWidth()) {
+            QuestionnaireItem("task", required = true) {
+                CardHeader {
+                    QuestionnaireTitle("What should the agent work on?")
+                    QuestionnaireDescription("Choose the task that should be handled next.")
+                    CardAction { QuestionnaireProgress() }
+                }
+                CardContent {
+                    QuestionnaireChoices {
+                        QuestionnaireChoice("fix", "Fix the failing tests")
+                        QuestionnaireChoice("refactor", "Refactor the data layer")
+                        QuestionnaireChoice("docs", "Update the integration guide")
+                    }
+                    QuestionnaireError()
+                }
+            }
+            QuestionnaireItem("output", required = true) {
+                CardHeader {
+                    QuestionnaireTitle("What should the final handoff include?")
+                    QuestionnaireDescription("Pick the level of detail needed for review.")
+                    CardAction { QuestionnaireProgress() }
+                }
+                CardContent {
+                    QuestionnaireChoices {
+                        QuestionnaireChoice("summary", "Summary only")
+                        QuestionnaireChoice("files", "Summary and changed files")
+                        QuestionnaireChoice("review", "Full review handoff")
+                    }
+                    QuestionnaireError()
+                }
+            }
+            CardFooter {
+                QuestionnaireActions {
+                    QuestionnairePrevious()
+                    QuestionnaireNext("Next")
+                    QuestionnaireSubmit("Create task")
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun DialogPreview() {
+    var open by remember { mutableStateOf(false) }
+    Dialog(open = open, onOpenChange = { open = it }) {
+        DialogTrigger("Open clarification")
+            DialogContent {
+                DialogHeader {
+                    DialogTitle("Clarification")
+                    DialogDescription("Answer so the agent can continue. Close is host-owned.")
+                }
+                Questionnaire(
+                    modifier = Modifier.fillMaxWidth(),
+                    defaultItem = "scope",
+                    items =
+                        listOf("scope", "tests").map {
+                            com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition(
+                                it,
+                                required = true,
+                            )
+                        },
+                    onSubmit = { open = false },
+                ) {
+                    QuestionnaireItem("scope", required = true) {
+                        QuestionnaireTitle("Which files are in scope?")
+                        QuestionnaireDescription("Choose how broadly the agent can update the workspace.")
+                        QuestionnaireChoices {
+                            QuestionnaireChoice("component", "Component only")
+                            QuestionnaireChoice("feature", "Complete feature directory")
+                            QuestionnaireChoice("workspace", "Any related workspace file")
+                        }
+                        QuestionnaireError()
+                    }
+                    QuestionnaireItem("tests", required = true) {
+                        QuestionnaireTitle("How much verification is needed?")
+                        QuestionnaireDescription("Choose the checks the agent should run before handoff.")
+                        QuestionnaireChoices {
+                            QuestionnaireChoice("targeted", "Targeted tests")
+                            QuestionnaireChoice("package", "Package tests")
+                            QuestionnaireChoice("full", "Full workspace verification")
+                        }
+                        QuestionnaireError()
+                    }
+                DialogFooter {
+                    QuestionnaireActions {
+                        QuestionnairePrevious()
+                        QuestionnaireNext("Next")
+                        QuestionnaireSubmit("Send answer")
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun DisabledExtensionPreview() {
+    Questionnaire(modifier = contentWidth(), disabled = true, onSubmit = { }) {
+        QuestionnaireProgress()
+        QuestionnaireItem("direction", required = true) {
+            QuestionnaireTitle("What should the agent build next?")
+            QuestionnaireChoices {
+                QuestionnaireChoice("timeline", "Tool call timeline")
+                QuestionnaireChoice("checkpoints", "Approval checkpoints")
+            }
+        }
+        QuestionnaireActions {
+            QuestionnairePrevious()
+            QuestionnaireNext()
+            QuestionnaireSubmit()
+        }
+    }
+}
+
+@Composable
+private fun ItemsCollectionExtensionPreview() {
+    Questionnaire(
+        modifier = contentWidth(),
+        items = questionnaireCollection,
+        onSubmit = { },
+    ) {
+        QuestionnaireProgress()
+        questionnaireCollection.forEach { question ->
+            QuestionnaireItem(question.name, required = question.required, multiple = question.multiple) {
+                if (question.prompt.isNotEmpty()) QuestionnaireTitle(question.prompt)
+                question.description?.let { QuestionnaireDescription(it) }
+                QuestionnaireChoices {
+                    question.choices.forEach { choice ->
+                        QuestionnaireChoice(choice.value, choice.label, description = choice.description)
+                    }
+                    question.input?.let { input ->
+                        QuestionnaireInput(contentDescription = input.label, placeholder = input.placeholder)
+                    }
+                }
+                QuestionnaireError()
+            }
+        }
+        QuestionnaireActions {
+            QuestionnairePrevious()
+            QuestionnaireSkip()
+            QuestionnaireNext()
+            QuestionnaireSubmit()
+        }
+    }
+}
+
+@Composable
+private fun ChoicePartsExtensionPreview() {
+    Questionnaire(modifier = contentWidth(), onSubmit = { }) {
+        QuestionnaireProgress()
+        QuestionnaireItem("direction", required = true) {
+            QuestionnaireTitle("What should the agent build next?")
+            QuestionnaireDescription("Compose ChoiceLabel and ChoiceDescription for rich rows.")
+            QuestionnaireChoices {
+                QuestionnaireChoice("timeline") {
+                    Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.Top) {
+                        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                            QuestionnaireChoiceLabel("Tool call timeline")
+                            QuestionnaireChoiceDescription("Show what the agent ran and what came back.")
+                        }
+                    }
+                }
+                QuestionnaireChoice("checkpoints") {
+                    Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.Top) {
+                        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                            QuestionnaireChoiceLabel("Approval checkpoints")
+                            QuestionnaireChoiceDescription("Ask before sensitive or destructive actions.")
+                        }
+                    }
+                }
+            }
+        }
+        QuestionnaireActions {
+            QuestionnaireNext()
+            QuestionnaireSubmit()
+        }
+    }
+}
+
+@Composable
+private fun ResetExtensionPreview() {
+    Questionnaire(modifier = contentWidth(), defaultItem = "detail", onSubmit = { }) {
+        QuestionnaireProgress()
+        QuestionnaireItem("direction", required = true) {
+            QuestionnaireTitle("What should the agent build next?")
+            QuestionnaireChoices {
+                QuestionnaireChoice("timeline", "Tool call timeline")
+                QuestionnaireChoice("checkpoints", "Approval checkpoints")
+            }
+            QuestionnaireError()
+        }
+        QuestionnaireItem("detail") {
+            QuestionnaireTitle("How should the migration be verified?")
+            QuestionnaireDescription("These checks were selected during the previous session.")
+            QuestionnaireChoices {
+                QuestionnaireChoice("tests", "Run migration tests")
+                QuestionnaireChoice("types", "Run the typecheck", defaultChecked = true)
+                QuestionnaireChoice("manual", "Perform a manual smoke test")
+            }
+        }
+        QuestionnaireActions {
+            QuestionnaireReset()
+            QuestionnairePrevious()
+            QuestionnaireSubmit()
+        }
+    }
+}
 
 val questionnaireDoc =
     ComponentDoc(
@@ -89,885 +874,495 @@ val questionnaireDoc =
         description =
             "A multi-step questionnaire with single-choice, multiple-choice, freeform, " +
                 "and skippable questions.",
+        usageImportsCode =
+            "import com.toutiaoyan.compose.ui.components.questionnaire.*",
         usageCode =
             """
-            Questionnaire(onSubmit = { answers -> }) {
+            val items = listOf(
+                QuestionnaireItemDefinition(
+                    name = "direction",
+                    required = true,
+                    prompt = "What should we prototype next?",
+                    description = "Choose a direction or write your own.",
+                    choices = listOf(
+                        QuestionnaireChoiceDefinition("delegation", "Delegation", "Show how work moves to a specialist."),
+                        QuestionnaireChoiceDefinition("questions", "Question prompts", "Show choices while the interface waits."),
+                        QuestionnaireChoiceDefinition("both", "Both together"),
+                    ),
+                    input = QuestionnaireInputDefinition("Another answer", "Type another answer…"),
+                ),
+            )
+
+            Questionnaire(items = items, onSubmit = { answers -> }) {
                 QuestionnaireProgress()
                 QuestionnaireItem("direction", required = true) {
-                    QuestionnaireTitle("What should the agent build next?")
-                    QuestionnaireDescription("Choose a direction or describe another task.")
+                    QuestionnaireTitle("What should we prototype next?")
+                    QuestionnaireDescription("Choose a direction or write your own.")
                     QuestionnaireChoices {
-                        QuestionnaireChoice("timeline", "Tool call timeline")
-                        QuestionnaireChoice("checkpoints", "Approval checkpoints")
+                        QuestionnaireChoice("delegation", "Delegation")
+                        QuestionnaireChoice("questions", "Question prompts")
+                        QuestionnaireChoice("both", "Both together")
+                        QuestionnaireInput(placeholder = "Type another answer…")
                     }
                     QuestionnaireError()
                 }
                 QuestionnaireActions {
                     QuestionnairePrevious()
+                    QuestionnaireSkip()
                     QuestionnaireNext()
                     QuestionnaireSubmit()
                 }
             }
             """.trimIndent(),
-        examples =
+        compositionCode =
+            """
+            Questionnaire
+            ├── QuestionnaireProgress
+            ├── QuestionnaireItem
+            │   ├── QuestionnaireTitle
+            │   ├── QuestionnaireDescription
+            │   ├── QuestionnaireChoices
+            │   │   ├── QuestionnaireChoice
+            │   │   └── QuestionnaireInput
+            │   └── QuestionnaireError
+            └── QuestionnaireActions
+                ├── QuestionnairePrevious
+                ├── QuestionnaireSkip
+                ├── QuestionnaireNext
+                └── QuestionnaireSubmit
+            """.trimIndent(),
+        examplesHeading = null,
+        beforeExamples =
             listOf(
-                ComponentExample(
-                    title = "Default (Kotlin)",
-                    code =
-                        """
-                        Questionnaire(onSubmit = { }) {
-                            QuestionnaireProgress()
-                            QuestionnaireItem("direction", required = true) {
-                                QuestionnaireTitle("What should the agent build next?")
-                                QuestionnaireDescription("Choose a direction or describe another task.")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice(
-                                        "timeline",
-                                        "Tool call timeline",
-                                        description = "Show what the agent ran and what came back.",
-                                    )
-                                    QuestionnaireChoice(
-                                        "checkpoints",
-                                        "Approval checkpoints",
-                                        description = "Ask before sensitive or destructive actions.",
-                                    )
-                                    QuestionnaireChoice(
-                                        "handoffs",
-                                        "Sub-agent handoffs",
-                                        description = "Make delegated work and results easier to follow.",
-                                    )
-                                }
-                                QuestionnaireError()
-                            }
-                            QuestionnaireItem("detail") {
-                                QuestionnaireTitle("How much detail should it include?")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("focused", "Focused")
-                                    QuestionnaireChoice("complete", "Complete flow")
-                                }
-                            }
-                            QuestionnaireActions {
-                                QuestionnairePrevious()
-                                QuestionnaireNext()
-                                QuestionnaireSubmit()
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Questionnaire(modifier = Modifier.width(360.dp), onSubmit = { }) {
-                            QuestionnaireProgress()
-                            QuestionnaireItem("direction", required = true) {
-                                QuestionnaireTitle("What should the agent build next?")
-                                QuestionnaireDescription("Choose a direction or describe another task.")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice(
-                                        "timeline",
-                                        "Tool call timeline",
-                                        description = "Show what the agent ran and what came back.",
-                                    )
-                                    QuestionnaireChoice(
-                                        "checkpoints",
-                                        "Approval checkpoints",
-                                        description = "Ask before sensitive or destructive actions.",
-                                    )
-                                    QuestionnaireChoice(
-                                        "handoffs",
-                                        "Sub-agent handoffs",
-                                        description = "Make delegated work and results easier to follow.",
-                                    )
-                                }
-                                QuestionnaireError()
-                            }
-                            QuestionnaireItem("detail") {
-                                QuestionnaireTitle("How much detail should it include?")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("focused", "Focused")
-                                    QuestionnaireChoice("complete", "Complete flow")
-                                }
-                            }
-                            QuestionnaireActions {
-                                QuestionnairePrevious()
-                                QuestionnaireNext()
-                                QuestionnaireSubmit()
-                            }
-                        }
-                    },
+                ComponentGuideSection(
+                    "Server Rendering",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "Pass `items` to server-render the active item, progress, actions, and answer " +
+                                "shortcuts. See the [headless Questionnaire](https://ui.shadcn.com/docs/react/questionnaire) " +
+                                "for the complete behavior.",
+                        ),
+                    ),
                 ),
-                ComponentExample(
-                    title = "Disabled",
-                    code =
-                        """
-                        Questionnaire(disabled = true, onSubmit = { }) {
-                            QuestionnaireProgress()
-                            QuestionnaireItem("direction", required = true) {
-                                QuestionnaireTitle("What should the agent build next?")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("timeline", "Tool call timeline")
-                                    QuestionnaireChoice("checkpoints", "Approval checkpoints")
-                                }
-                            }
-                            QuestionnaireActions {
-                                QuestionnairePrevious()
-                                QuestionnaireNext()
-                                QuestionnaireSubmit()
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Questionnaire(
-                            modifier = Modifier.width(360.dp),
-                            disabled = true,
-                            onSubmit = { },
-                        ) {
-                            QuestionnaireProgress()
-                            QuestionnaireItem("direction", required = true) {
-                                QuestionnaireTitle("What should the agent build next?")
-                                QuestionnaireDescription("Choose a direction or describe another task.")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice(
-                                        "timeline",
-                                        "Tool call timeline",
-                                        description = "Show what the agent ran and what came back.",
-                                    )
-                                    QuestionnaireChoice(
-                                        "checkpoints",
-                                        "Approval checkpoints",
-                                        description = "Ask before sensitive or destructive actions.",
-                                    )
-                                    QuestionnaireChoice(
-                                        "handoffs",
-                                        "Sub-agent handoffs",
-                                        description = "Make delegated work and results easier to follow.",
-                                    )
-                                }
-                                QuestionnaireError()
-                            }
-                            QuestionnaireItem("detail") {
-                                QuestionnaireTitle("How much detail should it include?")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("focused", "Focused")
-                                    QuestionnaireChoice("complete", "Complete flow")
-                                }
-                            }
-                            QuestionnaireActions {
-                                QuestionnairePrevious()
-                                QuestionnaireNext()
-                                QuestionnaireSubmit()
-                            }
-                        }
-                    },
+            ),
+        afterExamples =
+            listOf(
+                ComponentGuideSection(
+                    "Accessibility",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "`QuestionnaireItem` renders a `fieldset`, and `QuestionnaireTitle` renders its " +
+                                "`legend`. Descriptions and active errors are associated with the current item, " +
+                                "and invalid items and answer controls expose an invalid state.",
+                        ),
+                        ComponentGuideBlock.Paragraph(
+                            "Fixed choices preserve native radio and checkbox behavior. Progress is exposed as " +
+                                "a named progressbar, navigation uses real buttons, and inactive items and " +
+                                "actions are hidden and inert. Successful navigation focuses the newly active " +
+                                "item; failed validation focuses an available answer control.",
+                        ),
+                        ComponentGuideBlock.Paragraph(
+                            "Always give `QuestionnaireInput` an accessible name with a visible label, " +
+                                "`contentDescription`, or a labelled field. A placeholder is not a label. See the " +
+                                "[Questionnaire accessibility guide](https://ui.shadcn.com/docs/react/questionnaire#accessibility) " +
+                                "for labeling custom compositions and the complete keyboard behavior.",
+                        ),
+                    ),
                 ),
-                ComponentExample(
-                    title = "Multiple selection",
-                    code =
-                        """
-                        QuestionnaireItem("context", multiple = true) {
-                            QuestionnaireTitle("What context should the agent inspect?")
-                            QuestionnaireChoices {
-                                QuestionnaireChoice("source", "Relevant source files")
-                                QuestionnaireChoice("tests", "Existing tests")
-                                QuestionnaireChoice("docs", "Architecture documentation")
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Questionnaire(modifier = Modifier.width(360.dp), defaultValue = "context") {
-                            QuestionnaireProgress()
-                            QuestionnaireItem("context", multiple = true) {
-                                QuestionnaireTitle("What context should the agent inspect?")
-                                QuestionnaireDescription("Select every source that may affect the implementation.")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("source", "Relevant source files")
-                                    QuestionnaireChoice("tests", "Existing tests")
-                                    QuestionnaireChoice("docs", "Architecture documentation")
-                                }
-                            }
-                            QuestionnaireActions {
-                                QuestionnairePrevious()
-                                QuestionnaireSubmit()
-                            }
-                        }
-                    },
+                ComponentGuideSection(
+                    "Unstyled",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "The behavior in the official `Questionnaire` comes from the `@shadcn/react` package. " +
+                                "To use it directly with your own markup and styles, see " +
+                                "[Questionnaire](https://ui.shadcn.com/docs/react/questionnaire) under " +
+                                "`@shadcn/react`. This Compose port implements the styled parts with the same " +
+                                "behavior in Kotlin, without that package.",
+                        ),
+                    ),
                 ),
-                ComponentExample(
-                    title = "Freeform answer",
-                    code =
-                        """
-                        QuestionnaireChoices {
-                            QuestionnaireChoice("smallest", "Make the smallest safe change")
-                            QuestionnaireInput(
-                                placeholder = "Type another answer…",
-                                contentDescription = "Another answer",
-                            )
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Questionnaire(
-                            modifier = Modifier.width(360.dp),
-                            onSubmit = { },
-                        ) {
-                            QuestionnaireProgress()
-                            QuestionnaireItem("approach") {
-                                QuestionnaireTitle("How should the agent approach this refactor?")
-                                QuestionnaireDescription("Choose a strategy or write a more specific instruction.")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("smallest", "Make the smallest safe change")
-                                    QuestionnaireChoice("module", "Refactor one module at a time")
-                                    QuestionnaireInput(
-                                        placeholder = "Type another answer…",
-                                        contentDescription = "Another answer",
-                                    )
-                                }
-                            }
-                            QuestionnaireActions {
-                                QuestionnaireSubmit()
-                            }
-                        }
-                    },
+                ComponentGuideSection(
+                    "API Reference",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "The props, data attributes, and render states for every part are documented on the " +
+                                "[@shadcn/react Questionnaire](https://ui.shadcn.com/docs/react/questionnaire#api-reference) " +
+                                "page. The styled components inherit the corresponding unstyled props. " +
+                                "Navigation components also accept Button `size` and `variant` props, and " +
+                                "`QuestionnaireActions` is a styled-only layout helper.",
+                        ),
+                        ComponentGuideBlock.Paragraph(
+                            "Kotlin API summary: `Questionnaire` takes `item`/`onItemChange` for controlled " +
+                                "navigation and `defaultItem` for the initial step, `items` for progress, " +
+                                "shortcuts and validation, `shortcuts`, `animate`, `disabled` and `onSubmit` " +
+                                "(answers keyed by item name). `QuestionnaireItem` takes `required`, `multiple`, " +
+                                "`requiredMessage`, `disabled`, `invalid`, `validate` and `onStatusChange`.",
+                        ),
+                    ),
                 ),
-                ComponentExample(
-                    title = "Explicit skip",
-                    code =
-                        """
-                        QuestionnaireItem("kind", required = false) {
-                            QuestionnaireTitle("What kind of change is this?")
-                            QuestionnaireChoices {
-                                QuestionnaireChoice("feature", "New feature")
-                                QuestionnaireChoice("fix", "Bug fix")
-                            }
-                        }
-                        QuestionnaireActions {
-                            QuestionnaireSkip()
-                            QuestionnaireNext()
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Questionnaire(modifier = Modifier.width(360.dp)) {
-                            QuestionnaireProgress()
-                            QuestionnaireItem("kind") {
-                                QuestionnaireTitle("What kind of change is this?")
-                                QuestionnaireDescription("Skip this if you are not sure yet.")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("feature", "New feature")
-                                    QuestionnaireChoice("fix", "Bug fix")
-                                    QuestionnaireChoice("refactor", "Refactor")
-                                }
-                            }
-                            QuestionnaireItem("done", required = true) {
-                                QuestionnaireTitle("Ready to continue?")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("yes", "Yes")
-                                }
-                                QuestionnaireError()
-                            }
-                            QuestionnaireActions {
-                                QuestionnairePrevious()
-                                QuestionnaireSkip()
-                                QuestionnaireNext()
-                                QuestionnaireSubmit()
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Shortcuts",
-                    code =
-                        """
-                        Questionnaire(shortcuts = QuestionnaireShortcuts.Letters) {
-                            QuestionnaireItem("review", required = true) {
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("api", "Public API")
-                                    QuestionnaireChoice("tests", "Test coverage")
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Questionnaire(
-                            modifier = Modifier.width(360.dp),
-                            shortcuts = QuestionnaireShortcuts.Letters,
-                        ) {
-                            QuestionnaireProgress()
-                            QuestionnaireItem("review", required = true) {
-                                QuestionnaireTitle("What should the agent review?")
-                                QuestionnaireDescription("Use the displayed shortcut or click a choice.")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("api", "Public API")
-                                    QuestionnaireChoice("tests", "Test coverage")
-                                    QuestionnaireChoice("docs", "Architecture docs")
-                                }
-                                QuestionnaireError()
-                            }
-                            QuestionnaireActions {
-                                QuestionnaireNext()
-                                QuestionnaireSubmit()
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Conditional item",
-                    code =
-                        """
-                        var run by remember { mutableStateOf<String?>(null) }
-                        QuestionnaireChoice("cloud", "Cloud workspace",
-                            checked = run == "cloud",
-                            onCheckedChange = { if (it) run = "cloud" })
-                        QuestionnaireItem("region", disabled = run != "cloud") { /* … */ }
-                        """.trimIndent(),
-                    preview = {
-                        var run by remember { mutableStateOf<String?>(null) }
-                        Questionnaire(modifier = Modifier.width(360.dp), defaultValue = "run") {
-                            QuestionnaireProgress()
-                            QuestionnaireItem("run", required = true) {
-                                QuestionnaireTitle("Where should the agent run?")
-                                QuestionnaireDescription("Cloud adds an environment question.")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice(
-                                        "local",
-                                        "Local workspace",
-                                        checked = run == "local",
-                                        onCheckedChange = { if (it) run = "local" },
-                                    )
-                                    QuestionnaireChoice(
-                                        "cloud",
-                                        "Cloud workspace",
-                                        checked = run == "cloud",
-                                        onCheckedChange = { if (it) run = "cloud" },
-                                    )
-                                }
-                            }
-                            QuestionnaireItem("region", disabled = run != "cloud") {
-                                QuestionnaireTitle("Which cloud region?")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("us", "US")
-                                    QuestionnaireChoice("eu", "EU")
-                                }
-                            }
-                            QuestionnaireActions {
-                                QuestionnairePrevious()
-                                QuestionnaireNext()
-                                QuestionnaireSubmit()
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Resume",
-                    code =
-                        """
-                        Questionnaire(defaultItem = "detail") {
-                            QuestionnaireItem("direction", required = true) { /* … */ }
-                            QuestionnaireItem("detail") {
-                                QuestionnaireChoice("complete", "Complete flow", defaultChecked = true)
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Questionnaire(
-                            modifier = Modifier.width(360.dp),
-                            defaultItem = "detail",
-                        ) {
-                            QuestionnaireProgress()
-                            QuestionnaireItem("direction", required = true) {
-                                QuestionnaireTitle("What should the agent build next?")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("timeline", "Tool call timeline")
-                                    QuestionnaireChoice("checkpoints", "Approval checkpoints")
-                                }
-                                QuestionnaireError()
-                            }
-                            QuestionnaireItem("detail") {
-                                QuestionnaireTitle("How much detail should it include?")
-                                QuestionnaireDescription("Resumed on this question with a default answer.")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("focused", "Focused")
-                                    QuestionnaireChoice(
-                                        "complete",
-                                        "Complete flow",
-                                        defaultChecked = true,
-                                    )
-                                }
-                            }
-                            QuestionnaireActions {
-                                QuestionnairePrevious()
-                                QuestionnaireSubmit()
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Custom validation",
-                    code =
-                        """
-                        QuestionnaireItem(
-                            "email",
-                            required = true,
-                            invalid = true,
-                            requiredMessage = "Enter a company email.",
-                            validate = { answers ->
-                                answers.firstOrNull()?.takeIf { !it.endsWith("@acme.com") }
-                                    ?.let { "Enter a company email." }
-                            },
-                        ) {
-                            QuestionnaireInput(placeholder = "you@acme.com", type = InputType.Email)
-                            QuestionnaireError()
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Questionnaire(modifier = Modifier.width(360.dp), onSubmit = { }) {
-                            QuestionnaireProgress()
-                            QuestionnaireItem(
-                                "email",
-                                required = true,
-                                invalid = true,
-                                requiredMessage = "Enter a company email.",
-                            ) {
-                                QuestionnaireTitle("Work email")
-                                QuestionnaireDescription("Must be an @acme.com address.")
-                                QuestionnaireInput(placeholder = "you@acme.com", type = InputType.Email)
-                                QuestionnaireError()
-                            }
-                            QuestionnaireActions {
-                                QuestionnaireSubmit()
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Animated items",
-                    code =
-                        """
-                        Questionnaire(animate = true, onSubmit = { }) {
-                            QuestionnaireItem("direction", required = true) { /* … */ }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Questionnaire(
-                            modifier = Modifier.width(360.dp),
-                            animate = true,
-                            onSubmit = { },
-                        ) {
-                            QuestionnaireProgress()
-                            QuestionnaireItem("direction", required = true) {
-                                QuestionnaireTitle("What should the agent build next?")
-                                QuestionnaireDescription("Choose a direction or describe another task.")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("timeline", "Tool call timeline")
-                                    QuestionnaireChoice("checkpoints", "Approval checkpoints")
-                                    QuestionnaireChoice("handoffs", "Sub-agent handoffs")
-                                }
-                            }
-                            QuestionnaireActions {
-                                QuestionnaireNext()
-                                QuestionnaireSubmit()
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Item status",
-                    code =
-                        """
-                        QuestionnaireItem("direction", onStatusChange = { status -> }) { /* … */ }
-                        val state = questionnaireState() // state.status
-                        """.trimIndent(),
-                    preview = {
-                        Questionnaire(modifier = Modifier.width(360.dp), onSubmit = { }) {
-                            val state = questionnaireState()
-                            QuestionnaireProgress()
-                            QuestionnaireItem("direction") {
-                                QuestionnaireTitle("What should the agent build next?")
-                                QuestionnaireDescription("Status: ${state.status.name.lowercase()}")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("timeline", "Tool call timeline")
-                                    QuestionnaireChoice("checkpoints", "Approval checkpoints")
-                                }
-                            }
-                            QuestionnaireActions {
-                                QuestionnaireSkip()
-                                QuestionnaireSubmit()
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Custom progress",
-                    code =
-                        """
-                        QuestionnaireProgress { state ->
-                            "Checkpoint ${'$'}{state.current} of ${'$'}{state.total}"
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Questionnaire(modifier = Modifier.width(360.dp), onSubmit = { }) {
-                            QuestionnaireProgress { state ->
-                                "Checkpoint ${state.current} of ${state.total}"
-                            }
-                            QuestionnaireItem("scope", required = true) {
-                                QuestionnaireTitle("How large is the change?")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("patch", "Small patch")
-                                    QuestionnaireChoice("feature", "Feature-sized change")
-                                    QuestionnaireChoice("cross", "Cross-package change")
-                                }
-                            }
-                            QuestionnaireItem("verify") {
-                                QuestionnaireTitle("How should it be verified?")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("tests", "Run tests")
-                                    QuestionnaireChoice("manual", "Manual smoke test")
-                                }
-                            }
-                            QuestionnaireActions {
-                                QuestionnaireNext()
-                                QuestionnaireSubmit()
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Navigation state",
-                    code =
-                        """
-                        val state = questionnaireState()
-                        QuestionnaireNext(
-                            enabled = state.status != QuestionnaireItemStatus.Unanswered,
-                        )
-                        """.trimIndent(),
-                    preview = {
-                        Questionnaire(modifier = Modifier.width(360.dp), onSubmit = { }) {
-                            val state = questionnaireState()
-                            QuestionnaireProgress()
-                            QuestionnaireItem("modify", required = true) {
-                                QuestionnaireTitle("What may the agent modify?")
-                                QuestionnaireDescription("Next is disabled until an answer is selected.")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("files", "Project files")
-                                    QuestionnaireChoice("tests", "Project files and tests")
-                                    QuestionnaireChoice("config", "Files, tests, and configuration")
-                                }
-                            }
-                            QuestionnaireItem("verify") {
-                                QuestionnaireTitle("How should it be verified?")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("tests", "Run tests")
-                                    QuestionnaireChoice("manual", "Manual smoke test")
-                                }
-                            }
-                            QuestionnaireActions {
-                                QuestionnaireNext(
-                                    enabled = state.status != QuestionnaireItemStatus.Unanswered,
-                                )
-                                QuestionnaireSubmit()
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Card",
-                    code =
-                        """
-                        Questionnaire(onSubmit = { }) {
-                            Card {
-                                CardHeader {
-                                    QuestionnaireTitle("What should the agent work on?")
-                                    QuestionnaireDescription("Choose the task that should be handled next.")
-                                }
-                                CardContent {
-                                    QuestionnaireProgress()
-                                    QuestionnaireItem("task", required = true) { /* choices */ }
-                                }
-                                CardFooter {
-                                    QuestionnaireNext()
-                                    QuestionnaireSubmit()
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Questionnaire(onSubmit = { }) {
-                            Card(modifier = Modifier.width(360.dp)) {
-                                CardHeader {
-                                    QuestionnaireTitle("What should the agent work on?")
-                                    QuestionnaireDescription("Choose the task that should be handled next.")
-                                }
-                                CardContent {
-                                    QuestionnaireProgress()
-                                    QuestionnaireItem("task", required = true) {
-                                        QuestionnaireChoices {
-                                            QuestionnaireChoice("tests", "Fix the failing tests")
-                                            QuestionnaireChoice("refactor", "Refactor the data layer")
-                                            QuestionnaireChoice("docs", "Update the integration guide")
-                                        }
-                                    }
-                                    QuestionnaireItem("verify") {
-                                        QuestionnaireChoices {
-                                            QuestionnaireChoice("tests", "Run tests")
-                                            QuestionnaireChoice("manual", "Manual smoke test")
-                                        }
-                                    }
-                                }
-                                CardFooter {
-                                    QuestionnaireNext()
-                                    QuestionnaireSubmit()
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Dialog",
-                    code =
-                        """
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open clarification")
-                            DialogContent {
-                                DialogHeader(
-                                    "Clarification",
-                                    description = "Answer so the agent can continue. Close is host-owned.",
-                                )
-                                Questionnaire(onSubmit = { open = false }) {
-                                    QuestionnaireProgress()
-                                    QuestionnaireItem("task", required = true) { /* … */ }
-                                    DialogFooter {
-                                        QuestionnaireNext()
-                                        QuestionnaireSubmit()
-                                    }
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open clarification")
-                            DialogContent {
-                                DialogHeader(
-                                    "Clarification",
-                                    description = "Answer so the agent can continue. Close is host-owned.",
-                                )
-                                Questionnaire(onSubmit = { open = false }) {
-                                    QuestionnaireProgress()
-                                    QuestionnaireItem("task", required = true) {
-                                        QuestionnaireTitle("What should the agent work on?")
-                                        QuestionnaireChoices {
-                                            QuestionnaireChoice("tests", "Fix the failing tests")
-                                            QuestionnaireChoice("refactor", "Refactor the data layer")
-                                            QuestionnaireChoice("docs", "Update the integration guide")
-                                        }
-                                    }
-                                    QuestionnaireItem("verify") {
-                                        QuestionnaireChoices {
-                                            QuestionnaireChoice("tests", "Run tests")
-                                            QuestionnaireChoice("manual", "Manual smoke test")
-                                        }
-                                    }
-                                    DialogFooter {
-                                        QuestionnaireNext()
-                                        QuestionnaireSubmit()
-                                    }
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Items collection",
-                    code =
-                        """
-                        Questionnaire(items = items, onSubmit = { }) {
-                            QuestionnaireProgress()
-                            items.forEach { question ->
-                                QuestionnaireItem(question.name, required = question.required) { /* … */ }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Questionnaire(
-                            modifier = Modifier.width(360.dp),
-                            items = questionnaireCollection,
-                            onSubmit = { },
-                        ) {
-                            QuestionnaireProgress()
-                            questionnaireCollection.forEach { question ->
-                                QuestionnaireItem(
-                                    question.name,
-                                    required = question.required,
-                                    multiple = question.multiple,
-                                    disabled = question.disabled,
-                                ) {
-                                    if (question.prompt.isNotEmpty()) {
-                                        QuestionnaireTitle(question.prompt)
-                                    }
-                                    question.description?.let { QuestionnaireDescription(it) }
+            ),
+        examples =
+            questionnaireOfficialExamples +
+                listOf(
+                    ComponentExample(
+                        title = "Multiple Selection",
+                        minPreviewHeight = 420.dp,
+                        descriptionMarkdown =
+                            "Use `multiple` for an item that accepts more than one fixed answer.",
+                        code =
+                            """
+                            Questionnaire(items = items) {
+                                QuestionnaireItem("context", required = true, multiple = true) {
+                                    QuestionnaireTitle("What context should the agent inspect?")
+                                    QuestionnaireDescription("Select every source that may affect the implementation.")
                                     QuestionnaireChoices {
-                                        question.choices.forEach { choice ->
-                                            QuestionnaireChoice(
-                                                choice.value,
-                                                choice.label,
-                                                description = choice.description,
-                                                disabled = choice.disabled,
-                                            )
-                                        }
-                                        question.input?.let { input ->
-                                            QuestionnaireInput(placeholder = input.placeholder)
-                                        }
+                                        QuestionnaireChoice("source", "Relevant source files")
+                                        QuestionnaireChoice("tests", "Existing tests")
+                                        QuestionnaireChoice("docs", "Architecture documentation")
+                                        QuestionnaireChoice("history", "Recent commit history")
                                     }
                                     QuestionnaireError()
                                 }
+                                QuestionnaireActions { QuestionnaireSubmit("Share context") }
                             }
+                            """.trimIndent(),
+                        preview = { MultipleSelectionPreview() },
+                    ),
+                    ComponentExample(
+                        title = "Freeform Answer",
+                        minPreviewHeight = 420.dp,
+                        descriptionMarkdown =
+                            "Compose `QuestionnaireInput` with fixed choices when the user can provide another " +
+                                "answer.",
+                        code =
+                            """
+                            QuestionnaireItem("approach", required = true) {
+                                QuestionnaireChoices {
+                                    QuestionnaireChoice("incremental", "Make the smallest safe change")
+                                    QuestionnaireChoice("module", "Refactor one module at a time")
+                                    QuestionnaireInput(placeholder = "Describe another approach…")
+                                }
+                            }
+                            """.trimIndent(),
+                        preview = { FreeformAnswerPreview() },
+                    ),
+                    ComponentExample(
+                        title = "Explicit Skip",
+                        minPreviewHeight = 520.dp,
+                        descriptionMarkdown =
+                            "Add `QuestionnaireSkip` when an optional item may be intentionally left unanswered.",
+                        code =
+                            """
+                            Questionnaire(items = items) {
+                                QuestionnaireProgress()
+                                QuestionnaireItem("task", required = true) { /* … */ }
+                                QuestionnaireItem("constraints") { /* optional */ }
+                                QuestionnaireItem("review", required = true) { /* … */ }
+                                QuestionnaireActions {
+                                    QuestionnairePrevious()
+                                    QuestionnaireSkip()
+                                    QuestionnaireNext("Next")
+                                    QuestionnaireSubmit("Submit brief")
+                                }
+                            }
+                            """.trimIndent(),
+                        preview = { ExplicitSkipPreview() },
+                    ),
+                    ComponentExample(
+                        title = "Shortcuts",
+                        minPreviewHeight = 480.dp,
+                        descriptionMarkdown = "Assign a letter or number key to each answer with `shortcuts`.",
+                        code =
+                            """
+                            var shortcuts by remember { mutableStateOf(QuestionnaireShortcuts.Letters) }
+                            Select(value = "Letters", onValueChange = { shortcuts = QuestionnaireShortcuts.Letters }) {
+                                SelectTrigger(Modifier.width(160.dp), size = SelectSize.Sm, accessibilityLabel = "Shortcut style")
+                                SelectContent {
+                                    SelectItem("No shortcuts")
+                                    SelectItem("Letters")
+                                    SelectItem("Numbers")
+                                }
+                            }
+                            Questionnaire(items = items, shortcuts = shortcuts) {
+                                QuestionnaireItem("action", required = true) { /* … */ }
+                                QuestionnaireActions { QuestionnaireSubmit("Confirm action") }
+                            }
+                            """.trimIndent(),
+                        preview = { ShortcutsPreview() },
+                    ),
+                    ComponentExample(
+                        title = "Custom Validation",
+                        minPreviewHeight = 520.dp,
+                        descriptionMarkdown =
+                            "Combine controlled navigation with an external schema to return to an invalid item " +
+                                "and present its error.",
+                        code =
+                            """
+                            var item by remember { mutableStateOf("detail") }
+                            var errors by remember { mutableStateOf<Map<String, String>>(emptyMap()) }
+                            Questionnaire(
+                                item = item,
+                                onItemChange = { item = it },
+                                items = items,
+                                onSubmit = { answers ->
+                                    errors = validate(answers)
+                                    if (errors.isNotEmpty()) item = "detail"
+                                },
+                            ) {
+                                QuestionnaireItem("detail", required = true, invalid = errors.containsKey("detail")) {
+                                    QuestionnaireChoices {
+                                        QuestionnaireChoice("summary", "Concise summary")
+                                        QuestionnaireChoice("complete", "Complete answer")
+                                    }
+                                    QuestionnaireError(text = errors["detail"])
+                                }
+                                QuestionnaireActions { QuestionnaireSubmit("Validate answers") }
+                            }
+                            """.trimIndent(),
+                        preview = { CustomValidationPreview() },
+                    ),
+                    ComponentExample(
+                        title = "Controlled",
+                        minPreviewHeight = 520.dp,
+                        descriptionMarkdown = "Control the active item from host state, such as returning to an " +
+                            "invalid step.",
+                        code =
+                            """
+                            var item by remember { mutableStateOf("scope") }
+                            Questionnaire(
+                                item = item,
+                                onItemChange = { item = it },
+                                items = items,
+                                onSubmit = { },
+                            ) {
+                                QuestionnaireProgress { state -> "Checkpoint ${'$'}{state.current} of ${'$'}{state.total}" }
+                                QuestionnaireItem("scope", required = true) { /* … */ }
+                                QuestionnaireActions {
+                                    QuestionnairePrevious()
+                                    QuestionnaireNext("Next")
+                                    QuestionnaireSubmit("Save workflow")
+                                }
+                            }
+                            """.trimIndent(),
+                        preview = { ControlledPreview() },
+                    ),
+                    ComponentExample(
+                        title = "Resume",
+                        minPreviewHeight = 520.dp,
+                        descriptionMarkdown =
+                            "Restore a saved active item and default answers, then reset changes back to that " +
+                                "saved state.",
+                        code =
+                            """
+                            Questionnaire(defaultItem = "verification", items = items) {
+                                QuestionnaireItem("change", required = true) {
+                                    QuestionnaireChoice("incremental", "Incremental migration", defaultChecked = true)
+                                    QuestionnaireChoice("cutover", "Single cutover")
+                                }
+                                QuestionnaireItem("verification", required = true, multiple = true) {
+                                    QuestionnaireChoice("tests", "Run migration tests", defaultChecked = true)
+                                    QuestionnaireChoice("typecheck", "Run the typecheck", defaultChecked = true)
+                                }
+                                QuestionnaireInput(contentDescription = "Saved migration note", defaultValue = "…")
+                                QuestionnaireActions {
+                                    QuestionnaireReset()
+                                    QuestionnairePrevious()
+                                    QuestionnaireNext("Next")
+                                    QuestionnaireSubmit("Update draft")
+                                }
+                            }
+                            """.trimIndent(),
+                        preview = { ResumePreview() },
+                    ),
+                    ComponentExample(
+                        title = "Conditional Items",
+                        minPreviewHeight = 520.dp,
+                        descriptionMarkdown = "Disable items that do not apply to the user's earlier answers.",
+                        code =
+                            """
+                            var runtime by remember { mutableStateOf("local") }
+                            QuestionnaireItem("runtime", required = true) {
+                                QuestionnaireChoices {
+                                    QuestionnaireChoice("local", "Local workspace", checked = runtime == "local",
+                                        onCheckedChange = { if (it) runtime = "local" })
+                                    QuestionnaireChoice("cloud", "Cloud workspace", checked = runtime == "cloud",
+                                        onCheckedChange = { if (it) runtime = "cloud" })
+                                }
+                            }
+                            QuestionnaireItem("environment", required = true, disabled = runtime != "cloud") { /* … */ }
+                            """.trimIndent(),
+                        preview = { ConditionalItemsPreview() },
+                    ),
+                    ComponentExample(
+                        title = "Navigation State",
+                        minPreviewHeight = 480.dp,
+                        descriptionMarkdown =
+                            "Read item status to opt into disabled navigation and custom action styling.",
+                        code =
+                            """
+                            val state = questionnaireState()
+                            QuestionnaireItem("permission", required = true) { /* … */ }
                             QuestionnaireActions {
                                 QuestionnairePrevious()
-                                QuestionnaireSkip()
-                                QuestionnaireNext()
-                                QuestionnaireSubmit()
+                                QuestionnaireNext(
+                                    enabled = state.status != QuestionnaireItemStatus.Unanswered,
+                                    text = "Next",
+                                )
+                                QuestionnaireSubmit(
+                                    enabled = state.status != QuestionnaireItemStatus.Unanswered,
+                                    text = "Save permissions",
+                                )
                             }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Choice parts",
-                    code =
-                        """
-                        QuestionnaireChoice("timeline") {
-                            Row {
-                                Column {
-                                    QuestionnaireChoiceLabel("Tool call timeline")
-                                    QuestionnaireChoiceDescription("Show what the agent ran.")
+                            """.trimIndent(),
+                        preview = { NavigationStatePreview() },
+                    ),
+                    ComponentExample(
+                        title = "Custom Progress",
+                        minPreviewHeight = 520.dp,
+                        descriptionMarkdown = "Use the Progress render state to build a custom progress indicator.",
+                        code =
+                            """
+                            QuestionnaireProgress { state ->
+                                "Checkpoint ${'$'}{state.current} of ${'$'}{state.total}"
+                            }
+                            """.trimIndent(),
+                        preview = { CustomProgressPreview() },
+                    ),
+                    ComponentExample(
+                        title = "Animated Items",
+                        minPreviewHeight = 520.dp,
+                        descriptionMarkdown =
+                            "Animate the active item while keeping progress and navigation stationary.",
+                        code =
+                            """
+                            Questionnaire(animate = true, items = items) {
+                                QuestionnaireProgress()
+                                QuestionnaireItem("direction", required = true) { /* … */ }
+                                QuestionnaireActions {
+                                    QuestionnaireNext("Next")
+                                    QuestionnaireSubmit()
                                 }
                             }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Questionnaire(modifier = Modifier.width(360.dp), onSubmit = { }) {
-                            QuestionnaireProgress()
-                            QuestionnaireItem("direction", required = true) {
-                                QuestionnaireTitle("What should the agent build next?")
-                                QuestionnaireDescription("Compose ChoiceInput, ChoiceLabel, and ChoiceDescription.")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("timeline") {
-                                        Row(
-                                            horizontalArrangement = Arrangement.spacedBy(12.dp),
-                                            verticalAlignment = Alignment.Top,
-                                        ) {
-                                            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                                                QuestionnaireChoiceLabel("Tool call timeline")
-                                                QuestionnaireChoiceDescription(
-                                                    "Show what the agent ran and what came back.",
-                                                )
+                            """.trimIndent(),
+                        preview = { AnimatedItemsPreview() },
+                    ),
+                    ComponentExample(
+                        title = "Card",
+                        minPreviewHeight = 560.dp,
+                        descriptionMarkdown =
+                            "Compose Questionnaire with Card slots while keeping the question title and " +
+                                "description semantic.",
+                        code =
+                            """
+                            Questionnaire(items = items, shortcuts = QuestionnaireShortcuts.Numbers) {
+                                Card {
+                                    QuestionnaireItem("task", required = true) {
+                                        CardHeader {
+                                            QuestionnaireTitle("What should the agent work on?")
+                                            QuestionnaireDescription("Choose the task that should be handled next.")
+                                            QuestionnaireProgress()
+                                        }
+                                        CardContent { QuestionnaireChoices { /* … */ } }
+                                    }
+                                    CardFooter {
+                                        QuestionnaireActions {
+                                            QuestionnairePrevious()
+                                            QuestionnaireNext("Next")
+                                            QuestionnaireSubmit("Create task")
+                                        }
+                                    }
+                                }
+                            }
+                            """.trimIndent(),
+                        preview = { CardPreview() },
+                    ),
+                    ComponentExample(
+                        title = "Dialog",
+                        minPreviewHeight = 320.dp,
+                        descriptionMarkdown =
+                            "Compose Questionnaire inside a Dialog while keeping cancellation and dismissal " +
+                                "host-owned.",
+                        code =
+                            """
+                            var open by remember { mutableStateOf(false) }
+                            Dialog(open = open, onOpenChange = { open = it }) {
+                                DialogTrigger("Open clarification")
+                                DialogContent {
+                                    DialogHeader {
+                                        DialogTitle("Clarification")
+                                        DialogDescription("Answer so the agent can continue. Close is host-owned.")
+                                    }
+                                    Questionnaire(items = items, onSubmit = { open = false }) {
+                                        QuestionnaireItem("scope", required = true) { /* … */ }
+                                        DialogFooter {
+                                            QuestionnaireActions {
+                                                QuestionnairePrevious()
+                                                QuestionnaireNext("Next")
+                                                QuestionnaireSubmit("Send answer")
                                             }
                                         }
                                     }
-                                    QuestionnaireChoice("checkpoints") {
-                                        Row(
-                                            horizontalArrangement = Arrangement.spacedBy(12.dp),
-                                            verticalAlignment = Alignment.Top,
-                                        ) {
-                                            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                                                QuestionnaireChoiceLabel("Approval checkpoints")
-                                                QuestionnaireChoiceDescription(
-                                                    "Ask before sensitive or destructive actions.",
-                                                )
-                                            }
-                                        }
+                                }
+                            }
+                            """.trimIndent(),
+                        preview = { DialogPreview() },
+                    ),
+                    ComponentExample(
+                        title = "Kotlin extension: Disabled",
+                        descriptionMarkdown =
+                            "`disabled = true` renders the whole questionnaire inert. The official page has no " +
+                                "disabled recipe.",
+                        code = "Questionnaire(disabled = true, items = items) { /* same parts */ }",
+                        preview = { DisabledExtensionPreview() },
+                    ),
+                    ComponentExample(
+                        title = "Kotlin extension: Items collection",
+                        descriptionMarkdown =
+                            "One `items` list drives progress, shortcuts and validation; the same parts are " +
+                                "mapped from the definitions.",
+                        code =
+                            """
+                            Questionnaire(items = items) {
+                                QuestionnaireProgress()
+                                items.forEach { question ->
+                                    QuestionnaireItem(question.name, required = question.required) { /* … */ }
+                                }
+                                QuestionnaireActions { /* … */ }
+                            }
+                            """.trimIndent(),
+                        preview = { ItemsCollectionExtensionPreview() },
+                    ),
+                    ComponentExample(
+                        title = "Kotlin extension: Choice parts",
+                        descriptionMarkdown =
+                            "Compose `QuestionnaireChoiceLabel` and `QuestionnaireChoiceDescription` for rich " +
+                                "choice rows.",
+                        code =
+                            """
+                            QuestionnaireChoice("timeline") {
+                                Row {
+                                    Column {
+                                        QuestionnaireChoiceLabel("Tool call timeline")
+                                        QuestionnaireChoiceDescription("Show what the agent ran.")
                                     }
                                 }
                             }
-                            QuestionnaireActions {
-                                QuestionnaireNext()
-                                QuestionnaireSubmit()
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Reset",
-                    code =
-                        """
-                        Questionnaire(defaultItem = "detail") {
-                            QuestionnaireChoice("complete", "Complete flow", defaultChecked = true)
+                            """.trimIndent(),
+                        preview = { ChoicePartsExtensionPreview() },
+                    ),
+                    ComponentExample(
+                        title = "Kotlin extension: Reset",
+                        descriptionMarkdown =
+                            "`QuestionnaireReset` restores the default answers in a saved draft.",
+                        code =
+                            """
                             QuestionnaireActions {
                                 QuestionnaireReset()
                                 QuestionnairePrevious()
                                 QuestionnaireSubmit()
                             }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Questionnaire(
-                            modifier = Modifier.width(360.dp),
-                            defaultItem = "detail",
-                            onSubmit = { },
-                        ) {
-                            QuestionnaireProgress()
-                            QuestionnaireItem("direction", required = true) {
-                                QuestionnaireTitle("What should the agent build next?")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("timeline", "Tool call timeline")
-                                    QuestionnaireChoice("checkpoints", "Approval checkpoints")
-                                }
-                            }
-                            QuestionnaireItem("detail") {
-                                QuestionnaireTitle("How should the migration be verified?")
-                                QuestionnaireDescription("These checks were selected during the previous session.")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("tests", "Run migration tests")
-                                    QuestionnaireChoice(
-                                        "types",
-                                        "Run the typecheck",
-                                        defaultChecked = true,
-                                    )
-                                    QuestionnaireChoice("manual", "Perform a manual smoke test")
-                                }
-                            }
-                            QuestionnaireActions {
-                                QuestionnaireReset()
-                                QuestionnairePrevious()
-                                QuestionnaireSubmit()
-                            }
-                        }
-                    },
+                            """.trimIndent(),
+                        preview = { ResetExtensionPreview() },
+                    ),
                 ),
-                ComponentExample(
-                    title = "Without Actions",
-                    code =
-                        """
-                        Questionnaire {
-                            QuestionnaireProgress()
-                            QuestionnaireItem("kind") { /* … */ }
-                            QuestionnairePrevious()
-                            QuestionnaireSkip()
-                            QuestionnaireNext()
-                            QuestionnaireSubmit()
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Questionnaire(modifier = Modifier.width(360.dp), onSubmit = { }) {
-                            QuestionnaireProgress()
-                            QuestionnaireItem("kind") {
-                                QuestionnaireTitle("What kind of change is this?")
-                                QuestionnaireDescription("Skip this if you are not sure yet.")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("feature", "New feature")
-                                    QuestionnaireChoice("fix", "Bug fix")
-                                    QuestionnaireChoice("refactor", "Refactor")
-                                }
-                            }
-                            QuestionnaireItem("verify") {
-                                QuestionnaireTitle("How should it be verified?")
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("tests", "Run tests")
-                                    QuestionnaireChoice("manual", "Manual smoke test")
-                                }
-                            }
-                            QuestionnairePrevious()
-                            QuestionnaireSkip()
-                            QuestionnaireNext()
-                            QuestionnaireSubmit()
-                        }
-                    },
-                ),
-            ),
     )
-        .let { native -> native.copy(examples = questionnaireOfficialExamples + native.examples) }

@@ -1,0 +1,118 @@
+{
+  "slug": "radio-group",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/radio-group",
+  "localUrl": "http://127.0.0.1:8775/radio-group",
+  "capturedAt": "2026-11-05T05:11:01.684Z",
+  "app": [
+    "http://127.0.0.1:8775/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8775/afd5a5c537062da19b46.wasm"
+  ],
+  "officialDom": {
+    "title": "Radio Group",
+    "description": "Copy PagePreviousNext",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "Installation#"
+      },
+      {
+        "tag": "H2",
+        "text": "Usage#"
+      },
+      {
+        "tag": "H2",
+        "text": "Composition#"
+      },
+      {
+        "tag": "H2",
+        "text": "Description#"
+      },
+      {
+        "tag": "H2",
+        "text": "Choice Card#"
+      },
+      {
+        "tag": "H2",
+        "text": "Fieldset#"
+      },
+      {
+        "tag": "H2",
+        "text": "Disabled#"
+      },
+      {
+        "tag": "H2",
+        "text": "Invalid#"
+      },
+      {
+        "tag": "H2",
+        "text": "RTL#"
+      },
+      {
+        "tag": "H2",
+        "text": "API Reference#"
+      }
+    ],
+    "tabs": [
+      "Command",
+      "Manual",
+      "pnpm",
+      "npm",
+      "yarn",
+      "bun"
+    ],
+    "examples": 7,
+    "toc": [],
+    "bodyWidth": {
+      "x": 0,
+      "y": 64,
+      "width": 1080,
+      "height": 5067.171875,
+      "top": 64,
+      "right": 1080,
+      "bottom": 5131.171875,
+      "left": 0
+    },
+    "clientWidth": 1080,
+    "scrollHeight": 5131
+  },
+  "local": {
+    "desktop-light": {
+      "url": "http://127.0.0.1:8775/radio-group",
+      "theme": "light",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(6333.5px + 100vh)"
+    },
+    "desktop-dark": {
+      "url": "http://127.0.0.1:8775/radio-group",
+      "theme": "dark",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(6333.5px + 100vh)"
+    },
+    "phone-light": {
+      "url": "http://127.0.0.1:8775/radio-group",
+      "theme": "light",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(7401.5px + 100vh)"
+    },
+    "phone-dark": {
+      "url": "http://127.0.0.1:8775/radio-group",
+      "theme": "dark",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(7401.5px + 100vh)"
+    }
+  },
+  "files": {
+    "official-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/radio-group-r1/browser/official-desktop-light.png",
+    "local-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/radio-group-r1/browser/local-desktop-light.png",
+    "official-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/radio-group-r1/browser/official-desktop-dark.png",
+    "local-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/radio-group-r1/browser/local-desktop-dark.png",
+    "official-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/radio-group-r1/browser/official-phone-light.png",
+    "local-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/radio-group-r1/browser/local-phone-light.png",
+    "official-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/radio-group-r1/browser/official-phone-dark.png",
+    "local-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/radio-group-r1/browser/local-phone-dark.png"
+  }
+}

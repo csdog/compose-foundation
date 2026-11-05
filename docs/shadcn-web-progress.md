@@ -107,14 +107,14 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Aspect Ratio (`aspect-ratio`)：Default/Square/Portrait/三语 RTL 组件已做基础复核；固定 caption 20dp 行框并修正 Nova Select 真实 Arabic 字体选项高度。r3再次确认当前官网仍为四配方，补精确顺序/文案及`ratio`默认值说明，11项聚焦测试和Wasm构建通过。旧勾选撤回：色域/整数测量、共享页面差异及共享布局修复后的新浏览器矩阵仍未关闭，见[aspect-ratio-r3](web-parity/aspect-ratio-r3/README.md)。
 - [ ] Attachment (`attachment`)：六组示例、Nova布局、Group吸附/键盘/渐隐/约束、整卡焦点和onClick hover，以及Features/Accessibility指南、目录/导出已补。第七轮按官网当前SVG修正FileSearch；实际标题14px/500字重和约148px排版字宽已验证，未调粗字体。26项目录回归、JS/Wasm构建通过；旧Vega、字形像素观感、自定义overlay hover、颜色过渡与原生辅助技术仍待关闭。按用户要求暂停逐轮细化，剩余项合并到后续统一处理；第八轮 hover 动画只有定向测试通过，尚未完成浏览器验收。证据见attachment-r2至attachment-r8。
 - [ ] Avatar (`avatar`)：2026-10-30 首轮主要差异已补：真实图片、九组官方配方与额外 Fallback、Composition/六个 Kotlin API 小节；修正 fallback 字号、外圈、图标徽标、RTL 徽标及绿色令牌，补齐菜单键盘导航。9 项测试、JS/Wasm distribution 和四象限浏览器检查通过。r2按当前官网确认十组官方顺序，给额外Fallback加Kotlin extension前缀，并把Dropdown前三个条目放入DropdownMenuGroup；25项聚焦测试及Wasm构建通过，浏览器仍待新空间复核。混合尺寸分组计数、图片混合边框、菜单完整焦点/像素矩阵等保留明确后续项，见[avatar-r2](web-parity/avatar-r2/README.md)及avatar-r1。
-- [ ] Badge (`badge`)：七个官方页面示例已补齐；桌面/手机浅深28组双方截图及英语/希伯来语8组双方截图已复查；补 href/invalid/逻辑图标边距与 Spinner 固有尺寸修复，23项定向测试通过。r2再次确认当前七配方及自定义色阶，补齐Usage代码缺失的`BadgeVariant`导入并对齐Link文案；30项聚焦测试及Wasm构建通过，浏览器仍待新空间复核。原生链接语义、完整交互/辅助技术和共享页面差异仍开放，见[badge-r2](web-parity/badge-r2/README.md)及badge-r1。
-- [ ] Breadcrumb (`breadcrumb`)：2026-10-30 七组官方配方、Composition/七个 API 小节已补；修正 6dp 换行列表、4dp item 间距、14dp 镜像描边分隔符、20/16dp 省略号及链接 hover。r2再次确认当前七配方，三组菜单路径补`DropdownMenuGroup`，额外Disabled改为Kotlin extension标题；23项聚焦测试及Wasm构建通过，浏览器仍待新空间复核。共享手机宽度导致的换行差异、链接/导航原生语义和焦点细节仍明确保留，见[breadcrumb-r2](web-parity/breadcrumb-r2/README.md)及breadcrumb-r1。
-- [ ] Bubble (`bubble`)：2026-10-30 九组官方配方、Composition/四个 API 及可访问性指南已补；修正自然宽度/80% 上限、Ghost 全宽、字号行框、Muted/Tinted 颜色和反应行悬浮定位。17 项定向测试、16 张像素基准、JS/Wasm distribution、四象限首屏对照及静态检查通过。任意复杂槽位裁剪/多 Content 布局、按钮反应自动 padding、完整焦点及原生辅助技术矩阵仍待关闭，见 bubble-r1。
-- [ ] Button (`button`)：十五组实际配方已补齐，新增公开 buttonStyle/invalid、As Link、完整默认Group菜单；修正Nova背景裁剪、阴影alpha与嵌套Escape。r3重新确认当前官网配方与As Link说明，移除API Reference中重复的根Button属性表，保留命名Button与buttonStyle小节；63项聚焦测试及Wasm构建通过，浏览器仍待新空间复核。子菜单宽度/手机碰撞/指针聚焦、Tabler图形、expanded/pressed及完整状态仍开放，见[button-r3](web-parity/button-r3/README.md)。[Card依赖](web-parity/card-r1/README.md)、r1、r2。
-- [ ] Button Group (`button-group`)：基础已验证（第六批）；默认配方、完整菜单、图标、单选状态与响应式Go Back已验证。r2读取当前官网，页面已从旧13参数示例切换为Default、Orientation、Size、Nested、Separator、Split、Input、Input Group、Dropdown Menu、Select、Popover、RTL十二组实际配方；`ButtonGroupItem`新增`size`参数，42项聚焦测试及Wasm构建通过。共享菜单宽度/碰撞、混合子项形状、role=group语义、浏览器与完整状态矩阵仍待关闭，见[button-group-r2](web-parity/button-group-r2/README.md)。
-- [ ] Calendar (`calendar`)：2026-10-30 完成首轮公历主要对照：15 组实现、Composition/四组 API、预设/时间/已订日期/价格格/周数/RTL 已补。r2再次读取当前官网，官方十配方顺序一致，额外Multiple/Disabled/周起始/隐藏外部日期/月份范围已明确加`Kotlin extension:`前缀；35项聚焦测试及Wasm构建通过，浏览器仍待新空间复核。波斯历、原生时间输入行为、caption 细节及完整辅助技术/交互矩阵仍保留，见[calendar-r2](web-parity/calendar-r2/README.md)及calendar-r1。
-- [ ] Card (`card`)：六组官方示例与完整导出代码已补；Nova垂直根padding、分区水平inset、满宽Footer及公开CardImage已修正，调用方Style优先。93项联合回归、11图像素校验、JS/Wasm通过；官网/本地各56张四象限静态/交互图已复查。原生滚动条、1px边框占位、字体字重/换行、共享Select浏览器键盘及全状态仍开放。[证据](web-parity/card-r1/README.md)。
-- [ ] Carousel (`carousel`)：当前官网仍为Default、Sizes、Spacing、Orientation、API、Plugins、RTL七配方；r2确认组件、MDX与七示例相对首轮固定版本字节一致。修复Plugins悬停/拖动结束后不恢复自动播放、各配方未使用公开`CarouselItem`的问题，并把点指示器明确标为Kotlin extension；24项聚焦测试、全仓lint/detekt及JS/Wasm通过，浏览器仍待新空间复核。Embla任意options/plugins、loop、浏览器拖动/动态主题和完整辅助技术仍开放，见[carousel-r2](web-parity/carousel-r2/README.md)及首轮记录。
+- [ ] Badge (`badge`)：七个官方配方（Default、Variants、With Icon、With Spinner、Link、Custom Colors、RTL）顺序/标题/文案核对一致；slot h 最终构建（wasm c0570519）后已重拍 1440×1000/390×844 浅深四象限、6 组逐配方官本对照与 Link hover/点击状态；8 项 BadgeExamplesTest 通过。RTL 描述改为官方原文。仍开放：本地额外 Composition 小节（官方无）、键盘焦点/原生链接语义与 aria 矩阵，见 [badge-r3](web-parity/badge-r3/README.md)。
+- [ ] Breadcrumb (`breadcrumb`)：七个官方配方（Default、Basic、Custom separator、Dropdown、Collapsed、Link component、RTL）与 Composition/API 小节核对一致；slot h 最终构建后已重拍四象限、6 组逐配方对照，并取证 Dropdown 菜单打开/关闭、Collapsed 省略号与链接 hover；5 项 BreadcrumbExamplesTest 通过。仍开放：Kotlin extension: Disabled 与 RTL 语言选择器等本地扩展、原生导航语义/键盘焦点、手机宽度换行差异，见 [breadcrumb-r3](web-parity/breadcrumb-r3/README.md)。
+- [ ] Bubble (`bubble`)：九个官方配方（Default、Variants、Alignment、Bubble Group、Links and Buttons、Reactions、Show More / Collapsible、Tooltip、Popover）顺序/标题核对一致；slot h 最终构建后已重拍四象限与 8 组逐配方对照，取证可点击气泡 hover 焦点环与点击 toast；8 项 BubbleExamplesTest 通过。仍开放：Variants 预览 ghost 长文案被预览高度截断、Links and Buttons 描述为 Kotlin 适配、完整 aria/键盘路径，见 [bubble-r2](web-parity/bubble-r2/README.md)。
+- [ ] Button (`button`)：十五个官方配方（demo、Size、Default、Outline、Secondary、Ghost、Destructive、Link、Icon、With Icon、Rounded、Spinner、Button Group、As Link、RTL）与 Cursor 文案核对一致；slot h 最终构建后已重拍四象限、14 组逐配方对照，取证 Button Group 真实菜单与 As Link hover；ButtonExamplesTest 12 + ButtonFollowupRecipesTest 12 全部通过。仍开放：本地额外 Composition 小节、Tabler 图标近似、子菜单宽度/手机碰撞/指针聚焦与完整状态矩阵，见 [button-r4](web-parity/button-r4/README.md)。
+- [ ] Button Group (`button-group`)：十二个官方配方顺序/标题核对一致；本轮按官方示例重写 Orientation（单竖向组）、Size（三行四按钮）、Nested（Plus+InputGroup）、Separator/Split（Secondary）、Dropdown Menu（Follow+官方七项菜单）、Select（货币+10.00+发送）、Input Group（Plus+InputGroup+Voice）并同步导出代码；RTL 描述改为官方原文；slot h 最终构建后已重拍四象限、11 组逐配方对照，并取证 Dropdown/Select/Popover 打开状态；16 项 ButtonGroupExamplesTest 通过。仍开放：Popover 内容简化、Input 配方内部结构差异、role=group 语义与完整状态矩阵，见 [button-group-r3](web-parity/button-group-r3/README.md)。
+- [ ] Calendar (`calendar`)：官方十配方（demo、Basic、Range、Month/Year Selector、Presets、Time、Booked、Custom Cell Size、Week Numbers、RTL）+5 个 Kotlin extension 顺序核对一致；补齐 Basic/Range/Month-Year/Week Numbers/RTL 官方描述，RTL 用官方原文；slot h 最终构建后已重拍四象限、9 组逐配方对照，取证月份/年份菜单、日期选择、Range 与阿拉伯语 RTL；6 项 CalendarExamplesTest 通过。仍开放：官方 Hijri 预览未实现、caption 下拉为带边框胶囊+DropdownMenu（官方无边框文本+原生 select，组件层差异，需共享修复）、Changelog 未复刻，见 [calendar-r3](web-parity/calendar-r3/README.md)。
+- [ ] Card (`card`)：六个官方配方（Default、Size、Spacing、Edge to Edge、Image、RTL）与 Composition/API 核对一致；RTL 描述按 Lead 要求改为官方 “in shadcn/ui” 原文；slot h 最终构建后已重拍四象限与 4 组逐配方对照；20 项 CardExamplesTest 通过。仍开放：390 宽度下 Password 行贴合、原生滚动条/1px 边框占位/图像占位色差等像素细节，见 [card-r3](web-parity/card-r3/README.md)。
+- [ ] Carousel (`carousel`)：七个官方配方（Default、Sizes、Spacing、Orientation、API、Plugins、RTL）+Kotlin extension: With dot indicators 顺序核对一致；RTL 描述改为官方原文；slot h 最终构建后已重拍四象限、6 组逐配方对照，取证下一箭头、拖拽与 Plugins 自动播放；7 项 CarouselExamplesTest 通过。仍开放：页面小节顺序（About 应在 Installation 前、Options/Events 与预览交错）受共享 ComponentDetailScreen 固定顺序限制、Embla options/plugins/loop 与完整辅助技术，见 [carousel-r3](web-parity/carousel-r3/README.md)。
 - [x] Code Block (`code-block`)：按当前官网重建 23 个配方（demo + Basic…Terminal Output，Max Height/Languages/Terminal Output 为嵌套 h3），补 Features/Accessibility/Composition/Usage 与九个 API 小节；组件新增 maxHeight/scrollable 截断及静态底部渐隐、横向滚动渐隐、内容强制 LTR、行号对读屏隐藏。26 项聚焦测试、Wasm 构建通过；1440/390 浅深四象限及复制确认、换行、悬浮按钮、键盘滚动、Show More 展开/收起、Tabs、RTL 阿语/英语切换均已复核。仍余 rhea→Nova 样式上下文、Shiki/ANSI/Streamdown 服务端/流式/Markdown、Typeset 近似、下载按钮无效、无原生滚动条、共享页面缺少 demo 后导语槽位及指针聚焦 ring 与 focus-visible 差异，见 [Code Block r2](web-parity/code-block-r2/README.md)。
 - [x] Trace (`trace`)：按固定版本 8a35366 补齐官方 16 个预览（顶部 demo + Trace Line/Status/Description/Collapsible/Open State/Link/Dialog/Sheet/Group/Sources/Chain of Thought/Commit/Whole Turn/Reasoning/Tool），顺序/标题/文案、Built with Trace/Features/Accessibility 与 9 个 API 小节（TraceLink 为 Kotlin extension）已对齐；组件补 `keepMounted`、标题后图标 4dp、`TraceDescription(mono=)` 与 `TraceLink`。30 项聚焦测试（页面19+核心11含RTL/keepMounted/链接语义）、Wasm 89721bca、四象限与新空间实际浏览器展开/受控/Dialog/Sheet/嵌套diff/Reasoning/Tool/Replay 状态通过。残余（已解释）：官方简介段/Built with 表格/Status 表受本地文档模型限制置于 Composition 后或改为散文，官方预览后补充 TSX 片段未收录，Reasoning/Tool 非流式、Replay 恢复静态转录，Dialog/Sheet 触发行为无 hover 变色，官方预览为 base-rhea 而本地 Nova（对话框448vs384）且 API 表少 Description 列，见[trace-r3](web-parity/trace-r3/README.md)。
 - [ ] Chart (`chart`)：本页八组官方配方已迁移，补真实tooltip/键盘选点、系列切换、主题/图标、响应尺寸、数值域与日期轴修复；320高、桌面48/手机0缩进及缩放后阿语轴重叠已处理。r4把Your First Chart保留为h2，Add a Grid/Axis/Tooltip/Legend改为嵌套h3并补Compose步骤说明；页面/文档/预览56项、核心交互/布局/截图40项共96项通过，全仓lint/detekt与JS/Wasm通过。浏览器仍待新空间复核，共享标题/代码细节、窄屏日期刻度和动效/完整交互继续开放，见[chart-page-r4](web-parity/chart-page-r4/README.md)、chart-r1、chart-axis-r2及chart-preview-r3。
@@ -172,6 +172,109 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Carousel：四象限与箭头/拖拽/自动播放状态复核（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 200 -->
+
+官方 `carousel`（rev `8a353667`）7 预览与本地 7 官方配方顺序、标题一致；另有 1 个 Kotlin extension（With dot indicators）。
+
+本轮变更：RTL 描述改为官方原文；组件未动。
+
+验证：最终构建后四象限与 6 组逐配方对照；Sizes 下一箭头前进至 2/3/4、拖拽手势后保持结果、Plugins 自动播放 2 秒切换均截图取证；`CarouselExamplesTest` 7/7 通过。证据：`docs/web-parity/carousel-r3/`。
+
+剩余差异：页面小节顺序受共享骨架限制——官方 About 在 Installation 前、Options/Events 与预览交错，本地 about 类内容在 Usage 后、options/events 在配方后；页面 description 为 Kotlin 适配（Compose Pager 替代 Embla）；Embla 任意 options/plugins、loop、动态主题、完整辅助技术未对齐；拖动未断言惯性参数。
+
+### Card：修正 RTL 描述并完成四象限复核（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 199 -->
+
+官方 `card`（rev `8a353667`）6 预览与本地 6 配方顺序、标题一致；Composition 与 7 个 API 小节对应。
+
+本轮变更：RTL 描述由 “in your app” 改为官方原文 “To enable RTL support in shadcn/ui, see the RTL configuration guide.”；组件未动。
+
+验证：最终构建后四象限与 Size、Spacing+Edge to Edge、Image、RTL 四组逐配方对照；静态配方无额外交互；`CardExamplesTest` 20/20 通过。证据：`docs/web-parity/card-r3/`。
+
+剩余差异：390 宽度下 “Password”/“Forgot password?” 行距贴合偏紧；原生滚动条、1px 边框占位、图像占位色差；1:1 像素未宣称。
+
+### Calendar：补齐官方描述并复核下拉/选择/RTL 状态（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 198 -->
+
+官方 `calendar`（rev `8a353667`）11 预览中本地实现 10 个官方配方（缺 Hijri），顺序一致；另有 5 个 Kotlin extension 配方。
+
+本轮变更：补齐 Basic、Range Calendar、Month and Year Selector、Week Numbers、RTL 的官方描述；RTL 采用官方原文。未改组件。
+
+验证：最终构建后四象限与 9 组逐配方对照；Month 菜单（Jan–Dec）与 Year 菜单（1926–2026）打开、日期选择、Range 初始区间与点击选择、阿拉伯语 RTL 日历均取证；`CalendarExamplesTest` 6/6 通过。证据：`docs/web-parity/calendar-r3/`。
+
+剩余差异：Persian/Hijri/Jalali 预览未实现（CalendarDate 仅公历，需日历系统适配器）；caption 下拉本地为带边框胶囊按钮 + DropdownMenu，官方为无边框文本 + 原生 select，月份文案随 locale（官方 “11月” vs 本地 “Nov”），属组件层差异需共享修复（`CalendarStyles.kt`/`Calendar.kt`）；Custom Cell Size 价格密度、Booked dates 日期与官方示例有差；官方 Changelog 小节未复刻。
+
+### Button Group：配方内容对齐官方并完成浏览器状态复核（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 197 -->
+
+官方 `button-group`（rev `8a353667`）12 预览与本地 12 配方顺序、标题一致；本轮修复了预览内容差异：
+
+- Orientation：单个竖向组（Plus、Minus）。
+- Size：三行四按钮（Small/Default/Large × label+Button+Group+Plus，32dp 行距）。
+- Nested：嵌套组（Plus 图标组 + InputGroup “Send a message...” + Voice Mode 音频按钮）。
+- Separator/Split：Secondary（Separator 为 sm）。
+- Dropdown Menu：Follow + 官方 7 项菜单（含 Delete destructive、分组与分隔符）。
+- Select：货币 Select + “10.00” Input + 发送图标组。
+- Input Group：Plus 组 + InputGroup + Voice Mode。
+- RTL 描述改为官方原文；导出 code 与测试断言同步。
+
+验证：最终构建后四象限、11 组逐配方对照；Dropdown/Select/Popover 打开截图取证；`ButtonGroupExamplesTest` 16/16 通过。证据：`docs/web-parity/button-group-r3/`。
+
+剩余差异：Popover 内容仍简化（官方含 Header/Description/Field/FieldDescription）；Input 配方保留本地 outline 统一 style 与分隔符；role=group 语义、混合子项形状、焦点环缝合处矩阵未覆盖。
+
+### Button：浏览器四象限与菜单/As Link 状态复核（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 196 -->
+
+官方 `button`（rev `8a353667`）15 预览与本地 15 配方顺序、标题一致；Cursor 文案小节存在。
+
+本轮变更：RTL 描述改为官方原文；其余未动。
+
+验证：最终构建后四象限与 14 组逐配方对照；Button Group 配方 “⋯” 打开真实菜单（Mark as Read/Archive/Snooze/Add to Calendar/Add to List/Label As…/Trash）并可 Escape 关闭；As Link 配方 Login hover；`ButtonExamplesTest` 12/12 + `ButtonFollowupRecipesTest` 12/12 通过。证据：`docs/web-parity/button-r4/`。
+
+剩余差异：本地额外 Composition 小节；Tabler 图标以 Lucide 近似；子菜单宽度、手机宽度碰撞、指针聚焦与 expanded/pressed 全状态矩阵仍开放。
+
+### Bubble：浏览器四象限与可点击气泡状态复核（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 195 -->
+
+官方 `bubble`（rev `8a353667`）9 预览与本地 9 配方顺序、标题一致。
+
+本轮仅复核与取证，未改页面/组件。
+
+验证：最终构建后四象限与 8 组逐配方对照；Links and Buttons 配方点击 “I need help with my subscription” 触发 toast “You clicked help with subscription”，hover 显示焦点环；`BubbleExamplesTest` 8/8 通过。证据：`docs/web-parity/bubble-r2/`。
+
+剩余差异：Variants 预览高度截断 ghost 末段文案（官方完整显示）；Links and Buttons 描述为 Kotlin 适配（官方讲 render prop）；按钮反应自动 padding、复杂槽位裁剪与完整辅助技术矩阵仍开放。
+
+### Breadcrumb：浏览器四象限与 Dropdown/Collapsed 状态复核（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 194 -->
+
+官方 `breadcrumb`（rev `8a353667`）7 预览与本地 7 配方顺序、标题一致；Composition 与 7 个 API 小节对应。
+
+本轮仅复核与取证，未改页面/组件。
+
+验证：最终构建后四象限重拍；Basic、Custom separator、Dropdown、Collapsed、Link component、RTL 逐配方对照；Dropdown 点击 “Components ⌄” 打开 Documentation/Themes/GitHub 菜单，Escape/外部点击关闭；Collapsed 省略号与 Basic 链接 hover 已截图；`BreadcrumbExamplesTest` 5/5 通过。证据：`docs/web-parity/breadcrumb-r3/`。
+
+剩余差异：本地额外 Kotlin extension: Disabled 配方与 RTL 语言选择器；Canvas 无原生链接/导航语义，键盘焦点顺序未验证；手机断行与官方仍有细微差异。
+
+### Badge：浏览器四象限与 Link 状态复核（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 193 -->
+
+官方 `badge`（rev `8a353667`）7 预览与本地 7 配方顺序、标题、描述一致；Usage/API Reference 对应。
+
+本轮变更：RTL 配方描述改为官方原文；页面/组件其余未动。
+
+验证：slot h/8778 最终构建 wasm `c0570519…` 后重拍四象限（1440×1000、390×844，light/dark）与 6 组逐配方 official/local 对照；Link 配方 hover 变色、点击后 hash 变为 `#link`；`BadgeExamplesTest` 8/8 通过。证据：`docs/web-parity/badge-r3/`。
+
+剩余差异：本地保留 Composition 小节（官方 Badge 页无），需统一页面结构决策；Canvas 无 DOM，键盘焦点与原生链接辅助技术矩阵未覆盖；React Aria/Radix 变体标签不适用。
 
 ### Spinner：八配方、三枚徽标与分节复查（2026-11-05）
 

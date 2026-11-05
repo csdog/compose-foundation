@@ -1,0 +1,15 @@
+{
+  "retrieved": "2026-11-05",
+  "officialPage": "https://ui.shadcn.com/docs/components/base/progress",
+  "revision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "files": {
+    "apps/v4/content/docs/components/base/progress.mdx": "41f1a5e3bc0527d2638f5abf12e623d022d1a1ae5d68cfc62eacc0c1ff703372",
+    "apps/v4/registry/bases/base/ui/progress.tsx": "00afc4c7f319f5f5e78c5e294250abc656e2f7e2839821b9e086555fbd91cd76",
+    "apps/v4/registry/styles/style-nova.css": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e",
+    "apps/v4/registry/styles/style-rhea.css": "bac4eff75a0e21d9dd90ce40634937f54730471d8f7fa50ca67b317892cf908f",
+    "apps/v4/examples/base/progress-demo.tsx": "649b235601426323bbab0a9b73245c88eb6e46db90847bc843396bfac2573787",
+    "apps/v4/examples/base/progress-label.tsx": "102789f83117fea9819ae490d57421470f74a1ad0e33d65d6391fd28b9b231e0",
+    "apps/v4/examples/base/progress-controlled.tsx": "6cc9730406838b8cd1c70693b92483a6db7bcf5ddb4246cbed9a150882707afb",
+    "apps/v4/examples/base/progress-rtl.tsx": "5affb7c0cf83c1231d4af4d89fb217cffc54c00aa2561c48e45b1e407b6b76cc"
+  }
+}

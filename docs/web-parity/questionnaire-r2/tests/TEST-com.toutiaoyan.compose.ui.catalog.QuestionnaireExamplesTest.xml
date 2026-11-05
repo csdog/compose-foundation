@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="QuestionnaireExamplesTest[jvm]" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-11-05T05:14:31.326Z" hostname="Apples-MacBook-Pro.local" time="2.11">
+  <properties/>
+  <testcase name="replacingFreeformWithAFixedChoiceKeepsTheDraftButOmitsItFromSubmission[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.QuestionnaireExamplesTest" time="0.3"/>
+  <testcase name="validationMultiSelectAndSubmitUseTheSourceAnswersAndToast[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.QuestionnaireExamplesTest" time="0.152"/>
+  <testcase name="sourceDefaultHasThreeQuestionsAndOnlyTheVisibleActions[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.QuestionnaireExamplesTest" time="0.035"/>
+  <testcase name="inputShortcutPlainEnterAndExplicitSkipKeepOnlyTheFreeformAnswer[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.QuestionnaireExamplesTest" time="0.143"/>
+  <testcase name="replacingFreeformWithAFixedChoiceKeepsTheDraftButOmitsItFromSubmission[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.QuestionnaireExamplesTest" time="0.183"/>
+  <testcase name="validationMultiSelectAndSubmitUseTheSourceAnswersAndToast[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.QuestionnaireExamplesTest" time="0.163"/>
+  <testcase name="sourceDefaultHasThreeQuestionsAndOnlyTheVisibleActions[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.QuestionnaireExamplesTest" time="0.038"/>
+  <testcase name="inputShortcutPlainEnterAndExplicitSkipKeepOnlyTheFreeformAnswer[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.QuestionnaireExamplesTest" time="0.161"/>
+  <testcase name="replacingFreeformWithAFixedChoiceKeepsTheDraftButOmitsItFromSubmission[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.QuestionnaireExamplesTest" time="0.151"/>
+  <testcase name="validationMultiSelectAndSubmitUseTheSourceAnswersAndToast[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.QuestionnaireExamplesTest" time="0.136"/>
+  <testcase name="sourceDefaultHasThreeQuestionsAndOnlyTheVisibleActions[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.QuestionnaireExamplesTest" time="0.033"/>
+  <testcase name="inputShortcutPlainEnterAndExplicitSkipKeepOnlyTheFreeformAnswer[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.QuestionnaireExamplesTest" time="0.126"/>
+  <testcase name="replacingFreeformWithAFixedChoiceKeepsTheDraftButOmitsItFromSubmission[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.QuestionnaireExamplesTest" time="0.157"/>
+  <testcase name="validationMultiSelectAndSubmitUseTheSourceAnswersAndToast[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.QuestionnaireExamplesTest" time="0.151"/>
+  <testcase name="sourceDefaultHasThreeQuestionsAndOnlyTheVisibleActions[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.QuestionnaireExamplesTest" time="0.034"/>
+  <testcase name="inputShortcutPlainEnterAndExplicitSkipKeepOnlyTheFreeformAnswer[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.QuestionnaireExamplesTest" time="0.146"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

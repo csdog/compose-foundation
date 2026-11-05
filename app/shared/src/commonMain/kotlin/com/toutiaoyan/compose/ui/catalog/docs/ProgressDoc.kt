@@ -17,11 +17,11 @@ val progressDoc =
         examplesHeading = null,
         compositionCode =
             """
-            Progress(value = 56f, max = 100f, modifier = Modifier.widthIn(max = 384.dp).fillMaxWidth()) {
-                ProgressLabel("Upload progress")
-                ProgressValue()
-            }
-            // Progress appends ProgressTrack and ProgressIndicator after the content.
+            Progress
+            ├── ProgressLabel
+            ├── ProgressValue
+            └── ProgressTrack
+                └── ProgressIndicator
             """.trimIndent(),
         beforeExamples =
             listOf(
@@ -29,12 +29,15 @@ val progressDoc =
                     "With label and value",
                     listOf(
                         ComponentGuideBlock.Paragraph(
-                            "Use ProgressLabel and ProgressValue to add a label and value display.",
+                            "Use `ProgressLabel` and `ProgressValue` to add a label and value display.",
                         ),
                         ComponentGuideBlock.Code(
-                            "Progress\n├── ProgressLabel\n├── ProgressValue\n" +
-                                "└── ProgressTrack\n    └── ProgressIndicator",
-                            "text",
+                            """
+                            Progress(value = 56f, max = 100f, modifier = Modifier.widthIn(max = 384.dp).fillMaxWidth()) {
+                                ProgressLabel("Upload progress")
+                                ProgressValue()
+                            }
+                            """.trimIndent(),
                         ),
                     ),
                     level = 3,
@@ -67,7 +70,9 @@ val progressDoc =
             listOf(
                 ComponentApiSection(
                     "Progress",
-                    "A controlled progress root that appends its track after the optional content.",
+                    "A controlled progress root that appends its track after the optional content. " +
+                        "See the [Base UI Progress](https://base-ui.com/react/components/progress#api-reference) " +
+                        "documentation for the original props.",
                     listOf(
                         ApiProperty("value", "Float", "required"),
                         ApiProperty("max", "Float", "1f"),

@@ -1,0 +1,110 @@
+{
+  "slug": "progress",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/progress",
+  "localUrl": "http://127.0.0.1:8775/progress",
+  "capturedAt": "2026-11-05T05:10:24.163Z",
+  "app": [
+    "http://127.0.0.1:8775/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8775/afd5a5c537062da19b46.wasm"
+  ],
+  "officialDom": {
+    "title": "Progress",
+    "description": "Copy PagePreviousNext",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "Installation#"
+      },
+      {
+        "tag": "H2",
+        "text": "Usage#"
+      },
+      {
+        "tag": "H2",
+        "text": "Composition#"
+      },
+      {
+        "tag": "H3",
+        "text": "With label and value#"
+      },
+      {
+        "tag": "H2",
+        "text": "Label#"
+      },
+      {
+        "tag": "H2",
+        "text": "Controlled#"
+      },
+      {
+        "tag": "H2",
+        "text": "RTL#"
+      },
+      {
+        "tag": "H2",
+        "text": "API Reference#"
+      }
+    ],
+    "tabs": [
+      "Command",
+      "Manual",
+      "pnpm",
+      "npm",
+      "yarn",
+      "bun"
+    ],
+    "examples": 4,
+    "toc": [],
+    "bodyWidth": {
+      "x": 0,
+      "y": 64,
+      "width": 1080,
+      "height": 3590.953125,
+      "top": 64,
+      "right": 1080,
+      "bottom": 3654.953125,
+      "left": 0
+    },
+    "clientWidth": 1080,
+    "scrollHeight": 3655
+  },
+  "local": {
+    "desktop-light": {
+      "url": "http://127.0.0.1:8775/progress",
+      "theme": "light",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(3666.5px + 100vh)"
+    },
+    "desktop-dark": {
+      "url": "http://127.0.0.1:8775/progress",
+      "theme": "dark",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(3666.5px + 100vh)"
+    },
+    "phone-light": {
+      "url": "http://127.0.0.1:8775/progress",
+      "theme": "light",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(4658px + 100vh)"
+    },
+    "phone-dark": {
+      "url": "http://127.0.0.1:8775/progress",
+      "theme": "dark",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(4658px + 100vh)"
+    }
+  },
+  "files": {
+    "official-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/progress-r3/browser/official-desktop-light.png",
+    "local-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/progress-r3/browser/local-desktop-light.png",
+    "official-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/progress-r3/browser/official-desktop-dark.png",
+    "local-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/progress-r3/browser/local-desktop-dark.png",
+    "official-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/progress-r3/browser/official-phone-light.png",
+    "local-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/progress-r3/browser/local-phone-light.png",
+    "official-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/progress-r3/browser/official-phone-dark.png",
+    "local-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/progress-r3/browser/local-phone-dark.png"
+  }
+}

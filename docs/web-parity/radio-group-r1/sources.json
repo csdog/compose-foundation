@@ -1,0 +1,18 @@
+{
+  "retrieved": "2026-11-05",
+  "officialPage": "https://ui.shadcn.com/docs/components/base/radio-group",
+  "revision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "files": {
+    "apps/v4/content/docs/components/base/radio-group.mdx": "2b12455a2651e0fadcbed1ecf01e18dc1f80c3d8c4ab03bc559b2a4d9e23b187",
+    "apps/v4/registry/bases/base/ui/radio-group.tsx": "c27fecb49f924d324d8c3d1354434508be0b59f202878d9713b8c1af1ebf5afa",
+    "apps/v4/registry/styles/style-nova.css": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e",
+    "apps/v4/registry/styles/style-rhea.css": "bac4eff75a0e21d9dd90ce40634937f54730471d8f7fa50ca67b317892cf908f",
+    "apps/v4/examples/base/radio-group-demo.tsx": "da4db59ebf87d6be6c3dfb4a116966e4d3c7b3dc130c86491b0a23f4adb7bfc4",
+    "apps/v4/examples/base/radio-group-description.tsx": "4eb49612c423dd2b1d3d84cf779019eca702e2e7984161838ba52cd7101f393f",
+    "apps/v4/examples/base/radio-group-choice-card.tsx": "c9c4054e7e74f5fd85c4c53b36506dfd613e818f618b940ea4ef9086dab17ca5",
+    "apps/v4/examples/base/radio-group-fieldset.tsx": "aae918fde8a30009fd3e2229cc1286250adaf6e53fb1a0736054fe3e3840dc84",
+    "apps/v4/examples/base/radio-group-disabled.tsx": "08991a4264dc9cd429b5156c76a795c6089be8e104e062642edaed8154fde247",
+    "apps/v4/examples/base/radio-group-invalid.tsx": "61729f20d4e5da38a25840bd248daf5cb2cd2e07d9494c469025e5039236840a",
+    "apps/v4/examples/base/radio-group-rtl.tsx": "83bfc2f82b665ec1150aca1b30fd9fba0dc68bad545308e9b41767687f8a7748"
+  }
+}
