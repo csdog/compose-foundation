@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="SeparatorPageTest[jvm]" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-11-05T05:05:44.154Z" hostname="Apples-MacBook-Pro.local" time="0.521">
+  <properties/>
+  <testcase name="rtlSectionCarriesTheCurrentGuideCopy[1,440-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.SeparatorPageTest" time="0.013"/>
+  <testcase name="rtlBodyAndBundledFontsKeepTwentyPixelSubtitleLines[1,440-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.SeparatorPageTest" time="0.114"/>
+  <testcase name="pageContainsTheFiveOfficialRecipesWithoutLegacyDuplicates[1,440-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.SeparatorPageTest" time="0.014"/>
+  <testcase name="rtlSectionCarriesTheCurrentGuideCopy[1,440-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.SeparatorPageTest" time="0.014"/>
+  <testcase name="rtlBodyAndBundledFontsKeepTwentyPixelSubtitleLines[1,440-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.SeparatorPageTest" time="0.099"/>
+  <testcase name="pageContainsTheFiveOfficialRecipesWithoutLegacyDuplicates[1,440-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.SeparatorPageTest" time="0.013"/>
+  <testcase name="rtlSectionCarriesTheCurrentGuideCopy[390-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.SeparatorPageTest" time="0.014"/>
+  <testcase name="rtlBodyAndBundledFontsKeepTwentyPixelSubtitleLines[390-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.SeparatorPageTest" time="0.102"/>
+  <testcase name="pageContainsTheFiveOfficialRecipesWithoutLegacyDuplicates[390-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.SeparatorPageTest" time="0.018"/>
+  <testcase name="rtlSectionCarriesTheCurrentGuideCopy[390-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.SeparatorPageTest" time="0.014"/>
+  <testcase name="rtlBodyAndBundledFontsKeepTwentyPixelSubtitleLines[390-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.SeparatorPageTest" time="0.092"/>
+  <testcase name="pageContainsTheFiveOfficialRecipesWithoutLegacyDuplicates[390-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.SeparatorPageTest" time="0.013"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

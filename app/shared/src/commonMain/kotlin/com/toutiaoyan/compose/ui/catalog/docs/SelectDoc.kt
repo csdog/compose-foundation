@@ -54,8 +54,26 @@ val selectDoc =
                 ApiProperty("SelectTrigger.size", "SelectSize", "Default"),
                 ApiProperty("SelectContent.alignItemWithTrigger", "Boolean?", "null"),
             ),
+        examplesHeading = null,
+        compositionCode =
+            """
+            Select
+            ├── SelectTrigger
+            │   └── SelectValue
+            └── SelectContent
+                ├── SelectGroup
+                │   ├── SelectLabel
+                │   ├── SelectItem
+                │   └── SelectItem
+                ├── SelectSeparator
+                └── SelectGroup
+                    ├── SelectLabel
+                    ├── SelectItem
+                    └── SelectItem
+            """.trimIndent(),
         examples =
-            listOf(
+            selectPageExamples(
+                listOf(
                 ComponentExample(
                     title = "Default",
                     code =
@@ -1128,5 +1146,6 @@ val selectDoc =
                         }
                     },
                 ),
+            ),
             ),
     )

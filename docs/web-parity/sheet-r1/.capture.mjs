@@ -1,15 +1,15 @@
 
 const fs = await import('node:fs/promises');
-const task = await taskSpace("compose-foundation parity A");
+const task = await taskSpace("compose-foundation parity C");
 const pages = await task.pages();
 let official = pages.find((p) => p.label === "p1");
 if (!official) official = await task.newPage();
 let local = pages.find((p) => p.label === "p2");
 if (!local) local = await task.newPage();
-const base = "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/combobox-r1/browser";
-const slug = "combobox";
-const officialUrl = "https://ui.shadcn.com/docs/components/base/combobox";
-const localUrl = "http://127.0.0.1:" + 8771 + "/" + slug;
+const base = "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/sheet-r1";
+const slug = "sheet";
+const officialUrl = "https://ui.shadcn.com/docs/components/base/sheet";
+const localUrl = "http://127.0.0.1:" + 8773 + "/" + slug;
 const views = [
   { n: "desktop-light", w: 1440, h: 1000, t: "light" },
   { n: "desktop-dark", w: 1440, h: 1000, t: "dark" },

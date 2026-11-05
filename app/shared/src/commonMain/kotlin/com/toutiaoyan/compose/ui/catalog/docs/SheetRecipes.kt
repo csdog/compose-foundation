@@ -247,9 +247,32 @@ internal fun SheetRtlRecipe(language: Int = 1) {
 internal val sheetOfficialExamples =
     listOf(
         ComponentExample("Default", code = sheetDefaultRecipeCode, preview = { SheetDefaultRecipe() }),
-        ComponentExample("Side", code = sheetSideRecipeCode, preview = { SheetSideRecipe() }),
-        ComponentExample("No Close Button", code = sheetNoCloseRecipeCode, preview = { SheetNoCloseRecipe() }),
-        ComponentExample("RTL", code = sheetRtlRecipeCode, previewPadding = 0.dp, preview = {
+        ComponentExample(
+            "Side",
+            code = sheetSideRecipeCode,
+            descriptionMarkdown =
+                ("Use the `side` prop on `SheetContent` to set the edge of the screen where the " +
+                    "sheet appears. Values are `top`, `right`, `bottom`, or `left`."),
+            preview = { SheetSideRecipe() },
+        ),
+        ComponentExample(
+            "No Close Button",
+            code = sheetNoCloseRecipeCode,
+            descriptionMarkdown =
+                "Use `showCloseButton = false` on `SheetContent` to hide the close button.",
+            preview = { SheetNoCloseRecipe() },
+        ),
+        ComponentExample(
+            "RTL",
+            code = sheetRtlRecipeCode,
+            descriptionMarkdown =
+                (
+                    "To enable RTL support in your app, see the [RTL configuration guide]" +
+                        "(https://ui.shadcn.com/docs/rtl). Source shows the Arabic pair; the " +
+                        "catalog toolbar also previews English and Hebrew."
+                ),
+            previewPadding = 0.dp,
+            preview = {
             var language by remember { mutableIntStateOf(1) }
             RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
                 SheetRtlRecipe(language)

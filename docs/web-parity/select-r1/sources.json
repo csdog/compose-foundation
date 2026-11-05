@@ -1,0 +1,59 @@
+{
+  "component": "select",
+  "revision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "retrievedAt": "2026-11-05T13:05:00+08:00",
+  "source": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/<path>",
+  "livePage": "https://ui.shadcn.com/docs/components/base/select",
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/select.mdx",
+      "sha256": "6dfdca0d48c9f77190d5dd7d968abfae8c3d85b751f042503c8d56b4a8b9f7e9",
+      "bytes": 3510
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/select.tsx",
+      "sha256": "6348d30035b68867d5efffe9b0b1611718226bef9fdeef9554349d6b98252110",
+      "bytes": 5904
+    },
+    {
+      "path": "apps/v4/examples/base/select-demo.tsx",
+      "sha256": "cc8c7490bf2ce6579bda00d18793e96053dc23e1b8cd393a005068b87a8dc8db",
+      "bytes": 905
+    },
+    {
+      "path": "apps/v4/examples/base/select-align-item.tsx",
+      "sha256": "15fe8e38434095cfde0422d563ba27d739000e6f67b7ebe6ba8c0739fa1c4b17",
+      "bytes": 1816
+    },
+    {
+      "path": "apps/v4/examples/base/select-groups.tsx",
+      "sha256": "235c78c123cd35d3ec435db4db9d67004e3e72b9327ffde14d88cccefe447ecf",
+      "bytes": 1361
+    },
+    {
+      "path": "apps/v4/examples/base/select-scrollable.tsx",
+      "sha256": "1f65a9aabcf3863737b528069facc7518c1d5e429f833b501d03370c03903f75",
+      "bytes": 3400
+    },
+    {
+      "path": "apps/v4/examples/base/select-disabled.tsx",
+      "sha256": "c1d45a73f9fc557488d8a0afe2bb0e223e27eafd343eae914bd9e6c7ef302b3a",
+      "bytes": 970
+    },
+    {
+      "path": "apps/v4/examples/base/select-invalid.tsx",
+      "sha256": "122c65b56c8d31749dd7b3c009d8b10fb571163d6e9ec6dc33fc89a59a37912e",
+      "bytes": 1009
+    },
+    {
+      "path": "apps/v4/examples/base/select-rtl.tsx",
+      "sha256": "9f077d193a7acbb1bc47309c5c1cde1877c72e5380c604c30937a34fed282e27",
+      "bytes": 3046
+    },
+    {
+      "path": "apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e",
+      "bytes": 78661
+    }
+  ]
+}

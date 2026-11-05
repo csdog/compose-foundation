@@ -13,7 +13,7 @@ val separatorDoc =
         beforeExamples =
             listOf(
                 ComponentGuideSection(
-                    "Compose layout and semantics",
+                    "Kotlin extension: Compose layout and semantics",
                     listOf(
                         ComponentGuideBlock.Paragraph(
                             "For a vertical divider in a content-sized row, use `Modifier.height(IntrinsicSize.Min)` " +

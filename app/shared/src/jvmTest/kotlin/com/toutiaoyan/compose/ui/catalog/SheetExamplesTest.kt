@@ -11,6 +11,7 @@ import androidx.compose.ui.platform.*
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.*
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.catalog.docs.sheetDoc
 import com.toutiaoyan.compose.ui.catalog.docs.SheetRtlRecipe
 import com.toutiaoyan.compose.ui.theme.Theme
@@ -194,5 +195,28 @@ class SheetExamplesTest(private val viewport: Int, private val dark: Boolean) {
         assertTrue(sheetDoc.examples.single { it.title == "Side" }.code.contains("repeat(10)"))
         assertTrue(sheetDoc.examples.single { it.title == "Side" }.code.contains("viewportHeight / 2"))
         assertTrue(sheetDoc.examples.single { it.title == "RTL" }.code.contains("peduarte"))
+    }
+
+    @Test fun exportKeepsOfficialSectionsCompositionAndKotlinExtensions() {
+        assertEquals(
+            listOf("Default", "Side", "No Close Button", "RTL"),
+            sheetDoc.examples.take(4).map { it.title },
+        )
+        assertTrue(sheetDoc.examples.drop(4).all { it.title.startsWith("Kotlin extension: ") })
+        assertEquals(null, sheetDoc.examplesHeading)
+        val markdown = componentPageMarkdown(sheetDoc)
+        val order = listOf(
+            "## Composition",
+            "## Side",
+            "## No Close Button",
+            "## RTL",
+            "## API Reference",
+        ).map { markdown.indexOf(it) }
+        assertTrue(order.all { it >= 0 }, "missing a section heading: $order")
+        assertEquals(order.sorted(), order)
+        assertContains(markdown, "Use the `side` prop on `SheetContent`")
+        assertContains(markdown, "showCloseButton = false")
+        assertContains(markdown, "Kotlin extension: Side")
+        assertFalse(markdown.contains("## Examples"))
     }
 }

@@ -29,6 +29,51 @@ import com.toutiaoyan.compose.ui.components.sheet.SheetTitle
 import com.toutiaoyan.compose.ui.components.sheet.SheetTrigger
 import com.toutiaoyan.compose.ui.components.text.Text
 
+private val sheetApiSections =
+    listOf(
+        ComponentApiSection(
+            "Sheet",
+            (
+                "Controlled (`open` + `onOpenChange`) or uncontrolled (`defaultOpen`). " +
+                    "Matches Base UI Dialog: the page behind is inert while modal and Escape " +
+                    "closes. See the [Base UI Dialog API]" +
+                    "(https://base-ui.com/react/components/dialog#api-reference)."
+            ),
+            listOf(
+                ApiProperty("open", "Boolean?", "null"),
+                ApiProperty("onOpenChange", "((Boolean) -> Unit)?", "null"),
+                ApiProperty("defaultOpen", "Boolean", "false"),
+                ApiProperty("modal", "Boolean", "true"),
+            ),
+        ),
+        ComponentApiSection(
+            "SheetContent / SheetHeader / SheetFooter",
+            (
+                "`side` picks the edge (`top`/`right`/`bottom`/`left`); Nova uses the official " +
+                    "`bg-popover` panel, 1px border and overlay blur. `showCloseButton = false` " +
+                    "hides the corner control. Header carries the title/description block; " +
+                    "Footer is the action row."
+            ),
+            listOf(
+                ApiProperty("side", "SheetSide", "SheetSide.Right"),
+                ApiProperty("showCloseButton", "Boolean", "true"),
+                ApiProperty("closeAriaLabel", "String", "Close"),
+                ApiProperty("title / description", "String / String?", "Required / null"),
+            ),
+        ),
+        ComponentApiSection(
+            "SheetTrigger / SheetClose",
+            (
+                "Host slots for the open and dismiss controls; the string overloads render an " +
+                    "outline `Button` wired to toggle/close."
+            ),
+            listOf(
+                ApiProperty("text", "String", "Required (string overload)"),
+                ApiProperty("content", "@Composable () -> Unit", "Required (slot overload)"),
+            ),
+        ),
+    )
+
 val sheetDoc =
     ComponentDoc(
         id = "sheet",
@@ -845,4 +890,24 @@ val sheetDoc =
                 ),
             ),
     )
-        .let { native -> native.copy(examples = sheetOfficialExamples + native.examples) }
+        .let { native ->
+            native.copy(
+                examplesHeading = null,
+                compositionCode =
+                    """
+                    Sheet
+                    ├── SheetTrigger
+                    └── SheetContent
+                        ├── SheetHeader
+                        │   ├── SheetTitle
+                        │   └── SheetDescription
+                        └── SheetFooter
+                    """.trimIndent(),
+                apiSections = sheetApiSections,
+                examples =
+                    sheetOfficialExamples +
+                        native.examples
+                            .filterNot { it.title == "Edit profile" }
+                            .map { it.copy(title = "Kotlin extension: " + it.title) },
+            )
+        }

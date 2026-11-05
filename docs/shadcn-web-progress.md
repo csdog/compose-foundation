@@ -150,9 +150,9 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Resizable (`resizable`)：官网四配方与三语 RTL 已迁移；Nova 分隔线/grip、0..100%范围、真实鼠标/触摸命中、键盘调节及嵌套比例已补。37项定向验证和两个ktlint通过；浏览器四象限、多面板/resize光标及完整状态仍待完成。
 - [ ] Scroll Area (`scroll-area`)：已迁移官网 Tags/三幅照片横向/三语RTL配方；Nova轨道、thumb端点、轨道点击及滚轮、键盘、双轴corner和Lazy拖动已补，49项定向验证与两个ktlint通过，JS/Wasm退出0但仍有诊断。浏览器、任意Root形状继承及完整状态仍开放。
 - [ ] Scroll Fade (`scroll-fade`)：七组官网配方、12%/40dp/96dp规则、逐边/尺寸/none、RTL停点及MessageScroller视口遮罩顺序已补；92项定向验证和两个ktlint通过。浏览器四象限、CSS fallback与完整状态仍开放，详见文末。
-- [ ] Select (`select`)：基础已验证（第七批）；默认水果示例、选中行定位、键盘/焦点和错误状态已修正，已按官网固定弹层宽度补 Nova 标签不收缩/不换行及 6dp 间距，长标签与希伯来语菜单项回归通过，本轮另补SelectValue当前值单行/省略、窄触发器不再换行裁剪；复杂碰撞/长列表滚动、键入搜索、动态重排与完整 RTL 待关闭。Card浏览器复查观察到指针打开语言菜单后Home/End滚动页面，键盘初始焦点仍需专项核对。
-- [ ] Separator (`separator`)：官网五配方桌面/窄屏浅深、三语与767/768断点已对照；移除十个重复旧示例，补说明/API和公共代码导出，RTL改Noto/单一288正文/40inset/20行框，Menu接CSS视口桥接。44项常规测试、lint/JS/Wasm通过；显式6图5通过，旧暗色20像素actual与r1一致。共享排版/字形、平台role及完整动态/辅助技术仍开放，见[separator-r2](web-parity/separator-r2/README.md)。
-- [ ] Sheet (`sheet`)：官网四配方及三语RTL已迁移；响应式宽度、动画/焦点、Nova单侧border与shadow、Header/Footer/正文权重和RTL关闭按钮已补。55项定向验证及core/shared两个ktlint通过；浏览器四象限、旧基准审计和完整状态矩阵仍开放，详见文末。
+- [ ] Select (`select`)：r1 按当前官网重建页面：官方七配方顺序（demo、Align Item With Trigger、Groups、Scrollable、Disabled、Invalid、RTL）+ Compose-only 示例统一 `Kotlin extension:` 前缀、`examplesHeading` 移除并补 Composition 树；新增 Align Item（Switch+alignItemWithTrigger）、Groups（双分组+Separator）、Scrollable（长时区列表）、Disabled（整表禁用）、Invalid（Field+Select invalid）、RTL（三语工具栏/Arabic）并复用原 demo。浏览器验证 demo 打开/选择、长列表弹出滚动、RTL 阿拉伯语、四象限 1440/390×浅深，SelectExamplesTest 7 项与 Wasm 构建通过；typeahead/碰撞翻转/动态重排未在浏览器取证，原生 listbox 语义缺失，见[Select r1](web-parity/select-r1/README.md)。
+- [ ] Separator (`separator`)：r1 重读当前官网确认五配方顺序不变（demo、Vertical、Menu、List、RTL），补 RTL 官方引导句并把 Compose 专有指南标题改为 `Kotlin extension: Compose layout and semantics`；浏览器复查 Menu/RTL 段与四象限 1440/390×浅深，SeparatorPageTest 12 项 + SeparatorExamplesTest 20 项通过，Wasm 构建通过。原生 separator 角色语义、跨断点缩放与菜单内指针/键盘矩阵未重验，见[Separator r1](web-parity/separator-r1/README.md)。
+- [ ] Sheet (`sheet`)：r1 按当前官网补 Composition 树与三个 API 小节，移除 `Examples` 分组并给原生示例加 `Kotlin extension:` 前缀；Side/No Close Button/RTL 三节补官方 copy 与说明，四官方配方顺序（demo、Side、No Close Button、RTL）已确认。浏览器验证右侧 demo、顶部/左侧面板、无关闭按钮、RTL 镜像，四象限 1440/390×浅深复查，SheetExamplesTest 32 项与 Wasm 构建通过。bottom 侧未单独截图、动画中间帧/焦点恢复与 Nova 单侧 border 逐像素未验，原生 dialog/inert 语义缺失，见[Sheet r1](web-parity/sheet-r1/README.md)。
 - [ ] Shimmer (`shimmer`)：已修复Style绘制/重组、实际currentColor、浅深高光alpha/OKLCH及九组官网配方；78项定向验证和core/shared两个ktlint通过。字体spread、自动减弱动态、色域/采样误差及浏览器完整矩阵仍开放，详见文末。
 - [ ] Sidebar (`sidebar`)：已核对官网来源并补桌面/移动端独立状态、响应式切换、Offcanvas内容保留/200ms动画、移动面板与内侧边框；内容滚动及Header/Footer/Group间距也已补齐，34项定向验证及两个ktlint通过。官网配方、浏览器四象限及完整状态矩阵仍待完成，详见 sidebar-r1/r2。
 - [ ] Skeleton (`skeleton`)：七组官网配方及三语RTL已迁移，Shimmer扩展复制代码已统一；脉冲Style逐帧重组49次问题已修复。50项定向测试、两项旧截图验证及core/shared ktlint通过，40张原生截图已检查。浏览器四象限及完整状态验收仍开放，见 skeleton-r1。
@@ -172,6 +172,42 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Sheet：官网配方、Composition 与状态复核（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 184 -->
+
+按固定上游 `8a3536678a528cc012b9e62484290e79d0be410f` 复核 Sheet 页面。官方顺序为 demo（Edit profile 表单）、Composition、Side、No Close Button、RTL、API Reference；本地四段官方配方已前置，但缺 Composition/API Reference、Side/No Close/RTL 无官网说明、页面仍有 `Examples` 分组且 Compose-only 示例无前缀。
+
+本轮补 Composition 树与三个 API 小节（含 Base UI Dialog 链接），`examplesHeading = null`，给 Side（`side` 取值）、No Close Button（`showCloseButton = false`）、RTL（RTL 指南）补官方 copy；27 个原生示例统一 `Kotlin extension:` 前缀并过滤与官方 demo 重复的旧 Edit profile 条目；组件未改。
+
+验证：浏览器实测右侧 demo 打开（表单 + Save/Close）、顶部 50vh 面板、左侧面板、无关闭按钮面板、RTL 镜像到左侧的阿拉伯语表单；四象限 1440/390×浅深在最终构建 `8b31cf6051ad0ed3c7dd.wasm`（SHA256 `af0897ba8dcd1ca0ba6ea8ace92d531d0a7a68b6aa02253393db7e8c3dc60285`）复查；SheetExamplesTest **32 项通过**（4 视口/主题参数化）。
+
+保留：bottom 侧本轮未单独截图；侧边动画中间帧、焦点陷阱/恢复与 Nova 单侧 border/shadow 字重未逐像素对比；Canvas 无原生 dialog/inert 语义；共享页面标签、手机 375 对 390 与代码面板差异不变。
+
+### Separator：官网配方、Composition 与状态复核（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 183 -->
+
+按固定上游 `8a3536678a528cc012b9e62484290e79d0be410f` 重读 Separator MDX、`separator.tsx` 与五个官方配方，并实时对照当前页面。官方顺序仍为 demo、Vertical、Menu、List、RTL、API Reference；本地 `separatorOfficialExamples` 已是这五段，Vertical/Menu/List 说明与官网一致，RTL 缺官网引导句。
+
+本轮给 RTL 段补 `descriptionMarkdown`（RTL 配置指南链接 + 工具栏三语说明），并把 Compose 专有的 “Compose layout and semantics” 指南标题改为 `Kotlin extension: Compose layout and semantics`。组件与预览未改。
+
+验证：浏览器复查 Menu/RTL 段；四象限 1440/390×浅深在最终构建 `8b31cf6051ad0ed3c7dd.wasm`（SHA256 `af0897ba8dcd1ca0ba6ea8ace92d531d0a7a68b6aa02253393db7e8c3dc60285`）复查；SeparatorPageTest **12 项**、SeparatorExamplesTest **20 项通过**。
+
+保留：Canvas 无原生 `role=separator`，`decorative` 为近似；767/768 断点由测试覆盖但跨断点缩放与菜单内指针/键盘矩阵未重验；共享页面标签/手机宽度/代码面板差异不变。
+
+### Select：官网配方、Composition 与状态复核（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 182 -->
+
+按固定上游 `8a3536678a528cc012b9e62484290e79d0be410f` 复核并重建 Select 页面。官网顺序为 demo、Composition、Align Item With Trigger、Groups、Scrollable、Disabled、Invalid、RTL、API Reference；本地此前是 30 个 API 式示例放在 `Examples` 分组，没有官方配方标题、Composition 与 RTL。
+
+本轮 `examplesHeading = null`，补 Composition 树；官方七段按官网顺序接线：demo 复用原 Default 水果选择；新增 Align Item With Trigger（Switch + `alignItemWithTrigger`）、Groups（Fruits/Vegetables 双分组 + Separator）、Scrollable（五个时区分组的长列表）、Disabled（整表 `disabled` + 禁用项）、Invalid（`Field(invalid)` + `Select(invalid)`）、RTL（三语工具栏 + 阿拉伯语占位/选项）；其余示例统一 `Kotlin extension:` 前缀。
+
+验证：浏览器实测 demo 打开并选择水果、Scrollable 弹出后滚动到 South America、RTL 阿拉伯语触发/弹出，四象限 1440/390×浅深在最终构建 `8b31cf6051ad0ed3c7dd.wasm`（SHA256 `af0897ba8dcd1ca0ba6ea8ace92d531d0a7a68b6aa02253393db7e8c3dc60285`）复查；SelectExamplesTest **7 项通过**。
+
+保留：浏览器只覆盖长列表滚动，typeahead、边缘碰撞翻转、动态重排与 prevent-item-select 仍靠 Kotlin extension 示例与既有核心测试；Canvas 无原生 listbox/option/aria-activedescendant 语义；共享页面标签、手机 375 对 390 与代码面板差异不变。
 
 ### Textarea：当前六配方、扩展裁剪与分节对照（2026-11-05）
 
