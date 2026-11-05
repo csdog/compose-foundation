@@ -43,7 +43,6 @@ val buttonDoc =
                     ),
                 ),
             ),
-        apiProperties = buttonApiProperties,
         apiSections =
             listOf(
                 ComponentApiSection(

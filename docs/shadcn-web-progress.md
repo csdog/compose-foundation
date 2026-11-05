@@ -109,7 +109,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Badge (`badge`)：七个官方页面示例已补齐；桌面/手机浅深28组双方截图及英语/希伯来语8组双方截图已复查；补 href/invalid/逻辑图标边距与 Spinner 固有尺寸修复，23项定向测试通过。r2再次确认当前七配方及自定义色阶，补齐Usage代码缺失的`BadgeVariant`导入并对齐Link文案；30项聚焦测试及Wasm构建通过，浏览器仍待新空间复核。原生链接语义、完整交互/辅助技术和共享页面差异仍开放，见[badge-r2](web-parity/badge-r2/README.md)及badge-r1。
 - [ ] Breadcrumb (`breadcrumb`)：2026-10-30 七组官方配方、Composition/七个 API 小节已补；修正 6dp 换行列表、4dp item 间距、14dp 镜像描边分隔符、20/16dp 省略号及链接 hover。r2再次确认当前七配方，三组菜单路径补`DropdownMenuGroup`，额外Disabled改为Kotlin extension标题；23项聚焦测试及Wasm构建通过，浏览器仍待新空间复核。共享手机宽度导致的换行差异、链接/导航原生语义和焦点细节仍明确保留，见[breadcrumb-r2](web-parity/breadcrumb-r2/README.md)及breadcrumb-r1。
 - [ ] Bubble (`bubble`)：2026-10-30 九组官方配方、Composition/四个 API 及可访问性指南已补；修正自然宽度/80% 上限、Ghost 全宽、字号行框、Muted/Tinted 颜色和反应行悬浮定位。17 项定向测试、16 张像素基准、JS/Wasm distribution、四象限首屏对照及静态检查通过。任意复杂槽位裁剪/多 Content 布局、按钮反应自动 padding、完整焦点及原生辅助技术矩阵仍待关闭，见 bubble-r1。
-- [ ] Button (`button`)：十五组实际配方已补齐，新增公开 buttonStyle/invalid、As Link、完整默认Group菜单；修正Nova背景裁剪、阴影alpha与嵌套Escape。51项定向测试、两张有意更新Nova基准verify、JS/Wasm及两配方四象限56图已复查。Card复查另修Nova长单行文字完整显示及仅反馈层裁剪，新增2项回归；两张Nova基准各仅2个边缘像素有意更新。子菜单宽度/手机碰撞/指针聚焦、Tabler图形、expanded/pressed及完整状态仍开放。[Card依赖](web-parity/card-r1/README.md)、[r1](web-parity/button-r1/README.md)、[r2](web-parity/button-r2/README.md)。
+- [ ] Button (`button`)：十五组实际配方已补齐，新增公开 buttonStyle/invalid、As Link、完整默认Group菜单；修正Nova背景裁剪、阴影alpha与嵌套Escape。r3重新确认当前官网配方与As Link说明，移除API Reference中重复的根Button属性表，保留命名Button与buttonStyle小节；63项聚焦测试及Wasm构建通过，浏览器仍待新空间复核。子菜单宽度/手机碰撞/指针聚焦、Tabler图形、expanded/pressed及完整状态仍开放，见[button-r3](web-parity/button-r3/README.md)。[Card依赖](web-parity/card-r1/README.md)、r1、r2。
 - [ ] Button Group (`button-group`)：基础已验证（第六批）；本轮共用完整默认菜单，补图标、Other单选与状态保持及响应式Go Back。默认配方在Button页四象限已验；共享菜单宽度/碰撞/指针焦点、本页其他示例与混合子项/纵向/尺寸矩阵仍待关闭。见[Button r2](web-parity/button-r2/README.md)。
 - [ ] Calendar (`calendar`)：2026-10-30 完成首轮公历主要对照：15 组配方及源码、Composition/四组 API、预设/时间/已订日期/价格格/周数/RTL 已补。修正可变周数、日格/行距、真实焦点和键盘作用域、百年年份范围及月份边界；15 项功能/目录测试、12 张像素基准及 JS/Wasm 构建通过，十组官方与十五组本地四象限首屏已检查。波斯历、原生时间输入行为、caption 细节及完整辅助技术/交互矩阵仍保留，见 calendar-r1 和文末。
 - [ ] Card (`card`)：六组官方示例与完整导出代码已补；Nova垂直根padding、分区水平inset、满宽Footer及公开CardImage已修正，调用方Style优先。93项联合回归、11图像素校验、JS/Wasm通过；官网/本地各56张四象限静态/交互图已复查。原生滚动条、1px边框占位、字体字重/换行、共享Select浏览器键盘及全状态仍开放。[证据](web-parity/card-r1/README.md)。
@@ -171,6 +171,16 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Button：API Reference 去重与当前页面复核（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 144 -->
+
+重新读取当前官网，十五组配方与本地顺序一致，Cursor与As Link的“链接不要使用Button角色”说明仍匹配。发现ComponentDoc同时设置根`apiProperties`和命名`Button` section，导致页面与Copy Page重复整张Button属性表；现删除根表，只保留详细Button和buttonStyle两节。
+
+新增Markdown导出回归要求`onClick` API行只出现一次。Button页面与Followup 24项、文档8项、核心CallerSize/Icon/Invalid/NoWrap/Nova/截图共31项，合计63项通过；Wasm开发distribution14.878s退出0并保留1条Webpack warning，全仓ktlint/detekt通过。摘要与XML见[button-r3](web-parity/button-r3/README.md)。
+
+当前Ego仍无compose-foundation TaskSpace，只有用户空间和无关Product Hunt委派空间；未创建替代空间或接管标签。因此没有新的浅深桌面/手机浏览器验证，Button保持未勾选；菜单自然宽/碰撞、指针焦点、expanded/pressed、图形与完整辅助技术继续开放。Editor排除、Attachment后置。
 
 ### Breadcrumb：当前七配方、菜单分组与扩展标题（2026-11-05）
 

@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.catalog.docs.buttonDoc
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
@@ -84,6 +85,12 @@ class ButtonExamplesTest(private val width: Int, private val dark: Boolean) {
         val generating = rule.onNodeWithText("Generating").getUnclippedBoundsInRoot()
         val downloading = rule.onNodeWithText("Downloading").getUnclippedBoundsInRoot()
         assertEquals(generating.top.value, downloading.top.value, .1f, "Loading buttons remain on one row")
+    }
+
+    @Test fun apiReferenceDoesNotDuplicateTheRootButtonTable() {
+        val api = componentPageMarkdown(buttonDoc).substringAfter("## API Reference")
+        assertEquals(1, Regex("\\| `onClick` \\|").findAll(api).count())
+        assertContains(api, "### buttonStyle")
     }
 
     @Test fun rtlLanguageSwitchesRestoreDirectionAndLoadingButtonsRemainDisabled() {

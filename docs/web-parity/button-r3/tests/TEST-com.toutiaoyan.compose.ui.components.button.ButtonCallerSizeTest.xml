@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ButtonCallerSizeTest[jvm]" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-05T03:20:16.345Z" hostname="Apples-MacBook-Pro.local" time="0.755">
+  <properties/>
+  <testcase name="explicitCallerHeightConstrainsThePaintedChrome[jvm]" classname="com.toutiaoyan.compose.ui.components.button.ButtonCallerSizeTest" time="0.682"/>
+  <testcase name="fillWidthPaintsTheWholeRequestedButtonDark[jvm]" classname="com.toutiaoyan.compose.ui.components.button.ButtonCallerSizeTest" time="0.024"/>
+  <testcase name="expandedTouchTargetKeepsTheIconChromeSmall[jvm]" classname="com.toutiaoyan.compose.ui.components.button.ButtonCallerSizeTest" time="0.025"/>
+  <testcase name="fillWidthPaintsTheWholeRequestedButtonLight[jvm]" classname="com.toutiaoyan.compose.ui.components.button.ButtonCallerSizeTest" time="0.021"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
