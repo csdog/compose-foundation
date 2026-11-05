@@ -105,7 +105,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Alert Dialog (`alert-dialog`)：官方七组预览、Composition/Kotlin API 已补；Media 桌面两列/手机与 Small 居中、24dp 图标、三语两尺寸切换及 Settings 链接已验证；56 项定向测试与六张 Nova 像素基准通过，桌面/手机浅深矩阵已检查。r3重新读取当前官网，校正Basic、Small with Media和Destructive三段说明并使用当前Kotlin API名称；28项聚焦回归及Wasm构建通过，浏览器仍待新空间复核。共用深色 input/border 令牌已在共享主题复核中修正；正文换行/字重及阿拉伯语回退字体、无障碍映射与四张旧 Vega 基准失配仍待关闭，见[Alert Dialog r3](web-parity/alert-dialog-r3/README.md)。
 - [ ] Aspect Ratio (`aspect-ratio`)：Default/Square/Portrait/三语 RTL 组件已做基础复核；固定 caption 20dp 行框并修正 Nova Select 真实 Arabic 字体选项高度。r3再次确认当前官网仍为四配方，补精确顺序/文案及`ratio`默认值说明，11项聚焦测试和Wasm构建通过。旧勾选撤回：色域/整数测量、共享页面差异及共享布局修复后的新浏览器矩阵仍未关闭，见[aspect-ratio-r3](web-parity/aspect-ratio-r3/README.md)。
 - [ ] Attachment (`attachment`)：六组示例、Nova布局、Group吸附/键盘/渐隐/约束、整卡焦点和onClick hover，以及Features/Accessibility指南、目录/导出已补。第七轮按官网当前SVG修正FileSearch；实际标题14px/500字重和约148px排版字宽已验证，未调粗字体。26项目录回归、JS/Wasm构建通过；旧Vega、字形像素观感、自定义overlay hover、颜色过渡与原生辅助技术仍待关闭。按用户要求暂停逐轮细化，剩余项合并到后续统一处理；第八轮 hover 动画只有定向测试通过，尚未完成浏览器验收。证据见attachment-r2至attachment-r8。
-- [ ] Avatar (`avatar`)：2026-10-30 首轮主要差异已补：真实图片、九组官方配方与额外 Fallback、Composition/六个 Kotlin API 小节；修正 fallback 字号、外圈、图标徽标、RTL 徽标及绿色令牌，补齐菜单键盘导航。9 项测试、JS/Wasm distribution 和四象限浏览器检查通过。混合尺寸分组计数、图片混合边框、菜单完整焦点/像素矩阵等保留明确后续项，见文末及 avatar-r1。
+- [ ] Avatar (`avatar`)：2026-10-30 首轮主要差异已补：真实图片、九组官方配方与额外 Fallback、Composition/六个 Kotlin API 小节；修正 fallback 字号、外圈、图标徽标、RTL 徽标及绿色令牌，补齐菜单键盘导航。9 项测试、JS/Wasm distribution 和四象限浏览器检查通过。r2按当前官网确认十组官方顺序，给额外Fallback加Kotlin extension前缀，并把Dropdown前三个条目放入DropdownMenuGroup；25项聚焦测试及Wasm构建通过，浏览器仍待新空间复核。混合尺寸分组计数、图片混合边框、菜单完整焦点/像素矩阵等保留明确后续项，见[avatar-r2](web-parity/avatar-r2/README.md)及avatar-r1。
 - [ ] Badge (`badge`)：七个官方页面示例已补齐；桌面/手机浅深28组双方截图及英语/希伯来语8组双方截图已复查；补 href/invalid/逻辑图标边距与 Spinner 固有尺寸修复，23项定向测试通过。原生链接语义、完整交互/辅助技术和共享页面差异仍开放。[证据](web-parity/badge-r1/README.md)。
 - [ ] Breadcrumb (`breadcrumb`)：2026-10-30 七组官方配方、Composition/七个 API 小节已补；修正 6dp 换行列表、4dp item 间距、14dp 镜像描边分隔符、20/16dp 省略号及链接 hover。9 项组件/目录定向测试、四象限七组浏览器检查、JS/Wasm distribution 通过；连同 Avatar 共 31 项联合验证和 13 张像素基准通过。共享手机宽度导致的换行差异、链接/导航原生语义和焦点细节仍明确保留，详见 breadcrumb-r1。
 - [ ] Bubble (`bubble`)：2026-10-30 九组官方配方、Composition/四个 API 及可访问性指南已补；修正自然宽度/80% 上限、Ghost 全宽、字号行框、Muted/Tinted 颜色和反应行悬浮定位。17 项定向测试、16 张像素基准、JS/Wasm distribution、四象限首屏对照及静态检查通过。任意复杂槽位裁剪/多 Content 布局、按钮反应自动 padding、完整焦点及原生辅助技术矩阵仍待关闭，见 bubble-r1。
@@ -171,6 +171,18 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Avatar：当前十配方、Dropdown Group 与扩展标题（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 141 -->
+
+对照当前UI官网与Base源码，官方顺序为Default、Basic、Badge、Badge with Icon、Avatar Group、Avatar Group Count、Avatar Group with Icon、Sizes、Dropdown、RTL。本地十组顺序已一致，最后额外Fallback改为`Kotlin extension: Fallback`，不再与官网配方混排。
+
+官方Dropdown把Profile/Billing/Settings放在`DropdownMenuGroup`，Log out在Separator之后；本地复制代码和实际预览现同步该结构。Sizes说明改为官网的`size` prop措辞。回归测试锁定十组官方顺序、Fallback扩展标题、Dropdown Group及文案。
+
+Avatar页面4项、文档8项、核心Parity5项、截图8项共25项通过；Wasm开发distribution17.073s退出0并保留1条Webpack warning，全仓ktlint/detekt通过。来源、XML与构建摘要见[avatar-r2](web-parity/avatar-r2/README.md)。
+
+当前Ego仍只有用户空间和无关Product Hunt委派空间，没有compose-foundation TaskSpace；未创建替代空间或接管标签。因此没有新的浅深桌面/手机浏览器验证，Avatar保持未勾选；混合尺寸分组、图片混合边框、菜单完整焦点/像素与原生辅助语义继续开放。Editor排除、Attachment后置。
 
 ### Aspect Ratio：完成状态复查与当前四配方（2026-11-05）
 

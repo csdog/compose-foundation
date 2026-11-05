@@ -94,9 +94,11 @@ private val avatarDropdownCode =
         """
             }
             DropdownMenuContent(style = Style { width(128.dp) }) {
-                DropdownMenuItem("Profile", onClick = {})
-                DropdownMenuItem("Billing", onClick = {})
-                DropdownMenuItem("Settings", onClick = {})
+                DropdownMenuGroup {
+                    DropdownMenuItem("Profile", onClick = {})
+                    DropdownMenuItem("Billing", onClick = {})
+                    DropdownMenuItem("Settings", onClick = {})
+                }
                 DropdownMenuSeparator()
                 DropdownMenuItem("Log out", onClick = {}, destructive = true)
             }
@@ -217,7 +219,7 @@ val avatarDoc =
                             ).prependIndent("    ")
                         } +
                         "\n}",
-                    descriptionMarkdown = "Use size to change the size of the avatar.",
+                    descriptionMarkdown = "Use the `size` prop to change the size of the avatar.",
                     preview = {
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -276,7 +278,7 @@ val avatarDoc =
                     },
                 ),
                 ComponentExample(
-                    "Fallback",
+                    "Kotlin extension: Fallback",
                     "Avatar(\"CN\")",
                     descriptionMarkdown = (
                         "Initials remain visible when an image is missing or fails to " +
@@ -452,9 +454,11 @@ internal fun AvatarDropdownPreview() {
                     Style { shape(CircleShape) },
         ) { AvatarPhoto(grayscale = false) }
         DropdownMenuContent(style = Style { width(128.dp) }) {
-            DropdownMenuItem("Profile", onClick = {})
-            DropdownMenuItem("Billing", onClick = {})
-            DropdownMenuItem("Settings", onClick = {})
+            DropdownMenuGroup {
+                DropdownMenuItem("Profile", onClick = {})
+                DropdownMenuItem("Billing", onClick = {})
+                DropdownMenuItem("Settings", onClick = {})
+            }
             DropdownMenuSeparator()
             DropdownMenuItem("Log out", onClick = {}, destructive = true)
         }

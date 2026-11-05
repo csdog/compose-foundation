@@ -48,6 +48,9 @@ class AvatarExamplesTest {
         rule.onNodeWithText("Billing").assertIsFocused()
         rule.onNodeWithText("Billing").performKeyInput { pressKey(Key.Escape) }
         rule.onNodeWithText("Profile").assertDoesNotExist()
+        assertTrue(
+            avatarDoc.examples.single { it.title == "Dropdown" }.code.contains("DropdownMenuGroup {"),
+        )
     }
 
     @Test fun languageSelectorMirrorsAvatarsAndTranslatesCount() {
@@ -78,7 +81,7 @@ class AvatarExamplesTest {
         assertEquals(arabicLeft, firstAvatarLeft(), .1f)
     }
 
-    @Test fun docsIncludeEveryOfficialRecipeAndSixApiParts() {
+    @Test fun docsKeepOfficialRecipesFirstAndLabelKotlinFallback() {
         assertEquals(
             listOf(
                 "Default",
@@ -91,11 +94,14 @@ class AvatarExamplesTest {
                 "Sizes",
                 "Dropdown",
                 "RTL",
-                "Fallback",
             ),
-            avatarDoc.examples.map {
-                it.title
-            },
+            avatarDoc.examples.take(10).map { it.title },
+        )
+        assertEquals("Kotlin extension: Fallback", avatarDoc.examples[10].title)
+        assertNull(avatarDoc.examplesHeading)
+        assertEquals(
+            "Use the `size` prop to change the size of the avatar.",
+            avatarDoc.examples.single { it.title == "Sizes" }.descriptionMarkdown,
         )
         assertEquals(6, avatarDoc.apiSections.size)
         assertFalse(avatarDoc.examples.any { "model = null" in it.code })

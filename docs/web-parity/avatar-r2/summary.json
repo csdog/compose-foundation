@@ -1,0 +1,41 @@
+{
+  "date": "2026-11-05",
+  "officialRecipeOrder": [
+    "Default",
+    "Basic",
+    "Badge",
+    "Badge with Icon",
+    "Avatar Group",
+    "Avatar Group Count",
+    "Avatar Group with Icon",
+    "Sizes",
+    "Dropdown",
+    "RTL"
+  ],
+  "changes": [
+    "Wrapped Avatar Dropdown related rows in DropdownMenuGroup",
+    "Labeled the extra Fallback recipe as a Kotlin extension",
+    "Aligned the Sizes guidance to the official size prop wording",
+    "Added page-order and Dropdown-structure regression coverage"
+  ],
+  "tests": {
+    "total": 25,
+    "failures": 0,
+    "suites": {
+      "AvatarExamplesTest": 4,
+      "ComponentDocumentationTest": 8,
+      "AvatarParityTest": 5,
+      "AvatarScreenshotTest": 8
+    }
+  },
+  "wasmDevelopmentBuild": {
+    "exitStatus": 0,
+    "elapsedSeconds": 17.073,
+    "appWasmSha256": "d137d06a129661e4a1136ab767ca9253e539ea610159a5516d0d8aab6ab68707",
+    "warning": "webpack compiled with one warning"
+  },
+  "browser": {
+    "rerun": false,
+    "reason": "No owned compose-foundation Ego TaskSpace is available; unrelated user/delegated spaces were not claimed and no replacement space was created."
+  }
+}
