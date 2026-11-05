@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.tailwind.core.twRadius
 import com.toutiaoyan.compose.ui.components.button.Button
+import com.toutiaoyan.compose.ui.components.button.ButtonSize
 import com.toutiaoyan.compose.ui.components.button.ButtonVariant
 import com.toutiaoyan.compose.ui.components.separator.Separator
 import com.toutiaoyan.compose.ui.components.separator.SeparatorOrientation
@@ -226,6 +227,7 @@ fun ButtonGroupScope.ButtonGroupItem(
     enabled: Boolean = true,
     disabled: Boolean = false,
     variant: ButtonVariant = ButtonVariant.Ghost,
+    size: ButtonSize = ButtonSize.Md,
     style: Style = Style,
     content: @Composable () -> Unit,
 ) {
@@ -262,6 +264,7 @@ fun ButtonGroupScope.ButtonGroupItem(
         enabled = enabled,
         disabled = disabled || controller.disabled,
         variant = variant,
+        size = size,
         style = Style { shape(itemShape) } then style,
         modifier = modifier.then(overlapModifier),
         content = content,
@@ -277,6 +280,7 @@ fun ButtonGroupScope.ButtonGroupItem(
     enabled: Boolean = true,
     disabled: Boolean = false,
     variant: ButtonVariant = ButtonVariant.Ghost,
+    size: ButtonSize = ButtonSize.Md,
     style: Style = Style,
 ) {
     ButtonGroupItem(
@@ -285,6 +289,7 @@ fun ButtonGroupScope.ButtonGroupItem(
         enabled = enabled,
         disabled = disabled,
         variant = variant,
+        size = size,
         style = style,
     ) {
         Text { label }

@@ -1,0 +1,42 @@
+{
+  "date": "2026-11-05",
+  "officialRecipeOrder": [
+    "Default",
+    "Orientation",
+    "Size",
+    "Nested",
+    "Separator",
+    "Split",
+    "Input",
+    "Input Group",
+    "Dropdown Menu",
+    "Select",
+    "Popover",
+    "RTL"
+  ],
+  "changes": [
+    "Added ButtonGroupItem.size as an additive public API",
+    "Replaced the legacy 13-example gallery with the 12 current official recipes",
+    "Added functional page tests for size, dropdown, popover, and RTL behavior"
+  ],
+  "tests": {
+    "total": 42,
+    "failures": 0,
+    "suites": {
+      "ButtonGroupExamplesTest": 16,
+      "ButtonFollowupRecipesTest": 12,
+      "ComponentDocumentationTest": 8,
+      "ButtonGroupScreenshotTest": 6
+    }
+  },
+  "wasmDevelopmentBuild": {
+    "exitStatus": 0,
+    "elapsedSeconds": 23.937,
+    "appWasmSha256": "89f199d0691f9915804ed3b1a1e394c19944fa1e65a9074785094bd7d09bf556",
+    "warning": "webpack compiled with one warning"
+  },
+  "browser": {
+    "rerun": false,
+    "reason": "No owned compose-foundation Ego TaskSpace is available; unrelated user/delegated spaces were not claimed and no replacement space was created."
+  }
+}
