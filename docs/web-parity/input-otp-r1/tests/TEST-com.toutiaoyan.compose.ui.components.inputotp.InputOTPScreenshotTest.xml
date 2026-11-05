@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="InputOTPScreenshotTest[jvm]" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-05T05:24:27.052Z" hostname="Apples-MacBook-Pro.local" time="0.195">
+  <properties/>
+  <testcase name="focused_light[jvm]" classname="com.toutiaoyan.compose.ui.components.inputotp.InputOTPScreenshotTest" time="0.037"/>
+  <testcase name="verify_email_light[jvm]" classname="com.toutiaoyan.compose.ui.components.inputotp.InputOTPScreenshotTest" time="0.027"/>
+  <testcase name="focused_with_ring_disabled_light[jvm]" classname="com.toutiaoyan.compose.ui.components.inputotp.InputOTPScreenshotTest" time="0.032"/>
+  <testcase name="verify_email_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.inputotp.InputOTPScreenshotTest" time="0.023"/>
+  <testcase name="states_light[jvm]" classname="com.toutiaoyan.compose.ui.components.inputotp.InputOTPScreenshotTest" time="0.022"/>
+  <testcase name="focused_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.inputotp.InputOTPScreenshotTest" time="0.029"/>
+  <testcase name="states_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.inputotp.InputOTPScreenshotTest" time="0.025"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

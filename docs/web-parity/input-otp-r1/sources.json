@@ -1,0 +1,62 @@
+{
+  "component": "Input OTP",
+  "officialPage": "https://ui.shadcn.com/docs/components/base/input-otp",
+  "upstreamRevision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "retrievedAt": "2026-11-05",
+  "files": {
+    "mdx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/input-otp.mdx",
+      "sha256": "bc3af0765b342e0f40c0ae3aa01bf26effb9a626749b57cd0f1752bd9961fd2b"
+    },
+    "componentSource": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/components/input-otp.tsx",
+      "sha256": "8f540b9de861859602b3fbfffa5af76045877498aad5401aa4d1e8d94e1f8922"
+    },
+    "style": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+    },
+    "examples": {
+      "input-otp-alphanumeric": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/input-otp-alphanumeric.tsx",
+        "sha256": "5f16efa15a038550bafe61ec6211b8473e3f654371b56c760bcfad9514687cd9"
+      },
+      "input-otp-controlled": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/input-otp-controlled.tsx",
+        "sha256": "5ea554f9448b5eff972a42f94bc69bda5bd84fb5fd9437f3bedcdafc43ed3762"
+      },
+      "input-otp-demo": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/input-otp-demo.tsx",
+        "sha256": "60282187c19216a2961d6d6b0a7efa36f378ec7b9cbef15fd42cbc268390b041"
+      },
+      "input-otp-disabled": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/input-otp-disabled.tsx",
+        "sha256": "db6f70c9fa05a11a0e8158673a6ed448eb085562786ca4cbee037699a56aead9"
+      },
+      "input-otp-form": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/input-otp-form.tsx",
+        "sha256": "b9d5ae044ff050c01e15738abf0ccea64497de7234a59094ea4c18e63f7e06a6"
+      },
+      "input-otp-four-digits": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/input-otp-four-digits.tsx",
+        "sha256": "5c98ef9d7d68ab5263aa5f3c63c91d0886503091e51649825c865e557cfd1400"
+      },
+      "input-otp-invalid": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/input-otp-invalid.tsx",
+        "sha256": "1b34272f970da77a2f42471f8bf565819c69cb3addaa310f3fa9c4439307c951"
+      },
+      "input-otp-pattern": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/input-otp-pattern.tsx",
+        "sha256": "3c038701d078d12bcc043507a7e422dc1f2e5cc74b2867c7ef2ae61ceec271e0"
+      },
+      "input-otp-rtl": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/input-otp-rtl.tsx",
+        "sha256": "7620c619cd9693b308713f7fc735417ed0b22020b9db74dbb0eea60cf099c9c7"
+      },
+      "input-otp-separator": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/input-otp-separator.tsx",
+        "sha256": "03abe532e33a1b99bc3d0cb62b4d63d0762c830521d164b07c6ff00cafc56774"
+      }
+    }
+  }
+}

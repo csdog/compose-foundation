@@ -59,6 +59,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.shadow.Shadow
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.disabled
+import androidx.compose.ui.semantics.error
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.tailwind.core.twRadius
@@ -79,6 +84,7 @@ internal class InputOTPController(
     val maxLength: Int,
     val isFocused: Boolean,
     val masked: Boolean,
+    val invalid: Boolean,
     val activeIndex: Int,
     val slots: MutableMap<Int, Rect>,
 )
@@ -167,6 +173,8 @@ fun InputOTP(
     keyboardType: KeyboardType = KeyboardType.NumberPassword,
     masked: Boolean = false,
     readOnly: Boolean = false,
+    invalid: Boolean = false,
+    contentDescription: String? = null,
     type: InputOTPType? = null,
     onComplete: ((String) -> Unit)? = null,
     style: Style = Style,
@@ -207,6 +215,7 @@ fun InputOTP(
             maxLength = resolvedLength,
             isFocused = isFocused,
             masked = resolvedMasked,
+            invalid = invalid,
             activeIndex = selection.start.coerceIn(0, minOf(value.length, resolvedLength - 1)),
             slots = slots,
         )
@@ -215,6 +224,11 @@ fun InputOTP(
         Box(
             modifier =
                 modifier
+                    .semantics {
+                        contentDescription?.let { this.contentDescription = it }
+                        if (!resolvedEnabled) disabled()
+                        if (invalid) error("Invalid one-time password")
+                    }
                     .onGloballyPositioned { rootBounds.value = it.boundsInRoot() }
                     .then(
                         if (nova) {
@@ -320,8 +334,10 @@ fun InputOTPScope.InputOTPGroup(
 fun InputOTPGroupScope.InputOTPSlot(
     index: Int,
     modifier: Modifier = Modifier,
+    invalid: Boolean = false,
 ) {
     val ctrl = inputOTPController()
+    val resolvedInvalid = invalid || ctrl.invalid
     val char = ctrl.value.getOrNull(index)
     val nova = currentTheme.activePreset == StylePreset.Nova
     val (position, count) = checkNotNull(LocalOTPGroupRegistry.current).register()
@@ -348,6 +364,7 @@ fun InputOTPGroupScope.InputOTPSlot(
             },
         shape = shape,
         overlap = nova && position > 0,
+        invalid = resolvedInvalid,
     )
 }
 
@@ -377,6 +394,7 @@ private fun OtpSlot(
     modifier: Modifier = Modifier,
     shape: RoundedCornerShape,
     overlap: Boolean,
+    invalid: Boolean = false,
 ) {
     val theme = currentTheme
     val nova = theme.activePreset == StylePreset.Nova
@@ -393,16 +411,27 @@ private fun OtpSlot(
             )
             borderWidth(1.dp)
             borderColor(
-                if (isActive) {
-                    theme.colors.ring
-                } else if (nova) {
-                    theme.colors.input
-                } else {
-                    theme.colors.border
+                when {
+                    invalid -> theme.colors.destructive
+                    isActive -> theme.colors.ring
+                    nova -> theme.colors.input
+                    else -> theme.colors.border
                 },
             )
             shape(shape)
             if (isActive) dropShadow(theme.focusRingShadow())
+            if (invalid) {
+                dropShadow(
+                    Shadow(
+                        radius = 0.dp,
+                        spread = 3.dp,
+                        color =
+                            theme.colors.destructive.copy(
+                                alpha = if (theme.isDark) 0.4f else 0.2f,
+                            ),
+                    ),
+                )
+            }
         }
 
     Box(

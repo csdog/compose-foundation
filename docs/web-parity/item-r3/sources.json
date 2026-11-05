@@ -1,0 +1,66 @@
+{
+  "component": "Item",
+  "officialPage": "https://ui.shadcn.com/docs/components/base/item",
+  "upstreamRevision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "retrievedAt": "2026-11-05",
+  "files": {
+    "mdx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/item.mdx",
+      "sha256": "c702f71e9727490b0953a9271824093f2b9adc80e9f165193e66c26f4d5292ff"
+    },
+    "componentSource": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/components/item.tsx",
+      "sha256": "dcc8a3fbb7d58d32413b31b51d5ec636b9573c5ad3ebe258a3b4a03ec23670cc"
+    },
+    "style": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+    },
+    "examples": {
+      "item-avatar": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/item-avatar.tsx",
+        "sha256": "8e6958fd78c58ab81906897a5e4a56b3d573c2cf553130c1f434102ba4a396a9"
+      },
+      "item-demo": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/item-demo.tsx",
+        "sha256": "7b46012ea81012bdfa2c62fe9a33dfc44a04e8c178055de7e9305cc6f0cf2bbb"
+      },
+      "item-dropdown": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/item-dropdown.tsx",
+        "sha256": "4da28f29593753b02fd01b1c864ec55bbff0a5619e2e8adf3e6d28f139a0676e"
+      },
+      "item-group": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/item-group.tsx",
+        "sha256": "0952d17ddfa557f57c082f7caac3c992eeda4d04fae3b1cd5ceaf4879e008d94"
+      },
+      "item-header": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/item-header.tsx",
+        "sha256": "d115c7395dfeb55a2d12e66ce066a4bd58ad0531d723e88ad99a59607a372cbf"
+      },
+      "item-icon": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/item-icon.tsx",
+        "sha256": "a166cd60fbaa558f256e5bb262ad77591bc8b45d4a97c242775b427f2fa67159"
+      },
+      "item-image": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/item-image.tsx",
+        "sha256": "e5ba06b854b90d85a0f34f0746c7717c432d262729f7a60466cfeaf85d618c75"
+      },
+      "item-link": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/item-link.tsx",
+        "sha256": "5bb514a64999373541ad188389de97c9a20bb303ec67913edb004a58d85b6bf4"
+      },
+      "item-rtl": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/item-rtl.tsx",
+        "sha256": "1df98192f76a2262683d08f1852f97d98d17d867ddd475014157a5c89a5d51ca"
+      },
+      "item-size": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/item-size.tsx",
+        "sha256": "3a46c16f73c5b572259190ca7941bf43ee6bd873d133572e02732249696f1ff5"
+      },
+      "item-variant": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/item-variant.tsx",
+        "sha256": "650d17c2ceb94f4c93e73e4870996bc059df4094c40e85d04f1b1354623bc00a"
+      }
+    }
+  }
+}

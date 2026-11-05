@@ -1,0 +1,170 @@
+{
+  "slug": "input-group",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/input-group",
+  "localUrl": "http://127.0.0.1:8771/input-group",
+  "capturedAt": "2026-11-05T05:18:17.324Z",
+  "app": [
+    "http://127.0.0.1:8771/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8771/69232a823ff0c149be5d.wasm"
+  ],
+  "officialDom": {
+    "title": "Input Group",
+    "description": "Copy PagePreviousNext",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "Installation#"
+      },
+      {
+        "tag": "H2",
+        "text": "Usage#"
+      },
+      {
+        "tag": "H2",
+        "text": "Composition#"
+      },
+      {
+        "tag": "H2",
+        "text": "Align#"
+      },
+      {
+        "tag": "H3",
+        "text": "inline-start#"
+      },
+      {
+        "tag": "H3",
+        "text": "inline-end#"
+      },
+      {
+        "tag": "H3",
+        "text": "block-start#"
+      },
+      {
+        "tag": "H3",
+        "text": "block-end#"
+      },
+      {
+        "tag": "H2",
+        "text": "Icon#"
+      },
+      {
+        "tag": "H2",
+        "text": "Text#"
+      },
+      {
+        "tag": "H2",
+        "text": "Button#"
+      },
+      {
+        "tag": "H2",
+        "text": "Kbd#"
+      },
+      {
+        "tag": "H2",
+        "text": "Dropdown#"
+      },
+      {
+        "tag": "H2",
+        "text": "Spinner#"
+      },
+      {
+        "tag": "H2",
+        "text": "Textarea#"
+      },
+      {
+        "tag": "H2",
+        "text": "Custom Input#"
+      },
+      {
+        "tag": "H2",
+        "text": "RTL#"
+      },
+      {
+        "tag": "H2",
+        "text": "API Reference#"
+      },
+      {
+        "tag": "H3",
+        "text": "InputGroup#"
+      },
+      {
+        "tag": "H3",
+        "text": "InputGroupAddon#"
+      },
+      {
+        "tag": "H3",
+        "text": "InputGroupButton#"
+      },
+      {
+        "tag": "H3",
+        "text": "InputGroupInput#"
+      },
+      {
+        "tag": "H3",
+        "text": "InputGroupTextarea#"
+      }
+    ],
+    "tabs": [
+      "Command",
+      "Manual",
+      "pnpm",
+      "npm",
+      "yarn",
+      "bun"
+    ],
+    "examples": 14,
+    "toc": [],
+    "bodyWidth": {
+      "x": 0,
+      "y": 64,
+      "width": 1080,
+      "height": 11657.171875,
+      "top": 64,
+      "right": 1080,
+      "bottom": 11721.171875,
+      "left": 0
+    },
+    "clientWidth": 1080,
+    "scrollHeight": 11721
+  },
+  "local": {
+    "desktop-light": {
+      "url": "http://127.0.0.1:8771/input-group",
+      "theme": "light",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(9586px + 100vh)"
+    },
+    "desktop-dark": {
+      "url": "http://127.0.0.1:8771/input-group",
+      "theme": "dark",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(9586px + 100vh)"
+    },
+    "phone-light": {
+      "url": "http://127.0.0.1:8771/input-group",
+      "theme": "light",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(10826.5px + 100vh)"
+    },
+    "phone-dark": {
+      "url": "http://127.0.0.1:8771/input-group",
+      "theme": "dark",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(10826.5px + 100vh)"
+    }
+  },
+  "files": {
+    "official-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/input-group-r1/browser/official-desktop-light.png",
+    "local-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/input-group-r1/browser/local-desktop-light.png",
+    "official-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/input-group-r1/browser/official-desktop-dark.png",
+    "local-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/input-group-r1/browser/local-desktop-dark.png",
+    "official-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/input-group-r1/browser/official-phone-light.png",
+    "local-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/input-group-r1/browser/local-phone-light.png",
+    "official-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/input-group-r1/browser/official-phone-dark.png",
+    "local-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/input-group-r1/browser/local-phone-dark.png"
+  }
+}

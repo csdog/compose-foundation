@@ -54,6 +54,7 @@ import com.toutiaoyan.compose.ui.components.button.Button
 import com.toutiaoyan.compose.ui.components.button.ButtonSize
 import com.toutiaoyan.compose.ui.components.button.ButtonVariant
 import com.toutiaoyan.compose.ui.components.input.Input
+import com.toutiaoyan.compose.ui.components.input.InputType
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.textarea.Textarea
 import com.toutiaoyan.compose.ui.components.text.TextColors
@@ -623,6 +624,8 @@ fun InputGroupInput(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     disabled: Boolean = false,
+    readOnly: Boolean = false,
+    type: InputType = InputType.Text,
     placeholder: String? = null,
     isError: Boolean = false,
     invalid: Boolean = false,
@@ -633,6 +636,8 @@ fun InputGroupInput(
         modifier = modifier,
         enabled = enabled,
         disabled = disabled,
+        readOnly = readOnly,
+        type = type,
         placeholder = placeholder,
         isError = isError,
         invalid = invalid,
@@ -650,9 +655,13 @@ fun InputGroupTextarea(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     disabled: Boolean = false,
+    readOnly: Boolean = false,
     placeholder: String? = null,
     isError: Boolean = false,
     invalid: Boolean = false,
+    rows: Int? = null,
+    minLines: Int = 1,
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     Textarea(
         value = value,
@@ -660,8 +669,12 @@ fun InputGroupTextarea(
         modifier = modifier,
         enabled = enabled,
         disabled = disabled,
+        readOnly = readOnly,
         placeholder = placeholder,
         isError = isError,
         invalid = invalid,
+        rows = rows,
+        minLines = minLines,
+        maxLines = maxLines,
     )
 }

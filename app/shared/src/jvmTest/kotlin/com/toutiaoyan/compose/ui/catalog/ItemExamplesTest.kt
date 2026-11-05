@@ -78,6 +78,58 @@ class ItemExamplesTest {
         assertFalse(itemDoc.examples.single { it.title == "RTL" }.code.contains("RtlPreview("))
     }
 
+    @Test fun currentOfficialCopyIsUsedForEveryRecipeAndTheItemVsFieldGuide() {
+        assertEquals(
+            "Use the `variant` prop to change the visual style of the item.",
+            itemDoc.examples.single { it.title == "Variant" }.descriptionMarkdown,
+        )
+        assertEquals(
+            "Use the `size` prop to change the size of the item. Available sizes are `default`, `sm`, and `xs`.",
+            itemDoc.examples.single { it.title == "Size" }.descriptionMarkdown,
+        )
+        assertEquals(
+            "Use `ItemMedia` with `variant=\"icon\"` to display an icon.",
+            itemDoc.examples.single { it.title == "Icon" }.descriptionMarkdown,
+        )
+        assertEquals(
+            "You can use `ItemMedia` with `variant=\"avatar\"` to display an avatar.",
+            itemDoc.examples.single { it.title == "Avatar" }.descriptionMarkdown,
+        )
+        assertEquals(
+            "Use `ItemMedia` with `variant=\"image\"` to display an image.",
+            itemDoc.examples.single { it.title == "Image" }.descriptionMarkdown,
+        )
+        assertEquals(
+            "Use `ItemGroup` to group related items together.",
+            itemDoc.examples.single { it.title == "Group" }.descriptionMarkdown,
+        )
+        assertEquals(
+            "Use `ItemHeader` to add a header above the item content.",
+            itemDoc.examples.single { it.title == "Header" }.descriptionMarkdown,
+        )
+        val link = itemDoc.examples.single { it.title == "Link" }
+        assertTrue(link.descriptionMarkdown!!.contains("`href`") && link.descriptionMarkdown!!.contains("`render`"))
+        assertTrue(
+            itemDoc.examples
+                .single { it.title == "RTL" }
+                .descriptionMarkdown!!
+                .contains("RTL configuration guide"),
+        )
+        assertTrue(
+            itemDoc.examples
+                .single { it.title == "Default" }
+                .descriptionMarkdown!!
+                .contains("straightforward flex container"),
+        )
+        val vsField = itemDoc.beforeExamples.single { it.title == "Item vs Field" }
+        assertEquals(2, vsField.blocks.size)
+        assertTrue(
+            (vsField.blocks.first() as com.toutiaoyan.compose.ui.catalog.docs.ComponentGuideBlock.Paragraph)
+                .markdown
+                .contains("form input such as a checkbox"),
+        )
+    }
+
     @Test fun defaultIncludesTheActionAndTheVerifiedProfileLink() {
         show("Default")
         rule.onNodeWithText("Basic Item").assertIsDisplayed()
