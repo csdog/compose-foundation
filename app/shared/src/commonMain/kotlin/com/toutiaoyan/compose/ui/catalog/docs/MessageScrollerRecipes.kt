@@ -55,7 +55,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.delay
 
 // region shared
-private data class ScrollerRecipeMessage(
+internal data class ScrollerRecipeMessage(
     val id: String,
     val user: Boolean,
     val text: String,
@@ -64,7 +64,7 @@ private data class ScrollerRecipeMessage(
 )
 
 @Composable
-private fun ScrollerRecipeTranscript(
+internal fun ScrollerRecipeTranscript(
     messages: List<ScrollerRecipeMessage>,
     animateUsers: Boolean = false,
 ) {
@@ -103,7 +103,7 @@ private fun ScrollerRecipeTranscript(
 }
 
 @Composable
-private fun ScrollerRecipeFrame(
+internal fun ScrollerRecipeFrame(
     title: String,
     description: String,
     note: String,

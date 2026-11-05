@@ -162,9 +162,9 @@ val messageScrollerDoc =
         id = "message-scroller",
         title = "Message Scroller",
         description = (
-            "A transcript viewport with turn anchors, saved opening " +
-                "positions, streaming follow, history preservation and message " +
-                "commands."
+            "A chat scroll container that anchors turns, opens saved transcripts, " +
+                "follows streamed responses, loads history without jumping, and jumps " +
+                "to any message."
         ),
         usageImportsCode =
             """
@@ -212,30 +212,31 @@ val messageScrollerDoc =
                 └── MessageScrollerButton
             """.trimIndent(),
         beforeExamples =
-            listOf(
-                ComponentGuideSection(
-                    "Provider and standalone usage",
-                    listOf(
-                        ComponentGuideBlock.Paragraph(
-                            (
-                                "Provider defaults to autoScroll=false, opening at End once, " +
-                                    "an 8dp edge threshold and 64dp previous-turn peek. Give every " +
-                                    "row a stable messageId and use key(id). Commands are suspend " +
-                                    "functions; launch them from your caller-owned coroutine scope."
+            messageScrollerPageGuideSections +
+                listOf(
+                    ComponentGuideSection(
+                        "Kotlin extension: Provider and standalone usage",
+                        listOf(
+                            ComponentGuideBlock.Paragraph(
+                                (
+                                    "Provider defaults to autoScroll=false, opening at End once, " +
+                                        "an 8dp edge threshold and 64dp previous-turn peek. Give every " +
+                                        "row a stable messageId and use key(id). Commands are suspend " +
+                                        "functions; launch them from your caller-owned coroutine scope."
+                                ),
                             ),
-                        ),
-                        ComponentGuideBlock.Paragraph(
-                            (
-                                "Root content now uses BoxScope so viewport and controls are " +
-                                    "siblings. Without a Provider, the legacy standalone Root " +
-                                    "keeps its scrolling column and automatic end button, opting " +
-                                    "into following. This pass implements the engine; the eleven " +
-                                    "official page recipes are still being migrated."
+                            ComponentGuideBlock.Paragraph(
+                                (
+                                    "Root content uses BoxScope so viewport and controls are " +
+                                        "siblings. Without a Provider, the legacy standalone Root " +
+                                        "keeps its scrolling column and automatic end button, opting " +
+                                        "into following."
+                                ),
                             ),
                         ),
                     ),
                 ),
-            ),
+        afterExamples = messageScrollerPageAfterSections,
         apiSections =
             listOf(
                 ComponentApiSection(
@@ -332,7 +333,7 @@ val messageScrollerDoc =
                 ),
             ),
         examples =
-            messageScrollerOfficialExamples +
+            messageScrollerOfficialPageExamples +
                 listOf(
                     ComponentExample(
                         title = "Provider controls (Kotlin)",
@@ -787,7 +788,14 @@ val messageScrollerDoc =
                             """.trimIndent(),
                         preview = { InteractiveChatPanel() },
                     ),
-                ),
+                ).map { example ->
+                    if (example.title.startsWith("Kotlin extension: ")) {
+                        example
+                    } else {
+                        example.copy(title = "Kotlin extension: " + example.title)
+                    }
+                },
+        examplesHeading = null,
     )
 
 @Composable

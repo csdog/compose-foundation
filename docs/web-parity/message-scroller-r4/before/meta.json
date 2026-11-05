@@ -1,0 +1,169 @@
+{
+  "slug": "message-scroller",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/message-scroller",
+  "localUrl": "http://127.0.0.1:8773/message-scroller",
+  "capturedAt": "2026-11-05T04:40:25.181Z",
+  "app": [
+    "http://127.0.0.1:8773/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8773/17aa61fed5cd3f56a86f.wasm"
+  ],
+  "officialDom": {
+    "title": "Message Scroller",
+    "description": "Copy PagePreviousNext",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "What Makes a Great Streaming Chat Experience#"
+      },
+      {
+        "tag": "H2",
+        "text": "MessageScroller#"
+      },
+      {
+        "tag": "H2",
+        "text": "Installation#"
+      },
+      {
+        "tag": "H2",
+        "text": "Usage#"
+      },
+      {
+        "tag": "H2",
+        "text": "Composition#"
+      },
+      {
+        "tag": "H2",
+        "text": "Core Concepts#"
+      },
+      {
+        "tag": "H3",
+        "text": "Anchoring Turns#"
+      },
+      {
+        "tag": "H3",
+        "text": "Group Chat#"
+      },
+      {
+        "tag": "H3",
+        "text": "Keeping Context Visible#"
+      },
+      {
+        "tag": "H3",
+        "text": "Following the Live Edge#"
+      },
+      {
+        "tag": "H3",
+        "text": "Opening Saved Threads#"
+      },
+      {
+        "tag": "H3",
+        "text": "Avoiding a Flash on Reload#"
+      },
+      {
+        "tag": "H3",
+        "text": "Loading Earlier Messages#"
+      },
+      {
+        "tag": "H3",
+        "text": "Animating New Messages#"
+      },
+      {
+        "tag": "H3",
+        "text": "Jumping to Messages#"
+      },
+      {
+        "tag": "H3",
+        "text": "Tracking the Reader's Position#"
+      },
+      {
+        "tag": "H3",
+        "text": "Reading Scroll State#"
+      },
+      {
+        "tag": "H2",
+        "text": "Performance#"
+      },
+      {
+        "tag": "H2",
+        "text": "Virtualization#"
+      },
+      {
+        "tag": "H2",
+        "text": "Accessibility#"
+      },
+      {
+        "tag": "H2",
+        "text": "Unstyled#"
+      },
+      {
+        "tag": "H2",
+        "text": "API Reference#"
+      }
+    ],
+    "tabs": [
+      "Command",
+      "Manual",
+      "pnpm",
+      "npm",
+      "yarn",
+      "bun",
+      "start",
+      "end",
+      "last-anchor"
+    ],
+    "examples": 11,
+    "toc": [],
+    "bodyWidth": {
+      "x": 0,
+      "y": 64,
+      "width": 1080,
+      "height": 22131.5,
+      "top": 64,
+      "right": 1080,
+      "bottom": 22195.5,
+      "left": 0
+    },
+    "clientWidth": 1080,
+    "scrollHeight": 22195
+  },
+  "local": {
+    "desktop-light": {
+      "url": "http://127.0.0.1:8773/message-scroller",
+      "theme": "light",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(12541px + 100vh)"
+    },
+    "desktop-dark": {
+      "url": "http://127.0.0.1:8773/message-scroller",
+      "theme": "dark",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(12541px + 100vh)"
+    },
+    "phone-light": {
+      "url": "http://127.0.0.1:8773/message-scroller",
+      "theme": "light",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(13803.5px + 100vh)"
+    },
+    "phone-dark": {
+      "url": "http://127.0.0.1:8773/message-scroller",
+      "theme": "dark",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(13803.5px + 100vh)"
+    }
+  },
+  "files": {
+    "official-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/message-scroller-r4/official-desktop-light.png",
+    "local-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/message-scroller-r4/local-desktop-light.png",
+    "official-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/message-scroller-r4/official-desktop-dark.png",
+    "local-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/message-scroller-r4/local-desktop-dark.png",
+    "official-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/message-scroller-r4/official-phone-light.png",
+    "local-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/message-scroller-r4/local-phone-light.png",
+    "official-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/message-scroller-r4/official-phone-dark.png",
+    "local-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/message-scroller-r4/local-phone-dark.png"
+  }
+}

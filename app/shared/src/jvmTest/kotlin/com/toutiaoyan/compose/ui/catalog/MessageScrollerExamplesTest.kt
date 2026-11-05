@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.catalog.docs.messageScrollerDoc
 import com.toutiaoyan.compose.ui.components.overlay.OverlayHost
 import com.toutiaoyan.compose.ui.theme.Theme
@@ -21,7 +22,7 @@ class MessageScrollerExamplesTest {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 OverlayHost {
                     Box(Modifier.width(600.dp).height(800.dp), contentAlignment = Alignment.TopCenter) {
-                        messageScrollerDoc.examples.single { it.title == "Provider controls (Kotlin)" }.preview()
+                        messageScrollerDoc.examples.single { it.title == "Kotlin extension: Provider controls (Kotlin)" }.preview()
                     }
                 }
             }
@@ -56,5 +57,61 @@ class MessageScrollerExamplesTest {
         rule.onNodeWithText("Append reply").performClick()
         rule.onNodeWithText("Message 12").assertIsDisplayed()
         rule.onNodeWithContentDescription("Scroll to end").assertDoesNotExist()
+    }
+
+    @Test fun officialPageOrderGuidesAndKotlinExtensions() {
+        assertEquals(
+            listOf(
+                "Default",
+                "Anchoring Turns",
+                "Group Chat",
+                "Keeping Context Visible",
+                "Following the Live Edge",
+                "Opening Saved Threads",
+                "Avoiding a Flash on Reload",
+                "Loading Earlier Messages",
+                "Animating New Messages",
+                "Jumping to Messages",
+                "Tracking the Reader's Position",
+                "Reading Scroll State",
+            ),
+            messageScrollerDoc.examples.take(12).map { it.title },
+        )
+        assertTrue(
+            messageScrollerDoc.examples.drop(12).all { it.title.startsWith("Kotlin extension: ") },
+        )
+        assertEquals(
+            "A chat scroll container that anchors turns, opens saved transcripts, " +
+                "follows streamed responses, loads history without jumping, and jumps " +
+                "to any message.",
+            messageScrollerDoc.description,
+        )
+        val markdown = componentPageMarkdown(messageScrollerDoc)
+        assertFalse(markdown.contains("## Examples"))
+        val order = listOf(
+            "## What Makes a Great Streaming Chat Experience",
+            "## MessageScroller",
+            "## Core Concepts",
+            "## Anchoring Turns",
+            "## Group Chat",
+            "## Keeping Context Visible",
+            "## Following the Live Edge",
+            "## Opening Saved Threads",
+            "## Avoiding a Flash on Reload",
+            "## Loading Earlier Messages",
+            "## Animating New Messages",
+            "## Jumping to Messages",
+            "## Tracking the Reader's Position",
+            "## Reading Scroll State",
+            "## Performance",
+            "## Virtualization",
+            "## Accessibility",
+            "## Unstyled",
+            "## API Reference",
+        ).map { markdown.indexOf(it) }
+        assertTrue(order.all { it >= 0 }, "missing a section heading: $order")
+        assertEquals(order.sorted(), order)
+        assertContains(markdown, "## Kotlin extension: Provider controls (Kotlin)")
+        assertContains(markdown, "Never move the reader against their intent.")
     }
 }
