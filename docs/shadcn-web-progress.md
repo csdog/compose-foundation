@@ -144,9 +144,9 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Navigation Menu (`navigation-menu`)：r3按当前官网8a3536678a复核Default/三语RTL顺序与内容；补官网RTL文案、Composition中的NavigationMenuIndicator和Link Component章节（render prop说明为Kotlin onClick），隐藏通用Examples标题；仅保留3个Kotlin扩展（Vertical/Delay/Controlled），其余参数矩阵不再渲染。修复390px预览被裁切：官方在sm以下缩小预览内边距，本地改为16dp预览边距+640dp以下压缩触发器水平内边距（桌面保持官网10dp）。16项配方+2项响应式测试通过；Wasm c0570519…构建后四象限（官方主题已重新断言并逐张校验背景像素）与hover/点击/Escape/1024面板已浏览器验证。仍开放：共享viewport/Root align、弹层绘制在预览卡外而非h-96内裁剪、原生anchor/辅助技术与完整延迟矩阵，故保持未勾选，见[navigation-menu-r3](web-parity/navigation-menu-r3/README.md)。
 - [ ] Pagination (`pagination`)：r2按当前官网8a3536678a复核Default/Simple/Icons Only/三语RTL；补Simple/Icons Only/RTL官网描述，隐藏通用Examples标题，仅保留3个Kotlin扩展（Controlled/First and last/Ellipsis，去掉重复(Kotlin)后缀），其余26项参数矩阵不再渲染。20项参数化测试通过（1440/390×浅深，覆盖静态默认组合、五页码、Rows per page选择器25默认、RTL阿拉伯数字与语言切换）；Wasm c0570519…构建后四象限（官方主题逐张校验）及Icons Only下拉、RTL区已浏览器验证。仍开放：Next.js与Changelog章节省略、原生anchor语义、旧Vega两张预存失配，故保持未勾选，见[pagination-r2](web-parity/pagination-r2/README.md)。
 - [ ] Popover (`popover`)：r3按当前官网8a3536678a复核五配方Default/Basic/Align/With Form/RTL；补官方描述、Composition区块并隐藏通用Examples标题，仅保留3个Kotlin扩展（Non-modal/Placement/Uncontrolled），其余参数矩阵不再渲染。24项目录参数化测试通过（1440/390×浅深：四输入Dimensions、Basic header、三对齐面板、表单、六向RTL、扩展），既有核心PopoverFocusTest 2、NovaLayout 5、NovaScreenshot 2继续作为焦点/布局覆盖；Wasm c0570519…构建后四象限（官方主题逐张校验）与默认打开/外部点击关闭/Escape关闭已浏览器验证。仍开放：默认modal=true与Base UI差异（非模态示例已文档化）、完整初始焦点/焦点恢复与动画矩阵、side/align物理属性矩阵未按1:1配方展开，故保持未勾选，见[popover-r3](web-parity/popover-r3/README.md)。
-- [ ] Progress (`progress`)：四官网配方桌面/窄屏浅深静态、三语和受控键盘已对照；移除十二重复预览，补Composition/说明/真实API，RTL统一288正文/40inset与Noto字体。41常规项、Nova四图显式verify、JS/Wasm通过；旧Vega四图actual与r1一致。共享初载缩放根因已在[viewport-scroll-r1](web-parity/viewport-scroll-r1/README.md)修复；绘制时序/排版/代码顺序、原生语义和完整交互仍开放；官网轨道点击未生效有可信事件诊断，不计通过。[证据](web-parity/progress-r2/README.md)。
-- [ ] Questionnaire (`questionnaire`)：本轮修正 Nova 选项图形/间距/字号、导航与验证、单选输入互斥、提交顺序和受控更新；官网 Default 三题流程已迁移。原生38项通过；其余13组官网配方及浏览器/完整状态矩阵待完成。
-- [ ] Radio Group (`radio-group`)：Nova 间距/错误状态、方向键循环、跳过 disabled、RTL/Home/End 已补；Tab 单入口、动态重排和完整矩阵待关闭。
+- [ ] Progress (`progress`)：按当前官网 8a353667 复核四配方（demo/Label/Controlled/RTL）；Composition 改为官方结构树并补嵌套 “With label and value” 说明/代码，RTL 改官网引导链接，API 首节补 Base UI 链接；28 项聚焦测试、Wasm 构建通过；1440/390 浅深四象限、受控键盘 End/Home、轨道点击无效（与官网一致）及三语切换已复核。仍余共享 Composition 内容顺序、Kotlin API 表/扩展小节、完整指针与原生语义、旧 Vega 基准及共享初载/排版差异，见 [Progress r3](web-parity/progress-r3/README.md)。
+- [ ] Questionnaire (`questionnaire`)：按当前官网重建 14 个预览（demo + 13 配方）的顺序与文案，补 Server Rendering/Accessibility/Unstyled/API Reference；Custom Validation 真实返回无效项、Controlled/Resume/Card/Dialog 对齐 CardAction 与默认答案；旧参数演示收敛为 4 个 Kotlin extension。22 项聚焦测试、Wasm 构建通过；1440/390 浅深四象限及多选、校验返回、Resume 重置、Dialog 打开已复核。仍余自定义 Progress render、NativeSelect、onReset、render-prop 组合、共享 Composition 段落/底对齐、浏览器完整键盘/AT 与 toast，见 [Questionnaire r2](web-parity/questionnaire-r2/README.md)。
+- [ ] Radio Group (`radio-group`)：按当前官网重建 7 个预览（demo/Description/Choice Card/Fieldset/Disabled/Invalid/RTL）及 Usage/Composition 与 API 小节，Horizontal/Required 保留为 Kotlin extension；12 项聚焦测试、Wasm 构建通过；1440/390 浅深四象限及卡片选中、disabled 无效、Invalid、RTL 阿语/英语切换已复核。仍余 Kotlin API 表与额外 TOC、FieldLabel 字重/原生 label 关联、完整 AT/动态重排与真机触屏，见 [Radio Group r1](web-parity/radio-group-r1/README.md)。
 - [ ] Resizable (`resizable`)：官网四配方与三语 RTL 已迁移；Nova 分隔线/grip、0..100%范围、真实鼠标/触摸命中、键盘调节及嵌套比例已补。37项定向验证和两个ktlint通过；浏览器四象限、多面板/resize光标及完整状态仍待完成。
 - [ ] Scroll Area (`scroll-area`)：已迁移官网 Tags/三幅照片横向/三语RTL配方；Nova轨道、thumb端点、轨道点击及滚轮、键盘、双轴corner和Lazy拖动已补，49项定向验证与两个ktlint通过，JS/Wasm退出0但仍有诊断。浏览器、任意Root形状继承及完整状态仍开放。
 - [ ] Scroll Fade (`scroll-fade`)：七组官网配方、12%/40dp/96dp规则、逐边/尺寸/none、RTL停点及MessageScroller视口遮罩顺序已补；92项定向验证和两个ktlint通过。浏览器四象限、CSS fallback与完整状态仍开放，详见文末。
@@ -157,7 +157,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Sidebar (`sidebar`)：已核对官网来源并补桌面/移动端独立状态、响应式切换、Offcanvas内容保留/200ms动画、移动面板与内侧边框；内容滚动及Header/Footer/Group间距也已补齐，34项定向验证及两个ktlint通过。官网配方、浏览器四象限及完整状态矩阵仍待完成，详见 sidebar-r1/r2。
 - [ ] Skeleton (`skeleton`)：七组官网配方及三语RTL已迁移，Shimmer扩展复制代码已统一；脉冲Style逐帧重组49次问题已修复。50项定向测试、两项旧截图验证及core/shared ktlint通过，40张原生截图已检查。浏览器四象限及完整状态验收仍开放，见 skeleton-r1。
 - [ ] Slider (`slider`)：基础已验证（第六批）；Create Payout 静态 Progress 已换为真实 50..10000/step50 Slider，金额和键盘 Home/End 已回归；12dp Nova 滑块、填充/尺寸、键盘步进和 commit 已修正，多滑块标签、动态焦点与完整竖向/反转/RTL 手势矩阵待关闭。
-- [ ] Spinner (`spinner`)：八官方配方、自定义图形slot及旋转读取阶段已修正；22项测试、既有两图verify、lint与JS/Wasm通过。四种显示组合及三语/演示按钮已对照；共享排版、Empty换行、Item字体、完整动态及读屏矩阵仍待关闭，见Spinner第一轮。
+- [x] Spinner (`spinner`)：按当前官网复查八个配方（demo、Customization、Size、Button、Badge、Input Group、Empty、RTL）、描述与 API 表，页面/组件无需改动；SpinnerExamplesTest 7 项与 SpinnerViewportTest 8 项通过，Wasm 构建、1440/390×浅深四象限及七个分节对照通过，Badge 三枚 12dp spinner 单行、Input Group 与 Empty 布局与官网一致。仅余 Canvas 无原生 progressbar 语义与共享页面 chrome/字体差异，见 [spinner-r2](web-parity/spinner-r2/README.md)。
 - [x] Stepper (`stepper`)：项目扩展一致性自查完成：补 Kotlin extension 说明、Usage 导入块、Stepper 与 StepperItem 两个 API 表，并接入共享 `isKotlinExtension` 标识；保留 12 组既有配方；新增 StepperExamplesTest 3 项，Wasm 构建与 1440/390×浅深浏览器复查通过。无官方对照对象，仅余共享页面 chrome 与字体栅格化差异，见 [stepper-r1](web-parity/stepper-r1/README.md)。
 - [x] Switch (`switch`)：按当前官网重建为 demo、Description、Choice Card、Disabled、Invalid、Size、RTL 七配方，删除参数矩阵并补官方描述/文案；SwitchExamplesTest 8 项、Wasm 构建、1440/390×浅深四象限与 Description/Choice Card/Disabled/Invalid/Size/RTL 分节对照通过。Canvas 无原生 role=switch/label-for，Choice Card 由目录配方绘制边框/选中底色，共享页面 chrome 与字体栅格化属既有差异，见 [switch-r1](web-parity/switch-r1/README.md)。
 - [ ] Table (`table`)：已补caption-bottom、Header40dp、单元格14/20与p8、行hover/selected、Footer半透明顶线、内容槽和横向溢出；四组官网数据/交互配方及三语RTL已加入。44项定向测试和core/shared ktlint通过，24张原生图已检查；共享自动列宽/跨列、希伯来字体及浏览器完整矩阵仍开放，详见 table-r1。
@@ -172,6 +172,50 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Spinner：八配方、三枚徽标与分节复查（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 192 -->
+
+Spinner 页在本轮之前已具备八个官网配方与正确 API 表。本轮按“未关闭项”重新读取当前官网做浏览器复验：demo（Processing payment 卡片）、Customization（替换 content slot）、Size、Button（Loading/Please wait/Processing）、Badge（Synced/Updating/Processing 三枚 12dp）、Input Group（发送框 + Spinner 后缀）、Empty（Processing your request + Cancel）与 RTL 三语；页面与组件未发现需要修改的差异。
+
+验证：SpinnerExamplesTest 7 项、SpinnerViewportTest 8 项通过（XML 已归档）；Wasm 构建后应用 Wasm `71d6df01…`。浏览器完成 1440×1000/390×844 浅/深四象限，并对七个分节做官网/本地桌面与手机对照，Badge 三个 spinner 保持单行、Input Group/Empty 几何一致。证据见 [spinner-r2](web-parity/spinner-r2/README.md)。
+
+仍保留：Canvas 无原生 `role=progressbar`/可读名称（仅有 label），完整读屏矩阵属平台范围差异；共享页面 chrome 与字体栅格化沿用既有说明。
+
+### Radio Group：官方 7 配方与 Nova Field 组合（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 191 -->
+
+重新读取当前官网（MDX、7 示例、radio-group.tsx、Nova CSS）后把原来的 15 项参数矩阵页替换为官方 7 个预览：demo（无标题）、Description、Choice Card、Fieldset、Disabled、Invalid、RTL，并补官方 Usage 与 `RadioGroup → RadioGroupItem ×2` Composition 树。配方用本地 Field/FieldContent/FieldLabel/FieldSet 组合：Description 行、FieldLabel 整卡可点的 Plus/Pro/Enterprise、FieldSet+FieldLegend(Label) 的订阅计划/通知偏好、RTL 三语工具栏；标签点击选中对应官方 htmlFor 关联。
+
+RTL 使用阿语默认、英语/希伯来语切换，行与键盘方向随 LocalLayoutDirection 镜像；保留 Horizontal orientation 与 Required 为 `Kotlin extension:`。API Reference 用 Kotlin API 小节并引用 Base UI 链接。
+
+**验证**：`RadioGroupExamplesTest` 12 项通过（顺序/文案、默认选中与标签点击、Description、Choice Card、Fieldset、disabled 无效与键盘跳过/循环、Home/End、Invalid、RTL 阿语→英语、Horizontal 单行、Required 单选）；Wasm 快照 `b222e1e1`。四象限（1440/390 × 浅深）在最终构建后复核，首次 phone-light 官网图为深色已重拍并核对背景像素；浏览器实测卡片选中、disabled 点击前后一致、RTL 菜单/英语 LTR。
+
+**剩余**：API Reference 采用项目 Kotlin 表而非官方单段链接，h3 小节增加 TOC 条目；Disabled 文案按官网逐字保留（其官方预览只禁用一个选项）；Fieldset/Disabled/Invalid 的 FieldLabel 字重缺少 font-normal 覆盖，标签点击是本地便利而非原生 label 关联；完整 AT/动态重排/真机触屏仍开放。证据见 `docs/web-parity/radio-group-r1/`。
+
+### Questionnaire：官方 14 预览、校验返回与指南文案（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 190 -->
+
+重新读取当前官网（MDX、15 份源码、questionnaire.tsx）后按官方顺序重建页面：demo 三题流程 + Multiple Selection、Freeform Answer、Explicit Skip、Shortcuts、Custom Validation、Controlled、Resume、Conditional Items、Navigation State、Custom Progress、Animated Items、Card、Dialog 共 14 个预览，文案/问题/选项对齐官方示例；补 Server Rendering、Accessibility 三段、Unstyled、API Reference 两段；旧属性演示收敛为 Disabled/Items collection/Choice parts/Reset 四个 Kotlin extension，移除重复的 Item status/Without actions。
+
+Custom Validation 改为真实宿主校验（受控 item、invalid + 错误文本、提交后回到无效项）；Resume 用 defaultItem/defaultChecked + `QuestionnaireReset`；Card/Dialog 使用本地 Card/Dialog 部件，Progress 移入 `CardAction` 对齐官方头部布局。
+
+**验证**：`QuestionnairePageTest` 6 项 + `QuestionnaireExamplesTest` 16 项通过；Wasm 快照 `b222e1e1`。四象限（1440/390 × 浅深）复核；浏览器实测多选勾选、校验错误返回、Resume 默认答案/重置、Dialog 打开。
+
+**剩余**：自定义 Progress 仅支持文本覆盖（无 render 布局）；Shortcuts 用 Select 代替 NativeSelect；无 onReset 回调；Card/Dialog 为直接组合而非官方 render-prop；共享页面无法展示 Composition 后的所有权段落且预览为垂直居中而非官方底部对齐；浏览器完整键盘/AT、toast 与真机触屏仍开放。证据见 `docs/web-parity/questionnaire-r2/`。
+
+### Progress：当前官网四配方、Composition 结构与键盘/轨道状态（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 189 -->
+
+重新读取当前官网（MDX、四示例、progress.tsx、Nova 样式）确认仍是 demo/Label/Controlled/RTL 四配方、Composition 内嵌 “With label and value” 与单段 API 链接。页面改为官方 Composition 树并补嵌套段落的说明与 Kotlin 代码，RTL 说明改成官网 RTL 引导链接，API 首节加入 Base UI Progress 链接；Progress 组件本身无需改动。
+
+**验证**：`ProgressExamplesTest` 16 项 + `ProgressPageLayoutTest` 12 项全部通过；Wasm 快照 `b222e1e1`。最终构建后复核 1440×1000/390×844 浅深四象限（官网主题重新断言并检查背景像素），浏览器实测受控配方 50%→键盘 End=100%→Home=0%、轨道点击前后逐字节一致（官网同样无效）、RTL 菜单打开并切到英语 LTR。
+
+**剩余**：共享页面无法在 Composition 代码块后插入正文，官方 h3 内容顺序（说明→代码→树）本地为树→说明→代码；API Reference 保留项目 Kotlin 表并补官方链接，另保留 “Kotlin conventions and accessibility” 项目扩展节；完整指针/原生 HTML progress 语义、旧 Vega 基准与共享初载/排版差异仍开放。证据见 `docs/web-parity/progress-r3/`。
 
 ### Switch：当前七配方、Choice Card 与状态核验（2026-11-05）
 
