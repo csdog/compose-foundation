@@ -961,8 +961,9 @@ val attachmentDoc =
                 ComponentExample(
                     "Trigger",
                     descriptionMarkdown = (
-                        "Make the whole card open a preview while the action buttons " +
-                            "remain independently clickable."
+                        "Add an `AttachmentTrigger` to make the whole card open a link " +
+                            "or dialog. It fills the card behind the actions, so the " +
+                            "actions stay independently clickable."
                     ),
                     code = attachmentTriggerCode,
                     minPreviewHeight = 0.dp,

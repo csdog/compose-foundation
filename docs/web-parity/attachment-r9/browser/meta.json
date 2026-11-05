@@ -1,0 +1,174 @@
+{
+  "slug": "attachment",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/attachment",
+  "localUrl": "http://127.0.0.1:8778/attachment",
+  "capturedAt": "2026-11-05T05:23:33.533Z",
+  "app": [
+    "http://127.0.0.1:8778/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8778/95277c533706ef574905.wasm"
+  ],
+  "officialDom": {
+    "title": "Attachment",
+    "description": "Copy PagePreviousNext",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "Installation#"
+      },
+      {
+        "tag": "H2",
+        "text": "Usage#"
+      },
+      {
+        "tag": "H2",
+        "text": "Composition#"
+      },
+      {
+        "tag": "H2",
+        "text": "Features#"
+      },
+      {
+        "tag": "H2",
+        "text": "Image#"
+      },
+      {
+        "tag": "H2",
+        "text": "States#"
+      },
+      {
+        "tag": "H2",
+        "text": "Sizes#"
+      },
+      {
+        "tag": "H2",
+        "text": "Group#"
+      },
+      {
+        "tag": "H2",
+        "text": "Trigger#"
+      },
+      {
+        "tag": "H2",
+        "text": "Accessibility#"
+      },
+      {
+        "tag": "H3",
+        "text": "Label icon-only actions#"
+      },
+      {
+        "tag": "H3",
+        "text": "Label the trigger#"
+      },
+      {
+        "tag": "H3",
+        "text": "Keyboard scrolling#"
+      },
+      {
+        "tag": "H3",
+        "text": "Meaning beyond color#"
+      },
+      {
+        "tag": "H2",
+        "text": "API Reference#"
+      },
+      {
+        "tag": "H3",
+        "text": "Attachment#"
+      },
+      {
+        "tag": "H3",
+        "text": "AttachmentMedia#"
+      },
+      {
+        "tag": "H3",
+        "text": "AttachmentContent#"
+      },
+      {
+        "tag": "H3",
+        "text": "AttachmentTitle#"
+      },
+      {
+        "tag": "H3",
+        "text": "AttachmentDescription#"
+      },
+      {
+        "tag": "H3",
+        "text": "AttachmentActions#"
+      },
+      {
+        "tag": "H3",
+        "text": "AttachmentAction#"
+      },
+      {
+        "tag": "H3",
+        "text": "AttachmentTrigger#"
+      },
+      {
+        "tag": "H3",
+        "text": "AttachmentGroup#"
+      }
+    ],
+    "tabs": [
+      "Command",
+      "Manual",
+      "pnpm",
+      "npm",
+      "yarn",
+      "bun"
+    ],
+    "examples": 6,
+    "toc": [],
+    "bodyWidth": {
+      "x": 0,
+      "y": 64,
+      "width": 1080,
+      "height": 9660.71875,
+      "top": 64,
+      "right": 1080,
+      "bottom": 9724.71875,
+      "left": 0
+    },
+    "clientWidth": 1080,
+    "scrollHeight": 9724
+  },
+  "local": {
+    "desktop-light": {
+      "url": "http://127.0.0.1:8778/attachment",
+      "theme": "light",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(9535.5px + 100vh)"
+    },
+    "desktop-dark": {
+      "url": "http://127.0.0.1:8778/attachment",
+      "theme": "dark",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(9535.5px + 100vh)"
+    },
+    "phone-light": {
+      "url": "http://127.0.0.1:8778/attachment",
+      "theme": "light",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(12427px + 100vh)"
+    },
+    "phone-dark": {
+      "url": "http://127.0.0.1:8778/attachment",
+      "theme": "dark",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(12427px + 100vh)"
+    }
+  },
+  "files": {
+    "official-desktop-light": "/tmp/cf-parity/work-h/attachment/official-desktop-light.png",
+    "local-desktop-light": "/tmp/cf-parity/work-h/attachment/local-desktop-light.png",
+    "official-desktop-dark": "/tmp/cf-parity/work-h/attachment/official-desktop-dark.png",
+    "local-desktop-dark": "/tmp/cf-parity/work-h/attachment/local-desktop-dark.png",
+    "official-phone-light": "/tmp/cf-parity/work-h/attachment/official-phone-light.png",
+    "local-phone-light": "/tmp/cf-parity/work-h/attachment/local-phone-light.png",
+    "official-phone-dark": "/tmp/cf-parity/work-h/attachment/official-phone-dark.png",
+    "local-phone-dark": "/tmp/cf-parity/work-h/attachment/local-phone-dark.png"
+  }
+}

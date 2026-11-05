@@ -1,0 +1,48 @@
+{
+  "slug": "attachment",
+  "pairs": [
+    [
+      "image",
+      "example-0",
+      "image"
+    ],
+    [
+      "states",
+      "example-1",
+      "states"
+    ],
+    [
+      "sizes",
+      "example-2",
+      "sizes"
+    ],
+    [
+      "group",
+      "example-3",
+      "group"
+    ],
+    [
+      "trigger",
+      "example-4",
+      "trigger"
+    ]
+  ],
+  "views": [
+    {
+      "name": "desktop-light",
+      "theme": "light"
+    }
+  ],
+  "files": {
+    "official-image-desktop-light": "/tmp/cf-parity/work-h/sections/attachment/official-image-desktop-light.png",
+    "local-image-desktop-light": "/tmp/cf-parity/work-h/sections/attachment/local-image-desktop-light.png",
+    "official-states-desktop-light": "/tmp/cf-parity/work-h/sections/attachment/official-states-desktop-light.png",
+    "local-states-desktop-light": "/tmp/cf-parity/work-h/sections/attachment/local-states-desktop-light.png",
+    "official-sizes-desktop-light": "/tmp/cf-parity/work-h/sections/attachment/official-sizes-desktop-light.png",
+    "local-sizes-desktop-light": "/tmp/cf-parity/work-h/sections/attachment/local-sizes-desktop-light.png",
+    "official-group-desktop-light": "/tmp/cf-parity/work-h/sections/attachment/official-group-desktop-light.png",
+    "local-group-desktop-light": "/tmp/cf-parity/work-h/sections/attachment/local-group-desktop-light.png",
+    "official-trigger-desktop-light": "/tmp/cf-parity/work-h/sections/attachment/official-trigger-desktop-light.png",
+    "local-trigger-desktop-light": "/tmp/cf-parity/work-h/sections/attachment/local-trigger-desktop-light.png"
+  }
+}

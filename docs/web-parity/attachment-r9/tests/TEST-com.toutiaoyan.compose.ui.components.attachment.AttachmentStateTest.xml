@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AttachmentStateTest[jvm]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-05T05:25:05.889Z" hostname="Apples-MacBook-Pro.local" time="0.16">
+  <properties/>
+  <testcase name="processingLambdaTitleInheritsMovingShimmer[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentStateTest" time="0.035"/>
+  <testcase name="rootMediaAndDescriptionFollowLiveStateAndTheme[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentStateTest" time="0.033"/>
+  <testcase name="uploadingTitleInheritsMovingShimmer[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentStateTest" time="0.034"/>
+  <testcase name="explicitDescriptionOverrideAndNestedAttachmentRemainIndependent[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentStateTest" time="0.02"/>
+  <testcase name="imageOpacityTracksLifecycleAndCallerShapeClipsTheImage[jvm]" classname="com.toutiaoyan.compose.ui.components.attachment.AttachmentStateTest" time="0.038"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
