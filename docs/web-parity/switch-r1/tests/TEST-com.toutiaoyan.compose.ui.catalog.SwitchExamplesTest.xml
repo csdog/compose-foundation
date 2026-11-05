@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="SwitchExamplesTest[jvm]" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-05T05:11:06.286Z" hostname="Apples-MacBook-Pro.local" time="0.876">
+  <properties/>
+  <testcase name="descriptionRecipeRendersTheOfficialCopy[jvm]" classname="com.toutiaoyan.compose.ui.catalog.SwitchExamplesTest" time="0.532"/>
+  <testcase name="invalidRecipeShowsTheTermsCopy[jvm]" classname="com.toutiaoyan.compose.ui.catalog.SwitchExamplesTest" time="0.038"/>
+  <testcase name="defaultRecipeTogglesFromTheLabel[jvm]" classname="com.toutiaoyan.compose.ui.catalog.SwitchExamplesTest" time="0.087"/>
+  <testcase name="officialRecipeOrderAndDescriptionMatchCurrentPage[jvm]" classname="com.toutiaoyan.compose.ui.catalog.SwitchExamplesTest" time="0.017"/>
+  <testcase name="copyPageMarkdownKeepsOfficialOrder[jvm]" classname="com.toutiaoyan.compose.ui.catalog.SwitchExamplesTest" time="0.015"/>
+  <testcase name="choiceCardRowTogglesItsSwitch[jvm]" classname="com.toutiaoyan.compose.ui.catalog.SwitchExamplesTest" time="0.069"/>
+  <testcase name="rtlRecipeStartsWithArabicCopy[jvm]" classname="com.toutiaoyan.compose.ui.catalog.SwitchExamplesTest" time="0.094"/>
+  <testcase name="disabledRecipeCannotBeToggled[jvm]" classname="com.toutiaoyan.compose.ui.catalog.SwitchExamplesTest" time="0.021"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

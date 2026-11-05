@@ -159,7 +159,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Slider (`slider`)：基础已验证（第六批）；Create Payout 静态 Progress 已换为真实 50..10000/step50 Slider，金额和键盘 Home/End 已回归；12dp Nova 滑块、填充/尺寸、键盘步进和 commit 已修正，多滑块标签、动态焦点与完整竖向/反转/RTL 手势矩阵待关闭。
 - [ ] Spinner (`spinner`)：八官方配方、自定义图形slot及旋转读取阶段已修正；22项测试、既有两图verify、lint与JS/Wasm通过。四种显示组合及三语/演示按钮已对照；共享排版、Empty换行、Item字体、完整动态及读屏矩阵仍待关闭，见Spinner第一轮。
 - [x] Stepper (`stepper`)：项目扩展一致性自查完成：补 Kotlin extension 说明、Usage 导入块、Stepper 与 StepperItem 两个 API 表，并接入共享 `isKotlinExtension` 标识；保留 12 组既有配方；新增 StepperExamplesTest 3 项，Wasm 构建与 1440/390×浅深浏览器复查通过。无官方对照对象，仅余共享页面 chrome 与字体栅格化差异，见 [stepper-r1](web-parity/stepper-r1/README.md)。
-- [ ] Switch (`switch`)：Nova 轨道/滑块尺寸、暗色滑块、150ms 位移、错误 ring 和标签焦点已修正；复杂组合及完整状态矩阵待关闭。
+- [x] Switch (`switch`)：按当前官网重建为 demo、Description、Choice Card、Disabled、Invalid、Size、RTL 七配方，删除参数矩阵并补官方描述/文案；SwitchExamplesTest 8 项、Wasm 构建、1440/390×浅深四象限与 Description/Choice Card/Disabled/Invalid/Size/RTL 分节对照通过。Canvas 无原生 role=switch/label-for，Choice Card 由目录配方绘制边框/选中底色，共享页面 chrome 与字体栅格化属既有差异，见 [switch-r1](web-parity/switch-r1/README.md)。
 - [ ] Table (`table`)：已补caption-bottom、Header40dp、单元格14/20与p8、行hover/selected、Footer半透明顶线、内容槽和横向溢出；四组官网数据/交互配方及三语RTL已加入。44项定向测试和core/shared ktlint通过，24张原生图已检查；共享自动列宽/跨列、希伯来字体及浏览器完整矩阵仍开放，详见 table-r1。
 - [ ] Tabs (`tabs`)：六组官网配方、四面板与三语RTL已迁移；默认Manual、单Tab入口/RTL键盘/动态顺序、隐藏面板状态与焦点、选中chrome及透明focus阴影已修正。58项定向测试、core/shared ktlint通过，44张原生图已检查；150ms颜色过渡、辅助技术及浏览器完整矩阵仍开放，详见 tabs-r1。
 - [x] Text (`text`)：项目扩展一致性自查完成：Usage 与所有示例代码中已不存在的 `TextTypography`/`TextStyles` 改为当前 `TextVariant`/`TextColors`；新增 Variants（全部类型刻度）、Muted、Kotlin extension: Style font-size 示例与 Text API 表；共享 ComponentDoc 增加 `isKotlinExtension`，扩展页头部改为 `Kotlin extension` 而非 Base UI 页签；TextExamplesTest 5 项与 1440/390×浅深浏览器复查通过。无官方对照对象，仅余共享页面 chrome 与字体栅格化差异，见 [text-r1](web-parity/text-r1/README.md)。
@@ -172,6 +172,16 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Switch：当前七配方、Choice Card 与状态核验（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 188 -->
+
+原 Switch 页是 Default/Sizes/Default size/Default disabled/With label/With description/Default invalid/Uncontrolled/Default checked/Required/Thumb… 的参数矩阵。当前官网为 demo、Description、Choice Card、Disabled、Invalid、Size、RTL 七配方，描述为 "A control that allows the user to toggle between checked and not checked."
+
+已按官网重建：demo 为开关+可点击 Airplane Mode 标签；Description 使用横向 Field/FieldContent；Choice Card 为整卡可点击、选中卡使用 muted 底；Disabled 同时禁用开关与标签；Invalid 使用 destructive 文案与 ring；Size 为 Sm/Default 两行；RTL 为阿/英/希三语横向表单。删除重复参数，保留根 API 表中的 Kotlin 参数说明。新增 `SwitchExamplesTest` 8 项。
+
+8/8 测试通过；Wasm 构建后应用 Wasm `71d6df01…`。浏览器 1440×1000、390×844 浅/深四象限，另对六个官方配方做桌面/手机分节对照。证据见 [switch-r1](web-parity/switch-r1/README.md)。仍保留：Canvas 无原生 role=switch/label-for；Choice Card 的边框与选中底色由目录配方绘制而非组件，视觉一致；共享页面 chrome 与字体栅格化属既有项目范围差异。
 
 ### Popover：r3 官方描述/Composition 与弹层状态矩阵（2026-11-05）
 

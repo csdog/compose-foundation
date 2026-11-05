@@ -2,209 +2,360 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
+import com.toutiaoyan.compose.ui.catalog.catalogArabicFontFamily
+import com.toutiaoyan.compose.ui.catalog.catalogHebrewFontFamily
+import com.toutiaoyan.compose.ui.components.field.Field
+import com.toutiaoyan.compose.ui.components.field.FieldContent
+import com.toutiaoyan.compose.ui.components.field.FieldDescription
+import com.toutiaoyan.compose.ui.components.field.FieldGroup
+import com.toutiaoyan.compose.ui.components.field.FieldLabel
+import com.toutiaoyan.compose.ui.components.field.FieldOrientation
+import com.toutiaoyan.compose.ui.components.field.FieldTitle
 import com.toutiaoyan.compose.ui.components.switch.Switch
 import com.toutiaoyan.compose.ui.components.switch.SwitchSize
-import com.toutiaoyan.compose.ui.components.text.Text
+import com.toutiaoyan.compose.ui.theme.Theme
+import com.toutiaoyan.compose.ui.theme.currentTheme
 
 val switchDoc =
     ComponentDoc(
         id = "switch",
         title = "Switch",
-        description = "An on/off control for a single setting, applied immediately.",
+        description = "A control that allows the user to toggle between checked and not checked.",
+        usageImportsCode = "import com.toutiaoyan.compose.ui.components.switch.Switch",
         usageCode =
             """
-            import com.toutiaoyan.compose.ui.components.switch.Switch
-
-            var enabled by remember { mutableStateOf(false) }
-            Switch(checked = enabled, onCheckedChange = { enabled = it }, text = "Airplane Mode")
+            var checked by remember { mutableStateOf(false) }
+            Switch(checked = checked, onCheckedChange = { checked = it })
             """.trimIndent(),
+        examplesHeading = null,
         apiProperties =
             listOf(
                 ApiProperty("checked", "Boolean?", "null"),
                 ApiProperty("defaultChecked", "Boolean", "false"),
+                ApiProperty("onCheckedChange", "((Boolean) -> Unit)?", "null"),
                 ApiProperty("size", "SwitchSize", "Default"),
                 ApiProperty("invalid", "Boolean", "false"),
-                ApiProperty("disabled", "Boolean", "false"),
+                ApiProperty("required", "Boolean", "false"),
+                ApiProperty("enabled / disabled", "Boolean", "true / false"),
+                ApiProperty("animation", "ButtonAnimation", "Scale"),
+                ApiProperty("style", "Style", "Style"),
             ),
         examples =
             listOf(
                 ComponentExample(
                     title = "Default",
+                    showHeading = false,
                     code =
                         """
-                        var enabled by remember { mutableStateOf(false) }
-                        Switch("Airplane Mode", checked = enabled, onCheckedChange = { enabled = it })
+                        var checked by remember { mutableStateOf(false) }
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Switch(checked = checked, onCheckedChange = { checked = it })
+                            FieldLabel("Airplane Mode", modifier = Modifier.clickable { checked = !checked })
+                        }
                         """.trimIndent(),
                     preview = {
-                        var enabled by remember { mutableStateOf(false) }
-                        Switch("Airplane Mode", checked = enabled, onCheckedChange = { enabled = it })
-                    },
-                ),
-                ComponentExample(
-                    title = "Sizes",
-                    code =
-                        """
-                        Switch(checked = true, onCheckedChange = {})
-                        Switch(checked = true, onCheckedChange = {}, size = SwitchSize.Sm)
-                        """.trimIndent(),
-                    preview = {
+                        var checked by remember { mutableStateOf(false) }
                         Row(
-                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            Switch(checked = true, onCheckedChange = {})
-                            Text { "Default" }
-                            Switch(checked = true, onCheckedChange = {}, size = SwitchSize.Sm)
-                            Text { "Sm" }
+                            Switch(checked = checked, onCheckedChange = { checked = it })
+                            FieldLabel("Airplane Mode", modifier = Modifier.clickable { checked = !checked })
                         }
                     },
                 ),
                 ComponentExample(
-                    title = "Default size",
+                    title = "Description",
+                    descriptionMarkdown =
+                        "Use `FieldContent` with `FieldLabel` and `FieldDescription`, and place the " +
+                            "switch at the logical end.",
                     code =
                         """
-                        var enabled by remember { mutableStateOf(false) }
-                        Switch(checked = enabled, onCheckedChange = { enabled = it }, size = SwitchSize.Default)
+                        var checked by remember { mutableStateOf(false) }
+                        Field(Modifier.widthIn(max = 384.dp), orientation = FieldOrientation.Horizontal) {
+                            FieldContent {
+                                FieldLabel("Share across devices")
+                                FieldDescription("Focus is shared across devices, and turns off when you leave the app.")
+                            }
+                            Switch(checked = checked, onCheckedChange = { checked = it })
+                        }
                         """.trimIndent(),
                     preview = {
-                        var enabled by remember { mutableStateOf(false) }
-                        Switch(
-                            checked = enabled,
-                            onCheckedChange = { enabled = it },
-                            size = SwitchSize.Default,
-                        )
+                        var checked by remember { mutableStateOf(false) }
+                        Field(Modifier.widthIn(max = 384.dp), orientation = FieldOrientation.Horizontal) {
+                            FieldContent {
+                                FieldLabel("Share across devices")
+                                FieldDescription(
+                                    "Focus is shared across devices, and turns off when you leave the app.",
+                                )
+                            }
+                            Switch(checked = checked, onCheckedChange = { checked = it })
+                        }
+                    },
+                ),
+                ComponentExample(
+                    title = "Choice Card",
+                    descriptionMarkdown =
+                        "Card-style selection where the whole row is the label for the switch.",
+                    code =
+                        """
+                        var share by remember { mutableStateOf(false) }
+                        var notifications by remember { mutableStateOf(true) }
+                        FieldGroup(Modifier.widthIn(max = 384.dp), spacing = 12.dp) {
+                            SwitchChoiceCard(
+                                title = "Share across devices",
+                                description = "Focus is shared across devices, and turns off when you leave the app.",
+                                checked = share,
+                                onCheckedChange = { share = it },
+                            )
+                            SwitchChoiceCard(
+                                title = "Enable notifications",
+                                description = "Receive notifications when focus mode is enabled or disabled.",
+                                checked = notifications,
+                                onCheckedChange = { notifications = it },
+                            )
+                        }
+                        """.trimIndent(),
+                    preview = {
+                        var share by remember { mutableStateOf(false) }
+                        var notifications by remember { mutableStateOf(true) }
+                        FieldGroup(Modifier.widthIn(max = 384.dp), spacing = 12.dp) {
+                            SwitchChoiceCard(
+                                title = "Share across devices",
+                                description = "Focus is shared across devices, and turns off when you leave the app.",
+                                checked = share,
+                                onCheckedChange = { share = it },
+                            )
+                            SwitchChoiceCard(
+                                title = "Enable notifications",
+                                description = "Receive notifications when focus mode is enabled or disabled.",
+                                checked = notifications,
+                                onCheckedChange = { notifications = it },
+                            )
+                        }
                     },
                 ),
                 ComponentExample(
                     title = "Disabled",
-                    code = """Switch(checked = true, onCheckedChange = null, disabled = true)""",
-                    preview = { Switch(checked = true, onCheckedChange = null, disabled = true) },
-                ),
-                ComponentExample(
-                    title = "Default disabled",
-                    code = """Switch(checked = false, onCheckedChange = {}, disabled = false)""",
-                    preview = { Switch(checked = false, onCheckedChange = {}, disabled = false) },
-                ),
-                ComponentExample(
-                    title = "With label",
+                    descriptionMarkdown =
+                        "`disabled = true` on the switch; pass `disabled = true` to the label or `Field` too.",
                     code =
                         """
-                        var enabled by remember { mutableStateOf(true) }
-                        Switch(checked = enabled, onCheckedChange = { enabled = it }, text = "Airplane Mode")
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Switch(checked = false, onCheckedChange = {}, disabled = true)
+                            FieldLabel("Disabled", disabled = true)
+                        }
                         """.trimIndent(),
                     preview = {
-                        var enabled by remember { mutableStateOf(true) }
-                        Switch(checked = enabled, onCheckedChange = { enabled = it }, text = "Airplane Mode")
-                    },
-                ),
-                ComponentExample(
-                    title = "With description",
-                    code =
-                        """
-                        var sharing by remember { mutableStateOf(true) }
-                        Switch(
-                            checked = sharing,
-                            onCheckedChange = { sharing = it },
-                            text = "Share across devices",
-                            description = "Everyone signed in on this account can see this.",
-                        )
-                        """.trimIndent(),
-                    preview = {
-                        var sharing by remember { mutableStateOf(true) }
-                        Switch(
-                            checked = sharing,
-                            onCheckedChange = { sharing = it },
-                            text = "Share across devices",
-                            description = "Everyone signed in on this account can see this.",
-                        )
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Switch(checked = false, onCheckedChange = {}, disabled = true)
+                            FieldLabel("Disabled", disabled = true)
+                        }
                     },
                 ),
                 ComponentExample(
                     title = "Invalid",
+                    descriptionMarkdown =
+                        "`invalid = true` adds the destructive ring; the wrapping `Field` can mark the copy too.",
                     code =
                         """
-                        var enabled by remember { mutableStateOf(false) }
-                        Switch(
-                            checked = enabled,
-                            onCheckedChange = { enabled = it },
-                            text = "Airplane Mode",
-                            invalid = true,
-                        )
-                        """.trimIndent(),
-                    preview = {
-                        var enabled by remember { mutableStateOf(false) }
-                        Switch(
-                            checked = enabled,
-                            onCheckedChange = { enabled = it },
-                            text = "Airplane Mode",
-                            invalid = true,
-                        )
-                    },
-                ),
-                ComponentExample(
-                    title = "Default invalid",
-                    code =
-                        """
-                        var enabled by remember { mutableStateOf(false) }
-                        Switch(
-                            checked = enabled,
-                            onCheckedChange = { enabled = it },
-                            text = "Airplane Mode",
-                            invalid = false,
-                        )
-                        """.trimIndent(),
-                    preview = {
-                        var enabled by remember { mutableStateOf(false) }
-                        Switch(
-                            checked = enabled,
-                            onCheckedChange = { enabled = it },
-                            text = "Airplane Mode",
-                            invalid = false,
-                        )
-                    },
-                ),
-                ComponentExample(
-                    title = "Uncontrolled",
-                    code = """Switch(text = "Airplane Mode", defaultChecked = true)""",
-                    preview = { Switch(text = "Airplane Mode", defaultChecked = true) },
-                ),
-                ComponentExample(
-                    title = "Default checked",
-                    code = """Switch(text = "Airplane Mode", defaultChecked = false)""",
-                    preview = { Switch(text = "Airplane Mode", defaultChecked = false) },
-                ),
-                ComponentExample(
-                    title = "Required",
-                    code = """Switch(text = "Airplane Mode", required = true)""",
-                    preview = { Switch(text = "Airplane Mode", required = true) },
-                ),
-                ComponentExample(
-                    title = "Default required",
-                    code = """Switch(text = "Airplane Mode", required = false)""",
-                    preview = { Switch(text = "Airplane Mode", required = false) },
-                ),
-                ComponentExample(
-                    title = "Thumb",
-                    code =
-                        """
-                        var enabled by remember { mutableStateOf(true) }
-                        Switch(checked = enabled, onCheckedChange = { enabled = it }) {
-                            
+                        var checked by remember { mutableStateOf(false) }
+                        Field(Modifier.widthIn(max = 384.dp), orientation = FieldOrientation.Horizontal, invalid = true) {
+                            FieldContent {
+                                FieldLabel("Accept terms and conditions")
+                                FieldDescription("You must accept the terms and conditions to continue.")
+                            }
+                            Switch(checked = checked, onCheckedChange = { checked = it }, invalid = true)
                         }
                         """.trimIndent(),
                     preview = {
-                        var enabled by remember { mutableStateOf(true) }
-                        Switch(checked = enabled, onCheckedChange = { enabled = it }) {
+                        var checked by remember { mutableStateOf(false) }
+                        Field(
+                            Modifier.widthIn(max = 384.dp),
+                            orientation = FieldOrientation.Horizontal,
+                            invalid = true,
+                        ) {
+                            FieldContent {
+                                FieldLabel("Accept terms and conditions")
+                                FieldDescription("You must accept the terms and conditions to continue.")
+                            }
+                            Switch(checked = checked, onCheckedChange = { checked = it }, invalid = true)
                         }
                     },
+                ),
+                ComponentExample(
+                    title = "Size",
+                    descriptionMarkdown = "Use `size = SwitchSize.Sm` for compact layouts.",
+                    code =
+                        """
+                        FieldGroup(Modifier.widthIn(max = 160.dp), spacing = 12.dp) {
+                            Field(orientation = FieldOrientation.Horizontal) {
+                                Switch(checked = false, onCheckedChange = {}, size = SwitchSize.Sm)
+                                FieldLabel("Small")
+                            }
+                            Field(orientation = FieldOrientation.Horizontal) {
+                                Switch(checked = false, onCheckedChange = {})
+                                FieldLabel("Default")
+                            }
+                        }
+                        """.trimIndent(),
+                    preview = {
+                        FieldGroup(Modifier.widthIn(max = 160.dp), spacing = 12.dp) {
+                            Field(orientation = FieldOrientation.Horizontal) {
+                                Switch(checked = false, onCheckedChange = {}, size = SwitchSize.Sm)
+                                FieldLabel("Small")
+                            }
+                            Field(orientation = FieldOrientation.Horizontal) {
+                                Switch(checked = false, onCheckedChange = {})
+                                FieldLabel("Default")
+                            }
+                        }
+                    },
+                ),
+                ComponentExample(
+                    title = "RTL",
+                    descriptionMarkdown =
+                        "To enable RTL support in shadcn/ui, see the " +
+                            "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
+                    previewPadding = 0.dp,
+                    code =
+                        """
+                        var language by remember { mutableStateOf(0) }
+                        var checked by remember { mutableStateOf(false) }
+                        RtlPreview(language, listOf("Arabic (العربية)", "English", "Hebrew (עברית)"), { language = it }) {
+                            CompositionLocalProvider(
+                                LocalLayoutDirection provides if (language == 1) LayoutDirection.Ltr else LayoutDirection.Rtl,
+                            ) {
+                                Field(Modifier.widthIn(max = 384.dp), orientation = FieldOrientation.Horizontal) {
+                                    FieldContent {
+                                        FieldLabel(label)
+                                        FieldDescription(description)
+                                    }
+                                    Switch(checked = checked, onCheckedChange = { checked = it })
+                                }
+                            }
+                        }
+                        """.trimIndent(),
+                    preview = { SwitchRtlPreview() },
                 ),
             ),
     )
+
+@Composable
+private fun SwitchChoiceCard(
+    title: String,
+    description: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+) {
+    val colors = currentTheme.colors
+    val shape = RoundedCornerShape(10.dp)
+    Row(
+        modifier =
+            Modifier.fillMaxWidth().clip(shape)
+                .background(if (checked) colors.muted else colors.background)
+                .border(1.dp, colors.border, shape)
+                .clickable { onCheckedChange(!checked) }
+                .padding(horizontal = 12.dp, vertical = 12.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.Top,
+    ) {
+        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            FieldTitle(title)
+            FieldDescription(description)
+        }
+        Switch(checked = checked, onCheckedChange = onCheckedChange)
+    }
+}
+
+private val switchRtlLabels = listOf("Arabic (العربية)", "English", "Hebrew (עברית)")
+
+private class SwitchRtlCopy(
+    val label: String,
+    val description: String,
+)
+
+private val switchRtlCopy =
+    listOf(
+        SwitchRtlCopy(
+            label = "المشاركة عبر الأجهزة",
+            description = "يتم مشاركة التركيز عبر الأجهزة، ويتم إيقاف تشغيله عند مغادرة التطبيق.",
+        ),
+        SwitchRtlCopy(
+            label = "Share across devices",
+            description = "Focus is shared across devices, and turns off when you leave the app.",
+        ),
+        SwitchRtlCopy(
+            label = "שיתוף בין מכשירים",
+            description = "המיקוד משותף בין מכשירים, וכבה כשאתה עוזב את האפליקציה.",
+        ),
+    )
+
+@Composable
+private fun SwitchRtlPreview() {
+    var language by remember { mutableStateOf(0) }
+    RtlPreview(language, switchRtlLabels, { language = it }) {
+        val inherited = currentTheme
+        val fontFamily =
+            when (language) {
+                0 -> catalogArabicFontFamily()
+                2 -> catalogHebrewFontFamily()
+                else -> inherited.fontFamily
+            }
+        CompositionLocalProvider(
+            LocalLayoutDirection provides if (language == 1) LayoutDirection.Ltr else LayoutDirection.Rtl,
+        ) {
+            Theme(
+                preset = inherited.activePreset,
+                baseColor = inherited.activeBaseColor,
+                accent = inherited.activeAccent,
+                isDark = inherited.isDark,
+                baseRadius = inherited.baseRadius,
+                ring = inherited.ring,
+                unitSpacing = LocalUnitSpacing.current,
+                minTouchTarget = inherited.minTouchTarget,
+                fontFamily = fontFamily,
+            ) {
+                var checked by remember { mutableStateOf(false) }
+                val copy = switchRtlCopy[language]
+                Field(
+                    Modifier.widthIn(max = 384.dp),
+                    orientation = FieldOrientation.Horizontal,
+                ) {
+                    FieldContent {
+                        FieldLabel(copy.label)
+                        FieldDescription(copy.description)
+                    }
+                    Switch(checked = checked, onCheckedChange = { checked = it })
+                }
+            }
+        }
+    }
+}
