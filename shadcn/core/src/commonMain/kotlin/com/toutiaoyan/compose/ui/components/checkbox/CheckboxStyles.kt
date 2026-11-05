@@ -4,8 +4,11 @@ package com.toutiaoyan.compose.ui.components.checkbox
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.animate
 import androidx.compose.foundation.style.triStateToggleIndeterminate
 import androidx.compose.foundation.style.triStateToggleOn
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.tokens.StylePreset
@@ -23,21 +26,26 @@ import com.toutiaoyan.compose.ui.styles.focusRing
 fun rememberCheckboxStyle(): Style =
     rememberTheme {
         Style {
-            background(
-                if (theme.activePreset == StylePreset.Nova) {
-                    if (theme.isDark) colors.input.copy(alpha = colors.input.alpha * 0.3f) else Color.Transparent
-                } else {
-                    Color.Transparent
-                },
-            )
-            border(if (theme.activePreset == StylePreset.Nova) colors.input else colors.border)
-            triStateToggleOn {
-                background(colors.primary)
-                borderColor(colors.primary)
-            }
-            triStateToggleIndeterminate {
-                background(colors.primary)
-                borderColor(colors.primary)
+            animate(
+                toSpec = tween(CheckboxDefaults.ColorTransitionMillis, easing = FastOutSlowInEasing),
+                fromSpec = tween(CheckboxDefaults.ColorTransitionMillis, easing = FastOutSlowInEasing),
+            ) {
+                background(
+                    if (theme.activePreset == StylePreset.Nova) {
+                        if (theme.isDark) colors.input.copy(alpha = colors.input.alpha * 0.3f) else Color.Transparent
+                    } else {
+                        Color.Transparent
+                    },
+                )
+                border(if (theme.activePreset == StylePreset.Nova) colors.input else colors.border)
+                triStateToggleOn {
+                    background(colors.primary)
+                    borderColor(colors.primary)
+                }
+                triStateToggleIndeterminate {
+                    background(colors.primary)
+                    borderColor(colors.primary)
+                }
             }
             val controlShape = RoundedCornerShape(if (theme.activePreset == StylePreset.Nova) 4.dp else radius.xs)
             if (theme.activePreset == StylePreset.Nova && LocalFieldLabelChoice.currentValue) {

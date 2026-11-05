@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CheckboxScreenshotTest[jvm]" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-05T03:46:19.141Z" hostname="Apples-MacBook-Pro.local" time="0.085">
+  <properties/>
+  <testcase name="focused_light[jvm]" classname="com.toutiaoyan.compose.ui.components.checkbox.CheckboxScreenshotTest" time="0.032"/>
+  <testcase name="states_light[jvm]" classname="com.toutiaoyan.compose.ui.components.checkbox.CheckboxScreenshotTest" time="0.019"/>
+  <testcase name="focused_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.checkbox.CheckboxScreenshotTest" time="0.016"/>
+  <testcase name="states_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.checkbox.CheckboxScreenshotTest" time="0.018"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

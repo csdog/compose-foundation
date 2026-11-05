@@ -32,7 +32,9 @@ val checkboxDoc =
             listOf(
                 ComponentApiSection(
                     "Checkbox",
-                    "Controlled or uncontrolled checkbox; `indeterminate` represents a mixed state.",
+                    "Controlled or uncontrolled checkbox; `indeterminate` represents a mixed state. " +
+                        "Nova uses the official150ms color transition without moving the control; " +
+                        "callers can opt into `ButtonAnimation` press motion.",
                     listOf(
                         ApiProperty("checked / defaultChecked", "Boolean? / Boolean", "null / false"),
                         ApiProperty("onCheckedChange", "((Boolean) -> Unit)?", "null"),

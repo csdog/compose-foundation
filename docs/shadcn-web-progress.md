@@ -117,7 +117,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Code Block (`code-block`)：已补公开组合组件、编号/差异行/换行/复制与目录页；扩展示例及完整状态矩阵待验收。
 - [ ] Trace (`trace`)：已补公开状态行、折叠详情、键盘/受控回归与目录页；官方复杂工具调用示例待补。
 - [ ] Chart (`chart`)：本页八组官方配方已迁移，补真实tooltip/键盘选点、系列切换、主题/图标、响应尺寸、数值域与日期轴修复；320高、桌面48/手机0缩进及缩放后阿语轴重叠已处理。r4把Your First Chart保留为h2，Add a Grid/Axis/Tooltip/Legend改为嵌套h3并补Compose步骤说明；页面/文档/预览56项、核心交互/布局/截图40项共96项通过，全仓lint/detekt与JS/Wasm通过。浏览器仍待新空间复核，共享标题/代码细节、窄屏日期刻度和动效/完整交互继续开放，见[chart-page-r4](web-parity/chart-page-r4/README.md)、chart-r1、chart-axis-r2及chart-preview-r3。
-- [ ] Checkbox (`checkbox`)：官网八配方及完整导出已补，移除反向Default重复；补Group、Table、三语RTL及整卡FieldLabel。修正Field说明顶对齐/1dp偏移、21dp说明/20dp标题与legend完整行框、label legend正文间隔，整卡hover/键盘焦点与单次激活。20项定向回归、lint和JS/Wasm通过，官网/本地各61张主对照与手机Space过程已复查。旧Vega6图失配已HEAD隔离，未刷新；列宽/滚动条、字重/换行/焦点绘制、CSS命中区与完整原生表单/辅助技术仍开放。[证据](web-parity/checkbox-r1/README.md)。
+- [ ] Checkbox (`checkbox`)：官网八配方、Group/Table/三语RTL及Field布局已补。r2确认当前组件、MDX/Field/Nova与八示例相对首轮固定版本字节一致；修复默认误用Button缩放按压、改为官网150ms颜色过渡，调用方仍可显式选择动画。25项聚焦功能测试、全仓lint/detekt及JS/Wasm通过，浅色截图verify通过；两张深色失配与历史HEAD逐字节一致且未刷新。浏览器仍待新空间复核，原生表单/label关联、CSS命中区、动态主题和完整辅助技术继续开放，见[checkbox-r2](web-parity/checkbox-r2/README.md)及首轮记录。
 - [ ] Chip (`chip`)：项目扩展，检查一致性。
 - [x] Collapsible (`collapsible`)：第九批完成 Web 剩余项：外部收起回收内容焦点、keepMounted 状态保持/隐藏语义、动画中断反转。
 - [ ] Combobox (`combobox`)：基础已验证（第七批）；内联编辑、筛选/键盘提交/清空和默认示例已完成，多选 chips、完整辅助技术映射及复杂状态矩阵待关闭。
@@ -171,6 +171,18 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Checkbox：颜色过渡与当前源码复核（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 150 -->
+
+当前官网仍为Default、Invalid State、Basic、Description、Disabled、Group、Table、RTL八组配方；当前shadcn/ui `main`为`8a353667`，Checkbox MDX、组件、Field、Nova样式与八份示例均与首轮`96da9cc7`归档字节一致。
+
+官方`cn-checkbox`使用`transition-colors`，没有位移或缩放反馈；本地默认复用了Button的`ButtonAnimation.Scale`。现新增`CheckboxDefaults.Animation=None`与150ms颜色过渡，只动画背景和边框，调用方仍可通过原有`animation`参数显式选择Scale/Bounce/MoveDown。页面API说明同步区分官方默认与Kotlin可选扩展。
+
+核心parity6项、Checkbox截图4项、页面3项、Viewport12项共25项功能测试通过；全仓ktlint/detekt通过。Wasm开发distribution22.680s退出0并有1条Webpack warning；JS开发distribution27.894s退出0但保留既有`os`/`path`诊断。显式像素verify中浅色两图通过；深色focused/states两图失败，其actual与compare哈希同首轮current及HEAD逐字节一致，已归档且未刷新。
+
+当前Ego仍无compose-foundation TaskSpace，只有用户空间与无关Product Hunt委派空间；未创建替代空间或接管标签，因此没有新的浅深桌面/手机浏览器验证。Checkbox保持未勾选；深色旧基准、CSS命中区、HTML name/value/required、原生label关联、触摸、动态主题/shape和完整辅助技术继续开放。Editor排除、Attachment后置。
 
 ### Chart：First Chart 层级与 Compose 步骤说明（2026-11-05）
 

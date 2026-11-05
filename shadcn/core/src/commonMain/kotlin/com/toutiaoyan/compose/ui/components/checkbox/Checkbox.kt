@@ -64,6 +64,14 @@ class CheckboxState(val state: ToggleableState) {
     val indeterminate: Boolean get() = state == ToggleableState.Indeterminate
 }
 
+object CheckboxDefaults {
+    /** Base UI Checkbox changes colors only; button-style scale motion is opt-in. */
+    val Animation = ButtonAnimation.None
+
+    /** Official `transition-colors` duration. */
+    const val ColorTransitionMillis = 150
+}
+
 /** Reads the nearest [Checkbox]. */
 @Composable
 fun checkboxState(): CheckboxState {
@@ -95,7 +103,7 @@ fun Checkbox(
     disabled: Boolean = false,
     invalid: Boolean = false,
     required: Boolean = false,
-    animation: ButtonAnimation = ButtonAnimation.Scale,
+    animation: ButtonAnimation = CheckboxDefaults.Animation,
     label: String = "",
     defaultChecked: Boolean = false,
     style: Style = Style,
@@ -209,7 +217,7 @@ fun Checkbox(
     disabled: Boolean = false,
     invalid: Boolean = false,
     required: Boolean = false,
-    animation: ButtonAnimation = ButtonAnimation.Scale,
+    animation: ButtonAnimation = CheckboxDefaults.Animation,
     label: String = text,
     defaultChecked: Boolean = false,
     style: Style = Style,

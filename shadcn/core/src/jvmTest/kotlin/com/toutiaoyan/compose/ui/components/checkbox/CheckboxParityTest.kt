@@ -12,6 +12,7 @@ import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.ui.components.button.ButtonAnimation
 import com.toutiaoyan.compose.ui.components.field.*
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
@@ -38,6 +39,11 @@ class CheckboxParityTest {
         val content = rule.onNodeWithTag("content").fetchSemanticsNode().boundsInRoot
         assertEquals(1f, control.top - content.top, .5f)
         assertEquals(16f, control.width, .5f)
+    }
+
+    @Test fun defaultInteractionUsesOfficialColorMotionWithoutAScaleTransform() {
+        assertEquals(ButtonAnimation.None, CheckboxDefaults.Animation)
+        assertEquals(150, CheckboxDefaults.ColorTransitionMillis)
     }
 
     @Test fun indeterminateSpaceSelectsOnceAndControlledRejectionIsRespected() {

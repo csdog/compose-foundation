@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CheckboxParityTest[jvm]" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-05T03:46:18.441Z" hostname="Apples-MacBook-Pro.local" time="0.698">
+  <properties/>
+  <testcase name="descriptionAlignsTheControlWithTheFirstLine[jvm]" classname="com.toutiaoyan.compose.ui.components.checkbox.CheckboxParityTest" time="0.492"/>
+  <testcase name="disabledFieldPreventsControlAndLabelActivation[jvm]" classname="com.toutiaoyan.compose.ui.components.checkbox.CheckboxParityTest" time="0.043"/>
+  <testcase name="plainHorizontalFieldStaysCenteredAndRtlMovesControlToInlineStart[jvm]" classname="com.toutiaoyan.compose.ui.components.checkbox.CheckboxParityTest" time="0.02"/>
+  <testcase name="choiceCardPaddingAndControlEachToggleOnceAndKeepTheControlFocus[jvm]" classname="com.toutiaoyan.compose.ui.components.checkbox.CheckboxParityTest" time="0.101"/>
+  <testcase name="defaultInteractionUsesOfficialColorMotionWithoutAScaleTransform[jvm]" classname="com.toutiaoyan.compose.ui.components.checkbox.CheckboxParityTest" time="0.012"/>
+  <testcase name="indeterminateSpaceSelectsOnceAndControlledRejectionIsRespected[jvm]" classname="com.toutiaoyan.compose.ui.components.checkbox.CheckboxParityTest" time="0.028"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
