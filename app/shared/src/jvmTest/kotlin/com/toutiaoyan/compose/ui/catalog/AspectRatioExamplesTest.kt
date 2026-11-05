@@ -23,10 +23,39 @@ import org.junit.Rule
 import kotlin.math.abs
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class AspectRatioExamplesTest {
     @get:Rule val rule = createComposeRule()
+
+    @Test fun officialPageCopyOrderAndKotlinRatioDeviationStayDocumented() {
+        assertEquals(
+            listOf("Default", "Square", "Portrait", "RTL"),
+            aspectRatioDoc.examples.map { it.title },
+        )
+        assertNull(aspectRatioDoc.examplesHeading)
+        assertEquals(
+            "A square aspect ratio component using the `ratio = 1f / 1f` parameter. " +
+                "This is useful for displaying images in a square format.",
+            aspectRatioDoc.examples.single { it.title == "Square" }.descriptionMarkdown,
+        )
+        assertEquals(
+            "A portrait aspect ratio component using the `ratio = 9f / 16f` parameter. " +
+                "This is useful for displaying images in a portrait format.",
+            aspectRatioDoc.examples.single { it.title == "Portrait" }.descriptionMarkdown,
+        )
+        val aspectRatioApi = aspectRatioDoc.apiSections.single { it.title == "AspectRatio" }
+        assertEquals(
+            "1f",
+            aspectRatioApi.properties.single { it.name == "ratio" }.defaultValue,
+        )
+        assertTrue(
+            aspectRatioApi.descriptionMarkdown.contains(
+                "Unlike the current web wrapper's required ratio, this Kotlin API retains its existing square default.",
+            ),
+        )
+    }
 
     @Test fun rtlCaptionLineBoxAndPhotoPositionStayStableAcrossLanguagesAndThemes() {
         var dark by mutableStateOf(false)

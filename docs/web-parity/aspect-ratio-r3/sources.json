@@ -1,0 +1,11 @@
+{
+  "retrieved": "2026-11-05",
+  "officialPage": "https://ui.shadcn.com/docs/components/base/aspect-ratio",
+  "componentSource": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/registry/bases/base/ui/aspect-ratio.tsx",
+  "examples": [
+    "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/examples/base/aspect-ratio-demo.tsx",
+    "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/examples/base/aspect-ratio-square.tsx",
+    "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/examples/base/aspect-ratio-portrait.tsx",
+    "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/examples/base/aspect-ratio-rtl.tsx"
+  ]
+}
