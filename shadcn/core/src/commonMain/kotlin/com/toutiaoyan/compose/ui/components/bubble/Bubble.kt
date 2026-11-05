@@ -30,6 +30,7 @@ import com.toutiaoyan.compose.ui.components.message.LocalMessageAlign
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
 import com.toutiaoyan.compose.ui.tokens.Colors
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.styles.cssStyleable
 import com.toutiaoyan.compose.ui.styles.focusVisible
 import com.toutiaoyan.compose.ui.utils.rememberTheme
@@ -87,7 +88,14 @@ private fun BubbleVariant.rememberStyle(interactive: Boolean): Style =
             borderColor(if (variant == BubbleVariant.Outline) colors.border else Color.Transparent)
             contentPadding(
                 horizontal = if (variant == BubbleVariant.Ghost) 0.dp else 12.dp,
-                vertical = if (variant == BubbleVariant.Ghost) 0.dp else 8.dp,
+                vertical =
+                    if (variant == BubbleVariant.Ghost) {
+                        0.dp
+                    } else if (theme.activePreset == StylePreset.Rhea) {
+                        10.dp
+                    } else {
+                        8.dp
+                    },
             )
             contentColor(variant.contentColor(colors))
             background(

@@ -22,6 +22,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -110,16 +113,17 @@ fun Message(
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val nova = currentTheme.activePreset == StylePreset.Nova
+    val rhea = currentTheme.activePreset == StylePreset.Rhea
     val parts = remember { MessageParts() }
     Row(
         modifier =
             modifier.then(if (nova) Modifier else Modifier.fillMaxWidth())
                 .styleable(styleState, rememberMessageRootStyle() then style),
-        horizontalArrangement = Arrangement.spacedBy(if (nova) 8.dp else twSpacing.sm),
+        horizontalArrangement = Arrangement.spacedBy(if (nova || rhea) 8.dp else twSpacing.sm),
     ) {
         CompositionLocalProvider(
             LocalMessageAlign provides align,
-            LocalMessageParts provides if (nova) parts else null,
+            LocalMessageParts provides if (nova || rhea) parts else null,
             LocalDefaultTextStyle provides
                 if (nova) {
                     TextStyle(
@@ -135,7 +139,10 @@ fun Message(
                     Box(
                         modifier =
                             Modifier.align(Alignment.Bottom).offset {
-                                IntOffset(0, if (nova && parts.footerCount > 0) -32.dp.roundToPx() else 0)
+                                IntOffset(
+                                    0,
+                                    if ((nova || rhea) && parts.footerCount > 0) -32.dp.roundToPx() else 0,
+                                )
                             },
                     ) { avatar() }
                 }
@@ -180,7 +187,12 @@ fun MessageAvatar(
                 rememberMessageAvatarStyle() then style,
             ),
         contentAlignment = Alignment.Center,
-        content = { content() },
+        content = {
+            Box(modifier = Modifier.widthIn(min = 32.dp), contentAlignment = Alignment.Center) {
+                Spacer(Modifier.width(32.dp))
+                content()
+            }
+        },
     )
 }
 
@@ -219,6 +231,7 @@ private fun MessageContentBody(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val nova = currentTheme.activePreset == StylePreset.Nova
+    val rhea = currentTheme.activePreset == StylePreset.Rhea
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Column(
         modifier = modifier.styleable(styleState, rememberMessageRootStyle() then style),
@@ -230,7 +243,7 @@ private fun MessageContentBody(
             } else {
                 Alignment.Start
             },
-        verticalArrangement = Arrangement.spacedBy(if (nova) 10.dp else twSpacing.xs),
+        verticalArrangement = Arrangement.spacedBy(if (nova || rhea) 10.dp else twSpacing.xs),
         content = content,
     )
 }
@@ -243,11 +256,14 @@ fun MessageGroup(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val novaOrRhea =
+        currentTheme.activePreset == StylePreset.Nova ||
+            currentTheme.activePreset == StylePreset.Rhea
     Column(
         modifier = modifier.styleable(styleState, style),
         verticalArrangement =
             Arrangement.spacedBy(
-                if (currentTheme.activePreset == StylePreset.Nova) {
+                if (novaOrRhea) {
                     8.dp
                 } else {
                     twSpacing.sm

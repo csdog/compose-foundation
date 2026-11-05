@@ -18,6 +18,9 @@ fun rememberMessageAvatarStyle(): Style =
             if (theme.activePreset == StylePreset.Nova) {
                 minWidth(32.dp)
                 clip()
+            } else if (theme.activePreset == StylePreset.Rhea) {
+                minWidth(32.dp)
+                clip()
             } else {
                 width(32.dp)
                 height(32.dp)
