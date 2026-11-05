@@ -1,0 +1,28 @@
+{
+  "anchors": [
+    "square",
+    "portrait",
+    "rtl"
+  ],
+  "localAnchors": [
+    "example-0",
+    "example-1",
+    "example-2"
+  ],
+  "views": [
+    {
+      "name": "desktop-light",
+      "theme": "light",
+      "w": 1440,
+      "h": 1000
+    }
+  ],
+  "files": {
+    "official-square-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r4/sections/official-square-desktop-light.png",
+    "local-square-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r4/sections/local-square-desktop-light.png",
+    "official-portrait-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r4/sections/official-portrait-desktop-light.png",
+    "local-portrait-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r4/sections/local-portrait-desktop-light.png",
+    "official-rtl-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r4/sections/official-rtl-desktop-light.png",
+    "local-rtl-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r4/sections/local-rtl-desktop-light.png"
+  }
+}

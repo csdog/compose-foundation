@@ -45,6 +45,11 @@ class AspectRatioExamplesTest {
                 "This is useful for displaying images in a portrait format.",
             aspectRatioDoc.examples.single { it.title == "Portrait" }.descriptionMarkdown,
         )
+        assertEquals(
+            "To enable RTL support in shadcn/ui, see the " +
+                "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
+            aspectRatioDoc.examples.single { it.title == "RTL" }.descriptionMarkdown,
+        )
         val aspectRatioApi = aspectRatioDoc.apiSections.single { it.title == "AspectRatio" }
         assertEquals(
             "1f",

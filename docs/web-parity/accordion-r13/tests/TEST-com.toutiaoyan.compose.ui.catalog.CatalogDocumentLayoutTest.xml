@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CatalogDocumentLayoutTest[jvm]" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-11-05T05:16:02.340Z" hostname="Apples-MacBook-Pro.local" time="2.397">
+  <properties/>
+  <testcase name="documentMatchesOfficialHorizontalGeometryAndBreakpoints[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogDocumentLayoutTest" time="0.507"/>
+  <testcase name="documentMatchesOfficialHorizontalGeometryAndBreakpoints[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogDocumentLayoutTest" time="0.147"/>
+  <testcase name="documentMatchesOfficialHorizontalGeometryAndBreakpoints[width=768, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogDocumentLayoutTest" time="0.162"/>
+  <testcase name="documentMatchesOfficialHorizontalGeometryAndBreakpoints[width=768, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogDocumentLayoutTest" time="0.169"/>
+  <testcase name="documentMatchesOfficialHorizontalGeometryAndBreakpoints[width=900, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogDocumentLayoutTest" time="0.144"/>
+  <testcase name="documentMatchesOfficialHorizontalGeometryAndBreakpoints[width=900, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogDocumentLayoutTest" time="0.13"/>
+  <testcase name="documentMatchesOfficialHorizontalGeometryAndBreakpoints[width=1,024, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogDocumentLayoutTest" time="0.182"/>
+  <testcase name="documentMatchesOfficialHorizontalGeometryAndBreakpoints[width=1,024, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogDocumentLayoutTest" time="0.137"/>
+  <testcase name="documentMatchesOfficialHorizontalGeometryAndBreakpoints[width=1,280, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogDocumentLayoutTest" time="0.139"/>
+  <testcase name="documentMatchesOfficialHorizontalGeometryAndBreakpoints[width=1,280, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogDocumentLayoutTest" time="0.138"/>
+  <testcase name="documentMatchesOfficialHorizontalGeometryAndBreakpoints[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogDocumentLayoutTest" time="0.137"/>
+  <testcase name="documentMatchesOfficialHorizontalGeometryAndBreakpoints[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogDocumentLayoutTest" time="0.147"/>
+  <testcase name="documentMatchesOfficialHorizontalGeometryAndBreakpoints[width=1,800, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogDocumentLayoutTest" time="0.131"/>
+  <testcase name="documentMatchesOfficialHorizontalGeometryAndBreakpoints[width=1,800, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogDocumentLayoutTest" time="0.126"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

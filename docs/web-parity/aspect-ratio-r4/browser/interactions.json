@@ -1,0 +1,33 @@
+{
+  "component": "aspect-ratio-r4",
+  "states": [
+    {
+      "file": "browser/interactions/local-portrait-desktop.png",
+      "state": "portrait ratio"
+    },
+    {
+      "file": "browser/interactions/local-rtl-arabic.png",
+      "state": "RTL Arabic caption"
+    },
+    {
+      "file": "browser/interactions/local-rtl-english.png",
+      "state": "RTL switched to English"
+    },
+    {
+      "file": "browser/interactions/local-rtl-hebrew.png",
+      "state": "RTL switched to Hebrew"
+    },
+    {
+      "file": "browser/interactions/local-rtl-language-popup.png",
+      "state": "language selector popup"
+    },
+    {
+      "file": "browser/interactions/local-square-desktop.png",
+      "state": "square ratio at 1440"
+    },
+    {
+      "file": "browser/interactions/local-square-phone.png",
+      "state": "square ratio at 390"
+    }
+  ]
+}

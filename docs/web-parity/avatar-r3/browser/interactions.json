@@ -1,0 +1,49 @@
+{
+  "component": "avatar-r3",
+  "states": [
+    {
+      "file": "browser/interactions/local-dropdown-default.png",
+      "state": "Dropdown recipe default"
+    },
+    {
+      "file": "browser/interactions/local-dropdown-escape-closed.png",
+      "state": "Escape closes the menu"
+    },
+    {
+      "file": "browser/interactions/local-dropdown-first-focus.png",
+      "state": "ArrowDown focuses row 1"
+    },
+    {
+      "file": "browser/interactions/local-dropdown-open-dark.png",
+      "state": "menu open in dark theme"
+    },
+    {
+      "file": "browser/interactions/local-dropdown-open.png",
+      "state": "pointer open, no row highlighted"
+    },
+    {
+      "file": "browser/interactions/local-dropdown-second-focus.png",
+      "state": "ArrowDown focuses row 2"
+    },
+    {
+      "file": "browser/interactions/local-rtl-arabic.png",
+      "state": "RTL Arabic (+\u0663)"
+    },
+    {
+      "file": "browser/interactions/local-rtl-english.png",
+      "state": "English (+3)"
+    },
+    {
+      "file": "browser/interactions/local-rtl-hebrew.png",
+      "state": "Hebrew (+3, RTL order)"
+    },
+    {
+      "file": "browser/interactions/local-rtl-language-popup.png",
+      "state": "language selector popup"
+    },
+    {
+      "file": "browser/interactions/local-rtl-popup-2.png",
+      "state": "local-rtl-popup-2"
+    }
+  ]
+}

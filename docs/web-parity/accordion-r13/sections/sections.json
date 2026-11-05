@@ -1,0 +1,40 @@
+{
+  "anchors": [
+    "basic",
+    "multiple",
+    "disabled",
+    "borders",
+    "card",
+    "rtl"
+  ],
+  "localAnchors": [
+    "example-0",
+    "example-1",
+    "example-2",
+    "example-3",
+    "example-4",
+    "example-5"
+  ],
+  "views": [
+    {
+      "name": "desktop-light",
+      "theme": "light",
+      "w": 1440,
+      "h": 1000
+    }
+  ],
+  "files": {
+    "official-basic-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/accordion-r13/sections/official-basic-desktop-light.png",
+    "local-basic-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/accordion-r13/sections/local-basic-desktop-light.png",
+    "official-multiple-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/accordion-r13/sections/official-multiple-desktop-light.png",
+    "local-multiple-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/accordion-r13/sections/local-multiple-desktop-light.png",
+    "official-disabled-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/accordion-r13/sections/official-disabled-desktop-light.png",
+    "local-disabled-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/accordion-r13/sections/local-disabled-desktop-light.png",
+    "official-borders-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/accordion-r13/sections/official-borders-desktop-light.png",
+    "local-borders-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/accordion-r13/sections/local-borders-desktop-light.png",
+    "official-card-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/accordion-r13/sections/official-card-desktop-light.png",
+    "local-card-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/accordion-r13/sections/local-card-desktop-light.png",
+    "official-rtl-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/accordion-r13/sections/official-rtl-desktop-light.png",
+    "local-rtl-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/accordion-r13/sections/local-rtl-desktop-light.png"
+  }
+}

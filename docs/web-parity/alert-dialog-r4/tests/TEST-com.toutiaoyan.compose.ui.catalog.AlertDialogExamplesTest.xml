@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AlertDialogExamplesTest[jvm]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-05T05:15:58.231Z" hostname="Apples-MacBook-Pro.local" time="2.846">
+  <properties/>
+  <testcase name="rtlPreviewChangesLanguageAndBothDialogSizesUseTranslation[jvm]" classname="com.toutiaoyan.compose.ui.catalog.AlertDialogExamplesTest" time="1.039"/>
+  <testcase name="destructiveSettingsLinkNavigatesCurrentPageWithoutConfirmingDeletion[jvm]" classname="com.toutiaoyan.compose.ui.catalog.AlertDialogExamplesTest" time="0.125"/>
+  <testcase name="realExamplesOpenAndBothActionPathsClose[jvm]" classname="com.toutiaoyan.compose.ui.catalog.AlertDialogExamplesTest" time="1.53"/>
+  <testcase name="destructiveMediaBackgroundChangesWithLiveTheme[jvm]" classname="com.toutiaoyan.compose.ui.catalog.AlertDialogExamplesTest" time="0.134"/>
+  <testcase name="exportContainsRealExamplesCompositionAndKotlinApi[jvm]" classname="com.toutiaoyan.compose.ui.catalog.AlertDialogExamplesTest" time="0.018"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

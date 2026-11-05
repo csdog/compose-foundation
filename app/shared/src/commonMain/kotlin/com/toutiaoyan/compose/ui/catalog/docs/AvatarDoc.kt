@@ -151,9 +151,12 @@ val avatarDoc =
                         "val onlineColor = if (currentTheme.isDark) TwColors.green800 " +
                             "else TwColors.green600\n"
                     ) + avatarRecipe(badge = "AvatarBadge(style = Style { background(onlineColor) })"),
-                    descriptionMarkdown = "Add a status badge at the bottom right. Use Style to customize its color.",
+                    descriptionMarkdown =
+                        "Use the `AvatarBadge` component to add a badge to the avatar. " +
+                            "The badge is positioned at the bottom right of the avatar. " +
+                            "Use `Style` to customize its color.",
                     preview = {
-                        AvatarPhoto(badge = { AvatarBadge(style = onlineStyle()) })
+                        AvatarPhoto(grayscale = false, badge = { AvatarBadge(style = onlineStyle()) })
                     },
                 ),
                 ComponentExample(
@@ -177,7 +180,7 @@ val avatarDoc =
                     groupRecipe(
                         count = false,
                     ),
-                    descriptionMarkdown = "A group of avatars with overlapping styling.",
+                    descriptionMarkdown = "Use the `AvatarGroup` component to add a group of avatars.",
                     preview = {
                         AvatarPeople(count = false)
                     },
@@ -186,7 +189,7 @@ val avatarDoc =
                     "Avatar Group Count",
                     groupRecipe(),
                     descriptionMarkdown =
-                        "Add a count to the group.",
+                        "Use `AvatarGroupCount` to add a count to the group.",
                     preview =
                         {
                             AvatarPeople()
@@ -233,7 +236,7 @@ val avatarDoc =
                     "Dropdown",
                     avatarDropdownCode,
                     descriptionMarkdown =
-                        "Use the Avatar as a trigger for a dropdown menu.",
+                        "You can use the `Avatar` component as a trigger for a dropdown menu.",
                     preview =
                         {
                             AvatarDropdownPreview()
@@ -251,7 +254,10 @@ val avatarDoc =
                             "AvatarGroupCount(if (language == 0) \"+٣\" else \"+3\")",
                         ).prependIndent("        ") + "\n    }\n}",
                     previewPadding = 0.dp,
-                    descriptionMarkdown = "Switch Arabic, English and Hebrew to compare layout direction.",
+                    descriptionMarkdown = (
+                        "To enable RTL support in shadcn/ui, see the [RTL configuration " +
+                            "guide](https://ui.shadcn.com/docs/rtl)."
+                    ),
                     preview = {
                         var language by remember { mutableStateOf(0) }
                         RtlPreview(

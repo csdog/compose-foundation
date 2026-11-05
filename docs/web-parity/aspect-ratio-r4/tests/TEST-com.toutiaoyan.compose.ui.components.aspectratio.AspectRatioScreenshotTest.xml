@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AspectRatioScreenshotTest[jvm]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-05T05:15:20.076Z" hostname="Apples-MacBook-Pro.local" time="0.034">
+  <properties/>
+  <testcase name="states_light[jvm]" classname="com.toutiaoyan.compose.ui.components.aspectratio.AspectRatioScreenshotTest" time="0.018"/>
+  <testcase name="states_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.aspectratio.AspectRatioScreenshotTest" time="0.016"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

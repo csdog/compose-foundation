@@ -211,9 +211,14 @@ class AlertDialogExamplesTest {
                             "alert dialog. The Settings link is a current-page placeholder, " +
                             "as in the upstream example."
                     ),
+                "RTL" to
+                    (
+                        "To enable RTL support in shadcn/ui, see the " +
+                            "[RTL configuration guide](https://ui.shadcn.com/docs/rtl)."
+                    ),
             ),
             alertDialogDoc.examples
-                .filter { it.title in setOf("Basic", "Small with Media", "Destructive") }
+                .filter { it.title in setOf("Basic", "Small with Media", "Destructive", "RTL") }
                 .associate { it.title to it.descriptionMarkdown },
         )
         val text = componentPageMarkdown(alertDialogDoc)

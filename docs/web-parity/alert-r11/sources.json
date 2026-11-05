@@ -1,0 +1,49 @@
+{
+  "component": "Alert",
+  "officialRevision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/alert",
+  "retrievedAt": "2026-11-05T13:02:19+08:00",
+  "retrievedBy": "parity-g",
+  "files": [
+    {
+      "path": "../../../../../../../../tmp/cf-parity/src-g/mdx-alert.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/alert.mdx",
+      "sha256": "e86ac12ea181b073cbe803b4e142dd80aee1e9879c099b5ca704e7ee578f73f7"
+    },
+    {
+      "path": "../../../../../../../../tmp/cf-parity/src-g/ui-alert.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/registry/bases/base/ui/alert.tsx",
+      "sha256": "639c846b57885d8af4dbdf7ddab7b15fd4d392c051f7496c67e811154e7861d9"
+    },
+    {
+      "path": "../../../../../../../../tmp/cf-parity/src-g/ex-alert-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/alert-demo.tsx",
+      "sha256": "d3822ecc439caf3b716e07a182c472adf4282c1c9517be50915e3b441376d633"
+    },
+    {
+      "path": "../../../../../../../../tmp/cf-parity/src-g/ex-alert-basic.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/alert-basic.tsx",
+      "sha256": "8de17b44eb7c82bf56da568607dc5d4b1be38ab4fab890e58fccf5b00f57a072"
+    },
+    {
+      "path": "../../../../../../../../tmp/cf-parity/src-g/ex-alert-destructive.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/alert-destructive.tsx",
+      "sha256": "0b4cf8d50650036b7f6c402c109e7670a32221f1d8b2f11e3bf3d706c884a72b"
+    },
+    {
+      "path": "../../../../../../../../tmp/cf-parity/src-g/ex-alert-action.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/alert-action.tsx",
+      "sha256": "c96d0f04652f4f293ca085f579df4bd9233efa655210ff465351a847680bfb68"
+    },
+    {
+      "path": "../../../../../../../../tmp/cf-parity/src-g/ex-alert-colors.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/alert-colors.tsx",
+      "sha256": "65411cd59a4da7fbe6acac0ff676fc96391983ba342781799d3466dd2a353d24"
+    },
+    {
+      "path": "../../../../../../../../tmp/cf-parity/src-g/ex-alert-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/alert-rtl.tsx",
+      "sha256": "b6ada688e4d49eae0bc870cda4ee9e5093c0e30f1a60018f4132d8398fa53e63"
+    }
+  ]
+}

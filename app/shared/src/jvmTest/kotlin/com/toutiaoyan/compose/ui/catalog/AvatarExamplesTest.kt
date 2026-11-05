@@ -3,6 +3,7 @@ package com.toutiaoyan.compose.ui.catalog
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.width
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toPixelMap
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
@@ -12,6 +13,7 @@ import com.toutiaoyan.compose.ui.components.overlay.OverlayHost
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import org.junit.Rule
+import kotlin.math.abs
 import kotlin.test.*
 
 class AvatarExamplesTest {
@@ -43,6 +45,10 @@ class AvatarExamplesTest {
         rule.onNodeWithText("Log out").performClick()
         rule.onNodeWithText("Profile").assertDoesNotExist()
         rule.onNodeWithContentDescription("Open user menu").performClick()
+        // Base UI pointer opens leave every row unhighlighted; the first ArrowDown reaches row 1.
+        rule.onNodeWithText("Profile").assertIsNotFocused()
+        rule.onNodeWithText("Billing").assertIsNotFocused()
+        rule.onNodeWithText("Profile").performKeyInput { pressKey(Key.DirectionDown) }
         rule.onNodeWithText("Profile").assertIsFocused()
         rule.onNodeWithText("Profile").performKeyInput { pressKey(Key.DirectionDown) }
         rule.onNodeWithText("Billing").assertIsFocused()
@@ -103,7 +109,59 @@ class AvatarExamplesTest {
             "Use the `size` prop to change the size of the avatar.",
             avatarDoc.examples.single { it.title == "Sizes" }.descriptionMarkdown,
         )
+        assertEquals(
+            "Use the `AvatarBadge` component to add a badge to the avatar. The badge is " +
+                "positioned at the bottom right of the avatar. Use `Style` to customize its color.",
+            avatarDoc.examples.single { it.title == "Badge" }.descriptionMarkdown,
+        )
+        assertEquals(
+            "Use the `AvatarGroup` component to add a group of avatars.",
+            avatarDoc.examples.single { it.title == "Avatar Group" }.descriptionMarkdown,
+        )
+        assertEquals(
+            "Use `AvatarGroupCount` to add a count to the group.",
+            avatarDoc.examples.single { it.title == "Avatar Group Count" }.descriptionMarkdown,
+        )
+        assertEquals(
+            "You can use the `Avatar` component as a trigger for a dropdown menu.",
+            avatarDoc.examples.single { it.title == "Dropdown" }.descriptionMarkdown,
+        )
+        assertEquals(
+            "To enable RTL support in shadcn/ui, see the " +
+                "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
+            avatarDoc.examples.single { it.title == "RTL" }.descriptionMarkdown,
+        )
         assertEquals(6, avatarDoc.apiSections.size)
         assertFalse(avatarDoc.examples.any { "model = null" in it.code })
+    }
+
+    @Test fun badgeExampleKeepsThePhotoInColorLikeTheOfficialExample() {
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, minTouchTarget = null) {
+                Box(Modifier.width(120.dp)) {
+                    avatarDoc.examples.single { it.title == "Badge" }.preview()
+                }
+            }
+        }
+        val pixels = rule.onNodeWithContentDescription("@shadcn").captureToImage().toPixelMap()
+        var chromatic = 0
+        for (y in 0 until pixels.height) {
+            for (x in 0 until pixels.width) {
+                val color = pixels[x, y]
+                if (color.alpha > .9f &&
+                    (
+                        abs(color.red - color.green) > .05f ||
+                            abs(color.green - color.blue) > .05f ||
+                            abs(color.red - color.blue) > .05f
+                    )
+                ) {
+                    chromatic++
+                }
+            }
+        }
+        assertTrue(
+            chromatic > pixels.width * pixels.height / 10,
+            "The official Badge example keeps the colored photo; chromatic=$chromatic",
+        )
     }
 }

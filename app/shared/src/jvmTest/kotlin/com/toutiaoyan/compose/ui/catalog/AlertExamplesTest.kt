@@ -39,6 +39,14 @@ class AlertExamplesTest {
             ),
             alertDoc.examples.drop(6).map { it.title },
         )
+        assertEquals(
+            "A basic alert with an icon, title and description.",
+            alertDoc.examples.single { it.title == "Basic" }.descriptionMarkdown,
+        )
+        assertEquals(
+            "Use `AlertAction` to add a button or other action element to the alert.",
+            alertDoc.examples.single { it.title == "Action" }.descriptionMarkdown,
+        )
     }
 
     @Test fun colorsExampleUpdatesActualTitleColorWhenThemeChanges() {

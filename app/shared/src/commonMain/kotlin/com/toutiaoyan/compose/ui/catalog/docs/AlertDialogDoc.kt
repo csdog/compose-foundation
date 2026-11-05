@@ -347,10 +347,8 @@ val alertDialogDoc =
                 ComponentExample(
                     title = "RTL",
                     descriptionMarkdown = (
-                        "To enable RTL support in your app, see the [RTL configuration " +
-                            "guide](https://ui.shadcn.com/docs/rtl). Source shows the " +
-                            "Arabic pair; the catalog toolbar also previews English and " +
-                            "Hebrew."
+                        "To enable RTL support in shadcn/ui, see the [RTL configuration " +
+                            "guide](https://ui.shadcn.com/docs/rtl)."
                     ),
                     previewPadding = 0.dp,
                     code =

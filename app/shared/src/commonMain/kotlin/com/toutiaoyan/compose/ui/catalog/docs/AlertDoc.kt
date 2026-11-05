@@ -172,7 +172,7 @@ val alertDoc =
                 ),
                 ComponentExample(
                     title = "Basic",
-                    descriptionMarkdown = "An alert with an icon, title, and description.",
+                    descriptionMarkdown = "A basic alert with an icon, title and description.",
                     mobileMinPreviewHeight = 0.dp,
                     previewPadding = 24.dp,
                     code =
@@ -226,7 +226,7 @@ val alertDoc =
                 ),
                 ComponentExample(
                     title = "Action",
-                    descriptionMarkdown = "Use `AlertAction` to add a button or another action element to the alert.",
+                    descriptionMarkdown = "Use `AlertAction` to add a button or other action element to the alert.",
                     mobileMinPreviewHeight = 0.dp,
                     previewPadding = 24.dp,
                     code =

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AspectRatioLayoutTest[jvm]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-05T05:15:20.022Z" hostname="Apples-MacBook-Pro.local" time="0.053">
+  <properties/>
+  <testcase name="styleWidthParticipatesBeforeRatioMeasurement[jvm]" classname="com.toutiaoyan.compose.ui.components.aspectratio.AspectRatioLayoutTest" time="0.017"/>
+  <testcase name="widthRatioAndChildTrackLiveConstraints[jvm]" classname="com.toutiaoyan.compose.ui.components.aspectratio.AspectRatioLayoutTest" time="0.02"/>
+  <testcase name="omittedRatioRetainsSquareKotlinDefault[jvm]" classname="com.toutiaoyan.compose.ui.components.aspectratio.AspectRatioLayoutTest" time="0.015"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
