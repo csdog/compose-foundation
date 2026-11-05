@@ -146,10 +146,37 @@ internal fun ResizableRtlRecipe(language: Int = 1) {
 
 internal val resizableOfficialExamples =
     listOf(
-        ComponentExample("Default", code = resizableDefaultRecipeCode, preview = { ResizableDefaultRecipe() }),
-        ComponentExample("Vertical", code = resizableVerticalRecipeCode, preview = { ResizableVerticalRecipe() }),
-        ComponentExample("Handle", code = resizableHandleRecipeCode, preview = { ResizableHandleRecipe() }),
-        ComponentExample("RTL", code = resizableRtlRecipeCode, previewPadding = 0.dp, preview = {
+        ComponentExample(
+            "Default",
+            code = resizableDefaultRecipeCode,
+            minPreviewHeight = 240.dp,
+            preview = { ResizableDefaultRecipe() },
+        ),
+        ComponentExample(
+            "Vertical",
+            code = resizableVerticalRecipeCode,
+            minPreviewHeight = 208.dp,
+            descriptionMarkdown = "Use `orientation = Orientation.Vertical` for vertical resizing.",
+            preview = { ResizableVerticalRecipe() },
+        ),
+        ComponentExample(
+            "Handle",
+            code = resizableHandleRecipeCode,
+            minPreviewHeight = 208.dp,
+            descriptionMarkdown =
+                "Use `withHandle = true` on `ResizableHandle` to show a visible handle.",
+            preview = { ResizableHandleRecipe() },
+        ),
+        ComponentExample(
+            "RTL",
+            code = resizableRtlRecipeCode,
+            minPreviewHeight = 208.dp,
+            previewPadding = 0.dp,
+            descriptionMarkdown =
+                "The component mirrors in RTL: the first pane starts on the right and dragging " +
+                    "moves the split in the opposite physical direction. See the RTL " +
+                    "configuration guide for the site-level setup.",
+            preview = {
             var language by remember { mutableIntStateOf(1) }
             RtlPreview(
                 language,

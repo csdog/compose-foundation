@@ -126,10 +126,14 @@ private fun ScrollFadeFrame(
                 items.forEach { ScrollFadeTile(it, true) }
             }
         } else {
+            // The "no overflow" recipe intentionally has no fixed height: a nested
+            // verticalScroll would be measured with an infinite max height inside the
+            // docs column (and, in Wasm, throws). Nothing can overflow there, so the
+            // fade modifier is applied to the plain column instead.
+            val scroller = if (height == null) Modifier else Modifier.verticalScroll(state)
             Column(
-                viewport.verticalScroll(state).focusable().padding(6.dp),
-                verticalArrangement =
-                    Arrangement.spacedBy(6.dp),
+                viewport.then(scroller).focusable().padding(6.dp),
+                verticalArrangement = Arrangement.spacedBy(6.dp),
             ) {
                 items.forEach { ScrollFadeTile(it, false) }
             }
@@ -294,11 +298,20 @@ internal fun ScrollFadeRtlRecipe(language: Int = 1) =
 
 internal val scrollFadeOfficialExamples =
     listOf(
-        ComponentExample("Default", code = scrollFadeDefaultRecipeCode, preview = { ScrollFadeDefaultRecipe() }),
+        ComponentExample(
+            "Default",
+            code = scrollFadeDefaultRecipeCode,
+            minPreviewHeight = 0.dp,
+            preview = { ScrollFadeDefaultRecipe() },
+        ),
         ComponentExample(
             "No Overflow, No Fade",
             code =
             scrollFadeOverflowRecipeCode,
+            minPreviewHeight = 0.dp,
+            descriptionMarkdown =
+                "If the content does not overflow, no fade is shown. You can apply " +
+                    "`scrollFade` to any list without checking whether it scrolls.",
             preview =
                 { ScrollFadeOverflowRecipe() },
         ),
@@ -306,19 +319,60 @@ internal val scrollFadeOfficialExamples =
             "Horizontal Scrolling",
             code =
             scrollFadeHorizontalRecipeCode,
+            minPreviewHeight = 0.dp,
+            descriptionMarkdown =
+                "Use `ScrollFadeOrientation.Horizontal` on containers that scroll " +
+                    "horizontally. The horizontal fade is direction-aware: in RTL layouts " +
+                    "the crisp edge and the fade follow the reading direction with no extra " +
+                    "configuration.",
             preview =
                 { ScrollFadeHorizontalRecipe() },
         ),
-        ComponentExample("Edge Fades", code = scrollFadeEdgeRecipeCode, preview = {
+        ComponentExample(
+            "Edge Fades",
+            code = scrollFadeEdgeRecipeCode,
+            minPreviewHeight = 0.dp,
+            descriptionMarkdown =
+                "Use `ScrollFadeEdge.Top` / `Bottom` / `Left` / `Right` for physical edges and " +
+                    "`Start` / `End` for logical inline edges that mirror in RTL. Start edges " +
+                    "fade in after you scroll away from the start; end edges fade out when you " +
+                    "reach the end.",
+            preview = {
             ScrollFadeEdgeRecipe(com.toutiaoyan.compose.ui.catalog.catalogMonoFontFamily())
         }),
-        ComponentExample("Fade Size", code = scrollFadeSizeRecipeCode, preview = {
+        ComponentExample(
+            "Fade Size",
+            code = scrollFadeSizeRecipeCode,
+            minPreviewHeight = 0.dp,
+            descriptionMarkdown =
+                "The fade depth defaults to `12%` of the container, capped at `40.dp`. Use " +
+                    "`ScrollFadeSize.Length` to set a fixed size on the spacing scale or " +
+                    "`ScrollFadeSize.Fraction` for an arbitrary percentage; per-edge sizes " +
+                    "override the shared size. The fade eases in over `revealDistance`, " +
+                    "`96dp` by default and independent of the depth.",
+            preview = {
             ScrollFadeSizeRecipe(com.toutiaoyan.compose.ui.catalog.catalogMonoFontFamily())
         }),
-        ComponentExample("Disabling the Fade", code = scrollFadeNoneRecipeCode, preview = {
+        ComponentExample(
+            "Disabling the Fade",
+            code = scrollFadeNoneRecipeCode,
+            minPreviewHeight = 0.dp,
+            descriptionMarkdown =
+                "Use `enabled = false` to remove the fade. It works in any class order, so the " +
+                    "typical use is responsive or stateful.",
+            preview = {
             ScrollFadeNoneRecipe(com.toutiaoyan.compose.ui.catalog.catalogMonoFontFamily())
         }),
-        ComponentExample("RTL", code = scrollFadeRtlRecipeCode, previewPadding = 0.dp, preview = {
+        ComponentExample(
+            "RTL",
+            code = scrollFadeRtlRecipeCode,
+            minPreviewHeight = 0.dp,
+            previewPadding = 0.dp,
+            descriptionMarkdown =
+                "`scrollFade` follows the reading direction. At rest the start edge is crisp " +
+                    "and the end edge fades; in RTL that means a crisp right edge and a fade " +
+                    "on the left, mirrored from LTR.",
+            preview = {
             var language by remember { mutableIntStateOf(1) }
             RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
                 ScrollFadeRtlRecipe(language)

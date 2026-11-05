@@ -23,18 +23,82 @@ val resizableDoc =
         id = "resizable",
         title = "Resizable",
         description = "Accessible resizable panel groups and layouts with keyboard support.",
-        usageCode =
+        examplesHeading = null,
+        usageImportsCode =
             """
             import com.toutiaoyan.compose.ui.components.resizable.ResizablePanelGroup
-            import com.toutiaoyan.compose.ui.components.resizable.ResizableHandle
             import com.toutiaoyan.compose.ui.components.resizable.ResizablePanel
-
+            import com.toutiaoyan.compose.ui.components.resizable.ResizableHandle
+            """.trimIndent(),
+        usageCode =
+            """
             ResizablePanelGroup { first, second, _ ->
                 ResizablePanel(first, "One")
                 ResizableHandle()
                 ResizablePanel(second, "Two")
             }
             """.trimIndent(),
+        compositionCode =
+            """
+            ResizablePanelGroup
+            ├── ResizablePanel
+            ├── ResizableHandle
+            └── ResizablePanel
+            """.trimIndent(),
+        beforeExamples =
+            listOf(
+                ComponentGuideSection(
+                    "About",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "The `Resizable` component is built on top of " +
+                                "[react-resizable-panels](https://github.com/bvaughn/react-resizable-panels) " +
+                                "by [bvaughn](https://github.com/bvaughn).",
+                        ),
+                    ),
+                ),
+            ),
+        afterExamples =
+            listOf(
+                ComponentGuideSection(
+                    "API Reference",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "See the [react-resizable-panels](" +
+                                "https://github.com/bvaughn/react-resizable-panels/tree/main/packages/react-resizable-panels" +
+                                ") documentation.",
+                        ),
+                    ),
+                ),
+                ComponentGuideSection(
+                    "Changelog",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "The upstream `react-resizable-panels` v4 renamed its primitives. " +
+                                "The shadcn/ui wrapper components (`ResizablePanelGroup`, " +
+                                "`ResizablePanel`, `ResizableHandle`) remain unchanged.",
+                        ),
+                    ),
+                ),
+                ComponentGuideSection(
+                    "2025-02-02 react-resizable-panels v4",
+                    listOf(
+                        ComponentGuideBlock.Bullets(
+                            listOf(
+                                "`PanelGroup` → `Group`",
+                                "`PanelResizeHandle` → `Separator`",
+                                "`direction` prop → `orientation` prop",
+                                "`defaultSize={50}` → `defaultSize=\"50%\"`",
+                                "`onLayout` → `onLayoutChange`",
+                                "`ImperativePanelHandle` → `PanelImperativeHandle`",
+                                "`ref` prop on Panel → `panelRef` prop",
+                                "`data-panel-group-direction` → `aria-orientation`",
+                            ),
+                        ),
+                    ),
+                    level = 3,
+                ),
+            ),
         examples =
             listOf(
                 ComponentExample(
@@ -421,4 +485,34 @@ val resizableDoc =
                 ),
             ),
     )
-        .let { native -> native.copy(examples = resizableOfficialExamples + native.examples) }
+        .let { native ->
+            native.copy(
+                examples = resizableOfficialExamples + resizableExtensionExamples(native.examples),
+            )
+        }
+
+
+/**
+ * Kotlin-only recipes. Everything else in the legacy list is a duplicate of the four
+ * official previews and is no longer rendered.
+ */
+private fun resizableExtensionExamples(native: List<ComponentExample>): List<ComponentExample> =
+    native.filter {
+        it.title in
+            setOf(
+                "Sidebar and content",
+                "Default min fraction",
+                "Default max fraction",
+                "Disabled",
+            )
+    }.map {
+        it.copy(
+            title =
+                when (it.title) {
+                    "Sidebar and content" -> "Kotlin extension: Custom pane content"
+                    "Default min fraction" -> "Kotlin extension: Min fraction"
+                    "Default max fraction" -> "Kotlin extension: Max fraction"
+                    else -> "Kotlin extension: Disabled handle"
+                },
+        )
+    }

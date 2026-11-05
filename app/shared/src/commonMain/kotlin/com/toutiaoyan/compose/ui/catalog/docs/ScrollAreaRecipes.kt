@@ -172,13 +172,31 @@ internal fun ScrollAreaRtlRecipe(language: Int = 1) {
 
 internal val scrollAreaOfficialExamples =
     listOf(
-        ComponentExample("Default", code = scrollAreaDefaultRecipeCode, preview = { ScrollAreaDefaultRecipe() }),
+        ComponentExample(
+            "Default",
+            code = scrollAreaDefaultRecipeCode,
+            minPreviewHeight = 304.dp,
+            preview = { ScrollAreaDefaultRecipe() },
+        ),
         ComponentExample(
             "Horizontal",
             code = scrollAreaHorizontalRecipeCode,
+            minPreviewHeight = 0.dp,
+            previewHeight = 288.dp,
+            descriptionMarkdown =
+                "Use `ScrollBar` with `orientation = ScrollAreaOrientation.Horizontal` for " +
+                    "horizontal scrolling.",
             preview = { ScrollAreaHorizontalRecipe() },
         ),
-        ComponentExample("RTL", code = scrollAreaRtlRecipeCode, previewPadding = 0.dp, preview = {
+        ComponentExample(
+            "RTL",
+            code = scrollAreaRtlRecipeCode,
+            minPreviewHeight = 0.dp,
+            previewPadding = 0.dp,
+            descriptionMarkdown =
+                "The scroll position and scrollbar mirror in RTL. See the RTL configuration " +
+                    "guide for the site-level setup.",
+            preview = {
             var language by remember { mutableIntStateOf(1) }
             RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
                 ScrollAreaRtlRecipe(language)

@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.toAwtImage
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.*
@@ -157,9 +158,35 @@ class ScrollFadeExamplesTest(private val viewport: Int, private val dark: Boolea
     @Test fun noOverflowKeepsAllThreeTilesCrispWithoutScrollRange() {
         show("No Overflow, No Fade")
         rule.onNodeWithTag("scroll-fade-example").assertHeightIsEqualTo(146.dp)
-        assertEquals(0f, maximum("overflow"))
+        // The source container has no fixed height, so it must not be a scroll container
+        // (a nested verticalScroll would get infinite constraints on the Web page).
+        assertNull(
+            node("overflow").fetchSemanticsNode().config.getOrNull(
+                SemanticsProperties.VerticalScrollAxisRange,
+            ),
+        )
         (1..3).forEach { rule.onNodeWithText("Item $it").assertIsDisplayed() }
         capture("no-overflow")
+    }
+
+    @Test fun officialRecipeOrderAndKotlinExtensionAreExplicit() {
+        assertEquals(
+            listOf(
+                "Default",
+                "No Overflow, No Fade",
+                "Horizontal Scrolling",
+                "Edge Fades",
+                "Fade Size",
+                "Disabling the Fade",
+                "RTL",
+            ),
+            scrollFadeDoc.examples.take(7).map { it.title },
+        )
+        assertEquals("Kotlin extension: Rows", scrollFadeDoc.examples[7].title)
+        assertEquals(8, scrollFadeDoc.examples.size)
+        assertTrue(scrollFadeDoc.examples.drop(7).all { it.title.startsWith("Kotlin extension: ") })
+        assertTrue(scrollFadeDoc.isKotlinExtension)
+        assertEquals(null, scrollFadeDoc.examplesHeading)
     }
 
     @Test fun horizontalIncludesAllTwelveTagsAndScrollsToSecurity() {

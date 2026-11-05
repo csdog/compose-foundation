@@ -19,10 +19,17 @@ val scrollFadeDoc =
         title = "scroll-fade",
         description =
             "Utilities for adding a fade effect to the edges of a scroll container.",
-        usageCode =
+        isKotlinExtension = true,
+        examplesHeading = null,
+        usageImportsCode =
             """
             import com.toutiaoyan.compose.ui.styles.scrollFade
-
+            import com.toutiaoyan.compose.ui.styles.ScrollFadeEdge
+            import com.toutiaoyan.compose.ui.styles.ScrollFadeSize
+            import com.toutiaoyan.compose.ui.styles.ScrollFadeOrientation
+            """.trimIndent(),
+        usageCode =
+            """
             val scrollState = rememberScrollState()
             Column(
                 modifier = Modifier.height(160.dp).scrollFade(scrollState).verticalScroll(scrollState),
@@ -33,22 +40,51 @@ val scrollFadeDoc =
         beforeExamples =
             listOf(
                 ComponentGuideSection(
-                    "Usage",
+                    "Kotlin extension: Scroll fade rules",
                     listOf(
                         ComponentGuideBlock.Paragraph(
                             (
                                 "Place `scrollFade` before `verticalScroll` or " +
-                                    "`horizontalScroll` so the mask measures the viewport. "
-                            ) +
-                                (
-                                    "Put the background and border on an outer wrapper. The " +
-                                        "default depth is 12%, capped at 40.dp, "
-                                ) +
-                                (
-                                    "revealed over 96.dp of scrolling. Use `ScrollFadeEdge`, " +
-                                        "`ScrollFadeSize` or `enabled = false` "
-                                ) +
-                                "for single edges, custom lengths/percentages and no fade.",
+                                    "`horizontalScroll` so the mask measures the viewport, and " +
+                                    "put the background and border on an outer wrapper. The " +
+                                    "default depth is `min(12%, 40.dp)`, revealed over `96dp` " +
+                                    "of scrolling."
+                            ),
+                        ),
+                        ComponentGuideBlock.Bullets(
+                            listOf(
+                                "`ScrollFadeEdge.Both` / `Top` / `Bottom` / `Left` / `Right` / `Start` / `End` choose the faded edges.",
+                                "`ScrollFadeEdge.Start` and `End` are logical inline edges that mirror in RTL.",
+                                "`ScrollFadeSize.Default` / `Length(dp)` / `Fraction(0.15f)` set the fade depth; per-edge sizes override it.",
+                                "`enabled = false` removes the fade in any state or responsive branch.",
+                                "`revealDistance` controls how far you scroll before the fade reaches full depth.",
+                            ),
+                        ),
+                        ComponentGuideBlock.Paragraph(
+                            (
+                                "The fade is applied with a mask, so it dissolves the content " +
+                                    "itself rather than overlaying a color. At rest the start " +
+                                    "edge is crisp and the end edge fades; mid-scroll both edges " +
+                                    "stay faded; at the end the trailing edge sharpens. If the " +
+                                    "content does not overflow, no fade is shown."
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        afterExamples =
+            listOf(
+                ComponentGuideSection(
+                    "Fallback",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            (
+                                "The scroll-aware behavior is driven by the `ScrollState` " +
+                                    "position and eases in over `revealDistance`; no scroll " +
+                                    "listeners are installed. Since the mask is applied to the " +
+                                    "scroll container itself, a visible scrollbar fades with " +
+                                    "the content at the edges."
+                            ),
                         ),
                     ),
                 ),
@@ -56,7 +92,7 @@ val scrollFadeDoc =
         examples =
             listOf(
                 ComponentExample(
-                    title = "Rows (Kotlin)",
+                    title = "Kotlin extension: Rows",
                     code =
                         """
                         val scrollState = rememberScrollState()

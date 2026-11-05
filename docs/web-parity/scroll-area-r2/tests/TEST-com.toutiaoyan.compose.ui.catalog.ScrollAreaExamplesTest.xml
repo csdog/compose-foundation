@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ScrollAreaExamplesTest[jvm]" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-11-05T05:20:43.491Z" hostname="Apples-MacBook-Pro.local" time="1.067">
+  <properties/>
+  <testcase name="defaultHasSourceFrameFiftyTagsAndKeyboardReachesLastTag[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.088"/>
+  <testcase name="horizontalUsesOriginalArtworkDimensionsAndScrollsToThirdArtist[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.093"/>
+  <testcase name="pageKeepsTheThreeOfficialRecipesAndLabelsExtensions[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.016"/>
+  <testcase name="rtlStartsArabicMovesScrollbarAndRetainsOffsetAcrossLanguages[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.173"/>
+  <testcase name="defaultHasSourceFrameFiftyTagsAndKeyboardReachesLastTag[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.044"/>
+  <testcase name="horizontalUsesOriginalArtworkDimensionsAndScrollsToThirdArtist[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.059"/>
+  <testcase name="pageKeepsTheThreeOfficialRecipesAndLabelsExtensions[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.015"/>
+  <testcase name="rtlStartsArabicMovesScrollbarAndRetainsOffsetAcrossLanguages[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.133"/>
+  <testcase name="defaultHasSourceFrameFiftyTagsAndKeyboardReachesLastTag[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.034"/>
+  <testcase name="horizontalUsesOriginalArtworkDimensionsAndScrollsToThirdArtist[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.051"/>
+  <testcase name="pageKeepsTheThreeOfficialRecipesAndLabelsExtensions[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.015"/>
+  <testcase name="rtlStartsArabicMovesScrollbarAndRetainsOffsetAcrossLanguages[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.118"/>
+  <testcase name="defaultHasSourceFrameFiftyTagsAndKeyboardReachesLastTag[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.035"/>
+  <testcase name="horizontalUsesOriginalArtworkDimensionsAndScrollsToThirdArtist[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.051"/>
+  <testcase name="pageKeepsTheThreeOfficialRecipesAndLabelsExtensions[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.016"/>
+  <testcase name="rtlStartsArabicMovesScrollbarAndRetainsOffsetAcrossLanguages[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ScrollAreaExamplesTest" time="0.124"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

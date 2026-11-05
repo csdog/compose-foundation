@@ -1,0 +1,35 @@
+{
+  "retrieved": "2026-11-05",
+  "officialPage": "https://ui.shadcn.com/docs/components/base/resizable",
+  "revision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "localBuild": {
+    "command": "/tmp/cf-parity/web-build.sh f 8776",
+    "wasmSha256": "52e9c17c2bd84f125bfefce884246b92aacd162fd2646a931fcefc243c3368c0",
+    "slot": "f",
+    "port": 8776
+  },
+  "files": {
+    "apps/v4/content/docs/components/base/resizable.mdx": {
+      "sha256": "4d8a3f17dd10ecc0c97ef8e8a7fefd2062af5d3527b2a9d1143b13f15599d24b"
+    },
+    "apps/v4/registry/bases/base/ui/resizable.tsx": {
+      "sha256": "7971b48619d5e322ca95e29b2a2ff72eacb95b730d1fcbdead94511dae056e83"
+    },
+    "apps/v4/registry/styles/style-nova.css": {
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+    },
+    "apps/v4/examples/base/resizable-demo.tsx": {
+      "sha256": "61ecdc315a40344562af9cc7f96250e9ba0b2f7f140a2be24d4d654bf657c733"
+    },
+    "apps/v4/examples/base/resizable-vertical.tsx": {
+      "sha256": "eede13dbec1c352ebf363fa79751b94239dc95d99af1e4820ddd55991955dec7"
+    },
+    "apps/v4/examples/base/resizable-handle.tsx": {
+      "sha256": "57067dd190003a415c5022810c41a73608e7726d2c3d3236cc8580bf360882b8"
+    },
+    "apps/v4/examples/base/resizable-rtl.tsx": {
+      "sha256": "5d55a5b2ded8dca429318429ad401d59040e501a9bb45cb86cbf62d4963f0c81"
+    }
+  },
+  "officialDom": "About, Installation, Usage, Composition, Vertical, Handle, RTL, API Reference, Changelog (+h3 2025-02-02 react-resizable-panels v4); 4 previews, inner heights 320/288/288/288"
+}

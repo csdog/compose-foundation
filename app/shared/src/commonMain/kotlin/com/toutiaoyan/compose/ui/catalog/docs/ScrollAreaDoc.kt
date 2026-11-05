@@ -26,13 +26,21 @@ val scrollAreaDoc =
         title = "Scroll Area",
         description =
             "Augments native scroll functionality for custom, cross-browser styling.",
-        usageCode =
+        examplesHeading = null,
+        usageImportsCode =
             """
             import com.toutiaoyan.compose.ui.components.scrollarea.ScrollArea
             import com.toutiaoyan.compose.ui.components.scrollarea.LazyScrollArea
             import com.toutiaoyan.compose.ui.components.scrollarea.ScrollType
             import com.toutiaoyan.compose.ui.components.scrollarea.ScrollDir
-
+            """.trimIndent(),
+        compositionCode =
+            """
+            ScrollArea
+            └── ScrollBar
+            """.trimIndent(),
+        usageCode =
+            """
             // Default: Auto (show when content overflows)
             ScrollArea(modifier = Modifier.height(200.dp)) {
                 Column { repeat(20) { Text { "Item ${'$'}it" } } }
@@ -52,7 +60,7 @@ val scrollAreaDoc =
         beforeExamples =
             listOf(
                 ComponentGuideSection(
-                    "Compose customization",
+                    "Kotlin extension: Compose customization",
                     listOf(
                         ComponentGuideBlock.Paragraph(
                             "Use `style` for the root and `viewportStyle` for the scrolling viewport. " +
@@ -64,6 +72,19 @@ val scrollAreaDoc =
                                     "The default visibility is `ScrollType.Auto`; pass " +
                                         "`ScrollType.Hover()` for hover-only controls."
                                 ),
+                        ),
+                    ),
+                ),
+            ),
+        afterExamples =
+            listOf(
+                ComponentGuideSection(
+                    "API Reference",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "See the [Base UI Scroll Area](" +
+                                "https://base-ui.com/react/components/scroll-area#api-reference) " +
+                                "documentation.",
                         ),
                     ),
                 ),
@@ -452,4 +473,35 @@ val scrollAreaDoc =
                 ),
             ),
     )
-        .let { native -> native.copy(examples = scrollAreaOfficialExamples + native.examples) }
+        .let { native ->
+            native.copy(
+                examples = scrollAreaOfficialExamples + scrollAreaExtensionExamples(native.examples),
+            )
+        }
+
+
+/**
+ * Kotlin-only recipes: the Base UI page does not document these type/dir/lazy variants
+ * and the remaining legacy list duplicated the three official previews.
+ */
+private fun scrollAreaExtensionExamples(native: List<ComponentExample>): List<ComponentExample> =
+    native.filter {
+        it.title in
+            setOf(
+                "Hover (Kotlin)",
+                "Always",
+                "Scroll (custom hide delay)",
+                "Lazy list",
+            )
+    }.map {
+        it.copy(
+            title =
+                when (it.title) {
+                    "Hover (Kotlin)" -> "Kotlin extension: Hover-only scrollbar"
+                    "Always" -> "Kotlin extension: Always-visible scrollbar"
+                    "Scroll (custom hide delay)" -> "Kotlin extension: Custom hide delay"
+                    else -> "Kotlin extension: Lazy list"
+                },
+        )
+    }
+

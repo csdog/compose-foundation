@@ -87,6 +87,20 @@ class ScrollAreaExamplesTest(private val viewport: Int, private val dark: Boolea
         node("viewport").fetchSemanticsNode()
             .config[SemanticsProperties.VerticalScrollAxisRange].value()
 
+    @Test fun pageKeepsTheThreeOfficialRecipesAndLabelsExtensions() {
+        assertEquals(
+            listOf("Default", "Horizontal", "RTL"),
+            scrollAreaDoc.examples.take(3).map { it.title },
+        )
+        assertTrue(scrollAreaDoc.examples.drop(3).all { it.title.startsWith("Kotlin extension: ") })
+        assertEquals(null, scrollAreaDoc.examplesHeading)
+        assertEquals("ScrollArea\n└── ScrollBar", scrollAreaDoc.compositionCode)
+        assertEquals(
+            "Augments native scroll functionality for custom, cross-browser styling.",
+            scrollAreaDoc.description,
+        )
+    }
+
     @Test fun defaultHasSourceFrameFiftyTagsAndKeyboardReachesLastTag() {
         show("Default")
         node("example").assertWidthIsEqualTo(192.dp).assertHeightIsEqualTo(288.dp)

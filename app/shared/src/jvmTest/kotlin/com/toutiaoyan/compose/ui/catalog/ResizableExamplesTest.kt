@@ -94,6 +94,14 @@ class ResizableExamplesTest(private val viewport: Int, private val dark: Boolean
         advance()
     }
 
+    @Test fun pageKeepsTheFourOfficialRecipesFirstAndLabelsExtensions() {
+        assertEquals(listOf("Default", "Vertical", "Handle", "RTL"), resizableDoc.examples.take(4).map { it.title })
+        assertTrue(resizableDoc.examples.drop(4).all { it.title.startsWith("Kotlin extension: ") })
+        assertEquals(null, resizableDoc.examplesHeading)
+        assertTrue(resizableDoc.compositionCode!!.contains("ResizableHandle"))
+        assertEquals("Accessible resizable panel groups and layouts with keyboard support.", resizableDoc.description)
+    }
+
     @Test fun nestedSourceDefaultKeepsIndependentRatiosAndSupportsActualDragging() {
         assertEquals(listOf("Default", "Vertical", "Handle", "RTL"), resizableDoc.examples.take(4).map { it.title })
         resizableDoc.examples.take(4).forEach {

@@ -147,13 +147,13 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Progress (`progress`)：按当前官网 8a353667 复核四配方（demo/Label/Controlled/RTL）；Composition 改为官方结构树并补嵌套 “With label and value” 说明/代码，RTL 改官网引导链接，API 首节补 Base UI 链接；28 项聚焦测试、Wasm 构建通过；1440/390 浅深四象限、受控键盘 End/Home、轨道点击无效（与官网一致）及三语切换已复核。仍余共享 Composition 内容顺序、Kotlin API 表/扩展小节、完整指针与原生语义、旧 Vega 基准及共享初载/排版差异，见 [Progress r3](web-parity/progress-r3/README.md)。
 - [ ] Questionnaire (`questionnaire`)：按当前官网重建 14 个预览（demo + 13 配方）的顺序与文案，补 Server Rendering/Accessibility/Unstyled/API Reference；Custom Validation 真实返回无效项、Controlled/Resume/Card/Dialog 对齐 CardAction 与默认答案；旧参数演示收敛为 4 个 Kotlin extension。22 项聚焦测试、Wasm 构建通过；1440/390 浅深四象限及多选、校验返回、Resume 重置、Dialog 打开已复核。仍余自定义 Progress render、NativeSelect、onReset、render-prop 组合、共享 Composition 段落/底对齐、浏览器完整键盘/AT 与 toast，见 [Questionnaire r2](web-parity/questionnaire-r2/README.md)。
 - [ ] Radio Group (`radio-group`)：按当前官网重建 7 个预览（demo/Description/Choice Card/Fieldset/Disabled/Invalid/RTL）及 Usage/Composition 与 API 小节，Horizontal/Required 保留为 Kotlin extension；12 项聚焦测试、Wasm 构建通过；1440/390 浅深四象限及卡片选中、disabled 无效、Invalid、RTL 阿语/英语切换已复核。仍余 Kotlin API 表与额外 TOC、FieldLabel 字重/原生 label 关联、完整 AT/动态重排与真机触屏，见 [Radio Group r1](web-parity/radio-group-r1/README.md)。
-- [ ] Resizable (`resizable`)：官网四配方与三语 RTL 已迁移；Nova 分隔线/grip、0..100%范围、真实鼠标/触摸命中、键盘调节及嵌套比例已补。37项定向验证和两个ktlint通过；浏览器四象限、多面板/resize光标及完整状态仍待完成。
-- [ ] Scroll Area (`scroll-area`)：已迁移官网 Tags/三幅照片横向/三语RTL配方；Nova轨道、thumb端点、轨道点击及滚轮、键盘、双轴corner和Lazy拖动已补，49项定向验证与两个ktlint通过，JS/Wasm退出0但仍有诊断。浏览器、任意Root形状继承及完整状态仍开放。
-- [ ] Scroll Fade (`scroll-fade`)：七组官网配方、12%/40dp/96dp规则、逐边/尺寸/none、RTL停点及MessageScroller视口遮罩顺序已补；92项定向验证和两个ktlint通过。浏览器四象限、CSS fallback与完整状态仍开放，详见文末。
+- [x] Resizable (`resizable`)：按固定版本 8a35366 对齐官方四配方（Default/Vertical/Handle/RTL）顺序与文案，补 Composition/Usage 导入/About/API Reference/Changelog（v3→v4 八条），移除 Examples 标题并把 13 个重复变体裁剪为四条 `Kotlin extension:` 配方；20 项聚焦测试（拖拽/键盘/触摸/RTL/嵌套比例）、Wasm 52e9c17c、1440/390 浅深四象限与浏览器拖拽+RTL 反向拖拽状态通过。残余（已解释）：About 受文档模型限制在 Composition 后（官方在 Installation 前），Changelog 官方两表改为列表，Canvas 无原生 separator DOM 语义，见[resizable-r2](web-parity/resizable-r2/README.md)。
+- [x] Scroll Area (`scroll-area`)：按固定版本 8a35366 对齐官方三配方（Default/Horizontal/RTL），补 Composition/Usage 导入/Horizontal/RTL 说明与 API Reference，移除 Examples 标题并把重复变体裁剪为四条 `Kotlin extension:` 配方（hover/always/hide delay/lazy）；16 项聚焦测试（50 Tag 滚动/键盘/三图横向/RTL 镜像）、Wasm 52e9c17c、四象限与浏览器 Tags 滚动/Horizontal 横向滚动/RTL 滚动状态通过。残余（已解释）：Horizontal 用 288 高预览复现官方裁切、图片为本地归档同款灰度图、扩展配方为 Kotlin 专有、Canvas 无原生滚动条 DOM，见[scroll-area-r2](web-parity/scroll-area-r2/README.md)。
+- [x] Scroll Fade (`scroll-fade`)：修复该页在 Web 上整页空白（No Overflow 配方无固定高度的 verticalScroll 触发无限约束异常），改为无溢出时不挂滚动；isKotlinExtension 标记显示 "Kotlin extension"；官方七配方顺序/标题/说明、Usage 规则列表与 Fallback 指南补齐，Rows 改为 Kotlin extension；32 项聚焦测试、Wasm 52e9c17c、四象限与浏览器默认中部滚动/横向滚动/RTL 横向滚动状态通过。残余（已解释）：Installation 为全站 Gradle 块而非 npm/CSS、class 表改为规则列表、Fallback 在 RTL 之后且扩展项增多、rhea 预览近似、CSS scroll-timeline 由 ScrollState 驱动，见[scroll-fade-r2](web-parity/scroll-fade-r2/README.md)。
 - [ ] Select (`select`)：r1 按当前官网重建页面：官方七配方顺序（demo、Align Item With Trigger、Groups、Scrollable、Disabled、Invalid、RTL）+ Compose-only 示例统一 `Kotlin extension:` 前缀、`examplesHeading` 移除并补 Composition 树；新增 Align Item（Switch+alignItemWithTrigger）、Groups（双分组+Separator）、Scrollable（长时区列表）、Disabled（整表禁用）、Invalid（Field+Select invalid）、RTL（三语工具栏/Arabic）并复用原 demo。浏览器验证 demo 打开/选择、长列表弹出滚动、RTL 阿拉伯语、四象限 1440/390×浅深，SelectExamplesTest 7 项与 Wasm 构建通过；typeahead/碰撞翻转/动态重排未在浏览器取证，原生 listbox 语义缺失，见[Select r1](web-parity/select-r1/README.md)。
 - [ ] Separator (`separator`)：r1 重读当前官网确认五配方顺序不变（demo、Vertical、Menu、List、RTL），补 RTL 官方引导句并把 Compose 专有指南标题改为 `Kotlin extension: Compose layout and semantics`；浏览器复查 Menu/RTL 段与四象限 1440/390×浅深，SeparatorPageTest 12 项 + SeparatorExamplesTest 20 项通过，Wasm 构建通过。原生 separator 角色语义、跨断点缩放与菜单内指针/键盘矩阵未重验，见[Separator r1](web-parity/separator-r1/README.md)。
 - [ ] Sheet (`sheet`)：r1 按当前官网补 Composition 树与三个 API 小节，移除 `Examples` 分组并给原生示例加 `Kotlin extension:` 前缀；Side/No Close Button/RTL 三节补官方 copy 与说明，四官方配方顺序（demo、Side、No Close Button、RTL）已确认。浏览器验证右侧 demo、顶部/左侧面板、无关闭按钮、RTL 镜像，四象限 1440/390×浅深复查，SheetExamplesTest 32 项与 Wasm 构建通过。bottom 侧未单独截图、动画中间帧/焦点恢复与 Nova 单侧 border 逐像素未验，原生 dialog/inert 语义缺失，见[Sheet r1](web-parity/sheet-r1/README.md)。
-- [ ] Shimmer (`shimmer`)：已修复Style绘制/重组、实际currentColor、浅深高光alpha/OKLCH及九组官网配方；78项定向验证和core/shared两个ktlint通过。字体spread、自动减弱动态、色域/采样误差及浏览器完整矩阵仍开放，详见文末。
+- [ ] Shimmer (`shimmer`)：官方九配方（Default、With Marker、Color、Duration、Spread、Angle、Play Once、Disabling、RTL）顺序/标题/文案已对齐并移除 `Examples` H2，新增 Reverse 配方（官方仅代码）、`Kotlin extension: CSS class mapping`、Fallback/Reduced Motion 说明；四条旧 Kotlin 示例改名 `Kotlin extension: …`；补齐 reverse 参数并重新生成可复制代码。11×4=44 项目录测试通过，Wasm `97fa0dc3…` 下 1440/390 浅深四象限及 demo/Reverse/Play Once/Disabled/RTL 双帧动画、手机与深色浏览器证据已保存。仍待：官方 rhea 预览调色板、`3ch+40px` 精确 spread、自动减弱动态、Fallback/Reduced Motion 位置、Oklab/色域/采样与完整辅助技术；[证据](web-parity/shimmer-r3/README.md)。
 - [ ] Sidebar (`sidebar`)：已核对官网来源并补桌面/移动端独立状态、响应式切换、Offcanvas内容保留/200ms动画、移动面板与内侧边框；内容滚动及Header/Footer/Group间距也已补齐，34项定向验证及两个ktlint通过。官网配方、浏览器四象限及完整状态矩阵仍待完成，详见 sidebar-r1/r2。
 - [ ] Skeleton (`skeleton`)：七组官网配方及三语RTL已迁移，Shimmer扩展复制代码已统一；脉冲Style逐帧重组49次问题已修复。50项定向测试、两项旧截图验证及core/shared ktlint通过，40张原生截图已检查。浏览器四象限及完整状态验收仍开放，见 skeleton-r1。
 - [ ] Slider (`slider`)：基础已验证（第六批）；Create Payout 静态 Progress 已换为真实 50..10000/step50 Slider，金额和键盘 Home/End 已回归；12dp Nova 滑块、填充/尺寸、键盘步进和 commit 已修正，多滑块标签、动态焦点与完整竖向/反转/RTL 手势矩阵待关闭。
@@ -172,6 +172,70 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### scroll-fade：修复 Web 空白、官方七配方与扩展标记（r2）（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 209 -->
+
+按固定版本 `8a3536678a528cc012b9e62484290e79d0be410f` 重读 `scroll-fade.mdx`（官方路径是 `/docs/utils/scroll-fade`，capture.py 需显式 `--official-path`）与七个示例 TSX。
+
+关键发现：本地 `/scroll-fade` 页此前在 Web 上整页空白。安装错误捕获后定位为 `No Overflow, No Fade` 配方在无固定高度容器上挂 `verticalScroll`，文档列赋予无限最大高度，Wasm 运行时抛 `IllegalStateException: Vertically scrollable component was measured with an infinity maximum height`。修复为无溢出时只应用遮罩、不挂滚动，JVM 测试改为断言该节点没有滚动轴语义。
+
+本轮：
+
+- `isKotlinExtension = true`，页面顶部显示 "Kotlin extension" 标签（该工具为 Compose 扩展而非 Base UI 组件）。
+- 移除多余 Examples 标题；为七个官方配方补官方说明（No Overflow/Horizontal/Edge Fades/Fade Size/Disabling/RTL）；新增 Usage 规则列表与 Fallback 指南；"Rows (Kotlin)" 改为 `Kotlin extension: Rows`。
+- 预览继续使用 Rhea 源主题，12%/40dp/96dp、按边/按尺寸/禁用与 RTL 行为沿用现有实现。
+
+验证：32 项聚焦测试通过（默认 12 tile 两端滚动、无溢出无滚动轴、横向 12 tag、四边独立滚动与标注、4/24 深度、开启/关闭等价、RTL 阿拉伯语与位置保持、官方顺序/扩展前缀/扩展页标记）；最终 Wasm `52e9c17c`；四象限（official 用 utils 路径）与浏览器默认中部滚动、横向滚动、RTL 横向滚动截图入 [scroll-fade-r2](web-parity/scroll-fade-r2/README.md)。
+
+残余（已解释）：Installation 为全站 Gradle 块而非官方 npm/CSS；官方 class 表改为规则列表；Fallback 位于 RTL 之后且新增两个 Kotlin 扩展入口；rhea 预览为近似；CSS scroll-driven animation 由 ScrollState 驱动。
+
+### Scroll Area：官方三配方、Horizontal 裁切与扩展裁剪（r2）（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 208 -->
+
+按固定版本 `8a3536678a528cc012b9e62484290e79d0be410f` 重读 `scroll-area.mdx`、`scroll-area.tsx` 与三个示例 TSX。官方页面为 Installation、Usage、Composition（ScrollArea→ScrollBar）、Horizontal、RTL、API Reference，三个预览的内高分别为 384（h-96）、288（高度裁切）、368。
+
+本轮：
+
+- 补 `Composition`、`Usage` 导入代码块、Horizontal/RTL 官方说明与 API Reference 链接，移除多余 Examples 标题，删除 Usage 中重复的 import。
+- 官方三配方保持 Default/Horizontal/RTL：Default 预览内高 304（h-96 总高 384），Horizontal 用 288 预览复现官方对 458 高内容的裁切，RTL 自动高度；图片沿用 r1 归档的三张同款灰度图。
+- 旧列表 13 个变体裁剪为四条 `Kotlin extension: ` 配方（Hover-only scrollbar、Always-visible scrollbar、Custom hide delay、Lazy list），其余重复变体不再渲染。
+- 组件行为未改：Nova 轨道/滑块、轨道点击、滚轮/键盘、双轴角落、Lazy 拖拽沿用现有实现。
+
+验证：16 项聚焦测试通过（默认 192×288/50 Tag/键盘到末项、Horizontal 3×300×400 图片与轨道高度、RTL 轨道左端点与三语、页面顺序与扩展前缀）；最终 Wasm `52e9c17c`；四象限与浏览器 Tags 滚动、Horizontal 横向滚动、RTL 滚动截图入 [scroll-area-r2](web-parity/scroll-area-r2/README.md)。
+
+残余（已解释）：Horizontal 预览的裁切方式与官方略有差异（本地垂直居中）；图片来源为本地归档而非 Unsplash；本地保留四个 Kotlin 扩展配方；Canvas 无原生滚动条 DOM。
+
+### Resizable：官方四配方、Changelog 与扩展裁剪（r2）（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 207 -->
+
+按固定版本 `8a3536678a528cc012b9e62484290e79d0be410f` 重读 `resizable.mdx`、`resizable.tsx` 与四个示例 TSX。官方页面顺序为顶部 demo、About、Installation、Usage、Composition、Vertical、Handle、RTL、API Reference、Changelog（h3 v4 升级说明和 v3→v4 对照表）。
+
+本轮：
+
+- 页面描述保持官方文案；补 `Composition`（PanelGroup→Panel/Handle/Panel）、`Usage` 导入代码块、`About`、`API Reference` 链接与 `Changelog`（八条 v3→v4 映射列表）。
+- 移除本地多出的 Examples 标题；四个官方配方保持 Default/Vertical/Handle/RTL 顺序，补 Vertical/Handle/RTL 官方说明；Default 预览内高按官方 `h-80` 设为 320，其余 288；删除 Usage 代码块里重复的 import。
+- 旧列表 17 个 Kotlin 变体只保留四个并统一 `Kotlin extension: ` 前缀（Custom pane content、Min fraction、Max fraction、Disabled handle），其余与官方重复的变体不再渲染。
+- 组件行为未改：Nova 细分隔线/抓手、0..100% 钳制、鼠标/触摸命中、方向键调整、嵌套比例均沿用现有实现并重跑覆盖。
+
+验证：20 项聚焦测试通过（四视口/主题参数化：官方顺序、50/25/75 嵌套比例、鼠标拖拽、键盘 ArrowRight/Down、触摸拖拽、Vertical 1dp 分隔线、Handle 25% 起点、RTL 镜像与三语切换）；最终 Wasm `52e9c17c`；1440/390 浅深四象限与浏览器默认拖拽、RTL 反向拖拽截图入 [resizable-r2](web-parity/resizable-r2/README.md)。
+
+残余（已解释）：About 受本地文档模型限制显示在 Composition 之后（官方在 Installation 之前）；Changelog 的两张表改为八条列表；Canvas 无原生 `role=separator`/`aria-orientation`，以 Compose 语义近似；本地保留四个 Kotlin 扩展配方。
+
+### Shimmer：官方小节文案、Reverse与四象限双帧证据（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 206 -->
+
+复核当前官网 utils/shimmer（`8a353667`，官方预览 pin `base-rhea`）：九个预览、Reverse/Fallback/Reduced Motion 三个纯文案小节，类表含 shimmer/once/reverse/none/color/duration/spread/angle，默认 2000ms、`calc(3ch + 40px)`、20°。
+
+**页面修改：** 移除 `Examples` H2；九条官方配方补官方说明段（With Marker、Color、Duration、Spread、Angle、Play Once、Disabling、RTL）；Angle 与 Play Once 之间新增 Reverse（官方文案 + 反向预览，官网该节只有代码，已记录）；新增 `Kotlin extension: CSS class mapping`（类到 Style API 映射 + currentColor 行为）与 Fallback/Reduced Motion 指南；四条旧 Kotlin 示例改名为 `Kotlin extension: …`。补齐共享 `ShimmerText` 的 reverse 参数并重新运行 `generate_shimmer_recipe_code.py` 产生 `shimmerReverseRecipeCode`。
+
+**验证：** `ShimmerExamplesTest` 11 例 × 4 视口/主题 = 44 项通过，含配方顺序/文案/指南断言、像素动画、once/replay、768 响应式 none、RTL 阅读方向、reverse 与默认同帧差异。Wasm `97fa0dc3…`；1440×1000/390×844 浅深四象限；浏览器保存 demo、Reverse、Play Once、Disabling 桌面浅色、深色 demo、手机浅深与 RTL 各两帧（间隔约 420ms，帧内容不同证明扫光运行；桌面 none 静态）。
+
+**未关闭：** 官网工具页使用 rhea 风格，本页用 Nova 令牌，周边调色板/高光 alpha 与 rhea 预览不同；Kotlin 以 64dp 近似 `calc(3ch + 40px)`，无法表达字体相对单位与百分比 spread；自动 reduced-motion 未接平台偏好，需 `enabled = false`；Reverse 预览为 Compose 页新增，Fallback/Reduced Motion 因文档模型只能放在配方之后（官网在 RTL 前）；Oklab 采样/色域映射、P3、超色域颜色、alpha 量化、自定义字体/密度、富文本透明 span 与辅助技术仍未验证。
 
 ### Avatar：r3 浏览器四象限、Badge 彩色照片与菜单/RTL 交互（2026-11-05）
 
