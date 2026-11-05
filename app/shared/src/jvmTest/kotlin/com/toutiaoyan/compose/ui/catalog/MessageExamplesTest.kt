@@ -7,6 +7,7 @@ import androidx.compose.ui.semantics.*
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.catalog.docs.messageDoc
 import com.toutiaoyan.compose.ui.components.overlay.OverlayHost
 import com.toutiaoyan.compose.ui.theme.Theme
@@ -42,6 +43,9 @@ class MessageExamplesTest {
             messageDoc.examples.take(6).map { it.title },
         )
         assertEquals(6, messageDoc.apiSections.size)
+        assertTrue(
+            messageDoc.examples.drop(6).all { it.title.startsWith("Kotlin extension: ") },
+        )
         assertFalse(messageDoc.usageCode.contains("components.*"))
     }
 
@@ -102,5 +106,27 @@ class MessageExamplesTest {
         rule.onNodeWithText("PDF · 2.4 MB").assertIsDisplayed()
         rule.onNodeWithContentDescription("Download").assertHasClickAction()
         rule.onNodeWithText("Thanks. Looks good.").assertIsDisplayed()
+    }
+
+    @Test fun exportKeepsFeaturesAccessibilityAndOfficialRecipeOrder() {
+        val markdown = componentPageMarkdown(messageDoc)
+        assertFalse(markdown.contains("## Examples"))
+        val order = listOf(
+            "## Features",
+            "## Avatar",
+            "## Group",
+            "## Header and Footer",
+            "## Actions",
+            "## Attachment",
+            "## Accessibility",
+            "### Label icon-only actions",
+            "### Status updates",
+            "## API Reference",
+        ).map { markdown.indexOf(it) }
+        assertTrue(order.all { it >= 0 }, "missing a section heading: $order")
+        assertEquals(order.sorted(), order)
+        assertContains(markdown, "Start and end alignment for sender and receiver rows via `align`.")
+        assertContains(markdown, "Kotlin extension: Start aligned")
+        assertContains(markdown, "`role = \"status\"`")
     }
 }

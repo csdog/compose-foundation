@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.catalog.docs.menubarDoc
 import com.toutiaoyan.compose.ui.components.overlay.OverlayHost
 import com.toutiaoyan.compose.ui.theme.Theme
@@ -40,7 +41,10 @@ class MenubarExamplesTest {
             ),
             menubarDoc.examples.take(6).map { it.title },
         )
-        assertTrue(menubarDoc.examples.any { it.title == "Controlled" })
+        assertTrue(menubarDoc.examples.any { it.title == "Kotlin extension: Controlled" })
+        assertTrue(
+            menubarDoc.examples.drop(6).all { it.title.startsWith("Kotlin extension: ") },
+        )
         val rtl = menubarDoc.examples.single { it.title == "RTL" }.code
         assertFalse(rtl.contains("RtlPreview("))
         assertFalse(rtl.contains("menubarTranslations"))
@@ -107,5 +111,23 @@ class MenubarExamplesTest {
         assertTrue(file.left > edit.left)
         rule.onNodeWithText("ملف").performClick()
         rule.onNodeWithText("علامة تبويب جديدة").assertIsDisplayed()
+    }
+
+    @Test fun exportKeepsOfficialSectionsAndKotlinExtensions() {
+        val markdown = componentPageMarkdown(menubarDoc)
+        assertFalse(markdown.contains("## Examples"))
+        val order = listOf(
+            "## Checkbox",
+            "## Radio",
+            "## Submenu",
+            "## With Icons",
+            "## RTL",
+            "## API Reference",
+        ).map { markdown.indexOf(it) }
+        assertTrue(order.all { it >= 0 }, "missing a section heading: $order")
+        assertEquals(order.sorted(), order)
+        assertContains(markdown, "Kotlin extension: Controlled")
+        assertContains(markdown, "base-ui.com/react/components/menubar#api-reference")
+        assertFalse(markdown.contains("EmojiText"))
     }
 }

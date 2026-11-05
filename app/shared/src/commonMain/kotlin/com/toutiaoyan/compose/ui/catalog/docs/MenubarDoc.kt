@@ -126,6 +126,61 @@ private val menubarTranslations =
         ),
     )
 
+/** The official page names these six; everything after is a Compose-only extension. */
+private val menubarOfficialTitles = setOf("Default", "Checkbox", "Radio", "Submenu", "With Icons", "RTL")
+
+private fun menubarPageExample(example: ComponentExample): ComponentExample =
+    if (example.title in menubarOfficialTitles) example
+    else example.copy(title = "Kotlin extension: " + example.title)
+
+private val menubarApiSections =
+    listOf(
+        ComponentApiSection(
+            "Menubar",
+            (
+                "A visually persistent menu bar. Each `MenubarMenu` owns a trigger and a " +
+                    "popup; open menus share the bar's overlay/pointer context so moving " +
+                    "between them keeps one menu open (Base UI behaviour). Arrow keys wrap " +
+                    "inside a menu and Left/Right switch menus. See the [Base UI Menubar " +
+                    "API](https://base-ui.com/react/components/menubar#api-reference) for " +
+                    "the full prop list; the Kotlin surface below covers the same slots."
+            ),
+            listOf(
+                ApiProperty("content", "@Composable MenubarScope.() -> Unit", "Required"),
+            ),
+        ),
+        ComponentApiSection(
+            "MenubarMenu / MenubarTrigger / MenubarContent",
+            (
+                "`MenubarMenu(value = …)` is the identity used for controlled state. " +
+                    "`MenubarTrigger` is the persistent bar button; `MenubarContent` is " +
+                    "the anchored panel (Nova: popover surface, 1dp ring, shadow) with " +
+                    "`sideOffset`/`align` overrides."
+            ),
+            listOf(
+                ApiProperty("value", "String", "Required"),
+                ApiProperty("sideOffset", "Dp", "4.dp"),
+                ApiProperty("align", "PopupAlign", "PopupAlign.Start"),
+            ),
+        ),
+        ComponentApiSection(
+            "Items, groups and separators",
+            (
+                "`MenubarItem` accepts an optional `shortcut`; `MenubarCheckboxItem` and " +
+                    "`MenubarRadioGroup`/`MenubarRadioItem` keep their state across close/" +
+                    "reopen like the upstream examples, and `MenubarSeparator` matches the " +
+                    "1px rule. `MenubarSub`/`MenubarSubTrigger`/`MenubarSubContent` add the " +
+                    "nested panel."
+            ),
+            listOf(
+                ApiProperty("shortcut", "String?", "null"),
+                ApiProperty("inset", "Boolean", "false"),
+                ApiProperty("disabled", "Boolean", "false"),
+                ApiProperty("variant", "DropdownMenuItemVariant", "Default"),
+            ),
+        ),
+    )
+
 val menubarDoc =
     ComponentDoc(
         id = "menubar",
@@ -2482,5 +2537,6 @@ val menubarDoc =
                         }
                     },
                 ),
-            ),
+            ).map(::menubarPageExample),
+        apiSections = menubarApiSections,
     )

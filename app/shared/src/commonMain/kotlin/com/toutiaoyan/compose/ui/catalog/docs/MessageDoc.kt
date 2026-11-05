@@ -32,6 +32,97 @@ import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.tokens.Accent
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 
+/** The official page names these six; everything after is a Compose-only extension. */
+private val messageOfficialTitles =
+    setOf("Default", "Avatar", "Group", "Header and Footer", "Actions", "Attachment")
+
+private fun messagePageExample(example: ComponentExample): ComponentExample =
+    if (example.title in messageOfficialTitles) example
+    else example.copy(title = "Kotlin extension: " + example.title)
+
+private val messageFeatureSections =
+    listOf(
+        ComponentGuideSection(
+            title = "Features",
+            blocks =
+                listOf(
+                    ComponentGuideBlock.Bullets(
+                        listOf(
+                            "Start and end alignment for sender and receiver rows via `align`.",
+                            "Avatar slot that anchors to the bottom of the message and stays clear of the footer.",
+                            "Header and footer slots for sender names, status, and message actions.",
+                            "Footer follows the message side; actions stay aligned on `MessageAlign.End` rows.",
+                            "`MessageGroup` stacks consecutive messages from the same sender.",
+                        ),
+                    ),
+                ),
+        ),
+    )
+
+private val messageAccessibilitySections =
+    listOf(
+        ComponentGuideSection(
+            title = "Accessibility",
+            blocks =
+                listOf(
+                    ComponentGuideBlock.Paragraph(
+                        (
+                            "`Message` is a presentational layout wrapper. Accessibility comes " +
+                                "from the content you place inside it."
+                        ),
+                    ),
+                ),
+        ),
+        ComponentGuideSection(
+            title = "Label icon-only actions",
+            level = 3,
+            blocks =
+                listOf(
+                    ComponentGuideBlock.Paragraph(
+                        (
+                            "Action buttons in `MessageFooter` are usually icon-only, so give " +
+                                "each one a content description (`aria-label` on the web)."
+                        ),
+                    ),
+                    ComponentGuideBlock.Code(
+                        """
+                        MessageFooter {
+                            Button(
+                                onClick = { },
+                                variant = ButtonVariant.Ghost,
+                                size = ButtonSize.IconSm,
+                                label = "Copy",
+                            ) { Icon(Lucide.Copy) }
+                        }
+                        """.trimIndent(),
+                    ),
+                ),
+        ),
+        ComponentGuideSection(
+            title = "Status updates",
+            level = 3,
+            blocks =
+                listOf(
+                    ComponentGuideBlock.Paragraph(
+                        (
+                            "For in-progress messages, use a `Marker` with `role = \"status\"` " +
+                                "so assistive tech announces the update as it appears."
+                        ),
+                    ),
+                    ComponentGuideBlock.Code(
+                        """
+                        Message {
+                            Marker(role = "status") {
+                                MarkerIcon { Spinner() }
+                                MarkerContent { "Checking the logs..." }
+                            }
+                        }
+                        """.trimIndent(),
+                    ),
+                ),
+        ),
+    )
+
 val messageDoc =
     ComponentDoc(
         id = "message",
@@ -1110,5 +1201,7 @@ val messageDoc =
                         }
                     },
                 ),
-            ),
+            ).map(::messagePageExample),
+        beforeExamples = messageFeatureSections,
+        afterExamples = messageAccessibilitySections,
     )

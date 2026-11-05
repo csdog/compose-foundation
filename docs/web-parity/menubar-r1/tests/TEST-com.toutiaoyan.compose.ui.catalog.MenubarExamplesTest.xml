@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MenubarExamplesTest[jvm]" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-05T04:44:14.149Z" hostname="Apples-MacBook-Pro.local" time="1.28">
+  <properties/>
+  <testcase name="checkboxToggleSurvivesClosingAndReopening[jvm]" classname="com.toutiaoyan.compose.ui.catalog.MenubarExamplesTest" time="0.729"/>
+  <testcase name="defaultIncludesProfilesAndRealFileItems[jvm]" classname="com.toutiaoyan.compose.ui.catalog.MenubarExamplesTest" time="0.107"/>
+  <testcase name="defaultLiteralCheckedAndProfileValuesStayReadonlyLikeUpstream[jvm]" classname="com.toutiaoyan.compose.ui.catalog.MenubarExamplesTest" time="0.12"/>
+  <testcase name="iconRecipeIncludesTheDestructiveActionAndShortcut[jvm]" classname="com.toutiaoyan.compose.ui.catalog.MenubarExamplesTest" time="0.108"/>
+  <testcase name="officialSixRecipesComeBeforeKotlinSupplements[jvm]" classname="com.toutiaoyan.compose.ui.catalog.MenubarExamplesTest" time="0.018"/>
+  <testcase name="exportKeepsOfficialSectionsAndKotlinExtensions[jvm]" classname="com.toutiaoyan.compose.ui.catalog.MenubarExamplesTest" time="0.016"/>
+  <testcase name="rtlStartsInArabicAndRendersTranslatedMenuItems[jvm]" classname="com.toutiaoyan.compose.ui.catalog.MenubarExamplesTest" time="0.091"/>
+  <testcase name="radioSelectionSurvivesClosingAndReopening[jvm]" classname="com.toutiaoyan.compose.ui.catalog.MenubarExamplesTest" time="0.088"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
