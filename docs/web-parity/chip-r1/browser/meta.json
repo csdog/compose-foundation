@@ -1,0 +1,66 @@
+{
+  "slug": "chip",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/chip",
+  "localUrl": "http://127.0.0.1:8771/chip",
+  "capturedAt": "2026-11-05T05:03:04.755Z",
+  "app": [
+    "http://127.0.0.1:8771/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8771/acdf4da67b5d2a92b8f6.wasm"
+  ],
+  "officialDom": {
+    "title": "404",
+    "description": "This page could not be found.",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "This page could not be found."
+      }
+    ],
+    "tabs": [],
+    "examples": 0,
+    "toc": [],
+    "bodyWidth": null,
+    "clientWidth": 1095,
+    "scrollHeight": 687
+  },
+  "local": {
+    "desktop-light": {
+      "url": "http://127.0.0.1:8771/chip",
+      "theme": "light",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(4582px + 100vh)"
+    },
+    "desktop-dark": {
+      "url": "http://127.0.0.1:8771/chip",
+      "theme": "dark",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(4582px + 100vh)"
+    },
+    "phone-light": {
+      "url": "http://127.0.0.1:8771/chip",
+      "theme": "light",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(5548.5px + 100vh)"
+    },
+    "phone-dark": {
+      "url": "http://127.0.0.1:8771/chip",
+      "theme": "dark",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(5548.5px + 100vh)"
+    }
+  },
+  "files": {
+    "official-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/official-desktop-light.png",
+    "local-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/local-desktop-light.png",
+    "official-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/official-desktop-dark.png",
+    "local-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/local-desktop-dark.png",
+    "official-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/official-phone-light.png",
+    "local-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/local-phone-light.png",
+    "official-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/official-phone-dark.png",
+    "local-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/local-phone-dark.png"
+  }
+}

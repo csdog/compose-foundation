@@ -119,11 +119,11 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [x] Trace (`trace`)：按固定版本 8a35366 补齐官方 16 个预览（顶部 demo + Trace Line/Status/Description/Collapsible/Open State/Link/Dialog/Sheet/Group/Sources/Chain of Thought/Commit/Whole Turn/Reasoning/Tool），顺序/标题/文案、Built with Trace/Features/Accessibility 与 9 个 API 小节（TraceLink 为 Kotlin extension）已对齐；组件补 `keepMounted`、标题后图标 4dp、`TraceDescription(mono=)` 与 `TraceLink`。30 项聚焦测试（页面19+核心11含RTL/keepMounted/链接语义）、Wasm 89721bca、四象限与新空间实际浏览器展开/受控/Dialog/Sheet/嵌套diff/Reasoning/Tool/Replay 状态通过。残余（已解释）：官方简介段/Built with 表格/Status 表受本地文档模型限制置于 Composition 后或改为散文，官方预览后补充 TSX 片段未收录，Reasoning/Tool 非流式、Replay 恢复静态转录，Dialog/Sheet 触发行为无 hover 变色，官方预览为 base-rhea 而本地 Nova（对话框448vs384）且 API 表少 Description 列，见[trace-r3](web-parity/trace-r3/README.md)。
 - [ ] Chart (`chart`)：本页八组官方配方已迁移，补真实tooltip/键盘选点、系列切换、主题/图标、响应尺寸、数值域与日期轴修复；320高、桌面48/手机0缩进及缩放后阿语轴重叠已处理。r4把Your First Chart保留为h2，Add a Grid/Axis/Tooltip/Legend改为嵌套h3并补Compose步骤说明；页面/文档/预览56项、核心交互/布局/截图40项共96项通过，全仓lint/detekt与JS/Wasm通过。浏览器仍待新空间复核，共享标题/代码细节、窄屏日期刻度和动效/完整交互继续开放，见[chart-page-r4](web-parity/chart-page-r4/README.md)、chart-r1、chart-axis-r2及chart-preview-r3。
 - [ ] Checkbox (`checkbox`)：官网八配方、Group/Table/三语RTL及Field布局已补；r2确认组件/MDX/示例与首轮字节一致，默认改为官网150ms颜色过渡。r3按当前官网补齐 RTL 说明文案（"in shadcn/ui"），并在新空间完成 1440/390×浅深四象限、Invalid/Basic/Description/Disabled/Group/Table/RTL 分节与 Basic/Table 实际点击交互复查；CheckboxExamplesTest 3 项、CheckboxViewportTest 12 项通过，Wasm 构建通过。仍保留两张历史深色基准差异（actual 与 HEAD 逐字节一致、未刷新）、Canvas 无原生 input/label 关联、CSS 命中区/动态主题/shape 与完整辅助技术矩阵，见 [checkbox-r3](web-parity/checkbox-r3/README.md)。
-- [ ] Chip (`chip`)：项目扩展，检查一致性。
+- [ ] Chip (`chip`)：项目 Kotlin 扩展页（无官网页面；chip.mdx 在 8a35366 返回 404）。r1 已用 `isKotlinExtension` 标记替代 Base UI 标签，新增“Kotlin extension”说明（明确 shadcn 只有静态 Badge、无官方配方可对照），删除 `Default variant/Default selected/Default disabled/Default leading icon` 等参数默认值式配方，保留 Default/Selectable/Selected/Outline/Disabled/Icon/Row 七组实际状态，并按组件源码补 Chip/ChipVariant API 表（leadingIcon、animation、selected 派生 variant、enabled/disabled）。16 项聚焦测试绿，1440/390×浅深四象限已复查（官网侧为预期 404 截图，不冒充官方对照）。仍留：无官方基准，除 selected/hover/focus/disabled 外的按压中间帧、RTL/长按矩阵未纳入本扩展页验收。见 [chip-r1](web-parity/chip-r1/README.md)。
 - [x] Collapsible (`collapsible`)：已按当前官网 `8a353667` 重建 Default/Basic/Settings Panel/File Tree/RTL 五配方，补 Controlled State 文案与代码、Composition、Base UI API Reference 及 288dp/576dp 预览几何；四个 Kotlin 专有示例保留为 `Kotlin extension:`。8 项聚焦测试、Wasm 构建、1440/390×浅深四象限、四个分节对照及 Default/Basic/Settings/File Tree/RTL 语言切换交互已验证；仅余 Base UI 单变体、sr-only FieldLabel、字体栅格化等已说明差异，见 [collapsible-r1](web-parity/collapsible-r1/README.md)。
-- [ ] Combobox (`combobox`)：基础已验证（第七批）；内联编辑、筛选/键盘提交/清空和默认示例已完成，多选 chips、完整辅助技术映射及复杂状态矩阵待关闭。
+- [ ] Combobox (`combobox`)：r1 已按当前官网（8a35366）重建页面：demo + Basic/Multiple/Clear Button/Groups/Custom Items/Invalid/Disabled/Auto Highlight/Popup/Input Group/RTL 十二配方及官方顺序/文案，Composition 三棵组合树、Custom Items/Multiple Selection 指南与 Base UI API 链接已补；删除 48 条 Base UI API dump 配方。组件修复可编辑输入按 anchor 宽度出面板、chips 宽度跟踪与点击即开、空态/筛选项自动隐藏、InputGroup 前导 addon 与 panelWidth 覆盖；56 项聚焦测试绿（本组件 12 项），四象限与 closed/open/filtered/selected/multi/custom/invalid/disabled/auto/popup/input-group/RTL 状态截图已复查。仍留：Composition 三个 h3 受单 compositionCode 模型限制合为一块；可编辑输入固定 216dp（官网 Input Group 约 229px）；单选清空需 onClear 回调；RTL 语言工具栏为目录页共享 chrome 且希伯来标签走共享字体回退。见 [combobox-r1](web-parity/combobox-r1/README.md)。
 - [x] Command (`command`)：r11按当前官网8a3536678a重建页面：About、Composition与6个官方配方（demo、Basic、Shortcuts、Groups、Scrollable、RTL，含官网标题/描述/预览内容）按官网顺序实现；删除旧的54项参数矩阵，仅保留4个Kotlin扩展（受控value、自定义filter、长列表Home/End、keywords）。6项新目录测试通过，Wasm构建后四象限与Basic/Shortcuts对话框打开+Escape画面已在浏览器复核。残留：About位于Composition之后（本地渲染器顺序）、CommandDialog居中而官网top-1/3、API表为本地增补、无Radix/Aria标签页与广告，详见[round record](web-parity/command-r11/README.md)。
-- [ ] Context Menu (`context-menu`)：保留第九批窗口坐标/边缘翻转、RTL/字母定位、触摸取消与非模态host结果；本轮共享依赖复查发现Escape被根层提前消费，已补两层逐层关闭/恢复焦点，模态与非模态回归通过。面板宽度/ring/阴影、完整页面与四象限需重新验收，历史勾选撤回。见[Button r2](web-parity/button-r2/README.md)。
+- [ ] Context Menu (`context-menu`)：r1 已按当前官网（8a35366）重建为 demo + Basic/Submenu/Shortcuts/Groups/Icons/Checkboxes/Radio/Destructive/Sides/RTL 十一配方，官方顺序/文案/Composition/API 链接齐备，删除 39 条 API dump 配方；虚线触发器统一。组件补齐 `side`（Top/Right/Bottom/Left/InlineStart/InlineEnd）/`align` 与边缘翻转（新 provider 8 项数学测试）、面板 `panelWidth`（默认 144，demo/RTL 192，checkboxes 188，submenu 144/176）、外置 ring（消费共享 novaRing）、`ContextMenuItem` slot 重载与 SubContent width/style。此前窗口坐标/RTL/触摸取消/两层 Escape 回归保持。28 项 contextmenu 相关测试与 16 项目录测试绿，四象限及 open/submenu+嵌套/双层 Escape/checkbox 切换保持展开/sides=top/RTL 菜单与语言菜单截图已复查。仍留：Compose 菜单行需显式宽度（官网 min-w-36 随内容 187.7 等按实测宽度传入）；官网 pointer-fine/coarse 双文案在目录页合并为一句（触摸长按仍实现）；API Reference 仅 Base UI 链接；RTL 语言名走共享 RTL 工具栏字体回退。见 [context-menu-r1](web-parity/context-menu-r1/README.md)。
 - [x] Date Picker (`date-picker`)：r10按当前官网8a3536678a重建页面：官方8个配方（demo、Basic、Range Picker、Date of Birth、Input、Time Picker、Natural Language Picker、RTL）按官网顺序与文案实现，含Composition；删除旧38项Calendar参数矩阵，仅保留4个Kotlin扩展（中文本地化、多选、禁用周末、最小/最大月份）。8项新目录测试通过，Wasm构建后四象限与demo弹层打开画面已在浏览器复核。残留：Time Picker用24h文本字段替代原生input[type=time]；Natural Language用Kotlin小解析器替代chrono-node；RTL使用内置阿拉伯日历locale而非date-fns/DayPicker bundle；本地增加API表，详见[round record](web-parity/date-picker-r10/README.md)。
 - [x] Dialog (`dialog`)：r1 按当前官网重建页面为官方六配方（Edit profile、Custom Close Button、No Close Button、Sticky Footer、Scrollable Content、RTL），其余 Compose-only 配方统一加 `Kotlin extension:` 前缀后置，并补 Composition 树、Usage 导入块与七个 API 小节；Custom Close 的 448dp、RTL 三语、初始焦点/Escape 焦点恢复、非模态、Sticky/Scrollable 滚动均已在真实浏览器验证，四象限 1440/390×浅深已复查，DialogExamplesTest 10 项与 Wasm 构建通过。Canvas 无原生 inert/aria-modal 语义、无内容弹窗的 Escape 仅有浏览器证据、Base UI `trap-focus`/`initialFocus`/`onOpenChangeComplete` 未映射，见[Dialog r1](web-parity/dialog-r1/README.md)。
 - [x] Drawer (`drawer`)：r1 按当前官网重建为官方七配方（Delivery time、Position、Swipe Handle、Nested、Non Modal、Snap Points、Responsive），Compose-only 配方加 `Kotlin extension:` 后置，并补 Custom Sizes/Styling/Migrating from Vaul 章节、Composition 树与七个 API 小节；右侧/左侧/内容自适应/四层嵌套/非模态/496dp peek→全高吸附/桌面 Dialog 响应式均在真实浏览器验证，四象限已复查，DrawerExamplesTest 10 项与 Wasm 构建通过。demo 后 Callout 无放置位、迁移步骤以 Bullets 呈现、预览内 Toast 位置、真机手势与 data-* 属性语义仍见[Drawer r1](web-parity/drawer-r1/README.md)。
@@ -131,7 +131,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Empty (`empty`)：r3 按当前官网校正六段配方 copy（Outline/Background/Avatar/Avatar Group/InputGroup/RTL）并给 Usage 补 EmptyMedia，Outline 自然高度、RTL 阿拉伯语、Avatar Group、InputGroup 重新取证；四象限 1440/390×浅深已复查，EmptyExamplesTest 7、EmptyBrowserParityTest 12、core EmptyParityTest 7 共 26 项通过，Wasm 构建通过。平衡/pretty 换行、字重与图形/阴影细节、共享页面排版、原生 HTML 链接与完整键盘/读屏、任意 Style/shape 与大内容仍开放；历史旧 Vega 截图矩阵未重验，见[Empty r3](web-parity/empty-r3/README.md)。
 - [ ] Field (`field`)：官方13配方（Demo、Input、Textarea、Select、Slider、Fieldset、Checkbox、Radio、Switch、Choice Card、Field Group、RTL、Responsive Layout）顺序/标题/文案与Composition三小节、Anatomy、Form、Validation/Errors、Accessibility、10项API已对齐；Demo 448宽、分隔线、正常字重复选框、Select全宽、滑块区间说明已修；Nova FieldSet legend→description负边距、dense组12间距、横向*:w-auto、FieldSeparator -8边距与Choice Card 10dp半径已实现；9项目录测试+14项FormNova+4项FieldScreenshot通过，1440/390浅深四象限及Select/Radio/Choice/Switch/RTL三语/Responsive手机实测。仍待：label无htmlFor聚焦、FieldDescription nth-last-2 -4、RadioGroup触发的FieldSet 12间距、官方bullets无悬挂缩进、Textarea原生拖拽柄、多错误列表语义及完整辅助技术；[证据](web-parity/field-r1/README.md)。
 - [ ] Hover Card (`hover-card`)：官方顺序（Demo、Installation、Usage、Composition、Trigger Delays、Positioning、Basic、Sides、RTL、API Reference）与文案已对齐，Composition 补官方说明句，三条 Kotlin 配方改名 `Kotlin extension: …`；r2 的 Trigger 锚点、失焦立即关闭、Nova 5dp 避让与 RTL 行框修复保留。2026-11-05 r3 新构建 `6f7a5fe4…` 下 5项目录+12项定位测试通过；1440/390 浅深关闭态与 Demo 开/关、Sides 四物理方向打开、手机开态已实测并存图。safe polygon、多 Trigger/嵌套宿主、全局 Escape、按实际翻转侧的动画、完整辅助技术与连续切换/重载矩阵仍开放；[证据](web-parity/hover-card-r3/README.md)。
-- [ ] Input (`input`)：32 高、14/16 响应式字号、dark/disabled/invalid/focus 已修正；复杂组合与全状态矩阵待关闭。
+- [ ] Input (`input`)：官方15配方顺序/标题/文案已对齐（Demo、Basic、Field、Field Group、Disabled、Invalid、File、Inline、Grid、Required、Badge、Input Group、Button Group、Form、RTL），移除旧26条自造参数示例与不存在的API表；RTL文案改为官方“in shadcn/ui”；32高/10dp半径、320宽度、Grid 384/182、Form 384与Country默认United States、InputGroup https:// 前置与Info图标、ButtonGroup联合边框、Inline 244宽度均已核对；8项目录测试+14项FormNova+4项FieldScreenshot通过；1440/390浅深四象限（官方主题像素已复核并重拍深色）及Focus/Disabled/Invalid/Form Select/RTL希伯来/手机实测。仍待：原生type=file、label无htmlFor聚焦、Inline/ButtonGroup显式宽度、目录Info用Lucide图标、无API参数表及辅助技术/输入法矩阵；[证据](web-parity/input-r1/README.md)。
 - [ ] Input Group (`input-group`)：基础已验证（第六、七批）；32dp 布局、附件聚焦、禁用/错误和单行按钮附件已修正，button/kbd 负 margin、复杂多控件与完整焦点矩阵待关闭。
 - [ ] Input OTP (`input-otp`)：基础已验证（第七批）；连体格、分组、编辑/粘贴/密码语义和默认示例已完成，光标闪烁、invalid API、完整 IME/自动填码矩阵待关闭。
 - [ ] Item (`item`)：11配方与10个API部分已基础移植；r2修默认标题自然换行/显式maxLines、Nova Xs菜单上下文padding及单一RTL正文。Item/Spinner共51项常规测试和6张像素verify通过；四组合浏览器证据见[item-r2](web-parity/item-r2/README.md)。窄屏Header的min-content溢出、Web同页链接/target、菜单初始焦点、共享排版与完整动态/辅助技术仍未关闭。
@@ -172,6 +172,62 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Input：官方十五配方重建、RTL文案与状态矩阵（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 180 -->
+
+读取当前官网（`8a353667`）Input MDX、15 份示例、`input.tsx` 与 nova 样式，并核对实时 DOM：预览 288 高（Grid p-6、Form h-[32rem]），`*:max-w-xs`=320、Form `max-w-sm`=384、输入 32 高/10 半径/14 字号、Grid 两列 182+16、Form 中 Country Select 184 宽、InputGroup 32 高且 `https://` 为 inline-start addon、ButtonGroup 输入 252.8+按钮 67.2、RTL 为 API Key 单字段加语言工具栏。
+
+**页面重构：** 旧页 26 条自造参数示例（Filled/Ghost/Password/Search/Telephone/Read only/Max length/Autofocus 等）与过时 API 表全部移除，改为官方 15 条按序配方且 `examplesHeading = null`；补官方 Field、Field Group、Disabled、Invalid、File、Inline、Grid、Required、Badge、Input Group、Button Group、Form、RTL 说明文案；Usage 简化为 `Input` 基本用法；RTL 采用官方“To enable RTL support in shadcn/ui…”（Lead 指出的措辞差异）。
+
+**配方实现：** API Key 密码输入、Basic、Username 字段、Name/Email + Reset/Submit 组、disabled（Field+Input 同时禁用）、invalid（红色边框+3dp ring）、文件选择近似（Choose File + No file chosen，平台无原生 file input）、水平 Search 输入+按钮、两列 Grid、Required 破坏色星号、Webhook URL+Beta Badge、Website URL InputGroup（`https://` 前置、Lucide Info 尾随）、搜索 Input+ButtonGroup 联合边框、完整 Form（含 Country Select 默认 United States）、三语 RTL（复用语言工具栏与 Noto 字体）。为支持 Inline，`FieldHorizontalLayout` 改为对每个非内容子项按行宽测量一次（CSS `*:w-auto` 收缩）后把剩余宽度交给 `FieldContent`；Inline 输入显式 244dp 宽度以对应 HTML `w-full min-w-0` 的收缩结果。
+
+**验证：** 8 项 `InputExamplesTest`（配方顺序/文案、320 宽、disabled/input、Inline 宽度、Form 默认国家、破坏色星号、阿拉伯 RTL）+ 14 项 `FormNovaParityTest` + 4 项 `FieldScreenshotTest` 通过。Wasm 最终共享构建 `421a6c71…`；1440×1000/390×844 浅深四象限，按 Lead 的共享浏览器主题提示复核官方背景像素并重拍 input-r1 深色；浏览器实测输入聚焦+键入、disabled、invalid、Form Country 打开（United States 选中）并改选 Canada、RTL 语言菜单与希伯来切换、手机 Form。
+
+**未关闭：** ①浏览器原生 `type=file` 无法在 Compose Web 复现（近似按钮+文案）；②label 无 `htmlFor`，点击普通字段标签不聚焦输入；③Inline/Button Group 依赖显式宽度（244/252dp）而非 flex-basis，视觉一致但导出代码多一个 width；④Info 图标由目录引入 Lucide，库本体无图标依赖；⑤官网无 API Reference，本页也不再提供 Kotlin 参数表；⑥React Aria/Radix 标签、包管理器切换、Kotlin 代码面板与字体光栅化为平台差异，原生文件选择与浏览器自动填充 UI 不可复现。
+
+### Chip：扩展页一致性、Kotlin extension 标记与 API 表（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 179 -->
+
+**定位**：Chip 是项目 Kotlin 扩展，shadcn 只有静态 `Badge`，上游 `apps/v4/content/docs/components/base/chip.mdx` 在 revision `8a3536678a528cc012b9e62484290e79d0be410f` 返回 404（[sources.json](web-parity/chip-r1/sources.json) 记录），因此不做也不声称官方对照。
+
+**发现**：原页未标记扩展、无 API 参考；配方为 API dump（Default/Default variant/Selectable/Selected/Default selected/Outline/Disabled/Default disabled/Icon/Default leading icon），其中四条只是参数默认值；`enabled/disabled`、`animation`、由 selected 派生的默认 variant 未记录。
+
+**改动**：`ChipDoc.kt` 设置 `isKotlinExtension = true`（Lead 提供的共享标记），新增“Kotlin extension”说明段（明确无官方页面/配方可对照），将配方收敛为 Default/Selectable/Selected/Outline/Disabled/Icon/Row 七组实际状态，并按 `Chip.kt`/`ChipStyles.kt` 补 Chip 与 ChipVariant API 表（label、onClick、selected、variant、enabled/disabled、leadingIcon、animation、modifier/style；三种 variant 的内容色）。无组件行为改动。
+
+**验证**：`ChipExamplesTest` 16 项（4 方法×1440/390×浅深：扩展标记/指南、配方顺序、API 表准确性、全部预览渲染、selected 语义切换、disabled 不可点击与 icon 槽）通过；XML 在 [tests](web-parity/chip-r1/tests/)。1440/390×浅深四象限截图已复查（官方侧为预期 404 页，不冒充官方对照）。
+
+**仍保留**：无官方基准（扩展属性）；除 selected/hover/focus/disabled 外的按压中间帧、RTL/长按矩阵不属于本扩展页验收范围；共享页头由 `isKotlinExtension` 显示 “Kotlin extension”。
+
+### Context Menu：当前官方页十一配方、side/align 定位与面板宽度/外置 ring（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 178 -->
+
+**官方来源**：<https://ui.shadcn.com/docs/components/base/context-menu>，上游 revision `8a3536678a528cc012b9e62484290e79d0be410f`（MDX/11 个示例/context-menu.tsx/style-nova.css SHA-256 见 [sources.json](web-parity/context-menu-r1/sources.json)）。
+
+**发现**：本地页仍是 39 条 Base UI API dump（Checkboxes/Radio group/Disabled/Default variant/Inset/Non-modal/Modal/Undismissable/Controlled/Portal/Group heading/Trigger/Content/Side offset 等），官方当前为 demo + Basic/Submenu/Shortcuts/Groups/Icons/Checkboxes/Radio/Destructive/Sides/RTL。实测官网面板宽：Basic/Submenu/Shortcuts/Groups/Icons/Radio/Destructive/Sides 144，Checkboxes 187.7，RTL 192；demo w-48=192、子菜单 w-44=176。组件侧：面板固定 192dp、内边框而非官网 ring、Content 无 side/align（Sides 配方无法表达）、item 无 slot（Icons/Destructive/RTL 无法表达）、SubContent 无法覆盖宽度。
+
+**改动**：`ContextMenuDoc.kt` 重写为官方十一配方 + 官方 Usage/Composition/文案/Base UI API 链接，统一官方虚线触发器；删除 API dump。新增 `ContextMenuPosition.kt`（`ContextMenuSide` 物理+逻辑边、`align`、offset、边缘翻转、窗口夹取），`ContextMenu.kt` 的 Content 暴露 side/align/panelWidth 并消费共享 `rememberMenuPanelStyle(novaWidth, novaRing)`（外置 ring），ContextMenuItem 增加 required-slot 重载（保留默认行的 destructive 配色），SubContent 增加 style 且默认官方 144dp。未修改共享 MenuStyles（消费 parity-b 的可选参数）。
+
+**验证**：`ContextMenuExamplesTest` 16 项、`ContextMenuPanelTest` 2 项（144dp→行宽 136、192dp→184）、`ContextMenuPositionTest` 8 项、既有 `ContextMenuScreenshotTest` 2 项全部通过；XML 在 [tests](web-parity/context-menu-r1/tests/)。Wasm `89721bca784cc2dd66346c26a0de1fa9a445ecf2a0d7ea0d13e04fc658b8129d`；四象限拼图 + states（default/basic/submenu 嵌套/双层 Escape/checkboxes 切换后保持展开/radio/destructive/sides=top/RTL 阿拉伯语菜单+语言菜单）已复查。
+
+**仍保留**：菜单行需要显式宽度，故用 `panelWidth`（默认 144；官网 min-w-36 随内容增宽，Checkboxes 按实测 188）；官网 pointer-fine/coarse 的 Right click/Long press 双文案在目录页合并为一句（触摸长按路径仍实现）；`panelWidth` 为 Kotlin 侧 className 等价物；API Reference 仅外链 Base UI（与官网一致）；RTL 语言名来自共享 RTL 工具栏字体回退；开放面板仍由浏览器证据+宽度单测覆盖，未新增 open-state 像素基准。
+
+### Combobox：当前官方页十二配方、可编辑筛选/多选 chips 与弹层面板宽度（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 177 -->
+
+**官方来源**：<https://ui.shadcn.com/docs/components/base/combobox>，上游 revision `8a3536678a528cc012b9e62484290e79d0be410f`（MDX/12 个示例/combobox.tsx/style-nova.css 均在 [sources.json](web-parity/combobox-r1/sources.json) 记录 SHA-256）。
+
+**发现**：本地页仍是 Base UI API dump（48 条 “Default open/Default query/Custom filter/Default empty text/Default input icon/Required/Modal/Side offset” 式配方），与当前官网十二配方及顺序不符。组件侧：内联弹层宽度为 anchor+28dp（官网 Basic 实测 215px=输入组宽）；ComboboxChips 未发布自身宽度导致多选弹层回退 200dp；chips input 默认“Search…”占位且点击不开；调用方组合的列表不按 query 过滤、Empty 恒显示；可编辑输入仅输入时开、无前导 InputGroupAddon 槽。
+
+**改动**：`ComboboxDoc.kt` 完整重写为官方 demo + Basic/Multiple/Clear Button/Groups/Custom Items/Invalid/Disabled/Auto Highlight/Popup/Input Group/RTL，含官方 Usage、Composition 三棵树、Custom Items/Multiple Selection 指南、Base UI API 链接与 Kotlin API 表；删除全部 API dump 配方，导出 code 与预览同步。`components/combobox/Combobox.kt`：内联弹层按 anchor 宽（新增 panelWidth 覆盖，Popup 256/Input Group 240 使用）；chips 宽度跟踪；chips input 点击即开且默认无占位；item 按实时 query 隐藏、Empty 仅空集合显示；可编辑输入按压即开并支持 leading addon。
+
+**验证**：`ComboboxExamplesTest` 12 项（3 方法×1440/390×浅深；官方顺序/文案/Composition 断言、12 预览渲染、输入→过滤 “nu”→ArrowDown/Enter 选中）通过；XML 在 [tests](web-parity/combobox-r1/tests/)。Wasm 构建 `89721bca784cc2dd66346c26a0de1fa9a445ecf2a0d7ea0d13e04fc658b8129d`；[四象限与拼图](web-parity/combobox-r1/browser/)及 closed/open/filtered/selected/multi/custom/invalid/disabled/auto/popup/input-group/RTL 状态图已人工复查（1440/390×浅深）。
+
+**仍保留**：Composition 三个 h3 因 `ComponentDoc.compositionCode` 单块模型合并在一个代码块（ToC 仅一个 Composition）；可编辑输入固定 216dp，Input Group 配方字段 216dp vs 官网约 229px 自动宽（弹层已按官网 240dp）；单选清空需 Kotlin `onClear`（官网由 Base UI 复位推导）；RTL 预览带目录共享语言工具栏，Hebrew 工具栏标签走共享字体回退；API Reference 为 Base UI 链接+Kotlin 表（官网仅外链）。
 
 ### Trace：最终构建复验（导入清理后 89721bca）（2026-11-05）
 

@@ -20,7 +20,6 @@ import com.toutiaoyan.compose.ui.components.overlay.HostPortal
 import com.toutiaoyan.compose.ui.components.overlay.overlayOutsideDismiss
 import com.toutiaoyan.compose.ui.components.overlay.OverlayFocusOwner
 import com.toutiaoyan.compose.ui.components.overlay.LocalOverlayFocus
-import com.toutiaoyan.compose.ui.components.overlay.WindowPointPositionProvider
 import androidx.compose.ui.input.key.*
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -80,7 +79,7 @@ import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuSub
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuSubContent
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuSubScope
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuSubTrigger
-import com.toutiaoyan.compose.ui.components.overlay.PointPositionProvider
+import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
 import com.toutiaoyan.compose.ui.components.overlay.PopupTransitions
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.styles.rememberMenuPanelStyle
@@ -298,11 +297,15 @@ fun ContextMenuScope.ContextMenuContent(
     modifier: Modifier = Modifier,
     style: Style = Style,
     dismissOnClickOutside: Boolean = true,
-    // Base ContextMenuContent Positioner defaults.
+    // Base ContextMenuContent Positioner defaults: side right, align start, offsets 0 / 4.
+    side: ContextMenuSide = ContextMenuSide.Right,
+    align: PopupAlign = PopupAlign.Start,
     sideOffset: Dp = 0.dp,
     alignOffset: Dp = 4.dp,
     enter: EnterTransition = PopupTransitions.Enter,
     exit: ExitTransition = PopupTransitions.Exit,
+    // base-nova `.cn-context-menu-content` is `min-w-36`; the demo overrides it with `w-48`.
+    panelWidth: Dp = 144.dp,
     content: @Composable DropdownMenuScope.() -> Unit,
 ) {
     val controller = contextMenuController()
@@ -317,12 +320,31 @@ fun ContextMenuScope.ContextMenuContent(
     val nova = currentTheme.activePreset == StylePreset.Nova
     val navigation = remember { ContextMenuNavigation() }
     val escapeLayers = remember { MenuEscapeLayers() }
-    val point =
-        remember(controller.lastPoint, sideOffset, alignOffset, density) {
-            val sidePx = with(density) { sideOffset.roundToPx() }
-            val alignPx = with(density) { alignOffset.roundToPx() }
-            // Base default side=right → main axis X; alignOffset on cross axis (Y).
-            IntOffset(controller.lastPoint.x + sidePx, controller.lastPoint.y + alignPx)
+    val sideOffsetPx = with(density) { sideOffset.roundToPx() }
+    val alignOffsetPx = with(density) { alignOffset.roundToPx() }
+    val point = controller.lastPoint
+    val hostPoint = if (controller.pointIsWindow) point else controller.rootOrigin + point
+    val hostPositionProvider =
+        remember(hostPoint, side, align, sideOffsetPx, alignOffsetPx) {
+            ContextMenuPointPositionProvider(
+                point = hostPoint,
+                side = side,
+                align = align,
+                sideOffsetPx = sideOffsetPx,
+                alignOffsetPx = alignOffsetPx,
+                absolute = true,
+            )
+        }
+    val popupPositionProvider =
+        remember(point, side, align, sideOffsetPx, alignOffsetPx) {
+            ContextMenuPointPositionProvider(
+                point = point,
+                side = side,
+                align = align,
+                sideOffsetPx = sideOffsetPx,
+                alignOffsetPx = alignOffsetPx,
+                absolute = controller.pointIsWindow,
+            )
         }
 
     if (visibleState.currentState || visibleState.targetState) {
@@ -365,7 +387,10 @@ fun ContextMenuScope.ContextMenuContent(
                                     }
                                 }.styleable(
                                     styleState,
-                                    rememberMenuPanelStyle() then style,
+                                    rememberMenuPanelStyle(
+                                        novaWidth = panelWidth,
+                                        novaRing = true,
+                                    ) then style,
                                 ),
                         ) {
                             scope.content()
@@ -377,11 +402,8 @@ fun ContextMenuScope.ContextMenuContent(
                 HostPortal(host) {
                     Layout(content = menuPanel) { measurables, constraints ->
                         val child = measurables.firstOrNull()?.measure(constraints.copy(minWidth = 0, minHeight = 0))
-                        val cursor = if (controller.pointIsWindow) point else controller.rootOrigin + point
                         val position =
-                            WindowPointPositionProvider(
-                                cursor,
-                            ).calculatePosition(
+                            hostPositionProvider.calculatePosition(
                                 IntRect.Zero,
                                 androidx.compose.ui.unit.IntSize(constraints.maxWidth, constraints.maxHeight),
                                 layoutDirection,
@@ -392,14 +414,7 @@ fun ContextMenuScope.ContextMenuContent(
                 }
             } else {
                 Popup(
-                    popupPositionProvider =
-                        if (controller.pointIsWindow) {
-                            WindowPointPositionProvider(
-                                point,
-                            )
-                        } else {
-                            PointPositionProvider(point)
-                        },
+                    popupPositionProvider = popupPositionProvider,
                     onDismissRequest = { controller.onOpenChange(false) },
                     properties =
                         PopupProperties(
@@ -449,6 +464,44 @@ fun DropdownMenuScope.ContextMenuItem(
         onSelect = onSelect,
         textValue = textValue,
         style = style,
+    )
+}
+
+/**
+ * Slot form of [ContextMenuItem] matching Base UI's children API (icons + label + shortcut).
+ * The required [content] parameter keeps it unambiguous against the label-only overload.
+ */
+@Composable
+@JvmName("ContextMenuItemSlot")
+fun DropdownMenuScope.ContextMenuItem(
+    label: String,
+    onClick: () -> Unit,
+    content: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    destructive: Boolean = false,
+    variant: DropdownMenuItemVariant = DropdownMenuItemVariant.Default,
+    shortcut: String? = null,
+    inset: Boolean = false,
+    onSelect: (() -> Boolean)? = null,
+    textValue: String? = null,
+    style: Style = Style,
+) {
+    DropdownMenuItem(
+        label = label,
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled,
+        disabled = disabled,
+        destructive = destructive,
+        variant = variant,
+        shortcut = shortcut,
+        inset = inset,
+        onSelect = onSelect,
+        textValue = textValue,
+        style = style,
+        content = content,
     )
 }
 
@@ -603,6 +656,9 @@ fun DropdownMenuSubScope.ContextMenuSubTrigger(
 @Composable
 fun DropdownMenuSubScope.ContextMenuSubContent(
     modifier: Modifier = Modifier,
+    // base-nova `.cn-context-menu-content` is `min-w-36`; the demo overrides it with `w-44`.
+    // A fixed width is required because menu rows fill their parent width.
+    style: Style = Style { width(144.dp) },
     sideOffset: Dp = 0.dp,
     alignOffset: Dp = 4.dp,
     dismissOnClickOutside: Boolean = true,
@@ -610,6 +666,7 @@ fun DropdownMenuSubScope.ContextMenuSubContent(
 ) {
     DropdownMenuSubContent(
         modifier = modifier,
+        style = style,
         sideOffset = sideOffset,
         alignOffset = alignOffset,
         dismissOnClickOutside = dismissOnClickOutside,

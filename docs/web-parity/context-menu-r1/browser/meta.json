@@ -1,0 +1,134 @@
+{
+  "slug": "context-menu",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/context-menu",
+  "localUrl": "http://127.0.0.1:8771/context-menu",
+  "capturedAt": "2026-11-05T05:02:45.107Z",
+  "app": [
+    "http://127.0.0.1:8771/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8771/acdf4da67b5d2a92b8f6.wasm"
+  ],
+  "officialDom": {
+    "title": "Context Menu",
+    "description": "Copy PagePreviousNext",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "Installation#"
+      },
+      {
+        "tag": "H2",
+        "text": "Usage#"
+      },
+      {
+        "tag": "H2",
+        "text": "Composition#"
+      },
+      {
+        "tag": "H2",
+        "text": "Basic#"
+      },
+      {
+        "tag": "H2",
+        "text": "Submenu#"
+      },
+      {
+        "tag": "H2",
+        "text": "Shortcuts#"
+      },
+      {
+        "tag": "H2",
+        "text": "Groups#"
+      },
+      {
+        "tag": "H2",
+        "text": "Icons#"
+      },
+      {
+        "tag": "H2",
+        "text": "Checkboxes#"
+      },
+      {
+        "tag": "H2",
+        "text": "Radio#"
+      },
+      {
+        "tag": "H2",
+        "text": "Destructive#"
+      },
+      {
+        "tag": "H2",
+        "text": "Sides#"
+      },
+      {
+        "tag": "H2",
+        "text": "RTL#"
+      },
+      {
+        "tag": "H2",
+        "text": "API Reference#"
+      }
+    ],
+    "tabs": [
+      "Command",
+      "Manual",
+      "pnpm",
+      "npm",
+      "yarn",
+      "bun"
+    ],
+    "examples": 11,
+    "toc": [],
+    "bodyWidth": {
+      "x": 0,
+      "y": 64,
+      "width": 1080,
+      "height": 8117.953125,
+      "top": 64,
+      "right": 1080,
+      "bottom": 8181.953125,
+      "left": 0
+    },
+    "clientWidth": 1080,
+    "scrollHeight": 8182
+  },
+  "local": {
+    "desktop-light": {
+      "url": "http://127.0.0.1:8771/context-menu",
+      "theme": "light",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(6659px + 100vh)"
+    },
+    "desktop-dark": {
+      "url": "http://127.0.0.1:8771/context-menu",
+      "theme": "dark",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(6659px + 100vh)"
+    },
+    "phone-light": {
+      "url": "http://127.0.0.1:8771/context-menu",
+      "theme": "light",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(7240.5px + 100vh)"
+    },
+    "phone-dark": {
+      "url": "http://127.0.0.1:8771/context-menu",
+      "theme": "dark",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(7240.5px + 100vh)"
+    }
+  },
+  "files": {
+    "official-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/context-menu-r1/browser/official-desktop-light.png",
+    "local-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/context-menu-r1/browser/local-desktop-light.png",
+    "official-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/context-menu-r1/browser/official-desktop-dark.png",
+    "local-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/context-menu-r1/browser/local-desktop-dark.png",
+    "official-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/context-menu-r1/browser/official-phone-light.png",
+    "local-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/context-menu-r1/browser/local-phone-light.png",
+    "official-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/context-menu-r1/browser/official-phone-dark.png",
+    "local-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/context-menu-r1/browser/local-phone-dark.png"
+  }
+}

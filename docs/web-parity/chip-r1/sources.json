@@ -1,0 +1,16 @@
+{
+  "component": "Chip",
+  "kind": "project extension",
+  "officialPage": null,
+  "note": "shadcn/ui has no Chip component; the Base UI docs tree returns 404 for chip.mdx at the pinned revision. No official comparison is claimed.",
+  "officialProbe": {
+    "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/chip.mdx",
+    "httpStatus": 404,
+    "retrievedAt": "2026-11-05"
+  },
+  "upstreamRevision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "localSources": [
+    "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/chip/Chip.kt",
+    "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/chip/ChipStyles.kt"
+  ]
+}

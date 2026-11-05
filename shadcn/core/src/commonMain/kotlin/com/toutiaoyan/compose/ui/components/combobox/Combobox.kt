@@ -17,6 +17,8 @@ import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.input.key.*
+import androidx.compose.ui.input.pointer.PointerEventType
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.semantics.selected
 import com.toutiaoyan.compose.ui.components.inputgroup.*
@@ -112,6 +114,7 @@ class ComboboxController internal constructor(
     val modal: Boolean,
     val multiple: Boolean,
     val canClear: Boolean,
+    val shouldFilter: Boolean,
     private val highlighted: Any?,
     private val onSelect: (Any?) -> Unit,
     private val onClearSelection: () -> Unit,
@@ -147,6 +150,7 @@ private class ComboboxEditing {
     var active by mutableStateOf<Any?>(null)
     var userEdited by mutableStateOf(false)
     var width by mutableStateOf(216.dp)
+    var chipsWidth by mutableStateOf<Dp?>(null)
 
     fun key(
         event: KeyEvent,
@@ -442,6 +446,7 @@ private fun <T> ComboboxRoot(
             modal = modal,
             multiple = multiple,
             canClear = canClear,
+            shouldFilter = shouldFilter,
             highlighted =
                 editing.active
                     ?: if (autoHighlight && query.isNotBlank() && filtered.isNotEmpty()) {
@@ -613,6 +618,9 @@ fun ComboboxScope.ComboboxContent(
     sideOffset: Dp = 6.dp,
     align: PopupAlign = PopupAlign.Start,
     alignOffset: Dp = 0.dp,
+    // Official `w-60`-style popup width overrides on the Base UI popup; when null the
+    // panel follows the anchored input / chips width (Base UI `--anchor-width`).
+    panelWidth: Dp? = null,
     enter: EnterTransition = PopupTransitions.Enter,
     exit: ExitTransition = PopupTransitions.Exit,
     dismissOnClickOutside: Boolean = true,
@@ -622,7 +630,7 @@ fun ComboboxScope.ComboboxContent(
     val panelStyleState = remember { MutableStyleState(MutableInteractionSource()) }
     val editing = checkNotNull(LocalComboboxEditing.current)
     val inline = editing.inputs.isNotEmpty()
-    val nova = currentTheme.activePreset == StylePreset.Nova
+    val anchorWidth = editing.chipsWidth ?: editing.width
     ComboboxPortal {
         AnchoredPopup(
             open = ctrl.open && !ctrl.disabled,
@@ -636,11 +644,20 @@ fun ComboboxScope.ComboboxContent(
             exit = exit,
         ) {
             Column(
+                // Base UI sizes the popup from the anchor width (`--anchor-width`; chips use the
+                // chips container, inputs the input group). The previous +28dp offset made the
+                // local panel wider than the official one.
                 modifier =
-                    modifier.then(if (inline) Modifier.width(editing.width + 28.dp) else Modifier).styleable(
-                        panelStyleState,
-                        rememberComboboxPanelStyle() then style,
-                    ),
+                    modifier.then(
+                        when {
+                            panelWidth != null -> Modifier.width(panelWidth)
+                            inline || editing.chipsWidth != null -> Modifier.width(anchorWidth)
+                            else -> Modifier
+                        },
+                    ).styleable(
+                            panelStyleState,
+                            rememberComboboxPanelStyle() then style,
+                        ),
                 content = content,
             )
         }
@@ -732,6 +749,7 @@ fun ComboboxInput(
     placeholder: String? = null,
     disabled: Boolean = false,
     icon: (@Composable () -> Unit)? = null,
+    leading: (@Composable () -> Unit)? = null,
     editable: Boolean,
     showTrigger: Boolean = true,
     showClear: Boolean = false,
@@ -757,6 +775,7 @@ fun ComboboxInput(
         invalid = ctrl.invalid,
         disabled = disabled || ctrl.disabled,
     ) {
+        leading?.let { InputGroupAddon(InputGroupAddonAlign.InlineStart) { it() } }
         InputGroupInput(
             value = if (editing.userEdited || ctrl.query.isNotEmpty()) ctrl.query else ctrl.displayText.orEmpty(),
             onValueChange = {
@@ -767,6 +786,14 @@ fun ComboboxInput(
             },
             modifier =
                 Modifier.focusRequester(editing.inputFocus).onPreviewKeyEvent { editing.key(it, ctrl) }
+                    .pointerInput(Unit) {
+                        awaitPointerEventScope {
+                            while (true) {
+                                val event = awaitPointerEvent()
+                                if (event.type == PointerEventType.Press && !ctrl.disabled) ctrl.setOpen(true)
+                            }
+                        }
+                    }
                     .semantics { stateDescription = if (ctrl.open) "Expanded" else "Collapsed" },
             placeholder = placeholder ?: ctrl.placeholder,
         )
@@ -819,6 +846,8 @@ fun ComboboxEmpty(
     text: String? = null,
 ) {
     val ctrl = comboboxController()
+    // Base UI `Combobox.Empty` only renders when the collection is empty.
+    if (ctrl.filtered.isNotEmpty()) return
     val nova = currentTheme.activePreset == StylePreset.Nova
     Box(
         modifier = modifier.fillMaxWidth().then(if (nova) Modifier.padding(vertical = 8.dp) else Modifier),
@@ -866,6 +895,9 @@ fun ComboboxItem(
     },
 ) {
     val ctrl = comboboxController()
+    // Base UI's collection filters composed items against the live query. The default list
+    // already iterates `filtered`, so this only affects caller-composed lists.
+    if (ctrl.shouldFilter && ctrl.filtered.none { it == value }) return
     val resolvedEnabled = enabled && !disabled
     val selected = ctrl.isSelected(value)
     val editing = checkNotNull(LocalComboboxEditing.current)
@@ -1043,6 +1075,8 @@ fun ComboboxChips(
     content: @Composable RowScope.() -> Unit,
 ) {
     val ctrl = comboboxController()
+    val editing = checkNotNull(LocalComboboxEditing.current)
+    val density = LocalDensity.current
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     var hasFocusWithin by remember { mutableStateOf(false) }
     val chipsStyle = rememberComboboxChipsStyle(focused = hasFocusWithin, invalid = ctrl.invalid)
@@ -1050,6 +1084,7 @@ fun ComboboxChips(
         modifier =
             modifier
                 .fillMaxWidth()
+                .onGloballyPositioned { editing.chipsWidth = with(density) { it.size.width.toDp() } }
                 .onFocusEvent { hasFocusWithin = it.hasFocus }
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
@@ -1126,9 +1161,18 @@ fun RowScope.ComboboxChipsInput(
             ctrl.setQuery(it)
             if (!ctrl.open && it.isNotEmpty()) ctrl.setOpen(true)
         },
-        placeholder = placeholder ?: ctrl.searchPlaceholder,
+        placeholder = placeholder,
         variant = InputVariant.Ghost,
         disabled = disabled || ctrl.disabled,
-        modifier = modifier.weight(1f),
+        modifier =
+            modifier.weight(1f).pointerInput(Unit) {
+                awaitPointerEventScope {
+                    while (true) {
+                        val event = awaitPointerEvent()
+                        // Base UI's chips input opens the popup on click, not only while typing.
+                        if (event.type == PointerEventType.Press && !ctrl.disabled) ctrl.setOpen(true)
+                    }
+                }
+            },
     )
 }

@@ -1,0 +1,66 @@
+{
+  "component": "Context Menu",
+  "officialPage": "https://ui.shadcn.com/docs/components/base/context-menu",
+  "upstreamRevision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "retrievedAt": "2026-11-05",
+  "files": {
+    "mdx": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/context-menu.mdx",
+      "sha256": "15ad5959bcb215afe5de3fd7d667a3cb9a8869accf7493565f4060b06c820156"
+    },
+    "componentSource": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/components/context-menu.tsx",
+      "sha256": "e4359306eb2242681388aa1b3a541de49dce46c375db1593f8d3362f6bb023ca"
+    },
+    "style": {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+    },
+    "examples": {
+      "context-menu-basic": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/context-menu-basic.tsx",
+        "sha256": "de31f299a35bf6e4d52dc9678436867509202795dcaf11efcf514fcf69315209"
+      },
+      "context-menu-checkboxes": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/context-menu-checkboxes.tsx",
+        "sha256": "04c68bf3f24097877d65ffb3e36da7f10d737016f1e9321522952f7eefb0400f"
+      },
+      "context-menu-demo": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/context-menu-demo.tsx",
+        "sha256": "cd7a5a9c5e0757cbd8e8d4d98b6085c4f32656b1125c416b53d4650f1ab02419"
+      },
+      "context-menu-destructive": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/context-menu-destructive.tsx",
+        "sha256": "d49426cb6dcf5b49946a6569ee84b573c28e6a756620ff1f303e5faa1650646c"
+      },
+      "context-menu-groups": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/context-menu-groups.tsx",
+        "sha256": "93099773b4ec86edde7ea347969b23ed3c1bec8bd3832196ce52c30c336ab0c2"
+      },
+      "context-menu-icons": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/context-menu-icons.tsx",
+        "sha256": "1603db6afc4416d78ca8204160b94062a4cfc41d37a7276465e482dcf9c09f3b"
+      },
+      "context-menu-radio": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/context-menu-radio.tsx",
+        "sha256": "ade0086d93efbd84b910cce5da581b4e945e760e5bce0df3000b2c8cb72259c7"
+      },
+      "context-menu-rtl": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/context-menu-rtl.tsx",
+        "sha256": "3b27b3f7761764af749b91b27f65015f5372edc1a28b4f0b92956d8f4a78be7b"
+      },
+      "context-menu-shortcuts": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/context-menu-shortcuts.tsx",
+        "sha256": "b68dbcfac63eb2a15fd66ccd9c28cabd25c093deb3ca152ffb60e22b99d8fbcd"
+      },
+      "context-menu-sides": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/context-menu-sides.tsx",
+        "sha256": "ea7dfbcc23a3e0ae64b85e4bdcefe29c1fdefb589a5ff8b446f3d9eb9fcf0f7c"
+      },
+      "context-menu-submenu": {
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/examples/context-menu-submenu.tsx",
+        "sha256": "e8ffe489c2ab9cfb90e87f28dfaeeb676bddcf768cfad70fb51a219fb57fca74"
+      }
+    }
+  }
+}
