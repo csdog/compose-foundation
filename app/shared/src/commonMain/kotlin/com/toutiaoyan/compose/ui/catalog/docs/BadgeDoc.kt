@@ -128,7 +128,11 @@ val badgeDoc =
         id = "badge",
         title = "Badge",
         description = "Displays a badge or a component that looks like a badge.",
-        usageImportsCode = "import com.toutiaoyan.compose.ui.components.badge.Badge",
+        usageImportsCode =
+            """
+            import com.toutiaoyan.compose.ui.components.badge.Badge
+            import com.toutiaoyan.compose.ui.components.badge.BadgeVariant
+            """.trimIndent(),
         usageCode = "Badge(\"Badge\", variant = BadgeVariant.Default)",
         compositionCode = "Badge {\n    Text { \"Badge\" }\n}",
         examplesHeading = null,
@@ -151,7 +155,7 @@ val badgeDoc =
                                 "Render a spinner inside the badge. Set `iconPlacement` to `Start` or `End` " +
                                     "to match the spinner position."
                             4 ->
-                                "Use `href` to navigate as a badge. `onClick` can override navigation, " +
+                                "Use `href` to render a link as a badge. `onClick` can override navigation, " +
                                     "as this catalog does for its section anchor."
                             5 ->
                                 "Customize colors with `Style`, using the light and dark palette steps " +

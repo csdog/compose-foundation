@@ -59,6 +59,12 @@ class BadgeExamplesTest(private val width: Int, private val dark: Boolean) {
                 it.title
             },
         )
+        assertEquals(
+            "Use `href` to render a link as a badge. `onClick` can override navigation, " +
+                "as this catalog does for its section anchor.",
+            badgeDoc.examples.single { it.title == "Link" }.descriptionMarkdown,
+        )
+        assertTrue(badgeDoc.usageImportsCode!!.contains("badge.BadgeVariant"))
         rule.onNodeWithText("Badge").assertExists()
         rule.runOnIdle { index = 1 }
         rule.onNodeWithText("Ghost").assertExists()

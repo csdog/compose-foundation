@@ -1,0 +1,14 @@
+{
+  "retrieved": "2026-11-05",
+  "officialPage": "https://ui.shadcn.com/docs/components/base/badge",
+  "componentSource": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/registry/bases/base/ui/badge.tsx",
+  "examples": [
+    "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/examples/base/badge-demo.tsx",
+    "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/examples/base/badge-variants.tsx",
+    "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/examples/base/badge-icon.tsx",
+    "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/examples/base/badge-spinner.tsx",
+    "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/examples/base/badge-link.tsx",
+    "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/examples/base/badge-colors.tsx",
+    "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/examples/base/badge-rtl.tsx"
+  ]
+}

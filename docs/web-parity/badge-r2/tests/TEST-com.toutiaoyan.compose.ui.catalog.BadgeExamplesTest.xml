@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="BadgeExamplesTest[jvm]" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-05T03:16:04.331Z" hostname="Apples-MacBook-Pro.local" time="1.256">
+  <properties/>
+  <testcase name="actualLinkRecipeNavigatesToItsDocumentAnchor[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.BadgeExamplesTest" time="0.506"/>
+  <testcase name="officialRecipesAndLogicalIconsRemainVisibleAtBothWidths[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.BadgeExamplesTest" time="0.332"/>
+  <testcase name="actualLinkRecipeNavigatesToItsDocumentAnchor[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.BadgeExamplesTest" time="0.018"/>
+  <testcase name="officialRecipesAndLogicalIconsRemainVisibleAtBothWidths[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.BadgeExamplesTest" time="0.137"/>
+  <testcase name="actualLinkRecipeNavigatesToItsDocumentAnchor[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.BadgeExamplesTest" time="0.017"/>
+  <testcase name="officialRecipesAndLogicalIconsRemainVisibleAtBothWidths[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.BadgeExamplesTest" time="0.119"/>
+  <testcase name="actualLinkRecipeNavigatesToItsDocumentAnchor[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.BadgeExamplesTest" time="0.017"/>
+  <testcase name="officialRecipesAndLogicalIconsRemainVisibleAtBothWidths[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.BadgeExamplesTest" time="0.107"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
