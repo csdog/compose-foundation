@@ -1,40 +1,44 @@
 {
-  "revision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+  "component": "table",
+  "revision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "retrievedAt": "2026-11-05T13:10:00+08:00",
+  "source": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/<path>",
+  "livePage": "https://ui.shadcn.com/docs/components/base/table",
   "files": [
     {
-      "file": "source/table.mdx",
-      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/content/docs/components/base/table.mdx",
-      "sha256": "f37ea1e03c099986ec946cdc9eaebbbeee3c4b86bbcefe36a09ed5a96bfb40c5"
+      "path": "apps/v4/content/docs/components/base/table.mdx",
+      "sha256": "f37ea1e03c099986ec946cdc9eaebbbeee3c4b86bbcefe36a09ed5a96bfb40c5",
+      "bytes": 3042
     },
     {
-      "file": "source/table.tsx",
-      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/bases/base/ui/table.tsx",
-      "sha256": "77d15e11fcf1fb2f5e1b814aa64868e7644bb59c5e1498ecb93bcbdca1c7a070"
+      "path": "apps/v4/registry/bases/base/ui/table.tsx",
+      "sha256": "77d15e11fcf1fb2f5e1b814aa64868e7644bb59c5e1498ecb93bcbdca1c7a070",
+      "bytes": 1965
     },
     {
-      "file": "source/table-demo.tsx",
-      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/table-demo.tsx",
-      "sha256": "96834b31d74c322372c4ffe5763fee79e765318d0a0c61cbdebc5f18c2cc080d"
+      "path": "apps/v4/examples/base/table-demo.tsx",
+      "sha256": "96834b31d74c322372c4ffe5763fee79e765318d0a0c61cbdebc5f18c2cc080d",
+      "bytes": 2074
     },
     {
-      "file": "source/table-footer.tsx",
-      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/table-footer.tsx",
-      "sha256": "fc2e11409475ef821841276401cb0fa5c847e9a0bafc29af540e641336e735f4"
+      "path": "apps/v4/examples/base/table-footer.tsx",
+      "sha256": "fc2e11409475ef821841276401cb0fa5c847e9a0bafc29af540e641336e735f4",
+      "bytes": 2095
     },
     {
-      "file": "source/table-actions.tsx",
-      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/table-actions.tsx",
-      "sha256": "9803eb54ae6d127a5015401fa025c72591ba7cde8cebbabde04be77937814e7d"
+      "path": "apps/v4/examples/base/table-actions.tsx",
+      "sha256": "9803eb54ae6d127a5015401fa025c72591ba7cde8cebbabde04be77937814e7d",
+      "bytes": 3560
     },
     {
-      "file": "source/table-rtl.tsx",
-      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/examples/base/table-rtl.tsx",
-      "sha256": "9613172920146ba37bd9e48ed9e36fca4aa663f6a691e92c771c29a5358f544f"
+      "path": "apps/v4/examples/base/table-rtl.tsx",
+      "sha256": "9613172920146ba37bd9e48ed9e36fca4aa663f6a691e92c771c29a5358f544f",
+      "bytes": 3776
     },
     {
-      "file": "source/style-nova.css",
-      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/96da9cc7f1aa10580a3741664e2a77c721206c00/apps/v4/registry/styles/style-nova.css",
-      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+      "path": "apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e",
+      "bytes": 78661
     }
   ]
 }

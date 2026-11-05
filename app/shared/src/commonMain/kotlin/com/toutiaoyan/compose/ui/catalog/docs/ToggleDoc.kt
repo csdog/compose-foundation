@@ -43,8 +43,10 @@ val toggleDoc =
                 ApiProperty("invalid", "Boolean", "explicit invalid overload"),
                 ApiProperty("disabled", "Boolean", "false"),
             ),
+        examplesHeading = null,
         examples =
-            listOf(
+            togglePageExamples(
+                listOf(
                 ComponentExample(
                     title = "Default",
                     code =
@@ -201,6 +203,7 @@ val toggleDoc =
                     code = """Toggle("Bold", defaultPressed = false, label = "Bold")""",
                     preview = { Toggle("Bold", defaultPressed = false, label = "Bold") },
                 ),
+            ),
             ),
     )
 

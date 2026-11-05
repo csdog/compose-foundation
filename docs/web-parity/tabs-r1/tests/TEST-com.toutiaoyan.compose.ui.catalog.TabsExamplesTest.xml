@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TabsExamplesTest[jvm]" tests="44" skipped="0" failures="0" errors="0" timestamp="2026-11-05T05:22:04.982Z" hostname="Apples-MacBook-Pro.local" time="1.784">
+  <properties/>
+  <testcase name="defaultDemoActivatesOnArrowKeys[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.068"/>
+  <testcase name="rtlArabicDefaultHasTranslatedCardAndMirroredTriggers[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.035"/>
+  <testcase name="defaultHasFourSourceCardsAndShowsOneAtATime[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.086"/>
+  <testcase name="rtlHebrewSelectorKeepsRtl[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.0"/>
+  <testcase name="pageKeepsOfficialRecipeOrderCompositionAndKotlinExtensions[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.013"/>
+  <testcase name="lineUsesManualActivationAndThirtyTwoPixelTrack[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.027"/>
+  <testcase name="disabledCannotBeActivated[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.022"/>
+  <testcase name="defaultActivationExtensionUsesTheActualDefault[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.027"/>
+  <testcase name="rtlEnglishSelectorRestoresLtr[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.08"/>
+  <testcase name="verticalListUsesUniformWidthsAndDownArrowFocus[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.025"/>
+  <testcase name="iconsAreSeparateFromTextAndBothTriggersWork[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.028"/>
+  <testcase name="defaultDemoActivatesOnArrowKeys[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.032"/>
+  <testcase name="rtlArabicDefaultHasTranslatedCardAndMirroredTriggers[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.032"/>
+  <testcase name="defaultHasFourSourceCardsAndShowsOneAtATime[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.084"/>
+  <testcase name="rtlHebrewSelectorKeepsRtl[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.087"/>
+  <testcase name="pageKeepsOfficialRecipeOrderCompositionAndKotlinExtensions[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.016"/>
+  <testcase name="lineUsesManualActivationAndThirtyTwoPixelTrack[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.028"/>
+  <testcase name="disabledCannotBeActivated[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.023"/>
+  <testcase name="defaultActivationExtensionUsesTheActualDefault[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.029"/>
+  <testcase name="rtlEnglishSelectorRestoresLtr[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.089"/>
+  <testcase name="verticalListUsesUniformWidthsAndDownArrowFocus[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.031"/>
+  <testcase name="iconsAreSeparateFromTextAndBothTriggersWork[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.028"/>
+  <testcase name="defaultDemoActivatesOnArrowKeys[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.038"/>
+  <testcase name="rtlArabicDefaultHasTranslatedCardAndMirroredTriggers[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.043"/>
+  <testcase name="defaultHasFourSourceCardsAndShowsOneAtATime[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.09"/>
+  <testcase name="rtlHebrewSelectorKeepsRtl[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.079"/>
+  <testcase name="pageKeepsOfficialRecipeOrderCompositionAndKotlinExtensions[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.015"/>
+  <testcase name="lineUsesManualActivationAndThirtyTwoPixelTrack[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.025"/>
+  <testcase name="disabledCannotBeActivated[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.02"/>
+  <testcase name="defaultActivationExtensionUsesTheActualDefault[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.024"/>
+  <testcase name="rtlEnglishSelectorRestoresLtr[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.072"/>
+  <testcase name="verticalListUsesUniformWidthsAndDownArrowFocus[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.022"/>
+  <testcase name="iconsAreSeparateFromTextAndBothTriggersWork[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.027"/>
+  <testcase name="defaultDemoActivatesOnArrowKeys[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.03"/>
+  <testcase name="rtlArabicDefaultHasTranslatedCardAndMirroredTriggers[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.03"/>
+  <testcase name="defaultHasFourSourceCardsAndShowsOneAtATime[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.082"/>
+  <testcase name="rtlHebrewSelectorKeepsRtl[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.076"/>
+  <testcase name="pageKeepsOfficialRecipeOrderCompositionAndKotlinExtensions[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.015"/>
+  <testcase name="lineUsesManualActivationAndThirtyTwoPixelTrack[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.022"/>
+  <testcase name="disabledCannotBeActivated[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.026"/>
+  <testcase name="defaultActivationExtensionUsesTheActualDefault[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.024"/>
+  <testcase name="rtlEnglishSelectorRestoresLtr[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.078"/>
+  <testcase name="verticalListUsesUniformWidthsAndDownArrowFocus[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.032"/>
+  <testcase name="iconsAreSeparateFromTextAndBothTriggersWork[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TabsExamplesTest" time="0.023"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

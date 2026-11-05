@@ -283,11 +283,31 @@ internal fun TabsRtlRecipe(language: Int = 1) {
 internal val tabsOfficialExamples =
     listOf(
         ComponentExample("Default", code = tabsDefaultRecipeCode, preview = { TabsDefaultRecipe() }),
-        ComponentExample("Line", code = tabsLineRecipeCode, preview = { TabsLineRecipe() }),
-        ComponentExample("Vertical", code = tabsVerticalRecipeCode, preview = { TabsVerticalRecipe() }),
+        ComponentExample(
+            "Line",
+            code = tabsLineRecipeCode,
+            descriptionMarkdown = "Use the line variant on `TabsList` for a line style.",
+            preview = { TabsLineRecipe() },
+        ),
+        ComponentExample(
+            "Vertical",
+            code = tabsVerticalRecipeCode,
+            descriptionMarkdown = "Use `orientation = TabsOrientation.Vertical` for vertical tabs.",
+            preview = { TabsVerticalRecipe() },
+        ),
         ComponentExample("Disabled", code = tabsDisabledRecipeCode, preview = { TabsDisabledRecipe() }),
         ComponentExample("Icons", code = tabsIconsRecipeCode, preview = { TabsIconsRecipe() }),
-        ComponentExample("RTL", code = tabsRtlRecipeCode, previewPadding = 0.dp, preview = {
+        ComponentExample(
+            "RTL",
+            code = tabsRtlRecipeCode,
+            descriptionMarkdown =
+                (
+                    "To enable RTL support in your app, see the [RTL configuration guide]" +
+                        "(https://ui.shadcn.com/docs/rtl). Source shows the Arabic pair; the " +
+                        "catalog toolbar also previews English and Hebrew."
+                ),
+            previewPadding = 0.dp,
+            preview = {
             var language by remember { mutableIntStateOf(1) }
             RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
                 TabsRtlRecipe(language)

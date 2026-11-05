@@ -160,18 +160,83 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [x] Spinner (`spinner`)：按当前官网复查八个配方（demo、Customization、Size、Button、Badge、Input Group、Empty、RTL）、描述与 API 表，页面/组件无需改动；SpinnerExamplesTest 7 项与 SpinnerViewportTest 8 项通过，Wasm 构建、1440/390×浅深四象限及七个分节对照通过，Badge 三枚 12dp spinner 单行、Input Group 与 Empty 布局与官网一致。仅余 Canvas 无原生 progressbar 语义与共享页面 chrome/字体差异，见 [spinner-r2](web-parity/spinner-r2/README.md)。
 - [x] Stepper (`stepper`)：项目扩展一致性自查完成：补 Kotlin extension 说明、Usage 导入块、Stepper 与 StepperItem 两个 API 表，并接入共享 `isKotlinExtension` 标识；保留 12 组既有配方；新增 StepperExamplesTest 3 项，Wasm 构建与 1440/390×浅深浏览器复查通过。无官方对照对象，仅余共享页面 chrome 与字体栅格化差异，见 [stepper-r1](web-parity/stepper-r1/README.md)。
 - [x] Switch (`switch`)：按当前官网重建为 demo、Description、Choice Card、Disabled、Invalid、Size、RTL 七配方，删除参数矩阵并补官方描述/文案；SwitchExamplesTest 8 项、Wasm 构建、1440/390×浅深四象限与 Description/Choice Card/Disabled/Invalid/Size/RTL 分节对照通过。Canvas 无原生 role=switch/label-for，Choice Card 由目录配方绘制边框/选中底色，共享页面 chrome 与字体栅格化属既有差异，见 [switch-r1](web-parity/switch-r1/README.md)。
-- [ ] Table (`table`)：已补caption-bottom、Header40dp、单元格14/20与p8、行hover/selected、Footer半透明顶线、内容槽和横向溢出；四组官网数据/交互配方及三语RTL已加入。44项定向测试和core/shared ktlint通过，24张原生图已检查；共享自动列宽/跨列、希伯来字体及浏览器完整矩阵仍开放，详见 table-r1。
-- [ ] Tabs (`tabs`)：六组官网配方、四面板与三语RTL已迁移；默认Manual、单Tab入口/RTL键盘/动态顺序、隐藏面板状态与焦点、选中chrome及透明focus阴影已修正。58项定向测试、core/shared ktlint通过，44张原生图已检查；150ms颜色过渡、辅助技术及浏览器完整矩阵仍开放，详见 tabs-r1。
+- [ ] Table (`table`)：r1 按当前官网确认 demo/Footer/Actions/Data Table/RTL 顺序，补 Composition 树与三个 API 小节、移除 `Examples` 分组并给 Data Table 说明段加只读示意表、Footer/Actions/RTL 补官方 copy、原生 12 个分项示例统一 `Kotlin extension:` 前缀；浏览器验证 7 行发票 + Total + caption、行内 DropdownMenu 打开与 RTL 段，四象限 1440/390×浅深复查，TableExamplesTest 28 项与 Wasm 构建通过。自动列宽/colSpan、行 hover/selected 交互帧、水平溢出滚动与 Hebrew 行框未重验，见[Table r1](web-parity/table-r1/README.md)。
+- [ ] Tabs (`tabs`)：r1 按当前官网确认 demo/Line/Vertical/Disabled/Icons/RTL 顺序，补 Composition 树与三个 API 小节、移除 `Examples` 分组、Line/Vertical/RTL 补官方 copy 并给原生示例加 `Kotlin extension:` 前缀；组件修复 `activationMode` 默认 Manual→**Automatic**（对齐 Base UI/Radix），核心与页面测试同步更新。浏览器验证四面板点击切换、ArrowRight 自动选中、Line/Vertical/RTL 段，四象限复查，TabsExamplesTest 44 项 + 核心 TabsBehaviorParityTest 12 项通过。150ms 过渡中间帧、hidden panel 焦点回收与 DOM 动态顺序语义未逐帧验证；核心全量运行的 5 个 Menubar/Menu Escape 失败属其他 batch 改动，见[Tabs r1](web-parity/tabs-r1/README.md)。
 - [x] Text (`text`)：项目扩展一致性自查完成：Usage 与所有示例代码中已不存在的 `TextTypography`/`TextStyles` 改为当前 `TextVariant`/`TextColors`；新增 Variants（全部类型刻度）、Muted、Kotlin extension: Style font-size 示例与 Text API 表；共享 ComponentDoc 增加 `isKotlinExtension`，扩展页头部改为 `Kotlin extension` 而非 Base UI 页签；TextExamplesTest 5 项与 1440/390×浅深浏览器复查通过。无官方对照对象，仅余共享页面 chrome 与字体栅格化差异，见 [text-r1](web-parity/text-r1/README.md)。
 - [x] Textarea (`textarea`)：按当前官网重建为 demo、Field、Disabled、Invalid、Button、RTL 六配方，补官网描述与 Usage；删除 22 项重复参数矩阵，只保留 Rows、Min/Max lines、Max length、Autofocus、Read only 五个 `Kotlin extension:` 配方；新增 TextareaExamplesTest 7 项，Wasm 构建、1440/390×浅深四象限与 Field/Disabled/Invalid/Button/RTL 分节对照通过。仍余 Canvas 无原生 resize grip、无 htmlFor 式 label→control 焦点关联及共享页面 chrome/字体差异，见 [textarea-r1](web-parity/textarea-r1/README.md)。
-- [ ] Toast (`toast`)：本轮进行中，已对照固定上游 Base UI Toast 源码，补 Default/Types/Promise 配方及管理器、图标和卡片样式；43项定向测试通过，堆叠/手势/动效和浏览器四象限仍待验。见 Toast 本轮记录。 Marker r2浏览器补查确认共享Toaster仍位于预览内部，与官网窗口顶部位置不同，需在Toast专轮修正。
-- [ ] Toggle (`toggle`)：Nova 字重/行内图标/间距/选中/小号圆角已修正，新增兼容 invalid 重载；非对称图标内边距、完整 hover/pressed 矩阵待关闭。
-- [ ] Toggle Group (`toggle-group`)：基础已验证（第六批）；连体样式、单选取消和方向键焦点已修正，Tab 单入口、动态重排与完整纵向矩阵待关闭。
-- [ ] Tooltip (`tooltip`)：本轮进行中，已对照八份固定上游源码，接入五组官方配方并修计时、Escape、排版及箭头占位；30项定向测试及core/shared ktlint通过，32张原生图已检查；动效/剩余交互与浏览器矩阵待验。见 Tooltip 本轮记录。
+- [ ] Toast (`toast`)：r2按当前官网8a3536678a复核Base UI Toast页面：Default/Types/Promise三配方与官方标题/描述一致，补Types/Promise官方文案并隐藏通用Examples标题；仅保留Position/Duration/Close button三个Kotlin扩展，其余20+参数矩阵不再渲染。24项参数化测试通过（1440/390×浅深，含源消息/Undo id、五种type播报、Promise切换与位置扩展）；Wasm 97fa0dc3…构建后四象限（官方背景像素逐张校验）与浏览器默认toast已验：共享Toaster在窗口右下固定位置出现、5秒后自动消失，非预览内绘制，上一轮“预览内Toaster”证据已作废。仍开放：Action说明章节省略（Default配方已展示Undo）、Base UI完整管理器选项/堆叠手势/精确动效未按页面配方展开，故保持未勾选，详见[toast-r2](web-parity/toast-r2/README.md)。
+- [ ] Toggle (`toggle`)：r1 按当前官网重建为 demo/Outline/With Text/Size/Disabled/RTL 六段（Sizes→Size、With text→With Text，新增三语 RTL Bookmark 配方），Outline/Size/RTL 补官方 copy、其余示例统一 `Kotlin extension:` 前缀并移除 `Examples` 分组；组件未改。浏览器验证 Bookmark 按下态、Size 段、RTL 阿拉伯语按下态，四象限 1440/390×浅深复查，ToggleExamplesTest 5 项与 Wasm 构建通过。非对称图标 padding、hover/pressed 过渡与 invalid overload 矩阵未逐帧截图，见[Toggle r1](web-parity/toggle-r1/README.md)。
+- [ ] Toggle Group (`toggle-group`)：r1按当前官网8a3536678a重建页面：官方八配方Default/Outline/Size/Spacing/Vertical/Disabled/Custom/RTL按官网顺序、标题、描述与内容实现（含官方Composition与API表），删除旧18项参数矩阵，仅保留Single select与Connected两个Kotlin扩展。新增ToggleGroupExamplesTest 5/5（顺序文案、Outline字面all选中、单选取消、纵向堆叠、禁用不切换）；Wasm 97fa0dc3…构建后四象限（官方背景像素逐张校验）与浏览器Italic选中、ArrowRight焦点、Tab移出已验。仍开放：Changelog章节省略、自定义64dp卡片用Modifier.size而非CSS、全部方向键/Tab矩阵由组件测试而非页面配方覆盖，故保持未勾选，详见[toggle-group-r1](web-parity/toggle-group-r1/README.md)。
+- [ ] Tooltip (`tooltip`)：r2按当前官网8a3536678a复核五组官方配方（Default/Side/With Keyboard Shortcut/Disabled Button/RTL）顺序与内容，补官方Composition区块与Side/Disabled Button/RTL官方文案；仅保留Arrow/Delay/Controlled三个Kotlin扩展，其余19项矩阵不再渲染。20项参数化测试通过（1440/390×浅深，覆盖四向side、快捷键配方、禁用包装、RTL三语与焦点/Escape）；Wasm 97fa0dc3…构建后四象限（官方背景像素逐张校验）与浏览器hover弹出“Add to library”、键盘Tab打开及Escape关闭已验。仍开放：嵌套Provider延迟矩阵、各方向arrow offset与原生overlay辅助技术映射，故保持未勾选，详见[tooltip-r2](web-parity/tooltip-r2/README.md)。
 
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Toggle Group：r1 按当前官网重建八配方（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 215 -->
+
+Toggle Group 以当前官网固定修订 `8a3536678a…` 重建页面（源码见 [sources.json](web-parity/toggle-group-r1/sources.json)）。
+
+- 旧页18项参数矩阵无官方配方；现按官网八配方重建：Default（B/I/U图标、multiple）、Outline（All/Missed、字面all选中）、Size（sm+默认两行）、Spacing（sm spacing=2）、Vertical（multiple、spacing=1）、Disabled、Custom（Font Weight四个Aa卡片）、RTL（语言工具栏+List/Grid/Cards）；新增官方Composition与API表，仅保留Single select/Connected两个Kotlin扩展。
+- 验证：新增ToggleGroupExamplesTest 5/5（顺序/文案、Outline字面选中、单选取消、纵向堆叠、禁用不切换）；Wasm `wasm=97fa0dc3…` 后四象限逐张校验官方主题；浏览器验证Italic选中、ArrowRight焦点迁移与Tab移出分组。仍开放：Changelog省略、自定义卡片用Modifier.size替代CSS、完整方向键/Tab矩阵由组件测试覆盖。保持未勾选，证据见[toggle-group-r1](web-parity/toggle-group-r1/README.md)。
+
+### Tooltip：r2 官方 Composition/描述与 hover 状态（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 214 -->
+
+Tooltip 以当前官网固定修订 `8a3536678a…` 复核（源码见 [sources.json](web-parity/tooltip-r2/sources.json)）。
+
+- 官网五配方：Default、Side、With Keyboard Shortcut、Disabled Button、RTL；本轮补官方Composition区块与Side/Disabled Button/RTL描述，仅保留Arrow/Delay/Controlled三个Kotlin扩展。
+- 既有r1行为（八份上游源计时、Escape、箭头占位、内容hover、动态移除/卸载清理）继续由目录与核心测试覆盖。
+- 验证：TooltipExamplesTest 20/20（1440/390×浅深，四向side、快捷键、禁用包装、RTL三语、焦点/Escape）；Wasm `wasm=97fa0dc3…` 后四象限逐张校验官方主题；浏览器hover显示带箭头“Add to library”、键盘Tab打开、Escape关闭。仍开放：嵌套Provider完整延迟矩阵、各方向arrow offset、原生overlay辅助技术映射。保持未勾选，证据见[tooltip-r2](web-parity/tooltip-r2/README.md)。
+
+### Toast：r2 官方文案、viewpoint-fixed Toaster 与浏览器矩阵（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 213 -->
+
+Toast 以当前官网固定修订 `8a3536678a…` 复核（源码见 [sources.json](web-parity/toast-r2/sources.json)）。
+
+- 官网为 Base UI Toast 页面（非 sonner）：Default/Types/Promise 三预览，另有 Actions/Promise 说明与单例 Toaster 安装说明。本地三配方已存在；本轮补 Types/Promise 官方描述、隐藏通用Examples标题，仅保留Position/Duration/Close button三个Kotlin扩展。
+- Toaster 位置：CatalogToastHost 在应用根部以 bottom-end+16dp 渲染，本轮浏览器实测toast出现在窗口右下角并在5秒后消失，属viewport-fixed，而非预览卡内；此前的“预览内Toaster”证据作废。
+- 验证：ToastExamplesTest 24/24（1440/390×浅深）；Wasm `wasm=97fa0dc3…` 后四象限逐张校验官方主题背景；浏览器默认toast、自动消失与Types五个按钮。仍开放：Action独立章节省略、Base UI完整管理器/堆叠/手势/精确动效未按页面配方展开。保持未勾选，证据见[toast-r2](web-parity/toast-r2/README.md)。
+
+### Toggle：官网配方、组件默认与状态复核（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 212 -->
+
+按固定上游 `8a3536678a528cc012b9e62484290e79d0be410f` 复核 Toggle 页面。官方顺序为 demo（Bookmark 图标+文字、outline/sm）、Outline、With Text、Size、Disabled、RTL、API Reference；本地缺 RTL 配方、示例标题为 API 式且未控制 `Examples` 分组。
+
+本轮重建示例：官方六段按官网标题/顺序（demo 复用 Bookmark toggle、Sizes→Size、With text→With Text），新增 RTL（三语工具栏 + 阿拉伯/希伯来 Bookmark 标签 + 主题字体），Outline/Size/RTL 补官方 copy，其余示例统一 `Kotlin extension:` 前缀，`examplesHeading = null`；组件未改，API 参数表沿用既有 apiProperties。
+
+验证：浏览器验证 Bookmark 按下态、Size 段、RTL 阿拉伯语按下；四象限 1440/390×浅深在最终构建 `879c014d3060edbcf720.wasm`（SHA256 `97fa0dc37ba6ef519ac835a9de585e4f3cf0c3f35ce14a80d232502370a46931`）复查；ToggleExamplesTest **5 项通过**。
+
+保留：非对称图标 padding、hover/pressed 过渡与 invalid overload 的完整矩阵未逐帧截图；Canvas 无原生 aria-pressed/button 语义；共享页面标签/手机宽度/代码面板差异不变。
+
+### Tabs：官网配方、组件默认与状态复核（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 211 -->
+
+按固定上游 `8a3536678a528cc012b9e62484290e79d0be410f` 复核 Tabs 页面。官方顺序为 demo（四面板）、Composition、Line、Vertical、Disabled、Icons、RTL、API Reference；本地六段已前置但缺 Composition/API 小节、仍是 `Examples` 分组、Line/Vertical/RTL 无说明、原生示例无前缀。
+
+组件级修复：`Tabs` 的 `activationMode` 原本默认 `Manual`，而 Base UI/Radix `Tabs.Root` 默认 **Automatic**（方向键移动焦点并选中面板）。本轮把默认改为 Automatic，在组件 KDoc 注明显式 Manual 的写法；显式 Manual/Automatic 扩展示例保留；核心 TabsBehaviorParityTest 与目录 TabsExamplesTest 里“默认即 Manual”的断言同步更新为自动激活。页面补 Composition 树与三个 API 小节、`examplesHeading = null`、Line/Vertical/RTL 官方 copy、原生示例统一前缀。
+
+验证：浏览器验证点击 Analytics 切换面板、点击后 ArrowRight 直接选中并显示 Reports（Automatic 生效，深色截图）、Line/Vertical/RTL 段；四象限 1440/390×浅深在最终构建 `879c014d3060edbcf720.wasm`（SHA256 `97fa0dc37ba6ef519ac835a9de585e4f3cf0c3f35ce14a80d232502370a46931`）复查；TabsExamplesTest **44 项**、核心 TabsBehaviorParityTest **12 项通过**。
+
+保留：150ms 选中过渡中间帧、hidden panel 的焦点回收/keepMounted 状态只由 JVM 覆盖；RTL 方向键与动态 DOM 顺序以测试为主；Canvas 无原生 tablist/tab/aria-selected 语义；共享页面差异不变。核心全量测试中的 5 个 Menubar/Menu Escape 失败与本批无关（其他 agent 的进行中改动）。
+
+### Table：官网配方、组件默认与状态复核（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 210 -->
+
+按固定上游 `8a3536678a528cc012b9e62484290e79d0be410f` 复核 Table 页面。官方顺序为 demo（7 行发票 + Total footer + caption-bottom）、Composition、Footer、Actions、Data Table 说明、RTL；本地四段官方配方已前置，但缺 Composition/API 小节、仍是 `Examples` 分组、原生分项示例无前缀、Footer/Actions/RTL 无官网说明、Data Table 段缺失。
+
+本轮补 Composition 树与三个 API 小节，`examplesHeading = null`，插入 Data Table 说明段（用只读小表呈现 Compose 无 TanStack 对应物的取舍）、给 Footer/Actions/RTL 补官方 copy、原生 12 个分项示例统一 `Kotlin extension:` 前缀；组件未改。
+
+验证：浏览器验证 7 行发票/Total/caption、行内 DropdownMenu（Edit/Duplicate/Delete）与 RTL 段；四象限 1440/390×浅深在最终构建 `879c014d3060edbcf720.wasm`（SHA256 `97fa0dc37ba6ef519ac835a9de585e4f3cf0c3f35ce14a80d232502370a46931`）复查；TableExamplesTest **28 项通过**。
+
+保留：Compose 无 HTML 自动列宽/colSpan 语义（用 weight），行 hover/selected 与水平溢出未新增交互帧，Hebrew 回退字体行框仍有差异；共享页面标签/手机宽度/代码面板差异不变。
 
 ### scroll-fade：修复 Web 空白、官方七配方与扩展标记（r2）（2026-11-05）
 

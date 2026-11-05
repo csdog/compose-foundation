@@ -23,7 +23,9 @@ import kotlin.test.*
 class TabsBehaviorParityTest : ScreenshotTest() {
     private fun tab(value: String) = composeRule.onNodeWithTag(value)
 
-    @Test fun defaultKeyboardFocusRequiresExplicitActivation() {
+    @Test fun defaultKeyboardActivationSelectsOnArrow() {
+        // Base UI / Radix `Tabs.Root` default activationMode is "automatic":
+        // arrow keys both move focus and select the panel.
         setThemedContent(stylePreset = StylePreset.Nova) {
             Tabs(defaultValue = "a") {
                 TabsList {
@@ -34,9 +36,7 @@ class TabsBehaviorParityTest : ScreenshotTest() {
         }
         tab("a").requestFocus()
         tab("a").performKeyInput { pressKey(Key.DirectionRight) }
-        tab("b").assertIsFocused().assertIsNotSelected()
-        tab("b").performKeyInput { pressKey(Key.Enter) }
-        tab("b").assertIsSelected()
+        tab("b").assertIsFocused().assertIsSelected()
     }
 
     @Test fun rtlArrowDirectionIsReversed() {
@@ -248,12 +248,12 @@ class TabsBehaviorParityTest : ScreenshotTest() {
         }
         tab("a").requestFocus()
         tab("a").performKeyInput { pressKey(Key.MoveEnd) }
-        tab("c").assertIsFocused().assertIsNotSelected()
+        tab("c").assertIsFocused().assertIsSelected()
         tab("c").performKeyInput { pressKey(Key.DirectionDown) }
-        tab("c").assertIsFocused()
+        tab("c").assertIsFocused().assertIsSelected()
         tab("c").performKeyInput { pressKey(Key.Enter) }
         tab("c").assertIsSelected()
         tab("c").performKeyInput { pressKey(Key.MoveHome) }
-        tab("a").assertIsFocused()
+        tab("a").assertIsFocused().assertIsSelected()
     }
 }

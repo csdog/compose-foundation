@@ -12,6 +12,7 @@ import androidx.compose.ui.platform.*
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.*
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.catalog.docs.tableDoc
 import com.toutiaoyan.compose.ui.catalog.docs.ApiReference
 import com.toutiaoyan.compose.ui.catalog.docs.ApiProperty
@@ -89,10 +90,29 @@ class TableExamplesTest(private val viewport: Int, private val dark: Boolean) {
         ImageIO.write(node("table-example").captureToImage().toAwtImage(), "png", file)
     }
 
-    @Test fun apiReferenceCallerStillRendersWithBuiltInScrolling() {
-        show("API")
-        rule.onNodeWithContentDescription("Component API").assertExists()
-        rule.onNodeWithText("onValueChange").assertIsDisplayed()
+    @Test fun pageKeepsOfficialRecipeOrderCompositionAndKotlinExtensions() {
+        assertEquals(
+            listOf("Default", "Footer", "Actions", "Data Table", "RTL"),
+            tableDoc.examples.take(5).map { it.title },
+        )
+        assertTrue(
+            tableDoc.examples.drop(5).all { it.title.startsWith("Kotlin extension: ") },
+        )
+        assertEquals(null, tableDoc.examplesHeading)
+        val markdown = componentPageMarkdown(tableDoc)
+        val order = listOf(
+            "## Composition",
+            "## Footer",
+            "## Actions",
+            "## Data Table",
+            "## RTL",
+            "## API Reference",
+        ).map { markdown.indexOf(it) }
+        assertTrue(order.all { it >= 0 }, "missing a section heading: $order")
+        assertEquals(order.sorted(), order)
+        assertContains(markdown, "Use the `TableFooter` component to add a footer to the table.")
+        assertContains(markdown, "A table showing actions for each row using a `DropdownMenu` component.")
+        assertFalse(markdown.contains("## Examples"))
     }
 
     @Test fun defaultHasAllSevenInvoicesAndSourceFooter() {

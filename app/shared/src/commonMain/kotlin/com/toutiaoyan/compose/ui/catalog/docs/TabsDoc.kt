@@ -13,6 +13,51 @@ import com.toutiaoyan.compose.ui.components.tabs.TabsList
 import com.toutiaoyan.compose.ui.components.tabs.TabsOrientation
 import com.toutiaoyan.compose.ui.components.tabs.TabsTrigger
 
+private val tabsApiSections =
+    listOf(
+        ComponentApiSection(
+            "Tabs",
+            (
+                "Controlled (`value` + `onValueChange`) or uncontrolled (`defaultValue`). " +
+                    "Activation modes follow Base UI (`activationMode = Manual` keeps arrow " +
+                    "keys from activating a panel until Enter/Space). `orientation` switches " +
+                    "horizontal/vertical keyboard navigation. See the [Base UI Tabs API]" +
+                    "(https://base-ui.com/react/components/tabs#api-reference)."
+            ),
+            listOf(
+                ApiProperty("value / onValueChange", "String? / ((String) -> Unit)?", "null"),
+                ApiProperty("defaultValue", "String?", "First tab"),
+                ApiProperty("orientation", "TabsOrientation", "Horizontal"),
+                ApiProperty("activationMode", "TabsActivationMode", "Automatic"),
+            ),
+        ),
+        ComponentApiSection(
+            "TabsList / TabsTrigger",
+            (
+                "`TabsList` owns the shared chrome (default pill/line variants, 150ms " +
+                    "transition). `TabsTrigger` is the single Tab entry; only the selected " +
+                    "trigger is focusable in the default mode, and arrows move within the list."
+            ),
+            listOf(
+                ApiProperty("variant", "TabsVariant", "TabsVariant.Default"),
+                ApiProperty("disabled", "Boolean", "false"),
+                ApiProperty("icon", "@Composable (() -> Unit)?", "null"),
+            ),
+        ),
+        ComponentApiSection(
+            "TabsContent",
+            (
+                "Panel content. Hidden panels stay composed when `keepMounted`/`forceMount` " +
+                    "is requested; otherwise they leave composition and lose focus."
+            ),
+            listOf(
+                ApiProperty("value", "String", "Required"),
+                ApiProperty("keepMounted", "Boolean", "false"),
+                ApiProperty("forceMount", "Boolean", "false"),
+            ),
+        ),
+    )
+
 val tabsDoc =
     ComponentDoc(
         id = "tabs",
@@ -35,6 +80,17 @@ val tabsDoc =
                 TabsContent("password", "Password settings")
             }
             """.trimIndent(),
+        examplesHeading = null,
+        compositionCode =
+            """
+            Tabs
+            ├── TabsList
+            │   ├── TabsTrigger
+            │   └── TabsTrigger
+            ├── TabsContent
+            └── TabsContent
+            """.trimIndent(),
+        apiSections = tabsApiSections,
         examples =
             tabsOfficialExamples +
                 listOf(
@@ -508,5 +564,5 @@ val tabsDoc =
                             }
                         },
                     ),
-                ),
+                ).map { it.copy(title = "Kotlin extension: " + it.title) },
     )

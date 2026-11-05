@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ToggleExamplesTest[jvm]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-05T05:22:06.768Z" hostname="Apples-MacBook-Pro.local" time="0.236">
+  <properties/>
+  <testcase name="disabledToggleDoesNotChangeState[jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToggleExamplesTest" time="0.031"/>
+  <testcase name="demoIsTheOfficialBookmarkToggle[jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToggleExamplesTest" time="0.03"/>
+  <testcase name="outlineAndTextToggleStillPress[jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToggleExamplesTest" time="0.021"/>
+  <testcase name="rtlPreviewSwitchesBetweenTranslations[jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToggleExamplesTest" time="0.139"/>
+  <testcase name="officialRecipesKeepOfficialOrderAndKotlinExtensionsComeAfter[jvm]" classname="com.toutiaoyan.compose.ui.catalog.ToggleExamplesTest" time="0.015"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

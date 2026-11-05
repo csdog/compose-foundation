@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.*
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.*
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.catalog.docs.tabsDoc
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.theme.currentTheme
@@ -87,12 +88,11 @@ class TabsExamplesTest(private val viewport: Int, private val dark: Boolean) {
     }
 
     @Test fun defaultActivationExtensionUsesTheActualDefault() {
-        show("Default activation")
+        show("Kotlin extension: Default activation")
         rule.onNodeWithText("Account").requestFocus()
         rule.onNodeWithText("Account").performKeyInput { pressKey(Key.DirectionRight) }
         advance()
-        rule.onNodeWithText("Password").assertIsFocused().assertIsNotSelected()
-        rule.onNodeWithText("Account").assertIsSelected()
+        rule.onNodeWithText("Password").assertIsFocused().assertIsSelected()
     }
 
     @Test fun defaultHasFourSourceCardsAndShowsOneAtATime() {
@@ -121,10 +121,7 @@ class TabsExamplesTest(private val viewport: Int, private val dark: Boolean) {
         node("tabs-overview").requestFocus()
         node("tabs-overview").performKeyInput { pressKey(Key.DirectionRight) }
         advance()
-        node("tabs-analytics").assertIsFocused().assertIsNotSelected()
-        node("tabs-analytics").performKeyInput { pressKey(Key.Enter) }
-        advance()
-        node("tabs-analytics").assertIsSelected()
+        node("tabs-analytics").assertIsFocused().assertIsSelected()
         capture("line")
     }
 
@@ -138,10 +135,7 @@ class TabsExamplesTest(private val viewport: Int, private val dark: Boolean) {
         node("tabs-account").requestFocus()
         node("tabs-account").performKeyInput { pressKey(Key.DirectionDown) }
         advance()
-        node("tabs-password").assertIsFocused().assertIsNotSelected()
-        node("tabs-password").performKeyInput { pressKey(Key.Enter) }
-        advance()
-        node("tabs-password").assertIsSelected()
+        node("tabs-password").assertIsFocused().assertIsSelected()
         capture("vertical")
     }
 
@@ -202,5 +196,38 @@ class TabsExamplesTest(private val viewport: Int, private val dark: Boolean) {
         direction(true, "סקירה כללית", "הגדרות")
         rule.onNodeWithText("יש לך 12 פרויקטים פעילים ו-3 משימות ממתינות.").assertIsDisplayed()
         capture("rtl-hebrew")
+    }
+
+    @Test fun defaultDemoActivatesOnArrowKeys() {
+        show("Default")
+        node("tabs-overview").requestFocus()
+        node("tabs-overview").performKeyInput { pressKey(Key.DirectionRight) }
+        advance()
+        node("tabs-analytics").assertIsSelected()
+        rule.onNodeWithText("Page views are up 25% compared to last month.").assertIsDisplayed()
+    }
+
+    @Test fun pageKeepsOfficialRecipeOrderCompositionAndKotlinExtensions() {
+        assertEquals(
+            listOf("Default", "Line", "Vertical", "Disabled", "Icons", "RTL"),
+            tabsDoc.examples.take(6).map { it.title },
+        )
+        assertTrue(tabsDoc.examples.drop(6).all { it.title.startsWith("Kotlin extension: ") })
+        assertEquals(null, tabsDoc.examplesHeading)
+        val markdown = componentPageMarkdown(tabsDoc)
+        val order = listOf(
+            "## Composition",
+            "## Line",
+            "## Vertical",
+            "## Disabled",
+            "## Icons",
+            "## RTL",
+            "## API Reference",
+        ).map { markdown.indexOf(it) }
+        assertTrue(order.all { it >= 0 }, "missing a section heading: $order")
+        assertEquals(order.sorted(), order)
+        assertContains(markdown, "Use the line variant on `TabsList` for a line style.")
+        assertContains(markdown, "orientation = TabsOrientation.Vertical")
+        assertFalse(markdown.contains("## Examples"))
     }
 }

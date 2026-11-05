@@ -203,6 +203,11 @@ class TabsListScope internal constructor()
  * Tabs(defaultValue = "account") { … }
  * Tabs(..., activationMode = TabsActivationMode.Manual) { … }
  * ```
+ *
+ * [activationMode] defaults to [TabsActivationMode.Automatic], matching Base UI
+ * and Radix (`Tabs.Root` has no explicit default, so arrow keys both move
+ * focus and select the panel). Pass [TabsActivationMode.Manual] to keep focus
+ * movement separate from activation.
  */
 @Composable
 fun Tabs(
@@ -211,7 +216,7 @@ fun Tabs(
     modifier: Modifier = Modifier,
     defaultValue: String = "",
     orientation: TabsOrientation = TabsOrientation.Horizontal,
-    activationMode: TabsActivationMode = TabsActivationMode.Manual,
+    activationMode: TabsActivationMode = TabsActivationMode.Automatic,
     loop: Boolean = true,
     style: Style = Style,
     value: String? = null,

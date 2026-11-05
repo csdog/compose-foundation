@@ -156,9 +156,29 @@ internal fun TableRtlRecipe(language: Int = 1) {
 internal val tableOfficialExamples =
     listOf(
         ComponentExample("Default", code = tableDefaultRecipeCode, preview = { TableDefaultRecipe() }),
-        ComponentExample("Footer", code = tableFooterRecipeCode, preview = { TableFooterRecipe() }),
-        ComponentExample("Actions", code = tableActionsRecipeCode, preview = { TableActionsRecipe() }),
-        ComponentExample("RTL", code = tableRtlRecipeCode, previewPadding = 0.dp, preview = {
+        ComponentExample(
+            "Footer",
+            code = tableFooterRecipeCode,
+            descriptionMarkdown = "Use the `TableFooter` component to add a footer to the table.",
+            preview = { TableFooterRecipe() },
+        ),
+        ComponentExample(
+            "Actions",
+            code = tableActionsRecipeCode,
+            descriptionMarkdown = "A table showing actions for each row using a `DropdownMenu` component.",
+            preview = { TableActionsRecipe() },
+        ),
+        ComponentExample(
+            "RTL",
+            code = tableRtlRecipeCode,
+            descriptionMarkdown =
+                (
+                    "To enable RTL support in your app, see the [RTL configuration guide]" +
+                        "(https://ui.shadcn.com/docs/rtl). Source shows the Arabic pair; the " +
+                        "catalog toolbar also previews English and Hebrew."
+                ),
+            previewPadding = 0.dp,
+            preview = {
             var language by remember { mutableIntStateOf(1) }
             RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
                 TableRtlRecipe(language)
