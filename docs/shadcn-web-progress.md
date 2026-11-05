@@ -119,7 +119,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Chart (`chart`)：本页八组官方配方已迁移，补真实tooltip/键盘选点、系列切换、主题/图标、响应尺寸、数值域与日期轴修复；320高、桌面48/手机0缩进及缩放后阿语轴重叠已处理。r4把Your First Chart保留为h2，Add a Grid/Axis/Tooltip/Legend改为嵌套h3并补Compose步骤说明；页面/文档/预览56项、核心交互/布局/截图40项共96项通过，全仓lint/detekt与JS/Wasm通过。浏览器仍待新空间复核，共享标题/代码细节、窄屏日期刻度和动效/完整交互继续开放，见[chart-page-r4](web-parity/chart-page-r4/README.md)、chart-r1、chart-axis-r2及chart-preview-r3。
 - [ ] Checkbox (`checkbox`)：官网八配方、Group/Table/三语RTL及Field布局已补。r2确认当前组件、MDX/Field/Nova与八示例相对首轮固定版本字节一致；修复默认误用Button缩放按压、改为官网150ms颜色过渡，调用方仍可显式选择动画。25项聚焦功能测试、全仓lint/detekt及JS/Wasm通过，浅色截图verify通过；两张深色失配与历史HEAD逐字节一致且未刷新。浏览器仍待新空间复核，原生表单/label关联、CSS命中区、动态主题和完整辅助技术继续开放，见[checkbox-r2](web-parity/checkbox-r2/README.md)及首轮记录。
 - [ ] Chip (`chip`)：项目扩展，检查一致性。
-- [x] Collapsible (`collapsible`)：第九批完成 Web 剩余项：外部收起回收内容焦点、keepMounted 状态保持/隐藏语义、动画中断反转。
+- [x] Collapsible (`collapsible`)：已按当前官网 `8a353667` 重建 Default/Basic/Settings Panel/File Tree/RTL 五配方，补 Controlled State 文案与代码、Composition、Base UI API Reference 及 288dp/576dp 预览几何；四个 Kotlin 专有示例保留为 `Kotlin extension:`。8 项聚焦测试、Wasm 构建、1440/390×浅深四象限、四个分节对照及 Default/Basic/Settings/File Tree/RTL 语言切换交互已验证；仅余 Base UI 单变体、sr-only FieldLabel、字体栅格化等已说明差异，见 [collapsible-r1](web-parity/collapsible-r1/README.md)。
 - [ ] Combobox (`combobox`)：基础已验证（第七批）；内联编辑、筛选/键盘提交/清空和默认示例已完成，多选 chips、完整辅助技术映射及复杂状态矩阵待关闭。
 - [x] Command (`command`)：第九批完成 Web 剩余项：长列表 Home/End 滚动跟随、不因初始高亮滚动页面、受控 value 拒绝未确认导航、IME 组合期间不提交。
 - [ ] Context Menu (`context-menu`)：保留第九批窗口坐标/边缘翻转、RTL/字母定位、触摸取消与非模态host结果；本轮共享依赖复查发现Escape被根层提前消费，已补两层逐层关闭/恢复焦点，模态与非模态回归通过。面板宽度/ring/阴影、完整页面与四象限需重新验收，历史勾选撤回。见[Button r2](web-parity/button-r2/README.md)。
@@ -171,6 +171,18 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Collapsible：当前五配方、RTL 与浏览器四象限（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 152 -->
+
+按“已标记完成组件也要复查”重新读取当前官网（`8a353667`）。官方页现为 Default、Basic、Settings Panel、File Tree、RTL 五组预览，另有 Usage、Composition、Controlled State 与 Base UI API Reference；`collapsible.tsx` 只是 Base UI 薄包装、没有组件级样式。本地页仍是 10 月 31 日的 Kotlin 参数矩阵（Always-visible siblings、Default open、Disabled、Keep mounted、Force mount、Uncontrolled、Trigger、Content），与当前页面结构不一致。
+
+页面已按官网重建：Default 为 350dp 订单卡，Basic 为 Card 内 Product details/Learn More，Settings Panel 使用 Card+Field+Input 与图标触发器，File Tree 为 256dp Card、Explorer/Outline Tabs 与递归嵌套 Collapsible，RTL 复用官网语言工具栏与阿/英/希顺序卡文案；预览几何按官网 `h-72`（288dp）+40dp 内边距，Default/Basic/RTL 顶部对齐，File Tree 固定 576dp。补 Controlled State 文案/代码与 Base UI API Reference；`examplesHeading = null`，四个 Kotlin 专有示例移到官方配方之后并加 `Kotlin extension:` 前缀。新增 `CollapsibleExamplesTest` 8 项，锁定配方顺序/标题、Controlled State、Copy Page 标题顺序、Default/Basic/Settings/File Tree 打开行为与阿拉伯语 RTL 文案。
+
+8/8 聚焦测试通过；Wasm development distribution 重新构建（应用 Wasm `ee99559a…`）。浏览器在 1440×1000 与 390×844 的浅/深四象限逐张复查，Basic/Settings Panel/File Tree/RTL 另有分节对照；实际点击验证 Default 展开/收起、Basic 展开、Settings 显示额外输入、File Tree 展开 `components`→`ui`→文件行，以及 RTL 工具栏阿拉伯语切换英语（LTR）后的方向与文案。证据见 [collapsible-r1](web-parity/collapsible-r1/README.md)。
+
+仍保留并说明：官网预览含 React Aria/Radix 变体，本地按项目范围只实现 Base UI；四个 Kotlin API 示例属专有扩展；Settings Panel 的官网 sr-only `FieldLabel` 未移植，原生读屏标签仍缺口；Geist/阿拉伯字体栅格化与单像素抗锯齿差异。Base UI 单变体、原生辅助技术与字体采样因此不计为未说明差异。Editor 排除、Attachment 后置。
 
 ### Trace：Description、Collapsible、Open State 与 Group（2026-11-05）
 

@@ -1,0 +1,54 @@
+{
+  "anchors": [
+    "basic",
+    "settings-panel",
+    "file-tree",
+    "rtl"
+  ],
+  "views": [
+    {
+      "name": "desktop-light",
+      "theme": "light",
+      "w": 1440,
+      "h": 1000
+    },
+    {
+      "name": "desktop-dark",
+      "theme": "dark",
+      "w": 1440,
+      "h": 1000
+    },
+    {
+      "name": "phone-light",
+      "theme": "light",
+      "w": 390,
+      "h": 844
+    }
+  ],
+  "files": {
+    "official-basic-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/official-basic-desktop-light.png",
+    "local-basic-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/local-basic-desktop-light.png",
+    "official-settings-panel-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/official-settings-panel-desktop-light.png",
+    "local-settings-panel-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/local-settings-panel-desktop-light.png",
+    "official-file-tree-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/official-file-tree-desktop-light.png",
+    "local-file-tree-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/local-file-tree-desktop-light.png",
+    "official-rtl-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/official-rtl-desktop-light.png",
+    "local-rtl-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/local-rtl-desktop-light.png",
+    "official-basic-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/official-basic-desktop-dark.png",
+    "local-basic-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/local-basic-desktop-dark.png",
+    "official-settings-panel-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/official-settings-panel-desktop-dark.png",
+    "local-settings-panel-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/local-settings-panel-desktop-dark.png",
+    "official-file-tree-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/official-file-tree-desktop-dark.png",
+    "local-file-tree-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/local-file-tree-desktop-dark.png",
+    "official-rtl-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/official-rtl-desktop-dark.png",
+    "local-rtl-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/local-rtl-desktop-dark.png",
+    "official-basic-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/official-basic-phone-light.png",
+    "local-basic-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/local-basic-phone-light.png",
+    "official-settings-panel-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/official-settings-panel-phone-light.png",
+    "local-settings-panel-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/local-settings-panel-phone-light.png",
+    "official-file-tree-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/official-file-tree-phone-light.png",
+    "local-file-tree-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/local-file-tree-phone-light.png",
+    "official-rtl-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/official-rtl-phone-light.png",
+    "local-rtl-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/collapsible-r1/sections/local-rtl-phone-light.png"
+  }
+}
