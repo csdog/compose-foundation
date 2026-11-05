@@ -121,7 +121,7 @@ val checkboxDoc =
                     ),
                     previewPadding = 0.dp,
                     descriptionMarkdown =
-                        "To enable RTL support in your app, see the [RTL configuration " +
+                        "To enable RTL support in shadcn/ui, see the [RTL configuration " +
                             "guide](https://ui.shadcn.com/docs/rtl).",
                     preview = {
                         CheckboxRtlRecipe()

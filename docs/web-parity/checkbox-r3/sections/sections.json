@@ -1,0 +1,55 @@
+{
+  "anchors": [
+    "invalid-state",
+    "basic",
+    "description",
+    "disabled",
+    "group",
+    "table",
+    "rtl"
+  ],
+  "views": [
+    {
+      "name": "desktop-light",
+      "theme": "light",
+      "w": 1440,
+      "h": 1000
+    },
+    {
+      "name": "phone-light",
+      "theme": "light",
+      "w": 390,
+      "h": 844
+    }
+  ],
+  "files": {
+    "official-invalid-state-desktop-light": "/tmp/cf-checkbox-r3b/sections/official-invalid-state-desktop-light.png",
+    "local-invalid-state-desktop-light": "/tmp/cf-checkbox-r3b/sections/local-invalid-state-desktop-light.png",
+    "official-basic-desktop-light": "/tmp/cf-checkbox-r3b/sections/official-basic-desktop-light.png",
+    "local-basic-desktop-light": "/tmp/cf-checkbox-r3b/sections/local-basic-desktop-light.png",
+    "official-description-desktop-light": "/tmp/cf-checkbox-r3b/sections/official-description-desktop-light.png",
+    "local-description-desktop-light": "/tmp/cf-checkbox-r3b/sections/local-description-desktop-light.png",
+    "official-disabled-desktop-light": "/tmp/cf-checkbox-r3b/sections/official-disabled-desktop-light.png",
+    "local-disabled-desktop-light": "/tmp/cf-checkbox-r3b/sections/local-disabled-desktop-light.png",
+    "official-group-desktop-light": "/tmp/cf-checkbox-r3b/sections/official-group-desktop-light.png",
+    "local-group-desktop-light": "/tmp/cf-checkbox-r3b/sections/local-group-desktop-light.png",
+    "official-table-desktop-light": "/tmp/cf-checkbox-r3b/sections/official-table-desktop-light.png",
+    "local-table-desktop-light": "/tmp/cf-checkbox-r3b/sections/local-table-desktop-light.png",
+    "official-rtl-desktop-light": "/tmp/cf-checkbox-r3b/sections/official-rtl-desktop-light.png",
+    "local-rtl-desktop-light": "/tmp/cf-checkbox-r3b/sections/local-rtl-desktop-light.png",
+    "official-invalid-state-phone-light": "/tmp/cf-checkbox-r3b/sections/official-invalid-state-phone-light.png",
+    "local-invalid-state-phone-light": "/tmp/cf-checkbox-r3b/sections/local-invalid-state-phone-light.png",
+    "official-basic-phone-light": "/tmp/cf-checkbox-r3b/sections/official-basic-phone-light.png",
+    "local-basic-phone-light": "/tmp/cf-checkbox-r3b/sections/local-basic-phone-light.png",
+    "official-description-phone-light": "/tmp/cf-checkbox-r3b/sections/official-description-phone-light.png",
+    "local-description-phone-light": "/tmp/cf-checkbox-r3b/sections/local-description-phone-light.png",
+    "official-disabled-phone-light": "/tmp/cf-checkbox-r3b/sections/official-disabled-phone-light.png",
+    "local-disabled-phone-light": "/tmp/cf-checkbox-r3b/sections/local-disabled-phone-light.png",
+    "official-group-phone-light": "/tmp/cf-checkbox-r3b/sections/official-group-phone-light.png",
+    "local-group-phone-light": "/tmp/cf-checkbox-r3b/sections/local-group-phone-light.png",
+    "official-table-phone-light": "/tmp/cf-checkbox-r3b/sections/official-table-phone-light.png",
+    "local-table-phone-light": "/tmp/cf-checkbox-r3b/sections/local-table-phone-light.png",
+    "official-rtl-phone-light": "/tmp/cf-checkbox-r3b/sections/official-rtl-phone-light.png",
+    "local-rtl-phone-light": "/tmp/cf-checkbox-r3b/sections/local-rtl-phone-light.png"
+  }
+}

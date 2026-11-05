@@ -118,7 +118,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [x] Code Block (`code-block`)：按当前官网重建 23 个配方（demo + Basic…Terminal Output，Max Height/Languages/Terminal Output 为嵌套 h3），补 Features/Accessibility/Composition/Usage 与九个 API 小节；组件新增 maxHeight/scrollable 截断及静态底部渐隐、横向滚动渐隐、内容强制 LTR、行号对读屏隐藏。26 项聚焦测试、Wasm 构建通过；1440/390 浅深四象限及复制确认、换行、悬浮按钮、键盘滚动、Show More 展开/收起、Tabs、RTL 阿语/英语切换均已复核。仍余 rhea→Nova 样式上下文、Shiki/ANSI/Streamdown 服务端/流式/Markdown、Typeset 近似、下载按钮无效、无原生滚动条、共享页面缺少 demo 后导语槽位及指针聚焦 ring 与 focus-visible 差异，见 [Code Block r2](web-parity/code-block-r2/README.md)。
 - [x] Trace (`trace`)：按固定版本 8a35366 补齐官方 16 个预览（顶部 demo + Trace Line/Status/Description/Collapsible/Open State/Link/Dialog/Sheet/Group/Sources/Chain of Thought/Commit/Whole Turn/Reasoning/Tool），顺序/标题/文案、Built with Trace/Features/Accessibility 与 9 个 API 小节（TraceLink 为 Kotlin extension）已对齐；组件补 `keepMounted`、标题后图标 4dp、`TraceDescription(mono=)` 与 `TraceLink`。30 项聚焦测试（页面19+核心11含RTL/keepMounted/链接语义）、Wasm 9862c51a、四象限与新空间实际浏览器展开/受控/Dialog/Sheet/嵌套diff/Reasoning/Tool/Replay 状态通过。残余（已解释）：官方简介段/Built with 表格/Status 表受本地文档模型限制置于 Composition 后或改为散文，官方预览后补充 TSX 片段未收录，Reasoning/Tool 非流式、Replay 恢复静态转录，Dialog/Sheet 触发行为无 hover 变色，官方预览为 base-rhea 而本地 Nova（对话框448vs384）且 API 表少 Description 列，见[trace-r3](web-parity/trace-r3/README.md)。
 - [ ] Chart (`chart`)：本页八组官方配方已迁移，补真实tooltip/键盘选点、系列切换、主题/图标、响应尺寸、数值域与日期轴修复；320高、桌面48/手机0缩进及缩放后阿语轴重叠已处理。r4把Your First Chart保留为h2，Add a Grid/Axis/Tooltip/Legend改为嵌套h3并补Compose步骤说明；页面/文档/预览56项、核心交互/布局/截图40项共96项通过，全仓lint/detekt与JS/Wasm通过。浏览器仍待新空间复核，共享标题/代码细节、窄屏日期刻度和动效/完整交互继续开放，见[chart-page-r4](web-parity/chart-page-r4/README.md)、chart-r1、chart-axis-r2及chart-preview-r3。
-- [ ] Checkbox (`checkbox`)：官网八配方、Group/Table/三语RTL及Field布局已补。r2确认当前组件、MDX/Field/Nova与八示例相对首轮固定版本字节一致；修复默认误用Button缩放按压、改为官网150ms颜色过渡，调用方仍可显式选择动画。25项聚焦功能测试、全仓lint/detekt及JS/Wasm通过，浅色截图verify通过；两张深色失配与历史HEAD逐字节一致且未刷新。浏览器仍待新空间复核，原生表单/label关联、CSS命中区、动态主题和完整辅助技术继续开放，见[checkbox-r2](web-parity/checkbox-r2/README.md)及首轮记录。
+- [ ] Checkbox (`checkbox`)：官网八配方、Group/Table/三语RTL及Field布局已补；r2确认组件/MDX/示例与首轮字节一致，默认改为官网150ms颜色过渡。r3按当前官网补齐 RTL 说明文案（"in shadcn/ui"），并在新空间完成 1440/390×浅深四象限、Invalid/Basic/Description/Disabled/Group/Table/RTL 分节与 Basic/Table 实际点击交互复查；CheckboxExamplesTest 3 项、CheckboxViewportTest 12 项通过，Wasm 构建通过。仍保留两张历史深色基准差异（actual 与 HEAD 逐字节一致、未刷新）、Canvas 无原生 input/label 关联、CSS 命中区/动态主题/shape 与完整辅助技术矩阵，见 [checkbox-r3](web-parity/checkbox-r3/README.md)。
 - [ ] Chip (`chip`)：项目扩展，检查一致性。
 - [x] Collapsible (`collapsible`)：已按当前官网 `8a353667` 重建 Default/Basic/Settings Panel/File Tree/RTL 五配方，补 Controlled State 文案与代码、Composition、Base UI API Reference 及 288dp/576dp 预览几何；四个 Kotlin 专有示例保留为 `Kotlin extension:`。8 项聚焦测试、Wasm 构建、1440/390×浅深四象限、四个分节对照及 Default/Basic/Settings/File Tree/RTL 语言切换交互已验证；仅余 Base UI 单变体、sr-only FieldLabel、字体栅格化等已说明差异，见 [collapsible-r1](web-parity/collapsible-r1/README.md)。
 - [ ] Combobox (`combobox`)：基础已验证（第七批）；内联编辑、筛选/键盘提交/清空和默认示例已完成，多选 chips、完整辅助技术映射及复杂状态矩阵待关闭。
@@ -140,7 +140,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Marker (`marker`)：r3按当前官网8a3536678a复核八个配方（demo、Variants、Status、Shimmer、Separator、Border、With Icon、Links and Buttons）顺序与内容，Variants/Status/Shimmer/Separator/Border/With Icon/Links and Buttons说明改为官网原文；确认自然预览高度、本页链接、文字/图标hover与按钮Toast仍正常。MarkerExamplesTest 5、MarkerInteractionTest 12、MarkerParityTest 8、MarkerScreenshotTest 5通过；Wasm构建60af0664…后四象限已复核（含共享说明80%宽度），浏览器已验链接hover、Revert Toast与Accessibility/API区。仍开放：共享Toaster位置/堆叠、原生anchor/button与辅助技术能力、官网demo后导语与base-rhea预览主题、Variants表格/节奏差异及旧暗色分隔线基准，故保持未勾选，详见[marker-r3](web-parity/marker-r3/README.md)。
 - [ ] Menubar (`menubar`)：r1 按当前官网确认六配方顺序（demo/Checkbox/Radio/Submenu/With Icons/RTL），给 30 个 Compose-only 配方统一加 `Kotlin extension:` 前缀，补 API Reference 三个小节与 Base UI 链接；浏览器实测 File/View/Profiles 菜单开关、ArrowDown/ArrowRight 键盘导航、Escape 关闭与 RTL 阿拉伯语栏，四象限 1440/390×浅深已复查，MenubarExamplesTest 8 项与 Wasm 构建通过。Canvas 无原生 menu/menuitem 语义、悬停子菜单交互帧、指针碰撞/滚动与真机触摸、共享页面标签/手机宽度仍开放，见[Menubar r1](web-parity/menubar-r1/README.md)。
 - [ ] Message (`message`)：r1 按当前官网确认六配方顺序（demo/Avatar/Group/Header and Footer/Actions/Attachment），补 Features 与 Accessibility（Label icon-only actions / Status updates）章节，并把额外配方统一加 `Kotlin extension:` 前缀；官方 base-rhea 的蓝色气泡用 Nova + Accent.Blue 复现（实测 RGB 35,70,221），浏览器复查 Group/Actions/Attachment 与四象限，MessageExamplesTest 7 项与 Wasm 构建通过。base-rhea 圆角/间距、原生 ARIA/读屏、完整键盘与动态主题、共享页面标签/手机宽度仍开放，见[Message r1](web-parity/message-r1/README.md)。
-- [ ] Message Scroller (`message-scroller`)：r4 按当前官网重核结构：确认为 8 段指南 + 11 个配方（Anchoring Turns、Group Chat、Keeping Context Visible、Following the Live Edge、Opening Saved Threads、Avoiding a Flash on Reload、Loading Earlier Messages、Animating New Messages、Jumping to Messages、Tracking the Reader's Position、Reading Scroll State）+ demo，官方 description 与 hero demo 也需更新。本地已接线 6 个官方配方、MessageScrollerExamplesTest 3 项通过并重拍四象限（1440/390×浅深），但页面仍在 `Examples` 分组下、hero 非 demo、扩展未加 `Kotlin extension:`、缺 demo 与其余 5 配方、8 段指南未渲染。真实滚动/可见性状态本轮未重跑，见[Message Scroller r4](web-parity/message-scroller-r4/README.md)。
+- [x] Message Scroller (`message-scroller`)：r4 按当前官网对齐：description 原文、`examplesHeading = null`、官方顺序 12 节（New Chat demo、Anchoring Turns、Group Chat、Keeping Context Visible、Following the Live Edge、Opening Saved Threads、Avoiding a Flash on Reload、Loading Earlier Messages、Animating New Messages、Jumping to Messages、Tracking the Reader's Position、Reading Scroll State）+ 8 段官方指南，Compose-only 示例统一 `Kotlin extension:` 前缀。新增 5 个官方配方实现（demo、anchoring、group chat、streaming follow、animation presets），复用既有 6 个；浏览器实测 demo 流式跟随、锚点切换（user/assistant + 64dp peek）、Group Chat 两步推进与 Marker 锚点、streaming 跟随、animation 预设发送，四象限 1440/390×浅深复查，MessageScrollerExamplesTest 4 项与 Wasm 构建通过（`ef04de09cbf8457ebdc6.wasm`）。官方指南位置（Installation 前）、scroll-release 仅 JVM、rhea/theme-blue 近似、DOM aria 语义与虚拟化/unstyled 无对应物等差异见[Message Scroller r4](web-parity/message-scroller-r4/README.md)。
 - [ ] Navigation Menu (`navigation-menu`)：官网Default/三语RTL的内容、真实导航、图标及768/1024媒体查询已移植，75条文案逐字核对；本轮修复面板链接悬停关闭/重开及Popup导航依赖作用域，公共版本0.3.16。核心22项独立验证、目录18项及两个ktlint通过；共享视口/Root align、浏览器及完整状态仍开放，详见文末。
 - [ ] Pagination (`pagination`)：官网Default/Simple/Icons Only/三语RTL已移植；Nova32dp/2dp间隔、响应式文字、RTL箭头、禁用及省略号语义已补，新增内容slot/size/style并修正Select当前值换行，版本0.3.17。核心24、目录16及两个ktlint通过，JS/Wasm成功；旧Vega2图预存失配，浏览器及完整状态仍待关闭，详见文末。
 - [ ] Popover (`popover`)：本轮已核对官网来源，修正 Nova 面板间距、圆角、阴影细环与完整行高；原生9项、两项ktlint与JS/Wasm已验证。五组官网配方已迁移，原生24项示例交互已过；默认非模态与焦点行为、动画及浏览器完整状态矩阵仍待完成。
@@ -172,6 +172,28 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Message Scroller：官方 11 配方、指南与滚动状态复核（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 175 -->
+
+按固定上游 `8a3536678a528cc012b9e62484290e79d0be410f` 完成本页对齐。官网为 8 段指南 + 11 个 Core Concepts 配方（另有 New Chat demo）；官方把 What Makes… / MessageScroller 放在 Installation 前，11 个配方从 Anchoring Turns 到 Reading Scroll State。
+
+本轮把 description 改为官网原文，移除 `Examples` 分组，示例改为官方顺序：demo、Anchoring Turns、Group Chat、Keeping Context Visible、Following the Live Edge、Opening Saved Threads、Avoiding a Flash on Reload、Loading Earlier Messages、Animating New Messages、Jumping to Messages、Tracking the Reader's Position、Reading Scroll State，之后才是 Compose-only 示例并统一加 `Kotlin extension:` 前缀。新增 `MessageScrollerMissingRecipes.kt` 实现 5 个缺失配方：New Chat demo（空态 + 脚本化逐字流式 + autoScroll）、Anchoring Turns（User/Assistant 锚点切换、重置、空态、64dp peek）、Group Chat（Grace/Mary/Rocky、Marker 作为锚点、Add Rocky→Send 两步）、Following the Live Edge（autoScroll 多轮流式）、Animating New Messages（Fade/Pop/Slide + transform/opacity 入场）；既有 6 个官方配方复用并按官方顺序接线。补 8 段官方指南（What Makes…15 条、MessageScroller、Core Concepts、Performance、Virtualization、Accessibility、Unstyled），Avoiding a Flash on Reload 官网无预览，用说明文字 + 提示卡承担。复用 recipes helper（private→internal），未改滚动组件运行时代码。
+
+验证：浏览器实测 demo 流式跟随到最新文本、anchoring 两种角色锚点、Group Chat marker 锚点与 Rocky 消息、streaming 跟随、animation 预设发送；四象限 1440/390×浅深在最终构建 `ef04de09cbf8457ebdc6.wasm`（SHA256 `9b8f50bf1288b50c1c7cbc59d22f28dacbcb0a18b94a84583bc4662197c38ca8`）复查；MessageScrollerExamplesTest **4 项通过**（官方顺序、指南顺序、前缀、官网 description、Provider 状态回归）。
+
+保留差异：指南位置受页面壳限制在 Composition 之后（官网在 Installation 前）；流式/动画为本地协程模拟、内容为官网脚本摘要，animation 弹簧只做预设近似；浏览器滚轮未能复现“滚动离开释放跟随”（事件落到页面），该状态由 JVM 测试覆盖；demo 的 rhea+theme-blue 用 Nova 近似；Canvas 无 role=log/aria-live/aria-busy/data-* 语义，Virtualization 与 Unstyled 包无 Compose 对应物；真实触摸/键盘滚动与长 transcript 性能未重验。
+
+### Checkbox：RTL 文案、新空间四象限与 Table 交互（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 174 -->
+
+Checkbox 的八个官方配方与 Group/Table/RTL 布局在 r2 已对齐。本轮按“已标记/已完成组件也要复查”重新读取当前官网，发现 RTL 说明仍写 "To enable RTL support in your app"，官网为 "in shadcn/ui"，已改为官网原文；组件与主题无需改动，r2 的 150ms 官方颜色过渡保留。
+
+验证：CheckboxExamplesTest 3 项、CheckboxViewportTest 12 项通过（XML 已归档）；Wasm development distribution 重建（应用 Wasm `0a293101…`）。浏览器完成 1440×1000 与 390×844 的浅/深四象限，另对 Invalid State、Basic、Description、Disabled、Group、Table、RTL 七个分节做官网/本地对照，并实际点击 Basic 复选框与 Table 行，确认勾选/取消与行选择生效。证据见 [checkbox-r3](web-parity/checkbox-r3/README.md)。
+
+仍保留并说明：两张历史深色 Roborazzi 基准与 actual 不一致，actual 自首轮起与 HEAD 逐字节相同且未刷新；Canvas 没有原生 `<input type=checkbox>` 与 label-for 关联，CSS 命中区、动态主题/shape 和完整读屏/键盘矩阵仍开放；共享页面 chrome 与字体栅格化属既有项目范围差异。Checkbox 保持未勾选。
 
 ### Trace：官方 16 配方、核心 keepMounted/链接与四象限复验（2026-11-05）
 
