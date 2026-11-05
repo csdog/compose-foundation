@@ -228,8 +228,8 @@ val kbdDoc =
                 ComponentExample(
                     title = "Button",
                     descriptionMarkdown =
-                        "Use the `Kbd` component inside a `Button` to display a keyboard " +
-                            "key inside a button.",
+                        "Use the `Kbd` component inside a `Button` component to display a " +
+                            "keyboard key inside a button.",
                     minPreviewHeight = 288.dp,
                     mobileMinPreviewHeight = 288.dp,
                     previewPadding = 40.dp,
@@ -259,8 +259,8 @@ val kbdDoc =
                 ComponentExample(
                     title = "Tooltip",
                     descriptionMarkdown =
-                        "Use the `Kbd` component inside a `Tooltip` to display a tooltip " +
-                            "with a keyboard key.",
+                        "You can use the `Kbd` component inside a `Tooltip` component to " +
+                            "display a tooltip with a keyboard key.",
                     minPreviewHeight = 288.dp,
                     mobileMinPreviewHeight = 288.dp,
                     previewPadding = 40.dp,
@@ -354,8 +354,8 @@ val kbdDoc =
                 ComponentExample(
                     title = "Input Group",
                     descriptionMarkdown =
-                        "Use the `Kbd` component inside an `InputGroupAddon` to display a " +
-                            "keyboard key inside an input group.",
+                        "You can use the `Kbd` component inside a `InputGroupAddon` component " +
+                            "to display a keyboard key inside an input group.",
                     minPreviewHeight = 288.dp,
                     mobileMinPreviewHeight = 288.dp,
                     previewPadding = 40.dp,
@@ -393,8 +393,7 @@ val kbdDoc =
                 ComponentExample(
                     title = "RTL",
                     descriptionMarkdown =
-                        "To enable RTL support, provide `LocalLayoutDirection` using a " +
-                            "`CompositionLocalProvider`.",
+                        "To enable RTL support in shadcn/ui, see the RTL configuration guide.",
                     minPreviewHeight = 304.dp,
                     mobileMinPreviewHeight = 304.dp,
                     previewPadding = 0.dp,

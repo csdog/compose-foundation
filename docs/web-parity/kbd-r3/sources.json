@@ -1,0 +1,55 @@
+{
+  "retrievedAt": "2026-11-05T04:44:01.560122+00:00",
+  "revision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "repo": "shadcn-ui/ui",
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/kbd.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/kbd.mdx",
+      "sha256": "366fa8fa3ea4c8c0c8f0cfc1824f033fb409a459c83787b3d5264369e61c9b9b",
+      "bytes": 2280
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/kbd.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/registry/bases/base/ui/kbd.tsx",
+      "sha256": "f04fe8ce9c10023fa4d9907030ec5e26a4c714e5377e6b3864cb03548bd0a56f",
+      "bytes": 556
+    },
+    {
+      "path": "apps/v4/examples/base/kbd-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/kbd-demo.tsx",
+      "sha256": "6e36026ff5df098042132fe787d21babcfc68f1c378909743b20db85e3934643",
+      "bytes": 408
+    },
+    {
+      "path": "apps/v4/examples/base/kbd-group.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/kbd-group.tsx",
+      "sha256": "11eacd72d8ee1bc6b37562fe1d88c72f848c3c4e247458db15db9ea3cd5ba404",
+      "bytes": 406
+    },
+    {
+      "path": "apps/v4/examples/base/kbd-button.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/kbd-button.tsx",
+      "sha256": "7259b31490487dcee12c9fb4a948ecc4605280193931119f9835f69c06835fb4",
+      "bytes": 309
+    },
+    {
+      "path": "apps/v4/examples/base/kbd-tooltip.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/kbd-tooltip.tsx",
+      "sha256": "36c2fc92d22db31846d4df9e88d308e0f42cec92bcdd1f02965fdd902cb0b129",
+      "bytes": 1003
+    },
+    {
+      "path": "apps/v4/examples/base/kbd-input-group.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/kbd-input-group.tsx",
+      "sha256": "a3c47c88ec8ae8d6dd0a0578636032fda35dac0283fd52c61a5a773241ccc60f",
+      "bytes": 613
+    },
+    {
+      "path": "apps/v4/examples/base/kbd-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/kbd-rtl.tsx",
+      "sha256": "c5d435bc40f50e8ed5ebdc9d8270143567e410894fb6de0da91442d37f277962",
+      "bytes": 776
+    }
+  ]
+}

@@ -190,7 +190,7 @@ val markerDoc =
                 ComponentExample(
                     title = "Variants",
                     descriptionMarkdown =
-                        "Use variant to switch between an inline marker, bordered row, and labeled separator.",
+                        "Use `variant` to switch between an inline marker, bordered row, and labeled separator.",
                     minPreviewHeight = 0.dp,
                     mobileMinPreviewHeight = 0.dp,
                     previewPadding = 40.dp,
@@ -238,7 +238,8 @@ val markerDoc =
                 ComponentExample(
                     title = "Status",
                     descriptionMarkdown =
-                        "Use a polite live region and a Spinner for streaming or in-progress status updates.",
+                        "Set `role=\"status\"` and include a `Spinner` for streaming or in-progress " +
+                            "markers so updates are announced.",
                     minPreviewHeight = 0.dp,
                     mobileMinPreviewHeight = 0.dp,
                     previewPadding = 40.dp,
@@ -295,7 +296,8 @@ val markerDoc =
                 ComponentExample(
                     title = "Shimmer",
                     descriptionMarkdown =
-                        "Apply rememberShimmerStyle to MarkerContent text for an animated streaming effect.",
+                        "Add the shimmer utility to `MarkerContent` for an animated streaming-text " +
+                            "effect. The catalog applies it with `rememberShimmerStyle()`.",
                     minPreviewHeight = 0.dp,
                     mobileMinPreviewHeight = 0.dp,
                     previewPadding = 40.dp,
@@ -348,7 +350,8 @@ val markerDoc =
                 ComponentExample(
                     title = "Separator",
                     descriptionMarkdown =
-                        "Use the separator variant for labeled dividers, such as dates or section breaks.",
+                        "Use the `separator` variant for labeled dividers, such as dates or section " +
+                            "breaks, in a conversation.",
                     minPreviewHeight = 0.dp,
                     mobileMinPreviewHeight = 0.dp,
                     previewPadding = 40.dp,
@@ -396,7 +399,8 @@ val markerDoc =
                 ComponentExample(
                     title = "Border",
                     descriptionMarkdown =
-                        "Use the border variant to separate status rows while keeping their default alignment.",
+                        "Use the `border` variant for status rows that should keep the default marker " +
+                            "alignment while separating the next row.",
                     minPreviewHeight = 0.dp,
                     mobileMinPreviewHeight = 0.dp,
                     previewPadding = 40.dp,
@@ -450,7 +454,8 @@ val markerDoc =
                 ComponentExample(
                     title = "With Icon",
                     descriptionMarkdown =
-                        "Use MarkerIcon alongside the content, or stack the icon and content in a Column.",
+                        "Use `MarkerIcon` to render an icon alongside the content. Use a column to " +
+                            "stack the icon above the content.",
                     minPreviewHeight = 0.dp,
                     mobileMinPreviewHeight = 0.dp,
                     previewPadding = 40.dp,
@@ -520,7 +525,7 @@ val markerDoc =
                     minPreviewHeight = 0.dp,
                     mobileMinPreviewHeight = 0.dp,
                     previewPadding = 40.dp,
-                    descriptionMarkdown = "Render markers as links or buttons to make them interactive.",
+                    descriptionMarkdown = "Turn a marker into a link or button with the `render` prop on `Marker`.",
                     code = markerActionCode,
                     preview = { MarkerActionsRecipe() },
                 ),

@@ -1,0 +1,162 @@
+{
+  "slug": "marker",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/marker",
+  "localUrl": "http://127.0.0.1:8772/marker",
+  "capturedAt": "2026-11-05T04:44:53.641Z",
+  "app": [
+    "http://127.0.0.1:8772/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8772/454ce44178f5890786a6.wasm"
+  ],
+  "officialDom": {
+    "title": "Marker",
+    "description": "Copy PagePreviousNext",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "Installation#"
+      },
+      {
+        "tag": "H2",
+        "text": "Usage#"
+      },
+      {
+        "tag": "H2",
+        "text": "Composition#"
+      },
+      {
+        "tag": "H2",
+        "text": "Features#"
+      },
+      {
+        "tag": "H2",
+        "text": "Variants#"
+      },
+      {
+        "tag": "H2",
+        "text": "Status#"
+      },
+      {
+        "tag": "H2",
+        "text": "Shimmer#"
+      },
+      {
+        "tag": "H2",
+        "text": "Separator#"
+      },
+      {
+        "tag": "H2",
+        "text": "Border#"
+      },
+      {
+        "tag": "H2",
+        "text": "With Icon#"
+      },
+      {
+        "tag": "H2",
+        "text": "Links and Buttons#"
+      },
+      {
+        "tag": "H2",
+        "text": "Accessibility#"
+      },
+      {
+        "tag": "H3",
+        "text": "Status and Progress#"
+      },
+      {
+        "tag": "H3",
+        "text": "Labeled Separators#"
+      },
+      {
+        "tag": "H3",
+        "text": "Bordered Markers#"
+      },
+      {
+        "tag": "H3",
+        "text": "Decorative Icons#"
+      },
+      {
+        "tag": "H3",
+        "text": "Interactive Markers#"
+      },
+      {
+        "tag": "H2",
+        "text": "API Reference#"
+      },
+      {
+        "tag": "H3",
+        "text": "Marker#"
+      },
+      {
+        "tag": "H3",
+        "text": "MarkerIcon#"
+      },
+      {
+        "tag": "H3",
+        "text": "MarkerContent#"
+      }
+    ],
+    "tabs": [
+      "Command",
+      "Manual",
+      "pnpm",
+      "npm",
+      "yarn",
+      "bun"
+    ],
+    "examples": 8,
+    "toc": [],
+    "bodyWidth": {
+      "x": 0,
+      "y": 64,
+      "width": 1080,
+      "height": 8965.515625,
+      "top": 64,
+      "right": 1080,
+      "bottom": 9029.515625,
+      "left": 0
+    },
+    "clientWidth": 1080,
+    "scrollHeight": 9029
+  },
+  "local": {
+    "desktop-light": {
+      "url": "http://127.0.0.1:8772/marker",
+      "theme": "light",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(5937px + 100vh)"
+    },
+    "desktop-dark": {
+      "url": "http://127.0.0.1:8772/marker",
+      "theme": "dark",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(5937px + 100vh)"
+    },
+    "phone-light": {
+      "url": "http://127.0.0.1:8772/marker",
+      "theme": "light",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(7434px + 100vh)"
+    },
+    "phone-dark": {
+      "url": "http://127.0.0.1:8772/marker",
+      "theme": "dark",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(7434px + 100vh)"
+    }
+  },
+  "files": {
+    "official-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/marker-r3/official-desktop-light.png",
+    "local-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/marker-r3/local-desktop-light.png",
+    "official-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/marker-r3/official-desktop-dark.png",
+    "local-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/marker-r3/local-desktop-dark.png",
+    "official-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/marker-r3/official-phone-light.png",
+    "local-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/marker-r3/local-phone-light.png",
+    "official-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/marker-r3/official-phone-dark.png",
+    "local-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/marker-r3/local-phone-dark.png"
+  }
+}
