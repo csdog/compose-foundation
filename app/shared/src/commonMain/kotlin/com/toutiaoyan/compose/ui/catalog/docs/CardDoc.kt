@@ -52,8 +52,8 @@ val cardDoc =
                 ),
                 ComponentApiSection(
                     "CardHeader",
-                    "Title, description, and optional action. Nova places the action at the logical end; " +
-                        "modifier and Style customize the section.",
+                    "Used for a title, description, and optional action. Nova places the action at the " +
+                        "logical end (top-right in LTR); modifier and Style customize the section.",
                     listOf(
                         ApiProperty("modifier", "Modifier", "Modifier"),
                         ApiProperty("style", "Style", "Style"),
@@ -73,7 +73,7 @@ val cardDoc =
                 ),
                 ComponentApiSection(
                     "CardDescription",
-                    "Helper text below the title.",
+                    "Used for helper text under the title.",
                     listOf(
                         ApiProperty("text", "String or () -> String/AnnotatedString", "Required"),
                         ApiProperty("modifier", "Modifier", "Modifier"),
@@ -82,7 +82,8 @@ val cardDoc =
                 ),
                 ComponentApiSection(
                     "CardAction",
-                    "Caller-provided action at the logical end of a Nova header.",
+                    "Places content in the top-right of the header (logical end in RTL), such as a button " +
+                        "or badge.",
                     listOf(
                         ApiProperty("modifier", "Modifier", "Modifier"),
                         ApiProperty("content", "@Composable () -> Unit", "Required"),
@@ -90,7 +91,8 @@ val cardDoc =
                 ),
                 ComponentApiSection(
                     "CardContent",
-                    "Main body. Override horizontal padding with Style for edge-to-edge content.",
+                    "Used for the main card body. Override horizontal padding with Style for edge-to-edge " +
+                        "content.",
                     listOf(
                         ApiProperty("modifier", "Modifier", "Modifier"),
                         ApiProperty("style", "Style", "Style"),
@@ -109,10 +111,10 @@ val cardDoc =
                     ),
                 ),
                 ComponentApiSection(
-                    "CardImage",
-                    "Kotlin image region corresponding to a leading HTML image. Supply the painter, " +
-                        "description, aspect ratio, and overlays in the slot; a first image removes the root " +
-                        "top inset.",
+                    "CardImage (Kotlin extension)",
+                    "Kotlin-only image region corresponding to a leading HTML image. Supply the painter, " +
+                        "description, aspect ratio, and overlays in the slot; a first image removes the " +
+                        "root top inset.",
                     listOf(
                         ApiProperty("modifier", "Modifier", "Modifier"),
                         ApiProperty("content", "@Composable BoxScope.() -> Unit", "Required"),

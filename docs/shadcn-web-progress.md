@@ -172,6 +172,16 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
 
+### Card：当前源码复核与 Kotlin 扩展边界（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 147 -->
+
+当前官网仍为Default、Size、Spacing（含Edge to Edge）、Image、RTL六组；API Reference仍为七个官方组件，不包含`CardImage`。shadcn/ui当前`main`已从Card首轮固定的`4aaea19d`前进到`8a353667`，但两次提交之间只改动`apps/v4/registry/directory.json`，九份Card、MDX、示例、图片与Nova来源均保持字节一致，因此未新增源码或配方。
+
+页面API文案已按当前上游校正`CardHeader`、`CardDescription`、`CardAction`和`CardContent`；本地`CardImage`小节明确标记为`Kotlin extension`并说明它是Kotlin-only图像区域。页面导出测试新增Action逻辑末端语义及`CardImage`边界断言。页面20项、核心Nova parity5项、Spacing contract5项、Card截图7项共37项通过；全仓ktlint/detekt通过，Wasm开发distribution14.686s退出0并保留1条既有Webpack warning。来源、XML与构建摘要见[card-r2](web-parity/card-r2/README.md)。
+
+当前Ego仍无compose-foundation TaskSpace，只有用户空间与无关Product Hunt委派空间；未创建替代空间或接管标签，因此没有新的浅深桌面/手机浏览器验证。Card保持未勾选，原生HTML滚动条/边框占位、字体与换行、共享页几何、Select键盘初始焦点、完整链接/焦点/禁用/触摸/辅助技术矩阵继续开放。Editor排除、Attachment后置。
+
 ### Calendar：官方十配方与 Kotlin 扩展标识（2026-11-05）
 
 <!-- progress-created: 2026-11-05; order: 146 -->

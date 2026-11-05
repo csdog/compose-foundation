@@ -78,6 +78,12 @@ class CardExamplesTest(private val width: Int, private val dark: Boolean) {
         )
         assertFalse(docSections(cardDoc).any { it.title == "Edge to Edge" })
         assertFalse(componentPageMarkdown(cardDoc).contains("## Edge to Edge"))
+        assertContains(
+            componentPageMarkdown(cardDoc),
+            "Places content in the top-right of the header (logical end in RTL), such as a button or badge.",
+        )
+        assertContains(componentPageMarkdown(cardDoc), "### CardImage (Kotlin extension)")
+        assertContains(componentPageMarkdown(cardDoc), "Kotlin-only image region")
         rule.onNodeWithText("Login to your account").assertIsDisplayed()
         rule.onNodeWithText("m@example.com").performTextInput("alice@example.com")
         rule.onNodeWithContentDescription("Password", useUnmergedTree = true).performTextInput("secret")
