@@ -273,7 +273,7 @@ val hoverCardDoc =
                 ComponentExample(
                     title = "RTL",
                     descriptionMarkdown =
-                        "To enable RTL support in your app, see the " +
+                        "To enable RTL support in shadcn/ui, see the " +
                             "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
                     minPreviewHeight = 384.dp,
                     mobileMinPreviewHeight = 384.dp,

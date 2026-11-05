@@ -1,0 +1,1003 @@
+{
+  "nested_promoted": [
+    {
+      "id": "message-scroller",
+      "promoted": [
+        [
+          "Anchoring Turns",
+          2
+        ],
+        [
+          "Group Chat",
+          2
+        ],
+        [
+          "Keeping Context Visible",
+          2
+        ],
+        [
+          "Following the Live Edge",
+          2
+        ],
+        [
+          "Opening Saved Threads",
+          2
+        ],
+        [
+          "Loading Earlier Messages",
+          2
+        ],
+        [
+          "Animating New Messages",
+          2
+        ],
+        [
+          "Jumping to Messages",
+          2
+        ],
+        [
+          "Tracking the Reader's Position",
+          2
+        ],
+        [
+          "Reading Scroll State",
+          2
+        ]
+      ]
+    }
+  ],
+  "description_classes": [
+    {
+      "id": "accordion",
+      "title": "Multiple",
+      "ratio": 0.918,
+      "local": "Use multiple = true to allow multiple items to be open at the same time.",
+      "official": "Use the multiple prop to allow multiple items to be open at the same time.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "accordion",
+      "title": "Borders",
+      "ratio": 0.607,
+      "local": "Add a border around the Accordion and keep separators between AccordionItem elements.",
+      "official": "Add border to the Accordion and border-b last:border-b-0 to the AccordionItem to add borders to the items.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "alert",
+      "title": "Destructive",
+      "ratio": 0.762,
+      "local": "Set variant = AlertVariant.Destructive to display a destructive alert.",
+      "official": "Use variant=\"destructive\" to create a destructive alert.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "alert",
+      "title": "Custom Colors",
+      "ratio": 0.658,
+      "local": "You can customize the alert colors with Style properties such as background and contentColor on the Alert component.",
+      "official": "You can customize the alert colors by adding custom classes such as bg-amber-50 dark:bg-amber-950 to the Alert component.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "alert-dialog",
+      "title": "Small",
+      "ratio": 0.789,
+      "local": "Use size = DialogSize.Sm to make the alert dialog smaller.",
+      "official": "Use the size=\"sm\" prop to make the alert dialog smaller.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "alert-dialog",
+      "title": "Small with Media",
+      "ratio": 0.797,
+      "local": "Use size = DialogSize.Sm to make the alert dialog smaller and AlertDialogMedia to add a media element such as an icon or image.",
+      "official": "Use the size=\"sm\" prop to make the alert dialog smaller and the AlertDialogMedia component to add a media element such as an icon or image to the alert dialog.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "alert-dialog",
+      "title": "Destructive",
+      "ratio": 0.629,
+      "local": "Use AlertDialogAction to add a destructive action button to the alert dialog. The Settings link is a current-page placeholder, as in the upstream example.",
+      "official": "Use the AlertDialogAction component to add a destructive action button to the alert dialog.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "attachment",
+      "title": "Image",
+      "ratio": 0.496,
+      "local": "Set variant = AttachmentMediaVariant.Image on the media and use orientation = AttachmentOrientation.Vertical. Supply your own image resources.",
+      "official": "Set variant=\"image\" on AttachmentMedia and render an inside it. Use orientation=\"vertical\" to stack the media above the content.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "avatar",
+      "title": "Badge",
+      "ratio": 0.729,
+      "local": "Use the AvatarBadge component to add a badge to the avatar. The badge is positioned at the bottom right of the avatar. Use Style to customize its color.",
+      "official": "Use the AvatarBadge component to add a badge to the avatar. The badge is positioned at the bottom right of the avatar. Use the className prop to add custom styles to the badge such as custom colors, sizes, etc.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "avatar",
+      "title": "Badge with Icon",
+      "ratio": 0.857,
+      "local": "You can also use an icon inside AvatarBadge.",
+      "official": "You can also use an icon inside .",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "avatar",
+      "title": "Avatar Group Count",
+      "ratio": 0.79,
+      "local": "Use AvatarGroupCount to add a count to the group.",
+      "official": "Use to add a count to the group.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "avatar",
+      "title": "Avatar Group with Icon",
+      "ratio": 0.805,
+      "local": "You can also use an icon inside AvatarGroupCount.",
+      "official": "You can also use an icon inside .",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "badge",
+      "title": "With Icon",
+      "ratio": 0.54,
+      "local": "Render icons inside the badge. Set iconPlacement to Start or End for the matching logical edge spacing.",
+      "official": "You can render an icon inside the badge. Use data-icon=\"inline-start\" to render the icon on the left and data-icon=\"inline-end\" to render the icon on the right.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "badge",
+      "title": "With Spinner",
+      "ratio": 0.618,
+      "local": "Render a spinner inside the badge. Set iconPlacement to Start or End to match the spinner position.",
+      "official": "You can render a spinner inside the badge. Remember to add the data-icon=\"inline-start\" or data-icon=\"inline-end\" prop to the spinner.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "badge",
+      "title": "Link",
+      "ratio": 0.442,
+      "local": "Use href to render a link as a badge. onClick can override navigation, as this catalog does for its section anchor.",
+      "official": "Use the render prop to render a link as a badge.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "badge",
+      "title": "Custom Colors",
+      "ratio": 0.432,
+      "local": "Customize colors with Style, using the light and dark palette steps appropriate to the current theme.",
+      "official": "You can customize the colors of a badge by adding custom classes such as bg-green-50 dark:bg-green-800 to the Badge component.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "breadcrumb",
+      "title": "Custom separator",
+      "ratio": 0.493,
+      "local": "Pass custom content to BreadcrumbSeparator to replace the default chevron.",
+      "official": "Use a custom component as children for to create a custom separator.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "breadcrumb",
+      "title": "Dropdown",
+      "ratio": 0.297,
+      "local": "Compose BreadcrumbItem with DropdownMenu to show additional paths.",
+      "official": "You can compose with a to create a dropdown in the breadcrumb.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "breadcrumb",
+      "title": "Collapsed",
+      "ratio": 0.416,
+      "local": "BreadcrumbEllipsis shows a collapsed run of crumbs. It is presentational; use a menu trigger to make it interactive.",
+      "official": "We provide a component to show a collapsed state when the breadcrumb is too long.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "breadcrumb",
+      "title": "Link component",
+      "ratio": 0.266,
+      "local": "Keep routing in the caller's onClick handler, or place your own router link inside BreadcrumbItem.",
+      "official": "To use a custom link component from your routing library, you can use the render prop on .",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "bubble",
+      "title": "Variants",
+      "ratio": 0.216,
+      "local": "Seven visual treatments, including full-row ghost content.",
+      "official": "Use variant to change the visual treatment of the bubble. A bubble sizes to its content, up to 80% of the container width. The ghost variant removes the max-width so assistant text and rich content can span the full row.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "bubble",
+      "title": "Alignment",
+      "ratio": 0.241,
+      "local": "Align a bubble to the start or end of the conversation. Message alignment is inherited.",
+      "official": "Use align on Bubble to align the bubble to the start or end of the conversation. Note: When building chat interfaces, you probably want to use alignment on the Message component itself, not the Bubble component. You can use the role prop on the Message component to automatically align the bubble to the start or end of the conversation.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "bubble",
+      "title": "Bubble Group",
+      "ratio": 0.592,
+      "local": "Group consecutive bubbles from the same sender. Set alignment on each bubble.",
+      "official": "Use BubbleGroup to group consecutive bubbles from the same sender. Note the align prop should be set on the Bubble component itself, not the BubbleGroup component.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "bubble",
+      "title": "Links and Buttons",
+      "ratio": 0.244,
+      "local": "Clickable BubbleContent supports keyboard activation and a visible focus ring.",
+      "official": "You can turn a bubble into a link or button by using the render prop on BubbleContent.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "bubble",
+      "title": "Reactions",
+      "ratio": 0.11,
+      "local": "Reactions overlap the edge. Leave vertical space between rows; use Style to remove padding around buttons.",
+      "official": "Use BubbleReactions for bubble reactions. You can use it to display reactions or quick action buttons. Use side and align to position the row \u2014 side=\"top\" anchors it to the upper edge. Reactions overlap the bubble edge, so leave vertical space between rows \u2014 the examples below use a larger gap for this reason.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "bubble",
+      "title": "Show More / Collapsible",
+      "ratio": 0.458,
+      "local": "Compose long content with Collapsible to show more or less text.",
+      "official": "Long bubble content can be composed with Collapsible to allow for a show more or show less interaction. Use the CollapsibleTrigger component to trigger the collapsible content.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "bubble",
+      "title": "Tooltip",
+      "ratio": 0.583,
+      "local": "Use Tooltip to reveal read metadata on hover or keyboard focus.",
+      "official": "Wrap a bubble in a Tooltip to reveal metadata on hover, such as when a message was read.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "bubble",
+      "title": "Popover",
+      "ratio": 0.364,
+      "local": "Open a Popover for detailed error information.",
+      "official": "Pair a bubble with a Popover to surface more information on demand, such as the full error message for a failed action.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "button",
+      "title": "Size",
+      "ratio": 0.476,
+      "local": "Use size to change the button dimensions. The four pairs stack below 640dp.",
+      "official": "Use the size prop to change the size of the button.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "button",
+      "title": "With Icon",
+      "ratio": 0.286,
+      "local": "Set iconPlacement to Start or End for the matching logical edge spacing.",
+      "official": "Remember to add the data-icon=\"inline-start\" or data-icon=\"inline-end\" attribute to the icon for the correct spacing.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "button",
+      "title": "Rounded",
+      "ratio": 0.333,
+      "local": "Override the component shape with CircleShape for fully rounded buttons.",
+      "official": "Use the rounded-full class to make the button rounded.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "button",
+      "title": "Spinner",
+      "ratio": 0.359,
+      "local": "Render Spinner inside the button and declare its logical icon edge. Both loading buttons are disabled.",
+      "official": "Render a component inside the button to show a loading state. Remember to add the data-icon=\"inline-start\" or data-icon=\"inline-end\" attribute to the spinner for the correct spacing.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "button",
+      "title": "Button Group",
+      "ratio": 0.657,
+      "local": "Use ButtonGroup to group related actions. See the Button Group documentation for the complete API.",
+      "official": "To create a button group, use the ButtonGroup component. See the Button Group documentation for more details.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "button",
+      "title": "As Link",
+      "ratio": 0.025,
+      "local": "Use a LinkAnnotation URL and the public Button variant/size styles. The link owns keyboard and accessibility behavior; padding is clickable too. Do not use Button for links because it declares Role.Button.",
+      "official": "You can use the buttonVariants helper to make a link look like a button. Do not use } nativeButton= / for links. The Base UI Button component always applies role=\"button\", which overrides the semantic link role on elements. Use buttonVariants with a plain tag instead.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "calendar",
+      "title": "Basic",
+      "ratio": 0.802,
+      "local": "A basic calendar component. The preview adds a rounded border to style the calendar.",
+      "official": "A basic calendar component. We used className=\"rounded-lg border\" to style the calendar.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "calendar",
+      "title": "Range Calendar",
+      "ratio": 0.738,
+      "local": "Use range selection mode to enable range selection.",
+      "official": "Use the mode=\"range\" prop to enable range selection.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "calendar",
+      "title": "Month and Year Selector",
+      "ratio": 0.65,
+      "local": "Use the dropdown caption layout to show month and year menus.",
+      "official": "Use captionLayout=\"dropdown\" to show month and year dropdowns.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "calendar",
+      "title": "RTL",
+      "ratio": 0.398,
+      "local": "To enable RTL support in shadcn/ui, see the RTL configuration guide.",
+      "official": "To enable RTL support in shadcn/ui, see the RTL configuration guide. See also the Hijri Guide for enabling the Persian / Hijri / Jalali calendar. When using RTL, import the locale from react-day-picker/locale and pass both the locale and dir props to the Calendar component:",
+      "kind": "missing-official-content"
+    },
+    {
+      "id": "card",
+      "title": "Size",
+      "ratio": 0.902,
+      "local": "Use the size = CardSize.Sm parameter to set the size of the card to small. The small size variant uses smaller spacing.",
+      "official": "Use the size=\"sm\" prop to set the size of the card to small. The small size variant uses smaller spacing.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "card",
+      "title": "Spacing",
+      "ratio": 0.391,
+      "local": "In addition to the size parameter, you can use the spacing parameter to control the spacing between sections and the inset of card parts.",
+      "official": "In addition to the size prop, you can use the --card-spacing CSS variable to control the spacing between sections and the inset of card parts. Use negative margins with -mx-(--card-spacing) to make content go edge to edge while keeping it aligned with the card inset. When the edge-to-edge content sits above a footer, use -mb-(--card-spacing) on CardContent to remove the section gap.",
+      "kind": "missing-official-content"
+    },
+    {
+      "id": "carousel",
+      "title": "Sizes",
+      "ratio": 0.25,
+      "local": "Two slides on small screens and three at the large breakpoint.",
+      "official": "To set the size of the items, you can use the basis utility class on the .",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "carousel",
+      "title": "Spacing",
+      "ratio": 0.344,
+      "local": "Use a smaller gap between slides without adding an empty leading gutter.",
+      "official": "To set the spacing between the items, we use a pl-[VALUE] utility on the and a negative -ml-[VALUE] on the .",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "carousel",
+      "title": "Orientation",
+      "ratio": 0.13,
+      "local": "A vertical viewport with two visible slides.",
+      "official": "Use the orientation prop to set the orientation of the carousel.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "carousel",
+      "title": "API",
+      "ratio": 0.402,
+      "local": "PagerState exposes the selected slide, count, scroll boundaries and suspend scroll functions.",
+      "official": "Use a state and the setApi prop to get an instance of the carousel API.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "carousel",
+      "title": "Plugins",
+      "ratio": 0.352,
+      "local": "Advance every two seconds. Hover or dragging pauses autoplay; leaving the carousel or releasing the drag resumes it.",
+      "official": "You can use the plugins prop to add plugins to the carousel.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "carousel",
+      "title": "RTL",
+      "ratio": 0.253,
+      "local": "To enable RTL support in shadcn/ui, see the RTL configuration guide.",
+      "official": "To enable RTL support in shadcn/ui, see the RTL configuration guide. When localizing the carousel for RTL languages, you need to set the direction option in the opts prop to match the text direction. This ensures the carousel scrolls in the correct direction. The direction option accepts \"ltr\" or \"rtl\" and should match the dir prop value. You may also want to rotate the navigation buttons using th",
+      "kind": "missing-official-content"
+    },
+    {
+      "id": "chart",
+      "title": "Your First Chart",
+      "ratio": 0.005,
+      "local": "Define the chart data and series config, then render the bars inside a bounded ChartContainer.",
+      "official": "Let's build your first chart. We'll build a bar chart, add a grid, axis, tooltip and legend. The following data represents the number of desktop and mobile users for each month. Note: Your data can be in any shape. You are not limited to the shape of the data below. Use the dataKey prop to map your data to the chart. The chart config holds configuration for the chart. This is where you place human",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "chart",
+      "title": "Add a Grid",
+      "ratio": 0.364,
+      "local": "Set showGrid = true on BarChart to add the horizontal reference grid.",
+      "official": "Let's add a grid to the chart.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "chart",
+      "title": "Add an Axis",
+      "ratio": 0.229,
+      "local": "Set showXAxis = true and format each month label to its first three characters.",
+      "official": "To add an x-axis to the chart, we'll use the XAxis component.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "chart",
+      "title": "Add Tooltip",
+      "ratio": 0.023,
+      "local": "Provide the tooltip slot with ChartTooltipContent; the chart then supports pointer and keyboard selection.",
+      "official": "So far we've only used components from Recharts. They look great out of the box thanks to some customization in the chart component. To add a tooltip, we'll use the custom ChartTooltip and ChartTooltipContent components from chart. Hover to see the tooltips. Easy, right? Two components, and we've got a beautiful tooltip.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "chart",
+      "title": "Add Legend",
+      "ratio": 0.281,
+      "local": "Place ChartLegendContent below the plot so the same series config labels both values and swatches.",
+      "official": "We'll do the same for the legend. We'll use the ChartLegend and ChartLegendContent components from chart. Done. You've built your first chart! What's next? - Themes and Colors - Tooltip - Legend",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "checkbox",
+      "title": "Invalid State",
+      "ratio": 0.856,
+      "local": "Set invalid on both the checkbox and the field wrapper to show the invalid styles.",
+      "official": "Set aria-invalid on the checkbox and data-invalid on the field wrapper to show the invalid styles.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "checkbox",
+      "title": "Disabled",
+      "ratio": 0.605,
+      "local": "Use disabled on the checkbox and field to prevent interaction and show disabled styles.",
+      "official": "Use the disabled prop to prevent interaction and add the data-disabled attribute to the component for disabled styles.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "code-block",
+      "title": "Highlighted Lines",
+      "ratio": 0.877,
+      "local": "Render each line as a CodeBlockLine and set variant = CodeBlockLineVariant.Highlighted on the lines to call out.",
+      "official": "Render each line as a CodeBlockLine and set variant=\"highlighted\" on the lines to call out.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "code-block",
+      "title": "Diff",
+      "ratio": 0.748,
+      "local": "Set variant = CodeBlockLineVariant.Added or CodeBlockLineVariant.Removed on a CodeBlockLine. Each one adds a + or \u2212 marker.",
+      "official": "Set variant=\"added\" or variant=\"removed\" on a CodeBlockLine. Each one adds a + or \u2212 marker.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "code-block",
+      "title": "Height",
+      "ratio": 0.253,
+      "local": "Cap the height with maxHeight on CodeBlockContent. The content scrolls inside the block. CodeBlockContent fades its edges as it scrolls: left and right by default, top and bottom when the block is capped.",
+      "official": "Cap the height with a max-h- class on CodeBlockContent. The content scrolls inside the block. CodeBlockContent fades its edges with scroll-fade as it scrolls: left and right by default, top and bottom when it wraps. Add scroll-fade-y to a capped block that does not wrap.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "code-block",
+      "title": "Size",
+      "ratio": 0.807,
+      "local": "Use size = CodeBlockSize.Sm for tool and Trace output. It has tighter padding and smaller code text.",
+      "official": "Use size=\"sm\" for tool and Trace output. It has tighter padding and text-xs text.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "code-block",
+      "title": "Destructive",
+      "ratio": 0.835,
+      "local": "Use variant = CodeBlockVariant.Destructive for errors and failed output.",
+      "official": "Use variant=\"destructive\" for errors and failed output.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "code-block",
+      "title": "Trace",
+      "ratio": 0.152,
+      "local": "Put a CodeBlock with size = CodeBlockSize.Sm in TraceCollapsibleContent for tool and terminal output. Add wrap and a maxHeight so long output wraps and scrolls inside the trace. The block sets its own text color, so TraceCollapsibleContent does not mute it.",
+      "official": "Put a CodeBlock with size=\"sm\" in TraceCollapsibleContent for tool and terminal output. Add wrap and a max-h-64 class to CodeBlockContent so long output wraps and scrolls inside the trace. The block sets its own text color, so TraceCollapsibleContent does not mute it.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "code-block",
+      "title": "Typeset",
+      "ratio": 0.675,
+      "local": "A CodeBlock inside a typeset container keeps its own styles and gets the same space above as a paragraph. This catalog has no typeset utility; the preview uses heading and body text to show the same rhythm.",
+      "official": "A CodeBlock inside a typeset container keeps its own styles and gets the same space above as a paragraph.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "code-block",
+      "title": "Syntax Highlighting",
+      "ratio": 0.452,
+      "local": "useHighlightedCode highlights with Shiki and returns one line per CodeBlockLine. Syntax highlighting is out of scope in this Compose port: CodeBlockContent renders plain text, and no highlighter is bundled. The official server rendering, streaming and Markdown recipes depend on the same tokenizer and on Streamdown, so they are not reproduced here.",
+      "official": "useHighlightedCode highlights with Shiki and returns one React node per line for CodeBlockLine. Shiki uses its JavaScript regex engine, so there is no WASM to load.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "code-block",
+      "title": "Languages",
+      "ratio": 0.198,
+      "local": "Each language loads the first time it is used. A language that is not in the list renders as plain text. Language loading is out of scope in this Compose port; every language renders as plain text.",
+      "official": "Each language loads the first time it is used. Edit the list in lib/highlighter.tsx. A language that is not in the list renders as plain text. The list ships with bash, css, diff, html, javascript, json, jsx, markdown, python, sql, tsx, typescript and yaml, plus aliases such as ts, js, sh and yml.",
+      "kind": "missing-official-content"
+    },
+    {
+      "id": "code-block",
+      "title": "Terminal Output",
+      "ratio": 0.776,
+      "local": "Pass \"ansi\" as the language to render the colors in terminal output. Without it, escape codes show as text. ANSI colors do not carry from one line to the next. ANSI interpretation is out of scope in this Compose port, so escape codes are not rendered.",
+      "official": "Pass \"ansi\" as the language to render the colors in terminal output. Without it, escape codes show as text. ANSI colors do not carry from one line to the next.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "combobox",
+      "title": "Custom Items",
+      "ratio": 0.679,
+      "local": "You can render a custom component inside ComboboxItem.",
+      "official": "Use itemToStringValue when your items are objects. You can render a custom component inside ComboboxItem.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "context-menu",
+      "title": "RTL",
+      "ratio": 0.624,
+      "local": "To enable RTL support in shadcn/ui, see the RTL configuration guide.",
+      "official": "To enable RTL support in shadcn/ui, see the RTL configuration guide. Use side=\"inline-end\" to place the menu on the logical right side of the trigger.",
+      "kind": "missing-official-content"
+    },
+    {
+      "id": "dialog",
+      "title": "RTL",
+      "ratio": 0.618,
+      "local": "To enable RTL support in shadcn/ui, see the RTL configuration guide. Source shows the Arabic pair; the catalog toolbar also previews English and Hebrew.",
+      "official": "To enable RTL support in shadcn/ui, see the RTL configuration guide.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "dropdown-menu",
+      "title": "Destructive",
+      "ratio": 0.828,
+      "local": "Use DropdownMenuItemVariant.Destructive for irreversible actions.",
+      "official": "Use variant=\"destructive\" for irreversible actions.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "dropdown-menu",
+      "title": "RTL",
+      "ratio": 0.269,
+      "local": "Set LocalLayoutDirection for the selected language.",
+      "official": "To enable RTL support in shadcn/ui, see the RTL configuration guide.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "empty",
+      "title": "Outline",
+      "ratio": 0.794,
+      "local": "Use EmptyVariant.Outline (the border utility) to create an outline empty state.",
+      "official": "Use the border utility class to create an outline empty state.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "empty",
+      "title": "Background",
+      "ratio": 0.881,
+      "local": "Use a background style (the bg- and bg-gradient- utilities) to add a background to the empty state.",
+      "official": "Use the bg- and bg-gradient- utilities to add a background to the empty state.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "empty",
+      "title": "RTL",
+      "ratio": 0.618,
+      "local": "To enable RTL support in shadcn/ui, see the RTL configuration guide. Source shows the Arabic pair; the catalog toolbar also previews English and Hebrew.",
+      "official": "To enable RTL support in shadcn/ui, see the RTL configuration guide.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "field",
+      "title": "Responsive Layout",
+      "ratio": 0.637,
+      "local": "Vertical fields: Default orientation stacks label, control, and helper text\u2014ideal for mobile-first layouts. Horizontal fields: Set orientation = FieldOrientation.Horizontal on Field to align the label and control side-by-side. Pair with FieldContent to keep descriptions aligned. Responsive fields: Set orientation = FieldOrientation.Responsive for automatic column layouts inside container-aware parents. A FieldGroup switches orientations at the 448dp container breakpoint.",
+      "official": "- Vertical fields: Default orientation stacks label, control, and helper text\u2014ideal for mobile-first layouts. - Horizontal fields: Set orientation=\"horizontal\" on Field to align the label and control side-by-side. Pair with FieldContent to keep descriptions aligned. - Responsive fields: Set orientation=\"responsive\" for automatic column layouts inside container-aware parents. Apply @container/field",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "input",
+      "title": "Disabled",
+      "ratio": 0.819,
+      "local": "Use the disabled prop to disable the input. To style the disabled state, disable the Field as well.",
+      "official": "Use the disabled prop to disable the input. To style the disabled state, add the data-disabled attribute to the Field component.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "input",
+      "title": "Invalid",
+      "ratio": 0.766,
+      "local": "Use the invalid prop to mark the input as invalid. To style the invalid state, mark the Field invalid as well.",
+      "official": "Use the aria-invalid prop to mark the input as invalid. To style the invalid state, add the data-invalid attribute to the Field component.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "input",
+      "title": "File",
+      "ratio": 0.354,
+      "local": "Use a file picker for file inputs. Compose has no browser-native type=\"file\" control, so this preview approximates the browser field.",
+      "official": "Use the type=\"file\" prop to create a file input.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "input",
+      "title": "Inline",
+      "ratio": 0.91,
+      "local": "Use Field with orientation = FieldOrientation.Horizontal to create an inline input. Pair it with Button to create a search input with a button.",
+      "official": "Use Field with orientation=\"horizontal\" to create an inline input. Pair with Button to create a search input with a button.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "input-group",
+      "title": "Custom Input",
+      "ratio": 0.539,
+      "local": "Add the input-group-control slot to your custom input for automatic focus state handling. The Compose equivalent of the third-party resize-none textarea is the built-in InputGroupTextarea, which grows with explicit rows/minLines instead of a DOM size.",
+      "official": "Add the data-slot=\"input-group-control\" attribute to your custom input for automatic focus state handling. Here's an example of a custom resizable textarea from a third-party library.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "input-otp",
+      "title": "Separator",
+      "ratio": 0.866,
+      "local": "Use the InputOTPSeparator component to add a separator between input groups.",
+      "official": "Use the component to add a separator between input groups.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "input-otp",
+      "title": "Four Digits",
+      "ratio": 0.868,
+      "local": "A common pattern for PIN codes. This uses the pattern prop with digits only.",
+      "official": "A common pattern for PIN codes. This uses the pattern= prop.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "input-otp",
+      "title": "Alphanumeric",
+      "ratio": 0.703,
+      "local": "Use the alphanumeric pattern to accept both letters and numbers.",
+      "official": "Use REGEXPONLYDIGITSANDCHARS to accept both letters and numbers.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "item",
+      "title": "Link",
+      "ratio": 0.664,
+      "local": "Use href to render the item as a link (the Kotlin equivalent of the render prop). The hover and focus states apply to the whole row.",
+      "official": "Use the render prop to render the item as a link. The hover and focus states will be applied to the anchor element.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "marker",
+      "title": "Shimmer",
+      "ratio": 0.729,
+      "local": "Add the shimmer utility to MarkerContent for an animated streaming-text effect. The catalog applies it with rememberShimmerStyle().",
+      "official": "Add the shimmer utility class to MarkerContent for an animated streaming-text effect. The utility ships with the shadcn package \u2014 see the shimmer docs for installation.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "marker",
+      "title": "Separator",
+      "ratio": 0.707,
+      "local": "Use the separator variant for labeled dividers, such as dates or section breaks, in a conversation.",
+      "official": "Use the separator variant for labeled dividers, such as dates or section breaks, in a conversation. A Checkpoint is a separator with a button that restores the thread to that point.",
+      "kind": "missing-official-content"
+    },
+    {
+      "id": "message-scroller",
+      "title": "Avoiding a Flash on Reload",
+      "ratio": 0.079,
+      "local": "A scroll container always opens at the top. When defaultScrollPosition is end or last-anchor, the styled viewport stays hidden until that position is applied, so you see the frame instead of the jump. start does not need this.",
+      "official": "A scroll container always opens at the top. HTML has no way to set scrollTop, so a server-rendered transcript shows the oldest messages first. After JavaScript runs, defaultScrollPosition moves the view, and you see a jump. When defaultScrollPosition is \"end\" or \"last-anchor\", the viewport has data-pending-scroll until that position is applied. The styled viewport stays hidden while the attribute ",
+      "kind": "missing-official-content"
+    },
+    {
+      "id": "radio-group",
+      "title": "Invalid",
+      "ratio": 0.863,
+      "local": "Use invalid on RadioGroupItem and Field to show validation errors.",
+      "official": "Use aria-invalid on RadioGroupItem and data-invalid on Field to show validation errors.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "resizable",
+      "title": "Vertical",
+      "ratio": 0.855,
+      "local": "Use orientation = Orientation.Vertical for vertical resizing.",
+      "official": "Use orientation=\"vertical\" for vertical resizing.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "resizable",
+      "title": "Handle",
+      "ratio": 0.91,
+      "local": "Use withHandle = true on ResizableHandle to show a visible handle.",
+      "official": "Use the withHandle prop on ResizableHandle to show a visible handle.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "resizable",
+      "title": "RTL",
+      "ratio": 0.511,
+      "local": "To enable RTL support in shadcn/ui, see the RTL configuration guide. The component mirrors in RTL: the first pane starts on the right and dragging moves the split in the opposite physical direction.",
+      "official": "To enable RTL support in shadcn/ui, see the RTL configuration guide.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "scroll-area",
+      "title": "Horizontal",
+      "ratio": 0.838,
+      "local": "Use ScrollBar with orientation = ScrollAreaOrientation.Horizontal for horizontal scrolling.",
+      "official": "Use ScrollBar with orientation=\"horizontal\" for horizontal scrolling.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "scroll-area",
+      "title": "RTL",
+      "ratio": 0.735,
+      "local": "To enable RTL support in shadcn/ui, see the RTL configuration guide. The scroll position and scrollbar mirror in RTL.",
+      "official": "To enable RTL support in shadcn/ui, see the RTL configuration guide.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "scroll-fade",
+      "title": "Horizontal Scrolling",
+      "ratio": 0.417,
+      "local": "Use ScrollFadeOrientation.Horizontal on containers that scroll horizontally. The horizontal fade is direction-aware: in RTL layouts the crisp edge and the fade follow the reading direction with no extra configuration.",
+      "official": "Use scroll-fade-x on containers that scroll horizontally, i.e. the element that has overflow-x-auto. The horizontal fade is direction-aware. In RTL layouts, the crisp edge and the fade follow the reading direction with no extra classes needed. scroll-fade- and scroll-fade-none work the same for both axes.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "scroll-fade",
+      "title": "Edge Fades",
+      "ratio": 0.023,
+      "local": "Use ScrollFadeEdge.Top / Bottom / Left / Right for physical edges and Start / End for logical inline edges that mirror in RTL. Start edges fade in after you scroll away from the start; end edges fade out when you reach the end.",
+      "official": "Use edge utilities when only one edge should track the scroll position. The edge utilities are scroll-aware. Start edges fade in after you scroll away from the start, and end edges fade out when you reach the end. Use scroll-fade-t, scroll-fade-b, scroll-fade-l, and scroll-fade-r for physical edges. Use scroll-fade-s and scroll-fade-e for logical inline edges that mirror in RTL.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "scroll-fade",
+      "title": "Fade Size",
+      "ratio": 0.22,
+      "local": "The fade depth defaults to 12% of the container, capped at 40.dp. Use ScrollFadeSize.Length to set a fixed size on the spacing scale or ScrollFadeSize.Fraction for an arbitrary percentage; per-edge sizes override the shared size. The fade eases in over revealDistance, 96dp by default and independent of the depth.",
+      "official": "The fade depth defaults to 12% of the container, capped at 40px so tall scrollers stay subtle. Use scroll-fade- to set a fixed size on the spacing scale instead, the same way scroll-mt- works. For one-off values, use an arbitrary length or percentage: To fade opposite edges by different amounts, use the per-edge modifiers scroll-fade-t- , scroll-fade-b- , scroll-fade-s- , and scroll-fade-e- . They",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "scroll-fade",
+      "title": "Disabling the Fade",
+      "ratio": 0.891,
+      "local": "Use enabled = false to remove the fade. It works in any class order, so the typical use is responsive or stateful.",
+      "official": "Use scroll-fade-none to remove the fade. It works in any class order, so the typical use is responsive or stateful:",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "scroll-fade",
+      "title": "RTL",
+      "ratio": 0.706,
+      "local": "To enable RTL support in shadcn/ui, see the RTL configuration guide. scrollFade follows the reading direction: at rest the start edge is crisp and the end edge fades; in RTL that means a crisp right edge and a fade on the left, mirrored from LTR.",
+      "official": "To enable RTL support in shadcn/ui, see the RTL configuration guide. scroll-fade-x follows the reading direction. At rest, the start edge is crisp and the end edge fades. In RTL layouts that means a crisp right edge and a fade on the left, mirrored from LTR.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "select",
+      "title": "Invalid",
+      "ratio": 0.768,
+      "local": "Add the data-invalid attribute to the Field component and the aria-invalid attribute to the SelectTrigger component to show an error state. In Compose, Field(invalid = true) and Select(invalid = true) expose the same state.",
+      "official": "Add the data-invalid attribute to the Field component and the aria-invalid attribute to the SelectTrigger component to show an error state.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "separator",
+      "title": "Vertical",
+      "ratio": 0.847,
+      "local": "Set orientation to Vertical to create a vertical separator.",
+      "official": "Use orientation=\"vertical\" for a vertical separator.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "separator",
+      "title": "Menu",
+      "ratio": 0.504,
+      "local": "Use vertical separators to divide groups of content in a menu.",
+      "official": "Vertical separators between menu items with descriptions.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "separator",
+      "title": "List",
+      "ratio": 0.537,
+      "local": "Use separators to divide items in a list.",
+      "official": "Horizontal separators between list items.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "shimmer",
+      "title": "Reverse",
+      "ratio": 0.728,
+      "local": "Use shimmer-reverse to sweep the highlight in the opposite direction. In RTL layouts the sweep already follows the reading direction. The official page documents this class with code only; the preview above is added for the Compose page.",
+      "official": "Use shimmer-reverse to sweep the highlight in the opposite direction. In RTL layouts the sweep already follows the reading direction. See RTL.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "slider",
+      "title": "Range",
+      "ratio": 0.673,
+      "local": "Use a ClosedFloatingPointRange value for a range slider.",
+      "official": "Use an array with two values for a range slider.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "slider",
+      "title": "Multiple Thumbs",
+      "ratio": 0.758,
+      "local": "Use a list of values for multiple thumbs.",
+      "official": "Use an array with multiple values for multiple thumbs.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "slider",
+      "title": "Vertical",
+      "ratio": 0.81,
+      "local": "Use orientation = SliderOrientation.Vertical for a vertical slider.",
+      "official": "Use orientation=\"vertical\" for a vertical slider.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "spinner",
+      "title": "Customization",
+      "ratio": 0.609,
+      "local": "Replace the default circular visual using the Spinner content slot.",
+      "official": "You can replace the default spinner icon with any other icon by editing the Spinner component.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "spinner",
+      "title": "Size",
+      "ratio": 0.772,
+      "local": "Use Modifier.size to change the size of the spinner.",
+      "official": "Use the size- utility class to change the size of the spinner.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "switch",
+      "title": "Choice Card",
+      "ratio": 0.604,
+      "local": "Card-style selection where the whole row is the label for the switch.",
+      "official": "Card-style selection where FieldLabel wraps the entire Field for a clickable card pattern.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "switch",
+      "title": "Disabled",
+      "ratio": 0.526,
+      "local": "disabled = true on the switch; pass disabled = true to the label or Field too.",
+      "official": "Add the disabled prop to the Switch component to disable the switch. Add the data-disabled prop to the Field component for styling.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "switch",
+      "title": "Invalid",
+      "ratio": 0.384,
+      "local": "invalid = true adds the destructive ring; the wrapping Field can mark the copy too.",
+      "official": "Add the aria-invalid prop to the Switch component to indicate an invalid state. Add the data-invalid prop to the Field component for styling.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "switch",
+      "title": "Size",
+      "ratio": 0.354,
+      "local": "Use size = SwitchSize.Sm for compact layouts.",
+      "official": "Use the size prop to change the size of the switch.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "table",
+      "title": "Footer",
+      "ratio": 0.887,
+      "local": "Use the TableFooter component to add a footer to the table.",
+      "official": "Use the component to add a footer to the table.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "table",
+      "title": "Actions",
+      "ratio": 0.894,
+      "local": "A table showing actions for each row using a DropdownMenu component.",
+      "official": "A table showing actions for each row using a component.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "table",
+      "title": "Data Table",
+      "ratio": 0.396,
+      "local": "You can use the Table component to build more complex data tables. Combine it with a sorting/filtering/pagination library to create tables with those behaviors; Compose has no TanStack Table equivalent, so this library keeps Table as the presentational primitive.",
+      "official": "You can use the component to build more complex data tables. Combine it with @tanstack/react-table to create tables with sorting, filtering and pagination. See the Data Table documentation for more information. You can also see an example of a data table in the Tasks demo.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "tabs",
+      "title": "Line",
+      "ratio": 0.841,
+      "local": "Use the line variant on TabsList for a line style.",
+      "official": "Use the variant=\"line\" prop on TabsList for a line style.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "tabs",
+      "title": "Vertical",
+      "ratio": 0.811,
+      "local": "Use orientation = TabsOrientation.Vertical for vertical tabs.",
+      "official": "Use orientation=\"vertical\" for vertical tabs.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "textarea",
+      "title": "Disabled",
+      "ratio": 0.573,
+      "local": "Use the disabled prop to disable the textarea. Pass disabled = true to Field so the label follows the disabled state.",
+      "official": "Use the disabled prop to disable the textarea. To style the disabled state, add the data-disabled attribute to the Field component.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "textarea",
+      "title": "Invalid",
+      "ratio": 0.504,
+      "local": "Mark the textarea with invalid = true and the wrapping Field with invalid = true so the label and description become destructive.",
+      "official": "Use the aria-invalid prop to mark the textarea as invalid. To style the invalid state, add the data-invalid attribute to the Field component.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "toggle",
+      "title": "Outline",
+      "ratio": 0.82,
+      "local": "Use variant = ToggleVariant.Outline for an outline style.",
+      "official": "Use variant=\"outline\" for an outline style.",
+      "kind": "kotlin-api-adaptation"
+    },
+    {
+      "id": "trace",
+      "title": "Status",
+      "ratio": 0.351,
+      "local": "Set status on TraceLine when a step is running, has failed or hasn't started yet. None is for work that is done (\"Ran pnpm install\"). Error is for work that failed; say so in the title (\"Failed to run pnpm lint\"). Running is for work in progress, written in the present tense (\"Running pnpm build\"). Pending is for work that has not started, such as a plan step (\"Run pnpm test\").",
+      "official": "Set status on TraceLine when a step is running, has failed or hasn't started yet.",
+      "kind": "paraphrase"
+    },
+    {
+      "id": "trace",
+      "title": "Open State",
+      "ratio": 0.727,
+      "local": "Rows start closed. Use defaultOpen on TraceCollapsible to start open, or open with onOpenChange to control a row.",
+      "official": "Rows start closed. Use defaultOpen on TraceCollapsible to start open, or open with onOpenChange to control a row. To open a row while it streams and let the reader's click win, pass open ?? running.",
+      "kind": "missing-official-content"
+    }
+  ]
+}

@@ -266,11 +266,8 @@ internal val sheetOfficialExamples =
             "RTL",
             code = sheetRtlRecipeCode,
             descriptionMarkdown =
-                (
-                    "To enable RTL support in your app, see the [RTL configuration guide]" +
-                        "(https://ui.shadcn.com/docs/rtl). Source shows the Arabic pair; the " +
-                        "catalog toolbar also previews English and Hebrew."
-                ),
+                "To enable RTL support in shadcn/ui, see the " +
+                    "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
             previewPadding = 0.dp,
             preview = {
             var language by remember { mutableIntStateOf(1) }

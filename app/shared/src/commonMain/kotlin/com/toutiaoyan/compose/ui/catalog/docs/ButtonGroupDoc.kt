@@ -221,6 +221,7 @@ val buttonGroupDoc =
         id = "button-group",
         title = "Button Group",
         description = "A container that groups related buttons together with consistent styling.",
+        examplesHeading = null,
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.buttongroup.ButtonGroup

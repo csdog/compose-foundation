@@ -1,0 +1,325 @@
+{
+  "revision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "files": [
+    {
+      "component": "accordion",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/accordion.mdx",
+      "sha256": "52d994969582fca0f54ed0ff75ee2fb5b765549f2a87deecf005f16a45691c5e"
+    },
+    {
+      "component": "alert-dialog",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/alert-dialog.mdx",
+      "sha256": "bb4b918855c5bbea6a6bcf0082eb93ceea21a6973ee7e2ba24d40dfe83b5e04a"
+    },
+    {
+      "component": "alert",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/alert.mdx",
+      "sha256": "e86ac12ea181b073cbe803b4e142dd80aee1e9879c099b5ca704e7ee578f73f7"
+    },
+    {
+      "component": "aspect-ratio",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/aspect-ratio.mdx",
+      "sha256": "0a248906c3ee2ec5e9f5dc8272b07ce546914114d00fcce6c1912507e3526639"
+    },
+    {
+      "component": "attachment",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/attachment.mdx",
+      "sha256": "1fe065378f7929d12d4b85c0472cc72543173d206e691ac32aaec07a25d95764"
+    },
+    {
+      "component": "avatar",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/avatar.mdx",
+      "sha256": "f0e7a35ef6d6bcd3c74c356e62bec85d071891de7054e525379cbe080b389c12"
+    },
+    {
+      "component": "badge",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/badge.mdx",
+      "sha256": "1bee6e70606e0c374c84c5294525f876de671fe7d9640eb5d7491741cf48f59f"
+    },
+    {
+      "component": "breadcrumb",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/breadcrumb.mdx",
+      "sha256": "1a2c9d53bb192c9cee5ac9e6544a8f464d61f58ef4e0913be41bb0fce7aa7bf1"
+    },
+    {
+      "component": "bubble",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/bubble.mdx",
+      "sha256": "78594d2f236f5618aacd4f9525e95b60d8ea4ff17ddfdfdeb687b967330e379e"
+    },
+    {
+      "component": "button-group",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/button-group.mdx",
+      "sha256": "5a955ee44d95ea6e1d10a3c549f8f6fa13ce3da32714a7e375a5e85e3f23b97e"
+    },
+    {
+      "component": "button",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/button.mdx",
+      "sha256": "3580d11761e0cb4f035567ac08dc2d8e8023d8c2fb964bbe163b9111e1892ebd"
+    },
+    {
+      "component": "calendar",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/calendar.mdx",
+      "sha256": "c9d22ce8f5c3e2229e792099cc5f542f79c715966573887f867035d2c3bc35ff"
+    },
+    {
+      "component": "card",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/card.mdx",
+      "sha256": "a058a2f8a1fdfaece149524fa4bf6466b0af831276d25489f918f6ceb4c10c0c"
+    },
+    {
+      "component": "carousel",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/carousel.mdx",
+      "sha256": "42e87e8c7fecc9f7f5fbb1786ca2bdd0af3e97af052529b8b31b07b0cdb2f07b"
+    },
+    {
+      "component": "chart",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/chart.mdx",
+      "sha256": "2d2a256a5fa2f2dd71faabde8f78108910d65a864fc708d015880bd7d45b2043"
+    },
+    {
+      "component": "checkbox",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/checkbox.mdx",
+      "sha256": "36d0cc475ca4e1b4f501060e1033837d7f6138c4cdbdb43d3d15b1f51dece296"
+    },
+    {
+      "component": "code-block",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/code-block.mdx",
+      "sha256": "04be53ab7d0a34e71a91e9f9fb87d32ead27ca7c108107c0249e1c0ea40e1712"
+    },
+    {
+      "component": "collapsible",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/collapsible.mdx",
+      "sha256": "32c7e66a50d2f878d5fc21b58f0655c556768ceaf9f23a37f8253d8db184f25f"
+    },
+    {
+      "component": "combobox",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/combobox.mdx",
+      "sha256": "9ebdfbc6857a743beb988ea91c81e7345a659d414ac153a465fcb0efb40884e7"
+    },
+    {
+      "component": "command",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/command.mdx",
+      "sha256": "44bc1f723bda05d7954a9268697d42c6bf91054d76802fd401ec547ee2bb56c0"
+    },
+    {
+      "component": "context-menu",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/context-menu.mdx",
+      "sha256": "15ad5959bcb215afe5de3fd7d667a3cb9a8869accf7493565f4060b06c820156"
+    },
+    {
+      "component": "date-picker",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/date-picker.mdx",
+      "sha256": "3a39e4274f247f1f0d6f8f0c7029ca3161db37cf5026f48de3f5e2831fb82b17"
+    },
+    {
+      "component": "dialog",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/dialog.mdx",
+      "sha256": "9079868107a2eed2486d7529f1f1e358fe58858c73542add3876e93d695b0b76"
+    },
+    {
+      "component": "drawer",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/drawer.mdx",
+      "sha256": "4f0474a675c714681cbb24f4521556d15f7a3c1d96c2ae1387e5b65505c3a3c3"
+    },
+    {
+      "component": "dropdown-menu",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/dropdown-menu.mdx",
+      "sha256": "36e21a0f00fb6f808c5ce4af27353f9cbaac4f8d746ada2306f809114826d990"
+    },
+    {
+      "component": "empty",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/empty.mdx",
+      "sha256": "c5774ea5afe66274441071b1d1ac0491d9335eb171576001413d207649c91934"
+    },
+    {
+      "component": "field",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/field.mdx",
+      "sha256": "80b9a621fe3cfb41ed49a8afb9df21ef8458b8836f60e9a23fa3ddfcc8a0a6b5"
+    },
+    {
+      "component": "hover-card",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/hover-card.mdx",
+      "sha256": "4f76a01c6949f349749d4975c44260483d4782384608a35582dfa7079c35e97b"
+    },
+    {
+      "component": "input-group",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/input-group.mdx",
+      "sha256": "4d128cc0ff287ed88396d686c73f2ed02b67fdd8aa1d73a0ab32f34b102f26bb"
+    },
+    {
+      "component": "input-otp",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/input-otp.mdx",
+      "sha256": "bc3af0765b342e0f40c0ae3aa01bf26effb9a626749b57cd0f1752bd9961fd2b"
+    },
+    {
+      "component": "input",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/input.mdx",
+      "sha256": "39c7395ca281c3fc7029159b65b9a08747dc8fca92495ae935a49d5a11cc1225"
+    },
+    {
+      "component": "item",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/item.mdx",
+      "sha256": "c702f71e9727490b0953a9271824093f2b9adc80e9f165193e66c26f4d5292ff"
+    },
+    {
+      "component": "kbd",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/kbd.mdx",
+      "sha256": "366fa8fa3ea4c8c0c8f0cfc1824f033fb409a459c83787b3d5264369e61c9b9b"
+    },
+    {
+      "component": "label",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/label.mdx",
+      "sha256": "7e84849ed5c8f4101e12b79de7567c07c77871f7c59f173b4ea471b3b35d04f0"
+    },
+    {
+      "component": "marker",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/marker.mdx",
+      "sha256": "07de1e2fabcbb7380f491bbd24cd1bede3a0bea1533a76120a1c1a1672caf611"
+    },
+    {
+      "component": "menubar",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/menubar.mdx",
+      "sha256": "18c979d74cacd51bb7c1db36541f2b44606643676a2cf60b6447890c0707eb97"
+    },
+    {
+      "component": "message-scroller",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/message-scroller.mdx",
+      "sha256": "4a0d32c3b4ce045eb320a965e924c81dcad624d035ca7e3c76e46f369ca07c51"
+    },
+    {
+      "component": "message",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/message.mdx",
+      "sha256": "e89794ca20b01689aae4cc0028a77ae8e96782846e54993c78f8ac5eee2d4848"
+    },
+    {
+      "component": "navigation-menu",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/navigation-menu.mdx",
+      "sha256": "dd2698a2b4d07e0ddecf51415640205b843464cd9802492ee58837b05df88412"
+    },
+    {
+      "component": "pagination",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/pagination.mdx",
+      "sha256": "d362b24d2370df4b957d0f90969d1a1fb13472ea9fb445310dea41d39778742d"
+    },
+    {
+      "component": "popover",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/popover.mdx",
+      "sha256": "ae07e5ab3203d606d8ff804ba3517a43914f7471b0e852ff11e63d03f8b7ccb3"
+    },
+    {
+      "component": "progress",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/progress.mdx",
+      "sha256": "41f1a5e3bc0527d2638f5abf12e623d022d1a1ae5d68cfc62eacc0c1ff703372"
+    },
+    {
+      "component": "questionnaire",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/questionnaire.mdx",
+      "sha256": "a92d18daa039a225b5762b79633e284e77b18443768a899c22845eefc814cb78"
+    },
+    {
+      "component": "radio-group",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/radio-group.mdx",
+      "sha256": "2b12455a2651e0fadcbed1ecf01e18dc1f80c3d8c4ab03bc559b2a4d9e23b187"
+    },
+    {
+      "component": "resizable",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/resizable.mdx",
+      "sha256": "4d8a3f17dd10ecc0c97ef8e8a7fefd2062af5d3527b2a9d1143b13f15599d24b"
+    },
+    {
+      "component": "scroll-area",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/scroll-area.mdx",
+      "sha256": "4572c57f1f068afb74ee7253a28cdd4ee89256067a805bacb9cee53eced52ebb"
+    },
+    {
+      "component": "scroll-fade",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/scroll-fade.mdx",
+      "sha256": "10eddfcfc85df4b674e04f16fad43f39cbcfeb8fbad9cd2cc15629b29f56b88a"
+    },
+    {
+      "component": "select",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/select.mdx",
+      "sha256": "6dfdca0d48c9f77190d5dd7d968abfae8c3d85b751f042503c8d56b4a8b9f7e9"
+    },
+    {
+      "component": "separator",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/separator.mdx",
+      "sha256": "eae95ff0c0e1545b27ce8ab0fc405a7ad9156764a2cc4409ce722e80f92cdd19"
+    },
+    {
+      "component": "sheet",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/sheet.mdx",
+      "sha256": "039bf46b0e5bc7a2b7a28831670c41775502b1cf6b40cae60148791892aa62e1"
+    },
+    {
+      "component": "shimmer",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/shimmer.mdx",
+      "sha256": "9a269ebb0d5bb33bfdef6e003ed36bed65d605103611a78db3fc92c18d7044c0"
+    },
+    {
+      "component": "sidebar",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/sidebar.mdx",
+      "sha256": "e4d8e1f352dea28d4365e5a07c3326bb55d6fdade459e10e8ca4aba2a0733802"
+    },
+    {
+      "component": "skeleton",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/skeleton.mdx",
+      "sha256": "445325cbc6d390ee38c5a1f3ea38fa4eaaf610d4cc0618e7eb748238815cddee"
+    },
+    {
+      "component": "slider",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/slider.mdx",
+      "sha256": "89c1821040576ca8b6156076f7a911c8e7844be8611894babb2fe35f7d627eea"
+    },
+    {
+      "component": "spinner",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/spinner.mdx",
+      "sha256": "98c7f77cc0e6f359a23f97a569d965bc76e23e4b5d6ebdaa7a80701cc61865d6"
+    },
+    {
+      "component": "switch",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/switch.mdx",
+      "sha256": "0c27f1b62185621184eac1e7471b78d956fba70ad95c5b4a9aba5224a9e8e429"
+    },
+    {
+      "component": "table",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/table.mdx",
+      "sha256": "f37ea1e03c099986ec946cdc9eaebbbeee3c4b86bbcefe36a09ed5a96bfb40c5"
+    },
+    {
+      "component": "tabs",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/tabs.mdx",
+      "sha256": "dfdad7346332d0dfc9c21cba8325c32833560ec105b04cec89102af79eacd3b9"
+    },
+    {
+      "component": "textarea",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/textarea.mdx",
+      "sha256": "42887e101023fadc9b8d085a1ae3d4fe91c547285c8381bcf51337eca42c7d5c"
+    },
+    {
+      "component": "toast",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/toast.mdx",
+      "sha256": "282db7dad6c7a9abf562aa998f89cf9088e136868fbea9d41fd06ef9615f2ecc"
+    },
+    {
+      "component": "toggle-group",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/toggle-group.mdx",
+      "sha256": "7be06167d743c4454bea5a8ec24d7ebbb8f330c749aa2fabfc31d537e2e2e1e6"
+    },
+    {
+      "component": "toggle",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/toggle.mdx",
+      "sha256": "a5268565d3c8fa8479a45fec832dbd5870db58a592a3a729ee469d6f26bb10a3"
+    },
+    {
+      "component": "tooltip",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/tooltip.mdx",
+      "sha256": "04e47f5e1b8300ce162e00968760a4c5628feda1cf6682c363e230d176cd68a9"
+    },
+    {
+      "component": "trace",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/trace.mdx",
+      "sha256": "6adacdc8fc42d563040f9bc57b023d6ffd533108f877d50f5de19df85aa52fe4"
+    }
+  ]
+}

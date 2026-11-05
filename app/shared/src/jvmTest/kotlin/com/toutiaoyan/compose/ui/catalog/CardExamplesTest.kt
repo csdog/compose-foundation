@@ -73,7 +73,7 @@ class CardExamplesTest(private val width: Int, private val dark: Boolean) {
     @Test fun sixOfficialRecipesHaveTheirContentAndSectionStructure() {
         content()
         assertEquals(
-            listOf("Default", "Size", "Spacing", "Edge to Edge", "Image", "RTL"),
+            listOf("Default", "Size", "Spacing", "Kotlin extension: Edge to Edge", "Image", "RTL"),
             cardDoc.examples.map { it.title },
         )
         assertFalse(docSections(cardDoc).any { it.title == "Edge to Edge" })

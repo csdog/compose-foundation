@@ -140,7 +140,7 @@ val cardDoc =
                 ),
                 cardExample(
                     3,
-                    "Edge to Edge",
+                    "Kotlin extension: Edge to Edge",
                     384,
                     "Use `contentPadding(0.dp)` on `CardContent` to make content go edge to edge while " +
                         "keeping it aligned with the card inset. When the edge-to-edge content sits above a " +

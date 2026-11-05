@@ -64,9 +64,8 @@ class SeparatorPageTest(private val width: Int, private val dark: Boolean) {
 
     @Test fun rtlSectionCarriesTheCurrentGuideCopy() {
         val rtl = separatorDoc.examples.single { it.title == "RTL" }.descriptionMarkdown.orEmpty()
-        assertContains(rtl, "To enable RTL support in your app")
+        assertContains(rtl, "To enable RTL support in shadcn/ui")
         assertContains(rtl, "https://ui.shadcn.com/docs/rtl")
-        assertContains(rtl, "catalog toolbar also previews English and Hebrew")
     }
 
     companion object {

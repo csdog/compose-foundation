@@ -155,7 +155,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Sheet (`sheet`)：r1 按当前官网补 Composition 树与三个 API 小节，移除 `Examples` 分组并给原生示例加 `Kotlin extension:` 前缀；Side/No Close Button/RTL 三节补官方 copy 与说明，四官方配方顺序（demo、Side、No Close Button、RTL）已确认。浏览器验证右侧 demo、顶部/左侧面板、无关闭按钮、RTL 镜像，四象限 1440/390×浅深复查，SheetExamplesTest 32 项与 Wasm 构建通过。bottom 侧未单独截图、动画中间帧/焦点恢复与 Nova 单侧 border 逐像素未验，原生 dialog/inert 语义缺失，见[Sheet r1](web-parity/sheet-r1/README.md)。
 - [ ] Shimmer (`shimmer`)：官方九配方（Default、With Marker、Color、Duration、Spread、Angle、Play Once、Disabling、RTL）顺序/标题/文案已对齐并移除 `Examples` H2，新增 Reverse 配方（官方仅代码）、`Kotlin extension: CSS class mapping`、Fallback/Reduced Motion 说明；四条旧 Kotlin 示例改名 `Kotlin extension: …`；补齐 reverse 参数并重新生成可复制代码。11×4=44 项目录测试通过，Wasm `97fa0dc3…` 下 1440/390 浅深四象限及 demo/Reverse/Play Once/Disabled/RTL 双帧动画、手机与深色浏览器证据已保存。仍待：官方 rhea 预览调色板、`3ch+40px` 精确 spread、自动减弱动态、Fallback/Reduced Motion 位置、Oklab/色域/采样与完整辅助技术；[证据](web-parity/shimmer-r3/README.md)。
 - [ ] Sidebar (`sidebar`)：已核对官网来源并补桌面/移动端独立状态、响应式切换、Offcanvas内容保留/200ms动画、移动面板与内侧边框；内容滚动及Header/Footer/Group间距也已补齐，34项定向验证及两个ktlint通过。官网配方、浏览器四象限及完整状态矩阵仍待完成，详见 sidebar-r1/r2。
-- [ ] Skeleton (`skeleton`)：七组官网配方及三语RTL已迁移，Shimmer扩展复制代码已统一；脉冲Style逐帧重组49次问题已修复。50项定向测试、两项旧截图验证及core/shared ktlint通过，40张原生截图已检查。浏览器四象限及完整状态验收仍开放，见 skeleton-r1。
+- [ ] Skeleton (`skeleton`)：官方顺序（Demo、Avatar、Card、Text、Form、Table、RTL）与文案已对齐，移除 `Examples` H2，RTL 补官方 “in shadcn/ui” 说明，Kotlin 扩展改名 `Kotlin extension: Shimmer`；r1 的七配方尺寸/间距/比例、RTL 三语与脉冲逐帧重组修复保留。40 项目录测试（10 状态 × 1440/390 × 浅深）通过，最终构建下 1440/390 浅深四象限及官方主题像素已复核；手机浏览器中 314dp 头像行与官方溢出裁切仍有差异。仍待：浏览器减弱动态、手机 314dp 溢出行为、完整辅助技术与原生/Skia 脉冲时序；[证据](web-parity/skeleton-r2/README.md)。
 - [ ] Slider (`slider`)：基础已验证（第六批）；Create Payout 静态 Progress 已换为真实 50..10000/step50 Slider，金额和键盘 Home/End 已回归；12dp Nova 滑块、填充/尺寸、键盘步进和 commit 已修正，多滑块标签、动态焦点与完整竖向/反转/RTL 手势矩阵待关闭。
 - [x] Spinner (`spinner`)：按当前官网复查八个配方（demo、Customization、Size、Button、Badge、Input Group、Empty、RTL）、描述与 API 表，页面/组件无需改动；SpinnerExamplesTest 7 项与 SpinnerViewportTest 8 项通过，Wasm 构建、1440/390×浅深四象限及七个分节对照通过，Badge 三枚 12dp spinner 单行、Input Group 与 Empty 布局与官网一致。仅余 Canvas 无原生 progressbar 语义与共享页面 chrome/字体差异，见 [spinner-r2](web-parity/spinner-r2/README.md)。
 - [x] Stepper (`stepper`)：项目扩展一致性自查完成：补 Kotlin extension 说明、Usage 导入块、Stepper 与 StepperItem 两个 API 表，并接入共享 `isKotlinExtension` 标识；保留 12 组既有配方；新增 StepperExamplesTest 3 项，Wasm 构建与 1440/390×浅深浏览器复查通过。无官方对照对象，仅余共享页面 chrome 与字体栅格化差异，见 [stepper-r1](web-parity/stepper-r1/README.md)。
@@ -172,6 +172,42 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Skeleton：官方顺序、RTL文案与浏览器四象限（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 222 -->
+
+复核当前官网（`8a353667`）Skeleton MDX/七示例：Demo、Installation、Usage（100×20 rounded-full）、Avatar、Card（h-80）、Text、Form、Table、RTL；除 RTL 指南链接外无正文，且无 `Examples` 标题。
+
+**页面修改：** 设置 `examplesHeading = null`；RTL 配方补官方 “To enable RTL support in shadcn/ui, see the RTL configuration guide.”；项目扩展改名 `Kotlin extension: Shimmer`。r1 的 48/40dp 圆、250/200 行、Card 16:9 图片位、Form 组距、Table 列宽、RTL 语言选择器和脉冲 Style 观察修复保持不变，未改组件几何。
+
+**验证：** 40 项 `SkeletonExamplesTest`（10 状态 × viewport 1440/390 × 浅深）通过，含顺序/文案断言、尺寸/间距/比例、响应式 Table 宽度、RTL 三语切换与 Shimmer 扩展三行代码。最终构建下重拍 1440×1000/390×844 浅深四象限并复核官方背景像素（防止共享浏览器主题翻转）。脉冲由原生截图/帧观察测试覆盖，浏览器截图仅记录当下相位。
+
+**未关闭：** 官方手机布局允许 314dp 头像/资料行在 320dp 预览列内溢出并裁切，Compose 页会按预览内容宽（390px 浏览器实测 268dp）收窄；原生 342dp fixture 可完整容纳，属浏览器手机溢出差异而非配方几何差异。浏览器自动 reduced-motion 未接入（脉冲默认播放，需调用方换 Chrome Style）；无 API Reference（官网亦无）；React Aria/Radix 标签、Kotlin 代码面板、字体光栅化与原生/Skia 脉冲帧时序为平台差异；小于 390dp 容器未测。
+
+### 跨页文案与标注审计：未标注配方与 RTL 措辞清零，登记缺失预览与说明文案分类（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 221 -->
+
+按 task-22 对 67 个组件文档做跨页文案/标注审计（基准 `8a353667`；64 个官网 MDX 加 `chip`/`stepper`/`text` 3 个无官网扩展页）。只读优先：用临时 JVM dump 导出全部 recipe 标题/说明/`examplesHeading`（取证后删除），再用脚本与官网 MDX 的 `ComponentPreview` 顺序、标题和说明段逐项比对，产物归档在 [copy-audit-r1](web-parity/copy-audit-r1/README.md)。
+
+复核后结果：未加 `Kotlin extension:` 的非官方标题 0（修复前 Card “Edge to Edge” 1 处，已加前缀并同步 `CardExamplesTest`）；RTL 说明残留 “in your app” 0（修复前 9 个文件，我直接修正 Alert、Breadcrumb、Select、Separator、Sheet、DropdownMenu 六处，Field/HoverCard/Table/Tabs/Toggle 由活跃 owner 在同窗口内改为官网句，Resizable/ScrollArea/ScrollFade 的 RTL 说明也已由 parity-f 补官网首句）；`examplesHeading` 与官网不符 0（Button Group 显式 `examplesHeading = null`；Sidebar 由 parity-d 处理）；配方顺序不一致 0（Combobox 一处为解析把指南性 “Custom Items” 标题算成重复项的误报）。
+
+仍记录为开放项：Calendar 缺官方 “Persian / Hijri / Jalali Calendar” 预览（RTL 说明也少官网 Hijri guide 第二句）；Code Block 缺 “Syntax Highlighting” 下 Streaming / Markdown 两个 h3 预览；Message Scroller 把官方 Core Concepts 下 10 个 h3 预览提升为顶层配方（标题本身是官方字符串，仅层级不同）。说明文案差异共 119 条，其中 82 条属既有 Kotlin API 适配约定、29 条为语义改写、8 条缺官网后续句，已逐条分类归档，未做大规模改写以免重构页面。
+
+本轮直接修复 8 个文档（Alert/Breadcrumb/Card/Select/Separator/Sheet/ButtonGroup/DropdownMenu；其中 Select/Separator/Sheet 的 RTL 文案在 *Recipes 文件）与 2 个断言这些文案的测试（`CardExamplesTest`、`SeparatorPageTest`），相关聚焦测试全部通过。证据含 README、findings.json、description-classification.json、local-docs.jsonl、mdx-sources.json、audit.py/classify.py；临时 dump 测试已删除，未重建 Wasm、未改共享主题/布局、未提交。
+
+### 全仓 67 组件证据完整性审计（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 220 -->
+
+只读审计 67 个组件的证据完整性（未修改任何组件/证据文件）。口径：从每条 checklist 行与最新记录提取 claimed `web-parity/<dir>`，检查目录存在、README、sources/来源哈希、meta.json、完整四象限（8 张 official/local×desktop/phone×light/dark）或 `sheet-all.png`、tests XML 及 testcase 数；项目扩展组件（README 明确“官方无页面”）按本地截图+README+tests 判定。结果写入 [evidence-audit-r1](web-parity/evidence-audit-r1/README.md)。
+
+快照（13:27，期间有并行写入，`[x]` 从 16 变 17）：组件 **67**、`[x]` **17**、记录 **220**；**OK 63 / STALE 1 / MISSING 3**。`[x]` **全部 17 个达到证据门槛**（README/来源/meta/完整四象限或 sheet/tests XML 齐全，最新记录均为 2026-11-05；scroll-fade 记录标题为 slug 形式已按 slug 匹配）。结构检查：组件在清单中无重复、order 唯一、标题唯一、日期倒序、进度文档 **0 条悬空链接**；`attachment-r9` 本轮新勾选且四象限/tests（54）齐全。项目扩展组件 Chip/Stepper/Text 按扩展口径通过。
+
+最高影响缺口（均未勾选）：Chart（chart-page-r4 缺 meta.json/四象限，截图证据分散在 chart-preview-r3/chart-axis-r2/chart-r1）；Sidebar（sidebar-r2 无 sources/meta/标准四象限，但 verification/ 下有 native 截图与 tests XML，属非标准路径）；Skeleton（skeleton-r2）与 Slider（slider-r1）审计时仍在并行写入（缺 README/tests），属移动目标，gate 前需复查。审计 README 含 67 行明细表、[x] 门槛结论与重跑口径。
+
+另：按 parity-g 的 copy-audit 把 Table/Tabs/Toggle 三处 RTL 说明改为官网原文 “To enable RTL support in shadcn/ui, see the [RTL configuration guide](https://ui.shadcn.com/docs/rtl).”（去掉本地工具栏补充句），对应聚焦测试重跑通过。
 
 ### Attachment 第九轮：最终页面复核、overlay hover 与四象限取证（2026-11-05）
 

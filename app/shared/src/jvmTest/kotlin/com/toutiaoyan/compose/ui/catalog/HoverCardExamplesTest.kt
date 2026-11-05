@@ -105,6 +105,11 @@ class HoverCardExamplesTest {
         rule.onNodeWithText("99.99 $").assertIsDisplayed()
     }
 
+    @Test fun rtlCopyUsesTheOfficialWording() {
+        val rtl = hoverCardDoc.examples.single { it.title == "RTL" }
+        assertTrue(rtl.descriptionMarkdown!!.contains("shadcn/ui"))
+    }
+
     @Test fun controlledExamplePublishesItsOpenState() {
         show("Kotlin extension: Controlled")
         rule.onNodeWithText("Closed").assertIsDisplayed()

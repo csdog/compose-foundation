@@ -756,7 +756,10 @@ internal val dropdownMenuAdditionalExamples =
         ),
         ComponentExample(
             title = "RTL",
-            descriptionMarkdown = "Set LocalLayoutDirection for the selected language.",
+            descriptionMarkdown = (
+                "To enable RTL support in shadcn/ui, see the " +
+                    "[RTL configuration guide](https://ui.shadcn.com/docs/rtl)."
+            ),
             code =
                 """
                 // Connect language to your picker: 0 English, 1 Arabic, 2 Hebrew.

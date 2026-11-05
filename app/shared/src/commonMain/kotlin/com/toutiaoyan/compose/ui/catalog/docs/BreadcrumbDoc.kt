@@ -264,8 +264,8 @@ val breadcrumbDoc =
                         ).prependIndent("        ") + "\n    }\n}",
                     previewPadding = 0.dp,
                     descriptionMarkdown = (
-                        "Switch Arabic, English and Hebrew to compare translated links " +
-                            "and menu alignment."
+                        "To enable RTL support in shadcn/ui, see the " +
+                            "[RTL configuration guide](https://ui.shadcn.com/docs/rtl)."
                     ),
                     preview = {
                         var language by remember { mutableStateOf(0) }

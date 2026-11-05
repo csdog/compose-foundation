@@ -300,8 +300,8 @@ val alertDoc =
                 ComponentExample(
                     title = "RTL",
                     descriptionMarkdown = (
-                        "To enable RTL support, provide `LocalLayoutDirection`. See " +
-                            "the [RTL configuration guide](https://ui.shadcn.com/docs/rtl)."
+                        "To enable RTL support in shadcn/ui, see the " +
+                            "[RTL configuration guide](https://ui.shadcn.com/docs/rtl)."
                     ),
                     minPreviewHeight = 0.dp,
                     mobileMinPreviewHeight = 0.dp,
