@@ -16,6 +16,7 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.*
 import com.toutiaoyan.compose.ui.catalog.docs.chartDoc
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
@@ -124,6 +125,23 @@ class ChartExamplesTest(private val viewport: Int, private val dark: Boolean) {
         chart().requestFocus()
         chart().assertIsFocused()
         capture("first")
+    }
+
+    @Test fun pageNestsFirstChartStepsAndExportsTheirComposeInstructions() {
+        val markdown = componentPageMarkdown(chartDoc)
+        val first = markdown.indexOf("## Your First Chart").also { assertTrue(it >= 0) }
+        listOf("Add a Grid", "Add an Axis", "Add Tooltip", "Add Legend").forEach { title ->
+            val heading = markdown.indexOf("### $title").also { assertTrue(it > first, "$title missing") }
+            assertTrue(heading > first)
+        }
+        assertTrue(markdown.indexOf("## Tooltip") > markdown.indexOf("### Add Legend"))
+        assertContains(markdown, "Set `showGrid = true` on `BarChart`")
+        assertContains(markdown, "keyboard selection")
+        val nested =
+            docSections(chartDoc).associateBy { it.title }
+        listOf("Add a Grid", "Add an Axis", "Add Tooltip", "Add Legend").forEach { title ->
+            assertTrue(nested.getValue(title).nested, "$title should be nested")
+        }
     }
 
     @Test fun gridStepStillOmitsTheXAxis() {

@@ -116,7 +116,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Carousel (`carousel`)：当前官网仍为Default、Sizes、Spacing、Orientation、API、Plugins、RTL七配方；r2确认组件、MDX与七示例相对首轮固定版本字节一致。修复Plugins悬停/拖动结束后不恢复自动播放、各配方未使用公开`CarouselItem`的问题，并把点指示器明确标为Kotlin extension；24项聚焦测试、全仓lint/detekt及JS/Wasm通过，浏览器仍待新空间复核。Embla任意options/plugins、loop、浏览器拖动/动态主题和完整辅助技术仍开放，见[carousel-r2](web-parity/carousel-r2/README.md)及首轮记录。
 - [ ] Code Block (`code-block`)：已补公开组合组件、编号/差异行/换行/复制与目录页；扩展示例及完整状态矩阵待验收。
 - [ ] Trace (`trace`)：已补公开状态行、折叠详情、键盘/受控回归与目录页；官方复杂工具调用示例待补。
-- [ ] Chart (`chart`)：本页八组官方配方已迁移，补真实tooltip/键盘选点、系列切换、主题/图标、响应尺寸、数值域与日期轴修复。最新64项定向测试、两模块ktlint通过；44原生图一致，追加16张Web图复查。缩放后阿语轴重叠已修，官网/本地Mobile键盘180确认。五步骤320高及桌面48/手机0缩进已补，本轮51项app测试和20图复查通过。标题层级/Steps正文、窄屏日期刻度和动效/完整交互仍待补齐，详见chart-r1、chart-axis-r2及chart-preview-r3。
+- [ ] Chart (`chart`)：本页八组官方配方已迁移，补真实tooltip/键盘选点、系列切换、主题/图标、响应尺寸、数值域与日期轴修复；320高、桌面48/手机0缩进及缩放后阿语轴重叠已处理。r4把Your First Chart保留为h2，Add a Grid/Axis/Tooltip/Legend改为嵌套h3并补Compose步骤说明；页面/文档/预览56项、核心交互/布局/截图40项共96项通过，全仓lint/detekt与JS/Wasm通过。浏览器仍待新空间复核，共享标题/代码细节、窄屏日期刻度和动效/完整交互继续开放，见[chart-page-r4](web-parity/chart-page-r4/README.md)、chart-r1、chart-axis-r2及chart-preview-r3。
 - [ ] Checkbox (`checkbox`)：官网八配方及完整导出已补，移除反向Default重复；补Group、Table、三语RTL及整卡FieldLabel。修正Field说明顶对齐/1dp偏移、21dp说明/20dp标题与legend完整行框、label legend正文间隔，整卡hover/键盘焦点与单次激活。20项定向回归、lint和JS/Wasm通过，官网/本地各61张主对照与手机Space过程已复查。旧Vega6图失配已HEAD隔离，未刷新；列宽/滚动条、字重/换行/焦点绘制、CSS命中区与完整原生表单/辅助技术仍开放。[证据](web-parity/checkbox-r1/README.md)。
 - [ ] Chip (`chip`)：项目扩展，检查一致性。
 - [x] Collapsible (`collapsible`)：第九批完成 Web 剩余项：外部收起回收内容焦点、keepMounted 状态保持/隐藏语义、动画中断反转。
@@ -171,6 +171,18 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Chart：First Chart 层级与 Compose 步骤说明（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 149 -->
+
+当前官网Chart仍为Default、Your First Chart、Add a Grid、Add an Axis、Add Tooltip、Add Legend、Tooltip、RTL八组页面预览；当前shadcn/ui `main`为`8a353667`，Chart MDX、组件、八份示例、Nova样式与Recharts数值来源均与首轮`96da9cc7`归档字节一致。
+
+发现页面结构仍把所有增量步骤渲染为同级h2，且四步没有Compose说明。现为`ComponentExample`增加通用`headingLevel`，同时用于页面标题、TOC嵌套和Copy Page Markdown；Your First Chart保持h2，Grid/Axis/Tooltip/Legend改为h3。四步分别补充数据/配置、`showGrid`、`showXAxis`、tooltip slot和legend content的Kotlin用法，不把Compose实现误写成Recharts运行时。
+
+页面与交互36项、Preview Frame8项、文档8项、代码块4项、核心Chart axis/interaction/numeric/presentation/scale/screenshot共40项，合计96项通过；全仓ktlint/detekt通过。Wasm开发distribution23.254s退出0并有1条Webpack warning；JS开发distribution28.466s退出0但保留既有`os`/`path`诊断。来源、XML与构建摘要见[chart-page-r4](web-parity/chart-page-r4/README.md)。
+
+当前Ego仍无compose-foundation TaskSpace，只有用户空间与无关Product Hunt委派空间；未创建替代空间或接管标签，因此没有新的浅深桌面/手机浏览器验证。Chart保持未勾选；Recharts精确几何/动画、复杂config/payload、locale rounding、窄屏日期刻度和完整指针/触摸/键盘/辅助技术矩阵继续开放。Editor排除、Attachment后置。
 
 ### Carousel：自动播放恢复、CarouselItem 与当前页面边界（2026-11-05）
 

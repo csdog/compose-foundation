@@ -20,6 +20,8 @@ data class ComponentExample(
     /** Steps keep their content inset on desktop and use the full column below640px. */
     val desktopPreviewInsetStart: Dp = 0.dp,
     val showHeading: Boolean = true,
+    /** Nested step examples use level 3; ordinary recipes remain level 2. */
+    val headingLevel: Int = 2,
     val preview: @Composable () -> Unit,
 )
 

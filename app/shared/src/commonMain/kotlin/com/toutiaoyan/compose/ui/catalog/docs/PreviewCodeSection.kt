@@ -41,6 +41,7 @@ fun PreviewCodeSection(
     code: String,
     modifier: Modifier = Modifier,
     title: String? = null,
+    headingLevel: Int = 2,
     minPreviewHeight: Dp = 288.dp,
     mobileMinPreviewHeight: Dp? = null,
     previewPadding: Dp = 40.dp,
@@ -60,7 +61,7 @@ fun PreviewCodeSection(
     val colors = currentTheme.colors
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         if (title != null) {
-            DocHeading(title, anchorId = headingAnchor)
+            DocHeading(title, level = headingLevel, anchorId = headingAnchor)
         }
         descriptionMarkdown?.let { DocParagraph(it) }
         Column(

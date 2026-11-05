@@ -623,6 +623,9 @@ internal val chartOfficialExamples =
         ),
         ComponentExample(
             "Your First Chart",
+            descriptionMarkdown =
+                "Define the chart data and series config, then render the bars inside a bounded " +
+                    "`ChartContainer`.",
             previewHeight =
                 320.dp,
             desktopPreviewInsetStart =
@@ -634,6 +637,8 @@ internal val chartOfficialExamples =
         ),
         ComponentExample(
             "Add a Grid",
+            headingLevel = 3,
+            descriptionMarkdown = "Set `showGrid = true` on `BarChart` to add the horizontal reference grid.",
             previewHeight =
                 320.dp,
             desktopPreviewInsetStart =
@@ -645,6 +650,9 @@ internal val chartOfficialExamples =
         ),
         ComponentExample(
             "Add an Axis",
+            headingLevel = 3,
+            descriptionMarkdown =
+                "Set `showXAxis = true` and format each month label to its first three characters.",
             previewHeight =
                 320.dp,
             desktopPreviewInsetStart =
@@ -656,6 +664,10 @@ internal val chartOfficialExamples =
         ),
         ComponentExample(
             "Add Tooltip",
+            headingLevel = 3,
+            descriptionMarkdown =
+                "Provide the `tooltip` slot with `ChartTooltipContent`; the chart then supports pointer and " +
+                    "keyboard selection.",
             previewHeight =
                 320.dp,
             desktopPreviewInsetStart =
@@ -667,6 +679,10 @@ internal val chartOfficialExamples =
         ),
         ComponentExample(
             "Add Legend",
+            headingLevel = 3,
+            descriptionMarkdown =
+                "Place `ChartLegendContent` below the plot so the same series config labels both values " +
+                    "and swatches.",
             previewHeight =
                 320.dp,
             desktopPreviewInsetStart =

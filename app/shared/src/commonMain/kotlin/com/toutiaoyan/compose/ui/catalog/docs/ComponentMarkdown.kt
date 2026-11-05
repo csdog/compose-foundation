@@ -6,7 +6,7 @@ internal fun componentPageMarkdown(doc: ComponentDoc): String =
         appendLine("# ${doc.title}\n\n${doc.description}\n")
 
         fun example(example: ComponentExample) {
-            if (example.showHeading) appendLine("## ${example.title}\n")
+            if (example.showHeading) appendLine("${"#".repeat(example.headingLevel)} ${example.title}\n")
             example.descriptionMarkdown?.let { appendLine("$it\n") }
             appendLine("```kotlin\n${example.code}\n```\n")
         }
