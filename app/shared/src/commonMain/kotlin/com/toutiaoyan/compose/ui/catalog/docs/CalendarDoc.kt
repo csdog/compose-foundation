@@ -43,6 +43,15 @@ private val calendarTitles =
         "Multiple", "Disabled", "Week starts on Monday", "Hide outside days", "Month bounds",
     )
 
+private val calendarExtensionTitles =
+    setOf(
+        "Multiple",
+        "Disabled",
+        "Week starts on Monday",
+        "Hide outside days",
+        "Month bounds",
+    )
+
 private fun calendarPlusDays(
     date: CalendarDate,
     days: Int,
@@ -143,7 +152,7 @@ val calendarDoc =
         examples =
             calendarTitles.map { title ->
                 ComponentExample(
-                    title = title,
+                    title = if (title in calendarExtensionTitles) "Kotlin extension: $title" else title,
                     code = calendarRecipeCode(title),
                     minPreviewHeight =
                         when (title) {

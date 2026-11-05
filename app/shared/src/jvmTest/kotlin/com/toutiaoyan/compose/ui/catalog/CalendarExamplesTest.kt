@@ -61,20 +61,29 @@ class CalendarExamplesTest {
     }
 
     @Test fun catalogHasOfficialRecipesAndDocumentsTheCalendarSystemGap() {
-        assertEquals(15, calendarDoc.examples.size)
-        assertTrue(
-            calendarDoc.examples.map { it.title }.containsAll(
-                listOf(
-                    "Basic",
-                    "Range Calendar",
-                    "Month and Year Selector",
-                    "Presets",
-                    "Date and Time Picker",
-                    "Week Numbers",
-                    "RTL",
-                ),
+        assertEquals(
+            listOf(
+                "Default",
+                "Basic",
+                "Range Calendar",
+                "Month and Year Selector",
+                "Presets",
+                "Date and Time Picker",
+                "Booked dates",
+                "Custom Cell Size",
+                "Week Numbers",
+                "RTL",
             ),
+            calendarDoc.examples.take(10).map { it.title },
         )
+        assertEquals(
+            listOf("Multiple", "Disabled", "Week starts on Monday", "Hide outside days", "Month bounds"),
+            calendarDoc.examples.drop(10).map { it.title.removePrefix("Kotlin extension: ") },
+        )
+        assertTrue(
+            calendarDoc.examples.drop(10).all { it.title.startsWith("Kotlin extension: ") },
+        )
+        assertEquals(null, calendarDoc.examplesHeading)
         assertTrue(calendarDoc.beforeExamples.any { it.title == "Persian / Hijri / Jalali Calendar" })
         assertTrue(calendarDoc.apiSections.any { it.title == "CalendarGrid" })
     }

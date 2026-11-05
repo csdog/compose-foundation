@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CalendarExamplesTest[jvm]" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-05T03:28:41.836Z" hostname="Apples-MacBook-Pro.local" time="1.102">
+  <properties/>
+  <testcase name="exportedRecipesIncludeTheirStateAndCustomInteractions[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CalendarExamplesTest" time="0.37"/>
+  <testcase name="priceContentSelectsTheActualRangeAndRetainsThePrice[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CalendarExamplesTest" time="0.424"/>
+  <testcase name="catalogHasOfficialRecipesAndDocumentsTheCalendarSystemGap[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CalendarExamplesTest" time="0.015"/>
+  <testcase name="presetsSelectTheCivilDateAndMoveTheVisibleMonth[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CalendarExamplesTest" time="0.112"/>
+  <testcase name="bookedDatesCannotBeSelectedButUnbookedDaysRemainInteractive[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CalendarExamplesTest" time="0.057"/>
+  <testcase name="timeFieldsKeepTheirIndependentEdits[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CalendarExamplesTest" time="0.121"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

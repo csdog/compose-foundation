@@ -111,7 +111,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Bubble (`bubble`)：2026-10-30 九组官方配方、Composition/四个 API 及可访问性指南已补；修正自然宽度/80% 上限、Ghost 全宽、字号行框、Muted/Tinted 颜色和反应行悬浮定位。17 项定向测试、16 张像素基准、JS/Wasm distribution、四象限首屏对照及静态检查通过。任意复杂槽位裁剪/多 Content 布局、按钮反应自动 padding、完整焦点及原生辅助技术矩阵仍待关闭，见 bubble-r1。
 - [ ] Button (`button`)：十五组实际配方已补齐，新增公开 buttonStyle/invalid、As Link、完整默认Group菜单；修正Nova背景裁剪、阴影alpha与嵌套Escape。r3重新确认当前官网配方与As Link说明，移除API Reference中重复的根Button属性表，保留命名Button与buttonStyle小节；63项聚焦测试及Wasm构建通过，浏览器仍待新空间复核。子菜单宽度/手机碰撞/指针聚焦、Tabler图形、expanded/pressed及完整状态仍开放，见[button-r3](web-parity/button-r3/README.md)。[Card依赖](web-parity/card-r1/README.md)、r1、r2。
 - [ ] Button Group (`button-group`)：基础已验证（第六批）；默认配方、完整菜单、图标、单选状态与响应式Go Back已验证。r2读取当前官网，页面已从旧13参数示例切换为Default、Orientation、Size、Nested、Separator、Split、Input、Input Group、Dropdown Menu、Select、Popover、RTL十二组实际配方；`ButtonGroupItem`新增`size`参数，42项聚焦测试及Wasm构建通过。共享菜单宽度/碰撞、混合子项形状、role=group语义、浏览器与完整状态矩阵仍待关闭，见[button-group-r2](web-parity/button-group-r2/README.md)。
-- [ ] Calendar (`calendar`)：2026-10-30 完成首轮公历主要对照：15 组配方及源码、Composition/四组 API、预设/时间/已订日期/价格格/周数/RTL 已补。修正可变周数、日格/行距、真实焦点和键盘作用域、百年年份范围及月份边界；15 项功能/目录测试、12 张像素基准及 JS/Wasm 构建通过，十组官方与十五组本地四象限首屏已检查。波斯历、原生时间输入行为、caption 细节及完整辅助技术/交互矩阵仍保留，见 calendar-r1 和文末。
+- [ ] Calendar (`calendar`)：2026-10-30 完成首轮公历主要对照：15 组实现、Composition/四组 API、预设/时间/已订日期/价格格/周数/RTL 已补。r2再次读取当前官网，官方十配方顺序一致，额外Multiple/Disabled/周起始/隐藏外部日期/月份范围已明确加`Kotlin extension:`前缀；35项聚焦测试及Wasm构建通过，浏览器仍待新空间复核。波斯历、原生时间输入行为、caption 细节及完整辅助技术/交互矩阵仍保留，见[calendar-r2](web-parity/calendar-r2/README.md)及calendar-r1。
 - [ ] Card (`card`)：六组官方示例与完整导出代码已补；Nova垂直根padding、分区水平inset、满宽Footer及公开CardImage已修正，调用方Style优先。93项联合回归、11图像素校验、JS/Wasm通过；官网/本地各56张四象限静态/交互图已复查。原生滚动条、1px边框占位、字体字重/换行、共享Select浏览器键盘及全状态仍开放。[证据](web-parity/card-r1/README.md)。
 - [ ] Carousel (`carousel`)：已完成首轮页面、七个官网配方及四象限浏览器对照；补齐 compound root、响应式多页、竖向、API、自动播放与 RTL，23 项定向测试通过。鼠标拖动、Embla options/loop/plugins 与完整状态仍待补齐，见 Carousel 首轮记录。
 - [ ] Code Block (`code-block`)：已补公开组合组件、编号/差异行/换行/复制与目录页；扩展示例及完整状态矩阵待验收。
@@ -171,6 +171,16 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Calendar：官方十配方与 Kotlin 扩展标识（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 146 -->
+
+当前官网Calendar为Default、Basic、Range Calendar、Month and Year Selector、Presets、Date and Time Picker、Booked dates、Custom Cell Size、Week Numbers、RTL十组。本地前十年保持原顺序，随后Multiple、Disabled、Week starts on Monday、Hide outside days、Month bounds五组现明确加`Kotlin extension:`前缀；底层预览与生成代码仍使用原始配方名，不改交互逻辑。
+
+页面/交互6项、文档8项、核心Calendar parity9项、Calendar截图10项、DatePicker截图2项共35项通过；Wasm开发distribution16.701s退出0并保留1条Webpack warning，全仓ktlint/detekt通过。来源、XML与构建摘要见[calendar-r2](web-parity/calendar-r2/README.md)。
+
+当前Ego仍无compose-foundation TaskSpace，只有用户空间与无关Product Hunt委派空间；未创建替代空间或接管标签。因此没有新的浅深桌面/手机浏览器验证，Calendar保持未勾选；波斯/Jalali转换、原生时间输入、caption细节和完整辅助技术/触摸继续开放。Editor排除、Attachment后置。
 
 ### Button Group：当前十二配方与 Item 尺寸 API（2026-11-05）
 

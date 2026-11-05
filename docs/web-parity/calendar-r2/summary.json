@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-05",
+  "officialRecipeOrder": [
+    "Default",
+    "Basic",
+    "Range Calendar",
+    "Month and Year Selector",
+    "Presets",
+    "Date and Time Picker",
+    "Booked dates",
+    "Custom Cell Size",
+    "Week Numbers",
+    "RTL"
+  ],
+  "kotlinExtensions": [
+    "Kotlin extension: Multiple",
+    "Kotlin extension: Disabled",
+    "Kotlin extension: Week starts on Monday",
+    "Kotlin extension: Hide outside days",
+    "Kotlin extension: Month bounds"
+  ],
+  "changes": [
+    "Labeled the five additional calendar variants as Kotlin extensions",
+    "Pinned the ten current official recipes and their order",
+    "Preserved preview and generated-code behavior for all extension variants"
+  ],
+  "tests": {
+    "total": 35,
+    "failures": 0,
+    "suites": {
+      "CalendarExamplesTest": 6,
+      "ComponentDocumentationTest": 8,
+      "CalendarParityTest": 9,
+      "CalendarScreenshotTest": 10,
+      "DatePickerScreenshotTest": 2
+    }
+  },
+  "wasmDevelopmentBuild": {
+    "exitStatus": 0,
+    "elapsedSeconds": 16.701,
+    "appWasmSha256": "bf634f4203db8a417d4d2c97ebd49d1cce4f6a420a4bbfb8f77a40096e812c4d",
+    "warning": "webpack compiled with one warning"
+  },
+  "browser": {
+    "rerun": false,
+    "reason": "No owned compose-foundation Ego TaskSpace is available; unrelated user/delegated spaces were not claimed and no replacement space was created."
+  }
+}

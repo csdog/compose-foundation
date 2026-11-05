@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DatePickerScreenshotTest[jvm]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-05T03:28:33.350Z" hostname="Apples-MacBook-Pro.local" time="0.121">
+  <properties/>
+  <testcase name="states_light[jvm]" classname="com.toutiaoyan.compose.ui.components.calendar.DatePickerScreenshotTest" time="0.077"/>
+  <testcase name="states_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.calendar.DatePickerScreenshotTest" time="0.044"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
