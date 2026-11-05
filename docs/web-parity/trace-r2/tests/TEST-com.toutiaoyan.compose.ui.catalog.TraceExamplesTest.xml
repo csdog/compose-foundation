@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TraceExamplesTest[jvm]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-05T03:52:15.929Z" hostname="Apples-MacBook-Pro.local" time="0.971">
+  <properties/>
+  <testcase name="descriptionKeepsCountsAndSearchResultsVisible[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.585"/>
+  <testcase name="openStateCombinesDefaultOpenControlledOpenAndAnExternalTrigger[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.293"/>
+  <testcase name="collapsibleRendersTheTerminalOutputOnlyAfterExpansion[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.052"/>
+  <testcase name="officialTraceExamplesKeepSourceOrderAndReplaceTheExpandedAlias[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.016"/>
+  <testcase name="groupShowsThreeIndependentTraceLines[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.022"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

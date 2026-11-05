@@ -115,7 +115,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Card (`card`)：六组官方示例与完整导出代码已补；Nova垂直根padding、分区水平inset、满宽Footer及公开CardImage已修正，调用方Style优先。93项联合回归、11图像素校验、JS/Wasm通过；官网/本地各56张四象限静态/交互图已复查。原生滚动条、1px边框占位、字体字重/换行、共享Select浏览器键盘及全状态仍开放。[证据](web-parity/card-r1/README.md)。
 - [ ] Carousel (`carousel`)：当前官网仍为Default、Sizes、Spacing、Orientation、API、Plugins、RTL七配方；r2确认组件、MDX与七示例相对首轮固定版本字节一致。修复Plugins悬停/拖动结束后不恢复自动播放、各配方未使用公开`CarouselItem`的问题，并把点指示器明确标为Kotlin extension；24项聚焦测试、全仓lint/detekt及JS/Wasm通过，浏览器仍待新空间复核。Embla任意options/plugins、loop、浏览器拖动/动态主题和完整辅助技术仍开放，见[carousel-r2](web-parity/carousel-r2/README.md)及首轮记录。
 - [ ] Code Block (`code-block`)：已补公开组合组件、编号/差异行/换行/复制与目录页；扩展示例及完整状态矩阵待验收。
-- [ ] Trace (`trace`)：已补公开状态行、折叠详情、键盘/受控回归与目录页；官方复杂工具调用示例待补。
+- [ ] Trace (`trace`)：已补公开状态行、折叠详情、键盘/受控回归与目录页。r2按当前官网加入Description、Collapsible、Open State、Group，移除非官方Expanded别名；Open State同时覆盖defaultOpen、受控状态和外部Button。11项聚焦测试、全仓lint/detekt及JS/Wasm通过；Link/Dialog/Sheet/Sources/Chain of Thought/Commit/Whole Turn/Reasoning/Tool及浏览器/辅助技术矩阵仍开放，见[trace-r2](web-parity/trace-r2/README.md)。
 - [ ] Chart (`chart`)：本页八组官方配方已迁移，补真实tooltip/键盘选点、系列切换、主题/图标、响应尺寸、数值域与日期轴修复；320高、桌面48/手机0缩进及缩放后阿语轴重叠已处理。r4把Your First Chart保留为h2，Add a Grid/Axis/Tooltip/Legend改为嵌套h3并补Compose步骤说明；页面/文档/预览56项、核心交互/布局/截图40项共96项通过，全仓lint/detekt与JS/Wasm通过。浏览器仍待新空间复核，共享标题/代码细节、窄屏日期刻度和动效/完整交互继续开放，见[chart-page-r4](web-parity/chart-page-r4/README.md)、chart-r1、chart-axis-r2及chart-preview-r3。
 - [ ] Checkbox (`checkbox`)：官网八配方、Group/Table/三语RTL及Field布局已补。r2确认当前组件、MDX/Field/Nova与八示例相对首轮固定版本字节一致；修复默认误用Button缩放按压、改为官网150ms颜色过渡，调用方仍可显式选择动画。25项聚焦功能测试、全仓lint/detekt及JS/Wasm通过，浅色截图verify通过；两张深色失配与历史HEAD逐字节一致且未刷新。浏览器仍待新空间复核，原生表单/label关联、CSS命中区、动态主题和完整辅助技术继续开放，见[checkbox-r2](web-parity/checkbox-r2/README.md)及首轮记录。
 - [ ] Chip (`chip`)：项目扩展，检查一致性。
@@ -171,6 +171,18 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Trace：Description、Collapsible、Open State 与 Group（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 151 -->
+
+当前官网Trace的页面结构仍由Trace/Line/Icon/Title/Description与Collapsible组合，官方MDX列出十五个示例。本地原页只有Default、Status及非官方Expanded，缺少Description、真实终端输出、受控打开和Group。
+
+现以当前`8a353667`的Description、Collapsible、Open State、Group四份example source为准补入页面；Expanded改为官方Collapsible，折叠内容使用`CodeBlock`显示真实`node --version`输出。Open State同时包含`defaultOpen`、`open/onOpenChange`和外部Button触发。新增页面测试验证配方顺序、计数/搜索结果、展开/收起、受控外部触发与Group三条内容。
+
+页面5项、核心Trace行为/截图6项共11项通过；全仓ktlint/detekt通过。Wasm开发distribution16.103s退出0并有1条Webpack warning；JS开发distribution33.818s退出0但保留既有`os`/`path`诊断。来源、XML与构建摘要见[trace-r2](web-parity/trace-r2/README.md)。
+
+当前Ego仍无compose-foundation TaskSpace，只有用户空间与无关Product Hunt委派空间；未创建替代空间或接管标签，因此没有新的浅深桌面/手机浏览器验证。Trace保持未勾选；Link、Dialog、Sheet、Sources、Chain of Thought、Commit、Whole Turn、Reasoning、Tool及完整指针/触摸/键盘/减弱动态/辅助技术继续开放。Editor排除、Attachment后置。
 
 ### Checkbox：颜色过渡与当前源码复核（2026-11-05）
 

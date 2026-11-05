@@ -1,12 +1,32 @@
 package com.toutiaoyan.compose.ui.catalog.docs
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.composables.icons.lucide.FilePen
+import com.composables.icons.lucide.FileText
+import com.composables.icons.lucide.Lucide
+import com.composables.icons.lucide.Search
+import com.composables.icons.lucide.Terminal
+import com.toutiaoyan.compose.ui.catalog.catalogMonoFontFamily
+import com.toutiaoyan.compose.ui.components.button.Button
+import com.toutiaoyan.compose.ui.components.button.ButtonSize
+import com.toutiaoyan.compose.ui.components.button.ButtonVariant
+import com.toutiaoyan.compose.ui.components.codeblock.CodeBlock
+import com.toutiaoyan.compose.ui.components.codeblock.CodeBlockContent
+import com.toutiaoyan.compose.ui.components.codeblock.CodeBlockSize
 import com.toutiaoyan.compose.ui.components.trace.*
 import com.toutiaoyan.compose.ui.components.icon.Icon
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.icons.Check
+import androidx.compose.ui.text.TextStyle
 
 val traceDoc =
     ComponentDoc(
@@ -82,25 +102,178 @@ val traceDoc =
                         }
                     }
                 },
-                ComponentExample("Expanded", "TraceCollapsible(defaultOpen = true) { /* trigger and content */ }") {
+                ComponentExample(
+                    "Description",
+                    """
+                    Trace {
+                        TraceLine {
+                            TraceIcon { Icon(Lucide.FilePen) }
+                            TraceTitle("Edited components/settings/notification-preferences-form.tsx")
+                            TraceDescription("+48 −12")
+                        }
+                        TraceLine {
+                            TraceIcon { Icon(Lucide.Terminal) }
+                            TraceTitle("Ran pnpm test")
+                            TraceDescription("14s")
+                        }
+                    }
+                    """.trimIndent(),
+                ) {
                     Trace(Modifier.widthIn(max = 384.dp)) {
-                        TraceCollapsible(defaultOpen = true) {
+                        TraceLine {
+                            TraceIcon { Icon(Lucide.FilePen) }
+                            TraceTitle("Edited components/settings/notification-preferences-form.tsx")
+                            TraceDescription("+48 −12")
+                        }
+                        TraceLine {
+                            TraceIcon { Icon(Lucide.Terminal) }
+                            TraceTitle("Ran pnpm test")
+                            TraceDescription("14s")
+                        }
+                        TraceLine {
+                            TraceIcon { Icon(Lucide.Search) }
+                            TraceTitle("Searched for useChat")
+                            TraceDescription("8 results")
+                        }
+                    }
+                },
+                ComponentExample(
+                    "Collapsible",
+                    """
+                    TraceCollapsible {
+                        TraceCollapsibleTrigger {
+                            TraceLine {
+                                TraceIcon { Icon(Lucide.Terminal) }
+                                TraceTitle("Ran node --version")
+                            }
+                        }
+                        TraceCollapsibleContent {
+                            CodeBlock(size = CodeBlockSize.Sm) {
+                                CodeBlockContent("${'$'} node --version\nv24.18.0", wrap = true)
+                            }
+                        }
+                    }
+                    """.trimIndent(),
+                ) {
+                    Column(Modifier.widthIn(max = 384.dp)) {
+                        TraceCollapsible {
                             TraceCollapsibleTrigger {
                                 TraceLine {
-                                    TraceTitle("Read documentation")
-                                    TraceDescription("1.2s")
+                                    TraceIcon { Icon(Lucide.Terminal) }
+                                    TraceTitle("Ran node --version")
                                 }
                             }
                             TraceCollapsibleContent {
-                                Text {
-                                    (
-                                        "Compared Base UI component source, spacing, and keyboard " +
-                                            "behavior."
+                                CodeBlock(size = CodeBlockSize.Sm) {
+                                    CodeBlockContent(
+                                        "${'$'} node --version\nv24.18.0",
+                                        wrap = true,
+                                        textStyle = TextStyle(fontFamily = catalogMonoFontFamily()),
                                     )
                                 }
                             }
                         }
                     }
                 },
+                ComponentExample(
+                    "Open State",
+                    """
+                    var open by remember { mutableStateOf(false) }
+                    Column {
+                        TraceCollapsible(defaultOpen = true) { /* node output */ }
+                        TraceCollapsible(open = open, onOpenChange = { open = it }) {
+                            /* pnpm output */
+                        }
+                        Button(onClick = { open = !open }) {
+                            Text(if (open) "Hide the pnpm output" else "Show the pnpm output")
+                        }
+                    }
+                    """.trimIndent(),
+                ) {
+                    var open by remember { mutableStateOf(false) }
+                    Column(
+                        Modifier.widthIn(max = 384.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                    ) {
+                        TraceOutput(defaultOpen = true, title = "Ran node --version", output = "v24.18.0")
+                        TraceOutput(
+                            open = open,
+                            onOpenChange = { open = it },
+                            title = "Ran pnpm --version",
+                            output = "10.33.4",
+                        )
+                        Button(
+                            text = if (open) "Hide the pnpm output" else "Show the pnpm output",
+                            onClick = { open = !open },
+                            variant = ButtonVariant.Outline,
+                            size = ButtonSize.Sm,
+                        )
+                    }
+                },
+                ComponentExample(
+                    "Group",
+                    """
+                    Trace {
+                        TraceLine {
+                            TraceIcon { Icon(Lucide.Search) }
+                            TraceTitle("Searched for minimumReleaseAge")
+                        }
+                        TraceLine {
+                            TraceIcon { Icon(Lucide.FileText) }
+                            TraceTitle("Read pnpm-workspace.yaml")
+                        }
+                        TraceLine {
+                            TraceIcon { Icon(Lucide.Terminal) }
+                            TraceTitle("Ran pnpm install")
+                        }
+                    }
+                    """.trimIndent(),
+                ) {
+                    Trace(Modifier.widthIn(max = 384.dp)) {
+                        TraceLine {
+                            TraceIcon { Icon(Lucide.Search) }
+                            TraceTitle("Searched for minimumReleaseAge")
+                        }
+                        TraceLine {
+                            TraceIcon { Icon(Lucide.FileText) }
+                            TraceTitle("Read pnpm-workspace.yaml")
+                        }
+                        TraceLine {
+                            TraceIcon { Icon(Lucide.Terminal) }
+                            TraceTitle("Ran pnpm install")
+                        }
+                    }
+                },
             ),
     )
+
+@Composable
+private fun TraceOutput(
+    title: String,
+    output: String,
+    defaultOpen: Boolean = false,
+    open: Boolean? = null,
+    onOpenChange: ((Boolean) -> Unit)? = null,
+) {
+    TraceCollapsible(
+        defaultOpen = defaultOpen,
+        open = open,
+        onOpenChange = onOpenChange,
+    ) {
+        TraceCollapsibleTrigger {
+            TraceLine {
+                TraceIcon { Icon(Lucide.Terminal) }
+                TraceTitle(title)
+            }
+        }
+        TraceCollapsibleContent {
+            CodeBlock(size = CodeBlockSize.Sm) {
+                CodeBlockContent(
+                    "${'$'} ${title.removePrefix("Ran ")}\n$output",
+                    wrap = true,
+                    textStyle = TextStyle(fontFamily = catalogMonoFontFamily()),
+                )
+            }
+        }
+    }
+}

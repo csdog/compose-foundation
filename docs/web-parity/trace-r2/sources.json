@@ -1,0 +1,13 @@
+{
+  "retrieved": "2026-11-05",
+  "officialPage": "https://ui.shadcn.com/docs/components/base/trace",
+  "revision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "files": {
+    "apps/v4/content/docs/components/base/trace.mdx": "6adacdc8fc42d563040f9bc57b023d6ffd533108f877d50f5de19df85aa52fe4",
+    "apps/v4/registry/bases/base/ui/trace.tsx": "39aa939c4845029793d98bb9f4d9814686be0198ccee257cc198da276294ca79",
+    "apps/v4/examples/base/trace-description.tsx": "d9ada22d05fdbaa9c7bc060ffb53b053286fdf5e58c50910255d6fc95f65a5ae",
+    "apps/v4/examples/base/trace-collapsible.tsx": "4ae81af0b7ada1cf0bded62bcd5c62e54ce7541fae55750ae4829875bcd1a592",
+    "apps/v4/examples/base/trace-open.tsx": "f9f5e8d07cf92c898dc7297642d68011a2c3b1a0ff4f18f3cebb8870d4a7ff09",
+    "apps/v4/examples/base/trace-group.tsx": "f5ade9d9320778cd0595854ce16dc60615a15dd71690304d5fd4f45674baf5d8"
+  }
+}
