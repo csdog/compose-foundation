@@ -1,0 +1,67 @@
+{
+  "revision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "retrievedAt": "2026-11-05T12:03:00+08:00",
+  "source": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/<path>",
+  "livePages": [
+    "https://ui.shadcn.com/docs/components/base/dialog",
+    "https://ui.shadcn.com/docs/components/base/drawer",
+    "https://ui.shadcn.com/docs/components/base/empty"
+  ],
+  "files": {
+    "drawer": [
+      {
+        "path": "apps/v4/content/docs/components/base/drawer.mdx",
+        "sha256": "4f0474a675c714681cbb24f4521556d15f7a3c1d96c2ae1387e5b65505c3a3c3",
+        "bytes": 10288
+      },
+      {
+        "path": "apps/v4/registry/bases/base/ui/drawer.tsx",
+        "sha256": "7180299dff3cc1659ab75130f0521ba485e18b38625b904e1da4049f23479060",
+        "bytes": 10202
+      },
+      {
+        "path": "apps/v4/examples/base/drawer-demo.tsx",
+        "sha256": "3fcf66184aa1380634f511eb3d7de1b4f14736da9ba92ab96d70c2b56e0680da",
+        "bytes": 3556
+      },
+      {
+        "path": "apps/v4/examples/base/drawer-sides.tsx",
+        "sha256": "f701482bdf0872dd240dd7672abcf71feb1fc110707585a741a8a40768022aed",
+        "bytes": 882
+      },
+      {
+        "path": "apps/v4/examples/base/drawer-swipe-handle.tsx",
+        "sha256": "b21d5f0c1093a617eec57ec580230ed0484c970fdf812e1b9b34d2e4869d4d9a",
+        "bytes": 1011
+      },
+      {
+        "path": "apps/v4/examples/base/drawer-nested.tsx",
+        "sha256": "d55550c364aa242c48d5ecb42f174c97dd087831f70b6207d4f5bbb632458f6f",
+        "bytes": 4658
+      },
+      {
+        "path": "apps/v4/examples/base/drawer-non-modal.tsx",
+        "sha256": "970a91babd69d579af84929b878a54eddc24ff317b5a0af6da8ea1628a125ff3",
+        "bytes": 947
+      },
+      {
+        "path": "apps/v4/examples/base/drawer-snap-points.tsx",
+        "sha256": "f5c7f1c46db617d614dd50642accec450436b347d4fa7de6e6cd30c9fb2b560f",
+        "bytes": 1161
+      },
+      {
+        "path": "apps/v4/examples/base/drawer-dialog.tsx",
+        "sha256": "ce4f1225115ef2142e72c6320d1a7077fea312bc8edfe0e6a41026161a624a0f",
+        "bytes": 2395
+      }
+    ],
+    "styles": [
+      {
+        "path": "apps/v4/registry/styles/style-nova.css",
+        "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e",
+        "bytes": 78661
+      }
+    ]
+  },
+  "component": "drawer"
+}

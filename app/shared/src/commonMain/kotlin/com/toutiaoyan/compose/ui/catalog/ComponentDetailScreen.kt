@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineBreak
 import com.composables.icons.lucide.ArrowLeft
 import com.composables.icons.lucide.ArrowRight
 import com.composables.icons.lucide.Lucide
@@ -213,7 +214,22 @@ internal fun ComponentDetailContent(
                                     }
                                 }
                             }
-                            Text(variant = TextVariant.BodyLarge, textStyle = TextColors.Muted) { doc.description }
+                            val descriptionViewport = catalogViewportWidth()
+                            Text(
+                                variant = TextVariant.BodyLarge,
+                                modifier =
+                                    if (descriptionViewport >= 768.dp) {
+                                        Modifier.fillMaxWidth(0.8f)
+                                    } else {
+                                        Modifier.fillMaxWidth()
+                                    },
+                                textStyle =
+                                    TextColors.Muted.copy(
+                                        fontSize = if (descriptionViewport < 640.dp) 16.8.sp else 16.sp,
+                                        lineHeight = if (descriptionViewport < 640.dp) 25.2.sp else 24.sp,
+                                        lineBreak = LineBreak.Heading,
+                                    ),
+                            ) { doc.description }
                         }
                         Column(verticalArrangement = Arrangement.spacedBy(28.dp)) {
                             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {

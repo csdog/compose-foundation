@@ -91,6 +91,7 @@ val emptyDoc =
             """
             Empty {
                 EmptyHeader {
+                    EmptyMedia(variant = EmptyMediaVariant.Icon) { Icon(Lucide.FolderCode) }
                     EmptyTitle("No data")
                     EmptyDescription("No data found")
                 }
@@ -235,7 +236,7 @@ val emptyDoc =
                 ),
                 ComponentExample(
                     title = "Outline",
-                    descriptionMarkdown = "Use a dashed border to create an outline empty state.",
+                    descriptionMarkdown = "Use `EmptyVariant.Outline` (the `border` utility) to create an outline empty state.",
                     minPreviewHeight = 384.dp,
                     mobileMinPreviewHeight = 384.dp,
                     previewPadding = 0.dp,
@@ -262,7 +263,7 @@ val emptyDoc =
                 ),
                 ComponentExample(
                     title = "Background",
-                    descriptionMarkdown = "Add a muted background to the empty state.",
+                    descriptionMarkdown = "Use a `background` style (the `bg-*` and `bg-gradient-*` utilities) to add a background to the empty state.",
                     minPreviewHeight = 384.dp,
                     mobileMinPreviewHeight = 384.dp,
                     previewPadding = 0.dp,

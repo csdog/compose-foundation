@@ -85,6 +85,37 @@ class EmptyExamplesTest {
         rule.onNodeWithText("Leave Message").assertIsEnabled()
     }
 
+    @Test fun officialRecipeCopyMatchesTheCurrentPage() {
+        assertEquals(
+            mapOf(
+                "Outline" to
+                    "Use `EmptyVariant.Outline` (the `border` utility) to create an outline empty state.",
+                "Background" to
+                    (
+                        "Use a `background` style (the `bg-*` and `bg-gradient-*` utilities) to " +
+                            "add a background to the empty state."
+                    ),
+                "Avatar" to
+                    "Use the `EmptyMedia` component to display an avatar in the empty state.",
+                "Avatar Group" to
+                    "Use the `EmptyMedia` component to display an avatar group in the empty state.",
+                "InputGroup" to
+                    "You can add an `InputGroup` component to the `EmptyContent` component.",
+            ),
+            emptyDoc.examples
+                .filter { it.title in setOf("Outline", "Background", "Avatar", "Avatar Group", "InputGroup") }
+                .associate { it.title to it.descriptionMarkdown },
+        )
+        val rtl = emptyDoc.examples.single { it.title == "RTL" }.descriptionMarkdown.orEmpty()
+        assertContains(rtl, "To enable RTL support in your app")
+        assertContains(rtl, "https://ui.shadcn.com/docs/rtl")
+        assertContains(rtl, "catalog toolbar also previews English and Hebrew")
+        assertContains(emptyDoc.usageCode, "EmptyMedia(variant = EmptyMediaVariant.Icon)")
+        assertContains(emptyDoc.usageCode, "EmptyTitle(\"No data\")")
+        assertContains(emptyDoc.usageCode, "EmptyDescription(\"No data found\")")
+        assertContains(emptyDoc.usageCode, "Button(\"Add data\"")
+    }
+
     @Test fun avatarGroupOverlapsThreeRealPhotosByEightPixels() {
         show("Avatar Group")
         val photos =

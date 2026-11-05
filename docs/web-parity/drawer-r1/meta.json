@@ -1,0 +1,158 @@
+{
+  "slug": "drawer",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/drawer",
+  "localUrl": "http://127.0.0.1:8773/drawer",
+  "capturedAt": "2026-11-05T04:35:32.674Z",
+  "app": [
+    "http://127.0.0.1:8773/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8773/17aa61fed5cd3f56a86f.wasm"
+  ],
+  "officialDom": {
+    "title": "Drawer",
+    "description": "Copy PagePreviousNext",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "Installation#"
+      },
+      {
+        "tag": "H2",
+        "text": "Usage#"
+      },
+      {
+        "tag": "H2",
+        "text": "Composition#"
+      },
+      {
+        "tag": "H2",
+        "text": "Custom Sizes#"
+      },
+      {
+        "tag": "H2",
+        "text": "Styling#"
+      },
+      {
+        "tag": "H2",
+        "text": "Position#"
+      },
+      {
+        "tag": "H2",
+        "text": "Swipe Handle#"
+      },
+      {
+        "tag": "H2",
+        "text": "Nested#"
+      },
+      {
+        "tag": "H2",
+        "text": "Non Modal#"
+      },
+      {
+        "tag": "H2",
+        "text": "Snap Points#"
+      },
+      {
+        "tag": "H2",
+        "text": "Responsive#"
+      },
+      {
+        "tag": "H2",
+        "text": "Migrating from Vaul#"
+      },
+      {
+        "tag": "H3",
+        "text": "Update the dependency."
+      },
+      {
+        "tag": "H3",
+        "text": "Replace direction with swipeDirection."
+      },
+      {
+        "tag": "H3",
+        "text": "Replace asChild with render."
+      },
+      {
+        "tag": "H3",
+        "text": "Update snap point props."
+      },
+      {
+        "tag": "H3",
+        "text": "Update animation and focus props."
+      },
+      {
+        "tag": "H3",
+        "text": "Review Vaul-only props."
+      },
+      {
+        "tag": "H3",
+        "text": "Update custom data attribute selectors."
+      },
+      {
+        "tag": "H2",
+        "text": "API Reference#"
+      }
+    ],
+    "tabs": [
+      "Command",
+      "Manual",
+      "pnpm",
+      "npm",
+      "yarn",
+      "bun"
+    ],
+    "examples": 7,
+    "toc": [],
+    "bodyWidth": {
+      "x": 0,
+      "y": 64,
+      "width": 1080,
+      "height": 10198.265625,
+      "top": 64,
+      "right": 1080,
+      "bottom": 10262.265625,
+      "left": 0
+    },
+    "clientWidth": 1080,
+    "scrollHeight": 10262
+  },
+  "local": {
+    "desktop-light": {
+      "url": "http://127.0.0.1:8773/drawer",
+      "theme": "light",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(20799.5px + 100vh)"
+    },
+    "desktop-dark": {
+      "url": "http://127.0.0.1:8773/drawer",
+      "theme": "dark",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(20799.5px + 100vh)"
+    },
+    "phone-light": {
+      "url": "http://127.0.0.1:8773/drawer",
+      "theme": "light",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(24590px + 100vh)"
+    },
+    "phone-dark": {
+      "url": "http://127.0.0.1:8773/drawer",
+      "theme": "dark",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(24590px + 100vh)"
+    }
+  },
+  "files": {
+    "official-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/drawer-r1/official-desktop-light.png",
+    "local-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/drawer-r1/local-desktop-light.png",
+    "official-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/drawer-r1/official-desktop-dark.png",
+    "local-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/drawer-r1/local-desktop-dark.png",
+    "official-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/drawer-r1/official-phone-light.png",
+    "local-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/drawer-r1/local-phone-light.png",
+    "official-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/drawer-r1/official-phone-dark.png",
+    "local-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/drawer-r1/local-phone-dark.png"
+  }
+}

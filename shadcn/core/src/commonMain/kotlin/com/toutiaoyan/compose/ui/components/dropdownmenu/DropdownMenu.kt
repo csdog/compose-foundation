@@ -45,6 +45,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.focusTarget
 import com.toutiaoyan.compose.ui.components.contextmenu.MenuEscapeLayers
 import com.toutiaoyan.compose.ui.components.contextmenu.LocalMenuEscapeLayers
 import com.toutiaoyan.compose.ui.components.contextmenu.LocalMenuEscapeDepth
@@ -116,11 +117,27 @@ internal class DropdownMenuController(
     val onOpenChange: (Boolean) -> Unit,
     val modal: Boolean,
     val anchorBounds: () -> Rect,
+    /**
+     * Which row (if any) the menu should focus once it appears. Base UI only moves focus
+     * into the menu for keyboard opens; a pointer open leaves every row unhighlighted
+     * until the first ArrowDown/ArrowUp.
+     */
+    val initialFocus: () -> DropdownMenuInitialFocus,
+    val consumeInitialFocus: () -> Unit,
+    val setInitialFocus: (DropdownMenuInitialFocus) -> Unit,
 ) {
     fun toggle() = onOpenChange(!open)
 
     fun dismiss() = onOpenChange(false)
+
+    fun onOpenChangeWithFocus(focus: DropdownMenuInitialFocus) {
+        setInitialFocus(focus)
+        onOpenChange(true)
+    }
 }
+
+/** Base UI menu open intent: none (pointer), first row (Enter/Space/ArrowDown), last row (ArrowUp). */
+internal enum class DropdownMenuInitialFocus { None, First, Last }
 
 private val LocalDropdownMenu = staticCompositionLocalOf<DropdownMenuController?> { null }
 
@@ -219,6 +236,7 @@ fun DropdownMenu(
     }
     val anchor = remember { mutableStateOf(Rect.Zero) }
     val readAnchor = remember { { anchor.value } }
+    val initialFocus = remember { mutableStateOf(DropdownMenuInitialFocus.None) }
     val controller =
         DropdownMenuController(
             open =
@@ -229,6 +247,12 @@ fun DropdownMenu(
             modal,
             anchorBounds =
             readAnchor,
+            initialFocus =
+            { initialFocus.value },
+            consumeInitialFocus =
+            { initialFocus.value = DropdownMenuInitialFocus.None },
+            setInitialFocus =
+            { initialFocus.value = it },
         )
     CompositionLocalProvider(LocalDropdownMenu provides controller) {
         Box(modifier = modifier.onGloballyPositioned { anchor.value = it.boundsInWindow() }) {
@@ -258,6 +282,39 @@ fun DropdownMenuScope.DropdownMenuTrigger(
                 .semantics {
                     role = Role.Button
                     stateDescription = if (controller.open) "Expanded" else "Collapsed"
+                }
+                // Base UI opens the menu from the keyboard with Enter / Space / ArrowDown
+                // (first row focused) or ArrowUp (last row focused). Record that intent
+                // before the click handler toggles the menu; pointer clicks leave it None.
+                .onPreviewKeyEvent { event ->
+                    if (event.type != KeyEventType.KeyDown || !resolvedEnabled) {
+                        false
+                    } else {
+                        when (event.key) {
+                            Key.DirectionDown,
+                            Key.DirectionUp,
+                            -> {
+                                if (controller.open) {
+                                    false
+                                } else {
+                                    val focus =
+                                        if (event.key == Key.DirectionUp) {
+                                            DropdownMenuInitialFocus.Last
+                                        } else {
+                                            DropdownMenuInitialFocus.First
+                                        }
+                                    controller.onOpenChangeWithFocus(focus)
+                                    true
+                                }
+                            }
+                            Key.Enter, Key.Spacebar -> {
+                                if (!controller.open) controller.onOpenChangeWithFocus(DropdownMenuInitialFocus.First)
+                                // Fall through so the row's own click handler performs the toggle.
+                                false
+                            }
+                            else -> false
+                        }
+                    }
                 }
                 .clickable(
                     interactionSource = interactionSource,
@@ -313,7 +370,13 @@ fun DropdownMenuScope.DropdownMenuContent(
         }
     val navigation = remember { ContextMenuNavigation() }
     val escapeLayers = remember { MenuEscapeLayers() }
+    val panelFocus = remember { FocusRequester() }
     val nova = currentTheme.activePreset == com.toutiaoyan.compose.ui.tokens.StylePreset.Nova
+    // Official base-nova `DropdownMenuContent` is `w-(--anchor-width)` with `min-w-32`;
+    // its demos override that with explicit `w-40` / `min-w-56` style widths.
+    val anchorWidth =
+        with(LocalDensity.current) { controller.anchorBounds().width.toDp() }
+    val panelWidth = if (nova) maxOf(anchorWidth, 128.dp) else null
     DropdownMenuPortal {
         AnchoredPopup(
             open = controller.open,
@@ -335,8 +398,16 @@ fun DropdownMenuScope.DropdownMenuContent(
                 LocalContextMenuNavigation provides navigation,
             ) {
                 LaunchedEffect(Unit) {
+                    val intent = controller.initialFocus()
+                    controller.consumeInitialFocus()
                     androidx.compose.runtime.withFrameNanos { }
-                    navigation.items.firstOrNull()?.requestFocus()
+                    when (intent) {
+                        DropdownMenuInitialFocus.First -> navigation.items.firstOrNull()?.requestFocus()
+                        DropdownMenuInitialFocus.Last -> navigation.items.lastOrNull()?.requestFocus()
+                        // Pointer opens keep every row unhighlighted; focus the panel itself so
+                        // ArrowDown/ArrowUp can still reach the menu, matching Base UI.
+                        DropdownMenuInitialFocus.None -> panelFocus.requestFocus()
+                    }
                 }
                 Column(
                     modifier =
@@ -345,18 +416,20 @@ fun DropdownMenuScope.DropdownMenuContent(
                                 ?: placement,
                             sideOffset,
                             controller.anchorBounds,
-                        ).onPreviewKeyEvent {
-                            if (it.type == KeyEventType.KeyDown && it.key == Key.Escape) {
-                                if (!escapeLayers.closeDeepest()) controller.dismiss()
-                                true
-                            } else {
-                                navigation.key(it)
-                            }
-                        }.styleable(
-                            styleState,
-                            rememberMenuPanelStyle() then
-                                style,
-                        ).verticalScroll(rememberScrollState()),
+                        ).focusRequester(panelFocus)
+                            .focusTarget()
+                            .onPreviewKeyEvent {
+                                if (it.type == KeyEventType.KeyDown && it.key == Key.Escape) {
+                                    if (!escapeLayers.closeDeepest()) controller.dismiss()
+                                    true
+                                } else {
+                                    navigation.key(it)
+                                }
+                            }.styleable(
+                                styleState,
+                                rememberMenuPanelStyle(novaWidth = panelWidth, novaRing = true) then
+                                    style,
+                            ).verticalScroll(rememberScrollState()),
                 ) {
                     scope.content()
                 }
@@ -1196,7 +1269,12 @@ fun DropdownMenuSubScope.DropdownMenuSubContent(
                         .hoverable(hoverSource)
                         .styleable(
                             styleState,
-                            rememberMenuPanelStyle() then style,
+                            // Official submenu content is `w-auto min-w-[96px]`; callers pass an
+                            // explicit `style` width for wider labels.
+                            rememberMenuPanelStyle(
+                                novaMinWidth = if (contextNova) 96.dp else null,
+                                novaRing = contextNova,
+                            ) then style,
                         ).verticalScroll(rememberScrollState()),
             ) {
                 scope.content()

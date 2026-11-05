@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DropdownMenuExamplesTest[jvm]" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-11-05T04:36:47.627Z" hostname="Apples-MacBook-Pro.local" time="1.075">
+  <properties/>
+  <testcase name="notificationIconsKeepIndependentCheckedStates[jvm]" classname="com.toutiaoyan.compose.ui.catalog.DropdownMenuExamplesTest" time="0.063"/>
+  <testcase name="disabledNovaItemKeepsTheForegroundBeforeRowOpacity[jvm]" classname="com.toutiaoyan.compose.ui.catalog.DropdownMenuExamplesTest" time="0.043"/>
+  <testcase name="defaultIncludesDisabledApiAndSelectingAnActionClosesTheMenu[jvm]" classname="com.toutiaoyan.compose.ui.catalog.DropdownMenuExamplesTest" time="0.058"/>
+  <testcase name="complexMenuScrollsToTheLastAction[jvm]" classname="com.toutiaoyan.compose.ui.catalog.DropdownMenuExamplesTest" time="0.077"/>
+  <testcase name="complexNestedNotificationsShareTheSidebarState[jvm]" classname="com.toutiaoyan.compose.ui.catalog.DropdownMenuExamplesTest" time="0.13"/>
+  <testcase name="keyboardCanEnterBothSubmenusAndSelectAnAction[jvm]" classname="com.toutiaoyan.compose.ui.catalog.DropdownMenuExamplesTest" time="0.099"/>
+  <testcase name="rtlAccountSubmenuUsesTheArabicTranslation[jvm]" classname="com.toutiaoyan.compose.ui.catalog.DropdownMenuExamplesTest" time="0.101"/>
+  <testcase name="checkboxSelectionStaysOpenAndPersistsAfterReopening[jvm]" classname="com.toutiaoyan.compose.ui.catalog.DropdownMenuExamplesTest" time="0.069"/>
+  <testcase name="paymentIconsSelectExactlyOneMethod[jvm]" classname="com.toutiaoyan.compose.ui.catalog.DropdownMenuExamplesTest" time="0.045"/>
+  <testcase name="basicUsesOfficialTwentyEightPixelRows[jvm]" classname="com.toutiaoyan.compose.ui.catalog.DropdownMenuExamplesTest" time="0.037"/>
+  <testcase name="avatarTriggerOpensAccountActions[jvm]" classname="com.toutiaoyan.compose.ui.catalog.DropdownMenuExamplesTest" time="0.062"/>
+  <testcase name="officialRecipesAppearInTheOfficialOrder[jvm]" classname="com.toutiaoyan.compose.ui.catalog.DropdownMenuExamplesTest" time="0.012"/>
+  <testcase name="keyboardArrowUpOpenFocusesTheLastEnabledRow[jvm]" classname="com.toutiaoyan.compose.ui.catalog.DropdownMenuExamplesTest" time="0.035"/>
+  <testcase name="nestedSubmenuActionClosesTheEntireMenuTree[jvm]" classname="com.toutiaoyan.compose.ui.catalog.DropdownMenuExamplesTest" time="0.094"/>
+  <testcase name="defaultContentWidthFollowsTheTriggerWithAnOfficialMinimum[jvm]" classname="com.toutiaoyan.compose.ui.catalog.DropdownMenuExamplesTest" time="0.04"/>
+  <testcase name="keyboardArrowDownOpenFocusesTheFirstRow[jvm]" classname="com.toutiaoyan.compose.ui.catalog.DropdownMenuExamplesTest" time="0.035"/>
+  <testcase name="keyboardEnterOpenFocusesTheFirstRow[jvm]" classname="com.toutiaoyan.compose.ui.catalog.DropdownMenuExamplesTest" time="0.036"/>
+  <testcase name="pointerOpenLeavesEveryRowUnhighlighted[jvm]" classname="com.toutiaoyan.compose.ui.catalog.DropdownMenuExamplesTest" time="0.036"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

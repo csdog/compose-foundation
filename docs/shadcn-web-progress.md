@@ -83,6 +83,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 
 - 顶栏仅显示本项目真实存在的导航；官方其他产品页面没有伪造本地入口。
 - 侧栏与官方仍有栏目内容、渐隐边界、选中项宽度和细微尺寸差异；当前项目扩展单独列出。
+- 组件描述已按官网 80% 限宽、移动 1.05rem 与 `LineBreak.Heading` 调整；Compose 无 `text-wrap: balance`，逐行均衡仍与官网不同，见共享记录。
 - 手机 Sheet 沿用组件默认 320px 宽，官方导航尺寸及关闭按钮位置需进一步视觉核对。
 - API 参数表已补 Alert/Alert Dialog/Button/Badge/Card/Code Block/Trace/Input/Field/Label/Textarea/Checkbox/Radio Group/Switch/Toggle/Toggle Group/Slider/Input Group/Button Group/Input OTP/Select/Combobox；其余组件需逐项从 Kotlin 源码填写。
 - 目录已支持可读 URL fragment、刷新定位、浏览器前进/后退和重复点击同一章节；桌面与手机已验证 Alert。标题自身的 permalink 入口已在 Alert 验证；其他组件未据此视为复核完成，复杂重排后的滚动锚定仍待逐项核对。
@@ -121,14 +122,14 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Chip (`chip`)：项目扩展，检查一致性。
 - [x] Collapsible (`collapsible`)：已按当前官网 `8a353667` 重建 Default/Basic/Settings Panel/File Tree/RTL 五配方，补 Controlled State 文案与代码、Composition、Base UI API Reference 及 288dp/576dp 预览几何；四个 Kotlin 专有示例保留为 `Kotlin extension:`。8 项聚焦测试、Wasm 构建、1440/390×浅深四象限、四个分节对照及 Default/Basic/Settings/File Tree/RTL 语言切换交互已验证；仅余 Base UI 单变体、sr-only FieldLabel、字体栅格化等已说明差异，见 [collapsible-r1](web-parity/collapsible-r1/README.md)。
 - [ ] Combobox (`combobox`)：基础已验证（第七批）；内联编辑、筛选/键盘提交/清空和默认示例已完成，多选 chips、完整辅助技术映射及复杂状态矩阵待关闭。
-- [x] Command (`command`)：第九批完成 Web 剩余项：长列表 Home/End 滚动跟随、不因初始高亮滚动页面、受控 value 拒绝未确认导航、IME 组合期间不提交。
+- [x] Command (`command`)：r11按当前官网8a3536678a重建页面：About、Composition与6个官方配方（demo、Basic、Shortcuts、Groups、Scrollable、RTL，含官网标题/描述/预览内容）按官网顺序实现；删除旧的54项参数矩阵，仅保留4个Kotlin扩展（受控value、自定义filter、长列表Home/End、keywords）。6项新目录测试通过，Wasm构建后四象限与Basic/Shortcuts对话框打开+Escape画面已在浏览器复核。残留：About位于Composition之后（本地渲染器顺序）、CommandDialog居中而官网top-1/3、API表为本地增补、无Radix/Aria标签页与广告，详见[round record](web-parity/command-r11/README.md)。
 - [ ] Context Menu (`context-menu`)：保留第九批窗口坐标/边缘翻转、RTL/字母定位、触摸取消与非模态host结果；本轮共享依赖复查发现Escape被根层提前消费，已补两层逐层关闭/恢复焦点，模态与非模态回归通过。面板宽度/ring/阴影、完整页面与四象限需重新验收，历史勾选撤回。见[Button r2](web-parity/button-r2/README.md)。
-- [x] Date Picker (`date-picker`)：第九批完成 Web 剩余项：本地时区、可配置 locale/周起始日/读屏日期、连续范围、多月换行、月界限、隐藏日期语义和真实键盘焦点；弹层显式初始焦点。
-- [x] Dialog (`dialog`)：第九批完成 Web 剩余项：4dp 背景模糊、初始焦点/Tab 闭环/恢复触发器、非模态背景交互与外部关闭；须在窗口根接入 OverlayHost。
-- [x] Drawer (`drawer`)：第九批完成 Web 剩余项：背景模糊和嵌套捕获、初始/恢复焦点、受控 snap 切换、真实顺序吸附、手势与外部关闭策略解耦；真机覆盖另列。
-- [ ] Dropdown Menu (`dropdown-menu`)：官网13个配方已全部移植，图标槽位、Complex/RTL、章节顺序和导出代码已补齐。21项定向测试通过；新增七配方四象限共28个展开/Escape画面验证通过。手机长菜单可滚动，默认宽度、指针聚焦、阴影/ring、完整状态及可访问树同步仍待关闭，详见文末。Item r2实测发现指针打开后本地立即聚焦首项，官网首个ArrowDown才聚焦首项，仍待专轮修正。
-- [ ] Empty (`empty`)：七组官网/本地桌面窄屏浅深各28静态图，加搜索8图/三语12图已复查。修正Outline自然高度、RTL 288正文/40inset/Noto/行框及LearnMore URL+官网button角色，支持链接实际回页首。25项回归、两张既有Nova显式verify、JS/Wasm通过，无基准刷新。平衡换行、字重/图形/共享页面、HTML原生链接与完整状态仍开放；历史旧图矩阵未重验。[证据](web-parity/empty-r2/README.md)。
-- [ ] Field (`field`)：Nova 间距/字号、448 响应式阈值、嵌套 disabled、支付表单示例已补；choice-card、嵌套组及完整 RTL 待核对。
+- [x] Date Picker (`date-picker`)：r10按当前官网8a3536678a重建页面：官方8个配方（demo、Basic、Range Picker、Date of Birth、Input、Time Picker、Natural Language Picker、RTL）按官网顺序与文案实现，含Composition；删除旧38项Calendar参数矩阵，仅保留4个Kotlin扩展（中文本地化、多选、禁用周末、最小/最大月份）。8项新目录测试通过，Wasm构建后四象限与demo弹层打开画面已在浏览器复核。残留：Time Picker用24h文本字段替代原生input[type=time]；Natural Language用Kotlin小解析器替代chrono-node；RTL使用内置阿拉伯日历locale而非date-fns/DayPicker bundle；本地增加API表，详见[round record](web-parity/date-picker-r10/README.md)。
+- [x] Dialog (`dialog`)：r1 按当前官网重建页面为官方六配方（Edit profile、Custom Close Button、No Close Button、Sticky Footer、Scrollable Content、RTL），其余 Compose-only 配方统一加 `Kotlin extension:` 前缀后置，并补 Composition 树、Usage 导入块与七个 API 小节；Custom Close 的 448dp、RTL 三语、初始焦点/Escape 焦点恢复、非模态、Sticky/Scrollable 滚动均已在真实浏览器验证，四象限 1440/390×浅深已复查，DialogExamplesTest 10 项与 Wasm 构建通过。Canvas 无原生 inert/aria-modal 语义、无内容弹窗的 Escape 仅有浏览器证据、Base UI `trap-focus`/`initialFocus`/`onOpenChangeComplete` 未映射，见[Dialog r1](web-parity/dialog-r1/README.md)。
+- [x] Drawer (`drawer`)：r1 按当前官网重建为官方七配方（Delivery time、Position、Swipe Handle、Nested、Non Modal、Snap Points、Responsive），Compose-only 配方加 `Kotlin extension:` 后置，并补 Custom Sizes/Styling/Migrating from Vaul 章节、Composition 树与七个 API 小节；右侧/左侧/内容自适应/四层嵌套/非模态/496dp peek→全高吸附/桌面 Dialog 响应式均在真实浏览器验证，四象限已复查，DrawerExamplesTest 10 项与 Wasm 构建通过。demo 后 Callout 无放置位、迁移步骤以 Bullets 呈现、预览内 Toast 位置、真机手势与 data-* 属性语义仍见[Drawer r1](web-parity/drawer-r1/README.md)。
+- [ ] Dropdown Menu (`dropdown-menu`)：r4按当前官网8a3536678a逐条复核13个配方（demo/Basic/Submenu/Shortcuts/Icons/Checkboxes/Checkboxes Icons/Radio Group/Radio Icons/Destructive/Avatar/Complex/RTL）顺序、标题与文案一致，宽度与官网一致。核心修复：指针打开不再聚焦首行（原缺陷）、键盘ArrowDown/ArrowUp/Enter/Space分别聚焦首/末行、Nova默认内容宽度改为max(anchor,128dp)、子菜单min-w-96、Nova面板以内描边改为官网ring-1 foreground/10（不再吃掉2dp行宽）。18项目录测试通过，2张Nova基准按预期重录并verify通过，Wasm构建后四象限与浏览器指针/键盘/Escape/手机状态已复核。剩余：Compose Web语义树无法等价ARIA role=menu/menuitem，anchor宽度对“触发器宽于显式宽度”的用例仍会取宽，子菜单无显式宽度时不做内容自适应，详见[round record](web-parity/dropdown-menu-r4/README.md)。
+- [ ] Empty (`empty`)：r3 按当前官网校正六段配方 copy（Outline/Background/Avatar/Avatar Group/InputGroup/RTL）并给 Usage 补 EmptyMedia，Outline 自然高度、RTL 阿拉伯语、Avatar Group、InputGroup 重新取证；四象限 1440/390×浅深已复查，EmptyExamplesTest 7、EmptyBrowserParityTest 12、core EmptyParityTest 7 共 26 项通过，Wasm 构建通过。平衡/pretty 换行、字重与图形/阴影细节、共享页面排版、原生 HTML 链接与完整键盘/读屏、任意 Style/shape 与大内容仍开放；历史旧 Vega 截图矩阵未重验，见[Empty r3](web-parity/empty-r3/README.md)。
+- [ ] Field (`field`)：官方13配方（Demo、Input、Textarea、Select、Slider、Fieldset、Checkbox、Radio、Switch、Choice Card、Field Group、RTL、Responsive Layout）顺序/标题/文案与Composition三小节、Anatomy、Form、Validation/Errors、Accessibility、10项API已对齐；Demo 448宽、分隔线、正常字重复选框、Select全宽、滑块区间说明已修；Nova FieldSet legend→description负边距、dense组12间距、横向*:w-auto、FieldSeparator -8边距与Choice Card 10dp半径已实现；9项目录测试+14项FormNova+4项FieldScreenshot通过，1440/390浅深四象限及Select/Radio/Choice/Switch/RTL三语/Responsive手机实测。仍待：label无htmlFor聚焦、FieldDescription nth-last-2 -4、RadioGroup触发的FieldSet 12间距、官方bullets无悬挂缩进、Textarea原生拖拽柄、多错误列表语义及完整辅助技术；[证据](web-parity/field-r1/README.md)。
 - [ ] Hover Card (`hover-card`)：四官方配方桌面/手机浅深已保存关闭和Default/Basic展开证据，三个方向单例已确认，连续切换/重载与本地三语完整Web矩阵仍待补；补实际Trigger锚点、键盘失焦立即关闭、Nova 5dp避让/手机垂直fallback、RTL 320正文/Noto完整行框及Sides亚像素换行。44项回归、4张显式像素verify、lint和JS/Wasm通过；仅两张Nova基准按5px平移更新。safe polygon、多Trigger/嵌套宿主、全局Escape、实际翻转动画及完整辅助技术仍开放。[证据](web-parity/hover-card-r2/README.md)。
 - [ ] Input (`input`)：32 高、14/16 响应式字号、dark/disabled/invalid/focus 已修正；复杂组合与全状态矩阵待关闭。
 - [ ] Input Group (`input-group`)：基础已验证（第六、七批）；32dp 布局、附件聚焦、禁用/错误和单行按钮附件已修正，button/kbd 负 margin、复杂多控件与完整焦点矩阵待关闭。
@@ -171,6 +172,105 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### 共享 Web：描述 80% 限宽、移动字号与断行策略（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 161 -->
+
+当前官网组件页描述使用 `text-[1.05rem] text-muted-foreground sm:text-base sm:text-balance md:max-w-[80%]`：小于 640px 为 16.8px/25.2px，640px 起 16px/24px，768px 起再限制为正文宽度的 80%。本地此前是整宽 16sp/24sp，导致所有组件页描述换行与官方不同（Accordion 等页一条长行）。
+
+现按官方规则修改共享文档头：`catalogViewportWidth() >= 768.dp` 时描述 `fillMaxWidth(0.8f)`，`< 640.dp` 时 16.8sp/25.2sp，其余 16sp/24sp，并尝试 Compose 的 `LineBreak.Heading`。Accordion 描述现在折成两行，手机字号与官方一致。CatalogDocumentLayoutTest 14 项、ComponentDocumentationTest 7 项、CatalogNavigationTest 3 项及文档/导航相关 10 项均通过。
+
+仍保留：Compose 没有 CSS `text-wrap: balance`，`LineBreak.Heading` 只改变断行策略、不做逐行均衡；因此具体断点仍与官网不同（Accordion 在 "that" 前后分布不同）。这是字体/断行残差，归入已说明差异，不据此宣称逐像素一致。
+
+### Field：官方十三配方重构与Nova FieldSet/横向布局修正（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 160 -->
+
+读取当前官网（`8a353667`）Field MDX、13份示例、`field.tsx` 与 nova 样式，并核对实时 DOM 尺寸：Demo 内容 `max-w-md`=448、legend 16/24 + 6 下边距、description 紧跟 legend 时 -6、FieldSet gap 16、FieldGroup gap 20（`data-slot=checkbox-group` 为 12）、separator 高 20 且 `-my-2`、Input 32 高、choice-card 10dp 圆角 + 10 内边距。
+
+**页面重构：** 旧页是 26 条自造配方并带 `Examples` H2；现改为官方 13 条按序排列，`examplesHeading = null`。`beforeExamples` 为 Composition（H2）+ Field/FieldGroup/FieldSet（H3）、Anatomy（段落/代码/三条要点）、Form；`afterExamples` 为 Validation and Errors、Accessibility；API Reference 覆盖 FieldSet…FieldError 十项；Usage 采用官方 Profile 示例的 Kotlin 版。所有配方使用官方文案与内容：支付 Demo、Input（Username/Password）、Textarea（rows=4）、Select（Department 九项）、Slider（Price Range 200–800）、Fieldset（Address Information）、Checkbox（桌面显示四项 + Sync 描述）、Radio（Subscription Plan）、Switch（MFA 行内）、Choice Card（Kubernetes/VM）、Field Group（Responses/Tasks 含链接与禁用复选框）、RTL（英/阿/希支付表单，复用 RTL 工具栏与 Noto 字体）、Responsive Layout（448 容器断点）。
+
+**组件修正：** 新增 `FieldSetLayout`（Nova）：直接子项 parent-data 标记 legend/description/group，legend→description 负 6dp 边距，`FieldGroup(dense = true)` 映射 `data-slot=checkbox-group` 并使 FieldSet gap 12；横向 `FieldHorizontalLayout` 按 CSS `*:w-auto` 先量控制项自然宽度、再让 `FieldContent`（flex-1）占满剩余，修复 Responsive 输入把标签挤成逐字换行；`FieldSeparator` Nova 改为 20dp 高、`-8/-8` 边距、居中横线 + 背景遮罩标签（`px-2`、14/20 muted）；`FieldTitle` 禁用时 50% 透明度；choice-card `FieldLabel` 圆角改用 `twRadius.lg`（10dp）而非硬编码 8dp。另修正 `FormNovaParityTest` 中 FieldDescription 行高期望（官方 `leading-normal` = 21，非 20）。
+
+**验证：** 9 项 `FieldExamplesTest`（配方顺序/文案/API、legend→description 40dp、radio/choice 选中、checkbox 标签切换、响应式 448 断点、开关标签切换、RTL 阿拉伯标签）通过；core `FormNovaParityTest` 14 项、`FieldScreenshotTest` 4 项通过。Wasm `b3b5e53c…`，四象限（1440×1000/390×844 浅深）与分区对照已保存；浏览器实测 Select 打开/选择、Radio 切换、Choice Card 选中、Switch 开关、RTL 阿拉伯↔希伯来切换、手机 Responsive 垂直堆叠、深色 Select 面板与 Input 聚焦输入。
+
+**未关闭差异：** ①Compose 无 `htmlFor`，普通字段点击 label 不会聚焦/激活控件（复选框/单选/开关配方已显式接线）；②`FieldDescription` 的 `nth-last-2:-mt-1`（在 Field 中为倒数第二项时 -4dp）未实现，影响官方 Input 配方 Password 一处 4dp；③FieldSet 的 `has-[>[data-slot=radio-group]]:gap-3` 无法从独立 RadioGroup 组件标记，Radio/Choice Card 的 legend→description 比官方多 4dp；④Responsive Layout 官方为三条 bullet 列表，目录 description 槽仅渲染段落，现用「• 」前缀行，无悬挂缩进；⑤Textarea 无浏览器原生拖拽手柄；⑥`FieldError` 多错误用行内「• 」而非 `<ul class=list-disc>`（本页无多错误配方）；⑦无 React Aria/Radix UI 标签页与 pnpm/npm 包管理器切换，代码面板为 Kotlin，字体光栅化不同。
+
+### Date Picker：r10 按当前官网重建八配方（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 159 -->
+
+Date Picker 以当前官网修订 `8a3536678a…` 重建页面（源码见 [sources.json](web-parity/date-picker-r10/sources.json)）。
+
+- 官方页8个配方：无名 demo、Basic、Range Picker、Date of Birth、Input、Time Picker、Natural Language Picker、RTL；本地旧页为38个 Calendar 参数矩阵，缺少上述配方，原 `[x]` 的页面依据不成立。
+- 已按官网顺序与文案重建8个配方及其 Composition，删除旧参数矩阵，仅保留4个 Kotlin 扩展（中文本地化、多选、禁用周末、最小/最大月份）；demo 复用既有 `DatePickerParityExample`，其余配方共用带 `PopoverScope.toggle` 的触发器/日历辅助组件（顺带修复了新触发器最初未接 toggle、无法打开弹层的问题）。
+- 验证：`DatePickerExamplesTest` 8/8通过（顺序/文案、demo 选中日期、Range 默认 Jan20–Feb9、Date of Birth dropdown caption、Input 保留官方格式化值、Time 两个字段、自然语言解析、RTL 阿拉伯占位与标签）；Wasm `wasm=7f45661c…` 后四象限重新采集，浏览器打开 demo 弹层（November 2026，今天高亮）并 Escape 关闭。
+- 残留（均已在代码注释与本记录说明）：Compose 无原生 `input[type=time]`，Time 用24h文本字段；`chrono-node` 仅JS可用，Natural Language 改为支持 In N days/tomorrow/yesterday/next week 的Kotlin小解析器；RTL 使用内置阿拉伯 `CalendarLocale` 与 `LayoutDirection.Rtl`，不用 date-fns/DayPicker bundle；本地页面额外保留 API 表。证据 [date-picker-r10](web-parity/date-picker-r10/README.md)。
+
+### Command：r11 按当前官网重建六配方与 About/Composition（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 158 -->
+
+Command 以当前官网修订 `8a3536678a…` 重建页面（源码见 [sources.json](web-parity/command-r11/sources.json)）。
+
+- 官方页只有6个示例：无名 demo、Basic、Shortcuts、Groups、Scrollable、RTL，另有 About 与 Composition；本地旧页仍是54个参数的矩阵式示例且没有 RTL/About/Composition，原 `[x]` 不准确。
+- 已删除旧参数矩阵（Lead同意），按官网顺序与标题/描述重建：`CommandDoc.kt` 提供 demo、About、官方 Composition 与4个精选 Kotlin 扩展（受控 value、自定义 filter、长列表 Home/End、keywords）；新增 `CommandOfficialRecipes.kt` 数据驱动生成 Basic/Shortcuts/Groups/Scrollable/RTL 的预览与导出代码，保证预览与代码同步。
+- 验证：新增 `CommandExamplesTest` 6/6通过（配方顺序/文案、官方 demo 内容、Basic 对话框打开、Scrollable 滚到最后分组、RTL 阿拉伯标题、80项列表 Home/End 滚到首末项）；Wasm `wasm=7f45661c…` 后四象限重新采集，浏览器实测 Basic 对话框打开（搜索框+Suggestions行）与 Escape 关闭、Shortcuts 打开。
+- 残留：About 位于 Composition 之后（本地渲染器顺序，官网在 Installation 前）；CommandDialog 居中且使用库 Dialog 宽度（官网 top-1/3）；API Reference 为本地 Kotlin 表（官网指向 cmdk 文档）；无 React Aria/Radix 标签页与广告卡片。证据 [command-r11](web-parity/command-r11/README.md)。
+
+### Dropdown Menu：r4 指针聚焦、默认宽度与 ring 对齐（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 157 -->
+
+本轮以当前官网固定修订 `8a3536678a528cc012b9e62484290e79d0be410f`（Base UI + base-nova）逐条复核 Dropdown Menu 页与组件，源码与校验值见 [sources.json](web-parity/dropdown-menu-r4/sources.json)。
+
+- 页面：官方首个预览为无名 `dropdown-menu-demo`，其后为 Installation、Usage、Composition、Basic…RTL、API Reference 共15个H2；本地13个官方配方顺序、标题、预览内容与显式宽度（160/128/192/224/176/144）均已与官网源一致；8个原本标题与官方配方并列的Kotlin参数示例改为 `Kotlin extension: …`，排在官方配方之后。r4 未改配方宽度。
+- 组件修复：① 指针打开不再自动聚焦/高亮首行，改用 `DropdownMenuInitialFocus { None, First, Last }` 意图：触发器的 ArrowDown/ArrowUp/Enter/Space 记录键盘意图，指针点击保持 None；None 时聚焦面板本体，使后续 ArrowDown 仍能进入菜单。② Nova 根内容宽度改为 `max(anchor, 128dp)`，子菜单默认 `min-w-[96px]`（官方 `w-(--anchor-width)` + `min-w-32`、子菜单 `w-auto min-w-[96px]`）。③ 官方 `ring-1 ring-foreground/10` 是 box-shadow；本地原用 inner border，会吃掉每行2dp宽度，现 Nova 改用 `dropShadow(ringShadow(...))` 外描边，几何与官网一致，Vega 保持原样。④ 折叠/翻转/可用高度上限沿用既有 `PopupPositionProvider`，本轮复测未发现新差异。`MenuStyles.rememberMenuPanelStyle` 仅新增默认保留的可选参数（Lead 已批准），ContextMenu/Menubar 调用不变。
+- 验证：`DropdownMenuExamplesTest` 18/18通过（新增指针不聚焦首行、ArrowDown/ArrowUp/Enter 键盘打开聚焦首/末行、默认宽度遵循触发器且不小于128dp、Kotlin扩展标题）；`dropdown_menu_nova_{light,dark}` 因指针打开不再高亮首行而按预期重录，`verifyRoborazziJvm` 仅这两张变化，Vega `dropdown_menu_states_*` 未变；四个界面模块编译通过；Wasm 构建 `wasm=7f45661c…` 后重新采集四象限，并在浏览器复核指针打开（无高亮行）、ArrowDown（首行高亮）、Escape 关闭、390px 指针打开，与官网同浏览器实测的宽度/行高/ring 对照。
+- 仍保留：Compose Web Canvas 的语义树无法等价输出 ARIA `role=menu`/`role=menuitem`（当前为 Button/Checkbox/RadioButton + aria-checked/selected）；显式宽度小于超宽触发器的调用会被拉宽到 anchor 宽度；无显式宽度的子菜单只保证96dp最小宽度，不做内容自适应；指针打开时焦点所有者为面板而非触发器（视觉状态与官网一致）。因此保持未勾选，证据见 [dropdown-menu-r4](web-parity/dropdown-menu-r4/README.md)。
+
+### Empty：测试矩阵补记与最终证据（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 156 -->
+
+补记测试矩阵（同轮）：按固定上游 `8a3536678a528cc012b9e62484290e79d0be410f` 复核后，除 EmptyExamplesTest 7 项外，又跑通 EmptyBrowserParityTest 12 项（四种显示组合、搜索/清空、三语、Contact support/Learn More 导航）与 core EmptyParityTest 7 项，共 **26 项通过**，三份 JUnit XML 均归档在 [empty-r3/tests](web-parity/empty-r3/tests)。页面 copy 修正（六段说明与 Usage 的 `EmptyMedia`）、Outline 自然高度、RTL 阿拉伯语与四象限浏览器证据不变；未重验的是历史旧 Vega 截图矩阵（12 changed / 4 missing），不能据本轮通过声称旧基准已通过。最终应用仍为 `17aa61fed5cd3f56a86f.wasm`，SHA256 `7f45661cba22c83438633b3dd71bca5bfadb43c773ab974a905c067eaeed9fb0`。
+
+### Empty：官方配方 copy、Usage 与四象限复核（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 155 -->
+
+按固定上游 `8a3536678a528cc012b9e62484290e79d0be410f` 重读 Empty MDX、`empty.tsx`、七个配方与 `style-nova.css`，并实时读取当前页面段落。配方顺序仍为 demo、Outline、Background、Avatar、Avatar Group、InputGroup、RTL；每节有一句说明，Usage 的 EmptyHeader 含 `EmptyMedia variant="icon"`。
+
+本轮校正页面 copy：Outline → `EmptyVariant.Outline`（border utility）；Background → `background` style（bg-*/bg-gradient-*）；Avatar/Avatar Group → `Use the EmptyMedia component …`；InputGroup → `You can add an InputGroup component to the EmptyContent component.`；RTL → RTL 配置指南链接 + 三语工具栏说明。Usage 代码补 `EmptyMedia(variant = EmptyMediaVariant.Icon)`。组件未改：Outline 仍由预览承担 384dp 与 40/24dp inset、Empty 自然高度；RTL 64dp 工具栏 + 288dp 正文 + 40dp inset + 打包 Noto；Avatar 48dp 灰度、Avatar Group 40dp 叠放、InputGroup 搜索/清空/支持链接保持 r2 状态。
+
+验证：EmptyExamplesTest **7 项通过**（七配方顺序、六段官方 copy、Usage EmptyMedia、Learn More 导航、48dp/灰度头像、Avatar Group 40dp 步进、InputGroup 编辑/清空/链接、RTL 三语顺序）；浏览器重拍 Outline/Background/Avatar Group/InputGroup/RTL 阿拉伯语，四象限 1440/390×浅深已复查；Empty 页无 toast，共享 toast 位置问题不适用于本页。Wasm 构建成功，最终应用 `17aa61fed5cd3f56a86f.wasm`，SHA256 `7f45661cba22c83438633b3dd71bca5bfadb43c773ab974a905c067eaeed9fb0`。
+
+保留差异：text-balance/text-pretty 未实现导致多处换行不同；深色字重/图形/阴影/圆角细节、头像缓存/缩放采样差异；Composition 前引导句与共享页面标题/节奏/代码底栏/API 表排版；原生 HTML 链接语义、读屏与完整键盘/hover/focus、任意 Style/shape、极端约束与大内容；历史 Vega 截图矩阵未重验，r2 的 25 项完整矩阵本轮未重跑。
+
+### Drawer：官方七配方、章节与手势/snap 复核（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 154 -->
+
+按固定上游 `8a3536678a528cc012b9e62484290e79d0be410f` 重读 Drawer MDX、`drawer.tsx`、七个官方配方与 `style-nova.css`，并实时对照当前页面。官方顺序为 demo（delivery time）、Custom Sizes、Styling、Position、Swipe Handle、Nested、Non Modal、Snap Points、Responsive、Migrating from Vaul、API Reference，demo 后还有一条 Base UI 迁移 Callout。本地旧页缺这些章节与 Composition/API Reference，官方七配方顺序/标题错位，缺 Responsive，Nested 触发文案不同。
+
+本轮重建示例为官方七配方 + `Kotlin extension:` 后置：Delivery time（公共 ShadcnToast 确认提示）、Position（左抽屉 Move Goal）、Swipe Handle（内容自适应 + 拖动条）、Nested（四层，父层保持挂载）、Non Modal（无遮罩、页面可交互且不因外部点击关闭）、Snap Points（496dp/全高，手柄实拖吸附）、Responsive（桌面 Dialog/窄屏 Drawer）。补 Custom Sizes、Styling 前置章节与 Migrating from Vaul 后置章节、Composition 树、Usage 导入块和七个 API 小节；官方配方 footer 的 Close 改为 `fillMaxWidth()` 以匹配 flex-col 拉伸；demo 根布局改用居中的 Box 避免共享 Toaster 撑开预览。
+
+验证：DrawerExamplesTest **10 项通过**；浏览器验证 desktop demo、左抽屉、Swipe Handle、四层嵌套逐层打开、非模态点击页面仍打开、Snap peek→拖动吸附全高、Responsive 桌面 Dialog，四象限 1440/390×浅深已复查。Wasm 构建成功，最终应用 `17aa61fed5cd3f56a86f.wasm`，SHA256 `7f45661cba22c83438633b3dd71bca5bfadb43c773ab974a905c067eaeed9fb0`。
+
+保留差异：demo 后 Callout 无页面壳槽位；Migrating 的 7 个 Steps 用 Bullets+代码近似（标题层级不同）；demo toast 渲染在预览右下角而非 sonner 的视口固定位置（共享 toast 位置问题）；data-* 属性/`--drawer-*` 变量无可直接对应物、改用 Compose 参数；四向拖动/欠阻尼/真机触摸与 iOS body 定位要求未在本轮重验；官网 drawer 用 base-rhea、本地按项目目标继续 base-nova。
+
+### Dialog：官方六配方、Composition/API 与状态复核（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 153 -->
+
+按固定上游 `8a3536678a528cc012b9e62484290e79d0be410f` 重读 Dialog MDX、`dialog.tsx`、六个官方配方与 `style-nova.css`，并实时对照当前页面。官方顺序为 demo（Edit profile）、Custom Close Button、No Close Button、Sticky Footer、Scrollable Content、RTL，正文无 Examples 分组；本地旧页把 33 个 API 示例放在 Examples 下，缺 RTL，缺 Composition/API Reference，且 Custom Close Button/No Close Button 的标题、copy、预览内容均非官网内容。
+
+本轮把页面重建为官方六配方 + `Kotlin extension:` 后置（`examplesHeading = null`）：Edit profile、Share link（只读链接、`sm:max-w-md` 用 `Style { width(448.dp) }` 覆盖）、No Close Button、Sticky Footer（10 段 lorem + 固定 footer）、Scrollable Content、RTL（阿拉伯语默认、工具栏可切英语/希伯来语）。补 Usage 导入块、Composition 树和 Dialog/DialogTrigger/DialogContent/Header-Title-Description/Footer/Close/Overlay-Portal 七个 API 小节，区分 Compose 扩展与 Base UI 属性。组件未改：Nova 面板、4dp 背景模糊、footer `bg-muted/50` + 顶边框、关闭按钮位置与源码一致。
+
+验证：DialogExamplesTest **10 项通过**（官方顺序、extension 前缀、各配方开关、Escape 焦点恢复、禁用关闭、RTL 三语、导出顺序）；Wasm development distribution 成功，最终应用 `17aa61fed5cd3f56a86f.wasm`，SHA256 `7f45661cba22c83438633b3dd71bca5bfadb43c773ab974a905c067eaeed9fb0`。浏览器保存打开/关闭、Escape 焦点恢复、非模态页面交互、Sticky/Scrollable 滚动、RTL 浅深、448dp Custom Close 与四象限拼图；无内容弹窗的 Escape 只有浏览器证据，因 Canvas 无焦点节点时 JVM 键注入不进入 Popup。
+
+保留差异：Canvas 无原生 inert/aria-modal/aria-labelledby 与浏览器焦点陷阱；Base UI `modal="trap-focus"`、`initialFocus`/`finalFocus`、`onOpenChangeComplete` 未映射；448px 用的是 Style 覆盖而 `DialogSize` 仍只有 320/384/512；共享页面（单 Base UI 标签、无广告、Geist 光栅化、手机 375 对 390、Kotlin 代码面板、RTL 回退字体行框）未变。
 
 ### Collapsible：当前五配方、RTL 与浏览器四象限（2026-11-05）
 

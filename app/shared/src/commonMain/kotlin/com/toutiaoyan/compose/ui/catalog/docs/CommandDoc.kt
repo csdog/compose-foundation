@@ -2,26 +2,159 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
-import com.composables.icons.lucide.Lucide
-import com.composables.icons.lucide.Search
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.composables.icons.lucide.Lucide
+import com.composables.icons.lucide.*
 import com.toutiaoyan.compose.ui.components.command.Command
-import com.toutiaoyan.compose.ui.components.command.CommandDefaults
-import com.toutiaoyan.compose.ui.components.command.CommandDialog
 import com.toutiaoyan.compose.ui.components.command.CommandEmpty
-import com.toutiaoyan.compose.ui.components.command.CommandFooter
 import com.toutiaoyan.compose.ui.components.command.CommandGroup
-import com.toutiaoyan.compose.ui.components.command.CommandGroupHeading
 import com.toutiaoyan.compose.ui.components.command.CommandInput
 import com.toutiaoyan.compose.ui.components.command.CommandItem
 import com.toutiaoyan.compose.ui.components.command.CommandList
-import com.toutiaoyan.compose.ui.components.command.CommandLoading
 import com.toutiaoyan.compose.ui.components.command.CommandSeparator
 import com.toutiaoyan.compose.ui.components.command.CommandShortcut
-import com.toutiaoyan.compose.ui.components.button.Button
+import com.toutiaoyan.compose.ui.components.text.Text
+import com.toutiaoyan.compose.ui.theme.currentTheme
+
+/** One icon + label + optional shortcut row shared by the page previews and their code. */
+@Composable
+private fun CommandExampleItem(
+    label: String,
+    icon: ImageVector,
+    shortcut: String? = null,
+    disabled: Boolean = false,
+    onSelect: () -> Unit = {},
+) {
+    CommandItem(label, onSelect, disabled = disabled) {
+        Row(
+            Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Image(
+                icon,
+                null,
+                Modifier.size(16.dp),
+                colorFilter =
+                    ColorFilter.tint(
+                        if (disabled) {
+                            currentTheme.colors.mutedForeground
+                        } else {
+                            currentTheme.colors.foreground
+                        },
+                    ),
+            )
+            Text(Modifier.weight(1f)) { label }
+            if (shortcut != null) CommandShortcut(shortcut)
+        }
+    }
+}
+
+@Composable
+private fun SurfaceText(
+    text: String,
+    muted: Boolean = false,
+) {
+    val theme = currentTheme
+    Text(
+        textStyle =
+            theme.typography.bodyMedium.copy(
+                fontFamily = theme.fontFamily,
+                fontSize = 14.sp,
+                lineHeight = 20.sp,
+                fontWeight = FontWeight.Normal,
+                color = if (muted) theme.colors.mutedForeground else theme.colors.foreground,
+            ),
+    ) { text }
+}
+
+private val commandDemoPreview: @Composable () -> Unit = {
+    var selection by remember { mutableStateOf("") }
+    Column(Modifier.widthIn(max = 384.dp)) {
+        Command(modifier = Modifier.fillMaxWidth()) {
+            CommandInput()
+            CommandList {
+                CommandEmpty()
+                CommandGroup(heading = "Suggestions") {
+                    CommandExampleItem("Calendar", Lucide.Calendar, onSelect = { selection = "Calendar" })
+                    CommandExampleItem("Search Emoji", Lucide.Smile, onSelect = { selection = "Search Emoji" })
+                    CommandExampleItem("Calculator", Lucide.Calculator, disabled = true, onSelect = {})
+                }
+                CommandSeparator()
+                CommandGroup(heading = "Settings") {
+                    CommandExampleItem("Profile", Lucide.User, "⌘P", onSelect = { selection = "Profile" })
+                    CommandExampleItem("Billing", Lucide.CreditCard, "⌘B", onSelect = { selection = "Billing" })
+                    CommandExampleItem("Settings", Lucide.Settings, "⌘S", onSelect = { selection = "Settings" })
+                }
+            }
+        }
+        if (selection.isNotEmpty()) SurfaceText("Selected: $selection", muted = true)
+    }
+}
+
+private val commandDemoCode =
+    """
+    @Composable
+    fun CommandDemo() {
+        var selection by remember { mutableStateOf("") }
+        Column(Modifier.widthIn(max = 384.dp)) {
+            Command(modifier = Modifier.fillMaxWidth()) {
+                CommandInput()
+                CommandList {
+                    CommandEmpty()
+                    CommandGroup(heading = "Suggestions") {
+                        CommandExampleItem("Calendar", Lucide.Calendar, onSelect = { selection = "Calendar" })
+                        CommandExampleItem("Search Emoji", Lucide.Smile, onSelect = { selection = "Search Emoji" })
+                        CommandExampleItem("Calculator", Lucide.Calculator, disabled = true, onSelect = {})
+                    }
+                    CommandSeparator()
+                    CommandGroup(heading = "Settings") {
+                        CommandExampleItem("Profile", Lucide.User, "⌘P", onSelect = { selection = "Profile" })
+                        CommandExampleItem("Billing", Lucide.CreditCard, "⌘B", onSelect = { selection = "Billing" })
+                        CommandExampleItem("Settings", Lucide.Settings, "⌘S", onSelect = { selection = "Settings" })
+                    }
+                }
+            }
+            if (selection.isNotEmpty()) SurfaceText("Selected: ${'$'}selection", muted = true)
+        }
+    }
+
+    @Composable
+    private fun CommandExampleItem(
+        label: String,
+        icon: ImageVector,
+        shortcut: String? = null,
+        disabled: Boolean = false,
+        onSelect: () -> Unit = {},
+    ) {
+        CommandItem(label, onSelect, disabled = disabled) {
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Image(icon, null, Modifier.size(16.dp))
+                Text(Modifier.weight(1f)) { label }
+                if (shortcut != null) CommandShortcut(shortcut)
+            }
+        }
+    }
+    """.trimIndent()
 
 val commandDoc =
     ComponentDoc(
@@ -30,13 +163,7 @@ val commandDoc =
         description = "Command menu for search and quick actions.",
         usageCode =
             """
-            import com.toutiaoyan.compose.ui.components.command.Command
-            import com.toutiaoyan.compose.ui.components.command.CommandEmpty
-            import com.toutiaoyan.compose.ui.components.command.CommandGroup
-            import com.toutiaoyan.compose.ui.components.command.CommandInput
-            import com.toutiaoyan.compose.ui.components.command.CommandItem
-            import com.toutiaoyan.compose.ui.components.command.CommandList
-            import com.toutiaoyan.compose.ui.components.command.CommandSeparator
+            import com.toutiaoyan.compose.ui.components.command.*
 
             Command {
                 CommandInput(placeholder = "Type a command or search...")
@@ -45,1164 +172,150 @@ val commandDoc =
                     CommandGroup(heading = "Suggestions") {
                         CommandItem("Calendar", onSelect = {})
                         CommandItem("Search Emoji", onSelect = {})
+                        CommandItem("Calculator", onSelect = {})
                     }
                     CommandSeparator()
                     CommandGroup(heading = "Settings") {
                         CommandItem("Profile", onSelect = {})
+                        CommandItem("Billing", onSelect = {})
+                        CommandItem("Settings", onSelect = {})
                     }
                 }
             }
             """.trimIndent(),
+        compositionCode =
+            """
+            Command
+            ├── CommandInput
+            └── CommandList
+                ├── CommandEmpty
+                ├── CommandGroup
+                │   ├── CommandItem
+                │   └── CommandItem
+                ├── CommandSeparator
+                └── CommandGroup
+                    ├── CommandItem
+                    └── CommandItem
+            """.trimIndent(),
+        examplesHeading = null,
+        beforeExamples =
+            listOf(
+                ComponentGuideSection(
+                    "About",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "The `Command` component is modelled on the upstream cmdk command menu: " +
+                                "a searchable list with groups, separators and keyboard selection.",
+                        ),
+                    ),
+                ),
+            ),
         examples =
             listOf(
                 ComponentExample(
                     title = "Default",
+                    code = commandDemoCode,
+                    preview = commandDemoPreview,
+                ),
+            ) + commandOfficialRecipes + listOf(
+                ComponentExample(
+                    title = "Kotlin extension: Controlled value",
                     code =
                         """
-                        @Composable
-                        fun CommandParityExample() {
-                            var selection by remember { mutableStateOf("") }
-                            Column(Modifier.widthIn(max = 384.dp)) {
-                                Command(modifier = Modifier.fillMaxWidth()) {
-                                    CommandInput()
-                                    CommandList {
-                                        CommandEmpty()
-                                        CommandGroup(heading = "Suggestions") {
-                                            CommandExampleItem("Calendar", Lucide.Calendar, onSelect = { selection = "Calendar" })
-                                            CommandExampleItem("Search Emoji", Lucide.Smile, onSelect = { selection = "Search Emoji" })
-                                            CommandExampleItem("Calculator", Lucide.Calculator, disabled = true, onSelect = {})
-                                        }
-                                        CommandSeparator()
-                                        CommandGroup(heading = "Settings") {
-                                            CommandExampleItem("Profile", Lucide.User, "⌘P", onSelect = { selection = "Profile" })
-                                            CommandExampleItem("Billing", Lucide.CreditCard, "⌘B", onSelect = { selection = "Billing" })
-                                            CommandExampleItem("Settings", Lucide.Settings, "⌘S", onSelect = { selection = "Settings" })
-                                        }
+                        var value by remember { mutableStateOf("") }
+                        Command(value = value, onValueChange = { value = it }) {
+                            CommandInput()
+                            CommandList {
+                                CommandGroup(heading = "Suggestions") {
+                                    CommandItem("Calendar", onSelect = {})
+                                    CommandItem("Search Emoji", onSelect = {})
+                                }
+                            }
+                        }
+                        // value is the highlighted item's value; rejected writes keep the old value.
+                        """.trimIndent(),
+                    preview = {
+                        var value by remember { mutableStateOf("") }
+                        Column(Modifier.widthIn(max = 384.dp)) {
+                            Command(value = value, onValueChange = { value = it }) {
+                                CommandInput()
+                                CommandList {
+                                    CommandGroup(heading = "Suggestions") {
+                                        CommandItem("Calendar", onSelect = {})
+                                        CommandItem("Search Emoji", onSelect = {})
                                     }
                                 }
-                                if (selection.isNotEmpty()) SurfaceText("Selected: ${'$'}selection", muted = true)
                             }
-                        }
-
-                        @Composable
-                        private fun SurfaceText(text: String, muted: Boolean = false, medium: Boolean = false) {
-                            val theme = currentTheme
-                            Text(textStyle = theme.typography.bodyMedium.copy(fontFamily = theme.fontFamily, fontSize = 14.sp, lineHeight = 20.sp,
-                                fontWeight = if (medium) FontWeight.Medium else FontWeight.Normal,
-                                color = if (muted) theme.colors.mutedForeground else theme.colors.foreground)) { text }
-                        }
-
-                        @Composable
-                        private fun CommandExampleItem(label: String, icon: androidx.compose.ui.graphics.vector.ImageVector, shortcut: String? = null, disabled: Boolean = false, onSelect: () -> Unit) {
-                            CommandItem(label, onSelect, disabled = disabled) {
-                                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                    Image(icon, null, Modifier.size(16.dp), colorFilter = ColorFilter.tint(if (disabled) currentTheme.colors.mutedForeground else currentTheme.colors.foreground))
-                                    Text(Modifier.weight(1f)) { label }
-                                    if (shortcut != null) CommandShortcut(shortcut)
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = { CommandParityExample() },
-                ),
-                ComponentExample(
-                    title = "Long list keyboard navigation",
-                    code =
-                        "Command { CommandInput(); CommandList { " +
-                            "repeat(80) { CommandItem(\"Action \$it\", {}) } } }",
-                    preview = {
-                        Command {
-                            CommandInput()
-                            CommandList { repeat(80) { CommandItem("Action $it", {}) } }
+                            SurfaceText("Active: " + value.ifEmpty { "(none)" }, muted = true)
                         }
                     },
                 ),
                 ComponentExample(
-                    title = "Default query",
+                    title = "Kotlin extension: Custom filter",
                     code =
                         """
-                        Command(defaultQuery = "") {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command(defaultQuery = "") {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Dialog",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(open = open, onOpenChange = { open = it }) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(open = open, onOpenChange = { open = it }) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Dialog title",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            title = "Command Palette",
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandItem("Calendar", onSelect = { open = false })
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            title = "Command Palette",
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandItem("Calendar", onSelect = { open = false })
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default dialog title",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            title = "Command Palette",
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandItem("Calendar", onSelect = { open = false })
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            title = "Command Palette",
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandItem("Calendar", onSelect = { open = false })
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Dialog description",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            description = "Search for a command to run...",
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandItem("Calendar", onSelect = { open = false })
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            description = "Search for a command to run...",
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandItem("Calendar", onSelect = { open = false })
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default dialog description",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            description = "Search for a command to run...",
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandItem("Calendar", onSelect = { open = false })
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            description = "Search for a command to run...",
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandItem("Calendar", onSelect = { open = false })
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Disabled",
-                    code =
-                        """
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                    CommandItem("Search Emoji", onSelect = {}, disabled = true)
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                    CommandItem("Search Emoji", onSelect = {}, disabled = true)
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default disabled",
-                    code =
-                        """
-                        Command {
-                            CommandInput(disabled = false)
-                            CommandList {
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                    CommandItem("Search Emoji", onSelect = {}, disabled = false)
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command {
-                            CommandInput(disabled = false)
-                            CommandList {
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                    CommandItem("Search Emoji", onSelect = {}, disabled = false)
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Disabled input",
-                    code =
-                        """
-                        Command {
-                            CommandInput(disabled = true)
-                            CommandList {
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command {
-                            CommandInput(disabled = true)
-                            CommandList {
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Loading",
-                    code =
-                        """
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandLoading()
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandLoading()
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Loading text",
-                    code =
-                        """
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandLoading(text = "Loading...")
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandLoading(text = "Loading...")
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default loading text",
-                    code =
-                        """
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandLoading(text = "Loading...")
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandLoading(text = "Loading...")
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Keywords",
-                    code =
-                        """
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandItem(
-                                    "Calendar",
-                                    onSelect = {},
-                                    keywords = listOf("event", "date"),
-                                )
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandItem(
-                                    "Calendar",
-                                    onSelect = {},
-                                    keywords = listOf("event", "date"),
-                                )
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Empty",
-                    code =
-                        """
-                        Command(defaultQuery = "xyzzy") {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandItem("Calendar", onSelect = {})
-                                CommandItem("Search Emoji", onSelect = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command(defaultQuery = "xyzzy") {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandItem("Calendar", onSelect = {})
-                                CommandItem("Search Emoji", onSelect = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Empty text",
-                    code =
-                        """
-                        Command(defaultQuery = "xyzzy") {
+                        Command(filter = { query, item -> item.contains(query, ignoreCase = true) }) {
                             CommandInput()
                             CommandList {
                                 CommandEmpty(text = "No results found.")
-                                CommandItem("Calendar", onSelect = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command(defaultQuery = "xyzzy") {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty(text = "No results found.")
-                                CommandItem("Calendar", onSelect = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default empty text",
-                    code =
-                        """
-                        Command(defaultQuery = "xyzzy") {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty(text = "No results found.")
-                                CommandItem("Calendar", onSelect = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command(defaultQuery = "xyzzy") {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty(text = "No results found.")
-                                CommandItem("Calendar", onSelect = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Custom filter",
-                    code =
-                        """
-                        Command(
-                            defaultQuery = "Cal",
-                            filter = { query, value -> value.startsWith(query, ignoreCase = true) },
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandItem("Calendar", onSelect = {})
-                                CommandItem("Search Emoji", onSelect = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command(
-                            defaultQuery = "Cal",
-                            filter = { query, value -> value.startsWith(query, ignoreCase = true) },
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandItem("Calendar", onSelect = {})
-                                CommandItem("Search Emoji", onSelect = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default filter",
-                    code =
-                        """
-                        Command(shouldFilter = true) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandItem("Calendar", onSelect = {})
-                                CommandItem("Search Emoji", onSelect = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command(shouldFilter = true) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandItem("Calendar", onSelect = {})
-                                CommandItem("Search Emoji", onSelect = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default should filter",
-                    code =
-                        """
-                        Command(shouldFilter = true) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandItem("Calendar", onSelect = {})
-                                CommandItem("Search Emoji", onSelect = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command(shouldFilter = true) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandItem("Calendar", onSelect = {})
-                                CommandItem("Search Emoji", onSelect = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "No loop",
-                    code =
-                        """
-                        Command(loop = false) {
-                            CommandInput()
-                            CommandList {
                                 CommandGroup(heading = "Suggestions") {
                                     CommandItem("Calendar", onSelect = {})
                                     CommandItem("Search Emoji", onSelect = {})
+                                    CommandItem("Calculator", onSelect = {})
                                 }
                             }
                         }
                         """.trimIndent(),
                     preview = {
-                        Command(loop = false) {
+                        Command(filter = { query, item -> item.contains(query, ignoreCase = true) }) {
                             CommandInput()
                             CommandList {
+                                CommandEmpty()
                                 CommandGroup(heading = "Suggestions") {
                                     CommandItem("Calendar", onSelect = {})
                                     CommandItem("Search Emoji", onSelect = {})
+                                    CommandItem("Calculator", onSelect = {})
                                 }
                             }
                         }
                     },
                 ),
                 ComponentExample(
-                    title = "Loop",
-                    code =
-                        """
-                        Command(loop = true) {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                    CommandItem("Search Emoji", onSelect = {})
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command(loop = true) {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                    CommandItem("Search Emoji", onSelect = {})
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default loop",
-                    code =
-                        """
-                        Command(loop = true) {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                    CommandItem("Search Emoji", onSelect = {})
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command(loop = true) {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                    CommandItem("Search Emoji", onSelect = {})
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Controlled",
-                    code =
-                        """
-                        var selected by remember { mutableStateOf("Calendar") }
-                        Command(value = selected, onValueChange = { selected = it }) {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                    CommandItem("Search Emoji", onSelect = {})
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var selected by remember { mutableStateOf("Calendar") }
-                        Command(value = selected, onValueChange = { selected = it }) {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                    CommandItem("Search Emoji", onSelect = {})
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Close button",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            showCloseButton = CommandDefaults.ShowCloseButton,
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            showCloseButton = CommandDefaults.ShowCloseButton,
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default close button",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            showCloseButton = false,
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            showCloseButton = false,
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Non-modal",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            modal = false,
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            modal = false,
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Modal",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            modal = true,
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            modal = true,
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default modal",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            modal = true,
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            modal = true,
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Undismissible",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            dismissOnClickOutside = false,
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            dismissOnClickOutside = false,
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default dismiss",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            dismissOnClickOutside = true,
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            dismissOnClickOutside = true,
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Always visible item",
+                    title = "Kotlin extension: Long list keyboard navigation",
                     code =
                         """
                         Command {
-                            CommandInput(placeholder = "Type a command or search...")
+                            CommandInput()
                             CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {}, forceMount = true)
-                                    CommandItem("Search Emoji", onSelect = {})
+                                repeat(80) { index ->
+                                    CommandItem("Action ${'$'}index", onSelect = {})
                                 }
                             }
                         }
+                        // Arrow keys move the selection; Home/End jump to the first/last item
+                        // and the list scrolls the highlighted row into view.
                         """.trimIndent(),
                     preview = {
                         Command {
-                            CommandInput(placeholder = "Type a command or search...")
+                            CommandInput()
                             CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {}, forceMount = true)
-                                    CommandItem("Search Emoji", onSelect = {})
+                                repeat(80) { index ->
+                                    CommandItem("Action $index", onSelect = {})
                                 }
                             }
                         }
                     },
                 ),
                 ComponentExample(
-                    title = "Default force mount",
-                    code =
-                        """
-                        Command {
-                            CommandInput(placeholder = "Type a command or search...")
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {}, forceMount = false)
-                                    CommandItem("Search Emoji", onSelect = {})
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command {
-                            CommandInput(placeholder = "Type a command or search...")
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {}, forceMount = false)
-                                    CommandItem("Search Emoji", onSelect = {})
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Prevent pointer dismiss",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            onPointerDownOutside = { true },
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            onPointerDownOutside = { true },
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Prevent interact outside",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            onInteractOutside = { true },
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            onInteractOutside = { true },
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Content close label",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            showCloseButton = true,
-                            closeAriaLabel = "Dismiss command",
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            showCloseButton = true,
-                            closeAriaLabel = "Dismiss command",
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default close label",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            showCloseButton = true,
-                            closeAriaLabel = "Close",
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Button("Open command", onClick = { open = true })
-                        CommandDialog(
-                            open = open,
-                            onOpenChange = { open = it },
-                            showCloseButton = true,
-                            closeAriaLabel = "Close",
-                        ) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = { open = false })
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Custom text value",
+                    title = "Kotlin extension: Keywords",
                     code =
                         """
                         Command {
                             CommandInput()
                             CommandList {
                                 CommandGroup(heading = "Suggestions") {
-                                    CommandItem("cal", onSelect = {}, textValue = "Calendar")
-                                    CommandItem("mail", onSelect = {}, textValue = "Mail")
+                                    CommandItem("Calendar", onSelect = {}, keywords = listOf("date", "event"))
+                                    CommandItem("Search Emoji", onSelect = {}, keywords = listOf("smile", "icon"))
                                 }
                             }
                         }
@@ -1212,354 +325,45 @@ val commandDoc =
                             CommandInput()
                             CommandList {
                                 CommandGroup(heading = "Suggestions") {
-                                    CommandItem("cal", onSelect = {}, textValue = "Calendar")
-                                    CommandItem("mail", onSelect = {}, textValue = "Mail")
+                                    CommandItem("Calendar", onSelect = {}, keywords = listOf("date", "event"))
+                                    CommandItem("Search Emoji", onSelect = {}, keywords = listOf("smile", "icon"))
                                 }
                             }
                         }
                     },
                 ),
-                ComponentExample(
-                    title = "Default value",
-                    code =
-                        """
-                        Command(defaultValue = "Calendar") {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                    CommandItem("Search Emoji", onSelect = {})
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command(defaultValue = "Calendar") {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                    CommandItem("Search Emoji", onSelect = {})
-                                }
-                            }
-                        }
-                    },
+            ),
+        apiSections =
+            listOf(
+                ComponentApiSection(
+                    "Command / CommandDialog",
+                    "Search state, filtering and dialog wrapper.",
+                    listOf(
+                        ApiProperty("defaultQuery", "String", "\"\""),
+                        ApiProperty("shouldFilter / filter", "Boolean / (String, String) -> Boolean", "true / substring match"),
+                        ApiProperty("loop", "Boolean", "true"),
+                        ApiProperty("value / onValueChange", "String? / ((String) -> Unit)?", "null"),
+                        ApiProperty("open / onOpenChange (dialog)", "Boolean? / ((Boolean) -> Unit)?", "null"),
+                    ),
                 ),
-                ComponentExample(
-                    title = "Group heading",
-                    code =
-                        """
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup {
-                                    CommandGroupHeading("Suggestions")
-                                    CommandItem("Calendar", onSelect = {})
-                                    CommandItem("Search Emoji", onSelect = {})
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup {
-                                    CommandGroupHeading("Suggestions")
-                                    CommandItem("Calendar", onSelect = {})
-                                    CommandItem("Search Emoji", onSelect = {})
-                                }
-                            }
-                        }
-                    },
+                ComponentApiSection(
+                    "CommandInput / CommandList / CommandGroup",
+                    "Search field, viewport and grouped rows.",
+                    listOf(
+                        ApiProperty("placeholder", "String", "\"Type a command or search...\""),
+                        ApiProperty("disabled", "Boolean", "false"),
+                        ApiProperty("heading", "String?", "null on group"),
+                    ),
                 ),
-                ComponentExample(
-                    title = "Shortcut",
-                    code =
-                        """
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup(heading = "Settings") {
-                                    CommandItem("Profile", onSelect = {}, shortcut = "⌘P")
-                                    CommandItem("Billing", onSelect = {}, shortcut = "⌘B")
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup(heading = "Settings") {
-                                    CommandItem("Profile", onSelect = {}, shortcut = "⌘P")
-                                    CommandItem("Billing", onSelect = {}, shortcut = "⌘B")
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Footer",
-                    code =
-                        """
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                }
-                            }
-                            CommandFooter {
-                                CommandShortcut("⌘K")
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                }
-                            }
-                            CommandFooter {
-                                CommandShortcut("⌘K")
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Separator",
-                    code =
-                        """
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandItem("Calendar", onSelect = {})
-                                CommandSeparator()
-                                CommandItem("Profile", onSelect = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandItem("Calendar", onSelect = {})
-                                CommandSeparator()
-                                CommandItem("Profile", onSelect = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Icon",
-                    code =
-                        """
-                        Command {
-                            CommandInput(icon = { DocIcon(Lucide.Search) })
-                            CommandList {
-                                CommandItem("Calendar", onSelect = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command {
-                            CommandInput(icon = { DocIcon(Lucide.Search) })
-                            CommandList {
-                                CommandItem("Calendar", onSelect = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default icon",
-                    code =
-                        """
-                        Command {
-                            CommandInput(icon = null)
-                            CommandList {
-                                CommandItem("Calendar", onSelect = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command {
-                            CommandInput(icon = null)
-                            CommandList {
-                                CommandItem("Calendar", onSelect = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Placeholder",
-                    code =
-                        """
-                        Command {
-                            CommandInput(placeholder = "Search...")
-                            CommandList {
-                                CommandItem("Calendar", onSelect = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command {
-                            CommandInput(placeholder = "Search...")
-                            CommandList {
-                                CommandItem("Calendar", onSelect = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default placeholder",
-                    code =
-                        """
-                        Command {
-                            CommandInput(placeholder = "Type a command or search...")
-                            CommandList {
-                                CommandItem("Calendar", onSelect = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command {
-                            CommandInput(placeholder = "Type a command or search...")
-                            CommandList {
-                                CommandItem("Calendar", onSelect = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Accessible label",
-                    code =
-                        """
-                        Command(label = "Command Menu") {
-                            CommandInput()
-                            CommandList {
-                                CommandItem("Calendar", onSelect = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command(label = "Command Menu") {
-                            CommandInput()
-                            CommandList {
-                                CommandItem("Calendar", onSelect = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default label",
-                    code =
-                        """
-                        Command(label = "Command Menu") {
-                            CommandInput()
-                            CommandList {
-                                CommandItem("Calendar", onSelect = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command(label = "Command Menu") {
-                            CommandInput()
-                            CommandList {
-                                CommandItem("Calendar", onSelect = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Input",
-                    code =
-                        """
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandItem("Calendar", onSelect = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandItem("Calendar", onSelect = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "List",
-                    code =
-                        """
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandItem("Calendar", onSelect = {})
-                                CommandItem("Search Emoji", onSelect = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandItem("Calendar", onSelect = {})
-                                CommandItem("Search Emoji", onSelect = {})
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Group",
-                    code =
-                        """
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup {
-                                    CommandItem("Calendar", onSelect = {})
-                                    CommandItem("Search Emoji", onSelect = {})
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup {
-                                    CommandItem("Calendar", onSelect = {})
-                                    CommandItem("Search Emoji", onSelect = {})
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Item",
-                    code =
-                        """
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandItem("Calendar", onSelect = {})
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandItem("Calendar", onSelect = {})
-                            }
-                        }
-                    },
+                ComponentApiSection(
+                    "CommandItem / CommandShortcut",
+                    "Selectable row with label, icon slot, keywords and shortcut.",
+                    listOf(
+                        ApiProperty("label / onSelect", "String / () -> Unit", "Required"),
+                        ApiProperty("shortcut", "String?", "null"),
+                        ApiProperty("keywords", "List<String>", "emptyList()"),
+                        ApiProperty("enabled / disabled", "Boolean", "true / false"),
+                    ),
                 ),
             ),
     )

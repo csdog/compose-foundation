@@ -7,6 +7,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import com.toutiaoyan.compose.ui.components.drawer.DrawerFooterColumn
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import com.toutiaoyan.compose.ui.catalog.catalogViewportWidth
+import com.toutiaoyan.compose.ui.components.dialog.Dialog
+import com.toutiaoyan.compose.ui.components.dialog.DialogContent
+import com.toutiaoyan.compose.ui.components.dialog.DialogTrigger
+import com.toutiaoyan.compose.ui.components.input.Input
+import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -103,39 +112,7 @@ private val drawerNestedCode =
 
     """.trimIndent()
 
-val drawerDoc =
-    ComponentDoc(
-        id = "drawer",
-        title = "Drawer",
-        description = "A drawer component for React.",
-        usageCode =
-            """
-            import com.toutiaoyan.compose.ui.components.button.Button
-            import com.toutiaoyan.compose.ui.components.button.ButtonVariant
-            import com.toutiaoyan.compose.ui.components.drawer.Drawer
-            import com.toutiaoyan.compose.ui.components.drawer.DrawerClose
-            import com.toutiaoyan.compose.ui.components.drawer.DrawerContent
-            import com.toutiaoyan.compose.ui.components.drawer.DrawerFooter
-            import com.toutiaoyan.compose.ui.components.drawer.DrawerHeader
-            import com.toutiaoyan.compose.ui.components.drawer.DrawerTrigger
-
-            var open by remember { mutableStateOf(false) }
-            Drawer(open = open, onOpenChange = { open = it }) {
-                DrawerTrigger {
-                    Button("Open drawer", onClick = toggle, variant = ButtonVariant.Outline)
-                }
-                DrawerContent {
-                    DrawerHeader("Are you absolutely sure?", description = "This action cannot be undone.")
-                    DrawerFooter {
-                        Button("Submit", onClick = close)
-                        DrawerClose {
-                            Button("Cancel", onClick = close, variant = ButtonVariant.Outline)
-                        }
-                    }
-                }
-            }
-            """.trimIndent(),
-        examples =
+private val drawerExtensionExamples =
             listOf(
                 ComponentExample(
                     title = "Edit profile (bottom edge, drag to dismiss)",
@@ -624,7 +601,7 @@ val drawerDoc =
                             DrawerTrigger("Open indent drawer")
                             DrawerContent {
                                 DrawerHeader("Indent effect", "Drag the drawer to restore the page scale and corners. Release to settle together.")
-                                DrawerFooter { DrawerClose { Button("Close", onClick = close) } }
+                                DrawerFooter { DrawerClose { Button("Close", onClick = close, modifier = Modifier.fillMaxWidth()) } }
                             }
                         }
                         """.trimIndent(),
@@ -639,7 +616,7 @@ val drawerDoc =
                                             "Release to settle together."
                                     ),
                                 )
-                                DrawerFooter { DrawerClose { Button("Close", onClick = close) } }
+                                DrawerFooter { DrawerClose { Button("Close", onClick = close, modifier = Modifier.fillMaxWidth()) } }
                             }
                         }
                     },
@@ -1107,5 +1084,563 @@ val drawerDoc =
                         }
                     },
                 ),
+            )
+
+/** Official recipes promoted into [drawerOfficialExamples]; not repeated as extensions. */
+private val drawerPromotedExamples =
+    setOf(
+        "Edit profile (bottom edge, drag to dismiss)",
+        "Non-modal",
+        "Modal",
+        "Default modal",
+        "Swipe handle",
+        "Nested drawers",
+        "Snap points",
+    )
+
+private val drawerOfficialExamples =
+    listOf(
+        ComponentExample(
+            title = "Delivery time",
+            code =
+                """
+                @Composable
+                fun DrawerDemo() {
+                    var open by remember { mutableStateOf(false) }
+                    var deliveryTime by remember { mutableStateOf("asap") }
+                    val toasts = rememberToastState()
+                    val mobile = LocalWindowInfo.current.containerSize.width <
+                        with(LocalDensity.current) { 768.dp.roundToPx() }
+                    Box {
+                        Drawer(
+                            open = open,
+                            onOpenChange = { open = it },
+                            showSwipeHandle = mobile,
+                            swipeDirection = if (mobile) DrawerSwipeDirection.Down else DrawerSwipeDirection.Right,
+                        ) {
+                            DrawerTrigger("Open Drawer", variant = ButtonVariant.Secondary)
+                            DrawerContent {
+                                DrawerHeader("Pick a delivery time", "We'll prepare your order as soon as possible.")
+                                Column(Modifier.weight(1f).clipToBounds().verticalScroll(rememberScrollState()).padding(16.dp)) {
+                                    RadioGroup(value = deliveryTime, onValueChange = { deliveryTime = it }) {
+                                        deliveryTimes.forEach { time ->
+                                            FieldLabel {
+                                                Field(orientation = FieldOrientation.Horizontal) {
+                                                    FieldContent {
+                                                        FieldTitle { time.label }
+                                                        FieldDescription(time.description)
+                                                    }
+                                                    RadioGroupItem(time.value)
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                DrawerFooterColumn(Modifier.fillMaxWidth()) {
+                                    Button("Confirm Delivery Time", onClick = {
+                                        val selected = deliveryTimes.first { it.value == deliveryTime }
+                                        open = false
+                                        toasts.show("Delivery time confirmed", description = selected.label)
+                                    }, modifier = Modifier.fillMaxWidth(), style = Style { height(34.dp) })
+                                    DrawerClose { Button("Cancel", onClick = close, variant = ButtonVariant.Outline, modifier = Modifier.fillMaxWidth()) }
+                                }
+                            }
+                        }
+                        Toaster(state = toasts)
+                    }
+                }
+                """.trimIndent(),
+            preview = { DrawerParityExample() },
+        ),
+        ComponentExample(
+            title = "Position",
+            code =
+                """
+                Drawer(swipeDirection = DrawerSwipeDirection.Left) {
+                    DrawerTrigger("Open Left Drawer", variant = ButtonVariant.Secondary)
+                    DrawerContent {
+                        DrawerHeader("Move Goal", "Set your daily activity goal.")
+                        Box(Modifier.weight(1f).padding(16.dp)) {
+                            Box(Modifier.fillMaxSize().background(currentTheme.colors.muted, RoundedCornerShape(16.dp)))
+                        }
+                        DrawerFooterColumn(Modifier.fillMaxWidth()) {
+                            DrawerClose { Button("Close", onClick = close, modifier = Modifier.fillMaxWidth()) }
+                        }
+                    }
+                }
+                """.trimIndent(),
+            preview = { DrawerPositionRecipe() },
+        ),
+        ComponentExample(
+            title = "Swipe Handle",
+            code =
+                """
+                Drawer(showSwipeHandle = true) {
+                    DrawerTrigger("Open Drawer", variant = ButtonVariant.Secondary)
+                    DrawerContent {
+                        DrawerHeader("Drawer", "Drawer with a swipe handle.")
+                        Box(Modifier.weight(1f).padding(16.dp)) {
+                            Box(Modifier.fillMaxWidth().height(320.dp).background(currentTheme.colors.muted, RoundedCornerShape(16.dp)))
+                        }
+                        DrawerFooterColumn(Modifier.fillMaxWidth()) {
+                            DrawerClose { Button("Close", onClick = close, modifier = Modifier.fillMaxWidth()) }
+                        }
+                    }
+                }
+                """.trimIndent(),
+            preview = { DrawerSwipeHandleRecipe() },
+        ),
+        ComponentExample(
+            title = "Nested",
+            code = drawerNestedCode,
+            preview = { DrawerNestedParityExample() },
+        ),
+        ComponentExample(
+            title = "Non Modal",
+            code =
+                """
+                Drawer(modal = false, disablePointerDismissal = true, swipeDirection = DrawerSwipeDirection.Right) {
+                    DrawerTrigger("Non Modal", variant = ButtonVariant.Outline)
+                    DrawerContent {
+                        DrawerHeader("Non Modal Drawer")
+                        Box(Modifier.weight(1f).padding(16.dp)) {
+                            Box(Modifier.fillMaxSize().background(currentTheme.colors.muted, RoundedCornerShape(16.dp)))
+                        }
+                        DrawerFooterColumn(Modifier.fillMaxWidth()) {
+                            DrawerClose { Button("Close", onClick = close, modifier = Modifier.fillMaxWidth()) }
+                        }
+                    }
+                }
+                """.trimIndent(),
+            preview = { DrawerNonModalRecipe() },
+        ),
+        ComponentExample(
+            title = "Snap Points",
+            code =
+                """
+                val snaps = listOf(DrawerSnapPoint.Absolute(496.dp), DrawerSnapPoint.Fraction(1f))
+                var snap by remember { mutableStateOf<DrawerSnapPoint?>(snaps.first()) }
+                Drawer(snapPoints = snaps, snapPoint = snap, onSnapPointChange = { snap = it }, showSwipeHandle = true) {
+                    DrawerTrigger("Open Snap Drawer", variant = ButtonVariant.Outline)
+                    DrawerContent {
+                        DrawerHeader(
+                            "Snap points",
+                            "Drag the drawer to snap between a compact peek and a near full-height view.",
+                        )
+                        Box(Modifier.weight(1f).padding(16.dp)) {
+                            Box(Modifier.fillMaxWidth().height(320.dp).background(currentTheme.colors.muted, RoundedCornerShape(16.dp)))
+                        }
+                        DrawerFooterColumn(Modifier.fillMaxWidth()) {
+                            DrawerClose { Button("Close", onClick = close, modifier = Modifier.fillMaxWidth()) }
+                        }
+                    }
+                }
+                """.trimIndent(),
+            preview = { DrawerSnapPointsRecipe() },
+        ),
+        ComponentExample(
+            title = "Responsive",
+            code =
+                """
+                val desktop = catalogViewportWidth() >= 768.dp
+                if (desktop) {
+                    Dialog {
+                        DialogTrigger("Edit Profile", variant = ButtonVariant.Outline)
+                        DialogContent("Edit profile", description = "Make changes to your profile here. Click save when you're done.") {
+                            ProfileForm()
+                        }
+                    }
+                } else {
+                    Drawer {
+                        DrawerTrigger("Edit Profile", variant = ButtonVariant.Outline)
+                        DrawerContent("Edit profile", "Make changes to your profile here. Click save when you're done.") {
+                            ProfileForm(Modifier.padding(16.dp))
+                        }
+                    }
+                }
+                """.trimIndent(),
+            preview = { DrawerResponsiveRecipe() },
+        ),
+    )
+
+@Composable
+private fun DrawerPositionRecipe() {
+    Drawer(swipeDirection = DrawerSwipeDirection.Left) {
+        DrawerTrigger("Open Left Drawer", variant = ButtonVariant.Secondary)
+        DrawerContent {
+            DrawerHeader("Move Goal", "Set your daily activity goal.")
+            Box(Modifier.weight(1f).padding(16.dp)) {
+                Box(Modifier.fillMaxSize().background(currentTheme.colors.muted, RoundedCornerShape(16.dp)))
+            }
+            DrawerFooterColumn(Modifier.fillMaxWidth()) {
+                DrawerClose { Button("Close", onClick = close, modifier = Modifier.fillMaxWidth()) }
+            }
+        }
+    }
+}
+
+@Composable
+private fun DrawerSwipeHandleRecipe() {
+    Drawer(showSwipeHandle = true) {
+        DrawerTrigger("Open Drawer", variant = ButtonVariant.Secondary)
+        DrawerContent {
+            DrawerHeader("Drawer", "Drawer with a swipe handle.")
+            Box(Modifier.padding(16.dp)) {
+                Box(Modifier.fillMaxWidth().height(320.dp).background(currentTheme.colors.muted, RoundedCornerShape(16.dp)))
+            }
+            DrawerFooterColumn(Modifier.fillMaxWidth()) {
+                DrawerClose { Button("Close", onClick = close, modifier = Modifier.fillMaxWidth()) }
+            }
+        }
+    }
+}
+
+@Composable
+private fun DrawerNonModalRecipe() {
+    Drawer(modal = false, disablePointerDismissal = true, swipeDirection = DrawerSwipeDirection.Right) {
+        DrawerTrigger("Non Modal", variant = ButtonVariant.Outline)
+        DrawerContent {
+            DrawerHeader("Non Modal Drawer")
+            Box(Modifier.weight(1f).padding(16.dp)) {
+                Box(Modifier.fillMaxSize().background(currentTheme.colors.muted, RoundedCornerShape(16.dp)))
+            }
+            DrawerFooterColumn(Modifier.fillMaxWidth()) {
+                DrawerClose { Button("Close", onClick = close, modifier = Modifier.fillMaxWidth()) }
+            }
+        }
+    }
+}
+
+@Composable
+private fun DrawerSnapPointsRecipe() {
+    val snaps = listOf(DrawerSnapPoint.Absolute(496.dp), DrawerSnapPoint.Fraction(1f))
+    var snap by remember { mutableStateOf<DrawerSnapPoint?>(snaps.first()) }
+    Drawer(
+        snapPoints = snaps,
+        snapPoint = snap,
+        onSnapPointChange = { snap = it },
+        showSwipeHandle = true,
+    ) {
+        DrawerTrigger("Open Snap Drawer", variant = ButtonVariant.Outline)
+        DrawerContent {
+            DrawerHeader(
+                "Snap points",
+                "Drag the drawer to snap between a compact peek and a near full-height view.",
+            )
+            Box(Modifier.padding(16.dp)) {
+                Box(Modifier.fillMaxWidth().height(320.dp).background(currentTheme.colors.muted, RoundedCornerShape(16.dp)))
+            }
+            DrawerFooterColumn(Modifier.fillMaxWidth()) {
+                DrawerClose { Button("Close", onClick = close, modifier = Modifier.fillMaxWidth()) }
+            }
+        }
+    }
+}
+
+@Composable
+private fun DrawerResponsiveRecipe() {
+    val desktop = catalogViewportWidth() >= 768.dp
+    if (desktop) {
+        Dialog {
+            DialogTrigger("Edit Profile", variant = ButtonVariant.Outline)
+            DialogContent(
+                "Edit profile",
+                description = "Make changes to your profile here. Click save when you're done.",
+            ) {
+                DrawerProfileForm()
+            }
+        }
+    } else {
+        var open by remember { mutableStateOf(false) }
+        Drawer(open = open, onOpenChange = { open = it }) {
+            DrawerTrigger("Edit Profile", variant = ButtonVariant.Outline)
+            DrawerContent(
+                "Edit profile",
+                "Make changes to your profile here. Click save when you're done.",
+            ) {
+                DrawerProfileForm(Modifier.padding(16.dp))
+            }
+        }
+    }
+}
+
+@Composable
+private fun DrawerProfileForm(modifier: Modifier = Modifier) {
+    var email by remember { mutableStateOf("shadcn@example.com") }
+    var username by remember { mutableStateOf("@shadcn") }
+    Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            Text { "Email" }
+            Input(value = email, onValueChange = { email = it })
+        }
+        Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            Text { "Username" }
+            Input(value = username, onValueChange = { username = it })
+        }
+        Button("Save changes", onClick = {})
+    }
+}
+
+private val drawerGuideSections =
+    listOf(
+        ComponentGuideSection(
+            title = "Custom Sizes",
+            blocks =
+                listOf(
+                    ComponentGuideBlock.Paragraph(
+                        (
+                            "A vertical drawer sizes itself to its content and is capped at 96dp less " +
+                                "than the viewport height (`calc(100dvh - 6rem)`). A side drawer spans " +
+                                "`75%` of the viewport width, or 384dp on larger screens."
+                        ),
+                    ),
+                    ComponentGuideBlock.Paragraph(
+                        "To customize the panel, pass a `Modifier` or `Style` to `DrawerContent`.",
+                    ),
+                    ComponentGuideBlock.Code(
+                        """
+                        DrawerContent(style = Style { height(400.dp) }) { /* ... */ }
+                        """.trimIndent(),
+                    ),
+                    ComponentGuideBlock.Code(
+                        """
+                        // Side drawer width
+                        Drawer(swipeDirection = DrawerSwipeDirection.Right) {
+                            DrawerContent(style = Style { width(384.dp) }) { /* ... */ }
+                        }
+                        """.trimIndent(),
+                    ),
+                    ComponentGuideBlock.Paragraph(
+                        (
+                            "To make a region of the drawer scrollable, make the scroll container a " +
+                                "flex item — `Modifier.weight(1f)` inside `DrawerContent`'s column. Avoid " +
+                                "`fillMaxHeight`, which does not resolve inside a content-sized drawer."
+                        ),
+                    ),
+                    ComponentGuideBlock.Code(
+                        """
+                        DrawerContent {
+                            DrawerHeader("Notice", "Scrollable body")
+                            Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) { /* ... */ }
+                            DrawerFooter { /* ... */ }
+                        }
+                        """.trimIndent(),
+                    ),
+                ),
+        ),
+        ComponentGuideSection(
+            title = "Styling",
+            blocks =
+                listOf(
+                    ComponentGuideBlock.Paragraph(
+                        (
+                            "The web drawer exposes CSS variables and `data-*` attributes for " +
+                                "style-level customization. Compose has no CSS cascade, so the same " +
+                                "knobs are component parameters."
+                        ),
+                    ),
+                    ComponentGuideBlock.Bullets(
+                        listOf(
+                            "`--drawer-inset` → `DrawerDefaults.WindowInset` (8dp floating gap).",
+                            "`--drawer-bleed-background` → the overlay/popover fill behind the panel on swipe overshoot.",
+                            "`--drawer-overlay-min-opacity` → the overlay floor, 0.5 while snap points are active.",
+                            "`data-swipe-direction` / `data-swipe-axis` → `DrawerSwipeDirection`, readable in the preview to scope axis-specific layout.",
+                            "`data-snap-points` / `data-expanded` / `data-swiping` / `data-nested-drawer-open` → the snap and nesting state on `DrawerScope`, not style variants.",
+                        ),
+                    ),
+                ),
+        ),
+    )
+
+private val drawerMigrationSections =
+    listOf(
+        ComponentGuideSection(
+            title = "Migrating from Vaul",
+            blocks =
+                listOf(
+                    ComponentGuideBlock.Paragraph(
+                        (
+                            "The Base drawer replaces Vaul. This library follows the Base UI API: " +
+                                "`swipeDirection` replaces `direction`, the slot overloads replace " +
+                                "`asChild`/`render`, and snap points use the controlled " +
+                                "`snapPoint` / `onSnapPointChange` pair."
+                        ),
+                    ),
+                    ComponentGuideBlock.Bullets(
+                        listOf(
+                            "`direction = \"bottom\"` → `DrawerSwipeDirection.Down`; `\"top\"` → `Up`; `left`/`right` are unchanged.",
+                            "`asChild` / `render` → `DrawerTrigger { Button(...) }` and `DrawerClose { Button(...) }`.",
+                            "`activeSnapPoint` / `setActiveSnapPoint` → `snapPoint` / `onSnapPointChange`; `snapToSequentialPoint` → `snapToSequentialPoints`.",
+                            "`onAnimationEnd` → `onOpenChangeComplete` is not modelled; compose state changes directly.",
+                            "`onOpenAutoFocus` → `DrawerContent`'s initial focus is owned by the overlay host.",
+                            "Vaul-only props (`handleOnly`, `repositionInputs`, `shouldScaleBackground`) → `disablePointerDismissal`, `modal`, `snapPoints` or controlled `open`; `dismissible = false` is a Compose convenience.",
+                        ),
+                    ),
+                    ComponentGuideBlock.Code(
+                        """
+                        Drawer(swipeDirection = DrawerSwipeDirection.Down) {
+                            DrawerTrigger { Button("Open", onClick = toggle, variant = ButtonVariant.Outline) }
+                            DrawerContent { /* ... */ }
+                        }
+                        """.trimIndent(),
+                    ),
+                ),
+        ),
+    )
+
+private val drawerApiSections =
+    listOf(
+        ComponentApiSection(
+            "Drawer",
+            (
+                "Controlled (`open` + `onOpenChange`) or uncontrolled (`defaultOpen`). " +
+                    "`swipeDirection` picks the edge; `showSwipeHandle` paints the grabber. " +
+                    "`modal = false` leaves the page interactive and `disablePointerDismissal` " +
+                    "keeps outside presses from closing while swipe still works. " +
+                    "`dismissible = false` and `indentBackground` are Compose extensions."
             ),
+            listOf(
+                ApiProperty("open", "Boolean?", "null"),
+                ApiProperty("onOpenChange", "((Boolean) -> Unit)?", "null"),
+                ApiProperty("defaultOpen", "Boolean", "false"),
+                ApiProperty("swipeDirection", "DrawerSwipeDirection", "DrawerSwipeDirection.Down"),
+                ApiProperty("showSwipeHandle", "Boolean", "false"),
+                ApiProperty("snapPoints", "List<DrawerSnapPoint>?", "null"),
+                ApiProperty("snapPoint / onSnapPointChange", "DrawerSnapPoint? / ((DrawerSnapPoint?) -> Unit)?", "null"),
+                ApiProperty("modal", "Boolean", "true"),
+                ApiProperty("disablePointerDismissal", "Boolean", "false"),
+                ApiProperty("dismissible", "Boolean", "true"),
+                ApiProperty("indentBackground", "Boolean", "false"),
+            ),
+        ),
+        ComponentApiSection(
+            "DrawerTrigger",
+            (
+                "Host slot for the open control. The string overload renders an outline " +
+                    "`Button`; the slot overload leaves chrome to the caller and does not add " +
+                    "its own clickable layer."
+            ),
+            listOf(
+                ApiProperty("text", "String", "Required (string overload)"),
+                ApiProperty("variant", "ButtonVariant", "ButtonVariant.Outline"),
+                ApiProperty("content", "@Composable () -> Unit", "Required (slot overload)"),
+            ),
+        ),
+        ComponentApiSection(
+            "DrawerContent",
+            (
+                "Portal + overlay + panel. Vertical drawers size to content with the " +
+                    "`calc(100dvh - 6rem)` cap; side drawers use 75% of the viewport width " +
+                    "capped at 384dp with the 8dp floating inset. `onPointerDownOutside` / " +
+                    "`onInteractOutside` return true to veto dismissal."
+            ),
+            listOf(
+                ApiProperty("title / description", "String / String?", "Required / null"),
+                ApiProperty("onPointerDownOutside", "(() -> Boolean)?", "null"),
+                ApiProperty("onInteractOutside", "(() -> Boolean)?", "null"),
+                ApiProperty("content", "@Composable ColumnScope.() -> Unit", "Required"),
+            ),
+        ),
+        ComponentApiSection(
+            "DrawerHeader / DrawerTitle / DrawerDescription",
+            (
+                "Header is `p-4 pb-0`; title/description follow the official typography. " +
+                    "The title + description overload is a Compose convenience for the slots."
+            ),
+            listOf(
+                ApiProperty("title / description", "String / String?", "Required / null"),
+                ApiProperty("content", "@Composable ColumnScope.() -> Unit", "Required (slot)"),
+            ),
+        ),
+        ComponentApiSection(
+            "DrawerFooter",
+            (
+                "`p-4 pt-0`. `DrawerFooter` keeps the original `RowScope` action row; " +
+                    "`DrawerFooterColumn` stacks actions vertically like the Base UI footer."
+            ),
+            listOf(ApiProperty("content", "@Composable RowScope.() -> Unit", "Required")),
+        ),
+        ComponentApiSection(
+            "DrawerClose",
+            (
+                "Dismiss control host. The string overload renders an outline `Button` wired " +
+                    "to `DrawerScope.close`; `DrawerCloseIcon` renders the Nova X glyph."
+            ),
+            listOf(
+                ApiProperty("text", "String", "Required (string overload)"),
+                ApiProperty("disabled", "Boolean", "false"),
+                ApiProperty("content", "@Composable () -> Unit", "Required (slot overload)"),
+            ),
+        ),
+        ComponentApiSection(
+            "DrawerOverlay / DrawerPortal / DrawerSwipeHandle",
+            (
+                "Lower-level pieces [DrawerContent] composes: the `bg-black/10` blurred " +
+                    "overlay, the window-level teleport host and the grabber pill. Use them " +
+                    "directly only when replacing the default chrome."
+            ),
+            listOf(
+                ApiProperty("content", "@Composable () -> Unit", "Required"),
+            ),
+        ),
+    )
+
+val drawerDoc =
+    ComponentDoc(
+        id = "drawer",
+        title = "Drawer",
+        description = "A drawer component for React.",
+        usageImportsCode =
+            """
+            import com.toutiaoyan.compose.ui.components.button.Button
+            import com.toutiaoyan.compose.ui.components.button.ButtonVariant
+            import com.toutiaoyan.compose.ui.components.drawer.Drawer
+            import com.toutiaoyan.compose.ui.components.drawer.DrawerClose
+            import com.toutiaoyan.compose.ui.components.drawer.DrawerContent
+            import com.toutiaoyan.compose.ui.components.drawer.DrawerDescription
+            import com.toutiaoyan.compose.ui.components.drawer.DrawerFooter
+            import com.toutiaoyan.compose.ui.components.drawer.DrawerHeader
+            import com.toutiaoyan.compose.ui.components.drawer.DrawerTitle
+            import com.toutiaoyan.compose.ui.components.drawer.DrawerTrigger
+            """.trimIndent(),
+        usageCode =
+            """
+            var open by remember { mutableStateOf(false) }
+            Drawer(open = open, onOpenChange = { open = it }) {
+                DrawerTrigger {
+                    Button("Open", onClick = toggle, variant = ButtonVariant.Outline)
+                }
+                DrawerContent {
+                    DrawerHeader {
+                        DrawerTitle("Are you absolutely sure?")
+                        DrawerDescription("This action cannot be undone.")
+                    }
+                    DrawerFooter {
+                        Button("Submit", onClick = close)
+                        DrawerClose {
+                            Button("Cancel", onClick = close, variant = ButtonVariant.Outline)
+                        }
+                    }
+                }
+            }
+            """.trimIndent(),
+        compositionCode =
+            """
+            Drawer
+            ├── DrawerTrigger
+            └── DrawerContent
+                ├── DrawerHeader
+                │   ├── DrawerTitle
+                │   └── DrawerDescription
+                └── DrawerFooter
+            """.trimIndent(),
+        beforeExamples = drawerGuideSections,
+        afterExamples = drawerMigrationSections,
+        examplesHeading = null,
+        examples =
+            drawerOfficialExamples +
+                drawerExtensionExamples
+                    .filterNot { it.title in drawerPromotedExamples }
+                    .map { it.copy(title = "Kotlin extension: " + it.title) },
+        apiSections = drawerApiSections,
     )

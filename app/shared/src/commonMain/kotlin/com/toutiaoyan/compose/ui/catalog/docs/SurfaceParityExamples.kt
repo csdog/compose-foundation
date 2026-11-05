@@ -36,6 +36,9 @@ import com.toutiaoyan.compose.ui.components.field.*
 import com.toutiaoyan.compose.ui.components.input.*
 import com.toutiaoyan.compose.ui.components.radiobutton.*
 import com.toutiaoyan.compose.ui.components.text.*
+import com.toutiaoyan.compose.ui.components.toast.ToastPosition
+import com.toutiaoyan.compose.ui.components.toast.Toaster
+import com.toutiaoyan.compose.ui.components.toast.rememberToastState
 import com.toutiaoyan.compose.ui.components.badge.*
 import com.toutiaoyan.compose.ui.components.calendar.*
 import com.toutiaoyan.compose.ui.components.popover.*
@@ -242,10 +245,10 @@ private fun DrawerNestedLevel(
     ) {
         DrawerTrigger(
             when (level) {
-                1 -> "Open outer"
-                2 -> "Open nested"
-                3 -> "Open third"
-                else -> "Open fourth"
+                1 -> "Open Drawer"
+                2 -> "Open Nested Drawer"
+                3 -> "Open Third Drawer"
+                else -> "Open Fourth Drawer"
             },
             modifier = if (level > 1) Modifier.fillMaxWidth() else Modifier,
             variant = ButtonVariant.Outline,
@@ -310,9 +313,9 @@ internal fun DrawerLargeContentExample() {
 internal fun DrawerParityExample() {
     var open by remember { mutableStateOf(false) }
     var selected by remember { mutableStateOf("asap") }
-    var confirmed by remember { mutableStateOf("") }
+    val toasts = rememberToastState()
     val mobile = LocalWindowInfo.current.containerSize.width < with(LocalDensity.current) { 768.dp.roundToPx() }
-    Column {
+    Box(contentAlignment = Alignment.TopCenter) {
         Drawer(
             open = open,
             onOpenChange = {
@@ -390,8 +393,9 @@ internal fun DrawerParityExample() {
                             },
                         modifier = Modifier.fillMaxWidth(),
                         onClick = {
-                            confirmed = deliveryTimes.first { it.first == selected }.second
+                            val label = deliveryTimes.first { it.first == selected }.second
                             open = false
+                            toasts.show("Delivery time confirmed", description = label)
                         },
                     )
                     Button(
@@ -407,7 +411,7 @@ internal fun DrawerParityExample() {
                 }
             }
         }
-        if (confirmed.isNotEmpty()) SurfaceText("Delivery time confirmed: $confirmed", muted = true)
+        Toaster(state = toasts, modifier = Modifier.align(Alignment.BottomEnd), position = ToastPosition.BottomEnd)
     }
 }
 

@@ -43,7 +43,7 @@ internal val emptyAdditionalExamples =
     listOf(
         ComponentExample(
             title = "Avatar",
-            descriptionMarkdown = "Display an avatar in the empty state.",
+            descriptionMarkdown = "Use the `EmptyMedia` component to display an avatar in the empty state.",
             minPreviewHeight = 384.dp,
             mobileMinPreviewHeight = 384.dp,
             previewPadding = 0.dp,
@@ -85,7 +85,7 @@ internal val emptyAdditionalExamples =
         ),
         ComponentExample(
             title = "Avatar Group",
-            descriptionMarkdown = "Display a group of avatars in the empty state.",
+            descriptionMarkdown = "Use the `EmptyMedia` component to display an avatar group in the empty state.",
             minPreviewHeight = 384.dp,
             mobileMinPreviewHeight = 384.dp,
             previewPadding = 0.dp,
@@ -158,7 +158,7 @@ internal val emptyAdditionalExamples =
         ),
         ComponentExample(
             title = "InputGroup",
-            descriptionMarkdown = "Add an InputGroup to the EmptyContent.",
+            descriptionMarkdown = "You can add an `InputGroup` component to the `EmptyContent` component.",
             minPreviewHeight = 384.dp,
             mobileMinPreviewHeight = 384.dp,
             previewPadding = 0.dp,
@@ -236,7 +236,7 @@ internal val emptyAdditionalExamples =
         ),
         ComponentExample(
             title = "RTL",
-            descriptionMarkdown = "Set the layout direction for the selected language.",
+            descriptionMarkdown = "To enable RTL support in your app, see the [RTL configuration guide](https://ui.shadcn.com/docs/rtl). Source shows the Arabic pair; the catalog toolbar also previews English and Hebrew.",
             minPreviewHeight = 352.dp,
             mobileMinPreviewHeight = 352.dp,
             previewPadding = 0.dp,

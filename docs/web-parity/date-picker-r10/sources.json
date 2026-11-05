@@ -1,0 +1,61 @@
+{
+  "retrievedAt": "2026-11-05T04:28:55.478418+00:00",
+  "revision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "repo": "shadcn-ui/ui",
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/date-picker.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/date-picker.mdx",
+      "sha256": "3a39e4274f247f1f0d6f8f0c7029ca3161db37cf5026f48de3f5e2831fb82b17",
+      "bytes": 2982
+    },
+    {
+      "path": "apps/v4/examples/base/date-picker-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/date-picker-demo.tsx",
+      "sha256": "6e2e2191ee17d699aa3821c6fef0ef14401ef0c7a9c59241d3c50b67d71591df",
+      "bytes": 1090
+    },
+    {
+      "path": "apps/v4/examples/base/date-picker-basic.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/date-picker-basic.tsx",
+      "sha256": "3a362e0d7d7458fe3a1a6b1267841d83145fa7028d48c14062ccab5c9a168aa2",
+      "bytes": 1156
+    },
+    {
+      "path": "apps/v4/examples/base/date-picker-range.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/date-picker-range.tsx",
+      "sha256": "d3a623938f4dc9f66cc89295af62947e00ba8813fd845b0fb45f395770bbe140",
+      "bytes": 1772
+    },
+    {
+      "path": "apps/v4/examples/base/date-picker-dob.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/date-picker-dob.tsx",
+      "sha256": "55148d52178286a57bca51a6911a76fe2dd568d155e43ddc256f778f14ae6723",
+      "bytes": 1330
+    },
+    {
+      "path": "apps/v4/examples/base/date-picker-input.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/date-picker-input.tsx",
+      "sha256": "3f9601a170b0dc21996e761f097462bed504e3195fa801d6bcd549b3011a04a6",
+      "bytes": 2848
+    },
+    {
+      "path": "apps/v4/examples/base/date-picker-time.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/date-picker-time.tsx",
+      "sha256": "4a65399ebf3ddebad365e04d7a876236311fd099dcf67fd64712fc2f704b72a2",
+      "bytes": 2061
+    },
+    {
+      "path": "apps/v4/examples/base/date-picker-natural-language.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/date-picker-natural-language.tsx",
+      "sha256": "cab7dd423fa2fe787417204d839edbea27935637e171ea0a72c11abbc0c3de22",
+      "bytes": 2837
+    },
+    {
+      "path": "apps/v4/examples/base/date-picker-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/date-picker-rtl.tsx",
+      "sha256": "68343f94eaa5e7cf69d7cac4a9388eefebb54a5da7cda0be4621ace06bfe772d",
+      "bytes": 2251
+    }
+  ]
+}

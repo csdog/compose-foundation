@@ -1,0 +1,67 @@
+{
+  "revision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "retrievedAt": "2026-11-05T12:03:00+08:00",
+  "source": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/<path>",
+  "livePages": [
+    "https://ui.shadcn.com/docs/components/base/dialog",
+    "https://ui.shadcn.com/docs/components/base/drawer",
+    "https://ui.shadcn.com/docs/components/base/empty"
+  ],
+  "files": {
+    "empty": [
+      {
+        "path": "apps/v4/content/docs/components/base/empty.mdx",
+        "sha256": "c5774ea5afe66274441071b1d1ac0491d9335eb171576001413d207649c91934",
+        "bytes": 4618
+      },
+      {
+        "path": "apps/v4/registry/bases/base/ui/empty.tsx",
+        "sha256": "05c419160ac0226973f6f00d7d8865dc46645a75ea0697138992cdbc736efec4",
+        "bytes": 2276
+      },
+      {
+        "path": "apps/v4/examples/base/empty-demo.tsx",
+        "sha256": "d4bfa1bd766fa59cdd531b9e54f1603ef571b3dfbf566eaf408139d71e05d101",
+        "bytes": 1115
+      },
+      {
+        "path": "apps/v4/examples/base/empty-outline.tsx",
+        "sha256": "943f9294d74083e1ed9772287869cd29647f6b3f8dbebdcb642f8ba2a834e41e",
+        "bytes": 784
+      },
+      {
+        "path": "apps/v4/examples/base/empty-background.tsx",
+        "sha256": "33cc2a4f7ad4f996f0bc6a340de6b67ef4593262cbc742d3c0b709f6eb7a3987",
+        "bytes": 888
+      },
+      {
+        "path": "apps/v4/examples/base/empty-avatar.tsx",
+        "sha256": "8850590227c9643badc11cfde3c53fccdb55e91ed227f2095bfe626976bc58fd",
+        "bytes": 1000
+      },
+      {
+        "path": "apps/v4/examples/base/empty-avatar-group.tsx",
+        "sha256": "aa53df1f469e7a3df77d203449931918c5d50af5ca041b668c702d9fa226639a",
+        "bytes": 1601
+      },
+      {
+        "path": "apps/v4/examples/base/empty-input-group.tsx",
+        "sha256": "680adef5117fb0e7c6b27aee036ffd7a718b64a5a407f50155470cfab580fae4",
+        "bytes": 1130
+      },
+      {
+        "path": "apps/v4/examples/base/empty-rtl.tsx",
+        "sha256": "114e060da61d09300db2e5c283156b20d53d5c311ede163cc5ba1e9df6e7f3d5",
+        "bytes": 2353
+      }
+    ],
+    "styles": [
+      {
+        "path": "apps/v4/registry/styles/style-nova.css",
+        "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e",
+        "bytes": 78661
+      }
+    ]
+  },
+  "component": "empty"
+}

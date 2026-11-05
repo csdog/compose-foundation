@@ -1,0 +1,62 @@
+{
+  "revision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "retrievedAt": "2026-11-05T12:03:00+08:00",
+  "source": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/<path>",
+  "livePages": [
+    "https://ui.shadcn.com/docs/components/base/dialog",
+    "https://ui.shadcn.com/docs/components/base/drawer",
+    "https://ui.shadcn.com/docs/components/base/empty"
+  ],
+  "files": {
+    "dialog": [
+      {
+        "path": "apps/v4/content/docs/components/base/dialog.mdx",
+        "sha256": "9079868107a2eed2486d7529f1f1e358fe58858c73542add3876e93d695b0b76",
+        "bytes": 2825
+      },
+      {
+        "path": "apps/v4/registry/bases/base/ui/dialog.tsx",
+        "sha256": "aba6df6cbf51a1edcc22e415a3a46a666fc8cb66729e47b3ed2ecd97f166adff",
+        "bytes": 3701
+      },
+      {
+        "path": "apps/v4/examples/base/dialog-demo.tsx",
+        "sha256": "35e451795f40bfd4ed6db6d3aad892d2a52f45af819739d8bf3fdaecd121cfbc",
+        "bytes": 1561
+      },
+      {
+        "path": "apps/v4/examples/base/dialog-close-button.tsx",
+        "sha256": "49fefe0767e792e2c8728c6ff9593a0114c4af376995cb6544ea9300c01d4f1c",
+        "bytes": 1311
+      },
+      {
+        "path": "apps/v4/examples/base/dialog-no-close-button.tsx",
+        "sha256": "4d73c3bdd944e8b679516949bb368a93e119620f9da4f6787885e3e82c7716ca",
+        "bytes": 744
+      },
+      {
+        "path": "apps/v4/examples/base/dialog-sticky-footer.tsx",
+        "sha256": "fb2a727ced06f58051a11abdfd96d267c40ab9ce0ba807f6a0deec34c4013739",
+        "bytes": 1638
+      },
+      {
+        "path": "apps/v4/examples/base/dialog-scrollable-content.tsx",
+        "sha256": "ec1ae54d37d58f538322de8b23db251c33476a555cd6316983bd5863d8f77c89",
+        "bytes": 1446
+      },
+      {
+        "path": "apps/v4/examples/base/dialog-rtl.tsx",
+        "sha256": "14901aa1a9db5e1292792f4414ec644982f569bc644148d7bf731ffc035ddfea",
+        "bytes": 2944
+      }
+    ],
+    "styles": [
+      {
+        "path": "apps/v4/registry/styles/style-nova.css",
+        "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e",
+        "bytes": 78661
+      }
+    ]
+  },
+  "component": "dialog"
+}

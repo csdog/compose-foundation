@@ -1,0 +1,111 @@
+{
+  "slug": "date-picker",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/date-picker",
+  "localUrl": "http://127.0.0.1:8772/date-picker",
+  "capturedAt": "2026-11-05T04:39:30.598Z",
+  "app": [
+    "http://127.0.0.1:8772/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8772/659783f094fccca17d88.wasm"
+  ],
+  "officialDom": {
+    "title": "Date Picker",
+    "description": "Copy PagePreviousNext",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "Installation#"
+      },
+      {
+        "tag": "H2",
+        "text": "Usage#"
+      },
+      {
+        "tag": "H2",
+        "text": "Composition#"
+      },
+      {
+        "tag": "H2",
+        "text": "Basic#"
+      },
+      {
+        "tag": "H2",
+        "text": "Range Picker#"
+      },
+      {
+        "tag": "H2",
+        "text": "Date of Birth#"
+      },
+      {
+        "tag": "H2",
+        "text": "Input#"
+      },
+      {
+        "tag": "H2",
+        "text": "Time Picker#"
+      },
+      {
+        "tag": "H2",
+        "text": "Natural Language Picker#"
+      },
+      {
+        "tag": "H2",
+        "text": "RTL#"
+      }
+    ],
+    "tabs": [],
+    "examples": 8,
+    "toc": [],
+    "bodyWidth": {
+      "x": 0,
+      "y": 64,
+      "width": 1080,
+      "height": 6210.203125,
+      "top": 64,
+      "right": 1080,
+      "bottom": 6274.203125,
+      "left": 0
+    },
+    "clientWidth": 1080,
+    "scrollHeight": 6274
+  },
+  "local": {
+    "desktop-light": {
+      "url": "http://127.0.0.1:8772/date-picker",
+      "theme": "light",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(6876px + 100vh)"
+    },
+    "desktop-dark": {
+      "url": "http://127.0.0.1:8772/date-picker",
+      "theme": "dark",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(6876px + 100vh)"
+    },
+    "phone-light": {
+      "url": "http://127.0.0.1:8772/date-picker",
+      "theme": "light",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(7699.5px + 100vh)"
+    },
+    "phone-dark": {
+      "url": "http://127.0.0.1:8772/date-picker",
+      "theme": "dark",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(7699.5px + 100vh)"
+    }
+  },
+  "files": {
+    "official-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/date-picker-r10/official-desktop-light.png",
+    "local-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/date-picker-r10/local-desktop-light.png",
+    "official-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/date-picker-r10/official-desktop-dark.png",
+    "local-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/date-picker-r10/local-desktop-dark.png",
+    "official-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/date-picker-r10/official-phone-light.png",
+    "local-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/date-picker-r10/local-phone-light.png",
+    "official-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/date-picker-r10/official-phone-dark.png",
+    "local-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/date-picker-r10/local-phone-dark.png"
+  }
+}

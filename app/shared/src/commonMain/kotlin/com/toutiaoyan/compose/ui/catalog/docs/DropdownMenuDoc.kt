@@ -442,7 +442,7 @@ val dropdownMenuDoc =
                         },
                     ),
                     ComponentExample(
-                        title = "Inset",
+                        title = "Kotlin extension: Inset",
                         code =
                             """
                             var open by remember { mutableStateOf(false) }
@@ -478,7 +478,7 @@ val dropdownMenuDoc =
                         },
                     ),
                     ComponentExample(
-                        title = "Disabled",
+                        title = "Kotlin extension: Disabled",
                         code =
                             """
                             var open by remember { mutableStateOf(false) }
@@ -504,7 +504,7 @@ val dropdownMenuDoc =
                         },
                     ),
                     ComponentExample(
-                        title = "Non-modal",
+                        title = "Kotlin extension: Non-modal",
                         code =
                             """
                             var open by remember { mutableStateOf(false) }
@@ -530,7 +530,7 @@ val dropdownMenuDoc =
                         },
                     ),
                     ComponentExample(
-                        title = "Non-dismissible",
+                        title = "Kotlin extension: Non-dismissible",
                         code =
                             """
                             var open by remember { mutableStateOf(false) }
@@ -556,7 +556,7 @@ val dropdownMenuDoc =
                         },
                     ),
                     ComponentExample(
-                        title = "Indeterminate checkbox",
+                        title = "Kotlin extension: Indeterminate checkbox",
                         code =
                             """
                             var open by remember { mutableStateOf(false) }
@@ -588,7 +588,7 @@ val dropdownMenuDoc =
                         },
                     ),
                     ComponentExample(
-                        title = "Keep open on select",
+                        title = "Kotlin extension: Keep open on select",
                         code =
                             """
                             var open by remember { mutableStateOf(false) }
@@ -612,7 +612,7 @@ val dropdownMenuDoc =
                         },
                     ),
                     ComponentExample(
-                        title = "Prevent checkbox toggle",
+                        title = "Kotlin extension: Prevent checkbox toggle",
                         code =
                             """
                             var open by remember { mutableStateOf(false) }
@@ -644,7 +644,7 @@ val dropdownMenuDoc =
                         },
                     ),
                     ComponentExample(
-                        title = "Uncontrolled",
+                        title = "Kotlin extension: Uncontrolled",
                         code =
                             """
                             DropdownMenu {

@@ -1,6 +1,7 @@
 package com.toutiaoyan.compose.ui.catalog
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.ui.Alignment
@@ -15,7 +16,12 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.catalog.docs.dropdownMenuDoc
+import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenu
+import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuContent
+import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuItem
+import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuTrigger
 import com.toutiaoyan.compose.ui.components.overlay.OverlayHost
+import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import org.junit.Rule
@@ -27,6 +33,7 @@ class DropdownMenuExamplesTest {
     private fun show(
         title: String,
         trigger: String = "Open",
+        openWithKeyboard: Boolean = false,
     ) {
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
@@ -37,7 +44,25 @@ class DropdownMenuExamplesTest {
                 }
             }
         }
-        rule.onNodeWithText(trigger).performClick()
+        if (openWithKeyboard) {
+            rule.onNodeWithText(trigger).requestFocus()
+            rule.onNodeWithText(trigger).performKeyInput { pressKey(Key.DirectionDown) }
+        } else {
+            rule.onNodeWithText(trigger).performClick()
+        }
+    }
+
+    /** Renders one preview without opening it, for tests that drive the trigger themselves. */
+    private fun render(title: String) {
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, minTouchTarget = null) {
+                OverlayHost {
+                    Box(Modifier.width(560.dp).height(600.dp), contentAlignment = Alignment.Center) {
+                        dropdownMenuDoc.examples.single { it.title == title }.preview()
+                    }
+                }
+            }
+        }
     }
 
     @Test fun defaultIncludesDisabledApiAndSelectingAnActionClosesTheMenu() {
@@ -84,7 +109,7 @@ class DropdownMenuExamplesTest {
     }
 
     @Test fun keyboardCanEnterBothSubmenusAndSelectAnAction() {
-        show("Submenu")
+        show("Submenu", openWithKeyboard = true)
         rule.onNodeWithText("Team").assertIsFocused().performKeyInput { pressKey(Key.DirectionDown) }
         rule.onNodeWithText("Invite users").assertIsFocused().performKeyInput { pressKey(Key.DirectionRight) }
         rule.onNodeWithText("Email").assertIsFocused().performKeyInput {
@@ -115,6 +140,71 @@ class DropdownMenuExamplesTest {
             dropdownMenuDoc.examples.take(13).map { it.title },
         )
         assertTrue(dropdownMenuDoc.examples.single { it.title == "Checkboxes Icons" }.code.contains("leadingContent"))
+        assertTrue(
+            dropdownMenuDoc.examples.drop(13).all { it.title.startsWith("Kotlin extension: ") },
+        )
+    }
+
+    @Test fun pointerOpenLeavesEveryRowUnhighlighted() {
+        show("Basic")
+        rule.onNodeWithText("Profile").assertIsNotFocused()
+        rule.onNodeWithText("Billing").assertIsNotFocused()
+        // The first ArrowDown from the open-but-unhighlighted menu reaches the first row.
+        rule.onNodeWithText("Profile").assertIsDisplayed()
+    }
+
+    @Test fun keyboardArrowDownOpenFocusesTheFirstRow() {
+        render("Basic")
+        rule.onNodeWithText("Open").requestFocus()
+        rule.onNodeWithText("Open").performKeyInput { pressKey(Key.DirectionDown) }
+        rule.onNodeWithText("Profile").assertIsFocused()
+    }
+
+    @Test fun keyboardArrowUpOpenFocusesTheLastEnabledRow() {
+        render("Basic")
+        rule.onNodeWithText("Open").requestFocus()
+        rule.onNodeWithText("Open").performKeyInput { pressKey(Key.DirectionUp) }
+        rule.onNodeWithText("Support").assertIsFocused()
+    }
+
+    @Test fun keyboardEnterOpenFocusesTheFirstRow() {
+        render("Basic")
+        rule.onNodeWithText("Open").requestFocus()
+        rule.onNodeWithText("Open").performKeyInput { pressKey(Key.Enter) }
+        rule.onNodeWithText("Profile").assertIsFocused()
+    }
+
+    @Test fun defaultContentWidthFollowsTheTriggerWithAnOfficialMinimum() {
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, minTouchTarget = null) {
+                OverlayHost {
+                    Box(Modifier.width(560.dp).height(600.dp), contentAlignment = Alignment.Center) {
+                        Column {
+                            DropdownMenu(open = true, onOpenChange = {}) {
+                                DropdownMenuTrigger(modifier = Modifier.width(240.dp)) {
+                                    Text { "Wide trigger" }
+                                }
+                                DropdownMenuContent {
+                                    DropdownMenuItem("Profile", onClick = {})
+                                }
+                            }
+                            DropdownMenu(open = true, onOpenChange = {}) {
+                                DropdownMenuTrigger(modifier = Modifier.width(40.dp)) {
+                                    Text { "Narrow trigger" }
+                                }
+                                DropdownMenuContent {
+                                    DropdownMenuItem("Billing", onClick = {})
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // A wide trigger widens the panel past the official 128dp minimum.
+        rule.onNodeWithText("Profile").assertWidthIsAtLeast(220.dp)
+        // A narrow trigger falls back to the official min-w-32 minus the panel padding.
+        rule.onNodeWithText("Billing").assertWidthIsEqualTo(120.dp)
     }
 
     @Test fun notificationIconsKeepIndependentCheckedStates() {

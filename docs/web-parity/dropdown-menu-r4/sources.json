@@ -1,0 +1,103 @@
+{
+  "retrievedAt": "2026-11-05T04:23:37.791881+00:00",
+  "revision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "repo": "shadcn-ui/ui",
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/dropdown-menu.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/dropdown-menu.mdx",
+      "sha256": "36e21a0f00fb6f808c5ce4af27353f9cbaac4f8d746ada2306f809114826d990",
+      "bytes": 4833
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/dropdown-menu.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/registry/bases/base/ui/dropdown-menu.tsx",
+      "sha256": "18c1829679694a9b9850afcabf1158a80ec3624fb5e03d0d4b13339b729e0503",
+      "bytes": 7461
+    },
+    {
+      "path": "apps/v4/registry/styles/style-nova.css",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e",
+      "bytes": 78661
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/dropdown-menu-demo.tsx",
+      "sha256": "1c06196af05a7e0a05b78d4fdec221b0f36ba24dfc570628b93303f8c0a4d4d1",
+      "bytes": 2503
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-basic.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/dropdown-menu-basic.tsx",
+      "sha256": "2f627d8d53e59c91b5814c6c70ae022581f8f0be1c3fff36c00898ba91be9c5b",
+      "bytes": 1011
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-submenu.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/dropdown-menu-submenu.tsx",
+      "sha256": "0b9d631d545863f8342232a4b87f85a9fd076bc1351f33529eb4e958b6515ddc",
+      "bytes": 1952
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-shortcuts.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/dropdown-menu-shortcuts.tsx",
+      "sha256": "a23a4174f4e9b616331ef5b1d807f79f0fef5054c0c62d2dafc43e80a08f79d1",
+      "bytes": 1273
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-icons.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/dropdown-menu-icons.tsx",
+      "sha256": "90533e248e0f66c68572980f38a5b8d726510c942a9eac272ae145c5d2a60391",
+      "bytes": 1034
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-checkboxes.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/dropdown-menu-checkboxes.tsx",
+      "sha256": "a4b092f10b23689d1402350caeaf313574249580b8453ee70f125d82099cb46c",
+      "bytes": 1478
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-checkboxes-icons.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/dropdown-menu-checkboxes-icons.tsx",
+      "sha256": "b50b08098653f6639e3a6225633662e4d57c47add8d8c38140d0fccbc74510b5",
+      "bytes": 1855
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-radio-group.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/dropdown-menu-radio-group.tsx",
+      "sha256": "52c09d7cef24efebecfe9f033fc54c53ecd8eb0d5a454fcf8f39853fc5a758aa",
+      "bytes": 1127
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-radio-icons.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/dropdown-menu-radio-icons.tsx",
+      "sha256": "8cf9c241b7383c102cb7d0bbe9daf31a5a86480bd245e0e9746de9825fe4ea27",
+      "bytes": 1464
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-destructive.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/dropdown-menu-destructive.tsx",
+      "sha256": "2362640f2c4d53dd50ac983b77b6b3e99a5031ff7d5bb774eadcf0f6df743f69",
+      "bytes": 1064
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-avatar.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/dropdown-menu-avatar.tsx",
+      "sha256": "77d748e94061625e618028e25e05252db8499c82e1e5159e3d93fbbcdcee4916",
+      "bytes": 1420
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-complex.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/dropdown-menu-complex.tsx",
+      "sha256": "8acc550d9a2a70363879459640945da369123258eb76cbb105d07d9b5ee41ce0",
+      "bytes": 9722
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/dropdown-menu-rtl.tsx",
+      "sha256": "e007cdaedc052d900237da32d158613aef79370acb71e5fdf322bfa63059239e",
+      "bytes": 7959
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "retrievedAt": "2026-11-05T04:28:55.475032+00:00",
+  "revision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "repo": "shadcn-ui/ui",
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/command.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/command.mdx",
+      "sha256": "44bc1f723bda05d7954a9268697d42c6bf91054d76802fd401ec547ee2bb56c0",
+      "bytes": 3049
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/command.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/registry/bases/base/ui/command.tsx",
+      "sha256": "65c077360299bf07e26db0954e1f2472f0ecc4568e881b4b956634fa65ca6c80",
+      "bytes": 4709
+    },
+    {
+      "path": "apps/v4/examples/base/command-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/command-demo.tsx",
+      "sha256": "94e0c12b815dba06479e6547fb4cd6f00d01ca0731ac03d3e4eb1f05665a1800",
+      "bytes": 1534
+    },
+    {
+      "path": "apps/v4/examples/base/command-basic.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/command-basic.tsx",
+      "sha256": "dea002832db68402ea3d33cc977330478c528dcc9e862f099c153e2ee13952ef",
+      "bytes": 1049
+    },
+    {
+      "path": "apps/v4/examples/base/command-shortcuts.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/command-shortcuts.tsx",
+      "sha256": "538f88c0e1d11e5bd0866cf74888dde6949a1510c3f0c45b91cd76ed7025d90e",
+      "bytes": 1535
+    },
+    {
+      "path": "apps/v4/examples/base/command-groups.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/command-groups.tsx",
+      "sha256": "3295a2aebdff29479bea05dd46c1348bd3a5fbcc80b450de6797b8cebac0a1e9",
+      "bytes": 2105
+    },
+    {
+      "path": "apps/v4/examples/base/command-scrollable.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/command-scrollable.tsx",
+      "sha256": "88b78d2047fdbbe8facd25b04882eea196ddda039a38045599153541f15cedff",
+      "bytes": 5487
+    },
+    {
+      "path": "apps/v4/examples/base/command-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/command-rtl.tsx",
+      "sha256": "6efc3c200c8b8c9d25936e1f219fe61b1961b11f77c9bc01cf613449db523a45",
+      "bytes": 2991
+    }
+  ]
+}
