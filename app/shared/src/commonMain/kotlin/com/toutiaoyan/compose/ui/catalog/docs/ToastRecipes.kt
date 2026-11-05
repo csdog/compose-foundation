@@ -94,10 +94,22 @@ internal val toastOfficialExamples =
         ComponentExample("Default", code = toastDefaultRecipeCode, preview = {
             ToastDefaultRecipe(checkNotNull(com.toutiaoyan.compose.ui.catalog.LocalCatalogToastState.current))
         }),
-        ComponentExample("Types", code = toastTypesRecipeCode, preview = {
+        ComponentExample(
+            title = "Types",
+            descriptionMarkdown =
+                "Set the `type` option to render a status icon. The built-in renderer recognizes " +
+                    "`success`, `info`, `warning`, `error`, and `loading`.",
+            code = toastTypesRecipeCode,
+            preview = {
             ToastTypesRecipe(checkNotNull(com.toutiaoyan.compose.ui.catalog.LocalCatalogToastState.current))
         }),
-        ComponentExample("Promise", code = toastPromiseRecipeCode, preview = {
+        ComponentExample(
+            title = "Promise",
+            descriptionMarkdown =
+                "Use `toast.promise` to update one toast as an asynchronous task moves through " +
+                    "loading, success, and error states.",
+            code = toastPromiseRecipeCode,
+            preview = {
             ToastPromiseRecipe(checkNotNull(com.toutiaoyan.compose.ui.catalog.LocalCatalogToastState.current))
         }),
     )

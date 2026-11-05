@@ -39,6 +39,12 @@ val tooltipDoc =
                 }
             }
             """.trimIndent(),
+        compositionCode =
+            """
+            Tooltip
+            ├── TooltipTrigger
+            └── TooltipContent
+            """.trimIndent(),
         examplesHeading = null,
         examples =
             tooltipOfficialExamples +
@@ -485,5 +491,14 @@ val tooltipDoc =
                             }
                         },
                     ),
-                ),
+                ).let { all ->
+                    all.filter {
+                        it.title in
+                            setOf(
+                                "Kotlin extension: Arrow",
+                                "Kotlin extension: Delay",
+                                "Kotlin extension: Controlled",
+                            )
+                    }
+                },
     )

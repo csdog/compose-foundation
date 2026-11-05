@@ -1,0 +1,130 @@
+{
+  "slug": "toggle-group",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/toggle-group",
+  "localUrl": "http://127.0.0.1:8772/toggle-group",
+  "capturedAt": "2026-11-05T05:20:51.267Z",
+  "app": [
+    "http://127.0.0.1:8772/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8772/879c014d3060edbcf720.wasm"
+  ],
+  "officialDom": {
+    "title": "Toggle Group",
+    "description": "Copy PagePreviousNext",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "Installation#"
+      },
+      {
+        "tag": "H2",
+        "text": "Usage#"
+      },
+      {
+        "tag": "H2",
+        "text": "Composition#"
+      },
+      {
+        "tag": "H2",
+        "text": "Outline#"
+      },
+      {
+        "tag": "H2",
+        "text": "Size#"
+      },
+      {
+        "tag": "H2",
+        "text": "Spacing#"
+      },
+      {
+        "tag": "H2",
+        "text": "Vertical#"
+      },
+      {
+        "tag": "H2",
+        "text": "Disabled#"
+      },
+      {
+        "tag": "H2",
+        "text": "Custom#"
+      },
+      {
+        "tag": "H2",
+        "text": "RTL#"
+      },
+      {
+        "tag": "H2",
+        "text": "API Reference#"
+      },
+      {
+        "tag": "H2",
+        "text": "Changelog#"
+      },
+      {
+        "tag": "H3",
+        "text": "2026-05-17 Default Spacing#"
+      }
+    ],
+    "tabs": [
+      "Command",
+      "Manual",
+      "pnpm",
+      "npm",
+      "yarn",
+      "bun"
+    ],
+    "examples": 8,
+    "toc": [],
+    "bodyWidth": {
+      "x": 0,
+      "y": 64,
+      "width": 1080,
+      "height": 5514.578125,
+      "top": 64,
+      "right": 1080,
+      "bottom": 5578.578125,
+      "left": 0
+    },
+    "clientWidth": 1080,
+    "scrollHeight": 5578
+  },
+  "local": {
+    "desktop-light": {
+      "url": "http://127.0.0.1:8772/toggle-group",
+      "theme": "light",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(5654.5px + 100vh)"
+    },
+    "desktop-dark": {
+      "url": "http://127.0.0.1:8772/toggle-group",
+      "theme": "dark",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(5654.5px + 100vh)"
+    },
+    "phone-light": {
+      "url": "http://127.0.0.1:8772/toggle-group",
+      "theme": "light",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(6290.5px + 100vh)"
+    },
+    "phone-dark": {
+      "url": "http://127.0.0.1:8772/toggle-group",
+      "theme": "dark",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(6290.5px + 100vh)"
+    }
+  },
+  "files": {
+    "official-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/toggle-group-r1/official-desktop-light.png",
+    "local-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/toggle-group-r1/local-desktop-light.png",
+    "official-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/toggle-group-r1/official-desktop-dark.png",
+    "local-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/toggle-group-r1/local-desktop-dark.png",
+    "official-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/toggle-group-r1/official-phone-light.png",
+    "local-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/toggle-group-r1/local-phone-light.png",
+    "official-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/toggle-group-r1/official-phone-dark.png",
+    "local-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/toggle-group-r1/local-phone-dark.png"
+  }
+}

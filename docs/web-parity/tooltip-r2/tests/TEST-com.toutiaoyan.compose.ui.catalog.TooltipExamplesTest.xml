@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TooltipExamplesTest[jvm]" tests="20" skipped="0" failures="0" errors="0" timestamp="2026-11-05T05:14:51.228Z" hostname="Apples-MacBook-Pro.local" time="2.893">
+  <properties/>
+  <testcase name="shortcutUsesTheSaveIconAndPassiveKeycap[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TooltipExamplesTest" time="0.107"/>
+  <testcase name="rtlHasPhysicalAndLogicalSidesAndRealLanguageSwitching[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TooltipExamplesTest" time="0.33"/>
+  <testcase name="allFourPhysicalSidesUseTheSameSourceMessage[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TooltipExamplesTest" time="0.248"/>
+  <testcase name="defaultFocusAndEscapeUseTheOfficialMessage[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TooltipExamplesTest" time="0.075"/>
+  <testcase name="disabledButtonStillAllowsItsWrapperTooltip[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TooltipExamplesTest" time="0.065"/>
+  <testcase name="shortcutUsesTheSaveIconAndPassiveKeycap[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TooltipExamplesTest" time="0.061"/>
+  <testcase name="rtlHasPhysicalAndLogicalSidesAndRealLanguageSwitching[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TooltipExamplesTest" time="0.248"/>
+  <testcase name="allFourPhysicalSidesUseTheSameSourceMessage[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TooltipExamplesTest" time="0.262"/>
+  <testcase name="defaultFocusAndEscapeUseTheOfficialMessage[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TooltipExamplesTest" time="0.068"/>
+  <testcase name="disabledButtonStillAllowsItsWrapperTooltip[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TooltipExamplesTest" time="0.06"/>
+  <testcase name="shortcutUsesTheSaveIconAndPassiveKeycap[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TooltipExamplesTest" time="0.061"/>
+  <testcase name="rtlHasPhysicalAndLogicalSidesAndRealLanguageSwitching[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TooltipExamplesTest" time="0.254"/>
+  <testcase name="allFourPhysicalSidesUseTheSameSourceMessage[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TooltipExamplesTest" time="0.229"/>
+  <testcase name="defaultFocusAndEscapeUseTheOfficialMessage[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TooltipExamplesTest" time="0.065"/>
+  <testcase name="disabledButtonStillAllowsItsWrapperTooltip[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TooltipExamplesTest" time="0.058"/>
+  <testcase name="shortcutUsesTheSaveIconAndPassiveKeycap[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TooltipExamplesTest" time="0.059"/>
+  <testcase name="rtlHasPhysicalAndLogicalSidesAndRealLanguageSwitching[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TooltipExamplesTest" time="0.261"/>
+  <testcase name="allFourPhysicalSidesUseTheSameSourceMessage[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TooltipExamplesTest" time="0.245"/>
+  <testcase name="defaultFocusAndEscapeUseTheOfficialMessage[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TooltipExamplesTest" time="0.071"/>
+  <testcase name="disabledButtonStillAllowsItsWrapperTooltip[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.TooltipExamplesTest" time="0.065"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,67 @@
+{
+  "retrievedAt": "2026-11-05T05:16:50.807995+00:00",
+  "revision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "repo": "shadcn-ui/ui",
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/toggle-group.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/toggle-group.mdx",
+      "sha256": "7be06167d743c4454bea5a8ec24d7ebbb8f330c749aa2fabfc31d537e2e2e1e6",
+      "bytes": 2784
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/toggle-group.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/registry/bases/base/ui/toggle-group.tsx",
+      "sha256": "2562e00c69ad2ad15e4ce9fdbcf4c9cc42223b7ce7340db0ad3d203f23177c21",
+      "bytes": 2647
+    },
+    {
+      "path": "apps/v4/examples/base/toggle-group-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/toggle-group-demo.tsx",
+      "sha256": "05cd86b04d3da9b666433a0d2ac078c2fcfeea004e5133f9235fe6fa8e703ca4",
+      "bytes": 602
+    },
+    {
+      "path": "apps/v4/examples/base/toggle-group-outline.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/toggle-group-outline.tsx",
+      "sha256": "7994e70d7a366fea09fea17ca8cb0291ffb8f5b38ba0f98b6457deb4cd10a1cd",
+      "bytes": 425
+    },
+    {
+      "path": "apps/v4/examples/base/toggle-group-sizes.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/toggle-group-sizes.tsx",
+      "sha256": "58f56733a02c06897123f2f463029e80493031478fb18d90d74d11eb26c19bba",
+      "bytes": 1229
+    },
+    {
+      "path": "apps/v4/examples/base/toggle-group-spacing.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/toggle-group-spacing.tsx",
+      "sha256": "dc4ad4d2a04af0669683125ad54435b14793731ecc5c99dec01e474404624df2",
+      "bytes": 650
+    },
+    {
+      "path": "apps/v4/examples/base/toggle-group-vertical.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/toggle-group-vertical.tsx",
+      "sha256": "19901b038dd6c9d7f94e30b82b7c3861a5e9db8dd4f77fe95889f7e57e9403ca",
+      "bytes": 702
+    },
+    {
+      "path": "apps/v4/examples/base/toggle-group-disabled.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/toggle-group-disabled.tsx",
+      "sha256": "5ef8081856fd8029c45bdb42ba741b3550d472dd09efe2b403dfa0435109ce11",
+      "bytes": 588
+    },
+    {
+      "path": "apps/v4/examples/base/toggle-group-font-weight-selector.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/toggle-group-font-weight-selector.tsx",
+      "sha256": "63b34b46744a736bea96532b72f97bc5335322b13b0b70dedd00874e090ebf97",
+      "bytes": 2203
+    },
+    {
+      "path": "apps/v4/examples/base/toggle-group-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/toggle-group-rtl.tsx",
+      "sha256": "da7544277a68edea7d4a15f78f2032fb6ffac52d18c159e7fbfb94a97dff0ad1",
+      "bytes": 1134
+    }
+  ]
+}

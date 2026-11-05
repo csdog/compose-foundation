@@ -34,6 +34,7 @@ val toastDoc =
                 )
             }
             """.trimIndent(),
+        examplesHeading = null,
         examples =
             toastOfficialExamples +
                 listOf(
@@ -729,5 +730,14 @@ val toastDoc =
                             }
                         },
                     ),
-                ),
+                ).let { all ->
+                    all.filter {
+                        it.title in
+                            setOf(
+                                "Kotlin extension: Position",
+                                "Kotlin extension: Duration",
+                                "Kotlin extension: Close button",
+                            )
+                    }
+                },
     )

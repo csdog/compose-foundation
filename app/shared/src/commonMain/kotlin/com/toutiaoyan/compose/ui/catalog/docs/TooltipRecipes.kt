@@ -176,14 +176,30 @@ internal fun TooltipRtlRecipe(language: Int = 1) {
 internal val tooltipOfficialExamples =
     listOf(
         ComponentExample("Default", code = tooltipDefaultRecipeCode, preview = { TooltipDefaultRecipe() }),
-        ComponentExample("Side", code = tooltipSideRecipeCode, preview = { TooltipSideRecipe() }),
+        ComponentExample(
+            title = "Side",
+            descriptionMarkdown = "Use the `side` prop to change the position of the tooltip.",
+            code = tooltipSideRecipeCode,
+            preview = { TooltipSideRecipe() },
+        ),
         ComponentExample(
             "With Keyboard Shortcut",
             code = tooltipKeyboardRecipeCode,
             preview = { TooltipKeyboardRecipe() },
         ),
-        ComponentExample("Disabled Button", code = tooltipDisabledRecipeCode, preview = { TooltipDisabledRecipe() }),
-        ComponentExample("RTL", code = tooltipRtlRecipeCode, previewPadding = 0.dp, preview = {
+        ComponentExample(
+            title = "Disabled Button",
+            descriptionMarkdown =
+                "Show a tooltip on a disabled button by wrapping it with a span.",
+            code = tooltipDisabledRecipeCode,
+            preview = { TooltipDisabledRecipe() },
+        ),
+        ComponentExample(
+            title = "RTL",
+            descriptionMarkdown = "To enable RTL support in shadcn/ui, see the RTL configuration guide.",
+            code = tooltipRtlRecipeCode,
+            previewPadding = 0.dp,
+            preview = {
             var language by remember { mutableIntStateOf(1) }
             RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
                 TooltipRtlRecipe(language)
