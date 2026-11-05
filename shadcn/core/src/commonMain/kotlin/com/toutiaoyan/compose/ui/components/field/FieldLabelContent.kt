@@ -17,6 +17,7 @@ import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.tailwind.core.twRadius
 import com.toutiaoyan.compose.ui.styles.cssStyleable
 import com.toutiaoyan.compose.ui.theme.currentTheme
 
@@ -42,7 +43,7 @@ fun FieldLabel(
     val colors = theme.colors
     val base =
         Style {
-            shape(androidx.compose.foundation.shape.RoundedCornerShape(8.dp))
+            shape(androidx.compose.foundation.shape.RoundedCornerShape(twRadius.lg))
             borderWidth(1.dp)
             borderColor(
                 if (focusVisible) {

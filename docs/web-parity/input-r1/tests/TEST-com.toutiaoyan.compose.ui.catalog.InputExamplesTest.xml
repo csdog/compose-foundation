@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="InputExamplesTest[jvm]" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-05T05:01:52.558Z" hostname="Apples-MacBook-Pro.local" time="0.863">
+  <properties/>
+  <testcase name="rtlRecipeShowsArabicCopy[jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputExamplesTest" time="0.658"/>
+  <testcase name="requiredLabelShowsTheDestructiveAsterisk[jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputExamplesTest" time="0.032"/>
+  <testcase name="inputsFillTheConfiguredWidth[jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputExamplesTest" time="0.03"/>
+  <testcase name="inlineRecipeLetsTheInputFillTheRow[jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputExamplesTest" time="0.032"/>
+  <testcase name="formStartsWithTheSelectedCountry[jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputExamplesTest" time="0.05"/>
+  <testcase name="disabledRecipeDisablesFieldAndInput[jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputExamplesTest" time="0.028"/>
+  <testcase name="officialRecipeOrderMatchesCurrentPage[jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputExamplesTest" time="0.015"/>
+  <testcase name="officialCopyIsPresentInTheExportedCode[jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputExamplesTest" time="0.015"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -60,21 +60,30 @@ val hoverCardDoc =
                 HoverCardContent { Text { "The React Framework – created and maintained by @vercel." } }
             }
             """.trimIndent(),
-        compositionCode =
-            """
-            HoverCard
-            ├── HoverCardTrigger
-            └── HoverCardContent
-            """.trimIndent(),
         beforeExamples =
             listOf(
+                ComponentGuideSection(
+                    "Composition",
+                    listOf(
+                        ComponentGuideBlock.Paragraph("Use the following composition to build a `HoverCard`:"),
+                        ComponentGuideBlock.Code(
+                            """
+                            HoverCard
+                            ├── HoverCardTrigger
+                            └── HoverCardContent
+                            """.trimIndent(),
+                            language = null,
+                        ),
+                    ),
+                ),
                 ComponentGuideSection(
                     "Trigger Delays",
                     listOf(
                         ComponentGuideBlock.Paragraph(
                             (
-                                "Set delay and closeDelay on HoverCardTrigger. Base UI " +
-                                    "defaults are 600/300ms; the demo explicitly uses 10/100ms."
+                                "Use `delay` and `closeDelay` on the trigger to control when the " +
+                                    "card opens and closes. Base UI defaults are 600/300ms; the demo " +
+                                    "explicitly uses 10/100ms."
                             ),
                         ),
                         ComponentGuideBlock.Code(
@@ -90,8 +99,9 @@ val hoverCardDoc =
                     listOf(
                         ComponentGuideBlock.Paragraph(
                             (
-                                "HoverCardContent supports four physical sides and " +
-                                    "InlineStart/InlineEnd, resolved against LocalLayoutDirection."
+                                "Use the `side` and `align` props on `HoverCardContent` to control " +
+                                    "placement. Four physical sides and InlineStart/InlineEnd resolve " +
+                                    "against `LocalLayoutDirection`."
                             ),
                         ),
                         ComponentGuideBlock.Code(
@@ -272,7 +282,7 @@ val hoverCardDoc =
                     preview = { HoverCardRtlRecipe() },
                 ),
                 ComponentExample(
-                    title = "Controlled",
+                    title = "Kotlin extension: Controlled",
                     descriptionMarkdown = "The parent can observe and control open state.",
                     minPreviewHeight = 320.dp,
                     mobileMinPreviewHeight = 320.dp,
@@ -304,7 +314,7 @@ val hoverCardDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Provider timing",
+                    title = "Kotlin extension: Provider timing",
                     descriptionMarkdown = "Share timing defaults between cards.",
                     minPreviewHeight = 320.dp,
                     mobileMinPreviewHeight = 320.dp,
@@ -336,7 +346,7 @@ val hoverCardDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Disabled",
+                    title = "Kotlin extension: Disabled",
                     descriptionMarkdown = "Disable the trigger and preview.",
                     minPreviewHeight = 320.dp,
                     mobileMinPreviewHeight = 320.dp,

@@ -52,7 +52,18 @@ class HoverCardExamplesTest {
         )
         assertFalse(hoverCardDoc.examples.first().code.contains("Avatar("))
         assertFalse(hoverCardDoc.examples.single { it.title == "RTL" }.code.contains("RtlPreview("))
-        assertEquals(2, hoverCardDoc.beforeExamples.size)
+        assertEquals(
+            listOf("Composition", "Trigger Delays", "Positioning"),
+            hoverCardDoc.beforeExamples.map { it.title },
+        )
+        assertEquals(
+            listOf("Default", "Basic", "Sides", "RTL"),
+            hoverCardDoc.examples.take(4).map { it.title },
+        )
+        assertTrue(
+            hoverCardDoc.examples.drop(4).all { it.title.startsWith("Kotlin extension: ") },
+            "Kotlin-only recipes must be titled `Kotlin extension: ...`",
+        )
     }
 
     @Test fun defaultShowsTheActualNextjsPreview() {
@@ -95,7 +106,7 @@ class HoverCardExamplesTest {
     }
 
     @Test fun controlledExamplePublishesItsOpenState() {
-        show("Controlled")
+        show("Kotlin extension: Controlled")
         rule.onNodeWithText("Closed").assertIsDisplayed()
         hover("Controlled preview", "The parent owns the open state.")
         rule.onNodeWithText("Open").assertIsDisplayed()

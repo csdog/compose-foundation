@@ -1,0 +1,142 @@
+{
+  "slug": "input",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/input",
+  "localUrl": "http://127.0.0.1:8774/input",
+  "capturedAt": "2026-11-05T05:02:14.580Z",
+  "app": [
+    "http://127.0.0.1:8774/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8774/c11eb2b3b04c183ac5ae.wasm"
+  ],
+  "officialDom": {
+    "title": "Input",
+    "description": "Copy PagePreviousNext",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "Installation#"
+      },
+      {
+        "tag": "H2",
+        "text": "Usage#"
+      },
+      {
+        "tag": "H2",
+        "text": "Basic#"
+      },
+      {
+        "tag": "H2",
+        "text": "Field#"
+      },
+      {
+        "tag": "H2",
+        "text": "Field Group#"
+      },
+      {
+        "tag": "H2",
+        "text": "Disabled#"
+      },
+      {
+        "tag": "H2",
+        "text": "Invalid#"
+      },
+      {
+        "tag": "H2",
+        "text": "File#"
+      },
+      {
+        "tag": "H2",
+        "text": "Inline#"
+      },
+      {
+        "tag": "H2",
+        "text": "Grid#"
+      },
+      {
+        "tag": "H2",
+        "text": "Required#"
+      },
+      {
+        "tag": "H2",
+        "text": "Badge#"
+      },
+      {
+        "tag": "H2",
+        "text": "Input Group#"
+      },
+      {
+        "tag": "H2",
+        "text": "Button Group#"
+      },
+      {
+        "tag": "H2",
+        "text": "Form#"
+      },
+      {
+        "tag": "H2",
+        "text": "RTL#"
+      }
+    ],
+    "tabs": [
+      "Command",
+      "Manual",
+      "pnpm",
+      "npm",
+      "yarn",
+      "bun"
+    ],
+    "examples": 15,
+    "toc": [],
+    "bodyWidth": {
+      "x": 0,
+      "y": 64,
+      "width": 1080,
+      "height": 9076.375,
+      "top": 64,
+      "right": 1080,
+      "bottom": 9140.375,
+      "left": 0
+    },
+    "clientWidth": 1080,
+    "scrollHeight": 9140
+  },
+  "local": {
+    "desktop-light": {
+      "url": "http://127.0.0.1:8774/input",
+      "theme": "light",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(8477.5px + 100vh)"
+    },
+    "desktop-dark": {
+      "url": "http://127.0.0.1:8774/input",
+      "theme": "dark",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(8477.5px + 100vh)"
+    },
+    "phone-light": {
+      "url": "http://127.0.0.1:8774/input",
+      "theme": "light",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(9504.5px + 100vh)"
+    },
+    "phone-dark": {
+      "url": "http://127.0.0.1:8774/input",
+      "theme": "dark",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(9504.5px + 100vh)"
+    }
+  },
+  "files": {
+    "official-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/input-r1/official-desktop-light.png",
+    "local-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/input-r1/local-desktop-light.png",
+    "official-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/input-r1/official-desktop-dark.png",
+    "local-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/input-r1/local-desktop-dark.png",
+    "official-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/input-r1/official-phone-light.png",
+    "local-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/input-r1/local-phone-light.png",
+    "official-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/input-r1/official-phone-dark.png",
+    "local-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/input-r1/local-phone-dark.png"
+  }
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="HoverCardBrowserParityTest[jvm]" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-11-05T04:46:28.065Z" hostname="Apples-MacBook-Pro.local" time="2.202">
+  <properties/>
+  <testcase name="rtlUsesActualPreviewHeightAndAllThreeLanguageFontsAndLineBoxes[1,440-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.HoverCardBrowserParityTest" time="1.062"/>
+  <testcase name="fourDirectionsShareOneLineAtTheOfficialPhonePreviewWidth[1,440-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.HoverCardBrowserParityTest" time="0.04"/>
+  <testcase name="defaultPreviewRetainsAllThreeCompleteLineBoxes[1,440-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.HoverCardBrowserParityTest" time="0.064"/>
+  <testcase name="rtlUsesActualPreviewHeightAndAllThreeLanguageFontsAndLineBoxes[1,440-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.HoverCardBrowserParityTest" time="0.291"/>
+  <testcase name="fourDirectionsShareOneLineAtTheOfficialPhonePreviewWidth[1,440-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.HoverCardBrowserParityTest" time="0.027"/>
+  <testcase name="defaultPreviewRetainsAllThreeCompleteLineBoxes[1,440-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.HoverCardBrowserParityTest" time="0.049"/>
+  <testcase name="rtlUsesActualPreviewHeightAndAllThreeLanguageFontsAndLineBoxes[390-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.HoverCardBrowserParityTest" time="0.261"/>
+  <testcase name="fourDirectionsShareOneLineAtTheOfficialPhonePreviewWidth[390-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.HoverCardBrowserParityTest" time="0.026"/>
+  <testcase name="defaultPreviewRetainsAllThreeCompleteLineBoxes[390-false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.HoverCardBrowserParityTest" time="0.056"/>
+  <testcase name="rtlUsesActualPreviewHeightAndAllThreeLanguageFontsAndLineBoxes[390-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.HoverCardBrowserParityTest" time="0.241"/>
+  <testcase name="fourDirectionsShareOneLineAtTheOfficialPhonePreviewWidth[390-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.HoverCardBrowserParityTest" time="0.022"/>
+  <testcase name="defaultPreviewRetainsAllThreeCompleteLineBoxes[390-true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.HoverCardBrowserParityTest" time="0.056"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

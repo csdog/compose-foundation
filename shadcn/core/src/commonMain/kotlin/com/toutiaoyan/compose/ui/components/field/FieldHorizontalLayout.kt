@@ -31,20 +31,32 @@ internal fun FieldHorizontalLayout(
         val kinds = children.map { (it.parentData as? FieldChildData)?.kind }
         val hasContent = FieldChild.Content in kinds
         val placeables = arrayOfNulls<androidx.compose.ui.layout.Placeable>(children.size)
-        var remaining =
+        val available =
             if (constraints.hasBoundedWidth) {
-                (constraints.maxWidth - gap * (children.size - 1)).coerceAtLeast(
-                    0,
-                )
+                (constraints.maxWidth - gap * (children.size - 1)).coerceAtLeast(0)
             } else {
                 Constraints.Infinity
             }
-        // Reserve control widths before giving FieldContent the remaining inline space.
-        val order = children.indices.sortedBy { if (kinds[it] == FieldChild.Content) 1 else 0 }
-        order.forEach { i ->
-            val child = children[i].measure(Constraints(maxWidth = remaining, maxHeight = constraints.maxHeight))
+        var remaining = available
+        // CSS `*:w-auto`: measure each non-content child once with the row's full width so
+        // controls can wrap/shrink, then give `FieldContent` (`flex-1`) the remaining space.
+        children.indices.filter { kinds[it] != FieldChild.Content }.forEach { i ->
+            val child =
+                if (available == Constraints.Infinity) {
+                    children[i].measure(Constraints())
+                } else {
+                    children[i].measure(Constraints(maxWidth = available))
+                }
             placeables[i] = child
             if (remaining != Constraints.Infinity) remaining = (remaining - child.width).coerceAtLeast(0)
+        }
+        children.indices.filter { kinds[it] == FieldChild.Content }.forEach { i ->
+            placeables[i] =
+                if (remaining == Constraints.Infinity) {
+                    children[i].measure(Constraints())
+                } else {
+                    children[i].measure(Constraints(minWidth = remaining, maxWidth = remaining))
+                }
         }
         val inset = 1.dp.roundToPx()
         val items = placeables.map { checkNotNull(it) }

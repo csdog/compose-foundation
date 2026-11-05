@@ -123,7 +123,8 @@ class FormNovaParityTest : ScreenshotTest() {
                 }
             }
         }
-        for ((text, height) in listOf("Label" to 14.sp, "Field label" to 19.25.sp, "Help" to 20.sp, "Error" to 20.sp)) {
+        // Nova `.cn-field-description` adds `leading-normal` (14 × 1.5 = 21); error text stays 20.
+        for ((text, height) in listOf("Label" to 14.sp, "Field label" to 19.25.sp, "Help" to 21.sp, "Error" to 20.sp)) {
             val results = mutableListOf<TextLayoutResult>()
             composeRule.onNodeWithText(
                 text,

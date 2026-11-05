@@ -1,0 +1,86 @@
+{
+ "retrievedAt": "2026-11-05",
+ "revision": "8a3536678a528cc012b9e62484290e79d0be410f",
+ "files": [
+  {
+   "file": "field.mdx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/field.mdx",
+   "sha256": "80b9a621fe3cfb41ed49a8afb9df21ef8458b8836f60e9a23fa3ddfcc8a0a6b5"
+  },
+  {
+   "file": "field.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/registry/bases/base/ui/field.tsx",
+   "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+  },
+  {
+   "file": "style-nova.css",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/registry/styles/style-nova.css",
+   "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+  },
+  {
+   "file": "examples/base/field-demo.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/field-demo.tsx",
+   "sha256": "4ac44250626b200412bd8d7f933bfb9ad227b97e6f5c8e73164c0a6b792dc7cf"
+  },
+  {
+   "file": "examples/base/field-input.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/field-input.tsx",
+   "sha256": "08e10ff210a0a8497826bcc0b2fcbcf9e7f80bf3a849dc51a847bf3f604ce6a7"
+  },
+  {
+   "file": "examples/base/field-textarea.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/field-textarea.tsx",
+   "sha256": "03aa7094a014c645d173ecf4ce6ecfb682590d3031c38c5b8f6f7a9d56a09902"
+  },
+  {
+   "file": "examples/base/field-select.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/field-select.tsx",
+   "sha256": "aaeffb2b6f1955236f273132c78c5b50be33dd51a5b09531eecde9feef3c9406"
+  },
+  {
+   "file": "examples/base/field-slider.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/field-slider.tsx",
+   "sha256": "1f9423dbb0fc94f99d0abed9beeac8b2d15124793a8c96cc0ee9195b098f969f"
+  },
+  {
+   "file": "examples/base/field-fieldset.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/field-fieldset.tsx",
+   "sha256": "90acf9c6cf606694fd85ff2e1f6132bca849169fff67bad36f88d0525314cccc"
+  },
+  {
+   "file": "examples/base/field-checkbox.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/field-checkbox.tsx",
+   "sha256": "a9d537ad28c1daf72fb5e9315d0a34166b19527cb4564d8e15f636904cc87b44"
+  },
+  {
+   "file": "examples/base/field-radio.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/field-radio.tsx",
+   "sha256": "ff8b0c0b240834291bbdd2e1a0043053d69a79149a825ad5722a0c6b2baf67b3"
+  },
+  {
+   "file": "examples/base/field-switch.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/field-switch.tsx",
+   "sha256": "c02a5b27e092a815014304fe45c5730e2797d20c7d380ea2a4769df569de6bbe"
+  },
+  {
+   "file": "examples/base/field-choice-card.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/field-choice-card.tsx",
+   "sha256": "58579490e9a09e6cf945aa68812c8a4b3c1dd685f71f49128d702b0e8133bbe8"
+  },
+  {
+   "file": "examples/base/field-group.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/field-group.tsx",
+   "sha256": "eef64c44aa9d0440432f34bb14cca91ceeababb5d9047add13a6a66a6d42249e"
+  },
+  {
+   "file": "examples/base/field-rtl.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/field-rtl.tsx",
+   "sha256": "fcaf9bc0c464a5d1f121eb78254ae5a1cab3628a17ac563498080e8513b9e535"
+  },
+  {
+   "file": "examples/base/field-responsive.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/field-responsive.tsx",
+   "sha256": "25b2536183afaddfe7a8410fbbb91a825ffd3ea7ab7ee05772f8f27df31cc9be"
+  }
+ ]
+}
