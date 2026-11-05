@@ -1,0 +1,45 @@
+{
+  "anchors": [
+    "field",
+    "disabled",
+    "invalid",
+    "button",
+    "rtl"
+  ],
+  "views": [
+    {
+      "name": "desktop-light",
+      "theme": "light",
+      "w": 1440,
+      "h": 1000
+    },
+    {
+      "name": "phone-light",
+      "theme": "light",
+      "w": 390,
+      "h": 844
+    }
+  ],
+  "files": {
+    "official-field-desktop-light": "/tmp/cf-textarea-r1/sections/official-field-desktop-light.png",
+    "local-field-desktop-light": "/tmp/cf-textarea-r1/sections/local-field-desktop-light.png",
+    "official-disabled-desktop-light": "/tmp/cf-textarea-r1/sections/official-disabled-desktop-light.png",
+    "local-disabled-desktop-light": "/tmp/cf-textarea-r1/sections/local-disabled-desktop-light.png",
+    "official-invalid-desktop-light": "/tmp/cf-textarea-r1/sections/official-invalid-desktop-light.png",
+    "local-invalid-desktop-light": "/tmp/cf-textarea-r1/sections/local-invalid-desktop-light.png",
+    "official-button-desktop-light": "/tmp/cf-textarea-r1/sections/official-button-desktop-light.png",
+    "local-button-desktop-light": "/tmp/cf-textarea-r1/sections/local-button-desktop-light.png",
+    "official-rtl-desktop-light": "/tmp/cf-textarea-r1/sections/official-rtl-desktop-light.png",
+    "local-rtl-desktop-light": "/tmp/cf-textarea-r1/sections/local-rtl-desktop-light.png",
+    "official-field-phone-light": "/tmp/cf-textarea-r1/sections/official-field-phone-light.png",
+    "local-field-phone-light": "/tmp/cf-textarea-r1/sections/local-field-phone-light.png",
+    "official-disabled-phone-light": "/tmp/cf-textarea-r1/sections/official-disabled-phone-light.png",
+    "local-disabled-phone-light": "/tmp/cf-textarea-r1/sections/local-disabled-phone-light.png",
+    "official-invalid-phone-light": "/tmp/cf-textarea-r1/sections/official-invalid-phone-light.png",
+    "local-invalid-phone-light": "/tmp/cf-textarea-r1/sections/local-invalid-phone-light.png",
+    "official-button-phone-light": "/tmp/cf-textarea-r1/sections/official-button-phone-light.png",
+    "local-button-phone-light": "/tmp/cf-textarea-r1/sections/local-button-phone-light.png",
+    "official-rtl-phone-light": "/tmp/cf-textarea-r1/sections/official-rtl-phone-light.png",
+    "local-rtl-phone-light": "/tmp/cf-textarea-r1/sections/local-rtl-phone-light.png"
+  }
+}

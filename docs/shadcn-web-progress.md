@@ -163,7 +163,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Table (`table`)：已补caption-bottom、Header40dp、单元格14/20与p8、行hover/selected、Footer半透明顶线、内容槽和横向溢出；四组官网数据/交互配方及三语RTL已加入。44项定向测试和core/shared ktlint通过，24张原生图已检查；共享自动列宽/跨列、希伯来字体及浏览器完整矩阵仍开放，详见 table-r1。
 - [ ] Tabs (`tabs`)：六组官网配方、四面板与三语RTL已迁移；默认Manual、单Tab入口/RTL键盘/动态顺序、隐藏面板状态与焦点、选中chrome及透明focus阴影已修正。58项定向测试、core/shared ktlint通过，44张原生图已检查；150ms颜色过渡、辅助技术及浏览器完整矩阵仍开放，详见 tabs-r1。
 - [x] Text (`text`)：项目扩展一致性自查完成：Usage 与所有示例代码中已不存在的 `TextTypography`/`TextStyles` 改为当前 `TextVariant`/`TextColors`；新增 Variants（全部类型刻度）、Muted、Kotlin extension: Style font-size 示例与 Text API 表；共享 ComponentDoc 增加 `isKotlinExtension`，扩展页头部改为 `Kotlin extension` 而非 Base UI 页签；TextExamplesTest 5 项与 1440/390×浅深浏览器复查通过。无官方对照对象，仅余共享页面 chrome 与字体栅格化差异，见 [text-r1](web-parity/text-r1/README.md)。
-- [ ] Textarea (`textarea`)：64 最小高、上下 8 内边距、顶部对齐、内容自增高已补；完整组合矩阵待关闭。
+- [x] Textarea (`textarea`)：按当前官网重建为 demo、Field、Disabled、Invalid、Button、RTL 六配方，补官网描述与 Usage；删除 22 项重复参数矩阵，只保留 Rows、Min/Max lines、Max length、Autofocus、Read only 五个 `Kotlin extension:` 配方；新增 TextareaExamplesTest 7 项，Wasm 构建、1440/390×浅深四象限与 Field/Disabled/Invalid/Button/RTL 分节对照通过。仍余 Canvas 无原生 resize grip、无 htmlFor 式 label→control 焦点关联及共享页面 chrome/字体差异，见 [textarea-r1](web-parity/textarea-r1/README.md)。
 - [ ] Toast (`toast`)：本轮进行中，已对照固定上游 Base UI Toast 源码，补 Default/Types/Promise 配方及管理器、图标和卡片样式；43项定向测试通过，堆叠/手势/动效和浏览器四象限仍待验。见 Toast 本轮记录。 Marker r2浏览器补查确认共享Toaster仍位于预览内部，与官网窗口顶部位置不同，需在Toast专轮修正。
 - [ ] Toggle (`toggle`)：Nova 字重/行内图标/间距/选中/小号圆角已修正，新增兼容 invalid 重载；非对称图标内边距、完整 hover/pressed 矩阵待关闭。
 - [ ] Toggle Group (`toggle-group`)：基础已验证（第六批）；连体样式、单选取消和方向键焦点已修正，Tab 单入口、动态重排与完整纵向矩阵待关闭。
@@ -172,6 +172,16 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Textarea：当前六配方、扩展裁剪与分节对照（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 181 -->
+
+原 Textarea 页是 22 条 Kotlin 参数矩阵（Default 与 Default disabled/invalid/rows… 成对重复），描述和 Usage 也是本地旧文案。当前官网为六个配方：demo、Field、Disabled、Invalid、Button、RTL，描述为 "Displays a form textarea or a component that looks like a textarea."
+
+已按官网重建：320dp demo 占位符 `Type your message here.`；Field 按官网顺序 label→description→textarea；Disabled 同时禁用 Field 与 Textarea；Invalid 使用 destructive 描述；Button 配方为 textarea + 全宽 Send message；RTL 使用阿/英/希三语 feedback 表单（rows=4）。删除重复矩阵，仅保留 Rows、Min/Max lines、Max length、Autofocus、Read only 五个扩展配方并加 `Kotlin extension:` 前缀；Usage/API 表同步当前 Kotlin API。新增 `TextareaExamplesTest` 7 项，并把 CatalogPreviewTest 的 autofocus 用例指向重命名后的扩展配方。
+
+7/7 测试通过；Wasm 构建后应用 Wasm `af0897ba…`。浏览器 1440×1000、390×844 浅/深四象限，另对 Field/Disabled/Invalid/Button/RTL 做桌面与手机分节对照，文案、字号、320dp 宽度与 RTL 方向一致。证据见 [textarea-r1](web-parity/textarea-r1/README.md)。仍保留：Canvas 无原生 textarea resize grip、Field 无 htmlFor 式 label→control 焦点关联；共享页面 chrome 与字体栅格化属既有项目范围差异。
 
 ### Input：官方十五配方重建、RTL文案与状态矩阵（2026-11-05）
 
