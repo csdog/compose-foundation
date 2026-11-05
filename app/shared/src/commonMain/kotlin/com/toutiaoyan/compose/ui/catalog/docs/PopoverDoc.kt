@@ -48,6 +48,13 @@ val popoverDoc =
                 }
             }
             """.trimIndent(),
+        compositionCode =
+            """
+            Popover
+            ├── PopoverTrigger
+            └── PopoverContent
+            """.trimIndent(),
+        examplesHeading = null,
         examples =
             listOf(
                 ComponentExample(
@@ -540,4 +547,11 @@ val popoverDoc =
                 ),
             ),
     )
-        .let { native -> native.copy(examples = popoverOfficialExamples + native.examples) }
+        .let { native ->
+            val curated = listOf("Non-modal", "Placement", "Uncontrolled")
+            native.copy(
+                examples = popoverOfficialExamples +
+                    native.examples.filter { it.title in curated }
+                        .map { it.copy(title = "Kotlin extension: ${it.title}") },
+            )
+        }

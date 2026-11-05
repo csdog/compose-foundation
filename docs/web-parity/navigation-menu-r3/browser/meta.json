@@ -1,0 +1,102 @@
+{
+  "slug": "navigation-menu",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/navigation-menu",
+  "localUrl": "http://127.0.0.1:8772/navigation-menu",
+  "capturedAt": "2026-11-05T05:06:19.250Z",
+  "app": [
+    "http://127.0.0.1:8772/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8772/05a9f4d05293ffae3b86.wasm"
+  ],
+  "officialDom": {
+    "title": "Navigation Menu",
+    "description": "Copy PagePreviousNext",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "Installation#"
+      },
+      {
+        "tag": "H2",
+        "text": "Usage#"
+      },
+      {
+        "tag": "H2",
+        "text": "Composition#"
+      },
+      {
+        "tag": "H2",
+        "text": "Link Component#"
+      },
+      {
+        "tag": "H2",
+        "text": "RTL#"
+      },
+      {
+        "tag": "H2",
+        "text": "API Reference#"
+      }
+    ],
+    "tabs": [
+      "Command",
+      "Manual",
+      "pnpm",
+      "npm",
+      "yarn",
+      "bun"
+    ],
+    "examples": 2,
+    "toc": [],
+    "bodyWidth": {
+      "x": 0,
+      "y": 64,
+      "width": 1080,
+      "height": 3579.890625,
+      "top": 64,
+      "right": 1080,
+      "bottom": 3643.890625,
+      "left": 0
+    },
+    "clientWidth": 1080,
+    "scrollHeight": 3644
+  },
+  "local": {
+    "desktop-light": {
+      "url": "http://127.0.0.1:8772/navigation-menu",
+      "theme": "light",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(4431px + 100vh)"
+    },
+    "desktop-dark": {
+      "url": "http://127.0.0.1:8772/navigation-menu",
+      "theme": "dark",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(4431px + 100vh)"
+    },
+    "phone-light": {
+      "url": "http://127.0.0.1:8772/navigation-menu",
+      "theme": "light",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(5163.5px + 100vh)"
+    },
+    "phone-dark": {
+      "url": "http://127.0.0.1:8772/navigation-menu",
+      "theme": "dark",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(5163.5px + 100vh)"
+    }
+  },
+  "files": {
+    "official-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/navigation-menu-r3/official-desktop-light.png",
+    "local-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/navigation-menu-r3/local-desktop-light.png",
+    "official-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/navigation-menu-r3/official-desktop-dark.png",
+    "local-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/navigation-menu-r3/local-desktop-dark.png",
+    "official-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/navigation-menu-r3/official-phone-light.png",
+    "local-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/navigation-menu-r3/local-phone-light.png",
+    "official-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/navigation-menu-r3/official-phone-dark.png",
+    "local-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/navigation-menu-r3/local-phone-dark.png"
+  }
+}

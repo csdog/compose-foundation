@@ -1,0 +1,110 @@
+{
+  "slug": "popover",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/popover",
+  "localUrl": "http://127.0.0.1:8772/popover",
+  "capturedAt": "2026-11-05T05:07:09.721Z",
+  "app": [
+    "http://127.0.0.1:8772/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8772/05a9f4d05293ffae3b86.wasm"
+  ],
+  "officialDom": {
+    "title": "Popover",
+    "description": "Copy PagePreviousNext",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "Installation#"
+      },
+      {
+        "tag": "H2",
+        "text": "Usage#"
+      },
+      {
+        "tag": "H2",
+        "text": "Composition#"
+      },
+      {
+        "tag": "H2",
+        "text": "Basic#"
+      },
+      {
+        "tag": "H2",
+        "text": "Align#"
+      },
+      {
+        "tag": "H2",
+        "text": "With Form#"
+      },
+      {
+        "tag": "H2",
+        "text": "RTL#"
+      },
+      {
+        "tag": "H2",
+        "text": "API Reference#"
+      }
+    ],
+    "tabs": [
+      "Command",
+      "Manual",
+      "pnpm",
+      "npm",
+      "yarn",
+      "bun"
+    ],
+    "examples": 5,
+    "toc": [],
+    "bodyWidth": {
+      "x": 0,
+      "y": 64,
+      "width": 1080,
+      "height": 4142.421875,
+      "top": 64,
+      "right": 1080,
+      "bottom": 4206.421875,
+      "left": 0
+    },
+    "clientWidth": 1080,
+    "scrollHeight": 4206
+  },
+  "local": {
+    "desktop-light": {
+      "url": "http://127.0.0.1:8772/popover",
+      "theme": "light",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(4288.5px + 100vh)"
+    },
+    "desktop-dark": {
+      "url": "http://127.0.0.1:8772/popover",
+      "theme": "dark",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(4288.5px + 100vh)"
+    },
+    "phone-light": {
+      "url": "http://127.0.0.1:8772/popover",
+      "theme": "light",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(4740px + 100vh)"
+    },
+    "phone-dark": {
+      "url": "http://127.0.0.1:8772/popover",
+      "theme": "dark",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(4740px + 100vh)"
+    }
+  },
+  "files": {
+    "official-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/popover-r3/official-desktop-light.png",
+    "local-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/popover-r3/local-desktop-light.png",
+    "official-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/popover-r3/official-desktop-dark.png",
+    "local-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/popover-r3/local-desktop-dark.png",
+    "official-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/popover-r3/official-phone-light.png",
+    "local-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/popover-r3/local-phone-light.png",
+    "official-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/popover-r3/official-phone-dark.png",
+    "local-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/popover-r3/local-phone-dark.png"
+  }
+}

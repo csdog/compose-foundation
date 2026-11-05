@@ -18,7 +18,16 @@ class NavigationMenuResponsiveTest {
 
     @Test fun officialPreviewsPrecedeKotlinSupplementsAndCopyCodeIncludesItsDependencies() {
         assertEquals(listOf("Default", "RTL"), navigationMenuDoc.examples.take(2).map { it.title })
-        assertTrue(navigationMenuDoc.examples.any { it.title == "Native overview (Kotlin)" })
+        assertTrue(navigationMenuDoc.examples.any { it.title == "Kotlin extension: Vertical" })
+        assertTrue(navigationMenuDoc.examples.any { it.title == "Kotlin extension: Controlled" })
+        assertTrue(navigationMenuDoc.examples.any { it.title == "Kotlin extension: Delay" })
+        assertTrue(
+            navigationMenuDoc.examples.single { it.title == "RTL" }
+                .descriptionMarkdown.orEmpty()
+                .startsWith("To enable RTL support in shadcn/ui"),
+        )
+        assertTrue(navigationMenuDoc.compositionCode.orEmpty().contains("NavigationMenuIndicator"))
+        assertEquals("Link Component", navigationMenuDoc.beforeExamples.single().title)
         navigationMenuDoc.examples.take(2).forEach {
             assertFalse(it.code.contains("RtlPreview("))
             assertTrue(it.code.contains("private fun NavigationMenuRecipeBody"))

@@ -97,6 +97,29 @@ class PaginationExamplesTest(private val viewport: Int, private val dark: Boolea
         ImageIO.write(rule.onNodeWithTag("pagination-capture").captureToImage().toAwtImage(), "png", out)
     }
 
+    @Test fun officialRecipesKeepTheirOfficialCopyAndKotlinExtensionsFollow() {
+        assertEquals(
+            listOf("Default", "Simple", "Icons Only", "RTL"),
+            paginationDoc.examples.take(4).map { it.title },
+        )
+        assertEquals(
+            "A simple pagination with only page numbers.",
+            paginationDoc.examples.single { it.title == "Simple" }.descriptionMarkdown,
+        )
+        assertTrue(
+            paginationDoc.examples.single { it.title == "Icons Only" }
+                .descriptionMarkdown.orEmpty()
+                .startsWith("Use just the previous and next buttons"),
+        )
+        assertTrue(
+            paginationDoc.examples.single { it.title == "RTL" }.descriptionMarkdown.orEmpty()
+                .startsWith("To enable RTL support"),
+        )
+        assertTrue(paginationDoc.examples.drop(4).all { it.title.startsWith("Kotlin extension: ") })
+        assertTrue(paginationDoc.examples.any { it.title == "Kotlin extension: Controlled" })
+        assertFalse(paginationDoc.examples.any { it.title.contains("(Kotlin)") && it.title.startsWith("Kotlin extension") })
+    }
+
     @Test fun defaultIsTheStaticSourceCompositionRatherThanAnInventedControlledPager() {
         show("Default")
         (1..3).forEach { rule.onNodeWithText(it.toString()).assertIsDisplayed() }

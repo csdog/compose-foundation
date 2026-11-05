@@ -79,10 +79,34 @@ val navigationMenuDoc =
                 ├── NavigationMenuItem
                 │   ├── NavigationMenuTrigger
                 │   └── NavigationMenuContent
+                │       ├── NavigationMenuLink
                 │       └── NavigationMenuLink
                 └── NavigationMenuItem
                     └── NavigationMenuLink
+            NavigationMenuIndicator
             """.trimIndent(),
+        examplesHeading = null,
+        beforeExamples =
+            listOf(
+                ComponentGuideSection(
+                    "Link Component",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "Use the `render` prop to compose a custom link component such as the " +
+                                "Next.js `Link`. Kotlin has no render prop: pass the navigation " +
+                                "action to `NavigationMenuLink(onClick = ...)` and use the same " +
+                                "trigger styling for standalone links.",
+                        ),
+                        ComponentGuideBlock.Code(
+                            """
+                            NavigationMenuItem {
+                                NavigationMenuLink("Documentation", onClick = { openDocs() })
+                            }
+                            """.trimIndent(),
+                        ),
+                    ),
+                ),
+            ),
         apiSections =
             listOf(
                 ComponentApiSection(
@@ -836,4 +860,11 @@ val navigationMenuDoc =
                     },
                 ),
             ),
-    ).let { native -> native.copy(examples = navigationMenuOfficialExamples + native.examples) }
+    ).let { native ->
+        val curated = listOf("Vertical", "Controlled", "Delay")
+        native.copy(
+            examples = navigationMenuOfficialExamples +
+                native.examples.filter { it.title in curated }
+                    .map { it.copy(title = "Kotlin extension: ${it.title}") },
+        )
+    }

@@ -3,6 +3,9 @@
 package com.toutiaoyan.compose.ui.catalog.docs
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.contentPadding
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -171,10 +174,22 @@ private fun NavigationMenuRecipeBody(
             400.dp
         }
     val uriHandler = LocalUriHandler.current
+    // The official preview shrinks its inner padding below the sm breakpoint so the three
+    // visible triggers fit; the Compose preview keeps a 40dp padding, so compact the trigger
+    // padding under 640dp instead. Desktop keeps the official 10dp trigger padding.
+    val compactTriggers = viewportWidth < 640.dp
+    val triggerStyle =
+        remember(compactTriggers) {
+            if (compactTriggers) {
+                Style { contentPadding(horizontal = 4.dp, vertical = 6.dp) }
+            } else {
+                Style
+            }
+        }
     NavigationMenu(modifier.testTag("navigation-recipe")) {
         NavigationMenuList {
             NavigationMenuItem("getting-started") {
-                NavigationMenuTrigger(words.getValue("gettingStarted"))
+                NavigationMenuTrigger(words.getValue("gettingStarted"), style = triggerStyle)
                 NavigationMenuContent(Modifier.testTag("navigation-start-panel")) {
                     Column(Modifier.width(384.dp)) {
                         listOf(
@@ -195,7 +210,7 @@ private fun NavigationMenuRecipeBody(
             }
             if (medium) {
                 NavigationMenuItem("components") {
-                    NavigationMenuTrigger(words.getValue("components"))
+                    NavigationMenuTrigger(words.getValue("components"), style = triggerStyle)
                     NavigationMenuContent(Modifier.testTag("navigation-components-panel")) {
                         Column(Modifier.width(componentWidth), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                             navigationComponentPaths.chunked(2).forEach { row ->
@@ -216,7 +231,7 @@ private fun NavigationMenuRecipeBody(
                 }
             }
             NavigationMenuItem("with-icon") {
-                NavigationMenuTrigger(words.getValue("withIcon"))
+                NavigationMenuTrigger(words.getValue("withIcon"), style = triggerStyle)
                 NavigationMenuContent(Modifier.testTag("navigation-icons-panel")) {
                     Column(Modifier.width(200.dp)) {
                         listOf(
@@ -289,10 +304,12 @@ internal val navigationMenuOfficialExamples =
             title = "Default",
             code = navigationDefaultRecipeCode,
             minPreviewHeight = 384.dp,
+            previewPadding = 16.dp,
             preview = { NavigationMenuDefaultRecipe() },
         ),
         ComponentExample(
             title = "RTL",
+            descriptionMarkdown = "To enable RTL support in shadcn/ui, see the RTL configuration guide.",
             code = navigationRtlRecipeCode,
             minPreviewHeight = 384.dp,
             previewPadding = 0.dp,

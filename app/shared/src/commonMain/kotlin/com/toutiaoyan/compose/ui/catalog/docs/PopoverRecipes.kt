@@ -245,10 +245,31 @@ internal fun PopoverRtlRecipe(language: Int = 1) {
 internal val popoverOfficialExamples =
     listOf(
         ComponentExample("Default", code = popoverDefaultRecipeCode, preview = { PopoverDefaultRecipe() }),
-        ComponentExample("Basic", code = popoverBasicRecipeCode, preview = { PopoverBasicRecipe() }),
-        ComponentExample("Align", code = popoverAlignRecipeCode, preview = { PopoverAlignRecipe() }),
-        ComponentExample("With Form", code = popoverFormRecipeCode, preview = { PopoverFormRecipe() }),
-        ComponentExample("RTL", code = popoverRtlRecipeCode, previewPadding = 0.dp, preview = {
+        ComponentExample(
+            title = "Basic",
+            descriptionMarkdown = "A simple popover with a header, title, and description.",
+            code = popoverBasicRecipeCode,
+            preview = { PopoverBasicRecipe() },
+        ),
+        ComponentExample(
+            title = "Align",
+            descriptionMarkdown =
+                "Use the `align` prop on `PopoverContent` to control the horizontal alignment.",
+            code = popoverAlignRecipeCode,
+            preview = { PopoverAlignRecipe() },
+        ),
+        ComponentExample(
+            title = "With Form",
+            descriptionMarkdown = "A popover with form fields inside.",
+            code = popoverFormRecipeCode,
+            preview = { PopoverFormRecipe() },
+        ),
+        ComponentExample(
+            title = "RTL",
+            descriptionMarkdown = "To enable RTL support in shadcn/ui, see the RTL configuration guide.",
+            code = popoverRtlRecipeCode,
+            previewPadding = 0.dp,
+            preview = {
             var language by remember { mutableIntStateOf(1) }
             RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
                 PopoverRtlRecipe(language)

@@ -1,0 +1,31 @@
+{
+  "retrievedAt": "2026-11-05T04:50:59.947776+00:00",
+  "revision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "repo": "shadcn-ui/ui",
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/navigation-menu.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/navigation-menu.mdx",
+      "sha256": "dd2698a2b4d07e0ddecf51415640205b843464cd9802492ee58837b05df88412",
+      "bytes": 2989
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/navigation-menu.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/registry/bases/base/ui/navigation-menu.tsx",
+      "sha256": "37074909a349319adc1f90ab122c46730103b5bf752915de27fb10ab25b90f65",
+      "bytes": 5390
+    },
+    {
+      "path": "apps/v4/examples/base/navigation-menu-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/navigation-menu-demo.tsx",
+      "sha256": "b801ab39c314dd6f7de2e1e32ddc8fadfed6d9d3e1b9978512f8ed27829d3b0e",
+      "bytes": 4944
+    },
+    {
+      "path": "apps/v4/examples/base/navigation-menu-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/navigation-menu-rtl.tsx",
+      "sha256": "b758255d0338f0bab219d6948d68e013062a030617db6109ee1f6210ea55712b",
+      "bytes": 10195
+    }
+  ]
+}

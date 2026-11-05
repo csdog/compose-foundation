@@ -51,6 +51,7 @@ val paginationDoc =
                 ├── PaginationItem → PaginationEllipsis
                 └── PaginationItem → PaginationNext
             """.trimIndent(),
+        examplesHeading = null,
         apiSections =
             listOf(
                 ComponentApiSection(
@@ -669,4 +670,11 @@ val paginationDoc =
                     },
                 ),
             ),
-    ).let { native -> native.copy(examples = paginationOfficialExamples + native.examples) }
+    ).let { native ->
+        val curated = listOf("Controlled (Kotlin)", "First and last", "Ellipsis")
+        native.copy(
+            examples = paginationOfficialExamples +
+                native.examples.filter { it.title in curated }
+                    .map { it.copy(title = "Kotlin extension: " + it.title.removeSuffix(" (Kotlin)")) },
+        )
+    }

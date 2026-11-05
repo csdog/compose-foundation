@@ -138,9 +138,26 @@ internal val paginationOfficialExamples =
             code = paginationDefaultRecipeCode,
             preview = { PaginationDefaultRecipe() },
         ),
-        ComponentExample(title = "Simple", code = paginationSimpleRecipeCode, preview = { PaginationSimpleRecipe() }),
-        ComponentExample(title = "Icons Only", code = paginationIconsRecipeCode, preview = { PaginationIconsRecipe() }),
-        ComponentExample(title = "RTL", code = paginationRtlRecipeCode, previewPadding = 0.dp, preview = {
+        ComponentExample(
+            title = "Simple",
+            descriptionMarkdown = "A simple pagination with only page numbers.",
+            code = paginationSimpleRecipeCode,
+            preview = { PaginationSimpleRecipe() },
+        ),
+        ComponentExample(
+            title = "Icons Only",
+            descriptionMarkdown =
+                "Use just the previous and next buttons without page numbers. This is useful " +
+                    "for data tables with a rows per page selector.",
+            code = paginationIconsRecipeCode,
+            preview = { PaginationIconsRecipe() },
+        ),
+        ComponentExample(
+            title = "RTL",
+            descriptionMarkdown = "To enable RTL support in shadcn/ui, see the RTL configuration guide.",
+            code = paginationRtlRecipeCode,
+            previewPadding = 0.dp,
+            preview = {
             var language by remember { mutableIntStateOf(1) }
             RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
                 PaginationRtlRecipe(language)

@@ -92,6 +92,23 @@ class PopoverExamplesTest(private val viewport: Int, private val dark: Boolean) 
     @Test fun officialRecipesComeFirstAndExportStandaloneCode() {
         val examples = popoverDoc.examples.take(5)
         assertEquals(listOf("Default", "Basic", "Align", "With Form", "RTL"), examples.map { it.title })
+        assertEquals(
+            "A simple popover with a header, title, and description.",
+            popoverDoc.examples.single { it.title == "Basic" }.descriptionMarkdown,
+        )
+        assertTrue(
+            popoverDoc.examples.single { it.title == "Align" }.descriptionMarkdown.orEmpty()
+                .contains("`align` prop"),
+        )
+        assertEquals(
+            "A popover with form fields inside.",
+            popoverDoc.examples.single { it.title == "With Form" }.descriptionMarkdown,
+        )
+        assertTrue(
+            popoverDoc.examples.single { it.title == "RTL" }.descriptionMarkdown.orEmpty()
+                .startsWith("To enable RTL support"),
+        )
+        assertTrue(popoverDoc.examples.drop(5).all { it.title.startsWith("Kotlin extension: ") })
         examples.forEach {
             assertContains(it.code, "import com.toutiaoyan.compose.ui.components.popover.*")
             assertFalse(it.code.contains("RtlPreview"))

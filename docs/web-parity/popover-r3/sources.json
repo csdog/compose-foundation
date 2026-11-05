@@ -1,0 +1,49 @@
+{
+  "retrievedAt": "2026-11-05T04:50:59.958871+00:00",
+  "revision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "repo": "shadcn-ui/ui",
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/popover.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/popover.mdx",
+      "sha256": "ae07e5ab3203d606d8ff804ba3517a43914f7471b0e852ff11e63d03f8b7ccb3",
+      "bytes": 2321
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/popover.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/registry/bases/base/ui/popover.tsx",
+      "sha256": "935bab728b60fd867384ebc6097d6a46c937423e015503e0251999b686f38bb7",
+      "bytes": 2093
+    },
+    {
+      "path": "apps/v4/examples/base/popover-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/popover-demo.tsx",
+      "sha256": "1c4f7cd2f7f7cc24b83cb0100ca85d9c0352e24566701d57747ec244c2f4671d",
+      "bytes": 2014
+    },
+    {
+      "path": "apps/v4/examples/base/popover-basic.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/popover-basic.tsx",
+      "sha256": "913c729e375f84a43cd5b16e86d64935d66b22a3bbaf2e675c251010ad747059",
+      "bytes": 718
+    },
+    {
+      "path": "apps/v4/examples/base/popover-alignments.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/popover-alignments.tsx",
+      "sha256": "c8ab69b416c1ed2ec905b47b95f771bad1249c2d520f41f950b7759e22d92782",
+      "bytes": 1084
+    },
+    {
+      "path": "apps/v4/examples/base/popover-form.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/popover-form.tsx",
+      "sha256": "b644ab7839c11e709d9f415d82240b8a2611ff02c5099c0eb52149f50b2b9634",
+      "bytes": 1376
+    },
+    {
+      "path": "apps/v4/examples/base/popover-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/popover-rtl.tsx",
+      "sha256": "02d6680282d4dfe98cfc1209778f1ceb40fa3e33a38c20d5681e4cd4a093eafa",
+      "bytes": 2717
+    }
+  ]
+}

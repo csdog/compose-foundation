@@ -141,9 +141,9 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Menubar (`menubar`)：r1 按当前官网确认六配方顺序（demo/Checkbox/Radio/Submenu/With Icons/RTL），给 30 个 Compose-only 配方统一加 `Kotlin extension:` 前缀，补 API Reference 三个小节与 Base UI 链接；浏览器实测 File/View/Profiles 菜单开关、ArrowDown/ArrowRight 键盘导航、Escape 关闭与 RTL 阿拉伯语栏，四象限 1440/390×浅深已复查，MenubarExamplesTest 8 项与 Wasm 构建通过。Canvas 无原生 menu/menuitem 语义、悬停子菜单交互帧、指针碰撞/滚动与真机触摸、共享页面标签/手机宽度仍开放，见[Menubar r1](web-parity/menubar-r1/README.md)。
 - [ ] Message (`message`)：r1 按当前官网确认六配方顺序（demo/Avatar/Group/Header and Footer/Actions/Attachment），补 Features 与 Accessibility（Label icon-only actions / Status updates）章节，并把额外配方统一加 `Kotlin extension:` 前缀；官方 base-rhea 的蓝色气泡用 Nova + Accent.Blue 复现（实测 RGB 35,70,221），浏览器复查 Group/Actions/Attachment 与四象限，MessageExamplesTest 7 项与 Wasm 构建通过。base-rhea 圆角/间距、原生 ARIA/读屏、完整键盘与动态主题、共享页面标签/手机宽度仍开放，见[Message r1](web-parity/message-r1/README.md)。
 - [x] Message Scroller (`message-scroller`)：r4 按当前官网对齐：description 原文、`examplesHeading = null`、官方顺序 12 节（New Chat demo、Anchoring Turns、Group Chat、Keeping Context Visible、Following the Live Edge、Opening Saved Threads、Avoiding a Flash on Reload、Loading Earlier Messages、Animating New Messages、Jumping to Messages、Tracking the Reader's Position、Reading Scroll State）+ 8 段官方指南，Compose-only 示例统一 `Kotlin extension:` 前缀。新增 5 个官方配方实现（demo、anchoring、group chat、streaming follow、animation presets），复用既有 6 个；浏览器实测 demo 流式跟随、锚点切换（user/assistant + 64dp peek）、Group Chat 两步推进与 Marker 锚点、streaming 跟随、animation 预设发送，四象限 1440/390×浅深复查，MessageScrollerExamplesTest 4 项与 Wasm 构建通过（`ef04de09cbf8457ebdc6.wasm`）。官方指南位置（Installation 前）、scroll-release 仅 JVM、rhea/theme-blue 近似、DOM aria 语义与虚拟化/unstyled 无对应物等差异见[Message Scroller r4](web-parity/message-scroller-r4/README.md)。
-- [ ] Navigation Menu (`navigation-menu`)：官网Default/三语RTL的内容、真实导航、图标及768/1024媒体查询已移植，75条文案逐字核对；本轮修复面板链接悬停关闭/重开及Popup导航依赖作用域，公共版本0.3.16。核心22项独立验证、目录18项及两个ktlint通过；共享视口/Root align、浏览器及完整状态仍开放，详见文末。
-- [ ] Pagination (`pagination`)：官网Default/Simple/Icons Only/三语RTL已移植；Nova32dp/2dp间隔、响应式文字、RTL箭头、禁用及省略号语义已补，新增内容slot/size/style并修正Select当前值换行，版本0.3.17。核心24、目录16及两个ktlint通过，JS/Wasm成功；旧Vega2图预存失配，浏览器及完整状态仍待关闭，详见文末。
-- [ ] Popover (`popover`)：本轮已核对官网来源，修正 Nova 面板间距、圆角、阴影细环与完整行高；原生9项、两项ktlint与JS/Wasm已验证。五组官网配方已迁移，原生24项示例交互已过；默认非模态与焦点行为、动画及浏览器完整状态矩阵仍待完成。
+- [ ] Navigation Menu (`navigation-menu`)：r3按当前官网8a3536678a复核Default/三语RTL顺序与内容；补官网RTL文案、Composition中的NavigationMenuIndicator和Link Component章节（render prop说明为Kotlin onClick），隐藏通用Examples标题；仅保留3个Kotlin扩展（Vertical/Delay/Controlled），其余参数矩阵不再渲染。修复390px预览被裁切：官方在sm以下缩小预览内边距，本地改为16dp预览边距+640dp以下压缩触发器水平内边距（桌面保持官网10dp）。16项配方+2项响应式测试通过；Wasm c0570519…构建后四象限（官方主题已重新断言并逐张校验背景像素）与hover/点击/Escape/1024面板已浏览器验证。仍开放：共享viewport/Root align、弹层绘制在预览卡外而非h-96内裁剪、原生anchor/辅助技术与完整延迟矩阵，故保持未勾选，见[navigation-menu-r3](web-parity/navigation-menu-r3/README.md)。
+- [ ] Pagination (`pagination`)：r2按当前官网8a3536678a复核Default/Simple/Icons Only/三语RTL；补Simple/Icons Only/RTL官网描述，隐藏通用Examples标题，仅保留3个Kotlin扩展（Controlled/First and last/Ellipsis，去掉重复(Kotlin)后缀），其余26项参数矩阵不再渲染。20项参数化测试通过（1440/390×浅深，覆盖静态默认组合、五页码、Rows per page选择器25默认、RTL阿拉伯数字与语言切换）；Wasm c0570519…构建后四象限（官方主题逐张校验）及Icons Only下拉、RTL区已浏览器验证。仍开放：Next.js与Changelog章节省略、原生anchor语义、旧Vega两张预存失配，故保持未勾选，见[pagination-r2](web-parity/pagination-r2/README.md)。
+- [ ] Popover (`popover`)：r3按当前官网8a3536678a复核五配方Default/Basic/Align/With Form/RTL；补官方描述、Composition区块并隐藏通用Examples标题，仅保留3个Kotlin扩展（Non-modal/Placement/Uncontrolled），其余参数矩阵不再渲染。24项目录参数化测试通过（1440/390×浅深：四输入Dimensions、Basic header、三对齐面板、表单、六向RTL、扩展），既有核心PopoverFocusTest 2、NovaLayout 5、NovaScreenshot 2继续作为焦点/布局覆盖；Wasm c0570519…构建后四象限（官方主题逐张校验）与默认打开/外部点击关闭/Escape关闭已浏览器验证。仍开放：默认modal=true与Base UI差异（非模态示例已文档化）、完整初始焦点/焦点恢复与动画矩阵、side/align物理属性矩阵未按1:1配方展开，故保持未勾选，见[popover-r3](web-parity/popover-r3/README.md)。
 - [ ] Progress (`progress`)：四官网配方桌面/窄屏浅深静态、三语和受控键盘已对照；移除十二重复预览，补Composition/说明/真实API，RTL统一288正文/40inset与Noto字体。41常规项、Nova四图显式verify、JS/Wasm通过；旧Vega四图actual与r1一致。共享初载缩放根因已在[viewport-scroll-r1](web-parity/viewport-scroll-r1/README.md)修复；绘制时序/排版/代码顺序、原生语义和完整交互仍开放；官网轨道点击未生效有可信事件诊断，不计通过。[证据](web-parity/progress-r2/README.md)。
 - [ ] Questionnaire (`questionnaire`)：本轮修正 Nova 选项图形/间距/字号、导航与验证、单选输入互斥、提交顺序和受控更新；官网 Default 三题流程已迁移。原生38项通过；其余13组官网配方及浏览器/完整状态矩阵待完成。
 - [ ] Radio Group (`radio-group`)：Nova 间距/错误状态、方向键循环、跳过 disabled、RTL/Home/End 已补；Tab 单入口、动态重排和完整矩阵待关闭。
@@ -172,6 +172,36 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Popover：r3 官方描述/Composition 与弹层状态矩阵（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 187 -->
+
+Popover 以当前官网固定修订 `8a3536678a…` 复核（源码见 [sources.json](web-parity/popover-r3/sources.json)）。
+
+- 官网五配方Default/Basic/Align/With Form/RTL；本地官方配方已存在，但后接20项参数矩阵，页面缺Composition与官方描述、多出通用Examples标题。
+- 本轮：补Basic/Align/With Form/RTL官方描述、加入Composition区块并examplesHeading=null；仅保留Kotlin扩展Non-modal/Placement/Uncontrolled，其余不再渲染。组件层面的Nova面板间距/圆角/阴影细环/完整行高沿用r2修复。
+- 验证：PopoverExamplesTest 24/24（1440/390×浅深）覆盖四输入Dimensions、Basic header/start对齐、三个160dp Align面板、两字段表单、六向RTL与扩展；既有核心PopoverFocusTest 2、PopoverNovaLayoutTest 5、PopoverNovaScreenshotTest 2继续覆盖焦点与布局。Wasm `wasm=c0570519…` 后四象限逐张校验官方主题；浏览器验证默认弹层（Dimensions+4输入）、外部点击关闭与Escape关闭。仍开放：默认modal=true与Base UI差异（非模态示例已提供）、完整初始焦点/焦点恢复/动画矩阵、side/align物理属性矩阵未按1:1页面配方展开。保持未勾选，证据见[popover-r3](web-parity/popover-r3/README.md)。
+
+### Pagination：r2 官方描述、扩展收敛与浏览器矩阵（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 186 -->
+
+Pagination 以当前官网固定修订 `8a3536678a…` 复核（源码见 [sources.json](web-parity/pagination-r2/sources.json)）。
+
+- 官网预览四项：Default、Simple、Icons Only、RTL，另有Next.js与Changelog说明。本地官方配方已存在，但后接26项参数矩阵、缺官方描述且页面多出通用Examples标题。
+- 本轮：补Simple/Icons Only/RTL官网描述，examplesHeading=null；仅保留Kotlin扩展Controlled/First and last/Ellipsis，并把“Controlled (Kotlin)”重命名为“Kotlin extension: Controlled”，其余矩阵不再渲染。组件既有Nova 32dp/2dp、640dp响应式文字、RTL箭头与禁用/省略号语义沿用。
+- 验证：PaginationExamplesTest 20/20（1440/390×浅深）覆盖静态默认组合、五页码、Rows per page选择器（25默认可展开10/25/50/100）、RTL阿拉伯数字与三语切换；Wasm `wasm=c0570519…` 后四象限逐张校验官方主题，浏览器验证Icons Only下拉与RTL区（السابق/التالي、١٢٣、镜像箭头）。仍开放：Next.js/Changelog章节省略、原生anchor语义、旧Vega两张预存失配。保持未勾选，证据见[pagination-r2](web-parity/pagination-r2/README.md)。
+
+### Navigation Menu：r3 官方文案/Link Component 与浏览器矩阵（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 185 -->
+
+Navigation Menu 以当前官网固定修订 `8a3536678a…` 复核页面与浏览器矩阵（源码见 [sources.json](web-parity/navigation-menu-r3/sources.json)）。
+
+- 官网仅 Default/RTL 两个预览，另有 Link Component 说明与 API；本地官方配方已在最前，但后有20项参数矩阵且缺 Link Component/Indicator/RTL官方文案。
+- 本轮：补官方RTL描述、在Composition中加入NavigationMenuIndicator、新增Link Component章节（Kotlin以onClick替代render prop），设置examplesHeading=null；仅保留Kotlin扩展Vertical/Delay/Controlled，其余不再渲染。390px复核发现触发行被预览卡裁切——官方在sm以下缩小预览内边距，本地相应改为16dp预览边距并在<640dp压缩触发器水平内边距（桌面仍官网10dp）；768/1024媒体查询逻辑沿用既有实现。
+- 验证：NavigationMenuExamplesTest 16/16、NavigationMenuResponsiveTest 2/2；Wasm `wasm=c0570519…` 后重新采集四象限并逐张校验官方主题背景像素；浏览器验证Components面板（2列6链接）、Escape关闭、Getting started hover与1024视口。仍开放：共享viewport/Root align、弹层未在h-96预览内裁剪、原生anchor/辅助技术与完整延迟矩阵。保持未勾选，证据见[navigation-menu-r3](web-parity/navigation-menu-r3/README.md)。
 
 ### Sheet：官网配方、Composition 与状态复核（2026-11-05）
 

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="PopoverExamplesTest[jvm]" tests="24" skipped="0" failures="0" errors="0" timestamp="2026-11-05T04:53:30.550Z" hostname="Apples-MacBook-Pro.local" time="3.518">
+  <properties/>
+  <testcase name="officialRecipesComeFirstAndExportStandaloneCode[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.021"/>
+  <testcase name="alignUsesSmallTriggersAndThreeIndependent160PixelPanels[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.139"/>
+  <testcase name="formHasTwoHorizontalFieldsWithClickableLabelsAndEditableValues[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.155"/>
+  <testcase name="basicHasOnlyTheSourceHeaderAndStartAlignment[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.056"/>
+  <testcase name="rtlChangesAllSixTriggersAndPopupTextAcrossThreeLanguages[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.478"/>
+  <testcase name="defaultHasFourEditableGridInputsAndRestartsValuesAfterClose[viewport=1,440,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.141"/>
+  <testcase name="officialRecipesComeFirstAndExportStandaloneCode[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.015"/>
+  <testcase name="alignUsesSmallTriggersAndThreeIndependent160PixelPanels[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.121"/>
+  <testcase name="formHasTwoHorizontalFieldsWithClickableLabelsAndEditableValues[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.091"/>
+  <testcase name="basicHasOnlyTheSourceHeaderAndStartAlignment[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.053"/>
+  <testcase name="rtlChangesAllSixTriggersAndPopupTextAcrossThreeLanguages[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.459"/>
+  <testcase name="defaultHasFourEditableGridInputsAndRestartsValuesAfterClose[viewport=1,440,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.134"/>
+  <testcase name="officialRecipesComeFirstAndExportStandaloneCode[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.014"/>
+  <testcase name="alignUsesSmallTriggersAndThreeIndependent160PixelPanels[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.117"/>
+  <testcase name="formHasTwoHorizontalFieldsWithClickableLabelsAndEditableValues[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.081"/>
+  <testcase name="basicHasOnlyTheSourceHeaderAndStartAlignment[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.05"/>
+  <testcase name="rtlChangesAllSixTriggersAndPopupTextAcrossThreeLanguages[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.417"/>
+  <testcase name="defaultHasFourEditableGridInputsAndRestartsValuesAfterClose[viewport=390,dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.134"/>
+  <testcase name="officialRecipesComeFirstAndExportStandaloneCode[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.015"/>
+  <testcase name="alignUsesSmallTriggersAndThreeIndependent160PixelPanels[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.121"/>
+  <testcase name="formHasTwoHorizontalFieldsWithClickableLabelsAndEditableValues[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.091"/>
+  <testcase name="basicHasOnlyTheSourceHeaderAndStartAlignment[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.052"/>
+  <testcase name="rtlChangesAllSixTriggersAndPopupTextAcrossThreeLanguages[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.428"/>
+  <testcase name="defaultHasFourEditableGridInputsAndRestartsValuesAfterClose[viewport=390,dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.PopoverExamplesTest" time="0.133"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
