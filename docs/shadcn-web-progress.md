@@ -116,7 +116,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Card (`card`)：六组官方示例与完整导出代码已补；Nova垂直根padding、分区水平inset、满宽Footer及公开CardImage已修正，调用方Style优先。93项联合回归、11图像素校验、JS/Wasm通过；官网/本地各56张四象限静态/交互图已复查。原生滚动条、1px边框占位、字体字重/换行、共享Select浏览器键盘及全状态仍开放。[证据](web-parity/card-r1/README.md)。
 - [ ] Carousel (`carousel`)：当前官网仍为Default、Sizes、Spacing、Orientation、API、Plugins、RTL七配方；r2确认组件、MDX与七示例相对首轮固定版本字节一致。修复Plugins悬停/拖动结束后不恢复自动播放、各配方未使用公开`CarouselItem`的问题，并把点指示器明确标为Kotlin extension；24项聚焦测试、全仓lint/detekt及JS/Wasm通过，浏览器仍待新空间复核。Embla任意options/plugins、loop、浏览器拖动/动态主题和完整辅助技术仍开放，见[carousel-r2](web-parity/carousel-r2/README.md)及首轮记录。
 - [x] Code Block (`code-block`)：按当前官网重建 23 个配方（demo + Basic…Terminal Output，Max Height/Languages/Terminal Output 为嵌套 h3），补 Features/Accessibility/Composition/Usage 与九个 API 小节；组件新增 maxHeight/scrollable 截断及静态底部渐隐、横向滚动渐隐、内容强制 LTR、行号对读屏隐藏。26 项聚焦测试、Wasm 构建通过；1440/390 浅深四象限及复制确认、换行、悬浮按钮、键盘滚动、Show More 展开/收起、Tabs、RTL 阿语/英语切换均已复核。仍余 rhea→Nova 样式上下文、Shiki/ANSI/Streamdown 服务端/流式/Markdown、Typeset 近似、下载按钮无效、无原生滚动条、共享页面缺少 demo 后导语槽位及指针聚焦 ring 与 focus-visible 差异，见 [Code Block r2](web-parity/code-block-r2/README.md)。
-- [x] Trace (`trace`)：按固定版本 8a35366 补齐官方 16 个预览（顶部 demo + Trace Line/Status/Description/Collapsible/Open State/Link/Dialog/Sheet/Group/Sources/Chain of Thought/Commit/Whole Turn/Reasoning/Tool），顺序/标题/文案、Built with Trace/Features/Accessibility 与 9 个 API 小节（TraceLink 为 Kotlin extension）已对齐；组件补 `keepMounted`、标题后图标 4dp、`TraceDescription(mono=)` 与 `TraceLink`。30 项聚焦测试（页面19+核心11含RTL/keepMounted/链接语义）、Wasm 9862c51a、四象限与新空间实际浏览器展开/受控/Dialog/Sheet/嵌套diff/Reasoning/Tool/Replay 状态通过。残余（已解释）：官方简介段/Built with 表格/Status 表受本地文档模型限制置于 Composition 后或改为散文，官方预览后补充 TSX 片段未收录，Reasoning/Tool 非流式、Replay 恢复静态转录，Dialog/Sheet 触发行为无 hover 变色，官方预览为 base-rhea 而本地 Nova（对话框448vs384）且 API 表少 Description 列，见[trace-r3](web-parity/trace-r3/README.md)。
+- [x] Trace (`trace`)：按固定版本 8a35366 补齐官方 16 个预览（顶部 demo + Trace Line/Status/Description/Collapsible/Open State/Link/Dialog/Sheet/Group/Sources/Chain of Thought/Commit/Whole Turn/Reasoning/Tool），顺序/标题/文案、Built with Trace/Features/Accessibility 与 9 个 API 小节（TraceLink 为 Kotlin extension）已对齐；组件补 `keepMounted`、标题后图标 4dp、`TraceDescription(mono=)` 与 `TraceLink`。30 项聚焦测试（页面19+核心11含RTL/keepMounted/链接语义）、Wasm 89721bca、四象限与新空间实际浏览器展开/受控/Dialog/Sheet/嵌套diff/Reasoning/Tool/Replay 状态通过。残余（已解释）：官方简介段/Built with 表格/Status 表受本地文档模型限制置于 Composition 后或改为散文，官方预览后补充 TSX 片段未收录，Reasoning/Tool 非流式、Replay 恢复静态转录，Dialog/Sheet 触发行为无 hover 变色，官方预览为 base-rhea 而本地 Nova（对话框448vs384）且 API 表少 Description 列，见[trace-r3](web-parity/trace-r3/README.md)。
 - [ ] Chart (`chart`)：本页八组官方配方已迁移，补真实tooltip/键盘选点、系列切换、主题/图标、响应尺寸、数值域与日期轴修复；320高、桌面48/手机0缩进及缩放后阿语轴重叠已处理。r4把Your First Chart保留为h2，Add a Grid/Axis/Tooltip/Legend改为嵌套h3并补Compose步骤说明；页面/文档/预览56项、核心交互/布局/截图40项共96项通过，全仓lint/detekt与JS/Wasm通过。浏览器仍待新空间复核，共享标题/代码细节、窄屏日期刻度和动效/完整交互继续开放，见[chart-page-r4](web-parity/chart-page-r4/README.md)、chart-r1、chart-axis-r2及chart-preview-r3。
 - [ ] Checkbox (`checkbox`)：官网八配方、Group/Table/三语RTL及Field布局已补；r2确认组件/MDX/示例与首轮字节一致，默认改为官网150ms颜色过渡。r3按当前官网补齐 RTL 说明文案（"in shadcn/ui"），并在新空间完成 1440/390×浅深四象限、Invalid/Basic/Description/Disabled/Group/Table/RTL 分节与 Basic/Table 实际点击交互复查；CheckboxExamplesTest 3 项、CheckboxViewportTest 12 项通过，Wasm 构建通过。仍保留两张历史深色基准差异（actual 与 HEAD 逐字节一致、未刷新）、Canvas 无原生 input/label 关联、CSS 命中区/动态主题/shape 与完整辅助技术矩阵，见 [checkbox-r3](web-parity/checkbox-r3/README.md)。
 - [ ] Chip (`chip`)：项目扩展，检查一致性。
@@ -172,6 +172,18 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Trace：最终构建复验（导入清理后 89721bca）（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 176 -->
+
+清理未使用 import 后重新构建并复验，最终 Wasm sha256 `89721bca784cc2dd66346c26a0de1fa9a445ecf2a0d7ea0d13e04fc658b8129d`（此前 9862c51a 的页面输出与之一致）。
+
+- 聚焦测试重跑 **30 项通过**（页面 19 + 核心 11），XML 已更新到 [trace-r3/tests](web-parity/trace-r3/tests/)。
+- 四象限重新抓取并逐文件比对：official 三张、local 深色与手机浅深与上一版逐字节相同；桌面浅色唯一差异是右上主题切换按钮的 hover 像素（鼠标停在上面），页面内容一致。证据见 [trace-r3/browser](web-parity/trace-r3/browser/)。
+- 交互状态截图沿用同一视觉构建（导入清理不改变渲染），[trace-r3/browser/states](web-parity/trace-r3/browser/states/) 覆盖 Replay、折叠、受控、Dialog/Sheet、嵌套 diff、Whole Turn、Reasoning/Tool。
+- `:shadcn:core:verifyRoborazziJvm --tests TraceParityTest` 通过（6 张 Nova 基准；`trace_parity_dark` 在本轮记录前已因共享深色 border 抗锯齿有 1px 差异，重录后稳定）。
+- 最终 sha 与来源哈希已写入 [sources.json](web-parity/trace-r3/sources.json)，残余差异与原因见 [README](web-parity/trace-r3/README.md)。
 
 ### Message Scroller：官方 11 配方、指南与滚动状态复核（2026-11-05）
 

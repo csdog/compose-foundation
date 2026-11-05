@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TraceExamplesTest[jvm]" tests="19" skipped="0" failures="0" errors="0" timestamp="2026-11-05T04:56:23.089Z" hostname="Apples-MacBook-Pro.local" time="3.237">
+  <properties/>
+  <testcase name="guideSectionsMatchTheOfficialPageCopy[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.323"/>
+  <testcase name="descriptionKeepsCountsAndSearchResultsVisible[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.202"/>
+  <testcase name="openStateCombinesDefaultOpenControlledOpenAndAnExternalTrigger[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.31"/>
+  <testcase name="linkRowsExposeTheSourceAndTheNewTabSuffix[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.027"/>
+  <testcase name="toolStartsEmptyAndSendMessageRendersTheThreeToolRows[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.086"/>
+  <testcase name="dialogRowOpensTheThreeSearchResultsAndEscapeCloses[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="1.214"/>
+  <testcase name="wholeTurnNestsThreeLevelsAndKeepsTheRowsBetweenTraceLists[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.062"/>
+  <testcase name="collapsibleRendersTheTerminalOutputOnlyAfterExpansion[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.039"/>
+  <testcase name="statusRowsCoverNoneErrorRunningAndPending[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.031"/>
+  <testcase name="demoShowsTheFinishedTurnAndReplayControl[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.032"/>
+  <testcase name="sourcesStartsExpandedAndListsEveryLink[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.024"/>
+  <testcase name="sheetRowOpensTheExploredFileList[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.35"/>
+  <testcase name="reasoningStartsEmptyAndSendMessageRendersTheThoughtRow[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.036"/>
+  <testcase name="copyPageMarkdownKeepsTheRecipeOrderAndUsage[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.017"/>
+  <testcase name="traceLineIsPlainTextWithoutAStatus[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.017"/>
+  <testcase name="commitListsChangedFilesAndEachFileOpensItsDiff[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.382"/>
+  <testcase name="chainOfThoughtNestsStepRowsAndExpandsTheBuildLog[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.051"/>
+  <testcase name="groupShowsThreeIndependentTraceLines[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.017"/>
+  <testcase name="pageKeepsTheOfficialRecipeOrderAndTitles[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TraceExamplesTest" time="0.013"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

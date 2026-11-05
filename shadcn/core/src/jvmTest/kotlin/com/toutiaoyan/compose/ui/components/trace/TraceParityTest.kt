@@ -4,13 +4,16 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.*
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.ScreenshotTest
 import com.toutiaoyan.compose.ui.components.icon.Icon
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.icons.Check
+import com.toutiaoyan.compose.ui.icons.ChevronRight
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.*
@@ -100,5 +103,129 @@ class TraceParityTest : ScreenshotTest() {
         }
         composeRule.onNodeWithTag("trigger").assertIsNotEnabled().performClick()
         composeRule.onNodeWithText("Details").assertDoesNotExist()
+    }
+
+    private fun extras(name: String, rtl: Boolean) {
+        for (dark in listOf(false, true)) {
+            snapshot(name, darkTheme = dark, stylePreset = StylePreset.Nova) {
+                if (rtl) {
+                    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                        ExtrasMatrix()
+                    }
+                } else {
+                    ExtrasMatrix()
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun ExtrasMatrix() {
+        Trace(Modifier.width(384.dp)) {
+            TraceLine {
+                TraceIcon { Icon(Check) }
+                TraceTitle("Edited trace.ktx")
+                TraceDescription("+48 \u221212", mono = true)
+                TraceIcon { Icon(ChevronRight) }
+            }
+            TraceCollapsible(defaultOpen = true) {
+                TraceCollapsibleTrigger(Modifier.testTag("outer")) {
+                    TraceLine {
+                        TraceIcon { Icon(Check) }
+                        TraceTitle("Read 3 pages")
+                    }
+                }
+                TraceCollapsibleContent(keepMounted = true) {
+                    Trace(Modifier.fillMaxWidth()) {
+                        TraceLine {
+                            TraceIcon { Icon(Check) }
+                            TraceTitle("Nested row")
+                        }
+                    }
+                    Text { "Reviewed documentation and examples." }
+                }
+            }
+        }
+    }
+
+    @Test fun extrasMatrix() = extras("trace_parity_extras", rtl = false)
+
+    @Test fun rtlMatrix() = extras("trace_parity_rtl", rtl = true)
+
+    @Test fun keepMountedPreservesNestedOpenState() {
+        composeRule.setContent {
+            Theme(preset = StylePreset.Nova) {
+                Trace(Modifier.width(384.dp)) {
+                    TraceCollapsible(defaultOpen = true) {
+                        TraceCollapsibleTrigger(Modifier.testTag("outer")) {
+                            TraceLine { TraceTitle("Outer") }
+                        }
+                        TraceCollapsibleContent(keepMounted = true) {
+                            TraceCollapsible {
+                                TraceCollapsibleTrigger(Modifier.testTag("inner")) {
+                                    TraceLine { TraceTitle("Inner") }
+                                }
+                                TraceCollapsibleContent { Text { "Inner detail" } }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        composeRule.onNodeWithTag("inner").performClick()
+        composeRule.onNodeWithText("Inner detail").assertIsDisplayed()
+        composeRule.onNodeWithTag("outer").performClick()
+        composeRule.onNodeWithText("Inner detail").assertDoesNotExist()
+        composeRule.onNodeWithTag("outer").performClick()
+        composeRule.onNodeWithText("Inner detail").assertIsDisplayed()
+    }
+
+    @Test fun unkeptContentDropsNestedOpenStateWhenTheOuterRowCollapses() {
+        composeRule.setContent {
+            Theme(preset = StylePreset.Nova) {
+                Trace(Modifier.width(384.dp)) {
+                    TraceCollapsible(defaultOpen = true) {
+                        TraceCollapsibleTrigger(Modifier.testTag("outer")) {
+                            TraceLine { TraceTitle("Outer") }
+                        }
+                        TraceCollapsibleContent {
+                            TraceCollapsible {
+                                TraceCollapsibleTrigger(Modifier.testTag("inner")) {
+                                    TraceLine { TraceTitle("Inner") }
+                                }
+                                TraceCollapsibleContent { Text { "Inner detail" } }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        composeRule.onNodeWithTag("inner").performClick()
+        composeRule.onNodeWithText("Inner detail").assertIsDisplayed()
+        composeRule.onNodeWithTag("outer").performClick()
+        composeRule.onNodeWithText("Inner detail").assertDoesNotExist()
+        composeRule.onNodeWithTag("outer").performClick()
+        composeRule.onNodeWithText("Inner detail").assertDoesNotExist()
+    }
+
+    @Test fun linkRowKeepsTheAccessibleNameForANewTab() {
+        composeRule.setContent {
+            Theme(preset = StylePreset.Nova) {
+                Trace {
+                    TraceLink(
+                        href = "https://example.com/docs",
+                        contentDescription = "Read the docs (opens in a new tab)",
+                    ) {
+                        TraceLine {
+                            TraceIcon { Icon(Check) }
+                            TraceTitle("Read the docs")
+                            TraceIcon { Icon(ChevronRight) }
+                        }
+                    }
+                }
+            }
+        }
+        composeRule.onNodeWithContentDescription("Read the docs (opens in a new tab)")
+            .assertIsDisplayed()
     }
 }

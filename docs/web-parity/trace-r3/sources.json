@@ -1,0 +1,75 @@
+{
+  "retrieved": "2026-11-05",
+  "officialPage": "https://ui.shadcn.com/docs/components/base/trace",
+  "revision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "localBuild": {
+    "command": "/tmp/cf-parity/web-build.sh f 8776",
+    "wasmSha256": "89721bca784cc2dd66346c26a0de1fa9a445ecf2a0d7ea0d13e04fc658b8129d",
+    "slot": "f",
+    "port": 8776
+  },
+  "files": {
+    "apps/v4/content/docs/components/base/trace.mdx": {
+      "sha256": "6adacdc8fc42d563040f9bc57b023d6ffd533108f877d50f5de19df85aa52fe4",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/trace.mdx"
+    },
+    "apps/v4/registry/bases/base/ui/trace.tsx": {
+      "sha256": "39aa939c4845029793d98bb9f4d9814686be0198ccee257cc198da276294ca79",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/registry/bases/base/ui/trace.tsx"
+    },
+    "apps/v4/registry/styles/style-nova.css": {
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/registry/styles/style-nova.css",
+      "note": "Trace cn-* tokens: gap-2, trigger gap-1, icon size-4 with trailing -ml-1, content mt-2 mb-1 ml-[7px] border-l pl-4 pr-1"
+    },
+    "apps/v4/examples/base/trace-demo.tsx": {
+      "sha256": "8fc4af502b008ccac12605c31dd3ee03a8babcd010e26b86e19f9dbcfa7b8d00"
+    },
+    "apps/v4/examples/base/trace-static.tsx": {
+      "sha256": "2b7872a05adc4e74427ff8fb982864d670762fb700f3213f3f46d8831a5e58fd"
+    },
+    "apps/v4/examples/base/trace-status.tsx": {
+      "sha256": "d7158295221dbd1535730fe5e80beca5823d93ba65d3d868507dd3f7d751b9a5"
+    },
+    "apps/v4/examples/base/trace-description.tsx": {
+      "sha256": "d9ada22d05fdbaa9c7bc060ffb53b053286fdf5e58c50910255d6fc95f65a5ae"
+    },
+    "apps/v4/examples/base/trace-collapsible.tsx": {
+      "sha256": "4ae81af0b7ada1cf0bded62bcd5c62e54ce7541fae55750ae4829875bcd1a592"
+    },
+    "apps/v4/examples/base/trace-open.tsx": {
+      "sha256": "f9f5e8d07cf92c898dc7297642d68011a2c3b1a0ff4f18f3cebb8870d4a7ff09"
+    },
+    "apps/v4/examples/base/trace-link.tsx": {
+      "sha256": "eec64a1a7beadbc67cbf0298381ef7688553620d690e84b8e5ed20b3c2abdb98"
+    },
+    "apps/v4/examples/base/trace-dialog.tsx": {
+      "sha256": "63c8e55eb3a259924065e752d16a07eb1853f21642c4fe0997b7b2da47836adb"
+    },
+    "apps/v4/examples/base/trace-sheet.tsx": {
+      "sha256": "91d14c624681ac4d50bd45a9228ffe375de2f61388d39c155647e235d7e27d73"
+    },
+    "apps/v4/examples/base/trace-group.tsx": {
+      "sha256": "f5ade9d9320778cd0595854ce16dc60615a15dd71690304d5fd4f45674baf5d8"
+    },
+    "apps/v4/examples/base/trace-sources.tsx": {
+      "sha256": "25cab1a3a6850784a09849f3a69cfd3b3bd964e7be562c7b3c8299d71df3aa99"
+    },
+    "apps/v4/examples/base/trace-steps.tsx": {
+      "sha256": "3c26358ef6e0bc612a12d5153dc2575cc4f439d6ca4ac32087bc578335376c01"
+    },
+    "apps/v4/examples/base/trace-commit.tsx": {
+      "sha256": "60dca1f554aaf8c5e65a619995b535785d7bc86276c4baa0f1778d63266b4121"
+    },
+    "apps/v4/examples/base/trace-turn.tsx": {
+      "sha256": "73b666f8735d9d8787af734f9e8377f24ee6876af03ba577b29bc4ddc6e35c3d"
+    },
+    "apps/v4/examples/base/trace-thinking.tsx": {
+      "sha256": "05ddda1887a1745a23fa38e62eb105406495f84cbc3c9496f2b7615e3965b604"
+    },
+    "apps/v4/examples/base/trace-tool-calls.tsx": {
+      "sha256": "5d97e5a4185e64e1afb8c0bf74ae0b7f89eeb38e9524138f73679dabffea1e9d"
+    }
+  },
+  "officialDom": "browser/meta.json (headings: Built with Trace, Installation, Usage, Composition, Features, Trace Line, Status, Description, Collapsible, Open State, Link, Dialog, Sheet, Group, Sources, Chain of Thought, Commit, Whole Turn, Reasoning, Tool, Accessibility, API Reference; 16 component previews)"
+}

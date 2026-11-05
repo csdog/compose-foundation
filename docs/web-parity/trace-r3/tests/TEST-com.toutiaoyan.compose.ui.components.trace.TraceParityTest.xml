@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TraceParityTest[jvm]" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-11-05T04:56:24.106Z" hostname="Apples-MacBook-Pro.local" time="1.164">
+  <properties/>
+  <testcase name="darkMatrix[jvm]" classname="com.toutiaoyan.compose.ui.components.trace.TraceParityTest" time="0.626"/>
+  <testcase name="disabledTriggerCannotExpand[jvm]" classname="com.toutiaoyan.compose.ui.components.trace.TraceParityTest" time="0.056"/>
+  <testcase name="unkeptContentDropsNestedOpenStateWhenTheOuterRowCollapses[jvm]" classname="com.toutiaoyan.compose.ui.components.trace.TraceParityTest" time="0.166"/>
+  <testcase name="linkRowKeepsTheAccessibleNameForANewTab[jvm]" classname="com.toutiaoyan.compose.ui.components.trace.TraceParityTest" time="0.024"/>
+  <testcase name="controlledTriggerOnlyRequestsStateChange[jvm]" classname="com.toutiaoyan.compose.ui.components.trace.TraceParityTest" time="0.033"/>
+  <testcase name="rtlMatrix[jvm]" classname="com.toutiaoyan.compose.ui.components.trace.TraceParityTest" time="0.033"/>
+  <testcase name="keepMountedPreservesNestedOpenState[jvm]" classname="com.toutiaoyan.compose.ui.components.trace.TraceParityTest" time="0.077"/>
+  <testcase name="uncontrolledTriggerExpandsAndCollapsesDetails[jvm]" classname="com.toutiaoyan.compose.ui.components.trace.TraceParityTest" time="0.053"/>
+  <testcase name="keyboardEnterExpandsDetails[jvm]" classname="com.toutiaoyan.compose.ui.components.trace.TraceParityTest" time="0.04"/>
+  <testcase name="extrasMatrix[jvm]" classname="com.toutiaoyan.compose.ui.components.trace.TraceParityTest" time="0.028"/>
+  <testcase name="lightMatrix[jvm]" classname="com.toutiaoyan.compose.ui.components.trace.TraceParityTest" time="0.025"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
