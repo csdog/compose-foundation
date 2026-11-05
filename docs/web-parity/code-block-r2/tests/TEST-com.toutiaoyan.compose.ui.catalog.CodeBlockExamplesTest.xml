@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CodeBlockExamplesTest[jvm]" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-11-05T04:51:06.842Z" hostname="Apples-MacBook-Pro.local" time="1.625">
+  <properties/>
+  <testcase name="languagesAndTerminalOutputRecipesRenderOfficialSamples[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CodeBlockExamplesTest" time="0.686"/>
+  <testcase name="heightCapsTheOutputAndKeyboardEndRevealsTheLastLine[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CodeBlockExamplesTest" time="0.173"/>
+  <testcase name="demoKeepsOfficialRouteCodeHeaderAndHighlightedLines[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CodeBlockExamplesTest" time="0.049"/>
+  <testcase name="messageRecipePlacesCodeBetweenParagraphs[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CodeBlockExamplesTest" time="0.045"/>
+  <testcase name="traceRecipeShowsTerminalAndDestructiveOutput[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CodeBlockExamplesTest" time="0.061"/>
+  <testcase name="pageListsOfficialRecipesInOrder[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CodeBlockExamplesTest" time="0.015"/>
+  <testcase name="showMoreClipsUntilExpandedThenShowsFullOutput[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CodeBlockExamplesTest" time="0.217"/>
+  <testcase name="rtlHeaderFollowsDirectionWhileCodeStaysLeftToRight[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CodeBlockExamplesTest" time="0.052"/>
+  <testcase name="startLineMovesTheNumberGutterTo995[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CodeBlockExamplesTest" time="0.026"/>
+  <testcase name="syntaxHighlightingRecipesRenderPlainTextAndSaySo[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CodeBlockExamplesTest" time="0.024"/>
+  <testcase name="typesetRecipeKeepsParagraphRhythm[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CodeBlockExamplesTest" time="0.035"/>
+  <testcase name="tabsSwitchBetweenOfficialFileRecipes[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CodeBlockExamplesTest" time="0.076"/>
+  <testcase name="maxHeightScrollsAfterExpanding[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CodeBlockExamplesTest" time="0.089"/>
+  <testcase name="actionsWrapToggleChangesTheRenderedHeight[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CodeBlockExamplesTest" time="0.061"/>
+  <testcase name="pageKeepsOfficialUsageCompositionFeaturesAndAccessibilityCopy[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CodeBlockExamplesTest" time="0.014"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

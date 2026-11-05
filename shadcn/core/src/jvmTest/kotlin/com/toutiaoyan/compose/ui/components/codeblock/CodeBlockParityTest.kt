@@ -7,11 +7,14 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.Clipboard
 import androidx.compose.ui.platform.ClipEntry
 import androidx.compose.ui.platform.LocalClipboard
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.*
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.input.key.Key
 import com.toutiaoyan.compose.ui.ScreenshotTest
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.theme.Theme
@@ -90,6 +93,66 @@ class CodeBlockParityTest : ScreenshotTest() {
         val code = composeRule.onNodeWithTag("code").fetchSemanticsNode().boundsInRoot
         assertTrue(code.width <= block.width)
         assertTrue(code.height > 23f)
+    }
+
+    @Test fun cappedOutputScrollsVerticallyWithKeyboard() {
+        val code = (1..40).joinToString("\n") { "line $it" }
+        composeRule.setContent {
+            Theme(preset = StylePreset.Nova) {
+                CodeBlock(Modifier.width(260.dp)) {
+                    CodeBlockContent(
+                        code = code,
+                        lineNumbers = true,
+                        maxHeight = 96.dp,
+                        modifier = Modifier.testTag("capped-code"),
+                    )
+                }
+            }
+        }
+        composeRule.onNodeWithTag("capped-code").assertHeightIsEqualTo(96.dp)
+        composeRule.onNodeWithText("line 40").assertIsNotDisplayed()
+        composeRule.onNodeWithTag("capped-code").requestFocus().performKeyInput { pressKey(Key.MoveEnd) }
+        composeRule.onNodeWithText("line 40").assertIsDisplayed()
+        composeRule.onNodeWithTag("capped-code").performKeyInput { pressKey(Key.MoveHome) }
+        composeRule.onNodeWithText("line 1").assertIsDisplayed()
+    }
+
+    @Test fun nonScrollableCapClipsInsteadOfScrolling() {
+        val code = (1..40).joinToString("\n") { "line $it" }
+        composeRule.setContent {
+            Theme(preset = StylePreset.Nova) {
+                CodeBlock(Modifier.width(260.dp)) {
+                    CodeBlockContent(
+                        code = code,
+                        lineNumbers = true,
+                        maxHeight = 96.dp,
+                        scrollable = false,
+                        modifier = Modifier.testTag("clipped-code"),
+                    )
+                }
+            }
+        }
+        composeRule.onNodeWithTag("clipped-code").assertHeightIsEqualTo(96.dp)
+        composeRule.onNodeWithText("line 40").assertIsNotDisplayed()
+        composeRule.onNodeWithTag("clipped-code").requestFocus().performKeyInput { pressKey(Key.MoveEnd) }
+        // overflow-y-hidden: the content stays clipped, the last line never scrolls into view.
+        composeRule.onNodeWithText("line 40").assertIsNotDisplayed()
+        composeRule.onNodeWithText("line 1").assertIsDisplayed()
+    }
+
+    @Test fun rtlPageKeepsCodeContentLeftToRight() {
+        composeRule.setContent {
+            Theme(preset = StylePreset.Nova) {
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                    CodeBlock(Modifier.width(260.dp)) {
+                        CodeBlockContent("const answer = 42", lineNumbers = true)
+                    }
+                }
+            }
+        }
+        val number = composeRule.onNodeWithText("1").fetchSemanticsNode().boundsInRoot
+        val code = composeRule.onNodeWithText("const answer = 42").fetchSemanticsNode().boundsInRoot
+        assertTrue(number.left < code.left, "number ${number.left} should stay left of ${code.left}")
     }
 
     @Test fun copyWritesOriginalWhitespaceAndConfirmsForTwoSeconds() {

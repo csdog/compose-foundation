@@ -1,6 +1,7 @@
 package com.toutiaoyan.compose.ui.components.codeblock
 
 import androidx.compose.foundation.focusable
+import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.offset
@@ -14,22 +15,44 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.selection.DisableSelection
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.CompositingStrategy
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.semantics.hideFromAccessibility
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
+import com.toutiaoyan.compose.ui.styles.ScrollFadeOrientation
+import com.toutiaoyan.compose.ui.styles.scrollFade
 import com.toutiaoyan.compose.ui.theme.LocalContentColor
 import com.toutiaoyan.compose.ui.theme.currentTheme
+import kotlinx.coroutines.launch
 
 sealed interface CodeBlockLineVariant {
     data object Default : CodeBlockLineVariant
@@ -56,22 +79,31 @@ fun CodeBlockScope.CodeBlockContent(
     wrap: Boolean = false,
     lineNumbers: Boolean = false,
     startLine: Int = 1,
+    maxHeight: androidx.compose.ui.unit.Dp? = null,
+    scrollable: Boolean = true,
     textStyle: TextStyle = TextStyle.Default,
 ) {
-    CodeBlockContent(modifier, wrap, lineNumbers, startLine, textStyle) {
+    CodeBlockContent(modifier, wrap, lineNumbers, startLine, maxHeight, scrollable, textStyle) {
         code.removeSuffix("\n").split('\n').forEachIndexed { index, line ->
             CodeBlockLine(text = line, lineNumber = startLine + index)
         }
     }
 }
 
-/** Rich/diff lines specify their line numbers explicitly, avoiding a composition-time counter. */
+/**
+ * Rich/diff lines specify their line numbers explicitly, avoiding a composition-time counter.
+ *
+ * [maxHeight] mirrors an official `max-h-*` class; [scrollable = false] mirrors
+ * `overflow-y-hidden` (the Show More collapsed state), where the cap clips instead of scrolling.
+ */
 @Composable
 fun CodeBlockScope.CodeBlockContent(
     modifier: Modifier = Modifier,
     wrap: Boolean = false,
     lineNumbers: Boolean = false,
     startLine: Int = 1,
+    maxHeight: androidx.compose.ui.unit.Dp? = null,
+    scrollable: Boolean = true,
     textStyle: TextStyle = TextStyle.Default,
     content: @Composable CodeBlockContentScope.() -> Unit,
 ) {
@@ -85,25 +117,91 @@ fun CodeBlockScope.CodeBlockContent(
             lineHeight = if (context.size == CodeBlockSize.Sm) 19.5.sp else 22.75.sp,
         ).merge(textStyle)
     val scope = CodeBlockContentScope(context, lineNumbers, startLine, wrap, mono)
+    val verticalScrollState = rememberScrollState()
+    val horizontalScrollState = rememberScrollState()
+    val scopeCoroutine = rememberCoroutineScope()
+    val lineStep = with(LocalDensity.current) { (if (context.size == CodeBlockSize.Sm) 20.dp else 24.dp).toPx() }
+    val keyboardScroll =
+        Modifier.onPreviewKeyEvent { event ->
+            if (event.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
+            val verticalDelta =
+                when (event.key) {
+                    Key.DirectionUp -> -lineStep
+                    Key.DirectionDown -> lineStep
+                    Key.PageUp -> -lineStep * 8
+                    Key.PageDown -> lineStep * 8
+                    Key.MoveHome -> -verticalScrollState.value.toFloat()
+                    Key.MoveEnd -> verticalScrollState.maxValue.toFloat()
+                    else -> 0f
+                }
+            val horizontalDelta =
+                when (event.key) {
+                    Key.DirectionLeft -> -lineStep
+                    Key.DirectionRight -> lineStep
+                    else -> 0f
+                }
+            when {
+                verticalDelta != 0f && verticalScrollState.maxValue > 0 -> {
+                    scopeCoroutine.launch { verticalScrollState.scrollBy(verticalDelta) }
+                    true
+                }
+                !wrap && horizontalDelta != 0f && horizontalScrollState.maxValue > 0 -> {
+                    scopeCoroutine.launch { horizontalScrollState.scrollBy(horizontalDelta) }
+                    true
+                }
+                else -> false
+            }
+        }
     BoxWithConstraints(
         modifier =
             modifier.fillMaxWidth().codeSlot(CodeSlot.Content)
-                .onFocusChanged { context.onContentFocus(it.isFocused) }.focusable(),
+                .then(
+                    when {
+                        maxHeight == null -> Modifier
+                        scrollable ->
+                            Modifier.heightIn(max = maxHeight)
+                                .scrollFade(
+                                    verticalScrollState,
+                                    orientation = ScrollFadeOrientation.Vertical,
+                                )
+                                .verticalScroll(verticalScrollState)
+                        else ->
+                            Modifier.heightIn(max = maxHeight)
+                                .clipToBounds()
+                                // Official `max-h-* + scroll-fade-y + overflow-y-hidden`: the clipped
+                                // block keeps the trailing fade even though it cannot scroll.
+                                .clippedScrollFade()
+                    },
+                )
+                .then(
+                    if (wrap) {
+                        Modifier
+                    } else {
+                        // Official `scroll-fade-x` on the content: horizontal edges fade while scrolling.
+                        Modifier.scrollFade(horizontalScrollState, orientation = ScrollFadeOrientation.Horizontal)
+                    },
+                )
+                .onFocusChanged { context.onContentFocus(it.isFocused) }
+                .then(keyboardScroll)
+                .focusable(),
     ) {
         val viewportWidth = maxWidth
-        SelectionContainer {
-            val scrolling = if (wrap) Modifier else Modifier.horizontalScroll(rememberScrollState())
-            Column(scrolling) {
-                Column(
-                    if (wrap) {
-                        Modifier.fillMaxWidth()
-                    } else {
-                        Modifier.widthIn(
-                            min = viewportWidth,
-                        ).width(IntrinsicSize.Max)
-                    },
-                ) {
-                    scope.content()
+        // Official code content always sets dir="ltr"; only the header follows the page direction.
+        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+            SelectionContainer {
+                val scrolling = if (wrap) Modifier else Modifier.horizontalScroll(horizontalScrollState)
+                Column(scrolling) {
+                    Column(
+                        if (wrap) {
+                            Modifier.fillMaxWidth()
+                        } else {
+                            Modifier.widthIn(
+                                min = viewportWidth,
+                            ).width(IntrinsicSize.Max)
+                        },
+                    ) {
+                        scope.content()
+                    }
                 }
             }
         }
@@ -157,7 +255,8 @@ fun CodeBlockContentScope.CodeBlockLine(
                 if (numbered) {
                     BasicText(
                         text = lineNumber?.toString().orEmpty(),
-                        modifier = Modifier.width(24.dp),
+                        // Official line numbers are hidden from screen readers.
+                        modifier = Modifier.width(24.dp).semantics { hideFromAccessibility() },
                         style =
                             textStyle.copy(
                                 color = theme.colors.mutedForeground,
@@ -196,3 +295,24 @@ fun CodeBlockContentScope.CodeBlockLine(
         }
     }
 }
+
+/**
+ * Static `scroll-fade` trailing mask for a clipped, non-scrollable block. Matches the official
+ * `max-h-* scroll-fade-y overflow-y-hidden` combination: the bottom edge fades even though the
+ * content itself cannot scroll.
+ */
+private fun Modifier.clippedScrollFade(): Modifier =
+    graphicsLayer { compositingStrategy = CompositingStrategy.Offscreen }.drawWithContent {
+        drawContent()
+        val depth = minOf(size.height * 0.12f, 40.dp.toPx())
+        if (depth <= 0f || depth >= size.height) return@drawWithContent
+        drawRect(
+            brush =
+                Brush.verticalGradient(
+                    0f to Color.Black,
+                    (size.height - depth) / size.height to Color.Black,
+                    1f to Color.Transparent,
+                ),
+            blendMode = BlendMode.DstIn,
+        )
+    }
