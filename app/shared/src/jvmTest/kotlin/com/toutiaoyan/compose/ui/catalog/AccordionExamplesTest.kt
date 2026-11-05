@@ -38,7 +38,8 @@ class AccordionExamplesTest {
 
     @Test fun officialMultipleCopyAndApiReferenceMatchThePageSource() {
         val multiple = accordionDoc.examples.single { it.title == "Multiple" }
-        assertEquals("Kotlin extensions", accordionDoc.examplesHeading)
+        assertEquals(null, accordionDoc.examplesHeading)
+        assertTrue(accordionDoc.examples.drop(7).all { it.title.startsWith("Kotlin extension: ") })
         assertEquals(
             "Use `multiple = true` to allow multiple items to be open at the same time.",
             multiple.descriptionMarkdown,

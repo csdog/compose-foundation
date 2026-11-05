@@ -60,7 +60,7 @@ val accordionDoc =
                 AccordionItem("item-2", "Is it styled?", "Yes. It comes with default styles.")
             }
             """.trimIndent(),
-        examplesHeading = "Kotlin extensions",
+        examplesHeading = null,
         compositionCode =
             """
             Accordion

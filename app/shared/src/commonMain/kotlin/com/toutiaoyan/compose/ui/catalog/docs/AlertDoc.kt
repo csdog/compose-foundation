@@ -385,7 +385,7 @@ val alertDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Slots",
+                    title = "Kotlin extension: Slots",
                     mobileMinPreviewHeight = 0.dp,
                     previewPadding = 24.dp,
                     code =
@@ -403,7 +403,7 @@ val alertDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Title",
+                    title = "Kotlin extension: Title",
                     mobileMinPreviewHeight = 0.dp,
                     previewPadding = 24.dp,
                     code =
@@ -419,7 +419,7 @@ val alertDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Description",
+                    title = "Kotlin extension: Description",
                     mobileMinPreviewHeight = 0.dp,
                     previewPadding = 24.dp,
                     code =
@@ -435,7 +435,7 @@ val alertDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Multiple actions (Compose)",
+                    title = "Kotlin extension: Multiple actions",
                     descriptionMarkdown = (
                         "Compose extension: the upstream alert keeps a fixed 72dp " +
                             "action reserve. This 136dp action row uses 80dp extra end " +

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AlertNovaTest[jvm]" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-05T03:04:43.418Z" hostname="Apples-MacBook-Pro.local" time="0.302">
+  <properties/>
+  <testcase name="actionMatchesOfficialBorderRelativeInsetsAndFixedReserve[jvm]" classname="com.toutiaoyan.compose.ui.components.alert.AlertNovaTest" time="0.033"/>
+  <testcase name="titleAndDescriptionHaveTwoPixelGap[jvm]" classname="com.toutiaoyan.compose.ui.components.alert.AlertNovaTest" time="0.024"/>
+  <testcase name="titleInheritsCallerContentColor[jvm]" classname="com.toutiaoyan.compose.ui.components.alert.AlertNovaTest" time="0.027"/>
+  <testcase name="unboundedWidthStillMeasuresVisibleContent[jvm]" classname="com.toutiaoyan.compose.ui.components.alert.AlertNovaTest" time="0.041"/>
+  <testcase name="destructiveDescriptionUsesNinetyPercentDestructiveAndFourteenPixelText[jvm]" classname="com.toutiaoyan.compose.ui.components.alert.AlertNovaTest" time="0.025"/>
+  <testcase name="actionHasReservedSpaceAndSurvivesBodyRecomposition[jvm]" classname="com.toutiaoyan.compose.ui.components.alert.AlertNovaTest" time="0.028"/>
+  <testcase name="callerBodyPaddingSupportsMultipleActionsAcrossDirectionAndRecomposition[jvm]" classname="com.toutiaoyan.compose.ui.components.alert.AlertNovaTest" time="0.102"/>
+  <testcase name="rtlPlacesIconAtStartAndReservesEndForAction[jvm]" classname="com.toutiaoyan.compose.ui.components.alert.AlertNovaTest" time="0.021"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

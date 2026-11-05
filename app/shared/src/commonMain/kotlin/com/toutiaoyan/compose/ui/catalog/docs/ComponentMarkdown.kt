@@ -31,7 +31,11 @@ internal fun componentPageMarkdown(doc: ComponentDoc): String =
             }
         }
         doc.beforeExamples.forEach(::guide)
-        doc.examples.drop(1).forEach(::example)
+        val additionalExamples = doc.examples.drop(1)
+        if (additionalExamples.isNotEmpty()) {
+            doc.examplesHeading?.let { appendLine("## $it\n") }
+            additionalExamples.forEach(::example)
+        }
         doc.afterExamples.forEach(::guide)
         if (doc.apiProperties.isNotEmpty() || doc.apiSections.isNotEmpty()) {
             appendLine("## API Reference\n")

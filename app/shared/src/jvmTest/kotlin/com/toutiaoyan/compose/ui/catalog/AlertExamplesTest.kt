@@ -18,10 +18,28 @@ import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import org.junit.Rule
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class AlertExamplesTest {
     @get:Rule val rule = createComposeRule()
+
+    @Test fun officialRecipesComeFirstAndKotlinExtensionsAreSeparated() {
+        assertEquals(
+            listOf("Default", "Basic", "Destructive", "Action", "Custom Colors", "RTL"),
+            alertDoc.examples.take(6).map { it.title },
+        )
+        assertEquals(null, alertDoc.examplesHeading)
+        assertEquals(
+            listOf(
+                "Kotlin extension: Slots",
+                "Kotlin extension: Title",
+                "Kotlin extension: Description",
+                "Kotlin extension: Multiple actions",
+            ),
+            alertDoc.examples.drop(6).map { it.title },
+        )
+    }
 
     @Test fun colorsExampleUpdatesActualTitleColorWhenThemeChanges() {
         var dark by mutableStateOf(false)
@@ -108,7 +126,7 @@ class AlertExamplesTest {
     }
 
     @Test fun multipleActionsKeepBodyClearAndUpdateTheActualExample() {
-        val example = alertDoc.examples.single { it.title == "Multiple actions (Compose)" }
+        val example = alertDoc.examples.single { it.title == "Kotlin extension: Multiple actions" }
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 Box(Modifier.width(292.dp)) { example.preview() }

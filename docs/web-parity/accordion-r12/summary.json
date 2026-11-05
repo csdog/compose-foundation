@@ -11,7 +11,8 @@
     "RTL and extension inner content changed from260dp to245dp",
     "Added explicit frame-width assertions",
     "Changed Multiple explanation to the public `multiple = true` argument",
-    "Added Kotlin extensions heading and Base UI API Reference paragraph"
+    "Kept official examples ungrouped and retained explicit Kotlin extension titles",
+    "Added Base UI API Reference paragraph"
   ],
   "tests": {
     "total": 99,

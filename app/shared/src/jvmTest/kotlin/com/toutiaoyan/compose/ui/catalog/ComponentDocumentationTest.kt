@@ -155,6 +155,12 @@ class ComponentDocumentationTest {
         assertFalse(docSections(alertDoc).any { it.id == "examples" })
     }
 
+    @Test fun configuredExamplesHeadingIsIncludedInCopiedMarkdown() {
+        val markdown = componentPageMarkdown(alertDoc.copy(examplesHeading = "Examples"))
+        assertTrue(markdown.indexOf("## Composition") < markdown.indexOf("## Examples"))
+        assertTrue(markdown.indexOf("## Examples") < markdown.indexOf("## Basic"))
+    }
+
     @Test fun plainCompositionBlockCopiesItsOwnCodeAndShowsFeedback() {
         var copied: String? = null
         val code = "Alert\n└── AlertTitle"

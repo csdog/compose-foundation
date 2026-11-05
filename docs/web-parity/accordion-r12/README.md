@@ -20,7 +20,8 @@
   resulting 245dp inner content width.
 - Added explicit frame-width assertions so stale 342dp fixtures fail immediately.
 - Changed the Multiple explanation to `multiple = true`.
-- Added a “Kotlin extensions” heading for the extra Kotlin-only recipes.
+- Kept official examples ungrouped and retained the explicit `Kotlin extension:` prefix on
+  extra Kotlin-only recipes.
 - Added the official API Reference paragraph and Base UI link.
 - Added a source-copy regression assertion for the Multiple explanation, extension heading,
   copied `multiple` argument, and API link.
@@ -66,6 +67,5 @@ not claim a new light/dark desktop/mobile browser pass for Accordion.
   still differ.
 - Native Hebrew toolbar label ellipsis and the full assistive-technology/touch matrix remain
   open.
-- Extra Kotlin extension recipes are intentionally retained and now separated from the seven
-  official examples, but their complete Style/dynamic-slot matrix is not an official-page
-  equivalence claim.
+- Extra Kotlin extension recipes are intentionally retained and explicitly labeled, but their
+  complete Style/dynamic-slot matrix is not an official-page equivalence claim.
