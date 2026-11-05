@@ -1,0 +1,90 @@
+{
+  "slug": "button-group",
+  "pairs": [
+    [
+      "orientation",
+      "example-0",
+      "orientation"
+    ],
+    [
+      "size",
+      "example-1",
+      "size"
+    ],
+    [
+      "nested",
+      "example-2",
+      "nested"
+    ],
+    [
+      "separator",
+      "example-3",
+      "separator"
+    ],
+    [
+      "split",
+      "example-4",
+      "split"
+    ],
+    [
+      "input",
+      "example-5",
+      "input"
+    ],
+    [
+      "input-group",
+      "example-6",
+      "input-group"
+    ],
+    [
+      "dropdown-menu",
+      "example-7",
+      "dropdown"
+    ],
+    [
+      "select",
+      "example-8",
+      "select"
+    ],
+    [
+      "popover",
+      "example-9",
+      "popover"
+    ],
+    [
+      "rtl",
+      "example-10",
+      "rtl"
+    ]
+  ],
+  "views": [
+    {
+      "name": "desktop-light",
+      "theme": "light"
+    }
+  ],
+  "files": {
+    "official-orientation-desktop-light": "/tmp/cf-parity/work-h/sections/button-group/official-orientation-desktop-light.png",
+    "local-orientation-desktop-light": "/tmp/cf-parity/work-h/sections/button-group/local-orientation-desktop-light.png",
+    "official-size-desktop-light": "/tmp/cf-parity/work-h/sections/button-group/official-size-desktop-light.png",
+    "local-size-desktop-light": "/tmp/cf-parity/work-h/sections/button-group/local-size-desktop-light.png",
+    "official-nested-desktop-light": "/tmp/cf-parity/work-h/sections/button-group/official-nested-desktop-light.png",
+    "local-nested-desktop-light": "/tmp/cf-parity/work-h/sections/button-group/local-nested-desktop-light.png",
+    "official-separator-desktop-light": "/tmp/cf-parity/work-h/sections/button-group/official-separator-desktop-light.png",
+    "local-separator-desktop-light": "/tmp/cf-parity/work-h/sections/button-group/local-separator-desktop-light.png",
+    "official-split-desktop-light": "/tmp/cf-parity/work-h/sections/button-group/official-split-desktop-light.png",
+    "local-split-desktop-light": "/tmp/cf-parity/work-h/sections/button-group/local-split-desktop-light.png",
+    "official-input-desktop-light": "/tmp/cf-parity/work-h/sections/button-group/official-input-desktop-light.png",
+    "local-input-desktop-light": "/tmp/cf-parity/work-h/sections/button-group/local-input-desktop-light.png",
+    "official-input-group-desktop-light": "/tmp/cf-parity/work-h/sections/button-group/official-input-group-desktop-light.png",
+    "local-input-group-desktop-light": "/tmp/cf-parity/work-h/sections/button-group/local-input-group-desktop-light.png",
+    "official-dropdown-desktop-light": "/tmp/cf-parity/work-h/sections/button-group/official-dropdown-desktop-light.png",
+    "local-dropdown-desktop-light": "/tmp/cf-parity/work-h/sections/button-group/local-dropdown-desktop-light.png",
+    "official-select-desktop-light": "/tmp/cf-parity/work-h/sections/button-group/official-select-desktop-light.png",
+    "local-select-desktop-light": "/tmp/cf-parity/work-h/sections/button-group/local-select-desktop-light.png",
+    "official-popover-desktop-light": "/tmp/cf-parity/work-h/sections/button-group/official-popover-desktop-light.png",
+    "local-popover-desktop-light": "/tmp/cf-parity/work-h/sections/button-group/local-popover-desktop-light.png",
+    "official-rtl-desktop-light": "/tmp/cf-parity/work-h/sections/button-group/official-rtl-desktop-light.png",
+    "local-rtl-desktop-light": "/tmp/cf-parity/work-h/sections/button-group/local-rtl-desktop-light.png"
+  }
+}

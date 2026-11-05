@@ -64,9 +64,12 @@ class ButtonGroupExamplesTest(
         val indexState = mutableIntStateOf(8)
         var index by indexState
         setContent(indexState)
+        rule.onNodeWithText("Follow").assertIsDisplayed()
         rule.onNodeWithContentDescription("Open options").performClick()
-        rule.onNodeWithText("Option 1").assertIsDisplayed()
-        rule.onNodeWithText("Option 2").performClick()
+        rule.onNodeWithText("Mute Conversation").assertIsDisplayed()
+        rule.onNodeWithText("Copy Conversation").assertIsDisplayed()
+        rule.onNodeWithText("Delete Conversation").assertIsDisplayed()
+        rule.onNodeWithText("Mark as Read").performClick()
         rule.runOnIdle { index = 10 }
         rule.onNodeWithText("Copilot").performClick()
         rule.onNodeWithText("Start a new task with Copilot").assertIsDisplayed()

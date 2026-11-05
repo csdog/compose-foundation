@@ -1,0 +1,55 @@
+{
+  "slug": "breadcrumb",
+  "pairs": [
+    [
+      "basic",
+      "example-0",
+      "basic"
+    ],
+    [
+      "custom-separator",
+      "example-1",
+      "custom-separator"
+    ],
+    [
+      "dropdown",
+      "example-2",
+      "dropdown"
+    ],
+    [
+      "collapsed",
+      "example-3",
+      "collapsed"
+    ],
+    [
+      "link-component",
+      "example-4",
+      "link-component"
+    ],
+    [
+      "rtl",
+      "example-5",
+      "rtl"
+    ]
+  ],
+  "views": [
+    {
+      "name": "desktop-light",
+      "theme": "light"
+    }
+  ],
+  "files": {
+    "official-basic-desktop-light": "/tmp/cf-parity/work-h/sections/breadcrumb/official-basic-desktop-light.png",
+    "local-basic-desktop-light": "/tmp/cf-parity/work-h/sections/breadcrumb/local-basic-desktop-light.png",
+    "official-custom-separator-desktop-light": "/tmp/cf-parity/work-h/sections/breadcrumb/official-custom-separator-desktop-light.png",
+    "local-custom-separator-desktop-light": "/tmp/cf-parity/work-h/sections/breadcrumb/local-custom-separator-desktop-light.png",
+    "official-dropdown-desktop-light": "/tmp/cf-parity/work-h/sections/breadcrumb/official-dropdown-desktop-light.png",
+    "local-dropdown-desktop-light": "/tmp/cf-parity/work-h/sections/breadcrumb/local-dropdown-desktop-light.png",
+    "official-collapsed-desktop-light": "/tmp/cf-parity/work-h/sections/breadcrumb/official-collapsed-desktop-light.png",
+    "local-collapsed-desktop-light": "/tmp/cf-parity/work-h/sections/breadcrumb/local-collapsed-desktop-light.png",
+    "official-link-component-desktop-light": "/tmp/cf-parity/work-h/sections/breadcrumb/official-link-component-desktop-light.png",
+    "local-link-component-desktop-light": "/tmp/cf-parity/work-h/sections/breadcrumb/local-link-component-desktop-light.png",
+    "official-rtl-desktop-light": "/tmp/cf-parity/work-h/sections/breadcrumb/official-rtl-desktop-light.png",
+    "local-rtl-desktop-light": "/tmp/cf-parity/work-h/sections/breadcrumb/local-rtl-desktop-light.png"
+  }
+}

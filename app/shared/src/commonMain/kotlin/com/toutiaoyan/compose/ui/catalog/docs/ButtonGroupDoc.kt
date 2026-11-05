@@ -11,6 +11,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import com.composables.icons.lucide.ArrowRight
 import com.composables.icons.lucide.AudioLines
 import com.composables.icons.lucide.ChevronDown
 import com.composables.icons.lucide.Ellipsis
@@ -23,8 +24,11 @@ import com.toutiaoyan.compose.ui.components.button.ButtonVariant
 import com.toutiaoyan.compose.ui.components.buttongroup.*
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenu
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuContent
+import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuGroup
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuItem
+import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuItemVariant
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuTrigger
+import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuSeparator
 import com.toutiaoyan.compose.ui.components.icon.Icon
 import com.toutiaoyan.compose.ui.components.input.Input
 import com.toutiaoyan.compose.ui.components.inputgroup.*
@@ -35,24 +39,20 @@ import com.toutiaoyan.compose.ui.components.textarea.Textarea
 
 private val buttonGroupOrientationCode =
     """
-    Row(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically) {
-        ButtonGroup {
-            ButtonGroupItem(onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Icon) { Icon(Lucide.Minus) }
-            ButtonGroupItem(onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Icon) { Icon(Lucide.Plus) }
-        }
-        ButtonGroup(orientation = ButtonGroupOrientation.Vertical) {
-            ButtonGroupItem(onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Icon) { Icon(Lucide.Plus) }
-            ButtonGroupItem(onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Icon) { Icon(Lucide.Minus) }
-        }
+    ButtonGroup(orientation = ButtonGroupOrientation.Vertical, contentDescription = "Media controls") {
+        ButtonGroupItem(onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Icon) { Icon(Lucide.Plus) }
+        ButtonGroupItem(onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Icon) { Icon(Lucide.Minus) }
     }
     """.trimIndent()
 
 private val buttonGroupSizeCode =
     """
-    FlowRow(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(32.dp)) {
         listOf(ButtonSize.Sm to "Small", ButtonSize.Md to "Default", ButtonSize.Lg to "Large").forEach { (size, label) ->
             ButtonGroup {
                 ButtonGroupItem(label, onClick = {}, variant = ButtonVariant.Outline, size = size)
+                ButtonGroupItem("Button", onClick = {}, variant = ButtonVariant.Outline, size = size)
+                ButtonGroupItem("Group", onClick = {}, variant = ButtonVariant.Outline, size = size)
                 ButtonGroupItem(onClick = {}, variant = ButtonVariant.Outline, size = size) { Icon(Lucide.Plus) }
             }
         }
@@ -61,15 +61,18 @@ private val buttonGroupSizeCode =
 
 private val buttonGroupNestedCode =
     """
-    ButtonGroup(spacing = 8.dp) {
-        ButtonGroup { ButtonGroupItem("Button", onClick = {}, variant = ButtonVariant.Outline) }
+    var message by remember { mutableStateOf("") }
+    ButtonGroup {
         ButtonGroup {
-            ButtonGroupItem("Button", onClick = {}, variant = ButtonVariant.Outline)
-            ButtonGroupItem("Button", onClick = {}, variant = ButtonVariant.Outline)
+            ButtonGroupItem(onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Icon) { Icon(Lucide.Plus) }
         }
         ButtonGroup {
-            ButtonGroupItem("Button", onClick = {}, variant = ButtonVariant.Outline)
-            ButtonGroupItem(onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Icon) { Icon(Lucide.AudioLines) }
+            InputGroup(Modifier.width(280.dp)) {
+                InputGroupInput(message, { message = it }, placeholder = "Send a message...")
+                InputGroupAddon(InputGroupAddonAlign.InlineEnd) {
+                    InputGroupButton(onClick = {}, size = InputGroupButtonSize.Xs, label = "Voice Mode") { Icon(Lucide.AudioLines) }
+                }
+            }
         }
     }
     """.trimIndent()
@@ -77,18 +80,18 @@ private val buttonGroupNestedCode =
 private val buttonGroupSeparatorCode =
     """
     ButtonGroup {
-        ButtonGroupItem("Copy", onClick = {}, variant = ButtonVariant.Outline)
+        ButtonGroupItem("Copy", onClick = {}, variant = ButtonVariant.Secondary, size = ButtonSize.Sm)
         ButtonGroupSeparator()
-        ButtonGroupItem("Paste", onClick = {}, variant = ButtonVariant.Outline)
+        ButtonGroupItem("Paste", onClick = {}, variant = ButtonVariant.Secondary, size = ButtonSize.Sm)
     }
     """.trimIndent()
 
 private val buttonGroupSplitCode =
     """
     ButtonGroup {
-        ButtonGroupItem("Button", onClick = {}, variant = ButtonVariant.Outline)
+        ButtonGroupItem("Button", onClick = {}, variant = ButtonVariant.Secondary)
         ButtonGroupSeparator()
-        ButtonGroupItem(onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Icon) { Icon(Lucide.Plus) }
+        ButtonGroupItem(onClick = {}, variant = ButtonVariant.Secondary, size = ButtonSize.Icon) { Icon(Lucide.Plus) }
     }
     """.trimIndent()
 
@@ -105,29 +108,19 @@ private val buttonGroupInputCode =
 private val buttonGroupInputGroupCode =
     """
     var message by remember { mutableStateOf("") }
-    var voice by remember { mutableStateOf(false) }
-    ButtonGroup(spacing = 8.dp) {
-        InputGroup(Modifier.width(280.dp)) {
-            InputGroupAddon(InputGroupAddonAlign.InlineStart) {
-                InputGroupButton(
-                    onClick = { voice = !voice },
-                    size = InputGroupButtonSize.Xs,
-                    label = "Voice",
-                ) {
-                    Icon(Lucide.AudioLines)
-                }
-            }
-            InputGroupInput(message, { message = it }, placeholder = "Type a message...")
-            InputGroupAddon(InputGroupAddonAlign.InlineEnd) {
-                InputGroupButton(
-                    onClick = {},
-                    size = InputGroupButtonSize.Xs,
-                    label = "Send",
-                ) { Icon(Lucide.Plus) }
-            }
-        }
+    ButtonGroup {
         ButtonGroup {
             ButtonGroupItem(onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Icon) { Icon(Lucide.Plus) }
+        }
+        ButtonGroup {
+            InputGroup(Modifier.width(280.dp)) {
+                InputGroupInput(message, { message = it }, placeholder = "Send a message...")
+                InputGroupAddon(InputGroupAddonAlign.InlineEnd) {
+                    InputGroupButton(onClick = {}, size = InputGroupButtonSize.Xs, label = "Voice Mode") {
+                        Icon(Lucide.AudioLines)
+                    }
+                }
+            }
         }
     }
     """.trimIndent()
@@ -135,7 +128,7 @@ private val buttonGroupInputGroupCode =
 private val buttonGroupDropdownCode =
     """
     ButtonGroup {
-        ButtonGroupItem("Button", onClick = {}, variant = ButtonVariant.Outline)
+        ButtonGroupItem("Follow", onClick = {}, variant = ButtonVariant.Outline)
         DropdownMenu {
             DropdownMenuTrigger {
                 ButtonGroupItem(
@@ -146,8 +139,22 @@ private val buttonGroupDropdownCode =
                 ) { Icon(Lucide.ChevronDown) }
             }
             DropdownMenuContent {
-                DropdownMenuItem("Option 1", onClick = {})
-                DropdownMenuItem("Option 2", onClick = {})
+                DropdownMenuGroup {
+                    DropdownMenuItem("Mute Conversation", onClick = {})
+                    DropdownMenuItem("Mark as Read", onClick = {})
+                    DropdownMenuItem("Report Conversation", onClick = {})
+                    DropdownMenuItem("Block User", onClick = {})
+                    DropdownMenuItem("Share Conversation", onClick = {})
+                    DropdownMenuItem("Copy Conversation", onClick = {})
+                }
+                DropdownMenuSeparator()
+                DropdownMenuGroup {
+                    DropdownMenuItem(
+                        "Delete Conversation",
+                        onClick = {},
+                        variant = DropdownMenuItemVariant.Destructive,
+                    )
+                }
             }
         }
     }
@@ -156,16 +163,22 @@ private val buttonGroupDropdownCode =
 private val buttonGroupSelectCode =
     """
     var currency by remember { mutableStateOf("$") }
-    ButtonGroup(style = rememberButtonGroupOutlineStyle()) {
-        Select(value = currency, onValueChange = { currency = it }) {
-            SelectTrigger(Modifier.width(96.dp))
-            SelectContent {
-                SelectItem("$")
-                SelectItem("€")
-                SelectItem("£")
+    var amount by remember { mutableStateOf("") }
+    ButtonGroup {
+        ButtonGroup {
+            Select(value = currency, onValueChange = { currency = it }) {
+                SelectTrigger(Modifier.width(72.dp))
+                SelectContent {
+                    SelectItem("$")
+                    SelectItem("€")
+                    SelectItem("£")
+                }
             }
+            Input(amount, { amount = it }, Modifier.width(120.dp), placeholder = "10.00")
         }
-        ButtonGroupItem("Submit", onClick = {}, variant = ButtonVariant.Outline)
+        ButtonGroup {
+            ButtonGroupItem(onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Icon) { Icon(Lucide.ArrowRight) }
+        }
     }
     """.trimIndent()
 
@@ -246,6 +259,8 @@ val buttonGroupDoc =
                 ComponentExample(
                     "RTL",
                     buttonGroupRtlCode,
+                    descriptionMarkdown =
+                        "To enable RTL support in shadcn/ui, see the [RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
                     previewPadding = 0.dp,
                     preview = { ButtonGroupRtlRecipe() },
                 ),
@@ -254,33 +269,21 @@ val buttonGroupDoc =
 
 @Composable
 private fun ButtonGroupOrientationRecipe() {
-    Row(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically) {
-        ButtonGroup {
-            ButtonGroupItem(
-                onClick = {},
-                variant = ButtonVariant.Outline,
-                size = ButtonSize.Icon,
-            ) { Icon(Lucide.Minus) }
-            ButtonGroupItem(onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Icon) { Icon(Lucide.Plus) }
-        }
-        ButtonGroup(orientation = ButtonGroupOrientation.Vertical) {
-            ButtonGroupItem(onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Icon) { Icon(Lucide.Plus) }
-            ButtonGroupItem(
-                onClick = {},
-                variant = ButtonVariant.Outline,
-                size = ButtonSize.Icon,
-            ) { Icon(Lucide.Minus) }
-        }
+    ButtonGroup(orientation = ButtonGroupOrientation.Vertical, contentDescription = "Media controls") {
+        ButtonGroupItem(onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Icon) { Icon(Lucide.Plus) }
+        ButtonGroupItem(onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Icon) { Icon(Lucide.Minus) }
     }
 }
 
 @Composable
 private fun ButtonGroupSizeRecipe() {
-    FlowRow(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(32.dp)) {
         listOf(ButtonSize.Sm to "Small", ButtonSize.Md to "Default", ButtonSize.Lg to "Large").forEach {
                 (size, label) ->
             ButtonGroup {
                 ButtonGroupItem(label, onClick = {}, variant = ButtonVariant.Outline, size = size)
+                ButtonGroupItem("Button", onClick = {}, variant = ButtonVariant.Outline, size = size)
+                ButtonGroupItem("Group", onClick = {}, variant = ButtonVariant.Outline, size = size)
                 ButtonGroupItem(onClick = {}, variant = ButtonVariant.Outline, size = size) { Icon(Lucide.Plus) }
             }
         }
@@ -289,19 +292,24 @@ private fun ButtonGroupSizeRecipe() {
 
 @Composable
 private fun ButtonGroupNestedRecipe() {
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-        ButtonGroup { ButtonGroupItem("Button", onClick = {}, variant = ButtonVariant.Outline) }
+    var message by remember { mutableStateOf("") }
+    ButtonGroup {
         ButtonGroup {
-            ButtonGroupItem("Button", onClick = {}, variant = ButtonVariant.Outline)
-            ButtonGroupItem("Button", onClick = {}, variant = ButtonVariant.Outline)
+            ButtonGroupItem(onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Icon) {
+                Icon(Lucide.Plus)
+            }
         }
         ButtonGroup {
-            ButtonGroupItem("Button", onClick = {}, variant = ButtonVariant.Outline)
-            ButtonGroupItem(
-                onClick = {},
-                variant = ButtonVariant.Outline,
-                size = ButtonSize.Icon,
-            ) { Icon(Lucide.AudioLines) }
+            InputGroup(Modifier.width(280.dp)) {
+                InputGroupInput(message, { message = it }, placeholder = "Send a message...")
+                InputGroupAddon(InputGroupAddonAlign.InlineEnd) {
+                    InputGroupButton(
+                        onClick = {},
+                        size = InputGroupButtonSize.Xs,
+                        label = "Voice Mode",
+                    ) { Icon(Lucide.AudioLines) }
+                }
+            }
         }
     }
 }
@@ -309,18 +317,18 @@ private fun ButtonGroupNestedRecipe() {
 @Composable
 private fun ButtonGroupSeparatorRecipe() {
     ButtonGroup {
-        ButtonGroupItem("Copy", onClick = {}, variant = ButtonVariant.Outline)
+        ButtonGroupItem("Copy", onClick = {}, variant = ButtonVariant.Secondary, size = ButtonSize.Sm)
         ButtonGroupSeparator()
-        ButtonGroupItem("Paste", onClick = {}, variant = ButtonVariant.Outline)
+        ButtonGroupItem("Paste", onClick = {}, variant = ButtonVariant.Secondary, size = ButtonSize.Sm)
     }
 }
 
 @Composable
 private fun ButtonGroupSplitRecipe() {
     ButtonGroup {
-        ButtonGroupItem("Button", onClick = {}, variant = ButtonVariant.Outline)
+        ButtonGroupItem("Button", onClick = {}, variant = ButtonVariant.Secondary)
         ButtonGroupSeparator()
-        ButtonGroupItem(onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Icon) { Icon(Lucide.Plus) }
+        ButtonGroupItem(onClick = {}, variant = ButtonVariant.Secondary, size = ButtonSize.Icon) { Icon(Lucide.Plus) }
     }
 }
 
@@ -344,35 +352,26 @@ private fun ButtonGroupInputRecipe() {
 @Composable
 private fun ButtonGroupInputGroupRecipe() {
     var message by remember { mutableStateOf("") }
-    var voice by remember { mutableStateOf(false) }
-    BoxWithConstraints(Modifier.fillMaxWidth()) {
-        val fieldWidth = (maxWidth - 49.dp).coerceAtLeast(160.dp)
-        ButtonGroup(spacing = 8.dp) {
-            InputGroup(Modifier.width(fieldWidth)) {
-                InputGroupAddon(InputGroupAddonAlign.InlineStart) {
-                    InputGroupButton(
-                        onClick = { voice = !voice },
-                        size = InputGroupButtonSize.Xs,
-                        label = "Voice",
-                    ) {
-                        Icon(Lucide.AudioLines)
-                    }
-                }
-                InputGroupInput(message, { message = it }, placeholder = "Type a message...")
+    ButtonGroup {
+        ButtonGroup {
+            ButtonGroupItem(
+                onClick = {},
+                variant = ButtonVariant.Outline,
+                size = ButtonSize.Icon,
+            ) { Icon(Lucide.Plus) }
+        }
+        ButtonGroup {
+            InputGroup(Modifier.width(280.dp)) {
+                InputGroupInput(message, { message = it }, placeholder = "Send a message...")
                 InputGroupAddon(InputGroupAddonAlign.InlineEnd) {
                     InputGroupButton(
                         onClick = {},
                         size = InputGroupButtonSize.Xs,
-                        label = "Send",
-                    ) { Icon(Lucide.Plus) }
+                        label = "Voice Mode",
+                    ) {
+                        Icon(Lucide.AudioLines)
+                    }
                 }
-            }
-            ButtonGroup {
-                ButtonGroupItem(
-                    onClick = {},
-                    variant = ButtonVariant.Outline,
-                    size = ButtonSize.Icon,
-                ) { Icon(Lucide.Plus) }
             }
         }
     }
@@ -381,7 +380,7 @@ private fun ButtonGroupInputGroupRecipe() {
 @Composable
 private fun ButtonGroupDropdownRecipe() {
     ButtonGroup {
-        ButtonGroupItem("Button", onClick = {}, variant = ButtonVariant.Outline)
+        ButtonGroupItem("Follow", onClick = {}, variant = ButtonVariant.Outline)
         DropdownMenu {
             DropdownMenuTrigger {
                 ButtonGroupItem(
@@ -394,8 +393,22 @@ private fun ButtonGroupDropdownRecipe() {
                 }
             }
             DropdownMenuContent {
-                DropdownMenuItem("Option 1", onClick = {})
-                DropdownMenuItem("Option 2", onClick = {})
+                DropdownMenuGroup {
+                    DropdownMenuItem("Mute Conversation", onClick = {})
+                    DropdownMenuItem("Mark as Read", onClick = {})
+                    DropdownMenuItem("Report Conversation", onClick = {})
+                    DropdownMenuItem("Block User", onClick = {})
+                    DropdownMenuItem("Share Conversation", onClick = {})
+                    DropdownMenuItem("Copy Conversation", onClick = {})
+                }
+                DropdownMenuSeparator()
+                DropdownMenuGroup {
+                    DropdownMenuItem(
+                        "Delete Conversation",
+                        onClick = {},
+                        variant = DropdownMenuItemVariant.Destructive,
+                    )
+                }
             }
         }
     }
@@ -404,16 +417,26 @@ private fun ButtonGroupDropdownRecipe() {
 @Composable
 private fun ButtonGroupSelectRecipe() {
     var currency by remember { mutableStateOf("$") }
-    ButtonGroup(style = rememberButtonGroupOutlineStyle()) {
-        Select(value = currency, onValueChange = { currency = it }) {
-            SelectTrigger(Modifier.width(96.dp))
-            SelectContent {
-                SelectItem("$")
-                SelectItem("€")
-                SelectItem("£")
+    var amount by remember { mutableStateOf("") }
+    ButtonGroup {
+        ButtonGroup {
+            Select(value = currency, onValueChange = { currency = it }) {
+                SelectTrigger(Modifier.width(72.dp))
+                SelectContent {
+                    SelectItem("$")
+                    SelectItem("€")
+                    SelectItem("£")
+                }
             }
+            Input(amount, { amount = it }, Modifier.width(120.dp), placeholder = "10.00")
         }
-        ButtonGroupItem("Submit", onClick = {}, variant = ButtonVariant.Outline)
+        ButtonGroup {
+            ButtonGroupItem(
+                onClick = {},
+                variant = ButtonVariant.Outline,
+                size = ButtonSize.Icon,
+            ) { Icon(Lucide.ArrowRight) }
+        }
     }
 }
 

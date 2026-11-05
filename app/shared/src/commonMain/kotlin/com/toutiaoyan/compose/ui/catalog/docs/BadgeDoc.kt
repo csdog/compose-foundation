@@ -161,8 +161,7 @@ val badgeDoc =
                                 "Customize colors with `Style`, using the light and dark palette steps " +
                                     "appropriate to the current theme."
                             6 ->
-                                "Set `LocalLayoutDirection` to enable RTL layout, " +
-                                    "and supply the appropriate font for the language."
+                                "To enable RTL support in shadcn/ui, see the [RTL configuration guide](https://ui.shadcn.com/docs/rtl)."
                             else -> null
                         },
                     preview = { if (index == 6) BadgeRtlRecipe() else BadgeRecipe(index) },

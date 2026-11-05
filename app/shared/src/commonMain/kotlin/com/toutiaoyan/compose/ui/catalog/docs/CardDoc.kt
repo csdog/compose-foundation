@@ -151,7 +151,7 @@ val cardDoc =
                     5,
                     "RTL",
                     544,
-                    "To enable RTL support in your app, see the " +
+                    "To enable RTL support in shadcn/ui, see the " +
                         "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
                 ),
             ),

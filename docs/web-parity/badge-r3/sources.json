@@ -1,0 +1,48 @@
+{
+  "component": "badge",
+  "revision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "retrievedAt": "2026-11-05T13:13:55",
+  "officialPage": "https://ui.shadcn.com/docs/components/base/badge",
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/badge.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/badge.mdx",
+      "sha256": "1bee6e70606e0c374c84c5294525f876de671fe7d9640eb5d7491741cf48f59f"
+    },
+    {
+      "path": "apps/v4/examples/base/badge-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/badge-demo.tsx",
+      "sha256": "89f053edac9d636984cf9c54248d6866684550cedde12fceb26c09b81db86e9e"
+    },
+    {
+      "path": "apps/v4/examples/base/badge-variants.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/badge-variants.tsx",
+      "sha256": "ce4c02b24dfe3be76b87d0cd16ee4612f98bcd99c349eee6c33ea7541900d085"
+    },
+    {
+      "path": "apps/v4/examples/base/badge-icon.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/badge-icon.tsx",
+      "sha256": "80e2b83139f8e1ff3eb2ba5b134ee63be5701622e2c110a146229224f0948f4e"
+    },
+    {
+      "path": "apps/v4/examples/base/badge-spinner.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/badge-spinner.tsx",
+      "sha256": "2792829afb384da9993b8bf2b225fb7d5227afb51c2c1db0811aa6dafaf88626"
+    },
+    {
+      "path": "apps/v4/examples/base/badge-link.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/badge-link.tsx",
+      "sha256": "dc47c47d5b7fc218480a0c95a04a3a3fb91dbf95751de39913213da90a6be2d9"
+    },
+    {
+      "path": "apps/v4/examples/base/badge-colors.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/badge-colors.tsx",
+      "sha256": "5e2a401863ade8469076a01876362b5e416eef210c621ecc890930d22929a64e"
+    },
+    {
+      "path": "apps/v4/examples/base/badge-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/badge-rtl.tsx",
+      "sha256": "7ef3a3e1bfc10671f556d7d71c6fe8d2d73ce0938c9a18d72920fd033cea0b0c"
+    }
+  ]
+}

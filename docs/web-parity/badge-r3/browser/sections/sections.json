@@ -1,0 +1,55 @@
+{
+  "slug": "badge",
+  "pairs": [
+    [
+      "variants",
+      "example-0",
+      "variants"
+    ],
+    [
+      "with-icon",
+      "example-1",
+      "with-icon"
+    ],
+    [
+      "with-spinner",
+      "example-2",
+      "with-spinner"
+    ],
+    [
+      "link",
+      "example-3",
+      "link"
+    ],
+    [
+      "custom-colors",
+      "example-4",
+      "custom-colors"
+    ],
+    [
+      "rtl",
+      "example-5",
+      "rtl"
+    ]
+  ],
+  "views": [
+    {
+      "name": "desktop-light",
+      "theme": "light"
+    }
+  ],
+  "files": {
+    "official-variants-desktop-light": "/tmp/cf-parity/work-h/sections/badge/official-variants-desktop-light.png",
+    "local-variants-desktop-light": "/tmp/cf-parity/work-h/sections/badge/local-variants-desktop-light.png",
+    "official-with-icon-desktop-light": "/tmp/cf-parity/work-h/sections/badge/official-with-icon-desktop-light.png",
+    "local-with-icon-desktop-light": "/tmp/cf-parity/work-h/sections/badge/local-with-icon-desktop-light.png",
+    "official-with-spinner-desktop-light": "/tmp/cf-parity/work-h/sections/badge/official-with-spinner-desktop-light.png",
+    "local-with-spinner-desktop-light": "/tmp/cf-parity/work-h/sections/badge/local-with-spinner-desktop-light.png",
+    "official-link-desktop-light": "/tmp/cf-parity/work-h/sections/badge/official-link-desktop-light.png",
+    "local-link-desktop-light": "/tmp/cf-parity/work-h/sections/badge/local-link-desktop-light.png",
+    "official-custom-colors-desktop-light": "/tmp/cf-parity/work-h/sections/badge/official-custom-colors-desktop-light.png",
+    "local-custom-colors-desktop-light": "/tmp/cf-parity/work-h/sections/badge/local-custom-colors-desktop-light.png",
+    "official-rtl-desktop-light": "/tmp/cf-parity/work-h/sections/badge/official-rtl-desktop-light.png",
+    "local-rtl-desktop-light": "/tmp/cf-parity/work-h/sections/badge/local-rtl-desktop-light.png"
+  }
+}

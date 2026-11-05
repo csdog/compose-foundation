@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="BubbleExamplesTest[jvm]" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-05T05:14:41.070Z" hostname="Apples-MacBook-Pro.local" time="0.339">
+  <properties/>
+  <testcase name="focusedReadStatusExposesMetadataTooltip[jvm]" classname="com.toutiaoyan.compose.ui.catalog.BubbleExamplesTest" time="0.072"/>
+  <testcase name="interactiveReactionShowsSuccessNotification[jvm]" classname="com.toutiaoyan.compose.ui.catalog.BubbleExamplesTest" time="0.067"/>
+  <testcase name="collapsedTextExpandsAndContractsWithTheActualTrigger[jvm]" classname="com.toutiaoyan.compose.ui.catalog.BubbleExamplesTest" time="0.033"/>
+  <testcase name="docsHaveAllNineOfficialExamplesAndCurrentKotlinNames[jvm]" classname="com.toutiaoyan.compose.ui.catalog.BubbleExamplesTest" time="0.014"/>
+  <testcase name="catalogNotificationsUseTheWindowHostRatherThanTheBubbleFrame[jvm]" classname="com.toutiaoyan.compose.ui.catalog.BubbleExamplesTest" time="0.031"/>
+  <testcase name="defaultShowsCompleteConversationAndGroupedReactionLabels[jvm]" classname="com.toutiaoyan.compose.ui.catalog.BubbleExamplesTest" time="0.021"/>
+  <testcase name="clickableBubblesShowDistinctNotifications[jvm]" classname="com.toutiaoyan.compose.ui.catalog.BubbleExamplesTest" time="0.033"/>
+  <testcase name="popoverShowsActualErrorAndEscapeClosesIt[jvm]" classname="com.toutiaoyan.compose.ui.catalog.BubbleExamplesTest" time="0.067"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

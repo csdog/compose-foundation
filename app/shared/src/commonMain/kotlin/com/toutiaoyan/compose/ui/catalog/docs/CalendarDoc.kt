@@ -162,6 +162,18 @@ val calendarDoc =
                             else -> 384.dp
                         },
                     mobileMinPreviewHeight = if (title == "Range Calendar") 576.dp else null,
+                    descriptionMarkdown =
+                        when (title) {
+                            "Basic" ->
+                                "A basic calendar component. The preview adds a rounded border " +
+                                    "to style the calendar."
+                            "Range Calendar" -> "Use range selection mode to enable range selection."
+                            "Month and Year Selector" ->
+                                "Use the dropdown caption layout to show month and year menus."
+                            "Week Numbers" -> "Use `showWeekNumber` to show week numbers."
+                            "RTL" -> "To enable RTL support in shadcn/ui, see the [RTL configuration guide](https://ui.shadcn.com/docs/rtl)."
+                            else -> null
+                        },
                     preview = { CalendarRecipe(title) },
                 )
             },

@@ -1,0 +1,76 @@
+{
+  "slug": "calendar",
+  "pairs": [
+    [
+      "basic",
+      "example-0",
+      "basic"
+    ],
+    [
+      "range-calendar",
+      "example-1",
+      "range"
+    ],
+    [
+      "month-and-year-selector",
+      "example-2",
+      "month-year"
+    ],
+    [
+      "presets",
+      "example-3",
+      "presets"
+    ],
+    [
+      "date-and-time-picker",
+      "example-4",
+      "time"
+    ],
+    [
+      "booked-dates",
+      "example-5",
+      "booked"
+    ],
+    [
+      "custom-cell-size",
+      "example-6",
+      "cell-size"
+    ],
+    [
+      "week-numbers",
+      "example-7",
+      "week-numbers"
+    ],
+    [
+      "rtl",
+      "example-8",
+      "rtl"
+    ]
+  ],
+  "views": [
+    {
+      "name": "desktop-light",
+      "theme": "light"
+    }
+  ],
+  "files": {
+    "official-basic-desktop-light": "/tmp/cf-parity/work-h/sections/calendar/official-basic-desktop-light.png",
+    "local-basic-desktop-light": "/tmp/cf-parity/work-h/sections/calendar/local-basic-desktop-light.png",
+    "official-range-desktop-light": "/tmp/cf-parity/work-h/sections/calendar/official-range-desktop-light.png",
+    "local-range-desktop-light": "/tmp/cf-parity/work-h/sections/calendar/local-range-desktop-light.png",
+    "official-month-year-desktop-light": "/tmp/cf-parity/work-h/sections/calendar/official-month-year-desktop-light.png",
+    "local-month-year-desktop-light": "/tmp/cf-parity/work-h/sections/calendar/local-month-year-desktop-light.png",
+    "official-presets-desktop-light": "/tmp/cf-parity/work-h/sections/calendar/official-presets-desktop-light.png",
+    "local-presets-desktop-light": "/tmp/cf-parity/work-h/sections/calendar/local-presets-desktop-light.png",
+    "official-time-desktop-light": "/tmp/cf-parity/work-h/sections/calendar/official-time-desktop-light.png",
+    "local-time-desktop-light": "/tmp/cf-parity/work-h/sections/calendar/local-time-desktop-light.png",
+    "official-booked-desktop-light": "/tmp/cf-parity/work-h/sections/calendar/official-booked-desktop-light.png",
+    "local-booked-desktop-light": "/tmp/cf-parity/work-h/sections/calendar/local-booked-desktop-light.png",
+    "official-cell-size-desktop-light": "/tmp/cf-parity/work-h/sections/calendar/official-cell-size-desktop-light.png",
+    "local-cell-size-desktop-light": "/tmp/cf-parity/work-h/sections/calendar/local-cell-size-desktop-light.png",
+    "official-week-numbers-desktop-light": "/tmp/cf-parity/work-h/sections/calendar/official-week-numbers-desktop-light.png",
+    "local-week-numbers-desktop-light": "/tmp/cf-parity/work-h/sections/calendar/local-week-numbers-desktop-light.png",
+    "official-rtl-desktop-light": "/tmp/cf-parity/work-h/sections/calendar/official-rtl-desktop-light.png",
+    "local-rtl-desktop-light": "/tmp/cf-parity/work-h/sections/calendar/local-rtl-desktop-light.png"
+  }
+}

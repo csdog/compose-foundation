@@ -225,8 +225,7 @@ val buttonDoc =
                 ComponentExample(
                     title = "RTL",
                     descriptionMarkdown =
-                        "Set `LocalLayoutDirection` and supply the appropriate font for " +
-                            "the language.",
+                        "To enable RTL support in shadcn/ui, see the [RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
                     previewPadding = 0.dp,
                     code =
                         """

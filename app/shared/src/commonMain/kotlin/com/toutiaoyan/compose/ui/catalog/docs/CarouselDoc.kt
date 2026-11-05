@@ -102,7 +102,7 @@ val carouselDoc =
                     previewPadding = if (title == "RTL") 0.dp else 40.dp,
                     descriptionMarkdown =
                         when (title) {
-                            "RTL" -> "Set LocalLayoutDirection to match the language and navigation direction."
+                            "RTL" -> "To enable RTL support in shadcn/ui, see the [RTL configuration guide](https://ui.shadcn.com/docs/rtl)."
                             "Sizes" -> "Two slides on small screens and three at the large breakpoint."
                             "Spacing" -> "Use a smaller gap between slides without adding an empty leading gutter."
                             "Orientation" -> "A vertical viewport with two visible slides."

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ButtonGroupExamplesTest[jvm]" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-11-05T05:14:43.240Z" hostname="Apples-MacBook-Pro.local" time="0.985">
+  <properties/>
+  <testcase name="sizeRecipeUsesSmDefaultAndLgButtonHeights[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonGroupExamplesTest" time="0.023"/>
+  <testcase name="rtlLanguageSelectorKeepsButtonGroupsLogical[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonGroupExamplesTest" time="0.061"/>
+  <testcase name="dropdownAndPopoverRecipesOpenTheirRealContent[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonGroupExamplesTest" time="0.131"/>
+  <testcase name="currentOfficialRecipesRenderAtBothWidths[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonGroupExamplesTest" time="0.091"/>
+  <testcase name="sizeRecipeUsesSmDefaultAndLgButtonHeights[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonGroupExamplesTest" time="0.026"/>
+  <testcase name="rtlLanguageSelectorKeepsButtonGroupsLogical[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonGroupExamplesTest" time="0.054"/>
+  <testcase name="dropdownAndPopoverRecipesOpenTheirRealContent[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonGroupExamplesTest" time="0.088"/>
+  <testcase name="currentOfficialRecipesRenderAtBothWidths[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonGroupExamplesTest" time="0.058"/>
+  <testcase name="sizeRecipeUsesSmDefaultAndLgButtonHeights[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonGroupExamplesTest" time="0.019"/>
+  <testcase name="rtlLanguageSelectorKeepsButtonGroupsLogical[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonGroupExamplesTest" time="0.053"/>
+  <testcase name="dropdownAndPopoverRecipesOpenTheirRealContent[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonGroupExamplesTest" time="0.085"/>
+  <testcase name="currentOfficialRecipesRenderAtBothWidths[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonGroupExamplesTest" time="0.065"/>
+  <testcase name="sizeRecipeUsesSmDefaultAndLgButtonHeights[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonGroupExamplesTest" time="0.023"/>
+  <testcase name="rtlLanguageSelectorKeepsButtonGroupsLogical[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonGroupExamplesTest" time="0.055"/>
+  <testcase name="dropdownAndPopoverRecipesOpenTheirRealContent[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonGroupExamplesTest" time="0.099"/>
+  <testcase name="currentOfficialRecipesRenderAtBothWidths[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.ButtonGroupExamplesTest" time="0.053"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,158 @@
+{
+  "slug": "button-group",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/button-group",
+  "localUrl": "http://127.0.0.1:8778/button-group",
+  "capturedAt": "2026-11-05T05:06:21.816Z",
+  "app": [
+    "http://127.0.0.1:8778/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8778/05a9f4d05293ffae3b86.wasm"
+  ],
+  "officialDom": {
+    "title": "Button Group",
+    "description": "Copy PagePreviousNext",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "Installation#"
+      },
+      {
+        "tag": "H2",
+        "text": "Usage#"
+      },
+      {
+        "tag": "H2",
+        "text": "Composition#"
+      },
+      {
+        "tag": "H2",
+        "text": "Accessibility#"
+      },
+      {
+        "tag": "H2",
+        "text": "ButtonGroup vs ToggleGroup#"
+      },
+      {
+        "tag": "H2",
+        "text": "Orientation#"
+      },
+      {
+        "tag": "H2",
+        "text": "Size#"
+      },
+      {
+        "tag": "H2",
+        "text": "Nested#"
+      },
+      {
+        "tag": "H2",
+        "text": "Separator#"
+      },
+      {
+        "tag": "H2",
+        "text": "Split#"
+      },
+      {
+        "tag": "H2",
+        "text": "Input#"
+      },
+      {
+        "tag": "H2",
+        "text": "Input Group#"
+      },
+      {
+        "tag": "H2",
+        "text": "Dropdown Menu#"
+      },
+      {
+        "tag": "H2",
+        "text": "Select#"
+      },
+      {
+        "tag": "H2",
+        "text": "Popover#"
+      },
+      {
+        "tag": "H2",
+        "text": "RTL#"
+      },
+      {
+        "tag": "H2",
+        "text": "API Reference#"
+      },
+      {
+        "tag": "H3",
+        "text": "ButtonGroup#"
+      },
+      {
+        "tag": "H3",
+        "text": "ButtonGroupSeparator#"
+      },
+      {
+        "tag": "H3",
+        "text": "ButtonGroupText#"
+      }
+    ],
+    "tabs": [
+      "Command",
+      "Manual",
+      "pnpm",
+      "npm",
+      "yarn",
+      "bun"
+    ],
+    "examples": 12,
+    "toc": [],
+    "bodyWidth": {
+      "x": 0,
+      "y": 64,
+      "width": 1080,
+      "height": 9846.609375,
+      "top": 64,
+      "right": 1080,
+      "bottom": 9910.609375,
+      "left": 0
+    },
+    "clientWidth": 1080,
+    "scrollHeight": 9910
+  },
+  "local": {
+    "desktop-light": {
+      "url": "http://127.0.0.1:8778/button-group",
+      "theme": "light",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(6045.5px + 100vh)"
+    },
+    "desktop-dark": {
+      "url": "http://127.0.0.1:8778/button-group",
+      "theme": "dark",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(6045.5px + 100vh)"
+    },
+    "phone-light": {
+      "url": "http://127.0.0.1:8778/button-group",
+      "theme": "light",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(6291.5px + 100vh)"
+    },
+    "phone-dark": {
+      "url": "http://127.0.0.1:8778/button-group",
+      "theme": "dark",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(6291.5px + 100vh)"
+    }
+  },
+  "files": {
+    "official-desktop-light": "/tmp/cf-parity/work-h/button-group/official-desktop-light.png",
+    "local-desktop-light": "/tmp/cf-parity/work-h/button-group/local-desktop-light.png",
+    "official-desktop-dark": "/tmp/cf-parity/work-h/button-group/official-desktop-dark.png",
+    "local-desktop-dark": "/tmp/cf-parity/work-h/button-group/local-desktop-dark.png",
+    "official-phone-light": "/tmp/cf-parity/work-h/button-group/official-phone-light.png",
+    "local-phone-light": "/tmp/cf-parity/work-h/button-group/local-phone-light.png",
+    "official-phone-dark": "/tmp/cf-parity/work-h/button-group/official-phone-dark.png",
+    "local-phone-dark": "/tmp/cf-parity/work-h/button-group/local-phone-dark.png"
+  }
+}

@@ -101,12 +101,12 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 “基础已验证”表示已有本轮实现、定向测试和浏览器证据，后半句列出真实剩余范围；
 “尚未开始本轮页面与完整状态对照”表示该组件页还未进入本轮逐页核对。历史对齐结果不自动继承。
 
-- [ ] Accordion (`accordion`)：官网七组配方已逐轮对照；已修固定预览、Horizontal竖排与动态导航、RTL工具栏/Noto字体及20px行框，并补五组行为说明。r11常规六例48张新四象限浏览器图与Multiple全展开8图已复查，37项目录验证通过；共享Web主题持久化、七宽度水平布局已关闭，原生滚动基础桥接已验证。r12把过期342dp窄宽夹具校正到官网实际327dp/245dp内宽，补`multiple = true`文案、Kotlin扩展标题及Base UI API Reference，并完成99项聚焦回归；浏览器四象限仍未在新空间重跑。仍留字形/描述换行/垂直间距、代码面板细节、原生Hebrew标签，以及扩展API/Style/动态slot/辅助技术/触摸矩阵；见[页面布局新记录](web-parity/page-layout-r1/README.md)、[r12记录](web-parity/accordion-r12/README.md)、[组件记录](web-parity/accordion-r11/README.md)及r7–r10。
-- [ ] Alert (`alert`)：九组示例四象限、Composition/四个 Kotlin API 小节、说明/源码导出及新目录跳转已验证；共享 focus-visible、说明弹层焦点、URL/标题锚点、代码框/内联背景已验证；操作区默认定位及多按钮调用者布局四象限已补验。r10用当前官网重新确认官方六配方顺序，四条Kotlin专有配方明确加前缀，并修复Copy Page遗漏显式examplesHeading；28项聚焦测试和Wasm构建通过，浏览器仍待新空间复核。全文法、超高操作/任意复杂槽位、窗口重排、辅助技术及细微排版仍待关闭，见[Alert r10](web-parity/alert-r10/README.md)。
-- [ ] Alert Dialog (`alert-dialog`)：官方七组预览、Composition/Kotlin API 已补；Media 桌面两列/手机与 Small 居中、24dp 图标、三语两尺寸切换及 Settings 链接已验证；56 项定向测试与六张 Nova 像素基准通过，桌面/手机浅深矩阵已检查。r3重新读取当前官网，校正Basic、Small with Media和Destructive三段说明并使用当前Kotlin API名称；28项聚焦回归及Wasm构建通过，浏览器仍待新空间复核。共用深色 input/border 令牌已在共享主题复核中修正；正文换行/字重及阿拉伯语回退字体、无障碍映射与四张旧 Vega 基准失配仍待关闭，见[Alert Dialog r3](web-parity/alert-dialog-r3/README.md)。
-- [ ] Aspect Ratio (`aspect-ratio`)：Default/Square/Portrait/三语 RTL 组件已做基础复核；固定 caption 20dp 行框并修正 Nova Select 真实 Arabic 字体选项高度。r3再次确认当前官网仍为四配方，补精确顺序/文案及`ratio`默认值说明，11项聚焦测试和Wasm构建通过。旧勾选撤回：色域/整数测量、共享页面差异及共享布局修复后的新浏览器矩阵仍未关闭，见[aspect-ratio-r3](web-parity/aspect-ratio-r3/README.md)。
+- [ ] Accordion (`accordion`)：官网七配方（hero + Basic/Multiple/Disabled/Borders/Card/RTL 与 API Reference）及文案已按 `8a353667` 复核，r12 的 327dp/245dp 窄宽校正与 `Kotlin extension:` 前缀保持。r13 在专用空间完成 1440×1000/390×844×浅深四象限（逐像素校验主题）、6 个官方分节对照，并实际验证单开切换、Multiple 三开、Disabled 不响应、RTL 阿拉伯/英语/希伯来切换及 Horizontal 扩展点击与方向键；最终构建 Wasm `af0897b…`，107 项 app:shared + 62 项 shadcn:core 聚焦测试通过。仍留共享壳顶部导航/复制与前后页、预览垂直间距及 Geist 字形、扩展 API/Style/辅助技术/触摸矩阵，见 [accordion-r13](web-parity/accordion-r13/README.md)。
+- [ ] Alert (`alert`)：官方六配方（hero + Basic/Destructive/Action/Custom Colors/RTL）顺序/标题与四条 `Kotlin extension:` 边界已按 `8a353667` 复核；r11 修正 Basic 与 Action 两段说明为官网文案并补断言。专用空间 1440/390×浅深四象限（逐像素校验主题）、5 个官方分节对照、Action 按钮 hover/点击与 RTL 阿英希切换均已验证；最终构建 Wasm `af0897b…`，107 项 app:shared + 62 项 shadcn:core 聚焦测试通过。全文法/超高操作/任意复杂槽位/窗口重排/完整焦点矩阵/辅助技术及细微排版、共享壳与字形差异仍留，见 [alert-r11](web-parity/alert-r11/README.md)。
+- [ ] Alert Dialog (`alert-dialog`)：官方七配方（hero + Basic/Small/Media/Small with Media/Destructive/RTL 与 size/API Reference）顺序/标题已按 `8a353667` 复核；r4 将 RTL 说明改为官网 “in shadcn/ui” 文案并补断言。专用空间完成 1440/390×浅深四象限（逐像素校验主题）、6 个官方分节对照，以及打开/焦点、Escape 关闭、Continue 关闭、外部点击不关闭、Small/Media/Destructive、RTL 阿语弹窗与深色弹窗交互；最终构建 Wasm `af0897b…`，107 项 app:shared + 62 项 shadcn:core 聚焦测试通过。正文换行/字重、阿拉伯回退字体、辅助技术映射、四张旧 Vega 基准与完整焦点陷阱/Tab 矩阵仍留，见 [alert-dialog-r4](web-parity/alert-dialog-r4/README.md)。
+- [ ] Aspect Ratio (`aspect-ratio`)：官方四配方（hero + Square/Portrait/RTL 与 required `ratio` API）顺序/文案已按 `8a353667` 复核；r4 将 RTL 说明改为官网 “in shadcn/ui” 文案并补断言。专用空间完成 1440/390×浅深四象限（逐像素校验主题）、3 个官方分节对照，验证 Square 桌面/手机比例与 RTL 阿英希切换；最终构建 Wasm `af0897b…`，107 项 app:shared + 62 项 shadcn:core 聚焦测试通过。仍留 caption 颜色/字形与整数测量、内置 PNG 与官网 next/image 差异、`ratio` 默认 `1f` 的 Kotlin 偏差（破坏性变更未决）及共享壳/字形差异，见 [aspect-ratio-r4](web-parity/aspect-ratio-r4/README.md)。
 - [ ] Attachment (`attachment`)：六组示例、Nova布局、Group吸附/键盘/渐隐/约束、整卡焦点和onClick hover，以及Features/Accessibility指南、目录/导出已补。第七轮按官网当前SVG修正FileSearch；实际标题14px/500字重和约148px排版字宽已验证，未调粗字体。26项目录回归、JS/Wasm构建通过；旧Vega、字形像素观感、自定义overlay hover、颜色过渡与原生辅助技术仍待关闭。按用户要求暂停逐轮细化，剩余项合并到后续统一处理；第八轮 hover 动画只有定向测试通过，尚未完成浏览器验收。证据见attachment-r2至attachment-r8。
-- [ ] Avatar (`avatar`)：2026-10-30 首轮主要差异已补：真实图片、九组官方配方与额外 Fallback、Composition/六个 Kotlin API 小节；修正 fallback 字号、外圈、图标徽标、RTL 徽标及绿色令牌，补齐菜单键盘导航。9 项测试、JS/Wasm distribution 和四象限浏览器检查通过。r2按当前官网确认十组官方顺序，给额外Fallback加Kotlin extension前缀，并把Dropdown前三个条目放入DropdownMenuGroup；25项聚焦测试及Wasm构建通过，浏览器仍待新空间复核。混合尺寸分组计数、图片混合边框、菜单完整焦点/像素矩阵等保留明确后续项，见[avatar-r2](web-parity/avatar-r2/README.md)及avatar-r1。
+- [ ] Avatar (`avatar`)：官方十配方顺序/标题已按 `8a353667` 复核；r3 将 Badge/Avatar Group/Avatar Group Count/Dropdown/RTL 五段说明对齐官网、Badge 示例恢复彩色照片（官方 `grayscale` 仅用于群组等），补像素与文案回归，并按共享 DropdownMenu 指针开新行为更新交互测试。专用空间完成 1440/390×浅深四象限（逐像素校验主题）、9 个官方分节对照，验证菜单指针打开（无高亮）/方向键/ Escape、卡片彩色照片与 RTL 阿英希（`+٣`/`+3`）；最终构建 Wasm `af0897b…`，107 项 app:shared + 62 项 shadcn:core 聚焦测试通过。混合尺寸分组计数、混合图片边框、完整菜单焦点/像素矩阵、原生辅助语义与共享壳/字形差异仍留，见 [avatar-r3](web-parity/avatar-r3/README.md)。
 - [ ] Badge (`badge`)：七个官方配方（Default、Variants、With Icon、With Spinner、Link、Custom Colors、RTL）顺序/标题/文案核对一致；slot h 最终构建（wasm c0570519）后已重拍 1440×1000/390×844 浅深四象限、6 组逐配方官本对照与 Link hover/点击状态；8 项 BadgeExamplesTest 通过。RTL 描述改为官方原文。仍开放：本地额外 Composition 小节（官方无）、键盘焦点/原生链接语义与 aria 矩阵，见 [badge-r3](web-parity/badge-r3/README.md)。
 - [ ] Breadcrumb (`breadcrumb`)：七个官方配方（Default、Basic、Custom separator、Dropdown、Collapsed、Link component、RTL）与 Composition/API 小节核对一致；slot h 最终构建后已重拍四象限、6 组逐配方对照，并取证 Dropdown 菜单打开/关闭、Collapsed 省略号与链接 hover；5 项 BreadcrumbExamplesTest 通过。仍开放：Kotlin extension: Disabled 与 RTL 语言选择器等本地扩展、原生导航语义/键盘焦点、手机宽度换行差异，见 [breadcrumb-r3](web-parity/breadcrumb-r3/README.md)。
 - [ ] Bubble (`bubble`)：九个官方配方（Default、Variants、Alignment、Bubble Group、Links and Buttons、Reactions、Show More / Collapsible、Tooltip、Popover）顺序/标题核对一致；slot h 最终构建后已重拍四象限与 8 组逐配方对照，取证可点击气泡 hover 焦点环与点击 toast；8 项 BubbleExamplesTest 通过。仍开放：Variants 预览 ghost 长文案被预览高度截断、Links and Buttons 描述为 Kotlin 适配、完整 aria/键盘路径，见 [bubble-r2](web-parity/bubble-r2/README.md)。
@@ -172,6 +172,66 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Avatar：r3 浏览器四象限、Badge 彩色照片与菜单/RTL 交互（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 205 -->
+
+重新读取当前官网（`8a353667`）：Avatar 为 hero 后接 Basic、Badge、Badge with Icon、Avatar Group、Avatar Group Count、Avatar Group with Icon、Sizes、Dropdown、RTL 与 API 表；本地十配方顺序一致，额外 Fallback 保持 `Kotlin extension:` 前缀。
+
+本轮修正：Badge、Avatar Group、Avatar Group Count、Dropdown 四段说明改为官网文案（原先 “A group of avatars with overlapping styling.” 等），RTL 说明改为官网 “To enable RTL support in shadcn/ui…”。Badge 示例恢复彩色照片——官网 `avatar-badge.tsx` 未给 Avatar 加 grayscale，而本地默认灰阶导致徽标示例整图变灰；其余示例（demo 首图/群组/尺寸/Badge with Icon）仍按官网加灰阶，Dropdown 保持彩色。新增像素测试 `badgeExampleKeepsThePhotoInColorLikeTheOfficialExample` 与四段/RTL 文案断言；并按共享 DropdownMenu 指针开行为更新 Dropdown 交互测试。
+
+最终构建 Wasm `af0897ba8dcd1ca0ba6ea8ace92d531d0a7a68b6aa02253393db7e8c3dc60285` 后，完成四象限与 9 个官方分节对照；交互验证菜单指针打开时无行高亮、ArrowDown 依次聚焦 Profile/Billing、Escape 关闭、深色菜单，以及 RTL 工具栏阿语（`+٣`）/英语/希伯来语切换与徽标镜像。107 项 app:shared（AvatarExamplesTest 5 等）与 62 项 shadcn:core（AvatarParityTest 5、AvatarScreenshotTest 8）聚焦测试通过，XML 已归档。
+
+仍保留：混合尺寸分组计数、混合图片边框处理、完整菜单焦点/像素矩阵、原生辅助语义；共享壳与 Geist 字形差异保持。证据见 [avatar-r3](web-parity/avatar-r3/README.md)。
+
+### Aspect Ratio：r4 浏览器四象限与 RTL 切换复核（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 204 -->
+
+重新读取当前官网（`8a353667`）：Aspect Ratio 仍为 hero 后接 Square、Portrait、RTL 与 `ratio` 必填的 API 表；本地四配方顺序/文案一致，`ratio = 1f` 默认值仍作为已记录的 Kotlin 偏差保留。
+
+本轮把 RTL 说明里的 “in your app” 改为官网 “in shadcn/ui” 原文，`AspectRatioExamplesTest` 增加对应断言。
+
+最终构建 Wasm `af0897ba8dcd1ca0ba6ea8ace92d531d0a7a68b6aa02253393db7e8c3dc60285` 后，完成 1440/390×浅深四象限、3 个官方分节对照；实测 Square 在桌面/手机保持 1:1、Portrait 保持 9:16，RTL 工具栏切换阿拉伯语/英语/希伯来语时 caption 与方向变化而图片与比例不变。107 项 app:shared（AspectRatioExamplesTest 6 等）与 62 项 shadcn:core（AspectRatioLayoutTest 3、AspectRatioScreenshotTest 2）聚焦测试通过，XML 已归档。
+
+仍保留：RTL caption 颜色/字形与整数测量适配；本地使用内置上游示例 PNG + `ColorFilter` 灰阶/深色亮度，官网用 `next/image`，加载器语义不在范围；`ratio` 必填化是破坏性公共 API 变更，未擅自修改；共享壳与字形差异保持。证据见 [aspect-ratio-r4](web-parity/aspect-ratio-r4/README.md)。
+
+### Alert Dialog：r4 浏览器四象限与打开/关闭/RTL 交互（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 203 -->
+
+重新读取当前官网（`8a353667`）：Alert Dialog 仍为 hero 后接 Basic、Small、Media、Small with Media、Destructive、RTL，以及 `size` API 表与 Base UI 链接；本地七配方顺序/标题一致，r3 已对齐 Basic、Small with Media、Destructive 三段说明。
+
+本轮把 RTL 说明改为官网原文 “To enable RTL support in shadcn/ui, see the RTL configuration guide.”（原为 “in your app” 并附带本地工具栏说明），并在 `AlertDialogExamplesTest` 补断言。同时因共享 DropdownMenu 在 `000feffb` 改为 Base UI 指针打开不高亮任何行，更新了 `AvatarExamplesTest` 的交互断言（本轮唯一跨页测试调整）。
+
+最终构建 Wasm `af0897ba8dcd1ca0ba6ea8ace92d531d0a7a68b6aa02253393db7e8c3dc60285` 后，完成四象限与 6 个官方分节对照；交互验证了 Basic 打开（遮罩、标题、描述、Cancel/Continue）、Escape 关闭、重新打开、Continue 关闭、外部点击不关闭、Small/Media/Destructive 打开、深色弹窗，以及 RTL 阿语按钮打开右起排版的弹窗。107 项 app:shared（AlertDialogExamplesTest 5 等）与 62 项 shadcn:core（AlertDialogNovaTest 4、AlertDialogMediaTest 3、AlertDialogScreenshotTest 4、AlertDialogMediaScreenshotTest 4）聚焦测试通过，XML 已归档。
+
+仍保留：正文换行/字重、阿拉伯回退字体、辅助技术映射、r1/r2 记录的四个旧 Vega 基准；Tab 遍历在官网与本地都会离开弹窗（官网落到导航 Home，本地落到触发器），因此不宣称完成焦点陷阱矩阵。证据见 [alert-dialog-r4](web-parity/alert-dialog-r4/README.md)。
+
+### Alert：r11 浏览器四象限、说明文案与操作态复核（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 202 -->
+
+重新读取当前官网（`8a353667`）：Alert 页面为 hero 预览后接 Basic、Destructive、Action、Custom Colors、RTL，再是 Alert/AlertTitle/AlertDescription/AlertAction 四个 API 小节；本地六配方顺序与 r10 的四条 `Kotlin extension:` 前缀保持。
+
+复核发现两段说明仍与官网有措辞差：Basic 现在改为官网 “A basic alert with an icon, title and description.”；Action 改为 “Use `AlertAction` to add a button or other action element to the alert.”。两处都在 `AlertExamplesTest` 增加了精确断言。
+
+最终构建 Wasm `af0897ba8dcd1ca0ba6ea8ace92d531d0a7a68b6aa02253393db7e8c3dc60285` 后，取得 1440/390×浅深四象限（背景像素校验主题）、5 个官方分节对照，并实测 Action 的 Enable 按钮 hover/点击（点击不改变 URL，深色同样），以及 RTL 工具栏阿语/英语/希伯来语切换。107 项 app:shared（AlertExamplesTest 6、ComponentDocumentationTest 8 等）与 62 项 shadcn:core（AlertNovaTest 8、AlertScreenshotTest 4、AlertNovaActionScreenshotTest 2 等）聚焦测试通过，XML 已归档。
+
+仍保留：全文法/长说明换行、超高操作区、任意复杂槽位、窗口重排、完整焦点/按压/禁用矩阵与辅助技术语义；共享壳顶部导航、TOC 形状与 Geist 字形差异属已记录的项目级差异。证据见 [alert-r11](web-parity/alert-r11/README.md)。
+
+### Accordion：r13 浏览器四象限与交互复核（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 201 -->
+
+按“已完成组件也要复查”重新读取当前官网（`8a353667`）：Accordion 页面仍是 hero 预览后接 Basic、Multiple、Disabled、Borders、Card、RTL 与 Base UI API Reference；本地标题、顺序与六段说明与官网一致，r12 已把 Multiple 改为 `multiple = true`、补上 API Reference 并保留 `Kotlin extension:` 前缀，本轮无需改页面。
+
+本轮是浏览器复核轮：在专用 TaskSpace 重新构建 Wasm（应用 Wasm `af0897ba8dcd1ca0ba6ea8ace92d531d0a7a68b6aa02253393db7e8c3dc60285`），采集 1440×1000 / 390×844 × 浅/深共八张四象限并用背景像素逐张校验主题，另按官网六个配方各取一组桌面分节对照。交互实测：Basic 从 item-1 点开 item-2 时前一项关闭；Multiple 依次打开 Billing/Privacy 后三项同时展开（深色另存）；Disabled 项点击后保持关闭；RTL 工具栏依次切换阿拉伯语、英语、希伯来语，方向与字体随之变化；Kotlin Horizontal 扩展点击第二面板及方向键都能切换。
+
+107 项 app:shared 聚焦测试（AccordionExamplesTest 3、AccordionExtensionTest 32、AccordionPreviewFrameTest 24、AccordionRtlPreviewTest 4、CatalogDocumentLayoutTest 14、ComponentDocumentationTest 8，以及同轮的 Alert/AlertDialog/AspectRatio/Avatar 套件）与 62 项 shadcn:core（AccordionNovaTest 15 等）全部通过，JUnit XML 已归档。
+
+仍保留并说明：共享壳顶部导航高度/复制页与前后页按钮、预览内容垂直起点与官方约 15px 的差异、Geist 字形与深色字重、代码面板排版；Kotlin 扩展 API/Style/动态 slot、辅助技术与触摸矩阵未纳入官网等价声明。证据见 [accordion-r13](web-parity/accordion-r13/README.md)。
 
 ### Carousel：四象限与箭头/拖拽/自动播放状态复核（2026-11-05）
 

@@ -1,0 +1,69 @@
+{
+  "slug": "bubble",
+  "pairs": [
+    [
+      "variants",
+      "example-0",
+      "variants"
+    ],
+    [
+      "alignment",
+      "example-1",
+      "alignment"
+    ],
+    [
+      "bubble-group",
+      "example-2",
+      "bubble-group"
+    ],
+    [
+      "links-and-buttons",
+      "example-3",
+      "links-and-buttons"
+    ],
+    [
+      "reactions",
+      "example-4",
+      "reactions"
+    ],
+    [
+      "show-more--collapsible",
+      "example-5",
+      "show-more"
+    ],
+    [
+      "tooltip",
+      "example-6",
+      "tooltip"
+    ],
+    [
+      "popover",
+      "example-7",
+      "popover"
+    ]
+  ],
+  "views": [
+    {
+      "name": "desktop-light",
+      "theme": "light"
+    }
+  ],
+  "files": {
+    "official-variants-desktop-light": "/tmp/cf-parity/work-h/sections/bubble/official-variants-desktop-light.png",
+    "local-variants-desktop-light": "/tmp/cf-parity/work-h/sections/bubble/local-variants-desktop-light.png",
+    "official-alignment-desktop-light": "/tmp/cf-parity/work-h/sections/bubble/official-alignment-desktop-light.png",
+    "local-alignment-desktop-light": "/tmp/cf-parity/work-h/sections/bubble/local-alignment-desktop-light.png",
+    "official-bubble-group-desktop-light": "/tmp/cf-parity/work-h/sections/bubble/official-bubble-group-desktop-light.png",
+    "local-bubble-group-desktop-light": "/tmp/cf-parity/work-h/sections/bubble/local-bubble-group-desktop-light.png",
+    "official-links-and-buttons-desktop-light": "/tmp/cf-parity/work-h/sections/bubble/official-links-and-buttons-desktop-light.png",
+    "local-links-and-buttons-desktop-light": "/tmp/cf-parity/work-h/sections/bubble/local-links-and-buttons-desktop-light.png",
+    "official-reactions-desktop-light": "/tmp/cf-parity/work-h/sections/bubble/official-reactions-desktop-light.png",
+    "local-reactions-desktop-light": "/tmp/cf-parity/work-h/sections/bubble/local-reactions-desktop-light.png",
+    "official-show-more-desktop-light": "/tmp/cf-parity/work-h/sections/bubble/official-show-more-desktop-light.png",
+    "local-show-more-desktop-light": "/tmp/cf-parity/work-h/sections/bubble/local-show-more-desktop-light.png",
+    "official-tooltip-desktop-light": "/tmp/cf-parity/work-h/sections/bubble/official-tooltip-desktop-light.png",
+    "local-tooltip-desktop-light": "/tmp/cf-parity/work-h/sections/bubble/local-tooltip-desktop-light.png",
+    "official-popover-desktop-light": "/tmp/cf-parity/work-h/sections/bubble/official-popover-desktop-light.png",
+    "local-popover-desktop-light": "/tmp/cf-parity/work-h/sections/bubble/local-popover-desktop-light.png"
+  }
+}

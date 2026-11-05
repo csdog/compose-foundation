@@ -1,0 +1,68 @@
+{
+  "component": "calendar",
+  "revision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "retrievedAt": "2026-11-05T13:13:55",
+  "officialPage": "https://ui.shadcn.com/docs/components/base/calendar",
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/calendar.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/components/base/calendar.mdx",
+      "sha256": "c9d22ce8f5c3e2229e792099cc5f542f79c715966573887f867035d2c3bc35ff"
+    },
+    {
+      "path": "apps/v4/examples/base/calendar-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/calendar-demo.tsx",
+      "sha256": "44d94271b4a9db359e9839ebbb04ad9b0b6f4bd865ad602592fa4b35c54b07c5"
+    },
+    {
+      "path": "apps/v4/examples/base/calendar-hijri.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/calendar-hijri.tsx",
+      "sha256": "e715a8b0003b1a5ffa924c96e0c1aa9e635ce5cb4bd0a7414074389496943a05"
+    },
+    {
+      "path": "apps/v4/examples/base/calendar-basic.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/calendar-basic.tsx",
+      "sha256": "25ea2299bdd3d12a47c243751fde9501b764b675bff0c056d09ff3f481321f20"
+    },
+    {
+      "path": "apps/v4/examples/base/calendar-range.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/calendar-range.tsx",
+      "sha256": "3b351b58e636f8217a322ea25c983f4cb2081b2e64247f7b7cd70e975395fac9"
+    },
+    {
+      "path": "apps/v4/examples/base/calendar-caption.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/calendar-caption.tsx",
+      "sha256": "26d7e7cd2c35d14e66d3627e0ecbf3f34cb1cb9760bc5da19428c862b88c9584"
+    },
+    {
+      "path": "apps/v4/examples/base/calendar-presets.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/calendar-presets.tsx",
+      "sha256": "bc22d26cef3332e03b2780ac10b5a91ac3eab559b8fdc6fe2699b20a5249ae09"
+    },
+    {
+      "path": "apps/v4/examples/base/calendar-time.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/calendar-time.tsx",
+      "sha256": "e37be5ba3337e3240673205b29445c5fd856fa0ac06a6b61adba3765e45bbf64"
+    },
+    {
+      "path": "apps/v4/examples/base/calendar-booked-dates.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/calendar-booked-dates.tsx",
+      "sha256": "d6274e34b293a4ef2806128ed956fa8607e78e0751d62348cb2443b3667a4a98"
+    },
+    {
+      "path": "apps/v4/examples/base/calendar-custom-days.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/calendar-custom-days.tsx",
+      "sha256": "3c02d04e7bf38a28e76f9b1af92294d07e9b247f38d3dc8bc6dfd12c5a80de28"
+    },
+    {
+      "path": "apps/v4/examples/base/calendar-week-numbers.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/calendar-week-numbers.tsx",
+      "sha256": "bac39e488b8ceffc030f1bd121cb591b456d347f3569d70d9b52ddd701e9c101"
+    },
+    {
+      "path": "apps/v4/examples/base/calendar-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/calendar-rtl.tsx",
+      "sha256": "21e380b7362cfd621c5d68edc199114e1fdcebe8f5b6a11f9c6bc0330dc309c3"
+    }
+  ]
+}
