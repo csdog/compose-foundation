@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-05",
+  "officialRecipeOrder": [
+    "Default",
+    "Basic",
+    "Custom separator",
+    "Dropdown",
+    "Collapsed",
+    "Link component",
+    "RTL"
+  ],
+  "changes": [
+    "Grouped Breadcrumb menu paths with DropdownMenuGroup",
+    "Labeled the extra Disabled recipe as a Kotlin extension",
+    "Added menu-source and page-order regression coverage"
+  ],
+  "tests": {
+    "total": 23,
+    "failures": 0,
+    "suites": {
+      "BreadcrumbExamplesTest": 5,
+      "ComponentDocumentationTest": 8,
+      "BreadcrumbParityTest": 5,
+      "BreadcrumbScreenshotTest": 5
+    }
+  },
+  "wasmDevelopmentBuild": {
+    "exitStatus": 0,
+    "elapsedSeconds": 19.626,
+    "appWasmSha256": "a604c8c70d2c74d0be3eaa47435a290ca711d505da3b02ad53a5975cb86abe5f",
+    "warning": "webpack compiled with one warning"
+  },
+  "browser": {
+    "rerun": false,
+    "reason": "No owned compose-foundation Ego TaskSpace is available; unrelated user/delegated spaces were not claimed and no replacement space was created."
+  }
+}

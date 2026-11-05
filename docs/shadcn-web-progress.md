@@ -107,7 +107,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Attachment (`attachment`)：六组示例、Nova布局、Group吸附/键盘/渐隐/约束、整卡焦点和onClick hover，以及Features/Accessibility指南、目录/导出已补。第七轮按官网当前SVG修正FileSearch；实际标题14px/500字重和约148px排版字宽已验证，未调粗字体。26项目录回归、JS/Wasm构建通过；旧Vega、字形像素观感、自定义overlay hover、颜色过渡与原生辅助技术仍待关闭。按用户要求暂停逐轮细化，剩余项合并到后续统一处理；第八轮 hover 动画只有定向测试通过，尚未完成浏览器验收。证据见attachment-r2至attachment-r8。
 - [ ] Avatar (`avatar`)：2026-10-30 首轮主要差异已补：真实图片、九组官方配方与额外 Fallback、Composition/六个 Kotlin API 小节；修正 fallback 字号、外圈、图标徽标、RTL 徽标及绿色令牌，补齐菜单键盘导航。9 项测试、JS/Wasm distribution 和四象限浏览器检查通过。r2按当前官网确认十组官方顺序，给额外Fallback加Kotlin extension前缀，并把Dropdown前三个条目放入DropdownMenuGroup；25项聚焦测试及Wasm构建通过，浏览器仍待新空间复核。混合尺寸分组计数、图片混合边框、菜单完整焦点/像素矩阵等保留明确后续项，见[avatar-r2](web-parity/avatar-r2/README.md)及avatar-r1。
 - [ ] Badge (`badge`)：七个官方页面示例已补齐；桌面/手机浅深28组双方截图及英语/希伯来语8组双方截图已复查；补 href/invalid/逻辑图标边距与 Spinner 固有尺寸修复，23项定向测试通过。r2再次确认当前七配方及自定义色阶，补齐Usage代码缺失的`BadgeVariant`导入并对齐Link文案；30项聚焦测试及Wasm构建通过，浏览器仍待新空间复核。原生链接语义、完整交互/辅助技术和共享页面差异仍开放，见[badge-r2](web-parity/badge-r2/README.md)及badge-r1。
-- [ ] Breadcrumb (`breadcrumb`)：2026-10-30 七组官方配方、Composition/七个 API 小节已补；修正 6dp 换行列表、4dp item 间距、14dp 镜像描边分隔符、20/16dp 省略号及链接 hover。9 项组件/目录定向测试、四象限七组浏览器检查、JS/Wasm distribution 通过；连同 Avatar 共 31 项联合验证和 13 张像素基准通过。共享手机宽度导致的换行差异、链接/导航原生语义和焦点细节仍明确保留，详见 breadcrumb-r1。
+- [ ] Breadcrumb (`breadcrumb`)：2026-10-30 七组官方配方、Composition/七个 API 小节已补；修正 6dp 换行列表、4dp item 间距、14dp 镜像描边分隔符、20/16dp 省略号及链接 hover。r2再次确认当前七配方，三组菜单路径补`DropdownMenuGroup`，额外Disabled改为Kotlin extension标题；23项聚焦测试及Wasm构建通过，浏览器仍待新空间复核。共享手机宽度导致的换行差异、链接/导航原生语义和焦点细节仍明确保留，见[breadcrumb-r2](web-parity/breadcrumb-r2/README.md)及breadcrumb-r1。
 - [ ] Bubble (`bubble`)：2026-10-30 九组官方配方、Composition/四个 API 及可访问性指南已补；修正自然宽度/80% 上限、Ghost 全宽、字号行框、Muted/Tinted 颜色和反应行悬浮定位。17 项定向测试、16 张像素基准、JS/Wasm distribution、四象限首屏对照及静态检查通过。任意复杂槽位裁剪/多 Content 布局、按钮反应自动 padding、完整焦点及原生辅助技术矩阵仍待关闭，见 bubble-r1。
 - [ ] Button (`button`)：十五组实际配方已补齐，新增公开 buttonStyle/invalid、As Link、完整默认Group菜单；修正Nova背景裁剪、阴影alpha与嵌套Escape。51项定向测试、两张有意更新Nova基准verify、JS/Wasm及两配方四象限56图已复查。Card复查另修Nova长单行文字完整显示及仅反馈层裁剪，新增2项回归；两张Nova基准各仅2个边缘像素有意更新。子菜单宽度/手机碰撞/指针聚焦、Tabler图形、expanded/pressed及完整状态仍开放。[Card依赖](web-parity/card-r1/README.md)、[r1](web-parity/button-r1/README.md)、[r2](web-parity/button-r2/README.md)。
 - [ ] Button Group (`button-group`)：基础已验证（第六批）；本轮共用完整默认菜单，补图标、Other单选与状态保持及响应式Go Back。默认配方在Button页四象限已验；共享菜单宽度/碰撞/指针焦点、本页其他示例与混合子项/纵向/尺寸矩阵仍待关闭。见[Button r2](web-parity/button-r2/README.md)。
@@ -171,6 +171,16 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Breadcrumb：当前七配方、菜单分组与扩展标题（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 143 -->
+
+当前官网仍为Default、Basic、Custom separator、Dropdown、Collapsed、Link component、RTL七配方。本地顺序一致，最后额外Disabled改为`Kotlin extension: Disabled`；Default、Dropdown、RTL的Documentation/Themes/GitHub现统一放入`DropdownMenuGroup`，复制代码与实际预览一致。
+
+新增官方标题顺序、扩展标题及三处菜单源码结构回归。Breadcrumb页面5项、文档8项、核心Parity5项、截图5项共23项通过；Wasm开发distribution19.626s退出0并保留1条Webpack warning，全仓ktlint/detekt通过。来源、XML与构建摘要见[breadcrumb-r2](web-parity/breadcrumb-r2/README.md)。
+
+当前Ego仍无compose-foundation TaskSpace，只有用户空间和无关Product Hunt委派空间；未创建替代空间或接管标签。因此没有新的浅深桌面/手机浏览器验证，Breadcrumb保持未勾选；共享手机宽度换行、链接/导航原生语义与焦点细节继续开放。Editor排除、Attachment后置。
 
 ### Badge：可复制 Usage 导入与 Link 文案（2026-11-05）
 

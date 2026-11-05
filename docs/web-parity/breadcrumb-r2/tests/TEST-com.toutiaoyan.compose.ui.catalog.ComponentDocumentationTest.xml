@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ComponentDocumentationTest[jvm]" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-05T03:18:09.488Z" hostname="Apples-MacBook-Pro.local" time="2.445">
+  <properties/>
+  <testcase name="fragmentNavigationLoadsRestoresAndRepeatsRealSectionScroll[jvm]" classname="com.toutiaoyan.compose.ui.catalog.ComponentDocumentationTest" time="0.954"/>
+  <testcase name="configuredExamplesHeadingIsIncludedInCopiedMarkdown[jvm]" classname="com.toutiaoyan.compose.ui.catalog.ComponentDocumentationTest" time="0.014"/>
+  <testcase name="actualCopyPageExportsDescriptionsAndNewTocAnchorsScrollIntoView[jvm]" classname="com.toutiaoyan.compose.ui.catalog.ComponentDocumentationTest" time="0.228"/>
+  <testcase name="generatedSectionFragmentsAreReadableAndUnique[jvm]" classname="com.toutiaoyan.compose.ui.catalog.ComponentDocumentationTest" time="0.014"/>
+  <testcase name="attachmentGuidanceLoadsByFragmentCopiesAndNavigatesThroughAllSections[jvm]" classname="com.toutiaoyan.compose.ui.catalog.ComponentDocumentationTest" time="1.112"/>
+  <testcase name="alertExportIncludesDescriptionsCompositionAndKotlinApiInPageOrder[jvm]" classname="com.toutiaoyan.compose.ui.catalog.ComponentDocumentationTest" time="0.046"/>
+  <testcase name="plainCompositionBlockCopiesItsOwnCodeAndShowsFeedback[jvm]" classname="com.toutiaoyan.compose.ui.catalog.ComponentDocumentationTest" time="0.063"/>
+  <testcase name="attachmentGuidanceExportAndTocKeepSourceOrderAndReadableFragments[jvm]" classname="com.toutiaoyan.compose.ui.catalog.ComponentDocumentationTest" time="0.014"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

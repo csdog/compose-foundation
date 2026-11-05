@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="BreadcrumbParityTest[jvm]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-05T03:17:56.901Z" hostname="Apples-MacBook-Pro.local" time="1.027">
+  <properties/>
+  <testcase name="pageIsSelectedDisabledAndDecorationsHaveNoSpokenLabels[jvm]" classname="com.toutiaoyan.compose.ui.components.breadcrumb.BreadcrumbParityTest" time="0.875"/>
+  <testcase name="listUsesSixPixelGapsAndWrapsAtomicItems[jvm]" classname="com.toutiaoyan.compose.ui.components.breadcrumb.BreadcrumbParityTest" time="0.037"/>
+  <testcase name="linkHoverChangesActualInkInLightAndDark[jvm]" classname="com.toutiaoyan.compose.ui.components.breadcrumb.BreadcrumbParityTest" time="0.059"/>
+  <testcase name="linkHoverChangesActualInkInDark[jvm]" classname="com.toutiaoyan.compose.ui.components.breadcrumb.BreadcrumbParityTest" time="0.034"/>
+  <testcase name="rtlReversesOrderAndKeepsFourPixelItemGap[jvm]" classname="com.toutiaoyan.compose.ui.components.breadcrumb.BreadcrumbParityTest" time="0.02"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

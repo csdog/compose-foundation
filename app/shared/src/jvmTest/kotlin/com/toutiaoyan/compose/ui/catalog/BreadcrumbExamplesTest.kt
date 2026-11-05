@@ -19,6 +19,28 @@ import kotlin.test.*
 class BreadcrumbExamplesTest {
     @get:Rule val rule = createComposeRule()
 
+    @Test fun docsKeepOfficialRecipesFirstAndGroupMenuPaths() {
+        assertEquals(
+            listOf(
+                "Default",
+                "Basic",
+                "Custom separator",
+                "Dropdown",
+                "Collapsed",
+                "Link component",
+                "RTL",
+            ),
+            breadcrumbDoc.examples.take(7).map { it.title },
+        )
+        assertEquals("Kotlin extension: Disabled", breadcrumbDoc.examples[7].title)
+        assertNull(breadcrumbDoc.examplesHeading)
+        for (title in listOf("Default", "Dropdown", "RTL")) {
+            assertTrue(
+                breadcrumbDoc.examples.single { it.title == title }.code.contains("DropdownMenuGroup {"),
+            )
+        }
+    }
+
     @Test fun defaultHasWorkingCollapsedMenu() {
         rule.setContent {
             Theme(

@@ -1,0 +1,12 @@
+{
+  "retrieved": "2026-11-05",
+  "officialPage": "https://ui.shadcn.com/docs/components/base/breadcrumb",
+  "componentSource": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/registry/bases/base/ui/breadcrumb.tsx",
+  "examples": [
+    "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/examples/base/breadcrumb-demo.tsx",
+    "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/examples/base/breadcrumb-basic.tsx",
+    "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/examples/base/breadcrumb-dropdown.tsx",
+    "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/examples/base/breadcrumb-link.tsx",
+    "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/examples/base/breadcrumb-rtl.tsx"
+  ]
+}

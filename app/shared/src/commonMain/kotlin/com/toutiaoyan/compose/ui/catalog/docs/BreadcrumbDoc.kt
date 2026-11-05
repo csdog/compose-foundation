@@ -54,9 +54,11 @@ private fun crumbMenuCode(ellipsis: Boolean) =
                 ${if (ellipsis) "Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { BreadcrumbEllipsis() }" else "Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {\n                    Text { \"Components\" }\n                    Image(Lucide.ChevronDown, null, Modifier.size(14.dp), colorFilter = ColorFilter.tint(currentTheme.colors.mutedForeground))\n                }"}
             }
             DropdownMenuContent(align = PopupAlign.Start) {
-                DropdownMenuItem("Documentation", onClick = {})
-                DropdownMenuItem("Themes", onClick = {})
-                DropdownMenuItem("GitHub", onClick = {})
+                DropdownMenuGroup {
+                    DropdownMenuItem("Documentation", onClick = {})
+                    DropdownMenuItem("Themes", onClick = {})
+                    DropdownMenuItem("GitHub", onClick = {})
+                }
             }
         }
     }
@@ -291,7 +293,7 @@ val breadcrumbDoc =
                     },
                 ),
                 ComponentExample(
-                    "Disabled",
+                    "Kotlin extension: Disabled",
                     """
                     Breadcrumb {
                         BreadcrumbList {
@@ -446,7 +448,9 @@ internal fun BreadcrumbExample(
                             }
                         }
                         DropdownMenuContent(align = if (rtl) PopupAlign.End else PopupAlign.Start) {
-                            labels.drop(3).forEach { DropdownMenuItem(it, onClick = {}) }
+                            DropdownMenuGroup {
+                                labels.drop(3).forEach { DropdownMenuItem(it, onClick = {}) }
+                            }
                         }
                     }
                 }
