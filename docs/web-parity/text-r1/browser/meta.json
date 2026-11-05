@@ -1,0 +1,34 @@
+{
+  "slug": "text",
+  "capturedAt": "2026-11-05T04:46:55.074Z",
+  "app": [
+    "http://127.0.0.1:8765/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8765/4c78d6c1478e32c5f52a.wasm"
+  ],
+  "views": {
+    "desktop-light": {
+      "theme": "light",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(2582px + 100vh)"
+    },
+    "desktop-dark": {
+      "theme": "dark",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(2582px + 100vh)"
+    },
+    "phone-light": {
+      "theme": "light",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(3423px + 100vh)"
+    },
+    "phone-dark": {
+      "theme": "dark",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(3423px + 100vh)"
+    }
+  }
+}

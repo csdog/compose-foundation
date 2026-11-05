@@ -32,51 +32,127 @@ import com.toutiaoyan.compose.ui.components.text.TextVariant
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.tokens.BaseColor
 
+/**
+ * Kotlin extension page. shadcn/ui ships no `Text` component -- styling is expressed with
+ * Tailwind classes -- so there is no official Base UI page to mirror. This page documents the
+ * actual Kotlin API and is labeled as this catalog's own extension.
+ */
 val textDoc =
     ComponentDoc(
         id = "text",
+        isKotlinExtension = true,
         title = "Text",
         description =
-            "Renders text using the design system's type scale, with optional TextStyles.Muted preset.",
+            "Renders text using the design system's type scale, with the optional TextColors.Muted preset.",
+        usageImportsCode = "import com.toutiaoyan.compose.ui.components.text.*",
         usageCode =
             """
-            import com.toutiaoyan.compose.ui.components.text.Text
-            import com.toutiaoyan.compose.ui.components.text.TextStyles
-            import com.toutiaoyan.compose.ui.components.text.TextTypography
-
-            Text(typography = TextTypography.TitleLarge) { "Title" }
-            Text(textStyle = TextStyles.Muted) { "Subtitle" }
+            Text(variant = TextVariant.TitleLarge) { "Title" }
+            Text(textStyle = TextColors.Muted) { "Subtitle" }
             """.trimIndent(),
+        beforeExamples =
+            listOf(
+                ComponentGuideSection(
+                    title = "Kotlin extension",
+                    blocks =
+                        listOf(
+                            ComponentGuideBlock.Paragraph(
+                                (
+                                    "Text is a Kotlin extension of this catalog, not an official " +
+                                        "shadcn/ui component. shadcn styles text with Tailwind utility " +
+                                        "classes instead of a standalone component, so there is no Base UI " +
+                                        "reference page or upstream recipe list. The API below is the " +
+                                        "current Kotlin source of truth: a thin wrapper around BasicText " +
+                                        "that maps the theme's type scale and muted color preset."
+                                ),
+                            ),
+                        ),
+                ),
+            ),
+        examplesHeading = null,
         examples =
             listOf(
                 ComponentExample(
                     title = "Type scale",
+                    showHeading = false,
                     code =
                         """
-                        Text(typography = TextTypography.TitleLarge) { "Title Large" }
-                        Text(typography = TextTypography.BodyMedium) { "Body Medium" }
+                        Text(variant = TextVariant.TitleLarge) { "Title Large" }
+                        Text(variant = TextVariant.BodyMedium) { "Body Medium" }
                         """.trimIndent(),
                     preview = {
-                        Column {
+                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                             Text(variant = TextVariant.TitleLarge) { "Title Large" }
                             Text(variant = TextVariant.BodyMedium) { "Body Medium" }
                         }
                     },
                 ),
                 ComponentExample(
-                    title = "Default variant",
-                    code = """Text(variant = TextVariant.BodyMedium) { "Body Medium" }""",
-                    preview = { Text(variant = TextVariant.BodyMedium) { "Body Medium" } },
+                    title = "Variants",
+                    descriptionMarkdown =
+                        "Every `TextVariant` maps to one entry of the theme type scale; " +
+                            "`BodyMedium` is the default.",
+                    code =
+                        """
+                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            TextVariant.entries.forEach { variant ->
+                                Text(variant = variant) { variant.name }
+                            }
+                        }
+                        """.trimIndent(),
+                    preview = {
+                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            TextVariant.entries.forEach { variant ->
+                                Text(variant = variant) { variant.name }
+                            }
+                        }
+                    },
                 ),
                 ComponentExample(
                     title = "Muted",
+                    descriptionMarkdown = "Pass `TextColors.Muted` through `textStyle` for secondary copy.",
                     code =
                         """
-                        Text(typography = TextTypography.BodyMedium, textStyle = TextStyles.Muted) { "Muted body" }
+                        Text(variant = TextVariant.BodyMedium, textStyle = TextColors.Muted) { "Muted body" }
                         """.trimIndent(),
                     preview = {
                         Text(variant = TextVariant.BodyMedium, textStyle = TextColors.Muted) { "Muted body" }
                     },
+                ),
+                ComponentExample(
+                    title = "Kotlin extension: Style font-size",
+                    descriptionMarkdown =
+                        "The Style API can set a font size on the wrapper without changing the " +
+                            "`TextVariant`; `fontSizeSm()` / `textSm()` are project utilities.",
+                    code =
+                        """
+                        Text(style = Style { fontSizeSm() }) { "Style { fontSizeSm() }" }
+                        Text(style = Style { textLg() }) { "Style { textLg() } (size + leading)" }
+                        """.trimIndent(),
+                    preview = {
+                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Text(style = Style { fontSizeSm() }) { "Style { fontSizeSm() }" }
+                            Text(style = Style { textLg() }) { "Style { textLg() } (size + leading)" }
+                        }
+                    },
+                ),
+            ),
+        apiSections =
+            listOf(
+                ComponentApiSection(
+                    "Text",
+                    "Wraps BasicText with the design-system type scale. `textStyle` can carry a " +
+                        "preset such as `TextColors.Muted` or a caller TextStyle; `text` is a lambda so " +
+                        "the string is read at composition time.",
+                    listOf(
+                        ApiProperty("modifier", "Modifier", "Modifier"),
+                        ApiProperty("variant", "TextVariant", "BodyMedium"),
+                        ApiProperty("maxLines", "Int", "Int.MAX_VALUE"),
+                        ApiProperty("overflow", "TextOverflow", "Clip"),
+                        ApiProperty("textStyle", "TextStyle", "TextStyle.Default"),
+                        ApiProperty("style", "Style", "Style"),
+                        ApiProperty("text", "() -> String", "Required"),
+                    ),
                 ),
             ),
     )
@@ -154,7 +230,7 @@ private fun TextFontSizeStylePreview() {
             Text(style = Style { fontSizeXl() }) { "Style { fontSizeXl() }" }
             Text(style = Style { fontSizeXl2() }) { "Style { fontSizeXl2() }" }
             Text(style = Style { fontSizeSm() }, textStyle = TextColors.Muted) {
-                "fontSizeSm + TextStyles.Muted"
+                "fontSizeSm + TextColors.Muted"
             }
         }
     }

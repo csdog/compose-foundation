@@ -233,12 +233,16 @@ internal fun ComponentDetailContent(
                         }
                         Column(verticalArrangement = Arrangement.spacedBy(28.dp)) {
                             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                Text(variant = TextVariant.BodyLarge) { "Base UI" }
-                                Box(
-                                    Modifier.widthIn(
-                                        min = 56.dp,
-                                    ).height(2.dp).background(currentTheme.colors.foreground),
-                                )
+                                Text(variant = TextVariant.BodyLarge) {
+                                    if (doc.isKotlinExtension) "Kotlin extension" else "Base UI"
+                                }
+                                if (!doc.isKotlinExtension) {
+                                    Box(
+                                        Modifier.widthIn(
+                                            min = 56.dp,
+                                        ).height(2.dp).background(currentTheme.colors.foreground),
+                                    )
+                                }
                             }
                             doc.examples.firstOrNull()?.let { example ->
                                 PreviewCodeSection(

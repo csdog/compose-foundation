@@ -35,8 +35,10 @@ import com.toutiaoyan.compose.ui.theme.currentTheme
 val stepperDoc =
     ComponentDoc(
         id = "stepper",
+        isKotlinExtension = true,
         title = "Stepper",
         description = "A numbered multi-step progress indicator for wizards, onboarding, and checkout flows.",
+        usageImportsCode = "import com.toutiaoyan.compose.ui.components.stepper.*",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.stepper.Stepper
@@ -48,6 +50,25 @@ val stepperDoc =
                 StepperItem("Done", "All set")
             }
             """.trimIndent(),
+        beforeExamples =
+            listOf(
+                ComponentGuideSection(
+                    title = "Kotlin extension",
+                    blocks =
+                        listOf(
+                            ComponentGuideBlock.Paragraph(
+                                (
+                                    "Stepper is a Kotlin extension of this catalog, not an official " +
+                                        "shadcn/ui component. shadcn has no Base UI stepper page, so there " +
+                                        "is no upstream recipe list to mirror. The API below is the current " +
+                                        "Kotlin source of truth: a numbered multi-step indicator composed " +
+                                        "from `Stepper` + `StepperItem`, with horizontal and vertical " +
+                                        "orientations."
+                                ),
+                            ),
+                        ),
+                ),
+            ),
         examples =
             listOf(
                 ComponentExample(
@@ -468,6 +489,35 @@ val stepperDoc =
                             StepperItem("Review")
                         }
                     },
+                ),
+            ),
+        apiSections =
+            listOf(
+                ComponentApiSection(
+                    "Stepper",
+                    "Root multi-step indicator. `currentStep` is zero-based; `StepperItem` children " +
+                        "declare the steps and are collected in composition order. Horizontal is the " +
+                        "default orientation; `showLabels = false` hides titles on small footprints.",
+                    listOf(
+                        ApiProperty("currentStep", "Int", "Required"),
+                        ApiProperty("modifier", "Modifier", "Modifier"),
+                        ApiProperty("orientation", "StepperOrientation", "Horizontal"),
+                        ApiProperty("showLabels", "Boolean", "true"),
+                        ApiProperty("style", "Style", "Style"),
+                        ApiProperty("circleStyle", "Style", "Style"),
+                        ApiProperty("connectorStyle", "Style", "Style"),
+                        ApiProperty("content", "@Composable StepperScope.() -> Unit", "Required"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "StepperItem",
+                    "One step declaration registered with the parent Stepper. `description` is the " +
+                        "secondary line shown below the title.",
+                    listOf(
+                        ApiProperty("title", "String", "Required"),
+                        ApiProperty("description", "String?", "null"),
+                        ApiProperty("disabled", "Boolean", "false"),
+                    ),
                 ),
             ),
     )

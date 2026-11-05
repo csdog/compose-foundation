@@ -38,6 +38,8 @@ data class ComponentDoc(
     val usageImportsCode: String? = null,
     val beforeExamples: List<ComponentGuideSection> = emptyList(),
     val afterExamples: List<ComponentGuideSection> = emptyList(),
+    /** Project-only components show a "Kotlin extension" label instead of the Base UI tab. */
+    val isKotlinExtension: Boolean = false,
 )
 
 /** Prose between the component's recipes, with the same content used by Copy Page. */

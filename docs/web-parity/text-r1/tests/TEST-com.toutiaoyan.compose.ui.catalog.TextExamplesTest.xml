@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TextExamplesTest[jvm]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-05T04:48:15.758Z" hostname="Apples-MacBook-Pro.local" time="0.096">
+  <properties/>
+  <testcase name="pageIsLabeledAsKotlinExtensionAndUsesCurrentApiNames[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TextExamplesTest" time="0.015"/>
+  <testcase name="mutedPreviewKeepsMutedCopy[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TextExamplesTest" time="0.02"/>
+  <testcase name="recipeOrderAndCopyAreConsistent[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TextExamplesTest" time="0.014"/>
+  <testcase name="variantsPreviewRendersEveryTypeScaleEntry[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TextExamplesTest" time="0.029"/>
+  <testcase name="copyPageMarkdownHasNoRemovedApiNames[jvm]" classname="com.toutiaoyan.compose.ui.catalog.TextExamplesTest" time="0.017"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
