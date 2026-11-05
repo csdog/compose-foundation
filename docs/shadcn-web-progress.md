@@ -1,6 +1,6 @@
 # Web 对齐进度
 
-更新：2026-11-04。计划见 [shadcn-web-plan.md](shadcn-web-plan.md)。
+更新：2026-11-05。计划见 [shadcn-web-plan.md](shadcn-web-plan.md)。
 
 前八批基础实现及第九批六个组件的 Web 剩余实现已完成；本批详细范围与验证见下方倒序进度记录。
 第九批相关回归、像素与 JVM/JS/Wasm 验证见倒序记录；第八批及之前的证据保留。
@@ -100,7 +100,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 “基础已验证”表示已有本轮实现、定向测试和浏览器证据，后半句列出真实剩余范围；
 “尚未开始本轮页面与完整状态对照”表示该组件页还未进入本轮逐页核对。历史对齐结果不自动继承。
 
-- [ ] Accordion (`accordion`)：官网七组配方已逐轮对照；已修固定预览、Horizontal竖排与动态导航、RTL工具栏/Noto字体及20px行框，并补五组行为说明。r11常规六例48张新四象限浏览器图与Multiple全展开8图已复查，37项目录验证通过；共享Web主题持久化、七宽度水平布局已关闭，原生滚动基础桥接已验证。仍留字形/描述换行/垂直间距、代码面板细节、原生Hebrew标签，以及扩展API/Style/动态slot/辅助技术/触摸矩阵；见[页面布局新记录](web-parity/page-layout-r1/README.md)、[组件记录](web-parity/accordion-r11/README.md)及r7–r10。
+- [ ] Accordion (`accordion`)：官网七组配方已逐轮对照；已修固定预览、Horizontal竖排与动态导航、RTL工具栏/Noto字体及20px行框，并补五组行为说明。r11常规六例48张新四象限浏览器图与Multiple全展开8图已复查，37项目录验证通过；共享Web主题持久化、七宽度水平布局已关闭，原生滚动基础桥接已验证。r12把过期342dp窄宽夹具校正到官网实际327dp/245dp内宽，补`multiple = true`文案、Kotlin扩展分区及Base UI API Reference，并完成99项聚焦回归；浏览器四象限仍未在新空间重跑。仍留字形/描述换行/垂直间距、代码面板细节、原生Hebrew标签，以及扩展API/Style/动态slot/辅助技术/触摸矩阵；见[页面布局新记录](web-parity/page-layout-r1/README.md)、[r12记录](web-parity/accordion-r12/README.md)、[组件记录](web-parity/accordion-r11/README.md)及r7–r10。
 - [ ] Alert (`alert`)：九组示例四象限、Composition/四个 Kotlin API 小节、说明/源码导出及新目录跳转已验证；共享 focus-visible、说明弹层焦点、URL/标题锚点、代码框/内联背景已验证；操作区默认定位及多按钮调用者布局四象限已补验；全文法、超高操作/任意复杂槽位、窗口重排、辅助技术及细微排版仍待关闭。
 - [ ] Alert Dialog (`alert-dialog`)：官方七组预览、Composition/Kotlin API 已补；Media 桌面两列/手机与 Small 居中、24dp 图标、三语两尺寸切换及 Settings 链接已验证；56 项定向测试与六张 Nova 像素基准通过，桌面/手机浅深矩阵已检查。共用深色 input/border 令牌已在共享主题复核中修正；正文换行/字重及阿拉伯语回退字体、无障碍映射与四张旧 Vega 基准失配仍待关闭。
 - [x] Aspect Ratio (`aspect-ratio`)：Default/Square/Portrait/三语 RTL 组件复核完成；固定 caption 20dp 行框并修正 Nova Select 真实 Arabic 字体选项高度。三种宽度、浅深色、语言切换及展开代码保留状态已验证；53 项功能/布局测试、四张像素基准通过。色域/整数测量适配及共享页面剩余差异见文末第二轮记录，不代表全站 P1/P3 或 Select 已完成。
@@ -171,6 +171,24 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Accordion：当前327dp文档宽度、页面文案与API Reference（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 137 -->
+
+先用page-layout-r1的当前官网几何纠正r7–r11遗留的窄宽验证：390 CSS视口扣除15px经典滚动条后正文为327dp，而非342dp；RTL和扩展预览内部因此为245dp。两个预览测试新增固定宽度断言，避免共享布局修复后Accordion夹具继续测旧宽度。
+
+页面源码对照官方MDX补三处：Multiple说明改用公开`multiple = true`写法；额外Kotlin示例增加独立“Kotlin extensions”标题；官方末尾补Base UI API Reference段落及链接。新增文案/导出回归。七套聚焦测试共99项通过：预览24、扩展32、RTL4、页面示例3、文档几何14、核心Nova15、文档导出7；Wasm开发distribution37.315s通过并保留1条Webpack warning。当前窄宽图、测试XML与构建摘要见[accordion-r12](web-parity/accordion-r12/README.md)。
+
+本轮没有浏览器四象限：当前Ego仅返回用户空间和无关的Product Hunt委派空间，没有compose-foundation TaskSpace；未创建替代空间或接管用户标签。因此Accordion保持未勾选；Geist精确换行、代码面板字形、Hebrew省略、辅助技术/触摸及新构建浏览器矩阵继续开放。Editor排除、Attachment后置。
+
+### 文档：拆分计划与执行进度（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 136 -->
+
+将 [shadcn-web-plan.md](shadcn-web-plan.md) 收缩为目标、执行顺序与验收标准，删除计划中的批次完成摘要、共享页面修复状态和六个日期化组件增量。组件实施细节继续保存在本文件的 Badge、Button、Card、Empty、Hover Card、Checkbox 及共享 Web 记录中，不改变任何组件的完成状态或剩余差异。
+
+本次只调整文档职责，没有修改组件代码，也没有重新执行组件测试或浏览器验收。历史记录继续按创建日期倒序，同日按原追加顺序倒序。
 
 ### Item：标题自然换行、菜单上下文与RTL页面（2026-11-04）
 

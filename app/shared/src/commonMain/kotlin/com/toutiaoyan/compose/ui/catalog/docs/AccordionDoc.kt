@@ -60,7 +60,7 @@ val accordionDoc =
                 AccordionItem("item-2", "Is it styled?", "Yes. It comes with default styles.")
             }
             """.trimIndent(),
-        examplesHeading = null,
+        examplesHeading = "Kotlin extensions",
         compositionCode =
             """
             Accordion
@@ -183,7 +183,7 @@ val accordionDoc =
                 ComponentExample(
                     title = "Multiple",
                     descriptionMarkdown =
-                        "Use `AccordionType.Multiple` to allow multiple items to be " +
+                        "Use `multiple = true` to allow multiple items to be " +
                             "open at the same time.",
                     previewHeight = 450.dp,
                     previewVerticalAlignment = Alignment.Top,
@@ -1343,6 +1343,19 @@ val accordionDoc =
                             }
                         }
                     },
+                ),
+            ),
+        afterExamples =
+            listOf(
+                ComponentGuideSection(
+                    title = "API Reference",
+                    blocks =
+                        listOf(
+                            ComponentGuideBlock.Paragraph(
+                                "See the [Base UI](https://base-ui.com/react/components/accordion#api-reference) " +
+                                    "documentation for more information.",
+                            ),
+                        ),
                 ),
             ),
     )

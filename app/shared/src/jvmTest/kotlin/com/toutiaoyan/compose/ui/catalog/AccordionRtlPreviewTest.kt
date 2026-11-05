@@ -44,7 +44,7 @@ class AccordionRtlPreviewTest(private val viewport: Int, private val dark: Boole
                 Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
                     PreviewCodeSection(
                         example.code,
-                        modifier = Modifier.width(if (viewport == 390) 342.dp else 640.dp).testTag("frame"),
+                        modifier = Modifier.width(if (viewport == 390) 327.dp else 640.dp).testTag("frame"),
                         minPreviewHeight = example.minPreviewHeight,
                         previewPadding = example.previewPadding,
                         preview = example.preview,
@@ -58,9 +58,10 @@ class AccordionRtlPreviewTest(private val viewport: Int, private val dark: Boole
         assertEquals(frame.top + 1, toolbar.top, .5f)
         assertEquals(63f, toolbar.height, .5f)
         val first = rule.onNodeWithText("كيف يمكنني إعادة تعيين كلمة المرور؟").fetchSemanticsNode().boundsInRoot
+        assertEquals(if (viewport == 390) 327.dp else 640.dp, frame.width.dp)
         assertEquals(toolbar.bottom + 41, first.top, .5f)
         assertEquals(42f, first.height, .5f, "Official single-line trigger retains a20px line box")
-        assertEquals(if (viewport == 390) 260f else 448f, first.width, .5f)
+        assertEquals(if (viewport == 390) 245f else 448f, first.width, .5f)
         rule.onNodeWithContentDescription("Preview language").assertHeightIsEqualTo(28.dp).assertWidthIsEqualTo(144.dp)
 
         fun capture(language: String) {

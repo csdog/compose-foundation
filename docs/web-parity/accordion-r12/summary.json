@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-05",
+  "officialGeometry": {
+    "cssViewportWidth": 390,
+    "clientWidth": 375,
+    "documentLeft": 24,
+    "documentWidth": 327
+  },
+  "changes": [
+    "Narrow Accordion frame fixture changed from342dp to327dp",
+    "RTL and extension inner content changed from260dp to245dp",
+    "Added explicit frame-width assertions",
+    "Changed Multiple explanation to the public `multiple = true` argument",
+    "Added Kotlin extensions heading and Base UI API Reference paragraph"
+  ],
+  "tests": {
+    "total": 99,
+    "failures": 0,
+    "suites": {
+      "AccordionPreviewFrameTest": 24,
+      "AccordionExtensionTest": 32,
+      "AccordionRtlPreviewTest": 4,
+      "AccordionExamplesTest": 3,
+      "CatalogDocumentLayoutTest": 14,
+      "AccordionNovaTest": 15,
+      "ComponentDocumentationTest": 7
+    }
+  },
+  "wasmDevelopmentBuild": {
+    "task": ":app:webApp:wasmJsBrowserDevelopmentExecutableDistribution",
+    "exitStatus": 0,
+    "elapsedSeconds": 37.315,
+    "appWasmSha256": "1f8719c6bbbcf5ba4813ff8456ca16b2265afdb3db9779b611915353ee53f59b",
+    "warning": "webpack compiled with one warning"
+  },
+  "nativeEvidence": {
+    "multiple-initial-390-light.png": "90f2888b0ac329c54773b1d9e323c285fc21c5f05cd0e82e793c676a1c151dff",
+    "multiple-initial-390-dark.png": "82c2ddf8b12cbda38dc0f168b531813f79bd14abc0b72a8c6d81481851e3d90d",
+    "multiple-initial-1440-light.png": "7467b23492d2a593f3fb317522ea9da9de40add400bc5f33e1846599a87843fd",
+    "ar-390-light.png": "a31a4a185f6a7fb48516c8b78d7de51e44afd885d55117f0620de50978a9de5b",
+    "ar-390-dark.png": "501de8d22283e84fdcb657c02ee65acb652b9226be21dcbd0f649b6c32887187",
+    "horizontal-390-false-false.png": "66eb7bee871c7a3eee9a5e6b991ff32e781587774251137fb2f0539912b60033"
+  },
+  "browser": {
+    "rerun": false,
+    "reason": "No owned compose-foundation Ego TaskSpace is available; unrelated user/delegated spaces were not claimed and no replacement space was created."
+  }
+}

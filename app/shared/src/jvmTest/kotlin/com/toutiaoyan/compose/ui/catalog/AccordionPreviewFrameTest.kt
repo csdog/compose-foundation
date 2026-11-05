@@ -54,7 +54,7 @@ class AccordionPreviewFrameTest(private val title: String, private val viewport:
                 Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
                     PreviewCodeSection(
                         example.code,
-                        modifier = Modifier.width(if (viewport == 390) 342.dp else 640.dp).testTag("frame"),
+                        modifier = Modifier.width(if (viewport == 390) 327.dp else 640.dp).testTag("frame"),
                         previewHeight = example.previewHeight,
                         previewVerticalAlignment = example.previewVerticalAlignment,
                         previewPadding = example.previewPadding,
@@ -72,6 +72,7 @@ class AccordionPreviewFrameTest(private val title: String, private val viewport:
         fun assertFrame() {
             val frame = rule.onNodeWithTag("frame").fetchSemanticsNode().boundsInRoot
             val content = rule.onNodeWithTag("content").fetchSemanticsNode().boundsInRoot
+            assertEquals(if (viewport == 390) 327f else 640f, frame.width)
             assertEquals(expected + 111, frame.height)
             assertEquals(frame.top + 41, content.top, .5f, "Content stays40 below the border instead of recentering")
         }

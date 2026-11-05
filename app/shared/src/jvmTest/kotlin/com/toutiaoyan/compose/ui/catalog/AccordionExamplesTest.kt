@@ -2,11 +2,15 @@ package com.toutiaoyan.compose.ui.catalog
 
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
+import com.toutiaoyan.compose.ui.catalog.docs.ComponentGuideBlock
 import com.toutiaoyan.compose.ui.catalog.docs.accordionDoc
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import org.junit.Rule
+import kotlin.test.assertEquals
 import kotlin.test.Test
+import kotlin.test.assertIs
+import kotlin.test.assertTrue
 
 class AccordionExamplesTest {
     @get:Rule val rule = createComposeRule()
@@ -30,5 +34,19 @@ class AccordionExamplesTest {
         rule.onNodeWithText("Manage how you receive", substring = true).assertIsDisplayed()
         rule.onNodeWithText("Control your privacy", substring = true).assertIsDisplayed()
         rule.onNodeWithText("{item.content}").assertDoesNotExist()
+    }
+
+    @Test fun officialMultipleCopyAndApiReferenceMatchThePageSource() {
+        val multiple = accordionDoc.examples.single { it.title == "Multiple" }
+        assertEquals("Kotlin extensions", accordionDoc.examplesHeading)
+        assertEquals(
+            "Use `multiple = true` to allow multiple items to be open at the same time.",
+            multiple.descriptionMarkdown,
+        )
+        assertTrue(multiple.code.contains("multiple = true"))
+
+        val api = accordionDoc.afterExamples.single { it.title == "API Reference" }
+        val paragraph = assertIs<ComponentGuideBlock.Paragraph>(api.blocks.single())
+        assertTrue(paragraph.markdown.contains("https://base-ui.com/react/components/accordion#api-reference"))
     }
 }

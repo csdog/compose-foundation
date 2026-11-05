@@ -69,7 +69,7 @@ class AccordionExtensionTest(private val viewport: Int, private val dark: Boolea
                     Box(
                         Modifier.width(
                             if (viewport == 390) {
-                                260.dp
+                                245.dp
                             } else {
                                 384.dp
                             },

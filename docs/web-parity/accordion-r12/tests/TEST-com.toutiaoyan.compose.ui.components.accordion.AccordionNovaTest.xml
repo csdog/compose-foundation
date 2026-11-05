@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AccordionNovaTest[jvm]" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-11-05T02:58:50.743Z" hostname="Apples-MacBook-Pro.local" time="1.236">
+  <properties/>
+  <testcase name="lastDividerFollowsKeyedReordering[jvm]" classname="com.toutiaoyan.compose.ui.components.accordion.AccordionNovaTest" time="0.531"/>
+  <testcase name="horizontalLtrReorderFollowsTheCurrentStack[jvm]" classname="com.toutiaoyan.compose.ui.components.accordion.AccordionNovaTest" time="0.058"/>
+  <testcase name="novaTriggerUsesCompactPaddingAndToggles[jvm]" classname="com.toutiaoyan.compose.ui.components.accordion.AccordionNovaTest" time="0.132"/>
+  <testcase name="keptInputRetainsStateAndTabSkipsItWhileHidden[jvm]" classname="com.toutiaoyan.compose.ui.components.accordion.AccordionNovaTest" time="0.152"/>
+  <testcase name="keyboardUsesVisualOrderAfterKeyedReordering[jvm]" classname="com.toutiaoyan.compose.ui.components.accordion.AccordionNovaTest" time="0.028"/>
+  <testcase name="horizontalRtlReorderFollowsTheCurrentStack[jvm]" classname="com.toutiaoyan.compose.ui.components.accordion.AccordionNovaTest" time="0.029"/>
+  <testcase name="externalCollapseReturnsFocusAndHidesKeptContent[jvm]" classname="com.toutiaoyan.compose.ui.components.accordion.AccordionNovaTest" time="0.045"/>
+  <testcase name="cardNestedAccordionUsesThemeForeground[jvm]" classname="com.toutiaoyan.compose.ui.components.accordion.AccordionNovaTest" time="0.035"/>
+  <testcase name="verticalNavigationSkipsDisabledAndSupportsHomeEnd[jvm]" classname="com.toutiaoyan.compose.ui.components.accordion.AccordionNovaTest" time="0.038"/>
+  <testcase name="forceMountHidesSemanticsAndRestoresFocusWithoutDiscardingState[jvm]" classname="com.toutiaoyan.compose.ui.components.accordion.AccordionNovaTest" time="0.041"/>
+  <testcase name="focusRingDoesNotFillTransparentTriggerInterior[jvm]" classname="com.toutiaoyan.compose.ui.components.accordion.AccordionNovaTest" time="0.022"/>
+  <testcase name="horizontalRtlUsesLeftForForwardAndRightForBackward[jvm]" classname="com.toutiaoyan.compose.ui.components.accordion.AccordionNovaTest" time="0.029"/>
+  <testcase name="controlledRootCanRejectChangeAndDisabledItemNeverRequestsIt[jvm]" classname="com.toutiaoyan.compose.ui.components.accordion.AccordionNovaTest" time="0.033"/>
+  <testcase name="animationReversesFromItsCurrentHeight[jvm]" classname="com.toutiaoyan.compose.ui.components.accordion.AccordionNovaTest" time="0.035"/>
+  <testcase name="horizontalRtlUnequalWidthsUseStackOrder[jvm]" classname="com.toutiaoyan.compose.ui.components.accordion.AccordionNovaTest" time="0.025"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
