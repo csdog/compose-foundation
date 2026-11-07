@@ -1,0 +1,27 @@
+{
+  "capturedAt": "2026-11-07T10:34:19.686Z",
+  "files": {
+    "local-variants-ghost-full": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/bubble-r3/browser/interactions/local-variants-ghost-full.png",
+    "local-links-default": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/bubble-r3/browser/interactions/local-links-default.png",
+    "local-links-toast": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/bubble-r3/browser/interactions/local-links-toast.png",
+    "local-reactions-toast": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/bubble-r3/browser/interactions/local-reactions-toast.png",
+    "local-collapsible-closed": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/bubble-r3/browser/interactions/local-collapsible-closed.png",
+    "local-collapsible-open": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/bubble-r3/browser/interactions/local-collapsible-open.png",
+    "local-popover-closed": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/bubble-r3/browser/interactions/local-popover-closed.png",
+    "local-popover-open": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/bubble-r3/browser/interactions/local-popover-open.png",
+    "local-popover-closed-after-escape": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/bubble-r3/browser/interactions/local-popover-closed-after-escape.png",
+    "local-popover-open-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/bubble-r3/browser/interactions/local-popover-open-dark.png"
+  },
+  "hashes": {
+    "local-variants-ghost-full": "8a8366eca75af20ade2b84ac67d342b0049c35c2c364860c123942945b9205b5",
+    "local-links-default": "52a935ed970a90421ca3fdf355feda0682cf333ea72dab99a582d32e4ef8eb5b",
+    "local-links-toast": "a65adfdff631b7fb7e5e52b939c590b5282fcf6729e3b1da2c50c855cdfe8a57",
+    "local-reactions-toast": "66ac7b792cce43b5bc0917b25abdfef446b20fc71210086cf62db47f4f794e8d",
+    "local-collapsible-closed": "9430003572db942a7470046fddc98d33e3876ce95a1fd5237a54f3b563bb2d2c",
+    "local-collapsible-open": "50c6ff2f62339814260782a1e71c76d28a52feb478ac18a56b014a2b214ca2c4",
+    "local-popover-closed": "9995bad750cdc44b347d2ed6647bea930ba0da3cd67bda722bd0c8b156397f2f",
+    "local-popover-open": "6d7f0bdcbba1de5e7e820e7ebea2ec331582ad7b3328f914befcd518bdbc0258",
+    "local-popover-closed-after-escape": "e13365a7b923b28a6fb8c68c3b03ab4ed2e423bc182d593daf21d74055708935",
+    "local-popover-open-dark": "038a2721e7ae463727acb00e59363ac98a9d575bcca61c00a3baf3dd92b93080"
+  }
+}

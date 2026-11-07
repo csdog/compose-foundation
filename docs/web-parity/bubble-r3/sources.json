@@ -1,0 +1,68 @@
+{
+  "component": "Bubble",
+  "officialRevision": "42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/bubble",
+  "retrievedAt": "2026-11-07T18:32:00+08:00",
+  "files": [
+    {
+      "path": "sources/bubble.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/content/docs/components/base/bubble.mdx",
+      "sha256": "78594d2f236f5618aacd4f9525e95b60d8ea4ff17ddfdfdeb687b967330e379e"
+    },
+    {
+      "path": "sources/bubble.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/registry/bases/base/ui/bubble.tsx",
+      "sha256": "7b997c07146c49b4d3371272b937bc4f1b9852b3c47150de1537997de0ea85a0"
+    },
+    {
+      "path": "sources/bubble-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/bubble-demo.tsx",
+      "sha256": "b0585b169d28e1ec0b1db3fe92aefb98a6af1a4edccd23ac8413b910ebe19f68"
+    },
+    {
+      "path": "sources/bubble-variants.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/bubble-variants.tsx",
+      "sha256": "30b5b79ca7fe88298a44cf54b8dbd9d63ea8e6703eb24273a96c3ae3666a51d0"
+    },
+    {
+      "path": "sources/bubble-alignment.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/bubble-alignment.tsx",
+      "sha256": "790f53f55b6e56e3ba33475fd5d1c222cdbd03b7cd580304ced49fb33b495586"
+    },
+    {
+      "path": "sources/bubble-group-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/bubble-group-demo.tsx",
+      "sha256": "e6d71cb95a53c380f54bfd949b1a51ea6e7bc215ca8015c66bfaae3830e4afba"
+    },
+    {
+      "path": "sources/bubble-link-button.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/bubble-link-button.tsx",
+      "sha256": "63ea05e5eb6285b36e3ec4f0acd4951e5cf61a9cc8ede28ba0c0ce58d4596da7"
+    },
+    {
+      "path": "sources/bubble-reactions.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/bubble-reactions.tsx",
+      "sha256": "57cbb4a6f23838226fa2cb5332ff11ce72c09944aa4577ace70e1b27833f394b"
+    },
+    {
+      "path": "sources/bubble-collapsible.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/bubble-collapsible.tsx",
+      "sha256": "e9978c9ada0f76fdac6118b65921bd7bcef83a83ec2f63c2274c57cb5c9817a8"
+    },
+    {
+      "path": "sources/bubble-tooltip.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/bubble-tooltip.tsx",
+      "sha256": "402c05aa2fd8fff6ffa9f24f0d2e0ef6b297f5be6b29420c714591943f2b9019"
+    },
+    {
+      "path": "sources/bubble-popover.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/bubble-popover.tsx",
+      "sha256": "91c8f012836334ca012a86ab2125c65bce244ad6b386b937003b4ae1027da133"
+    },
+    {
+      "path": "sources/style-nova.css",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+    }
+  ]
+}

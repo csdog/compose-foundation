@@ -109,7 +109,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [x] Avatar (`avatar`)：r4 将当前官方 `main` 固定为 `42f3bb63…`，12 份 MDX/示例/wrapper 与 Nova CSS 均与 r3 字节一致。AvatarGroup 现在为所有成员无条件提供背景色 ring；Count 省略 `size` 时按官方 CSS 级联跟随组尺寸（有 Sm 则 Sm，否则有 Lg 则 Lg，否则 Default），显式尺寸可覆盖。Dropdown 键盘回归补齐 ArrowUp/Home/End/循环/Escape 焦点恢复。目录 5 项、core parity 7 项、截图 10 项通过；当前 Wasm `ba10ad5d…` 下完成四象限、72 张九分节和 12 个 Dropdown/RTL 交互取证。修复后独立 Reviewer 无 finding；共享壳、字形栅格、`next/image` 与 Canvas 原生语义作为明确平台差异，见 [avatar-r4](web-parity/avatar-r4/README.md)。
 - [ ] Badge (`badge`)：七个官方配方（Default、Variants、With Icon、With Spinner、Link、Custom Colors、RTL）顺序/标题/文案核对一致；slot h 最终构建（wasm c0570519）后已重拍 1440×1000/390×844 浅深四象限、6 组逐配方官本对照与 Link hover/点击状态；8 项 BadgeExamplesTest 通过。RTL 描述改为官方原文。仍开放：本地额外 Composition 小节（官方无）、键盘焦点/原生链接语义与 aria 矩阵，见 [badge-r3](web-parity/badge-r3/README.md)。
 - [x] Breadcrumb (`breadcrumb`)：r4 将当前官方 `main` 固定为 `42f3bb63…`，MDX/七示例与 r3 字节一致，并归档当前 Base wrapper 与 Nova CSS。BreadcrumbLink 增加主题 focus ring，补齐 Tab、Enter/Space 与 disabled 回归；当前页改为不可点击的 BasicText，并以 `"<text>, current page"` 暴露可访问名称。目录 5 项、core parity 6 项、截图 7 项通过；当前 Wasm `7a06664d…` 下完成四象限、48 张六分节及 11 个 hover/Dropdown/RTL 交互取证。Compose desktop 仍会把该可访问当前页节点标为 focused，作为明确语义差异记录；浏览器键盘 focus 为 JVM/golden-only，见 [breadcrumb-r4](web-parity/breadcrumb-r4/README.md)。
-- [ ] Bubble (`bubble`)：九个官方配方（Default、Variants、Alignment、Bubble Group、Links and Buttons、Reactions、Show More / Collapsible、Tooltip、Popover）顺序/标题核对一致；slot h 最终构建后已重拍四象限与 8 组逐配方对照，取证可点击气泡 hover 焦点环与点击 toast；8 项 BubbleExamplesTest 通过。仍开放：Variants 预览 ghost 长文案被预览高度截断、Links and Buttons 描述为 Kotlin 适配、完整 aria/键盘路径，见 [bubble-r2](web-parity/bubble-r2/README.md)。
+- [x] Bubble (`bubble`)：r3 将当前官方 `main` 固定为 `42f3bb63…`，MDX/九个示例与 r2 字节一致，并归档当前 wrapper 与 Nova CSS。Variants 三段 ghost 文案在可滚动 600dp 视口与当前浏览器构建中完整显示；BubbleContent 覆盖 disabled、指针、Enter、Space，Tooltip 覆盖 focus/Enter/Escape/焦点恢复，Popover 覆盖 Enter/Space/Escape，Reaction 覆盖指针与键盘。目录 9 项、core parity 7 项、截图 14 项通过；当前 Wasm `7a06664d…` 下完成四象限、64 张八分节和 10 个 ghost/链接/Reaction/Collapsible/Popover 状态。Tooltip 因 Ego 合成 hover 无法触发 Canvas 而明确限定为 JVM 覆盖；共享壳/字体与 Kotlin 路由文案作为既有差异，见 [bubble-r3](web-parity/bubble-r3/README.md)。
 - [ ] Button (`button`)：十五个官方配方（demo、Size、Default、Outline、Secondary、Ghost、Destructive、Link、Icon、With Icon、Rounded、Spinner、Button Group、As Link、RTL）与 Cursor 文案核对一致；slot h 最终构建后已重拍四象限、14 组逐配方对照，取证 Button Group 真实菜单与 As Link hover；ButtonExamplesTest 12 + ButtonFollowupRecipesTest 12 全部通过。仍开放：本地额外 Composition 小节、Tabler 图标近似、子菜单宽度/手机碰撞/指针聚焦与完整状态矩阵，见 [button-r4](web-parity/button-r4/README.md)。
 - [ ] Button Group (`button-group`)：十二个官方配方顺序/标题核对一致；本轮按官方示例重写 Orientation（单竖向组）、Size（三行四按钮）、Nested（Plus+InputGroup）、Separator/Split（Secondary）、Dropdown Menu（Follow+官方七项菜单）、Select（货币+10.00+发送）、Input Group（Plus+InputGroup+Voice）并同步导出代码；RTL 描述改为官方原文；slot h 最终构建后已重拍四象限、11 组逐配方对照，并取证 Dropdown/Select/Popover 打开状态；16 项 ButtonGroupExamplesTest 通过。仍开放：Popover 内容简化、Input 配方内部结构差异、role=group 语义与完整状态矩阵，见 [button-group-r3](web-parity/button-group-r3/README.md)。
 - [ ] Calendar (`calendar`)：官方十配方（demo、Basic、Range、Month/Year Selector、Presets、Time、Booked、Custom Cell Size、Week Numbers、RTL）+5 个 Kotlin extension 顺序核对一致；补齐 Basic/Range/Month-Year/Week Numbers/RTL 官方描述，RTL 用官方原文；slot h 最终构建后已重拍四象限、9 组逐配方对照，取证月份/年份菜单、日期选择、Range 与阿拉伯语 RTL；6 项 CalendarExamplesTest 通过。仍开放：官方 Hijri 预览未实现、caption 下拉为带边框胶囊+DropdownMenu（官方无边框文本+原生 select，组件层差异，需共享修复）、Changelog 未复刻，见 [calendar-r3](web-parity/calendar-r3/README.md)。
@@ -172,6 +172,12 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Bubble：r3 ghost 完整性、键盘状态与九分节验证（2026-11-07）
+
+<!-- progress-created: 2026-11-07; order: 234 -->
+
+当前官方 `main` 固定为 `42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9`；MDX 与九个示例和 r2 的 `8a353667…` 文件 SHA-256 一致，当前 wrapper/Nova CSS 已归档。以可滚动 600dp 视口锁定 Variants 三段 ghost 全文，并用当前浏览器 capture 证明页面无截断。补齐 BubbleContent Space、Tooltip Enter/Escape/焦点恢复、Popover Enter/Space/Escape 和 Reaction 指针/键盘路径；新增浅深交互 focus golden。目录 9/9、core 7/7、截图 14/14 通过；当前 Wasm `7a06664d…` 完成 8 张四象限、64 张八分节和 10 个交互状态。Tooltip 浏览器合成 hover 限制明确记录为 JVM-only；Bubble 文件在 owning ktlint 报告中为 0。见 [bubble-r3](web-parity/bubble-r3/README.md)。
 
 ### Breadcrumb：r4 focus ring、键盘导航与当前页语义（2026-11-07）
 

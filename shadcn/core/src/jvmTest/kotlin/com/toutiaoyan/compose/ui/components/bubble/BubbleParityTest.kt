@@ -102,6 +102,8 @@ class BubbleParityTest : ScreenshotTest() {
         assertEquals(1, clicks)
         composeRule.onNodeWithText("Reply").requestFocus().performKeyInput { pressKey(Key.Enter) }
         assertEquals(2, clicks)
+        composeRule.onNodeWithText("Reply").performKeyInput { pressKey(Key.Spacebar) }
+        assertEquals(3, clicks)
     }
 
     @Test fun tintUsesOpaqueRelativeOklchInsteadOfAnAlphaWash() {

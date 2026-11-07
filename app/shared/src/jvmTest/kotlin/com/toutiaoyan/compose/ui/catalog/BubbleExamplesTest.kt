@@ -1,8 +1,11 @@
 package com.toutiaoyan.compose.ui.catalog
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.key.Key
@@ -57,26 +60,68 @@ class BubbleExamplesTest {
         rule.onNodeWithText(bubbleLongText.take(180) + "...").assertIsDisplayed()
     }
 
+    @Test fun variantsShowEveryGhostParagraphWithoutTruncation() {
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, minTouchTarget = null) {
+                OverlayHost {
+                    Box(
+                        Modifier.width(384.dp).height(600.dp)
+                            .verticalScroll(rememberScrollState())
+                            .testTag("variants-preview"),
+                    ) {
+                        bubbleDoc.examples.single { it.title == "Variants" }.preview()
+                    }
+                }
+            }
+        }
+        rule.onNodeWithText(
+            "Ghost bubbles work for assistant text, markdown, and other content that should not be framed.",
+        ).assertExists()
+        rule.onNodeWithText(
+            "This is perfect for assistant messages that should not have a frame and can take the " +
+                "full width of the container. You can also render code in it.",
+        ).assertExists()
+        rule.onNodeWithText(
+            "Ghost bubbles are full width and can take the full width of the container.",
+        ).assertExists()
+        val last = rule.onNodeWithText(
+            "Ghost bubbles are full width and can take the full width of the container.",
+        )
+        last.performScrollTo().assertIsDisplayed()
+        assertTrue(last.fetchSemanticsNode().boundsInRoot.height > 0f)
+    }
+
     @Test fun popoverShowsActualErrorAndEscapeClosesIt() {
         show("Popover")
-        rule.onNodeWithContentDescription("Show error details").performClick()
+        val trigger = rule.onNodeWithContentDescription("Show error details")
+        trigger.requestFocus().performKeyInput { pressKey(Key.Enter) }
         rule.onNodeWithText("Command failed with exit code 1").assertIsDisplayed()
         rule.onNodeWithText("ENOENT: no such file or directory, open pnpm-lock.yaml").assertIsDisplayed()
         rule.onNodeWithText("Command failed with exit code 1").performKeyInput { pressKey(Key.Escape) }
         rule.onNodeWithText("Command failed with exit code 1").assertDoesNotExist()
+        trigger.assertIsFocused().performKeyInput { pressKey(Key.Spacebar) }
+        rule.onNodeWithText("Command failed with exit code 1").assertIsDisplayed()
+        rule.onNodeWithText("Command failed with exit code 1").performKeyInput { pressKey(Key.Escape) }
+        rule.onNodeWithText("Command failed with exit code 1").assertDoesNotExist()
+        trigger.assertIsFocused()
     }
 
     @Test fun focusedReadStatusExposesMetadataTooltip() {
         show("Tooltip")
-        rule.onNodeWithContentDescription("Read status").requestFocus()
+        rule.onNodeWithContentDescription("Read status").requestFocus().performKeyInput { pressKey(Key.Enter) }
         rule.mainClock.advanceTimeBy(1000)
         rule.onNodeWithText("Read on Jan 5, 2026 at 4:32 PM").assertIsDisplayed()
+        rule.onNodeWithText("Read on Jan 5, 2026 at 4:32 PM").performKeyInput { pressKey(Key.Escape) }
+        rule.onNodeWithText("Read on Jan 5, 2026 at 4:32 PM").assertDoesNotExist()
+        rule.onNodeWithContentDescription("Read status").assertIsFocused()
     }
 
     @Test fun interactiveReactionShowsSuccessNotification() {
         show("Reactions")
         rule.onNodeWithText("Yes, run it").performMouseInput { click(center) }
         rule.onNodeWithText("You clicked yes, running command...").assertIsDisplayed()
+        rule.onNodeWithText("Yes, run it").requestFocus().performKeyInput { pressKey(Key.Enter) }
+        rule.onAllNodesWithText("You clicked yes, running command...").assertCountEquals(2)
     }
 
     @Test fun docsHaveAllNineOfficialExamplesAndCurrentKotlinNames() {

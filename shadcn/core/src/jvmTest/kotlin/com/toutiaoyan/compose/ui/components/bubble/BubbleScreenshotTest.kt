@@ -4,8 +4,10 @@ package com.toutiaoyan.compose.ui.components.bubble
 
 import androidx.compose.foundation.layout.width
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.ScreenshotTest
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.Test
 import com.toutiaoyan.compose.ui.components.emojitext.EmojiText
 import com.toutiaoyan.compose.ui.components.message.MessageAlign
@@ -154,4 +156,23 @@ class BubbleScreenshotTest : ScreenshotTest() {
     @Test fun nova_light() = nova(false)
 
     @Test fun nova_dark() = nova(true)
+
+    private fun interactiveFocused(darkTheme: Boolean) {
+        snapshotFocused(
+            "bubble_interactive_focused",
+            focusTag = "bubble-focus",
+            darkTheme = darkTheme,
+            stylePreset = StylePreset.Nova,
+        ) {
+            BubbleGroup(Modifier.width(280.dp)) {
+                Bubble {
+                    BubbleContent("Reply", onClick = {}, modifier = Modifier.testTag("bubble-focus"))
+                }
+            }
+        }
+    }
+
+    @Test fun interactive_focused_light() = interactiveFocused(darkTheme = false)
+
+    @Test fun interactive_focused_dark() = interactiveFocused(darkTheme = true)
 }

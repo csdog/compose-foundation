@@ -1,0 +1,83 @@
+Reusing configuration cache.
+> Task :shadcn:core:convertXmlValueResourcesForJvmTest NO-SOURCE
+> Task :app:shared:convertXmlValueResourcesForJvmTest NO-SOURCE
+> Task :shadcn:core:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shadcn:core:copyNonXmlValueResourcesForJvmTest NO-SOURCE
+> Task :app:shared:copyNonXmlValueResourcesForJvmTest NO-SOURCE
+> Task :shadcn:core:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :app:shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :app:shared:prepareComposeResourcesTaskForJvmTest NO-SOURCE
+> Task :shadcn:core:prepareComposeResourcesTaskForJvmTest NO-SOURCE
+> Task :app:shared:generateExpectResourceCollectorsForCommonMain UP-TO-DATE
+> Task :shadcn:core:loadKtlintReporters UP-TO-DATE
+> Task :app:shared:loadKtlintReporters UP-TO-DATE
+> Task :app:shared:generateResourceAccessorsForJvmTest NO-SOURCE
+> Task :app:shared:generateComposeResClass UP-TO-DATE
+> Task :shadcn:core:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shadcn:core:generateExpectResourceCollectorsForCommonMain UP-TO-DATE
+> Task :shadcn:core:generateResourceAccessorsForJvmTest NO-SOURCE
+> Task :shadcn:core:generateComposeResClass UP-TO-DATE
+> Task :shadcn:core:generateResourceAccessorsForCommonMain NO-SOURCE
+> Task :app:shared:copyNonXmlValueResourcesForCommonMain UP-TO-DATE
+> Task :app:shared:prepareComposeResourcesTaskForCommonMain UP-TO-DATE
+> Task :app:shared:generateResourceAccessorsForCommonMain UP-TO-DATE
+> Task :app:shared:runKtlintCheckOverCommonMainSourceSet UP-TO-DATE
+
+> Task :app:shared:ktlintCommonMainSourceSetCheck FAILED
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ButtonGroupDoc.kt:263:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/DatePickerDoc.kt:678:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/DrawerDoc.kt:1461:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/DrawerDoc.kt:1463:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/DrawerDoc.kt:1464:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/DrawerDoc.kt:1487:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/DrawerDoc.kt:1489:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/DrawerDoc.kt:1490:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/DrawerDoc.kt:1492:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/InputGroupDoc.kt:145:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/InputOTPDoc.kt:101:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/InputOTPDoc.kt:102:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/InputOTPDoc.kt:103:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/InputOTPDoc.kt:196:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MessageScrollerMissingRecipes.kt:702:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/QuestionnaireDoc.kt:667:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/QuestionnaireDoc.kt:950:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/QuestionnaireDoc.kt:975:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/QuestionnaireDoc.kt:997:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ResizableDoc.kt:68:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/TableRecipes.kt:176:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/TabsRecipes.kt:305:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/BadgeDoc.kt:165:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ButtonDoc.kt:228:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/CalendarDoc.kt:174:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/CarouselDoc.kt:105:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/EmptyAdditionalRecipes.kt:239:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/EmptyDoc.kt:239:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/EmptyDoc.kt:266:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ItemDoc.kt:325:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ItemDoc.kt:745:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ItemDoc.kt:890:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MarkerDoc.kt:354:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ScrollFadeDoc.kt:56:1 Exceeded max line length (120) (cannot be auto-corrected)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ScrollFadeDoc.kt:58:1 Exceeded max line length (120) (cannot be auto-corrected)
+
+> Task :app:shared:runKtlintCheckOverJvmTestSourceSet
+> Task :shadcn:core:runKtlintCheckOverJvmTestSourceSet
+> Task :shadcn:core:runKtlintCheckOverCommonMainSourceSet
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:shared:ktlintCommonMainSourceSetCheck' (registered by plugin 'org.jlleitschuh.gradle.ktlint').
+> A failure occurred while executing org.jlleitschuh.gradle.ktlint.worker.ConsoleReportWorkAction
+   > KtLint found code style violations. Please see the following reports:
+     - /Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/build/reports/ktlint/ktlintCommonMainSourceSetCheck/ktlintCommonMainSourceSetCheck.txt
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 8s
+14 actionable tasks: 4 executed, 10 up-to-date
+Configuration cache entry reused.
