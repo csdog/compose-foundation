@@ -73,14 +73,35 @@ class CardExamplesTest(private val width: Int, private val dark: Boolean) {
     @Test fun sixOfficialRecipesHaveTheirContentAndSectionStructure() {
         content()
         assertEquals(
-            listOf("Default", "Size", "Spacing", "Kotlin extension: Edge to Edge", "Image", "RTL"),
+            listOf("Default", "Size", "Spacing", "Edge to Edge", "Image", "RTL"),
             cardDoc.examples.map { it.title },
         )
         assertFalse(docSections(cardDoc).any { it.title == "Edge to Edge" })
         assertFalse(componentPageMarkdown(cardDoc).contains("## Edge to Edge"))
+        assertFalse(componentPageMarkdown(cardDoc).contains("Kotlin extension: Edge to Edge"))
+        assertContains(
+            componentPageMarkdown(cardDoc),
+            "remove the section gap on `CardContent` with the matching negative bottom offset.",
+        )
         assertContains(
             componentPageMarkdown(cardDoc),
             "Places content in the top-right of the header (logical end in RTL), such as a button or badge.",
+        )
+        val apiThenChangelog =
+            listOf("## API Reference", "## Changelog", "### Spacing Variable").map {
+                componentPageMarkdown(cardDoc).indexOf(it)
+            }
+        assertTrue(apiThenChangelog.all { it >= 0 })
+        assertEquals(apiThenChangelog.sorted(), apiThenChangelog)
+        val sectionTitles = docSections(cardDoc).map { it.title }
+        assertTrue(sectionTitles.indexOf("API Reference") < sectionTitles.indexOf("Changelog"))
+        assertTrue(sectionTitles.indexOf("Changelog") < sectionTitles.indexOf("Spacing Variable"))
+        assertTrue(sectionTitles.none { it.startsWith("Update ") })
+        assertContains(componentPageMarkdown(cardDoc), "1. **Update the Card root spacing classes.**")
+        assertContains(componentPageMarkdown(cardDoc), "2. **Update CardHeader spacing classes.**")
+        assertContains(
+            componentPageMarkdown(cardDoc),
+            "3. **Update CardContent and CardFooter spacing classes.**",
         )
         assertContains(componentPageMarkdown(cardDoc), "### CardImage (Kotlin extension)")
         assertContains(componentPageMarkdown(cardDoc), "Kotlin-only image region")
@@ -88,6 +109,12 @@ class CardExamplesTest(private val width: Int, private val dark: Boolean) {
         rule.onNodeWithText("m@example.com").performTextInput("alice@example.com")
         rule.onNodeWithContentDescription("Password", useUnmergedTree = true).performTextInput("secret")
         rule.onNodeWithText("Forgot your password?").assertIsDisplayed()
+        if (width == 390) {
+            val password = rule.onNodeWithText("Password", useUnmergedTree = true).getUnclippedBoundsInRoot()
+            val forgot =
+                rule.onNodeWithText("Forgot your password?", useUnmergedTree = true).getUnclippedBoundsInRoot()
+            assertEquals(2f, (forgot.left - password.right).value, 1f)
+        }
         show(1)
         rule.onNodeWithText("Scheduled reports").assertIsDisplayed()
         val title = mutableListOf<TextLayoutResult>()

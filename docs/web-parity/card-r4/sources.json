@@ -1,0 +1,53 @@
+{
+  "component": "card",
+  "officialRevision": "42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9",
+  "retrievedAt": "2026-11-07T21:22:43+0800",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/card",
+  "files": [
+    {
+      "path": "sources/card.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/content/docs/components/base/card.mdx",
+      "sha256": "a058a2f8a1fdfaece149524fa4bf6466b0af831276d25489f918f6ceb4c10c0c"
+    },
+    {
+      "path": "sources/card-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/card-demo.tsx",
+      "sha256": "9fe011a4cd18ee259b8a149ad977751d046916d03636da3c97ca88173d16e276"
+    },
+    {
+      "path": "sources/card-small.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/card-small.tsx",
+      "sha256": "23b6f4300d5c8e0aadf83cc994e32c5850622b961c8db0e40b6cd3c5b2b39440"
+    },
+    {
+      "path": "sources/card-spacing.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/card-spacing.tsx",
+      "sha256": "c34775b8a6e54e34d5e5e62640f01fc48f07f20478af49557423a83ca9359bf9"
+    },
+    {
+      "path": "sources/card-edge-to-edge.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/card-edge-to-edge.tsx",
+      "sha256": "fee5aff6730dea88b1c14b6ed94881c59d23b56d48ff317d2fc8ed7b13f747c5"
+    },
+    {
+      "path": "sources/card-image.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/card-image.tsx",
+      "sha256": "f4b3e4d827225a24a122d1e7e0ad2da353c2dfb508f91805e7059ff395de3c30"
+    },
+    {
+      "path": "sources/card-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/card-rtl.tsx",
+      "sha256": "2fc2119646dcea0a631e5692e6418086cf8343be402f4dc178939cfbd974ff1c"
+    },
+    {
+      "path": "sources/card.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/registry/bases/base/ui/card.tsx",
+      "sha256": "0d525c03e086b0047f7c0700850281023359cfc020eb233fdb0d74ec870ebea0"
+    },
+    {
+      "path": "sources/style-nova.css",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+    }
+  ]
+}

@@ -27,6 +27,14 @@ internal fun componentPageMarkdown(doc: ComponentDoc): String =
                         appendLine()
                     }
                     is ComponentGuideBlock.Code -> appendLine("```${block.language.orEmpty()}\n${block.code}\n```\n")
+                    is ComponentGuideBlock.Steps ->
+                        block.items.forEachIndexed { index, step ->
+                            appendLine("${index + 1}. **${step.title}**\n")
+                            step.bodyMarkdown?.let { appendLine("$it\n") }
+                            step.code?.let {
+                                appendLine("```${step.language.orEmpty()}\n$it\n```\n")
+                            }
+                        }
                 }
             }
         }
@@ -54,4 +62,5 @@ internal fun componentPageMarkdown(doc: ComponentDoc): String =
                 properties(section.properties)
             }
         }
+        doc.afterApiSections.forEach(::guide)
     }

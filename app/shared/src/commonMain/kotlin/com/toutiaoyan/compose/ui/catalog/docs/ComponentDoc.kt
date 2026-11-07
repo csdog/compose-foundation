@@ -38,6 +38,7 @@ data class ComponentDoc(
     val usageImportsCode: String? = null,
     val beforeExamples: List<ComponentGuideSection> = emptyList(),
     val afterExamples: List<ComponentGuideSection> = emptyList(),
+    val afterApiSections: List<ComponentGuideSection> = emptyList(),
     /** Project-only components show a "Kotlin extension" label instead of the Base UI tab. */
     val isKotlinExtension: Boolean = false,
 )
@@ -55,6 +56,15 @@ sealed interface ComponentGuideBlock {
     data class Bullets(val items: List<String>) : ComponentGuideBlock
 
     data class Code(val code: String, val language: String? = "kotlin") : ComponentGuideBlock
+
+    data class Steps(val items: List<Step>) : ComponentGuideBlock
+
+    data class Step(
+        val title: String,
+        val bodyMarkdown: String? = null,
+        val code: String? = null,
+        val language: String? = "kotlin",
+    )
 }
 
 data class ComponentApiSection(

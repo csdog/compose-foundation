@@ -45,6 +45,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineBreak
 import com.composables.icons.lucide.ArrowLeft
@@ -363,6 +364,9 @@ internal fun ComponentDetailContent(
                                 }
                             }
                         }
+                        doc.afterApiSections.forEachIndexed { index, section ->
+                            GuideSection(section, anchors, "after-api-guide-$index")
+                        }
                     }
                 }
                 if (showTableOfContents) {
@@ -441,6 +445,50 @@ private fun GuideSection(
                             }
                         }
                     }
+                is ComponentGuideBlock.Steps ->
+                    Column(
+                        Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(24.dp),
+                    ) {
+                        block.items.forEachIndexed { index, step ->
+                            Row(
+                                Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                verticalAlignment = Alignment.Top,
+                            ) {
+                                Box(
+                                    Modifier.size(20.dp).background(currentTheme.colors.muted, CircleShape),
+                                    contentAlignment = Alignment.Center,
+                                ) {
+                                    Text(
+                                        textStyle = TextStyle(fontSize = 12.sp, lineHeight = 12.sp),
+                                    ) { "${index + 1}" }
+                                }
+                                Column(
+                                    Modifier.weight(1f),
+                                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                                ) {
+                                    Text(
+                                        textStyle =
+                                            TextStyle(
+                                                fontSize = bodySize.sp,
+                                                lineHeight = lineHeight.sp,
+                                                fontWeight = FontWeight.SemiBold,
+                                            ),
+                                    ) { step.title }
+                                    step.bodyMarkdown?.let { DocParagraph(it) }
+                                    step.code?.let {
+                                        CodeBlock(
+                                            it,
+                                            Modifier.fillMaxWidth(),
+                                            language = step.language,
+                                            lineNumbers = true,
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
             }
         }
     }
@@ -479,6 +527,9 @@ internal fun docSections(doc: ComponentDoc): List<DocSection> =
                 ->
                 add(DocSection("api-$index", section.title, nested = true))
             }
+        }
+        doc.afterApiSections.forEachIndexed { index, section ->
+            add(DocSection("after-api-guide-$index", section.title, nested = section.level == 3))
         }
     }.let { sections ->
         val used = mutableSetOf<String>()

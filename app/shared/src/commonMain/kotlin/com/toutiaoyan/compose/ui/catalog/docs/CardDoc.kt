@@ -136,15 +136,15 @@ val cardDoc =
                     "Spacing",
                     544,
                     "In addition to the `size` parameter, you can use the `spacing` parameter to control " +
-                        "the spacing between sections and the inset of card parts.",
+                        "the spacing between sections and the inset of card parts. Use negative horizontal " +
+                        "offsets to make content go edge to edge while keeping it aligned with the card inset. " +
+                        "When the edge-to-edge content sits above a footer, remove the section gap on " +
+                        "`CardContent` with the matching negative bottom offset.",
                 ),
                 cardExample(
                     3,
-                    "Kotlin extension: Edge to Edge",
+                    "Edge to Edge",
                     384,
-                    "Use `contentPadding(0.dp)` on `CardContent` to make content go edge to edge while " +
-                        "keeping it aligned with the card inset. When the edge-to-edge content sits above a " +
-                        "footer, reclaim the section gap with the layout modifier shown below.",
                 ),
                 cardExample(4, "Image", 512, "Add an image before the card header to create a card with an image."),
                 cardExample(
@@ -153,6 +153,59 @@ val cardDoc =
                     544,
                     "To enable RTL support in shadcn/ui, see the " +
                         "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
+                ),
+            ),
+        afterApiSections =
+            listOf(
+                ComponentGuideSection(
+                    title = "Changelog",
+                    blocks = emptyList(),
+                ),
+                ComponentGuideSection(
+                    title = "Spacing Variable",
+                    level = 3,
+                    blocks =
+                        listOf(
+                            ComponentGuideBlock.Paragraph(
+                                "If you are upgrading Card code, the Compose `spacing` parameter is the " +
+                                    "equivalent of the upstream shared `--card-spacing` token.",
+                            ),
+                            ComponentGuideBlock.Steps(
+                                listOf(
+                                    ComponentGuideBlock.Step(
+                                        "Update the Card root spacing classes.",
+                                        "Set the shared default on the root. Default is 16.dp, Sm is 12.dp, " +
+                                            "and an explicit value overrides the size default.",
+                                        """
+                                        Card(spacing = 16.dp) { ... }
+                                        Card(size = CardSize.Sm, spacing = 12.dp) { ... }
+                                        """.trimIndent(),
+                                    ),
+                                    ComponentGuideBlock.Step(
+                                        "Update CardHeader spacing classes.",
+                                        "CardHeader and CardContent use the same horizontal spacing token:",
+                                        """
+                                        Card(spacing = 24.dp) {
+                                            CardHeader("Custom spacing", "Override the shared inset.")
+                                        }
+                                        """.trimIndent(),
+                                    ),
+                                    ComponentGuideBlock.Step(
+                                        "Update CardContent and CardFooter spacing classes.",
+                                        "CardContent follows the same inset; CardFooter owns its padding and " +
+                                            "keeps full-width bounds. A leading CardImage removes the root top " +
+                                            "inset, and a trailing CardFooter removes the bottom inset.",
+                                        """
+                                        Card {
+                                            CardImage(Modifier.fillMaxWidth().aspectRatio(16f / 9f)) { ... }
+                                            CardContent("Content follows the shared inset.")
+                                            CardFooter { Text { "Footer" } }
+                                        }
+                                        """.trimIndent(),
+                                    ),
+                                ),
+                            ),
+                        ),
                 ),
             ),
     )

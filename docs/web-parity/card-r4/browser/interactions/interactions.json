@@ -1,0 +1,31 @@
+{
+  "capturedAt": "2026-11-07T14:16:44.282Z",
+  "files": {
+    "spacing16": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/card-r4/browser/interactions/local-spacing-16.png",
+    "spacing32": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/card-r4/browser/interactions/local-spacing-32.png",
+    "rtlArabic": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/card-r4/browser/interactions/local-rtl-arabic.png",
+    "rtlLanguagePopup": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/card-r4/browser/interactions/local-rtl-language-popup.png",
+    "rtlEnglish": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/card-r4/browser/interactions/local-rtl-english.png",
+    "rtlHebrew": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/card-r4/browser/interactions/local-rtl-hebrew.png"
+  },
+  "hashes": {
+    "spacing16": "333e3ad859298900b181bda26717111f5803b9bdb68d5cea17cc8ab74a157cc2",
+    "spacing32": "90870f051b3d0c59857dfb4f7e0b78c11c910138c412e07c31988ad2b1af8aa3",
+    "rtlArabic": "a09c57f7e1af1eb6b8d5638d7ff977deeffc137ee1fcaaf1bbed9578c8605161",
+    "rtlLanguagePopup": "18f721930eb2b070284e99e4d85daf53b2e8f8cc2460d998b47a47bfd6c3da79",
+    "rtlEnglish": "e121ff82ad6f75cb38452e835738be9ea2afa83b6a3322de73ff5a33f830b5da",
+    "rtlHebrew": "a8fed6fc44ce08497c29f76bad66561b29aca2386bb1f5b1bedf33bb93d4fe28"
+  },
+  "states": {
+    "spacing": {
+      "selected": "32px"
+    },
+    "rtl": {
+      "selectedLanguages": [
+        "Arabic",
+        "English",
+        "Hebrew"
+      ]
+    }
+  }
+}
