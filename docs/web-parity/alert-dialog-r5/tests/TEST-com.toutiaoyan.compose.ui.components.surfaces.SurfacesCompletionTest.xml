@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="SurfacesCompletionTest[jvm]" tests="29" skipped="0" failures="0" errors="0" timestamp="2026-11-07T12:46:03.768Z" hostname="Apples-MacBook-Pro.local" time="8.327">
+  <properties/>
+  <testcase name="calendarMonthBoundsDisableNavigationAndDoNotDisableMidMonthDates[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.037"/>
+  <testcase name="nonModalDialogAllowsBackgroundAction[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.043"/>
+  <testcase name="modalTabCyclesWithinActions[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.039"/>
+  <testcase name="popupCalendarOptsIntoSelectedDayInitialFocus[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.024"/>
+  <testcase name="dialogBackdropDark[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.072"/>
+  <testcase name="hiddenOutsideDaysAreAbsentFromFocusAndAccessibility[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.02"/>
+  <testcase name="contextRtlArrowsAndTypeAhead[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.085"/>
+  <testcase name="commandEndAndHomeKeepActiveItemInViewport[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.074"/>
+  <testcase name="commandDoesNotCommitWhileImeIsComposing[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.029"/>
+  <testcase name="defaultHighlightDoesNotScrollAnOffscreenExampleIntoView[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.018"/>
+  <testcase name="drawerBackdropDark[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.618"/>
+  <testcase name="collapsibleCanReverseMidTransition[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.023"/>
+  <testcase name="nestedBackdropLight[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="3.0"/>
+  <testcase name="drawerInitialFocusAndCloseRestoration[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.108"/>
+  <testcase name="nonModalContextMenuRemainsKeyboardInteractiveInHost[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.026"/>
+  <testcase name="windowCursorFlipsAtEdgesAndIgnoresRootOffset[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.012"/>
+  <testcase name="localizedRangeLight[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.022"/>
+  <testcase name="keepMountedRetainsInputButRejectsHiddenFocus[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.029"/>
+  <testcase name="dialogInitialFocusAndEscapeRestoration[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.097"/>
+  <testcase name="calendarChineseLabelsAndRtlDayNavigation[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.024"/>
+  <testcase name="controlledSnapChangeMovesPanelWithoutEmittingDismiss[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.052"/>
+  <testcase name="contextRestoresTriggerAfterEscape[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.033"/>
+  <testcase name="drawerBackdropLight[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.573"/>
+  <testcase name="externalCollapseMovesExistingContentFocusToTrigger[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.019"/>
+  <testcase name="nestedBackdropDark[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="2.949"/>
+  <testcase name="localizedRangeDark[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.018"/>
+  <testcase name="nestedDrawerCloseReturnsToParentAction[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.199"/>
+  <testcase name="dialogBackdropLight[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.064"/>
+  <testcase name="commandControlledValueDoesNotAcceptUnconfirmedNavigation[jvm]" classname="com.toutiaoyan.compose.ui.components.surfaces.SurfacesCompletionTest" time="0.018"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

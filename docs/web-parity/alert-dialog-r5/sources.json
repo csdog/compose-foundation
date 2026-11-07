@@ -1,0 +1,58 @@
+{
+  "component": "Alert Dialog",
+  "officialRevision": "42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/alert-dialog",
+  "retrievedAt": "2026-11-07T20:23:45+08:00",
+  "files": [
+    {
+      "path": "sources/alert-dialog.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/content/docs/components/base/alert-dialog.mdx",
+      "sha256": "bb4b918855c5bbea6a6bcf0082eb93ceea21a6973ee7e2ba24d40dfe83b5e04a"
+    },
+    {
+      "path": "sources/alert-dialog.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/registry/bases/base/ui/alert-dialog.tsx",
+      "sha256": "86a20c2cae7d8a686dded2ca61b84f8c0bb4c9e56cd5f423eddac87827469caf"
+    },
+    {
+      "path": "sources/alert-dialog-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/alert-dialog-demo.tsx",
+      "sha256": "4f18add6f4ac6afde2a4c8fb346a4da16694c0e83fc2cb7158a4fafee066bb7a"
+    },
+    {
+      "path": "sources/alert-dialog-basic.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/alert-dialog-basic.tsx",
+      "sha256": "11b8e501b92b71f8979beb6c52992a77743f0b95dcd5bbe39375f2519e04a802"
+    },
+    {
+      "path": "sources/alert-dialog-small.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/alert-dialog-small.tsx",
+      "sha256": "34aeae38dbf15917865d5afd675cc2b9f4e00763a92d16ad7cfe021b63e0d9dc"
+    },
+    {
+      "path": "sources/alert-dialog-media.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/alert-dialog-media.tsx",
+      "sha256": "d5bda4a56826c197b3e14d9fa6156d51ac9db22a4601c3b04850684834737e66"
+    },
+    {
+      "path": "sources/alert-dialog-small-media.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/alert-dialog-small-media.tsx",
+      "sha256": "b82393c176c9c86fbf5533077c5ff446e52f6ecf8d1c34e185952aaff0396681"
+    },
+    {
+      "path": "sources/alert-dialog-destructive.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/alert-dialog-destructive.tsx",
+      "sha256": "08ccec27cbccf332a9f294ccf867b7dcaad2bde6e52eb5483ac720de6e24989c"
+    },
+    {
+      "path": "sources/alert-dialog-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/alert-dialog-rtl.tsx",
+      "sha256": "406696bd62aa706c455dca4f385c009417328fe4921311c058a35d52dc14d711"
+    },
+    {
+      "path": "sources/style-nova.css",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+    }
+  ]
+}

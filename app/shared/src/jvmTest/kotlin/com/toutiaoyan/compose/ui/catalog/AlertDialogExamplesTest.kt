@@ -184,6 +184,25 @@ class AlertDialogExamplesTest {
     @Test fun exportContainsRealExamplesCompositionAndKotlinApi() {
         assertEquals(
             listOf(
+                "Installation",
+                "Usage",
+                "Composition",
+                "Basic",
+                "Small",
+                "Media",
+                "Small with Media",
+                "Destructive",
+                "RTL",
+                "API Reference",
+                "AlertDialog",
+                "AlertDialogContent",
+                "Header and Media",
+                "Footer and Actions",
+            ),
+            docSections(alertDialogDoc).map { it.title },
+        )
+        assertEquals(
+            listOf(
                 "Default",
                 "Basic",
                 "Small",

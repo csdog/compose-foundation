@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toPixelMap
+import androidx.compose.ui.input.key.Key
 import kotlin.test.assertTrue
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.SemanticsActions
@@ -121,6 +122,26 @@ class AlertDialogNovaTest : ScreenshotTest() {
         assertEquals(2, closeRequests)
         composeRule.runOnIdle { viewport = IntSize(1024, 768) }
         assertEquals(bounds("Cancel").top, bounds("Continue").top, .5f)
+    }
+
+    @Test fun modalActionsTrapTabAndEscapeReturnsFocusToTrigger() {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            AlertDialog {
+                AlertDialogTrigger("Open")
+                AlertDialogContent("Confirm changes", "Review before continuing.") {
+                    AlertDialogFooter {
+                        AlertDialogCancel("Cancel")
+                        AlertDialogAction("Continue")
+                    }
+                }
+            }
+        }
+        composeRule.onNodeWithText("Open").performClick()
+        composeRule.onNodeWithText("Cancel").assertIsFocused().performKeyInput { pressKey(Key.Tab) }
+        composeRule.onNodeWithText("Continue").assertIsFocused().performKeyInput { pressKey(Key.Tab) }
+        composeRule.onNodeWithText("Cancel").assertIsFocused().performKeyInput { pressKey(Key.Escape) }
+        composeRule.onNodeWithText("Confirm changes").assertDoesNotExist()
+        composeRule.onNodeWithText("Open").assertIsFocused()
     }
 
     private fun defaultDialog(dark: Boolean) {

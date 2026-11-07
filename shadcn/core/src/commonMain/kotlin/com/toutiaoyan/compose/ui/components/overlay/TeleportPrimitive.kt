@@ -9,8 +9,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusGroup
-import androidx.compose.foundation.focusable
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
@@ -25,6 +23,7 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.focus.focusTarget
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.graphics.BlurEffect
 import androidx.compose.ui.graphics.TileMode
@@ -324,11 +323,20 @@ fun TeleportPrimitiveScope.Content(
                         ) {
                             onDismissRequest()
                         }
-                    }.onFocusChanged { hasFocus = it.hasFocus }.focusGroup().pointerInput(
+                    }.then(
+                        if (managed) {
+                            Modifier.focusProperties { canFocus = initializing }
+                                .focusRequester(initialFocus)
+                                .focusTarget()
+                        } else {
+                            Modifier
+                        },
+                    ).onFocusChanged { hasFocus = it.hasFocus }
+                        .focusGroup()
+                        .pointerInput(
                         Unit,
                     ) { detectTapGestures { } },
             ) {
-                if (managed && initializing) Box(Modifier.size(0.dp).focusRequester(initialFocus).focusable())
                 androidx.compose.runtime.CompositionLocalProvider(
                     LocalOverlayHost provides (childHost ?: LocalOverlayHost.current),
                 ) {

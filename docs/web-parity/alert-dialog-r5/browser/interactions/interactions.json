@@ -1,0 +1,81 @@
+{
+  "capturedAt": "2026-11-07T12:50:27.852Z",
+  "files": {
+    "basicDefault": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-dialog-r5/browser/interactions/local-basic-default.png",
+    "basicOpen": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-dialog-r5/browser/interactions/local-basic-open.png",
+    "basicTabFirst": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-dialog-r5/browser/interactions/local-basic-tab-first.png",
+    "basicTabSecond": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-dialog-r5/browser/interactions/local-basic-tab-second.png",
+    "basicTabCycle": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-dialog-r5/browser/interactions/local-basic-tab-cycle.png",
+    "basicEscaped": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-dialog-r5/browser/interactions/local-basic-escaped.png",
+    "basicOpenAgain": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-dialog-r5/browser/interactions/local-basic-open-again.png",
+    "basicContinueClosed": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-dialog-r5/browser/interactions/local-basic-continue-closed.png",
+    "basicOutsideStillOpen": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-dialog-r5/browser/interactions/local-basic-outside-still-open.png",
+    "basicOpenDark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-dialog-r5/browser/interactions/local-basic-open-dark.png",
+    "smallOpen": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-dialog-r5/browser/interactions/local-small-open.png",
+    "mediaOpen": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-dialog-r5/browser/interactions/local-media-open.png",
+    "smallMediaOpen": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-dialog-r5/browser/interactions/local-small-media-open.png",
+    "destructiveOpen": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-dialog-r5/browser/interactions/local-destructive-open.png",
+    "rtlArabicDefault": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-dialog-r5/browser/interactions/local-rtl-arabic-default.png",
+    "rtlArabicOpen": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-dialog-r5/browser/interactions/local-rtl-arabic-open.png",
+    "phoneDefault": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-dialog-r5/browser/interactions/local-phone-basic-default.png",
+    "phoneOpen": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-dialog-r5/browser/interactions/local-phone-basic-open.png",
+    "phoneTabFirst": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-dialog-r5/browser/interactions/local-phone-basic-tab-first.png",
+    "phoneTabSecond": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-dialog-r5/browser/interactions/local-phone-basic-tab-second.png",
+    "officialBasicOpen": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-dialog-r5/browser/interactions/official-basic-open.png",
+    "officialPhoneOpen": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-dialog-r5/browser/interactions/official-phone-basic-open.png"
+  },
+  "hashes": {
+    "basicDefault": "413bcf9228c353e78cea0d4bf0114e5e77c7d6244c6f3e899e551f918f50f654",
+    "basicOpen": "ba2d33fee9e3af159488c2708c98cefdabbe8d897c923dabaefacd34e5d8efd2",
+    "basicTabFirst": "32e9008c58c114ec031079fc8e24aebec3967443305955b367327f441dd4a94b",
+    "basicTabSecond": "f58cba707ffbf061a9d0a46b015bf1a50939afd1a4d47d7bcefef474f628fe45",
+    "basicTabCycle": "32e9008c58c114ec031079fc8e24aebec3967443305955b367327f441dd4a94b",
+    "basicEscaped": "ff7e2b11d1f077e1c462dd5ef454cea6d6887debb145da737c15279e8f39fd1e",
+    "basicOpenAgain": "ba2d33fee9e3af159488c2708c98cefdabbe8d897c923dabaefacd34e5d8efd2",
+    "basicContinueClosed": "413bcf9228c353e78cea0d4bf0114e5e77c7d6244c6f3e899e551f918f50f654",
+    "basicOutsideStillOpen": "ba2d33fee9e3af159488c2708c98cefdabbe8d897c923dabaefacd34e5d8efd2",
+    "basicOpenDark": "368a2c6120351095d157c1a1ec8005f5815147ab43117675487c832c23a24c04",
+    "smallOpen": "39b34ab645f4e55e4163bb8210f22c6000b8d4619acf63a818c56b337a0f75e7",
+    "mediaOpen": "2051f3b92845576eb884b478e0129c7ed2c6d53c0e88c25e7338b8b902607259",
+    "smallMediaOpen": "f860d11c72e027659dcec0e11488a3b24726ee540d8a457420a6204fef6e2154",
+    "destructiveOpen": "878f9727a49dbb6d35fe3907d59d6c46774dbafb5b27d1eeff9141112b32e6dc",
+    "rtlArabicDefault": "e0462d56a28fdf76c58197f1ec1ce875228198ad73790da94894f1f41ece0204",
+    "rtlArabicOpen": "00e97c54c42d763554a97d159e7da7d363e2594485edcf455dedb70218292062",
+    "phoneDefault": "395d78dab3963e2e09f86f66178fd7e4d95cea34b1b11d6637cdaf7194e32351",
+    "phoneOpen": "4a36391d03bbf1798b5751d38968c932a15c5eab02d86be969d52e9d7712811e",
+    "phoneTabFirst": "860d599d9c73e572eb47802c4deb5268684e153ec8eccc2589495961f76661dc",
+    "phoneTabSecond": "1dc8218f5762afb13d3a0a12226cc92d7411ecb27cf08d4ec9fae631e6f2ba10",
+    "officialBasicOpen": "c28d536324e4dececfc95faf776ec98ac83b0bb2fe04b4626ea80d0bf92c3f4e",
+    "officialPhoneOpen": "2f4badf0fda8af18a24499bda32b809f8515c68cdc6dcd62fd8f591789d0372c"
+  },
+  "states": {
+    "basic": {
+      "openedFromBasicRecipe": true,
+      "escapeClosed": true,
+      "outsideClickStayedOpen": true,
+      "continueClosed": true,
+      "reopened": true
+    },
+    "focusTrap": {
+      "tabSequence": [
+        "Cancel",
+        "Continue",
+        "Cancel"
+      ],
+      "stayedInsideAlertDialog": true,
+      "escapeRestoredTriggerFocus": true
+    },
+    "variants": {
+      "smallOpen": true,
+      "mediaOpen": true,
+      "smallWithMediaOpen": true,
+      "destructiveOpen": true,
+      "darkOpen": true,
+      "phoneOpen": true
+    },
+    "rtl": {
+      "arabicDefault": true,
+      "arabicDialogOpen": true
+    }
+  }
+}
