@@ -1,0 +1,81 @@
+Reusing configuration cache.
+> Task :tailwind-core:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :tailwind-core:generateComposeResClass SKIPPED
+> Task :shadcn:core:convertXmlValueResourcesForCommonTest NO-SOURCE
+> Task :shadcn:core:generateExpectResourceCollectorsForCommonMain UP-TO-DATE
+> Task :tailwind-core:convertXmlValueResourcesForJvmMain NO-SOURCE
+> Task :shadcn:core:convertXmlValueResourcesForJvmMain NO-SOURCE
+> Task :shadcn:core:copyNonXmlValueResourcesForCommonTest NO-SOURCE
+> Task :shadcn:core:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shadcn:core:generateComposeResClass UP-TO-DATE
+> Task :tailwind-core:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shadcn:core:convertXmlValueResourcesForJvmTest NO-SOURCE
+> Task :shadcn:core:kmpPartiallyResolvedDependenciesChecker
+> Task :tailwind-core:copyNonXmlValueResourcesForJvmMain NO-SOURCE
+> Task :tailwind-core:kmpPartiallyResolvedDependenciesChecker
+> Task :tailwind-core:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shadcn:core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shadcn:core:copyNonXmlValueResourcesForJvmMain NO-SOURCE
+> Task :tailwind-core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :tailwind-core:prepareComposeResourcesTaskForJvmMain NO-SOURCE
+> Task :shadcn:core:copyNonXmlValueResourcesForJvmTest NO-SOURCE
+> Task :shadcn:core:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shadcn:core:prepareComposeResourcesTaskForCommonTest NO-SOURCE
+> Task :shadcn:core:prepareComposeResourcesTaskForJvmMain NO-SOURCE
+> Task :tailwind-core:generateResourceAccessorsForJvmMain SKIPPED
+> Task :shadcn:core:prepareComposeResourcesTaskForJvmTest NO-SOURCE
+> Task :shadcn:core:generateResourceAccessorsForCommonTest NO-SOURCE
+> Task :tailwind-core:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shadcn:core:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shadcn:core:generateResourceAccessorsForJvmMain NO-SOURCE
+> Task :tailwind-core:generateResourceAccessorsForCommonMain SKIPPED
+> Task :tailwind-core:checkJvmMainComposeLibrariesCompatibility
+> Task :tailwind-core:generateActualResourceCollectorsForJvmMain SKIPPED
+> Task :shadcn:core:checkJvmMainComposeLibrariesCompatibility
+> Task :shadcn:core:generateResourceAccessorsForJvmTest NO-SOURCE
+> Task :shadcn:core:checkJvmTestComposeLibrariesCompatibility
+> Task :shadcn:core:generateResourceAccessorsForCommonMain NO-SOURCE
+> Task :tailwind-core:assembleJvmMainResources UP-TO-DATE
+> Task :shadcn:core:assembleJvmTestResources UP-TO-DATE
+> Task :shadcn:core:assembleJvmMainResources UP-TO-DATE
+> Task :shadcn:core:generateActualResourceCollectorsForJvmMain UP-TO-DATE
+> Task :shadcn:core:jvmProcessResources UP-TO-DATE
+> Task :shadcn:core:jvmTestProcessResources UP-TO-DATE
+> Task :shadcn:core:processJvmMainResources SKIPPED
+> Task :shadcn:core:processJvmTestResources SKIPPED
+> Task :tailwind-core:jvmProcessResources UP-TO-DATE
+> Task :tailwind-core:processJvmMainResources SKIPPED
+> Task :tailwind-core:compileKotlinJvm UP-TO-DATE
+> Task :tailwind-core:compileJvmMainJava NO-SOURCE
+> Task :tailwind-core:jvmMainClasses UP-TO-DATE
+> Task :tailwind-core:jvmJar UP-TO-DATE
+> Task :shadcn:core:compileKotlinJvm UP-TO-DATE
+> Task :shadcn:core:compileJvmMainJava NO-SOURCE
+> Task :shadcn:core:jvmMainClasses UP-TO-DATE
+> Task :shadcn:core:jvmJar UP-TO-DATE
+> Task :shadcn:core:compileTestKotlinJvm UP-TO-DATE
+> Task :shadcn:core:compileJvmTestJava NO-SOURCE
+> Task :shadcn:core:jvmTestClasses UP-TO-DATE
+
+> Task :shadcn:core:jvmTest
+
+BreadcrumbScreenshotTest[jvm] > nova_dark[jvm] PASSED
+
+BreadcrumbScreenshotTest[jvm] > link_focused_light[jvm] PASSED
+
+BreadcrumbScreenshotTest[jvm] > nova_light[jvm] PASSED
+
+BreadcrumbScreenshotTest[jvm] > states_light[jvm] PASSED
+
+BreadcrumbScreenshotTest[jvm] > link_focused_dark[jvm] PASSED
+
+BreadcrumbScreenshotTest[jvm] > with_ellipsis_light[jvm] PASSED
+
+BreadcrumbScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+> Task :shadcn:core:verifyRoborazziJvm
+> Task :shadcn:core:finalizeTestRoborazziJvm
+
+BUILD SUCCESSFUL in 2s
+21 actionable tasks: 7 executed, 14 up-to-date
+Configuration cache entry reused.

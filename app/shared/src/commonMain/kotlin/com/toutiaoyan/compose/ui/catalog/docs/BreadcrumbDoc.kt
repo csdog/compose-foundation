@@ -343,7 +343,11 @@ val breadcrumbDoc =
                 ),
                 ComponentApiSection(
                     "BreadcrumbLink",
-                    "Muted, clickable link with foreground hover. Use onClick to integrate your router.",
+                    (
+                        "Muted, clickable link with foreground hover and a keyboard " +
+                            "focus ring. Tab navigation and Enter/Space activation use " +
+                            "the platform focus system; onClick integrates your router."
+                    ),
                     listOf(
                         ApiProperty("text", "String", "Required"),
                         ApiProperty("onClick", "() -> Unit", "Required"),
@@ -352,7 +356,10 @@ val breadcrumbDoc =
                 ),
                 ComponentApiSection(
                     "BreadcrumbPage",
-                    "Selected, non-clickable current page.",
+                    (
+                        "Non-clickable current page. Compose has no aria-current property, " +
+                            "so its accessible name includes \", current page\"."
+                    ),
                     listOf(ApiProperty("text", "String", "Required")),
                 ),
                 ComponentApiSection(

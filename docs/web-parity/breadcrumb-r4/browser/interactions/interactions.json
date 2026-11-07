@@ -1,0 +1,29 @@
+{
+  "capturedAt": "2026-11-07T10:22:08.459Z",
+  "files": {
+    "local-basic-rest": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/breadcrumb-r4/browser/interactions/local-basic-rest.png",
+    "local-basic-home-hover": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/breadcrumb-r4/browser/interactions/local-basic-home-hover.png",
+    "local-dropdown-default": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/breadcrumb-r4/browser/interactions/local-dropdown-default.png",
+    "local-dropdown-open": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/breadcrumb-r4/browser/interactions/local-dropdown-open.png",
+    "local-dropdown-closed": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/breadcrumb-r4/browser/interactions/local-dropdown-closed.png",
+    "local-dropdown-open-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/breadcrumb-r4/browser/interactions/local-dropdown-open-dark.png",
+    "local-rtl-arabic": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/breadcrumb-r4/browser/interactions/local-rtl-arabic.png",
+    "local-rtl-language-popup": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/breadcrumb-r4/browser/interactions/local-rtl-language-popup.png",
+    "local-rtl-english": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/breadcrumb-r4/browser/interactions/local-rtl-english.png",
+    "local-rtl-language-popup-after-english": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/breadcrumb-r4/browser/interactions/local-rtl-language-popup-after-english.png",
+    "local-rtl-hebrew": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/breadcrumb-r4/browser/interactions/local-rtl-hebrew.png"
+  },
+  "hashes": {
+    "local-basic-rest": "d7958071afb3ece9d35bb34aeaeae89b032c547b87fb83e03a8d41ce42c4bd1f",
+    "local-basic-home-hover": "94cb31031ed556144513741bba78242209f30c7028114f885ad503d39ebd75ff",
+    "local-dropdown-default": "56ccb59fde0f4a091a03faf9c1b69690b7502e13d98b8309c849d66fd756cf50",
+    "local-dropdown-open": "4a9dc7c7f13fde6d242ea51ebbfbda573aa5780fd071adffbaf50a4a6974084d",
+    "local-dropdown-closed": "f8d09e78e8a03fbab44e83cc1d7f0f4069495d7ca3b78d559b573f93d477b717",
+    "local-dropdown-open-dark": "f8ebcaf7d1099200a9e582d3c541ef5edc04a9a742cb8034468325929f4a9f8e",
+    "local-rtl-arabic": "66297cf09129654ee057fbee187ae28060ae464d75d1ce78f5a266e251c6868b",
+    "local-rtl-language-popup": "acef50d0c9c8c2e45638e1bc66c614b80c0cb4af9e0a478311dc7defd9e48fca",
+    "local-rtl-english": "5aada4de7889f450ffc7b7eed45dccd7d3a27dc76f88d1d1e271365cb72ce70d",
+    "local-rtl-language-popup-after-english": "56e8ea1d1caee6cb0225cfd8a296a10c8316db6c2fdfa3b52c18ad57035b9321",
+    "local-rtl-hebrew": "d665b23c2bc3d85ad624ec1e6fe3fed28d2ca027c725e477308244029ef841bc"
+  }
+}

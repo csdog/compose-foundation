@@ -39,6 +39,14 @@ class BreadcrumbExamplesTest {
                 breadcrumbDoc.examples.single { it.title == title }.code.contains("DropdownMenuGroup {"),
             )
         }
+        assertTrue(
+            breadcrumbDoc.apiSections.single { it.title == "BreadcrumbLink" }
+                .descriptionMarkdown.contains("keyboard focus ring"),
+        )
+        assertTrue(
+            breadcrumbDoc.apiSections.single { it.title == "BreadcrumbPage" }
+                .descriptionMarkdown.contains("current page"),
+        )
     }
 
     @Test fun defaultHasWorkingCollapsedMenu() {
@@ -110,7 +118,7 @@ class BreadcrumbExamplesTest {
                 }
             }
         }
-        rule.onNodeWithText("مسار التنقل").assertIsDisplayed()
+        rule.onNodeWithContentDescription("مسار التنقل, current page").assertIsDisplayed()
         rule.onNodeWithText("المكونات").performClick()
         rule.onNodeWithText("التوثيق").assertIsDisplayed().performClick()
         rule.onNodeWithContentDescription("Preview language").performClick()
@@ -119,7 +127,7 @@ class BreadcrumbExamplesTest {
         rule.onNodeWithText("Documentation").assertIsDisplayed().performClick()
         rule.onNodeWithContentDescription("Preview language").performClick()
         rule.onNodeWithText("Hebrew (עברית)").performClick()
-        rule.onNodeWithText("פירורי לחם").assertIsDisplayed()
+        rule.onNodeWithContentDescription("פירורי לחם, current page").assertIsDisplayed()
         rule.onNodeWithText("רכיבים").performClick()
         rule.onNodeWithText("תיעוד").assertIsDisplayed()
     }

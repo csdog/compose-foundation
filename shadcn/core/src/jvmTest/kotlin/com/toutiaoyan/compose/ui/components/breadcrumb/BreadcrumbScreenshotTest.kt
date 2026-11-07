@@ -2,7 +2,10 @@
 
 package com.toutiaoyan.compose.ui.components.breadcrumb
 
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import com.toutiaoyan.compose.ui.ScreenshotTest
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.Test
 
 class BreadcrumbScreenshotTest : ScreenshotTest() {
@@ -65,4 +68,27 @@ class BreadcrumbScreenshotTest : ScreenshotTest() {
     @Test fun nova_light() = nova(false)
 
     @Test fun nova_dark() = nova(true)
+
+    private fun focusedLink(darkTheme: Boolean) {
+        snapshotFocused(
+            "breadcrumb_link_focused",
+            focusTag = "breadcrumb-link",
+            darkTheme = darkTheme,
+            stylePreset = StylePreset.Nova,
+        ) {
+            Breadcrumb {
+                BreadcrumbList {
+                    BreadcrumbItem {
+                        BreadcrumbLink("Home", onClick = {}, modifier = Modifier.testTag("breadcrumb-link"))
+                    }
+                    BreadcrumbSeparator()
+                    BreadcrumbItem("Current")
+                }
+            }
+        }
+    }
+
+    @Test fun link_focused_light() = focusedLink(darkTheme = false)
+
+    @Test fun link_focused_dark() = focusedLink(darkTheme = true)
 }

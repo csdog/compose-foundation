@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
@@ -20,6 +21,8 @@ import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.foundation.style.hovered
 import androidx.compose.foundation.style.animate
+import androidx.compose.foundation.style.focused
+import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -35,12 +38,13 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.role
-import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import com.toutiaoyan.compose.ui.icons.NovaChevronRight
 import com.toutiaoyan.compose.ui.components.icon.Icon
 import com.toutiaoyan.compose.ui.icons.NovaEllipsis
 import com.toutiaoyan.compose.ui.styles.rememberMinTouchTargetStyle
+import com.toutiaoyan.compose.ui.styles.cssStyleable
+import com.toutiaoyan.compose.ui.styles.focusRingShadow
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextVariant
@@ -151,12 +155,16 @@ fun BreadcrumbLink(
     disabled: Boolean = false,
 ) {
     val resolvedEnabled = !disabled
+    val theme = currentTheme
+    val focusRing = theme.focusRingShadow()
     val interactionSource = remember { MutableInteractionSource() }
     val styleState = remember { MutableStyleState(interactionSource) }
     val linkStyle =
-        rememberTheme(resolvedEnabled) {
+        rememberTheme(resolvedEnabled, focusRing) {
             Style {
+                shape(RoundedCornerShape(2.dp))
                 contentColor(colors.mutedForeground)
+                focused { dropShadow(focusRing) }
                 animate(
                     toSpec = tween(150, easing = FastOutSlowInEasing),
                     fromSpec = tween(150, easing = FastOutSlowInEasing),
@@ -183,7 +191,7 @@ fun BreadcrumbLink(
                     role = Role.Button,
                     onClick = onClick,
                 )
-                .styleable(styleState, touchTargetStyle then linkStyle then style),
+                .cssStyleable(styleState, touchTargetStyle then linkStyle then style),
         contentAlignment = Alignment.Center,
     ) {
         Text(variant = TextVariant.BodyMedium) { text }
@@ -217,17 +225,23 @@ fun BreadcrumbPage(
     style: Style = Style,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Text(
-        variant = TextVariant.BodyMedium,
+    Box(
         modifier =
             modifier
                 .semantics {
-                    contentDescription = text
-                    selected = true
-                    disabled()
-                }
-                .styleable(styleState, style),
-    ) { text }
+                    contentDescription = "$text, current page"
+                },
+        contentAlignment = Alignment.Center,
+    ) {
+        BasicText(
+            text = text,
+            style = currentTheme.typography.bodyMedium.copy(color = currentTheme.colors.foreground),
+            modifier =
+                Modifier
+                    .clearAndSetSemantics { }
+                    .styleable(styleState, style),
+        )
+    }
 }
 
 @Composable

@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.graphics.toPixelMap
+import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.test.*
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -58,7 +59,7 @@ class BreadcrumbParityTest : ScreenshotTest() {
         assertTrue(divider.right < label.left)
     }
 
-    @Test fun pageIsSelectedDisabledAndDecorationsHaveNoSpokenLabels() {
+    @Test fun currentPageHasAccessibleNameAndDecorationsHaveNoSpokenLabels() {
         var clicked = 0
         setThemedContent(stylePreset = StylePreset.Nova) {
             Breadcrumb(ariaLabel = "Page path") {
@@ -74,9 +75,39 @@ class BreadcrumbParityTest : ScreenshotTest() {
         composeRule.onNodeWithContentDescription("Page path").assertExists()
         composeRule.onNodeWithText("Home").assertIsNotEnabled().performClick()
         assertEquals(0, clicked)
-        composeRule.onNodeWithText("Current").assertIsSelected().assertIsNotEnabled().assertHasNoClickAction()
+        composeRule.onNodeWithContentDescription("Current, current page").assertHasNoClickAction()
         composeRule.onNodeWithText("hidden separator").assertDoesNotExist()
         composeRule.onNodeWithContentDescription("More").assertDoesNotExist()
+    }
+
+    @Test fun linksFollowTabOrderAndActivateWithKeyboard() {
+        var homeClicks = 0
+        var componentClicks = 0
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Breadcrumb {
+                BreadcrumbList {
+                    BreadcrumbItem("Home", onClick = { homeClicks++ })
+                    BreadcrumbSeparator()
+                    BreadcrumbItem("Components", onClick = { componentClicks++ })
+                    BreadcrumbSeparator()
+                    BreadcrumbItem("Current")
+                }
+            }
+        }
+
+        composeRule.onRoot().performKeyInput { pressKey(Key.Tab) }
+        composeRule.onNodeWithText("Home").assertIsFocused().performKeyInput { pressKey(Key.Enter) }
+        assertEquals(1, homeClicks)
+        composeRule.onNodeWithText("Home").performKeyInput { pressKey(Key.Tab) }
+        composeRule.onNodeWithText("Components").assertIsFocused().performKeyInput { pressKey(Key.Spacebar) }
+        assertEquals(1, componentClicks)
+        composeRule.onNodeWithText("Components").performKeyInput { pressKey(Key.Tab) }
+        composeRule.waitForIdle()
+        // Desktop semantics still mark this accessible BasicText node as "focused"
+        // after the last link, despite it having no click/selection/focus target.
+        composeRule.onNodeWithText("Components").assertIsNotFocused()
+        composeRule.onNodeWithContentDescription("Current, current page")
+            .assertHasNoClickAction()
     }
 
     @Test fun linkHoverChangesActualInkInLightAndDark() = hover(false)
