@@ -101,7 +101,7 @@ jobs:
     if: github.ref == 'refs/heads/main' && needs.build_web.outputs.changed == 'true'
     uses: infra/ci-common/.gitea/workflows/deploy-k8s.yml@main
     with:
-      full_image: ${{ needs.build_web.outputs.full_image }}
+      full_image: ${{ format('{0}/{1}:{2}', env.DOCKER_REGISTRY, env.WEB_IMAGE_NAME, needs.build_web.outputs.image_tag) }}
       change_patterns: ${{ env.WEB_CHANGE_PATTERNS }}
       kubectl_version: v1.35.9
       k8s_namespace: web-foundation
