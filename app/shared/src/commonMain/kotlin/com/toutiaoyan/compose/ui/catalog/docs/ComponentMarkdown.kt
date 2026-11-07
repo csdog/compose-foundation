@@ -10,12 +10,6 @@ internal fun componentPageMarkdown(doc: ComponentDoc): String =
             example.descriptionMarkdown?.let { appendLine("$it\n") }
             appendLine("```kotlin\n${example.code}\n```\n")
         }
-        doc.examples.firstOrNull()?.let(::example)
-        appendLine("## Installation\n\n```kotlin\n$catalogInstallationCode\n```\n")
-        appendLine("## Usage\n")
-        doc.usageImportsCode?.let { appendLine("```kotlin\n$it\n```\n") }
-        appendLine("```kotlin\n${doc.usageCode}\n```\n")
-        doc.compositionCode?.let { appendLine("## Composition\n\n```text\n$it\n```\n") }
 
         fun guide(section: ComponentGuideSection) {
             appendLine("${"#".repeat(section.level)} ${section.title}\n")
@@ -38,11 +32,23 @@ internal fun componentPageMarkdown(doc: ComponentDoc): String =
                 }
             }
         }
+
+        doc.examples.firstOrNull()?.let(::example)
+        doc.introductionSections.forEach(::guide)
+        appendLine("## Installation\n\n```kotlin\n$catalogInstallationCode\n```\n")
+        appendLine("## Usage\n")
+        doc.usageImportsCode?.let { appendLine("```kotlin\n$it\n```\n") }
+        appendLine("```kotlin\n${doc.usageCode}\n```\n")
+        doc.compositionCode?.let { appendLine("## Composition\n\n```text\n$it\n```\n") }
+
         doc.beforeExamples.forEach(::guide)
         val additionalExamples = doc.examples.drop(1)
         if (additionalExamples.isNotEmpty()) {
             doc.examplesHeading?.let { appendLine("## $it\n") }
-            additionalExamples.forEach(::example)
+            additionalExamples.forEach { item ->
+                doc.beforeExampleSections[item.title]?.forEach(::guide)
+                example(item)
+            }
         }
         doc.afterExamples.forEach(::guide)
         if (doc.apiProperties.isNotEmpty() || doc.apiSections.isNotEmpty()) {

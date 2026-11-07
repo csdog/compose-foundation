@@ -36,7 +36,9 @@ data class ComponentDoc(
     val examplesHeading: String? = "Examples",
     val apiSections: List<ComponentApiSection> = emptyList(),
     val usageImportsCode: String? = null,
+    val introductionSections: List<ComponentGuideSection> = emptyList(),
     val beforeExamples: List<ComponentGuideSection> = emptyList(),
+    val beforeExampleSections: Map<String, List<ComponentGuideSection>> = emptyMap(),
     val afterExamples: List<ComponentGuideSection> = emptyList(),
     val afterApiSections: List<ComponentGuideSection> = emptyList(),
     /** Project-only components show a "Kotlin extension" label instead of the Base UI tab. */

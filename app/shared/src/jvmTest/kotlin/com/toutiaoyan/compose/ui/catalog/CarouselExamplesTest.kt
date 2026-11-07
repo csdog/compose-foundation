@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.catalog.docs.CarouselAutoplay
 import com.toutiaoyan.compose.ui.catalog.docs.carouselAutoplayEnabledWhileIdle
 import com.toutiaoyan.compose.ui.catalog.docs.carouselDoc
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.components.carousel.Carousel
 import com.toutiaoyan.compose.ui.components.overlay.OverlayHost
 import com.toutiaoyan.compose.ui.components.text.Text
@@ -121,5 +122,52 @@ class CarouselExamplesTest {
         assertTrue(code("Default").contains("CarouselItem(Modifier.fillMaxSize())"))
         assertTrue(code("RTL").contains("LocalLayoutDirection provides"))
         assertTrue(code("RTL").contains("٠١٢٣٤٥٦٧٨٩"))
+    }
+
+    @Test fun pageKeepsOfficialInterleavedSectionOrder() {
+        val titles = docSections(carouselDoc).map { it.title }
+        val officialOrder =
+            listOf(
+                "About",
+                "Installation",
+                "Usage",
+                "Composition",
+                "Sizes",
+                "Spacing",
+                "Orientation",
+                "Options",
+                "API",
+                "Events",
+                "Plugins",
+                "RTL",
+                "API Reference",
+            ).map { titles.indexOf(it) }
+        assertTrue(officialOrder.all { it >= 0 }, "missing section: $officialOrder")
+        assertEquals(officialOrder.sorted(), officialOrder)
+        assertTrue(titles.indexOf("Options") < titles.indexOf("API"))
+        assertTrue(titles.indexOf("Events") < titles.indexOf("Plugins"))
+
+        val markdown = componentPageMarkdown(carouselDoc)
+        val markdownOrder =
+            listOf(
+                "## About",
+                "## Installation",
+                "## Composition",
+                "## Sizes",
+                "## Spacing",
+                "## Orientation",
+                "## Options",
+                "## API",
+                "## Events",
+                "## Plugins",
+                "## RTL",
+                "## API Reference",
+            ).map { markdown.indexOf(it) }
+        assertTrue(markdownOrder.all { it >= 0 }, "missing markdown section: $markdownOrder")
+        assertEquals(markdownOrder.sorted(), markdownOrder)
+        assertContains(markdown, "[Embla Carousel](https://www.embla-carousel.com/)")
+        assertContains(markdown, "https://www.embla-carousel.com/api/options/")
+        assertContains(markdown, "https://www.embla-carousel.com/api/events/")
+        assertContains(markdown, "You can use the `plugins` prop to add plugins to the carousel.")
     }
 }

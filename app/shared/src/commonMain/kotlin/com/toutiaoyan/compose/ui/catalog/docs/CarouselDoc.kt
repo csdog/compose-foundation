@@ -62,21 +62,17 @@ val carouselDoc =
                 "└── CarouselItem\n├── CarouselPrevious\n└── CarouselNext"
         ),
         examplesHeading = null,
-        beforeExamples =
+        introductionSections =
             listOf(
                 ComponentGuideSection(
                     "About",
                     listOf(
                         ComponentGuideBlock.Paragraph(
-                            (
-                                "The official web component wraps Embla. Kotlin uses Compose " +
-                                    "Pager. CarouselRoot supplies shared "
-                            ) +
-                                (
-                                    "state, orientation and keyboard navigation to content and " +
-                                        "controls; the existing standalone Carousel "
-                                ) +
-                                "pager remains available. A bounded viewport is required.",
+                            "The carousel component is built using the " +
+                                "[Embla Carousel](https://www.embla-carousel.com/) library. " +
+                                "This Compose implementation uses Compose Pager; CarouselRoot supplies " +
+                                "shared state, orientation and keyboard navigation to content and controls. " +
+                                "A bounded viewport is required.",
                         ),
                     ),
                 ),
@@ -102,7 +98,7 @@ val carouselDoc =
                     previewPadding = if (title == "RTL") 0.dp else 40.dp,
                     descriptionMarkdown =
                         when (title) {
-                            "RTL" -> "To enable RTL support in shadcn/ui, see the [RTL configuration guide](https://ui.shadcn.com/docs/rtl)."
+                            "RTL" -> "To enable RTL support in shadcn/ui, see the [RTL configuration guide](https://ui.shadcn.com/docs/rtl). When localizing the carousel for RTL languages, provide `LocalLayoutDirection` to match the text direction; this ensures the carousel scrolls in the correct direction."
                             "Sizes" -> "Two slides on small screens and three at the large breakpoint."
                             "Spacing" -> "Use a smaller gap between slides without adding an empty leading gutter."
                             "Orientation" -> "A vertical viewport with two visible slides."
@@ -111,8 +107,10 @@ val carouselDoc =
                                     "boundaries and suspend scroll functions."
                             )
                             "Plugins" -> (
-                                "Advance every two seconds. Hover or dragging pauses autoplay; " +
-                                    "leaving the carousel or releasing the drag resumes it."
+                                "You can use the `plugins` prop to add plugins to the carousel. " +
+                                    "This Kotlin recipe maps the official autoplay example to a two-second " +
+                                    "timer; hover or dragging pauses autoplay, and leaving the carousel or " +
+                                    "releasing the drag resumes it."
                             )
                             "Kotlin extension: With dot indicators" -> (
                                 "An additional Kotlin recipe; the official component does not " +
@@ -123,37 +121,47 @@ val carouselDoc =
                     preview = { if (title == "RTL") CarouselRtlRecipe() else CarouselRecipe(title) },
                 )
             },
-        afterExamples =
-            listOf(
-                ComponentGuideSection(
-                    "Options",
+        beforeExampleSections =
+            mapOf(
+                "API" to
                     listOf(
-                        ComponentGuideBlock.Paragraph(
-                            (
-                                "Use pageSize and pageSpacing for partial slides, orientation " +
-                                    "for the axis, and userScrollEnabled "
-                            ) +
-                                (
-                                    "to control gestures. Embla opts, loop, align modes and " +
-                                        "JavaScript plugin objects are not "
-                                ) +
-                                "accepted by this Kotlin API; full option parity remains pending.",
-                        ),
-                    ),
-                ),
-                ComponentGuideSection(
-                    "Events",
-                    listOf(
-                        ComponentGuideBlock.Code(
-                            (
-                                "LaunchedEffect(state) {\n    snapshotFlow { state.settledPage " +
-                                    "}.collect { page ->\n        onSlideSelected(page)\n    }\n}"
+                        ComponentGuideSection(
+                            "Options",
+                            listOf(
+                                ComponentGuideBlock.Paragraph(
+                                    "You can pass options to the carousel using the `opts` prop. See the " +
+                                        "[Embla Carousel docs](https://www.embla-carousel.com/api/options/) " +
+                                        "for more information. In Compose, use pageSize and pageSpacing for " +
+                                        "partial slides, orientation for the axis, and userScrollEnabled to " +
+                                        "control gestures. Arbitrary Embla option and plugin objects are not " +
+                                        "accepted by this Kotlin API.",
+                                ),
                             ),
                         ),
                     ),
-                ),
+                "Plugins" to
+                    listOf(
+                        ComponentGuideSection(
+                            "Events",
+                            listOf(
+                                ComponentGuideBlock.Paragraph(
+                                    "You can listen to events using the api instance from `setApi`. " +
+                                        "In Compose, observe `state.settledPage` with `snapshotFlow`. See the " +
+                                        "[Embla Carousel docs](https://www.embla-carousel.com/api/events/) " +
+                                        "for more information on the web event model.",
+                                ),
+                                ComponentGuideBlock.Code(
+                                    "LaunchedEffect(state) {\n    snapshotFlow { state.settledPage " +
+                                        "}.collect { page ->\n        onSlideSelected(page)\n    }\n}",
+                                ),
+                            ),
+                        ),
+                    ),
+            ),
+        afterExamples =
+            listOf(
                 ComponentGuideSection(
-                    "Keyboard and accessibility",
+                    "Kotlin extension: Keyboard and accessibility",
                     listOf(
                         ComponentGuideBlock.Bullets(
                             listOf(

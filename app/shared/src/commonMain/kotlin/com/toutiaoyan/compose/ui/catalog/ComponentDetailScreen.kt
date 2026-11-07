@@ -262,6 +262,9 @@ internal fun ComponentDetailContent(
                                 )
                             }
                         }
+                        doc.introductionSections.forEachIndexed { index, section ->
+                            GuideSection(section, anchors, "introduction-$index")
+                        }
                         Section(
                             "Installation",
                             Modifier.docAnchor(anchors, "installation"),
@@ -309,33 +312,46 @@ internal fun ComponentDetailContent(
                                 }
                                 Column(verticalArrangement = Arrangement.spacedBy(48.dp)) {
                                     additionalExamples.forEachIndexed { exampleIndex, example ->
-                                        PreviewCodeSection(
-                                            code = example.code, title = example.title.takeIf { example.showHeading },
-                                            headingLevel = example.headingLevel,
-                                            modifier =
-                                                Modifier.fillMaxWidth().docAnchor(
+                                        Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
+                                            doc.beforeExampleSections[example.title]?.forEachIndexed {
+                                                    guideIndex,
+                                                    section,
+                                                ->
+                                                GuideSection(
+                                                    section,
                                                     anchors,
+                                                    "before-example-$exampleIndex-$guideIndex",
+                                                )
+                                            }
+                                            PreviewCodeSection(
+                                                code = example.code,
+                                                title = example.title.takeIf { example.showHeading },
+                                                headingLevel = example.headingLevel,
+                                                modifier =
+                                                    Modifier.fillMaxWidth().docAnchor(
+                                                        anchors,
+                                                        "example-$exampleIndex",
+                                                    ),
+                                                minPreviewHeight =
+                                                    example.minPreviewHeight,
+                                                mobileMinPreviewHeight =
+                                                    example.mobileMinPreviewHeight,
+                                                previewPadding =
+                                                    example.previewPadding,
+                                                previewBackground =
+                                                    example.previewBackground,
+                                                hideCode = example.hideCode,
+                                                previewHeight = example.previewHeight,
+                                                previewVerticalAlignment = example.previewVerticalAlignment,
+                                                desktopPreviewInsetStart = example.desktopPreviewInsetStart,
+                                                descriptionMarkdown =
+                                                    example.descriptionMarkdown,
+                                                headingAnchor =
                                                     "example-$exampleIndex",
-                                                ),
-                                            minPreviewHeight =
-                                                example.minPreviewHeight,
-                                            mobileMinPreviewHeight =
-                                                example.mobileMinPreviewHeight,
-                                            previewPadding =
-                                                example.previewPadding,
-                                            previewBackground =
-                                                example.previewBackground,
-                                            hideCode = example.hideCode,
-                                            previewHeight = example.previewHeight,
-                                            previewVerticalAlignment = example.previewVerticalAlignment,
-                                            desktopPreviewInsetStart = example.desktopPreviewInsetStart,
-                                            descriptionMarkdown =
-                                                example.descriptionMarkdown,
-                                            headingAnchor =
-                                                "example-$exampleIndex",
-                                            preview =
-                                                example.preview,
-                                        )
+                                                preview =
+                                                    example.preview,
+                                            )
+                                        }
                                     }
                                 }
                             }
@@ -496,6 +512,9 @@ private fun GuideSection(
 
 internal fun docSections(doc: ComponentDoc): List<DocSection> =
     buildList {
+        doc.introductionSections.forEachIndexed { index, section ->
+            add(DocSection("introduction-$index", section.title, nested = section.level == 3))
+        }
         add(DocSection("installation", "Installation"))
         add(DocSection("usage", "Usage"))
         if (doc.compositionCode != null) add(DocSection("composition", "Composition"))
@@ -505,6 +524,18 @@ internal fun docSections(doc: ComponentDoc): List<DocSection> =
         if (doc.examples.size > 1) {
             doc.examplesHeading?.let { add(DocSection("examples", it)) }
             doc.examples.drop(1).forEachIndexed { index, example ->
+                doc.beforeExampleSections[example.title]?.forEachIndexed {
+                        guideIndex,
+                        section,
+                    ->
+                    add(
+                        DocSection(
+                            "before-example-$index-$guideIndex",
+                            section.title,
+                            nested = section.level == 3,
+                        ),
+                    )
+                }
                 if (example.showHeading) {
                     add(
                         DocSection(
