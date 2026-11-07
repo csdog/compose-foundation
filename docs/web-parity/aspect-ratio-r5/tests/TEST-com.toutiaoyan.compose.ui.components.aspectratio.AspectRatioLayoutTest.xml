@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AspectRatioLayoutTest[jvm]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-07T09:20:37.317Z" hostname="Apples-MacBook-Pro.local" time="0.439">
+  <properties/>
+  <testcase name="styleWidthParticipatesBeforeRatioMeasurement[jvm]" classname="com.toutiaoyan.compose.ui.components.aspectratio.AspectRatioLayoutTest" time="0.392"/>
+  <testcase name="widthRatioAndChildTrackLiveConstraints[jvm]" classname="com.toutiaoyan.compose.ui.components.aspectratio.AspectRatioLayoutTest" time="0.028"/>
+  <testcase name="invalidRatioFailsFast[jvm]" classname="com.toutiaoyan.compose.ui.components.aspectratio.AspectRatioLayoutTest" time="0.016"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

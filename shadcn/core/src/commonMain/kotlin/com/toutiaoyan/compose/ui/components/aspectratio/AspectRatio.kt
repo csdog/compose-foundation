@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
  * current Base wrapper, which uses CSS aspect-ratio without imposing a surface.
  * Caller modifiers and Style establish the available size before the ratio is
  * measured. Clipping, images, and accessibility descriptions belong to content.
- * The existing Kotlin square default is retained; the web wrapper requires ratio.
+ * Like the web wrapper, [ratio] is required and must be finite and greater than zero.
  *
  * Usage:
  * ```
@@ -28,13 +28,21 @@ import androidx.compose.ui.Modifier
  */
 @Composable
 fun AspectRatio(
-    ratio: Float = 1f,
+    ratio: Float,
     modifier: Modifier = Modifier,
     style: Style = Style,
     content: @Composable () -> Unit,
 ) {
+    validateAspectRatio(ratio)
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Box(modifier = modifier.styleable(styleState, style).aspectRatio(ratio)) {
         content()
     }
+}
+
+internal fun validateAspectRatio(ratio: Float): Float {
+    require(ratio.isFinite() && ratio > 0f) {
+        "ratio must be finite and greater than 0"
+    }
+    return ratio
 }

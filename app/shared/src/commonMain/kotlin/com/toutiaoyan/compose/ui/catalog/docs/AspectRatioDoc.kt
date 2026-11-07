@@ -70,13 +70,12 @@ val aspectRatioDoc =
                     (
                         "Displays caller-provided content within a width/height ratio. " +
                             "Modifier and Style control placement and appearance. Unlike " +
-                            "the current web wrapper's required ratio, this Kotlin API " +
-                            "retains its existing square default. Supply a finite positive " +
-                            "ratio. Images, clipping, and accessibility descriptions " +
-                            "belong to the content."
+                            "the web wrapper, this Kotlin API validates that the required " +
+                            "ratio is finite and positive. Images, clipping, and " +
+                            "accessibility descriptions belong to the content."
                     ),
                     listOf(
-                        ApiProperty("ratio", "Float", "1f"),
+                        ApiProperty("ratio", "Float", "Required"),
                         ApiProperty("modifier", "Modifier", "Modifier"),
                         ApiProperty("style", "Style", "Style"),
                         ApiProperty("content", "@Composable () -> Unit", "Required"),

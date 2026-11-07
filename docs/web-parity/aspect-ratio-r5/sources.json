@@ -1,0 +1,43 @@
+{
+  "component": "Aspect Ratio",
+  "officialRevision": "42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/aspect-ratio",
+  "retrievedAt": "2026-11-07T17:20:00+08:00",
+  "files": [
+    {
+      "path": "sources/aspect-ratio.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/content/docs/components/base/aspect-ratio.mdx",
+      "sha256": "0a248906c3ee2ec5e9f5dc8272b07ce546914114d00fcce6c1912507e3526639"
+    },
+    {
+      "path": "sources/aspect-ratio.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/registry/bases/base/ui/aspect-ratio.tsx",
+      "sha256": "6df19df6b983c450361081b695dbf3541a6fe4a9d2ec148766991e4eb0bf6473"
+    },
+    {
+      "path": "sources/aspect-ratio-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/aspect-ratio-demo.tsx",
+      "sha256": "6def4e7d7dc5e030275abb0c00ed44ec9ad289e1c2b198f6961d4c53aa37f156"
+    },
+    {
+      "path": "sources/aspect-ratio-square.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/aspect-ratio-square.tsx",
+      "sha256": "d3a5434a5b85111307bb5aa385cebdd2403e23c4a10745bf5e7681bac7b8d0b3"
+    },
+    {
+      "path": "sources/aspect-ratio-portrait.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/aspect-ratio-portrait.tsx",
+      "sha256": "504074c9c37d462b6c87e1f052a49e82b3903dba4ec2d61bc6ce1359b10c2bbd"
+    },
+    {
+      "path": "sources/aspect-ratio-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/aspect-ratio-rtl.tsx",
+      "sha256": "50bef354657f87260007109b815a684e06166c5f33476bc8f8d4ddf4c52a2fbb"
+    },
+    {
+      "path": "sources/style-nova.css",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+    }
+  ]
+}

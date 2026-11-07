@@ -29,7 +29,7 @@ import kotlin.test.assertTrue
 class AspectRatioExamplesTest {
     @get:Rule val rule = createComposeRule()
 
-    @Test fun officialPageCopyOrderAndKotlinRatioDeviationStayDocumented() {
+    @Test fun officialPageCopyOrderAndRequiredRatioApiStayDocumented() {
         assertEquals(
             listOf("Default", "Square", "Portrait", "RTL"),
             aspectRatioDoc.examples.map { it.title },
@@ -52,12 +52,12 @@ class AspectRatioExamplesTest {
         )
         val aspectRatioApi = aspectRatioDoc.apiSections.single { it.title == "AspectRatio" }
         assertEquals(
-            "1f",
+            "Required",
             aspectRatioApi.properties.single { it.name == "ratio" }.defaultValue,
         )
         assertTrue(
             aspectRatioApi.descriptionMarkdown.contains(
-                "Unlike the current web wrapper's required ratio, this Kotlin API retains its existing square default.",
+                "this Kotlin API validates that the required ratio is finite and positive.",
             ),
         )
     }

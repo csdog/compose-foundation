@@ -1,0 +1,90 @@
+{
+  "anchors": [
+    "square",
+    "portrait",
+    "rtl"
+  ],
+  "localAnchors": [
+    "example-0",
+    "example-1",
+    "example-2"
+  ],
+  "views": [
+    {
+      "name": "desktop-light",
+      "width": 1440,
+      "height": 1000,
+      "theme": "light"
+    },
+    {
+      "name": "desktop-dark",
+      "width": 1440,
+      "height": 1000,
+      "theme": "dark"
+    },
+    {
+      "name": "phone-light",
+      "width": 390,
+      "height": 844,
+      "theme": "light"
+    },
+    {
+      "name": "phone-dark",
+      "width": 390,
+      "height": 844,
+      "theme": "dark"
+    }
+  ],
+  "files": {
+    "official-square-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-square-desktop-light.png",
+    "local-square-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-square-desktop-light.png",
+    "official-portrait-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-portrait-desktop-light.png",
+    "local-portrait-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-portrait-desktop-light.png",
+    "official-rtl-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-rtl-desktop-light.png",
+    "local-rtl-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-rtl-desktop-light.png",
+    "official-square-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-square-desktop-dark.png",
+    "local-square-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-square-desktop-dark.png",
+    "official-portrait-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-portrait-desktop-dark.png",
+    "local-portrait-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-portrait-desktop-dark.png",
+    "official-rtl-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-rtl-desktop-dark.png",
+    "local-rtl-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-rtl-desktop-dark.png",
+    "official-square-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-square-phone-light.png",
+    "local-square-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-square-phone-light.png",
+    "official-portrait-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-portrait-phone-light.png",
+    "local-portrait-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-portrait-phone-light.png",
+    "official-rtl-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-rtl-phone-light.png",
+    "local-rtl-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-rtl-phone-light.png",
+    "official-square-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-square-phone-dark.png",
+    "local-square-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-square-phone-dark.png",
+    "official-portrait-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-portrait-phone-dark.png",
+    "local-portrait-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-portrait-phone-dark.png",
+    "official-rtl-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-rtl-phone-dark.png",
+    "local-rtl-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-rtl-phone-dark.png"
+  },
+  "hashes": {
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-square-desktop-light.png": "e8d202949fca60533498ec179fb5eafaadba402f06190b883bc422ea9f097432",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-square-desktop-light.png": "1d2e30dc46392cc11c1d42cedfe4f331460d6573515405b413bc8f5dafdf7474",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-portrait-desktop-light.png": "2fdb3d90f47dc73f639e8cf287b75ea606d6c29f808be30bf506543a9c031f59",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-portrait-desktop-light.png": "1e92a4a476cbe17356afc1419bcb18b6c6e785f2b6295c282d11ab1427ea6aab",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-rtl-desktop-light.png": "361ec3938c83ffdb54a3ceb8e7bad447a4bdae8aec895185d8d1ab8b7c2bb8cf",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-rtl-desktop-light.png": "ed1619321304314f82956c530a823b9648bbcfdfd764663eab27fd4f72ecd59d",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-square-desktop-dark.png": "df1b62e812f90172ec94d49268375587faa814d9f2a8edeb1a3af94a42c63347",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-square-desktop-dark.png": "86bcb2b1dbfdc995fc685455932f8a048365d54747e2a1486ea5cb3cf7e8efae",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-portrait-desktop-dark.png": "efa218a207d0e959472ac9481576de44fb67a9f4a0599fefd7ad4d25e64e821f",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-portrait-desktop-dark.png": "4a98dc53cfa29f159ec5d6291795e02419126cb563e618daabfe2f3630433e3e",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-rtl-desktop-dark.png": "ba7a483588cc80ca4f65a919bf00fe864d599599b7a9bc28cef21398f1a3452c",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-rtl-desktop-dark.png": "31202ccfbc0a7296eae7b8cdd3984afd373848a71e33c58bafa540766af08e32",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-square-phone-light.png": "e31cbd38b1b6847d61531104e3fec22474867e432f969d6d6d42d4b6dab29922",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-square-phone-light.png": "c994a42ed71bda4888153917be3ffb3d4f1f7316ddd5eb5468fd00aa418677de",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-portrait-phone-light.png": "b37614ab64fe5f3c52ed33035fa8ba56b253159bd11d4e422320c6c4d7e057c2",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-portrait-phone-light.png": "afdd1b2514853a09acc12c50b6586181ea8f458d0f1dfb146cab09638aa07e30",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-rtl-phone-light.png": "82dc9da1474bd39822b30997d25137861757bfa7a80ddf39374cc909c88ffef4",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-rtl-phone-light.png": "cef3ec375cd61d2055e665314d57e7cd796434465b25191e69215a2b2102c955",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-square-phone-dark.png": "cf129d696bf8a9ab8cf52f5d7880d99cfb62a13cd02225c183783997a8ba56c1",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-square-phone-dark.png": "0ad261e6a767f8f6f26712d54ee095918fb4a0510a5f4db539cf42332690a0d4",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-portrait-phone-dark.png": "2ceea4be32839ad7592e12972ffbe8941b47dc131f806847b6e8ef0ed3cd1f01",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-portrait-phone-dark.png": "6a543dcf9b35c0591a7500cb9095b7bdcd24c419a55802c94e5d87aae66cfb3f",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/official-rtl-phone-dark.png": "70a60ae94864c16faa039a3210550843e8383bc7111698cbfcd9248f351354f5",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/sections/local-rtl-phone-dark.png": "4965ca5e123cc3f8c14c3a9361084ea96dbf61a95dcabfd3c90683539299e514"
+  }
+}

@@ -11,6 +11,8 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.ScreenshotTest
 import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class AspectRatioLayoutTest : ScreenshotTest() {
     @Test fun widthRatioAndChildTrackLiveConstraints() {
@@ -55,10 +57,13 @@ class AspectRatioLayoutTest : ScreenshotTest() {
         composeRule.onNodeWithTag("image").assertWidthIsEqualTo(160.dp).assertHeightIsEqualTo(90.dp)
     }
 
-    @Test fun omittedRatioRetainsSquareKotlinDefault() {
-        setThemedContent {
-            AspectRatio(modifier = Modifier.width(144.dp).testTag("ratio")) { }
+    @Test fun invalidRatioFailsFast() {
+        listOf(0f, -1f, Float.NaN, Float.POSITIVE_INFINITY).forEach { ratio ->
+            val error =
+                assertFailsWith<IllegalArgumentException> {
+                    validateAspectRatio(ratio)
+                }
+            assertEquals("ratio must be finite and greater than 0", error.message)
         }
-        composeRule.onNodeWithTag("ratio").assertWidthIsEqualTo(144.dp).assertHeightIsEqualTo(144.dp)
     }
 }

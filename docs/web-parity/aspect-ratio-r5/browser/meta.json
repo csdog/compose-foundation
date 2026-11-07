@@ -1,0 +1,93 @@
+{
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/aspect-ratio",
+  "officialRevision": "42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9",
+  "localUrl": "http://127.0.0.1:8777/aspect-ratio",
+  "capturedAt": "2026-11-07T09:26:04.637Z",
+  "app": [
+    "http://127.0.0.1:8777/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8777/05b244441e7ff1ea3da8.wasm"
+  ],
+  "officialDom": {
+    "title": "Aspect Ratio",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "Installation#"
+      },
+      {
+        "tag": "H2",
+        "text": "Usage#"
+      },
+      {
+        "tag": "H2",
+        "text": "Square#"
+      },
+      {
+        "tag": "H2",
+        "text": "Portrait#"
+      },
+      {
+        "tag": "H2",
+        "text": "RTL#"
+      },
+      {
+        "tag": "H2",
+        "text": "API Reference#"
+      },
+      {
+        "tag": "H3",
+        "text": "AspectRatio#"
+      }
+    ],
+    "examples": 4,
+    "theme": "dark",
+    "clientWidth": 1425,
+    "scrollHeight": 3551
+  },
+  "views": {
+    "desktop-light": {
+      "theme": "light",
+      "clientWidth": 1425,
+      "scrollHeight": 3626,
+      "bodyHeight": "calc(2626px + 100vh)"
+    },
+    "desktop-dark": {
+      "theme": "dark",
+      "clientWidth": 1425,
+      "scrollHeight": 3626,
+      "bodyHeight": "calc(2626px + 100vh)"
+    },
+    "phone-light": {
+      "theme": "light",
+      "clientWidth": 375,
+      "scrollHeight": 3982,
+      "bodyHeight": "calc(3138px + 100vh)"
+    },
+    "phone-dark": {
+      "theme": "dark",
+      "clientWidth": 375,
+      "scrollHeight": 3982,
+      "bodyHeight": "calc(3138px + 100vh)"
+    }
+  },
+  "files": {
+    "official-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/browser/official-desktop-light.png",
+    "local-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/browser/local-desktop-light.png",
+    "official-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/browser/official-desktop-dark.png",
+    "local-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/browser/local-desktop-dark.png",
+    "official-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/browser/official-phone-light.png",
+    "local-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/browser/local-phone-light.png",
+    "official-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/browser/official-phone-dark.png",
+    "local-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/browser/local-phone-dark.png"
+  },
+  "hashes": {
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/browser/official-desktop-light.png": "2cb9dceef77ec6b34366be8ffc62c96b051f973601bf09d6f9dc2b2e1e3f56fe",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/browser/local-desktop-light.png": "1085b07119f954409663b69a7fa2531223a7502c9cb95821a941ceffa8179343",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/browser/official-desktop-dark.png": "f9f6872a7070cb8730fd066aa7ba6e8e8e73673c37f9694196cac0018778b65f",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/browser/local-desktop-dark.png": "3d74f3c20aac747e02ef2aeae1edf599895cb9857a5d681bc488b9acbe398cb9",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/browser/official-phone-light.png": "c9e9fdc7dde0a6443969ad3ae790de8b705844b9bc1a1233eee063c2bc0465c6",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/browser/local-phone-light.png": "7e04debeabeb28d0f7af0274ce00d9247353aa17a0fe0d6b0717dddda3fe1a3f",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/browser/official-phone-dark.png": "65937e8e16e348ce5488b1b3ca303aa8a0b2cfd36fc5e4d98124854936c36a25",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/aspect-ratio-r5/browser/local-phone-dark.png": "ff890420a2d6522a83e9488f4f868968daa6d14fd1120d15d71cf701a12ce7c1"
+  }
+}
