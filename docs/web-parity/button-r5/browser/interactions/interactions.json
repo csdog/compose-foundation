@@ -1,0 +1,75 @@
+{
+  "capturedAt": "2026-11-07T12:17:28.509Z",
+  "groupMenu": {
+    "localDesktopEllipsis": {
+      "x": 841,
+      "y": 321
+    },
+    "localPhoneEllipsis": {
+      "x": 310,
+      "y": 377
+    },
+    "officialTrigger": "button[aria-label=\"More Options\"]",
+    "officialLabelTrigger": "[role=menuitem] containing \"Label As...\""
+  },
+  "files": {
+    "groupRest": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/interactions/local-group-rest.png",
+    "groupOpen": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/interactions/local-group-menu-open.png",
+    "groupSubmenu": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/interactions/local-group-label-submenu.png",
+    "groupWorkSelected": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/interactions/local-group-work-selected.png",
+    "groupClosed": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/interactions/local-group-menu-closed.png",
+    "groupReopened": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/interactions/local-group-reopened-label-submenu.png",
+    "groupPhoneRest": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/interactions/local-group-phone-rest.png",
+    "groupPhoneOpen": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/interactions/local-group-phone-menu-open.png",
+    "groupPhoneSubmenu": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/interactions/local-group-phone-label-submenu.png",
+    "linkRest": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/interactions/local-link-rest.png",
+    "linkHover": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/interactions/local-link-hover.png",
+    "linkPointerFocus": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/interactions/local-link-pointer-focus.png",
+    "linkActivated": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/interactions/local-link-activated.png",
+    "rtlArabic": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/interactions/local-rtl-arabic.png",
+    "rtlArabicPopup": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/interactions/local-rtl-language-popup.png",
+    "rtlEnglish": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/interactions/local-rtl-english.png",
+    "rtlEnglishPopup": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/interactions/local-rtl-language-popup-after-english.png",
+    "rtlHebrew": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/interactions/local-rtl-hebrew.png",
+    "officialGroupOpen": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/interactions/official-group-menu-open.png",
+    "officialGroupSubmenu": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/interactions/official-group-label-submenu.png",
+    "officialGroupPhoneOpen": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/interactions/official-group-phone-menu-open.png",
+    "officialGroupPhoneSubmenu": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/interactions/official-group-phone-label-submenu.png"
+  },
+  "hashes": {
+    "groupRest": "995a0ad5b7cdce60628f8aa3f215620ad48988b04637e6ea6bfa081ceb95f59f",
+    "groupOpen": "5897f5a4d84be438c41ed790d204ad0edc0081d73f4c52815f90f47eb52ac433",
+    "groupSubmenu": "68983eb50cdc9419fc33db37a7a587c91db203dcd842d25cb34ceabc8e33a3b5",
+    "groupWorkSelected": "cd3355c46bfaf0491aca8e85d9ff5187af5140506201008ba2a9cb5365ec2f74",
+    "groupClosed": "995a0ad5b7cdce60628f8aa3f215620ad48988b04637e6ea6bfa081ceb95f59f",
+    "groupReopened": "b3bf6266ee85dcfc6b20d4a5403636cf37d789a34cf59f1a61454065e837929c",
+    "groupPhoneRest": "668c0210e983f503050941550cc5e91b1af1171bdac1ae649892de1df295486d",
+    "groupPhoneOpen": "503d2a14b27e7624688216496383d28674ca1e95a7e9b6cd34ed32ea8ecb9afd",
+    "groupPhoneSubmenu": "4973f20c11369f4043ce5a8335c9e90a026e72449dff82d312688b9a52524d58",
+    "linkRest": "f2c9c499c4781659a6a98f4bfa6b729d43674e9692f3ee05644b4f631e800f92",
+    "linkHover": "2d8b33bf59f806f97def092af4c86317361899f37e12454d7a520c4d4f96c51d",
+    "linkPointerFocus": "c27ab6001a2d39bb1e533525bc916ce7ad1007d1fa73706ab276fe80aeb40992",
+    "linkActivated": "385e75d49d61b02ae467fd0b2260e077da1a3ceb3550c160466763ebcffa86b8",
+    "rtlArabic": "3676202fe85ccc91a68b36f4fe730ba36ca6afa35167d3ace34b46ff6b4bfd69",
+    "rtlArabicPopup": "c25854d39719f487a5e80cbd4bc0ac28701e639fb6dea5406c48c739dc14fa8d",
+    "rtlEnglish": "a4788170c6a23610f93d1a2ecf69d33164a6eec43586ffc8abc1a08704fb2270",
+    "rtlEnglishPopup": "83db2572d98e927749bb191c4e8840f642bedd8b0775fe7316e6e4c54d636690",
+    "rtlHebrew": "6e8da9a8434368792d52eaa8f7314aed46eb808da1cab66b8aef84551518b2e4",
+    "officialGroupOpen": "232a084dd9b7d4032f45a5c3da8a7838551716f5ac15af74d8bc1cf0a6d12276",
+    "officialGroupSubmenu": "6dc9d66d9ff9bde2f2d9960a187e8403665553a763c6551a44f76644f153ef49",
+    "officialGroupPhoneOpen": "d88bb55705b8b793d3898fff16d83a677103014bd331bd22542d47eb826e885d",
+    "officialGroupPhoneSubmenu": "cdc9aca53053f5fce5fc66cb5816447cbdb3f818df4b7feaff2904cd75fbef39"
+  },
+  "states": {
+    "linkActivation": {
+      "beforeActivation": {
+        "hash": "#example-12",
+        "historyLength": 50
+      },
+      "afterActivation": {
+        "hash": "",
+        "historyLength": 50
+      }
+    }
+  }
+}

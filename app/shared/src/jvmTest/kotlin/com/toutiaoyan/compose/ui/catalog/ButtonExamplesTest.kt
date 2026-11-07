@@ -88,9 +88,37 @@ class ButtonExamplesTest(private val width: Int, private val dark: Boolean) {
     }
 
     @Test fun apiReferenceDoesNotDuplicateTheRootButtonTable() {
-        val api = componentPageMarkdown(buttonDoc).substringAfter("## API Reference")
+        val markdown = componentPageMarkdown(buttonDoc)
+        assertFalse(markdown.contains("## Composition"))
+        assertEquals(
+            listOf(
+                "Installation",
+                "Usage",
+                "Cursor",
+                "Size",
+                "Default",
+                "Outline",
+                "Secondary",
+                "Ghost",
+                "Destructive",
+                "Link",
+                "Icon",
+                "With Icon",
+                "Rounded",
+                "Spinner",
+                "Button Group",
+                "As Link",
+                "RTL",
+                "API Reference",
+                "Button",
+                "Kotlin extension: buttonStyle",
+            ),
+            docSections(buttonDoc).map { it.title },
+        )
+        val api = markdown.substringAfter("## API Reference")
         assertEquals(1, Regex("\\| `onClick` \\|").findAll(api).count())
-        assertContains(api, "### buttonStyle")
+        assertContains(api, "### Kotlin extension: buttonStyle")
+        assertContains(api, "Kotlin-only helper.")
     }
 
     @Test fun rtlLanguageSwitchesRestoreDirectionAndLoadingButtonsRemainDisabled() {

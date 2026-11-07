@@ -1,0 +1,160 @@
+{
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/button",
+  "officialRevision": "42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9",
+  "localUrl": "http://127.0.0.1:8777/button",
+  "capturedAt": "2026-11-07T12:04:12.332Z",
+  "app": [
+    "http://127.0.0.1:8777/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8777/f6f852c7632388536e67.wasm"
+  ],
+  "officialDom": {
+    "title": "Button",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "Installation#",
+        "id": "installation"
+      },
+      {
+        "tag": "H2",
+        "text": "Usage#",
+        "id": "usage"
+      },
+      {
+        "tag": "H2",
+        "text": "Cursor#",
+        "id": "cursor"
+      },
+      {
+        "tag": "H2",
+        "text": "Size#",
+        "id": "size"
+      },
+      {
+        "tag": "H2",
+        "text": "Default#",
+        "id": "default"
+      },
+      {
+        "tag": "H2",
+        "text": "Outline#",
+        "id": "outline"
+      },
+      {
+        "tag": "H2",
+        "text": "Secondary#",
+        "id": "secondary"
+      },
+      {
+        "tag": "H2",
+        "text": "Ghost#",
+        "id": "ghost"
+      },
+      {
+        "tag": "H2",
+        "text": "Destructive#",
+        "id": "destructive"
+      },
+      {
+        "tag": "H2",
+        "text": "Link#",
+        "id": "link"
+      },
+      {
+        "tag": "H2",
+        "text": "Icon#",
+        "id": "icon"
+      },
+      {
+        "tag": "H2",
+        "text": "With Icon#",
+        "id": "with-icon"
+      },
+      {
+        "tag": "H2",
+        "text": "Rounded#",
+        "id": "rounded"
+      },
+      {
+        "tag": "H2",
+        "text": "Spinner#",
+        "id": "spinner"
+      },
+      {
+        "tag": "H2",
+        "text": "Button Group#",
+        "id": "button-group"
+      },
+      {
+        "tag": "H2",
+        "text": "As Link#",
+        "id": "as-link"
+      },
+      {
+        "tag": "H2",
+        "text": "RTL#",
+        "id": "rtl"
+      },
+      {
+        "tag": "H2",
+        "text": "API Reference#",
+        "id": "api-reference"
+      },
+      {
+        "tag": "H3",
+        "text": "Button#",
+        "id": "button"
+      }
+    ],
+    "examples": 15,
+    "theme": "dark",
+    "clientWidth": 1425,
+    "scrollHeight": 9461
+  },
+  "views": {
+    "desktop-light": {
+      "theme": "light",
+      "clientWidth": 1425,
+      "scrollHeight": 9572,
+      "bodyHeight": "calc(8572px + 100vh)"
+    },
+    "desktop-dark": {
+      "theme": "dark",
+      "clientWidth": 1425,
+      "scrollHeight": 9572,
+      "bodyHeight": "calc(8572px + 100vh)"
+    },
+    "phone-light": {
+      "theme": "light",
+      "clientWidth": 375,
+      "scrollHeight": 10503,
+      "bodyHeight": "calc(9659px + 100vh)"
+    },
+    "phone-dark": {
+      "theme": "dark",
+      "clientWidth": 375,
+      "scrollHeight": 10503,
+      "bodyHeight": "calc(9659px + 100vh)"
+    }
+  },
+  "files": {
+    "official-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/official-desktop-light.png",
+    "local-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/local-desktop-light.png",
+    "official-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/official-desktop-dark.png",
+    "local-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/local-desktop-dark.png",
+    "official-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/official-phone-light.png",
+    "local-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/local-phone-light.png",
+    "official-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/official-phone-dark.png",
+    "local-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/local-phone-dark.png"
+  },
+  "hashes": {
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/official-desktop-light.png": "36e7718a4297ff279e045e42f557f393ae1112e4d34f913062282ba28c6122b2",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/local-desktop-light.png": "385e75d49d61b02ae467fd0b2260e077da1a3ceb3550c160466763ebcffa86b8",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/official-desktop-dark.png": "658dc69c4080c9751cbc303223994a302924b2ab75542ea3b2a04abbd65baa97",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/local-desktop-dark.png": "028037deceaf847f1db1d8304118ed4ed6832aae9889ee4e113428add2aa9649",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/official-phone-light.png": "c66811ed5fdbc1a513c32e60d90ce9d967d44a66a1e5af8f570ccea6457c318a",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/local-phone-light.png": "099a12caa4b0b770ea861c396631e145e20b521ec9c080cde12075b5e6c90d06",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/official-phone-dark.png": "c8d07f1d6cb44c686bb67d7c26c3e552a97fb0098d8c767422cea13eee65b082",
+    "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/button-r5/browser/local-phone-dark.png": "99dcdaba0e5581aba62496994d842aaaafc2f0b333c6cafd5f09a58f7e513be5"
+  }
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ButtonScreenshotTest[jvm]" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-11-07T11:01:14.196Z" hostname="Apples-MacBook-Pro.local" time="0.239">
+  <properties/>
+  <testcase name="focused_light[jvm]" classname="com.toutiaoyan.compose.ui.components.button.ButtonScreenshotTest" time="0.025"/>
+  <testcase name="icon_sizes_light[jvm]" classname="com.toutiaoyan.compose.ui.components.button.ButtonScreenshotTest" time="0.017"/>
+  <testcase name="variants_disabled_light[jvm]" classname="com.toutiaoyan.compose.ui.components.button.ButtonScreenshotTest" time="0.019"/>
+  <testcase name="variants_disabled_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.button.ButtonScreenshotTest" time="0.019"/>
+  <testcase name="variants_light[jvm]" classname="com.toutiaoyan.compose.ui.components.button.ButtonScreenshotTest" time="0.018"/>
+  <testcase name="icon_sizes_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.button.ButtonScreenshotTest" time="0.017"/>
+  <testcase name="variants_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.button.ButtonScreenshotTest" time="0.017"/>
+  <testcase name="unpressed_baseline_light[jvm]" classname="com.toutiaoyan.compose.ui.components.button.ButtonScreenshotTest" time="0.016"/>
+  <testcase name="icon_variants_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.button.ButtonScreenshotTest" time="0.019"/>
+  <testcase name="focused_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.button.ButtonScreenshotTest" time="0.015"/>
+  <testcase name="pressed_light[jvm]" classname="com.toutiaoyan.compose.ui.components.button.ButtonScreenshotTest" time="0.038"/>
+  <testcase name="icon_variants_light[jvm]" classname="com.toutiaoyan.compose.ui.components.button.ButtonScreenshotTest" time="0.017"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

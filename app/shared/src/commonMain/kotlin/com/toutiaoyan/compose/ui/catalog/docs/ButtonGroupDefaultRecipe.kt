@@ -9,9 +9,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
@@ -80,11 +80,26 @@ internal fun ButtonGroupDefaultRecipe() {
                         ActionMenuItem("Add to List", Lucide.ListFilter)
                         DropdownMenuSub {
                             DropdownMenuSubTrigger("Label As...", leadingContent = { Icon(Lucide.Tag) })
-                            DropdownMenuSubContent {
+                            DropdownMenuSubContent(
+                                modifier = Modifier.testTag("button-group-label-submenu"),
+                                style = Style { width(96.dp) },
+                            ) {
                                 DropdownMenuRadioGroup(value = label, onValueChange = { label = it }) {
-                                    DropdownMenuRadioItem(value = "personal", label = "Personal")
-                                    DropdownMenuRadioItem(value = "work", label = "Work")
-                                    DropdownMenuRadioItem(value = "other", label = "Other")
+                                    DropdownMenuRadioItem(
+                                        value = "personal",
+                                        label = "Personal",
+                                        style = Style { contentPadding(horizontal = 4.dp, vertical = 4.dp) },
+                                    )
+                                    DropdownMenuRadioItem(
+                                        value = "work",
+                                        label = "Work",
+                                        style = Style { contentPadding(horizontal = 4.dp, vertical = 4.dp) },
+                                    )
+                                    DropdownMenuRadioItem(
+                                        value = "other",
+                                        label = "Other",
+                                        style = Style { contentPadding(horizontal = 4.dp, vertical = 4.dp) },
+                                    )
                                 }
                             }
                         }

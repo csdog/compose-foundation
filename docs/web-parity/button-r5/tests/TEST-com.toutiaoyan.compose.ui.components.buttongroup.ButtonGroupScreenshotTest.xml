@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ButtonGroupScreenshotTest[jvm]" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-07T11:01:14.437Z" hostname="Apples-MacBook-Pro.local" time="0.107">
+  <properties/>
+  <testcase name="with_label_light[jvm]" classname="com.toutiaoyan.compose.ui.components.buttongroup.ButtonGroupScreenshotTest" time="0.023"/>
+  <testcase name="with_label_focused_light[jvm]" classname="com.toutiaoyan.compose.ui.components.buttongroup.ButtonGroupScreenshotTest" time="0.019"/>
+  <testcase name="with_label_focused_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.buttongroup.ButtonGroupScreenshotTest" time="0.017"/>
+  <testcase name="states_light[jvm]" classname="com.toutiaoyan.compose.ui.components.buttongroup.ButtonGroupScreenshotTest" time="0.017"/>
+  <testcase name="with_label_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.buttongroup.ButtonGroupScreenshotTest" time="0.014"/>
+  <testcase name="states_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.buttongroup.ButtonGroupScreenshotTest" time="0.017"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

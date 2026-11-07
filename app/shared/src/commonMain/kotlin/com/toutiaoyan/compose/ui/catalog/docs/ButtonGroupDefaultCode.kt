@@ -81,11 +81,29 @@ internal val buttonGroupDefaultCode =
                             ActionMenuItem("Add to List", Lucide.ListFilter)
                             DropdownMenuSub {
                                 DropdownMenuSubTrigger("Label As...", leadingContent = { Icon(Lucide.Tag) })
-                                DropdownMenuSubContent {
+                                DropdownMenuSubContent(style = Style { width(96.dp) }) {
                                     DropdownMenuRadioGroup(value = label, onValueChange = { label = it }) {
-                                        DropdownMenuRadioItem(value = "personal", label = "Personal")
-                                        DropdownMenuRadioItem(value = "work", label = "Work")
-                                        DropdownMenuRadioItem(value = "other", label = "Other")
+                                        DropdownMenuRadioItem(
+                                            value = "personal",
+                                            label = "Personal",
+                                            style = Style {
+                                                contentPadding(horizontal = 4.dp, vertical = 4.dp)
+                                            },
+                                        )
+                                        DropdownMenuRadioItem(
+                                            value = "work",
+                                            label = "Work",
+                                            style = Style {
+                                                contentPadding(horizontal = 4.dp, vertical = 4.dp)
+                                            },
+                                        )
+                                        DropdownMenuRadioItem(
+                                            value = "other",
+                                            label = "Other",
+                                            style = Style {
+                                                contentPadding(horizontal = 4.dp, vertical = 4.dp)
+                                            },
+                                        )
                                     }
                                 }
                             }

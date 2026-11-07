@@ -27,7 +27,7 @@ val buttonDoc =
         description = "Displays a button or a component that looks like a button.",
         usageImportsCode = "import com.toutiaoyan.compose.ui.components.button.*",
         usageCode = "Button(\"Button\", variant = ButtonVariant.Outline)",
-        compositionCode = "Button(onClick = { /* perform action */ }) { Text { \"Continue\" } }",
+        compositionCode = null,
         examplesHeading = null,
         beforeExamples =
             listOf(
@@ -52,9 +52,10 @@ val buttonDoc =
                     buttonApiProperties,
                 ),
                 ComponentApiSection(
-                    "buttonStyle",
-                    "Applies the same variant/size chrome to another composable without " +
-                        "assigning button semantics or a click handler. The caller owns link behavior and content.",
+                    "Kotlin extension: buttonStyle",
+                    "Kotlin-only helper. Applies the same variant/size chrome to another " +
+                        "composable without assigning button semantics or a click handler. " +
+                        "The caller owns link behavior and content.",
                     listOf(
                         ApiProperty("variant", "ButtonVariant", "Default"),
                         ApiProperty("size", "ButtonSize", "Md"),
@@ -225,7 +226,8 @@ val buttonDoc =
                 ComponentExample(
                     title = "RTL",
                     descriptionMarkdown =
-                        "To enable RTL support in shadcn/ui, see the [RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
+                        "To enable RTL support in shadcn/ui, see the " +
+                            "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
                     previewPadding = 0.dp,
                     code =
                         """

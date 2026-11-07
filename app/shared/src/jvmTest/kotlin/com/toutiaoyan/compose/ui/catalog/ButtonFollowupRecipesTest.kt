@@ -101,6 +101,7 @@ class ButtonFollowupRecipesTest(private val width: Int, private val dark: Boolea
             assertEquals(16f, it.boundsInRoot.width, .1f)
         }
         rule.onNodeWithText("Label As...").performClick()
+        rule.onNodeWithTag("button-group-label-submenu").assertWidthIsEqualTo(96.dp)
         rule.onNodeWithText("Personal").assertIsSelected()
         rule.onNodeWithText("Other").performClick().assertIsSelected()
         rule.onNodeWithText("Mark as Read").assertIsDisplayed()
