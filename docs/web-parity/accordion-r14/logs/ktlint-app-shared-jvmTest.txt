@@ -1,0 +1,7 @@
+[90m/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/[0mMessageScrollerExamplesTest.kt[90m:[0m25[90m:1:[0m Exceeded max line length (120) [90m(standard:max-line-length)[0m
+[90m/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/[0mTextExamplesTest.kt[90m:[0m72[90m:1:[0m Exceeded max line length (120) [90m(standard:max-line-length)[0m
+[90m/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/[0mChartPageTest.kt[90m:[0m134[90m:1:[0m Exceeded max line length (120) [90m(standard:max-line-length)[0m
+[90m/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/[0mLabelExamplesTest.kt[90m:[0m68[90m:1:[0m Exceeded max line length (120) [90m(standard:max-line-length)[0m
+
+Summary error count (descending) by rule:
+  standard:max-line-length: 4

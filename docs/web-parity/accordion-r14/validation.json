@@ -1,0 +1,46 @@
+{
+  "ok": true,
+  "officialRevision": "42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9",
+  "sourceFiles": 10,
+  "quadrantFiles": 8,
+  "sectionFiles": 48,
+  "interactionFiles": 17,
+  "contactSheets": {
+    "desktop-light": {
+      "file": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/accordion-r14/sections/contact-desktop-light.png",
+      "bytes": 1845337,
+      "sha256": "4ac259be73a5e7ef8b89885f2e8207f93b383e78632bae4e8014e4888e957da6",
+      "dimensions": {
+        "width": 2880,
+        "height": 6000
+      }
+    },
+    "desktop-dark": {
+      "file": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/accordion-r14/sections/contact-desktop-dark.png",
+      "bytes": 1840406,
+      "sha256": "73d0df687d63588f9dda56a1c4100034f66bbb24d39e9dccdb8fa9d64214037b",
+      "dimensions": {
+        "width": 2880,
+        "height": 6000
+      }
+    },
+    "phone-light": {
+      "file": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/accordion-r14/sections/contact-phone-light.png",
+      "bytes": 631046,
+      "sha256": "f01f881248bf5d934c9a1ac9757f9fcd9f33cf9f5427a9844ab94ab819663e66",
+      "dimensions": {
+        "width": 780,
+        "height": 5064
+      }
+    },
+    "phone-dark": {
+      "file": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/accordion-r14/sections/contact-phone-dark.png",
+      "bytes": 626499,
+      "sha256": "bf1efb5f6b7f45c5baff6b2d7b4b53db8c4adaf9620ee94cf5d8cb6c28bf7673",
+      "dimensions": {
+        "width": 780,
+        "height": 5064
+      }
+    }
+  }
+}

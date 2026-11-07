@@ -4,6 +4,7 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import com.toutiaoyan.compose.ui.catalog.docs.ComponentGuideBlock
 import com.toutiaoyan.compose.ui.catalog.docs.accordionDoc
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import org.junit.Rule
@@ -36,15 +37,36 @@ class AccordionExamplesTest {
         rule.onNodeWithText("{item.content}").assertDoesNotExist()
     }
 
-    @Test fun officialMultipleCopyAndApiReferenceMatchThePageSource() {
+    @Test fun officialSectionOrderAndCopyMatchThePageSource() {
         val multiple = accordionDoc.examples.single { it.title == "Multiple" }
         assertEquals(null, accordionDoc.examplesHeading)
+        assertEquals(
+            listOf("Default", "Basic", "Multiple", "Disabled", "Borders", "Card", "RTL"),
+            accordionDoc.examples.take(7).map { it.title },
+        )
         assertTrue(accordionDoc.examples.drop(7).all { it.title.startsWith("Kotlin extension: ") })
         assertEquals(
             "Use `multiple = true` to allow multiple items to be open at the same time.",
             multiple.descriptionMarkdown,
         )
         assertTrue(multiple.code.contains("multiple = true"))
+
+        val markdown = componentPageMarkdown(accordionDoc)
+        val order =
+            listOf(
+                "## Installation",
+                "## Usage",
+                "## Composition",
+                "## Basic",
+                "## Multiple",
+                "## Disabled",
+                "## Borders",
+                "## Card",
+                "## RTL",
+                "## API Reference",
+            ).map { markdown.indexOf(it) }
+        assertTrue(order.all { it >= 0 }, "missing an official section: $order")
+        assertEquals(order.sorted(), order)
 
         val api = accordionDoc.afterExamples.single { it.title == "API Reference" }
         val paragraph = assertIs<ComponentGuideBlock.Paragraph>(api.blocks.single())

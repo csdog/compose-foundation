@@ -101,7 +101,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 “基础已验证”表示已有本轮实现、定向测试和浏览器证据，后半句列出真实剩余范围；
 “尚未开始本轮页面与完整状态对照”表示该组件页还未进入本轮逐页核对。历史对齐结果不自动继承。
 
-- [ ] Accordion (`accordion`)：官网七配方（hero + Basic/Multiple/Disabled/Borders/Card/RTL 与 API Reference）及文案已按 `8a353667` 复核，r12 的 327dp/245dp 窄宽校正与 `Kotlin extension:` 前缀保持。r13 在专用空间完成 1440×1000/390×844×浅深四象限（逐像素校验主题）、6 个官方分节对照，并实际验证单开切换、Multiple 三开、Disabled 不响应、RTL 阿拉伯/英语/希伯来切换及 Horizontal 扩展点击与方向键；最终构建 Wasm `af0897b…`，107 项 app:shared + 62 项 shadcn:core 聚焦测试通过。仍留共享壳顶部导航/复制与前后页、预览垂直间距及 Geist 字形、扩展 API/Style/辅助技术/触摸矩阵，见 [accordion-r13](web-parity/accordion-r13/README.md)。
+- [x] Accordion (`accordion`)：r14 将当前官方 `main` 固定为 `42f3bb63…`，MDX、wrapper 和七个示例的 9 份来源哈希与 r13 一致，并在 r14 新增 Nova CSS 固定；页面官方顺序（hero、Installation、Usage、Composition、Basic、Multiple、Disabled、Borders、Card、RTL、API Reference）已补完整回归断言。目录 63/63、core 21/21 通过；当前 Wasm `1355c1d5…` 下完成四象限、48 张六分节和 17 个交互取证，10 份来源及全部图片哈希由 [validation.json](web-parity/accordion-r14/validation.json) 校验。共享文档壳/代码面板、Geist 与阿拉伯/希伯来字形栅格、Canvas 原生辅助技术角色以及扩展/真机触摸矩阵作为明确平台差异，见 [accordion-r14](web-parity/accordion-r14/README.md)。
 - [ ] Alert (`alert`)：官方六配方（hero + Basic/Destructive/Action/Custom Colors/RTL）顺序/标题与四条 `Kotlin extension:` 边界已按 `8a353667` 复核；r11 修正 Basic 与 Action 两段说明为官网文案并补断言。专用空间 1440/390×浅深四象限（逐像素校验主题）、5 个官方分节对照、Action 按钮 hover/点击与 RTL 阿英希切换均已验证；最终构建 Wasm `af0897b…`，107 项 app:shared + 62 项 shadcn:core 聚焦测试通过。全文法/超高操作/任意复杂槽位/窗口重排/完整焦点矩阵/辅助技术及细微排版、共享壳与字形差异仍留，见 [alert-r11](web-parity/alert-r11/README.md)。
 - [x] Alert Dialog (`alert-dialog`)：r5 将当前官方 `main` 固定为 `42f3bb63…`，MDX、wrapper、七个示例和 Nova CSS 与 r4 字节一致。修复共享 modal 初始焦点：Tab 现在在 Cancel -> Continue -> Cancel 内循环，Escape 关闭并恢复触发器焦点。目录 5/5、Alert Dialog 与 modal-focus 17/17、受影响 Dialog/Sheet/Drawer/surfaces 回归 150/150 通过；Wasm `1355c1d5…` 下完成四象限、48 张六分节和 22 个官方/本地弹窗交互取证。共享文档壳/字体栅格与 Canvas 原生 alert-dialog 语义作为明确平台差异，见 [alert-dialog-r5](web-parity/alert-dialog-r5/README.md)。
 - [x] Aspect Ratio (`aspect-ratio`)：r5 将当前官方 `main` 固定为 `42f3bb63…`，MDX、wrapper、四个示例和 Nova CSS 与 r4 字节一致。`ratio` 改为官方一致的必填参数，并在组件入口拒绝零、负数、NaN 与无穷值；API 表同步标为 `Required`。6 项目录与 5 项 core 测试通过，当前 Wasm `dfb4b1c1…` 下完成 1440/390×浅深四象限、24 张三个官方示例分节截图，以及 RTL 阿拉伯语/英语/希伯来语与弹层切换。独立 Reviewer 无 finding；内置 PNG/`next/image`、阿希字体栅格和共享文档壳差异作为明确平台差异，见 [aspect-ratio-r5](web-parity/aspect-ratio-r5/README.md)。
@@ -173,6 +173,11 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
 
+### Accordion：r14 官方节序、完整哈希与当前构建取证（2026-11-07）
+
+<!-- progress-created: 2026-11-07; order: 235 -->
+
+当前官方 `main` 固定为 `42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9`；MDX、wrapper 和七个示例的 9 份来源哈希与 r13 一致，r14 另行固定 Nova CSS。页面保持 hero、Installation、Usage、Composition、Basic/Multiple/Disabled/Borders/Card/RTL 与 API Reference，并新增完整节序回归。目录 63/63、core 21/21 通过；当前 Wasm `1355c1d5…` 下完成 8 张四象限、48 张六分节和 17 个交互状态，10 份来源和全部图片哈希由 `validate.mjs` 校验。独立 Reviewer 的两项低风险记录问题已修正，独立 Verifier PASS；共享文档壳/代码面板、Geist/阿希字体栅格、Canvas 原生辅助技术语义及扩展/真机触摸矩阵保留为明确差异，见 [accordion-r14](web-parity/accordion-r14/README.md)。
 ### Bubble：r3 ghost 完整性、键盘状态与九分节验证（2026-11-07）
 
 <!-- progress-created: 2026-11-07; order: 234 -->
