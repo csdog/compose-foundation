@@ -334,8 +334,8 @@ fun TeleportPrimitiveScope.Content(
                     ).onFocusChanged { hasFocus = it.hasFocus }
                         .focusGroup()
                         .pointerInput(
-                        Unit,
-                    ) { detectTapGestures { } },
+                            Unit,
+                        ) { detectTapGestures { } },
             ) {
                 androidx.compose.runtime.CompositionLocalProvider(
                     LocalOverlayHost provides (childHost ?: LocalOverlayHost.current),

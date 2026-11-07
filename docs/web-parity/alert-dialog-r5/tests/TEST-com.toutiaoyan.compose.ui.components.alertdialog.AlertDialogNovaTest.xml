@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="AlertDialogNovaTest[jvm]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-07T12:45:58.836Z" hostname="Apples-MacBook-Pro.local" time="0.389">
+<testsuite name="AlertDialogNovaTest[jvm]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-07T12:56:31.057Z" hostname="Apples-MacBook-Pro.local" time="0.394">
   <properties/>
-  <testcase name="headerUsesAlertTypographyAndReactsToSmallSize[jvm]" classname="com.toutiaoyan.compose.ui.components.alertdialog.AlertDialogNovaTest" time="0.073"/>
+  <testcase name="headerUsesAlertTypographyAndReactsToSmallSize[jvm]" classname="com.toutiaoyan.compose.ui.components.alertdialog.AlertDialogNovaTest" time="0.076"/>
   <testcase name="defaultLight[jvm]" classname="com.toutiaoyan.compose.ui.components.alertdialog.AlertDialogNovaTest" time="0.042"/>
-  <testcase name="phoneFooterReversesVisualOrderAndButtonsRemainUsable[jvm]" classname="com.toutiaoyan.compose.ui.components.alertdialog.AlertDialogNovaTest" time="0.066"/>
-  <testcase name="defaultDark[jvm]" classname="com.toutiaoyan.compose.ui.components.alertdialog.AlertDialogNovaTest" time="0.038"/>
-  <testcase name="modalActionsTrapTabAndEscapeReturnsFocusToTrigger[jvm]" classname="com.toutiaoyan.compose.ui.components.alertdialog.AlertDialogNovaTest" time="0.17"/>
+  <testcase name="phoneFooterReversesVisualOrderAndButtonsRemainUsable[jvm]" classname="com.toutiaoyan.compose.ui.components.alertdialog.AlertDialogNovaTest" time="0.068"/>
+  <testcase name="defaultDark[jvm]" classname="com.toutiaoyan.compose.ui.components.alertdialog.AlertDialogNovaTest" time="0.037"/>
+  <testcase name="modalActionsTrapTabAndEscapeReturnsFocusToTrigger[jvm]" classname="com.toutiaoyan.compose.ui.components.alertdialog.AlertDialogNovaTest" time="0.171"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
