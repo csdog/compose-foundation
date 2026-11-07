@@ -1,0 +1,119 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  DOCKER_REGISTRY: harbor.devops.toutiaoyan.com
+  WEB_IMAGE_NAME: web-foundation/compose-foundation-web
+  CI_IMAGE_NAME: web-foundation/compose-linux-desktop
+  WEB_CHANGE_PATTERNS: '^(app/|core/|shadcn/|tailwind/|ci/docker/compose-web/|deploy/|build\.gradle\.kts|settings\.gradle\.kts|gradle\.properties|gradle/|package\.json|pnpm-lock\.yaml|\.gitea/)'
+  CI_IMAGE_CHANGE_PATTERNS: '^ci/docker/linux-tests/'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: zulu
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Lint
+        run: |
+          echo "kotlin.native.ignoreDisabledTargets=true" >> gradle.properties
+          ./gradlew ktlintCheck detekt --continue
+
+  test_desktop:
+    needs: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: zulu
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Desktop tests
+        run: |
+          echo "kotlin.native.ignoreDisabledTargets=true" >> gradle.properties
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+          xvfb-run -a ./gradlew jvmTest --continue
+
+  test_web:
+    needs: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: zulu
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Web tests
+        run: |
+          echo "kotlin.native.ignoreDisabledTargets=true" >> gradle.properties
+          ./gradlew jsTest wasmJsTest --continue
+
+  build_ci_image:
+    uses: infra/ci-common/.gitea/workflows/build_image.yml@main
+    with:
+      docker_registry: ${{ env.DOCKER_REGISTRY }}
+      docker_user: ${{ secrets.DOCKER_USER }}
+      docker_password: ${{ secrets.DOCKER_PASSWORD }}
+      image_name: ${{ env.CI_IMAGE_NAME }}
+      dockerfile: ci/docker/linux-tests/Dockerfile
+      build_context: ci/docker/linux-tests
+      change_patterns: ${{ env.CI_IMAGE_CHANGE_PATTERNS }}
+      push_latest: true
+    secrets:
+      gitea_token: ${{ github.token }}
+
+  build_web:
+    needs: [test_desktop, test_web]
+    uses: infra/ci-common/.gitea/workflows/build_image.yml@main
+    with:
+      docker_registry: ${{ env.DOCKER_REGISTRY }}
+      docker_user: ${{ secrets.DOCKER_USER }}
+      docker_password: ${{ secrets.DOCKER_PASSWORD }}
+      image_name: ${{ env.WEB_IMAGE_NAME }}
+      dockerfile: ci/docker/compose-web/Dockerfile
+      build_context: .
+      change_patterns: ${{ env.WEB_CHANGE_PATTERNS }}
+      push_latest: true
+    secrets:
+      gitea_token: ${{ github.token }}
+
+  deploy_web:
+    needs: build_web
+    if: github.ref == 'refs/heads/main' && needs.build_web.outputs.changed == 'true'
+    uses: infra/ci-common/.gitea/workflows/deploy-k8s.yml@main
+    with:
+      full_image: ${{ needs.build_web.outputs.full_image }}
+      change_patterns: ${{ env.WEB_CHANGE_PATTERNS }}
+      kubectl_version: v1.35.9
+      k8s_namespace: web-foundation
+      deploy_script: scripts/k8s-deploy.sh
+      deploy_env: |
+        K8S_DEPLOYMENT=deployment/compose-foundation-web
+        K8S_APPLY_MANIFESTS=deploy/base/namespace.yaml
+        K8S_APPLY_MANIFESTS=deploy/base/web-service.yaml
+        K8S_APPLY_MANIFESTS=deploy/base/web-deployment.yaml
+        K8S_APPLY_MANIFESTS=deploy/base/istio-routes.yaml
+        K8S_SET_IMAGES=deployment/compose-foundation-web:web
+        K8S_ROLLOUT_WAIT=deployment/compose-foundation-web
+    secrets:
+      gitea_token: ${{ github.token }}
+      kube_config: ${{ secrets.KUBE_CONFIG_CHONGQING }}
