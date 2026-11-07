@@ -1,0 +1,73 @@
+{
+  "component": "Avatar",
+  "officialRevision": "42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/avatar",
+  "retrievedAt": "2026-11-07T17:40:00+08:00",
+  "files": [
+    {
+      "path": "sources/avatar.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/content/docs/components/base/avatar.mdx",
+      "sha256": "f0e7a35ef6d6bcd3c74c356e62bec85d071891de7054e525379cbe080b389c12"
+    },
+    {
+      "path": "sources/avatar.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/registry/bases/base/ui/avatar.tsx",
+      "sha256": "d9850dc6f9aaccf9f7aab3c730c3aef62b42ef8cd9404b2d7133f771e14a6cbd"
+    },
+    {
+      "path": "sources/avatar-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/avatar-demo.tsx",
+      "sha256": "2d96b83d39927d78489565d6f9afb87a6f0eb77c1cd211afd34801eecdedd15e"
+    },
+    {
+      "path": "sources/avatar-basic.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/avatar-basic.tsx",
+      "sha256": "55c47c83c4f9fa3629bf1dc2183fef62f9ca88ec20703acae7d8708b1677cbd0"
+    },
+    {
+      "path": "sources/avatar-badge.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/avatar-badge.tsx",
+      "sha256": "ebbc373c5460fcf66d9ae1a58fe6b57a7adb532edc710de1c29c805fc5208084"
+    },
+    {
+      "path": "sources/avatar-badge-icon.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/avatar-badge-icon.tsx",
+      "sha256": "f9e0ff0936d61dcd2bf2f6bf0e5aedc7dbf328bcf317443628f831e569e7353b"
+    },
+    {
+      "path": "sources/avatar-group.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/avatar-group.tsx",
+      "sha256": "da325a98cec9e5c76ef9e5e53729c0d0a7788711a4f77afa0471dbabdcb75133"
+    },
+    {
+      "path": "sources/avatar-group-count.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/avatar-group-count.tsx",
+      "sha256": "2e37cc0da1cecc625d25f0c3664c0c069c154f3e45aec19c5197b41732341ede"
+    },
+    {
+      "path": "sources/avatar-group-count-icon.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/avatar-group-count-icon.tsx",
+      "sha256": "d2662cf083ec5fd9de2a98bfa934b51bfcbda138beab8b91ae5f164bb9a0b50a"
+    },
+    {
+      "path": "sources/avatar-size.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/avatar-size.tsx",
+      "sha256": "2179028c2eceab4061691e7085f9ea4745957df294f2e4644e7cc8d3d6dbf5a7"
+    },
+    {
+      "path": "sources/avatar-dropdown.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/avatar-dropdown.tsx",
+      "sha256": "23ad4bb4a84e895ac1efe13755fbd7cd746b09e7dd2fd7e7a2b9c3df46020643"
+    },
+    {
+      "path": "sources/avatar-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/avatar-rtl.tsx",
+      "sha256": "b9d2a45edf746219d67d4c8e8d5747bbe2019fb8ec9d71633ae8892ad8230604"
+    },
+    {
+      "path": "sources/style-nova.css",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+    }
+  ]
+}

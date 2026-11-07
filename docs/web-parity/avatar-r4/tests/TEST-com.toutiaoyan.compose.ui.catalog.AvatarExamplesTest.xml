@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AvatarExamplesTest[jvm]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-07T09:52:58.345Z" hostname="Apples-MacBook-Pro.local" time="0.999">
+  <properties/>
+  <testcase name="dropdownOpensSelectsAndDismissesWithEscape[jvm]" classname="com.toutiaoyan.compose.ui.catalog.AvatarExamplesTest" time="0.743"/>
+  <testcase name="defaultUsesRealImagesAndCount[jvm]" classname="com.toutiaoyan.compose.ui.catalog.AvatarExamplesTest" time="0.045"/>
+  <testcase name="badgeExampleKeepsThePhotoInColorLikeTheOfficialExample[jvm]" classname="com.toutiaoyan.compose.ui.catalog.AvatarExamplesTest" time="0.018"/>
+  <testcase name="languageSelectorMirrorsAvatarsAndTranslatesCount[jvm]" classname="com.toutiaoyan.compose.ui.catalog.AvatarExamplesTest" time="0.175"/>
+  <testcase name="docsKeepOfficialRecipesFirstAndLabelKotlinFallback[jvm]" classname="com.toutiaoyan.compose.ui.catalog.AvatarExamplesTest" time="0.014"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

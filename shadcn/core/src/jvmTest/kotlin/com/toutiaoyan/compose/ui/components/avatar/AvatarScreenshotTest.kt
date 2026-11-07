@@ -2,8 +2,14 @@
 
 package com.toutiaoyan.compose.ui.components.avatar
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.ScreenshotTest
 import com.toutiaoyan.compose.ui.components.text.Text
@@ -96,4 +102,26 @@ class AvatarScreenshotTest : ScreenshotTest() {
     @Test fun nova_light() = nova(false)
 
     @Test fun nova_dark() = nova(true)
+
+    private fun groupSpacedAndMixed(darkTheme: Boolean) {
+        snapshot("avatar_group_spaced_and_mixed", darkTheme = darkTheme) {
+            Box(Modifier.background(Color(0xFFF4C7CC)).padding(12.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                    AvatarGroup(spacing = 8.dp) {
+                        Avatar("CN")
+                        Avatar("LR")
+                    }
+                    AvatarGroup(spacing = 4.dp) {
+                        Avatar(size = AvatarSize.Sm) { AvatarFallback("SM") }
+                        Avatar(size = AvatarSize.Lg) { AvatarFallback("LG") }
+                        AvatarGroupCount("+3")
+                    }
+                }
+            }
+        }
+    }
+
+    @Test fun group_spaced_and_mixed_light() = groupSpacedAndMixed(darkTheme = false)
+
+    @Test fun group_spaced_and_mixed_dark() = groupSpacedAndMixed(darkTheme = true)
 }

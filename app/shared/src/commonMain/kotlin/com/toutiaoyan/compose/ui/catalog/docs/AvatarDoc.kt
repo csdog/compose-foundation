@@ -340,7 +340,10 @@ val avatarDoc =
                 ),
                 ComponentApiSection(
                     "AvatarGroup",
-                    "Overlapping row. Compose layout direction controls ordering.",
+                    (
+                        "Row of avatars with background-colored rings. Spacing controls " +
+                            "overlap; Compose layout direction controls ordering."
+                    ),
                     listOf(
                         ApiProperty("spacing", "Dp", "(-8).dp"),
                         ApiProperty("content", "@Composable () -> Unit", "Required"),
@@ -349,11 +352,13 @@ val avatarDoc =
                 ComponentApiSection(
                     "AvatarGroupCount",
                     (
-                        "Muted count or caller-provided icon. Pass size explicitly " +
-                            "when composing small or large group members."
+                        "Muted count or caller-provided icon. In an AvatarGroup the " +
+                            "default size follows CSS precedence: any sm member makes it sm, " +
+                            "otherwise any lg member makes it lg; otherwise it is default. " +
+                            "Pass size to override it."
                     ),
                     listOf(
-                        ApiProperty("size", "AvatarSize", "Default"),
+                        ApiProperty("size", "AvatarSize?", "Follows group (Default outside a group)"),
                         ApiProperty("content", "@Composable BoxScope.() -> Unit", "Required, or text overload"),
                     ),
                 ),

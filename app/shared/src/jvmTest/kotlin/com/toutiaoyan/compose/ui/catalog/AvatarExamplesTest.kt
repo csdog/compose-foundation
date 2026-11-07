@@ -48,12 +48,19 @@ class AvatarExamplesTest {
         // Base UI pointer opens leave every row unhighlighted; the first ArrowDown reaches row 1.
         rule.onNodeWithText("Profile").assertIsNotFocused()
         rule.onNodeWithText("Billing").assertIsNotFocused()
-        rule.onNodeWithText("Profile").performKeyInput { pressKey(Key.DirectionDown) }
+        rule.onNodeWithText("Profile").performKeyInput { pressKey(Key.DirectionUp) }
+        rule.onNodeWithText("Log out").assertIsFocused()
+        rule.onNodeWithText("Log out").performKeyInput { pressKey(Key.MoveHome) }
+        rule.onNodeWithText("Profile").assertIsFocused()
+        rule.onNodeWithText("Profile").performKeyInput { pressKey(Key.MoveEnd) }
+        rule.onNodeWithText("Log out").assertIsFocused()
+        rule.onNodeWithText("Log out").performKeyInput { pressKey(Key.DirectionDown) }
         rule.onNodeWithText("Profile").assertIsFocused()
         rule.onNodeWithText("Profile").performKeyInput { pressKey(Key.DirectionDown) }
         rule.onNodeWithText("Billing").assertIsFocused()
         rule.onNodeWithText("Billing").performKeyInput { pressKey(Key.Escape) }
         rule.onNodeWithText("Profile").assertDoesNotExist()
+        rule.onNodeWithContentDescription("Open user menu").assertIsFocused()
         assertTrue(
             avatarDoc.examples.single { it.title == "Dropdown" }.code.contains("DropdownMenuGroup {"),
         )
@@ -133,6 +140,12 @@ class AvatarExamplesTest {
         )
         assertEquals(6, avatarDoc.apiSections.size)
         assertFalse(avatarDoc.examples.any { "model = null" in it.code })
+        val groupCountApi = avatarDoc.apiSections.single { it.title == "AvatarGroupCount" }
+        assertEquals(
+            "AvatarSize?",
+            groupCountApi.properties.single { it.name == "size" }.type,
+        )
+        assertTrue(groupCountApi.descriptionMarkdown.contains("any sm member makes it sm"))
     }
 
     @Test fun badgeExampleKeepsThePhotoInColorLikeTheOfficialExample() {

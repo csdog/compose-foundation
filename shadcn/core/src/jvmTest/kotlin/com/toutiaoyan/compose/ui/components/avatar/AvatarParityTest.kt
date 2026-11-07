@@ -14,6 +14,7 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.ScreenshotTest
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.tokens.StylePreset
@@ -127,5 +128,47 @@ class AvatarParityTest : ScreenshotTest() {
         composeRule.runOnIdle { rtl = true }
         assertEquals(-24f, left("second") - left("first"), .1f)
         assertEquals(80f, composeRule.onNodeWithTag("group").fetchSemanticsNode().boundsInRoot.width, .1f)
+    }
+
+    @Test fun groupCountTracksSingleMemberSizeAndAllowsExplicitOverride() {
+        var memberSize by mutableStateOf(AvatarSize.Sm)
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            AvatarGroup {
+                Avatar(size = memberSize) { AvatarFallback("CN") }
+                AvatarGroupCount("+3", Modifier.testTag("auto-count"))
+                AvatarGroupCount("+4", Modifier.testTag("fixed-count"), size = AvatarSize.Lg)
+            }
+        }
+
+        fun assertSizes(
+            auto: Float,
+            fixed: Float,
+        ) {
+            composeRule.onNodeWithTag("auto-count").assertWidthIsEqualTo(auto.dp).assertHeightIsEqualTo(auto.dp)
+            composeRule.onNodeWithTag("fixed-count").assertWidthIsEqualTo(fixed.dp).assertHeightIsEqualTo(fixed.dp)
+        }
+
+        assertSizes(auto = 24f, fixed = 40f)
+        composeRule.runOnIdle { memberSize = AvatarSize.Default }
+        assertSizes(auto = 32f, fixed = 40f)
+        composeRule.runOnIdle { memberSize = AvatarSize.Lg }
+        assertSizes(auto = 40f, fixed = 40f)
+        composeRule.runOnIdle { memberSize = AvatarSize.Sm }
+        assertSizes(auto = 24f, fixed = 40f)
+    }
+
+    @Test fun groupCountUsesSmallPrecedenceWhenGroupSizesAreMixed() {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            AvatarGroup {
+                Avatar(size = AvatarSize.Sm) { AvatarFallback("SM") }
+                Avatar(size = AvatarSize.Default) { AvatarFallback("MD") }
+                Avatar(size = AvatarSize.Lg) { AvatarFallback("LG") }
+                AvatarGroupCount("+7", Modifier.testTag("mixed-count"))
+            }
+        }
+        composeRule
+            .onNodeWithTag("mixed-count")
+            .assertWidthIsEqualTo(24.dp)
+            .assertHeightIsEqualTo(24.dp)
     }
 }

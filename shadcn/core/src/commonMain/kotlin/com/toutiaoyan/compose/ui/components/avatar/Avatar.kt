@@ -14,9 +14,12 @@ import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -46,7 +49,31 @@ val AvatarSize.textStyle: TextVariant
 /** Lets [AvatarFallback]/[AvatarBadge] read their enclosing [Avatar]'s size. */
 val LocalAvatarSize = compositionLocalOf { AvatarSize.Default }
 
-private val LocalAvatarGroupOverlap = compositionLocalOf { false }
+@Stable
+internal class AvatarGroupState {
+    private val memberSizes = mutableStateMapOf<Any, AvatarSize>()
+
+    val size: AvatarSize
+        get() =
+            when {
+                memberSizes.values.any { it == AvatarSize.Sm } -> AvatarSize.Sm
+                memberSizes.values.any { it == AvatarSize.Lg } -> AvatarSize.Lg
+                else -> AvatarSize.Default
+            }
+
+    fun register(
+        member: Any,
+        size: AvatarSize,
+    ) {
+        memberSizes[member] = size
+    }
+
+    fun unregister(member: Any) {
+        memberSizes.remove(member)
+    }
+}
+
+private val LocalAvatarGroupState = compositionLocalOf<AvatarGroupState?> { null }
 
 /** Official AvatarGroup `-space-x-2` overlap. Pass as [AvatarGroup] `spacing`. */
 object AvatarGroupDefaults {
@@ -120,8 +147,14 @@ fun Avatar(
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val imageLoadState = remember { AvatarImageLoadStateHolder() }
+    val groupState = LocalAvatarGroupState.current
+    val groupMember = remember(groupState) { Any() }
+    DisposableEffect(groupState, groupMember, size) {
+        groupState?.register(groupMember, size)
+        onDispose { groupState?.unregister(groupMember) }
+    }
     val overlapRing =
-        if (LocalAvatarGroupOverlap.current) rememberAvatarGroupMemberRingStyle() else Style
+        if (groupState != null) rememberAvatarGroupMemberRingStyle() else Style
     CompositionLocalProvider(
         LocalAvatarSize provides size,
         LocalAvatarImageLoadState provides imageLoadState,
@@ -268,7 +301,8 @@ fun AvatarGroup(
     content: @Composable () -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    CompositionLocalProvider(LocalAvatarGroupOverlap provides (spacing < 0.dp)) {
+    val groupState = remember { AvatarGroupState() }
+    CompositionLocalProvider(LocalAvatarGroupState provides groupState) {
         Row(
             modifier = modifier.styleable(styleState, style),
             horizontalArrangement = Arrangement.spacedBy(spacing),
@@ -279,25 +313,29 @@ fun AvatarGroup(
 
 /**
  * Official `AvatarGroupCount`: a trailing muted circle for leftover members (`+3`)
- * or a plus icon. Default size matches [AvatarSize.Default] (`size-8`).
+ * or a plus icon. Without an explicit [size], it follows the enclosing group using
+ * the official CSS precedence: any [AvatarSize.Sm] -> [AvatarSize.Sm], otherwise
+ * any [AvatarSize.Lg] -> [AvatarSize.Lg], otherwise [AvatarSize.Default].
  */
 @Composable
 fun AvatarGroupCount(
     modifier: Modifier = Modifier,
-    size: AvatarSize = AvatarSize.Default,
+    size: AvatarSize? = null,
     style: Style = Style,
     content: @Composable BoxScope.() -> Unit,
 ) {
+    val resolvedSize =
+        size ?: LocalAvatarGroupState.current?.size ?: AvatarSize.Default
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     CompositionLocalProvider(
-        LocalAvatarSize provides size,
+        LocalAvatarSize provides resolvedSize,
         LocalContentColor provides currentTheme.colors.mutedForeground,
     ) {
         Box(
             modifier =
                 modifier.cssStyleable(
                     styleState,
-                    rememberAvatarGroupCountStyle(size) then style,
+                    rememberAvatarGroupCountStyle(resolvedSize) then style,
                 ),
             contentAlignment = Alignment.Center,
             content = content,
@@ -310,7 +348,7 @@ fun AvatarGroupCount(
 fun AvatarGroupCount(
     text: String,
     modifier: Modifier = Modifier,
-    size: AvatarSize = AvatarSize.Default,
+    size: AvatarSize? = null,
     style: Style = Style,
 ) {
     AvatarGroupCount(modifier = modifier, size = size, style = style) {

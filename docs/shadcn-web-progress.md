@@ -106,7 +106,7 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Alert Dialog (`alert-dialog`)：官方七配方（hero + Basic/Small/Media/Small with Media/Destructive/RTL 与 size/API Reference）顺序/标题已按 `8a353667` 复核；r4 将 RTL 说明改为官网 “in shadcn/ui” 文案并补断言。专用空间完成 1440/390×浅深四象限（逐像素校验主题）、6 个官方分节对照，以及打开/焦点、Escape 关闭、Continue 关闭、外部点击不关闭、Small/Media/Destructive、RTL 阿语弹窗与深色弹窗交互；最终构建 Wasm `af0897b…`，107 项 app:shared + 62 项 shadcn:core 聚焦测试通过。正文换行/字重、阿拉伯回退字体、辅助技术映射、四张旧 Vega 基准与完整焦点陷阱/Tab 矩阵仍留，见 [alert-dialog-r4](web-parity/alert-dialog-r4/README.md)。
 - [x] Aspect Ratio (`aspect-ratio`)：r5 将当前官方 `main` 固定为 `42f3bb63…`，MDX、wrapper、四个示例和 Nova CSS 与 r4 字节一致。`ratio` 改为官方一致的必填参数，并在组件入口拒绝零、负数、NaN 与无穷值；API 表同步标为 `Required`。6 项目录与 5 项 core 测试通过，当前 Wasm `dfb4b1c1…` 下完成 1440/390×浅深四象限、24 张三个官方示例分节截图，以及 RTL 阿拉伯语/英语/希伯来语与弹层切换。独立 Reviewer 无 finding；内置 PNG/`next/image`、阿希字体栅格和共享文档壳差异作为明确平台差异，见 [aspect-ratio-r5](web-parity/aspect-ratio-r5/README.md)。
 - [x] Attachment (`attachment`)：官方六配方（demo、Image、States、Sizes、Group、Trigger）顺序/标题一致，Features/四个 Accessibility 小节与 9 个官方 API 小节齐全；slot h 最终构建（wasm 02d85afc）后重拍 1440×1000/390×844 浅深四象限、5 组逐配方对照，并取证 Trigger 整卡 overlay hover（背景 muted/50）与离开恢复、点击打开预览 Dialog/Escape 关闭、Copy 动作独立聚焦不触发 Dialog、Image hover、Group 横向滚动渐隐、States shimmer 两帧及 Default 非交互卡片无 hover 变化；Chrome AX 树暴露真实 button 角色与名称（Preview research-summary.pdf / Copy link / Remove …）；FileSearch 自定义矢量与官方一致，标题 14px/500/17.5 行高沿用 r7 实测。54 项聚焦测试通过（AttachmentExamples 9 + core 45）。仍保留的已解释差异：demo 后官方介绍段落需共享页面骨架新增“预览后介绍”字段、base-rhea 预览上下文、完整 transition 中断帧级取证与屏幕阅读器全矩阵、旧 Vega golden；见 [attachment-r9](web-parity/attachment-r9/README.md)。
-- [ ] Avatar (`avatar`)：官方十配方顺序/标题已按 `8a353667` 复核；r3 将 Badge/Avatar Group/Avatar Group Count/Dropdown/RTL 五段说明对齐官网、Badge 示例恢复彩色照片（官方 `grayscale` 仅用于群组等），补像素与文案回归，并按共享 DropdownMenu 指针开新行为更新交互测试。专用空间完成 1440/390×浅深四象限（逐像素校验主题）、9 个官方分节对照，验证菜单指针打开（无高亮）/方向键/ Escape、卡片彩色照片与 RTL 阿英希（`+٣`/`+3`）；最终构建 Wasm `af0897b…`，107 项 app:shared + 62 项 shadcn:core 聚焦测试通过。混合尺寸分组计数、混合图片边框、完整菜单焦点/像素矩阵、原生辅助语义与共享壳/字形差异仍留，见 [avatar-r3](web-parity/avatar-r3/README.md)。
+- [x] Avatar (`avatar`)：r4 将当前官方 `main` 固定为 `42f3bb63…`，12 份 MDX/示例/wrapper 与 Nova CSS 均与 r3 字节一致。AvatarGroup 现在为所有成员无条件提供背景色 ring；Count 省略 `size` 时按官方 CSS 级联跟随组尺寸（有 Sm 则 Sm，否则有 Lg 则 Lg，否则 Default），显式尺寸可覆盖。Dropdown 键盘回归补齐 ArrowUp/Home/End/循环/Escape 焦点恢复。目录 5 项、core parity 7 项、截图 10 项通过；当前 Wasm `ba10ad5d…` 下完成四象限、72 张九分节和 12 个 Dropdown/RTL 交互取证。修复后独立 Reviewer 无 finding；共享壳、字形栅格、`next/image` 与 Canvas 原生语义作为明确平台差异，见 [avatar-r4](web-parity/avatar-r4/README.md)。
 - [ ] Badge (`badge`)：七个官方配方（Default、Variants、With Icon、With Spinner、Link、Custom Colors、RTL）顺序/标题/文案核对一致；slot h 最终构建（wasm c0570519）后已重拍 1440×1000/390×844 浅深四象限、6 组逐配方官本对照与 Link hover/点击状态；8 项 BadgeExamplesTest 通过。RTL 描述改为官方原文。仍开放：本地额外 Composition 小节（官方无）、键盘焦点/原生链接语义与 aria 矩阵，见 [badge-r3](web-parity/badge-r3/README.md)。
 - [ ] Breadcrumb (`breadcrumb`)：七个官方配方（Default、Basic、Custom separator、Dropdown、Collapsed、Link component、RTL）与 Composition/API 小节核对一致；slot h 最终构建后已重拍四象限、6 组逐配方对照，并取证 Dropdown 菜单打开/关闭、Collapsed 省略号与链接 hover；5 项 BreadcrumbExamplesTest 通过。仍开放：Kotlin extension: Disabled 与 RTL 语言选择器等本地扩展、原生导航语义/键盘焦点、手机宽度换行差异，见 [breadcrumb-r3](web-parity/breadcrumb-r3/README.md)。
 - [ ] Bubble (`bubble`)：九个官方配方（Default、Variants、Alignment、Bubble Group、Links and Buttons、Reactions、Show More / Collapsible、Tooltip、Popover）顺序/标题核对一致；slot h 最终构建后已重拍四象限与 8 组逐配方对照，取证可点击气泡 hover 焦点环与点击 toast；8 项 BubbleExamplesTest 通过。仍开放：Variants 预览 ghost 长文案被预览高度截断、Links and Buttons 描述为 Kotlin 适配、完整 aria/键盘路径，见 [bubble-r2](web-parity/bubble-r2/README.md)。
@@ -172,6 +172,12 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Avatar：r4 组尺寸级联、无条件 ring 与当前构建取证（2026-11-07）
+
+<!-- progress-created: 2026-11-07; order: 232 -->
+
+当前官方 `main` 固定为 `42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9`，全部 Avatar 示例、wrapper、MDX 与 Nova CSS 和 r3 的 `8a353667…` 文件 SHA-256 一致。实现组内成员登记与 Count 尺寸联动；首次独立 Review 发现混合尺寸应为 Sm 优先而非最大尺寸，随后按官方 CSS 级联修正为 Sm→Lg→Default，并用 Sm+Default+Lg 测试与 24dp golden 锁定。目录 5/5、core 7/7、截图 10/10 通过；当前 Wasm `ba10ad5d…` 完成 8 张四象限、72 张三示例四组合视图及 Dropdown ArrowUp/Home/End/Escape 与 RTL 三语交互。Avatar 文件在 owning ktlint 报告中为 0，修复后独立 Reviewer `No findings`。见 [avatar-r4](web-parity/avatar-r4/README.md)。
 
 ### Aspect Ratio：r5 required ratio、非法值回归与当前构建四象限（2026-11-07）
 

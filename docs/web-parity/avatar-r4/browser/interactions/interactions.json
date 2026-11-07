@@ -1,0 +1,31 @@
+{
+  "capturedAt": "2026-11-07T09:58:36.150Z",
+  "files": {
+    "local-dropdown-default": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/avatar-r4/browser/interactions/local-dropdown-default.png",
+    "local-dropdown-open": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/avatar-r4/browser/interactions/local-dropdown-open.png",
+    "local-dropdown-arrow-up-last": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/avatar-r4/browser/interactions/local-dropdown-arrow-up-last.png",
+    "local-dropdown-home-first": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/avatar-r4/browser/interactions/local-dropdown-home-first.png",
+    "local-dropdown-end-last": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/avatar-r4/browser/interactions/local-dropdown-end-last.png",
+    "local-dropdown-escape-restored": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/avatar-r4/browser/interactions/local-dropdown-escape-restored.png",
+    "local-dropdown-open-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/avatar-r4/browser/interactions/local-dropdown-open-dark.png",
+    "local-rtl-arabic": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/avatar-r4/browser/interactions/local-rtl-arabic.png",
+    "local-rtl-language-popup": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/avatar-r4/browser/interactions/local-rtl-language-popup.png",
+    "local-rtl-english": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/avatar-r4/browser/interactions/local-rtl-english.png",
+    "local-rtl-language-popup-after-english": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/avatar-r4/browser/interactions/local-rtl-language-popup-after-english.png",
+    "local-rtl-hebrew": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/avatar-r4/browser/interactions/local-rtl-hebrew.png"
+  },
+  "hashes": {
+    "local-dropdown-default": "1ba5d06bbcbc7785c0021b3f6be0cc521dbe521a5cf935b4cc15ca1ffa1b2b72",
+    "local-dropdown-open": "80b731853725d7336827d842df6b9dc57b4d013b6aebdfa23cb5cbf6c66ecfd2",
+    "local-dropdown-arrow-up-last": "65acbdc819168edcaf05534901aa97410c821c0959888e7f8d63881b0972c4c0",
+    "local-dropdown-home-first": "eeb130c63c38133270c82d2dd19a61dbee0db29d6c7ad0a64e0fd490e1e5ebb9",
+    "local-dropdown-end-last": "65acbdc819168edcaf05534901aa97410c821c0959888e7f8d63881b0972c4c0",
+    "local-dropdown-escape-restored": "13d0bc2fffac848884102cce0aadc2f368ce3575ea0081f149d82295f7d87b0e",
+    "local-dropdown-open-dark": "48bd48e900915203e798d3e747574510ebf124359bbfd0e0ab0561ef0acc294a",
+    "local-rtl-arabic": "47b3921f90cce4b08137671f1581a6a11ad1b68b93c2e20af50c30abfa26f0d4",
+    "local-rtl-language-popup": "725367021164b399342b02e0c09ac2032fecec369828bc4e1e98aec90e3a12d2",
+    "local-rtl-english": "9df189efb586fae1f492ba9df8603eac5513b0f1707ec376f7d85bab84d3e858",
+    "local-rtl-language-popup-after-english": "fde2849c2a6155a9345255d81c5ca3f56aaa0007368925490acc3e90bee0a724",
+    "local-rtl-hebrew": "f5104e3c0f9b29fbdf94526cd67595c9986a9fe37fb94e789da9bda455d7cce6"
+  }
+}
