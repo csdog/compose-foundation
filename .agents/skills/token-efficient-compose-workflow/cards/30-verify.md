@@ -28,6 +28,30 @@ Work units:
 4. `30d-audit`: consume the test XML, logs, build hash, browser summary, and source hashes.
    Compare deterministic evidence before visual judgment. Do not repeat any passed unit.
 
+## Coverage and audit feedback
+
+Before calling 30c complete, build an explicit applicability/coverage matrix from the
+canonical checklist and pinned source. Include visual comparison, browser interactions,
+state transitions, boundary inputs and semantics wherever applicable. A generic page
+capture or mechanical assertion count does not complete missing required coverage.
+
+Browser coverage may span bounded sessions within the same 30c unit. Write
+`$RUN_DIR/verification-progress.json` with `completed` entries shaped as
+`{"id":"stable-check-id","status":"passed","evidence":"relative/summary.json","sha256":"actual file sha256"}`.
+Use evidence files inside RUN_DIR and stable IDs; preserve existing completed entries.
+Record remaining checks in progress.md. New hash-bound completed IDs count as progress;
+rewritten prose, timestamps or repeated captures of the same check do not. This ledger
+is continuation telemetry, not proof of overall acceptance.
+
+Missing required evidence is assigned verification work, not an external blocker.
+Audit must return uncovered applicable checks to the owning 30a/30b/30c unit: list exact
+requirements, put that unit first under `Next`, preserve still-current passes, and end
+with `CONTEXT_HANDOFF 30-verify`. Do not repeat an unchanged audit. Extend or repair the
+browser verifier within 30c; source-level fixes to browser harness scripts are permitted.
+Record a terminal blocker only for a reproducible product failure requiring production
+edits, a failed external/shared gate, or a demonstrated unavailable verification capability
+after its supported fallback. Do not classify unperformed checks as unavailable.
+
 After completing `30a-tests`, `30b-build`, or `30c-browser`:
 
 1. Update `progress.md` with pass/fail, counts, and evidence paths.
@@ -51,3 +75,9 @@ its exact failure and evidence, then end with `STAGE_BLOCKED 30-verify`.
 Put a one-line blocker reason immediately before that marker. Do not use
 CONTEXT_HANDOFF for an unchanged external blocker. A fresh context cannot repair
 an out-of-scope failure. The scheduler must repair the shared gate before resuming.
+
+Historical failure logs are not proof of a current blocker. Check whether their
+source inputs match the current tree and whether a later gate result supersedes
+them. If freshness cannot be proven, rerun the narrow owning gate once; record
+current input hashes and timestamp. Apply the same freshness rule to passing
+build/test/browser evidence. Do not silently promote stale results to current.

@@ -12,6 +12,45 @@ spec.loader.exec_module(progress)
 
 
 class ProgressTests(unittest.TestCase):
+    def test_driver_stop_reason_is_not_replaced_by_worker_success_summary(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run = root / '.agent-runs/chart/orchestrator'
+            run.mkdir(parents=True)
+            message = run / 'last.md'
+            message.write_text('Added 98 passing checks.\nCONTEXT_HANDOFF 30-verify\n')
+            reason = 'No work-unit advancement after two handoffs'
+            (run / 'runs.json').write_text(json.dumps({'runs': [
+                {'stage': '30-verify', 'status': 'blocked', 'reason': reason, 'message_log': str(message)}]}))
+            (run.parent.parent / 'batch-state.json').write_text(json.dumps({'results': [
+                {'slug': 'chart', 'status': 'blocked', 'reason': 'driver stopped', 'started_at': 'now'}]}))
+            self.assertEqual(reason, progress.snapshot(root)['errors'][0]['reason'])
+
+    def test_verification_session_cap_is_pending_not_an_error(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            directory = root / '.agent-runs'
+            directory.mkdir()
+            (directory / 'batch-state.json').write_text(json.dumps({'results': [
+                {'slug': 'chart', 'status': 'verification_pending', 'reason': 'Continue saved coverage', 'started_at': 'now'}]}))
+            state = progress.snapshot(root)
+            self.assertEqual({'verification_pending': 1}, state['counts'])
+            self.assertEqual([], state['errors'])
+            self.assertIn('CHECKPOINT_PENDING chart', progress.render(state))
+
+    def test_skipped_committed_failure_is_still_reported_as_blocked(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run = root / '.agent-runs/fake/orchestrator'
+            run.mkdir(parents=True)
+            (run.parent.parent / 'batch-state.json').write_text(json.dumps({'results': [
+                {'slug': 'fake', 'status': 'skipped', 'reason': 'blocked by committed FAIL', 'started_at': 'now'}]}))
+            (run / 'runs.json').write_text(json.dumps({'runs': [
+                {'stage': '20-implement', 'status': 'blocked', 'reason': 'real assertion failure'}]}))
+            state = progress.snapshot(root)
+            self.assertEqual({'blocked': 1}, state['counts'])
+            self.assertEqual('real assertion failure', state['errors'][0]['reason'])
+
     def test_live_stage_and_lock_and_stale_state(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -43,6 +82,36 @@ class ProgressTests(unittest.TestCase):
             self.assertTrue(output.startswith("STARTED: fake"))
             self.assertEqual(2, output.count("[PROGRESS]"))
             self.assertIn("STOPPED", output)
+
+    def test_mirror_does_not_repeat_unchanged_errors_on_every_action(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            states = [{"active": active, "updated_at": str(n), "counts": {"blocked": 1}, "current": [],
+                       "errors": [{"component": "fake", "reason": "shared gate failed", "event_log": "failure.jsonl"}]}
+                      for n, active in enumerate((True, True, False))]
+            with patch.object(progress, "snapshot", side_effect=states), patch.object(progress.time, "sleep"):
+                progress.mirror(root, root / "batch.log")
+            self.assertEqual(1, (root / "batch.log").read_text().count("ERROR fake:"))
+
+    def test_reopened_blocker_is_pending_not_an_active_error(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run = root / '.agent-runs/fake/orchestrator'
+            run.mkdir(parents=True)
+            (run.parent.parent / 'batch-state.json').write_text(json.dumps({'results': [
+                {'slug': 'fake', 'status': 'blocked', 'started_at': 'now'}]}))
+            (run / 'runs.json').write_text(json.dumps({'runs': [
+                {'stage': '30-verify', 'status': 'blocked', 'reason': 'old failure'}]}))
+            mark = run.parent / 'progress.log'
+            mark.write_text('30-verify FAIL\n30-verify rotate\n')
+            state = progress.snapshot(root)
+            self.assertEqual({'recovery_pending': 1}, state['counts'])
+            self.assertEqual([], state['errors'])
+            self.assertIn('RECOVERY_PENDING fake', progress.render(state))
+            self.assertEqual('old failure', state['recoveries'][0]['previous_error']['reason'])
+            # A new failure after recovery remains visible.
+            mark.write_text('30-verify FAIL\n30-verify rotate\n30-verify FAIL\n')
+            self.assertEqual(1, len(progress.snapshot(root)['errors']))
 
     def test_empty_watch_exits_without_model_calls(self):
         with tempfile.TemporaryDirectory() as tmp:

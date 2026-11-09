@@ -206,4 +206,61 @@ class CalendarParityTest : ScreenshotTest() {
             assertEquals(2026, state.toYear)
         }
     }
+
+    @Test fun persianBoundaryNavigationAndKeyboardStayInRange() {
+        var year by mutableStateOf(1)
+        var month by mutableStateOf(1)
+        var state: CalendarState? = null
+        setThemedContent {
+            CompositionLocalProvider(LocalCalendarLocale provides CalendarLocale.Persian) {
+                Calendar(year, month, { y, m ->
+                    year = y
+                    month = m
+                }, selected = null, onSelectedChange = {}, showWeekNumber = true) {
+                    state = calendarState()
+                    CalendarDefaultContent()
+                }
+            }
+        }
+        composeRule.runOnIdle {
+            state!!.goPrevious()
+            state!!.moveFocusByDays(-1)
+            state!!.moveFocusByMonths(-1)
+            assertEquals(1, year)
+            assertEquals(1, month)
+            year = 3176
+            month = 12
+        }
+        composeRule.waitForIdle()
+        composeRule.runOnIdle {
+            state!!.goNext()
+            state!!.moveFocusByMonths(1)
+            assertEquals(3176, year)
+            assertEquals(12, month)
+        }
+    }
+
+    @Test fun persianMultiMonthFocusClampsWindowAndRetainsTarget() {
+        var year by mutableStateOf(3176)
+        var month by mutableStateOf(10)
+        var state: CalendarState? = null
+        setThemedContent {
+            CompositionLocalProvider(LocalCalendarLocale provides CalendarLocale.Persian) {
+                Calendar(year, month, { y, m ->
+                    year = y
+                    month = m
+                }, selected = null, onSelectedChange = {}, numberOfMonths = 2) {
+                    state = calendarState()
+                    CalendarDefaultContent()
+                }
+            }
+        }
+        composeRule.runOnIdle { state!!.moveFocusTo(CalendarDate(3176, 11, 30)) }
+        composeRule.runOnIdle { state!!.moveFocusByDays(1) }
+        composeRule.runOnIdle {
+            assertEquals(3176, year)
+            assertEquals(11, month)
+            assertEquals(CalendarDate(3176, 12, 1), state!!.focusedDate)
+        }
+    }
 }

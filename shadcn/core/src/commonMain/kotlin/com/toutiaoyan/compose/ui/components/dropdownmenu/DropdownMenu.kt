@@ -1104,9 +1104,7 @@ fun DropdownMenuSubScope.DropdownMenuSubTrigger(
     val resolvedEnabled = enabled && !disabled
     val interactionSource = remember { MutableInteractionSource() }
     val isHovered by interactionSource.collectIsHoveredAsState()
-    LaunchedEffect(isHovered) {
-        controller.onTriggerHoverChange(isHovered)
-    }
+    DropdownMenuSubTriggerHoverObserver(interactionSource, resolvedEnabled, controller.onTriggerHoverChange)
     val styleState =
         rememberUpdatedStyleState(interactionSource) {
             it.isEnabled = resolvedEnabled
@@ -1140,7 +1138,7 @@ fun DropdownMenuSubScope.DropdownMenuSubTrigger(
                     stateDescription = if (controller.open) "Expanded" else "Collapsed"
                     if (!resolvedEnabled) disabled()
                 }
-                .hoverable(interactionSource)
+                .hoverable(interactionSource, enabled = resolvedEnabled)
                 .clickable(
                     interactionSource = interactionSource,
                     indication = null,
@@ -1321,5 +1319,19 @@ private fun Modifier.dropdownViewport(
                 ),
             )
         layout(child.width, child.height) { child.placeRelative(0, 0) }
+    }
+}
+
+/** Keeps disabled triggers out of the submenu hover-open path, including live disabling. */
+@Composable
+internal fun DropdownMenuSubTriggerHoverObserver(
+    interactionSource: MutableInteractionSource,
+    enabled: Boolean,
+    onHoverChange: (Boolean) -> Unit,
+) {
+    val hovered by interactionSource.collectIsHoveredAsState()
+    val currentOnHoverChange by rememberUpdatedState(onHoverChange)
+    LaunchedEffect(hovered, enabled) {
+        currentOnHoverChange(hovered && enabled)
     }
 }

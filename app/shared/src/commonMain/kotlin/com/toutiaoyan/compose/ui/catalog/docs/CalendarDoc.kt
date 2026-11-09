@@ -76,6 +76,22 @@ internal val calendarUsage =
     )
     """.trimIndent()
 
+internal val calendarPersianCode =
+    """
+    val system = CalendarSystem.Persian
+    val initial = system.fromGregorian(CalendarDate(2025, 6, 12))
+    var year by remember { mutableStateOf(initial.year) }
+    var month by remember { mutableStateOf(initial.month) }
+    var selected by remember { mutableStateOf<CalendarDate?>(initial) }
+    CompositionLocalProvider(
+        LocalCalendarLocale provides CalendarLocale.Persian,
+        LocalLayoutDirection provides LayoutDirection.Rtl,
+    ) {
+        Calendar(year, month, { y, m -> year = y; month = m }, selected,
+            { selected = if (selected == it) null else it })
+    }
+    """.trimIndent()
+
 val calendarDoc =
     ComponentDoc(
         id = "calendar", title = "Calendar",
@@ -94,7 +110,7 @@ val calendarDoc =
                     "About",
                     listOf(
                         ComponentGuideBlock.Paragraph(
-                            "The Kotlin component uses civil Gregorian dates and caller-owned state. " +
+                            "The Kotlin component defaults to civil Gregorian dates and caller-owned state. " +
                                 (
                                     "It follows the official Base UI Calendar recipes without " +
                                         "adding a date-library dependency to core."
@@ -114,15 +130,10 @@ val calendarDoc =
                     "Persian / Hijri / Jalali Calendar",
                     listOf(
                         ComponentGuideBlock.Paragraph(
-                            (
-                                "The official Persian example uses a separate calendar engine. " +
-                                    "CalendarDate currently represents "
-                            ) +
-                                (
-                                    "Gregorian dates; translating labels does not convert a date " +
-                                        "to Jalali. A calendar-system adapter "
-                                ) +
-                                "and this example remain pending.",
+                            "Use CalendarLocale.Persian with LocalLayoutDirection.Rtl. All CalendarDate " +
+                                "fields and month callbacks then use solar Jalali dates. Convert with " +
+                                "CalendarSystem.Persian.fromGregorian / toGregorian at your application boundary. " +
+                                "Supported Jalali years: 1–3176. This is not an Islamic lunar calendar.",
                         ),
                     ),
                 ),
@@ -150,41 +161,68 @@ val calendarDoc =
                 ),
             ),
         examples =
-            calendarTitles.map { title ->
-                ComponentExample(
-                    title = if (title in calendarExtensionTitles) "Kotlin extension: $title" else title,
-                    code = calendarRecipeCode(title),
-                    minPreviewHeight =
-                        when (title) {
-                            "Presets" -> 650.dp
-                            "Date and Time Picker" -> 600.dp
-                            "Custom Cell Size" -> 560.dp
-                            else -> 384.dp
-                        },
-                    mobileMinPreviewHeight = if (title == "Range Calendar") 576.dp else null,
-                    descriptionMarkdown =
-                        when (title) {
-                            "Basic" ->
-                                "A basic calendar component. The preview adds a rounded border " +
-                                    "to style the calendar."
-                            "Range Calendar" -> "Use range selection mode to enable range selection."
-                            "Month and Year Selector" ->
-                                "Use the dropdown caption layout to show month and year menus."
-                            "Week Numbers" -> "Use `showWeekNumber` to show week numbers."
-                            "RTL" ->
-                                "To enable RTL support in shadcn/ui, see the " +
-                                    "[RTL configuration guide](https://ui.shadcn.com/docs/rtl). " +
-                                    "See also the [Hijri Guide]" +
-                                    "(https://ui.shadcn.com/docs/components/base/calendar" +
-                                    "#persian--hijri--jalali-calendar) for enabling the " +
-                                    "Persian / Hijri / Jalali calendar."
-                            else -> null
-                        },
-                    preview = { CalendarRecipe(title) },
-                )
-            },
+            (
+                listOf(
+                    ComponentExample(
+                        title = "Persian / Hijri / Jalali Calendar",
+                        code = calendarPersianCode,
+                        preview = { CalendarPersianPreview() },
+                    ),
+                ) +
+                    calendarTitles.map { title ->
+                        ComponentExample(
+                            title = if (title in calendarExtensionTitles) "Kotlin extension: $title" else title,
+                            code = calendarRecipeCode(title),
+                            minPreviewHeight =
+                                when (title) {
+                                    "Presets" -> 650.dp
+                                    "Date and Time Picker" -> 600.dp
+                                    "Custom Cell Size" -> 560.dp
+                                    else -> 384.dp
+                                },
+                            mobileMinPreviewHeight = if (title == "Range Calendar") 576.dp else null,
+                            descriptionMarkdown =
+                                when (title) {
+                                    "Basic" ->
+                                        "A basic calendar component. The preview adds a rounded border " +
+                                            "to style the calendar."
+                                    "Range Calendar" -> "Use range selection mode to enable range selection."
+                                    "Month and Year Selector" ->
+                                        "Use the dropdown caption layout to show month and year menus."
+                                    "Week Numbers" -> "Use `showWeekNumber` to show week numbers."
+                                    "RTL" ->
+                                        "To enable RTL support in shadcn/ui, see the " +
+                                            "[RTL configuration guide](https://ui.shadcn.com/docs/rtl). " +
+                                            "See also the [Hijri Guide]" +
+                                            "(https://ui.shadcn.com/docs/components/base/calendar" +
+                                            "#persian--hijri--jalali-calendar) for enabling the " +
+                                            "Persian / Hijri / Jalali calendar."
+                                    else -> null
+                                },
+                            preview = { CalendarRecipe(title) },
+                        )
+                    }
+            ).let { listOf(it[1]) + it.take(1) + it.drop(2) },
         afterExamples =
             listOf(
+                ComponentGuideSection(
+                    "Changelog",
+                    listOf(
+                        ComponentGuideBlock.Paragraph("RTL Support"),
+                        ComponentGuideBlock.Paragraph(
+                            "When migrating an RTL calendar, provide both CalendarLocale and " +
+                                "LocalLayoutDirection. A locale controls labels and the first weekday; " +
+                                "layout direction controls row order and navigation arrows. Remove manual " +
+                                "arrow mirroring and directional padding overrides; Calendar handles these " +
+                                "through Compose layout direction. Keep stored dates Gregorian unless you " +
+                                "explicitly select CalendarLocale.Persian and convert at the boundary.",
+                        ),
+                        ComponentGuideBlock.Code(
+                            "CompositionLocalProvider(LocalCalendarLocale provides CalendarLocale.Persian, " +
+                                "LocalLayoutDirection provides LayoutDirection.Rtl) { /* Calendar(...) */ }",
+                        ),
+                    ),
+                ),
                 ComponentGuideSection(
                     "Keyboard and accessibility",
                     listOf(
@@ -629,3 +667,34 @@ private fun calendarRtlLocale(language: Int): CalendarLocale =
             )
         else -> CalendarLocale.English
     }
+
+@Composable
+internal fun CalendarPersianPreview() {
+    val initial = CalendarSystem.Persian.fromGregorian(CalendarDate(2025, 6, 12))
+    var year by remember { mutableStateOf(initial.year) }
+    var month by remember { mutableStateOf(initial.month) }
+    var selected by remember { mutableStateOf<CalendarDate?>(initial) }
+    val border = currentTheme.colors.border
+    val radius = twRadius.lg
+    CompositionLocalProvider(
+        LocalCalendarLocale provides CalendarLocale.Persian,
+        LocalLayoutDirection provides LayoutDirection.Rtl,
+    ) {
+        Calendar(
+            year,
+            month,
+            { y, m ->
+                year = y
+                month = m
+            },
+            selected,
+            { selected = if (selected == it) null else it },
+            style =
+                Style {
+                    borderWidth(1.dp)
+                    borderColor(border)
+                    shape(RoundedCornerShape(radius))
+                },
+        )
+    }
+}

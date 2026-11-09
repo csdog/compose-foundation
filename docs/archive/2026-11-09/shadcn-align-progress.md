@@ -1,3 +1,5 @@
+> 归档快照（2026-11-09）：以下为整理前的历史记录，不代表当前工作树已重新验证。返回[文档入口](../../README.md)。
+
 # shadcn 对齐进度
 
 独立跟踪「把 `compose-foundation` 各组件对齐 [shadcn/ui](https://ui.shadcn.com) 实现」的任务进度。
@@ -13,7 +15,7 @@ Token / 已验证过的视觉对照仍以 `[shadcn-parity.md](shadcn-parity.md)`
 ## Web 页面专项（2026-10-28）
 
 本轮要求尽量复现 ui.shadcn.com 的实际页面与组件展示；
-执行计划见 [shadcn-web-plan.md](shadcn-web-plan.md)，
+执行计划见 [shadcn-web-plan.md](../../shadcn-web-plan.md)，
 逐组件状态与本轮验证见 [shadcn-web-progress.md](shadcn-web-progress.md)。
 旧 Tick 不作为本轮视觉验收通过的依据。
 
@@ -48,14 +50,14 @@ registry，因此不将旧日志中的对齐结论视为对最新版上游的重
 
 ### 已核对的源码入口
 
-- [ChipStyles.kt](../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/chip/ChipStyles.kt)、
-  [Chip.kt](../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/chip/Chip.kt)、
-  [RememberTheme.kt](../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/utils/RememberTheme.kt)
-- [Sidebar.kt](../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/sidebar/Sidebar.kt)、
-  [Sheet.kt](../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/sheet/Sheet.kt)、
-  [ToggleGroup.kt](../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/togglegroup/ToggleGroup.kt)
-- [Questionnaire.kt](../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/questionnaire/Questionnaire.kt)、
-  [Empty.kt](../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/empty/Empty.kt)
+- [ChipStyles.kt](../../../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/chip/ChipStyles.kt)、
+  [Chip.kt](../../../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/chip/Chip.kt)、
+  [RememberTheme.kt](../../../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/utils/RememberTheme.kt)
+- [Sidebar.kt](../../../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/sidebar/Sidebar.kt)、
+  [Sheet.kt](../../../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/sheet/Sheet.kt)、
+  [ToggleGroup.kt](../../../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/togglegroup/ToggleGroup.kt)
+- [Questionnaire.kt](../../../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/questionnaire/Questionnaire.kt)、
+  [Empty.kt](../../../shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/empty/Empty.kt)
 
 ### 刻意不做（不是缺口）
 
@@ -68,7 +70,7 @@ registry，因此不将旧日志中的对齐结论视为对最新版上游的重
 ## 待办（按优先级，仅保留未完成项）
 
 1. **CI 显式执行截图校验。**
-   [.github/workflows/ci.yml](../.github/workflows/ci.yml) 的 Desktop job 当前只运行
+   [.github/workflows/ci.yml](../../../.github/workflows/ci.yml) 的 Desktop job 当前只运行
    `jvmTest --continue`；应显式接入 `:shadcn:core:verifyRoborazziJvm`，
    让像素差异成为 CI 失败条件。详见 [visual-testing.md](visual-testing.md)。
 2. **核对旧截图基准与当前源码。**
@@ -87,7 +89,7 @@ registry，因此不将旧日志中的对齐结论视为对最新版上游的重
 
 以下描述保留各 Tick 当时的状态；已完成事项以顶部的本地核对结果为准。
 
-先前对话（[~228 ticks](890186cb-3c26-4cd4-b5c4-7d4a399f30b0)）没有单独进度文档，摘要：
+先前对话（~228 ticks；历史会话 ID `890186cb-3c26-4cd4-b5c4-7d4a399f30b0`，原相对链接已失效）没有单独进度文档，摘要：
 
 - 组合 API：Dialog / Sheet / Drawer / Accordion / Popover / HoverCard / Tooltip / DropdownMenu / ContextMenu / Combobox / Select / Command / Menubar / NavigationMenu / Sidebar / Carousel / Calendar 等拆成官方槽位。
 - 行为：`open` / `onOpenChange` / `defaultOpen`、hover 打开、focus Tooltip、Calendar range / 键盘漫游、Tabs `activationMode` 等。

@@ -1,5 +1,9 @@
 # Web 页面与 shadcn/ui 对齐计划
 
+> 文档定位（2026-11-09 整理）：这是执行与验收规范；状态只在[组件清单](shadcn-web-progress.md)维护。
+> 本轮上游快照段落是计划起始来源，具体组件以各自固定 revision 与输入哈希为准。
+> 历史批次记录见[归档](archive/README.md)。本次整理不修改下方验收规则。
+
 更新：2026-11-08。本文件只定义目标、执行策略和验收标准。组件状态、实施记录、
 测试结果与剩余差异统一记录在 [shadcn-web-progress.md](shadcn-web-progress.md)。
 

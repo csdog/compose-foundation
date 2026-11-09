@@ -222,14 +222,63 @@ val chartDoc =
                                 ),
                                 ComponentGuideBlock.Code(
                                     """
-                                    ChartContainer(config = chartConfig) {
-                                        BarChart(data = data, config = chartConfig)
+                                    Column {
+                                        ChartContainer(config = chartConfig) {
+                                            BarChart(data = data, config = chartConfig)
+                                        }
                                         ChartLegend(config = chartConfig)
                                     }
                                     """.trimIndent(),
                                 ),
                             ),
                             level = 3,
+                        ),
+                        ComponentGuideSection(
+                            "Components",
+                            listOf(
+                                ComponentGuideBlock.Paragraph(
+                                    "Resolve a component's series color through the chart config.",
+                                ),
+                                ComponentGuideBlock.Code("BarChart(data = data, config = chartConfig)"),
+                            ),
+                            level = 4,
+                        ),
+                        ComponentGuideSection(
+                            "Chart Data",
+                            listOf(
+                                ComponentGuideBlock.Paragraph(
+                                    "Kotlin API difference: ChartPoint stores numeric values rather than a CSS " +
+                                        "fill field. " +
+                                        "Use matching config keys to assign each browser's color.",
+                                ),
+                                ComponentGuideBlock.Code(
+                                    """
+                                    val browserConfig = mapOf(
+                                        "chrome" to ChartSeries("Chrome", currentTheme.colors.chart1),
+                                        "safari" to ChartSeries("Safari", currentTheme.colors.chart2),
+                                    )
+                                    val browserData = listOf(
+                                        ChartPoint("Chrome", mapOf("chrome" to 275f)),
+                                        ChartPoint("Safari", mapOf("safari" to 200f)),
+                                    )
+                                    BarChart(data = browserData, config = browserConfig)
+                                    """.trimIndent(),
+                                ),
+                            ),
+                            level = 4,
+                        ),
+                        ComponentGuideSection(
+                            "Tailwind",
+                            listOf(
+                                ComponentGuideBlock.Paragraph(
+                                    "Kotlin API difference: Compose has no CSS fill class or LabelList. " +
+                                        "For custom labels, resolve the same config color explicitly.",
+                                ),
+                                ComponentGuideBlock.Code(
+                                    "Text(\"Desktop\", color = chartConfig.getValue(\"desktop\").color)",
+                                ),
+                            ),
+                            level = 4,
                         ),
                     ),
                 "RTL" to
@@ -241,21 +290,77 @@ val chartDoc =
                                     "A chart tooltip contains a label, name, indicator and value. You can turn " +
                                         "any of these on or off and customize the indicator style.",
                                 ),
-                                ComponentGuideBlock.Bullets(
-                                    listOf(
-                                        "`label` / `labelFormatter` - the config or data key used for the " +
-                                            "tooltip label.",
-                                        "`values` / `valueFormatter` / `formatter` - the value rows; names " +
-                                            "come from the chart config labels.",
-                                        "`indicator` - `ChartIndicator.Dot`, `ChartIndicator.Line` or " +
-                                            "`ChartIndicator.Dashed`.",
-                                        "`hideLabel` - whether to hide the label.",
-                                        "`hideIndicator` - whether to hide the indicator.",
-                                    ),
+                                ComponentGuideBlock.Table(
+                                    headers = listOf("Prop", "Kotlin type", "Description"),
+                                    rows =
+                                        listOf(
+                                            listOf(
+                                                "`label` / `labelFormatter`",
+                                                "`String` / `(String) -> String`",
+                                                "The tooltip label and its display formatter.",
+                                            ),
+                                            listOf(
+                                                "`values` / `valueFormatter` / `formatter`",
+                                                "`Map<String, Float>` / `(Float) -> String` / `(@Composable " +
+                                                    "(String, Float) -> Unit)?`",
+                                                "Value rows; names come from chart config labels. The nullable " +
+                                                    "formatter renders custom composable content.",
+                                            ),
+                                            listOf(
+                                                "`indicator`",
+                                                "`ChartIndicator`",
+                                                "The indicator style: Dot, Line or Dashed.",
+                                            ),
+                                            listOf("`hideLabel`", "`Boolean`", "Whether to hide the label."),
+                                            listOf("`hideIndicator`", "`Boolean`", "Whether to hide the indicator."),
+                                        ),
                                 ),
                                 ComponentGuideBlock.Paragraph(
-                                    "Colors are automatically referenced from the chart config. Use " +
-                                        "`labelFormatter`/`valueFormatter` to customize the displayed keys.",
+                                    "Kotlin API difference: the web `labelKey` and `nameKey` payload lookups " +
+                                        "are represented by an explicit `label`, the `values` map and chart config " +
+                                        "labels. labelFormatter and valueFormatter return text; formatter " +
+                                        "renders custom composable content.",
+                                ),
+                            ),
+                            level = 3,
+                        ),
+                        ComponentGuideSection(
+                            "Colors",
+                            listOf(
+                                ComponentGuideBlock.Paragraph(
+                                    "Colors are automatically referenced from the chart config.",
+                                ),
+                            ),
+                            level = 3,
+                        ),
+                        ComponentGuideSection(
+                            "Custom",
+                            listOf(
+                                ComponentGuideBlock.Paragraph(
+                                    "Kotlin API difference: supply the visitors label explicitly and use " +
+                                        "browser keys " +
+                                        "in values and config instead of web labelKey/nameKey lookups. " +
+                                        "This displays Total Visitors with Chrome and Safari names.",
+                                ),
+                                ComponentGuideBlock.Code(
+                                    """
+                                    val browserConfig = mapOf(
+                                        "chrome" to ChartSeries("Chrome", currentTheme.colors.chart1),
+                                        "safari" to ChartSeries("Safari", currentTheme.colors.chart2),
+                                    )
+                                    ChartTooltipContent(
+                                        label = "Total Visitors",
+                                        config = browserConfig,
+                                        values = mapOf("chrome" to 187f, "safari" to 200f),
+                                    )
+                                    """.trimIndent(),
+                                ),
+                                ComponentGuideBlock.Paragraph(
+                                    "Colors are automatically referenced from the chart config. " +
+                                        "`labelFormatter` formats the tooltip heading; `valueFormatter` " +
+                                        "formats numeric values. " +
+                                        "Row names come from `ChartSeries.label`. Use the composable " +
+                                        "`formatter` for custom rows.",
                                 ),
                                 ComponentGuideBlock.Code(
                                     """
@@ -275,6 +380,7 @@ val chartDoc =
                                     """.trimIndent(),
                                 ),
                             ),
+                            level = 3,
                         ),
                         ComponentGuideSection(
                             "Legend",
@@ -282,19 +388,47 @@ val chartDoc =
                                 ComponentGuideBlock.Paragraph(
                                     "You can use `ChartLegend` / `ChartLegendContent` to add a legend to your chart.",
                                 ),
+                            ),
+                        ),
+                        ComponentGuideSection(
+                            "Colors",
+                            listOf(
+                                ComponentGuideBlock.Paragraph(
+                                    "Colors are automatically referenced from the chart config.",
+                                ),
+                            ),
+                            level = 3,
+                        ),
+                        ComponentGuideSection(
+                            "Custom",
+                            listOf(
+                                ComponentGuideBlock.Paragraph(
+                                    "Kotlin API difference: config labels replace the web nameKey=browser lookup. " +
+                                        "Using the browserConfig above displays Chrome and Safari for the " +
+                                        "legend names.",
+                                ),
+                                ComponentGuideBlock.Code("ChartLegend(config = browserConfig)"),
                                 ComponentGuideBlock.Paragraph(
                                     "Colors are automatically referenced from the chart config. Use `hideIcon` to " +
-                                        "render the swatch-only legend and `verticalAlign` to place the legend.",
+                                        "render the swatch-only legend. In a `Column`, composition order " +
+                                        "places the legend " +
+                                        "above or below the chart; `verticalAlign` controls spacing toward the chart.",
                                 ),
                                 ComponentGuideBlock.Code(
                                     """
-                                    ChartLegend(
-                                        config = chartConfig,
-                                        verticalAlign = ChartLegendVerticalAlign.Bottom,
-                                    )
+                                    Column {
+                                        ChartContainer {
+                                            BarChart(data = data, config = chartConfig)
+                                        }
+                                        ChartLegend(
+                                            config = chartConfig,
+                                            verticalAlign = ChartLegendVerticalAlign.Bottom,
+                                        )
+                                    }
                                     """.trimIndent(),
                                 ),
                             ),
+                            level = 3,
                         ),
                         ComponentGuideSection(
                             "Accessibility",

@@ -1,5 +1,9 @@
 # Component metadata
 
+> 维护说明（2026-11-09）：JSON 与预览是静态导出，不代表当前 API 或验收结果。
+> 本次保留原 JSON、生成路径和被引用图片，未重新生成。检查发现原导出有 53 个本地预览文件缺失，
+> 详见[导出检查快照](archive/2026-11-09/metadata-export-status.json)。当前组件入口见[目录](components.md)。
+
 `component-metadata.json` is a machine-readable index of every catalog component —
 generated from the same source the catalog app and this repo's own docs are built
 from, not hand-maintained separately. Meant for tooling that wants to compare another

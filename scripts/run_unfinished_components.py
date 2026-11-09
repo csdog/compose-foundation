@@ -72,8 +72,8 @@ def latest_tao_status(run_dir: Path) -> str | None:
 
 
 def skip_reason(run_dir: Path) -> str | None:
-    if (run_dir / "DONE.marker").is_file():
-        return "completed"
+    # This queue contains only unchecked components. A legacy DONE marker is
+    # merely a finished handoff and cannot override the canonical checklist.
     if latest_tao_status(run_dir) == "FAIL":
         return "blocked by committed FAIL"
     return None
@@ -82,6 +82,10 @@ def skip_reason(run_dir: Path) -> str | None:
 def classify_process_result(returncode: int) -> tuple[str, str | None]:
     if returncode == 0:
         return "completed", None
+    if returncode == 4:
+        return "acceptance_pending", "Handoff finished; canonical component acceptance remains open"
+    if returncode == 5:
+        return "verification_pending", "Session cap reached with verified progress; resume the saved verification checkpoint"
     if returncode == 3:
         return (
             "infrastructure_blocked",
@@ -139,7 +143,60 @@ def orchestrator_command(
         command.extend(["--model", args.model])
     if args.profile:
         command.extend(["--profile", args.profile])
+    if args.complete_components:
+        command.append("--require-acceptance-receipt")
     return command
+
+
+def execute_component(component: Component, args: argparse.Namespace) -> tuple[int, str, str | None]:
+    from codex_stage_orchestrator import (acceptance_problem, checklist_accepted,
+                                         latest_progress_mark, pending_resume_stage,
+                                         reopen_checkpoint, update_component_checkbox)
+    root = args.project_root
+    run = root / '.agent-runs' / component.slug
+    passes = args.max_component_passes if args.complete_components else 1
+    if (args.repair_blocked or args.complete_components) and latest_tao_status(run) == 'FAIL':
+        mark = latest_progress_mark(run)
+        stage = '20-implement' if mark and mark[0] in {'10-baseline', '20-implement', '30-verify', '40-handoff'} else (mark[0] if mark else '00-scope')
+        reopen_checkpoint(run, stage, 'User authorized actual component/shared-dependency fixes and full acceptance. Read the recorded failure, diagnose and repair production or verifier causes, then reverify; do not repeat an unchanged failed verification.')
+    for attempt in range(1, passes + 1):
+        print(f'COMPONENT_PASS {component.slug} {attempt}/{passes}', flush=True)
+        with (run / 'batch-driver.log').open('a', encoding='utf-8') as output:
+            process = subprocess.run(orchestrator_command(component, args), cwd=root,
+                                     stdout=output, stderr=subprocess.STDOUT)
+        returncode = process.returncode
+        status, reason = classify_process_result(returncode)
+        if status == 'completed':
+            problem = acceptance_problem(root, run) if args.complete_components else None
+            if problem or not checklist_accepted(root, component.slug):
+                if problem:
+                    update_component_checkbox(root, component.slug, False)
+                    path = run / 'acceptance.json'
+                    try:
+                        receipt = json.loads(path.read_text())
+                        if not isinstance(receipt, dict): receipt = {}
+                    except (OSError, ValueError):
+                        receipt = {}
+                    receipt.update(status='pending', resume_stage='30-verify', reason=problem)
+                    path.write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + '\n')
+                returncode = 4
+                status, reason = classify_process_result(returncode)
+        if status in {'completed', 'infrastructure_blocked'} or not args.complete_components:
+            return returncode, status, reason
+        if attempt == passes:
+            return returncode, status, reason
+        mark = latest_progress_mark(run)
+        if returncode == 5:
+            # A valid progress checkpoint is already rotating; preserve its unit.
+            continue
+        if returncode == 4:
+            stage = pending_resume_stage(run)
+        elif returncode == 2 and mark and mark[1] == 'FAIL':
+            stage = '20-implement' if mark[0] in {'10-baseline', '20-implement', '30-verify', '40-handoff'} else mark[0]
+        else:
+            return returncode, status, reason
+        reopen_checkpoint(run, stage, 'Bounded completion loop: repair the recorded component/shared production or test-harness defect, preserve current passing evidence, and return through verification/audit to actual acceptance. Component scope explicitly permits the shared dependency repair necessary for this component. Do not modify scheduling scripts or lower acceptance rules.')
+    raise AssertionError('component pass loop did not return')
 
 
 def write_batch_state(project_root: Path, results: Sequence[BatchResult]) -> None:
@@ -189,6 +246,10 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     mode.add_argument("--status", action="store_true", help="read compact persisted status")
     mode.add_argument("--repair-usage", action="store_true", help="recover historical session usage without model calls")
     parser.add_argument("--start-after")
+    parser.add_argument("--reverse", action="store_true", help="run unchecked components in reverse checklist order")
+    parser.add_argument("--repair-blocked", action="store_true", help="resume recorded component failures in an implementation/fixer session")
+    parser.add_argument("--complete-components", action="store_true", help="repair and reverify each component before advancing; require acceptance receipts")
+    parser.add_argument("--max-component-passes", type=int, default=6, help="bounded repair/verification passes for one component")
     parser.add_argument(
         "--exclude",
         default="",
@@ -216,6 +277,8 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         parser.error("--limit cannot be negative")
     if args.max_attempts < 1:
         parser.error("--max-attempts must be positive")
+    if args.max_component_passes < 1:
+        parser.error("--max-component-passes must be positive")
     if args.max_seconds < 1:
         parser.error("--max-seconds must be positive")
     if args.max_actions is not None and args.max_actions < 1:
@@ -232,7 +295,7 @@ def start_background(args: argparse.Namespace, argv: Sequence[str]) -> int:
     log = directory / f"{stamp}.log"
     command = [sys.executable, "-u", str(Path(__file__).resolve()),
                *[value for value in argv if value != "--background"]]
-    with log.open("w", encoding="utf-8") as output:
+    with log.open("a", encoding="utf-8") as output:
         process = subprocess.Popen(command, cwd=args.project_root, stdin=subprocess.DEVNULL,
                                    stdout=output, stderr=subprocess.STDOUT,
                                    start_new_session=True)
@@ -276,6 +339,8 @@ def run_main(argv: Sequence[str] | None = None) -> int:
         return start_background(args, list(sys.argv[1:] if argv is None else argv))
     progress = root / "docs/shadcn-web-progress.md"
     components = parse_unchecked(progress)
+    if args.reverse:
+        components.reverse()
     if args.start_after:
         slugs = [component.slug for component in components]
         if args.start_after not in slugs:
@@ -292,6 +357,8 @@ def run_main(argv: Sequence[str] | None = None) -> int:
     for component in components:
         run_dir = root / ".agent-runs" / component.slug
         reason = skip_reason(run_dir)
+        if args.repair_blocked or args.complete_components:
+            reason = None
         if component.slug in args.exclude:
             reason = "excluded"
         if reason:
@@ -358,14 +425,7 @@ def run_main(argv: Sequence[str] | None = None) -> int:
             result.returncode = init_status
             result.reason = "token_efficiency init failed"
         else:
-            command = orchestrator_command(component, args)
-            driver_log = root / ".agent-runs" / component.slug / "batch-driver.log"
-            with driver_log.open("a", encoding="utf-8") as output:
-                process = subprocess.run(command, cwd=root, stdout=output, stderr=subprocess.STDOUT)
-            result.returncode = process.returncode
-            result.status, result.reason = classify_process_result(
-                process.returncode
-            )
+            result.returncode, result.status, result.reason = execute_component(component, args)
             infrastructure_blocked = result.status == "infrastructure_blocked"
         result.completed_at = datetime.now().astimezone().isoformat(
             timespec="seconds"
@@ -373,20 +433,24 @@ def run_main(argv: Sequence[str] | None = None) -> int:
         append_batch_log(root, result)
         write_batch_state(root, results)
         print(f"{result.status.upper()}: {component.slug}")
+        if args.complete_components and result.status != 'completed':
+            print('Completion mode stopped at unresolved component; checkpoint preserved, no scan-and-skip.', flush=True)
+            break
 
     completed = sum(result.status == "completed" for result in results)
     blocked = sum(result.status == "blocked" for result in results)
+    pending = sum(result.status in {"acceptance_pending", "verification_pending"} for result in results)
     infrastructure = sum(
         result.status == "infrastructure_blocked" for result in results
     )
     print(
-        f"Batch complete: {completed} completed, {blocked} blocked, "
+        f"Batch complete: {completed} accepted, {pending} acceptance-pending, {blocked} blocked, "
         f"{infrastructure} infrastructure-blocked, "
-        f"{len(results) - completed - blocked - infrastructure} skipped/other"
+        f"{len(results) - completed - pending - blocked - infrastructure} skipped/other"
     )
     if infrastructure:
         return 3
-    return 0 if blocked == 0 else 2
+    return 2 if blocked else (4 if pending else 0)
 
 
 def main(argv: Sequence[str] | None = None) -> int:

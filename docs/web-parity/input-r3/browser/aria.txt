@@ -1,0 +1,1242 @@
+Compose Foundation — Components
+Notifications
+Home
+Components
+Create
+Dialog
+Drawer
+Dropdown Menu
+Empty
+Field
+Hover Card
+Input
+Input Group
+Input OTP
+Item
+Kbd
+Label
+Marker
+Menubar
+Message
+Message Scroller
+Navigation Menu
+Pagination
+Popover
+Progress
+Questionnaire
+Radio Group
+Resizable
+Scroll Area
+Select
+Separator
+Sheet
+Sidebar
+Home
+Components
+Create
+Search documentation
+GitHub
+Toggle theme
+New
+Dialog
+Drawer
+Dropdown Menu
+Empty
+Field
+Hover Card
+Input
+Input Group
+Input OTP
+Item
+Kbd
+Label
+Marker
+Menubar
+Message
+Message Scroller
+Navigation Menu
+Pagination
+Popover
+Progress
+Questionnaire
+New
+Radio Group
+Resizable
+Scroll Area
+Select
+Separator
+Sheet
+Sidebar
+Home
+Components
+Create
+Search...
+GitHub
+New
+Dialog
+Drawer
+Dropdown Menu
+Empty
+Field
+Hover Card
+Input
+Input Group
+Input OTP
+Item
+Kbd
+Label
+Marker
+Menubar
+Message
+Message Scroller
+Navigation Menu
+Pagination
+Popover
+Progress
+Questionnaire
+New
+Radio Group
+Resizable
+Scroll Area
+Select
+Separator
+Sheet
+Sidebar
+Installation
+Usage
+Basic
+Field
+Field Group
+Disabled
+Invalid
+File
+Inline
+Grid
+Required
+Badge
+Input Group
+Button Group
+Form
+RTL
+Kotlin extension: Autofocus
+Search...
+GitHub
+New
+Copy Page
+Previous: Hover Card
+Next: Input Group
+On This Page
+Installation
+Usage
+Basic
+Field
+Field Group
+Disabled
+Invalid
+File
+Inline
+Grid
+Required
+Badge
+Input Group
+Button Group
+Form
+RTL
+Kotlin extension: Autofocus
+Input
+Copy Page
+A text input component for forms and user data entry with built-in styling and accessibility features.
+Base UI
+Installation
+Usage
+Basic
+Field
+Field Group
+Disabled
+Invalid
+File
+Inline
+Grid
+Required
+Badge
+Input Group
+Button Group
+Form
+RTL
+Kotlin extension: Autofocus
+On This Page
+Installation
+Usage
+Basic
+Field
+Field Group
+Disabled
+Invalid
+File
+Inline
+Grid
+Required
+Badge
+Input Group
+Button Group
+Form
+RTL
+Kotlin extension: Autofocus
+Input
+Copy Page
+A text input component for forms and user data entry with built-in styling and accessibility features.
+Base UI
+API Key
+API Key
+View Code
+Installation
+Copy
+Usage
+Copy
+Copy
+Basic
+Field
+Use Field, FieldLabel, and FieldDescription to create an input with a label and description.
+Field Group
+Use FieldGroup to show multiple Field blocks and to build forms.
+Disabled
+Use the disabled prop to disable the input. To style the disabled state, disable the Field as well.
+Invalid
+Use the invalid prop to mark the input as invalid. To style the invalid state, mark the Field invalid as well.
+File
+Choose a file with the browser or desktop file chooser. This catalog preview shows its filename without reading or uploading the file. Android and iOS catalogs disable the action until a picker is connected.
+Inline
+Use Field with orientation = FieldOrientation.Horizontal to create an inline input. Pair it with Button to create a search input with a button.
+Grid
+Use a grid layout to place multiple inputs side by side.
+Required
+Use the required attribute to indicate required inputs.
+Badge
+Use Badge in the label to highlight a recommended field.
+Input Group
+To add icons, text, or buttons inside an input, use the InputGroup component. See the Input Group component for more examples.
+Button Group
+To add buttons to an input, use the ButtonGroup component. See the Button Group component for more examples.
+Form
+A full form example with multiple inputs, a select, and a button.
+RTL
+To enable RTL support in shadcn/ui, see the RTL configuration guide.
+Kotlin extension: Autofocus
+API Key
+Your API key is encrypted and stored securely.
+View Code
+Installation
+build.gradle.kts
+Usage
+1
+
+
+2
+
+
+3
+
+
+4
+
+
+5
+
+
+6
+
+
+7
+
+
+8
+
+
+9
+
+
+10
+
+
+11
+
+
+12
+
+
+13
+
+
+14
+
+
+15
+
+
+16
+
+
+17
+
+
+18
+
+
+19
+
+
+20
+
+
+21
+
+
+22
+
+
+23
+
+
+24
+
+
+25
+
+
+26
+
+
+27
+
+
+28
+
+
+29
+1
+
+
+2
+Basic
+View Code
+Field
+Use Field, FieldLabel, and FieldDescription to create an input with a label and description.
+Username
+Username
+View Code
+Field Group
+Use FieldGroup to show multiple Field blocks and to build forms.
+Name
+Name
+Email
+Email
+Reset
+Submit
+View Code
+Disabled
+Use the disabled prop to disable the input. To style the disabled state, disable the Field as well.
+View Code
+Invalid
+Use the invalid prop to mark the input as invalid. To style the invalid state, mark the Field invalid as well.
+Invalid Input
+Invalid Input
+View Code
+File
+Choose a file with the browser or desktop file chooser. This catalog preview shows its filename without reading or uploading the file. Android and iOS catalogs disable the action until a picker is connected.
+Picture
+Choose File: Picture
+View Code
+Inline
+Use Field with orientation = FieldOrientation.Horizontal to create an inline input. Pair it with Button to create a search input with a button.
+Search
+View Code
+Grid
+Use a grid layout to place multiple inputs side by side.
+First Name
+First Name
+Last Name
+Last Name
+View Code
+Required
+Use the required attribute to indicate required inputs.
+Required Field *
+Required Field, required
+View Code
+Badge
+Use Badge in the label to highlight a recommended field.
+Webhook URL
+Webhook URL
+View Code
+Input Group
+To add icons, text, or buttons inside an input, use the InputGroup component. See the Input Group component for more examples.
+Website URL
+View Code
+Button Group
+To add buttons to an input, use the ButtonGroup component. See the Button Group component for more examples.
+Search
+View Code
+Form
+A full form example with multiple inputs, a select, and a button.
+Name
+Name, required
+Email
+Email
+Phone
+Phone
+Country
+Country
+Address
+Address
+Cancel
+Submit
+View Code
+RTL
+To enable RTL support in shadcn/ui, see the RTL configuration guide.
+مفتاح API
+مفتاح API
+View Code
+Kotlin extension: Autofocus
+Try autofocus
+View Code
+API Key
+Your API key is encrypted and stored securely.
+1
+
+
+2
+
+
+3
+View Code
+build.gradle.kts
+// build.gradle.kts — commonMain.dependencies
+
+
+implementation("com.toutiaoyan.compose:ui:0.3.37")
+1
+
+
+2
+
+
+3
+
+
+4
+
+
+5
+
+
+6
+
+
+7
+
+
+8
+
+
+9
+
+
+10
+
+
+11
+
+
+12
+
+
+13
+
+
+14
+
+
+15
+
+
+16
+
+
+17
+
+
+18
+
+
+19
+
+
+20
+
+
+21
+
+
+22
+
+
+23
+
+
+24
+
+
+25
+
+
+26
+
+
+27
+
+
+28
+
+
+29
+import androidx.compose.foundation.clickable
+
+
+import androidx.compose.foundation.layout.*
+
+
+import androidx.compose.runtime.*
+
+
+import androidx.compose.ui.Alignment
+
+
+import androidx.compose.ui.Modifier
+
+
+import androidx.compose.ui.focus.FocusRequester
+
+
+import androidx.compose.ui.focus.focusProperties
+
+
+import androidx.compose.ui.focus.focusRequester
+
+
+import androidx.compose.ui.platform.LocalLayoutDirection
+
+
+import androidx.compose.ui.semantics.contentDescription
+
+
+import androidx.compose.ui.semantics.semantics
+
+
+import androidx.compose.ui.text.style.TextOverflow
+
+
+import androidx.compose.ui.unit.LayoutDirection
+
+
+import androidx.compose.ui.unit.dp
+
+
+import com.composables.icons.lucide.Info
+
+
+import com.composables.icons.lucide.Lucide
+
+
+import com.toutiaoyan.compose.ui.components.badge.Badge
+
+
+import com.toutiaoyan.compose.ui.components.badge.BadgeVariant
+
+
+import com.toutiaoyan.compose.ui.components.button.Button
+
+
+import com.toutiaoyan.compose.ui.components.button.ButtonVariant
+
+
+import com.toutiaoyan.compose.ui.components.buttongroup.*
+
+
+import com.toutiaoyan.compose.ui.components.field.*
+
+
+import com.toutiaoyan.compose.ui.components.icon.Icon
+
+
+import com.toutiaoyan.compose.ui.components.input.Input
+
+
+import com.toutiaoyan.compose.ui.components.input.InputType
+
+
+import com.toutiaoyan.compose.ui.components.inputgroup.*
+
+
+import com.toutiaoyan.compose.ui.components.select.*
+
+
+import com.toutiaoyan.compose.ui.components.text.Text
+
+
+import com.toutiaoyan.compose.ui.components.text.TextColors
+1
+
+
+2
+var text by remember { mutableStateOf("") }
+
+
+Input(text, { text = it }, placeholder = "Enter text")
+View Code
+Username
+Choose a unique username for your account.
+View Code
+Name
+Email
+We'll send updates to this address.
+Reset
+Submit
+View Code
+This field is currently disabled.
+View Code
+Invalid Input
+This field contains validation errors.
+View Code
+Picture
+Choose File
+No file chosen
+Select a picture to upload.
+View Code
+Search
+View Code
+First Name
+Last Name
+View Code
+Required Field
+
+
+ *
+This field must be filled out.
+View Code
+Webhook URL
+Beta
+View Code
+Website URL
+https://
+Website URL
+View Code
+Search
+Search
+Search
+View Code
+Name
+Email
+We'll never share your email with anyone.
+Phone
+Country
+United States
+Address
+Cancel
+Submit
+View Code
+Preview language
+Translation information
+مفتاح API
+مفتاح API الخاص بك مشفر ومخزن بأمان.
+View Code
+Try autofocus
+View Code
+1
+
+
+2
+
+
+3
+var apiKey by remember { mutableStateOf("") }
+
+
+Field(Modifier.widthIn(max = 320.dp)) {
+
+
+    val inputFocus0 = remember { FocusRequester() }
+// build.gradle.kts — commonMain.dependencies
+
+
+implementation("com.toutiaoyan.compose:ui:0.3.37")
+import androidx.compose.foundation.clickable
+
+
+import androidx.compose.foundation.layout.*
+
+
+import androidx.compose.runtime.*
+
+
+import androidx.compose.ui.Alignment
+
+
+import androidx.compose.ui.Modifier
+
+
+import androidx.compose.ui.focus.FocusRequester
+
+
+import androidx.compose.ui.focus.focusProperties
+
+
+import androidx.compose.ui.focus.focusRequester
+
+
+import androidx.compose.ui.platform.LocalLayoutDirection
+
+
+import androidx.compose.ui.semantics.contentDescription
+
+
+import androidx.compose.ui.semantics.semantics
+
+
+import androidx.compose.ui.text.style.TextOverflow
+
+
+import androidx.compose.ui.unit.LayoutDirection
+
+
+import androidx.compose.ui.unit.dp
+
+
+import com.composables.icons.lucide.Info
+
+
+import com.composables.icons.lucide.Lucide
+
+
+import com.toutiaoyan.compose.ui.components.badge.Badge
+
+
+import com.toutiaoyan.compose.ui.components.badge.BadgeVariant
+
+
+import com.toutiaoyan.compose.ui.components.button.Button
+
+
+import com.toutiaoyan.compose.ui.components.button.ButtonVariant
+
+
+import com.toutiaoyan.compose.ui.components.buttongroup.*
+
+
+import com.toutiaoyan.compose.ui.components.field.*
+
+
+import com.toutiaoyan.compose.ui.components.icon.Icon
+
+
+import com.toutiaoyan.compose.ui.components.input.Input
+
+
+import com.toutiaoyan.compose.ui.components.input.InputType
+
+
+import com.toutiaoyan.compose.ui.components.inputgroup.*
+
+
+import com.toutiaoyan.compose.ui.components.select.*
+
+
+import com.toutiaoyan.compose.ui.components.text.Text
+
+
+import com.toutiaoyan.compose.ui.components.text.TextColors
+var text by remember { mutableStateOf("") }
+
+
+Input(text, { text = it }, placeholder = "Enter text")
+1
+
+
+2
+View Code
+Username
+Choose a unique username for your account.
+1
+
+
+2
+
+
+3
+View Code
+Name
+Email
+We'll send updates to this address.
+Reset
+Submit
+1
+
+
+2
+
+
+3
+View Code
+Email
+This field is currently disabled.
+1
+
+
+2
+
+
+3
+View Code
+Invalid Input
+This field contains validation errors.
+1
+
+
+2
+
+
+3
+View Code
+Picture
+Choose File
+No file chosen
+Select a picture to upload.
+1
+
+
+2
+
+
+3
+View Code
+Search
+1
+
+
+2
+
+
+3
+View Code
+First Name
+Last Name
+1
+
+
+2
+
+
+3
+View Code
+Required Field
+
+
+ *
+This field must be filled out.
+1
+
+
+2
+
+
+3
+View Code
+Webhook URL
+Beta
+1
+
+
+2
+
+
+3
+View Code
+Website URL
+https://
+1
+
+
+2
+
+
+3
+View Code
+Search
+Search
+1
+
+
+2
+
+
+3
+View Code
+Name
+Email
+We'll never share your email with anyone.
+Phone
+Country
+United States
+Address
+Cancel
+Submit
+1
+
+
+2
+
+
+3
+View Code
+Arabic (العربية)
+Translation information
+مفتاح
+ API
+مفتاح
+ API 
+الخاص بك مشفر ومخزن بأمان
+.
+1
+
+
+2
+
+
+3
+View Code
+Try autofocus
+1
+
+
+2
+
+
+3
+View Code
+var apiKey by remember { mutableStateOf("") }
+
+
+Field(Modifier.widthIn(max = 320.dp)) {
+
+
+    val inputFocus0 = remember { FocusRequester() }
+1
+
+
+2
+var text by remember { mutableStateOf("") }
+
+
+Input(text, { text = it }, Modifier.widthIn(max = 320.dp), placeholder = "Enter text")
+1
+
+
+2
+
+
+3
+var username by remember { mutableStateOf("") }
+
+
+Field(Modifier.widthIn(max = 320.dp)) {
+
+
+    val inputFocus0 = remember { FocusRequester() }
+1
+
+
+2
+
+
+3
+var name by remember { mutableStateOf("") }
+
+
+var email by remember { mutableStateOf("") }
+
+
+FieldGroup(Modifier.widthIn(max = 320.dp)) {
+Email
+1
+
+
+2
+
+
+3
+var email by remember { mutableStateOf("") }
+
+
+Field(Modifier.widthIn(max = 320.dp), disabled = true) {
+
+
+    FieldLabel("Email")
+1
+
+
+2
+
+
+3
+var value by remember { mutableStateOf("") }
+
+
+Field(Modifier.widthIn(max = 320.dp), invalid = true) {
+
+
+    val inputFocus0 = remember { FocusRequester() }
+1
+
+
+2
+
+
+3
+// Supply the platform chooser; null result means cancelled.
+
+
+@Composable
+
+
+fun PictureInput(pickFile: (((String?) -> Unit) -> Unit)?) {
+1
+
+
+2
+
+
+3
+var query by remember { mutableStateOf("") }
+
+
+Field(Modifier.widthIn(max = 320.dp), orientation = FieldOrientation.Horizontal) {
+
+
+    Input(query, { query = it }, Modifier.width(244.dp), type = InputType.Search, placeholder = "Search...")
+1
+
+
+2
+
+
+3
+var first by remember { mutableStateOf("") }
+
+
+var last by remember { mutableStateOf("") }
+
+
+FieldGroup(Modifier.widthIn(max = 384.dp)) {
+1
+
+
+2
+
+
+3
+var value by remember { mutableStateOf("") }
+
+
+Field(Modifier.widthIn(max = 320.dp)) {
+
+
+    val inputFocus0 = remember { FocusRequester() }
+1
+
+
+2
+
+
+3
+var value by remember { mutableStateOf("") }
+
+
+Field(Modifier.widthIn(max = 320.dp)) {
+
+
+    val inputFocus0 = remember { FocusRequester() }
+https://
+1
+
+
+2
+
+
+3
+var value by remember { mutableStateOf("") }
+
+
+Field(Modifier.widthIn(max = 320.dp)) {
+
+
+    val inputFocus0 = remember { FocusRequester() }
+Search
+1
+
+
+2
+
+
+3
+var query by remember { mutableStateOf("") }
+
+
+Field(Modifier.widthIn(max = 320.dp)) {
+
+
+    val inputFocus0 = remember { FocusRequester() }
+1
+
+
+2
+
+
+3
+var name by remember { mutableStateOf("") }
+
+
+var email by remember { mutableStateOf("") }
+
+
+var phone by remember { mutableStateOf("") }
+Arabic (
+العربية
+)
+1
+
+
+2
+
+
+3
+@Composable
+
+
+fun InputRtlExample() {
+
+
+    // 0 English, 1 Arabic, 2 Hebrew; supply a font covering the chosen language.
+1
+
+
+2
+
+
+3
+var email by remember { mutableStateOf("") }
+
+
+val focus = remember { FocusRequester() }
+
+
+Field {
+var text by remember { mutableStateOf("") }
+
+
+Input(text, { text = it }, Modifier.widthIn(max = 320.dp), placeholder = "Enter text")
+var username by remember { mutableStateOf("") }
+
+
+Field(Modifier.widthIn(max = 320.dp)) {
+
+
+    val inputFocus0 = remember { FocusRequester() }
+var name by remember { mutableStateOf("") }
+
+
+var email by remember { mutableStateOf("") }
+
+
+FieldGroup(Modifier.widthIn(max = 320.dp)) {
+var email by remember { mutableStateOf("") }
+
+
+Field(Modifier.widthIn(max = 320.dp), disabled = true) {
+
+
+    FieldLabel("Email")
+var value by remember { mutableStateOf("") }
+
+
+Field(Modifier.widthIn(max = 320.dp), invalid = true) {
+
+
+    val inputFocus0 = remember { FocusRequester() }
+// Supply the platform chooser; null result means cancelled.
+
+
+@Composable
+
+
+fun PictureInput(pickFile: (((String?) -> Unit) -> Unit)?) {
+var query by remember { mutableStateOf("") }
+
+
+Field(Modifier.widthIn(max = 320.dp), orientation = FieldOrientation.Horizontal) {
+
+
+    Input(query, { query = it }, Modifier.width(244.dp), type = InputType.Search, placeholder = "Search...")
+var first by remember { mutableStateOf("") }
+
+
+var last by remember { mutableStateOf("") }
+
+
+FieldGroup(Modifier.widthIn(max = 384.dp)) {
+var value by remember { mutableStateOf("") }
+
+
+Field(Modifier.widthIn(max = 320.dp)) {
+
+
+    val inputFocus0 = remember { FocusRequester() }
+var value by remember { mutableStateOf("") }
+
+
+Field(Modifier.widthIn(max = 320.dp)) {
+
+
+    val inputFocus0 = remember { FocusRequester() }
+var value by remember { mutableStateOf("") }
+
+
+Field(Modifier.widthIn(max = 320.dp)) {
+
+
+    val inputFocus0 = remember { FocusRequester() }
+var query by remember { mutableStateOf("") }
+
+
+Field(Modifier.widthIn(max = 320.dp)) {
+
+
+    val inputFocus0 = remember { FocusRequester() }
+var name by remember { mutableStateOf("") }
+
+
+var email by remember { mutableStateOf("") }
+
+
+var phone by remember { mutableStateOf("") }
+@Composable
+
+
+fun InputRtlExample() {
+
+
+    // 0 English, 1 Arabic, 2 Hebrew; supply a font covering the chosen language.
+var email by remember { mutableStateOf("") }
+
+
+val focus = remember { FocusRequester() }
+
+
+Field {

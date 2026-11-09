@@ -5,8 +5,10 @@ package com.toutiaoyan.compose.ui.catalog.docs
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.style.Style
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -53,11 +55,12 @@ private fun ToggleGroupIconDemo(
     size: ToggleSize = ToggleSize.Md,
     spacing: androidx.compose.ui.unit.Dp = ToggleGroupDefaults.Spacing,
     disabled: Boolean = false,
+    variant: ToggleVariant = ToggleVariant.Outline,
 ) {
     ToggleGroup(
         value = value,
         onValueChange = onValueChange,
-        variant = ToggleVariant.Outline,
+        variant = variant,
         size = size,
         spacing = spacing,
         disabled = disabled,
@@ -66,7 +69,9 @@ private fun ToggleGroupIconDemo(
     ) {
         ToggleGroupItem("bold", label = "Toggle bold") { Icon(Lucide.Bold) }
         ToggleGroupItem("italic", label = "Toggle italic") { Icon(Lucide.Italic) }
-        ToggleGroupItem("underline", label = "Toggle strikethrough") { Icon(Lucide.Underline) }
+        ToggleGroupItem("underline", label = if (vertical) "Toggle underline" else "Toggle strikethrough") {
+            Icon(Lucide.Underline)
+        }
     }
 }
 
@@ -101,7 +106,7 @@ private fun ToggleGroupFontWeightDemo() {
             value = fontWeight,
             onValueChange = { fontWeight = it },
             variant = ToggleVariant.Outline,
-            spacing = 2.dp,
+            spacing = 8.dp,
             size = ToggleSize.Lg,
             modifier = Modifier.testTag("toggle-group-font-weight"),
         ) {
@@ -111,16 +116,33 @@ private fun ToggleGroupFontWeightDemo() {
                 "medium" to FontWeight.Medium,
                 "bold" to FontWeight.Bold,
             ).forEach { (value, weight) ->
-                ToggleGroupItem(value, label = value.replaceFirstChar { it.uppercase() }) {
+                ToggleGroupItem(
+                    value,
+                    label = value.replaceFirstChar { it.uppercase() },
+                    style =
+                        Style {
+                            width(64.dp)
+                            height(64.dp)
+                            shape(RoundedCornerShape(12.dp))
+                        },
+                ) {
+                    // CSS whitespace-nowrap lets this stack use its natural width inside the fixed card.
                     Column(
-                        Modifier.size(64.dp),
+                        modifier = Modifier.wrapContentWidth(unbounded = true),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
                     ) {
                         Text(
-                            textStyle = androidx.compose.ui.text.TextStyle(fontSize = 24.sp, fontWeight = weight),
+                            textStyle =
+                                androidx.compose.ui.text.TextStyle(
+                                    fontSize = 24.sp,
+                                    lineHeight = 24.sp,
+                                    fontWeight = weight,
+                                ),
                         ) { "Aa" }
-                        Text(textStyle = TextColors.Muted) { value.replaceFirstChar { it.uppercase() } }
+                        Text(textStyle = TextColors.Muted.copy(fontSize = 12.sp, lineHeight = 16.sp)) {
+                            value.replaceFirstChar { it.uppercase() }
+                        }
                     }
                 }
             }
@@ -164,7 +186,7 @@ private val toggleGroupSizesCode =
 
 private val toggleGroupSpacingCode =
     """
-    ToggleGroup(defaultValue = setOf("top"), variant = ToggleVariant.Outline, size = ToggleSize.Sm, spacing = 2.dp) {
+    ToggleGroup(defaultValue = setOf("top"), variant = ToggleVariant.Outline, size = ToggleSize.Sm, spacing = 8.dp) {
         listOf("top", "bottom", "left", "right").forEach { value ->
             ToggleGroupItem(value) { Text { value.replaceFirstChar { it.uppercase() } } }
         }
@@ -202,12 +224,18 @@ private val toggleGroupFontWeightCode =
     Field {
         FieldLabel("Font Weight")
         ToggleGroup(value = fontWeight, onValueChange = { fontWeight = it },
-            variant = ToggleVariant.Outline, spacing = 2.dp, size = ToggleSize.Lg) {
-            listOf("light", "normal", "medium", "bold").forEach { value ->
-                ToggleGroupItem(value, label = value.replaceFirstChar { it.uppercase() }) {
-                    Column(Modifier.size(64.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(textStyle = TextStyle(fontSize = 24.sp, fontWeight = fontWeightOf(value))) { "Aa" }
-                        Text(textStyle = TextColors.Muted) { value.replaceFirstChar { it.uppercase() } }
+            variant = ToggleVariant.Outline, spacing = 8.dp, size = ToggleSize.Lg) {
+            listOf("light" to FontWeight.Light, "normal" to FontWeight.Normal,
+                "medium" to FontWeight.Medium, "bold" to FontWeight.Bold).forEach { (value, weight) ->
+                ToggleGroupItem(value, label = value.replaceFirstChar { it.uppercase() },
+                    style = Style { width(64.dp); height(64.dp); shape(RoundedCornerShape(12.dp)) }) {
+                    Column(modifier = Modifier.wrapContentWidth(unbounded = true),
+                        horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(textStyle = TextStyle(fontSize = 24.sp, lineHeight = 24.sp,
+                            fontWeight = weight)) { "Aa" }
+                        Text(textStyle = TextColors.Muted.copy(fontSize = 12.sp, lineHeight = 16.sp)) {
+                            value.replaceFirstChar { it.uppercase() }
+                        }
                     }
                 }
             }
@@ -252,6 +280,20 @@ val toggleGroupDoc =
             └── ToggleGroupItem
             """.trimIndent(),
         examplesHeading = null,
+        afterApiSections =
+            listOf(
+                ComponentGuideSection("Changelog", emptyList()),
+                ComponentGuideSection(
+                    "2026-05-17 Default Spacing",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "Changed the default `spacing` from `0` to `2` (8.dp) so toggle groups render with space " +
+                                "between items by default. Use `spacing = 0.dp` for connected items.",
+                        ),
+                    ),
+                    level = 3,
+                ),
+            ),
         apiSections =
             listOf(
                 ComponentApiSection(
@@ -326,7 +368,7 @@ val toggleGroupDoc =
                             value,
                             { value = it },
                             size = ToggleSize.Sm,
-                            spacing = 2.dp,
+                            spacing = 8.dp,
                         )
                     },
                 ),
@@ -336,7 +378,13 @@ val toggleGroupDoc =
                     code = toggleGroupVerticalCode,
                     preview = {
                         var value by remember { mutableStateOf(setOf("bold", "italic")) }
-                        ToggleGroupIconDemo(value, { value = it }, vertical = true, spacing = 4.dp)
+                        ToggleGroupIconDemo(
+                            value,
+                            { value = it },
+                            vertical = true,
+                            spacing = 4.dp,
+                            variant = ToggleVariant.Default,
+                        )
                     },
                 ),
                 ComponentExample(
@@ -348,6 +396,8 @@ val toggleGroupDoc =
                 ),
                 ComponentExample(
                     title = "Custom",
+                    // Keep the phone preview wide enough for four 64dp cards and three 8dp gaps.
+                    previewPadding = 24.dp,
                     descriptionMarkdown = "A custom toggle group example.",
                     code = toggleGroupFontWeightCode,
                     preview = { ToggleGroupFontWeightDemo() },

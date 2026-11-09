@@ -42,18 +42,27 @@ class ChartPageTest {
         )
         assertEquals(
             listOf(3, 3, 3),
-            chartDoc.beforeExampleSections.getValue("Tooltip").takeLast(3).map { it.level },
+            chartDoc.beforeExampleSections.getValue("Tooltip").drop(2).take(3).map { it.level },
         )
         assertEquals(
             setOf("Tooltip", "RTL"),
             chartDoc.beforeExampleSections.keys,
         )
         assertEquals(
-            listOf("Chart Config", "Theming", "CSS Variables", "hex, hsl or oklch", "Using Colors"),
+            listOf(
+                "Chart Config",
+                "Theming",
+                "CSS Variables",
+                "hex, hsl or oklch",
+                "Using Colors",
+                "Components",
+                "Chart Data",
+                "Tailwind",
+            ),
             chartDoc.beforeExampleSections.getValue("Tooltip").map { it.title },
         )
         assertEquals(
-            listOf("Tooltip Props", "Legend", "Accessibility"),
+            listOf("Tooltip Props", "Colors", "Custom", "Legend", "Colors", "Custom", "Accessibility"),
             chartDoc.beforeExampleSections.getValue("RTL").map { it.title },
         )
         assertTrue(chartDoc.beforeExamples.isEmpty())
@@ -75,7 +84,7 @@ class ChartPageTest {
                 "### hex, hsl or oklch",
                 "### Using Colors",
                 "## Tooltip",
-                "## Tooltip Props",
+                "### Tooltip Props",
                 "## Legend",
                 "## Accessibility",
                 "## RTL",
@@ -133,13 +142,31 @@ class ChartPageTest {
             ).markdown,
         )
         val props =
-            tooltip.blocks.filterIsInstance<ComponentGuideBlock.Bullets>()
+            tooltip.blocks.filterIsInstance<ComponentGuideBlock.Table>()
                 .single()
-                .items
+                .also { assertEquals(listOf("Prop", "Kotlin type", "Description"), it.headers) }
+                .rows
         assertEquals(5, props.size)
         listOf("label", "values", "indicator", "hideLabel", "hideIndicator").forEach { prop ->
-            assertTrue(props.any { it.contains("`$prop") }, prop)
+            assertTrue(props.any { it.first().contains("`$prop") }, prop)
         }
+        assertTrue(props.all { it.size == 3 && it.all(String::isNotBlank) })
+        assertTrue(markdown().contains("| Prop | Kotlin type | Description |"))
+        assertEquals("`String` / `(String) -> String`", props[0][1])
+        assertEquals(
+            "`Map<String, Float>` / `(Float) -> String` / `(@Composable (String, Float) -> Unit)?`",
+            props[1][1],
+        )
+        assertTrue(props[1][2].contains("renders custom composable content"))
+        props.forEach { row -> assertTrue(markdown().contains("| " + row.joinToString(" | ") + " |")) }
+        val custom = chartDoc.beforeExampleSections.getValue("RTL").filter { it.title == "Custom" }
+        assertEquals(2, custom.size)
+        assertTrue(markdown().contains("label = \"Total Visitors\""))
+        assertTrue(markdown().contains("ChartLegend(config = browserConfig)"))
+        assertTrue(
+            tooltip.blocks.filterIsInstance<ComponentGuideBlock.Paragraph>()
+                .any { it.markdown.contains("Kotlin API difference:") && it.markdown.contains("`nameKey`") },
+        )
         val accessibility = chartDoc.beforeExampleSections.getValue("RTL").single { it.title == "Accessibility" }
         assertTrue(
             accessibility.blocks.filterIsInstance<ComponentGuideBlock.Paragraph>()

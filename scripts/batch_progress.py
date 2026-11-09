@@ -27,8 +27,17 @@ def snapshot(root: Path) -> dict:
             except BlockingIOError:
                 active = True
     current = []
+    pending = []
     errors = []
+    recoveries = []
+    counts = Counter()
     for row in results:
+        status = row['status']
+        if status == 'skipped' and row.get('reason') == 'blocked by committed FAIL':
+            status = 'blocked'
+        counts[status] += 1
+        if row['status'] in ('acceptance_pending', 'verification_pending'):
+            pending.append({'component': row['slug'], 'reason': row.get('reason'), 'status': row['status']})
         run = root / '.agent-runs' / row['slug'] / 'orchestrator'
         if row['status'] == 'running':
             live = read_json(run / 'live.json', {})
@@ -36,14 +45,16 @@ def snapshot(root: Path) -> dict:
             if live.get('updated_at', '') < row['started_at']:
                 live = {}
             current.append({'component': row['slug'], 'started_at': row['started_at'], **live})
-        if row['status'] in ('blocked', 'infrastructure_blocked', 'init_failed'):
+        if status in ('blocked', 'infrastructure_blocked', 'init_failed'):
             records = read_json(run / 'runs.json', {}).get('runs', [])
             last = records[-1] if records else {}
             reason = last.get('reason') or row.get('reason')
-            if not last.get('reason') and last.get('message_log'):
+            if last.get('status') == 'blocked' and last.get('message_log'):
                 try:
-                    lines = [line.strip() for line in Path(last['message_log']).read_text().splitlines() if line.strip()]
-                    reason = next((line for line in reversed(lines) if not line.startswith('STAGE_')), reason)
+                    from codex_stage_orchestrator import blocker_reason, last_nonempty_line
+                    message = Path(last['message_log']).read_text()
+                    if last_nonempty_line(message).startswith('STAGE_BLOCKED '):
+                        reason = blocker_reason(message)
                 except OSError:
                     pass
             event_path = Path(last.get('event_log') or '/nonexistent')
@@ -55,10 +66,25 @@ def snapshot(root: Path) -> dict:
                 reason = next((line[:300] for line in reversed(lines) if line.startswith('Error:')), reason)
             except OSError:
                 pass
-            errors.append({'component': row['slug'], 'reason': reason,
-                           'event_log': last.get('event_log')})
+            error = {'component': row['slug'], 'reason': reason, 'event_log': last.get('event_log')}
+            try:
+                marks = (run.parent / 'progress.log').read_text().splitlines()
+                latest_mark = next((line.split() for line in reversed(marks) if line.strip()), [])
+            except OSError:
+                latest_mark = []
+            if (last.get('status') == 'blocked' and
+                    latest_mark == [last.get('stage'), 'rotate']):
+                counts[status] -= 1
+                counts['recovery_pending'] += 1
+                recoveries.append({'component': row['slug'], 'stage': last['stage'],
+                                   'reason': 'Operator reopened the checkpoint; waiting for the current component to finish.',
+                                   'previous_error': error})
+            else:
+                errors.append(error)
     return {'active': active, 'updated_at': state.get('updated_at'),
-            'counts': dict(Counter(row['status'] for row in results)),
+            'counts': {key: value for key, value in counts.items() if value},
+            'recoveries': recoveries,
+            'acceptance_pending': pending,
             'running': [row['component'] for row in current], 'current': current,
             'errors': errors, 'state': str(root / '.agent-runs/batch-state.json')}
 
@@ -71,6 +97,11 @@ def render(state: dict) -> str:
                      f"last event={row.get('updated_at', row['started_at'])} | {row.get('event_type', '')}")
     if not state['active'] and state['current']:
         lines.append('Interrupted: saved running state is stale; no batch lock is held.')
+    for row in state.get('recoveries', []):
+        lines.append(f"RECOVERY_PENDING {row['component']} | {row['stage']} | {row['reason']}")
+    for row in state.get('acceptance_pending', []):
+        label = 'CHECKPOINT_PENDING' if row.get('status') == 'verification_pending' else 'ACCEPTANCE_PENDING'
+        lines.append(f"{label} {row['component']} | {row['reason']}")
     for error in state['errors'][-3:]:
         lines.append(f"ERROR {error['component']}: {error['reason']} | {error['event_log'] or ''}")
     return '\n'.join(lines)
@@ -101,10 +132,22 @@ def mirror(root: Path, log: Path, interval: float = 2) -> int:
         except BlockingIOError:
             raise RuntimeError('a progress mirror is already writing this log')
         previous = None
+        seen_errors = set()
         with log.open('a', encoding='utf-8', buffering=1) as output:
             while True:
                 state = snapshot(root)
-                message = render(state)
+                # Keep counts visible, but append unchanged blocker details only once.
+                fresh_errors = []
+                for error in state['errors']:
+                    signature = json.dumps(error, sort_keys=True)
+                    if signature not in seen_errors:
+                        fresh_errors.append(error)
+                        seen_errors.add(signature)
+                message = render({**state, 'errors': []})
+                if fresh_errors:
+                    message += '\n' + '\n'.join(
+                        f"ERROR {error['component']}: {error['reason']} | {error['event_log'] or ''}"
+                        for error in fresh_errors)
                 if message != previous:
                     output.write('[PROGRESS]\n' + message + '\n')
                     previous = message

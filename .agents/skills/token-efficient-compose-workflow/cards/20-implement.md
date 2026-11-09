@@ -3,8 +3,16 @@
 1. Read only the artifacts named by the scope card.
 2. Apply the smallest source change that addresses an observed difference.
 3. Run one focused compile or test command after the change through the output wrapper.
-4. Update `Done`, `Decisions`, `Verification`, and `Next` in `progress.md`.
-5. Do not run broad visual or repository sweeps in this stage.
+   For multiple Gradle test tasks, put each task's `--tests` options directly after
+   that task; never leave another task running its full unrelated suite.
+4. Before marking implementation done, run owning ktlint tasks for every changed
+   Kotlin source set. Fix formatting in this component's modified production/test
+   files here; do not defer it to a verifier that cannot edit source. Preserve exact
+   rendered strings when wrapping prose. Record tasks, result, relevant input hashes
+   and compact evidence paths. Reuse a passing result only when its inputs match.
+   An unresolved owning lint gate is STAGE_BLOCKED 20-implement, not completion.
+5. Update `Done`, `Decisions`, `Verification`, and `Next` in `progress.md`.
+6. Do not run broad visual or repository sweeps in this stage.
 
 Failure rule: after the same failure twice, preserve the error signature and start a fresh
 session instead of continuing speculative edits.

@@ -12,7 +12,7 @@ theming and sealed variant systems, built on the experimental **Compose Styles A
 dependency, no icon-library dependency — every component is drawn from this library's own tokens.
 
 70+ components across primitives, forms, overlays, data display, and AI Elements (chat UI) — see the
-[**component catalog**](docs/components.md) for the full list with keywords, and
+[**component catalog**](docs/components.md) for the component/source index, and
 [Registry parity](#registry-parity) for how closely each tracks real shadcn/ui.
 
 ## Installation
@@ -64,8 +64,9 @@ deliberate, documented exceptions — `native-select`, `direction`, `data-table`
 (deprecated upstream in favor of `sonner`, implemented here as `ShadcnToast`). Full reasoning in
 [`.claude/AGENTS.md`](.claude/AGENTS.md#registry-parity-status); token/component-level verification
 against real source in [`docs/shadcn-parity.md`](docs/shadcn-parity.md).
-Ongoing alignment work is logged in [
-`docs/shadcn-align-progress.md`](docs/shadcn-align-progress.md).
+Historical alignment work is in the [archive](docs/archive/2026-11-09/shadcn-align-progress.md).
+
+Documentation: [index](docs/README.md).
 
 Web visual alignment: [implementation plan](docs/shadcn-web-plan.md) ·
 [current progress and component checklist](docs/shadcn-web-progress.md).

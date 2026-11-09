@@ -50,7 +50,10 @@ Use `scripts/run_unfinished_components.py --execute --background` for unattended
 component queues. Python owns queue progression, waiting, retries and persistence.
 Do not assign a second agent to coordinate the queue while the parent also watches it.
 Stage workers execute their assigned work directly and return evidence or a blocker;
-they do not spawn more agents or send progress-only messages.
+they do not spawn coordination agents or send progress-only messages. The exception
+is one bounded fresh read-only reviewer session when plan R10/R15 requires independent
+review; pass file/diff/evidence paths only and persist a real verdict. The reviewer
+cannot delegate or schedule work; never retry an unchanged acknowledgement-only transport.
 
 Do not run a model loop calling `wait_agent`, `list_agents`, `--status`, or log tails
 when no decision is pending. The background receipt identifies the log and PID;
@@ -84,14 +87,17 @@ python3 scripts/token_efficiency.py init \
 python3 scripts/token_efficiency.py validate --run-dir "$RUN_DIR"
 ```
 
-In the fresh execution session, read only:
+In the fresh execution session, start by reading:
 
 1. This skill.
 2. `$RUN_DIR/progress.md`.
 3. The current stage card under `cards/`.
 4. Files explicitly named by the stage card.
 
-Do not load the previous session transcript.
+Then perform bounded read-only discovery required by that card: owning component
+sources, checklist entry, commands.log, manifests, pinned upstream files and evidence.
+This starting list does not prohibit inspecting the files the card requires. Keep
+searches scoped to the current component and stage. Do not load the previous session transcript.
 
 ## Stage Cards
 
@@ -190,7 +196,9 @@ The driver:
 - writes attempt telemetry to `.agent-runs/<slug>/loop_log.jsonl`;
 - appends `<stage> rotate` when a new session is required for the same Stage;
 - appends `<stage> FAIL` on a committed failure and never auto-retries that failure;
-- writes `.agent-runs/<slug>/DONE.marker` only after `40-handoff` passes;
+- writes `.agent-runs/<slug>/DONE.marker` only after `40-handoff` passes and the
+  canonical component checkbox is checked; otherwise records `HANDOFF.marker` and
+  `acceptance_pending`, and a later batch resumes open implementation/verification;
 - defaults to Stage-specific hard budgets: scope 30, baseline 30, implement 50, verify
   60, handoff 40; `--max-actions` overrides all Stages;
 - defaults to a 600-second wall-clock watchdog per session; `--max-seconds 0` disables it;

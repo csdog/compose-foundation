@@ -90,7 +90,7 @@ import kotlin.jvm.JvmName
 import com.toutiaoyan.compose.tailwind.core.twSpacing
 import com.toutiaoyan.compose.tailwind.core.twRadius
 
-/** A plain Gregorian calendar date -- the library has no `kotlinx-datetime` dependency,
+/** A civil calendar date (Gregorian by default; see CalendarLocale.calendarSystem) -- the library has no `kotlinx-datetime` dependency,
  so this stays a minimal value type. */
 data class CalendarDate(val year: Int, val month: Int, val day: Int) : Comparable<CalendarDate> {
     override fun compareTo(other: CalendarDate): Int {
@@ -138,6 +138,7 @@ class CalendarState(
     val toYear: Int,
 ) {
     internal var locale: CalendarLocale = CalendarLocale.English
+    internal val system get() = locale.calendarSystem
     internal var minMonth: CalendarDate? = null
     internal var maxMonth: CalendarDate? = null
     internal val canGoPrevious get() = minMonth?.let { CalendarDate(year, month, 1) > it } ?: true
@@ -174,7 +175,7 @@ class CalendarState(
     fun isSelectedDay(date: CalendarDate) =
         date == selected || date == rangeFrom || date == rangeTo || date in selectedDates
 
-    fun isDisabled(date: CalendarDate) = disabled(date)
+    fun isDisabled(date: CalendarDate) = !system.supports(date) || disabled(date)
 
     fun isRangeMiddle(date: CalendarDate): Boolean {
         val from = rangeFrom ?: return false
@@ -195,6 +196,7 @@ class CalendarState(
     }
 
     fun moveFocusTo(date: CalendarDate) {
+        if (!system.supports(date)) return
         val targetMonth = date.copy(day = 1)
         if (minMonth?.let { targetMonth < it } == true || maxMonth?.let { targetMonth > it } == true) return
         val inView =
@@ -203,18 +205,18 @@ class CalendarState(
                 date.year == y && date.month == m
             }
         if (!inView) {
-            onMonthChange(date.year, date.month)
+            goToMonth(date.year, date.month)
         }
         onFocusedDateChange(date)
     }
 
     fun moveFocusByDays(days: Int) {
         val start = focusedDate ?: today ?: CalendarDate(year, month, 1)
-        var candidate = start.plusDays(days)
+        var candidate = start.plusDays(days, system)
         val step = if (days >= 0) 1 else -1
         var hops = 0
         while (isDisabled(candidate) && hops < 400) {
-            candidate = candidate.plusDays(step)
+            candidate = candidate.plusDays(step, system)
             hops++
         }
         if (!isDisabled(candidate)) moveFocusTo(candidate)
@@ -222,12 +224,12 @@ class CalendarState(
 
     fun moveFocusToWeekEdge(end: Boolean) {
         val start = focusedDate ?: today ?: CalendarDate(year, month, 1)
-        val index = (start.dayOfWeek() - weekStartsOn + 7) % 7
+        val index = (system.dayOfWeek(start) - weekStartsOn + 7) % 7
         val target =
             if (end) {
-                start.plusDays(6 - index)
+                start.plusDays(6 - index, system)
             } else {
-                start.plusDays(-index)
+                start.plusDays(-index, system)
             }
         if (!isDisabled(target)) moveFocusTo(target)
     }
@@ -241,7 +243,8 @@ class CalendarState(
             y = next.first
             m = next.second
         }
-        val date = CalendarDate(y, m, start.day.coerceAtMost(daysInMonth(y, m)))
+        if (!system.supports(CalendarDate(y, m, 1))) return
+        val date = CalendarDate(y, m, start.day.coerceAtMost(system.daysInMonth(y, m)))
         if (!isDisabled(date)) moveFocusTo(date)
     }
 
@@ -326,12 +329,16 @@ private fun addMonths(
     return y to m
 }
 
-private fun CalendarDate.plusDays(days: Int): CalendarDate {
+private fun CalendarDate.plusDays(
+    days: Int,
+    system: CalendarSystem = CalendarSystem.Gregorian,
+): CalendarDate {
     var y = year
     var m = month
     var d = day + days
     while (true) {
-        val dim = daysInMonth(y, m)
+        if (!system.supports(CalendarDate(y, m, 1))) return system.clamp(CalendarDate(y, m, 1))
+        val dim = system.daysInMonth(y, m)
         when {
             d > dim -> {
                 d -= dim
@@ -343,7 +350,8 @@ private fun CalendarDate.plusDays(days: Int): CalendarDate {
                 val prev = previousMonth(y, m)
                 y = prev.first
                 m = prev.second
-                d += daysInMonth(y, m)
+                if (!system.supports(CalendarDate(y, m, 1))) return system.clamp(CalendarDate(y, m, 1))
+                d += system.daysInMonth(y, m)
             }
             else -> return CalendarDate(y, m, d)
         }
@@ -439,7 +447,10 @@ fun Calendar(
         weekStartsOn = weekStartsOn,
         showOutsideDays = showOutsideDays,
         fromDate = (startMonth ?: fromMonth)?.copy(day = 1) ?: fromDate,
-        toDate = (endMonth ?: toMonth)?.let { it.copy(day = daysInMonth(it.year, it.month)) } ?: toDate,
+        toDate =
+            (endMonth ?: toMonth)?.let {
+                it.copy(day = LocalCalendarLocale.current.calendarSystem.daysInMonth(it.year, it.month))
+            } ?: toDate,
         fixedWeeks = fixedWeeks,
         hideNavigation = hideNavigation,
         disableNavigation = disableNavigation,
@@ -510,7 +521,10 @@ fun Calendar(
         weekStartsOn = weekStartsOn,
         showOutsideDays = showOutsideDays,
         fromDate = (startMonth ?: fromMonth)?.copy(day = 1) ?: fromDate,
-        toDate = (endMonth ?: toMonth)?.let { it.copy(day = daysInMonth(it.year, it.month)) } ?: toDate,
+        toDate =
+            (endMonth ?: toMonth)?.let {
+                it.copy(day = LocalCalendarLocale.current.calendarSystem.daysInMonth(it.year, it.month))
+            } ?: toDate,
         fixedWeeks = fixedWeeks,
         hideNavigation = hideNavigation,
         disableNavigation = disableNavigation,
@@ -575,7 +589,10 @@ fun Calendar(
         weekStartsOn = weekStartsOn,
         showOutsideDays = showOutsideDays,
         fromDate = (startMonth ?: fromMonth)?.copy(day = 1) ?: fromDate,
-        toDate = (endMonth ?: toMonth)?.let { it.copy(day = daysInMonth(it.year, it.month)) } ?: toDate,
+        toDate =
+            (endMonth ?: toMonth)?.let {
+                it.copy(day = LocalCalendarLocale.current.calendarSystem.daysInMonth(it.year, it.month))
+            } ?: toDate,
         fixedWeeks = fixedWeeks,
         hideNavigation = hideNavigation,
         disableNavigation = disableNavigation,
@@ -619,6 +636,10 @@ private fun CalendarImpl(
     content: @Composable CalendarScope.() -> Unit,
 ) {
     require(cellSize == null || (cellSize.value.isFinite() && cellSize > 0.dp))
+    val system = LocalCalendarLocale.current.calendarSystem
+    require(system.supports(CalendarDate(year, month, 1)))
+    val lastMonth = addMonths(year, month, numberOfMonths.coerceAtLeast(1) - 1)
+    require(system.supports(CalendarDate(lastMonth.first, lastMonth.second, 1)))
     val referenceYear = remember(today?.year) { today?.year ?: year }
     // Real shadcn's calendar (react-day-picker) tracks a roving keyboard-focus cursor
     // separately from the selected date -- the ring you see on a freshly-opened
@@ -637,7 +658,7 @@ private fun CalendarImpl(
     val rootStyleState = remember { MutableStyleState(MutableInteractionSource()) }
     val focusCandidates =
         listOfNotNull(focusedDate, selected, rangeFrom, selectedDates.minOrNull(), today) +
-            (1..daysInMonth(year, month)).map { CalendarDate(year, month, it) }
+            (1..system.daysInMonth(year, month)).map { CalendarDate(year, month, it) }
     val resolvedFocus =
         focusCandidates.firstOrNull { date ->
             (0 until numberOfMonths.coerceAtLeast(1)).any { offset ->
@@ -675,8 +696,8 @@ private fun CalendarImpl(
             pagedNavigation = pagedNavigation,
             reverseMonths = reverseMonths,
             captionLayout = captionLayout,
-            fromYear = fromDate?.year ?: (referenceYear - 100),
-            toYear = toDate?.year ?: referenceYear,
+            fromYear = system.clamp(CalendarDate(fromDate?.year ?: (referenceYear - 100), 1, 1)).year,
+            toYear = system.clamp(CalendarDate(toDate?.year ?: referenceYear, 12, 1)).year,
         )
 
     LaunchedEffect(focusedDate, focusRevision) { if (focusRevision > 0) focusRegistry.focus(resolvedFocus) }
@@ -685,6 +706,10 @@ private fun CalendarImpl(
         ?: if (captionLayout != CalendarCaptionLayout.Label) CalendarDate(referenceYear - 100, 1, 1) else null
     state.maxMonth = toDate?.copy(day = 1)
         ?: if (captionLayout != CalendarCaptionLayout.Label) CalendarDate(referenceYear, 12, 1) else null
+    if (system == CalendarSystem.Persian) {
+        state.minMonth = maxOf(state.minMonth ?: CalendarDate(1, 1, 1), CalendarDate(1, 1, 1))
+        state.maxMonth = minOf(state.maxMonth ?: CalendarDate(3176, 12, 1), CalendarDate(3176, 12, 1))
+    }
     val autoFocus = LocalCalendarAutoFocus.current
     LaunchedEffect(autoFocus) {
         if (autoFocus) {
@@ -692,7 +717,7 @@ private fun CalendarImpl(
             val target =
                 (
                     listOfNotNull(focusedDate, today) +
-                        (1..daysInMonth(year, month)).map {
+                        (1..system.daysInMonth(year, month)).map {
                             CalendarDate(year, month, it)
                         }
                 ).firstOrNull { focusRegistry.items.containsKey(it) && !state.isDisabled(it) }
@@ -764,16 +789,17 @@ private val CALENDAR_WIDTH: Dp
 /** One cell in a month grid (`date` + whether it falls in the displayed month). */
 data class CalendarCell(val date: CalendarDate, val inCurrentMonth: Boolean)
 
-private fun buildMonthGrid(
+internal fun buildMonthGrid(
     year: Int,
     month: Int,
     weekStartsOn: Int = 0,
     fixedWeeks: Boolean = false,
+    system: CalendarSystem = CalendarSystem.Gregorian,
 ): List<List<CalendarCell>> {
-    val firstWeekday = (sakamotoDayOfWeek(year, month, 1) - weekStartsOn + 7) % 7
-    val daysThisMonth = daysInMonth(year, month)
+    val firstWeekday = (system.dayOfWeek(CalendarDate(year, month, 1)) - weekStartsOn + 7) % 7
+    val daysThisMonth = system.daysInMonth(year, month)
     val (prevYear, prevMonth) = previousMonth(year, month)
-    val daysPrevMonth = daysInMonth(prevYear, prevMonth)
+    val daysPrevMonth = system.precedingMonthLength(prevYear, prevMonth)
     val (nextYear, nextMonth) = nextMonth(year, month)
 
     val cells = mutableListOf<CalendarCell>()
@@ -936,8 +962,8 @@ fun CalendarGrid(
     val y = year ?: state.year
     val m = month ?: state.month
     val weeks =
-        remember(y, m, state.weekStartsOn, state.fixedWeeks) {
-            buildMonthGrid(y, m, state.weekStartsOn, state.fixedWeeks)
+        remember(y, m, state.weekStartsOn, state.fixedWeeks, state.system) {
+            buildMonthGrid(y, m, state.weekStartsOn, state.fixedWeeks, state.system)
         }
     Column(modifier.padding(top = 8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         weeks.forEach { week ->
@@ -945,7 +971,11 @@ fun CalendarGrid(
                 if (LocalCalendarWeekNumbers.current) {
                     Box(Modifier.size(CELL_SIZE), contentAlignment = Alignment.Center) {
                         Text(textStyle = TextStyle(fontSize = 12.8.sp, color = currentTheme.colors.mutedForeground)) {
-                            calendarWeekNumber(week.first().date, state.weekStartsOn).toString().padStart(2, '0')
+                            calendarWeekNumber(
+                                week.first().date,
+                                state.weekStartsOn,
+                                state.system,
+                            ).toString().padStart(2, '0')
                         }
                     }
                 }
@@ -957,7 +987,8 @@ fun CalendarGrid(
                         isToday = state.today != null && cell.date == state.today,
                         isFocused = cell.date == state.focusedDate,
                         isDisabled = state.isDisabled(cell.date),
-                        outsideHidden = !state.showOutsideDays && !cell.inCurrentMonth,
+                        outsideHidden =
+                            !state.system.supports(cell.date) || (!state.showOutsideDays && !cell.inCurrentMonth),
                         onClick = {
                             state.onSelectedChange(cell.date)
                             state.onFocusedDateChange(cell.date)
@@ -980,9 +1011,11 @@ fun CalendarGrid(
 internal fun calendarWeekNumber(
     date: CalendarDate,
     weekStartsOn: Int,
+    system: CalendarSystem = CalendarSystem.Gregorian,
 ): Int {
-    val end = date.plusDays(6 - (date.dayOfWeek() - weekStartsOn + 7) % 7)
-    val dayOfYear = (1 until end.month).sumOf { daysInMonth(end.year, it) } + end.day
+    val supportedDate = system.clamp(date)
+    val end = supportedDate.plusDays(6 - (system.dayOfWeek(supportedDate) - weekStartsOn + 7) % 7, system)
+    val dayOfYear = (1 until end.month).sumOf { system.daysInMonth(end.year, it) } + end.day
     return (dayOfYear - 1) / 7 + 1
 }
 

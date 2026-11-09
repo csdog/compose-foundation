@@ -1,0 +1,967 @@
+Compose Foundation — Components
+Notifications
+Open navigation
+Home
+Home
+Search documentation
+Toggle theme
+New
+Home
+New
+New
+Copy
+Hover Card
+Copy
+For sighted users to preview content available behind a link.
+Base UI
+Installation
+Usage
+Composition
+Use the following composition to build a HoverCard:
+Copy
+Trigger Delays
+Use delay and closeDelay on the trigger to control when the card opens and closes. Base UI defaults are 600/300ms; the demo explicitly uses 10/100ms.
+Copy
+Positioning
+Use the side and align props on HoverCardContent to control placement. Four physical sides and InlineStart/InlineEnd resolve against LocalLayoutDirection.
+Copy
+Basic
+Sides
+RTL
+Kotlin extension: Controlled
+Kotlin extension: Provider timing
+Kotlin extension: Disabled
+API Reference
+Component API
+Component API
+Component API
+Hover Card
+Copy
+For sighted users to preview content available behind a link.
+Base UI
+View Code
+Installation
+Copy
+Usage
+Copy
+Copy
+Composition
+Use the following composition to build a HoverCard:
+1
+
+
+2
+
+
+3
+Trigger Delays
+Use delay and closeDelay on the trigger to control when the card opens and closes. Base UI defaults are 600/300ms; the demo explicitly uses 10/100ms.
+1
+
+
+2
+
+
+3
+
+
+4
+
+
+5
+
+
+6
+Positioning
+Use the side and align props on HoverCardContent to control placement. Four physical sides and InlineStart/InlineEnd resolve against LocalLayoutDirection.
+1
+
+
+2
+
+
+3
+
+
+4
+
+
+5
+
+
+6
+
+
+7
+
+
+8
+Basic
+Sides
+RTL
+To enable RTL support in shadcn/ui, see the RTL configuration guide.
+Kotlin extension: Controlled
+The parent can observe and control open state.
+Kotlin extension: Provider timing
+Share timing defaults between cards.
+Kotlin extension: Disabled
+Disable the trigger and preview.
+API Reference
+HoverCard
+Controlled or uncontrolled root. Provider/root timing aliases remain available for Kotlin callers.
+HoverCardTrigger
+Use a focusable control in the content slot to support keyboard focus. Trigger timing takes precedence over root/provider aliases.
+HoverCardContent
+Nova panel uses 256dp width, 10dp padding, an outer ring and 100ms enter/exit transitions.
+Hover Here
+View Code
+Installation
+build.gradle.kts
+Usage
+1
+
+
+2
+
+
+3
+
+
+4
+
+
+5
+
+
+6
+
+
+7
+
+
+8
+
+
+9
+
+
+10
+
+
+11
+
+
+12
+
+
+13
+
+
+14
+
+
+15
+
+
+16
+
+
+17
+
+
+18
+
+
+19
+
+
+20
+
+
+21
+
+
+22
+1
+
+
+2
+
+
+3
+
+
+4
+Composition
+1
+
+
+2
+
+
+3
+HoverCard
+
+
+├── HoverCardTrigger
+
+
+└── HoverCardContent
+Trigger Delays
+1
+
+
+2
+
+
+3
+
+
+4
+
+
+5
+
+
+6
+HoverCard {
+
+
+    HoverCardTrigger(delay = 100, closeDelay = 200) {
+
+
+        Button("Hover", onClick = {}, variant = ButtonVariant.Link)
+
+
+    }
+
+
+    HoverCardContent { Text { "Content" } }
+
+
+}
+Positioning
+1
+
+
+2
+
+
+3
+
+
+4
+
+
+5
+
+
+6
+
+
+7
+
+
+8
+HoverCard {
+
+
+    HoverCardTrigger {
+
+
+        Button("Hover", onClick = {}, variant = ButtonVariant.Link)
+
+
+    }
+
+
+    HoverCardContent(side = HoverCardSide.Top, align = PopupAlign.Start) {
+
+
+        Text { "Content" }
+
+
+    }
+
+
+}
+Basic
+View Code
+Sides
+View Code
+RTL
+To enable RTL support in shadcn/ui, see the RTL configuration guide.
+View Code
+Kotlin extension: Controlled
+The parent can observe and control open state.
+View Code
+Kotlin extension: Provider timing
+Share timing defaults between cards.
+View Code
+Kotlin extension: Disabled
+Disable the trigger and preview.
+View Code
+API Reference
+HoverCard
+Controlled or uncontrolled root. Provider/root timing aliases remain available for Kotlin callers.
+Separator
+Separator
+Separator
+Separator
+Separator
+HoverCardTrigger
+Use a focusable control in the content slot to support keyboard focus. Trigger timing takes precedence over root/provider aliases.
+Separator
+Separator
+Separator
+HoverCardContent
+Nova panel uses 256dp width, 10dp padding, an outer ring and 100ms enter/exit transitions.
+Separator
+Separator
+Separator
+Separator
+Separator
+Separator
+Hover Here
+1
+
+
+2
+
+
+3
+View Code
+build.gradle.kts
+// build.gradle.kts — commonMain.dependencies
+
+
+implementation("com.toutiaoyan.compose:ui:0.3.37")
+1
+
+
+2
+
+
+3
+
+
+4
+
+
+5
+
+
+6
+
+
+7
+
+
+8
+
+
+9
+
+
+10
+
+
+11
+
+
+12
+
+
+13
+
+
+14
+
+
+15
+
+
+16
+
+
+17
+
+
+18
+
+
+19
+
+
+20
+
+
+21
+
+
+22
+import androidx.compose.foundation.layout.*
+
+
+import androidx.compose.foundation.style.Style
+
+
+import androidx.compose.runtime.*
+
+
+import androidx.compose.ui.Alignment
+
+
+import androidx.compose.ui.Modifier
+
+
+import androidx.compose.ui.platform.LocalLayoutDirection
+
+
+import androidx.compose.ui.text.font.FontFamily
+
+
+import compose_foundation.app.shared.generated.resources.*
+
+
+import org.jetbrains.compose.resources.Font
+
+
+import com.toutiaoyan.compose.ui.theme.Theme
+
+
+import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
+
+
+import androidx.compose.ui.layout.Layout
+
+
+import androidx.compose.ui.platform.LocalDensity
+
+
+import androidx.compose.ui.text.rememberTextMeasurer
+
+
+import androidx.compose.ui.text.TextStyle
+
+
+import androidx.compose.ui.text.font.FontWeight
+
+
+import androidx.compose.ui.unit.*
+
+
+import com.toutiaoyan.compose.ui.components.button.*
+
+
+import com.toutiaoyan.compose.ui.components.hovercard.*
+
+
+import com.toutiaoyan.compose.ui.components.overlay.*
+
+
+import com.toutiaoyan.compose.ui.components.text.Text
+
+
+import com.toutiaoyan.compose.ui.theme.currentTheme
+1
+
+
+2
+
+
+3
+
+
+4
+HoverCard {
+
+
+    HoverCardTrigger { Button("Hover", onClick = {}, variant = ButtonVariant.Link) }
+
+
+    HoverCardContent { Text { "The React Framework – created and maintained by @vercel." } }
+
+
+}
+HoverCard
+
+
+├── HoverCardTrigger
+
+
+└── HoverCardContent
+HoverCard {
+
+
+    HoverCardTrigger(delay = 100, closeDelay = 200) {
+
+
+        Button("Hover", onClick = {}, variant = ButtonVariant.Link)
+
+
+    }
+
+
+    HoverCardContent { Text { "Content" } }
+
+
+}
+HoverCard {
+
+
+    HoverCardTrigger {
+
+
+        Button("Hover", onClick = {}, variant = ButtonVariant.Link)
+
+
+    }
+
+
+    HoverCardContent(side = HoverCardSide.Top, align = PopupAlign.Start) {
+
+
+        Text { "Content" }
+
+
+    }
+
+
+}
+Hover Here
+View Code
+Left
+Top
+Bottom
+Right
+View Code
+Preview language
+Translation information
+View Code
+Closed
+Controlled preview
+View Code
+Provider timing
+View Code
+Disabled preview
+View Code
+HoverCard
+Property
+Type
+Default
+HoverCardTrigger
+Property
+Type
+Default
+HoverCardContent
+Property
+Type
+Default
+Hover Here
+1
+
+
+2
+
+
+3
+HoverCard {
+
+
+    HoverCardTrigger(delay = 10, closeDelay = 100) {
+
+
+        Button("Hover Here", onClick = {}, variant = ButtonVariant.Link)
+// build.gradle.kts — commonMain.dependencies
+
+
+implementation("com.toutiaoyan.compose:ui:0.3.37")
+import androidx.compose.foundation.layout.*
+
+
+import androidx.compose.foundation.style.Style
+
+
+import androidx.compose.runtime.*
+
+
+import androidx.compose.ui.Alignment
+
+
+import androidx.compose.ui.Modifier
+
+
+import androidx.compose.ui.platform.LocalLayoutDirection
+
+
+import androidx.compose.ui.text.font.FontFamily
+
+
+import compose_foundation.app.shared.generated.resources.*
+
+
+import org.jetbrains.compose.resources.Font
+
+
+import com.toutiaoyan.compose.ui.theme.Theme
+
+
+import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
+
+
+import androidx.compose.ui.layout.Layout
+
+
+import androidx.compose.ui.platform.LocalDensity
+
+
+import androidx.compose.ui.text.rememberTextMeasurer
+
+
+import androidx.compose.ui.text.TextStyle
+
+
+import androidx.compose.ui.text.font.FontWeight
+
+
+import androidx.compose.ui.unit.*
+
+
+import com.toutiaoyan.compose.ui.components.button.*
+
+
+import com.toutiaoyan.compose.ui.components.hovercard.*
+
+
+import com.toutiaoyan.compose.ui.components.overlay.*
+
+
+import com.toutiaoyan.compose.ui.components.text.Text
+
+
+import com.toutiaoyan.compose.ui.theme.currentTheme
+HoverCard {
+
+
+    HoverCardTrigger { Button("Hover", onClick = {}, variant = ButtonVariant.Link) }
+
+
+    HoverCardContent { Text { "The React Framework – created and maintained by @vercel." } }
+
+
+}
+Hover Here
+1
+
+
+2
+
+
+3
+View Code
+Left
+Top
+Bottom
+Right
+1
+
+
+2
+
+
+3
+View Code
+Arabic (العربية)
+Translation information
+يسار
+أعلى
+أسفل
+يمين
+بداية السطر
+نهاية السطر
+1
+
+
+2
+
+
+3
+View Code
+Closed
+Controlled preview
+1
+
+
+2
+
+
+3
+View Code
+Provider timing
+1
+
+
+2
+
+
+3
+View Code
+Disabled preview
+1
+
+
+2
+
+
+3
+View Code
+Property
+Type
+Default
+open / defaultOpen
+Boolean? / Boolean
+null / false
+onOpenChange
+((Boolean) -> Unit)?
+null
+disabled
+Boolean
+false
+openDelay / closeDelay
+Int?
+null (provider defaults)
+disableHoverableContent
+Boolean
+false
+Property
+Type
+Default
+delay / closeDelay
+Int?
+null (600 / 300ms defaults)
+disabled
+Boolean
+false
+modifier
+Modifier
+Modifier
+Property
+Type
+Default
+side
+HoverCardSide / PopupPlacement?
+Bottom
+align
+PopupAlign
+Center
+sideOffset / alignOffset
+Dp
+4.dp / 4.dp
+dismissOnClickOutside
+Boolean
+true
+modifier / style
+Modifier / Style
+Default
+enter / exit
+EnterTransition / ExitTransition
+Preset defaults
+HoverCard {
+
+
+    HoverCardTrigger(delay = 10, closeDelay = 100) {
+
+
+        Button("Hover Here", onClick = {}, variant = ButtonVariant.Link)
+Hover Here
+1
+
+
+2
+
+
+3
+HoverCard {
+
+
+    HoverCardTrigger(delay = 10, closeDelay = 100) {
+
+
+        Button("Hover Here", onClick = {}, variant = ButtonVariant.Link)
+Left
+Top
+Bottom
+Right
+1
+
+
+2
+
+
+3
+@Composable
+
+
+fun HoverCardSidesExample(modifier: Modifier = Modifier) {
+
+
+    val sides = listOf(HoverCardSide.Left, HoverCardSide.Top, HoverCardSide.Bottom, HoverCardSide.Right)
+Arabic (
+العربية
+)
+يسار
+أعلى
+أسفل
+يمين
+بداية السطر
+نهاية السطر
+1
+
+
+2
+
+
+3
+@Composable
+
+
+fun HoverCardRtlExample() {
+
+
+    var language by remember { mutableStateOf(1) }
+Controlled preview
+1
+
+
+2
+
+
+3
+var open by remember { mutableStateOf(false) }
+
+
+Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+
+
+    Text { if (open) "Open" else "Closed" }
+Provider timing
+1
+
+
+2
+
+
+3
+HoverCardProvider(openDelay = 250, closeDelay = 300) {
+
+
+    HoverCard {
+
+
+        HoverCardTrigger { Button("Provider timing", onClick = {}, variant = ButtonVariant.Outline) }
+Disabled preview
+1
+
+
+2
+
+
+3
+HoverCard(disabled = true) {
+
+
+    HoverCardTrigger(disabled = true) {
+
+
+        Button("Disabled preview", onClick = {}, disabled = true, variant = ButtonVariant.Outline)
+open / defaultOpen
+Boolean? / Boolean
+null / false
+onOpenChange
+((Boolean) -> Unit)?
+null
+disabled
+Boolean
+false
+openDelay / closeDelay
+Int?
+null (provider defaults)
+disableHoverableContent
+Boolean
+false
+delay / closeDelay
+Int?
+null (600 / 300ms defaults)
+disabled
+Boolean
+false
+modifier
+Modifier
+Modifier
+side
+HoverCardSide / PopupPlacement?
+Bottom
+align
+PopupAlign
+Center
+sideOffset / alignOffset
+Dp
+4.dp / 4.dp
+dismissOnClickOutside
+Boolean
+true
+modifier / style
+Modifier / Style
+Default
+enter / exit
+EnterTransition / ExitTransition
+Preset defaults
+HoverCard {
+
+
+    HoverCardTrigger(delay = 10, closeDelay = 100) {
+
+
+        Button("Hover Here", onClick = {}, variant = ButtonVariant.Link)
+@Composable
+
+
+fun HoverCardSidesExample(modifier: Modifier = Modifier) {
+
+
+    val sides = listOf(HoverCardSide.Left, HoverCardSide.Top, HoverCardSide.Bottom, HoverCardSide.Right)
+يسار
+أعلى
+أسفل
+يمين
+بداية السطر
+نهاية السطر
+@Composable
+
+
+fun HoverCardRtlExample() {
+
+
+    var language by remember { mutableStateOf(1) }
+var open by remember { mutableStateOf(false) }
+
+
+Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+
+
+    Text { if (open) "Open" else "Closed" }
+HoverCardProvider(openDelay = 250, closeDelay = 300) {
+
+
+    HoverCard {
+
+
+        HoverCardTrigger { Button("Provider timing", onClick = {}, variant = ButtonVariant.Outline) }
+HoverCard(disabled = true) {
+
+
+    HoverCardTrigger(disabled = true) {
+
+
+        Button("Disabled preview", onClick = {}, disabled = true, variant = ButtonVariant.Outline)

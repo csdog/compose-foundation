@@ -83,7 +83,9 @@ and context composition before changing the workflow.
 
 For unattended queues, use `scripts/run_unfinished_components.py --execute --background`.
 The Python driver is the sole scheduler; do not add a nested review coordinator or
-model polling loop. Stage workers do not spawn agents. Report only terminal results,
+model polling loop. Stage workers do not spawn coordination agents. A single bounded
+fresh read-only reviewer is permitted where plan R10/R15 requires independent review;
+it cannot delegate or schedule components. Report only terminal results,
 blockers, evidence paths, and decisions requiring action. Read status on demand;
 background execution does not itself deliver chat notifications. For token analysis,
 include descendants with `scripts/agent_tree_usage.py --thread <root-thread-id>`.
@@ -478,7 +480,7 @@ real site and easy to miss entirely.
   affected goldens, then `./gradlew :shadcn:core:verifyRoborazziJvm` to confirm a clean diff
   before committing. `jvmTest` alone does not enable pixel comparison. The current
   `.github/workflows/ci.yml` still invokes plain `jvmTest`; explicit screenshot
-  verification in CI remains a task in `docs/shadcn-align-progress.md`.
+  verification in CI remains a task in `docs/archive/2026-11-09/shadcn-align-progress.md`.
 
 ## Commands installed
 

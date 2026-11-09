@@ -1,0 +1,47 @@
+Compose Foundation — Components
+Back
+Forward
+Reload
+Separator
+Save
+Save As...
+Back
+
+
+⌘[
+Forward
+
+
+⌘]
+Reload
+
+
+⌘R
+Save
+
+
+⌘S
+Save As...
+
+
+⇧⌘S
+Back
+
+
+⌘[
+Forward
+
+
+⌘]
+Reload
+
+
+⌘R
+Save
+
+
+⌘S
+Save As...
+
+
+⇧⌘S

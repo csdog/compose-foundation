@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import importlib.util
+import hashlib
 import json
 import sys
 import tempfile
@@ -23,6 +24,50 @@ SPEC.loader.exec_module(orchestrator)
 
 
 class StageSelectionTests(unittest.TestCase):
+    def test_acceptance_receipt_checks_all_gates_and_current_source(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run = root / '.agent-runs/example'
+            run.mkdir(parents=True)
+            source = root / 'Example.kt'
+            source.write_text('class Example')
+            stylesheet = root / 'styles.css'
+            stylesheet.write_text('color: red')
+            inputs = run / 'inputs.json'
+            inputs.write_text(json.dumps({'Example.kt': hashlib.sha256(source.read_bytes()).hexdigest(),
+                                         'styles.css': hashlib.sha256(stylesheet.read_bytes()).hexdigest()}))
+            artifact = run / 'report.json'
+            artifact.write_text('{"passed":true}')
+            gates = {}
+            for name in ['tests', 'lint', 'build', 'browser', 'audit', 'review']:
+                evidence = run / f'{name}.json'
+                evidence.write_text(json.dumps({'status': 'passed', 'gate': name,
+                    'inputs': str(inputs.relative_to(root)), 'inputs_sha256': hashlib.sha256(inputs.read_bytes()).hexdigest(),
+                    'artifacts': {str(artifact.relative_to(root)): hashlib.sha256(artifact.read_bytes()).hexdigest()}}))
+                gates[name] = {'status': 'passed', 'evidence': str(evidence.relative_to(root)), 'sha256': hashlib.sha256(evidence.read_bytes()).hexdigest()}
+            receipt = {'status': 'accepted', 'gates': gates, 'source_hashes': {'Example.kt': hashlib.sha256(source.read_bytes()).hexdigest()}}
+            path = run / 'acceptance.json'
+            path.write_text(json.dumps(receipt))
+            self.assertIsNone(orchestrator.acceptance_problem(root, run))
+            stylesheet.write_text('color: blue')
+            self.assertIn('runtime input changed', orchestrator.acceptance_problem(root, run))
+            stylesheet.write_text('color: red')
+            source.write_text('class ChangedExample')
+            self.assertIn('source changed', orchestrator.acceptance_problem(root, run))
+            receipt['source_hashes']['Example.kt'] = hashlib.sha256(source.read_bytes()).hexdigest()
+            path.write_text(json.dumps(receipt))
+            self.assertIn('inputs differ', orchestrator.acceptance_problem(root, run))
+            source.write_text('class Example')
+            receipt['source_hashes']['Example.kt'] = hashlib.sha256(source.read_bytes()).hexdigest()
+            path.write_text(json.dumps(receipt))
+            browser_before = (run / 'browser.json').read_text()
+            (run / 'browser.json').write_text('stale')
+            self.assertIn('browser', orchestrator.acceptance_problem(root, run))
+            gates.pop('review')
+            (run / 'browser.json').write_text(browser_before)
+            path.write_text(json.dumps(receipt))
+            self.assertIn('review', orchestrator.acceptance_problem(root, run))
+
     def test_default_action_budget_allows_one_browser_unit(self) -> None:
         args = orchestrator.parse_args(["--component", "skeleton"])
         self.assertIsNone(args.max_actions)
@@ -50,10 +95,121 @@ class StageSelectionTests(unittest.TestCase):
 
 
 class BlockerProtocolTests(unittest.TestCase):
+    def test_progress_counts_new_checks_after_first_128_entries(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run = Path(tmp)
+            progress = run / 'progress.md'
+            progress.write_text('## Next\n1. Continue 30c-browser\n')
+            evidence = run / 'summary.json'
+            evidence.write_text('{"passed":true}')
+            digest = hashlib.sha256(evidence.read_bytes()).hexdigest()
+            entries = [{'id': f'check-{i}', 'status': 'passed', 'evidence': evidence.name, 'sha256': digest} for i in range(128)]
+            ledger = run / 'verification-progress.json'
+            ledger.write_text(json.dumps({'completed': entries}))
+            before = orchestrator.verification_checkpoint(progress)
+            entries.append({'id': 'new-keyboard-check', 'status': 'passed', 'evidence': evidence.name, 'sha256': digest})
+            ledger.write_text(json.dumps({'completed': entries}))
+            after = orchestrator.verification_checkpoint(progress)
+            self.assertEqual(frozenset({'new-keyboard-check'}), after[1] - before[1])
+
+    def test_session_cap_with_progress_preserves_resumable_checkpoint(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run = root / '.agent-runs/chart'
+            (run / 'orchestrator').mkdir(parents=True)
+            card = root / '.agents/skills/token-efficient-compose-workflow/cards/30-verify.md'
+            card.parent.mkdir(parents=True)
+            card.write_text('Verify')
+            progress = run / 'progress.md'
+            progress.write_text('## Next\n1. Continue 30c-browser\n')
+            event = root / 'events.jsonl'
+            event.write_text('')
+            def execute(*args, **kwargs):
+                evidence = run / 'keyboard.json'
+                evidence.write_text('{"passed":true}')
+                (run / 'verification-progress.json').write_text(json.dumps({'completed': [
+                    {'id': 'keyboard', 'status': 'passed', 'evidence': evidence.name,
+                     'sha256': hashlib.sha256(evidence.read_bytes()).hexdigest()}]}))
+                return orchestrator.RunResult(0, None, orchestrator.TokenUsage(), 1, False, False,
+                                              'CONTEXT_HANDOFF 30-verify', event, root / 'last.md')
+            args = orchestrator.parse_args(['--component', 'chart', '--project-root', str(root), '--max-attempts', '1'])
+            with patch.object(orchestrator, 'run_codex', side_effect=execute), patch.object(orchestrator, 'verify_handoff_or_fail'):
+                code = orchestrator.execute_stage(args=args, project_root=root, plan_path=root / 'plan', skill_path=root / 'skill', progress_path=progress,
+                                                  stage='30-verify', state_path=run / 'orchestrator/runs.json')
+            self.assertEqual(5, code)
+            self.assertEqual(('30-verify', 'rotate'), orchestrator.latest_progress_mark(run))
+            self.assertEqual('30-verify', orchestrator.infer_start_stage(run))
+            self.assertNotIn('FAIL', (run / 'progress.log').read_text())
+
+    def test_coverage_progress_requires_matching_local_evidence(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run = root / 'run'
+            run.mkdir()
+            progress = run / 'progress.md'
+            progress.write_text('## Next\n1. Complete 30c-browser\n')
+            evidence = run / 'result.json'
+            evidence.write_text('{"passed":true}')
+            outside = root / 'outside.json'
+            outside.write_text('outside')
+            entries = [
+                {'id': 'keyboard', 'status': 'passed', 'evidence': 'result.json', 'sha256': hashlib.sha256(evidence.read_bytes()).hexdigest()},
+                {'id': 'outside', 'status': 'passed', 'evidence': '../outside.json', 'sha256': hashlib.sha256(outside.read_bytes()).hexdigest()},
+                {'id': 'missing', 'status': 'passed', 'evidence': 'absent.json', 'sha256': '0' * 64},
+            ]
+            (run / 'verification-progress.json').write_text(json.dumps({'completed': entries}))
+            self.assertEqual(('30c-browser', frozenset({'keyboard'})), orchestrator.verification_checkpoint(progress))
+            evidence.write_text('changed')
+            self.assertEqual(('30c-browser', frozenset()), orchestrator.verification_checkpoint(progress))
+
+    def test_new_coverage_allows_continuing_same_browser_unit(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run = root / '.agent-runs/chart'
+            (run / 'orchestrator').mkdir(parents=True)
+            (run / 'state.json').write_text(json.dumps({'stage': 'verify', 'status': 'active'}))
+            card = root / '.agents/skills/token-efficient-compose-workflow/cards/30-verify.md'
+            card.parent.mkdir(parents=True)
+            card.write_text('Verify')
+            progress = run / 'progress.md'
+            progress.write_text('## Next\n1. Complete 30c-browser\n')
+            event = root / 'events.jsonl'
+            event.write_text('')
+            entries = []
+            def execute(*args, **kwargs):
+                number = len(entries) + 1
+                if number <= 3:
+                    evidence = run / f'check-{number}.json'
+                    evidence.write_text(json.dumps({'check': number, 'passed': True}))
+                    entries.append({'id': f'check-{number}', 'status': 'passed', 'evidence': evidence.name,
+                                    'sha256': hashlib.sha256(evidence.read_bytes()).hexdigest()})
+                    (run / 'verification-progress.json').write_text(json.dumps({'completed': entries}))
+                final = 'CONTEXT_HANDOFF 30-verify' if number <= 3 else 'STAGE_DONE 30-verify'
+                return orchestrator.RunResult(0, None, orchestrator.TokenUsage(), 1, False, False,
+                                              final, event, root / 'last.md')
+            args = orchestrator.parse_args(['--component', 'chart', '--project-root', str(root), '--max-attempts', '4'])
+            with patch.object(orchestrator, 'run_codex', side_effect=execute) as worker, patch.object(orchestrator, 'verify_handoff_or_fail'):
+                code = orchestrator.execute_stage(args=args, project_root=root, plan_path=root / 'plan', skill_path=root / 'skill', progress_path=progress,
+                                                  stage='30-verify', state_path=run / 'orchestrator/runs.json')
+            self.assertEqual(0, code)
+            self.assertEqual(4, worker.call_count)
+
+    def test_chinese_blocker_wins_over_passed_review(self):
+        message = '独立只读审查 PASS。\n聚焦测试被缓存权限阻断。\n阻塞：需修复 Skiko 缓存权限。\nSTAGE_BLOCKED 20-implement'
+        self.assertEqual('阻塞：需修复 Skiko 缓存权限。', orchestrator.blocker_reason(message))
+
+    def test_chinese_failure_without_explicit_marker(self):
+        self.assertEqual('测试无法访问缓存。', orchestrator.blocker_reason('审查通过。\n测试无法访问缓存。\nSTAGE_BLOCKED 20-implement'))
     def test_external_blocker_is_not_rotation(self):
         decision = orchestrator.classify_outcome("30-verify", 0, "Shared lint needs scheduler repair\n\nSTAGE_BLOCKED 30-verify", "")
         self.assertEqual("blocked", decision.status)
         self.assertEqual("Shared lint needs scheduler repair", decision.reason)
+
+    def test_blocker_reason_ignores_successful_footer(self):
+        message = "The scope attempt is blocked: required filenames are missing.\n\nThe handoff validator passed, and git diff --check passed.\n\nSTAGE_BLOCKED 00-scope"
+        decision = orchestrator.classify_outcome("00-scope", 0, message, "")
+        self.assertIn("required filenames", decision.reason)
+        self.assertNotIn("validator passed", decision.reason)
 
     def test_verification_progress_uses_next_unit_not_appended_notes(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -276,6 +432,11 @@ class CommandTests(unittest.TestCase):
         self.assertIn("--json", command)
         self.assertIn("--approve-for-me", command)
         self.assertNotIn("--sandbox", command)
+        self.assertEqual(str(Path.home() / ".gradle"), command[command.index("--add-dir") + 1])
+        grants = [command[index + 1] for index, value in enumerate(command) if value == '--add-dir']
+        self.assertIn(str(Path.home() / '.skiko'), grants)
+        self.assertIn(str(Path.home() / 'Library/Application Support/kotlin/daemon'), grants)
+        self.assertNotIn(str(Path.home()), grants)
         self.assertIn("stage_orchestrator", command)
         self.assertIn("model_auto_compact_token_limit=250000", command)
         self.assertIn(
@@ -303,6 +464,7 @@ class CommandTests(unittest.TestCase):
             command[command.index("--sandbox") + 1],
         )
         self.assertNotIn("--approve-for-me", command)
+        self.assertNotIn("--add-dir", command)
         self.assertFalse(
             any(
                 str(value).startswith("model_auto_compact_token_limit=")
@@ -555,8 +717,72 @@ class StateTests(unittest.TestCase):
             )
             orchestrator.bootstrap_tao_contract(run_dir)
             self.assertTrue((run_dir / "loop_log.jsonl").is_file())
-            self.assertTrue((run_dir / "DONE.marker").is_file())
+            self.assertFalse((run_dir / "DONE.marker").is_file())
+            self.assertTrue((run_dir / "HANDOFF.marker").is_file())
             self.assertIsNone(orchestrator.infer_start_stage(run_dir))
+
+    def test_done_marker_requires_canonical_acceptance(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run = root / '.agent-runs/example'
+            run.mkdir(parents=True)
+            (root / 'docs').mkdir()
+            checklist = root / 'docs/shadcn-web-progress.md'
+            checklist.write_text('- [ ] Example (`example`)\n')
+            (run / 'DONE.marker').write_text('legacy completion\n')
+            self.assertFalse(orchestrator.write_done_marker(run))
+            self.assertFalse((run / 'DONE.marker').exists())
+            self.assertTrue((run / 'HANDOFF.marker').exists())
+            checklist.write_text('- [x] Example (`example`)\n')
+            self.assertTrue(orchestrator.write_done_marker(run))
+            self.assertTrue((run / 'DONE.marker').exists())
+
+    def test_pending_acceptance_uses_explicit_verification_checkpoint(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run = Path(tmp)
+            self.assertEqual('20-implement', orchestrator.pending_resume_stage(run))
+            checkpoint = run / 'acceptance.json'
+            checkpoint.write_text(json.dumps({'status': 'pending', 'resume_stage': '30-verify'}))
+            self.assertEqual('30-verify', orchestrator.pending_resume_stage(run))
+            checkpoint.write_text(json.dumps({'status': 'pending', 'resume_stage': '40-handoff'}))
+            self.assertEqual('20-implement', orchestrator.pending_resume_stage(run))
+
+    def test_reopen_preserves_history_and_routes_to_selected_stage(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run = Path(tmp)
+            (run / 'progress.log').write_text('30-verify ok\n40-handoff ok\n')
+            (run / 'DONE.marker').write_text('old handoff\n')
+            orchestrator.reopen_checkpoint(run, '30-verify', 'Current browser evidence missing')
+            self.assertEqual('30-verify', orchestrator.infer_start_stage(run))
+            self.assertIn('40-handoff ok', (run / 'progress.log').read_text())
+            self.assertFalse((run / 'DONE.marker').exists())
+            self.assertEqual('old handoff\n', (run / 'HANDOFF.marker').read_text())
+            self.assertEqual('30-verify', json.loads((run / 'recovery.json').read_text())['stage'])
+
+    def test_handoff_success_does_not_accept_an_unchecked_component(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run = root / '.agent-runs/example'
+            run.mkdir(parents=True)
+            (run / 'orchestrator').mkdir()
+            card = root / '.agents/skills/token-efficient-compose-workflow/cards/40-handoff.md'
+            card.parent.mkdir(parents=True)
+            card.write_text('Hand off')
+            (root / 'docs').mkdir()
+            (root / 'docs/shadcn-web-progress.md').write_text('- [ ] Example (`example`)\n')
+            (run / 'state.json').write_text(json.dumps({'stage': 'handoff', 'status': 'active'}))
+            progress = run / 'progress.md'
+            progress.write_text('## Next\n1. Refresh browser evidence\n')
+            event = root / 'events.jsonl'
+            event.write_text('')
+            result = orchestrator.RunResult(0, None, orchestrator.TokenUsage(), 1, False, False,
+                                            'STAGE_DONE 40-handoff', event, root / 'last.md')
+            args = orchestrator.parse_args(['--component', 'example', '--project-root', str(root)])
+            with patch.object(orchestrator, 'run_codex', return_value=result), patch.object(orchestrator, 'verify_handoff_or_fail'):
+                code = orchestrator.execute_stage(args=args, project_root=root, plan_path=root / 'plan', skill_path=root / 'skill', progress_path=progress, stage='40-handoff', state_path=run / 'orchestrator/runs.json')
+            self.assertEqual(4, code)
+            self.assertFalse((run / 'DONE.marker').exists())
+            self.assertEqual('acceptance_pending', json.loads((run / 'state.json').read_text())['status'])
 
 
 if __name__ == "__main__":

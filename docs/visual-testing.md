@@ -1,106 +1,57 @@
-# Visual regression testing
+# 截图与视觉测试
 
-`:shadcn:core` has a Roborazzi screenshot-test suite under `shadcn/core/src/jvmTest/`, running
-Robolectric-less on the JVM/Desktop target (`roborazzi-compose-desktop`) -- no Android
-or Robolectric dependency anywhere in this module.
+本页维护测试入口与结果口径。旧覆盖矩阵、历史缺口、工具版本和当时 CI 状态见
+[整理前快照](archive/2026-11-09/visual-testing.md)。本次整理未执行 Gradle、重新截图或更新基准。
 
-## Why this exists
+## JVM / Desktop
 
-Live-browser spot checks (toggling dark mode, tabbing to a button to see its focus
-ring) are useful but not reproducible or reviewable -- nothing is committed, so a
-regression only surfaces if someone happens to look at the same screen again. This
-suite makes every component's visual states a committed, diffable artifact.
+- 测试源码：[shadcn/core/src/jvmTest](../shadcn/core/src/jvmTest/)。
+- 已提交基准：[shadcn/core/src/jvmTest/snapshots](../shadcn/core/src/jvmTest/snapshots/)。
+- 任务定义：[shadcn/core/build.gradle.kts](../shadcn/core/build.gradle.kts)。
 
-## What's covered
+下列是 Gradle 任务示例；agent 执行时继续遵循环境中的 `gradle-run` 封装规则。
 
-- **Per-component state matrices** (`shadcn/core/src/jvmTest/kotlin/.../components/*ScreenshotTest.kt`):
-  every component's variants/enabled/disabled/checked-selected states, each captured in
-  both light and dark, plus a real keyboard-`requestFocus()` capture for interactive
-  leaf controls (proves the focus ring actually renders, not just that the modifier
-  compiles).
-- **Style preset matrix** (`StylePresetMatrixTest.kt`): all 8 `StylePreset` values
-  (Vega/Nova/Maia/Lyra/Mira/Luma/Sera/Rhea) side by side in one composite image
-  (`style_matrix_ring_swatch_<light|dark>.png`), plus a real focused `Button` per
-  preset (`style_matrix_button_focused_<preset>_<light|dark>.png`) -- this is the
-  durable proof that picking a style preset actually changes the ring/shape tokens end
-  to end (`StylePreset` -> `Theme.light/dark(ring = ...)` -> `Button`
-  -> Style `dropShadow`), not just in the two presets that happened to get eyeballed live.
+```sh
+# 聚焦测试体；按具体任务附加 --tests 过滤器
+./gradlew :shadcn:core:jvmTest
 
-- **Held-press shape regression** (`modifiers/RippleShapeTest.kt`, current working tree):
-  five pixel/screenshot cases cover circles in light/dark themes, asymmetric corners,
-  a generic path, and preservation of the shadow outside the clip. Presses are driven
-  through a controlled `InteractionSource`, with a frozen animation clock.
-- **Grouped focus shape** (`ButtonGroupScreenshotTest.with_label_focused_*`):
-  covers the shape override at grouped ends. This does not establish complete
-  per-side border or hover coverage for every ButtonGroup/ToggleGroup configuration.
-
-Still to add: cross-component hover-state coverage, live theme/shape changes, and
-focus restoration after closing overlays. Hover tests can emit `HoverInteraction`
-through a controlled source; lack of pointer simulation is not an API limitation.
-
-**A real blind spot, found the hard way:** most existing fixtures render under one
-fixed theme without switching it at runtime -- so a `Style { }` block that captures a stale
-CompositionLocal snapshot (see `AGENTS.md`'s notes on this anti-pattern) renders
-*correctly* in a static test, because the one theme it was composed under happens to be
-the one it's frozen at. This exact bug shipped undetected in `InputGroup`/
-`Input`'s error state until a live dark-mode toggle in the running catalog app
-revealed it. This suite catches wrong colors; it cannot catch colors that are right once
-and then never update. Since a screenshot diff structurally can't catch this, the fix
-does not replace it. `currentTheme` inside `Style { }` is a compiler error
-(`@Composable` getter). The remaining risk is capturing a theme color in
-composition and stuffing it into Style -- that compiles and a static screenshot
-will not catch a live theme change.
-
-## Running it
-
-```bash
-# Record goldens (first run, or after an intentional visual change)
-./gradlew :shadcn:core:recordRoborazziJvm
-
-# Verify pixels against the committed goldens explicitly
+# 显式像素比对
 ./gradlew :shadcn:core:verifyRoborazziJvm
+
+# 仅在有意修改外观并审核差异时录制新基准
+./gradlew :shadcn:core:recordRoborazziJvm
 ```
 
-Plain `:shadcn:core:jvmTest` runs the test bodies but does not enable Roborazzi pixel
-comparison by itself. As checked on 2026-10-28, the Desktop job in
-[CI](../.github/workflows/ci.yml) still runs plain `jvmTest --continue`; connecting
-explicit verification is pending, even though an upload step for screenshot diffs
-already exists. Do not treat that upload step as proof that comparison ran.
+普通 `jvmTest` 通过不能单独证明启用了像素比对；上传了 diff 文件也不能证明比较任务已执行。
+当前 CI 任务见[ci.yml](../.github/workflows/ci.yml)，应以实际执行命令与报告为准。
+不要通过批量更新 goldens 掩盖未解释的差异。
 
-Goldens live in `shadcn/core/src/jvmTest/snapshots/` and are committed to git. On a
-mismatch, Roborazzi writes a `*_compare.png` beside the golden with
-expected/actual/diff side by side; CI uploads these as the `screenshot-diffs` artifact
-when the workflow actually runs screenshot verification and a mismatch occurs.
+## Android Preview / Layoutlib
 
-## Android Preview 截图（Layoutlib）
+- 宿主：[app/androidApp](../app/androidApp/)。
+- 测试源码：[screenshotTest](../app/androidApp/src/screenshotTest/)。
+- 基准：[reference](../app/androidApp/src/screenshotTestDefaultDebug/reference/)。
+- 依赖版本与配置以[构建文件](../app/androidApp/build.gradle.kts)为准。
 
-Android Preview 截图与 JVM 交互测试互补：前者检查 Android 渲染、宽度、主题和字体缩放，
-后者继续验证点击、焦点和动画过程。两套基准分开维护，不能互相替代或证明其他平台像素一致。
-
-- 工具链：AGP `9.5.0-rc02`、Gradle `9.6.0`、截图引擎 `0.0.1-alpha16`。
-  AGP 9.5 当前仍是预发布版本，截图测试套件也是实验性 API；升级时需重新核对 DSL。
-- 测试宿主：`:app:androidApp`，套件名 `screenshotTest`，目标变体 `debug`。
-- 用例目录：`app/androidApp/src/screenshotTest/kotlin/`。
-- 基准目录：`app/androidApp/src/screenshotTestDefaultDebug/reference/`，生成后需随代码提交。
-- 报告目录：`app/androidApp/build/reports/tests/testDebugScreenshotTestDefaultTestSuite/index.html`。
-- 每个用例包含 360dp 浅色、360dp 深色、600dp 浅色、360dp / 1.5 倍字体四种配置，
-  固定 API 37；使用固定数据，不访问网络、系统时间或登录状态。
-
-在仓库根目录运行：
-
-```bash
-# 首次生成或有意修改外观时更新；必须检查 PNG 差异。
-./gradlew :app:androidApp:updateDebugScreenshotTestDefaultTestSuite
-
-# 日常验证与 CI：只比较，不更新基准。
+```sh
 ./gradlew :app:androidApp:testDebugScreenshotTestDefaultTestSuite
+# 仅在有意更新并审核差异时使用
+./gradlew :app:androidApp:updateDebugScreenshotTestDefaultTestSuite
 ```
 
-以上直接使用 AGP 原生任务。当前 AGP `9.5.0-rc02` 生成的任务名顺序与官方文档示例不同，
-请以当前版本实际生成的任务为准。验证任务只比较图片，不更新基准。需要 JDK 17+、Android SDK platform 37 和 Build Tools 36.0.0；
-无需模拟器或真机。基准更新与验证应使用一致的渲染环境。
+Android 与 JVM 的结果分开维护，不能互相证明另一平台渲染一致。
 
-官方说明：[使用 AGP 测试套件进行 Compose 预览截图测试](https://developer.android.com/studio/preview/compose-screenshot-testing-with-testsuites)。
+## Web 与交互证据
 
-首批 Android 用例：`ButtonShapesPreview` 和 `FormStatesPreview`，覆盖按钮变体、禁用状态、
-圆形/非对称 shape、输入框与复选框。JVM 的按压中间态截图仍由 Roborazzi 负责。
+Web 验收见[计划](shadcn-web-plan.md)与[状态清单](shadcn-web-progress.md)。
+截图需要绑定实际源码、构建产物、视口和主题；[历史预览图集](previews/README.md)
+只用于浏览，不代表当前工作树已通过浏览器验收。
+
+静态图之外，适用时还需验证实时主题/shape、焦点与输入方式、动画中间帧、
+RTL、边界内容和辅助语义。只运行已有测试不能自动关闭尚未覆盖的要求。
+
+## 证据保管
+
+- 当前仍引用的取证材料见[web-parity](web-parity/README.md)。
+- 旧轮次与未使用截图已移至[归档](archive/README.md)，保留原内容和路径映射。
+- 组件截图、目录预览和 Web 浏览器证据用途不同；请在记录结果时注明具体任务和范围。

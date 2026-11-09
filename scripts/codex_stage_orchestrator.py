@@ -34,6 +34,7 @@ again, up to ``--max-attempts``.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -312,6 +313,17 @@ def last_nonempty_line(value: str) -> str:
     return next((line for line in reversed(lines) if line), "")
 
 
+def blocker_reason(final_message: str) -> str:
+    lines = [line.strip() for line in final_message.splitlines() if line.strip() and not line.strip().startswith("STAGE_BLOCKED ")]
+    explicit = next((line for line in lines if re.match(r"^(?:[-*] )?(?:Blocker\s*:|阻塞\s*[:：])", line, re.I)), None)
+    if explicit:
+        return explicit[:500]
+    # Prefer the actual failure over a later validator/whitespace success statement.
+    failure = next((line for line in lines if re.search(r"\b(blocked|cannot|could not|failed|failure|unavailable)\b|阻塞|阻断|失败|无法", line, re.I)), None)
+    fallback = next((line for line in lines if not re.search(r"\b(pass|passed|successful)\b|通过", line, re.I)), None)
+    return (failure or fallback or "Blocked without an explicit reason; inspect progress.md and final message")[:500]
+
+
 def classify_outcome(
     stage: str,
     returncode: int,
@@ -331,9 +343,7 @@ def classify_outcome(
         )
     last_line = last_nonempty_line(final_message)
     if returncode == 0 and last_line == f"STAGE_BLOCKED {stage}":
-        lines = [line.strip() for line in final_message.strip().splitlines() if line.strip()]
-        reason = lines[-2] if len(lines) > 1 else "external repair required; inspect progress.md"
-        return StageDecision("blocked", reason[:500])
+        return StageDecision("blocked", blocker_reason(final_message))
     if returncode == 0 and last_line == f"STAGE_DONE {stage}":
         return StageDecision("stage_done", "required Stage marker found")
     if returncode == 0 and last_line == f"CONTEXT_HANDOFF {stage}":
@@ -391,11 +401,53 @@ Component: {component_name} ({component})
 Stage: {stage}
 Attempt: {attempt}
 
-Read only:
+Recovery checkpoint: {read_text_tail(root / '.agent-runs' / component / 'recovery.json', lines=20, max_chars=2000) or '<none>'}
+The assigned stage and recovery checkpoint override obsolete stop/next instructions
+in earlier handoffs. Close the canonical checklist residuals; do not merely repeat
+an earlier handoff. Preserve passing evidence whose relevant input hashes still match.
+STAGE_DONE 40-handoff is only a handoff. Component acceptance additionally requires
+the canonical docs/shadcn-web-progress.md component checkbox to be checked after
+all required gates pass. Never check it while required current evidence is missing.
+The user explicitly authorizes fixing this component's production defects and the
+shared dependency defects blocking it. Stage20 is the fixer context; implement real
+repairs and regression checks before returning to verification. Do not edit scheduler
+scripts or weaken the plan/coverage/checkbox criteria. Browser harness repairs belong
+to the component's verification work. Read the assigned canonical row's historical
+scope link for the full acceptance residuals after the documentation reorganization.
+Existing paths relocated by docs cleanup are indexed by
+docs/archive/2026-11-09/relocation-map.json; locate preserved evidence rather than
+declaring it unavailable or discarding current passing work.
+Stage 20 must pass owning lint for its modified Kotlin production/test source sets
+before STAGE_DONE; fix its own formatting in the implementation session, not in a
+later read-only verifier. Attach each Gradle test task's --tests filters immediately
+after that task so other tasks do not run unrelated suites accidentally.
+In this checkout, Gradle verification commands must add `--no-daemon -x :installGitHooks`:
+that unrelated setup task writes read-only .git/hooks. Retain every required
+lint/test/build task. Use a fresh single-use daemon so an older Gradle daemon cannot
+retain a narrower sandbox/cache policy. Workers receive precise writable grants for
+Gradle, Skiko and Kotlin daemon caches; do not grant the whole home directory.
+On macOS, native JVM tests may also abort with exit 134/SIGABRT in AWT/AppKit
+application registration before assertions, even when cache writes succeed.
+Use the bounded diagnostic/crash signature to distinguish this from an assertion
+failure; retry the identical --no-daemon verification command once through approved
+escalation before declaring an environment blocker. Do not disable the worker sandbox.
+Shared lint repair evidence is indexed by .agent-runs/shared-lint-repair/latest.json
+when present; the older acceptance-recovery-summary.json remains historical.
+Reuse only the tasks covered by a matching current input manifest; never infer an
+unlisted task passed. Otherwise rerun the owning task.
+
+Initial reads:
 1. {plan_path}, sections 2-6
 2. {skill_path}
 3. {card_path}
 4. {progress_path}
+
+These are starting reads, not a restriction to four files. Read-only discovery
+required by the current card is authorized: search the owning component files,
+checklist entry, run commands.log, source manifests, pinned upstream sources and
+verification evidence. Use bounded rg/file reads. Do not load unrelated components
+or the whole transcript. Scope authorizes this discovery and source verification;
+missing filenames in progress.md are a reason to locate them, not to stop.
 
 TAO contract snapshots. Reuse recorded commands instead of rediscovering them.
 
@@ -407,9 +459,15 @@ commands.log tail:
 
 Do not load a previous transcript. Do not start another Stage or component.
 The Python driver is the only scheduler. Execute this work unit directly; do not
-spawn agents, create a review coordinator, or delegate the component queue. Do not
+create a review coordinator or delegate the component queue. Do not
 poll agents or send progress-only messages. Return one final handoff with evidence
 paths, or record the exact blocker. The driver owns waiting, retries and routing.
+When plan R10/R15 requires independent review, one bounded fresh `codex exec` reviewer
+session is permitted. Pass only the component diff/file paths, acceptance rules and
+evidence paths; save its verdict to disk. Do not use acknowledgement-only transport,
+reuse the implementer's transcript, start a nested coordinator, or retry an unchanged
+review transport failure. Wait for this single process without model polling. Reviewer
+must be read-only; report a real review verdict/findings, not a project-loaded receipt.
 Follow every numbered B/G/C/M/T/H/R/I/V rule in the plan. Preserve unrelated
 working-tree changes. Do not commit, push, publish, reset, or use destructive
 cleanup. Store screenshots, contact sheets, DOM/XML, and full logs as files;
@@ -445,6 +503,11 @@ file state, write an accurate compact handoff to progress.md, and end with
 exactly:
 
 CONTEXT_HANDOFF {stage}
+
+Before reporting any gate failure, verify that the evidence describes the current
+worktree. Historical failures without matching current inputs are not current blockers;
+rerun the narrow owning gate once and record source hashes and the new result. Likewise,
+never call an old successful build/browser capture current without matching inputs.
 
 If an external/shared gate fails and this card cannot repair it, do not request
 another identical continuation. Record the failed gate, evidence and required fix
@@ -498,7 +561,10 @@ def build_codex_command(
         command.extend(["--sandbox", sandbox])
     if approve_for_me or sandbox == "workspace-write":
         gradle_home = Path(os.environ.get("GRADLE_USER_HOME", str(Path.home() / ".gradle"))).resolve()
-        command.extend(["--add-dir", str(gradle_home)])
+        cache_dirs = [gradle_home, Path.home() / ".skiko",
+                      Path.home() / "Library/Application Support/kotlin/daemon"]
+        for cache in cache_dirs:
+            command.extend(["--add-dir", str(cache)])
     if model:
         command.extend(["--model", model])
     if profile:
@@ -667,18 +733,139 @@ def infer_start_stage(run_dir: Path) -> str | None:
         raise RuntimeError(
             f"latest TAO mark is {latest[0]} FAIL; no automatic retry"
         )
+    if latest and latest[1] == "rotate":
+        return latest[0]
     last = last_completed_stage(run_dir)
     if last is None:
         return DEFAULT_STAGES[0]
     return next_stage(last)
 
 
-def write_done_marker(run_dir: Path) -> None:
-    path = run_dir / DONE_MARKER
+def checklist_accepted(project_root: Path, component: str) -> bool:
+    """The canonical component checkbox is required for final acceptance."""
+    path = project_root / "docs/shadcn-web-progress.md"
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+    except OSError:
+        return False
+    matches = [re.match(r"^- \[([ xX])\] .+? \(`([^`]+)`\)", line) for line in lines]
+    statuses = [match[1].lower() == "x" for match in matches if match and match[2] == component]
+    return bool(statuses) and all(statuses)
+
+
+def pending_resume_stage(run_dir: Path) -> str:
+    try:
+        payload = json.loads((run_dir / "acceptance.json").read_text())
+        stage = payload.get("resume_stage")
+        if payload.get("status") == "pending" and stage in DEFAULT_STAGES[:-1]:
+            return stage
+    except (OSError, ValueError, AttributeError):
+        pass
+    return "20-implement"
+
+
+def acceptance_problem(project_root: Path, run_dir: Path) -> str | None:
+    """Check durable gate evidence and current source correspondence before closure."""
+    root = project_root.resolve()
+    try:
+        receipt = json.loads((run_dir / 'acceptance.json').read_text())
+    except (OSError, ValueError):
+        return 'Missing or invalid acceptance.json'
+    if not isinstance(receipt, dict) or receipt.get('status') != 'accepted':
+        return 'Acceptance receipt is not accepted'
+    def matches(path, digest):
+        if not isinstance(path, str) or not isinstance(digest, str):
+            return False
+        location = (root / path).resolve()
+        try:
+            return location.is_relative_to(root) and location.is_file() and hashlib.sha256(location.read_bytes()).hexdigest() == digest
+        except OSError:
+            return False
+    sources = receipt.get('source_hashes')
+    if not isinstance(sources, dict) or not sources or not any(str(path).endswith('.kt') for path in sources):
+        return 'Acceptance requires current component Kotlin source hashes'
+    for directory in ('app/shared/src/commonMain', 'shadcn/core/src/commonMain', 'app/webApp/src'):
+        for path in (root / directory).rglob('*.kt'):
+            if str(path.relative_to(root)) not in sources:
+                return f'Acceptance source manifest omits shared production dependency: {path.relative_to(root)}'
+    for name in ('build.gradle.kts', 'settings.gradle.kts', '.editorconfig', 'gradle/libs.versions.toml',
+                 'app/shared/build.gradle.kts', 'shadcn/core/build.gradle.kts', 'app/webApp/build.gradle.kts'):
+        if (root / name).is_file() and name not in sources:
+            return f'Acceptance source manifest omits build/lint input: {name}'
+    for path, digest in sources.items():
+        if not matches(path, digest):
+            return f'Acceptance source changed: {path}'
+    gates = receipt.get('gates', {})
+    for name in ('tests', 'lint', 'build', 'browser', 'audit', 'review'):
+        gate = gates.get(name) if isinstance(gates, dict) else None
+        if not isinstance(gate, dict) or gate.get('status') != 'passed' or not matches(gate.get('evidence'), gate.get('sha256')):
+            return f'Missing, failed or changed acceptance evidence: {name}'
+        try:
+            proof = json.loads((root / gate['evidence']).read_text())
+            if proof.get('status') != 'passed' or not matches(proof.get('inputs'), proof.get('inputs_sha256')):
+                return f'Acceptance gate lacks bound runtime inputs: {name}'
+            manifest = json.loads((root / proof['inputs']).read_text())
+            bound = manifest.get('inputs', manifest)
+            if not isinstance(bound, dict) or any(bound.get(path) != digest for path, digest in sources.items()):
+                return f'Acceptance gate inputs differ from accepted source: {name}'
+            for path, digest in bound.items():
+                if not matches(path, digest):
+                    return f'Acceptance runtime input changed: {name}: {path}'
+            artifacts = proof.get('artifacts')
+            if not isinstance(artifacts, dict) or not artifacts or any(not matches(path, digest) for path, digest in artifacts.items()):
+                return f'Acceptance gate lacks matching retained artifacts: {name}'
+        except (OSError, ValueError, AttributeError, TypeError):
+            return f'Acceptance gate has invalid runtime provenance: {name}'
+    return None
+
+
+def update_component_checkbox(project_root: Path, component: str, checked: bool) -> None:
+    path = project_root / 'docs/shadcn-web-progress.md'
+    text = path.read_text()
+    pattern = r'(?m)^(- )\[[ xX]\]( .+? \(`' + re.escape(component) + r'`\))'
+    text, count = re.subn(pattern, lambda m: m[1] + ('[x]' if checked else '[ ]') + m[2], text)
+    if count != 1:
+        raise RuntimeError(f'Expected one canonical checkbox for {component}, found {count}')
+    marks = re.findall(r'^- \[([ xX])\] .+? \(`[^`]+`\)', text, re.M)
+    closed = sum(mark.lower() == 'x' for mark in marks)
+    text = re.sub(r'\*\*\d+ / \d+ 项已勾选，\d+ 项未完成\*\*',
+                  f'**{closed} / {len(marks)} 项已勾选，{len(marks)-closed} 项未完成**', text)
+    temporary = path.with_suffix('.md.tmp')
+    temporary.write_text(text)
+    temporary.replace(path)
+
+
+def reopen_checkpoint(run_dir: Path, stage: str, reason: str) -> None:
+    """Preserve old evidence and reopen only the operator-selected checkpoint."""
+    if stage not in DEFAULT_STAGES:
+        raise ValueError(f"invalid recovery stage: {stage}")
+    marker = run_dir / DONE_MARKER
+    if marker.exists():
+        marker.replace(run_dir / "HANDOFF.marker")
+    record = {"stage": stage, "reason": reason,
+              "timestamp": datetime.now().astimezone().isoformat(timespec="seconds")}
+    (run_dir / "recovery.json").write_text(json.dumps(record, ensure_ascii=False, indent=2) + "\n")
+    append_contract_mark(run_dir, stage, "rotate")
+    append_loop_record(run_dir, {"status": "checkpoint_reopened", **record})
+    state_path = run_dir / "state.json"
+    if state_path.exists():
+        state = json.loads(state_path.read_text())
+        state.update(stage=stage.split("-", 1)[1], status="active", updated_at=record["timestamp"])
+        temporary = state_path.with_suffix(".json.tmp")
+        temporary.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n")
+        temporary.replace(state_path)
+
+
+def write_done_marker(run_dir: Path) -> bool:
+    accepted = checklist_accepted(run_dir.parent.parent, run_dir.name)
+    path = run_dir / (DONE_MARKER if accepted else "HANDOFF.marker")
+    if not accepted and (run_dir / DONE_MARKER).exists():
+        (run_dir / DONE_MARKER).replace(path)
     path.write_text(
         datetime.now().astimezone().isoformat(timespec="seconds") + "\n",
         encoding="utf-8",
     )
+    return accepted
 
 
 def run_codex(
@@ -943,6 +1130,45 @@ def next_verification_unit(progress_path: Path) -> str | None:
     return match.group(0) if match else None
 
 
+def verification_checkpoint(progress_path: Path) -> tuple[str | None, frozenset[str]]:
+    """Count completed coverage IDs only when their local evidence hashes match.
+
+    This measures continuation progress, never component acceptance. Rewriting
+    prose, timestamps or an already-completed check does not advance coverage.
+    """
+    unit = next_verification_unit(progress_path)
+    run_dir = progress_path.parent.resolve()
+    try:
+        payload = json.loads((run_dir / "verification-progress.json").read_text())
+        entries = payload.get("completed", [])
+    except (OSError, ValueError, AttributeError):
+        return unit, frozenset()
+    if not isinstance(entries, list):
+        return unit, frozenset()
+    completed = set()
+    evidence_hashes: dict[Path, str | None] = {}
+    for entry in entries:
+        if not isinstance(entry, dict) or entry.get("status") != "passed":
+            continue
+        check_id, evidence, digest = (entry.get(key) for key in ("id", "evidence", "sha256"))
+        if not all(isinstance(value, str) and value for value in (check_id, evidence, digest)):
+            continue
+        path = (run_dir / evidence).resolve()
+        if not path.is_relative_to(run_dir):
+            continue
+        try:
+            if path not in evidence_hashes:
+                evidence_hashes[path] = (
+                    hashlib.sha256(path.read_bytes()).hexdigest()
+                    if path.stat().st_size <= 32 * 1024 * 1024 else None
+                )
+            if evidence_hashes[path] == digest:
+                completed.add(check_id)
+        except OSError:
+            evidence_hashes[path] = None
+    return unit, frozenset(completed)
+
+
 def execute_stage(
     *,
     args: argparse.Namespace,
@@ -964,7 +1190,8 @@ def execute_stage(
 
     unchanged_handoffs = 0
     for attempt in range(1, args.max_attempts + 1):
-        previous_unit = next_verification_unit(progress_path) if stage == "30-verify" else None
+        previous_checkpoint = verification_checkpoint(progress_path) if stage == "30-verify" else (None, frozenset())
+        previous_unit = previous_checkpoint[0]
         progress_tail = read_text_tail(
             args.run_dir / PROGRESS_LOG,
             lines=8,
@@ -1024,11 +1251,13 @@ def execute_stage(
             budget_terminated=result.budget_terminated,
             timeout_terminated=result.timeout_terminated,
         )
+        advanced = False
         if decision.status == "context_handoff" and previous_unit:
-            current_unit = next_verification_unit(progress_path)
-            unchanged_handoffs = unchanged_handoffs + 1 if current_unit == previous_unit else 0
+            checkpoint = verification_checkpoint(progress_path)
+            advanced = checkpoint[0] != previous_unit or bool(checkpoint[1] - previous_checkpoint[1])
+            unchanged_handoffs = 0 if advanced else unchanged_handoffs + 1
             if unchanged_handoffs >= 2:
-                decision = StageDecision("blocked", f"No work-unit advancement after two handoffs: {previous_unit}; inspect progress.md blocker")
+                decision = StageDecision("blocked", f"No work-unit advancement or new hash-bound coverage after two handoffs: {previous_unit}; inspect progress.md blocker")
         record = {
             "stage": stage,
             "attempt": attempt,
@@ -1053,17 +1282,53 @@ def execute_stage(
         append_loop_record(args.run_dir, record)
 
         if decision.status == "stage_done":
+            try:
+                verify_handoff_or_fail(project_root, args.run_dir, stage)
+            except RuntimeError:
+                if stage == '40-handoff' and args.require_acceptance_receipt:
+                    update_component_checkbox(project_root, args.component, False)
+                raise
+            if stage == '40-handoff' and args.require_acceptance_receipt:
+                problem = acceptance_problem(project_root, args.run_dir)
+                if problem:
+                    update_component_checkbox(project_root, args.component, False)
+                    receipt_path = args.run_dir / 'acceptance.json'
+                    try:
+                        receipt = json.loads(receipt_path.read_text())
+                        if not isinstance(receipt, dict): receipt = {}
+                    except (OSError, ValueError):
+                        receipt = {}
+                    resume = receipt.get('resume_stage') if receipt.get('status') == 'pending' else None
+                    if resume not in DEFAULT_STAGES[:-1]: resume = '30-verify'
+                    receipt.update(status='pending', resume_stage=resume, reason=problem)
+                    receipt_path.write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + '\n')
+                    append_contract_mark(args.run_dir, resume, 'rotate')
+                    state_file = args.run_dir / 'state.json'
+                    if state_file.exists():
+                        state = json.loads(state_file.read_text())
+                        state.update(stage=resume.split('-', 1)[1], status='acceptance_pending')
+                        state_file.write_text(json.dumps(state, indent=2) + '\n')
+                    marker = args.run_dir / DONE_MARKER
+                    if marker.exists(): marker.replace(args.run_dir / 'HANDOFF.marker')
+                    print(f'ACCEPTANCE_PENDING: {problem}')
+                    return 4
+                if checklist_accepted(project_root, args.component):
+                    update_component_checkbox(project_root, args.component, True)
             if result.usage.prompt_tokens > args.warn_stage_input_tokens:
                 print(
                     "warning: Stage cumulative input exceeded the watch target:"
                     f" {result.usage.prompt_tokens:,}"
                     f" > {args.warn_stage_input_tokens:,}"
                 )
-            verify_handoff_or_fail(project_root, args.run_dir, stage)
             append_contract_mark(args.run_dir, stage, "ok")
             advance_run_state(args.run_dir, stage)
             if STATE_AFTER_STAGE[stage] == "complete":
-                write_done_marker(args.run_dir)
+                if not write_done_marker(args.run_dir):
+                    state = json.loads((args.run_dir / "state.json").read_text())
+                    state["status"] = "acceptance_pending"
+                    (args.run_dir / "state.json").write_text(json.dumps(state, indent=2) + "\n")
+                    print("ACCEPTANCE_PENDING: canonical component checklist remains unchecked")
+                    return 4
             print(f"[{stage}] completed")
             return 0
 
@@ -1078,6 +1343,11 @@ def execute_stage(
                 verify_handoff_or_fail(project_root, args.run_dir, stage)
                 append_contract_mark(args.run_dir, stage, "rotate")
                 continue
+            if stage == "30-verify" and decision.status == "context_handoff" and advanced:
+                verify_handoff_or_fail(project_root, args.run_dir, stage)
+                append_contract_mark(args.run_dir, stage, "rotate")
+                print("CHECKPOINT_PENDING: session cap reached with verified progress; resume next batch")
+                return 5
         else:
             print(f"[{stage}] failed: {decision.reason}", file=sys.stderr)
             if decision.status == "infrastructure_blocked":
@@ -1230,6 +1500,7 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         help="route headless approval requests through Codex automatic review",
     )
     parser.add_argument("--model")
+    parser.add_argument("--require-acceptance-receipt", action="store_true", help="require hash-bound test/lint/build/browser/audit/review receipts before component closure")
     parser.add_argument("--profile")
     parser.add_argument(
         "--execute",
@@ -1307,8 +1578,16 @@ def main(argv: Sequence[str] | None = None) -> int:
             print(f"ERROR: {error}", file=sys.stderr)
             return 2
         if start_stage is None:
-            print(f"ALL STAGES COMPLETE: {progress_path}")
-            return 0
+            if checklist_accepted(project_root, args.component) and (
+                    not args.require_acceptance_receipt or acceptance_problem(project_root, args.run_dir) is None):
+                print(f"COMPONENT ACCEPTED: {progress_path}")
+                return 0
+            if args.require_acceptance_receipt and checklist_accepted(project_root, args.component) and args.execute:
+                update_component_checkbox(project_root, args.component, False)
+            start_stage = pending_resume_stage(args.run_dir)
+            if args.execute:
+                reopen_checkpoint(args.run_dir, start_stage,
+                                  "Handoff finished but canonical checklist is open; close residual implementation and revalidate changed inputs.")
     else:
         start_stage = args.start_stage
     try:
@@ -1347,6 +1626,12 @@ def main(argv: Sequence[str] | None = None) -> int:
                 file=sys.stderr,
             )
             return 3
+        if stage_status == 4:
+            print(f"HANDOFF COMPLETE, ACCEPTANCE PENDING: {progress_path}")
+            return 4
+        if stage_status == 5:
+            print(f"VERIFICATION CHECKPOINT PENDING: {progress_path}")
+            return 5
         if stage_status != 0:
             print(
                 f"STOPPED at {stage}; inspect progress.md and {state_path}",

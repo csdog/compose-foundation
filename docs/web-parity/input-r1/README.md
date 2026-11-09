@@ -59,20 +59,41 @@ Group/Inline/Grid/Badge/Input Group/Button Group/Form/RTL recipes and a stale AP
   form select open with United States checked, after choosing Canada, RTL language menu and
   Hebrew switch, phone form.
 
-## Remaining differences (page stays unchecked)
+## Current Stage30 audit (2026-11-09)
 
-- **File**: Compose/browser has no native `type="file"` control; the preview approximates it
-  with an outline “Choose File” button and “No file chosen” text. A real file picker needs a
-  platform capability that does not exist here.
-- Plain field labels have no `htmlFor`; clicking “Username” does not focus the input
-  (checkbox/radio/switch labels are wired, and inputs are reachable with Tab).
-- Inline/Button Group widths are explicit because Compose has no `flex-basis:100%` shrink
-  model for an input; the visual widths (244/252dp) match, but the exported code carries a
-  width modifier the official code does not need.
-- The Input Group info icon is rendered from Lucide through the catalog preview; the
-  exported code uses `Icon(Lucide.Info)` (the library itself has no icon-set dependency).
-- Official page has no API Reference; this page therefore documents no Kotlin parameter
-  table (component API is covered by the core tests and component docs).
-- React Aria/Radix UI tabs, browser package-manager tabs, Kotlin code panels and font
-  rasterization remain platform-scope differences; native file inputs and browser autofill
-  UI cannot be reproduced.
+The historical results above remain historical. Current evidence is indexed by
+[Input audit](../../../.agent-runs/input/verify-30d-current/audit.json), with
+[freshness](../../../.agent-runs/input/verify-30d-current/freshness.json): all 1,460
+test/lint inputs, 1,466 build inputs and 46 distribution artifacts match. Archived XML
+proves 41/41 focused tests; owning lint, production Wasm and browser matrix 68/68 pass.
+The recovered [18 pinned source bodies and hashes](../../../.agent-runs/input/verify-30d-current/sources-check.json)
+match the original manifest exactly. Four prepared current demo crops show distinct
+light/dark rendering at desktop/phone; these do not prove every visual state.
+
+The original residual list is reconciled as follows:
+
+- **File capability resolved:** Web now creates an actual hidden HTML `input[type=file]`
+  through `wasmJsMain/.../docs/FilePicker.kt`. Current browser evidence proves chooser
+  invocation, selection and filename semantics. The visible field is Compose; injected
+  JVM tests prove cancellation retention, unsupported-platform disabling and label/button
+  focus. Forced browser click does not prove pointer actionability, keyboard access or
+  OS-dialog cancellation; these remain coverage gaps, not accepted interaction defects.
+- **Label focus resolved:** explicit `FocusRequester` wiring and named semantics are the
+  Canvas equivalent of `htmlFor`; current Default/Grid/Form/RTL tests verify focus and
+  Grid Tab traversal. Literal DOM label association remains a specific platform difference.
+- **Explicit widths:** Inline 244dp and responsive Button Group arithmetic substitute for
+  CSS shrink-basis. This is an accepted exported-code/API difference, supported by focused
+  layout checks; it does not exempt unexpected visual overflow.
+- **Info icon:** Lucide is catalog-only; core stays icon-set independent. This is an
+  accepted dependency/API difference.
+- **No API table:** pinned official Input MDX has no API Reference section. The local
+  omission aligns with that source and is not a missing requirement.
+- **Platform validation limits:** browser autofill/IME and external screen-reader behavior
+  remain unverified; Canvas semantics and JVM editing/focus tests are the recorded local
+  equivalents. No blanket layout/color/interaction exemption is granted.
+
+Acceptance remains open: current evidence lacks the pinned Nova `transition-colors`
+mid-frame check (I7), an Input live-shape switch check (I8), and browser proof of ordinary
+file-button activation. The existing independent review covered only the recovery harness;
+the current bounded audit review is recorded separately. Production/test repairs belong
+to an implementation/fixer session. Preserve passed units whose input hashes still match.

@@ -13,8 +13,26 @@ class CalendarLocale(
     val formatDate: (CalendarDate) -> String = { date -> "${months[date.month - 1]} ${date.day}, ${date.year}" },
     val firstDayOfWeek: Int = 0,
     val pickDate: String = "Pick a date",
+    val calendarSystem: CalendarSystem = CalendarSystem.Gregorian,
     val formatAccessibleDate: (CalendarDate) -> String = { "${it.year}-${it.month}-${it.day}" },
 ) {
+    /** Retains the original fully positional constructor signature. */
+    constructor(
+        months: List<String>,
+        shortMonths: List<String>,
+        weekdays: List<String>,
+        previousMonth: String,
+        nextMonth: String,
+        formatCaption: (Int, Int) -> String,
+        formatDate: (CalendarDate) -> String,
+        firstDayOfWeek: Int,
+        pickDate: String,
+        formatAccessibleDate: (CalendarDate) -> String,
+    ) : this(
+        months, shortMonths, weekdays, previousMonth, nextMonth, formatCaption,
+        formatDate, firstDayOfWeek, pickDate, CalendarSystem.Gregorian, formatAccessibleDate,
+    )
+
     init {
         require(months.size == 12 && shortMonths.size == 12 && weekdays.size == 7)
     }
@@ -52,6 +70,22 @@ class CalendarLocale(
                         }
                     "${English.months[date.month - 1]} ${date.day}$suffix, ${date.year}"
                 },
+            )
+        val Persian: CalendarLocale =
+            CalendarLocale(
+                listOf(
+                    "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور",
+                    "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند",
+                ),
+                listOf(
+                    "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور",
+                    "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند",
+                ),
+                listOf("ی", "د", "س", "چ", "پ", "ج", "ش"),
+                previousMonth = "ماه قبل",
+                nextMonth = "ماه بعد",
+                firstDayOfWeek = 6,
+                calendarSystem = CalendarSystem.Persian,
             )
         val Chinese: CalendarLocale =
             CalendarLocale(

@@ -16,12 +16,16 @@ RECORDS = '## 进度记录（按创建时间倒序）'
 
 def main():
     text = PROGRESS.read_text()
+    if RECORDS not in text and '## 旧 Badge 基准排查' not in text:
+        print('No inline legacy progress records; current checklist left unchanged. See docs/archive/.')
+        return
     if RECORDS in text:
         overview, timeline = text.split(RECORDS, 1)
         # The ordering explanation is outside the dated records.
         first = HEADING.search(timeline)
         if not first:
-            raise ValueError('No dated progress records')
+            print('No dated inline records; current checklist left unchanged.')
+            return
         timeline = timeline[first.start():]
     else:
         overview, timeline = text.split('## 旧 Badge 基准排查', 1)

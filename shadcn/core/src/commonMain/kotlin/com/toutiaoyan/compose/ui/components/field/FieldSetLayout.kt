@@ -131,13 +131,23 @@ internal fun FieldSetLayout(
             val previous = data[index - 1]
             val current = data[index]
             val base = effectiveGap
-            return if (previous?.kind == FieldSetChildKind.Legend &&
-                current?.kind == FieldSetChildKind.Description
-            ) {
-                legendToDescription
-            } else {
-                base
-            }
+            val legendDescriptionGap =
+                if (previous?.kind == FieldSetChildKind.Legend &&
+                    current?.kind == FieldSetChildKind.Description
+                ) {
+                    legendToDescription
+                } else {
+                    base
+                }
+            // Nova's `:nth-last-child(2)` description rule applies a -mt-1
+            // when the direct FieldDescription is followed by one final child.
+            val trailingDescriptionMargin =
+                if (index == children.lastIndex && previous?.kind == FieldSetChildKind.Description) {
+                    4.dp.roundToPx()
+                } else {
+                    0
+                }
+            return (legendDescriptionGap - trailingDescriptionMargin).coerceAtLeast(0)
         }
 
         val totalGap = children.indices.sumOf { gapBefore(it) }

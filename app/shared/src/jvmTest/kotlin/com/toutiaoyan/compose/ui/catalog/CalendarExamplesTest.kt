@@ -60,7 +60,7 @@ class CalendarExamplesTest {
         rule.onAllNodesWithText("$120", useUnmergedTree = true).assertCountEquals(8)
     }
 
-    @Test fun catalogHasOfficialRecipesAndDocumentsTheCalendarSystemGap() {
+    @Test fun catalogHasOfficialRecipesAndCalendarSystemGuidance() {
         assertEquals(
             listOf(
                 "Default",
@@ -74,18 +74,27 @@ class CalendarExamplesTest {
                 "Week Numbers",
                 "RTL",
             ),
-            calendarDoc.examples.take(10).map { it.title },
+            calendarDoc.examples.filter { it.title != "Persian / Hijri / Jalali Calendar" }.take(10).map { it.title },
         )
         assertEquals(
             listOf("Multiple", "Disabled", "Week starts on Monday", "Hide outside days", "Month bounds"),
-            calendarDoc.examples.drop(10).map { it.title.removePrefix("Kotlin extension: ") },
+            calendarDoc.examples.drop(11).map { it.title.removePrefix("Kotlin extension: ") },
         )
         assertTrue(
-            calendarDoc.examples.drop(10).all { it.title.startsWith("Kotlin extension: ") },
+            calendarDoc.examples.drop(11).all { it.title.startsWith("Kotlin extension: ") },
         )
         assertEquals(null, calendarDoc.examplesHeading)
         assertTrue(calendarDoc.beforeExamples.any { it.title == "Persian / Hijri / Jalali Calendar" })
         assertTrue(calendarDoc.apiSections.any { it.title == "CalendarGrid" })
+    }
+
+    @Test fun persianPreviewUsesJalaliDatesAndAllowsSelectionAndNavigation() {
+        show("Persian / Hijri / Jalali Calendar")
+        rule.onNodeWithContentDescription("1404-3-22").assertIsSelected()
+        rule.onNodeWithContentDescription("1404-3-23").performClick().assertIsSelected()
+        rule.onNodeWithContentDescription("ماه بعد").performClick()
+        rule.onNodeWithText("تیر 1404").assertIsDisplayed()
+        assertTrue(calendarDoc.afterExamples.any { it.title == "Changelog" })
     }
 
     @Test fun exportedRecipesIncludeTheirStateAndCustomInteractions() {

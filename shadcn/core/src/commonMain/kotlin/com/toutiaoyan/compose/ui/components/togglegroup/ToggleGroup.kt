@@ -6,6 +6,8 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.style.contentPadding
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.input.key.*
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -84,7 +86,8 @@ internal class ToggleGroupController(
 }
 
 private class ToggleGroupNavigation {
-    val items = mutableMapOf<String, Pair<FocusRequester, Boolean>>()
+    val items = androidx.compose.runtime.mutableStateMapOf<String, Pair<FocusRequester, Boolean>>()
+    var focused by mutableStateOf<String?>(null)
     val order = androidx.compose.runtime.mutableStateListOf<String>()
 }
 
@@ -338,7 +341,15 @@ fun ToggleGroupScope.ToggleGroupItem(
     androidx.compose.runtime.SideEffect { navigation.items[value] = requester to resolvedEnabled }
     val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
     val navigationModifier =
-        Modifier.focusRequester(requester).onPreviewKeyEvent { event ->
+        Modifier.focusRequester(requester).focusProperties {
+            val available = navigation.order.filter { navigation.items[it]?.second == true }
+            val entry =
+                navigation.focused?.takeIf { it in available }
+                    ?: available.firstOrNull { controller.isPressed(it) } ?: available.firstOrNull()
+            canFocus = resolvedEnabled && value == entry
+        }.onFocusChanged {
+            if (it.isFocused) navigation.focused = value
+        }.onPreviewKeyEvent { event ->
             if (event.type != KeyEventType.KeyDown || !resolvedEnabled) return@onPreviewKeyEvent false
             val horizontal = controller.orientation == ToggleGroupOrientation.Horizontal
             val forward =
@@ -364,12 +375,16 @@ fun ToggleGroupScope.ToggleGroupItem(
                     Key.MoveEnd -> available.lastIndex
                     else -> return@onPreviewKeyEvent false
                 }
+            navigation.focused = available[target]
             navigation.items[available[target]]?.first?.requestFocus()
             true
         }
     Toggle(
         pressed = controller.isPressed(value),
-        onPressedChange = { controller.toggle(value) },
+        onPressedChange = {
+            navigation.focused = value
+            controller.toggle(value)
+        },
         modifier = modifier.then(navigationModifier),
         enabled = resolvedEnabled,
         variant = controller.variant,

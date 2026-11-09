@@ -89,3 +89,104 @@ two consecutive `30-verify` continuations without advancing the ordered `## Next
 work unit stop with an explicit no-progress reason. A completed unit may still
 rotate normally. Preserve FAIL records; after inspecting and repairing a gate,
 an operator may append a rotate mark to resume that stage with evidence.
+
+Worker sessions using workspace-write/automatic review explicitly receive
+`--add-dir "$GRADLE_USER_HOME"` (default `~/.gradle`). This permits Gradle wrapper
+and dependency cache writes without making the rest of the home directory writable.
+Read-only sessions do not receive this grant. Other permission failures must retry
+the identical required command once through automatic approval before being called
+an environment blocker. Blank lines before STAGE_BLOCKED are ignored when extracting
+the displayed reason; existing records can fall back to the saved final message.
+
+For blocked markers, the parser prefers an explicit `Blocker:` line and then the
+actual failure statement, ignoring successful validator footers. The progress log
+emits unchanged blocker details once per mirror process, while keeping blocked
+counts visible. Initial prompt reads are not an authorization boundary: bounded
+read-only discovery required by the current card remains allowed. Before treating
+archived failures as current, compare owning inputs or rerun the narrow gate once;
+preserve superseded results as historical evidence.
+
+A blocked run whose matching TAO checkpoint has been explicitly reopened with a
+`rotate` mark is displayed as `RECOVERY_PENDING`, not an active ERROR. The old
+failure remains in the JSON recovery record and original logs. A later FAIL becomes
+an active error again. This label means queued recovery, never successful completion.
+Batch stdout and progress mirrors both use append mode to preserve interleaved lines.
+
+
+## Component acceptance and checkpoint recovery
+
+`40-handoff` completion is separate from component acceptance. The driver writes
+`DONE.marker` only when the canonical component checkbox is checked; otherwise it
+writes `HANDOFF.marker`, returns exit 4, and displays `ACCEPTANCE_PENDING`. Batch
+completion/exit 0 also requires canonical acceptance, including for older child
+processes that return 0. Unchecked components with legacy DONE markers stay queued.
+The handoff card records the next gate in `acceptance.json` (`status: pending`,
+`resume_stage`, `reason`); the next batch uses that stage. Missing legacy checkpoints
+reopen implementation to reconcile checklist residuals rather than invent acceptance.
+
+An operator may call `reopen_checkpoint(run_dir, stage, reason)` after inspecting
+and repairing the recorded blocker, while holding `.agent-runs/batch.lock` with no
+component worker active. It preserves old logs, moves legacy DONE to HANDOFF, writes
+`recovery.json`, and appends an audited rotate mark. Auto-routing respects the latest
+rotate stage even if a later-numbered stage had completed historically. Product FAILs
+are never blanket-cleared by normal batch startup. Mandatory plan R10/R15 review may
+use one fresh bounded read-only reviewer; it must return findings/verdict, not an
+acknowledgement or a new coordination loop.
+
+
+### Native JVM cache grants
+
+Workspace-write workers also receive precise writable grants for `~/.skiko` and
+`~/Library/Application Support/kotlin/daemon`, alongside `GRADLE_USER_HOME`. Native
+Skiko extraction locks and Kotlin daemon marker writes happen outside Gradle's own
+cache; an escalation retry must not be mistaken for a verified cache-policy change.
+Use `--no-daemon` on verification commands to avoid reusing a Gradle daemon started
+with a narrower sandbox policy. These grants do not expose the full home directory
+and are omitted for read-only reviewers. A bounded worker smoke probe creates and
+deletes only its own temporary files in the three granted cache directories.
+
+Blocker extraction recognizes `阻塞:` / `阻塞：` and Chinese failure statements as
+well as English markers; successful reviewer/validator summaries are not blockers.
+
+A successful cache write probe is not a passing native JVM test. macOS AWT/AppKit
+application registration can abort with exit 134/SIGABRT before assertions under
+the worker sandbox. Inspect its compact native signature and perform the one
+approved exact-command retry with `--no-daemon` before declaring an environment
+blocker. Never infer test counts from stale XML after an abnormal executor exit.
+
+
+### Verification coverage feedback
+
+A read-only audit that finds unperformed applicable checks routes `Next` back to
+30a/30b/30c and returns CONTEXT_HANDOFF. Missing evidence is assigned verification
+work; it is not an external blocker. Confirmed production failures and actual
+external/shared gate failures remain terminal blockers.
+
+Browser coverage can span sessions. `verification-progress.json` stores stable
+completed check IDs, passed status, run-relative evidence paths and SHA256 values.
+The driver counts only new completed IDs whose files exist under the run directory
+and still match the recorded hashes; this is progress telemetry, never acceptance.
+Two handoffs with neither unit advancement nor new verified coverage still stop.
+If the session cap is reached with verified progress, exit 5 retains a rotate
+checkpoint and displays CHECKPOINT_PENDING rather than committing a false FAIL.
+The batch can continue other components and the next batch resumes that checkpoint.
+
+
+## Reverse completion mode
+
+`python3 scripts/run_unfinished_components.py --reverse --repair-blocked --complete-components --execute --background`
+
+Reverse applies before limits/start-after. Completion mode owns one component until
+canonical acceptance passes, and routes a verifier's recorded product/shared/harness
+blocker to a fresh implementation/fixer session. It preserves valid verification
+checkpoints and current evidence. Missing evidence returns to verification. Component
+passes are bounded (default 6); unresolved work stops the queue for attention instead
+of scanning every component and accumulating skipped failures. No scheduler edits or
+acceptance-rule reductions are authorized for stage workers.
+
+The strict handoff requires acceptance.json with accepted status, tests/lint/build/
+browser/audit/review passed gate receipts (project-relative evidence plus SHA256), and
+current relevant source_hashes including component Kotlin. Missing/changed proof
+restores the checkbox to unchecked and retains a verification checkpoint. The
+canonical checkbox and summary count are synchronized only after receipt validation;
+existing historical checkmarks are not blanket reaccepted.
