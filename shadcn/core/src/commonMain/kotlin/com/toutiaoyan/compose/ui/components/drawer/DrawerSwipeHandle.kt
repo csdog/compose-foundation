@@ -2,9 +2,13 @@
 
 package com.toutiaoyan.compose.ui.components.drawer
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.*
+import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.theme.currentTheme
@@ -31,11 +35,20 @@ fun DrawerSwipeHandle(
     style: Style = Style,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val drawer = LocalDrawerState.current
+    val nestHost = LocalDrawerNestHost.current
+    val alpha =
+        animateFloatAsState(
+            if (drawer.nestedOpenCount > 0 && (nestHost?.nestedSwipeProgress ?: 0f) == 0f) 0f else 1f,
+            tween(200),
+            label = "Drawer covered handle",
+        )
+    val handleModifier = modifier.graphicsLayer { this.alpha = alpha.value }
     if (currentTheme.activePreset == StylePreset.Nova) {
         val direction = LocalDrawerState.current.swipeDirection
         val vertical = direction.isVertical()
         Box(
-            modifier.then(
+            handleModifier.then(
                 if (vertical) Modifier.fillMaxWidth().height(12.dp) else Modifier.width(12.dp).fillMaxHeight(),
             ).clearAndSetSemantics {
             },
@@ -43,8 +56,8 @@ fun DrawerSwipeHandle(
                 when (direction) {
                     DrawerSwipeDirection.Down -> Alignment.BottomCenter
                     DrawerSwipeDirection.Up -> Alignment.TopCenter
-                    DrawerSwipeDirection.Left -> Alignment.CenterStart
-                    DrawerSwipeDirection.Right -> Alignment.CenterEnd
+                    DrawerSwipeDirection.Left -> AbsoluteAlignment.CenterLeft
+                    DrawerSwipeDirection.Right -> AbsoluteAlignment.CenterRight
                 },
         ) {
             Box(
@@ -67,7 +80,7 @@ fun DrawerSwipeHandle(
     }
     Box(
         modifier =
-            modifier
+            handleModifier
                 .clearAndSetSemantics { }
                 .styleable(
                     styleState,

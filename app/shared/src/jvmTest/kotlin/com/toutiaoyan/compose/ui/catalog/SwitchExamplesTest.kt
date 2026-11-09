@@ -75,10 +75,44 @@ class SwitchExamplesTest {
     @Test fun copyPageMarkdownKeepsOfficialOrder() {
         val markdown = componentPageMarkdown(switchDoc)
         val headings = listOf("## Description", "## Choice Card", "## Disabled", "## Invalid", "## Size", "## RTL")
-        val positions = headings.map { heading ->
-            markdown.indexOf(heading).also { assertTrue(it >= 0, "missing $heading") }
-        }
+        val positions =
+            headings.map { heading ->
+                markdown.indexOf(heading).also { assertTrue(it >= 0, "missing $heading") }
+            }
         assertEquals(positions.sorted(), positions)
         assertFalse(markdown.contains("## Examples"))
+    }
+
+    private fun labelActivatesRecipe(
+        title: String,
+        label: String,
+    ) {
+        val example = switchDoc.examples.single { it.title == title }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.onNode(isToggleable()).assertIsOff()
+        rule.onNodeWithText(label).performClick()
+        rule.onNode(isToggleable()).assertIsOn().assertIsFocused()
+        rule.onNodeWithText(label).performClick()
+        rule.onNode(isToggleable()).assertIsOff().assertIsFocused()
+    }
+
+    @Test fun descriptionLabelActivatesAndFocusesSwitch() = labelActivatesRecipe("Description", "Share across devices")
+
+    @Test fun invalidLabelActivatesAndFocusesSwitch() = labelActivatesRecipe("Invalid", "Accept terms and conditions")
+
+    @Test fun rtlLabelActivatesAndFocusesSwitch() = labelActivatesRecipe("RTL", "المشاركة عبر الأجهزة")
+
+    @Test fun bothSizesToggleIndependentlyFromControlAndLabel() {
+        val example = switchDoc.examples.single { it.title == "Size" }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        val nodes = rule.onAllNodes(isToggleable())
+        nodes[0].performClick().assertIsOn()
+        nodes[1].assertIsOff()
+        nodes[1].performClick().assertIsOn()
+        rule.onNodeWithText("Small").performClick()
+        nodes[0].assertIsOff().assertIsFocused()
+        nodes[1].assertIsOn()
+        rule.onNodeWithText("Default").performClick()
+        nodes[1].assertIsOff().assertIsFocused()
     }
 }

@@ -635,8 +635,9 @@ fun FieldSeparator(
     // Nova `.cn-field-separator` — `-my-2 h-5 text-sm`, with the 1dp line centered
     // behind an optional background-masked label (`px-2`).
     Box(
-        modifier = modifier.fillMaxWidth().height(20.dp).fieldSeparatorOverlap()
-            .styleable(styleState, style),
+        modifier =
+            modifier.fillMaxWidth().height(20.dp).fieldSeparatorOverlap()
+                .styleable(styleState, style),
         contentAlignment = Alignment.Center,
     ) {
         Box(Modifier.fillMaxWidth().height(1.dp).background(currentTheme.colors.border))

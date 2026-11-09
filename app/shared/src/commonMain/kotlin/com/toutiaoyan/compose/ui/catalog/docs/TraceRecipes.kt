@@ -8,16 +8,20 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.hoverable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.key
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -77,10 +81,12 @@ import com.toutiaoyan.compose.ui.components.trace.TraceCollapsibleContent
 import com.toutiaoyan.compose.ui.components.trace.TraceCollapsibleTrigger
 import com.toutiaoyan.compose.ui.components.trace.TraceDescription
 import com.toutiaoyan.compose.ui.components.trace.TraceIcon
+import com.toutiaoyan.compose.ui.components.trace.TraceLineScope
 import com.toutiaoyan.compose.ui.components.trace.TraceLine
 import com.toutiaoyan.compose.ui.components.trace.TraceLink
 import com.toutiaoyan.compose.ui.components.trace.TraceStatus
 import com.toutiaoyan.compose.ui.components.trace.TraceTitle
+import com.toutiaoyan.compose.ui.theme.LocalContentColor
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import kotlinx.coroutines.delay
 
@@ -181,12 +187,12 @@ internal data class ChangedFile(
 /** Centered `max-w-sm` column, matching the official preview's `max-w-sm` wrapper. */
 @Composable
 private fun TraceColumn(
-    height: androidx.compose.ui.unit.Dp? = null,
+    minHeight: androidx.compose.ui.unit.Dp = 0.dp,
     content: @Composable androidx.compose.foundation.layout.ColumnScope.() -> Unit,
 ) {
     val base = Modifier.widthIn(max = 384.dp).fillMaxWidth()
     Column(
-        modifier = if (height == null) base else base.height(height),
+        modifier = base.heightIn(min = minHeight),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         content = content,
     )
@@ -216,8 +222,8 @@ private fun TraceOutputRow(
     icon: ImageVector = Lucide.Terminal,
 ) {
     TraceCollapsible(defaultOpen = defaultOpen, open = open, onOpenChange = onOpenChange) {
-        TraceCollapsibleTrigger {
-            TraceLine {
+        TraceCollapsibleTrigger(status = if (destructive) TraceStatus.Error else null) {
+            TraceLine(status = if (destructive) TraceStatus.Error else null) {
                 TraceIcon { Icon(icon) }
                 TraceTitle(title)
             }
@@ -279,70 +285,151 @@ private fun TraceSpinIcon() {
     Icon(Lucide.LoaderCircle, modifier = Modifier.graphicsLayer { rotationZ = rotation })
 }
 
-/** Official top preview: a finished assistant turn with reasoning, tool calls and sources. */
+/** The initial transcript is complete; Replay runs the same local streaming sequence. */
 @Composable
 internal fun TraceDemoPreview() {
     var replayToken by remember { mutableStateOf(0) }
-    var visible by remember { mutableStateOf(true) }
+    var stage by remember { mutableStateOf(8) }
+    var reasoning by remember { mutableStateOf(thoughtText) }
+    var answer by remember { mutableStateOf(demoAnswer) }
     LaunchedEffect(replayToken) {
         if (replayToken == 0) return@LaunchedEffect
-        visible = false
+        stage = 0
+        reasoning = ""
+        answer = ""
+        delay(200)
+        streamTraceText(thoughtText, 40) { reasoning = it }
+        stage = 1
+        delay(700)
+        stage = 2
+        delay(900)
+        stage = 3
         delay(1200)
-        visible = true
+        stage = 4
+        delay(1000)
+        stage = 5
+        streamTraceText(demoAnswer, 20) { answer = it }
+        stage = 8
     }
     Column(
         Modifier.widthIn(max = 384.dp).fillMaxWidth().padding(vertical = 24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         Bubble(demoQuestion, variant = BubbleVariant.Muted, align = MessageAlign.End)
-        if (visible) {
+        key(replayToken) {
             Trace(Modifier.fillMaxWidth()) {
-                TraceCollapsible {
-                    TraceCollapsibleTrigger {
-                        TraceLine {
-                            TraceIcon { Icon(Lucide.CircleCheck) }
-                            TraceTitle("Thought for 5s")
-                        }
-                    }
-                    TraceCollapsibleContent { Text { thoughtText } }
+                TraceThinkingRow(reasoning, stage == 0, "Thought for 5s", completedIcon = Lucide.CircleCheck)
+                if (stage >= 1) {
+                    TraceCommandRow(
+                        "pnpm --version",
+                        "10.18.0",
+                        running = stage == 1,
+                        completedIcon = Lucide.CircleCheck,
+                    )
                 }
-                TraceOutputRow("Ran pnpm --version", "10.18.0", icon = Lucide.CircleCheck)
-                TraceOutputRow(
-                    "Ran git diff --stat HEAD~1 -- package.json pnpm-lock.yaml",
-                    " package.json | 2 +-\n 1 file changed, 1 insertion(+), 1 deletion(-)",
-                    defaultOpen = true,
-                    icon = Lucide.CircleCheck,
-                )
-                TraceCollapsible {
-                    TraceCollapsibleTrigger {
-                        TraceLine(status = TraceStatus.Error) {
-                            TraceIcon { Icon(Lucide.CircleAlert) }
-                            TraceTitle("Failed to run pnpm install --frozen-lockfile")
-                        }
-                    }
-                    TraceCollapsibleContent { TraceOutput(lockfileError, destructive = true) }
+                if (stage >= 2) {
+                    TraceCommandRow(
+                        "git diff --stat HEAD~1 -- package.json pnpm-lock.yaml",
+                        " package.json | 2 +-\n 1 file changed, 1 insertion(+), 1 deletion(-)",
+                        running = stage == 2,
+                        defaultOpen = true,
+                        completedIcon = Lucide.CircleCheck,
+                    )
                 }
-                TraceCollapsible {
-                    TraceCollapsibleTrigger {
-                        TraceLine {
-                            TraceIcon { Icon(Lucide.Globe) }
-                            TraceTitle("Used ${demoSources.size} sources")
+                if (stage >= 3) {
+                    TraceCommandRow(
+                        "pnpm install --frozen-lockfile",
+                        lockfileError,
+                        running = stage == 3,
+                        failed = true,
+                        completedIcon = Lucide.CircleAlert,
+                    )
+                }
+                if (stage >= 4) {
+                    TraceCollapsible {
+                        TraceCollapsibleTrigger {
+                            TraceLine(status = if (stage == 4) TraceStatus.Running else null) {
+                                TraceIcon { Icon(Lucide.Globe) }
+                                TraceTitle("${if (stage == 4) "Using" else "Used"} ${demoSources.size} sources")
+                            }
                         }
-                    }
-                    TraceCollapsibleContent {
-                        Trace {
-                            demoSources.forEach { (title, href) -> TraceSourceRow(title, href) }
+                        TraceCollapsibleContent {
+                            Trace { demoSources.forEach { (title, href) -> TraceSourceRow(title, href) } }
                         }
                     }
                 }
             }
-            Text { demoAnswer }
         }
-        Button(
-            text = "Replay",
-            onClick = { replayToken += 1 },
-            variant = ButtonVariant.Outline,
-            size = ButtonSize.Sm,
+        if (answer.isNotEmpty()) Text { answer }
+        if (stage == 8) {
+            Button(
+                text = "Replay",
+                onClick = { replayToken += 1 },
+                variant = ButtonVariant.Outline,
+                size = ButtonSize.Sm,
+            )
+        }
+    }
+}
+
+/** Local transport: cancelled automatically when its recipe leaves composition. */
+private suspend fun streamTraceText(
+    text: String,
+    delayMillis: Long,
+    update: (String) -> Unit,
+) {
+    val words = text.split(" ")
+    words.indices.forEach { index ->
+        delay(delayMillis)
+        update(words.take(index + 1).joinToString(" "))
+    }
+}
+
+@Composable
+private fun TraceThinkingRow(
+    text: String,
+    running: Boolean,
+    completedTitle: String = "Thought",
+    completedIcon: ImageVector = Lucide.Brain,
+) {
+    var open by remember { mutableStateOf<Boolean?>(null) }
+    val line: @Composable () -> Unit = {
+        TraceLine(status = if (running) TraceStatus.Running else null) {
+            TraceIcon { if (running) TraceSpinIcon() else Icon(completedIcon) }
+            TraceTitle(if (running) "Thinking" else completedTitle)
+        }
+    }
+    if (text.isEmpty()) {
+        line()
+    } else {
+        TraceCollapsible(open = open ?: running, onOpenChange = { open = it }) {
+            TraceCollapsibleTrigger { line() }
+            TraceCollapsibleContent { Text { text } }
+        }
+    }
+}
+
+@Composable
+private fun TraceCommandRow(
+    command: String,
+    output: String,
+    running: Boolean,
+    failed: Boolean = false,
+    defaultOpen: Boolean = false,
+    completedIcon: ImageVector = Lucide.Terminal,
+) {
+    if (running) {
+        TraceLine(status = TraceStatus.Running) {
+            TraceIcon { TraceSpinIcon() }
+            TraceTitle("Running $command")
+        }
+    } else {
+        TraceOutputRow(
+            "${if (failed) "Failed to run" else "Ran"} $command",
+            output,
+            defaultOpen = defaultOpen,
+            destructive = failed,
+            icon = completedIcon,
         )
     }
 }
@@ -443,12 +530,26 @@ internal fun TraceLinkPreview() {
     }
 }
 
+/** Mirrors the source's button:hover TraceLine treatment for compound triggers. */
+@Composable
+internal fun TraceTriggerLine(
+    modifier: Modifier = Modifier,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    content: @Composable TraceLineScope.() -> Unit,
+) {
+    val hovered by interactionSource.collectIsHoveredAsState()
+    val colors = currentTheme.colors
+    CompositionLocalProvider(LocalContentColor provides if (hovered) colors.foreground else colors.mutedForeground) {
+        TraceLine(modifier.hoverable(interactionSource), content = content)
+    }
+}
+
 @Composable
 internal fun TraceDialogPreview() {
     Trace(Modifier.widthIn(max = 384.dp)) {
         Dialog {
             DialogTrigger {
-                TraceLine {
+                TraceTriggerLine {
                     TraceIcon { Icon(Lucide.Globe) }
                     TraceTitle("Searched the web for cache keys")
                     TraceIcon { Icon(Lucide.ChevronRight) }
@@ -472,7 +573,7 @@ internal fun TraceSheetPreview() {
     Trace(Modifier.widthIn(max = 384.dp)) {
         Sheet {
             SheetTrigger {
-                TraceLine {
+                TraceTriggerLine {
                     TraceIcon { Icon(Lucide.FolderSearch) }
                     TraceTitle("Explored 4 files")
                     TraceIcon { Icon(Lucide.ChevronRight) }
@@ -598,7 +699,7 @@ internal fun TraceCommitPreview() {
                     changedFiles.forEach { file ->
                         Sheet {
                             SheetTrigger {
-                                TraceLine {
+                                TraceTriggerLine {
                                     TraceIcon { Icon(if (file.added) Lucide.FilePlus else Lucide.FilePen) }
                                     TraceTitle("${if (file.added) "Added" else "Edited"} ${file.path}")
                                     TraceDescription(
@@ -665,7 +766,7 @@ private fun TraceDiff(diff: String) {
 internal fun TraceTurnPreview() {
     Column(Modifier.widthIn(max = 384.dp).fillMaxWidth()) {
         TraceCollapsible(defaultOpen = true) {
-            TraceCollapsibleTrigger {
+            TraceCollapsibleTrigger(status = TraceStatus.Error) {
                 TraceLine(status = TraceStatus.Error) {
                     TraceTitle("Worked for 2m 4s, 1 command failed")
                 }
@@ -689,7 +790,7 @@ internal fun TraceTurnPreview() {
                             }
                         }
                         TraceCollapsible(defaultOpen = true) {
-                            TraceCollapsibleTrigger {
+                            TraceCollapsibleTrigger(status = TraceStatus.Error) {
                                 TraceLine(status = TraceStatus.Error) {
                                     TraceIcon { Icon(Lucide.Terminal) }
                                     TraceTitle("Ran 2 commands, 1 failed")
@@ -699,7 +800,7 @@ internal fun TraceTurnPreview() {
                                 Trace(Modifier.fillMaxWidth()) {
                                     TraceStaticLine(Lucide.Terminal, "Ran node --version")
                                     TraceCollapsible {
-                                        TraceCollapsibleTrigger {
+                                        TraceCollapsibleTrigger(status = TraceStatus.Error) {
                                             TraceLine(status = TraceStatus.Error) {
                                                 TraceIcon { Icon(Lucide.Terminal) }
                                                 TraceTitle("Failed to run pnpm --version")
@@ -729,91 +830,92 @@ internal fun TraceTurnPreview() {
     }
 }
 
-@Composable
-private fun TraceReasoningConversation() {
-    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        Bubble(
-            "Why is the checkout deploy so slow?",
-            variant = BubbleVariant.Muted,
-            align = MessageAlign.End,
-        )
-        Trace(Modifier.fillMaxWidth()) {
-            TraceCollapsible {
-                TraceCollapsibleTrigger {
-                    TraceLine {
-                        TraceIcon { Icon(Lucide.Brain) }
-                        TraceTitle("Thought")
-                    }
-                }
-                TraceCollapsibleContent {
-                    Text {
-                        "The build log shows install and compile finish in under a minute. " +
-                            "Image optimization takes almost four, and it reruns on every deploy " +
-                            "because the cache key includes the commit hash."
-                    }
-                }
-            }
-        }
-        Text {
-            "Image optimization is the bottleneck. Key its cache on the lockfile and the " +
-                "image directory instead of the commit hash."
-        }
-    }
-}
+private const val reasoningText =
+    "The build log shows install and compile finish in under a minute. " +
+        "Image optimization takes almost four, and it reruns on every deploy " +
+        "because the cache key includes the commit hash."
+
+private const val reasoningAnswer =
+    "Image optimization is the bottleneck. Key its cache on the lockfile and the " +
+        "image directory instead of the commit hash."
 
 @Composable
 internal fun TraceReasoningPreview() {
     var started by remember { mutableStateOf(false) }
-    Column(
-        Modifier.widthIn(max = 384.dp).fillMaxWidth().height(288.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        if (started) TraceReasoningConversation()
-        Spacer(Modifier.weight(1f))
-        Button(
-            text = if (started) "Reset" else "Send message",
-            onClick = { started = !started },
-            variant = ButtonVariant.Outline,
-            size = ButtonSize.Sm,
-        )
+    var running by remember { mutableStateOf(false) }
+    var text by remember { mutableStateOf("") }
+    var answer by remember { mutableStateOf("") }
+    LaunchedEffect(started) {
+        if (!started) return@LaunchedEffect
+        running = true
+        delay(200)
+        streamTraceText(reasoningText, 60) { text = it }
+        running = false
+        delay(400)
+        streamTraceText(reasoningAnswer, 20) { answer = it }
     }
-}
-
-@Composable
-private fun TraceToolConversation() {
-    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        Bubble(
-            "Which package managers are installed?",
-            variant = BubbleVariant.Muted,
-            align = MessageAlign.End,
-        )
-        Trace(Modifier.fillMaxWidth()) {
-            TraceOutputRow("Ran node --version", "v24.18.0")
-            TraceOutputRow("Ran npm --version", "11.6.2")
-            TraceOutputRow(
-                "Failed to run pnpm --version",
-                "command not found: pnpm",
-                destructive = true,
+    TraceColumn(minHeight = 288.dp) {
+        if (started) {
+            Bubble("Why is the checkout deploy so slow?", variant = BubbleVariant.Muted, align = MessageAlign.End)
+            Trace { TraceThinkingRow(text, running) }
+            if (answer.isNotEmpty()) Text { answer }
+        }
+        if (!started || answer == reasoningAnswer) {
+            Button(
+                text = if (started) "Reset" else "Send message",
+                onClick = {
+                    started = !started
+                    text = ""
+                    answer = ""
+                },
+                variant = ButtonVariant.Outline,
+                size = ButtonSize.Sm,
             )
         }
-        Text { "Node 24 and npm 11 are installed. pnpm is not." }
     }
 }
 
 @Composable
 internal fun TraceToolPreview() {
     var started by remember { mutableStateOf(false) }
-    Column(
-        Modifier.widthIn(max = 384.dp).fillMaxWidth().height(288.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        if (started) TraceToolConversation()
-        Spacer(Modifier.weight(1f))
-        Button(
-            text = if (started) "Reset" else "Send message",
-            onClick = { started = !started },
-            variant = ButtonVariant.Outline,
-            size = ButtonSize.Sm,
-        )
+    var completed by remember { mutableStateOf(0) }
+    var answer by remember { mutableStateOf("") }
+    LaunchedEffect(started) {
+        if (!started) return@LaunchedEffect
+        repeat(3) {
+            delay(900)
+            completed = it + 1
+        }
+        streamTraceText("Node 24 and npm 11 are installed. pnpm is not.", 20) { answer = it }
+    }
+    TraceColumn(minHeight = 288.dp) {
+        if (started) {
+            Bubble("Which package managers are installed?", variant = BubbleVariant.Muted, align = MessageAlign.End)
+            Trace {
+                TraceCommandRow("node --version", "v24.18.0", running = completed == 0)
+                if (completed >= 1) TraceCommandRow("npm --version", "11.6.2", running = completed == 1)
+                if (completed >= 2) {
+                    TraceCommandRow(
+                        "pnpm --version",
+                        "command not found: pnpm",
+                        running = completed == 2,
+                        failed = true,
+                    )
+                }
+            }
+            if (answer.isNotEmpty()) Text { answer }
+        }
+        if (!started || answer == "Node 24 and npm 11 are installed. pnpm is not.") {
+            Button(
+                text = if (started) "Reset" else "Send message",
+                onClick = {
+                    started = !started
+                    completed = 0
+                    answer = ""
+                },
+                variant = ButtonVariant.Outline,
+                size = ButtonSize.Sm,
+            )
+        }
     }
 }

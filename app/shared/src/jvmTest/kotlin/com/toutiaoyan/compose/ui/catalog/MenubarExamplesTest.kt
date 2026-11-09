@@ -116,14 +116,15 @@ class MenubarExamplesTest {
     @Test fun exportKeepsOfficialSectionsAndKotlinExtensions() {
         val markdown = componentPageMarkdown(menubarDoc)
         assertFalse(markdown.contains("## Examples"))
-        val order = listOf(
-            "## Checkbox",
-            "## Radio",
-            "## Submenu",
-            "## With Icons",
-            "## RTL",
-            "## API Reference",
-        ).map { markdown.indexOf(it) }
+        val order =
+            listOf(
+                "## Checkbox",
+                "## Radio",
+                "## Submenu",
+                "## With Icons",
+                "## RTL",
+                "## API Reference",
+            ).map { markdown.indexOf(it) }
         assertTrue(order.all { it >= 0 }, "missing a section heading: $order")
         assertEquals(order.sorted(), order)
         assertContains(markdown, "Kotlin extension: Controlled")

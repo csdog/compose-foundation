@@ -2,10 +2,14 @@ package com.toutiaoyan.compose.ui.catalog
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.width
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.ui.catalog.docs.FilePicker
+import com.toutiaoyan.compose.ui.catalog.docs.LocalFilePicker
 import com.toutiaoyan.compose.ui.catalog.docs.inputDoc
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
@@ -17,7 +21,10 @@ import kotlin.test.assertTrue
 class InputExamplesTest {
     @get:Rule val rule = createComposeRule()
 
-    private fun show(title: String, width: Int = 640) {
+    private fun show(
+        title: String,
+        width: Int = 640,
+    ) {
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null, fontFamily = catalogFontFamily()) {
                 Box(Modifier.width(width.dp)) {
@@ -45,6 +52,7 @@ class InputExamplesTest {
                 "Button Group",
                 "Form",
                 "RTL",
+                "Kotlin extension: Autofocus",
             ),
             inputDoc.examples.map { it.title },
         )
@@ -114,5 +122,123 @@ class InputExamplesTest {
         show("RTL")
         rule.onNodeWithText("مفتاح API").assertIsDisplayed()
         rule.onNodeWithText("مفتاح API الخاص بك مشفر ومخزن بأمان.").assertIsDisplayed()
+    }
+
+    @Test fun clickingTheLabelFocusesTheNamedInput() {
+        show("Default")
+        rule.onNodeWithText("API Key").performClick()
+        rule.onNode(hasSetTextAction() and hasContentDescription("API Key")).assertIsFocused()
+    }
+
+    @Test fun gridLabelsFocusTheirOwnInputsWithoutAddingTabStops() {
+        show("Grid")
+        rule.onNodeWithText("First Name").performClick()
+        val first = rule.onNode(hasSetTextAction() and hasContentDescription("First Name"))
+        val last = rule.onNode(hasSetTextAction() and hasContentDescription("Last Name"))
+        first.assertIsFocused()
+        first.performKeyInput { pressKey(Key.Tab) }
+        last.assertIsFocused()
+        rule.onNodeWithText("First Name").performClick()
+        first.assertIsFocused()
+        rule.onNodeWithText("Last Name").performClick()
+        last.assertIsFocused()
+    }
+
+    @Test fun rtlLabelFocusesThePasswordInput() {
+        show("RTL")
+        rule.onNodeWithText("مفتاح API").performClick()
+        rule.onNode(hasSetTextAction() and hasContentDescription("مفتاح API")).assertIsFocused()
+    }
+
+    private fun showFile(picker: FilePicker?) {
+        rule.setContent {
+            CompositionLocalProvider(LocalFilePicker provides picker) {
+                Theme(preset = StylePreset.Nova) {
+                    Box(Modifier.width(640.dp)) {
+                        inputDoc.examples.single { it.title == "File" }.preview()
+                    }
+                }
+            }
+        }
+    }
+
+    @Test fun fileSelectionShowsTheFilenameAndCancellationKeepsIt() {
+        var onResult: ((String?) -> Unit)? = null
+        showFile { callback -> onResult = callback }
+        rule.onNodeWithText("No file chosen").assertIsDisplayed()
+        rule.onNodeWithText("Choose File").performClick()
+        rule.runOnIdle { requireNotNull(onResult)("holiday.png") }
+        rule.onNodeWithText("holiday.png").assertIsDisplayed()
+        rule.onNodeWithText("Choose File").performClick()
+        rule.runOnIdle { requireNotNull(onResult)(null) }
+        rule.onNodeWithText("holiday.png").assertIsDisplayed()
+    }
+
+    @Test fun unsupportedFilePickerIsDisabledAndExplained() {
+        showFile(null)
+        rule.onNodeWithText("Choose File").assertIsNotEnabled()
+        rule.onNodeWithText("File selection is unavailable on this platform.").assertIsDisplayed()
+    }
+
+    @Test fun exportedFileCodeHasACallerSuppliedPickerAndCancelContract() {
+        val code = inputDoc.examples.single { it.title == "File" }.code
+        assertTrue(code.contains("fun PictureInput(pickFile:"))
+        assertTrue(code.contains("if (selected != null) filename = selected"))
+        assertTrue(code.contains("enabled = pickFile != null"))
+        assertTrue(!code.contains("LocalFilePicker"))
+    }
+
+    @Test fun autofocusPreviewCanEditTheFocusedInput() {
+        show("Kotlin extension: Autofocus")
+        rule.onNodeWithText("Try autofocus").performClick()
+        val input = rule.onNode(hasSetTextAction() and hasContentDescription("Email"))
+        input.assertIsFocused()
+        input.performTextInput("name@example.com")
+        input.assertTextEquals("name@example.com")
+    }
+
+    @Test fun pictureLabelOpensTheInjectedPickerWithAnAccessibleButtonName() {
+        var requests = 0
+        showFile { requests++ }
+        rule.onNodeWithText("Picture").performClick()
+        rule.runOnIdle { assertEquals(1, requests) }
+        rule.onNodeWithContentDescription("Choose File: Picture").assertIsFocused()
+    }
+
+    @Test fun formLabelsFocusTheirOwnControls() {
+        show("Form", width = 480)
+        val labels = listOf("Name" to "Name, required", "Email" to "Email", "Phone" to "Phone", "Address" to "Address")
+        for ((label, accessibleName) in labels) {
+            rule.onNodeWithText(label).performClick()
+            rule.onNode(hasSetTextAction() and hasContentDescription(accessibleName)).assertIsFocused()
+        }
+        rule.onNodeWithText("Country").performClick()
+        rule.onNodeWithContentDescription("Country").assertIsFocused()
+    }
+
+    @Test fun fileActionUsesTheUpdatedPickerAndAcceptsAnOutstandingResult() {
+        var pending: ((String?) -> Unit)? = null
+        val picker = androidx.compose.runtime.mutableStateOf<FilePicker?>({ pending = it })
+        var updatedRequests = 0
+        rule.setContent {
+            CompositionLocalProvider(LocalFilePicker provides picker.value) {
+                Theme(preset = StylePreset.Nova) {
+                    inputDoc.examples.single { it.title == "File" }.preview()
+                }
+            }
+        }
+        rule.onNodeWithText("Choose File").performClick()
+        rule.runOnIdle {
+            picker.value = { callback ->
+                updatedRequests++
+                callback("new.png")
+            }
+        }
+        rule.waitForIdle()
+        rule.runOnIdle { requireNotNull(pending)("old.png") }
+        rule.onNodeWithText("old.png").assertIsDisplayed()
+        rule.onNodeWithText("Choose File").performClick()
+        rule.onNodeWithText("new.png").assertIsDisplayed()
+        rule.runOnIdle { assertEquals(1, updatedRequests) }
     }
 }

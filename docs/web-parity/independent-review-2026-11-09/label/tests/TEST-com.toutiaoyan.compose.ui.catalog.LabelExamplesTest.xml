@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="LabelExamplesTest[jvm]" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-11-08T23:58:34.650Z" hostname="Apples-MacBook-Pro.local" time="1.078">
+  <properties/>
+  <testcase name="paymentGuidanceAndBillingLabelActivationWork[jvm]" classname="com.toutiaoyan.compose.ui.catalog.LabelExamplesTest" time="0.725"/>
+  <testcase name="rtlRecipeChangesLanguageAndReversesTheControlRow[jvm]" classname="com.toutiaoyan.compose.ui.catalog.LabelExamplesTest" time="0.194"/>
+  <testcase name="labelInFieldRendersTheOfficialPaymentForm[jvm]" classname="com.toutiaoyan.compose.ui.catalog.LabelExamplesTest" time="0.041"/>
+  <testcase name="officialRecipesAndKotlinExtensionsAppearInOrder[jvm]" classname="com.toutiaoyan.compose.ui.catalog.LabelExamplesTest" time="0.014"/>
+  <testcase name="fieldGuidanceAppearsAfterThePrimaryPreview[jvm]" classname="com.toutiaoyan.compose.ui.catalog.LabelExamplesTest" time="0.014"/>
+  <testcase name="requiredExtensionRendersTheDestructiveMarker[jvm]" classname="com.toutiaoyan.compose.ui.catalog.LabelExamplesTest" time="0.016"/>
+  <testcase name="rtlRecipeShowsTheArabicLabel[jvm]" classname="com.toutiaoyan.compose.ui.catalog.LabelExamplesTest" time="0.022"/>
+  <testcase name="clickingTheDemoLabelTogglesItsCheckbox[jvm]" classname="com.toutiaoyan.compose.ui.catalog.LabelExamplesTest" time="0.032"/>
+  <testcase name="disabledExtensionStillRendersItsText[jvm]" classname="com.toutiaoyan.compose.ui.catalog.LabelExamplesTest" time="0.016"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

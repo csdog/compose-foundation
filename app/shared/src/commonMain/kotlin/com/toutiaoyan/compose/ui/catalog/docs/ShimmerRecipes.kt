@@ -44,6 +44,7 @@ private fun ShimmerText(
     duration: Int = 2000,
     spread: Dp = DefaultShimmerSpread,
     angle: Float = 20f,
+    reverse: Boolean = false,
     once: Boolean = false,
 ) {
     Text(
@@ -68,6 +69,8 @@ private fun ShimmerText(
                 spread,
                 angleDegrees =
                 angle,
+                reverse =
+                reverse,
                 once =
                 once,
             ),
@@ -195,6 +198,17 @@ internal fun ShimmerAngleRecipe() {
 }
 // endregion angle
 
+// region reverse
+@Composable
+internal fun ShimmerReverseRecipe() {
+    ShimmerComparison("shimmer", "shimmer-reverse", {
+        ShimmerText(modifier = Modifier.testTag("shimmer-forward"))
+    }, {
+        ShimmerText(modifier = Modifier.testTag("shimmer-reverse"), reverse = true)
+    })
+}
+// endregion reverse
+
 // region once
 @Composable
 internal fun ShimmerOnceRecipe() {
@@ -243,12 +257,84 @@ internal fun ShimmerRtlRecipe() {
 internal val shimmerOfficialExamples =
     listOf(
         ComponentExample("Default", code = shimmerDefaultRecipeCode, preview = { ShimmerDefaultRecipe() }),
-        ComponentExample("With Marker", code = shimmerMarkerRecipeCode, preview = { ShimmerMarkerRecipe() }),
-        ComponentExample("Color", code = shimmerColorRecipeCode, preview = { ShimmerColorRecipe() }),
-        ComponentExample("Duration", code = shimmerDurationRecipeCode, preview = { ShimmerDurationRecipe() }),
-        ComponentExample("Spread", code = shimmerSpreadRecipeCode, preview = { ShimmerSpreadRecipe() }),
-        ComponentExample("Angle", code = shimmerAngleRecipeCode, preview = { ShimmerAngleRecipe() }),
-        ComponentExample("Play Once", code = shimmerOnceRecipeCode, preview = { ShimmerOnceRecipe() }),
-        ComponentExample("Disabling the Shimmer", code = shimmerNoneRecipeCode, preview = { ShimmerNoneRecipe() }),
-        ComponentExample("RTL", code = shimmerRtlRecipeCode, preview = { ShimmerRtlRecipe() }),
+        ComponentExample(
+            "With Marker",
+            code = shimmerMarkerRecipeCode,
+            descriptionMarkdown =
+                "The shimmer composes with any component that renders text. A common pattern " +
+                    "is a `Marker` showing a live status while the assistant is working:",
+            preview = { ShimmerMarkerRecipe() },
+        ),
+        ComponentExample(
+            "Color",
+            code = shimmerColorRecipeCode,
+            descriptionMarkdown =
+                "Use `shimmer-color-<color>` to set the highlight color explicitly. It accepts " +
+                    "theme colors with an optional opacity modifier, or any arbitrary color value.",
+            preview = { ShimmerColorRecipe() },
+        ),
+        ComponentExample(
+            "Duration",
+            code = shimmerDurationRecipeCode,
+            descriptionMarkdown =
+                "Use `shimmer-duration-<number>` to set the duration of one sweep in " +
+                    "milliseconds. The default is `2000`, i.e. `2s`.",
+            preview = { ShimmerDurationRecipe() },
+        ),
+        ComponentExample(
+            "Spread",
+            code = shimmerSpreadRecipeCode,
+            descriptionMarkdown =
+                "Use `shimmer-spread-<number>` to set the width of the highlight band using " +
+                    "the spacing scale. The default is `calc(3ch + 40px)`: a fixed base plus a " +
+                    "`3ch` term that scales with the font size. For one-off values, use an " +
+                    "arbitrary length or percentage.",
+            preview = { ShimmerSpreadRecipe() },
+        ),
+        ComponentExample(
+            "Angle",
+            code = shimmerAngleRecipeCode,
+            descriptionMarkdown =
+                "Use `shimmer-angle-<number>` to set the tilt of the highlight band in " +
+                    "degrees. The default is `20`.",
+            preview = { ShimmerAngleRecipe() },
+        ),
+        ComponentExample(
+            "Reverse",
+            code = shimmerReverseRecipeCode,
+            descriptionMarkdown =
+                "Use `shimmer-reverse` to sweep the highlight in the opposite direction. In " +
+                    "RTL layouts the sweep already follows the reading direction. The official " +
+                    "page documents this class with code only; the preview above is added for " +
+                    "the Compose page.",
+            preview = { ShimmerReverseRecipe() },
+        ),
+        ComponentExample(
+            "Play Once",
+            code = shimmerOnceRecipeCode,
+            descriptionMarkdown =
+                "Use `shimmer-once` to play a single sweep instead of looping, useful as a " +
+                    "reveal when streaming completes. Pair it with `shimmer-duration-<number>` " +
+                    "to control how long the sweep takes.",
+            preview = { ShimmerOnceRecipe() },
+        ),
+        ComponentExample(
+            "Disabling the Shimmer",
+            code = shimmerNoneRecipeCode,
+            descriptionMarkdown =
+                "Use `shimmer-none` to turn the effect off and render the text normally. It " +
+                    "works in any class order, so the typical use is responsive or stateful:",
+            preview = { ShimmerNoneRecipe() },
+        ),
+        ComponentExample(
+            "RTL",
+            code = shimmerRtlRecipeCode,
+            descriptionMarkdown =
+                "To enable RTL support in shadcn/ui, see the " +
+                    "[RTL configuration guide](https://ui.shadcn.com/docs/rtl). The sweep follows " +
+                    "the reading direction, left to right in LTR and right to left in RTL, with " +
+                    "no extra classes. Like the CSS, `reverse = true` selects the reverse " +
+                    "direction; it does not cancel the RTL default.",
+            preview = { ShimmerRtlRecipe() },
+        ),
     )

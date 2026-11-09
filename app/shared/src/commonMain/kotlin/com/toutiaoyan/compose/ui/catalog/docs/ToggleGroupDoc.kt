@@ -37,7 +37,6 @@ import com.toutiaoyan.compose.ui.components.togglegroup.ToggleGroup
 import com.toutiaoyan.compose.ui.components.togglegroup.ToggleGroupDefaults
 import com.toutiaoyan.compose.ui.components.togglegroup.ToggleGroupItem
 import com.toutiaoyan.compose.ui.components.togglegroup.ToggleGroupOrientation
-import com.toutiaoyan.compose.ui.components.togglegroup.ToggleGroupType
 
 private val toggleGroupRtlLabels =
     listOf(
@@ -118,7 +117,9 @@ private fun ToggleGroupFontWeightDemo() {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
                     ) {
-                        Text(textStyle = androidx.compose.ui.text.TextStyle(fontSize = 24.sp, fontWeight = weight)) { "Aa" }
+                        Text(
+                            textStyle = androidx.compose.ui.text.TextStyle(fontSize = 24.sp, fontWeight = weight),
+                        ) { "Aa" }
                         Text(textStyle = TextColors.Muted) { value.replaceFirstChar { it.uppercase() } }
                     }
                 }

@@ -113,978 +113,988 @@ private val drawerNestedCode =
     """.trimIndent()
 
 private val drawerExtensionExamples =
-            listOf(
-                ComponentExample(
-                    title = "Edit profile (bottom edge, drag to dismiss)",
-                    code =
-                        """
-                        @Composable
-                        fun DrawerParityExample() {
-                            var open by remember { mutableStateOf(false) }
-                            var selected by remember { mutableStateOf("asap") }
-                            var confirmed by remember { mutableStateOf("") }
-                            val mobile = LocalWindowInfo.current.containerSize.width < with(LocalDensity.current) { 768.dp.roundToPx() }
-                            Column {
-                                Drawer(open = open, onOpenChange = { open = it }, showSwipeHandle = mobile, swipeDirection = if (mobile) DrawerSwipeDirection.Down else DrawerSwipeDirection.Right) {
-                                    DrawerTrigger("Open Drawer", variant = ButtonVariant.Secondary)
-                                    DrawerContent {
-                                        DrawerHeader("Pick a delivery time", "We'll prepare your order as soon as possible.")
-                                        Column(Modifier.weight(1f, fill = !mobile).clipToBounds().verticalScroll(rememberScrollState()).padding(16.dp)) {
-                                            RadioGroup(value = selected, onValueChange = { selected = it }) {
-                                                deliveryTimes.forEach { (value, label, description) ->
-                                                    Row(Modifier.fillMaxWidth().pointerInput(value) { detectTapGestures(onTap = { selected = value }) }.background(if (selected == value) currentTheme.colors.muted.copy(alpha = 0.3f) else androidx.compose.ui.graphics.Color.Transparent, RoundedCornerShape(twRadius.lg)).border(1.dp, currentTheme.colors.border, RoundedCornerShape(twRadius.lg)).padding(16.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                                                        Column(Modifier.weight(1f)) {
-                                                            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                                                SurfaceText(label, medium = true)
-                                                                if (value == "asap") Badge("Fastest", variant = BadgeVariant.Secondary)
-                                                            }
-                                                            SurfaceText(description, muted = true)
-                                                        }
-                                                        RadioGroupItem(value = value, label = label)
+    listOf(
+        ComponentExample(
+            title = "Edit profile (bottom edge, drag to dismiss)",
+            code =
+                """
+                @Composable
+                fun DrawerParityExample() {
+                    var open by remember { mutableStateOf(false) }
+                    var selected by remember { mutableStateOf("asap") }
+                    var confirmed by remember { mutableStateOf("") }
+                    val mobile = LocalWindowInfo.current.containerSize.width < with(LocalDensity.current) { 768.dp.roundToPx() }
+                    Column {
+                        Drawer(open = open, onOpenChange = { open = it }, showSwipeHandle = mobile, swipeDirection = if (mobile) DrawerSwipeDirection.Down else DrawerSwipeDirection.Right) {
+                            DrawerTrigger("Open Drawer", variant = ButtonVariant.Secondary)
+                            DrawerContent {
+                                DrawerHeader("Pick a delivery time", "We'll prepare your order as soon as possible.")
+                                Column(Modifier.weight(1f, fill = !mobile).clipToBounds().verticalScroll(rememberScrollState()).padding(16.dp)) {
+                                    RadioGroup(value = selected, onValueChange = { selected = it }) {
+                                        deliveryTimes.forEach { (value, label, description) ->
+                                            Row(Modifier.fillMaxWidth().pointerInput(value) { detectTapGestures(onTap = { selected = value }) }.background(if (selected == value) currentTheme.colors.muted.copy(alpha = 0.3f) else androidx.compose.ui.graphics.Color.Transparent, RoundedCornerShape(twRadius.lg)).border(1.dp, currentTheme.colors.border, RoundedCornerShape(twRadius.lg)).padding(16.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                                                Column(Modifier.weight(1f)) {
+                                                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                                        SurfaceText(label, medium = true)
+                                                        if (value == "asap") Badge("Fastest", variant = BadgeVariant.Secondary)
                                                     }
+                                                    SurfaceText(description, muted = true)
                                                 }
+                                                RadioGroupItem(value = value, label = label)
                                             }
                                         }
-                                        DrawerFooterColumn(modifier = Modifier.fillMaxWidth().background(currentTheme.colors.popover)) {
-                                            Button("Confirm Delivery Time", style = Style { width(1f); height(34.dp) }, modifier = Modifier.fillMaxWidth(), onClick = {
-                                                confirmed = deliveryTimes.first { it.first == selected }.second; open = false
-                                            })
-                                            Button("Cancel", style = Style { width(1f) }, modifier = Modifier.fillMaxWidth(), variant = ButtonVariant.Outline, onClick = { open = false })
-                                        }
                                     }
                                 }
-                                if (confirmed.isNotEmpty()) SurfaceText("Delivery time confirmed: ${'$'}confirmed", muted = true)
+                                DrawerFooterColumn(modifier = Modifier.fillMaxWidth().background(currentTheme.colors.popover)) {
+                                    Button("Confirm Delivery Time", style = Style { width(1f); height(34.dp) }, modifier = Modifier.fillMaxWidth(), onClick = {
+                                        confirmed = deliveryTimes.first { it.first == selected }.second; open = false
+                                    })
+                                    Button("Cancel", style = Style { width(1f) }, modifier = Modifier.fillMaxWidth(), variant = ButtonVariant.Outline, onClick = { open = false })
+                                }
                             }
                         }
+                        if (confirmed.isNotEmpty()) SurfaceText("Delivery time confirmed: ${'$'}confirmed", muted = true)
+                    }
+                }
 
-                        @Composable
-                        private fun SurfaceText(text: String, muted: Boolean = false, medium: Boolean = false) {
-                            val theme = currentTheme
-                            Text(textStyle = theme.typography.bodyMedium.copy(fontFamily = theme.fontFamily, fontSize = 14.sp, lineHeight = 20.sp,
-                                fontWeight = if (medium) FontWeight.Medium else FontWeight.Normal,
-                                color = if (muted) theme.colors.mutedForeground else theme.colors.foreground)) { text }
-                        }
+                @Composable
+                private fun SurfaceText(text: String, muted: Boolean = false, medium: Boolean = false) {
+                    val theme = currentTheme
+                    Text(textStyle = theme.typography.bodyMedium.copy(fontFamily = theme.fontFamily, fontSize = 14.sp, lineHeight = 20.sp,
+                        fontWeight = if (medium) FontWeight.Medium else FontWeight.Normal,
+                        color = if (muted) theme.colors.mutedForeground else theme.colors.foreground)) { text }
+                }
 
-                        private val deliveryTimes = listOf(
-                            Triple("asap", "Standard delivery", "25–35 min · Driver assigned now"),
-                            Triple("5-00", "5:00 PM – 5:15 PM", "Prep starts at 4:45 PM"),
-                            Triple("5-30", "5:30 PM – 5:45 PM", "Good if you're heading home"),
-                            Triple("6-00", "6:00 PM – 6:15 PM", "Most popular · High demand"),
-                            Triple("6-30", "6:30 PM – 6:45 PM", "Last slot before kitchen closes"),
+                private val deliveryTimes = listOf(
+                    Triple("asap", "Standard delivery", "25–35 min · Driver assigned now"),
+                    Triple("5-00", "5:00 PM – 5:15 PM", "Prep starts at 4:45 PM"),
+                    Triple("5-30", "5:30 PM – 5:45 PM", "Good if you're heading home"),
+                    Triple("6-00", "6:00 PM – 6:15 PM", "Most popular · High demand"),
+                    Triple("6-30", "6:30 PM – 6:45 PM", "Last slot before kitchen closes"),
+                )
+                """.trimIndent(),
+            preview = { DrawerParityExample() },
+        ),
+        ComponentExample(
+            title = "Swipe direction",
+            code =
+                """
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    for ((direction, label) in listOf(
+                        DrawerSwipeDirection.Up to "up",
+                        DrawerSwipeDirection.Right to "right",
+                        DrawerSwipeDirection.Down to "down",
+                        DrawerSwipeDirection.Left to "left",
+                    )) {
+                        Drawer(swipeDirection = direction) {
+                            DrawerTrigger(label)
+                            DrawerContent {
+                                DrawerHeader(
+                                    "Edit profile",
+                                    description = "Make changes to your profile here.",
+                                )
+                            }
+                        }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    for ((direction, label) in listOf(
+                        DrawerSwipeDirection.Up to "up",
+                        DrawerSwipeDirection.Right to "right",
+                        DrawerSwipeDirection.Down to "down",
+                        DrawerSwipeDirection.Left to "left",
+                    )) {
+                        Drawer(swipeDirection = direction) {
+                            DrawerTrigger(label)
+                            DrawerContent {
+                                DrawerHeader(
+                                    "Edit profile",
+                                    description = "Make changes to your profile here.",
+                                )
+                            }
+                        }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Default swipe direction (down)",
+            code = drawerLargeContentCode,
+            preview = { DrawerLargeContentExample() },
+        ),
+        ComponentExample(
+            title = "Scrollable content",
+            code = drawerLargeContentCode,
+            preview = { DrawerLargeContentExample() },
+        ),
+        ComponentExample(
+            title = "Non-dismissible",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Drawer(
+                    open = open,
+                    onOpenChange = { open = it },
+                    dismissOnClickOutside = false,
+                ) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon()
+                        DrawerHeader(
+                            "Notice",
+                            description = "Clicking outside will not close this drawer.",
                         )
-                        """.trimIndent(),
-                    preview = { DrawerParityExample() },
-                ),
-                ComponentExample(
-                    title = "Swipe direction",
-                    code =
-                        """
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            for ((direction, label) in listOf(
-                                DrawerSwipeDirection.Up to "up",
-                                DrawerSwipeDirection.Right to "right",
-                                DrawerSwipeDirection.Down to "down",
-                                DrawerSwipeDirection.Left to "left",
-                            )) {
-                                Drawer(swipeDirection = direction) {
-                                    DrawerTrigger(label)
-                                    DrawerContent {
-                                        DrawerHeader(
-                                            "Edit profile",
-                                            description = "Make changes to your profile here.",
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            for ((direction, label) in listOf(
-                                DrawerSwipeDirection.Up to "up",
-                                DrawerSwipeDirection.Right to "right",
-                                DrawerSwipeDirection.Down to "down",
-                                DrawerSwipeDirection.Left to "left",
-                            )) {
-                                Drawer(swipeDirection = direction) {
-                                    DrawerTrigger(label)
-                                    DrawerContent {
-                                        DrawerHeader(
-                                            "Edit profile",
-                                            description = "Make changes to your profile here.",
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default swipe direction (down)",
-                    code = drawerLargeContentCode,
-                    preview = { DrawerLargeContentExample() },
-                ),
-                ComponentExample(
-                    title = "Scrollable content",
-                    code = drawerLargeContentCode,
-                    preview = { DrawerLargeContentExample() },
-                ),
-                ComponentExample(
-                    title = "Non-dismissible",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(
-                            open = open,
-                            onOpenChange = { open = it },
-                            dismissOnClickOutside = false,
-                        ) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader(
-                                    "Notice",
-                                    description = "Clicking outside will not close this drawer.",
-                                )
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(
-                            open = open,
-                            onOpenChange = { open = it },
-                            dismissOnClickOutside = false,
-                        ) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader(
-                                    "Notice",
-                                    description = "Clicking outside will not close this drawer.",
-                                )
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default dismiss",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(
-                            open = open,
-                            onOpenChange = { open = it },
-                            dismissOnClickOutside = true,
-                        ) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerHeader(
-                                    "Notice",
-                                    description = "Clicking outside will close this drawer.",
-                                )
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(
-                            open = open,
-                            onOpenChange = { open = it },
-                            dismissOnClickOutside = true,
-                        ) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerHeader(
-                                    "Notice",
-                                    description = "Clicking outside will close this drawer.",
-                                )
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Non-modal",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(open = open, onOpenChange = { open = it }, modal = false) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader("Notice", description = "The page behind stays interactive.")
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(open = open, onOpenChange = { open = it }, modal = false) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader("Notice", description = "The page behind stays interactive.")
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Modal",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(open = open, onOpenChange = { open = it }, modal = true) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader("Notice", description = "The page behind is inert.")
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(open = open, onOpenChange = { open = it }, modal = true) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader("Notice", description = "The page behind is inert.")
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default modal",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(open = open, onOpenChange = { open = it }, modal = true) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader("Notice", description = "The page behind is inert.")
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(open = open, onOpenChange = { open = it }, modal = true) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader("Notice", description = "The page behind is inert.")
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Swipe handle",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(
-                            open = open,
-                            onOpenChange = { open = it },
-                            showSwipeHandle = true,
-                        ) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerHeader(
-                                    "Notice",
-                                    description = "showSwipeHandle paints DrawerSwipeHandle (Base default is false).",
-                                )
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(
-                            open = open,
-                            onOpenChange = { open = it },
-                            showSwipeHandle = true,
-                        ) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerHeader(
-                                    "Notice",
-                                    description = "showSwipeHandle paints DrawerSwipeHandle (Base default is false).",
-                                )
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Undismissible",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(
-                            open = open,
-                            onOpenChange = { open = it },
-                            dismissible = false,
-                        ) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader(
-                                    "Notice",
-                                    description = "Swipe and clicking outside will not close this drawer.",
-                                )
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(
-                            open = open,
-                            onOpenChange = { open = it },
-                            dismissible = false,
-                        ) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader(
-                                    "Notice",
-                                    description = "Swipe and clicking outside will not close this drawer.",
-                                )
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default dismissible",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(
-                            open = open,
-                            onOpenChange = { open = it },
-                            dismissible = true,
-                        ) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader("Notice", description = "Swipe or click outside to close.")
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(
-                            open = open,
-                            onOpenChange = { open = it },
-                            dismissible = true,
-                        ) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader("Notice", description = "Swipe or click outside to close.")
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Disable pointer dismissal",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(
-                            open = open,
-                            onOpenChange = { open = it },
-                            disablePointerDismissal = true,
-                        ) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerHeader(
-                                    "Notice",
-                                    description =
-                                        "Outside presses do not close (Base disablePointerDismissal). " +
-                                            "Swipe still works.",
-                                )
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(
-                            open = open,
-                            onOpenChange = { open = it },
-                            disablePointerDismissal = true,
-                        ) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerHeader(
-                                    "Notice",
-                                    description =
-                                        "Outside presses do not close (Base disablePointerDismissal). " +
-                                            "Swipe still works.",
-                                )
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Snap points",
-                    code =
-                        """
-                        val snaps = listOf(
-                            DrawerSnapPoint.Absolute(496.dp),
-                            DrawerSnapPoint.Fraction(1f),
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Drawer(
+                    open = open,
+                    onOpenChange = { open = it },
+                    dismissOnClickOutside = false,
+                ) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon()
+                        DrawerHeader(
+                            "Notice",
+                            description = "Clicking outside will not close this drawer.",
                         )
-                        var open by remember { mutableStateOf(false) }
-                        var snap by remember { mutableStateOf<DrawerSnapPoint?>(snaps[0]) }
-                        Drawer(
-                            open = open,
-                            onOpenChange = { open = it },
-                            showSwipeHandle = true,
-                            snapPoints = snaps,
-                            snapPoint = snap,
-                            onSnapPointChange = { snap = it },
-                        ) {
-                            DrawerTrigger("Open snap drawer")
-                            DrawerContent {
-                                DrawerHeader(
-                                    "Snap points",
-                                    description =
-                                        "Drag the drawer to snap between a compact peek and a near full-height view.",
-                                )
-                                Box(Modifier.weight(1f).padding(16.dp)) {
-                                    Box(Modifier.fillMaxWidth().height(320.dp).background(currentTheme.colors.muted, RoundedCornerShape(16.dp)))
-                                }
-                                DrawerFooterColumn(Modifier.fillMaxWidth()) {
-                                    DrawerClose { Button("Close", onClick = close, modifier = Modifier.fillMaxWidth()) }
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Default dismiss",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Drawer(
+                    open = open,
+                    onOpenChange = { open = it },
+                    dismissOnClickOutside = true,
+                ) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerHeader(
+                            "Notice",
+                            description = "Clicking outside will close this drawer.",
+                        )
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Drawer(
+                    open = open,
+                    onOpenChange = { open = it },
+                    dismissOnClickOutside = true,
+                ) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerHeader(
+                            "Notice",
+                            description = "Clicking outside will close this drawer.",
+                        )
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Non-modal",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Drawer(open = open, onOpenChange = { open = it }, modal = false) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon()
+                        DrawerHeader("Notice", description = "The page behind stays interactive.")
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Drawer(open = open, onOpenChange = { open = it }, modal = false) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon()
+                        DrawerHeader("Notice", description = "The page behind stays interactive.")
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Modal",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Drawer(open = open, onOpenChange = { open = it }, modal = true) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon()
+                        DrawerHeader("Notice", description = "The page behind is inert.")
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Drawer(open = open, onOpenChange = { open = it }, modal = true) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon()
+                        DrawerHeader("Notice", description = "The page behind is inert.")
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Default modal",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Drawer(open = open, onOpenChange = { open = it }, modal = true) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon()
+                        DrawerHeader("Notice", description = "The page behind is inert.")
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Drawer(open = open, onOpenChange = { open = it }, modal = true) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon()
+                        DrawerHeader("Notice", description = "The page behind is inert.")
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Swipe handle",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Drawer(
+                    open = open,
+                    onOpenChange = { open = it },
+                    showSwipeHandle = true,
+                ) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerHeader(
+                            "Notice",
+                            description = "showSwipeHandle paints DrawerSwipeHandle (Base default is false).",
+                        )
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Drawer(
+                    open = open,
+                    onOpenChange = { open = it },
+                    showSwipeHandle = true,
+                ) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerHeader(
+                            "Notice",
+                            description = "showSwipeHandle paints DrawerSwipeHandle (Base default is false).",
+                        )
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Undismissible",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Drawer(
+                    open = open,
+                    onOpenChange = { open = it },
+                    dismissible = false,
+                    disablePointerDismissal = true,
+                ) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon()
+                        DrawerHeader(
+                            "Notice",
+                            description = "Swipe and clicking outside will not close this drawer.",
+                        )
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Drawer(
+                    open = open,
+                    onOpenChange = { open = it },
+                    dismissible = false,
+                    disablePointerDismissal = true,
+                ) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon()
+                        DrawerHeader(
+                            "Notice",
+                            description = "Swipe and clicking outside will not close this drawer.",
+                        )
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Default dismissible",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Drawer(
+                    open = open,
+                    onOpenChange = { open = it },
+                    dismissible = true,
+                ) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon()
+                        DrawerHeader("Notice", description = "Swipe or click outside to close.")
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Drawer(
+                    open = open,
+                    onOpenChange = { open = it },
+                    dismissible = true,
+                ) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon()
+                        DrawerHeader("Notice", description = "Swipe or click outside to close.")
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Disable pointer dismissal",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Drawer(
+                    open = open,
+                    onOpenChange = { open = it },
+                    disablePointerDismissal = true,
+                ) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerHeader(
+                            "Notice",
+                            description =
+                                "Outside presses do not close (Base disablePointerDismissal). " +
+                                    "Swipe still works.",
+                        )
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Drawer(
+                    open = open,
+                    onOpenChange = { open = it },
+                    disablePointerDismissal = true,
+                ) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerHeader(
+                            "Notice",
+                            description =
+                                "Outside presses do not close (Base disablePointerDismissal). " +
+                                    "Swipe still works.",
+                        )
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Snap points",
+            code =
+                """
+                val snaps = listOf(
+                    DrawerSnapPoint.Absolute(496.dp),
+                    DrawerSnapPoint.Fraction(1f),
+                )
+                var open by remember { mutableStateOf(false) }
+                var snap by remember { mutableStateOf<DrawerSnapPoint?>(snaps[0]) }
+                Drawer(
+                    open = open,
+                    onOpenChange = { open = it },
+                    showSwipeHandle = true,
+                    snapPoints = snaps,
+                    snapPoint = snap,
+                    onSnapPointChange = { snap = it },
+                ) {
+                    DrawerTrigger("Open snap drawer")
+                    DrawerContent {
+                        DrawerHeader(
+                            "Snap points",
+                            description =
+                                "Drag the drawer to snap between a compact peek and a near full-height view.",
+                        )
+                        Box(Modifier.weight(1f).padding(16.dp)) {
+                            Box(Modifier.fillMaxWidth().height(320.dp).background(currentTheme.colors.muted, RoundedCornerShape(16.dp)))
                         }
-                        """.trimIndent(),
-                    preview = {
-                        val snaps =
-                            listOf(
-                                DrawerSnapPoint.Absolute(496.dp),
-                                DrawerSnapPoint.Fraction(1f),
+                        DrawerFooterColumn(Modifier.fillMaxWidth()) {
+                            DrawerClose { Button("Close", onClick = close, modifier = Modifier.fillMaxWidth()) }
+                        }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                val snaps =
+                    listOf(
+                        DrawerSnapPoint.Absolute(496.dp),
+                        DrawerSnapPoint.Fraction(1f),
+                    )
+                var open by remember { mutableStateOf(false) }
+                var snap by remember { mutableStateOf<DrawerSnapPoint?>(snaps[0]) }
+                Drawer(
+                    open = open,
+                    onOpenChange = { open = it },
+                    showSwipeHandle = true,
+                    snapPoints = snaps,
+                    snapPoint = snap,
+                    onSnapPointChange = { snap = it },
+                ) {
+                    DrawerTrigger("Open snap drawer")
+                    DrawerContent {
+                        DrawerHeader(
+                            "Snap points",
+                            description =
+                                "Drag the drawer to snap between a compact peek and a near full-height view.",
+                        )
+                        Box(Modifier.weight(1f).padding(16.dp)) {
+                            Box(
+                                Modifier.fillMaxWidth().height(
+                                    320.dp,
+                                ).background(currentTheme.colors.muted, RoundedCornerShape(16.dp)),
                             )
-                        var open by remember { mutableStateOf(false) }
-                        var snap by remember { mutableStateOf<DrawerSnapPoint?>(snaps[0]) }
-                        Drawer(
-                            open = open,
-                            onOpenChange = { open = it },
-                            showSwipeHandle = true,
-                            snapPoints = snaps,
-                            snapPoint = snap,
-                            onSnapPointChange = { snap = it },
-                        ) {
-                            DrawerTrigger("Open snap drawer")
-                            DrawerContent {
-                                DrawerHeader(
-                                    "Snap points",
-                                    description =
-                                        "Drag the drawer to snap between a compact peek and a near full-height view.",
-                                )
-                                Box(Modifier.weight(1f).padding(16.dp)) {
-                                    Box(
-                                        Modifier.fillMaxWidth().height(
-                                            320.dp,
-                                        ).background(currentTheme.colors.muted, RoundedCornerShape(16.dp)),
-                                    )
-                                }
-                                DrawerFooterColumn(Modifier.fillMaxWidth()) {
-                                    DrawerClose { Button("Close", onClick = close, modifier = Modifier.fillMaxWidth()) }
-                                }
-                            }
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Indent effect",
-                    code =
-                        """
-                        // At the app root: OverlayHost { DrawerIndentHost { AppContent() } }
-                        Drawer(indentBackground = true, showSwipeHandle = true) {
-                            DrawerTrigger("Open indent drawer")
-                            DrawerContent {
-                                DrawerHeader("Indent effect", "Drag the drawer to restore the page scale and corners. Release to settle together.")
-                                DrawerFooter { DrawerClose { Button("Close", onClick = close, modifier = Modifier.fillMaxWidth()) } }
-                            }
+                        DrawerFooterColumn(Modifier.fillMaxWidth()) {
+                            DrawerClose { Button("Close", onClick = close, modifier = Modifier.fillMaxWidth()) }
                         }
-                        """.trimIndent(),
-                    preview = {
-                        Drawer(indentBackground = true, showSwipeHandle = true) {
-                            DrawerTrigger("Open indent drawer")
-                            DrawerContent {
-                                DrawerHeader(
-                                    "Indent effect",
-                                    (
-                                        "Drag the drawer to restore the page scale and corners. " +
-                                            "Release to settle together."
-                                    ),
-                                )
-                                DrawerFooter { DrawerClose { Button("Close", onClick = close, modifier = Modifier.fillMaxWidth()) } }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Nested drawers",
-                    code = drawerNestedCode,
-                    preview = { DrawerNestedParityExample() },
-                ),
-                ComponentExample(
-                    title = "Disabled close",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(open = open, onOpenChange = { open = it }) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon(disabled = true)
-                                DrawerHeader("Notice", description = "The close control is disabled.")
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(open = open, onOpenChange = { open = it }) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon(disabled = true)
-                                DrawerHeader("Notice", description = "The close control is disabled.")
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default disabled",
-                    code =
-                        """
-                        Drawer(defaultOpen = false) {
-                            DrawerTrigger("Open drawer", disabled = false)
-                            DrawerContent {
-                                DrawerHeader("Notice", description = "Starts closed.")
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Drawer(defaultOpen = false) {
-                            DrawerTrigger("Open drawer", disabled = false)
-                            DrawerContent {
-                                DrawerHeader("Notice", description = "Starts closed.")
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Prevent pointer dismiss",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(open = open, onOpenChange = { open = it }) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent(
-                                onPointerDownOutside = { true },
-                            ) {
-                                DrawerCloseIcon()
-                                DrawerHeader("Notice", description = "Clicking the overlay will not close this drawer.")
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(open = open, onOpenChange = { open = it }) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent(
-                                onPointerDownOutside = { true },
-                            ) {
-                                DrawerCloseIcon()
-                                DrawerHeader("Notice", description = "Clicking the overlay will not close this drawer.")
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Prevent interact outside",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(open = open, onOpenChange = { open = it }) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent(
-                                onInteractOutside = { true },
-                            ) {
-                                DrawerCloseIcon()
-                                DrawerHeader("Notice", description = "Interacting outside will not close this drawer.")
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(open = open, onOpenChange = { open = it }) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent(
-                                onInteractOutside = { true },
-                            ) {
-                                DrawerCloseIcon()
-                                DrawerHeader("Notice", description = "Interacting outside will not close this drawer.")
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Accessible close label",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(open = open, onOpenChange = { open = it }) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon(ariaLabel = "Dismiss drawer")
-                                DrawerHeader("Notice", description = "The close button has a custom accessible name.")
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Drawer(open = open, onOpenChange = { open = it }) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon(ariaLabel = "Dismiss drawer")
-                                DrawerHeader("Notice", description = "The close button has a custom accessible name.")
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Uncontrolled",
-                    code =
-                        """
-                        Drawer {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader(
-                                    "Notice",
-                                    description = "Omit open and onOpenChange. Optional defaultOpen starts closed.",
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Indent effect",
+            code =
+                """
+                // At the app root: OverlayHost { DrawerIndentHost { AppContent() } }
+                Drawer(indentBackground = true, showSwipeHandle = true) {
+                    DrawerTrigger("Open indent drawer")
+                    DrawerContent {
+                        DrawerHeader("Indent effect", "Drag the drawer to restore the page scale and corners. Release to settle together.")
+                        DrawerFooter { DrawerClose { Button("Close", onClick = close, modifier = Modifier.fillMaxWidth()) } }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Drawer(indentBackground = true, showSwipeHandle = true) {
+                    DrawerTrigger("Open indent drawer")
+                    DrawerContent {
+                        DrawerHeader(
+                            "Indent effect",
+                            (
+                                "Drag the drawer to restore the page scale and corners. " +
+                                    "Release to settle together."
+                            ),
+                        )
+                        DrawerFooter {
+                            DrawerClose {
+                                Button(
+                                    "Close",
+                                    onClick = close,
+                                    modifier = Modifier.fillMaxWidth(),
                                 )
                             }
                         }
-                        """.trimIndent(),
-                    preview = {
-                        Drawer {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader(
-                                    "Notice",
-                                    description = "Omit open and onOpenChange. Optional defaultOpen starts closed.",
-                                )
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Nested drawers",
+            code = drawerNestedCode,
+            preview = { DrawerNestedParityExample() },
+        ),
+        ComponentExample(
+            title = "Disabled close",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Drawer(open = open, onOpenChange = { open = it }) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon(disabled = true)
+                        DrawerHeader("Notice", description = "The close control is disabled.")
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Drawer(open = open, onOpenChange = { open = it }) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon(disabled = true)
+                        DrawerHeader("Notice", description = "The close control is disabled.")
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Default disabled",
+            code =
+                """
+                Drawer(defaultOpen = false) {
+                    DrawerTrigger("Open drawer", disabled = false)
+                    DrawerContent {
+                        DrawerHeader("Notice", description = "Starts closed.")
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Drawer(defaultOpen = false) {
+                    DrawerTrigger("Open drawer", disabled = false)
+                    DrawerContent {
+                        DrawerHeader("Notice", description = "Starts closed.")
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Prevent pointer dismiss",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Drawer(open = open, onOpenChange = { open = it }) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent(
+                        onPointerDownOutside = { true },
+                    ) {
+                        DrawerCloseIcon()
+                        DrawerHeader("Notice", description = "Clicking the overlay will not close this drawer.")
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Drawer(open = open, onOpenChange = { open = it }) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent(
+                        onPointerDownOutside = { true },
+                    ) {
+                        DrawerCloseIcon()
+                        DrawerHeader("Notice", description = "Clicking the overlay will not close this drawer.")
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Prevent interact outside",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Drawer(open = open, onOpenChange = { open = it }) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent(
+                        onInteractOutside = { true },
+                    ) {
+                        DrawerCloseIcon()
+                        DrawerHeader("Notice", description = "Interacting outside will not close this drawer.")
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Drawer(open = open, onOpenChange = { open = it }) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent(
+                        onInteractOutside = { true },
+                    ) {
+                        DrawerCloseIcon()
+                        DrawerHeader("Notice", description = "Interacting outside will not close this drawer.")
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Accessible close label",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Drawer(open = open, onOpenChange = { open = it }) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon(ariaLabel = "Dismiss drawer")
+                        DrawerHeader("Notice", description = "The close button has a custom accessible name.")
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Drawer(open = open, onOpenChange = { open = it }) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon(ariaLabel = "Dismiss drawer")
+                        DrawerHeader("Notice", description = "The close button has a custom accessible name.")
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Uncontrolled",
+            code =
+                """
+                Drawer {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon()
+                        DrawerHeader(
+                            "Notice",
+                            description = "Omit open and onOpenChange. Optional defaultOpen starts closed.",
+                        )
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Drawer {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon()
+                        DrawerHeader(
+                            "Notice",
+                            description = "Omit open and onOpenChange. Optional defaultOpen starts closed.",
+                        )
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Default open",
+            code =
+                """
+                Drawer(defaultOpen = false) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon()
+                        DrawerHeader("Notice", description = "Starts closed.")
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Drawer(defaultOpen = false) {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon()
+                        DrawerHeader("Notice", description = "Starts closed.")
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Title and description",
+            code =
+                """
+                Drawer {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon()
+                        DrawerHeader {
+                            DrawerTitle("Notice")
+                            DrawerDescription("Compose Title and Description inside Header.")
+                        }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Drawer {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon()
+                        DrawerHeader {
+                            DrawerTitle("Notice")
+                            DrawerDescription("Compose Title and Description inside Header.")
+                        }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Footer",
+            code =
+                """
+                Drawer {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon()
+                        DrawerHeader {
+                            DrawerTitle("Notice")
+                            DrawerDescription("Footer holds actions, matching shadcn DrawerFooter.")
+                        }
+                        DrawerFooter {
+                            Button("Close", onClick = close)
+                        }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Drawer {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon()
+                        DrawerHeader {
+                            DrawerTitle("Notice")
+                            DrawerDescription("Footer holds actions, matching shadcn DrawerFooter.")
+                        }
+                        DrawerFooter {
+                            Button("Close", onClick = close)
+                        }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Header",
+            code =
+                """
+                Drawer {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon()
+                        DrawerHeader {
+                            DrawerTitle("Notice")
+                            DrawerDescription("Compose Title and Description inside Header.")
+                        }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Drawer {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerCloseIcon()
+                        DrawerHeader {
+                            DrawerTitle("Notice")
+                            DrawerDescription("Compose Title and Description inside Header.")
+                        }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Close (children slot)",
+            code =
+                """
+                Drawer {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerHeader {
+                            DrawerTitle("Notice")
+                            DrawerDescription("Compose uses children instead of Base render={Button}.")
+                        }
+                        DrawerFooter {
+                            DrawerClose {
+                                Button("Cancel", onClick = close, variant = ButtonVariant.Outline)
                             }
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default open",
-                    code =
-                        """
-                        Drawer(defaultOpen = false) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader("Notice", description = "Starts closed.")
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Drawer {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerHeader {
+                            DrawerTitle("Notice")
+                            DrawerDescription("Compose uses children instead of Base render={Button}.")
+                        }
+                        DrawerFooter {
+                            DrawerClose {
+                                Button("Cancel", onClick = close, variant = ButtonVariant.Outline)
                             }
                         }
-                        """.trimIndent(),
-                    preview = {
-                        Drawer(defaultOpen = false) {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader("Notice", description = "Starts closed.")
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Trigger (children slot)",
+            code =
+                """
+                Drawer {
+                    DrawerTrigger {
+                        Button("Open drawer", onClick = toggle, variant = ButtonVariant.Outline)
+                    }
+                    DrawerContent {
+                        DrawerHeader {
+                            DrawerTitle("Notice")
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Title and description",
-                    code =
-                        """
-                        Drawer {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader {
-                                    DrawerTitle("Notice")
-                                    DrawerDescription("Compose Title and Description inside Header.")
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Drawer {
+                    DrawerTrigger {
+                        Button("Open drawer", onClick = toggle, variant = ButtonVariant.Outline)
+                    }
+                    DrawerContent {
+                        DrawerHeader {
+                            DrawerTitle("Notice")
                         }
-                        """.trimIndent(),
-                    preview = {
-                        Drawer {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader {
-                                    DrawerTitle("Notice")
-                                    DrawerDescription("Compose Title and Description inside Header.")
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Description",
+            code =
+                """
+                Drawer {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerHeader {
+                            DrawerTitle("Notice")
+                            DrawerDescription("DrawerDescription matches shadcn's description slot.")
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Footer",
-                    code =
-                        """
-                        Drawer {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader {
-                                    DrawerTitle("Notice")
-                                    DrawerDescription("Footer holds actions, matching shadcn DrawerFooter.")
-                                }
-                                DrawerFooter {
-                                    Button("Close", onClick = {})
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Drawer {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerHeader {
+                            DrawerTitle("Notice")
+                            DrawerDescription("DrawerDescription matches shadcn's description slot.")
                         }
-                        """.trimIndent(),
-                    preview = {
-                        Drawer {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader {
-                                    DrawerTitle("Notice")
-                                    DrawerDescription("Footer holds actions, matching shadcn DrawerFooter.")
-                                }
-                                DrawerFooter {
-                                    Button("Close", onClick = {})
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Overlay",
+            code =
+                """
+                Drawer {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerHeader {
+                            DrawerTitle("Notice")
+                            DrawerDescription("DrawerOverlay is the scrim composed by DrawerContent.")
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Header",
-                    code =
-                        """
-                        Drawer {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader {
-                                    DrawerTitle("Notice")
-                                    DrawerDescription("Compose Title and Description inside Header.")
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Drawer {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerHeader {
+                            DrawerTitle("Notice")
+                            DrawerDescription("DrawerOverlay is the scrim composed by DrawerContent.")
                         }
-                        """.trimIndent(),
-                    preview = {
-                        Drawer {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerCloseIcon()
-                                DrawerHeader {
-                                    DrawerTitle("Notice")
-                                    DrawerDescription("Compose Title and Description inside Header.")
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Content",
+            code =
+                """
+                Drawer {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerHeader {
+                            DrawerTitle("Notice")
+                            DrawerDescription("DrawerContent hosts Header, Title, and Description.")
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Close (children slot)",
-                    code =
-                        """
-                        Drawer {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerHeader {
-                                    DrawerTitle("Notice")
-                                    DrawerDescription("Compose uses children instead of Base render={Button}.")
-                                }
-                                DrawerFooter {
-                                    DrawerClose {
-                                        Button("Cancel", onClick = close, variant = ButtonVariant.Outline)
-                                    }
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Drawer {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerHeader {
+                            DrawerTitle("Notice")
+                            DrawerDescription("DrawerContent hosts Header, Title, and Description.")
                         }
-                        """.trimIndent(),
-                    preview = {
-                        Drawer {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerHeader {
-                                    DrawerTitle("Notice")
-                                    DrawerDescription("Compose uses children instead of Base render={Button}.")
-                                }
-                                DrawerFooter {
-                                    DrawerClose {
-                                        Button("Cancel", onClick = close, variant = ButtonVariant.Outline)
-                                    }
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Title",
+            code =
+                """
+                Drawer {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerHeader {
+                            DrawerTitle("Notice")
+                            DrawerDescription("Compose Title and Description inside Header.")
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Trigger (children slot)",
-                    code =
-                        """
-                        Drawer {
-                            DrawerTrigger {
-                                Button("Open drawer", onClick = toggle, variant = ButtonVariant.Outline)
-                            }
-                            DrawerContent {
-                                DrawerHeader {
-                                    DrawerTitle("Notice")
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Drawer {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerHeader {
+                            DrawerTitle("Notice")
+                            DrawerDescription("Compose Title and Description inside Header.")
                         }
-                        """.trimIndent(),
-                    preview = {
-                        Drawer {
-                            DrawerTrigger {
-                                Button("Open drawer", onClick = toggle, variant = ButtonVariant.Outline)
-                            }
-                            DrawerContent {
-                                DrawerHeader {
-                                    DrawerTitle("Notice")
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Portal",
+            code =
+                """
+                Drawer {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerHeader {
+                            DrawerTitle("Notice")
+                            DrawerDescription("DrawerPortal is the teleport host composed by DrawerContent.")
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Description",
-                    code =
-                        """
-                        Drawer {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerHeader {
-                                    DrawerTitle("Notice")
-                                    DrawerDescription("DrawerDescription matches shadcn's description slot.")
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Drawer {
+                    DrawerTrigger("Open drawer")
+                    DrawerContent {
+                        DrawerHeader {
+                            DrawerTitle("Notice")
+                            DrawerDescription("DrawerPortal is the teleport host composed by DrawerContent.")
                         }
-                        """.trimIndent(),
-                    preview = {
-                        Drawer {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerHeader {
-                                    DrawerTitle("Notice")
-                                    DrawerDescription("DrawerDescription matches shadcn's description slot.")
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Overlay",
-                    code =
-                        """
-                        Drawer {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerHeader {
-                                    DrawerTitle("Notice")
-                                    DrawerDescription("DrawerOverlay is the scrim composed by DrawerContent.")
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Drawer {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerHeader {
-                                    DrawerTitle("Notice")
-                                    DrawerDescription("DrawerOverlay is the scrim composed by DrawerContent.")
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Content",
-                    code =
-                        """
-                        Drawer {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerHeader {
-                                    DrawerTitle("Notice")
-                                    DrawerDescription("DrawerContent hosts Header, Title, and Description.")
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Drawer {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerHeader {
-                                    DrawerTitle("Notice")
-                                    DrawerDescription("DrawerContent hosts Header, Title, and Description.")
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Title",
-                    code =
-                        """
-                        Drawer {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerHeader {
-                                    DrawerTitle("Notice")
-                                    DrawerDescription("Compose Title and Description inside Header.")
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Drawer {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerHeader {
-                                    DrawerTitle("Notice")
-                                    DrawerDescription("Compose Title and Description inside Header.")
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Portal",
-                    code =
-                        """
-                        Drawer {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerHeader {
-                                    DrawerTitle("Notice")
-                                    DrawerDescription("DrawerPortal is the teleport host composed by DrawerContent.")
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Drawer {
-                            DrawerTrigger("Open drawer")
-                            DrawerContent {
-                                DrawerHeader {
-                                    DrawerTitle("Notice")
-                                    DrawerDescription("DrawerPortal is the teleport host composed by DrawerContent.")
-                                }
-                            }
-                        }
-                    },
-                ),
-            )
+                    }
+                }
+            },
+        ),
+    )
 
 /** Official recipes promoted into [drawerOfficialExamples]; not repeated as extensions. */
 private val drawerPromotedExamples =
@@ -1286,7 +1296,11 @@ private fun DrawerSwipeHandleRecipe() {
         DrawerContent {
             DrawerHeader("Drawer", "Drawer with a swipe handle.")
             Box(Modifier.padding(16.dp)) {
-                Box(Modifier.fillMaxWidth().height(320.dp).background(currentTheme.colors.muted, RoundedCornerShape(16.dp)))
+                Box(
+                    Modifier.fillMaxWidth().height(
+                        320.dp,
+                    ).background(currentTheme.colors.muted, RoundedCornerShape(16.dp)),
+                )
             }
             DrawerFooterColumn(Modifier.fillMaxWidth()) {
                 DrawerClose { Button("Close", onClick = close, modifier = Modifier.fillMaxWidth()) }
@@ -1328,7 +1342,11 @@ private fun DrawerSnapPointsRecipe() {
                 "Drag the drawer to snap between a compact peek and a near full-height view.",
             )
             Box(Modifier.padding(16.dp)) {
-                Box(Modifier.fillMaxWidth().height(320.dp).background(currentTheme.colors.muted, RoundedCornerShape(16.dp)))
+                Box(
+                    Modifier.fillMaxWidth().height(
+                        320.dp,
+                    ).background(currentTheme.colors.muted, RoundedCornerShape(16.dp)),
+                )
             }
             DrawerFooterColumn(Modifier.fillMaxWidth()) {
                 DrawerClose { Button("Close", onClick = close, modifier = Modifier.fillMaxWidth()) }
@@ -1439,14 +1457,71 @@ private val drawerGuideSections =
                                 "knobs are component parameters."
                         ),
                     ),
-                    ComponentGuideBlock.Bullets(
-                        listOf(
-                            "`--drawer-inset` → `DrawerDefaults.WindowInset` (8dp floating gap).",
-                            "`--drawer-bleed-background` → the overlay/popover fill behind the panel on swipe overshoot.",
-                            "`--drawer-overlay-min-opacity` → the overlay floor, 0.5 while snap points are active.",
-                            "`data-swipe-direction` / `data-swipe-axis` → `DrawerSwipeDirection`, readable in the preview to scope axis-specific layout.",
-                            "`data-snap-points` / `data-expanded` / `data-swiping` / `data-nested-drawer-open` → the snap and nesting state on `DrawerScope`, not style variants.",
-                        ),
+                    ComponentGuideBlock.Paragraph(
+                        "Nova uses directional rounded-xl corners and an interior-edge border. The official " +
+                            "page previews use Rhea; their floating chrome is not the Nova specification. " +
+                            "Backdrop blur records the underlying content through `OverlayHost` and requires " +
+                            "platform RenderEffect support. Without the host, " +
+                            "the popup fallback has no backdrop capture.",
+                    ),
+                    ComponentGuideBlock.Table(
+                        headers = listOf("Web variable", "Default", "Compose behavior"),
+                        rows =
+                            listOf(
+                                listOf(
+                                    "`--drawer-inset`",
+                                    "`0px`",
+                                    "Nova uses `DrawerDefaults.WindowInset` (0dp); panels attach to the viewport.",
+                                ),
+                                listOf(
+                                    "`--drawer-bleed-background`",
+                                    "`var(--color-popover)`",
+                                    "Panel uses popover fill; anchored drags clamp at the open edge, " +
+                                        "so no overshoot gap is exposed.",
+                                ),
+                                listOf(
+                                    "`--drawer-overlay-min-opacity`",
+                                    "`0` (`0.5` with snap points)",
+                                    "Swipe fades the 10% black scrim and captured backdrop together; " +
+                                        "snap points keep an opacity floor of 0.5.",
+                                ),
+                            ),
+                    ),
+                    ComponentGuideBlock.Table(
+                        headers = listOf("Web attribute", "Values / when set", "Compose mapping"),
+                        rows =
+                            listOf(
+                                listOf(
+                                    "`data-swipe-direction`",
+                                    "up / right / down / left",
+                                    "`Drawer.swipeDirection`",
+                                ),
+                                listOf(
+                                    "`data-swipe-axis`",
+                                    "x / y",
+                                    "Derived from the supplied `swipeDirection`.",
+                                ),
+                                listOf(
+                                    "`data-snap-points`",
+                                    "Snap points configured",
+                                    "`Drawer.snapPoints`",
+                                ),
+                                listOf(
+                                    "`data-expanded`",
+                                    "At the full snap point",
+                                    "Compare `DrawerScope.snapPoint`.",
+                                ),
+                                listOf(
+                                    "`data-swiping`",
+                                    "During a swipe",
+                                    "No public swipe-progress state.",
+                                ),
+                                listOf(
+                                    "`data-nested-drawer-open`",
+                                    "Nested drawer open",
+                                    "`DrawerScope.nestedOpenCount > 0`",
+                                ),
+                            ),
                     ),
                 ),
         ),
@@ -1466,14 +1541,40 @@ private val drawerMigrationSections =
                                 "`snapPoint` / `onSnapPointChange` pair."
                         ),
                     ),
-                    ComponentGuideBlock.Bullets(
+                    ComponentGuideBlock.Steps(
                         listOf(
-                            "`direction = \"bottom\"` → `DrawerSwipeDirection.Down`; `\"top\"` → `Up`; `left`/`right` are unchanged.",
-                            "`asChild` / `render` → `DrawerTrigger { Button(...) }` and `DrawerClose { Button(...) }`.",
-                            "`activeSnapPoint` / `setActiveSnapPoint` → `snapPoint` / `onSnapPointChange`; `snapToSequentialPoint` → `snapToSequentialPoints`.",
-                            "`onAnimationEnd` → `onOpenChangeComplete` is not modelled; compose state changes directly.",
-                            "`onOpenAutoFocus` → `DrawerContent`'s initial focus is owned by the overlay host.",
-                            "Vaul-only props (`handleOnly`, `repositionInputs`, `shouldScaleBackground`) → `disablePointerDismissal`, `modal`, `snapPoints` or controlled `open`; `dismissible = false` is a Compose convenience.",
+                            ComponentGuideBlock.Step(
+                                "Update the dependency.",
+                                "Compose uses the UI artifact shown in Installation; no Vaul dependency is required.",
+                            ),
+                            ComponentGuideBlock.Step(
+                                "Replace direction with swipeDirection.",
+                                "Use `DrawerSwipeDirection.Down` for bottom, `Up` for top, and `Left` / `Right`.",
+                            ),
+                            ComponentGuideBlock.Step(
+                                "Replace asChild with render.",
+                                "In Compose, use `DrawerTrigger { Button(...) }` and `DrawerClose { Button(...) }` " +
+                                    "and wire `toggle` / `close` explicitly.",
+                            ),
+                            ComponentGuideBlock.Step(
+                                "Update snap point props.",
+                                "Use `snapPoint` / `onSnapPointChange` and `snapToSequentialPoints`.",
+                            ),
+                            ComponentGuideBlock.Step(
+                                "Update animation and focus props.",
+                                "`onOpenChangeComplete` is not exposed. Initial focus is owned by the overlay host.",
+                            ),
+                            ComponentGuideBlock.Step(
+                                "Review Vaul-only props.",
+                                "There are no one-to-one replacements for `handleOnly`, `repositionInputs` or " +
+                                    "`shouldScaleBackground`. Outside presses use `disablePointerDismissal`; " +
+                                    "the Compose `dismissible` flag controls swipe dismissal separately.",
+                            ),
+                            ComponentGuideBlock.Step(
+                                "Update custom data attribute selectors.",
+                                "Compose has no CSS selectors. See the Styling tables for available state and " +
+                                    "the web transition and swipe-state limitations.",
+                            ),
                         ),
                     ),
                     ComponentGuideBlock.Code(
@@ -1506,7 +1607,11 @@ private val drawerApiSections =
                 ApiProperty("swipeDirection", "DrawerSwipeDirection", "DrawerSwipeDirection.Down"),
                 ApiProperty("showSwipeHandle", "Boolean", "false"),
                 ApiProperty("snapPoints", "List<DrawerSnapPoint>?", "null"),
-                ApiProperty("snapPoint / onSnapPointChange", "DrawerSnapPoint? / ((DrawerSnapPoint?) -> Unit)?", "null"),
+                ApiProperty(
+                    "snapPoint / onSnapPointChange",
+                    "DrawerSnapPoint? / ((DrawerSnapPoint?) -> Unit)?",
+                    "null",
+                ),
                 ApiProperty("modal", "Boolean", "true"),
                 ApiProperty("disablePointerDismissal", "Boolean", "false"),
                 ApiProperty("dismissible", "Boolean", "true"),
@@ -1531,7 +1636,7 @@ private val drawerApiSections =
             (
                 "Portal + overlay + panel. Vertical drawers size to content with the " +
                     "`calc(100dvh - 6rem)` cap; side drawers use 75% of the viewport width " +
-                    "capped at 384dp with the 8dp floating inset. `onPointerDownOutside` / " +
+                    "384dp on larger screens with no default viewport inset. `onPointerDownOutside` / " +
                     "`onInteractOutside` return true to veto dismissal."
             ),
             listOf(
@@ -1575,7 +1680,7 @@ private val drawerApiSections =
         ComponentApiSection(
             "DrawerOverlay / DrawerPortal / DrawerSwipeHandle",
             (
-                "Lower-level pieces [DrawerContent] composes: the `bg-black/10` blurred " +
+                "Lower-level pieces [DrawerContent] composes: the `bg-black/10` " +
                     "overlay, the window-level teleport host and the grabber pill. Use them " +
                     "directly only when replacing the default chrome."
             ),
@@ -1634,6 +1739,12 @@ val drawerDoc =
                 │   └── DrawerDescription
                 └── DrawerFooter
             """.trimIndent(),
+        introMarkdown =
+            "The drawer now follows [Base UI](https://base-ui.com/react/components/drawer) instead of Vaul. " +
+                "See [Migrating from Vaul](#migrating-from-vaul) for the corresponding Kotlin API changes.",
+        compositionMarkdown =
+            "`DrawerContent` composes the portal, overlay and popup panel. " +
+                "`DrawerPortal`, `DrawerOverlay` and `DrawerSwipeHandle` are also exported for lower-level control.",
         beforeExamples = drawerGuideSections,
         afterExamples = drawerMigrationSections,
         examplesHeading = null,

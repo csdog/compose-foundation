@@ -386,6 +386,12 @@ val bubbleDoc =
                 "variants, alignment, grouping, reactions, and collapsible " +
                 "content."
         ),
+        introMarkdown =
+            "The `Bubble` component displays framed conversational content. Use it for chat text, " +
+                "short structured output, quoted replies, suggestions, and reactions.\n\n" +
+                "For full-featured chat interfaces, use the `Message` component. `Bubble` is " +
+                "intentionally scoped to the bubble surface. Place avatars, names, timestamps, " +
+                "metadata, and message-level actions in `Message`.",
         usageImportsCode = "import com.toutiaoyan.compose.ui.components.bubble.*",
         usageCode =
             """

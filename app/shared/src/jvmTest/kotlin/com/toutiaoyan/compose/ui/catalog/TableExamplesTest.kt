@@ -100,14 +100,15 @@ class TableExamplesTest(private val viewport: Int, private val dark: Boolean) {
         )
         assertEquals(null, tableDoc.examplesHeading)
         val markdown = componentPageMarkdown(tableDoc)
-        val order = listOf(
-            "## Composition",
-            "## Footer",
-            "## Actions",
-            "## Data Table",
-            "## RTL",
-            "## API Reference",
-        ).map { markdown.indexOf(it) }
+        val order =
+            listOf(
+                "## Composition",
+                "## Footer",
+                "## Actions",
+                "## Data Table",
+                "## RTL",
+                "## API Reference",
+            ).map { markdown.indexOf(it) }
         assertTrue(order.all { it >= 0 }, "missing a section heading: $order")
         assertEquals(order.sorted(), order)
         assertContains(markdown, "Use the `TableFooter` component to add a footer to the table.")
@@ -160,6 +161,10 @@ class TableExamplesTest(private val viewport: Int, private val dark: Boolean) {
         rule.onNodeWithText("المجموع").assertExists()
         rule.onNodeWithText("قائمة بفواتيرك الأخيرة.").assertIsDisplayed()
         assertDirection(rtl = true)
+        val amount = rule.onNodeWithText("$250.00").fetchSemanticsNode().boundsInRoot
+        // The source uses physical text-right, even when the column order mirrors.
+        val total = rule.onNodeWithText("$2,500.00").fetchSemanticsNode().boundsInRoot
+        assertEquals(total.right, amount.right, .1f)
         capture("rtl-arabic")
     }
 

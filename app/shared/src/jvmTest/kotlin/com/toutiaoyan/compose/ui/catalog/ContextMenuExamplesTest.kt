@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
@@ -50,7 +51,12 @@ class ContextMenuExamplesTest(private val width: Int, private val dark: Boolean)
         assertEquals("Displays a menu of actions triggered by a right click.", contextMenuDoc.description)
         assertEquals(null, contextMenuDoc.examplesHeading)
         val composition = contextMenuDoc.compositionCode!!
-        for (part in listOf("ContextMenuTrigger", "ContextMenuGroup", "ContextMenuCheckboxItem", "ContextMenuSubContent")) {
+        for (part in listOf(
+            "ContextMenuTrigger",
+            "ContextMenuGroup",
+            "ContextMenuCheckboxItem",
+            "ContextMenuSubContent",
+        )) {
             assertTrue(composition.contains(part), "composition is missing $part")
         }
         assertEquals(
@@ -81,9 +87,10 @@ class ContextMenuExamplesTest(private val width: Int, private val dark: Boolean)
             "Control submenu placement with side and align props.",
             contextMenuDoc.examples.single { it.title == "Sides" }.descriptionMarkdown,
         )
-        val api = assertIs<ComponentGuideBlock.Paragraph>(
-            contextMenuDoc.afterExamples.single { it.title == "API Reference" }.blocks.single(),
-        )
+        val api =
+            assertIs<ComponentGuideBlock.Paragraph>(
+                contextMenuDoc.afterExamples.single { it.title == "API Reference" }.blocks.single(),
+            )
         assertTrue(api.markdown.contains("https://base-ui.com/react/components/context-menu#api-reference"))
         assertTrue(contextMenuDoc.usageImportsCode!!.contains("contextmenu.ContextMenuTrigger"))
         assertTrue(contextMenuDoc.examples.single { it.title == "Sides" }.code.contains("ContextMenuSide.Top"))
@@ -144,6 +151,29 @@ class ContextMenuExamplesTest(private val width: Int, private val dark: Boolean)
         rule.onNodeWithContentDescription("Preview language").performClick()
         rule.onNodeWithText("Hebrew (עברית)").performClick()
         rule.onNodeWithText("לחץ לחיצה ימנית כאן").assertExists()
+    }
+
+    @Test fun rtlFullUrlsTogglePersistsAfterReopeningTheMenu() {
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = catalogFontFamily()) {
+                contextMenuDoc.examples.single { it.title == "RTL" }.preview()
+            }
+        }
+
+        fun openMenu() {
+            rule.onNodeWithText("انقر بزر الماوس الأيمن هنا").requestFocus().performKeyInput {
+                keyDown(Key.ShiftLeft)
+                pressKey(Key.F10)
+                keyUp(Key.ShiftLeft)
+            }
+            rule.waitForIdle()
+        }
+        openMenu()
+        rule.onNodeWithContentDescription("إظهار عناوين URL الكاملة").assertIsOff().performClick().assertIsOn()
+        rule.onNodeWithContentDescription("إظهار عناوين URL الكاملة").performKeyInput { pressKey(Key.Escape) }
+        rule.waitForIdle()
+        openMenu()
+        rule.onNodeWithContentDescription("إظهار عناوين URL الكاملة").assertIsOn().performClick().assertIsOff()
     }
 
     companion object {

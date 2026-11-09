@@ -47,6 +47,7 @@ internal val shimmerDefaultRecipeCode =
         duration: Int = 2000,
         spread: Dp = DefaultShimmerSpread,
         angle: Float = 20f,
+        reverse: Boolean = false,
         once: Boolean = false,
     ) {
         Text(
@@ -71,6 +72,8 @@ internal val shimmerDefaultRecipeCode =
                     spread,
                     angleDegrees =
                     angle,
+                    reverse =
+                    reverse,
                     once =
                     once,
                 ),
@@ -182,6 +185,7 @@ internal val shimmerMarkerRecipeCode =
         duration: Int = 2000,
         spread: Dp = DefaultShimmerSpread,
         angle: Float = 20f,
+        reverse: Boolean = false,
         once: Boolean = false,
     ) {
         Text(
@@ -206,6 +210,8 @@ internal val shimmerMarkerRecipeCode =
                     spread,
                     angleDegrees =
                     angle,
+                    reverse =
+                    reverse,
                     once =
                     once,
                 ),
@@ -329,6 +335,7 @@ internal val shimmerColorRecipeCode =
         duration: Int = 2000,
         spread: Dp = DefaultShimmerSpread,
         angle: Float = 20f,
+        reverse: Boolean = false,
         once: Boolean = false,
     ) {
         Text(
@@ -353,6 +360,8 @@ internal val shimmerColorRecipeCode =
                     spread,
                     angleDegrees =
                     angle,
+                    reverse =
+                    reverse,
                     once =
                     once,
                 ),
@@ -471,6 +480,7 @@ internal val shimmerDurationRecipeCode =
         duration: Int = 2000,
         spread: Dp = DefaultShimmerSpread,
         angle: Float = 20f,
+        reverse: Boolean = false,
         once: Boolean = false,
     ) {
         Text(
@@ -495,6 +505,8 @@ internal val shimmerDurationRecipeCode =
                     spread,
                     angleDegrees =
                     angle,
+                    reverse =
+                    reverse,
                     once =
                     once,
                 ),
@@ -608,6 +620,7 @@ internal val shimmerSpreadRecipeCode =
         duration: Int = 2000,
         spread: Dp = DefaultShimmerSpread,
         angle: Float = 20f,
+        reverse: Boolean = false,
         once: Boolean = false,
     ) {
         Text(
@@ -632,6 +645,8 @@ internal val shimmerSpreadRecipeCode =
                     spread,
                     angleDegrees =
                     angle,
+                    reverse =
+                    reverse,
                     once =
                     once,
                 ),
@@ -745,6 +760,7 @@ internal val shimmerAngleRecipeCode =
         duration: Int = 2000,
         spread: Dp = DefaultShimmerSpread,
         angle: Float = 20f,
+        reverse: Boolean = false,
         once: Boolean = false,
     ) {
         Text(
@@ -769,6 +785,8 @@ internal val shimmerAngleRecipeCode =
                     spread,
                     angleDegrees =
                     angle,
+                    reverse =
+                    reverse,
                     once =
                     once,
                 ),
@@ -836,6 +854,148 @@ internal val shimmerAngleRecipeCode =
     }
     """.trimIndent()
 
+internal val shimmerReverseRecipeCode =
+    """
+    @file:OptIn(androidx.compose.foundation.style.ExperimentalFoundationStyleApi::class)
+
+
+    import androidx.compose.foundation.layout.*
+    import androidx.compose.runtime.*
+    import androidx.compose.ui.Alignment
+    import androidx.compose.ui.Modifier
+    import androidx.compose.ui.graphics.Color
+    import androidx.compose.ui.platform.LocalDensity
+    import androidx.compose.ui.platform.LocalLayoutDirection
+    import androidx.compose.ui.platform.LocalWindowInfo
+    import androidx.compose.ui.platform.testTag
+    import androidx.compose.ui.semantics.LiveRegionMode
+    import androidx.compose.ui.semantics.liveRegion
+    import androidx.compose.ui.semantics.semantics
+    import androidx.compose.ui.text.TextStyle
+    import androidx.compose.ui.text.font.FontFamily
+    import androidx.compose.ui.text.style.LineHeightStyle
+    import androidx.compose.ui.text.style.TextAlign
+    import androidx.compose.ui.unit.*
+    import com.toutiaoyan.compose.tailwind.core.TwColors
+    import com.toutiaoyan.compose.ui.components.button.*
+    import com.toutiaoyan.compose.ui.components.marker.*
+    import com.toutiaoyan.compose.ui.components.spinner.Spinner
+    import com.toutiaoyan.compose.ui.components.text.Text
+    import com.toutiaoyan.compose.ui.styles.DefaultShimmerSpread
+    import com.toutiaoyan.compose.ui.styles.rememberShimmerStyle
+    import com.toutiaoyan.compose.ui.theme.currentTheme
+
+    private const val ShimmerMessage = "Generating response…"
+
+    @Composable
+    private fun shimmerViewportWidth(): Dp =
+        with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
+
+    @Composable
+    private fun ShimmerText(
+        value: String = ShimmerMessage,
+        modifier: Modifier = Modifier,
+        enabled: Boolean = true,
+        color: Color? = null,
+        duration: Int = 2000,
+        spread: Dp = DefaultShimmerSpread,
+        angle: Float = 20f,
+        reverse: Boolean = false,
+        once: Boolean = false,
+    ) {
+        Text(
+            modifier,
+            textStyle =
+                TextStyle(
+                    color = currentTheme.colors.mutedForeground,
+                    fontSize = 14.sp,
+                    lineHeight = 20.sp,
+                    textAlign = TextAlign.Center,
+                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+                ),
+            style =
+                rememberShimmerStyle(
+                    enabled =
+                    enabled,
+                    color =
+                    color,
+                    durationMillis =
+                    duration,
+                    spread =
+                    spread,
+                    angleDegrees =
+                    angle,
+                    reverse =
+                    reverse,
+                    once =
+                    once,
+                ),
+        ) { value }
+    }
+
+    @Composable
+    private fun ShimmerLabel(value: String) {
+        Text(
+            textStyle =
+                TextStyle(
+                    color = currentTheme.colors.mutedForeground,
+                    fontFamily = FontFamily.Monospace,
+                    fontSize = 12.sp,
+                    lineHeight = 16.sp,
+                    textAlign = TextAlign.Center,
+                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+                ),
+        ) { value }
+    }
+
+    @Composable
+    private fun ShimmerCell(
+        label: String,
+        content: @Composable () -> Unit,
+    ) {
+        Column(
+            Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Box(Modifier.fillMaxWidth(), propagateMinConstraints = true) { content() }
+            ShimmerLabel(label)
+        }
+    }
+
+    @Composable
+    private fun ShimmerComparison(
+        leftLabel: String,
+        rightLabel: String,
+        left: @Composable () -> Unit,
+        right: @Composable () -> Unit,
+    ) {
+        val wide = shimmerViewportWidth() >= 640.dp
+        Box(Modifier.widthIn(max = 512.dp).fillMaxWidth().testTag("shimmer-example")) {
+            if (wide) {
+                Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
+                    Box(Modifier.weight(1f).testTag("shimmer-left")) { ShimmerCell(leftLabel, left) }
+                    Box(Modifier.weight(1f).testTag("shimmer-right")) { ShimmerCell(rightLabel, right) }
+                }
+            } else {
+                Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
+                    Box(Modifier.testTag("shimmer-left")) { ShimmerCell(leftLabel, left) }
+                    Box(Modifier.testTag("shimmer-right")) { ShimmerCell(rightLabel, right) }
+                }
+            }
+        }
+    }
+
+    @Composable
+    internal fun ShimmerReverseRecipe() {
+        ShimmerComparison("shimmer", "shimmer-reverse", {
+            ShimmerText(modifier = Modifier.testTag("shimmer-forward"))
+        }, {
+            ShimmerText(modifier = Modifier.testTag("shimmer-reverse"), reverse = true)
+        })
+    }
+    """.trimIndent()
+
 internal val shimmerOnceRecipeCode =
     """
     @file:OptIn(androidx.compose.foundation.style.ExperimentalFoundationStyleApi::class)
@@ -882,6 +1042,7 @@ internal val shimmerOnceRecipeCode =
         duration: Int = 2000,
         spread: Dp = DefaultShimmerSpread,
         angle: Float = 20f,
+        reverse: Boolean = false,
         once: Boolean = false,
     ) {
         Text(
@@ -906,6 +1067,8 @@ internal val shimmerOnceRecipeCode =
                     spread,
                     angleDegrees =
                     angle,
+                    reverse =
+                    reverse,
                     once =
                     once,
                 ),
@@ -1025,6 +1188,7 @@ internal val shimmerNoneRecipeCode =
         duration: Int = 2000,
         spread: Dp = DefaultShimmerSpread,
         angle: Float = 20f,
+        reverse: Boolean = false,
         once: Boolean = false,
     ) {
         Text(
@@ -1049,6 +1213,8 @@ internal val shimmerNoneRecipeCode =
                     spread,
                     angleDegrees =
                     angle,
+                    reverse =
+                    reverse,
                     once =
                     once,
                 ),
@@ -1168,6 +1334,7 @@ internal val shimmerRtlRecipeCode =
         duration: Int = 2000,
         spread: Dp = DefaultShimmerSpread,
         angle: Float = 20f,
+        reverse: Boolean = false,
         once: Boolean = false,
     ) {
         Text(
@@ -1192,6 +1359,8 @@ internal val shimmerRtlRecipeCode =
                     spread,
                     angleDegrees =
                     angle,
+                    reverse =
+                    reverse,
                     once =
                     once,
                 ),

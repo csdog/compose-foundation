@@ -39,6 +39,10 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.key
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
@@ -186,37 +190,53 @@ fun Questionnaire(
                 onSubmit = onSubmit,
             ).also { it.applyItems(items) }
         }
+    val resolvedDisabled = disabled || LocalFieldSetDisabled.current
     SideEffect {
         ctrl.applyItems(items)
+        val previousActive = ctrl.activeName
         ctrl.externalValue = value ?: item
+        if (ctrl.externalValue != null && ctrl.activeName != previousActive && ctrl.pendingAnswerFocus == null) {
+            ctrl.pendingItemFocus = ctrl.activeName
+        }
         ctrl.onValueChange = onValueChange ?: onItemChange
         ctrl.onSubmit = onSubmit
         ctrl.shortcuts = shortcuts
         ctrl.animate = animate
-        ctrl.disabled = disabled
+        ctrl.disabled = resolvedDisabled
         val active = ctrl.activeName
         if (active != null && ctrl.disabledByName[active] == true && value == null) {
             ctrl.enabledNames().firstOrNull()?.let(ctrl::goTo)
         }
     }
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    val resolvedDisabled = disabled || LocalFieldSetDisabled.current
     CompositionLocalProvider(
         LocalQuestionnaireController provides ctrl,
         LocalFieldSetDisabled provides resolvedDisabled,
     ) {
-        Column(
-            modifier =
-                modifier
-                    .fillMaxWidth()
-                    .focusable()
-                    .keyboardInputMode()
-                    .onPreviewKeyEvent { handleQuestionnaireKey(ctrl, it) }
-                    .semantics { if (resolvedDisabled) this.disabled() }
-                    .styleable(styleState, style),
-            verticalArrangement = Arrangement.spacedBy(twSpacing.lg),
-        ) {
-            QuestionnaireScope().content()
+        Box {
+            Column(
+                modifier =
+                    modifier
+                        .fillMaxWidth()
+                        .focusable()
+                        .keyboardInputMode()
+                        .onPreviewKeyEvent { handleQuestionnaireKey(ctrl, it) }
+                        .semantics { if (resolvedDisabled) this.disabled() }
+                        .styleable(styleState, style),
+                verticalArrangement = Arrangement.spacedBy(twSpacing.lg),
+            ) {
+                QuestionnaireScope().content()
+            }
+            Layout(
+                modifier = Modifier.clearAndSetSemantics { },
+                content = {
+                    ctrl.hiddenContents.forEach { (name, hiddenContent) ->
+                        if (ctrl.activeName != name || ctrl.disabledByName[name] == true) {
+                            key(name) { hiddenContent() }
+                        }
+                    }
+                },
+            ) { _, _ -> layout(0, 0) { } }
         }
     }
 }
@@ -288,6 +308,7 @@ internal class QuestionnaireController(
     val names = mutableStateListOf<String>()
     val requiredByName = mutableStateMapOf<String, Boolean>()
     val multipleByName = mutableStateMapOf<String, Boolean>()
+    private val registeredMultiple = mutableMapOf<String, Boolean>()
     val requiredMessageByName = mutableStateMapOf<String, String>()
     val disabledByName = mutableStateMapOf<String, Boolean>()
     val choices = mutableStateMapOf<String, MutableList<String>>()
@@ -306,6 +327,9 @@ internal class QuestionnaireController(
     var choiceFocused by mutableStateOf(false)
     var focusedChoiceValue by mutableStateOf<String?>(null)
     var pendingAnswerFocus by mutableStateOf<String?>(null)
+    var pendingItemFocus by mutableStateOf<String?>(null)
+    val choiceInteractions = mutableMapOf<String, () -> Unit>()
+    val hiddenContents = mutableStateMapOf<String, @Composable () -> Unit>()
     private val inputPresentByName = mutableStateMapOf<String, Boolean>()
     private var itemsLocked = false
     private val itemsNames = mutableSetOf<String>()
@@ -335,7 +359,7 @@ internal class QuestionnaireController(
         }
 
     fun answers(): Map<String, List<String>> =
-        names.associateWith { name ->
+        names.filter { disabledByName[it] != true }.associateWith { name ->
             val order = choiceOrder[name].orEmpty()
             val selected =
                 choices[name].orEmpty().toList().sortedBy {
@@ -373,7 +397,7 @@ internal class QuestionnaireController(
         }
         defs.forEach { def ->
             requiredByName[def.name] = def.required
-            multipleByName[def.name] = def.multiple
+            updateMultiple(def.name, def.multiple)
             disabledByName[def.name] = def.disabled
             def.choices.forEach { ch ->
                 itemsChoiceKeys.add("${def.name}/${ch.value}")
@@ -406,7 +430,7 @@ internal class QuestionnaireController(
     ) {
         if (name !in names) names.add(name)
         requiredByName[name] = required
-        multipleByName[name] = multiple
+        updateMultiple(name, multiple, fromItem = true)
         if (requiredMessage == null) {
             requiredMessageByName.remove(name)
         } else {
@@ -425,9 +449,37 @@ internal class QuestionnaireController(
         }
     }
 
+    private fun updateMultiple(
+        name: String,
+        multiple: Boolean,
+        fromItem: Boolean = false,
+    ) {
+        if (!fromItem && name in registeredMultiple) return
+        val previous = registeredMultiple[name] ?: multipleByName[name]
+        if (fromItem) registeredMultiple[name] = multiple
+        if (previous == true && !multiple) {
+            val selected = choices[name].orEmpty()
+            val first = choiceOrder[name].orEmpty().firstOrNull { it in selected }
+            choices[name]?.apply {
+                clear()
+                if (first != null) add(first)
+            }
+            if (first != null) inputSelected[name] = false
+        }
+        multipleByName[name] = multiple
+    }
+
+    fun interactWithChoice(
+        name: String,
+        value: String,
+    ) {
+        choiceInteractions["$name/$value"]?.invoke() ?: selectChoice(name, value)
+    }
+
     fun unregister(name: String) {
         if (itemsLocked && name in itemsNames) return
         names.remove(name)
+        registeredMultiple.remove(name)
         requiredByName.remove(name)
         multipleByName.remove(name)
         requiredMessageByName.remove(name)
@@ -490,6 +542,7 @@ internal class QuestionnaireController(
         item: String,
         value: String,
     ) {
+        choiceInteractions.remove("$item/$value")
         if (itemsLocked && "$item/$value" in itemsChoiceKeys) return
         choiceOrder[item]?.remove(value)
         choiceEnabled.remove("$item/$value")
@@ -527,7 +580,7 @@ internal class QuestionnaireController(
             return true
         }
         val value = ordered.getOrNull(index) ?: return false
-        selectChoice(name, value)
+        interactWithChoice(name, value)
         pendingAnswerFocus = value
         return true
     }
@@ -538,6 +591,7 @@ internal class QuestionnaireController(
         choiceFocused = false
         focusedChoiceValue = null
         pendingAnswerFocus = null
+        pendingItemFocus = name
     }
 
     fun registerInput(
@@ -583,7 +637,7 @@ internal class QuestionnaireController(
         val next = keys[nextIdx]
         pendingAnswerFocus = next
         if (next != InputAnswerKey && multipleByName[name] != true && !isSelected(name, next)) {
-            selectChoice(name, next)
+            interactWithChoice(name, next)
         }
         return true
     }
@@ -672,7 +726,10 @@ internal class QuestionnaireController(
     fun next() {
         if (disabled) return
         val name = activeName ?: return
-        if (!validate(name)) return
+        if (!validate(name)) {
+            focusInvalid(name)
+            return
+        }
         if (isLast) return
         val enabled = enabledNames()
         val i = enabled.indexOf(name)
@@ -684,12 +741,20 @@ internal class QuestionnaireController(
         val firstInvalid = enabledNames().firstOrNull { !validate(it) }
         if (firstInvalid != null) {
             goTo(firstInvalid)
-            pendingAnswerFocus = choiceOrder[firstInvalid]?.firstOrNull {
-                choiceEnabled["$firstInvalid/$it"] != false
-            } ?: InputAnswerKey
+            focusInvalid(firstInvalid)
             return
         }
         onSubmit(answers())
+    }
+
+    private fun focusInvalid(name: String) {
+        pendingItemFocus = null
+        pendingAnswerFocus =
+            if (inputSelected[name] == true && inputPresentByName[name] == true) {
+                InputAnswerKey
+            } else {
+                choiceOrder[name]?.firstOrNull { choiceEnabled["$name/$it"] != false } ?: InputAnswerKey
+            }
     }
 
     fun continueOrSubmit() {
@@ -982,16 +1047,34 @@ fun QuestionnaireScope.QuestionnaireItem(
         }
         previousStatus = status
     }
+    val currentContent = rememberUpdatedState(content)
     DisposableEffect(name) {
-        onDispose { ctrl.unregister(name) }
+        ctrl.hiddenContents[name] = {
+            CompositionLocalProvider(LocalQuestionnaireItemName provides name) {
+                Column(content = currentContent.value)
+            }
+        }
+        onDispose {
+            ctrl.hiddenContents.remove(name)
+            ctrl.unregister(name)
+        }
     }
     if (disabled || ctrl.activeName != name) return
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val shouldAnimate = animate ?: ctrl.animate
     val itemError = ctrl.errorMessage(name)
+    val itemFocusRequester = remember { FocusRequester() }
+    LaunchedEffect(ctrl.activeName, ctrl.pendingItemFocus) {
+        if (ctrl.pendingItemFocus == name) {
+            itemFocusRequester.requestFocus()
+            ctrl.pendingItemFocus = null
+        }
+    }
     val itemModifier =
         modifier
             .fillMaxWidth()
+            .focusRequester(itemFocusRequester)
+            .focusable()
             .semantics { if (itemError != null) error(itemError) }
             .styleable(styleState, style)
     CompositionLocalProvider(LocalQuestionnaireItemName provides name) {
@@ -1140,17 +1223,27 @@ fun QuestionnaireScope.QuestionnaireChoice(
             defaultChecked = checked == null && defaultChecked,
         )
         if (checked != null) ctrl.setChoice(name, value, checked)
+        ctrl.choiceInteractions["$name/$value"] = {
+            val next = if (multiple) !selected else true
+            if (checked != null) {
+                onCheckedChange?.invoke(next)
+            } else {
+                ctrl.selectChoice(name, value)
+                onCheckedChange?.invoke(ctrl.isSelected(name, value))
+            }
+        }
     }
     DisposableEffect(name, value) {
         onDispose { ctrl.unregisterChoice(name, value) }
     }
+    if (ctrl.activeName != name || ctrl.disabledByName[name] == true) return
     val interactionSource = remember { MutableInteractionSource() }
     val styleState = remember { MutableStyleState(interactionSource) }
     val itemError = ctrl.errorMessage(name)
     val focusRequester = remember { FocusRequester() }
     val choiceSelected = selected
     LaunchedEffect(ctrl.pendingAnswerFocus, value) {
-        if (ctrl.pendingAnswerFocus == value) {
+        if (ctrl.activeName == name && ctrl.pendingAnswerFocus == value) {
             runCatching { focusRequester.requestFocus() }
             if (ctrl.pendingAnswerFocus == value) ctrl.pendingAnswerFocus = null
         }
@@ -1403,8 +1496,9 @@ fun QuestionnaireScope.QuestionnaireInput(
         ctrl.registerInput(name, resolvedInputEnabled)
         onDispose { ctrl.unregisterInput(name) }
     }
+    if (ctrl.activeName != name || ctrl.disabledByName[name] == true) return
     LaunchedEffect(ctrl.pendingAnswerFocus) {
-        if (ctrl.pendingAnswerFocus == InputAnswerKey) {
+        if (ctrl.activeName == name && ctrl.pendingAnswerFocus == InputAnswerKey) {
             runCatching { focusRequester.requestFocus() }
             if (ctrl.pendingAnswerFocus == InputAnswerKey) ctrl.pendingAnswerFocus = null
         }
@@ -1427,6 +1521,7 @@ fun QuestionnaireScope.QuestionnaireInput(
                 .onFocusChanged { ctrl.inputFocused = it.isFocused },
         enabled = enabled,
         disabled = disabled,
+        invalid = ctrl.errorMessage(name) != null,
         type = type,
         placeholder = placeholder,
         style =

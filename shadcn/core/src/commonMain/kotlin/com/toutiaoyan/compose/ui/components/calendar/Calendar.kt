@@ -850,7 +850,11 @@ fun CalendarMonths() {
                     } else {
                         Box(modifier = Modifier.size(CELL_SIZE))
                     }
-                    CalendarTitle(state.captionFor(y, m))
+                    if (state.captionLayout == CalendarCaptionLayout.Label) {
+                        CalendarTitle(state.captionFor(y, m))
+                    } else {
+                        CalendarCaptionDropdowns(year = y, month = m, monthOffset = offset)
+                    }
                     if (visualIndex == count - 1 && !state.hideNavigation) {
                         CalendarNext()
                     } else {
@@ -1048,30 +1052,43 @@ fun CalendarCaption(
 }
 
 @Composable
-private fun CalendarCaptionDropdowns(modifier: Modifier = Modifier) {
+private fun CalendarCaptionDropdowns(
+    modifier: Modifier = Modifier,
+    year: Int = calendarState().year,
+    month: Int = calendarState().month,
+    monthOffset: Int = 0,
+) {
     val state = calendarState()
+
+    fun changeMonth(
+        year: Int,
+        month: Int,
+    ) {
+        val (firstYear, firstMonth) = addMonths(year, month, -monthOffset)
+        state.goToMonth(firstYear, firstMonth)
+    }
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(twSpacing.xs),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (state.captionLayout == CalendarCaptionLayout.DropdownYears) {
-            CalendarTitle(LocalCalendarLocale.current.months[state.month - 1])
+            CalendarTitle(LocalCalendarLocale.current.months[month - 1])
         } else {
             CalendarCaptionSelect(
-                label = LocalCalendarLocale.current.shortMonths[state.month - 1],
+                label = LocalCalendarLocale.current.shortMonths[month - 1],
                 options = LocalCalendarLocale.current.shortMonths,
-                onSelect = { state.goToMonth(state.year, it + 1) },
+                onSelect = { changeMonth(year, it + 1) },
             )
         }
         if (state.captionLayout == CalendarCaptionLayout.DropdownMonths) {
-            CalendarTitle(state.year.toString())
+            CalendarTitle(year.toString())
         } else {
             val years = (state.fromYear.coerceAtMost(state.toYear)..state.toYear.coerceAtLeast(state.fromYear)).toList()
             CalendarCaptionSelect(
-                label = state.year.toString(),
+                label = year.toString(),
                 options = years.map { it.toString() },
-                onSelect = { state.goToMonth(years[it], state.month) },
+                onSelect = { changeMonth(years[it], month) },
             )
         }
     }

@@ -14,6 +14,7 @@ import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.catalog.docs.bubbleDoc
 import com.toutiaoyan.compose.ui.catalog.docs.bubbleLongText
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.components.overlay.OverlayHost
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
@@ -84,9 +85,10 @@ class BubbleExamplesTest {
         rule.onNodeWithText(
             "Ghost bubbles are full width and can take the full width of the container.",
         ).assertExists()
-        val last = rule.onNodeWithText(
-            "Ghost bubbles are full width and can take the full width of the container.",
-        )
+        val last =
+            rule.onNodeWithText(
+                "Ghost bubbles are full width and can take the full width of the container.",
+            )
         last.performScrollTo().assertIsDisplayed()
         assertTrue(last.fetchSemanticsNode().boundsInRoot.height > 0f)
     }
@@ -128,6 +130,13 @@ class BubbleExamplesTest {
         assertEquals(9, bubbleDoc.examples.size)
         assertEquals(4, bubbleDoc.apiSections.size)
         assertTrue(bubbleDoc.examples.none { "TextTypography" in it.code || "TextStyles" in it.code })
+        val introduction = assertNotNull(bubbleDoc.introMarkdown)
+        assertTrue("quoted replies, suggestions, and reactions" in introduction)
+        assertTrue("Place avatars, names, timestamps" in introduction)
+        val markdown = componentPageMarkdown(bubbleDoc)
+        val introPosition = markdown.indexOf(introduction)
+        assertTrue(introPosition > markdown.indexOf(bubbleDoc.examples.first().code))
+        assertTrue(introPosition < markdown.indexOf("## Installation"))
     }
 
     @Test fun catalogNotificationsUseTheWindowHostRatherThanTheBubbleFrame() {

@@ -38,6 +38,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.CollectionInfo
 import androidx.compose.ui.semantics.collectionInfo
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -148,7 +149,12 @@ internal fun ComponentDetailContent(
                         modifier =
                             Modifier.widthIn(max = 640.dp).fillMaxWidth()
                                 .onGloballyPositioned { anchors.content = it }
-                                .padding(horizontal = horizontalPadding, vertical = 48.dp).testTag("doc-column"),
+                                .padding(
+                                    horizontal = horizontalPadding,
+                                    // Official page: 48px top/bottom on desktop, 24px on phones
+                                    // (measured h1 top 112 at 1440 vs 80 at 390).
+                                    vertical = if (catalogViewportWidth() < 640.dp) 24.dp else 48.dp,
+                                ).testTag("doc-column"),
                         verticalArrangement = Arrangement.spacedBy(32.dp),
                     ) {
                         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -233,7 +239,9 @@ internal fun ComponentDetailContent(
                             ) { doc.description }
                         }
                         Column(verticalArrangement = Arrangement.spacedBy(28.dp)) {
-                            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            // Official tab row: label sits 2px above its underline; the previous
+                            // 8dp gap pushed the underline and first preview 6px below official.
+                            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                                 Text(variant = TextVariant.BodyLarge) {
                                     if (doc.isKotlinExtension) "Kotlin extension" else "Base UI"
                                 }
@@ -260,8 +268,10 @@ internal fun ComponentDetailContent(
                                     descriptionMarkdown = example.descriptionMarkdown,
                                     preview = example.preview,
                                 )
+                                doc.afterExampleSections[example.title]?.let { GuideBlocks(it) }
                             }
                         }
+                        doc.introMarkdown?.let { DocParagraph(it) }
                         doc.introductionSections.forEachIndexed { index, section ->
                             GuideSection(section, anchors, "introduction-$index")
                         }
@@ -294,7 +304,9 @@ internal fun ComponentDetailContent(
                                 spacing = 17.5.dp,
                                 anchorId = "composition",
                             ) {
+                                doc.beforeCompositionMarkdown?.let { DocParagraph(it) }
                                 CodeBlock(code = code, modifier = Modifier.fillMaxWidth(), language = null)
+                                doc.compositionMarkdown?.let { DocParagraph(it) }
                             }
                         }
                         doc.beforeExamples.forEachIndexed { index, section ->
@@ -351,6 +363,7 @@ internal fun ComponentDetailContent(
                                                 preview =
                                                     example.preview,
                                             )
+                                            doc.afterExampleSections[example.title]?.let { GuideBlocks(it) }
                                         }
                                     }
                                 }
@@ -413,12 +426,19 @@ private fun GuideSection(
     anchors: DocAnchors,
     id: String,
 ) {
+    Column(Modifier.fillMaxWidth()) {
+        DocHeading(section.title, Modifier.docAnchor(anchors, id), level = section.level, anchorId = id)
+        GuideBlocks(section.blocks)
+    }
+}
+
+@Composable
+internal fun GuideBlocks(blocks: List<ComponentGuideBlock>) {
     val mobile = catalogViewportWidth() < 640.dp
     val bodySize = if (mobile) 18.9f else 15f
     val lineHeight = bodySize * 1.75f
     Column(Modifier.fillMaxWidth()) {
-        DocHeading(section.title, Modifier.docAnchor(anchors, id), level = section.level, anchorId = id)
-        section.blocks.forEachIndexed { index, block ->
+        blocks.forEachIndexed { index, block ->
             val gap =
                 when {
                     block is ComponentGuideBlock.Code -> 17.5f
@@ -459,6 +479,25 @@ private fun GuideSection(
                                 }
                                 Column(Modifier.weight(1f)) { DocParagraph(item) }
                             }
+                        }
+                    }
+                is ComponentGuideBlock.Table ->
+                    Column(
+                        Modifier.fillMaxWidth().semantics {
+                            collectionInfo = CollectionInfo(block.rows.size + 1, block.headers.size)
+                        },
+                    ) {
+                        (listOf(block.headers) + block.rows).forEachIndexed { rowIndex, cells ->
+                            Row(Modifier.fillMaxWidth()) {
+                                cells.forEach { cell ->
+                                    Box(
+                                        Modifier.weight(1f).padding(8.dp).then(
+                                            if (rowIndex == 0) Modifier.semantics { heading() } else Modifier,
+                                        ),
+                                    ) { DocParagraph(cell) }
+                                }
+                            }
+                            Box(Modifier.fillMaxWidth().height(1.dp).background(currentTheme.colors.border))
                         }
                     }
                 is ComponentGuideBlock.Steps ->

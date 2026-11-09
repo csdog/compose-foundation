@@ -2,6 +2,8 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +18,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.dropShadow
+import androidx.compose.ui.graphics.shadow.Shadow
+import com.toutiaoyan.compose.tailwind.core.twRadius
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
@@ -46,7 +51,6 @@ import com.toutiaoyan.compose.ui.components.bubble.BubbleVariant
 import com.toutiaoyan.compose.ui.components.button.Button
 import com.toutiaoyan.compose.ui.components.button.ButtonSize
 import com.toutiaoyan.compose.ui.components.button.ButtonVariant
-import com.toutiaoyan.compose.ui.components.codeblock.CodeBlock
 import com.toutiaoyan.compose.ui.components.codeblock.CodeBlockActions
 import com.toutiaoyan.compose.ui.components.codeblock.CodeBlockContent
 import com.toutiaoyan.compose.ui.components.codeblock.CodeBlockContentScope
@@ -56,7 +60,6 @@ import com.toutiaoyan.compose.ui.components.codeblock.CodeBlockHeader
 import com.toutiaoyan.compose.ui.components.codeblock.CodeBlockLine
 import com.toutiaoyan.compose.ui.components.codeblock.CodeBlockLineVariant
 import com.toutiaoyan.compose.ui.components.codeblock.CodeBlockPartsScope
-import com.toutiaoyan.compose.ui.components.codeblock.CodeBlockScope
 import com.toutiaoyan.compose.ui.components.codeblock.CodeBlockSize
 import com.toutiaoyan.compose.ui.components.codeblock.CodeBlockTitle
 import com.toutiaoyan.compose.ui.components.codeblock.CodeBlockVariant
@@ -105,7 +108,7 @@ private val demoCode =
 
 private val basicOutput =
     """
-    ${D} pnpm build
+    $D pnpm build
     > next build
 
      ✓ Compiled successfully in 4.2s
@@ -121,7 +124,7 @@ private const val headerCommand = "pnpm add ai @ai-sdk/react zod"
 
 private val headerOutput =
     """
-    ${D} $headerCommand
+    $D $headerCommand
     Packages: +14
     Progress: resolved 412, reused 398, downloaded 14, added 14, done
     Done in 2.8s using pnpm v10.18.0
@@ -129,7 +132,7 @@ private val headerOutput =
 
 private val actionsOutput =
     """
-    ${D} pnpm lint
+    $D pnpm lint
     apps/web/components/message-list.tsx
       18:22  error  'messages' is possibly 'undefined'. Add a guard before calling map  @typescript-eslint/no-unsafe-call
       42:7   warning  React Hook React.useEffect has a missing dependency: 'scrollToBottom'  react-hooks/exhaustive-deps
@@ -139,7 +142,7 @@ private val actionsOutput =
 
 private val floatingOutput =
     """
-    ${D} pnpm add ai @ai-sdk/react zod
+    $D pnpm add ai @ai-sdk/react zod
     Progress: resolved 412, reused 398, downloaded 14, added 14, done
     dependencies:
     + @ai-sdk/react 3.0.12
@@ -172,6 +175,7 @@ private val startLineCode =
     |  })
     |
     |  return <ProjectList projects={projects} />
+    |}
     """.trimMargin()
 
 private val wrapOutput =
@@ -257,13 +261,13 @@ private val destructiveError =
 
 private val traceOutput =
     """
-    ${D} node --version
+    $D node --version
     v24.18.0
     """.trimIndent()
 
 private val traceError =
     """
-    ${D} pnpm dev
+    $D pnpm dev
     Error: listen EADDRINUSE: address already in use :::3000
         at Server.setupListenHandle [as _listen2] (node:net:1908:16)
     """.trimIndent()
@@ -363,7 +367,7 @@ private const val notesSample = "A language that is not in the list renders as p
 
 private val ansiOutput =
     """
-    ${D} pnpm test
+    $D pnpm test
     ✓ src/format.test.ts (4 tests)
     ✓ src/parse.test.ts (7 tests)
     ✗ src/stream.test.ts (3 tests | 1 failed)
@@ -395,25 +399,31 @@ private fun wrapToggleButton(
 ) {
     Button(
         onClick = onToggle,
-        modifier = modifier.semantics {
-            // aria-pressed: announce the ongoing wrap state.
-            stateDescription = if (wrap) "Pressed" else "Not pressed"
-        },
+        modifier =
+            modifier.semantics {
+                // aria-pressed: announce the ongoing wrap state.
+                stateDescription = if (wrap) "Pressed" else "Not pressed"
+            },
         variant = ButtonVariant.Ghost,
         size = ButtonSize.IconXs,
         label = "Wrap lines",
     ) { Icon(Lucide.TextWrap) }
 }
 
-/** Official download icon; the web build cannot start a file download from Canvas. */
 @Composable
-private fun downloadButton(modifier: Modifier = Modifier) {
+private fun downloadButton(
+    value: String,
+    filename: String,
+    modifier: Modifier = Modifier,
+) {
+    val download = LocalTextDownloader.current
     Button(
-        onClick = {},
+        onClick = { download?.invoke(value, filename) },
+        enabled = download != null,
         modifier = modifier,
         variant = ButtonVariant.Ghost,
         size = ButtonSize.IconXs,
-        label = "Download",
+        label = if (download != null) "Download" else "Download unavailable on this platform",
     ) { Icon(Lucide.Download) }
 }
 
@@ -443,7 +453,7 @@ private fun CodeBlockDemoPreview() {
                 }
                 CodeBlockActions {
                     wrapToggleButton(wrap, { wrap = !wrap })
-                    downloadButton()
+                    downloadButton(demoCode, "route.ts")
                     CodeBlockCopyButton(demoCode)
                 }
             }
@@ -494,7 +504,7 @@ private fun CodeBlockActionsPreview() {
                 }
                 CodeBlockActions {
                     wrapToggleButton(wrap, { wrap = !wrap })
-                    downloadButton()
+                    downloadButton(actionsOutput, "lint.log")
                     CodeBlockCopyButton(actionsOutput)
                 }
             }
@@ -513,7 +523,18 @@ private fun CodeBlockFloatingActionsPreview() {
     Box(Modifier.widthIn(max = 448.dp).fillMaxWidth()) {
         CodeBlockPanel {
             CodeBlockActions(modifier = Modifier.testTag("floating-actions")) {
-                CodeBlockCopyButton(floatingOutput)
+                val theme = currentTheme
+                val shape = RoundedCornerShape(minOf(twRadius.md, 10.dp))
+                CodeBlockCopyButton(
+                    floatingOutput,
+                    modifier =
+                        Modifier
+                            .dropShadow(
+                                shape,
+                                Shadow(radius = 0.dp, spread = 1.dp, color = theme.colors.foreground.copy(alpha = .1f)),
+                            )
+                            .background(theme.colors.background, shape),
+                )
             }
             CodeBlockContent(floatingOutput, textStyle = monoStyle())
         }
@@ -795,7 +816,11 @@ private fun CodeBlockMessagePreview() {
 }
 
 @Composable
-private fun TypesetParagraph(prefix: String, inlineCode: String, suffix: String) {
+private fun TypesetParagraph(
+    prefix: String,
+    inlineCode: String,
+    suffix: String,
+) {
     val theme = currentTheme
     Text(
         textStyle =
@@ -960,6 +985,16 @@ val codeBlockDoc =
         title = "Code Block",
         description =
             "Displays code, terminal output and diffs with an optional header, line numbers and a copy button.",
+        introMarkdown =
+            "`CodeBlock` displays code, terminal output, logs and diffs. It has a header with a title " +
+                "and actions, line numbers, wrapping, diff and highlighted lines, and a small size for tool " +
+                "output in a [Trace](/trace).\n\n" +
+                "The official component offers optional syntax highlighting through a separate hook. " +
+                "This Compose port renders plain text; syntax highlighting is out of scope.",
+        compositionMarkdown =
+            "`CodeBlockContent` takes a string or a list of `CodeBlockLine`. Use lines when you need line " +
+                "variants or highlighted tokens. In Compose, supply lines through the content lambda; " +
+                "highlighted token rendering is caller-provided.",
         usageCode =
             """
             CodeBlock {
@@ -991,8 +1026,8 @@ val codeBlockDoc =
                         listOf(
                             ComponentGuideBlock.Bullets(
                                 listOf(
-                                    "It streams cheaply. A string child renders as one text node, and the " +
-                                        "highlighter tokenizes only the new lines as code arrives.",
+                                    "It accepts changing output. Strings render as individual code lines in this " +
+                                        "Compose port; no incremental syntax highlighter is provided.",
                                     "It copies cleanly. Line numbers and diff markers are left out of a selection, " +
                                         "and blank lines survive the copy.",
                                     "It reads left to right. The content is always `dir=\"ltr\"`. The header " +
@@ -1017,29 +1052,33 @@ val codeBlockDoc =
                     minPreviewHeight = 0.dp,
                     code =
                         """
-                        var wrap by remember { mutableStateOf(false) }
-                        CodeBlock {
-                            CodeBlockHeader {
-                                CodeBlockTitle {
-                                    Icon(Lucide.FileCode)
-                                    Text(maxLines = 1, overflow = TextOverflow.Ellipsis) { "app/api/chat/route.ts" }
+                        @Composable
+                        fun RouteCodeSample(code: String, onDownload: (String, String) -> Unit) {
+                            // Supply onDownload(value, filename) using your platform's file-save API.
+                            var wrap by remember { mutableStateOf(false) }
+                            CodeBlock {
+                                CodeBlockHeader {
+                                    CodeBlockTitle {
+                                        Icon(Lucide.FileCode)
+                                        Text(maxLines = 1, overflow = TextOverflow.Ellipsis) { "app/api/chat/route.ts" }
+                                    }
+                                    CodeBlockActions {
+                                        Button(onClick = { wrap = !wrap }, variant = ButtonVariant.Ghost,
+                                            size = ButtonSize.IconXs, label = "Wrap lines") { Icon(Lucide.TextWrap) }
+                                        Button(onClick = { onDownload(code, "route.ts") }, variant = ButtonVariant.Ghost,
+                                            size = ButtonSize.IconXs, label = "Download") { Icon(Lucide.Download) }
+                                        CodeBlockCopyButton(routeCode)
+                                    }
                                 }
-                                CodeBlockActions {
-                                    Button(onClick = { wrap = !wrap }, variant = ButtonVariant.Ghost,
-                                        size = ButtonSize.IconXs, label = "Wrap lines") { Icon(Lucide.TextWrap) }
-                                    Button(onClick = {}, variant = ButtonVariant.Ghost,
-                                        size = ButtonSize.IconXs, label = "Download") { Icon(Lucide.Download) }
-                                    CodeBlockCopyButton(routeCode)
-                                }
-                            }
-                            CodeBlockContent(wrap = wrap, lineNumbers = true, textStyle = codeFont) {
-                                routeLines.forEachIndexed { index, line ->
-                                    CodeBlockLine(
-                                        text = line,
-                                        variant = if (index in 5..9) CodeBlockLineVariant.Highlighted
-                                            else CodeBlockLineVariant.Default,
-                                        lineNumber = index + 1,
-                                    )
+                                CodeBlockContent(wrap = wrap, lineNumbers = true, textStyle = codeFont) {
+                                    routeLines.forEachIndexed { index, line ->
+                                        CodeBlockLine(
+                                            text = line,
+                                            variant = if (index in 5..9) CodeBlockLineVariant.Highlighted
+                                                else CodeBlockLineVariant.Default,
+                                            lineNumber = index + 1,
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -1050,8 +1089,7 @@ val codeBlockDoc =
                     title = "Basic",
                     minPreviewHeight = 0.dp,
                     descriptionMarkdown =
-                        "Pass a string to `CodeBlockContent`. It renders as one text node, so it stays cheap " +
-                            "while output streams.",
+                        "Pass a string to `CodeBlockContent`. This Compose port renders it as individual code lines.",
                     code =
                         """
                         CodeBlock {
@@ -1087,20 +1125,26 @@ val codeBlockDoc =
                     minPreviewHeight = 0.dp,
                     descriptionMarkdown =
                         "`CodeBlockActions` holds any number of buttons. For a wrap toggle, keep the state " +
-                            "yourself and pass it to `wrap`.",
+                            "yourself and pass it to `wrap`. Supply a platform file-save callback as `onDownload` " +
+                            "for the download action; this catalog supports Web and Desktop.",
                     code =
                         """
-                        var wrap by remember { mutableStateOf(true) }
-                        CodeBlock {
-                            CodeBlockHeader {
-                                CodeBlockTitle { Icon(Lucide.Terminal); Text { "Terminal" } }
-                                CodeBlockActions {
-                                    Button(onClick = { wrap = !wrap }, variant = ButtonVariant.Ghost,
-                                        size = ButtonSize.IconXs, label = "Wrap lines") { Icon(Lucide.TextWrap) }
-                                    CodeBlockCopyButton(output)
+                        @Composable
+                        fun OutputCodeSample(output: String, onDownload: (String, String) -> Unit) {
+                            var wrap by remember { mutableStateOf(true) }
+                            CodeBlock {
+                                CodeBlockHeader {
+                                    CodeBlockTitle { Icon(Lucide.Terminal); Text { "Terminal" } }
+                                    CodeBlockActions {
+                                        Button(onClick = { wrap = !wrap }, variant = ButtonVariant.Ghost,
+                                            size = ButtonSize.IconXs, label = "Wrap lines") { Icon(Lucide.TextWrap) }
+                                        Button(onClick = { onDownload(output, "lint.log") }, variant = ButtonVariant.Ghost,
+                                            size = ButtonSize.IconXs, label = "Download") { Icon(Lucide.Download) }
+                                        CodeBlockCopyButton(output)
+                                    }
                                 }
+                                CodeBlockContent(output, wrap = wrap)
                             }
-                            CodeBlockContent(output, wrap = wrap)
                         }
                         """.trimIndent(),
                     preview = { CodeBlockActionsPreview() },
@@ -1111,11 +1155,19 @@ val codeBlockDoc =
                     descriptionMarkdown =
                         "Without a header, put `CodeBlockActions` directly inside `CodeBlock`. The actions " +
                             "float at the top end and stay hidden until the block is hovered or focused. They " +
-                            "always show on touch screens.",
+                            "always show on touch screens. In Compose, give each action its floating surface " +
+                            "and ring through its modifier, as shown below.",
                     code =
                         """
                         CodeBlock {
-                            CodeBlockActions { CodeBlockCopyButton(output) }
+                            CodeBlockActions {
+                                val theme = currentTheme
+                                val shape = RoundedCornerShape(minOf(twRadius.md, 10.dp))
+                                CodeBlockCopyButton(output, modifier = Modifier
+                                    .dropShadow(shape, Shadow(radius = 0.dp, spread = 1.dp,
+                                        color = theme.colors.foreground.copy(alpha = .1f)))
+                                    .background(theme.colors.background, shape))
+                            }
                             CodeBlockContent(output)
                         }
                         """.trimIndent(),
@@ -1204,7 +1256,7 @@ val codeBlockDoc =
                                 CodeBlockActions { CodeBlockCopyButton(patch) }
                             }
                             CodeBlockContent {
-                                patch.split("\n").forEach { line ->
+                                patch.split("\n").forEachIndexed { index, line ->
                                     CodeBlockLine(
                                         text = line.drop(1),
                                         variant = when (line.firstOrNull()) {
@@ -1356,7 +1408,7 @@ val codeBlockDoc =
                                 }
                                 TraceCollapsibleContent {
                                     CodeBlock(size = CodeBlockSize.Sm) {
-                                        CodeBlockContent(code = "${D} node --version\nv24.18.0", wrap = true)
+                                        CodeBlockContent(code = "$D node --version\nv24.18.0", wrap = true)
                                     }
                                 }
                             }
@@ -1498,7 +1550,9 @@ val codeBlockDoc =
                     minPreviewHeight = 0.dp,
                     descriptionMarkdown =
                         "Each language loads the first time it is used. A language that is not in the list renders " +
-                            "as plain text. Language loading is out of scope in this Compose port; every language " +
+                            "as plain text. The list ships with bash, css, diff, html, javascript, json, jsx, " +
+                            "markdown, python, sql, tsx, typescript and yaml, plus aliases such as ts, js, sh and " +
+                            "yml. Language loading is out of scope in this Compose port; every language " +
                             "renders as plain text.",
                     code =
                         """
@@ -1538,8 +1592,8 @@ val codeBlockDoc =
                         listOf(
                             ComponentGuideBlock.Bullets(
                                 listOf(
-                                    "`CodeBlockContent` is a `pre` with a code element and always sets " +
-                                        "`dir=\"ltr\"`, so code reads left to right on an RTL page.",
+                                    "`CodeBlockContent` always uses left-to-right layout, so code reads left to " +
+                                        "right on an RTL page.",
                                     "`CodeBlockContent` is focusable so keyboard users can scroll it.",
                                     "Floating actions show when focus is inside the block, not only on hover, " +
                                         "so keyboard users can reach them.",

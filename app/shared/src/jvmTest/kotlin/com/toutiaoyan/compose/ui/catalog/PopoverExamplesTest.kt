@@ -90,6 +90,7 @@ class PopoverExamplesTest(private val viewport: Int, private val dark: Boolean) 
     }
 
     @Test fun officialRecipesComeFirstAndExportStandaloneCode() {
+        assertEquals("Use the following composition to build a `Popover`:", popoverDoc.beforeCompositionMarkdown)
         val examples = popoverDoc.examples.take(5)
         assertEquals(listOf("Default", "Basic", "Align", "With Form", "RTL"), examples.map { it.title })
         assertEquals(

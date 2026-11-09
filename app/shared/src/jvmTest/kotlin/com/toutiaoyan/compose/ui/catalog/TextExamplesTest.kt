@@ -21,8 +21,10 @@ class TextExamplesTest {
     @Test fun pageIsLabeledAsKotlinExtensionAndUsesCurrentApiNames() {
         assertEquals("Text", textDoc.title)
         assertTrue(textDoc.isKotlinExtension)
-        assertTrue(textDoc.beforeExamples.single { it.title == "Kotlin extension" }
-            .blocks.filterIsInstance<ComponentGuideBlock.Paragraph>().isNotEmpty())
+        assertTrue(
+            textDoc.beforeExamples.single { it.title == "Kotlin extension" }
+                .blocks.filterIsInstance<ComponentGuideBlock.Paragraph>().isNotEmpty(),
+        )
         assertTrue(textDoc.usageCode.contains("TextVariant.TitleLarge"))
         assertTrue(textDoc.usageCode.contains("TextColors.Muted"))
         assertFalse(textDoc.usageCode.contains("TextTypography"))
@@ -47,8 +49,10 @@ class TextExamplesTest {
     @Test fun variantsPreviewRendersEveryTypeScaleEntry() {
         val example = textDoc.examples.single { it.title == "Variants" }
         rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
-        listOf("DisplayLarge", "DisplayMedium", "TitleLarge", "TitleMedium", "TitleSmall",
-            "BodyLarge", "BodyMedium", "BodySmall", "LabelLarge", "LabelSmall").forEach { name ->
+        listOf(
+            "DisplayLarge", "DisplayMedium", "TitleLarge", "TitleMedium", "TitleSmall",
+            "BodyLarge", "BodyMedium", "BodySmall", "LabelLarge", "LabelSmall",
+        ).forEach { name ->
             rule.onNodeWithText(name).assertExists()
         }
     }
@@ -64,7 +68,10 @@ class TextExamplesTest {
         assertFalse(markdown.contains("TextTypography"))
         assertFalse(markdown.contains("TextStyles"))
         assertTrue(markdown.contains("## Variants"))
-        assertTrue(markdown.contains("### Kotlin extension: Style font-size") || markdown.contains("## Kotlin extension: Style font-size"))
+        assertTrue(
+            markdown.contains("### Kotlin extension: Style font-size") ||
+                markdown.contains("## Kotlin extension: Style font-size"),
+        )
         val guide = textDoc.beforeExamples.single { it.title == "Kotlin extension" }
         assertIs<ComponentGuideBlock.Paragraph>(guide.blocks.single())
     }

@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.positionInWindow
+import androidx.compose.ui.layout.positionInParent
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
@@ -83,6 +84,8 @@ class MessageScrollerState internal constructor(
         private set
     internal val layouts = Channel<Unit>(Channel.CONFLATED)
     private val measuredRows = linkedMapOf<Any, MessageScrollerRow>()
+    private val rowCoordinates = linkedMapOf<Any, LayoutCoordinates>()
+    private var contentCoordinates: LayoutCoordinates? = null
     private var rows by mutableStateOf<List<MessageScrollerRow>>(emptyList())
     private var viewportHeight by mutableIntStateOf(0)
     private var contentBottom by mutableIntStateOf(0)
@@ -165,8 +168,11 @@ class MessageScrollerState internal constructor(
         rootOwner = null
         mounted = false
         measuredRows.clear()
+        rowCoordinates.clear()
+        contentCoordinates = null
         rows = emptyList()
         contentBottomMeasured = 0
+        contentTopMeasured = 0
     }
 
     internal fun viewportAttached(owner: Any) {
@@ -204,12 +210,34 @@ class MessageScrollerState internal constructor(
     }
 
     internal fun contentMeasured(coordinates: LayoutCoordinates) {
-        val top = (coordinates.positionInWindow().y - viewportOrigin.y + scrollState.value).roundToInt()
+        // The content's parent is the unscrolled Column. Do not add ScrollState.value
+        // to window coordinates: a footer resize can measure with a newer scroll
+        // value than the offset applied by the current layout pass.
+        val top = coordinates.positionInParent().y.roundToInt()
         val bottom = top + coordinates.size.height
-        if (bottom != contentBottomMeasured || top != contentTopMeasured) {
-            contentTopMeasured = top
-            contentBottomMeasured = bottom
+        val changed =
+            contentCoordinates !== coordinates ||
+                bottom != contentBottomMeasured || top != contentTopMeasured
+        contentCoordinates = coordinates
+        contentTopMeasured = top
+        contentBottomMeasured = bottom
+        if (changed) {
+            measuredRows.keys.toList().forEach { token ->
+                val row = measuredRows.getValue(token)
+                rowCoordinates[token]?.takeIf { it.isAttached }?.let { item ->
+                    measuredRows[token] = row.copy(top = itemTop(item))
+                }
+            }
             invalidate()
+        }
+    }
+
+    private fun itemTop(coordinates: LayoutCoordinates): Int {
+        val content = contentCoordinates?.takeIf { it.isAttached }
+        return if (content != null && coordinates.isAttached) {
+            contentTopMeasured + content.localPositionOf(coordinates, Offset.Zero).y.roundToInt()
+        } else {
+            (coordinates.positionInWindow().y - viewportOrigin.y + scrollState.value).roundToInt()
         }
     }
 
@@ -219,8 +247,8 @@ class MessageScrollerState internal constructor(
         anchor: Boolean,
         coordinates: LayoutCoordinates,
     ) {
-        val top = (coordinates.positionInWindow().y - viewportOrigin.y + scrollState.value).roundToInt()
-        val row = MessageScrollerRow(token, id, anchor, top, coordinates.size.height)
+        rowCoordinates[token] = coordinates
+        val row = MessageScrollerRow(token, id, anchor, itemTop(coordinates), coordinates.size.height)
         if (measuredRows[token] != row) {
             measuredRows[token] = row
             invalidate()
@@ -229,6 +257,7 @@ class MessageScrollerState internal constructor(
 
     internal fun removeItem(token: Any) {
         measuredRows.remove(token)
+        rowCoordinates.remove(token)
         invalidate()
     }
 

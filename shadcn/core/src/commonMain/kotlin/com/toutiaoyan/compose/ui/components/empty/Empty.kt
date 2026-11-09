@@ -22,6 +22,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineBreak
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.Dp
@@ -229,6 +230,9 @@ fun EmptyMedia(
 object EmptyTitleDefaults {
     /** Official `text-sm` ([TextVariant.BodySmall]). */
     val Official = TextVariant.BodySmall
+
+    /** Compose approximation of inherited CSS `text-balance`; line widths are not guaranteed equal. */
+    val Balanced: LineBreak = LineBreak.Heading
 }
 
 @Composable
@@ -237,6 +241,23 @@ fun EmptyTitle(
     modifier: Modifier = Modifier,
     variant: TextVariant = EmptyTitleDefaults.Official,
     style: Style = Style,
+) {
+    EmptyTitle(
+        text = text,
+        modifier = modifier,
+        variant = variant,
+        style = style,
+        lineBreak = EmptyTitleDefaults.Balanced,
+    )
+}
+
+@Composable
+fun EmptyTitle(
+    text: String,
+    modifier: Modifier = Modifier,
+    variant: TextVariant = EmptyTitleDefaults.Official,
+    style: Style = Style,
+    lineBreak: LineBreak,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Text(
@@ -278,6 +299,7 @@ fun EmptyTitle(
                         null
                     },
                 textAlign = TextAlign.Center,
+                lineBreak = lineBreak,
             ),
     ) { text }
 }
@@ -291,22 +313,59 @@ fun EmptyTitle(
     style: Style = Style,
     text: () -> String,
 ) {
-    EmptyTitle(text = text(), modifier = modifier, variant = variant, style = style)
+    EmptyTitle(
+        modifier = modifier,
+        variant = variant,
+        style = style,
+        text = text,
+        lineBreak = EmptyTitleDefaults.Balanced,
+    )
+}
+
+@Composable
+@JvmName("EmptyTitleLambda")
+@OverloadResolutionByLambdaReturnType
+fun EmptyTitle(
+    modifier: Modifier = Modifier,
+    variant: TextVariant = EmptyTitleDefaults.Official,
+    style: Style = Style,
+    lineBreak: LineBreak,
+    text: () -> String,
+) {
+    EmptyTitle(text = text(), modifier = modifier, variant = variant, style = style, lineBreak = lineBreak)
 }
 
 /** Matches Nova `cn-empty-description`: `text-sm/relaxed` + muted. */
+object EmptyDescriptionDefaults {
+    /** Compose approximation of inherited CSS `text-balance`, not CSS balancing equivalence. */
+    val Balanced: LineBreak = LineBreak.Heading
+
+    /** Compose readability preset approximating the Background recipe's CSS `text-pretty`. */
+    val Pretty: LineBreak = LineBreak.Paragraph
+}
+
 @Composable
 fun EmptyDescription(
     text: String,
     modifier: Modifier = Modifier,
     style: Style = Style,
 ) {
+    EmptyDescription(text = text, modifier = modifier, style = style, lineBreak = EmptyDescriptionDefaults.Balanced)
+}
+
+@Composable
+fun EmptyDescription(
+    text: String,
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+    lineBreak: LineBreak,
+) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Text(
         variant = TextVariant.BodyMedium,
         style = style,
         modifier = modifier.styleable(styleState, style),
-        textStyle = emptyDescriptionTextStyle(),
+        textStyle = emptyDescriptionTextStyle(lineBreak),
     ) { text }
 }
 
@@ -317,16 +376,26 @@ fun EmptyDescription(
     modifier: Modifier = Modifier,
     style: Style = Style,
 ) {
+    EmptyDescription(text = text, modifier = modifier, style = style, lineBreak = EmptyDescriptionDefaults.Balanced)
+}
+
+@Composable
+fun EmptyDescription(
+    text: AnnotatedString,
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+    lineBreak: LineBreak,
+) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Text(
         modifier = modifier.styleable(styleState, style),
         style = style,
-        textStyle = emptyDescriptionTextStyle(),
+        textStyle = emptyDescriptionTextStyle(lineBreak),
     ) { text }
 }
 
 @Composable
-private fun emptyDescriptionTextStyle(): TextStyle =
+private fun emptyDescriptionTextStyle(lineBreak: LineBreak): TextStyle =
     TextColors.Muted.merge(
         TextStyle(
             fontSize = if (currentTheme.activePreset == StylePreset.Nova) 14.sp else TextUnit.Unspecified,
@@ -342,6 +411,7 @@ private fun emptyDescriptionTextStyle(): TextStyle =
                     null
                 },
             textAlign = TextAlign.Center,
+            lineBreak = lineBreak,
         ),
     )
 
@@ -353,7 +423,19 @@ fun EmptyDescription(
     style: Style = Style,
     text: () -> String,
 ) {
-    EmptyDescription(text = text(), modifier = modifier, style = style)
+    EmptyDescription(modifier = modifier, style = style, text = text, lineBreak = EmptyDescriptionDefaults.Balanced)
+}
+
+@Composable
+@JvmName("EmptyDescriptionLambda")
+@OverloadResolutionByLambdaReturnType
+fun EmptyDescription(
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+    lineBreak: LineBreak,
+    text: () -> String,
+) {
+    EmptyDescription(text = text(), modifier = modifier, style = style, lineBreak = lineBreak)
 }
 
 @Composable

@@ -1,0 +1,6 @@
+[90m/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/[0mInputGroupExamplesTest.kt[90m:[0m188[90m:9:[0m Expected a blank line for this declaration [90m(standard:blank-line-before-declaration)[0m
+[90m/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/[0mItemExamplesTest.kt[90m:[0m135[90m:25:[0m A multiline expression should start on a new line [90m(standard:multiline-expression-wrapping)[0m
+
+Summary error count (descending) by rule:
+  standard:blank-line-before-declaration: 1
+  standard:multiline-expression-wrapping: 1

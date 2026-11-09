@@ -1,0 +1,179 @@
+{
+  "component": "hover-card",
+  "title": "Hover Card",
+  "generatedAt": "2026-11-08T11:43:47.321Z",
+  "localUrl": "http://127.0.0.1:63497/hover-card",
+  "ok": true,
+  "checks": 41,
+  "passed": 41,
+  "failed": 0,
+  "failures": [],
+  "captures": [
+    {
+      "name": "desktop-light",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/hover-card-r4/browser/desktop-light.png",
+      "bytes": 109522,
+      "sha256": "1edc10f5db324c65f3fb124b3811946ea5c9c0a5e18dc1970a7df07347e22d8f",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:63497/hover-card",
+        "theme": "light",
+        "bodyHeight": "calc(5844px + 100vh)",
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 1000
+        },
+        "wasm": [
+          "http://127.0.0.1:63497/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:63497/3cedbfcd5f276a0febfe.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "desktop-dark",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/hover-card-r4/browser/desktop-dark.png",
+      "bytes": 109786,
+      "sha256": "ab73ec001a55199487a17516f54bdc4b2c707f063f8d38d46503210e8646ed50",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:63497/hover-card",
+        "theme": "dark",
+        "bodyHeight": "calc(5844px + 100vh)",
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 1000
+        },
+        "wasm": [
+          "http://127.0.0.1:63497/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:63497/3cedbfcd5f276a0febfe.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "phone-light",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/hover-card-r4/browser/phone-light.png",
+      "bytes": 32432,
+      "sha256": "7cca8efe90442a99b60c09208532760e9d54a476f517b8ad803150056518c09e",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:63497/hover-card",
+        "theme": "light",
+        "bodyHeight": "calc(6702px + 100vh)",
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "wasm": [
+          "http://127.0.0.1:63497/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:63497/3cedbfcd5f276a0febfe.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "phone-dark",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/hover-card-r4/browser/phone-dark.png",
+      "bytes": 32770,
+      "sha256": "ed160fde35f4709ba31cbef83fdd032ff6d7efb6cc5f02bfe3c5d567511f50b6",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:63497/hover-card",
+        "theme": "dark",
+        "bodyHeight": "calc(6702px + 100vh)",
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "wasm": [
+          "http://127.0.0.1:63497/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:63497/3cedbfcd5f276a0febfe.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "section-trigger-delays",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/hover-card-r4/browser/section-trigger-delays.png",
+      "bytes": 120905,
+      "sha256": "2e730f8c3dc0022b5bc0520de95a8edb4f90a94b41d14072108963604e2cf684",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-positioning",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/hover-card-r4/browser/section-positioning.png",
+      "bytes": 104255,
+      "sha256": "b84acbb402824f71388b78a06df7aa23d1427b348f22f207d8281e0fac4056dd",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-basic",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/hover-card-r4/browser/section-basic.png",
+      "bytes": 89132,
+      "sha256": "980c498d6580fe4d937a5f4ccebd4c3f735d1deb710304fc51df47c79152b52a",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-sides",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/hover-card-r4/browser/section-sides.png",
+      "bytes": 100427,
+      "sha256": "3a03354667ac0e822d97b6cd050df5ca62c69941980c1d37201bc237ef24bb61",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-rtl",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/hover-card-r4/browser/section-rtl.png",
+      "bytes": 105263,
+      "sha256": "4a65cbb219b1f5de8a147374143a41da599f85c1d2961bf1c6ce684c70f404b1",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    }
+  ]
+}

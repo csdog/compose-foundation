@@ -510,12 +510,13 @@ val fieldDoc =
                     listOf(
                         ComponentGuideBlock.Bullets(
                             listOf(
-                                "`FieldSet` and `FieldLegend` keep related controls grouped for " +
-                                    "keyboard and assistive tech users.",
-                                "`Field` outputs `role=\"group\"` so nested controls inherit labeling " +
-                                    "from `FieldLabel` and `FieldLegend` when combined.",
-                                "Apply `FieldSeparator` sparingly to ensure screen readers encounter " +
-                                    "clear section boundaries.",
+                                "`FieldSet` and `FieldLegend` visually group related controls. " +
+                                    "Compose does not emit native HTML fieldset or legend elements.",
+                                "Provide accessible labels on the controls themselves. `FieldLabel` does not " +
+                                    "automatically associate with another control; checkbox, radio, and switch " +
+                                    "examples wire label activation explicitly.",
+                                "Use `FieldSeparator` for visual section boundaries and provide meaningful " +
+                                    "control labels independently.",
                             ),
                         ),
                     ),
@@ -525,7 +526,7 @@ val fieldDoc =
             listOf(
                 ComponentApiSection(
                     "FieldSet",
-                    "Container that renders a semantic `fieldset` with spacing presets.",
+                    "Container that visually groups related controls with spacing presets.",
                     listOf(ApiProperty("modifier", "Modifier", "Modifier")),
                 ),
                 ComponentApiSection(
@@ -576,7 +577,7 @@ val fieldDoc =
                 ),
                 ComponentApiSection(
                     "FieldDescription",
-                    "Helper text slot that automatically balances long lines in horizontal layouts.",
+                    "Helper text slot with muted styling and normal line height.",
                     listOf(ApiProperty("modifier", "Modifier", "Modifier")),
                 ),
                 ComponentApiSection(
@@ -778,7 +779,7 @@ val fieldDoc =
                 ComponentExample(
                     title = "RTL",
                     descriptionMarkdown =
-                        "To enable RTL support in your app, see the " +
+                        "To enable RTL support in shadcn/ui, see the " +
                             "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
                     minPreviewHeight = 640.dp,
                     mobileMinPreviewHeight = 640.dp,
@@ -1537,5 +1538,3 @@ private fun FieldRtlPaymentForm(t: FieldRtlStrings) {
 }
 
 // endregion
-
-

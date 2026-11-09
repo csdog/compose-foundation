@@ -179,6 +179,14 @@ internal fun sliderVisualFractionAlongTrack(
     return visual
 }
 
+// Compose accessibility divides the range into steps + 1 intervals.
+internal fun sliderSemanticsSteps(
+    rangeSpan: Float,
+    step: Float,
+): Int {
+    return if (step <= 0f || rangeSpan <= 0f) 0 else ((rangeSpan / step).roundToInt() - 1).coerceAtLeast(0)
+}
+
 private val LocalSlider = staticCompositionLocalOf<SliderController?> { null }
 
 /** Reads the nearest [Slider]. Matches Radix slider context. */
@@ -424,12 +432,7 @@ private fun SliderImpl(
                             ProgressBarRangeInfo(
                                 current = first,
                                 range = valueRange,
-                                steps =
-                                    if (step <= 0f || rangeSpan <= 0f) {
-                                        0
-                                    } else {
-                                        (rangeSpan / step).roundToInt().coerceAtLeast(0)
-                                    },
+                                steps = sliderSemanticsSteps(rangeSpan, step),
                             )
                         setProgress { target ->
                             if (!enabled) {
@@ -715,7 +718,12 @@ internal fun SliderThumb(
                     true
                 }
                 .semantics {
-                    progressBarRangeInfo = ProgressBarRangeInfo(slider.state.values[index], slider.state.valueRange)
+                    progressBarRangeInfo =
+                        ProgressBarRangeInfo(
+                            slider.state.values[index],
+                            slider.state.valueRange,
+                            steps = sliderSemanticsSteps(slider.rangeSpan, slider.state.step),
+                        )
                     setProgress { target ->
                         if (!slider.state.enabled) {
                             false

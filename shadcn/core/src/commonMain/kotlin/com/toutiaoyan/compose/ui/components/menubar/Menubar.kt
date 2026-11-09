@@ -89,6 +89,7 @@ internal class MenubarNavigation {
     val disabled = mutableSetOf<String>()
     var restoreFocus by mutableStateOf<String?>(null)
     var focusLastFor: String? = null
+    var focusFirstFor: String? = null
 
     fun move(
         from: String,
@@ -100,7 +101,10 @@ internal class MenubarNavigation {
         if (values.isEmpty()) return
         val next = values[(values.indexOf(from) + delta).mod(values.size)]
         triggers[next]?.requestFocus()
-        if (open) onOpenChange(next)
+        if (open) {
+            focusFirstFor = next
+            onOpenChange(next)
+        }
     }
 }
 
@@ -324,11 +328,21 @@ fun MenubarMenuScope.MenubarTrigger(
                                     }
                                 if (target != null) {
                                     navigation.triggers[target]?.requestFocus()
-                                    if (controller.openValue != null) controller.onOpenChange(target)
+                                    if (controller.openValue != null) {
+                                        navigation.focusFirstFor = target
+                                        controller.onOpenChange(target)
+                                    }
                                 }
                                 true
                             }
+                            Key.Enter, Key.Spacebar -> {
+                                navigation.focusFirstFor = value
+                                navigation.focusLastFor = null
+                                controller.onOpenChange(value)
+                                true
+                            }
                             Key.DirectionDown, Key.DirectionUp -> {
+                                navigation.focusFirstFor = if (event.key == Key.DirectionDown) value else null
                                 navigation.focusLastFor = if (event.key == Key.DirectionUp) value else null
                                 controller.onOpenChange(value)
                                 true
@@ -350,6 +364,7 @@ fun MenubarMenuScope.MenubarTrigger(
                     role = Role.Button,
                     onClick = {
                         navigation.focusLastFor = null
+                        navigation.focusFirstFor = null
                         controller.onOpenChange(if (isOpen) null else value)
                     },
                 )
@@ -412,6 +427,7 @@ fun MenubarMenuScope.MenubarContent(
 ) {
     val controller = menubarController()
     val direction = LocalLayoutDirection.current
+    val nova = currentTheme.activePreset == StylePreset.Nova
     dropdownMenuState().DropdownMenuContent(
         modifier =
             modifier.onKeyEvent { event ->
@@ -434,14 +450,15 @@ fun MenubarMenuScope.MenubarContent(
                 }
             }.onPreviewKeyEvent { event ->
                 if (event.type == KeyEventType.KeyDown && event.key == Key.Escape) {
+                    // Let the shared menu handler dismiss the deepest open layer first.
                     controller.navigation.restoreFocus = value
-                    controller.onOpenChange(null)
-                    true
+                    false
                 } else {
                     false
                 }
             },
-        style = style,
+        // Nova menubars override the shared dropdown minimum (min-w-36).
+        style = (if (nova) Style { minWidth(144.dp) } else Style) then style,
         sideOffset = sideOffset,
         align = align,
         alignOffset = alignOffset,
@@ -449,10 +466,17 @@ fun MenubarMenuScope.MenubarContent(
         content = {
             val navigation = LocalContextMenuNavigation.current
             LaunchedEffect(Unit) {
-                if (controller.navigation.focusLastFor == value) {
+                val focusLast = controller.navigation.focusLastFor == value
+                val focusFirst = controller.navigation.focusFirstFor == value
+                if (focusLast || focusFirst) {
                     withFrameNanos { }
-                    navigation?.items?.lastOrNull()?.requestFocus()
+                    if (focusLast) {
+                        navigation?.items?.lastOrNull()?.requestFocus()
+                    } else {
+                        navigation?.items?.firstOrNull()?.requestFocus()
+                    }
                     controller.navigation.focusLastFor = null
+                    controller.navigation.focusFirstFor = null
                 }
             }
             content()

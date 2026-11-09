@@ -4,11 +4,17 @@ package com.toutiaoyan.compose.ui.components.toggle
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.StyleScope
+import androidx.compose.foundation.style.animate
 import androidx.compose.foundation.style.checked
 import androidx.compose.foundation.style.contentPadding
 import androidx.compose.foundation.style.hovered
+import androidx.compose.foundation.style.pressed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.compositeOver
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.toutiaoyan.compose.ui.tokens.StylePreset
@@ -20,8 +26,8 @@ import com.toutiaoyan.compose.ui.styles.focusRing
 
 // Matches shadcn/ui's real toggle.tsx: shared hover:bg-muted, data-[state=on]:bg-accent
 // (our `secondary` token stands in for `accent`, since they're the same value in
-// the reference theme). `checked` is declared after `hovered` so the pressed-state
-// color wins if both interaction states are active at once, same as CSS cascade order.
+// the reference theme). `checked` follows `hovered`, and `pressed` follows both, so each
+// stronger interaction state wins when several are active at once, matching CSS cascade order.
 sealed interface ToggleVariant {
     data object Default : ToggleVariant
 
@@ -46,21 +52,33 @@ sealed interface ToggleSize {
     data object Lg : ToggleSize
 }
 
+/** Logical icon edge, matching shadcn's `data-icon="inline-start|inline-end"`. */
+enum class ToggleIconPlacement { Start, End, Both }
+
 @Composable
 fun ToggleVariant.rememberStyle(): Style {
     val receiver = this
     return rememberTheme(receiver) {
         val foreground = receiver.contentColor(colors)
+        val pressedSurface =
+            colors.foreground.copy(alpha = 0.08f).compositeOver(
+                if (theme.activePreset == StylePreset.Nova) colors.muted else colors.secondary,
+            )
         when (receiver) {
             ToggleVariant.Default ->
                 Style {
-                    background(if (theme.activePreset == StylePreset.Nova) colors.background else Color.Transparent)
+                    background(Color.Transparent)
                     contentColor(foreground)
-                    hovered { background(colors.muted) }
-                    checked {
-                        background(
-                            if (theme.activePreset == StylePreset.Nova) colors.muted else colors.secondary,
-                        )
+                    animate {
+                        hovered { background(colors.muted) }
+                        checked {
+                            background(
+                                if (theme.activePreset == StylePreset.Nova) colors.muted else colors.secondary,
+                            )
+                        }
+                        if (theme.activePreset != StylePreset.Nova) {
+                            pressed { background(pressedSurface) }
+                        }
                     }
                     focusRing(RoundedCornerShape(radius.lg))
                     disabledDim()
@@ -68,18 +86,23 @@ fun ToggleVariant.rememberStyle(): Style {
 
             ToggleVariant.Outline ->
                 Style {
-                    background(if (theme.activePreset == StylePreset.Nova) colors.background else Color.Transparent)
+                    background(Color.Transparent)
                     contentColor(foreground)
                     border(if (theme.activePreset == StylePreset.Nova) colors.input else colors.border)
-                    hovered {
-                        background(
-                            if (theme.activePreset == StylePreset.Nova) colors.muted else colors.secondary,
-                        )
-                    }
-                    checked {
-                        background(
-                            if (theme.activePreset == StylePreset.Nova) colors.muted else colors.secondary,
-                        )
+                    animate {
+                        hovered {
+                            background(
+                                if (theme.activePreset == StylePreset.Nova) colors.muted else colors.secondary,
+                            )
+                        }
+                        checked {
+                            background(
+                                if (theme.activePreset == StylePreset.Nova) colors.muted else colors.secondary,
+                            )
+                        }
+                        if (theme.activePreset != StylePreset.Nova) {
+                            pressed { background(pressedSurface) }
+                        }
                     }
                     focusRing(RoundedCornerShape(radius.lg))
                     disabledDim()
@@ -89,14 +112,56 @@ fun ToggleVariant.rememberStyle(): Style {
 }
 
 @Composable
-fun ToggleSize.rememberStyle(): Style {
+fun ToggleSize.rememberStyle(): Style = rememberStyle(iconPlacement = null)
+
+@Composable
+fun ToggleSize.rememberStyle(iconPlacement: ToggleIconPlacement?): Style {
     val receiver = this
-    return rememberTheme(receiver) {
+    val direction = LocalLayoutDirection.current
+    return rememberTheme(receiver, iconPlacement, direction) {
+        val horizontal = spacing.scale2p5
+        val icon =
+            when (receiver) {
+                ToggleSize.Sm -> spacing.scale1p5
+                ToggleSize.Md, ToggleSize.Lg -> spacing.scale2
+            }
+        val logicalStart =
+            if (
+                iconPlacement == ToggleIconPlacement.Start ||
+                iconPlacement == ToggleIconPlacement.Both
+            ) {
+                icon
+            } else {
+                horizontal
+            }
+        val logicalEnd =
+            if (
+                iconPlacement == ToggleIconPlacement.End ||
+                iconPlacement == ToggleIconPlacement.Both
+            ) {
+                icon
+            } else {
+                horizontal
+            }
+        val padding: StyleScope.() -> Unit =
+            if (iconPlacement == null) {
+                { contentPadding(horizontal = horizontal, vertical = 0.dp) }
+            } else {
+                {
+                    // Foundation scalar padding places physical edges; map logical edges once.
+                    contentPadding(
+                        start = if (direction == LayoutDirection.Ltr) logicalStart else logicalEnd,
+                        top = 0.dp,
+                        end = if (direction == LayoutDirection.Ltr) logicalEnd else logicalStart,
+                        bottom = 0.dp,
+                    )
+                }
+            }
         when (receiver) {
             // base-nova sm = h-7 min-w-7 px-2.5
             ToggleSize.Sm ->
                 Style {
-                    contentPadding(horizontal = spacing.scale2p5, vertical = 0.dp)
+                    padding()
                     height(28.dp)
                     minWidth(28.dp)
                     fontSize(12.8.sp)
@@ -106,7 +171,7 @@ fun ToggleSize.rememberStyle(): Style {
             // base-nova default = h-8 min-w-8 px-2.5
             ToggleSize.Md ->
                 Style {
-                    contentPadding(horizontal = spacing.scale2p5, vertical = 0.dp)
+                    padding()
                     height(32.dp)
                     minWidth(32.dp)
                     fontSize(14.sp)
@@ -115,7 +180,7 @@ fun ToggleSize.rememberStyle(): Style {
             // base-nova lg = h-9 min-w-9 px-2.5
             ToggleSize.Lg ->
                 Style {
-                    contentPadding(horizontal = spacing.scale2p5, vertical = 0.dp)
+                    padding()
                     height(36.dp)
                     minWidth(36.dp)
                     fontSize(14.sp)

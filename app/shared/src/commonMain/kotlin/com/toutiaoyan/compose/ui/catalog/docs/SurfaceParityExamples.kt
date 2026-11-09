@@ -41,6 +41,7 @@ import com.toutiaoyan.compose.ui.components.toast.Toaster
 import com.toutiaoyan.compose.ui.components.toast.rememberToastState
 import com.toutiaoyan.compose.ui.components.badge.*
 import com.toutiaoyan.compose.ui.components.calendar.*
+import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
 import com.toutiaoyan.compose.ui.components.popover.*
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import androidx.compose.foundation.style.then
@@ -451,6 +452,7 @@ internal fun DatePickerParityExample() {
             }
         }
         PopoverContent(
+            align = PopupAlign.Start,
             style =
                 Style {
                     width(214.dp)

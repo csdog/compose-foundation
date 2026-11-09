@@ -24,8 +24,11 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.input.key.*
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.runtime.Composable
@@ -241,6 +244,22 @@ internal class RadioGroupController(
 )
 
 private class RadioNavigation {
+    var focusedValue by mutableStateOf<String?>(null)
+
+    fun requestFocus(value: String) {
+        focusedValue = value
+        requesters[value]?.requestFocus()
+    }
+
+    // Keyed children retain effects when moved; placement follows their actual rendered order.
+    val positions = mutableStateMapOf<String, Offset>()
+
+    fun orderedValues(rtl: Boolean): List<String> =
+        order.sortedWith(
+            compareBy<String> { positions[it]?.y ?: Float.POSITIVE_INFINITY }
+                .thenBy { (positions[it]?.x ?: Float.POSITIVE_INFINITY) * if (rtl) -1 else 1 },
+        )
+
     val order = mutableStateListOf<String>()
     val enabled = mutableStateMapOf<String, Boolean>()
     val requesters = mutableMapOf<String, FocusRequester>()
@@ -283,12 +302,13 @@ fun RadioGroup(
 ) {
     var internalValue by remember { mutableStateOf(defaultValue) }
     val current = value ?: internalValue
+    val navigation = remember { RadioNavigation() }
     val setValue: (String) -> Unit = { next ->
+        if (navigation.enabled[next] == true) navigation.requestFocus(next)
         if (value == null) internalValue = next
         onValueChange?.invoke(next)
     }
     val controller = RadioGroupController(current, setValue, disabled || LocalFieldSetDisabled.current, required)
-    val navigation = remember { RadioNavigation() }
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val grouped =
         modifier
@@ -350,30 +370,49 @@ fun RadioGroupScope.RadioGroupItem(
         onDispose {
             navigation.order.remove(value)
             navigation.enabled.remove(value)
+            navigation.positions.remove(value)
             navigation.requesters.remove(value)
+            if (navigation.focusedValue == value) navigation.focusedValue = null
         }
     }
     SideEffect { navigation.enabled[value] = resolvedEnabled }
     val keys =
-        Modifier.focusRequester(requester).onPreviewKeyEvent { event ->
-            if (event.type != KeyEventType.KeyDown || !resolvedEnabled) return@onPreviewKeyEvent false
-            val available = navigation.order.filter { navigation.enabled[it] == true }
-            val index = available.indexOf(value)
-            if (index < 0) return@onPreviewKeyEvent false
-            val next =
-                when (event.key) {
-                    Key.DirectionDown -> available[(index + 1) % available.size]
-                    Key.DirectionUp -> available[(index - 1 + available.size) % available.size]
-                    Key.DirectionRight -> available[(index + (if (rtl) -1 else 1) + available.size) % available.size]
-                    Key.DirectionLeft -> available[(index + (if (rtl) 1 else -1) + available.size) % available.size]
-                    Key.MoveHome -> available.first()
-                    Key.MoveEnd -> available.last()
-                    else -> return@onPreviewKeyEvent false
+        Modifier.focusRequester(requester)
+            .onGloballyPositioned { navigation.positions[value] = it.positionInRoot() }
+            .focusProperties {
+                val entry =
+                    navigation.focusedValue
+                        ?: radio.value.takeIf { navigation.enabled[it] == true }
+                        ?: navigation.orderedValues(rtl).firstOrNull { navigation.enabled[it] == true }
+                canFocus = resolvedEnabled && value == entry
+            }
+            .onFocusChanged {
+                if (it.isFocused) {
+                    navigation.focusedValue = value
+                } else if (navigation.focusedValue == value) {
+                    navigation.focusedValue = null
                 }
-            navigation.requesters[next]?.requestFocus()
-            radio.onValueChange(next)
-            true
-        }
+            }
+            .onPreviewKeyEvent { event ->
+                if (event.type != KeyEventType.KeyDown || !resolvedEnabled) return@onPreviewKeyEvent false
+                val available =
+                    navigation.orderedValues(rtl).filter { navigation.enabled[it] == true }
+                val index = available.indexOf(value)
+                if (index < 0) return@onPreviewKeyEvent false
+                val next =
+                    when (event.key) {
+                        Key.DirectionDown -> available[(index + 1) % available.size]
+                        Key.DirectionUp -> available[(index - 1 + available.size) % available.size]
+                        Key.DirectionRight ->
+                            available[(index + (if (rtl) -1 else 1) + available.size) % available.size]
+                        Key.DirectionLeft -> available[(index + (if (rtl) 1 else -1) + available.size) % available.size]
+                        Key.MoveHome -> available.first()
+                        Key.MoveEnd -> available.last()
+                        else -> return@onPreviewKeyEvent false
+                    }
+                radio.onValueChange(next)
+                true
+            }
     RadioButton(
         selected = radio.value == value,
         onClick = { radio.onValueChange(value) },
@@ -426,7 +465,6 @@ fun RadioGroupScope.RadioGroupItem(
                 modifier =
                     Modifier.focusProperties { canFocus = false }.clickable(enabled = resolvedEnabled) {
                         radio.onValueChange(value)
-                        navigation.requesters[value]?.requestFocus()
                     },
                 disabled = !resolvedEnabled,
             )
@@ -437,7 +475,6 @@ fun RadioGroupScope.RadioGroupItem(
                     modifier =
                         Modifier.focusProperties { canFocus = false }.clickable(enabled = resolvedEnabled) {
                             radio.onValueChange(value)
-                            navigation.requesters[value]?.requestFocus()
                         },
                     disabled = !resolvedEnabled,
                 )

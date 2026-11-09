@@ -1,0 +1,8 @@
+url=http://localhost:8081/
+title=Compose Foundation — Components
+
+
+
+consoleErrors=[
+  "Accessing `memory` via `wasmExports` is deprecated. Use `kotlin.wasm.unsafe.wasmMemory` or update dependencies. Read more: https://kotl.in/vr3szr"
+]

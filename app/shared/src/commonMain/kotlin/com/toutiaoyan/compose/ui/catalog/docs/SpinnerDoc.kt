@@ -50,13 +50,33 @@ val spinnerDoc =
                         SpinnerSizeRecipe()
                     },
                 ),
-                ComponentExample("Button", spinnerCode("button"), preview = { SpinnerButtonRecipe() }),
-                ComponentExample("Badge", spinnerCode("badge"), preview = { SpinnerBadgeRecipe() }),
+                ComponentExample(
+                    "Button",
+                    spinnerCode("button"),
+                    descriptionMarkdown =
+                        "Add a spinner to a button to indicate a loading state. " +
+                            "Place Spinner before the label with ButtonIconPlacement.Start, " +
+                            "or after the label with ButtonIconPlacement.End.",
+                    preview = { SpinnerButtonRecipe() },
+                ),
+                ComponentExample(
+                    "Badge",
+                    spinnerCode("badge"),
+                    descriptionMarkdown =
+                        "Add a spinner to a badge to indicate a loading state. " +
+                            "Place Spinner before the label with BadgeIconPlacement.Start, " +
+                            "or after the label with BadgeIconPlacement.End.",
+                    preview = { SpinnerBadgeRecipe() },
+                ),
                 ComponentExample("Input Group", spinnerCode("inputgroup"), preview = { SpinnerInputGroupRecipe() }),
                 ComponentExample("Empty", spinnerCode("empty"), preview = { SpinnerEmptyRecipe() }),
                 ComponentExample(
                     "RTL",
                     spinnerCode("rtl"),
+                    descriptionMarkdown =
+                        "To enable RTL support, provide LocalLayoutDirection. " +
+                            "For shadcn/ui configuration, see the " +
+                            "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
                     previewPadding = 0.dp,
                     preview = { SpinnerRtlRecipe() },
                 ),

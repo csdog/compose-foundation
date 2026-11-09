@@ -83,7 +83,7 @@ private val questionnaireSourceItems =
     )
 
 @Composable
-private fun QuestionnaireSourceToast(state: ToastState) {
+internal fun QuestionnaireSourceToast(state: ToastState) {
     if (state.toasts.isEmpty()) return
     val inset = with(LocalDensity.current) { 16.dp.roundToPx() }
     val position =

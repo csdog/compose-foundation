@@ -121,3 +121,29 @@ private class ResizableDragNode(private var region: ResizablePointerRegion) :
         }
     }
 }
+
+/** Keeps pointer overshoot until it returns inside the permitted range. */
+internal class ResizableDragAccumulator {
+    private var initialFraction = 0f
+    private var extent = 0f
+    private var displacement = 0f
+
+    fun start(
+        fraction: Float,
+        availableExtent: Float,
+    ) {
+        initialFraction = fraction
+        extent = availableExtent
+        displacement = 0f
+    }
+
+    fun drag(
+        delta: Float,
+        min: Float,
+        max: Float,
+        rtl: Boolean,
+    ): Float {
+        if (delta.isFinite()) displacement += if (rtl) -delta else delta
+        return resizablePanelFraction(initialFraction, displacement, extent, min, max)
+    }
+}

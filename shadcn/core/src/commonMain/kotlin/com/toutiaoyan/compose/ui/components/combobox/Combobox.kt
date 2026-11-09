@@ -174,7 +174,7 @@ private class ComboboxEditing {
             }
             Key.Enter -> {
                 val target = active ?: options.firstOrNull { ctrl.isHighlighted(it) }
-                if (ctrl.open && target != null) {
+                if (ctrl.open && target != null && target in options) {
                     pick[target]?.invoke()
                     return true
                 }
@@ -655,9 +655,9 @@ fun ComboboxScope.ComboboxContent(
                             else -> Modifier
                         },
                     ).styleable(
-                            panelStyleState,
-                            rememberComboboxPanelStyle() then style,
-                        ),
+                        panelStyleState,
+                        rememberComboboxPanelStyle() then style,
+                    ),
                 content = content,
             )
         }
@@ -732,10 +732,13 @@ fun ComboboxInput(
             icon()
             Input(
                 value = ctrl.query,
-                onValueChange = ctrl.setQuery,
+                onValueChange = {
+                    editing.active = null
+                    ctrl.setQuery(it)
+                },
                 placeholder = resolvedPlaceholder,
                 variant = InputVariant.Ghost,
-                disabled = disabled,
+                disabled = disabled || ctrl.disabled,
                 modifier = Modifier.weight(1f),
             )
         }
@@ -1155,9 +1158,19 @@ fun RowScope.ComboboxChipsInput(
     disabled: Boolean = false,
 ) {
     val ctrl = comboboxController()
+    val editing = checkNotNull(LocalComboboxEditing.current)
+    val token = remember { Any() }
+    DisposableEffect(editing, token) {
+        editing.inputs[token] = Unit
+        onDispose { editing.inputs.remove(token) }
+    }
+    LaunchedEffect(ctrl.open) {
+        if (ctrl.open && !ctrl.disabled && !disabled) editing.inputFocus.requestFocus()
+    }
     Input(
         value = ctrl.query,
         onValueChange = {
+            editing.active = null
             ctrl.setQuery(it)
             if (!ctrl.open && it.isNotEmpty()) ctrl.setOpen(true)
         },
@@ -1165,14 +1178,17 @@ fun RowScope.ComboboxChipsInput(
         variant = InputVariant.Ghost,
         disabled = disabled || ctrl.disabled,
         modifier =
-            modifier.weight(1f).pointerInput(Unit) {
-                awaitPointerEventScope {
-                    while (true) {
-                        val event = awaitPointerEvent()
-                        // Base UI's chips input opens the popup on click, not only while typing.
-                        if (event.type == PointerEventType.Press && !ctrl.disabled) ctrl.setOpen(true)
+            modifier.weight(1f)
+                .focusRequester(editing.inputFocus)
+                .onPreviewKeyEvent { editing.key(it, ctrl) }
+                .pointerInput(ctrl.disabled, disabled) {
+                    awaitPointerEventScope {
+                        while (true) {
+                            val event = awaitPointerEvent()
+                            // Base UI's chips input opens the popup on click, not only while typing.
+                            if (event.type == PointerEventType.Press && !ctrl.disabled && !disabled) ctrl.setOpen(true)
+                        }
                     }
-                }
-            },
+                },
     )
 }

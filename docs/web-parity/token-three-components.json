@@ -1,0 +1,105 @@
+{
+  "capturedAt": "2026-11-07T05:25:55.866Z",
+  "taskSpaceId": 86,
+  "wasm": "http://127.0.0.1:8791/658820f72b4617efb380.wasm",
+  "components": {
+    "badge": {
+      "official-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/badge-r4/browser/official-desktop-light.png",
+      "local-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/badge-r4/browser/local-desktop-light.png",
+      "official-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/badge-r4/browser/official-desktop-dark.png",
+      "local-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/badge-r4/browser/local-desktop-dark.png",
+      "official-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/badge-r4/browser/official-phone-light.png",
+      "local-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/badge-r4/browser/local-phone-light.png",
+      "official-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/badge-r4/browser/official-phone-dark.png",
+      "local-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/badge-r4/browser/local-phone-dark.png"
+    },
+    "alert": {
+      "official-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r12/browser/official-desktop-light.png",
+      "local-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r12/browser/local-desktop-light.png",
+      "official-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r12/browser/official-desktop-dark.png",
+      "local-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r12/browser/local-desktop-dark.png",
+      "official-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r12/browser/official-phone-light.png",
+      "local-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r12/browser/local-phone-light.png",
+      "official-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r12/browser/official-phone-dark.png",
+      "local-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/alert-r12/browser/local-phone-dark.png"
+    },
+    "separator": {
+      "official-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/separator-r3/browser/official-desktop-light.png",
+      "local-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/separator-r3/browser/local-desktop-light.png",
+      "official-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/separator-r3/browser/official-desktop-dark.png",
+      "local-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/separator-r3/browser/local-desktop-dark.png",
+      "official-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/separator-r3/browser/official-phone-light.png",
+      "local-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/separator-r3/browser/local-phone-light.png",
+      "official-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/separator-r3/browser/official-phone-dark.png",
+      "local-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/separator-r3/browser/local-phone-dark.png"
+    }
+  },
+  "tokenAccounting": {
+    "measuredAt": "2026-11-07T05:35:06Z",
+    "definition": {
+      "raw": "uncached input + cache-read input + output",
+      "efficient": "uncached input + output"
+    },
+    "historicalComposeParity": {
+      "calls": 5121,
+      "rawTokens": 1768786909,
+      "efficientTokens": 9315677,
+      "medianPromptTokens": 339824,
+      "p95PromptTokens": 633252,
+      "toolContextShare": 0.46483,
+      "averageRawPerComponent": 64956115,
+      "averageEfficientPerComponent": 276649
+    },
+    "badgeDshPilot": {
+      "component": "badge",
+      "outcome": "component-complete-with-codex-follow-up",
+      "calls": 157,
+      "rawTokens": 9353674,
+      "uncachedInputTokens": 214458,
+      "cacheReadTokens": 9084800,
+      "outputTokens": 54416,
+      "efficientTokens": 268874,
+      "cacheHitRate": 0.97694,
+      "medianPromptTokens": 56847,
+      "p95PromptTokens": 94419,
+      "toolContextShare": 0.37902,
+      "rawReductionVsHistoricalAverage": 0.856,
+      "efficientReductionVsHistoricalAverage": 0.0281
+    },
+    "alertDshQuotaFailures": {
+      "component": "alert",
+      "outcome": "scope-incomplete-account-quota",
+      "calls": 17,
+      "rawTokens": 595815,
+      "uncachedInputTokens": 82644,
+      "cacheReadTokens": 509312,
+      "outputTokens": 3859,
+      "efficientTokens": 86503,
+      "cacheHitRate": 0.86039
+    },
+    "dshNovember7Total": {
+      "calls": 174,
+      "rawTokens": 9949489,
+      "uncachedInputTokens": 297102,
+      "cacheReadTokens": 9594112,
+      "outputTokens": 58275,
+      "efficientTokens": 355377,
+      "cacheHitRate": 0.96996
+    },
+    "codexSessionLowerBound": {
+      "scope": "whole current thread through final validation, not three components alone",
+      "inputTokens": 225765247,
+      "cachedInputTokens": 224198784,
+      "uncachedInputTokens": 1566463,
+      "outputTokens": 225229,
+      "rawTokens": 225990476,
+      "efficientTokens": 1791692,
+      "cacheHitRate": 0.99306
+    },
+    "limitations": [
+      "The Badge DSH pilot required a Codex follow-up to reach the final accepted outcome.",
+      "Alert DSH attempts stopped on provider quota, so Alert and Separator were finished in Codex rather than a clean DSH A/B.",
+      "The Codex token snapshot covers the whole thread and is not a per-component benchmark."
+    ]
+  }
+}

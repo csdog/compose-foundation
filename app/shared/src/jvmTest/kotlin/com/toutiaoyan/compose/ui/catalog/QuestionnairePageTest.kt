@@ -71,7 +71,9 @@ class QuestionnairePageTest {
             listOf("Accessibility", "Unstyled", "API Reference"),
             questionnaireDoc.afterExamples.map { it.title },
         )
-        assertTrue(questionnaireDoc.examples.all { it.title.startsWith("Kotlin extension: ") || !it.title.contains("Kotlin") })
+        assertTrue(
+            questionnaireDoc.examples.all { it.title.startsWith("Kotlin extension: ") || !it.title.contains("Kotlin") },
+        )
     }
 
     @Test fun pageKeepsOfficialUsageCompositionAndGuideCopy() {
@@ -104,8 +106,9 @@ class QuestionnairePageTest {
             "└── QuestionnaireActions",
         ).forEach { assertTrue(composition.contains(it), it) }
         val serverRendering = questionnaireDoc.beforeExamples.single()
-        val serverText = (serverRendering.blocks.single() as com.toutiaoyan.compose.ui.catalog.docs.ComponentGuideBlock.Paragraph)
-            .markdown
+        val serverText =
+            (serverRendering.blocks.single() as com.toutiaoyan.compose.ui.catalog.docs.ComponentGuideBlock.Paragraph)
+                .markdown
         assertTrue(serverText.contains("Pass `items` to server-render"))
 
         val accessibility = questionnaireDoc.afterExamples.first()
@@ -117,6 +120,24 @@ class QuestionnairePageTest {
         val api = questionnaireDoc.afterExamples.last()
         assertEquals("API Reference", api.title)
         assertEquals(2, api.blocks.size)
+    }
+
+    @Test fun pageKeepsCompositionOwnershipAndMappedAccessibleUsage() {
+        assertTrue(questionnaireDoc.compositionMarkdown!!.contains("close and cancellation behavior"))
+        assertTrue(questionnaireDoc.beforeCompositionMarkdown!!.contains("Define the collection once"))
+        assertTrue(questionnaireDoc.usageCode.contains("name = \"detail\""))
+        assertTrue(questionnaireDoc.usageCode.contains("items.forEach { question ->"))
+        assertTrue(questionnaireDoc.usageCode.contains("contentDescription = input.label"))
+    }
+
+    @Test fun customProgressIncludesFourSegmentsAndAdvancesItsCounter() {
+        show("Custom Progress")
+        repeat(4) { rule.onNodeWithTag("questionnaire-progress-segment-$it").assertHeightIsEqualTo(6.dp) }
+        rule.onNodeWithText("Checkpoint 1 of 4").assertIsDisplayed()
+        rule.onNodeWithText("Small patch").performClick()
+        rule.onNodeWithText("Next").performClick()
+        rule.onNodeWithText("Checkpoint 2 of 4").assertIsDisplayed()
+        repeat(4) { rule.onNodeWithTag("questionnaire-progress-segment-$it").assertIsDisplayed() }
     }
 
     @Test fun controlledRecipeTracksTheHostItem() {
@@ -147,6 +168,12 @@ class QuestionnairePageTest {
             "Public answers need enough context. Choose a complete answer.",
         ).assertIsDisplayed()
         rule.onNodeWithText("How much detail should the answer include?").assertIsDisplayed()
+        rule.onNodeWithText("Complete answer").performClick()
+        rule.onNodeWithText("Public answers need enough context. Choose a complete answer.").assertDoesNotExist()
+        rule.onNodeWithText("Next").performClick()
+        rule.onNodeWithText("Validate answers").performClick()
+        rule.onNodeWithText("Agent response configured").assertIsDisplayed()
+        rule.onNodeWithText("Detail: complete · Audience: public").assertIsDisplayed()
     }
 
     @Test fun resumeStartsWithSavedAnswersAndResetRestoresThem() {
@@ -163,18 +190,29 @@ class QuestionnairePageTest {
         rule.onNodeWithText("Run migration tests").assertIsOn()
         rule.onNodeWithText("Run the typecheck").assertIsOn()
         rule.onNodeWithText("Perform a manual smoke test").assertIsOff()
+        rule.onNodeWithText("Saved answers restored").assertIsDisplayed()
     }
 
     @Test fun dialogRecipeOpensAndAdvancesThroughItems() {
         show("Dialog")
         rule.onNodeWithText("Open clarification").performClick()
         rule.waitForIdle()
-        rule.onNodeWithText("Clarification").assertIsDisplayed()
+        rule.onNodeWithText("Clarification").assertDoesNotExist()
+        rule.onNodeWithText("Question 1 of 2").assertIsDisplayed()
+        rule.onNodeWithText("Cancel").assertIsDisplayed()
         rule.onNodeWithText("Which files are in scope?").assertIsDisplayed()
         rule.onNodeWithText("Component only").performClick()
         rule.waitForIdle()
         rule.onNodeWithText("Next").performClick()
         rule.waitForIdle()
         rule.onNodeWithText("How much verification is needed?").assertIsDisplayed()
+        rule.onNodeWithText("Question 2 of 2").assertIsDisplayed()
+        rule.onNodeWithText("Cancel").performClick()
+        rule.waitForIdle()
+        rule.onNodeWithText("How much verification is needed?").assertDoesNotExist()
+        rule.onNodeWithText("Open clarification").assertIsDisplayed().performClick()
+        rule.waitForIdle()
+        rule.onNodeWithText("Which files are in scope?").assertIsDisplayed()
+        rule.onNodeWithText("Question 1 of 2").assertIsDisplayed()
     }
 }

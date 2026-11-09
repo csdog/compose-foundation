@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.padding
 import com.toutiaoyan.compose.ui.components.field.LocalField
 import com.toutiaoyan.compose.ui.components.field.FieldChild
 import com.toutiaoyan.compose.ui.components.field.fieldChild
@@ -31,6 +32,7 @@ import androidx.compose.ui.focus.focusProperties
 import com.toutiaoyan.compose.ui.styles.cssStyleable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.Path
@@ -42,6 +44,7 @@ import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.offset
 import androidx.compose.ui.graphics.shadow.Shadow
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.tailwind.core.twSpacing
@@ -129,6 +132,11 @@ fun Checkbox(
         }
     val theme = currentTheme
     val nova = theme.activePreset == StylePreset.Nova
+    // Official after:-inset-x-3/after:-inset-y-2 enlarges hits, not layout.
+    // A larger theme minimum already supplies some or all of that target.
+    val layoutMinimum = theme.minTouchTarget?.coerceAtLeast(16.dp) ?: 16.dp
+    val horizontalHitPadding = ((40.dp - layoutMinimum) / 2).coerceAtLeast(0.dp)
+    val verticalHitPadding = ((32.dp - layoutMinimum) / 2).coerceAtLeast(0.dp)
     val errorColor = theme.colors.destructive
     val invalidStyle =
         if (invalid) {
@@ -168,7 +176,8 @@ fun Checkbox(
         modifier =
             modifier
                 .then(if (LocalField.current != null) Modifier.fieldChild(FieldChild.Checkbox) else Modifier)
-                .semantics {
+                // Keep accessibility bounds on the control, independent of the pointer wrapper.
+                .semantics(mergeDescendants = true) {
                     if (invalid) error("Invalid selection")
                     if (label.isNotEmpty()) {
                         contentDescription = if (required) "$label, required" else label
@@ -178,6 +187,17 @@ fun Checkbox(
                     }
                 }
                 .keyboardInputMode()
+                .layout { measurable, constraints ->
+                    val horizontal = horizontalHitPadding.roundToPx()
+                    val vertical = verticalHitPadding.roundToPx()
+                    val child =
+                        measurable.measure(
+                            constraints.offset(horizontal = horizontal * 2, vertical = vertical * 2),
+                        )
+                    layout(child.width - horizontal * 2, child.height - vertical * 2) {
+                        child.placeRelative(-horizontal, -vertical)
+                    }
+                }
                 .triStateToggleable(
                     state = toggleState,
                     onClick = { setChecked?.invoke(toggleState != ToggleableState.On) },
@@ -186,6 +206,7 @@ fun Checkbox(
                     interactionSource = interactionSource,
                     indication = null,
                 )
+                .padding(horizontal = horizontalHitPadding, vertical = verticalHitPadding)
                 .styleable(styleState, touchTargetStyle then pressStyle),
         contentAlignment = Alignment.Center,
     ) {

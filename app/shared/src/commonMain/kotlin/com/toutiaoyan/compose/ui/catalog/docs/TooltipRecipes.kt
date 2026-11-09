@@ -200,9 +200,10 @@ internal val tooltipOfficialExamples =
             code = tooltipRtlRecipeCode,
             previewPadding = 0.dp,
             preview = {
-            var language by remember { mutableIntStateOf(1) }
-            RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
-                TooltipRtlRecipe(language)
-            }
-        }),
+                var language by remember { mutableIntStateOf(1) }
+                RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
+                    TooltipRtlRecipe(language)
+                }
+            },
+        ),
     )

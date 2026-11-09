@@ -21,7 +21,7 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.anchoredDraggable
 import androidx.compose.foundation.gestures.snapTo
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -49,9 +49,12 @@ import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -70,9 +73,9 @@ object DrawerDefaults {
     /** `calc(100dvh - 6rem)` cap for vertical drawers. */
     val VerticalMaxHeightInset = 96.dp
 
-    /** Matches the current shadcn preview's floating horizontal drawer chrome. */
-    val WindowInset = 8.dp
-    val CornerRadius = 24.dp
+    /** Base Nova defaults to an attached panel (`--drawer-inset: 0px`). */
+    val WindowInset = 0.dp
+    val CornerRadius = 14.dp
     val SideInset = WindowInset
     val SideCornerRadius = CornerRadius
 
@@ -232,10 +235,17 @@ internal fun DrawerContentImpl(
             val peekPx = with(LocalDensity.current) { DrawerDefaults.NestedPeek.toPx() }
             // Keep the same layer while returning to depth zero so close/reversal
             // continues from the currently rendered transform instead of jumping.
+            val nestHost = LocalDrawerNestHost.current
+            val nestedSwipe = { nestHost?.nestedSwipeProgress ?: 0f }
             val nestModifier =
                 Modifier.graphicsLayer {
-                    val depth = stackDepth.value
-                    val scale = (1f - DrawerDefaults.NestedScaleStep * depth).coerceAtLeast(0.85f)
+                    val depth =
+                        drawerStackDepth(
+                            stackDepth.value,
+                            drawer.nestedOpenCount,
+                            nestedSwipe(),
+                        )
+                    val scale = (1f - DrawerDefaults.NestedScaleStep * depth).coerceIn(0f, 1f)
                     scaleX = scale
                     scaleY = scale
                     transformOrigin =
@@ -261,7 +271,6 @@ internal fun DrawerContentImpl(
                         }
                 }
 
-            val nestHost = LocalDrawerNestHost.current
             val stackHeight =
                 animateFloatAsState(
                     if (drawer.nestedOpenCount > 0 &&
@@ -399,6 +408,13 @@ private fun DrawerDismissPanel(
     }
 
     val indentAxis = if (swipeDirection.isVertical()) verticalState else horizontalState
+    val nestHost = LocalDrawerNestHost.current
+    DisposableEffect(nestHost, indentAxis) {
+        nestHost?.attachSwipeProgress {
+            drawerSwipeProgress(indentAxis.offset, indentAxis.anchors.positionOf(AnchoredSwipeValue.Closed))
+        }
+        onDispose { nestHost?.detachSwipeProgress() }
+    }
     DisposableEffect(drawer.indentGesture, indentAxis) {
         drawer.indentGesture?.progress = {
             val extent = indentAxis.anchors.positionOf(AnchoredSwipeValue.Closed)
@@ -442,31 +458,33 @@ private fun DrawerDismissPanel(
         }
 
     val panelShape =
-        if (currentTheme.activePreset == StylePreset.Nova) {
-            RoundedCornerShape(DrawerDefaults.CornerRadius)
-        } else {
-            drawerPanelShape(swipeDirection, twRadius.xl)
-        }
+        drawerPhysicalPanelShape(swipeDirection, twRadius.xl, LocalLayoutDirection.current)
     val panelModifier =
         modifier
             .then(sizeModifier)
-            .anchoredSwipe2D(
-                horizontal = horizontal,
-                vertical = vertical,
-                closingOffset = { hPx, vPx ->
-                    val x =
-                        when {
-                            enableHorizontalRight -> hPx
-                            enableHorizontalLeft -> -hPx
-                            else -> 0
-                        }
-                    val y =
-                        when {
-                            enableVerticalDown -> vPx
-                            enableVerticalUp -> -vPx
-                            else -> 0
-                        }
-                    IntOffset(x, y)
+            .then(
+                if (horizontal != null || vertical != null) {
+                    Modifier.anchoredSwipe2D(
+                        horizontal = horizontal,
+                        vertical = vertical,
+                        closingOffset = { hPx, vPx ->
+                            val x =
+                                when {
+                                    enableHorizontalRight -> hPx
+                                    enableHorizontalLeft -> -hPx
+                                    else -> 0
+                                }
+                            val y =
+                                when {
+                                    enableVerticalDown -> vPx
+                                    enableVerticalUp -> -vPx
+                                    else -> 0
+                                }
+                            IntOffset(x, y)
+                        },
+                    )
+                } else {
+                    Modifier
                 },
             )
             .clip(panelShape)
@@ -574,6 +592,14 @@ private fun DrawerSnapPanel(
         }
     }
 
+    val nestHost = LocalDrawerNestHost.current
+    DisposableEffect(nestHost, snapState, closingOffsets) {
+        nestHost?.attachSwipeProgress {
+            drawerSwipeProgress(snapState.offset, closingOffsets.lastOrNull() ?: 0f)
+        }
+        onDispose { nestHost?.detachSwipeProgress() }
+    }
+
     DisposableEffect(drawer.indentGesture, snapState, closingOffsets) {
         drawer.indentGesture?.progress = {
             val lowest = closingOffsets.dropLast(1).maxOrNull() ?: 0f
@@ -644,13 +670,7 @@ private fun DrawerSnapPanel(
                 },
             )
             .clip(
-                if (currentTheme.activePreset == StylePreset.Nova) {
-                    RoundedCornerShape(
-                        DrawerDefaults.CornerRadius,
-                    )
-                } else {
-                    drawerPanelShape(swipeDirection, twRadius.xl)
-                },
+                drawerPhysicalPanelShape(swipeDirection, twRadius.xl, LocalLayoutDirection.current),
             )
             .styleable(
                 styleState,
@@ -672,15 +692,29 @@ private fun DrawerPanelChrome(
     panelModifier: Modifier,
     content: @Composable ColumnScope.() -> Unit,
 ) {
+    val nestHost = LocalDrawerNestHost.current
+    val nestedCount = LocalDrawerState.current.nestedOpenCount
+    val nestedSwipe = { nestHost?.nestedSwipeProgress ?: 0f }
+    val brightness =
+        animateFloatAsState(
+            if (nestedCount > 0) 0.05f else 0f,
+            tween(DrawerMotionMillis, easing = DrawerMotionEasing),
+            label = "Drawer stack brightness",
+        )
+    val chrome =
+        panelModifier.drawWithContent {
+            drawContent()
+            drawRect(Color.Black.copy(alpha = brightness.value))
+        }
     val contentAlpha =
         animateFloatAsState(
-            if (LocalDrawerState.current.nestedOpenCount > 0) 0f else 1f,
+            if (nestedCount > 0 && nestedSwipe() == 0f) 0f else 1f,
             tween(300, easing = DrawerMotionEasing),
             label = "Drawer covered content",
         )
     when (swipeDirection) {
         DrawerSwipeDirection.Left, DrawerSwipeDirection.Right -> {
-            Row(modifier = panelModifier) {
+            Row(modifier = chrome, horizontalArrangement = Arrangement.Absolute.Left) {
                 if (showHandle && swipeDirection == DrawerSwipeDirection.Right) {
                     DrawerSwipeHandle(modifier = Modifier.align(Alignment.CenterVertically))
                 }
@@ -694,7 +728,7 @@ private fun DrawerPanelChrome(
             }
         }
         DrawerSwipeDirection.Up, DrawerSwipeDirection.Down -> {
-            Column(modifier = panelModifier) {
+            Column(modifier = chrome) {
                 if (showHandle && swipeDirection == DrawerSwipeDirection.Down) {
                     DrawerSwipeHandle(modifier = Modifier.align(Alignment.CenterHorizontally))
                 }

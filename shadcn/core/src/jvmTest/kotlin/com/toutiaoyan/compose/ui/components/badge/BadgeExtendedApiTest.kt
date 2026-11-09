@@ -1,14 +1,20 @@
 package com.toutiaoyan.compose.ui.components.badge
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.HoverInteraction
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.width
 import androidx.compose.ui.graphics.toPixelMap
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.input.InputModeManager
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.platform.LocalInputModeManager
 import com.toutiaoyan.compose.ui.tokens.BaseColor
 import kotlin.math.abs
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -113,6 +119,57 @@ class BadgeExtendedApiTest {
         )
     }
 
+    @Test fun keyboardActivatesClickBadge() {
+        var clicks = 0
+        rule.setContent {
+            Theme(preset = StylePreset.Nova) {
+                Badge("Action", Modifier.testTag("badge"), onClick = { clicks++ })
+            }
+        }
+        val badge = rule.onNodeWithTag("badge")
+        badge.requestFocus().assertIsFocused()
+        badge.performKeyInput { pressKey(Key.Spacebar) }
+        rule.waitForIdle()
+        assertEquals(1, clicks, "Space on a focused onClick badge must activate it")
+        badge.performKeyInput { pressKey(Key.Enter) }
+        rule.waitForIdle()
+        assertEquals(2, clicks, "Enter on a focused onClick badge must activate it")
+        assertEquals(Role.Button, badge.fetchSemanticsNode().config.getOrNull(SemanticsProperties.Role))
+    }
+
+    @Test fun keyboardActivatesHrefBadgeWithoutButtonRole() {
+        val opened = mutableListOf<String>()
+        val uri =
+            object : UriHandler {
+                override fun openUri(uri: String) {
+                    opened += uri
+                }
+            }
+        rule.setContent {
+            CompositionLocalProvider(LocalUriHandler provides uri) {
+                Theme(preset = StylePreset.Nova) {
+                    Badge("Link badge", Modifier.testTag("badge"), href = "https://example.com/keyboard")
+                }
+            }
+        }
+        val badge = rule.onNodeWithTag("badge")
+        badge.requestFocus().assertIsFocused()
+        badge.performKeyInput { pressKey(Key.Spacebar) }
+        rule.waitForIdle()
+        assertEquals(listOf("https://example.com/keyboard"), opened, "Space must navigate an href badge")
+        badge.performKeyInput { pressKey(Key.Enter) }
+        rule.waitForIdle()
+        assertEquals(
+            listOf("https://example.com/keyboard", "https://example.com/keyboard"),
+            opened,
+            "Enter must navigate an href badge",
+        )
+        assertNull(
+            badge.fetchSemanticsNode().config.getOrNull(SemanticsProperties.Role),
+            "A href must not be announced as a button",
+        )
+    }
+
     @Test fun invalidBorderUsesTheCurrentDestructiveColorInBothThemes() {
         lateinit var inputMode: InputModeManager
         var dark by mutableStateOf(false)
@@ -162,5 +219,73 @@ class BadgeExtendedApiTest {
         rule.onNodeWithText("Invalid").assert(SemanticsMatcher.expectValue(SemanticsProperties.Error, "Invalid badge"))
         rule.runOnIdle { invalid = false }
         rule.onNodeWithText("Invalid").assert(SemanticsMatcher.keyNotDefined(SemanticsProperties.Error))
+    }
+
+    @Test fun controlledHoverUpdatesTheFourInteractiveVariants() {
+        val source = MutableInteractionSource()
+        var palette = BaseColor.Neutral.light
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, minTouchTarget = null) {
+                palette = BaseColor.Neutral.light
+                Box(Modifier.background(palette.background)) {
+                    Row {
+                        listOf(
+                            BadgeVariant.Default,
+                            BadgeVariant.Secondary,
+                            BadgeVariant.Outline,
+                            BadgeVariant.Ghost,
+                        ).forEach { variant ->
+                            Badge(
+                                text = variant::class.simpleName ?: "?",
+                                modifier = Modifier.width(80.dp).testTag("badge-${variant::class.simpleName}"),
+                                variant = variant,
+                                onClick = {},
+                                interactionSource = source,
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        val enter = HoverInteraction.Enter()
+        rule.runOnIdle { source.tryEmit(enter) }
+        rule.waitForIdle()
+        val expected =
+            mapOf(
+                "Default" to palette.primary.copy(alpha = 0.8f).compositeOver(palette.background),
+                "Secondary" to palette.secondary.copy(alpha = 0.8f).compositeOver(palette.background),
+                "Outline" to palette.muted,
+                "Ghost" to palette.muted,
+            )
+        expected.forEach { (variant, color) ->
+            val pixels = rule.onNodeWithTag("badge-$variant").captureToImage().toPixelMap()
+            val actual = pixels[5, pixels.height / 2]
+            assertColor(actual, color, variant)
+        }
+
+        rule.runOnIdle { source.tryEmit(HoverInteraction.Exit(enter)) }
+        rule.waitForIdle()
+        expected.keys.forEach { variant ->
+            val pixels = rule.onNodeWithTag("badge-$variant").captureToImage().toPixelMap()
+            val actual = pixels[5, pixels.height / 2]
+            val rest =
+                when (variant) {
+                    "Default" -> palette.primary
+                    "Secondary" -> palette.secondary
+                    else -> palette.background
+                }
+            assertColor(actual, rest, "$variant rest")
+        }
+    }
+
+    private fun assertColor(
+        actual: androidx.compose.ui.graphics.Color,
+        expected: androidx.compose.ui.graphics.Color,
+        label: String,
+    ) {
+        assertEquals(expected.red, actual.red, .03f, "$label red")
+        assertEquals(expected.green, actual.green, .03f, "$label green")
+        assertEquals(expected.blue, actual.blue, .03f, "$label blue")
     }
 }

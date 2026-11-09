@@ -111,21 +111,28 @@ class MessageExamplesTest {
     @Test fun exportKeepsFeaturesAccessibilityAndOfficialRecipeOrder() {
         val markdown = componentPageMarkdown(messageDoc)
         assertFalse(markdown.contains("## Examples"))
-        val order = listOf(
-            "## Features",
-            "## Avatar",
-            "## Group",
-            "## Header and Footer",
-            "## Actions",
-            "## Attachment",
-            "## Accessibility",
-            "### Label icon-only actions",
-            "### Status updates",
-            "## API Reference",
-        ).map { markdown.indexOf(it) }
+        val order =
+            listOf(
+                "## Features",
+                "## Avatar",
+                "## Group",
+                "## Header and Footer",
+                "## Actions",
+                "## Attachment",
+                "## Accessibility",
+                "### Label icon-only actions",
+                "### Status updates",
+                "## API Reference",
+            ).map { markdown.indexOf(it) }
         assertTrue(order.all { it >= 0 }, "missing a section heading: $order")
         assertEquals(order.sorted(), order)
         assertContains(markdown, "Start and end alignment for sender and receiver rows via `align`.")
+        assertContains(markdown, "For AI apps, you can render reasoning steps, tool calls")
+        assertContains(markdown, "[Bubble](/bubble)")
+        assertContains(markdown, "[MessageScroller](/message-scroller)")
+        assertContains(markdown, "Render an empty `MessageAvatar` on the earlier messages")
+        assertContains(markdown, "| `Start` | Align the message to the start of the conversation. |")
+        assertContains(markdown, "Customize every part through its `modifier` and `style` parameters.")
         assertContains(markdown, "Kotlin extension: Start aligned")
         assertContains(markdown, "`role = \"status\"`")
     }

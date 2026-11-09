@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.ParentDataModifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.constrainWidth
 import androidx.compose.ui.unit.constrainHeight
@@ -141,6 +142,8 @@ fun CodeBlock(
         LocalContentColor provides foreground,
         LocalDefaultTextStyle provides
             theme.typography.bodyMedium.copy(
+                lineHeight = if (size == CodeBlockSize.Sm) 16.sp else 20.sp,
+                lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
                 fontSize =
                     if (size == CodeBlockSize.Sm) {
                         12.sp
@@ -227,7 +230,11 @@ fun CodeBlockPartsScope.CodeBlockHeader(
                 )
             }
         val gap = 8.dp.roundToPx()
-        val reserved = actions.sumOf { it.width } + if (actions.isNotEmpty()) gap else 0
+        // Nova's -my-1/-me-1.5 reduce the action margin box, not the button itself.
+        val endOverhang = if (actions.isNotEmpty()) 6.dp.roundToPx() else 0
+        val reserved =
+            (actions.sumOf { it.width } - endOverhang).coerceAtLeast(0) +
+                if (actions.isNotEmpty()) gap else 0
         var available = (constraints.maxWidth - reserved).coerceAtLeast(0)
         val leading =
             children.filter { it.parentData != CodeSlot.Actions }.map {
@@ -236,14 +243,18 @@ fun CodeBlockPartsScope.CodeBlockHeader(
                     available = (available - p.width - gap).coerceAtLeast(0)
                 }
             }
-        val height = (leading + actions).maxOfOrNull { it.height } ?: 0
+        val height =
+            maxOf(
+                leading.maxOfOrNull { it.height } ?: 0,
+                ((actions.maxOfOrNull { it.height } ?: 0) - 8.dp.roundToPx()).coerceAtLeast(0),
+            )
         layout(constraints.maxWidth, height) {
             var x = 0
             leading.forEach {
                 it.placeRelative(x, (height - it.height) / 2)
                 x += it.width + gap
             }
-            x = constraints.maxWidth - actions.sumOf { it.width }
+            x = constraints.maxWidth - actions.sumOf { it.width } + endOverhang
             actions.forEach {
                 it.placeRelative(x, (height - it.height) / 2)
                 x += it.width
@@ -275,6 +286,8 @@ fun CodeBlockPartsScope.CodeBlockTitle(
             },
         LocalDefaultTextStyle provides
             theme.typography.bodyMedium.copy(
+                lineHeight = if (context.size == CodeBlockSize.Sm) 16.sp else 20.sp,
+                lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
                 fontFamily =
                     theme.fontFamily,
                 fontSize =

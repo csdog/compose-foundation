@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,6 +18,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -72,19 +74,43 @@ val switchDoc =
                     code =
                         """
                         var checked by remember { mutableStateOf(false) }
+                        val target = remember { FocusRequester() }
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Switch(checked = checked, onCheckedChange = { checked = it })
-                            FieldLabel("Airplane Mode", modifier = Modifier.clickable { checked = !checked })
+                            Switch(
+                                checked = checked,
+                                onCheckedChange = { checked = it },
+                                modifier = Modifier.focusRequester(target),
+                            )
+                            FieldLabel(
+                                "Airplane Mode",
+                                modifier =
+                                    Modifier.focusProperties { canFocus = false }.clickable {
+                                        checked = !checked
+                                        target.requestFocus()
+                                    },
+                            )
                         }
                         """.trimIndent(),
                     preview = {
                         var checked by remember { mutableStateOf(false) }
+                        val target = remember { FocusRequester() }
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            Switch(checked = checked, onCheckedChange = { checked = it })
-                            FieldLabel("Airplane Mode", modifier = Modifier.clickable { checked = !checked })
+                            Switch(
+                                checked = checked,
+                                onCheckedChange = { checked = it },
+                                modifier = Modifier.focusRequester(target),
+                            )
+                            FieldLabel(
+                                "Airplane Mode",
+                                modifier =
+                                    Modifier.focusProperties { canFocus = false }.clickable {
+                                        checked = !checked
+                                        target.requestFocus()
+                                    },
+                            )
                         }
                     },
                 ),
@@ -96,24 +122,48 @@ val switchDoc =
                     code =
                         """
                         var checked by remember { mutableStateOf(false) }
+                        val target = remember { FocusRequester() }
                         Field(Modifier.widthIn(max = 384.dp), orientation = FieldOrientation.Horizontal) {
                             FieldContent {
-                                FieldLabel("Share across devices")
+                                FieldLabel(
+                                    "Share across devices",
+                                    modifier =
+                                        Modifier.focusProperties { canFocus = false }.clickable {
+                                            checked = !checked
+                                            target.requestFocus()
+                                        },
+                                )
                                 FieldDescription("Focus is shared across devices, and turns off when you leave the app.")
                             }
-                            Switch(checked = checked, onCheckedChange = { checked = it })
+                            Switch(
+                                checked = checked,
+                                onCheckedChange = { checked = it },
+                                modifier = Modifier.focusRequester(target),
+                            )
                         }
                         """.trimIndent(),
                     preview = {
                         var checked by remember { mutableStateOf(false) }
+                        val target = remember { FocusRequester() }
                         Field(Modifier.widthIn(max = 384.dp), orientation = FieldOrientation.Horizontal) {
                             FieldContent {
-                                FieldLabel("Share across devices")
+                                FieldLabel(
+                                    "Share across devices",
+                                    modifier =
+                                        Modifier.focusProperties { canFocus = false }.clickable {
+                                            checked = !checked
+                                            target.requestFocus()
+                                        },
+                                )
                                 FieldDescription(
                                     "Focus is shared across devices, and turns off when you leave the app.",
                                 )
                             }
-                            Switch(checked = checked, onCheckedChange = { checked = it })
+                            Switch(
+                                checked = checked,
+                                onCheckedChange = { checked = it },
+                                modifier = Modifier.focusRequester(target),
+                            )
                         }
                     },
                 ),
@@ -187,26 +237,52 @@ val switchDoc =
                     code =
                         """
                         var checked by remember { mutableStateOf(false) }
+                        val target = remember { FocusRequester() }
                         Field(Modifier.widthIn(max = 384.dp), orientation = FieldOrientation.Horizontal, invalid = true) {
                             FieldContent {
-                                FieldLabel("Accept terms and conditions")
+                                FieldLabel(
+                                    "Accept terms and conditions",
+                                    modifier =
+                                        Modifier.focusProperties { canFocus = false }.clickable {
+                                            checked = !checked
+                                            target.requestFocus()
+                                        },
+                                )
                                 FieldDescription("You must accept the terms and conditions to continue.")
                             }
-                            Switch(checked = checked, onCheckedChange = { checked = it }, invalid = true)
+                            Switch(
+                                checked = checked,
+                                onCheckedChange = { checked = it },
+                                modifier = Modifier.focusRequester(target),
+                                invalid = true,
+                            )
                         }
                         """.trimIndent(),
                     preview = {
                         var checked by remember { mutableStateOf(false) }
+                        val target = remember { FocusRequester() }
                         Field(
                             Modifier.widthIn(max = 384.dp),
                             orientation = FieldOrientation.Horizontal,
                             invalid = true,
                         ) {
                             FieldContent {
-                                FieldLabel("Accept terms and conditions")
+                                FieldLabel(
+                                    "Accept terms and conditions",
+                                    modifier =
+                                        Modifier.focusProperties { canFocus = false }.clickable {
+                                            checked = !checked
+                                            target.requestFocus()
+                                        },
+                                )
                                 FieldDescription("You must accept the terms and conditions to continue.")
                             }
-                            Switch(checked = checked, onCheckedChange = { checked = it }, invalid = true)
+                            Switch(
+                                checked = checked,
+                                onCheckedChange = { checked = it },
+                                modifier = Modifier.focusRequester(target),
+                                invalid = true,
+                            )
                         }
                     },
                 ),
@@ -217,24 +293,20 @@ val switchDoc =
                         """
                         FieldGroup(Modifier.widthIn(max = 160.dp), spacing = 12.dp) {
                             Field(orientation = FieldOrientation.Horizontal) {
-                                Switch(checked = false, onCheckedChange = {}, size = SwitchSize.Sm)
-                                FieldLabel("Small")
+                                Switch("Small", size = SwitchSize.Sm)
                             }
                             Field(orientation = FieldOrientation.Horizontal) {
-                                Switch(checked = false, onCheckedChange = {})
-                                FieldLabel("Default")
+                                Switch("Default")
                             }
                         }
                         """.trimIndent(),
                     preview = {
                         FieldGroup(Modifier.widthIn(max = 160.dp), spacing = 12.dp) {
                             Field(orientation = FieldOrientation.Horizontal) {
-                                Switch(checked = false, onCheckedChange = {}, size = SwitchSize.Sm)
-                                FieldLabel("Small")
+                                Switch("Small", size = SwitchSize.Sm)
                             }
                             Field(orientation = FieldOrientation.Horizontal) {
-                                Switch(checked = false, onCheckedChange = {})
-                                FieldLabel("Default")
+                                Switch("Default")
                             }
                         }
                     },
@@ -249,16 +321,28 @@ val switchDoc =
                         """
                         var language by remember { mutableStateOf(0) }
                         var checked by remember { mutableStateOf(false) }
+                        val target = remember { FocusRequester() }
                         RtlPreview(language, listOf("Arabic (العربية)", "English", "Hebrew (עברית)"), { language = it }) {
                             CompositionLocalProvider(
                                 LocalLayoutDirection provides if (language == 1) LayoutDirection.Ltr else LayoutDirection.Rtl,
                             ) {
                                 Field(Modifier.widthIn(max = 384.dp), orientation = FieldOrientation.Horizontal) {
                                     FieldContent {
-                                        FieldLabel(label)
+                                        FieldLabel(
+                                            label,
+                                            modifier =
+                                                Modifier.focusProperties { canFocus = false }.clickable {
+                                                    checked = !checked
+                                                    target.requestFocus()
+                                                },
+                                        )
                                         FieldDescription(description)
                                     }
-                                    Switch(checked = checked, onCheckedChange = { checked = it })
+                                    Switch(
+                                        checked = checked,
+                                        onCheckedChange = { checked = it },
+                                        modifier = Modifier.focusRequester(target),
+                                    )
                                 }
                             }
                         }
@@ -344,16 +428,28 @@ private fun SwitchRtlPreview() {
                 fontFamily = fontFamily,
             ) {
                 var checked by remember { mutableStateOf(false) }
+                val target = remember { FocusRequester() }
                 val copy = switchRtlCopy[language]
                 Field(
                     Modifier.widthIn(max = 384.dp),
                     orientation = FieldOrientation.Horizontal,
                 ) {
                     FieldContent {
-                        FieldLabel(copy.label)
+                        FieldLabel(
+                            copy.label,
+                            modifier =
+                                Modifier.focusProperties { canFocus = false }.clickable {
+                                    checked = !checked
+                                    target.requestFocus()
+                                },
+                        )
                         FieldDescription(copy.description)
                     }
-                    Switch(checked = checked, onCheckedChange = { checked = it })
+                    Switch(
+                        checked = checked,
+                        onCheckedChange = { checked = it },
+                        modifier = Modifier.focusRequester(target),
+                    )
                 }
             }
         }

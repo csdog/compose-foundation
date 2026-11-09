@@ -9,7 +9,9 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.*
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.style.LineBreak
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.ScreenshotTest
 import com.toutiaoyan.compose.ui.components.text.Text
@@ -17,6 +19,20 @@ import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.*
 
 class EmptyParityTest : ScreenshotTest() {
+    @Test fun originalPositionalSignaturesRemainCallable() {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Column {
+                EmptyTitle("String title", Modifier, EmptyTitleDefaults.Official, Style)
+                EmptyTitle(Modifier, EmptyTitleDefaults.Official, Style, { "Lambda title" })
+                EmptyDescription("String description", Modifier, Style)
+                EmptyDescription(AnnotatedString("Rich description"), Modifier, Style)
+                EmptyDescription(Modifier, Style, { "Lambda description" })
+            }
+        }
+        listOf("String title", "Lambda title", "String description", "Rich description", "Lambda description")
+            .forEach { composeRule.onNodeWithText(it).assertExists() }
+    }
+
     @Test fun novaHeaderAndContentHaveTheOfficialMaximumWidth() {
         setThemedContent(stylePreset = StylePreset.Nova) {
             Empty(Modifier.width(600.dp)) {
@@ -64,8 +80,10 @@ class EmptyParityTest : ScreenshotTest() {
         assertEquals(-0.35f, title.single().layoutInput.style.letterSpacing.value)
         assertEquals(14f, title.single().layoutInput.style.fontSize.value)
         assertEquals(20f, title.single().layoutInput.style.lineHeight.value)
+        assertEquals(LineBreak.Heading, title.single().layoutInput.style.lineBreak)
         assertEquals(14f, description.single().layoutInput.style.fontSize.value)
         assertEquals(22.75f, description.single().layoutInput.style.lineHeight.value)
+        assertEquals(LineBreak.Heading, description.single().layoutInput.style.lineBreak)
     }
 
     @Test fun novaCentersContentInsideAnExplicitHeight() {

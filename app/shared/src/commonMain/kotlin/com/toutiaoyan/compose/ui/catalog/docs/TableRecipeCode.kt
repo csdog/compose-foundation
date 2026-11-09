@@ -64,7 +64,7 @@ internal val tableDefaultRecipeCode =
                 TableHeadCell(labels[1], Modifier.width(100.dp))
                 TableHeadCell(labels[2], Modifier.weight(1f))
                 TableHeadCell(labels[3], Modifier.weight(1f))
-                TableHeadCell(labels[4], Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.End))
+                TableHeadCell(labels[4], Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.Right))
             }
             TableBody {
                 tableInvoices.take(rows).forEachIndexed { index, invoice ->
@@ -76,14 +76,14 @@ internal val tableDefaultRecipeCode =
                         )
                         TableCell(labels[5 + invoice.status], Modifier.weight(1f))
                         TableCell(labels[8 + invoice.method], Modifier.weight(1f))
-                        TableCell(invoice.amount, Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.End))
+                        TableCell(invoice.amount, Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.Right))
                     }
                 }
             }
             TableFooter {
                 TableRow(Modifier.testTag("table-total")) {
                     TableCell(labels[11], Modifier.weight(1f))
-                    TableCell("${'$'}2,500.00", Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.End))
+                    TableCell("${'$'}2,500.00", Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.Right))
                 }
             }
         }
@@ -158,7 +158,7 @@ internal val tableFooterRecipeCode =
                 TableHeadCell(labels[1], Modifier.width(100.dp))
                 TableHeadCell(labels[2], Modifier.weight(1f))
                 TableHeadCell(labels[3], Modifier.weight(1f))
-                TableHeadCell(labels[4], Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.End))
+                TableHeadCell(labels[4], Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.Right))
             }
             TableBody {
                 tableInvoices.take(rows).forEachIndexed { index, invoice ->
@@ -170,14 +170,14 @@ internal val tableFooterRecipeCode =
                         )
                         TableCell(labels[5 + invoice.status], Modifier.weight(1f))
                         TableCell(labels[8 + invoice.method], Modifier.weight(1f))
-                        TableCell(invoice.amount, Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.End))
+                        TableCell(invoice.amount, Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.Right))
                     }
                 }
             }
             TableFooter {
                 TableRow(Modifier.testTag("table-total")) {
                     TableCell(labels[11], Modifier.weight(1f))
-                    TableCell("${'$'}2,500.00", Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.End))
+                    TableCell("${'$'}2,500.00", Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.Right))
                 }
             }
         }
@@ -252,7 +252,7 @@ internal val tableActionsRecipeCode =
                 TableHeadCell(labels[1], Modifier.width(100.dp))
                 TableHeadCell(labels[2], Modifier.weight(1f))
                 TableHeadCell(labels[3], Modifier.weight(1f))
-                TableHeadCell(labels[4], Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.End))
+                TableHeadCell(labels[4], Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.Right))
             }
             TableBody {
                 tableInvoices.take(rows).forEachIndexed { index, invoice ->
@@ -264,14 +264,14 @@ internal val tableActionsRecipeCode =
                         )
                         TableCell(labels[5 + invoice.status], Modifier.weight(1f))
                         TableCell(labels[8 + invoice.method], Modifier.weight(1f))
-                        TableCell(invoice.amount, Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.End))
+                        TableCell(invoice.amount, Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.Right))
                     }
                 }
             }
             TableFooter {
                 TableRow(Modifier.testTag("table-total")) {
                     TableCell(labels[11], Modifier.weight(1f))
-                    TableCell("${'$'}2,500.00", Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.End))
+                    TableCell("${'$'}2,500.00", Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.Right))
                 }
             }
         }
@@ -284,7 +284,7 @@ internal val tableActionsRecipeCode =
             TableHeader {
                 TableHeadCell("Product", Modifier.weight(1f))
                 TableHeadCell("Price", Modifier.width(100.dp))
-                TableHeadCell("Actions", Modifier.width(80.dp), textStyle = TextStyle(textAlign = TextAlign.End))
+                TableHeadCell("Actions", Modifier.width(80.dp), textStyle = TextStyle(textAlign = TextAlign.Right))
             }
             TableBody {
                 products.forEachIndexed { index, (product, price) ->
@@ -380,7 +380,7 @@ internal val tableRtlRecipeCode =
                 TableHeadCell(labels[1], Modifier.width(100.dp))
                 TableHeadCell(labels[2], Modifier.weight(1f))
                 TableHeadCell(labels[3], Modifier.weight(1f))
-                TableHeadCell(labels[4], Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.End))
+                TableHeadCell(labels[4], Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.Right))
             }
             TableBody {
                 tableInvoices.take(rows).forEachIndexed { index, invoice ->
@@ -392,14 +392,14 @@ internal val tableRtlRecipeCode =
                         )
                         TableCell(labels[5 + invoice.status], Modifier.weight(1f))
                         TableCell(labels[8 + invoice.method], Modifier.weight(1f))
-                        TableCell(invoice.amount, Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.End))
+                        TableCell(invoice.amount, Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.Right))
                     }
                 }
             }
             TableFooter {
                 TableRow(Modifier.testTag("table-total")) {
                     TableCell(labels[11], Modifier.weight(1f))
-                    TableCell("${'$'}2,500.00", Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.End))
+                    TableCell("${'$'}2,500.00", Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.Right))
                 }
             }
         }

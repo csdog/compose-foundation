@@ -23,7 +23,7 @@ import kotlin.test.assertTrue
 import kotlin.math.abs
 
 class DrawerSizingTest : ScreenshotTest() {
-    private fun assertFloatingSide(direction: DrawerSwipeDirection) {
+    private fun assertAttachedSide(direction: DrawerSwipeDirection) {
         var viewportWidth = 0f
         var viewportHeight = 0f
         var density = 1f
@@ -32,11 +32,11 @@ class DrawerSizingTest : ScreenshotTest() {
             viewportWidth = LocalWindowInfo.current.containerSize.width.toFloat()
             viewportHeight = LocalWindowInfo.current.containerSize.height.toFloat()
             Drawer(defaultOpen = true, swipeDirection = direction) {
-                DrawerContent(Modifier.testTag("panel")) { DrawerHeader("Floating side") }
+                DrawerContent(Modifier.testTag("panel")) { DrawerHeader("Attached side") }
             }
         }
         val panel = composeRule.onNodeWithTag("panel").fetchSemanticsNode().boundsInWindow
-        val inset = 8f * density
+        val inset = 0f
         assertTrue(abs(panel.top - inset) < 2f, "Top gap: ${panel.top}")
         assertTrue(abs(viewportHeight - panel.bottom - inset) < 2f, "Bottom gap: ${viewportHeight - panel.bottom}")
         val sideGap = if (direction == DrawerSwipeDirection.Left) panel.left else viewportWidth - panel.right
@@ -48,11 +48,11 @@ class DrawerSizingTest : ScreenshotTest() {
         )
     }
 
-    @Test fun leftDrawerFloatsFromWindowEdges() = assertFloatingSide(DrawerSwipeDirection.Left)
+    @Test fun leftDrawerAttachesToWindowEdges() = assertAttachedSide(DrawerSwipeDirection.Left)
 
-    @Test fun rightDrawerFloatsFromWindowEdges() = assertFloatingSide(DrawerSwipeDirection.Right)
+    @Test fun rightDrawerAttachesToWindowEdges() = assertAttachedSide(DrawerSwipeDirection.Right)
 
-    private fun assertFloatingVertical(direction: DrawerSwipeDirection) {
+    private fun assertAttachedVertical(direction: DrawerSwipeDirection) {
         var viewportWidth = 0f
         var viewportHeight = 0f
         var density = 1f
@@ -65,16 +65,16 @@ class DrawerSizingTest : ScreenshotTest() {
             }
         }
         val panel = composeRule.onNodeWithTag("panel").fetchSemanticsNode().boundsInWindow
-        val inset = 8f * density
+        val inset = 0f
         assertTrue(abs(panel.left - inset) < 2f, "Left gap: ${panel.left}")
         assertTrue(abs(viewportWidth - panel.right - inset) < 2f, "Right gap: ${viewportWidth - panel.right}")
         val gap = if (direction == DrawerSwipeDirection.Down) viewportHeight - panel.bottom else panel.top
         assertTrue(abs(gap - inset) < 2f, "Attached edge gap: $gap")
     }
 
-    @Test fun bottomDrawerFloatsFromSideAndBottomEdges() = assertFloatingVertical(DrawerSwipeDirection.Down)
+    @Test fun bottomDrawerAttachesToSideAndBottomEdges() = assertAttachedVertical(DrawerSwipeDirection.Down)
 
-    @Test fun topDrawerFloatsFromSideAndTopEdges() = assertFloatingVertical(DrawerSwipeDirection.Up)
+    @Test fun topDrawerAttachesToSideAndTopEdges() = assertAttachedVertical(DrawerSwipeDirection.Up)
 
     private fun assertSnapPosition(
         point: DrawerSnapPoint,
@@ -95,15 +95,14 @@ class DrawerSizingTest : ScreenshotTest() {
                     ),
                 snapPoint = point,
             ) {
-                DrawerContent(Modifier.testTag("panel")) { DrawerHeader("Snap marker") }
+                DrawerContent(Modifier.testTag("panel")) {
+                    Box(Modifier.fillMaxWidth().height(1.dp).testTag("snap marker"))
+                }
             }
         }
         val panel = composeRule.onNodeWithTag("panel").fetchSemanticsNode().boundsInWindow
         val title =
-            composeRule.onNodeWithText(
-                "Snap marker",
-                useUnmergedTree = true,
-            ).fetchSemanticsNode().boundsInWindow
+            composeRule.onNodeWithTag("snap marker").fetchSemanticsNode().boundsInWindow
         val cap = viewport - 96f * density
         val exposed =
             if (full) {
@@ -116,7 +115,7 @@ class DrawerSizingTest : ScreenshotTest() {
             }
         assertTrue(abs(panel.height - cap) < 2f, "Snap panel must retain vertical cap: ${panel.height} vs $cap")
         assertTrue(
-            abs(title.top - (viewport - exposed + 8f * density)) < 2f,
+            abs(title.top - (viewport - exposed)) < 2f,
             "Snap should expose $exposed px; title at ${title.top}",
         )
     }

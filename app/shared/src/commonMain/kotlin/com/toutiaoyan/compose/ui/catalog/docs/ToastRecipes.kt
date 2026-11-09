@@ -101,8 +101,9 @@ internal val toastOfficialExamples =
                     "`success`, `info`, `warning`, `error`, and `loading`.",
             code = toastTypesRecipeCode,
             preview = {
-            ToastTypesRecipe(checkNotNull(com.toutiaoyan.compose.ui.catalog.LocalCatalogToastState.current))
-        }),
+                ToastTypesRecipe(checkNotNull(com.toutiaoyan.compose.ui.catalog.LocalCatalogToastState.current))
+            },
+        ),
         ComponentExample(
             title = "Promise",
             descriptionMarkdown =
@@ -110,6 +111,7 @@ internal val toastOfficialExamples =
                     "loading, success, and error states.",
             code = toastPromiseRecipeCode,
             preview = {
-            ToastPromiseRecipe(checkNotNull(com.toutiaoyan.compose.ui.catalog.LocalCatalogToastState.current))
-        }),
+                ToastPromiseRecipe(checkNotNull(com.toutiaoyan.compose.ui.catalog.LocalCatalogToastState.current))
+            },
+        ),
     )

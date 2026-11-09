@@ -75,9 +75,10 @@ class TextareaExamplesTest {
     @Test fun copyPageMarkdownKeepsOfficialOrderAndExtensions() {
         val markdown = componentPageMarkdown(textareaDoc)
         val headings = listOf("## Field", "## Disabled", "## Invalid", "## Button", "## RTL")
-        val positions = headings.map { heading ->
-            markdown.indexOf(heading).also { assertTrue(it >= 0, "missing $heading") }
-        }
+        val positions =
+            headings.map { heading ->
+                markdown.indexOf(heading).also { assertTrue(it >= 0, "missing $heading") }
+            }
         assertEquals(positions.sorted(), positions)
         assertFalse(markdown.contains("## Examples"))
         assertTrue(markdown.contains("## Kotlin extension: Rows"))

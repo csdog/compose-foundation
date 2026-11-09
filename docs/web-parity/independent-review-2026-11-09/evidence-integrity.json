@@ -1,0 +1,2048 @@
+{
+  "scope": "Latest numbered evidence directory for each canonical component. Only explicit path+sha256 pairs checked; no claim of functional or visual acceptance. Upstream apps/v4 paths resolve by basename AND exact SHA-256 against archived sources; unresolved references are not automatically missing screenshots.",
+  "components": [
+    {
+      "slug": "accordion",
+      "latest_evidence_directory": "docs/web-parity/accordion-r14",
+      "capture_records": 10,
+      "hash_verified": 10,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "alert",
+      "latest_evidence_directory": "docs/web-parity/alert-r12",
+      "capture_records": 9,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [
+        {
+          "manifest": "docs/web-parity/alert-r12/sources.json",
+          "path": "apps/v4/registry/styles/style-nova.css",
+          "archive": "docs/web-parity/attachment-r1/style-nova.css"
+        }
+      ],
+      "unresolved_upstream_sources": [
+        {
+          "manifest": "docs/web-parity/alert-r12/sources.json",
+          "path": "apps/v4/content/docs/components/base/alert.mdx"
+        },
+        {
+          "manifest": "docs/web-parity/alert-r12/sources.json",
+          "path": "apps/v4/registry/bases/base/ui/alert.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/alert-r12/sources.json",
+          "path": "apps/v4/examples/base/alert-demo.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/alert-r12/sources.json",
+          "path": "apps/v4/examples/base/alert-basic.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/alert-r12/sources.json",
+          "path": "apps/v4/examples/base/alert-destructive.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/alert-r12/sources.json",
+          "path": "apps/v4/examples/base/alert-action.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/alert-r12/sources.json",
+          "path": "apps/v4/examples/base/alert-colors.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/alert-r12/sources.json",
+          "path": "apps/v4/examples/base/alert-rtl.tsx"
+        }
+      ],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "alert-dialog",
+      "latest_evidence_directory": "docs/web-parity/alert-dialog-r5",
+      "capture_records": 10,
+      "hash_verified": 10,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "aspect-ratio",
+      "latest_evidence_directory": "docs/web-parity/aspect-ratio-r5",
+      "capture_records": 7,
+      "hash_verified": 7,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "attachment",
+      "latest_evidence_directory": "docs/web-parity/attachment-r9",
+      "capture_records": 8,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [
+        {
+          "manifest": "docs/web-parity/attachment-r9/sources.json",
+          "path": "apps/v4/content/docs/components/base/attachment.mdx",
+          "archive": "docs/web-parity/attachment-r1/attachment.mdx"
+        },
+        {
+          "manifest": "docs/web-parity/attachment-r9/sources.json",
+          "path": "apps/v4/examples/base/attachment-demo.tsx",
+          "archive": "docs/web-parity/attachment-r1/attachment-demo.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/attachment-r9/sources.json",
+          "path": "apps/v4/examples/base/attachment-image.tsx",
+          "archive": "docs/web-parity/attachment-r1/attachment-image.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/attachment-r9/sources.json",
+          "path": "apps/v4/examples/base/attachment-states.tsx",
+          "archive": "docs/web-parity/attachment-r1/attachment-states.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/attachment-r9/sources.json",
+          "path": "apps/v4/examples/base/attachment-sizes.tsx",
+          "archive": "docs/web-parity/attachment-r1/attachment-sizes.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/attachment-r9/sources.json",
+          "path": "apps/v4/examples/base/attachment-group.tsx",
+          "archive": "docs/web-parity/attachment-r1/attachment-group.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/attachment-r9/sources.json",
+          "path": "apps/v4/examples/base/attachment-trigger.tsx",
+          "archive": "docs/web-parity/attachment-r1/attachment-trigger.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/attachment-r9/sources.json",
+          "path": "apps/v4/registry/bases/base/ui/attachment.tsx",
+          "archive": "docs/web-parity/attachment-r1/attachment.tsx"
+        }
+      ],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "avatar",
+      "latest_evidence_directory": "docs/web-parity/avatar-r4",
+      "capture_records": 13,
+      "hash_verified": 13,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "badge",
+      "latest_evidence_directory": "docs/web-parity/badge-r4",
+      "capture_records": 10,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [
+        {
+          "manifest": "docs/web-parity/badge-r4/sources.json",
+          "path": "apps/v4/content/docs/components/base/badge.mdx",
+          "archive": "docs/web-parity/badge-r4/source/badge.mdx"
+        },
+        {
+          "manifest": "docs/web-parity/badge-r4/sources.json",
+          "path": "apps/v4/registry/bases/base/ui/badge.tsx",
+          "archive": "docs/web-parity/badge-r4/source/badge.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/badge-r4/sources.json",
+          "path": "apps/v4/examples/base/badge-demo.tsx",
+          "archive": "docs/web-parity/badge-r4/source/badge-demo.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/badge-r4/sources.json",
+          "path": "apps/v4/examples/base/badge-variants.tsx",
+          "archive": "docs/web-parity/badge-r4/source/badge-variants.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/badge-r4/sources.json",
+          "path": "apps/v4/examples/base/badge-icon.tsx",
+          "archive": "docs/web-parity/badge-r4/source/badge-icon.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/badge-r4/sources.json",
+          "path": "apps/v4/examples/base/badge-spinner.tsx",
+          "archive": "docs/web-parity/badge-r4/source/badge-spinner.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/badge-r4/sources.json",
+          "path": "apps/v4/examples/base/badge-link.tsx",
+          "archive": "docs/web-parity/badge-r4/source/badge-link.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/badge-r4/sources.json",
+          "path": "apps/v4/examples/base/badge-colors.tsx",
+          "archive": "docs/web-parity/badge-r4/source/badge-colors.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/badge-r4/sources.json",
+          "path": "apps/v4/examples/base/badge-rtl.tsx",
+          "archive": "docs/web-parity/badge-r4/source/badge-rtl.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/badge-r4/sources.json",
+          "path": "apps/v4/registry/styles/style-nova.css",
+          "archive": "docs/web-parity/attachment-r1/style-nova.css"
+        }
+      ],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "breadcrumb",
+      "latest_evidence_directory": "docs/web-parity/breadcrumb-r4",
+      "capture_records": 10,
+      "hash_verified": 10,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "bubble",
+      "latest_evidence_directory": "docs/web-parity/bubble-r3",
+      "capture_records": 12,
+      "hash_verified": 12,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "button",
+      "latest_evidence_directory": "docs/web-parity/button-r5",
+      "capture_records": 18,
+      "hash_verified": 18,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "button-group",
+      "latest_evidence_directory": "docs/web-parity/button-group-r4",
+      "capture_records": 15,
+      "hash_verified": 15,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "calendar",
+      "latest_evidence_directory": "docs/web-parity/calendar-r3",
+      "capture_records": 12,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [
+        {
+          "manifest": "docs/web-parity/calendar-r3/sources.json",
+          "path": "apps/v4/content/docs/components/base/calendar.mdx",
+          "archive": "docs/web-parity/calendar-r1/source/calendar.mdx"
+        },
+        {
+          "manifest": "docs/web-parity/calendar-r3/sources.json",
+          "path": "apps/v4/examples/base/calendar-demo.tsx",
+          "archive": "docs/web-parity/calendar-r1/source/calendar-demo.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/calendar-r3/sources.json",
+          "path": "apps/v4/examples/base/calendar-hijri.tsx",
+          "archive": "docs/web-parity/calendar-r1/source/calendar-hijri.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/calendar-r3/sources.json",
+          "path": "apps/v4/examples/base/calendar-basic.tsx",
+          "archive": "docs/web-parity/calendar-r1/source/calendar-basic.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/calendar-r3/sources.json",
+          "path": "apps/v4/examples/base/calendar-range.tsx",
+          "archive": "docs/web-parity/calendar-r1/source/calendar-range.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/calendar-r3/sources.json",
+          "path": "apps/v4/examples/base/calendar-caption.tsx",
+          "archive": "docs/web-parity/calendar-r1/source/calendar-caption.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/calendar-r3/sources.json",
+          "path": "apps/v4/examples/base/calendar-presets.tsx",
+          "archive": "docs/web-parity/calendar-r1/source/calendar-presets.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/calendar-r3/sources.json",
+          "path": "apps/v4/examples/base/calendar-time.tsx",
+          "archive": "docs/web-parity/calendar-r1/source/calendar-time.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/calendar-r3/sources.json",
+          "path": "apps/v4/examples/base/calendar-booked-dates.tsx",
+          "archive": "docs/web-parity/calendar-r1/source/calendar-booked-dates.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/calendar-r3/sources.json",
+          "path": "apps/v4/examples/base/calendar-custom-days.tsx",
+          "archive": "docs/web-parity/calendar-r1/source/calendar-custom-days.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/calendar-r3/sources.json",
+          "path": "apps/v4/examples/base/calendar-week-numbers.tsx",
+          "archive": "docs/web-parity/calendar-r1/source/calendar-week-numbers.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/calendar-r3/sources.json",
+          "path": "apps/v4/examples/base/calendar-rtl.tsx",
+          "archive": "docs/web-parity/calendar-r1/source/calendar-rtl.tsx"
+        }
+      ],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "card",
+      "latest_evidence_directory": "docs/web-parity/card-r4",
+      "capture_records": 9,
+      "hash_verified": 9,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "carousel",
+      "latest_evidence_directory": "docs/web-parity/carousel-r4",
+      "capture_records": 10,
+      "hash_verified": 10,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "code-block",
+      "latest_evidence_directory": "docs/web-parity/code-block-r2",
+      "capture_records": 0,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "trace",
+      "latest_evidence_directory": "docs/web-parity/trace-r3",
+      "capture_records": 0,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "chart",
+      "latest_evidence_directory": "docs/web-parity/chart-r6",
+      "capture_records": 4,
+      "hash_verified": 4,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [
+        {
+          "path": "docs/web-parity/chart-r6/summary.json",
+          "ok": null,
+          "checks": 45,
+          "passed": 45,
+          "failed": 0
+        }
+      ],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "checkbox",
+      "latest_evidence_directory": "docs/web-parity/checkbox-r3",
+      "capture_records": 71,
+      "hash_verified": 71,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [
+        {
+          "path": "docs/web-parity/checkbox-r3/verify-30c/metadata.json",
+          "ok": null,
+          "checks": null,
+          "passed": null,
+          "failed": null
+        }
+      ],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "chip",
+      "latest_evidence_directory": "docs/web-parity/chip-r1",
+      "capture_records": 26,
+      "hash_verified": 24,
+      "missing_files": [
+        {
+          "manifest": "docs/web-parity/chip-r1/browser/attempt-3/summary.json",
+          "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/webApp/build/dist/wasmJs/productionExecutable/f1c944db69f8cf0c1185.wasm"
+        }
+      ],
+      "hash_mismatches": [
+        {
+          "manifest": "docs/web-parity/chip-r1/browser/attempt-3/summary.json",
+          "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/webApp/build/dist/wasmJs/productionExecutable/webApp.js"
+        }
+      ],
+      "unresolved_paths": [],
+      "summaries": [
+        {
+          "path": "docs/web-parity/chip-r1/browser/attempt-3/summary.json",
+          "ok": null,
+          "checks": null,
+          "passed": true,
+          "failed": null
+        }
+      ],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "collapsible",
+      "latest_evidence_directory": "docs/web-parity/collapsible-r1",
+      "capture_records": 0,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "combobox",
+      "latest_evidence_directory": "docs/web-parity/combobox-r2",
+      "capture_records": 15,
+      "hash_verified": 15,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [
+        {
+          "path": "docs/web-parity/combobox-r2/browser/summary.json",
+          "ok": true,
+          "checks": 47,
+          "passed": 47,
+          "failed": 0
+        }
+      ],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "command",
+      "latest_evidence_directory": "docs/web-parity/command-r11",
+      "capture_records": 8,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [
+        {
+          "manifest": "docs/web-parity/command-r11/sources.json",
+          "path": "apps/v4/content/docs/components/base/command.mdx",
+          "archive": ".agent-runs/review-command/source/command.mdx",
+          "resolution": "exact SHA-256 regardless of flattened archive basename"
+        },
+        {
+          "manifest": "docs/web-parity/command-r11/sources.json",
+          "path": "apps/v4/registry/bases/base/ui/command.tsx",
+          "archive": ".agent-runs/review-command/source/command.tsx",
+          "resolution": "exact SHA-256 regardless of flattened archive basename"
+        },
+        {
+          "manifest": "docs/web-parity/command-r11/sources.json",
+          "path": "apps/v4/examples/base/command-demo.tsx",
+          "archive": ".agent-runs/review-command/source/command-demo.tsx",
+          "resolution": "exact SHA-256 regardless of flattened archive basename"
+        },
+        {
+          "manifest": "docs/web-parity/command-r11/sources.json",
+          "path": "apps/v4/examples/base/command-basic.tsx",
+          "archive": ".agent-runs/review-command/source/command-basic.tsx",
+          "resolution": "exact SHA-256 regardless of flattened archive basename"
+        },
+        {
+          "manifest": "docs/web-parity/command-r11/sources.json",
+          "path": "apps/v4/examples/base/command-shortcuts.tsx",
+          "archive": ".agent-runs/review-command/source/command-shortcuts.tsx",
+          "resolution": "exact SHA-256 regardless of flattened archive basename"
+        },
+        {
+          "manifest": "docs/web-parity/command-r11/sources.json",
+          "path": "apps/v4/examples/base/command-groups.tsx",
+          "archive": ".agent-runs/review-command/source/command-groups.tsx",
+          "resolution": "exact SHA-256 regardless of flattened archive basename"
+        },
+        {
+          "manifest": "docs/web-parity/command-r11/sources.json",
+          "path": "apps/v4/examples/base/command-scrollable.tsx",
+          "archive": ".agent-runs/review-command/source/command-scrollable.tsx",
+          "resolution": "exact SHA-256 regardless of flattened archive basename"
+        },
+        {
+          "manifest": "docs/web-parity/command-r11/sources.json",
+          "path": "apps/v4/examples/base/command-rtl.tsx",
+          "archive": ".agent-runs/review-command/source/command-rtl.tsx",
+          "resolution": "exact SHA-256 regardless of flattened archive basename"
+        }
+      ],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "context-menu",
+      "latest_evidence_directory": "docs/web-parity/context-menu-r2",
+      "capture_records": 14,
+      "hash_verified": 14,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [
+        {
+          "path": "docs/web-parity/context-menu-r2/browser/summary.json",
+          "ok": true,
+          "checks": 46,
+          "passed": 46,
+          "failed": 0
+        }
+      ],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "date-picker",
+      "latest_evidence_directory": "docs/web-parity/date-picker-r10",
+      "capture_records": 9,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [
+        {
+          "manifest": "docs/web-parity/date-picker-r10/sources.json",
+          "path": "apps/v4/content/docs/components/base/date-picker.mdx"
+        },
+        {
+          "manifest": "docs/web-parity/date-picker-r10/sources.json",
+          "path": "apps/v4/examples/base/date-picker-demo.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/date-picker-r10/sources.json",
+          "path": "apps/v4/examples/base/date-picker-basic.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/date-picker-r10/sources.json",
+          "path": "apps/v4/examples/base/date-picker-range.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/date-picker-r10/sources.json",
+          "path": "apps/v4/examples/base/date-picker-dob.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/date-picker-r10/sources.json",
+          "path": "apps/v4/examples/base/date-picker-input.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/date-picker-r10/sources.json",
+          "path": "apps/v4/examples/base/date-picker-time.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/date-picker-r10/sources.json",
+          "path": "apps/v4/examples/base/date-picker-natural-language.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/date-picker-r10/sources.json",
+          "path": "apps/v4/examples/base/date-picker-rtl.tsx"
+        }
+      ],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "dialog",
+      "latest_evidence_directory": "docs/web-parity/dialog-r1",
+      "capture_records": 9,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [
+        {
+          "manifest": "docs/web-parity/dialog-r1/sources.json",
+          "path": "apps/v4/registry/styles/style-nova.css",
+          "archive": "docs/web-parity/attachment-r1/style-nova.css"
+        }
+      ],
+      "unresolved_upstream_sources": [
+        {
+          "manifest": "docs/web-parity/dialog-r1/sources.json",
+          "path": "apps/v4/content/docs/components/base/dialog.mdx"
+        },
+        {
+          "manifest": "docs/web-parity/dialog-r1/sources.json",
+          "path": "apps/v4/registry/bases/base/ui/dialog.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/dialog-r1/sources.json",
+          "path": "apps/v4/examples/base/dialog-demo.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/dialog-r1/sources.json",
+          "path": "apps/v4/examples/base/dialog-close-button.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/dialog-r1/sources.json",
+          "path": "apps/v4/examples/base/dialog-no-close-button.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/dialog-r1/sources.json",
+          "path": "apps/v4/examples/base/dialog-sticky-footer.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/dialog-r1/sources.json",
+          "path": "apps/v4/examples/base/dialog-scrollable-content.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/dialog-r1/sources.json",
+          "path": "apps/v4/examples/base/dialog-rtl.tsx"
+        }
+      ],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "drawer",
+      "latest_evidence_directory": "docs/web-parity/drawer-r1",
+      "capture_records": 10,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [
+        {
+          "manifest": "docs/web-parity/drawer-r1/sources.json",
+          "path": "apps/v4/registry/styles/style-nova.css",
+          "archive": "docs/web-parity/attachment-r1/style-nova.css"
+        }
+      ],
+      "unresolved_upstream_sources": [
+        {
+          "manifest": "docs/web-parity/drawer-r1/sources.json",
+          "path": "apps/v4/content/docs/components/base/drawer.mdx"
+        },
+        {
+          "manifest": "docs/web-parity/drawer-r1/sources.json",
+          "path": "apps/v4/registry/bases/base/ui/drawer.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/drawer-r1/sources.json",
+          "path": "apps/v4/examples/base/drawer-demo.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/drawer-r1/sources.json",
+          "path": "apps/v4/examples/base/drawer-sides.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/drawer-r1/sources.json",
+          "path": "apps/v4/examples/base/drawer-swipe-handle.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/drawer-r1/sources.json",
+          "path": "apps/v4/examples/base/drawer-nested.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/drawer-r1/sources.json",
+          "path": "apps/v4/examples/base/drawer-non-modal.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/drawer-r1/sources.json",
+          "path": "apps/v4/examples/base/drawer-snap-points.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/drawer-r1/sources.json",
+          "path": "apps/v4/examples/base/drawer-dialog.tsx"
+        }
+      ],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "dropdown-menu",
+      "latest_evidence_directory": "docs/web-parity/dropdown-menu-r5",
+      "capture_records": 16,
+      "hash_verified": 16,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [
+        {
+          "path": "docs/web-parity/dropdown-menu-r5/browser/summary.json",
+          "ok": true,
+          "checks": 48,
+          "passed": 48,
+          "failed": 0
+        }
+      ],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "empty",
+      "latest_evidence_directory": "docs/web-parity/empty-r3",
+      "capture_records": 10,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [
+        {
+          "manifest": "docs/web-parity/empty-r3/sources.json",
+          "path": "apps/v4/content/docs/components/base/empty.mdx",
+          "archive": "docs/web-parity/empty-r1/source/empty.mdx"
+        },
+        {
+          "manifest": "docs/web-parity/empty-r3/sources.json",
+          "path": "apps/v4/registry/bases/base/ui/empty.tsx",
+          "archive": "docs/web-parity/empty-r1/source/empty.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/empty-r3/sources.json",
+          "path": "apps/v4/examples/base/empty-demo.tsx",
+          "archive": "docs/web-parity/empty-r1/source/empty-demo.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/empty-r3/sources.json",
+          "path": "apps/v4/examples/base/empty-outline.tsx",
+          "archive": "docs/web-parity/empty-r1/source/empty-outline.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/empty-r3/sources.json",
+          "path": "apps/v4/examples/base/empty-background.tsx",
+          "archive": "docs/web-parity/empty-r1/source/empty-background.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/empty-r3/sources.json",
+          "path": "apps/v4/examples/base/empty-avatar.tsx",
+          "archive": "docs/web-parity/empty-r1/source/empty-avatar.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/empty-r3/sources.json",
+          "path": "apps/v4/examples/base/empty-avatar-group.tsx",
+          "archive": "docs/web-parity/empty-r1/source/empty-avatar-group.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/empty-r3/sources.json",
+          "path": "apps/v4/examples/base/empty-input-group.tsx",
+          "archive": "docs/web-parity/empty-r1/source/empty-input-group.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/empty-r3/sources.json",
+          "path": "apps/v4/examples/base/empty-rtl.tsx",
+          "archive": "docs/web-parity/empty-r1/source/empty-rtl.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/empty-r3/sources.json",
+          "path": "apps/v4/registry/styles/style-nova.css",
+          "archive": "docs/web-parity/attachment-r1/style-nova.css"
+        }
+      ],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "field",
+      "latest_evidence_directory": "docs/web-parity/field-r2",
+      "capture_records": 16,
+      "hash_verified": 16,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [
+        {
+          "path": "docs/web-parity/field-r2/browser/summary.json",
+          "ok": true,
+          "checks": 48,
+          "passed": 48,
+          "failed": 0
+        }
+      ],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "hover-card",
+      "latest_evidence_directory": "docs/web-parity/hover-card-r4",
+      "capture_records": 9,
+      "hash_verified": 9,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [
+        {
+          "path": "docs/web-parity/hover-card-r4/browser/summary.json",
+          "ok": true,
+          "checks": 41,
+          "passed": 41,
+          "failed": 0
+        }
+      ],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "input",
+      "latest_evidence_directory": "docs/web-parity/input-r2",
+      "capture_records": 18,
+      "hash_verified": 18,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [
+        {
+          "path": "docs/web-parity/input-r2/browser/summary.json",
+          "ok": true,
+          "checks": 50,
+          "passed": 50,
+          "failed": 0
+        }
+      ],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "input-group",
+      "latest_evidence_directory": "docs/web-parity/input-group-r2",
+      "capture_records": 18,
+      "hash_verified": 18,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [
+        {
+          "path": "docs/web-parity/input-group-r2/browser/summary.json",
+          "ok": true,
+          "checks": 50,
+          "passed": 50,
+          "failed": 0
+        }
+      ],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "input-otp",
+      "latest_evidence_directory": "docs/web-parity/input-otp-r2",
+      "capture_records": 14,
+      "hash_verified": 14,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [
+        {
+          "path": "docs/web-parity/input-otp-r2/browser/summary.json",
+          "ok": true,
+          "checks": 46,
+          "passed": 46,
+          "failed": 0
+        }
+      ],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "item",
+      "latest_evidence_directory": "docs/web-parity/item-r4",
+      "capture_records": 14,
+      "hash_verified": 14,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [
+        {
+          "path": "docs/web-parity/item-r4/browser/summary.json",
+          "ok": true,
+          "checks": 46,
+          "passed": 46,
+          "failed": 0
+        }
+      ],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "kbd",
+      "latest_evidence_directory": "docs/web-parity/kbd-r3",
+      "capture_records": 8,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [
+        {
+          "manifest": "docs/web-parity/kbd-r3/sources.json",
+          "path": "apps/v4/content/docs/components/base/kbd.mdx",
+          "archive": "docs/web-parity/kbd-r2/source/kbd.mdx"
+        },
+        {
+          "manifest": "docs/web-parity/kbd-r3/sources.json",
+          "path": "apps/v4/registry/bases/base/ui/kbd.tsx",
+          "archive": "docs/web-parity/kbd-r2/source/kbd.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/kbd-r3/sources.json",
+          "path": "apps/v4/examples/base/kbd-demo.tsx",
+          "archive": "docs/web-parity/kbd-r2/source/kbd-demo.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/kbd-r3/sources.json",
+          "path": "apps/v4/examples/base/kbd-group.tsx",
+          "archive": "docs/web-parity/kbd-r2/source/kbd-group.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/kbd-r3/sources.json",
+          "path": "apps/v4/examples/base/kbd-button.tsx",
+          "archive": "docs/web-parity/kbd-r2/source/kbd-button.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/kbd-r3/sources.json",
+          "path": "apps/v4/examples/base/kbd-tooltip.tsx",
+          "archive": "docs/web-parity/kbd-r2/source/kbd-tooltip.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/kbd-r3/sources.json",
+          "path": "apps/v4/examples/base/kbd-input-group.tsx",
+          "archive": "docs/web-parity/kbd-r2/source/kbd-input-group.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/kbd-r3/sources.json",
+          "path": "apps/v4/examples/base/kbd-rtl.tsx",
+          "archive": "docs/web-parity/kbd-r2/source/kbd-rtl.tsx"
+        }
+      ],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "label",
+      "latest_evidence_directory": "docs/web-parity/label-r2",
+      "capture_records": 8,
+      "hash_verified": 8,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [
+        {
+          "path": "docs/web-parity/label-r2/browser/summary.json",
+          "ok": true,
+          "checks": 40,
+          "passed": 40,
+          "failed": 0
+        }
+      ],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "marker",
+      "latest_evidence_directory": "docs/web-parity/marker-r3",
+      "capture_records": 10,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [
+        {
+          "manifest": "docs/web-parity/marker-r3/sources.json",
+          "path": "apps/v4/content/docs/components/base/marker.mdx",
+          "archive": "docs/web-parity/marker-r1/source/marker.mdx"
+        },
+        {
+          "manifest": "docs/web-parity/marker-r3/sources.json",
+          "path": "apps/v4/registry/bases/base/ui/marker.tsx",
+          "archive": "docs/web-parity/marker-r1/source/marker.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/marker-r3/sources.json",
+          "path": "apps/v4/examples/base/marker-demo.tsx",
+          "archive": "docs/web-parity/marker-r1/source/marker-demo.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/marker-r3/sources.json",
+          "path": "apps/v4/examples/base/marker-variants.tsx",
+          "archive": "docs/web-parity/marker-r1/source/marker-variants.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/marker-r3/sources.json",
+          "path": "apps/v4/examples/base/marker-status.tsx",
+          "archive": "docs/web-parity/marker-r1/source/marker-status.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/marker-r3/sources.json",
+          "path": "apps/v4/examples/base/marker-shimmer.tsx",
+          "archive": "docs/web-parity/marker-r1/source/marker-shimmer.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/marker-r3/sources.json",
+          "path": "apps/v4/examples/base/marker-separator.tsx",
+          "archive": "docs/web-parity/marker-r1/source/marker-separator.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/marker-r3/sources.json",
+          "path": "apps/v4/examples/base/marker-border.tsx",
+          "archive": "docs/web-parity/marker-r1/source/marker-border.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/marker-r3/sources.json",
+          "path": "apps/v4/examples/base/marker-icon.tsx",
+          "archive": "docs/web-parity/marker-r1/source/marker-icon.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/marker-r3/sources.json",
+          "path": "apps/v4/examples/base/marker-link-button.tsx",
+          "archive": "docs/web-parity/marker-r1/source/marker-link-button.tsx"
+        }
+      ],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "menubar",
+      "latest_evidence_directory": "docs/web-parity/menubar-r1",
+      "capture_records": 9,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [
+        {
+          "manifest": "docs/web-parity/menubar-r1/sources.json",
+          "path": "apps/v4/content/docs/components/base/menubar.mdx",
+          "archive": "docs/web-parity/menubar-r1/source/menubar.mdx"
+        },
+        {
+          "manifest": "docs/web-parity/menubar-r1/sources.json",
+          "path": "apps/v4/registry/bases/base/ui/menubar.tsx",
+          "archive": "docs/web-parity/menubar-r1/source/menubar.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/menubar-r1/sources.json",
+          "path": "apps/v4/examples/base/menubar-demo.tsx",
+          "archive": "docs/web-parity/menubar-r1/source/menubar-demo.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/menubar-r1/sources.json",
+          "path": "apps/v4/examples/base/menubar-checkbox.tsx",
+          "archive": "docs/web-parity/menubar-r1/source/menubar-checkbox.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/menubar-r1/sources.json",
+          "path": "apps/v4/examples/base/menubar-radio.tsx",
+          "archive": "docs/web-parity/menubar-r1/source/menubar-radio.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/menubar-r1/sources.json",
+          "path": "apps/v4/examples/base/menubar-submenu.tsx",
+          "archive": "docs/web-parity/menubar-r1/source/menubar-submenu.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/menubar-r1/sources.json",
+          "path": "apps/v4/examples/base/menubar-icons.tsx",
+          "archive": "docs/web-parity/menubar-r1/source/menubar-icons.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/menubar-r1/sources.json",
+          "path": "apps/v4/examples/base/menubar-rtl.tsx",
+          "archive": "docs/web-parity/menubar-r1/source/menubar-rtl.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/menubar-r1/sources.json",
+          "path": "apps/v4/registry/styles/style-nova.css",
+          "archive": "docs/web-parity/attachment-r1/style-nova.css"
+        }
+      ],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "message",
+      "latest_evidence_directory": "docs/web-parity/message-r2",
+      "capture_records": 0,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "message-scroller",
+      "latest_evidence_directory": "docs/web-parity/message-scroller-r4",
+      "capture_records": 14,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [
+        {
+          "manifest": "docs/web-parity/message-scroller-r4/sources.json",
+          "path": "apps/v4/content/docs/components/base/message-scroller.mdx",
+          "archive": "docs/web-parity/message-scroller-r1/source/message-scroller.mdx"
+        },
+        {
+          "manifest": "docs/web-parity/message-scroller-r4/sources.json",
+          "path": "apps/v4/registry/bases/base/ui/message-scroller.tsx",
+          "archive": "docs/web-parity/message-scroller-r1/source/message-scroller.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/message-scroller-r4/sources.json",
+          "path": "apps/v4/examples/base/message-scroller-demo.tsx",
+          "archive": "docs/web-parity/message-scroller-r1/source/message-scroller-demo.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/message-scroller-r4/sources.json",
+          "path": "apps/v4/examples/base/message-scroller-anchoring.tsx",
+          "archive": "docs/web-parity/message-scroller-r1/source/message-scroller-anchoring.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/message-scroller-r4/sources.json",
+          "path": "apps/v4/examples/base/message-scroller-group-chat.tsx",
+          "archive": "docs/web-parity/message-scroller-r1/source/message-scroller-group-chat.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/message-scroller-r4/sources.json",
+          "path": "apps/v4/examples/base/message-scroller-previous-context.tsx",
+          "archive": "docs/web-parity/message-scroller-r1/source/message-scroller-previous-context.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/message-scroller-r4/sources.json",
+          "path": "apps/v4/examples/base/message-scroller-scrollable.tsx",
+          "archive": "docs/web-parity/message-scroller-r1/source/message-scroller-scrollable.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/message-scroller-r4/sources.json",
+          "path": "apps/v4/examples/base/message-scroller-opening-position.tsx",
+          "archive": "docs/web-parity/message-scroller-r1/source/message-scroller-opening-position.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/message-scroller-r4/sources.json",
+          "path": "apps/v4/examples/base/message-scroller-animation.tsx",
+          "archive": "docs/web-parity/message-scroller-r1/source/message-scroller-animation.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/message-scroller-r4/sources.json",
+          "path": "apps/v4/examples/base/message-scroller-load-history.tsx",
+          "archive": "docs/web-parity/message-scroller-r1/source/message-scroller-load-history.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/message-scroller-r4/sources.json",
+          "path": "apps/v4/examples/base/message-scroller-streaming.tsx",
+          "archive": "docs/web-parity/message-scroller-r1/source/message-scroller-streaming.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/message-scroller-r4/sources.json",
+          "path": "apps/v4/examples/base/message-scroller-commands.tsx",
+          "archive": "docs/web-parity/message-scroller-r1/source/message-scroller-commands.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/message-scroller-r4/sources.json",
+          "path": "apps/v4/examples/base/message-scroller-visibility.tsx",
+          "archive": "docs/web-parity/message-scroller-r1/source/message-scroller-visibility.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/message-scroller-r4/sources.json",
+          "path": "apps/v4/registry/styles/style-nova.css",
+          "archive": "docs/web-parity/attachment-r1/style-nova.css"
+        }
+      ],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "navigation-menu",
+      "latest_evidence_directory": "docs/web-parity/navigation-menu-r3",
+      "capture_records": 4,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [
+        {
+          "manifest": "docs/web-parity/navigation-menu-r3/sources.json",
+          "path": "apps/v4/content/docs/components/base/navigation-menu.mdx",
+          "archive": "docs/web-parity/navigation-menu-r1/source/navigation-menu.mdx"
+        },
+        {
+          "manifest": "docs/web-parity/navigation-menu-r3/sources.json",
+          "path": "apps/v4/registry/bases/base/ui/navigation-menu.tsx",
+          "archive": "docs/web-parity/navigation-menu-r1/source/navigation-menu.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/navigation-menu-r3/sources.json",
+          "path": "apps/v4/examples/base/navigation-menu-demo.tsx",
+          "archive": "docs/web-parity/navigation-menu-r1/source/navigation-menu-demo.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/navigation-menu-r3/sources.json",
+          "path": "apps/v4/examples/base/navigation-menu-rtl.tsx",
+          "archive": "docs/web-parity/navigation-menu-r1/source/navigation-menu-rtl.tsx"
+        }
+      ],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "pagination",
+      "latest_evidence_directory": "docs/web-parity/pagination-r2",
+      "capture_records": 6,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [
+        {
+          "manifest": "docs/web-parity/pagination-r2/sources.json",
+          "path": "apps/v4/content/docs/components/base/pagination.mdx",
+          "archive": "docs/web-parity/pagination-r1/source/pagination.mdx"
+        },
+        {
+          "manifest": "docs/web-parity/pagination-r2/sources.json",
+          "path": "apps/v4/registry/bases/base/ui/pagination.tsx",
+          "archive": "docs/web-parity/pagination-r1/source/pagination.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/pagination-r2/sources.json",
+          "path": "apps/v4/examples/base/pagination-demo.tsx",
+          "archive": "docs/web-parity/pagination-r1/source/pagination-demo.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/pagination-r2/sources.json",
+          "path": "apps/v4/examples/base/pagination-simple.tsx",
+          "archive": "docs/web-parity/pagination-r1/source/pagination-simple.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/pagination-r2/sources.json",
+          "path": "apps/v4/examples/base/pagination-icons-only.tsx",
+          "archive": "docs/web-parity/pagination-r1/source/pagination-icons-only.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/pagination-r2/sources.json",
+          "path": "apps/v4/examples/base/pagination-rtl.tsx",
+          "archive": "docs/web-parity/pagination-r1/source/pagination-rtl.tsx"
+        }
+      ],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "popover",
+      "latest_evidence_directory": "docs/web-parity/popover-r3",
+      "capture_records": 7,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [
+        {
+          "manifest": "docs/web-parity/popover-r3/sources.json",
+          "path": "apps/v4/content/docs/components/base/popover.mdx",
+          "archive": "docs/web-parity/popover-r1/source/popover.mdx"
+        },
+        {
+          "manifest": "docs/web-parity/popover-r3/sources.json",
+          "path": "apps/v4/registry/bases/base/ui/popover.tsx",
+          "archive": "docs/web-parity/popover-r1/source/popover.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/popover-r3/sources.json",
+          "path": "apps/v4/examples/base/popover-demo.tsx",
+          "archive": "docs/web-parity/popover-r1/source/popover-demo.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/popover-r3/sources.json",
+          "path": "apps/v4/examples/base/popover-basic.tsx",
+          "archive": "docs/web-parity/popover-r1/source/popover-basic.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/popover-r3/sources.json",
+          "path": "apps/v4/examples/base/popover-alignments.tsx",
+          "archive": "docs/web-parity/popover-r1/source/popover-alignments.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/popover-r3/sources.json",
+          "path": "apps/v4/examples/base/popover-form.tsx",
+          "archive": "docs/web-parity/popover-r1/source/popover-form.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/popover-r3/sources.json",
+          "path": "apps/v4/examples/base/popover-rtl.tsx",
+          "archive": "docs/web-parity/popover-r1/source/popover-rtl.tsx"
+        }
+      ],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "progress",
+      "latest_evidence_directory": "docs/web-parity/progress-r5",
+      "capture_records": 6,
+      "hash_verified": 6,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [
+        {
+          "path": "docs/web-parity/progress-r5/summary.json",
+          "ok": true,
+          "checks": 42,
+          "passed": 42,
+          "failed": 0
+        }
+      ],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "questionnaire",
+      "latest_evidence_directory": "docs/web-parity/questionnaire-r2",
+      "capture_records": 0,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "radio-group",
+      "latest_evidence_directory": "docs/web-parity/radio-group-r1",
+      "capture_records": 0,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "resizable",
+      "latest_evidence_directory": "docs/web-parity/resizable-r2",
+      "capture_records": 0,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "scroll-area",
+      "latest_evidence_directory": "docs/web-parity/scroll-area-r2",
+      "capture_records": 0,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "scroll-fade",
+      "latest_evidence_directory": "docs/web-parity/scroll-fade-r2",
+      "capture_records": 0,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "select",
+      "latest_evidence_directory": "docs/web-parity/select-r1",
+      "capture_records": 10,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [
+        {
+          "manifest": "docs/web-parity/select-r1/sources.json",
+          "path": "apps/v4/registry/bases/base/ui/select.tsx",
+          "archive": "docs/web-parity/aspect-ratio-r1/select.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/select-r1/sources.json",
+          "path": "apps/v4/registry/styles/style-nova.css",
+          "archive": "docs/web-parity/attachment-r1/style-nova.css"
+        }
+      ],
+      "unresolved_upstream_sources": [
+        {
+          "manifest": "docs/web-parity/select-r1/sources.json",
+          "path": "apps/v4/content/docs/components/base/select.mdx"
+        },
+        {
+          "manifest": "docs/web-parity/select-r1/sources.json",
+          "path": "apps/v4/examples/base/select-demo.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/select-r1/sources.json",
+          "path": "apps/v4/examples/base/select-align-item.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/select-r1/sources.json",
+          "path": "apps/v4/examples/base/select-groups.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/select-r1/sources.json",
+          "path": "apps/v4/examples/base/select-scrollable.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/select-r1/sources.json",
+          "path": "apps/v4/examples/base/select-disabled.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/select-r1/sources.json",
+          "path": "apps/v4/examples/base/select-invalid.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/select-r1/sources.json",
+          "path": "apps/v4/examples/base/select-rtl.tsx"
+        }
+      ],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "separator",
+      "latest_evidence_directory": "docs/web-parity/separator-r3",
+      "capture_records": 8,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [
+        {
+          "manifest": "docs/web-parity/separator-r3/sources.json",
+          "path": "apps/v4/content/docs/components/base/separator.mdx",
+          "archive": "docs/web-parity/separator-r2/source/separator.mdx"
+        },
+        {
+          "manifest": "docs/web-parity/separator-r3/sources.json",
+          "path": "apps/v4/registry/bases/base/ui/separator.tsx",
+          "archive": "docs/web-parity/separator-r2/source/separator.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/separator-r3/sources.json",
+          "path": "apps/v4/examples/base/separator-demo.tsx",
+          "archive": "docs/web-parity/separator-r2/source/separator-demo.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/separator-r3/sources.json",
+          "path": "apps/v4/examples/base/separator-vertical.tsx",
+          "archive": "docs/web-parity/separator-r2/source/separator-vertical.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/separator-r3/sources.json",
+          "path": "apps/v4/examples/base/separator-menu.tsx",
+          "archive": "docs/web-parity/separator-r2/source/separator-menu.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/separator-r3/sources.json",
+          "path": "apps/v4/examples/base/separator-list.tsx",
+          "archive": "docs/web-parity/separator-r2/source/separator-list.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/separator-r3/sources.json",
+          "path": "apps/v4/examples/base/separator-rtl.tsx",
+          "archive": "docs/web-parity/separator-r2/source/separator-rtl.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/separator-r3/sources.json",
+          "path": "apps/v4/registry/styles/style-nova.css",
+          "archive": "docs/web-parity/attachment-r1/style-nova.css"
+        }
+      ],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "sheet",
+      "latest_evidence_directory": "docs/web-parity/sheet-r2",
+      "capture_records": 0,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "shimmer",
+      "latest_evidence_directory": "docs/web-parity/shimmer-r3",
+      "capture_records": 0,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "sidebar",
+      "latest_evidence_directory": "docs/web-parity/sidebar-r3",
+      "capture_records": 0,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "skeleton",
+      "latest_evidence_directory": "docs/web-parity/skeleton-r2",
+      "capture_records": 0,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "slider",
+      "latest_evidence_directory": "docs/web-parity/slider-r1",
+      "capture_records": 0,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "spinner",
+      "latest_evidence_directory": "docs/web-parity/spinner-r2",
+      "capture_records": 0,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "stepper",
+      "latest_evidence_directory": "docs/web-parity/stepper-r1",
+      "capture_records": 0,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "switch",
+      "latest_evidence_directory": "docs/web-parity/switch-r1",
+      "capture_records": 0,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "table",
+      "latest_evidence_directory": "docs/web-parity/table-r1",
+      "capture_records": 42,
+      "hash_verified": 35,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [
+        {
+          "path": "docs/web-parity/table-r1/verification/green/test-summary.json",
+          "ok": null,
+          "checks": null,
+          "passed": null,
+          "failed": null
+        },
+        {
+          "path": "docs/web-parity/table-r1/verification/prepass-isolation/test-summary.json",
+          "ok": null,
+          "checks": null,
+          "passed": null,
+          "failed": null
+        },
+        {
+          "path": "docs/web-parity/table-r1/verification/green-attempt/test-summary.json",
+          "ok": null,
+          "checks": null,
+          "passed": null,
+          "failed": null
+        },
+        {
+          "path": "docs/web-parity/table-r1/verification/legacy-verify/test-summary.json",
+          "ok": null,
+          "checks": null,
+          "passed": null,
+          "failed": null
+        },
+        {
+          "path": "docs/web-parity/table-r1/verification/red/test-summary.json",
+          "ok": null,
+          "checks": null,
+          "passed": null,
+          "failed": null
+        },
+        {
+          "path": "docs/web-parity/table-r1/verification/examples-attempt/test-summary.json",
+          "ok": null,
+          "checks": null,
+          "passed": null,
+          "failed": null
+        }
+      ],
+      "upstream_archives_verified": [
+        {
+          "manifest": "docs/web-parity/table-r1/sources.json",
+          "path": "apps/v4/content/docs/components/base/table.mdx",
+          "archive": "docs/web-parity/table-r1/source/table.mdx"
+        },
+        {
+          "manifest": "docs/web-parity/table-r1/sources.json",
+          "path": "apps/v4/registry/bases/base/ui/table.tsx",
+          "archive": "docs/web-parity/table-r1/source/table.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/table-r1/sources.json",
+          "path": "apps/v4/examples/base/table-demo.tsx",
+          "archive": "docs/web-parity/table-r1/source/table-demo.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/table-r1/sources.json",
+          "path": "apps/v4/examples/base/table-footer.tsx",
+          "archive": "docs/web-parity/table-r1/source/table-footer.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/table-r1/sources.json",
+          "path": "apps/v4/examples/base/table-actions.tsx",
+          "archive": "docs/web-parity/table-r1/source/table-actions.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/table-r1/sources.json",
+          "path": "apps/v4/examples/base/table-rtl.tsx",
+          "archive": "docs/web-parity/table-r1/source/table-rtl.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/table-r1/sources.json",
+          "path": "apps/v4/registry/styles/style-nova.css",
+          "archive": "docs/web-parity/attachment-r1/style-nova.css"
+        }
+      ],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "tabs",
+      "latest_evidence_directory": "docs/web-parity/tabs-r1",
+      "capture_records": 9,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [
+        {
+          "path": "docs/web-parity/tabs-r1/verification/prepass-one-frame-red/test-summary.json",
+          "ok": null,
+          "checks": null,
+          "passed": null,
+          "failed": null
+        },
+        {
+          "path": "docs/web-parity/tabs-r1/verification/focus-fill-red/test-summary.json",
+          "ok": null,
+          "checks": null,
+          "passed": null,
+          "failed": null
+        },
+        {
+          "path": "docs/web-parity/tabs-r1/verification/direct-panel-attempt/test-summary.json",
+          "ok": null,
+          "checks": null,
+          "passed": null,
+          "failed": null
+        },
+        {
+          "path": "docs/web-parity/tabs-r1/verification/green-attempt/test-summary.json",
+          "ok": null,
+          "checks": null,
+          "passed": null,
+          "failed": null
+        },
+        {
+          "path": "docs/web-parity/tabs-r1/verification/kept-panel-focus-attempt/test-summary.json",
+          "ok": null,
+          "checks": null,
+          "passed": null,
+          "failed": null
+        },
+        {
+          "path": "docs/web-parity/tabs-r1/verification/red/test-summary.json",
+          "ok": null,
+          "checks": null,
+          "passed": null,
+          "failed": null
+        },
+        {
+          "path": "docs/web-parity/tabs-r1/verification/kept-panel-layout-attempt/test-summary.json",
+          "ok": null,
+          "checks": null,
+          "passed": null,
+          "failed": null
+        },
+        {
+          "path": "docs/web-parity/tabs-r1/verification/kept-panel-red/test-summary.json",
+          "ok": null,
+          "checks": null,
+          "passed": null,
+          "failed": null
+        }
+      ],
+      "upstream_archives_verified": [
+        {
+          "manifest": "docs/web-parity/tabs-r1/sources.json",
+          "path": "apps/v4/content/docs/components/base/tabs.mdx",
+          "archive": "docs/web-parity/tabs-r1/source/tabs.mdx"
+        },
+        {
+          "manifest": "docs/web-parity/tabs-r1/sources.json",
+          "path": "apps/v4/registry/bases/base/ui/tabs.tsx",
+          "archive": "docs/web-parity/tabs-r1/source/tabs.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/tabs-r1/sources.json",
+          "path": "apps/v4/examples/base/tabs-demo.tsx",
+          "archive": "docs/web-parity/tabs-r1/source/tabs-demo.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/tabs-r1/sources.json",
+          "path": "apps/v4/examples/base/tabs-line.tsx",
+          "archive": "docs/web-parity/tabs-r1/source/tabs-line.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/tabs-r1/sources.json",
+          "path": "apps/v4/examples/base/tabs-vertical.tsx",
+          "archive": "docs/web-parity/tabs-r1/source/tabs-vertical.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/tabs-r1/sources.json",
+          "path": "apps/v4/examples/base/tabs-disabled.tsx",
+          "archive": "docs/web-parity/tabs-r1/source/tabs-disabled.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/tabs-r1/sources.json",
+          "path": "apps/v4/examples/base/tabs-icons.tsx",
+          "archive": "docs/web-parity/tabs-r1/source/tabs-icons.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/tabs-r1/sources.json",
+          "path": "apps/v4/examples/base/tabs-rtl.tsx",
+          "archive": "docs/web-parity/tabs-r1/source/tabs-rtl.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/tabs-r1/sources.json",
+          "path": "apps/v4/registry/styles/style-nova.css",
+          "archive": "docs/web-parity/attachment-r1/style-nova.css"
+        }
+      ],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "text",
+      "latest_evidence_directory": "docs/web-parity/text-r1",
+      "capture_records": 0,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "textarea",
+      "latest_evidence_directory": "docs/web-parity/textarea-r1",
+      "capture_records": 0,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "toast",
+      "latest_evidence_directory": "docs/web-parity/toast-r2",
+      "capture_records": 5,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [
+        {
+          "manifest": "docs/web-parity/toast-r2/sources.json",
+          "path": "apps/v4/content/docs/components/base/toast.mdx",
+          "archive": "docs/web-parity/toast-r1/source/toast.mdx"
+        },
+        {
+          "manifest": "docs/web-parity/toast-r2/sources.json",
+          "path": "apps/v4/registry/bases/base/ui/toast.tsx",
+          "archive": "docs/web-parity/toast-r1/source/toast.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/toast-r2/sources.json",
+          "path": "apps/v4/examples/base/toast-demo.tsx",
+          "archive": "docs/web-parity/toast-r1/source/toast-demo.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/toast-r2/sources.json",
+          "path": "apps/v4/examples/base/toast-types.tsx",
+          "archive": "docs/web-parity/toast-r1/source/toast-types.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/toast-r2/sources.json",
+          "path": "apps/v4/examples/base/toast-promise.tsx",
+          "archive": "docs/web-parity/toast-r1/source/toast-promise.tsx"
+        }
+      ],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "toggle",
+      "latest_evidence_directory": "docs/web-parity/toggle-r4",
+      "capture_records": 9,
+      "hash_verified": 9,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [
+        {
+          "path": "docs/web-parity/toggle-r4/browser/summary.json",
+          "ok": true,
+          "checks": 41,
+          "passed": 41,
+          "failed": 0
+        }
+      ],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "toggle-group",
+      "latest_evidence_directory": "docs/web-parity/toggle-group-r1",
+      "capture_records": 10,
+      "hash_verified": 0,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [
+        {
+          "manifest": "docs/web-parity/toggle-group-r1/sources.json",
+          "path": "apps/v4/content/docs/components/base/toggle-group.mdx"
+        },
+        {
+          "manifest": "docs/web-parity/toggle-group-r1/sources.json",
+          "path": "apps/v4/registry/bases/base/ui/toggle-group.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/toggle-group-r1/sources.json",
+          "path": "apps/v4/examples/base/toggle-group-demo.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/toggle-group-r1/sources.json",
+          "path": "apps/v4/examples/base/toggle-group-outline.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/toggle-group-r1/sources.json",
+          "path": "apps/v4/examples/base/toggle-group-sizes.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/toggle-group-r1/sources.json",
+          "path": "apps/v4/examples/base/toggle-group-spacing.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/toggle-group-r1/sources.json",
+          "path": "apps/v4/examples/base/toggle-group-vertical.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/toggle-group-r1/sources.json",
+          "path": "apps/v4/examples/base/toggle-group-disabled.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/toggle-group-r1/sources.json",
+          "path": "apps/v4/examples/base/toggle-group-font-weight-selector.tsx"
+        },
+        {
+          "manifest": "docs/web-parity/toggle-group-r1/sources.json",
+          "path": "apps/v4/examples/base/toggle-group-rtl.tsx"
+        }
+      ],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    },
+    {
+      "slug": "tooltip",
+      "latest_evidence_directory": "docs/web-parity/tooltip-r3",
+      "capture_records": 15,
+      "hash_verified": 15,
+      "missing_files": [],
+      "hash_mismatches": [],
+      "unresolved_paths": [],
+      "summaries": [],
+      "upstream_archives_verified": [],
+      "unresolved_upstream_sources": [],
+      "note": "Build-output paths refer to mutable outputs; a mismatch shows evidence is not the currently built artifact, not that historical captures were fabricated."
+    }
+  ]
+}

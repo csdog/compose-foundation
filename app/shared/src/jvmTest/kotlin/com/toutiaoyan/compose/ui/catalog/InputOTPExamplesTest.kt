@@ -18,7 +18,11 @@ import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.semantics.SemanticsActions
 import com.toutiaoyan.compose.ui.catalog.docs.inputOTPDoc
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.components.inputotp.InputOTP
 import com.toutiaoyan.compose.ui.components.inputotp.InputOTPGroup
 import com.toutiaoyan.compose.ui.components.inputotp.InputOTPSlot
@@ -57,7 +61,10 @@ class InputOTPExamplesTest(private val width: Int, private val dark: Boolean) {
             inputOTPDoc.description,
         )
         assertEquals(null, inputOTPDoc.examplesHeading)
-        assertEquals(listOf("About"), inputOTPDoc.beforeExamples.map { it.title })
+        assertEquals(listOf("About"), inputOTPDoc.introductionSections.map { it.title })
+        val markdown = componentPageMarkdown(inputOTPDoc)
+        assertTrue(markdown.indexOf("## About") < markdown.indexOf("## Installation"))
+        assertTrue(markdown.contains("Use the following composition to build an `InputOTP`:"))
         assertEquals(
             "Use the `pattern` prop to define a custom pattern for the OTP input.",
             inputOTPDoc.examples.single { it.title == "Pattern" }.descriptionMarkdown,
@@ -119,6 +126,21 @@ class InputOTPExamplesTest(private val width: Int, private val dark: Boolean) {
             rule.waitForIdle()
         }
         assertEquals(10, inputOTPDoc.examples.size)
+    }
+
+    @Test fun officialFormUsesLargeSlotTypography() {
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = catalogFontFamily()) {
+                Box(Modifier.requiredSize(560.dp, 600.dp)) {
+                    inputOTPDoc.examples.single { it.title == "Form" }.preview()
+                }
+            }
+        }
+        rule.onNode(hasSetTextAction()).performTextInput("123456")
+        val layouts = mutableListOf<TextLayoutResult>()
+        rule.onNodeWithText("1").performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(layouts) }
+        assertEquals(20.sp, layouts.single().layoutInput.style.fontSize)
+        assertEquals(28.sp, layouts.single().layoutInput.style.lineHeight)
     }
 
     @Test fun controlledPreviewReflectsTypedDigits() {

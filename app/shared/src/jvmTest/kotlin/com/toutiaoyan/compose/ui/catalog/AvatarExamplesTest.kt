@@ -138,6 +138,13 @@ class AvatarExamplesTest {
                 "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
             avatarDoc.examples.single { it.title == "RTL" }.descriptionMarkdown,
         )
+        listOf("Badge", "Dropdown").forEach { title ->
+            assertFalse(
+                "setToSaturation" in avatarDoc.examples.single { it.title == title }.code,
+                "$title code should keep the photo in color, matching its preview and official recipe",
+            )
+        }
+        assertTrue("setToSaturation" in avatarDoc.examples.single { it.title == "Basic" }.code)
         assertEquals(6, avatarDoc.apiSections.size)
         assertFalse(avatarDoc.examples.any { "model = null" in it.code })
         val groupCountApi = avatarDoc.apiSections.single { it.title == "AvatarGroupCount" }

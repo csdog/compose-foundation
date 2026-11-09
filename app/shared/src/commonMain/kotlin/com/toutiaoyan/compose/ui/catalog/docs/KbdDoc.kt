@@ -61,6 +61,7 @@ val kbdDoc =
                         import com.toutiaoyan.compose.ui.tokens.StylePreset
             """.trimIndent(),
         usageCode = "Kbd(\"Ctrl\")",
+        beforeCompositionMarkdown = "Use the following composition to build `Kbd` and `KbdGroup`:",
         compositionCode =
             """
             Kbd
@@ -393,7 +394,8 @@ val kbdDoc =
                 ComponentExample(
                     title = "RTL",
                     descriptionMarkdown =
-                        "To enable RTL support in shadcn/ui, see the RTL configuration guide.",
+                        "To enable RTL support in shadcn/ui, see the " +
+                            "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
                     minPreviewHeight = 304.dp,
                     mobileMinPreviewHeight = 304.dp,
                     previewPadding = 0.dp,

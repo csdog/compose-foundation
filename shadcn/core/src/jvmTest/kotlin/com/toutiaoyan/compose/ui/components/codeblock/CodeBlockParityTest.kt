@@ -8,7 +8,13 @@ import androidx.compose.ui.platform.Clipboard
 import androidx.compose.ui.platform.ClipEntry
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.compositeOver
+import com.toutiaoyan.compose.ui.theme.currentTheme
+import androidx.compose.ui.graphics.toPixelMap
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.*
@@ -153,6 +159,139 @@ class CodeBlockParityTest : ScreenshotTest() {
         val number = composeRule.onNodeWithText("1").fetchSemanticsNode().boundsInRoot
         val code = composeRule.onNodeWithText("const answer = 42").fetchSemanticsNode().boundsInRoot
         assertTrue(number.left < code.left, "number ${number.left} should stay left of ${code.left}")
+    }
+
+    @Test fun numberGutterGrowsAcrossDigitBoundaryAndShrinksWithReplacement() {
+        var start by androidx.compose.runtime.mutableStateOf(999)
+        var output by androidx.compose.runtime.mutableStateOf("first\nlast")
+        composeRule.setContent {
+            Theme(preset = StylePreset.Nova) {
+                CodeBlock(Modifier.width(320.dp)) {
+                    CodeBlockContent(output, lineNumbers = true, startLine = start)
+                }
+            }
+        }
+
+        fun codeLeft() = composeRule.onNodeWithText("first").fetchSemanticsNode().boundsInRoot.left
+
+        fun assertSingleRow(label: String) {
+            val number = composeRule.onNodeWithText(label).fetchSemanticsNode().boundsInRoot
+            val first = composeRule.onNodeWithText("first").fetchSemanticsNode().boundsInRoot
+            assertTrue(number.height <= first.height + 1f, "Number $label must remain on one line")
+        }
+        assertSingleRow("1000")
+        val wide = codeLeft()
+        assertEquals(wide, composeRule.onNodeWithText("last").fetchSemanticsNode().boundsInRoot.left)
+        composeRule.runOnIdle { start = 1000000 }
+        assertSingleRow("1000001")
+        val wider = codeLeft()
+        assertTrue(wider > wide)
+        composeRule.runOnIdle {
+            start = 1
+            output = "first"
+        }
+        assertSingleRow("1")
+        assertTrue(codeLeft() < wide, "The gutter must shrink when output is replaced")
+    }
+
+    @Test fun richLinesShareTheWidestNumberGutter() {
+        composeRule.setContent {
+            Theme(preset = StylePreset.Nova) {
+                CodeBlock(Modifier.width(320.dp)) {
+                    CodeBlockContent(lineNumbers = true, wrap = true) {
+                        CodeBlockLine("first", lineNumber = 1)
+                        CodeBlockLine("last", lineNumber = 1000000)
+                    }
+                }
+            }
+        }
+        val first = composeRule.onNodeWithText("first").fetchSemanticsNode().boundsInRoot
+        val last = composeRule.onNodeWithText("last").fetchSemanticsNode().boundsInRoot
+        val number = composeRule.onNodeWithText("1000000").fetchSemanticsNode().boundsInRoot
+        assertEquals(first.left, last.left)
+        assertTrue(number.height <= first.height + 1f)
+        assertTrue(number.right < last.left)
+    }
+
+    @Test fun rtlCodeKeepsTheSamePhysicalHorizontalFadeAsLtr() {
+        composeRule.setContent {
+            Theme(preset = StylePreset.Nova) {
+                Column {
+                    listOf(LayoutDirection.Ltr, LayoutDirection.Rtl).forEach { direction ->
+                        CompositionLocalProvider(LocalLayoutDirection provides direction) {
+                            CodeBlock(Modifier.width(240.dp)) {
+                                CodeBlockContent(modifier = Modifier.testTag(direction.name)) {
+                                    CodeBlockLine("long output ".repeat(30), variant = CodeBlockLineVariant.Highlighted)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        val ltr = composeRule.onNodeWithTag("Ltr").captureToImage().toPixelMap()
+        val rtl = composeRule.onNodeWithTag("Rtl").captureToImage().toPixelMap()
+        // Sample the line background away from glyphs: only the overflow mask can differ.
+        listOf(2, ltr.width - 3).forEach { x ->
+            assertEquals(ltr[x, ltr.height - 2], rtl[x, rtl.height - 2], "Physical code fade at x=$x")
+        }
+    }
+
+    @Test fun headerActionsUseOfficialNegativeMarginsInBothDirections() {
+        composeRule.setContent {
+            Theme(preset = StylePreset.Nova, minTouchTarget = null) {
+                Column {
+                    listOf(LayoutDirection.Ltr, LayoutDirection.Rtl).forEach { direction ->
+                        CompositionLocalProvider(LocalLayoutDirection provides direction) {
+                            CodeBlock(Modifier.width(320.dp)) {
+                                CodeBlockHeader(Modifier.testTag("header-$direction")) {
+                                    CodeBlockTitle("terminal")
+                                    CodeBlockActions(Modifier.testTag("actions-$direction")) {
+                                        CodeBlockCopyButton("output")
+                                    }
+                                }
+                                CodeBlockContent("output")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        listOf(LayoutDirection.Ltr, LayoutDirection.Rtl).forEach { direction ->
+            val header = composeRule.onNodeWithTag("header-$direction").fetchSemanticsNode().boundsInRoot
+            val actions = composeRule.onNodeWithTag("actions-$direction").fetchSemanticsNode().boundsInRoot
+            assertEquals(20f, header.height, .5f, "-my-1 keeps the 24dp action from raising the 20dp title row")
+            assertEquals(header.center.y, actions.center.y, .5f)
+            if (direction == LayoutDirection.Ltr) {
+                assertEquals(header.right + 6f, actions.right, .5f)
+            } else {
+                assertEquals(header.left - 6f, actions.left, .5f)
+            }
+        }
+    }
+
+    @Test fun removedLineUsesOneTenPercentTintLayer() {
+        var expected = Color.Unspecified
+        composeRule.setContent {
+            Theme(preset = StylePreset.Nova, minTouchTarget = null) {
+                val theme = currentTheme
+                expected = theme.colors.destructive.copy(alpha = .1f).compositeOver(theme.colors.background)
+                CodeBlock(Modifier.width(240.dp)) {
+                    CodeBlockContent {
+                        CodeBlockLine(
+                            "removed",
+                            variant = CodeBlockLineVariant.Removed,
+                            modifier = Modifier.testTag("removed"),
+                        )
+                    }
+                }
+            }
+        }
+        val pixels = composeRule.onNodeWithTag("removed").captureToImage().toPixelMap()
+        val actual = pixels[pixels.width / 2, pixels.height - 2]
+        assertEquals(expected.red, actual.red, .005f)
+        assertEquals(expected.green, actual.green, .005f)
+        assertEquals(expected.blue, actual.blue, .005f)
     }
 
     @Test fun copyWritesOriginalWhitespaceAndConfirmsForTwoSeconds() {

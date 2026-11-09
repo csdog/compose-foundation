@@ -8,6 +8,51 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class DrawerTest {
+    @Test fun nestedSwipeReadersTrackTheFrontmostChildAndUnregisterOnDisposal() {
+        val root = DrawerNestHost()
+        val child = DrawerNestHost(root)
+        val grandchild = DrawerNestHost(child)
+        var childProgress = 0.2f
+        var frontProgress = 0.6f
+        child.attachSwipeProgress { childProgress }
+        assertEquals(0.2f, root.nestedSwipeProgress)
+        grandchild.attachSwipeProgress { frontProgress }
+        assertEquals(0.6f, root.nestedSwipeProgress)
+        assertEquals(0.6f, child.nestedSwipeProgress)
+        childProgress = 0.3f
+        // Replacing an ancestor callback must keep the deepest reader.
+        child.attachSwipeProgress { childProgress }
+        assertEquals(0.6f, root.nestedSwipeProgress)
+        frontProgress = 0f // cancelled swipe
+        assertEquals(0f, root.nestedSwipeProgress)
+        grandchild.detachSwipeProgress()
+        assertEquals(0.3f, root.nestedSwipeProgress)
+        childProgress = 0.4f
+        assertEquals(0.4f, root.nestedSwipeProgress)
+        child.detachSwipeProgress()
+        assertEquals(0f, root.nestedSwipeProgress)
+    }
+
+    @Test fun stackDepthRemainsContinuousWhenACompletedSwipeClosesItsChild() {
+        assertEquals(0.6f, drawerStackDepth(1f, 1, 0.4f))
+        assertEquals(0f, drawerStackDepth(1f, 0, 1f))
+        assertEquals(0f, drawerStackDepth(0.4f, 0, 1f))
+        assertEquals(1f, drawerStackDepth(1f, 1, 0f))
+        assertEquals(0f, drawerSwipeProgress(Float.NaN, 200f))
+        assertEquals(0f, drawerSwipeProgress(20f, 0f))
+        assertEquals(0.25f, drawerSwipeProgress(50f, 200f))
+    }
+
+    @Test fun overlayFadesWithSwipeAndSnapPointsKeepTheirFloor() {
+        assertEquals(1f, drawerOverlayOpacity(0f, false))
+        assertEquals(0.75f, drawerOverlayOpacity(0.25f, false))
+        assertEquals(0f, drawerOverlayOpacity(1f, false))
+        assertEquals(0.5f, drawerOverlayOpacity(0.8f, true))
+        assertEquals(0.5f, drawerOverlayOpacity(1f, true))
+        assertEquals(1f, drawerOverlayOpacity(-0.2f, false))
+        assertEquals(0f, drawerOverlayOpacity(1.2f, false))
+    }
+
     @Test
     fun a_small_drag_below_the_threshold_springs_back_open() {
         // 400px tall drawer, dragged only 50px (12.5%) toward closing -- below the 30% default.

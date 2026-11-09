@@ -11,6 +11,7 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.*
 import com.toutiaoyan.compose.ui.catalog.docs.progressDoc
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import org.junit.Rule
@@ -63,14 +64,54 @@ class ProgressPageLayoutTest(private val viewport: Int, private val dark: Boolea
     @Test fun pageContainsOnlyOfficialRecipesAndExplainsKotlinExtensions() {
         assertEquals(listOf("Default", "Label", "Controlled", "RTL"), progressDoc.examples.map { it.title })
         assertNull(progressDoc.examplesHeading)
-        assertNotNull(progressDoc.compositionCode)
+        assertNull(progressDoc.compositionCode)
         assertEquals(3, progressDoc.examples.count { !it.descriptionMarkdown.isNullOrBlank() })
         assertTrue(progressDoc.afterExamples.isNotEmpty())
+        val rtlCode = progressDoc.examples.single { it.title == "RTL" }.code
+        assertContains(rtlCode, "FontWeight.Normal")
+        assertContains(rtlCode, "FontWeight.Medium")
+        assertContains(rtlCode, "import androidx.compose.ui.text.font.FontWeight")
         progressDoc.examples.forEach {
             assertFalse(it.code.contains("ui.catalog"))
             assertFalse(it.code.contains("testTag"))
             assertTrue(it.code.trimEnd().endsWith("Recipe()"))
         }
+    }
+
+    @Test fun compositionGuidancePrecedesTheTreeInThePageAndCopiedMarkdown() {
+        val markdown = componentPageMarkdown(progressDoc)
+        val fragments =
+            listOf(
+                "## Composition",
+                "### With label and value",
+                "Use `ProgressLabel` and `ProgressValue` to add a label and value display.",
+                "Progress(value = 56f",
+                "└── ProgressIndicator",
+                "## Label",
+            )
+        val offsets =
+            fragments.map { fragment ->
+                markdown.indexOf(fragment).also { assertTrue(it >= 0, "$fragment missing") }
+            }
+        assertEquals(offsets.sorted(), offsets)
+        val sections = docSections(progressDoc)
+        assertEquals(1, sections.count { it.title == "Composition" })
+        assertEquals(1, sections.count { it.title == "With label and value" })
+        assertTrue(sections.single { it.title == "With label and value" }.nested)
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
+                Box(Modifier.width(viewport.dp).height(1000.dp)) { ComponentDetailContent(progressDoc) }
+            }
+        }
+        val heading = rule.onNodeWithTag("heading-before-guide-1").getUnclippedBoundsInRoot()
+        val sample =
+            rule.onNodeWithText("Progress(value = 56f", substring = true, useUnmergedTree = true)
+                .getUnclippedBoundsInRoot()
+        val tree =
+            rule.onNodeWithText("└── ProgressIndicator", substring = true, useUnmergedTree = true)
+                .getUnclippedBoundsInRoot()
+        assertTrue(heading.bottom <= sample.top)
+        assertTrue(sample.bottom <= tree.top)
     }
 
     @Test fun labelAndTrackUseTheOfficialAvailableWidth() {

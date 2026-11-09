@@ -18,6 +18,36 @@ import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.*
 
 class CalendarParityTest : ScreenshotTest() {
+    @Test fun multiMonthDropdownUsesTheDisplayedMonthOffsetAcrossTheYearBoundary() {
+        var year by mutableStateOf(2025)
+        var month by mutableStateOf(12)
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Calendar(
+                year,
+                month,
+                { y, m ->
+                    year = y
+                    month = m
+                },
+                selected = null,
+                onSelectedChange = {},
+                today = CalendarDate(2026, 1, 1),
+                numberOfMonths = 2,
+                reverseMonths = true,
+                captionLayout = CalendarCaptionLayout.Dropdown,
+            )
+        }
+        composeRule.onNodeWithText("Dec").assertExists()
+        composeRule.onNodeWithText("Jan").performClick()
+        composeRule.onNodeWithText("Feb").performClick()
+        composeRule.runOnIdle {
+            assertEquals(2026, year)
+            assertEquals(1, month)
+        }
+        composeRule.onNodeWithText("Jan").assertExists()
+        composeRule.onNodeWithText("Feb").assertExists()
+    }
+
     @Test fun novaHasVariableWeeksAndCorrectHeaderTableGeometry() {
         setThemedContent(stylePreset = StylePreset.Nova) {
             Calendar(

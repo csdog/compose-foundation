@@ -1,0 +1,1281 @@
+Compose Foundation — Components
+Notifications
+Home
+Components
+Create
+Getting Started
+Introduction
+Installation
+Theming
+Dark Mode
+Typography
+Components
+Accordion
+Alert
+Alert Dialog
+Aspect Ratio
+Attachment
+Avatar
+Badge
+Breadcrumb
+Bubble
+Button
+Button Group
+Calendar
+Card
+Carousel
+Chart
+Checkbox
+Code Block
+Collapsible
+Combobox
+Home
+Components
+Create
+Search documentation
+GitHub
+Toggle theme
+New
+Getting Started
+Introduction
+Installation
+Theming
+Dark Mode
+Typography
+Components
+Accordion
+Alert
+Alert Dialog
+Aspect Ratio
+Attachment
+Avatar
+Badge
+Breadcrumb
+Bubble
+Button
+Button Group
+Calendar
+Card
+Carousel
+Chart
+Checkbox
+Code Block
+New
+Collapsible
+Combobox
+Search...
+GitHub
+New
+Installation
+Usage
+Composition
+Custom Items
+Multiple Selection
+Basic
+Multiple
+Clear Button
+Groups
+Custom Items
+Invalid
+Disabled
+Auto Highlight
+Popup
+Input Group
+RTL
+API Reference
+Combobox
+ComboboxInput / ComboboxContent
+Chips, groups and items
+Copy Page
+Previous: Collapsible
+Next: Command
+On This Page
+Installation
+Usage
+Composition
+Custom Items
+Multiple Selection
+Basic
+Multiple
+Clear Button
+Groups
+Custom Items
+Invalid
+Disabled
+Auto Highlight
+Popup
+Input Group
+RTL
+API Reference
+Combobox
+ComboboxInput / ComboboxContent
+Chips, groups and items
+Combobox
+Copy Page
+Autocomplete input with a list of suggestions.
+Base UI
+Installation
+Usage
+Composition
+Custom Items
+Use itemToStringValue when your items are objects.
+Copy
+Multiple Selection
+Use multiple with chips for multi-select behavior.
+Copy
+Basic
+Multiple
+Clear Button
+Groups
+Custom Items
+Invalid
+Disabled
+Auto Highlight
+Popup
+Input Group
+RTL
+API Reference
+Component API
+Component API
+Component API
+View Code
+Installation
+Copy
+Usage
+Copy
+Copy
+Composition
+Copy
+Custom Items
+1
+
+
+2
+
+
+3
+
+
+4
+
+
+5
+
+
+6
+
+
+7
+
+
+8
+
+
+9
+
+
+10
+
+
+11
+
+
+12
+
+
+13
+
+
+14
+
+
+15
+
+
+16
+
+
+17
+
+
+18
+
+
+19
+
+
+20
+
+
+21
+
+
+22
+
+
+23
+
+
+24
+
+
+25
+
+
+26
+
+
+27
+
+
+28
+
+
+29
+
+
+30
+
+
+31
+
+
+32
+
+
+33
+
+
+34
+
+
+35
+
+
+36
+
+
+37
+
+
+38
+
+
+39
+
+
+40
+
+
+41
+
+
+42
+
+
+43
+
+
+44
+
+
+45
+
+
+46
+
+
+47
+
+
+48
+
+
+49
+
+
+50
+
+
+51
+
+
+52
+
+
+53
+
+
+54
+Multiple Selection
+1
+
+
+2
+
+
+3
+
+
+4
+
+
+5
+
+
+6
+
+
+7
+
+
+8
+
+
+9
+
+
+10
+
+
+11
+
+
+12
+
+
+13
+
+
+14
+
+
+15
+
+
+16
+
+
+17
+
+
+18
+
+
+19
+
+
+20
+
+
+21
+
+
+22
+
+
+23
+
+
+24
+
+
+25
+
+
+26
+
+
+27
+
+
+28
+
+
+29
+
+
+30
+
+
+31
+
+
+32
+Basic
+A simple combobox with a list of frameworks.
+Multiple
+A combobox with multiple selection using multiple and ComboboxChips.
+Clear Button
+Use the showClear prop to show a clear button.
+Groups
+Use ComboboxGroup and ComboboxSeparator to group items.
+Custom Items
+You can render a custom component inside ComboboxItem.
+Invalid
+Use the aria-invalid prop to make the combobox invalid.
+Disabled
+Use the disabled prop to disable the combobox.
+Auto Highlight
+Use the autoHighlight prop to automatically highlight the first item on filter.
+Popup
+You can trigger the combobox from a button or any other component by using the render prop. Move the ComboboxInput inside the ComboboxContent.
+Input Group
+You can add an addon to the combobox by using the InputGroupAddon component inside the ComboboxInput.
+RTL
+To enable RTL support in shadcn/ui, see the RTL configuration guide.
+API Reference
+Combobox
+Autocomplete root. Holds single or multiple value state, the option list, filtering and open state. See the Base UI documentation for more information.
+ComboboxInput / ComboboxContent
+The editable input group or an in-popup search field, plus the anchored list panel.
+Chips, groups and items
+Multi-select chips, grouped options and rows. ComboboxCollection is a name-parity passthrough because Compose callers already iterate.
+Show suggestions
+View Code
+build.gradle.kts
+1
+
+
+2
+
+
+3
+
+
+4
+
+
+5
+
+
+6
+1
+
+
+2
+
+
+3
+
+
+4
+
+
+5
+
+
+6
+
+
+7
+
+
+8
+
+
+9
+
+
+10
+
+
+11
+
+
+12
+
+
+13
+
+
+14
+
+
+15
+
+
+16
+
+
+17
+
+
+18
+import com.toutiaoyan.compose.ui.components.combobox.Combobox
+
+
+import com.toutiaoyan.compose.ui.components.combobox.ComboboxContent
+
+
+import com.toutiaoyan.compose.ui.components.combobox.ComboboxEmpty
+
+
+import com.toutiaoyan.compose.ui.components.combobox.ComboboxInput
+
+
+import com.toutiaoyan.compose.ui.components.combobox.ComboboxItem
+
+
+import com.toutiaoyan.compose.ui.components.combobox.ComboboxList
+
+
+
+
+data class Country(val code: String, val label: String, val continent: String)
+
+
+
+
+val countries = listOf(
+
+
+    Country("ar", "Argentina", "South America"),
+
+
+    Country("au", "Australia", "Oceania"),
+
+
+    Country("br", "Brazil", "South America"),
+
+
+    Country("ca", "Canada", "North America"),
+
+
+    Country("cn", "China", "Asia"),
+
+
+    Country("co", "Colombia", "South America"),
+
+
+    Country("eg", "Egypt", "Africa"),
+
+
+    Country("fr", "France", "Europe"),
+
+
+    Country("de", "Germany", "Europe"),
+
+
+    Country("it", "Italy", "Europe"),
+
+
+    Country("jp", "Japan", "Asia"),
+
+
+    Country("ke", "Kenya", "Africa"),
+
+
+    Country("mx", "Mexico", "North America"),
+
+
+    Country("nz", "New Zealand", "Oceania"),
+
+
+    Country("ng", "Nigeria", "Africa"),
+
+
+    Country("za", "South Africa", "Africa"),
+
+
+    Country("kr", "South Korea", "Asia"),
+
+
+    Country("gb", "United Kingdom", "Europe"),
+
+
+    Country("us", "United States", "North America"),
+
+
+)
+
+
+
+
+var country by remember { mutableStateOf<Country?>(null) }
+
+
+Combobox(
+
+
+    value = country,
+
+
+    options = countries,
+
+
+    onValueChange = { country = it },
+
+
+    itemToStringValue = { it.label },
+
+
+) {
+
+
+    ComboboxInput(editable = true, placeholder = "Search countries...")
+
+
+    ComboboxContent {
+
+
+        ComboboxEmpty(text = "No countries found.")
+
+
+        ComboboxList {
+
+
+            countries.forEach { item ->
+
+
+                ComboboxItem(value = item, label = item.label) {
+
+
+                    Item(
+
+
+                        title = item.label,
+
+
+                        description = "${item.continent} (${item.code})",
+
+
+                        size = ItemSize.Xs,
+
+
+                    )
+
+
+                }
+
+
+            }
+
+
+        }
+
+
+    }
+
+
+}
+import com.toutiaoyan.compose.ui.components.combobox.Combobox
+
+
+import com.toutiaoyan.compose.ui.components.combobox.ComboboxChip
+
+
+import com.toutiaoyan.compose.ui.components.combobox.ComboboxChips
+
+
+import com.toutiaoyan.compose.ui.components.combobox.ComboboxChipsInput
+
+
+import com.toutiaoyan.compose.ui.components.combobox.ComboboxContent
+
+
+import com.toutiaoyan.compose.ui.components.combobox.ComboboxEmpty
+
+
+import com.toutiaoyan.compose.ui.components.combobox.ComboboxItem
+
+
+import com.toutiaoyan.compose.ui.components.combobox.ComboboxList
+
+
+
+
+val frameworks = listOf("Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro")
+
+
+
+
+var value by remember { mutableStateOf(listOf<String>()) }
+
+
+Combobox(
+
+
+    values = value,
+
+
+    options = frameworks,
+
+
+    onValuesChange = { value = it },
+
+
+) {
+
+
+    ComboboxChips {
+
+
+        value.forEach { item ->
+
+
+            ComboboxChip(value = item, label = item)
+
+
+        }
+
+
+        ComboboxChipsInput(placeholder = "Add framework")
+
+
+    }
+
+
+    ComboboxContent {
+
+
+        ComboboxEmpty(text = "No items found.")
+
+
+        ComboboxList {
+
+
+            frameworks.forEach { item ->
+
+
+                ComboboxItem(value = item, label = item)
+
+
+            }
+
+
+        }
+
+
+    }
+
+
+}
+View Code
+Next.js Remove Next.js
+View Code
+View Code
+View Code
+View Code
+View Code
+View Code
+View Code
+Select country
+View Code
+View Code
+View Code
+Combobox
+Separator
+Separator
+Separator
+Separator
+Separator
+Separator
+Separator
+Separator
+Separator
+Separator
+Separator
+Separator
+Separator
+ComboboxInput / ComboboxContent
+Separator
+Separator
+Separator
+Separator
+Separator
+Separator
+Separator
+Separator
+Chips, groups and items
+Separator
+Separator
+Separator
+Separator
+Separator
+Separator
+Show suggestions
+1
+
+
+2
+
+
+3
+// build.gradle.kts — commonMain.dependencies
+
+
+implementation("com.toutiaoyan.compose:ui:0.3.37")
+import com.toutiaoyan.compose.ui.components.combobox.Combobox
+
+
+import com.toutiaoyan.compose.ui.components.combobox.ComboboxContent
+
+
+import com.toutiaoyan.compose.ui.components.combobox.ComboboxEmpty
+
+
+import com.toutiaoyan.compose.ui.components.combobox.ComboboxInput
+
+
+import com.toutiaoyan.compose.ui.components.combobox.ComboboxItem
+
+
+import com.toutiaoyan.compose.ui.components.combobox.ComboboxList
+val frameworks = listOf("Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro")
+
+
+
+
+var framework by remember { mutableStateOf<String?>(null) }
+
+
+Combobox(
+
+
+    value = framework,
+
+
+    options = frameworks,
+
+
+    onValueChange = { framework = it },
+
+
+) {
+
+
+    ComboboxInput(editable = true, placeholder = "Select a framework")
+
+
+    ComboboxContent {
+
+
+        ComboboxEmpty(text = "No items found.")
+
+
+        ComboboxList {
+
+
+            frameworks.forEach { item ->
+
+
+                ComboboxItem(value = item, label = item)
+
+
+            }
+
+
+        }
+
+
+    }
+
+
+}
+Simple
+
+
+
+
+Combobox
+
+
+├── ComboboxInput
+
+
+└── ComboboxContent
+
+
+    ├── ComboboxEmpty
+
+
+    └── ComboboxList
+
+
+        ├── ComboboxItem
+
+
+        └── ComboboxItem
+
+
+
+
+With chips
+
+
+
+
+Combobox
+
+
+├── ComboboxChips
+
+
+│   ├── ComboboxValue
+
+
+│   │   └── ComboboxChip
+
+
+│   └── ComboboxChipsInput
+
+
+└── ComboboxContent
+
+
+    ├── ComboboxEmpty
+
+
+    └── ComboboxList
+
+
+        ├── ComboboxItem
+
+
+        └── ComboboxItem
+
+
+
+
+With groups and collection
+
+
+
+
+Combobox
+
+
+├── ComboboxInput
+
+
+└── ComboboxContent
+
+
+    ├── ComboboxEmpty
+
+
+    └── ComboboxList
+
+
+        ├── ComboboxGroup
+
+
+        │   ├── ComboboxLabel
+
+
+        │   └── ComboboxCollection
+
+
+        │       ├── ComboboxItem
+
+
+        │       └── ComboboxItem
+
+
+        ├── ComboboxSeparator
+
+
+        └── ComboboxGroup
+
+
+            ├── ComboboxLabel
+
+
+            └── ComboboxCollection
+
+
+                ├── ComboboxItem
+
+
+                └── ComboboxItem
+Show suggestions
+View Code
+Next.js
+Remove Next.js
+View Code
+Clear
+View Code
+Show suggestions
+View Code
+Show suggestions
+View Code
+Show suggestions
+View Code
+Show suggestions
+View Code
+Show suggestions
+View Code
+Select country
+View Code
+Show suggestions
+View Code
+Preview language
+Translation information
+التكنولوجيا Remove التكنولوجيا
+View Code
+Property
+Type
+Default
+Property
+Type
+Default
+Property
+Type
+Default
+var framework by remember { mutableStateOf<String?>(null) }
+
+
+Combobox(
+
+
+    value = framework,
+Show suggestions
+1
+
+
+2
+
+
+3
+1
+
+
+2
+
+
+3
+Next.js
+Clear
+1
+
+
+2
+
+
+3
+Show suggestions
+1
+
+
+2
+
+
+3
+Show suggestions
+1
+
+
+2
+
+
+3
+Show suggestions
+1
+
+
+2
+
+
+3
+Show suggestions
+1
+
+
+2
+
+
+3
+Show suggestions
+1
+
+
+2
+
+
+3
+1
+
+
+2
+
+
+3
+Show suggestions
+1
+
+
+2
+
+
+3
+Arabic (العربية)
+Translation information
+الفئات
+التكنولوجيا
+Remove التكنولوجيا
+1
+
+
+2
+
+
+3
+value / values
+T? / List<T>
+Required for single / multiple
+options
+List<T>
+Required
+onValueChange / onValuesChange
+callback
+Required
+label / itemToStringValue
+(T) -> String
+toString()
+placeholder / searchPlaceholder
+String
+Select… / Search…
+emptyText
+String
+No results found.
+open / defaultOpen
+Boolean? / Boolean
+null / false
+onOpenChange
+((Boolean) -> Unit)?
+null
+autoHighlight / shouldFilter
+Boolean
+false / true
+filter / keywords
+callback
+case-insensitive contains / emptyList
+invalid / required / disabled
+Boolean
+false
+modal / defaultQuery
+Boolean / String
+true / ""
+onClear
+(() -> Unit)?
+null (single-select clear callback)
+ComboboxInput.editable
+Boolean
+required on the editable overload
+ComboboxInput.leading
+(@Composable () -> Unit)?
+null
+ComboboxInput.icon
+(@Composable () -> Unit)?
+null
+ComboboxInput.showTrigger / showClear
+Boolean
+true / false
+ComboboxContent.sideOffset / alignOffset
+Dp
+6.dp / 0.dp
+ComboboxContent.align / panelWidth
+PopupAlign / Dp?
+Start / null
+ComboboxContent.dismissOnClickOutside
+Boolean
+true
+ComboboxContent.modifier / style
+Modifier / Style
+Default
+ComboboxChips / ComboboxChipsInput
+slot composables
+Required inside multiple
+ComboboxChip.showRemove
+Boolean
+true
+ComboboxGroup.heading
+String?
+null
+ComboboxItem.onSelect
+(() -> Boolean)?
+null; return true to prevent
+ComboboxItem.disabled / textValue
+Boolean / String?
+false / null
+ComboboxEmpty.text
+String?
+null → root emptyText
+var framework by remember { mutableStateOf<String?>(null) }
+
+
+Combobox(
+
+
+    value = framework,
+var selected by remember { mutableStateOf(listOf("Next.js")) }
+
+
+Combobox(
+
+
+    values = selected,
+var framework by remember { mutableStateOf<String?>("Next.js") }
+
+
+Combobox(
+
+
+    value = framework,
+var timezone by remember { mutableStateOf<String?>(null) }
+
+
+Combobox(
+
+
+    value = timezone,
+var country by remember { mutableStateOf<ComboboxCountry?>(null) }
+
+
+Combobox(
+
+
+    value = country,
+var framework by remember { mutableStateOf<String?>(null) }
+
+
+Combobox(
+
+
+    value = framework,
+var framework by remember { mutableStateOf<String?>(null) }
+
+
+Combobox(
+
+
+    value = framework,
+var framework by remember { mutableStateOf<String?>(null) }
+
+
+Combobox(
+
+
+    value = framework,
+var country by remember {
+
+
+    mutableStateOf(ComboboxCountry("", "Select country", ""))
+
+
+}
+var timezone by remember { mutableStateOf<String?>(null) }
+
+
+Combobox(
+
+
+    value = timezone,
+val categories = listOf(
+
+
+    "technology", "design", "business", "marketing", "education", "health",
+
+
+)

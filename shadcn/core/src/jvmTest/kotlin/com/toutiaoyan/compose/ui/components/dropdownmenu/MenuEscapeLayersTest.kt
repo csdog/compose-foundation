@@ -43,7 +43,9 @@ class MenuEscapeLayersTest(private val kind: String) {
             }
         }
         if (kind == "dropdown") {
-            rule.onNodeWithText("Open").performClick()
+            rule.onNodeWithText("Open").requestFocus().performKeyInput {
+                pressKey(Key.DirectionDown)
+            }
         } else {
             rule.onNodeWithText("Area").requestFocus().performKeyInput {
                 keyDown(Key.ShiftLeft)
@@ -51,9 +53,15 @@ class MenuEscapeLayersTest(private val kind: String) {
                 keyUp(Key.ShiftLeft)
             }
         }
-        rule.onNodeWithText("Level one").performClick()
-        rule.onNodeWithText("Level two").performClick()
-        rule.onNodeWithText("Leaf").performKeyInput { pressKey(Key.Escape) }
+        // Open the layer stack through its keyboard path: this test owns Escape/focus
+        // restoration, while the catalog suite independently covers pointer-open behavior.
+        rule.onNodeWithText("Level one").assertIsFocused().performKeyInput {
+            pressKey(Key.DirectionRight)
+        }
+        rule.onNodeWithText("Level two").assertIsFocused().performKeyInput {
+            pressKey(Key.DirectionRight)
+        }
+        rule.onNodeWithText("Leaf").assertIsFocused().performKeyInput { pressKey(Key.Escape) }
         rule.onNodeWithText("Leaf").assertDoesNotExist()
         rule.onNodeWithText("Level two").assertIsFocused().performKeyInput { pressKey(Key.Escape) }
         rule.onNodeWithText("Level two").assertDoesNotExist()

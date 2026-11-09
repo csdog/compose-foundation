@@ -1,0 +1,431 @@
+{
+  "component": "chip",
+  "stage": "30c-browser",
+  "attempt": 3,
+  "runtime": "headless Google Chrome via installed playwright-core",
+  "capturedAt": "2026-11-08T10:51:24.841Z",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/chip",
+  "officialStatus": 404,
+  "officialRevision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "officialContract": "expected HTTP 404; Chip is a Kotlin extension",
+  "localUrl": "http://127.0.0.1:52561/chip",
+  "browserScale": 1,
+  "views": {
+    "desktop-light": {
+      "screenshot": {
+        "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/attempt-3/screens/local-desktop-light.png",
+        "bytes": 86028,
+        "sha256": "90e93a4f4ded71d7efbf47b9b4ebfe43ee44d0be781b804464dbfabb253ffd12",
+        "width": 1440,
+        "height": 1000
+      },
+      "geometry": {
+        "expected": {
+          "name": "desktop-light",
+          "width": 1440,
+          "height": 1000,
+          "theme": "light"
+        },
+        "title": "Compose Foundation — Components",
+        "pathname": "/chip",
+        "theme": "light",
+        "devicePixelRatio": 1,
+        "innerWidth": 1440,
+        "innerHeight": 1000,
+        "clientWidth": 1440,
+        "clientHeight": 1000,
+        "scrollWidth": 1440,
+        "scrollHeight": 5593,
+        "bodyHeight": "calc(4593px + 100vh)",
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 1000
+        },
+        "canvas": {
+          "x": 0,
+          "y": 0,
+          "cssWidth": 1440,
+          "cssHeight": 1000,
+          "bitmapWidth": 1440,
+          "bitmapHeight": 1000
+        },
+        "canvasCount": 1
+      },
+      "semanticCount": 126,
+      "ariaSnapshot": "- button \"Home\"\n- button \"Components\"\n- button \"Create\"\n- button \"Search documentation\": Search...\n- button \"GitHub\"\n- button \"Toggle theme\"\n- button \"New\"\n- list:\n  - button \"Questionnaire\"\n  - text: New\n  - button \"Radio Group\"\n  - button \"Resizable\"\n  - button \"Scroll Area\"\n  - button \"Select\"\n  - button \"Separator\"\n  - button \"Sheet\"\n  - button \"Sidebar\"\n  - button \"Skeleton\"\n  - button \"Slider\"\n  - button \"Spinner\"\n  - button \"Switch\"\n  - button \"Table\"\n  - button \"Tabs\"\n  - button \"Textarea\"\n  - button \"Toast\"\n  - button \"Toggle\"\n  - button \"Toggle Group\"\n  - button \"Tooltip\"\n  - button \"Trace\"\n  - text: New\n  - heading \"Utils\"\n  - button \"Shimmer\"\n  - button \"scroll-fade\"\n  - heading \"Extensions\"\n  - button \"Chip\"\n  - button \"Stepper\"\n  - text: New\n  - button \"Text\"\n- text: Chip\n- button \"Copy Page\"\n- 'button \"Previous: Checkbox\"'\n- 'button \"Next: Code Block\"'\n- text: A selectable tag, commonly used for filters or multi-select choices. Kotlin extension\n- button \"Kotlin\"\n- text: \"1 Chip(label = \\\"Kotlin\\\", onClick = {})\"\n- button \"View Code\"\n- heading \"Installation\":\n  - text: Installation\n  - button\n- button\n- text: build.gradle.kts // build.gradle.kts — commonMain.dependencies implementation(\"com.toutiaoyan.compose:ui:0.3.37\")\n- button \"Copy\"\n- heading \"Usage\":\n  - text: Usage\n  - button\n- button\n- text: 1 import com.toutiaoyan.compose.ui.components.chip.Chip\n- button \"Copy\"\n- text: \"1 2 3 4 5 6 var selected by remember { mutableStateOf(false) } Chip( label = \\\"Kotlin\\\", selected = selected, onClick = { selected = !selected }, )\"\n- button \"Copy\"\n- heading \"Composition\":\n  - text: Composition\n  - button\n- button\n- text: Chip ├── leadingIcon (optional slot) └── label\n- button \"Copy\"\n- heading \"Kotlin extension\":\n  - text: Kotlin extension\n  - button\n- button\n- text: \"Chip is a Kotlin extension of this catalog, not an official shadcn/ui component. shadcn only ships Badge, which is a static label, so there is no Base UI reference page or upstream recipe list to mirror. The API below is the current Kotlin source of truth: a selectable tag built from the same tokens as Button/Badge.\"\n- heading \"Selectable\":\n  - text: Selectable\n  - button\n- button\n- text: Pass selected and toggle it from onClick; the default variant follows the selection state.\n- button \"Kotlin\"\n- text: \"1 2 var selected by remember { mutableStateOf(false) } Chip(label = \\\"Kotlin\\\", selected = selected, onClick = { selected = !selected })\"\n- button \"View Code\"\n- heading \"Selected\":\n  - text: Selected\n  - button\n- button\n- text: Pin the selected look with ChipVariant.Selected.\n- button \"Kotlin\"\n- text: \"1 Chip(label = \\\"Kotlin\\\", variant = ChipVariant.Selected, onClick = {})\"\n- button \"View Code\"\n- heading \"Outline\":\n  - text: Outline\n  - button\n- button\n- text: Border-only treatment with ChipVariant.Outline.\n- button \"Outline\"\n- text: \"1 Chip(label = \\\"Outline\\\", variant = ChipVariant.Outline, onClick = {})\"\n- button \"View Code\"\n- heading \"Disabled\":\n  - text: Disabled\n  - button\n- button\n- text: disabled (or enabled = false) removes the click handler and dims the tag.\n- button \"Disabled\"\n- text: \"1 Chip(label = \\\"Disabled\\\", onClick = {}, disabled = true)\"\n- button \"View Code\"\n- heading \"Icon\":\n  - text: Icon\n  - button\n- button\n- text: The optional leadingIcon slot receives its size modifier and inherits the variant content color.\n- button \"Verified\"\n- text: \"1 2 3 Chip( label = \\\"Verified\\\", onClick = {},\"\n- button \"View Code\"\n- heading \"Row\":\n  - text: Row\n  - button\n- button\n- text: Chips compose in a row for filter groups.\n- button \"Kotlin\"\n- button \"Compose\"\n- button \"Multiplatform\"\n- text: \"1 2 3 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) { Chip(label = \\\"Kotlin\\\", selected = true, onClick = {}) Chip(label = \\\"Compose\\\", onClick = {})\"\n- button \"View Code\"\n- heading \"API Reference\":\n  - text: API Reference\n  - button\n- button\n- heading \"Chip\":\n  - text: Chip\n  - button\n- button\n- text: Selectable tag. Invoke with a label; the default variant is Selected when selected = true, otherwise Default. Property Type Default label String Required onClick (() -> Unit)? null (static tag when omitted) selected Boolean false variant ChipVariant Selected when selected, else Default enabled / disabled Boolean true / false leadingIcon (@Composable (Modifier) -> Unit)? null animation ButtonAnimation ButtonAnimation.Scale modifier / style Modifier / Style Default\n- heading \"ChipVariant\":\n  - text: ChipVariant\n  - button\n- button\n- text: \"Content colors: Default uses secondaryForeground, Selected uses primaryForeground, Outline uses foreground. Property Type Default Default ChipVariant Secondary fill with a border Selected ChipVariant Primary fill Outline ChipVariant Transparent with a border On This Page\"\n- button \"Installation\"\n- button \"Usage\"\n- button \"Composition\"\n- button \"Kotlin extension\"\n- button \"Selectable\"\n- button \"Selected\"\n- button \"Outline\"\n- button \"Disabled\"\n- button \"Icon\"\n- button \"Row\"\n- button \"API Reference\"\n- button \"Chip\"\n- button \"ChipVariant\"",
+      "bodyText": "",
+      "tagCounts": {
+        "DIV": 327,
+        "STYLE": 1,
+        "CANVAS": 1,
+        "BR": 23
+      }
+    },
+    "desktop-dark": {
+      "screenshot": {
+        "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/attempt-3/screens/local-desktop-dark.png",
+        "bytes": 85790,
+        "sha256": "e9655a783c60b41a27437dee3268d533b2c0045ce43a5e80ab316f3324423cf7",
+        "width": 1440,
+        "height": 1000
+      },
+      "geometry": {
+        "expected": {
+          "name": "desktop-dark",
+          "width": 1440,
+          "height": 1000,
+          "theme": "dark"
+        },
+        "title": "Compose Foundation — Components",
+        "pathname": "/chip",
+        "theme": "dark",
+        "devicePixelRatio": 1,
+        "innerWidth": 1440,
+        "innerHeight": 1000,
+        "clientWidth": 1440,
+        "clientHeight": 1000,
+        "scrollWidth": 1440,
+        "scrollHeight": 5593,
+        "bodyHeight": "calc(4593px + 100vh)",
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 1000
+        },
+        "canvas": {
+          "x": 0,
+          "y": 0,
+          "cssWidth": 1440,
+          "cssHeight": 1000,
+          "bitmapWidth": 1440,
+          "bitmapHeight": 1000
+        },
+        "canvasCount": 1
+      },
+      "semanticCount": 126,
+      "ariaSnapshot": "- button \"Home\"\n- button \"Components\"\n- button \"Create\"\n- button \"Search documentation\": Search...\n- button \"GitHub\"\n- button \"Toggle theme\"\n- button \"New\"\n- list:\n  - button \"Questionnaire\"\n  - text: New\n  - button \"Radio Group\"\n  - button \"Resizable\"\n  - button \"Scroll Area\"\n  - button \"Select\"\n  - button \"Separator\"\n  - button \"Sheet\"\n  - button \"Sidebar\"\n  - button \"Skeleton\"\n  - button \"Slider\"\n  - button \"Spinner\"\n  - button \"Switch\"\n  - button \"Table\"\n  - button \"Tabs\"\n  - button \"Textarea\"\n  - button \"Toast\"\n  - button \"Toggle\"\n  - button \"Toggle Group\"\n  - button \"Tooltip\"\n  - button \"Trace\"\n  - text: New\n  - heading \"Utils\"\n  - button \"Shimmer\"\n  - button \"scroll-fade\"\n  - heading \"Extensions\"\n  - button \"Chip\"\n  - button \"Stepper\"\n  - text: New\n  - button \"Text\"\n- text: Chip\n- button \"Copy Page\"\n- 'button \"Previous: Checkbox\"'\n- 'button \"Next: Code Block\"'\n- text: A selectable tag, commonly used for filters or multi-select choices. Kotlin extension\n- button \"Kotlin\"\n- text: \"1 Chip(label = \\\"Kotlin\\\", onClick = {})\"\n- button \"View Code\"\n- heading \"Installation\":\n  - text: Installation\n  - button\n- button\n- text: build.gradle.kts // build.gradle.kts — commonMain.dependencies implementation(\"com.toutiaoyan.compose:ui:0.3.37\")\n- button \"Copy\"\n- heading \"Usage\":\n  - text: Usage\n  - button\n- button\n- text: 1 import com.toutiaoyan.compose.ui.components.chip.Chip\n- button \"Copy\"\n- text: \"1 2 3 4 5 6 var selected by remember { mutableStateOf(false) } Chip( label = \\\"Kotlin\\\", selected = selected, onClick = { selected = !selected }, )\"\n- button \"Copy\"\n- heading \"Composition\":\n  - text: Composition\n  - button\n- button\n- text: Chip ├── leadingIcon (optional slot) └── label\n- button \"Copy\"\n- heading \"Kotlin extension\":\n  - text: Kotlin extension\n  - button\n- button\n- text: \"Chip is a Kotlin extension of this catalog, not an official shadcn/ui component. shadcn only ships Badge, which is a static label, so there is no Base UI reference page or upstream recipe list to mirror. The API below is the current Kotlin source of truth: a selectable tag built from the same tokens as Button/Badge.\"\n- heading \"Selectable\":\n  - text: Selectable\n  - button\n- button\n- text: Pass selected and toggle it from onClick; the default variant follows the selection state.\n- button \"Kotlin\"\n- text: \"1 2 var selected by remember { mutableStateOf(false) } Chip(label = \\\"Kotlin\\\", selected = selected, onClick = { selected = !selected })\"\n- button \"View Code\"\n- heading \"Selected\":\n  - text: Selected\n  - button\n- button\n- text: Pin the selected look with ChipVariant.Selected.\n- button \"Kotlin\"\n- text: \"1 Chip(label = \\\"Kotlin\\\", variant = ChipVariant.Selected, onClick = {})\"\n- button \"View Code\"\n- heading \"Outline\":\n  - text: Outline\n  - button\n- button\n- text: Border-only treatment with ChipVariant.Outline.\n- button \"Outline\"\n- text: \"1 Chip(label = \\\"Outline\\\", variant = ChipVariant.Outline, onClick = {})\"\n- button \"View Code\"\n- heading \"Disabled\":\n  - text: Disabled\n  - button\n- button\n- text: disabled (or enabled = false) removes the click handler and dims the tag.\n- button \"Disabled\"\n- text: \"1 Chip(label = \\\"Disabled\\\", onClick = {}, disabled = true)\"\n- button \"View Code\"\n- heading \"Icon\":\n  - text: Icon\n  - button\n- button\n- text: The optional leadingIcon slot receives its size modifier and inherits the variant content color.\n- button \"Verified\"\n- text: \"1 2 3 Chip( label = \\\"Verified\\\", onClick = {},\"\n- button \"View Code\"\n- heading \"Row\":\n  - text: Row\n  - button\n- button\n- text: Chips compose in a row for filter groups.\n- button \"Kotlin\"\n- button \"Compose\"\n- button \"Multiplatform\"\n- text: \"1 2 3 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) { Chip(label = \\\"Kotlin\\\", selected = true, onClick = {}) Chip(label = \\\"Compose\\\", onClick = {})\"\n- button \"View Code\"\n- heading \"API Reference\":\n  - text: API Reference\n  - button\n- button\n- heading \"Chip\":\n  - text: Chip\n  - button\n- button\n- text: Selectable tag. Invoke with a label; the default variant is Selected when selected = true, otherwise Default. Property Type Default label String Required onClick (() -> Unit)? null (static tag when omitted) selected Boolean false variant ChipVariant Selected when selected, else Default enabled / disabled Boolean true / false leadingIcon (@Composable (Modifier) -> Unit)? null animation ButtonAnimation ButtonAnimation.Scale modifier / style Modifier / Style Default\n- heading \"ChipVariant\":\n  - text: ChipVariant\n  - button\n- button\n- text: \"Content colors: Default uses secondaryForeground, Selected uses primaryForeground, Outline uses foreground. Property Type Default Default ChipVariant Secondary fill with a border Selected ChipVariant Primary fill Outline ChipVariant Transparent with a border On This Page\"\n- button \"Installation\"\n- button \"Usage\"\n- button \"Composition\"\n- button \"Kotlin extension\"\n- button \"Selectable\"\n- button \"Selected\"\n- button \"Outline\"\n- button \"Disabled\"\n- button \"Icon\"\n- button \"Row\"\n- button \"API Reference\"\n- button \"Chip\"\n- button \"ChipVariant\"",
+      "bodyText": "",
+      "tagCounts": {
+        "DIV": 327,
+        "STYLE": 1,
+        "CANVAS": 1,
+        "BR": 23
+      }
+    },
+    "phone-light": {
+      "screenshot": {
+        "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/attempt-3/screens/local-phone-light.png",
+        "bytes": 30812,
+        "sha256": "2343c10ff8ac8ab6989e53d59bbae41abb10ed5151c02af993652c858f76845b",
+        "width": 390,
+        "height": 844
+      },
+      "geometry": {
+        "expected": {
+          "name": "phone-light",
+          "width": 390,
+          "height": 844,
+          "theme": "light"
+        },
+        "title": "Compose Foundation — Components",
+        "pathname": "/chip",
+        "theme": "light",
+        "devicePixelRatio": 1,
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "clientWidth": 390,
+        "clientHeight": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 6314,
+        "bodyHeight": "calc(5470px + 100vh)",
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "canvas": {
+          "x": 0,
+          "y": 0,
+          "cssWidth": 390,
+          "cssHeight": 844,
+          "bitmapWidth": 390,
+          "bitmapHeight": 844
+        },
+        "canvasCount": 1
+      },
+      "semanticCount": 82,
+      "ariaSnapshot": "- button \"Open navigation\"\n- button \"Home\"\n- button \"Search documentation\"\n- button\n- button \"Toggle theme\"\n- button \"New\"\n- text: Chip\n- button \"Copy\"\n- text: A selectable tag, commonly used for filters or multi-select choices. Kotlin extension\n- button \"Kotlin\"\n- text: \"1 Chip(label = \\\"Kotlin\\\", onClick = {})\"\n- button \"View Code\"\n- heading \"Installation\":\n  - text: Installation\n  - button\n- button\n- text: build.gradle.kts // build.gradle.kts — commonMain.dependencies implementation(\"com.toutiaoyan.compose:ui:0.3.37\")\n- button \"Copy\"\n- heading \"Usage\":\n  - text: Usage\n  - button\n- button\n- text: 1 import com.toutiaoyan.compose.ui.components.chip.Chip\n- button \"Copy\"\n- text: \"1 2 3 4 5 6 var selected by remember { mutableStateOf(false) } Chip( label = \\\"Kotlin\\\", selected = selected, onClick = { selected = !selected }, )\"\n- button \"Copy\"\n- heading \"Composition\":\n  - text: Composition\n  - button\n- button\n- text: Chip ├── leadingIcon (optional slot) └── label\n- button \"Copy\"\n- heading \"Kotlin extension\":\n  - text: Kotlin extension\n  - button\n- button\n- text: \"Chip is a Kotlin extension of this catalog, not an official shadcn/ui component. shadcn only ships Badge, which is a static label, so there is no Base UI reference page or upstream recipe list to mirror. The API below is the current Kotlin source of truth: a selectable tag built from the same tokens as Button/Badge.\"\n- heading \"Selectable\":\n  - text: Selectable\n  - button\n- button\n- text: Pass selected and toggle it from onClick; the default variant follows the selection state.\n- button \"Kotlin\"\n- text: \"1 2 var selected by remember { mutableStateOf(false) } Chip(label = \\\"Kotlin\\\", selected = selected, onClick = { selected = !selected })\"\n- button \"View Code\"\n- heading \"Selected\":\n  - text: Selected\n  - button\n- button\n- text: Pin the selected look with ChipVariant.Selected.\n- button \"Kotlin\"\n- text: \"1 Chip(label = \\\"Kotlin\\\", variant = ChipVariant.Selected, onClick = {})\"\n- button \"View Code\"\n- heading \"Outline\":\n  - text: Outline\n  - button\n- button\n- text: Border-only treatment with ChipVariant.Outline.\n- button \"Outline\"\n- text: \"1 Chip(label = \\\"Outline\\\", variant = ChipVariant.Outline, onClick = {})\"\n- button \"View Code\"\n- heading \"Disabled\":\n  - text: Disabled\n  - button\n- button\n- text: disabled (or enabled = false) removes the click handler and dims the tag.\n- button \"Disabled\"\n- text: \"1 Chip(label = \\\"Disabled\\\", onClick = {}, disabled = true)\"\n- button \"View Code\"\n- heading \"Icon\":\n  - text: Icon\n  - button\n- button\n- text: The optional leadingIcon slot receives its size modifier and inherits the variant content color.\n- button \"Verified\"\n- text: \"1 2 3 Chip( label = \\\"Verified\\\", onClick = {},\"\n- button \"View Code\"\n- heading \"Row\":\n  - text: Row\n  - button\n- button\n- text: Chips compose in a row for filter groups.\n- button \"Kotlin\"\n- button \"Compose\"\n- button \"Multiplatform\"\n- text: \"1 2 3 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) { Chip(label = \\\"Kotlin\\\", selected = true, onClick = {}) Chip(label = \\\"Compose\\\", onClick = {})\"\n- button \"View Code\"\n- heading \"API Reference\":\n  - text: API Reference\n  - button\n- button\n- heading \"Chip\":\n  - text: Chip\n  - button\n- button\n- text: Selectable tag. Invoke with a label; the default variant is Selected when selected = true, otherwise Default. Property Type Default label String Required onClick (() -> Unit)? null (static tag when omitted) selected Boolean false variant ChipVariant Selected when selected, else Default enabled / disabled Boolean true / false leadingIcon (@Composable (Modifier) -> Unit)? null animation ButtonAnimation ButtonAnimation.Scale modifier / style Modifier / Style Default\n- heading \"ChipVariant\":\n  - text: ChipVariant\n  - button\n- button\n- text: \"Content colors: Default uses secondaryForeground, Selected uses primaryForeground, Outline uses foreground. Property Type Default Default ChipVariant Secondary fill with a border Selected ChipVariant Primary fill Outline ChipVariant Transparent with a border\"",
+      "bodyText": "",
+      "tagCounts": {
+        "DIV": 278,
+        "STYLE": 1,
+        "CANVAS": 1,
+        "BR": 23
+      }
+    },
+    "phone-dark": {
+      "screenshot": {
+        "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/attempt-3/screens/local-phone-dark.png",
+        "bytes": 30169,
+        "sha256": "2b102092ff31051f651656e26b21ee58af0d933a965bafe19d00b9c785f98dc7",
+        "width": 390,
+        "height": 844
+      },
+      "geometry": {
+        "expected": {
+          "name": "phone-dark",
+          "width": 390,
+          "height": 844,
+          "theme": "dark"
+        },
+        "title": "Compose Foundation — Components",
+        "pathname": "/chip",
+        "theme": "dark",
+        "devicePixelRatio": 1,
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "clientWidth": 390,
+        "clientHeight": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 6314,
+        "bodyHeight": "calc(5470px + 100vh)",
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "canvas": {
+          "x": 0,
+          "y": 0,
+          "cssWidth": 390,
+          "cssHeight": 844,
+          "bitmapWidth": 390,
+          "bitmapHeight": 844
+        },
+        "canvasCount": 1
+      },
+      "semanticCount": 82,
+      "ariaSnapshot": "- button \"Open navigation\"\n- button \"Home\"\n- button \"Search documentation\"\n- button\n- button \"Toggle theme\"\n- button \"New\"\n- text: Chip\n- button \"Copy\"\n- text: A selectable tag, commonly used for filters or multi-select choices. Kotlin extension\n- button \"Kotlin\"\n- text: \"1 Chip(label = \\\"Kotlin\\\", onClick = {})\"\n- button \"View Code\"\n- heading \"Installation\":\n  - text: Installation\n  - button\n- button\n- text: build.gradle.kts // build.gradle.kts — commonMain.dependencies implementation(\"com.toutiaoyan.compose:ui:0.3.37\")\n- button \"Copy\"\n- heading \"Usage\":\n  - text: Usage\n  - button\n- button\n- text: 1 import com.toutiaoyan.compose.ui.components.chip.Chip\n- button \"Copy\"\n- text: \"1 2 3 4 5 6 var selected by remember { mutableStateOf(false) } Chip( label = \\\"Kotlin\\\", selected = selected, onClick = { selected = !selected }, )\"\n- button \"Copy\"\n- heading \"Composition\":\n  - text: Composition\n  - button\n- button\n- text: Chip ├── leadingIcon (optional slot) └── label\n- button \"Copy\"\n- heading \"Kotlin extension\":\n  - text: Kotlin extension\n  - button\n- button\n- text: \"Chip is a Kotlin extension of this catalog, not an official shadcn/ui component. shadcn only ships Badge, which is a static label, so there is no Base UI reference page or upstream recipe list to mirror. The API below is the current Kotlin source of truth: a selectable tag built from the same tokens as Button/Badge.\"\n- heading \"Selectable\":\n  - text: Selectable\n  - button\n- button\n- text: Pass selected and toggle it from onClick; the default variant follows the selection state.\n- button \"Kotlin\"\n- text: \"1 2 var selected by remember { mutableStateOf(false) } Chip(label = \\\"Kotlin\\\", selected = selected, onClick = { selected = !selected })\"\n- button \"View Code\"\n- heading \"Selected\":\n  - text: Selected\n  - button\n- button\n- text: Pin the selected look with ChipVariant.Selected.\n- button \"Kotlin\"\n- text: \"1 Chip(label = \\\"Kotlin\\\", variant = ChipVariant.Selected, onClick = {})\"\n- button \"View Code\"\n- heading \"Outline\":\n  - text: Outline\n  - button\n- button\n- text: Border-only treatment with ChipVariant.Outline.\n- button \"Outline\"\n- text: \"1 Chip(label = \\\"Outline\\\", variant = ChipVariant.Outline, onClick = {})\"\n- button \"View Code\"\n- heading \"Disabled\":\n  - text: Disabled\n  - button\n- button\n- text: disabled (or enabled = false) removes the click handler and dims the tag.\n- button \"Disabled\"\n- text: \"1 Chip(label = \\\"Disabled\\\", onClick = {}, disabled = true)\"\n- button \"View Code\"\n- heading \"Icon\":\n  - text: Icon\n  - button\n- button\n- text: The optional leadingIcon slot receives its size modifier and inherits the variant content color.\n- button \"Verified\"\n- text: \"1 2 3 Chip( label = \\\"Verified\\\", onClick = {},\"\n- button \"View Code\"\n- heading \"Row\":\n  - text: Row\n  - button\n- button\n- text: Chips compose in a row for filter groups.\n- button \"Kotlin\"\n- button \"Compose\"\n- button \"Multiplatform\"\n- text: \"1 2 3 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) { Chip(label = \\\"Kotlin\\\", selected = true, onClick = {}) Chip(label = \\\"Compose\\\", onClick = {})\"\n- button \"View Code\"\n- heading \"API Reference\":\n  - text: API Reference\n  - button\n- button\n- heading \"Chip\":\n  - text: Chip\n  - button\n- button\n- text: Selectable tag. Invoke with a label; the default variant is Selected when selected = true, otherwise Default. Property Type Default label String Required onClick (() -> Unit)? null (static tag when omitted) selected Boolean false variant ChipVariant Selected when selected, else Default enabled / disabled Boolean true / false leadingIcon (@Composable (Modifier) -> Unit)? null animation ButtonAnimation ButtonAnimation.Scale modifier / style Modifier / Style Default\n- heading \"ChipVariant\":\n  - text: ChipVariant\n  - button\n- button\n- text: \"Content colors: Default uses secondaryForeground, Selected uses primaryForeground, Outline uses foreground. Property Type Default Default ChipVariant Secondary fill with a border Selected ChipVariant Primary fill Outline ChipVariant Transparent with a border\"",
+      "bodyText": "",
+      "tagCounts": {
+        "DIV": 278,
+        "STYLE": 1,
+        "CANVAS": 1,
+        "BR": 23
+      }
+    }
+  },
+  "interactions": {
+    "liveThemeSwitch": {
+      "trigger": {
+        "rect": {
+          "x": 1304,
+          "y": 18,
+          "width": 28,
+          "height": 28
+        },
+        "role": "button",
+        "ariaLabel": "Toggle theme",
+        "ariaPressed": null,
+        "ariaSelected": null,
+        "ariaChecked": null,
+        "ariaDisabled": null,
+        "text": ""
+      },
+      "before": {
+        "screenshot": {
+          "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/attempt-3/interactions/theme-before.png",
+          "bytes": 86028,
+          "sha256": "90e93a4f4ded71d7efbf47b9b4ebfe43ee44d0be781b804464dbfabb253ffd12",
+          "width": 1440,
+          "height": 1000
+        },
+        "theme": "light"
+      },
+      "after": {
+        "screenshot": {
+          "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/attempt-3/interactions/theme-after.png",
+          "bytes": 86027,
+          "sha256": "387580ada9f82f52048e37025826b61d8739083eefae115b0967090f867f5778",
+          "width": 1440,
+          "height": 1000
+        },
+        "theme": "dark"
+      }
+    },
+    "selectableChip": {
+      "target": {
+        "rect": {
+          "x": 689,
+          "y": 716,
+          "width": 62,
+          "height": 28
+        },
+        "role": "button",
+        "ariaLabel": "Kotlin",
+        "ariaPressed": null,
+        "ariaSelected": null,
+        "ariaChecked": null,
+        "ariaDisabled": null,
+        "text": "Kotlin"
+      },
+      "stateExposure": "Compose Web exposes role=button; selected state is not serialized as aria-pressed/selected/checked",
+      "before": {
+        "screenshot": {
+          "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/attempt-3/interactions/chip-pressed-before.png",
+          "bytes": 1113,
+          "sha256": "b11567aea9f5ad1f6e6e91da4cb8322f0a6ddeee5afbf98d29b6aa84b31d45ac",
+          "width": 86,
+          "height": 52
+        }
+      },
+      "after": {
+        "screenshot": {
+          "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/attempt-3/interactions/chip-pressed-after.png",
+          "bytes": 1033,
+          "sha256": "91a6e1ade0c537a547d40ec508dc2e1bf5ef80ab050c08eaea60bed0550e55bf",
+          "width": 86,
+          "height": 52
+        }
+      },
+      "similarity": {
+        "exitCode": 0,
+        "ssim": 0.404646
+      }
+    }
+  },
+  "build": {
+    "index.html": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/webApp/build/dist/wasmJs/productionExecutable/index.html",
+      "bytes": 1231,
+      "sha256": "0febf14ee7bfce11bb793449f281d55ba8242d006a319fdfe6cb0c8b32b31fd5"
+    },
+    "webApp.js": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/webApp/build/dist/wasmJs/productionExecutable/webApp.js",
+      "bytes": 538042,
+      "sha256": "09e5657c31bc39e41f19ef352ab17f278884087267998ea34c1475800fade8a3"
+    },
+    "styles.css": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/webApp/build/dist/wasmJs/productionExecutable/styles.css",
+      "bytes": 257,
+      "sha256": "eca2979046bc451da00f4f2c73b281b9174647f847e4da41713607be61a626bd"
+    },
+    "658820f72b4617efb380.wasm": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/webApp/build/dist/wasmJs/productionExecutable/658820f72b4617efb380.wasm",
+      "bytes": 8648883,
+      "sha256": "08e904ec38a6a81a4809a853acf68022f83905286827e804e88b262c37f2954d"
+    },
+    "f1c944db69f8cf0c1185.wasm": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/webApp/build/dist/wasmJs/productionExecutable/f1c944db69f8cf0c1185.wasm",
+      "bytes": 12971890,
+      "sha256": "1a9cd15d58090ab5d7284e382ae44c3825e0e81c55e1859b980918a91e088eb3"
+    }
+  },
+  "sources": {
+    "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/chip/Chip.kt": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/chip/Chip.kt",
+      "bytes": 5112,
+      "sha256": "cea8780e323897f38f220d548bff533901e7efee7d7c0c1ede07706b04f06811"
+    },
+    "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/chip/ChipStyles.kt": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/chip/ChipStyles.kt",
+      "bytes": 3248,
+      "sha256": "aab5cd7c28e2ca208a968cc9908431319da1c149b3dd300fd584c03c5b2d6a6b"
+    },
+    "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ChipDoc.kt": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ChipDoc.kt",
+      "bytes": 8690,
+      "sha256": "30b8c70f861ec34d616eb5023114c1e3b557b1b4dd7360edd3e687301d5e5334"
+    },
+    "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/ChipExamplesTest.kt": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/ChipExamplesTest.kt",
+      "bytes": 4946,
+      "sha256": "ad3015ab4979f27920ebd31e84c8f6c3597847cc611dbd68af3127de5b497a0e"
+    },
+    "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/chip/ChipScreenshotTest.kt": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/chip/ChipScreenshotTest.kt",
+      "bytes": 1483,
+      "sha256": "150beae8f5a95f265c09974dd348cb131fd92b3e00de8c4364a1e0eb57ff207a"
+    }
+  },
+  "screenshots": {
+    "screens/local-desktop-light": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/attempt-3/screens/local-desktop-light.png",
+      "bytes": 86028,
+      "sha256": "90e93a4f4ded71d7efbf47b9b4ebfe43ee44d0be781b804464dbfabb253ffd12",
+      "width": 1440,
+      "height": 1000
+    },
+    "screens/local-desktop-dark": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/attempt-3/screens/local-desktop-dark.png",
+      "bytes": 85790,
+      "sha256": "e9655a783c60b41a27437dee3268d533b2c0045ce43a5e80ab316f3324423cf7",
+      "width": 1440,
+      "height": 1000
+    },
+    "screens/local-phone-light": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/attempt-3/screens/local-phone-light.png",
+      "bytes": 30812,
+      "sha256": "2343c10ff8ac8ab6989e53d59bbae41abb10ed5151c02af993652c858f76845b",
+      "width": 390,
+      "height": 844
+    },
+    "screens/local-phone-dark": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/attempt-3/screens/local-phone-dark.png",
+      "bytes": 30169,
+      "sha256": "2b102092ff31051f651656e26b21ee58af0d933a965bafe19d00b9c785f98dc7",
+      "width": 390,
+      "height": 844
+    },
+    "interactions/theme-before": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/attempt-3/interactions/theme-before.png",
+      "bytes": 86028,
+      "sha256": "90e93a4f4ded71d7efbf47b9b4ebfe43ee44d0be781b804464dbfabb253ffd12",
+      "width": 1440,
+      "height": 1000
+    },
+    "interactions/theme-after": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/attempt-3/interactions/theme-after.png",
+      "bytes": 86027,
+      "sha256": "387580ada9f82f52048e37025826b61d8739083eefae115b0967090f867f5778",
+      "width": 1440,
+      "height": 1000
+    },
+    "interactions/chip-pressed-before": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/attempt-3/interactions/chip-pressed-before.png",
+      "bytes": 1113,
+      "sha256": "b11567aea9f5ad1f6e6e91da4cb8322f0a6ddeee5afbf98d29b6aa84b31d45ac",
+      "width": 86,
+      "height": 52
+    },
+    "interactions/chip-pressed-after": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chip-r1/browser/attempt-3/interactions/chip-pressed-after.png",
+      "bytes": 1033,
+      "sha256": "91a6e1ade0c537a547d40ec508dc2e1bf5ef80ab050c08eaea60bed0550e55bf",
+      "width": 86,
+      "height": 52
+    }
+  },
+  "failures": [],
+  "observations": [],
+  "localRuntimeEvents": [
+    {
+      "type": "console:warning",
+      "text": "WebGL: INVALID_ENUM: getParameter: invalid parameter name, WEBGL_debug_renderer_info not enabled"
+    },
+    {
+      "type": "console:warning",
+      "text": "WebGL: INVALID_ENUM: getParameter: invalid parameter name, WEBGL_debug_renderer_info not enabled"
+    },
+    {
+      "type": "console:error",
+      "text": "Accessing `memory` via `wasmExports` is deprecated. Use `kotlin.wasm.unsafe.wasmMemory` or update dependencies. Read more: https://kotl.in/vr3szr"
+    }
+  ],
+  "passed": true
+}

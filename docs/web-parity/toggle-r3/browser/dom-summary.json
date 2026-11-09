@@ -1,0 +1,622 @@
+{
+  "officialDom": {
+    "title": "Toggle",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "Installation#",
+        "id": "installation"
+      },
+      {
+        "tag": "H2",
+        "text": "Usage#",
+        "id": "usage"
+      },
+      {
+        "tag": "H2",
+        "text": "Outline#",
+        "id": "outline"
+      },
+      {
+        "tag": "H2",
+        "text": "With Text#",
+        "id": "with-text"
+      },
+      {
+        "tag": "H2",
+        "text": "Size#",
+        "id": "size"
+      },
+      {
+        "tag": "H2",
+        "text": "Disabled#",
+        "id": "disabled"
+      },
+      {
+        "tag": "H2",
+        "text": "RTL#",
+        "id": "rtl"
+      },
+      {
+        "tag": "H2",
+        "text": "API Reference#",
+        "id": "api-reference"
+      }
+    ],
+    "examples": 6,
+    "clientWidth": 1425,
+    "scrollHeight": 3991
+  },
+  "localDom": {
+    "title": "Compose Foundation — Components",
+    "bodyText": null,
+    "tagCounts": {
+      "DIV": 350,
+      "STYLE": 1,
+      "CANVAS": 1,
+      "BR": 32
+    },
+    "semantic": [
+      {
+        "tag": "CANVAS",
+        "role": "generic",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "presentation",
+        "ariaLabel": "",
+        "ariaPressed": null,
+        "text": "HomeComponentsCreateSearch...GitHubNewQuestionnaireNewRadio GroupResizableScroll AreaSelectSeparatorSheetSidebarSkeleton"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": "Home"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": "Components"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": "Create"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Search documentation",
+        "ariaPressed": null,
+        "text": "Search..."
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": "GitHub"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Toggle theme",
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": "New"
+      },
+      {
+        "tag": "DIV",
+        "role": "list",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": "QuestionnaireNewRadio GroupResizableScroll AreaSelectSeparatorSheetSidebarSkeletonSliderSpinnerSwitchTableTabsTextareaTo"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Questionnaire",
+        "ariaPressed": null,
+        "text": "Questionnaire"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Radio Group",
+        "ariaPressed": null,
+        "text": "Radio Group"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Resizable",
+        "ariaPressed": null,
+        "text": "Resizable"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Scroll Area",
+        "ariaPressed": null,
+        "text": "Scroll Area"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Select",
+        "ariaPressed": null,
+        "text": "Select"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Separator",
+        "ariaPressed": null,
+        "text": "Separator"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Sheet",
+        "ariaPressed": null,
+        "text": "Sheet"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Sidebar",
+        "ariaPressed": null,
+        "text": "Sidebar"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Skeleton",
+        "ariaPressed": null,
+        "text": "Skeleton"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Slider",
+        "ariaPressed": null,
+        "text": "Slider"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Spinner",
+        "ariaPressed": null,
+        "text": "Spinner"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Switch",
+        "ariaPressed": null,
+        "text": "Switch"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Table",
+        "ariaPressed": null,
+        "text": "Table"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Tabs",
+        "ariaPressed": null,
+        "text": "Tabs"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Textarea",
+        "ariaPressed": null,
+        "text": "Textarea"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Toast",
+        "ariaPressed": null,
+        "text": "Toast"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Toggle",
+        "ariaPressed": null,
+        "text": "Toggle"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Toggle Group",
+        "ariaPressed": null,
+        "text": "Toggle Group"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Tooltip",
+        "ariaPressed": null,
+        "text": "Tooltip"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Trace",
+        "ariaPressed": null,
+        "text": "Trace"
+      },
+      {
+        "tag": "DIV",
+        "role": "heading",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": "Utils"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Shimmer",
+        "ariaPressed": null,
+        "text": "Shimmer"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "scroll-fade",
+        "ariaPressed": null,
+        "text": "scroll-fade"
+      },
+      {
+        "tag": "DIV",
+        "role": "heading",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": "Extensions"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Chip",
+        "ariaPressed": null,
+        "text": "Chip"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Stepper",
+        "ariaPressed": null,
+        "text": "Stepper"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Text",
+        "ariaPressed": null,
+        "text": "Text"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Copy Page",
+        "ariaPressed": null,
+        "text": "Copy Page"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Previous: Toast",
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Next: Toggle Group",
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Toggle bookmark",
+        "ariaPressed": null,
+        "text": "Bookmark"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "View Code",
+        "ariaPressed": null,
+        "text": "View Code"
+      },
+      {
+        "tag": "DIV",
+        "role": "heading",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": "Installation"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Copy",
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "heading",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": "Usage"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Copy",
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "heading",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": "Outline"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Italic",
+        "ariaPressed": null,
+        "text": "Italic"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "View Code",
+        "ariaPressed": null,
+        "text": "View Code"
+      },
+      {
+        "tag": "DIV",
+        "role": "heading",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": "With Text"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": "𝐼Italic"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "View Code",
+        "ariaPressed": null,
+        "text": "View Code"
+      },
+      {
+        "tag": "DIV",
+        "role": "heading",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": "Size"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Sm",
+        "ariaPressed": null,
+        "text": "Sm"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Md",
+        "ariaPressed": null,
+        "text": "Md"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Lg",
+        "ariaPressed": null,
+        "text": "Lg"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "View Code",
+        "ariaPressed": null,
+        "text": "View Code"
+      },
+      {
+        "tag": "DIV",
+        "role": "heading",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": "Disabled"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Bold",
+        "ariaPressed": null,
+        "text": "Bold"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "View Code",
+        "ariaPressed": null,
+        "text": "View Code"
+      },
+      {
+        "tag": "DIV",
+        "role": "heading",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": "RTL"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Preview language",
+        "ariaPressed": null,
+        "text": "Arabic (العربية)"
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": null,
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "Translation information",
+        "ariaPressed": null,
+        "text": null
+      },
+      {
+        "tag": "DIV",
+        "role": "button",
+        "ariaLabel": "تبديل الإشارة المرجعية",
+        "ariaPressed": null,
+        "text": "إشارة مرجعية"
+      }
+    ]
+  }
+}

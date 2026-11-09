@@ -1,0 +1,21 @@
+{
+  "viewport": [
+    1440,
+    1000
+  ],
+  "theme": "dark",
+  "action": "Go to next page",
+  "box": [
+    765.5,
+    395,
+    836.5,
+    395,
+    836.5,
+    427,
+    765.5,
+    427
+  ],
+  "screenshot": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/pagination-r2/verify-30/attempt-4/screenshots/desktop-1440-dark-next-clicked.png",
+  "url": "http://127.0.0.1:8772/pagination",
+  "title": "Compose Foundation — Components"
+}

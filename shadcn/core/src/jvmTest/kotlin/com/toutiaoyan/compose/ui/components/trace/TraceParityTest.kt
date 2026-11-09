@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toPixelMap
+import com.toutiaoyan.compose.ui.theme.currentTheme
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.*
@@ -105,7 +107,10 @@ class TraceParityTest : ScreenshotTest() {
         composeRule.onNodeWithText("Details").assertDoesNotExist()
     }
 
-    private fun extras(name: String, rtl: Boolean) {
+    private fun extras(
+        name: String,
+        rtl: Boolean,
+    ) {
         for (dark in listOf(false, true)) {
             snapshot(name, darkTheme = dark, stylePreset = StylePreset.Nova) {
                 if (rtl) {
@@ -206,6 +211,27 @@ class TraceParityTest : ScreenshotTest() {
         composeRule.onNodeWithText("Inner detail").assertDoesNotExist()
         composeRule.onNodeWithTag("outer").performClick()
         composeRule.onNodeWithText("Inner detail").assertDoesNotExist()
+    }
+
+    @Test fun explicitErrorStatusColorsTheAutomaticChevron() {
+        var expected = androidx.compose.ui.graphics.Color.Unspecified
+        composeRule.setContent {
+            Theme(preset = StylePreset.Nova) {
+                expected = currentTheme.colors.destructive
+                TraceCollapsible {
+                    TraceCollapsibleTrigger(status = TraceStatus.Error, modifier = Modifier.testTag("error-trigger")) {
+                        Box(Modifier.size(20.dp))
+                    }
+                }
+            }
+        }
+        val pixels = composeRule.onNodeWithTag("error-trigger").captureToImage().toPixelMap()
+        assertTrue(
+            (0 until pixels.width).any { x ->
+                (0 until pixels.height).any { y -> pixels[x, y] == expected }
+            },
+            "The automatic chevron must use the line's explicit destructive status color",
+        )
     }
 
     @Test fun linkRowKeepsTheAccessibleNameForANewTab() {

@@ -1,6 +1,17 @@
+## Chart — 40-handoff — 2026-11-09
+
+- Stage `30-verify` is complete; focused Chart tests (53/53), owning ktlint, current-worktree Wasm distribution, bounded browser checks (46/46), and audit passed. Evidence is recorded in `.agent-runs/chart/progress.md` and `.agent-runs/chart/evidence/`.
+- Pinned source: `shadcn-ui/ui@42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9`; source manifest `.agent-runs/chart/evidence/00-scope/source-manifest.json`.
+- Browser residuals remain explicit: rendered canvas palette/live theme switching, internal canvas clipping, TOC scroll destination, full pixel parity, and independently reproducible source/build correspondence are not established. No deterministic assertion failures or source/artifact fingerprint drift were found.
+- Handoff: HEAD `11ce66dff6b5c474f4f47ffc5b6591f466d45891`; worktree remains broadly uncommitted and is preserved. The supplied event tail records 6 rotations, 1 failed attempt, then 1 successful completion; the run-action total and cumulative input warning are not exposed in the permitted snapshots. Configured compaction threshold: 250,000 prompt tokens; no compaction claim.
+
 # Web 对齐进度
 
-更新：2026-11-05。计划见 [shadcn-web-plan.md](shadcn-web-plan.md)。
+## 2026-11-09 — Combobox handoff
+
+- Combobox Stage 40 handoff completed against pinned Base UI / Nova / Neutral sources at `8ab27715521cbd4f87ae6886cd989cbb678f6de7`. Current-worktree verification evidence: catalog test log `.agent-runs/combobox/logs/20261108T193359-verify-combobox-catalog-current-51778.log`, screenshot test log `.agent-runs/combobox/logs/20261108T193416-verify-combobox-screenshots-current-51889.log`, Wasm build log `.agent-runs/combobox/logs/20261108T193452-verify-combobox-wasm-current-52143.log`, browser summary `docs/web-parity/combobox-r2/browser/summary.json`, browser log `.agent-runs/combobox/logs/20261108T193424-verify-combobox-browser-current-51937.log`. Catalog 12/12, screenshots 10/10, Wasm build passed, browser 47/47. Lint reports only unrelated pre-existing findings (Combobox hit count 0). Known residuals remain documented in `.agent-runs/combobox/progress.md`.
+
+更新：2026-11-08。计划见 [shadcn-web-plan.md](shadcn-web-plan.md)。
 
 前八批基础实现及第九批六个组件的 Web 剩余实现已完成；本批详细范围与验证见下方倒序进度记录。
 第九批相关回归、像素与 JVM/JS/Wasm 验证见倒序记录；第八批及之前的证据保留。
@@ -102,26 +113,26 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 “尚未开始本轮页面与完整状态对照”表示该组件页还未进入本轮逐页核对。历史对齐结果不自动继承。
 
 - [x] Accordion (`accordion`)：r14 将当前官方 `main` 固定为 `42f3bb63…`，MDX、wrapper 和七个示例的 9 份来源哈希与 r13 一致，并在 r14 新增 Nova CSS 固定；页面官方顺序（hero、Installation、Usage、Composition、Basic、Multiple、Disabled、Borders、Card、RTL、API Reference）已补完整回归断言。目录 63/63、core 21/21 通过；当前 Wasm `1355c1d5…` 下完成四象限、48 张六分节和 17 个交互取证，10 份来源及全部图片哈希由 [validation.json](web-parity/accordion-r14/validation.json) 校验。共享文档壳/代码面板、Geist 与阿拉伯/希伯来字形栅格、Canvas 原生辅助技术角色以及扩展/真机触摸矩阵作为明确平台差异，见 [accordion-r14](web-parity/accordion-r14/README.md)。
-- [ ] Alert (`alert`)：官方六配方（hero + Basic/Destructive/Action/Custom Colors/RTL）顺序/标题与四条 `Kotlin extension:` 边界已按 `8a353667` 复核；r11 修正 Basic 与 Action 两段说明为官网文案并补断言。专用空间 1440/390×浅深四象限（逐像素校验主题）、5 个官方分节对照、Action 按钮 hover/点击与 RTL 阿英希切换均已验证；最终构建 Wasm `af0897b…`，107 项 app:shared + 62 项 shadcn:core 聚焦测试通过。全文法/超高操作/任意复杂槽位/窗口重排/完整焦点矩阵/辅助技术及细微排版、共享壳与字形差异仍留，见 [alert-r11](web-parity/alert-r11/README.md)。
+- [x] Alert (`alert`)：r12 将当前官方 `main` 固定为 `42f3bb63…`，核对 MDX、`alert.tsx`、六个示例和 Nova CSS 与 r11 的 `8a353667…` 文件字节一致；14 项 core、6 项目录测试通过，并在当前 Wasm 构建上复查 1440/390×浅深官方/本地四象限。HTML role、任意富文本子节点、共享文档壳及字形栅格化作为明确平台/API 差异记录，见 [alert-r12](web-parity/alert-r12/README.md)。
 - [x] Alert Dialog (`alert-dialog`)：r5 将当前官方 `main` 固定为 `42f3bb63…`，MDX、wrapper、七个示例和 Nova CSS 与 r4 字节一致。修复共享 modal 初始焦点：Tab 现在在 Cancel -> Continue -> Cancel 内循环，Escape 关闭并恢复触发器焦点。目录 5/5、Alert Dialog 与 modal-focus 17/17、受影响 Dialog/Sheet/Drawer/surfaces 回归 150/150 通过；Wasm `1355c1d5…` 下完成四象限、48 张六分节和 22 个官方/本地弹窗交互取证。共享文档壳/字体栅格与 Canvas 原生 alert-dialog 语义作为明确平台差异，见 [alert-dialog-r5](web-parity/alert-dialog-r5/README.md)。
 - [x] Aspect Ratio (`aspect-ratio`)：r5 将当前官方 `main` 固定为 `42f3bb63…`，MDX、wrapper、四个示例和 Nova CSS 与 r4 字节一致。`ratio` 改为官方一致的必填参数，并在组件入口拒绝零、负数、NaN 与无穷值；API 表同步标为 `Required`。6 项目录与 5 项 core 测试通过，当前 Wasm `dfb4b1c1…` 下完成 1440/390×浅深四象限、24 张三个官方示例分节截图，以及 RTL 阿拉伯语/英语/希伯来语与弹层切换。独立 Reviewer 无 finding；内置 PNG/`next/image`、阿希字体栅格和共享文档壳差异作为明确平台差异，见 [aspect-ratio-r5](web-parity/aspect-ratio-r5/README.md)。
 - [x] Attachment (`attachment`)：官方六配方（demo、Image、States、Sizes、Group、Trigger）顺序/标题一致，Features/四个 Accessibility 小节与 9 个官方 API 小节齐全；slot h 最终构建（wasm 02d85afc）后重拍 1440×1000/390×844 浅深四象限、5 组逐配方对照，并取证 Trigger 整卡 overlay hover（背景 muted/50）与离开恢复、点击打开预览 Dialog/Escape 关闭、Copy 动作独立聚焦不触发 Dialog、Image hover、Group 横向滚动渐隐、States shimmer 两帧及 Default 非交互卡片无 hover 变化；Chrome AX 树暴露真实 button 角色与名称（Preview research-summary.pdf / Copy link / Remove …）；FileSearch 自定义矢量与官方一致，标题 14px/500/17.5 行高沿用 r7 实测。54 项聚焦测试通过（AttachmentExamples 9 + core 45）。仍保留的已解释差异：demo 后官方介绍段落需共享页面骨架新增“预览后介绍”字段、base-rhea 预览上下文、完整 transition 中断帧级取证与屏幕阅读器全矩阵、旧 Vega golden；见 [attachment-r9](web-parity/attachment-r9/README.md)。
 - [x] Avatar (`avatar`)：r4 将当前官方 `main` 固定为 `42f3bb63…`，12 份 MDX/示例/wrapper 与 Nova CSS 均与 r3 字节一致。AvatarGroup 现在为所有成员无条件提供背景色 ring；Count 省略 `size` 时按官方 CSS 级联跟随组尺寸（有 Sm 则 Sm，否则有 Lg 则 Lg，否则 Default），显式尺寸可覆盖。Dropdown 键盘回归补齐 ArrowUp/Home/End/循环/Escape 焦点恢复。目录 5 项、core parity 7 项、截图 10 项通过；当前 Wasm `ba10ad5d…` 下完成四象限、72 张九分节和 12 个 Dropdown/RTL 交互取证。修复后独立 Reviewer 无 finding；共享壳、字形栅格、`next/image` 与 Canvas 原生语义作为明确平台差异，见 [avatar-r4](web-parity/avatar-r4/README.md)。
-- [ ] Badge (`badge`)：七个官方配方（Default、Variants、With Icon、With Spinner、Link、Custom Colors、RTL）顺序/标题/文案核对一致；slot h 最终构建（wasm c0570519）后已重拍 1440×1000/390×844 浅深四象限、6 组逐配方官本对照与 Link hover/点击状态；8 项 BadgeExamplesTest 通过。RTL 描述改为官方原文。仍开放：本地额外 Composition 小节（官方无）、键盘焦点/原生链接语义与 aria 矩阵，见 [badge-r3](web-parity/badge-r3/README.md)。
+- [x] Badge (`badge`)：r4 固定当前官方 `main` 为 `42f3bb63…`，保存 MDX、`badge.tsx`、七个示例与 Nova CSS，移除官网不存在的本地 Composition 小节；新增 Space/Enter `onClick`/`href` 激活、可选受控 `interactionSource` 与四变体 hover 测试。core 17/17、catalog 8/8 通过，当前 Wasm 构建完成 1440/390×浅深官方/本地四象限。golden 字体漂移已由 HEAD-only 控制运行证明为仓库环境问题；调用方图标尺寸、非 Nova preset 与 CSS transition 作为明确平台/API 差异记录，见 [badge-r4](web-parity/badge-r4/README.md)。
 - [x] Breadcrumb (`breadcrumb`)：r4 将当前官方 `main` 固定为 `42f3bb63…`，MDX/七示例与 r3 字节一致，并归档当前 Base wrapper 与 Nova CSS。BreadcrumbLink 增加主题 focus ring，补齐 Tab、Enter/Space 与 disabled 回归；当前页改为不可点击的 BasicText，并以 `"<text>, current page"` 暴露可访问名称。目录 5 项、core parity 6 项、截图 7 项通过；当前 Wasm `7a06664d…` 下完成四象限、48 张六分节及 11 个 hover/Dropdown/RTL 交互取证。Compose desktop 仍会把该可访问当前页节点标为 focused，作为明确语义差异记录；浏览器键盘 focus 为 JVM/golden-only，见 [breadcrumb-r4](web-parity/breadcrumb-r4/README.md)。
 - [x] Bubble (`bubble`)：r3 将当前官方 `main` 固定为 `42f3bb63…`，MDX/九个示例与 r2 字节一致，并归档当前 wrapper 与 Nova CSS。Variants 三段 ghost 文案在可滚动 600dp 视口与当前浏览器构建中完整显示；BubbleContent 覆盖 disabled、指针、Enter、Space，Tooltip 覆盖 focus/Enter/Escape/焦点恢复，Popover 覆盖 Enter/Space/Escape，Reaction 覆盖指针与键盘。目录 9 项、core parity 7 项、截图 14 项通过；当前 Wasm `7a06664d…` 下完成四象限、64 张八分节和 10 个 ghost/链接/Reaction/Collapsible/Popover 状态。Tooltip 因 Ego 合成 hover 无法触发 Canvas 而明确限定为 JVM 覆盖；共享壳/字体与 Kotlin 路由文案作为既有差异，见 [bubble-r3](web-parity/bubble-r3/README.md)。
 - [x] Button (`button`)：r5 将当前官方 `main` 固定为 `42f3bb63…`，MDX、wrapper、15 个示例与 Nova CSS 均按 SHA-256 归档。删除官网不存在的 Composition 小节，把 `buttonStyle` 标为 `Kotlin extension`；Label As 子菜单改为官方 96dp 宽度，桌面右开、手机左翻且选项保持单行，Work 选择在关闭重开后保持。目录 24/24、精确 core 42/42 通过；Wasm `a4730c39…` 下完成四象限、120 张十五分节和 22 个官方/本地菜单、Link、RTL 交互状态取证。仍需共享文档壳/字体栅格、Canvas 原生链接语义和键盘-only 浏览器遍历作为明确平台差异，见 [button-r5](web-parity/button-r5/README.md)。
-- [ ] Button Group (`button-group`)：十二个官方配方顺序/标题核对一致；本轮按官方示例重写 Orientation（单竖向组）、Size（三行四按钮）、Nested（Plus+InputGroup）、Separator/Split（Secondary）、Dropdown Menu（Follow+官方七项菜单）、Select（货币+10.00+发送）、Input Group（Plus+InputGroup+Voice）并同步导出代码；RTL 描述改为官方原文；slot h 最终构建后已重拍四象限、11 组逐配方对照，并取证 Dropdown/Select/Popover 打开状态；16 项 ButtonGroupExamplesTest 通过。仍开放：Popover 内容简化、Input 配方内部结构差异、role=group 语义与完整状态矩阵，见 [button-group-r3](web-parity/button-group-r3/README.md)。
+- [x] Button Group (`button-group`)：r4 将当前官方 `main` 固定为 `42f3bb63…`，归档 MDX、12 个示例、组件、Base UI wrapper 与 Nova CSS。`ButtonGroup` 现提供 traversal-group 语义及可选 accessibility label，页面补齐官方 Popover/Input Group 配方、Composition、Accessibility 与 ButtonGroup-vs-ToggleGroup 指南。目录与 core 聚焦共 34/34 通过，`ktlintCheck` 与当前工作树 Wasm distribution 通过；1440×1000、390×844 浅深四象限和 hover、键盘焦点、Dropdown、滚动取证完成。Canvas 无直接 HTML `role=group`、指针点击无持续视觉状态及共享文档壳作为明确平台差异保留，见 [button-group-r4](web-parity/button-group-r4/sources.json)。
 - [ ] Calendar (`calendar`)：官方十配方（demo、Basic、Range、Month/Year Selector、Presets、Time、Booked、Custom Cell Size、Week Numbers、RTL）+5 个 Kotlin extension 顺序核对一致；补齐 Basic/Range/Month-Year/Week Numbers/RTL 官方描述，RTL 用官方原文；slot h 最终构建后已重拍四象限、9 组逐配方对照，取证月份/年份菜单、日期选择、Range 与阿拉伯语 RTL；6 项 CalendarExamplesTest 通过。仍开放：官方 Hijri 预览未实现、caption 下拉为带边框胶囊+DropdownMenu（官方无边框文本+原生 select，组件层差异，需共享修复）、Changelog 未复刻，见 [calendar-r3](web-parity/calendar-r3/README.md)。
 - [x] Card (`card`)：r4 固定当前官方 `main` 为 `42f3bb63…`，归档 MDX、六个示例、Base UI wrapper 与 Nova CSS。将官网嵌入 Spacing 的 Edge to Edge 配方从错误的 `Kotlin extension:` 标题纠正，并移除本地额外说明；390dp Password/Forgot 2px 间距与官方一致并新增回归。共享文档模型新增 API 后章节槽位，为 Card 补 Kotlin 等价 Changelog 与三步 Spacing Variable 迁移，步骤不再污染 TOC。目录 20/20、共享文档 8/8、core 17/17 通过；当前 Wasm `c575ab2d…` 下完成四象限、64 张六配方/API/Changelog 分节和 6 个 spacing/RTL 交互取证。共享文档壳、Geist/阿希字形、代码面板、原生滚动条与 Canvas 语义作为明确平台差异，见 [card-r4](web-parity/card-r4/README.md)。
 - [x] Carousel (`carousel`)：r4 固定当前官方 `main` 为 `42f3bb63…`，归档 MDX、七个示例、Base UI wrapper 与 Nova CSS。共享文档模型新增首屏后介绍与指定示例前指南槽位，页面恢复 About → Installation、Options → API、Events → Plugins，并把键盘/无障碍说明标为 Kotlin extension；About/Options/Events 保留官网 Embla 文案与链接。目录 8/8、共享文档 8/8、core 17/17 通过；当前 Wasm `a0632a78…` 下完成四象限、88 张七配方/About/Options/Events/API 分节和 7 个导航/拖拽/自动播放/RTL 交互取证。Embla 任意 options/plugins 惯性参数、共享壳与字体/Canvas 语义作为明确差异，见 [carousel-r4](web-parity/carousel-r4/README.md)。
 - [x] Code Block (`code-block`)：按当前官网重建 23 个配方（demo + Basic…Terminal Output，Max Height/Languages/Terminal Output 为嵌套 h3），补 Features/Accessibility/Composition/Usage 与九个 API 小节；组件新增 maxHeight/scrollable 截断及静态底部渐隐、横向滚动渐隐、内容强制 LTR、行号对读屏隐藏。26 项聚焦测试、Wasm 构建通过；1440/390 浅深四象限及复制确认、换行、悬浮按钮、键盘滚动、Show More 展开/收起、Tabs、RTL 阿语/英语切换均已复核。仍余 rhea→Nova 样式上下文、Shiki/ANSI/Streamdown 服务端/流式/Markdown、Typeset 近似、下载按钮无效、无原生滚动条、共享页面缺少 demo 后导语槽位及指针聚焦 ring 与 focus-visible 差异，见 [Code Block r2](web-parity/code-block-r2/README.md)。
 - [x] Trace (`trace`)：按固定版本 8a35366 补齐官方 16 个预览（顶部 demo + Trace Line/Status/Description/Collapsible/Open State/Link/Dialog/Sheet/Group/Sources/Chain of Thought/Commit/Whole Turn/Reasoning/Tool），顺序/标题/文案、Built with Trace/Features/Accessibility 与 9 个 API 小节（TraceLink 为 Kotlin extension）已对齐；组件补 `keepMounted`、标题后图标 4dp、`TraceDescription(mono=)` 与 `TraceLink`。30 项聚焦测试（页面19+核心11含RTL/keepMounted/链接语义）、Wasm 89721bca、四象限与新空间实际浏览器展开/受控/Dialog/Sheet/嵌套diff/Reasoning/Tool/Replay 状态通过。残余（已解释）：官方简介段/Built with 表格/Status 表受本地文档模型限制置于 Composition 后或改为散文，官方预览后补充 TSX 片段未收录，Reasoning/Tool 非流式、Replay 恢复静态转录，Dialog/Sheet 触发行为无 hover 变色，官方预览为 base-rhea 而本地 Nova（对话框448vs384）且 API 表少 Description 列，见[trace-r3](web-parity/trace-r3/README.md)。
-- [ ] Chart (`chart`)：本页八组官方配方已迁移，补真实tooltip/键盘选点、系列切换、主题/图标、响应尺寸、数值域与日期轴修复；320高、桌面48/手机0缩进及缩放后阿语轴重叠已处理。r4把Your First Chart保留为h2，Add a Grid/Axis/Tooltip/Legend改为嵌套h3并补Compose步骤说明；页面/文档/预览56项、核心交互/布局/截图40项共96项通过，全仓lint/detekt与JS/Wasm通过。浏览器仍待新空间复核，共享标题/代码细节、窄屏日期刻度和动效/完整交互继续开放，见[chart-page-r4](web-parity/chart-page-r4/README.md)、chart-r1、chart-axis-r2及chart-preview-r3。
-- [ ] Checkbox (`checkbox`)：官网八配方、Group/Table/三语RTL及Field布局已补；r2确认组件/MDX/示例与首轮字节一致，默认改为官网150ms颜色过渡。r3按当前官网补齐 RTL 说明文案（"in shadcn/ui"），并在新空间完成 1440/390×浅深四象限、Invalid/Basic/Description/Disabled/Group/Table/RTL 分节与 Basic/Table 实际点击交互复查；CheckboxExamplesTest 3 项、CheckboxViewportTest 12 项通过，Wasm 构建通过。仍保留两张历史深色基准差异（actual 与 HEAD 逐字节一致、未刷新）、Canvas 无原生 input/label 关联、CSS 命中区/动态主题/shape 与完整辅助技术矩阵，见 [checkbox-r3](web-parity/checkbox-r3/README.md)。
-- [ ] Chip (`chip`)：项目 Kotlin 扩展页（无官网页面；chip.mdx 在 8a35366 返回 404）。r1 已用 `isKotlinExtension` 标记替代 Base UI 标签，新增“Kotlin extension”说明（明确 shadcn 只有静态 Badge、无官方配方可对照），删除 `Default variant/Default selected/Default disabled/Default leading icon` 等参数默认值式配方，保留 Default/Selectable/Selected/Outline/Disabled/Icon/Row 七组实际状态，并按组件源码补 Chip/ChipVariant API 表（leadingIcon、animation、selected 派生 variant、enabled/disabled）。16 项聚焦测试绿，1440/390×浅深四象限已复查（官网侧为预期 404 截图，不冒充官方对照）。仍留：无官方基准，除 selected/hover/focus/disabled 外的按压中间帧、RTL/长按矩阵未纳入本扩展页验收。见 [chip-r1](web-parity/chip-r1/README.md)。
+- [ ] Chart (`chart`)：按当前官网 8a353667 校正官方描述，补导语与 Recharts v3 更新提示、Component/Updating to Recharts v3/Chart Config/Theming/CSS Variables/hex,hsl or oklch/Using Colors/Tooltip Props/Legend/Accessibility 章节（Kotlin 等价代码与说明）；保留八个官方配方与 Kotlin extension 标注。41 项聚焦测试、Wasm 构建通过；1440/390 浅深四象限及系列切换、键盘 tooltip、Legend、RTL 已复核。仍余共享页面缺少“顶部预览与 Usage 之间”槽位（导语/Component 位置后移）、指南与 recipe 交错顺序、Props 表转 bullets、本地 Canvas 替代 Recharts 及共享排版差异，见 [Chart r5](web-parity/chart-r5/README.md)。
+- [ ] Checkbox (`checkbox`)：40-handoff 完成。当前官方 `main` 固定为 `8ab27715521cbd4f87ae6886cd989cbb678f6de7`；官网八配方、Group/Table/三语 RTL 与 Field 布局已核对，Checkbox 聚焦 25/25、Wasm 构建、1440×1000/390×844 浅深四象限、7 个分节与 Basic/Table 实际切换通过。仍保留两张历史深色基准差异（未刷新）、Canvas 无原生 input/label 关联与完整辅助技术/动态 shape 矩阵，见 [checkbox-r3](web-parity/checkbox-r3/verify-30c/metadata.json) 与 [`.agent-runs/checkbox/progress.md`](../.agent-runs/checkbox/progress.md)。
+- [x] Chip (`chip`)：40-handoff 完成。项目 Kotlin 扩展页，固定 revision `8a3536678a528cc012b9e62484290e79d0be410f` 下 `chip.mdx` 为预期 404，不声称官方配方；七组实际状态、`isKotlinExtension` 标记与 Chip/ChipVariant API 表保留。聚焦 JVM 20/20、当前工作树 Wasm distribution 与 1440×1000/390×844 浅深四象限浏览器检查通过，无源码改动；Compose Web 将 `Role.Checkbox` 暴露为 `role=button` 且省略 `aria-pressed`，记录为明确平台/API 差异。见 [`.agent-runs/chip/progress.md`](../.agent-runs/chip/progress.md) 与 [chip-r1](web-parity/chip-r1/README.md)。
 - [x] Collapsible (`collapsible`)：已按当前官网 `8a353667` 重建 Default/Basic/Settings Panel/File Tree/RTL 五配方，补 Controlled State 文案与代码、Composition、Base UI API Reference 及 288dp/576dp 预览几何；四个 Kotlin 专有示例保留为 `Kotlin extension:`。8 项聚焦测试、Wasm 构建、1440/390×浅深四象限、四个分节对照及 Default/Basic/Settings/File Tree/RTL 语言切换交互已验证；仅余 Base UI 单变体、sr-only FieldLabel、字体栅格化等已说明差异，见 [collapsible-r1](web-parity/collapsible-r1/README.md)。
-- [ ] Combobox (`combobox`)：r1 已按当前官网（8a35366）重建页面：demo + Basic/Multiple/Clear Button/Groups/Custom Items/Invalid/Disabled/Auto Highlight/Popup/Input Group/RTL 十二配方及官方顺序/文案，Composition 三棵组合树、Custom Items/Multiple Selection 指南与 Base UI API 链接已补；删除 48 条 Base UI API dump 配方。组件修复可编辑输入按 anchor 宽度出面板、chips 宽度跟踪与点击即开、空态/筛选项自动隐藏、InputGroup 前导 addon 与 panelWidth 覆盖；56 项聚焦测试绿（本组件 12 项），四象限与 closed/open/filtered/selected/multi/custom/invalid/disabled/auto/popup/input-group/RTL 状态截图已复查。仍留：Composition 三个 h3 受单 compositionCode 模型限制合为一块；可编辑输入固定 216dp（官网 Input Group 约 229px）；单选清空需 onClear 回调；RTL 语言工具栏为目录页共享 chrome 且希伯来标签走共享字体回退。见 [combobox-r1](web-parity/combobox-r1/README.md)。
+- [x] Combobox (`combobox`)：r1 已按当前官网（8a35366）重建页面：demo + Basic/Multiple/Clear Button/Groups/Custom Items/Invalid/Disabled/Auto Highlight/Popup/Input Group/RTL 十二配方及官方顺序/文案，Composition 三棵组合树、Custom Items/Multiple Selection 指南与 Base UI API 链接已补；删除 48 条 Base UI API dump 配方。组件修复可编辑输入按 anchor 宽度出面板、chips 宽度跟踪与点击即开、空态/筛选项自动隐藏、InputGroup 前导 addon 与 panelWidth 覆盖；56 项聚焦测试绿（本组件 12 项），四象限与 closed/open/filtered/selected/multi/custom/invalid/disabled/auto/popup/input-group/RTL 状态截图已复查。仍留：Composition 三个 h3 受单 compositionCode 模型限制合为一块；可编辑输入固定 216dp（官网 Input Group 约 229px）；单选清空需 onClear 回调；RTL 语言工具栏为目录页共享 chrome 且希伯来标签走共享字体回退。见 [combobox-r1](web-parity/combobox-r1/README.md)。
 - [x] Command (`command`)：r11按当前官网8a3536678a重建页面：About、Composition与6个官方配方（demo、Basic、Shortcuts、Groups、Scrollable、RTL，含官网标题/描述/预览内容）按官网顺序实现；删除旧的54项参数矩阵，仅保留4个Kotlin扩展（受控value、自定义filter、长列表Home/End、keywords）。6项新目录测试通过，Wasm构建后四象限与Basic/Shortcuts对话框打开+Escape画面已在浏览器复核。残留：About位于Composition之后（本地渲染器顺序）、CommandDialog居中而官网top-1/3、API表为本地增补、无Radix/Aria标签页与广告，详见[round record](web-parity/command-r11/README.md)。
 - [ ] Context Menu (`context-menu`)：r1 已按当前官网（8a35366）重建为 demo + Basic/Submenu/Shortcuts/Groups/Icons/Checkboxes/Radio/Destructive/Sides/RTL 十一配方，官方顺序/文案/Composition/API 链接齐备，删除 39 条 API dump 配方；虚线触发器统一。组件补齐 `side`（Top/Right/Bottom/Left/InlineStart/InlineEnd）/`align` 与边缘翻转（新 provider 8 项数学测试）、面板 `panelWidth`（默认 144，demo/RTL 192，checkboxes 188，submenu 144/176）、外置 ring（消费共享 novaRing）、`ContextMenuItem` slot 重载与 SubContent width/style。此前窗口坐标/RTL/触摸取消/两层 Escape 回归保持。28 项 contextmenu 相关测试与 16 项目录测试绿，四象限及 open/submenu+嵌套/双层 Escape/checkbox 切换保持展开/sides=top/RTL 菜单与语言菜单截图已复查。仍留：Compose 菜单行需显式宽度（官网 min-w-36 随内容 187.7 等按实测宽度传入）；官网 pointer-fine/coarse 双文案在目录页合并为一句（触摸长按仍实现）；API Reference 仅 Base UI 链接；RTL 语言名走共享 RTL 工具栏字体回退。见 [context-menu-r1](web-parity/context-menu-r1/README.md)。
 - [x] Date Picker (`date-picker`)：r10按当前官网8a3536678a重建页面：官方8个配方（demo、Basic、Range Picker、Date of Birth、Input、Time Picker、Natural Language Picker、RTL）按官网顺序与文案实现，含Composition；删除旧38项Calendar参数矩阵，仅保留4个Kotlin扩展（中文本地化、多选、禁用周末、最小/最大月份）。8项新目录测试通过，Wasm构建后四象限与demo弹层打开画面已在浏览器复核。残留：Time Picker用24h文本字段替代原生input[type=time]；Natural Language用Kotlin小解析器替代chrono-node；RTL使用内置阿拉伯日历locale而非date-fns/DayPicker bundle；本地增加API表，详见[round record](web-parity/date-picker-r10/README.md)。
@@ -135,14 +146,14 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [ ] Input Group (`input-group`)：r1 已按当前官网（8a35366）重建：demo + Align（h2，官方 Callout）+ inline-start/inline-end/block-start/block-end（嵌套 h3）+ Icon/Text/Button/Kbd/Dropdown/Spinner/Textarea/Custom Input/RTL 共 14 配方，官方顺序/文案/Composition 与五节 API Reference 齐备，删除原 API dump 配方；“Align”通过 beforeExamples h2 + headingLevel=3 复刻官网层级（目录与官网一致）。组件为配方补齐 InputGroupInput readOnly/type 与 InputGroupTextarea readOnly/rows/minLines/maxLines 透传。32 项目录测试 + 17 项 core 测试通过，四象限与 inline-start/block-end/button/dropdown open/RTL(阿→英→希) 状态图已复查。仍留：Custom Input 无 Compose 版 TextareaAutosize，改用内置 Textarea 显式行高；Button 配方复制状态为本地图标切换、popover 正文简化；原生 htmlFor/className 覆盖为 Kotlin semantics/Modifier 等价物；RTL 语言名走共享工具栏字体回退。见 [input-group-r1](web-parity/input-group-r1/README.md)。
 - [ ] Input OTP (`input-otp`)：r1 已按当前官网（8a35366）重建为 demo + Pattern/Separator/Disabled/Controlled/Invalid/Four Digits/Alphanumeric/Form/RTL 十配方及官方 About/API 链接，删除原 API dump（Masked/Read only/Max length/Slot/Group 等）。组件新增 root/slot `invalid=`（destructive 边框+ring，等价 aria-invalid）与 root contentDescription/disabled/error 语义；10 预览、controlled 输入、digits pattern 过滤、无效/禁用语义与 RTL 均有 20 项目录测试 + 7 项 core 截图测试覆盖，四象限与 controlled/disabled/invalid/four-digits/form/RTL 状态图已复查。仍留：About 在目录模型中只能位于 Composition 之后（官网紧跟 demo）；Form 配方槽位使用共享 32dp 尺寸而非官网 h-12/w-11；逐槽读屏/IME 组合/平台自动填码矩阵未完成；RTL 语言名走共享字体回退。见 [input-otp-r1](web-parity/input-otp-r1/README.md)。
 - [ ] Item (`item`)：r3 在当前官网（8a35366）下确认 11 配方顺序与 10 个 API 小节不变，并把全部配方说明改为官网原文（variant/size/icon/avatar/image/group/header/Link 的 render→Kotlin href 对照/RTL），补回官网 Item vs Field 两段文字与 demo 后总述段；ItemExamplesTest 新增文案断言，9 项目录测试 + 16 项 core 测试通过，四象限与 dropdown 展开、RTL 状态图复查。仍留：总述段因首个示例描述槽位显示在预览上方（官网在代码块之后）；390 宽 Header 三卡仍是浏览器 flex min-content 溢出 vs Compose 换行模型差异，不以硬编码 padding/截断掩盖；Link 的 native target/rel/修饰键与同页锚点、Dropdown 指针打开的初始高亮（共享 DropdownMenu）、共享排版/text-pretty/图片裁切及完整动态/辅助技术矩阵仍开放。见 [item-r3](web-parity/item-r3/README.md)（承接 item-r2）。
-- [ ] Kbd (`kbd`)：r3按当前官网8a3536678a复核六个配方（demo、Group、Button、Tooltip、Input Group、RTL）顺序与内容，Button/Tooltip/Input Group/RTL说明改为官网原文；Button尾部键帽、TooltipProvider延迟、三语RTL与输入组键帽由现有测试覆盖。KbdExamplesTest 7、KbdViewportTest 4、KbdParityTest 11、KbdScreenshotTest 2通过；Wasm构建60af0664…后四象限已复核（含共享说明80%宽度），浏览器已验Tooltip悬停、Group/Button文案。仍开放：InputGroupAddon对直接kbd子项的5px圆角/负margin规则、Tooltip在ButtonGroup内的合并角/内边距、2张旧Tooltip基准差异、原生kbd/辅助技术/触屏，故保持未勾选，详见[kbd-r3](web-parity/kbd-r3/README.md)。
+- [x] Kbd (`kbd`)：40-handoff 完成。沿用固定归档 `kbd-r2` 与现有页面/组件实现，六个官方配方顺序与文案、Input Group 键帽、Button/Tooltip 几何和三语 RTL 均有聚焦及浏览器证据；core/catalog 24/24 测试、当前工作树 Wasm 构建、1440×1000/390×844 浅深四象限 242/242 浏览器检查和确定性审计通过。原生 `kbd`/辅助技术/触屏、共享字体栅格及当前 `main` 在线 revision 刷新受网络阻塞作为明确平台/环境差异记录，见 [`.agent-runs/kbd/progress.md`](../.agent-runs/kbd/progress.md) 与 [kbd-r2](web-parity/kbd-r2/)。
 - [ ] Label (`label`)：r1按当前官网8a3536678a重建页面：官方描述与用法，Default（复选框+Label，点击标签切换选中）、Label in Field（官方field-demo付款表单：FieldLabel/FieldDescription/FieldSet/FieldGroup/FieldSeparator）、RTL（阿拉伯语标签+语言工具栏）按官网顺序实现，另保留2个Kotlin扩展（required、disabled）。新增LabelExamplesTest 6项通过；Wasm构建60af0664…后四象限与标签点击选中已浏览器验证。仍开放：Compose无htmlFor隐式关联（付款表单FieldLabel点击不聚焦输入框）、官网demo后的Field提示Callout未在本地骨架渲染、任意字体/emoji/多行阿拉伯行高与完整辅助技术，故保持未勾选，详见[label-r1](web-parity/label-r1/README.md)。
 - [ ] Marker (`marker`)：r3按当前官网8a3536678a复核八个配方（demo、Variants、Status、Shimmer、Separator、Border、With Icon、Links and Buttons）顺序与内容，Variants/Status/Shimmer/Separator/Border/With Icon/Links and Buttons说明改为官网原文；确认自然预览高度、本页链接、文字/图标hover与按钮Toast仍正常。MarkerExamplesTest 5、MarkerInteractionTest 12、MarkerParityTest 8、MarkerScreenshotTest 5通过；Wasm构建60af0664…后四象限已复核（含共享说明80%宽度），浏览器已验链接hover、Revert Toast与Accessibility/API区。仍开放：共享Toaster位置/堆叠、原生anchor/button与辅助技术能力、官网demo后导语与base-rhea预览主题、Variants表格/节奏差异及旧暗色分隔线基准，故保持未勾选，详见[marker-r3](web-parity/marker-r3/README.md)。
 - [ ] Menubar (`menubar`)：r1 按当前官网确认六配方顺序（demo/Checkbox/Radio/Submenu/With Icons/RTL），给 30 个 Compose-only 配方统一加 `Kotlin extension:` 前缀，补 API Reference 三个小节与 Base UI 链接；浏览器实测 File/View/Profiles 菜单开关、ArrowDown/ArrowRight 键盘导航、Escape 关闭与 RTL 阿拉伯语栏，四象限 1440/390×浅深已复查，MenubarExamplesTest 8 项与 Wasm 构建通过。Canvas 无原生 menu/menuitem 语义、悬停子菜单交互帧、指针碰撞/滚动与真机触摸、共享页面标签/手机宽度仍开放，见[Menubar r1](web-parity/menubar-r1/README.md)。
 - [ ] Message (`message`)：r1 按当前官网确认六配方顺序（demo/Avatar/Group/Header and Footer/Actions/Attachment），补 Features 与 Accessibility（Label icon-only actions / Status updates）章节，并把额外配方统一加 `Kotlin extension:` 前缀；官方 base-rhea 的蓝色气泡用 Nova + Accent.Blue 复现（实测 RGB 35,70,221），浏览器复查 Group/Actions/Attachment 与四象限，MessageExamplesTest 7 项与 Wasm 构建通过。base-rhea 圆角/间距、原生 ARIA/读屏、完整键盘与动态主题、共享页面标签/手机宽度仍开放，见[Message r1](web-parity/message-r1/README.md)。
 - [x] Message Scroller (`message-scroller`)：r4 按当前官网对齐：description 原文、`examplesHeading = null`、官方顺序 12 节（New Chat demo、Anchoring Turns、Group Chat、Keeping Context Visible、Following the Live Edge、Opening Saved Threads、Avoiding a Flash on Reload、Loading Earlier Messages、Animating New Messages、Jumping to Messages、Tracking the Reader's Position、Reading Scroll State）+ 8 段官方指南，Compose-only 示例统一 `Kotlin extension:` 前缀。新增 5 个官方配方实现（demo、anchoring、group chat、streaming follow、animation presets），复用既有 6 个；浏览器实测 demo 流式跟随、锚点切换（user/assistant + 64dp peek）、Group Chat 两步推进与 Marker 锚点、streaming 跟随、animation 预设发送，四象限 1440/390×浅深复查，MessageScrollerExamplesTest 4 项与 Wasm 构建通过（`ef04de09cbf8457ebdc6.wasm`）。官方指南位置（Installation 前）、scroll-release 仅 JVM、rhea/theme-blue 近似、DOM aria 语义与虚拟化/unstyled 无对应物等差异见[Message Scroller r4](web-parity/message-scroller-r4/README.md)。
 - [ ] Navigation Menu (`navigation-menu`)：r3按当前官网8a3536678a复核Default/三语RTL顺序与内容；补官网RTL文案、Composition中的NavigationMenuIndicator和Link Component章节（render prop说明为Kotlin onClick），隐藏通用Examples标题；仅保留3个Kotlin扩展（Vertical/Delay/Controlled），其余参数矩阵不再渲染。修复390px预览被裁切：官方在sm以下缩小预览内边距，本地改为16dp预览边距+640dp以下压缩触发器水平内边距（桌面保持官网10dp）。16项配方+2项响应式测试通过；Wasm c0570519…构建后四象限（官方主题已重新断言并逐张校验背景像素）与hover/点击/Escape/1024面板已浏览器验证。仍开放：共享viewport/Root align、弹层绘制在预览卡外而非h-96内裁剪、原生anchor/辅助技术与完整延迟矩阵，故保持未勾选，见[navigation-menu-r3](web-parity/navigation-menu-r3/README.md)。
-- [ ] Pagination (`pagination`)：r2按当前官网8a3536678a复核Default/Simple/Icons Only/三语RTL；补Simple/Icons Only/RTL官网描述，隐藏通用Examples标题，仅保留3个Kotlin扩展（Controlled/First and last/Ellipsis，去掉重复(Kotlin)后缀），其余26项参数矩阵不再渲染。20项参数化测试通过（1440/390×浅深，覆盖静态默认组合、五页码、Rows per page选择器25默认、RTL阿拉伯数字与语言切换）；Wasm c0570519…构建后四象限（官方主题逐张校验）及Icons Only下拉、RTL区已浏览器验证。仍开放：Next.js与Changelog章节省略、原生anchor语义、旧Vega两张预存失配，故保持未勾选，见[pagination-r2](web-parity/pagination-r2/README.md)。
+- [x] Pagination (`pagination`)：40-handoff 完成。沿用固定官网 `8a353667…` 与 r2 页面结果，当前工作树 Wasm 构建在 1440×1000/390×844 浅深四象限通过；core 15/15、catalog 20/20，ktlint 仅命中无关 catalog 既有行长错误，`git diff --check` 与 handoff validator 通过。当前页无原生 HTML anchor、共享文档壳及旧 Vega 基准作为明确平台/历史差异记录，见 [pagination-r2](web-parity/pagination-r2/README.md) 与 `.agent-runs/pagination/progress.md`。
 - [ ] Popover (`popover`)：r3按当前官网8a3536678a复核五配方Default/Basic/Align/With Form/RTL；补官方描述、Composition区块并隐藏通用Examples标题，仅保留3个Kotlin扩展（Non-modal/Placement/Uncontrolled），其余参数矩阵不再渲染。24项目录参数化测试通过（1440/390×浅深：四输入Dimensions、Basic header、三对齐面板、表单、六向RTL、扩展），既有核心PopoverFocusTest 2、NovaLayout 5、NovaScreenshot 2继续作为焦点/布局覆盖；Wasm c0570519…构建后四象限（官方主题逐张校验）与默认打开/外部点击关闭/Escape关闭已浏览器验证。仍开放：默认modal=true与Base UI差异（非模态示例已文档化）、完整初始焦点/焦点恢复与动画矩阵、side/align物理属性矩阵未按1:1配方展开，故保持未勾选，见[popover-r3](web-parity/popover-r3/README.md)。
 - [ ] Progress (`progress`)：按当前官网 8a353667 复核四配方（demo/Label/Controlled/RTL）；Composition 改为官方结构树并补嵌套 “With label and value” 说明/代码，RTL 改官网引导链接，API 首节补 Base UI 链接；28 项聚焦测试、Wasm 构建通过；1440/390 浅深四象限、受控键盘 End/Home、轨道点击无效（与官网一致）及三语切换已复核。仍余共享 Composition 内容顺序、Kotlin API 表/扩展小节、完整指针与原生语义、旧 Vega 基准及共享初载/排版差异，见 [Progress r3](web-parity/progress-r3/README.md)。
 - [ ] Questionnaire (`questionnaire`)：按当前官网重建 14 个预览（demo + 13 配方）的顺序与文案，补 Server Rendering/Accessibility/Unstyled/API Reference；Custom Validation 真实返回无效项、Controlled/Resume/Card/Dialog 对齐 CardAction 与默认答案；旧参数演示收敛为 4 个 Kotlin extension。22 项聚焦测试、Wasm 构建通过；1440/390 浅深四象限及多选、校验返回、Resume 重置、Dialog 打开已复核。仍余自定义 Progress render、NativeSelect、onReset、render-prop 组合、共享 Composition 段落/底对齐、浏览器完整键盘/AT 与 toast，见 [Questionnaire r2](web-parity/questionnaire-r2/README.md)。
@@ -151,43 +162,193 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 - [x] Scroll Area (`scroll-area`)：按固定版本 8a35366 对齐官方三配方（Default/Horizontal/RTL），补 Composition/Usage 导入/Horizontal/RTL 说明与 API Reference，移除 Examples 标题并把重复变体裁剪为四条 `Kotlin extension:` 配方（hover/always/hide delay/lazy）；16 项聚焦测试（50 Tag 滚动/键盘/三图横向/RTL 镜像）、Wasm 52e9c17c、四象限与浏览器 Tags 滚动/Horizontal 横向滚动/RTL 滚动状态通过。残余（已解释）：Horizontal 用 288 高预览复现官方裁切、图片为本地归档同款灰度图、扩展配方为 Kotlin 专有、Canvas 无原生滚动条 DOM，见[scroll-area-r2](web-parity/scroll-area-r2/README.md)。
 - [x] Scroll Fade (`scroll-fade`)：修复该页在 Web 上整页空白（No Overflow 配方无固定高度的 verticalScroll 触发无限约束异常），改为无溢出时不挂滚动；isKotlinExtension 标记显示 "Kotlin extension"；官方七配方顺序/标题/说明、Usage 规则列表与 Fallback 指南补齐，Rows 改为 Kotlin extension；32 项聚焦测试、Wasm 52e9c17c、四象限与浏览器默认中部滚动/横向滚动/RTL 横向滚动状态通过。残余（已解释）：Installation 为全站 Gradle 块而非 npm/CSS、class 表改为规则列表、Fallback 在 RTL 之后且扩展项增多、rhea 预览近似、CSS scroll-timeline 由 ScrollState 驱动，见[scroll-fade-r2](web-parity/scroll-fade-r2/README.md)。
 - [ ] Select (`select`)：r1 按当前官网重建页面：官方七配方顺序（demo、Align Item With Trigger、Groups、Scrollable、Disabled、Invalid、RTL）+ Compose-only 示例统一 `Kotlin extension:` 前缀、`examplesHeading` 移除并补 Composition 树；新增 Align Item（Switch+alignItemWithTrigger）、Groups（双分组+Separator）、Scrollable（长时区列表）、Disabled（整表禁用）、Invalid（Field+Select invalid）、RTL（三语工具栏/Arabic）并复用原 demo。浏览器验证 demo 打开/选择、长列表弹出滚动、RTL 阿拉伯语、四象限 1440/390×浅深，SelectExamplesTest 7 项与 Wasm 构建通过；typeahead/碰撞翻转/动态重排未在浏览器取证，原生 listbox 语义缺失，见[Select r1](web-parity/select-r1/README.md)。
-- [ ] Separator (`separator`)：r1 重读当前官网确认五配方顺序不变（demo、Vertical、Menu、List、RTL），补 RTL 官方引导句并把 Compose 专有指南标题改为 `Kotlin extension: Compose layout and semantics`；浏览器复查 Menu/RTL 段与四象限 1440/390×浅深，SeparatorPageTest 12 项 + SeparatorExamplesTest 20 项通过，Wasm 构建通过。原生 separator 角色语义、跨断点缩放与菜单内指针/键盘矩阵未重验，见[Separator r1](web-parity/separator-r1/README.md)。
+- [x] Separator (`separator`)：r3 将当前官方 `main` 固定为 `42f3bb63…`，核对 MDX、`separator.tsx`、五个示例和 Nova CSS 与 r1/r2 的历史固定文件字节一致；10 项 core、2 项断点、16 项配方和 20 项目录页测试合计 48 项通过，并在当前 Wasm 构建上复查 1440/390×浅深官方/本地四象限。原生 HTML separator role 作为明确的 Compose 平台差异记录，见 [separator-r3](web-parity/separator-r3/README.md)。
 - [ ] Sheet (`sheet`)：r1 按当前官网补 Composition 树与三个 API 小节，移除 `Examples` 分组并给原生示例加 `Kotlin extension:` 前缀；Side/No Close Button/RTL 三节补官方 copy 与说明，四官方配方顺序（demo、Side、No Close Button、RTL）已确认。浏览器验证右侧 demo、顶部/左侧面板、无关闭按钮、RTL 镜像，四象限 1440/390×浅深复查，SheetExamplesTest 32 项与 Wasm 构建通过。bottom 侧未单独截图、动画中间帧/焦点恢复与 Nova 单侧 border 逐像素未验，原生 dialog/inert 语义缺失，见[Sheet r1](web-parity/sheet-r1/README.md)。
 - [ ] Shimmer (`shimmer`)：官方九配方（Default、With Marker、Color、Duration、Spread、Angle、Play Once、Disabling、RTL）顺序/标题/文案已对齐并移除 `Examples` H2，新增 Reverse 配方（官方仅代码）、`Kotlin extension: CSS class mapping`、Fallback/Reduced Motion 说明；四条旧 Kotlin 示例改名 `Kotlin extension: …`；补齐 reverse 参数并重新生成可复制代码。11×4=44 项目录测试通过，Wasm `97fa0dc3…` 下 1440/390 浅深四象限及 demo/Reverse/Play Once/Disabled/RTL 双帧动画、手机与深色浏览器证据已保存。仍待：官方 rhea 预览调色板、`3ch+40px` 精确 spread、自动减弱动态、Fallback/Reduced Motion 位置、Oklab/色域/采样与完整辅助技术；[证据](web-parity/shimmer-r3/README.md)。
 - [ ] Sidebar (`sidebar`)：已核对官网来源并补桌面/移动端独立状态、响应式切换、Offcanvas内容保留/200ms动画、移动面板与内侧边框；内容滚动及Header/Footer/Group间距也已补齐，34项定向验证及两个ktlint通过。官网配方、浏览器四象限及完整状态矩阵仍待完成，详见 sidebar-r1/r2。
-- [ ] Skeleton (`skeleton`)：官方顺序（Demo、Avatar、Card、Text、Form、Table、RTL）与文案已对齐，移除 `Examples` H2，RTL 补官方 “in shadcn/ui” 说明，Kotlin 扩展改名 `Kotlin extension: Shimmer`；r1 的七配方尺寸/间距/比例、RTL 三语与脉冲逐帧重组修复保留。40 项目录测试（10 状态 × 1440/390 × 浅深）通过，最终构建下 1440/390 浅深四象限及官方主题像素已复核；手机浏览器中 314dp 头像行与官方溢出裁切仍有差异。仍待：浏览器减弱动态、手机 314dp 溢出行为、完整辅助技术与原生/Skia 脉冲时序；[证据](web-parity/skeleton-r2/README.md)。
-- [ ] Slider (`slider`)：基础已验证（第六批）；Create Payout 静态 Progress 已换为真实 50..10000/step50 Slider，金额和键盘 Home/End 已回归；12dp Nova 滑块、填充/尺寸、键盘步进和 commit 已修正，多滑块标签、动态焦点与完整竖向/反转/RTL 手势矩阵待关闭。
+- [x] Skeleton (`skeleton`)：官方顺序（Demo、Avatar、Card、Text、Form、Table、RTL）与文案已对齐，移除 `Examples` H2，RTL 补官方 “in shadcn/ui” 说明，Kotlin 扩展改名 `Kotlin extension: Shimmer`；r1 的七配方尺寸/间距/比例、RTL 三语与脉冲逐帧重组修复保留。core 10/10、目录 40/40 通过，当前 Wasm 构建下 1440/390 浅深四象限、主题、DOM/AX、RTL、Shimmer 和 View Code 交互已复核。减弱动态因官方 `animate-pulse` 无 reduced-motion hook 而保留为明确差异；手机 314dp 头像行沿用官方溢出裁切、390dp 以下容器未覆盖，Canvas 原生语义与共享字体栅格作为平台差异记录，见 [skeleton-r2](web-parity/skeleton-r2/README.md)。
+- [ ] Slider (`slider`)：按当前官网重建 7 个官方预览（demo/Range/Multiple Thumbs/Vertical/Controlled/Disabled/RTL）与 Usage/API 说明，Step/Inverted/Commit/Min steps 保留为 Kotlin extension；修复 RTL 方向镜像。7 项聚焦测试、Wasm 构建通过；1440/390 浅深四象限及 range/multiple/vertical/controlled/disabled/RTL 状态已复核。仍余 Kotlin API 表与官方单链接差异、ego 指针无法取得 Compose 焦点致浏览器键盘/拖动证据缺失（键盘由 JVM 测试覆盖）、完整辅助技术/多 thumb 焦点/真机手势，见 [Slider r1](web-parity/slider-r1/README.md)。
 - [x] Spinner (`spinner`)：按当前官网复查八个配方（demo、Customization、Size、Button、Badge、Input Group、Empty、RTL）、描述与 API 表，页面/组件无需改动；SpinnerExamplesTest 7 项与 SpinnerViewportTest 8 项通过，Wasm 构建、1440/390×浅深四象限及七个分节对照通过，Badge 三枚 12dp spinner 单行、Input Group 与 Empty 布局与官网一致。仅余 Canvas 无原生 progressbar 语义与共享页面 chrome/字体差异，见 [spinner-r2](web-parity/spinner-r2/README.md)。
 - [x] Stepper (`stepper`)：项目扩展一致性自查完成：补 Kotlin extension 说明、Usage 导入块、Stepper 与 StepperItem 两个 API 表，并接入共享 `isKotlinExtension` 标识；保留 12 组既有配方；新增 StepperExamplesTest 3 项，Wasm 构建与 1440/390×浅深浏览器复查通过。无官方对照对象，仅余共享页面 chrome 与字体栅格化差异，见 [stepper-r1](web-parity/stepper-r1/README.md)。
 - [x] Switch (`switch`)：按当前官网重建为 demo、Description、Choice Card、Disabled、Invalid、Size、RTL 七配方，删除参数矩阵并补官方描述/文案；SwitchExamplesTest 8 项、Wasm 构建、1440/390×浅深四象限与 Description/Choice Card/Disabled/Invalid/Size/RTL 分节对照通过。Canvas 无原生 role=switch/label-for，Choice Card 由目录配方绘制边框/选中底色，共享页面 chrome 与字体栅格化属既有差异，见 [switch-r1](web-parity/switch-r1/README.md)。
-- [ ] Table (`table`)：r1 按当前官网确认 demo/Footer/Actions/Data Table/RTL 顺序，补 Composition 树与三个 API 小节、移除 `Examples` 分组并给 Data Table 说明段加只读示意表、Footer/Actions/RTL 补官方 copy、原生 12 个分项示例统一 `Kotlin extension:` 前缀；浏览器验证 7 行发票 + Total + caption、行内 DropdownMenu 打开与 RTL 段，四象限 1440/390×浅深复查，TableExamplesTest 28 项与 Wasm 构建通过。自动列宽/colSpan、行 hover/selected 交互帧、水平溢出滚动与 Hebrew 行框未重验，见[Table r1](web-parity/table-r1/README.md)。
-- [ ] Tabs (`tabs`)：r1 按当前官网确认 demo/Line/Vertical/Disabled/Icons/RTL 顺序，补 Composition 树与三个 API 小节、移除 `Examples` 分组、Line/Vertical/RTL 补官方 copy 并给原生示例加 `Kotlin extension:` 前缀；组件修复 `activationMode` 默认 Manual→**Automatic**（对齐 Base UI/Radix），核心与页面测试同步更新。浏览器验证四面板点击切换、ArrowRight 自动选中、Line/Vertical/RTL 段，四象限复查，TabsExamplesTest 44 项 + 核心 TabsBehaviorParityTest 12 项通过。150ms 过渡中间帧、hidden panel 焦点回收与 DOM 动态顺序语义未逐帧验证；核心全量运行的 5 个 Menubar/Menu Escape 失败属其他 batch 改动，见[Tabs r1](web-parity/tabs-r1/README.md)。
+- [x] Table (`table`)：40-handoff 完成。固定当前官方 `main` 为 `8ab27715521cbd4f87ae6886cd989cbb678f6de7`；官方顺序/文案、Composition/API、colSpan 与共享行权重、行 hover/selected、水平溢出、RTL/Hebrew 和四象限均有源码、48 项聚焦测试、当前 Wasm 构建及 35 张浏览器证据。ktlint 仅命中既有无关文件；平台/文档壳与 Kotlin 扩展残余已明确记录。见 [Table r1](web-parity/table-r1/verify-30c/summary.json) 与 [`.agent-runs/table/progress.md`](../.agent-runs/table/progress.md)。
+- [x] Tabs (`tabs`)：r2 固定当前官方 `main` 为 `42f3bb63…`，确认 demo/Line/Vertical/Disabled/Icons/RTL 顺序与文案、Composition/API 和 Automatic 激活语义；将 indicator 过渡修正为 150ms 并新增中间帧扫描。Tabs 聚焦 75/75、当前 Wasm 构建、1440/390×浅深 56/56 浏览器断言及 11 张必需截图通过，覆盖键盘激活、隐藏面板焦点回收、动态/视觉顺序、垂直导航与 RTL。Canvas 无原生 HTML tab/selected/disabled 属性作为明确平台差异，见 [`tabs` handoff](../.agent-runs/tabs/progress.md) 与 [Tabs r1](web-parity/tabs-r1/README.md)。
 - [x] Text (`text`)：项目扩展一致性自查完成：Usage 与所有示例代码中已不存在的 `TextTypography`/`TextStyles` 改为当前 `TextVariant`/`TextColors`；新增 Variants（全部类型刻度）、Muted、Kotlin extension: Style font-size 示例与 Text API 表；共享 ComponentDoc 增加 `isKotlinExtension`，扩展页头部改为 `Kotlin extension` 而非 Base UI 页签；TextExamplesTest 5 项与 1440/390×浅深浏览器复查通过。无官方对照对象，仅余共享页面 chrome 与字体栅格化差异，见 [text-r1](web-parity/text-r1/README.md)。
 - [x] Textarea (`textarea`)：按当前官网重建为 demo、Field、Disabled、Invalid、Button、RTL 六配方，补官网描述与 Usage；删除 22 项重复参数矩阵，只保留 Rows、Min/Max lines、Max length、Autofocus、Read only 五个 `Kotlin extension:` 配方；新增 TextareaExamplesTest 7 项，Wasm 构建、1440/390×浅深四象限与 Field/Disabled/Invalid/Button/RTL 分节对照通过。仍余 Canvas 无原生 resize grip、无 htmlFor 式 label→control 焦点关联及共享页面 chrome/字体差异，见 [textarea-r1](web-parity/textarea-r1/README.md)。
 - [ ] Toast (`toast`)：r2按当前官网8a3536678a复核Base UI Toast页面：Default/Types/Promise三配方与官方标题/描述一致，补Types/Promise官方文案并隐藏通用Examples标题；仅保留Position/Duration/Close button三个Kotlin扩展，其余20+参数矩阵不再渲染。24项参数化测试通过（1440/390×浅深，含源消息/Undo id、五种type播报、Promise切换与位置扩展）；Wasm 97fa0dc3…构建后四象限（官方背景像素逐张校验）与浏览器默认toast已验：共享Toaster在窗口右下固定位置出现、5秒后自动消失，非预览内绘制，上一轮“预览内Toaster”证据已作废。仍开放：Action说明章节省略（Default配方已展示Undo）、Base UI完整管理器选项/堆叠手势/精确动效未按页面配方展开，故保持未勾选，详见[toast-r2](web-parity/toast-r2/README.md)。
 - [ ] Toggle (`toggle`)：r1 按当前官网重建为 demo/Outline/With Text/Size/Disabled/RTL 六段（Sizes→Size、With text→With Text，新增三语 RTL Bookmark 配方），Outline/Size/RTL 补官方 copy、其余示例统一 `Kotlin extension:` 前缀并移除 `Examples` 分组；组件未改。浏览器验证 Bookmark 按下态、Size 段、RTL 阿拉伯语按下态，四象限 1440/390×浅深复查，ToggleExamplesTest 5 项与 Wasm 构建通过。非对称图标 padding、hover/pressed 过渡与 invalid overload 矩阵未逐帧截图，见[Toggle r1](web-parity/toggle-r1/README.md)。
 - [ ] Toggle Group (`toggle-group`)：r1按当前官网8a3536678a重建页面：官方八配方Default/Outline/Size/Spacing/Vertical/Disabled/Custom/RTL按官网顺序、标题、描述与内容实现（含官方Composition与API表），删除旧18项参数矩阵，仅保留Single select与Connected两个Kotlin扩展。新增ToggleGroupExamplesTest 5/5（顺序文案、Outline字面all选中、单选取消、纵向堆叠、禁用不切换）；Wasm 97fa0dc3…构建后四象限（官方背景像素逐张校验）与浏览器Italic选中、ArrowRight焦点、Tab移出已验。仍开放：Changelog章节省略、自定义64dp卡片用Modifier.size而非CSS、全部方向键/Tab矩阵由组件测试而非页面配方覆盖，故保持未勾选，详见[toggle-group-r1](web-parity/toggle-group-r1/README.md)。
-- [ ] Tooltip (`tooltip`)：r2按当前官网8a3536678a复核五组官方配方（Default/Side/With Keyboard Shortcut/Disabled Button/RTL）顺序与内容，补官方Composition区块与Side/Disabled Button/RTL官方文案；仅保留Arrow/Delay/Controlled三个Kotlin扩展，其余19项矩阵不再渲染。20项参数化测试通过（1440/390×浅深，覆盖四向side、快捷键配方、禁用包装、RTL三语与焦点/Escape）；Wasm 97fa0dc3…构建后四象限（官方背景像素逐张校验）与浏览器hover弹出“Add to library”、键盘Tab打开及Escape关闭已验。仍开放：嵌套Provider延迟矩阵、各方向arrow offset与原生overlay辅助技术映射，故保持未勾选，详见[tooltip-r2](web-parity/tooltip-r2/README.md)。
+- [x] Tooltip (`tooltip`)：40-handoff 完成。固定当前官方 `main` 为 `42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9`，五组官方配方顺序/文案、嵌套 Provider 延迟与 skip、侧向箭头偏移、焦点/Escape、兄弟关闭所有权和三语 RTL 均有源码、聚焦或浏览器证据；36/36 聚焦测试与当前工作树 Wasm distribution 通过。1440×1000/390×844 浅深四象限、hover、Tab、Escape 与 RTL 通过；官方原生 button 可访问名称在 Compose Web Canvas AX 树中缺失，作为已解释平台差异记录。见 [tooltip-r3](web-parity/tooltip-r3/audit.json) 与 [`.agent-runs/tooltip/progress.md`](../.agent-runs/tooltip/progress.md)。
 
 ## 进度记录（按创建时间倒序）
 
 按记录创建日期倒序；同日按原追加顺序倒序。旧记录未注明时分秒，不补造精确时间；后续修改不改变创建顺序。
+
+### Chip：40-handoff 完成、当前构建四象限与明确平台差异（2026-11-08）
+
+<!-- progress-created: 2026-11-08; order: 246 -->
+
+在当前工作树完成 Chip 的 `00-scope` 至 `40-handoff`。Chip 是项目 Kotlin
+扩展页；固定 revision `8a3536678a528cc012b9e62484290e79d0be410f` 下的
+`apps/v4/content/docs/components/base/chip.mdx` 返回 HTTP 404，因此没有官方配方
+可对照。页面继续使用 `isKotlinExtension` 标记，保留 Default/Selectable/Selected/
+Outline/Disabled/Icon/Row 七组实际状态、Kotlin extension 说明及 Chip/ChipVariant
+API 表；比较范围内没有可由固定来源证明的生产源码差异，因此没有源码改动。
+
+验证：Chip 聚焦 JVM 20/20 通过（screenshot 4、examples 16）；聚合 ktlint 的失败
+均位于 Chip 路径之外，`rg -i chip` 在四份报告中零命中；当前工作树 Web/Wasm
+distribution 成功。浏览器命令在当前 Wasm 构建的 1440×1000 与 390×844、浅色/深色
+下完成 4 个视图与 8 张截图，`officialStatus=404`、零失败；Canvas 原点/尺寸/DPR、
+构建 hash 与选择态交互证据一致。`Chip.kt:97-100` 的本地语义为
+`Role.Checkbox` + `selected`，Compose Web Canvas 暴露 `role=button` 且省略
+`aria-pressed`/`selected`/`checked`，按规则 `I16` 记录为已解释的浏览器平台/API
+差异，本地 Compose 语义等价物存在。
+
+状态：Stage 40 完成，标记录入 handoff；Chip 清单勾选。测试 XML、来源、截图、DOM、
+交互裁剪、构建 hash 与审计路径见
+[`.agent-runs/chip/progress.md`](../.agent-runs/chip/progress.md)。无未解释视觉差异；
+无官方基准是该扩展页的既定范围，不冒充官方对照。
+
+### Checkbox：40-handoff 完成、当前构建四象限与明确残余（2026-11-08）
+
+<!-- progress-created: 2026-11-08; order: 245 -->
+
+在当前工作树完成 Checkbox 的 `00-scope` 至 `40-handoff`。官方内容固定为
+`8ab27715521cbd4f87ae6886cd989cbb678f6de7`；`checkbox.tsx` SHA-256 为
+`67d7935d...c72f3a`，Nova CSS SHA-256 为 `fd9803ec...20f16e`。Stage 20
+逐项比较 16dp 本体、14dp 勾选图形、Nova 4dp shape、input/primary/destructive
+颜色、150ms transition、焦点 ring、card-focus 抑制与 disabled treatment，未发现
+可由当前固定来源证明的生产差异，因此没有生产源码改动。
+
+验证：Checkbox 聚焦 JVM 测试 25/25 通过（parity 6、screenshot 4、examples 3、
+viewport 12）；聚合 ktlint 的 42 个既有违规均不在 Checkbox 路径；当前工作树
+`:app:webApp:wasmJsBrowserDistribution` 成功。浏览器批量 verifier 在
+1440×1000 与 390×844、浅色/深色下完成 4 个视图 × 7 个分节、71 张固定截图，
+断言零失败；Canvas 原点/DPR、全部章节 hash、Basic 与 Table 行勾选往返及
+live light→dark 均通过。测试 XML、构建 manifest、DOM、浏览器 metadata 与截图
+哈希一致；确定性审计通过。
+
+明确残余：`checkbox_focused_dark.png` 与 `checkbox_states_dark.png` 仍有既往
+深色基准差异，当前 actual 稳定但未刷新 golden；Compose Web Canvas 没有原生
+HTML `<input type="checkbox">`/`label for`，以 JVM toggle/focus/state 测试覆盖等价
+路径；完整辅助技术矩阵与 live shape 切换扫描仍未宣称通过。见
+[Checkbox r3](web-parity/checkbox-r3/verify-30c/metadata.json)、
+`docs/web-parity/checkbox-r3/verify-30c/`、`.agent-runs/checkbox/logs/` 与
+[`.agent-runs/checkbox/progress.md`](../.agent-runs/checkbox/progress.md)。
+
+记录时 `HEAD=11ce66dff6b5c474f4f47ffc5b6591f466d45891`，工作树含 132 个已修改、
+46 个未跟踪、2 个删除路径，均为既有用户/其他组件改动与本轮 Checkbox 证据；
+未 commit、push 或 publish。已记录的 `00-scope` 至 `30-verify` orchestrator
+telemetry 为 8 条记录、229 actions、4 个 rotate，无 FAIL；累计输入 tokens 为
+11,753,355，超过 2,000,000 的累计 Stage-input 告警，作为成本警告保留。
+配置的 Codex 自动压缩阈值为 250000 tokens（`body_after_prefix`），没有证据
+表明发生 compaction。
+
+### Table：40-handoff 完成、colSpan/行权重与当前构建浏览器矩阵（2026-11-08）
+
+<!-- progress-created: 2026-11-08; order: 244 -->
+
+在当前工作树完成 Table 的 `00-scope` 至 `40-handoff`。官方内容固定为
+`8ab27715521cbd4f87ae6886cd989cbb678f6de7`；Base MDX、`table.tsx` 与
+`table-example.tsx` 的 SHA-256 分别为
+`f37ea1e03c099986ec946cdc9eaebbbeee3c4b86bbcefe36a09ed5a96bfb40c5`、
+`77d15e11fcf1fb2f5e1b814aa64868e7644bb59c5e1498ecb93bcbdca1c7a070`、
+`dcfd2fa9f630c6fc5440f1f0af57e8c8b9062a31879e1fc0be29ee8621ccf0c2`。
+官方 demo/Footer/Actions/Data Table/RTL 顺序与文案、Composition、API、
+原生示例的 `Kotlin extension:` 前缀均已对齐。`TableHead`/`TableHeadCell` 和全部
+`TableCell` 重载新增 `colSpan`；大于 1 时映射到现有 `RowScope.weight(colSpan)`，
+等于 1 时保持原 modifier 链。
+
+验证：Table 聚焦 JVM 测试 48/48 通过（parity 18、screenshot 2、examples 28），
+当前工作树 `:app:webApp:wasmJsBrowserDistribution` 成功。浏览器批量 verifier 在
+1440×1000 与 390×844、浅色/深色下生成 35 张固定截图，7/7 断言通过且无页面错误；
+覆盖发票/footer/caption、行内菜单、RTL、Hebrew、水平溢出和 Canvas 原点/DPR。
+XML、构建 manifest、浏览器 summary 与当前源码/产物哈希一致，确定性审计通过。
+聚合 ktlint 退出 1，仅命中既有的无关 `ToggleScreenshotTest.kt:150/163`，Table
+路径命中为 0。明确残余为本地 Kotlin 扩展、共享目录 chrome/字体栅格以及 Compose
+Canvas 无等价 HTML table/ARIA DOM；对应 Compose 行/列与语义等价物已记录。
+
+记录时 `HEAD=11ce66dff6b5c474f4f47ffc5b6591f466d45891`，工作树含 129 个已修改、
+40 个未跟踪、2 个删除路径，均为既有用户/其他组件改动与本轮 Table 证据；未 commit、
+push 或 publish。已记录的 `00-scope` 至 `30-verify` orchestrator telemetry 为
+9 条记录、244 actions、4 个 rotate；累计输入 tokens 为 6,488,820。配置的 Codex
+自动压缩阈值为 250000 tokens（`body_after_prefix`），没有声称发生 compaction。
+`git diff --check` 与 token-efficient handoff validator 通过。证据见
+[Table r1](web-parity/table-r1/)、`.agent-runs/table/logs/` 与
+`.agent-runs/table/progress.md`。
+
+### Tabs：40-handoff 完成、150ms 过渡与当前构建浏览器矩阵（2026-11-08）
+
+<!-- progress-created: 2026-11-08; order: 243 -->
+
+在当前工作树完成 Tabs 的 `00-scope` 至 `40-handoff`。官方内容固定为 `42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9`，Base `tabs.tsx` 的 SHA-256 为 `1eda25325a7aae9184224247d837b94f98f162d4f697740cc2b1bd53bd35cec6`。Stage 20 只修正 `TabsIndicator` 的过渡时长：250ms → Tailwind `transition-all` 默认的 150ms，并新增像素级中间帧回归；既有 Tabs 页面与本轮前的工作树改动均保留。
+
+验证：Tabs 聚焦测试 75/75 通过（Examples 44、Behavior 12、Chrome 10、Nova 4、Screenshot 5）；当前工作树 `:app:webApp:wasmJsBrowserDistribution` 成功；浏览器 verifier 56/56 通过并保存 11 张必需截图，覆盖 1440×1000/390×844、浅深色、Canvas 原点/DPR、点击与 ArrowRight、Line/Vertical/Disabled/Icons/RTL 及主题过渡。聚合 ktlint 退出 1，仅命中既有无关文件且 Tabs 命中为 0。确定性审计复核全部测试 XML、构建 hash、截图 manifest/hash 与 150ms、焦点回收、动态顺序、键盘激活、RTL 覆盖。`git diff --check` 与 token-efficient handoff validator 通过。Canvas Web 不暴露 HTML `tab`/`selected`/`disabled` 属性，接受为平台/API 差异；焦点、选择、禁用与激活由 JVM 语义测试覆盖。
+
+记录时 `HEAD=11ce66dff6b5c474f4f47ffc5b6591f466d45891`，工作树含 124 个已修改、37 个未跟踪、2 个删除路径，均为既有用户/其他组件改动与本轮 Tabs 证据；未 commit、push 或 publish。已记录的 `00-scope` 至 `30-verify` orchestrator telemetry 为 9 条记录、245 actions、5 个 rotate；累计输入 tokens 为 6,698,301。配置的 Codex 自动压缩阈值为 250000 tokens（`body_after_prefix`），没有声称发生 compaction；当前交互式 `40-handoff` 的最终 token 使用由 driver 在本轮结束后记录。证据见 [`.agent-runs/tabs/progress.md`](../.agent-runs/tabs/progress.md)、`.agent-runs/tabs/logs/` 与 `.agent-runs/tabs/30c-browser/screenshot-manifest.json`。
+
+### Tooltip：40-handoff 完成、交互矩阵与 Canvas AX 差异（2026-11-08）
+
+<!-- progress-created: 2026-11-08; order: 242 -->
+
+在当前工作树完成 Tooltip 的 `00-scope` 至 `40-handoff`。官方内容固定为 `42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9`，MDX、Base `tooltip.tsx`、五个官方配方与 Nova CSS 已归档到 `tooltip-r3` 证据目录。实现覆盖嵌套 Provider delay/skip、四向 side 与 arrow offset、focus/open、Escape、sibling close ownership、动态移除和 RTL；本轮没有已验证的 in-scope 生产源码差异，五组官方配方保持源码顺序。
+
+验证：Tooltip 核心与目录聚焦测试 36/36 通过；当前工作树 `:app:webApp:wasmJsBrowserDistribution` 成功；聚合 ktlint 退出 1，仅命中既有无关问题，Tooltip 路径为 0；`git diff --check` 通过。浏览器批次执行 18 项断言，17 项通过；1440×1000/390×844 浅深四象限、hover、Tab、Escape 与 RTL 通过，唯一失败为 Compose Web Canvas AX 树未暴露官方 `button`/`Hover` 触发器名称，已按平台/API 差异接受，等价焦点、打开/关闭与焦点恢复路径通过。
+
+记录时 `HEAD=11ce66dff6b5c474f4f47ffc5b6591f466d45891`，工作树含 122 个已修改、37 个未跟踪、2 个删除路径，均为既有用户/其他组件改动与本轮证据；未 commit、push 或 publish。已记录的 `00-scope` 至 `30-verify` orchestrator telemetry 为 7 条记录、204 actions、3 个 rotate；Tooltip 累计输入 tokens 为 10,501,231。配置的 Codex 自动压缩阈值为 250000 tokens（`body_after_prefix`），没有声称发生 compaction。证据见 [tooltip-r3](web-parity/tooltip-r3/) 与 [`.agent-runs/tooltip/progress.md`](../.agent-runs/tooltip/progress.md)。
+
+### Kbd：40-handoff 完成、当前构建四象限与确定性审计（2026-11-08）
+
+<!-- progress-created: 2026-11-08; order: 241 -->
+
+在当前工作树完成 Kbd 的 `30-verify` 与 `40-handoff`。归档 Base/Nova Kbd、六个官方配方、Tooltip 与来源清单固定在 `96da9cc7f1aa10580a3741664e2a77c721206c00`；本轮只读复核未发现需要修改生产组件、目录页、测试或 golden 的已证实差异，既有 Kbd 文件全部保留。当前官网 `main` revision 查询及一次完全相同命令的升级重试均被网络环境阻塞，未发明新 SHA。
+
+验证：`KbdParityTest` 11、`KbdScreenshotTest` 2、`KbdExamplesTest` 7、`KbdViewportTest` 4，共 24/24 通过；当前工作树 `:app:webApp:wasmJsBrowserDistribution` 成功。批量浏览器 verifier 在 1440×1000 与 390×844、浅色/深色下完成 56 张固定截图和 242/242 检查，覆盖 Tooltip hover/focus、输入键入及阿拉伯语/希伯来语/英语切换；确定性审计复核 24 项测试、56 张图、40 个唯一图哈希和全部来源。聚合 ktlint 退出 1，仅为 `:shadcn:core`/`:app:shared` 既有无关错误，Kbd 命中为 0。`git diff --check` 与 token-efficient handoff validator 通过。
+
+记录时 `HEAD=11ce66dff6b5c474f4f47ffc5b6591f466d45891`，工作树含 122 个已修改、36 个未跟踪、2 个删除路径，均为既有用户/其他组件改动与本轮证据；未 commit、push 或 publish。`30-verify` 有 8 条 orchestrator 记录、6 个 rotate 标记、1 个已记录 FAIL，最终 ok；该 Stage 共 219 actions、14,346,455 累计输入 tokens。整个组件累计 11 条记录、273 actions、16,746,273 累计输入 tokens。配置的 Codex 自动压缩阈值为 250000 tokens（`body_after_prefix`）；本轮没有声称发生 compaction。原理解释性残余保留：Canvas 无原生 HTML `<kbd>` 语义、完整屏幕阅读器/触屏矩阵与共享字体栅格/文档壳；证据见 `.agent-runs/kbd/` 与 [kbd-r2](web-parity/kbd-r2/)。
+
+### Skeleton：40-handoff 完成、当前构建浏览器矩阵与残余边界（2026-11-08）
+
+<!-- progress-created: 2026-11-08; order: 240 -->
+
+在当前工作树完成 Skeleton 的 `30-verify` 与 `40-handoff`。固定官网内容为 `8a3536678a528cc012b9e62484290e79d0be410f`，归档 MDX、组件、七组示例与 Nova CSS 的 10 份来源哈希全部匹配。官方配方顺序、文案、RTL 说明和 `Kotlin extension: Shimmer` 已对齐；本轮保留既有 r2 页面与测试改动，没有新增推测性的尺寸修改。
+
+验证：core `SkeletonParityTest` 10/10、catalog `SkeletonExamplesTest` 40/40，合计 50/50；`:app:webApp:wasmJsBrowserDistribution` 通过。当前构建以 1440×1000、390×844 和浅深四象限通过单个批量浏览器 verifier：CSS/bitmap 根尺寸一致（DPR 1）、手机横向溢出为 0、主题存储与渲染一致；DOM/AX 检查覆盖 Skeleton 文本、阿拉伯语 RTL、Shimmer、八个 View Code 交互及脉冲变化。减弱动态、官方手机头像行溢出裁切、390dp 以下容器、Canvas 原生语义和共享字体/文档壳作为明确残余或平台差异保留。`git diff --check` 与 token-efficient handoff validator 通过；记录时 `HEAD=11ce66dff6b5c474f4f47ffc5b6591f466d45891`，工作树含 113 个已修改、32 个未跟踪、2 个删除路径，均为既有用户/其他组件改动与本轮 Skeleton 证据，未 commit、push 或 publish。证据见 `.agent-runs/skeleton/`、[skeleton-r2](web-parity/skeleton-r2/) 与 `.agent-runs/skeleton/evidence-30d-audit.json`。
+
+### Pagination：40-handoff 完成、当前工作树浏览器矩阵与证据归档（2026-11-08）
+
+<!-- progress-created: 2026-11-08; order: 239 -->
+
+在当前工作树完成 Pagination 的 `30-verify` 与 `40-handoff`。固定官网内容仍为 `8a3536678a528cc012b9e62484290e79d0be410f`，归档的组件、六个源码/示例输入与 Nova CSS 哈希继续匹配 `sources.json`。本轮没有修改生产组件或文档页面；当前 Wasm 构建结束后按 1440×1000、390×844、浅色/深色四象限重拍，CSS 尺寸、bitmap DPR 1、主题和官方/本地对照均通过，默认、Simple、Icons Only、RTL、键盘激活、禁用链路、选中跟踪、触摸目标与 RTL 箭头由聚焦测试覆盖。
+
+验证：core `PaginationParityTest`/`PaginationNovaScreenshotTest` 15/15，catalog `PaginationExamplesTest` 20/20；`git diff --check` 与 token-efficient handoff validator 通过。聚合 ktlint 退出 1，仅 `:app:shared` 的既有无关 max-line-length 问题，日志中 Pagination 为 0 命中。当前构建基于工作树，记录时 `HEAD=11ce66dff6b5c474f4f47ffc5b6591f466d45891`；按用户约束未创建新 commit、未 push。证据见 `.agent-runs/pagination/`、`docs/web-parity/pagination-r1/sources.json` 与 `docs/web-parity/pagination-r2/`。Next.js/Changelog 章节省略、Canvas 无原生 HTML anchor、共享文档壳和两张旧 Vega 基准继续作为明确的平台/历史差异。
+
+### Button Group：r4 Canvas group 语义、官方 Popover/Input Group 配方与当前构建四象限（2026-11-08）
+
+<!-- progress-created: 2026-11-08; order: 238 -->
+
+固定官方 `main` 为 `42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9`，归档 Button Group MDX、12 个示例、组件源码、Base UI wrapper 与 Nova CSS，`sources.json` 的 15 份来源无缺失。组件以 `isTraversalGroup = true` 和可选 `contentDescription` 提供 Canvas traversal-group 语义，并保留原有 `ButtonGroupItem` 便捷 API；目录页补齐官方 Composition、Accessibility、ButtonGroup-vs-ToggleGroup 文案，Popover 使用 Copilot 触发器、任务输入和描述路径，Input Group 的 Voice Mode 可切换并禁用消息字段。
+
+验证：目录 `ButtonGroupExamplesTest` 28/28、core `ButtonGroupScreenshotTest` 6/6，合计 34/34；`:shadcn:core:ktlintCheck`、`:app:webApp:wasmJsBrowserDistribution` 和 `git diff --check` 通过。当前 Wasm 下完成 1440×1000/390×844 浅深四象限，CSS 与 bitmap 尺寸一致（DPR 1），hover、键盘焦点、Dropdown 打开和滚动变化均已取证。Canvas 无直接 HTML `role=group`，以 traversal group + 可选 label 近似；指针点击后的静止截图无持续视觉差异，由键盘焦点覆盖持久 focus 状态；共享文档壳差异不计入组件结论。证据见 `docs/web-parity/button-group-r4/`、`.agent-runs/button-group/evidence/web/verification-summary.json` 和 `.agent-runs/button-group/progress.md`。
 
 ### Carousel：r4 官方交错章节、拖拽/自动播放与 RTL 导航（2026-11-07）
 
 <!-- progress-created: 2026-11-07; order: 237 -->
 
 固定官方 `main` 为 `42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9`，归档 Carousel MDX、七个示例、Base UI wrapper 和 Nova CSS。共享文档模型新增 `introductionSections` 与 `beforeExampleSections`，页面和 Copy Page/TOC 均按 About → Installation、Options → API、Events → Plugins 排序；键盘/无障碍指南明确标为 Kotlin extension，About/Options/Events 保留官网 Embla 文案与链接。目录 8/8、共享文档 8/8、core 17/17、Wasm `a0632a78…` 下 8 张四象限、88 张分节及 1/2/3→2/3/4、拖拽、两秒自动播放、阿语 ١→٢ 交互通过。Embla 任意 options/plugins/惯性参数、共享壳与字体/Canvas 语义保留为明确差异。见 [carousel-r4](web-parity/carousel-r4/README.md)。
+
 ### Card：r4 官方 Edge to Edge 归类、390dp 间距回归与当前构建矩阵（2026-11-07）
 
 <!-- progress-created: 2026-11-07; order: 236 -->
 
 固定官方 `main` 为 `42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9`，归档 Card MDX、六个示例、Base UI wrapper 和 Nova CSS。官网 Edge to Edge 是 Spacing 下的第二个预览而非 Kotlin 扩展，r4 纠正该隐藏标题与本地额外说明；Password/Forgot 在 390dp/245dp 卡片下与官网同为约 2px 间距，并加入回归。共享文档模型新增可选 API 后槽位，Card 补齐 Kotlin 等价 Changelog 与三步 Spacing Variable 迁移，步骤作为页面内有序列表而不额外污染 TOC。目录 20/20、共享文档 8/8、core 17/17、Wasm `c575ab2d…` 下 8 张四象限、64 张六配方/API/Changelog 分节和 6 个 spacing/RTL 交互通过；仅余共享文档壳、字体栅格、代码面板、原生滚动条/Canvas 语义差异。见 [card-r4](web-parity/card-r4/README.md)。
+
 ### Accordion：r14 官方节序、完整哈希与当前构建取证（2026-11-07）
 
 <!-- progress-created: 2026-11-07; order: 235 -->
 
 当前官方 `main` 固定为 `42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9`；MDX、wrapper 和七个示例的 9 份来源哈希与 r13 一致，r14 另行固定 Nova CSS。页面保持 hero、Installation、Usage、Composition、Basic/Multiple/Disabled/Borders/Card/RTL 与 API Reference，并新增完整节序回归。目录 63/63、core 21/21 通过；当前 Wasm `1355c1d5…` 下完成 8 张四象限、48 张六分节和 17 个交互状态，10 份来源和全部图片哈希由 `validate.mjs` 校验。独立 Reviewer 的两项低风险记录问题已修正，独立 Verifier PASS；共享文档壳/代码面板、Geist/阿希字体栅格、Canvas 原生辅助技术语义及扩展/真机触摸矩阵保留为明确差异，见 [accordion-r14](web-parity/accordion-r14/README.md)。
+
 ### Bubble：r3 ghost 完整性、键盘状态与九分节验证（2026-11-07）
 
 <!-- progress-created: 2026-11-07; order: 234 -->
@@ -211,6 +372,91 @@ Nova 特有的按钮颜色/边框/字号按 preset 限定，保留其他预设�
 <!-- progress-created: 2026-11-07; order: 231 -->
 
 当前官方 `main` 固定为 `42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9`。MDX、Base wrapper、四个示例和 Nova CSS 与 r4 的 `8a353667…` 文件 SHA-256 一致。移除 Kotlin `ratio = 1f` 默认值，改为必填并增加有限正数校验；目录 API 的 Default 从 `1f` 改为 `Required`。目录 6/6、core 5/5 通过；当前 Wasm 主产物 `dfb4b1c1…` 下完成 8 张官方/本地四象限、24 张三示例四组视图，并实际切换阿语/英语/希伯来语和两个弹层状态。改动文件在 owning ktlint 报告中为 0，聚合测试报告的既有无关格式失败保留；独立 Reviewer `No findings`。内置 PNG/`next/image`、字体栅格和共享壳作为明确平台差异，见 [aspect-ratio-r5](web-parity/aspect-ratio-r5/README.md)。
+
+### Separator：r3 当前源码固定、48 项验证与四象限（2026-11-07）
+
+<!-- progress-created: 2026-11-07; order: 230 -->
+
+当前官方 `main` 固定为 `42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9`。MDX、`separator.tsx`、五个官方示例和 Nova CSS 与 r1/r2 的历史固定文件字节一致。10 项 core、2 项 767/768 断点、16 项配方和 20 项目录测试合计 48 项通过；当前 Wasm `22774ea2…` 完成 1440×1000/390×844×浅深官方/本地截图。Compose 无法提供原生 HTML separator role，现有 localized description/orientation 与 `decorative` 语义作为明确平台差异。见 [separator-r3](web-parity/separator-r3/README.md)。
+
+### Alert：r12 当前源码固定、20 项验证与四象限（2026-11-07）
+
+<!-- progress-created: 2026-11-07; order: 229 -->
+
+当前官方 `main` 固定为 `42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9`。MDX、`alert.tsx`、六个官方示例和 Nova CSS 与 r11 的 `8a353667…` 字节一致，当前 `cn-alert*` 结构仍是同一套 grid、10/8 padding、2 gap、72 action reserve 与 destructive 语义。14 项 core 与 6 项目录测试通过；当前 Wasm 完成 1440×1000/390×844×浅深官方/本地截图。HTML role、任意富文本子节点、共享文档壳和字形栅格化作为明确平台/API 差异。见 [alert-r12](web-parity/alert-r12/README.md)。
+
+### Badge：r4 token-efficient pilot、source pin 与 keyboard semantics（2026-11-07）
+
+<!-- progress-created: 2026-11-07; order: 228 -->
+
+在四个独立 DSH 阶段会话中完成 source/scope、baseline、implement 与 verify；Handoff 会话因 `ACCOUNT_QUOTA` 停止，最终交接由 Codex 补齐。固定官方 `main` 为 `42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9`，归档 MDX、`badge.tsx`、七个官方示例与 Nova CSS；页面和示例与 r3 的 `8a353667…` 字节相同。`BadgeDoc.compositionCode` 改为 `null`，新增 Space/Enter `onClick`/`href` 激活与可选 `interactionSource` 四变体 hover 测试。core 17/17、catalog 8/8、git whitespace 与 handoff validator 通过；当前 Wasm 完成 1440×1000/390×844×浅深官方/本地截图。`verifyRoborazziJvm` 的 4 个 Badge golden 与全仓 golden 同时受本机字体渲染漂移影响，HEAD-only 控制运行复现同样失败；`ktlintCheck` 的 84 项均来自既有 `app/shared` 改动，Badge 文件为 0。见 [badge-r4](web-parity/badge-r4/README.md)。
+
+### 最终门禁演练：全量测试/ktlint/detekt/Web 构建（r1）（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 227 -->
+
+在剩余批次仍在编辑的共享工作区执行全量门禁演练（所有 Gradle 均在 `/tmp/cf-parity/locked.py` 下；未编辑他人文件、未动基准/测试、未提交）。
+
+| 运行 | 结果 | 耗时 | 要点 |
+| --- | --- | --- | --- |
+| `:app:shared:jvmTest` | FAIL-real | 2m49s | 1188 项 6 失败，全部 `MessageScrollerRecipesTest`（既有） |
+| `:shadcn:core:jvmTest` | FAIL-real | 42s | 1333 项 5 失败：`MenuEscapeLayersTest` 3 + `MenubarParityTest` 2（隔离复现，既有） |
+| 4 模块 `ktlintCheck` | FAIL-real | 15s | 仅 `:app:shared:ktlintJvmTestSourceSetCheck`：86 条 / 28 文件；其余源集通过/UP-TO-DATE |
+| `detektMetadataCommonMain` core+shared | FAIL-real | 48s | core 11,734 + shared 24,712 = 36,446 条（仓库既有系统性基线） |
+| JS 编译 + Wasm distribution | PASS | 17s | 退出 0；wasm sha256 `b61208f6c945a73688f79695b40f3e39fd55cb29ee004f2fbdcae87dc7823294` |
+
+重试与 in-flight：第 1 次 shared 全量因 `SliderDoc.kt` 缺 import（parity-e 活跃）失败，等待后编译通过；第 2 次 9 失败中 Dialog/Empty 的 RTL 文案断言（parity-g copy audit）与 Input `Autofocus` 标题（parity-d）由 owner 修复，第 3 次降到 6 个既有 MessageScroller 失败。
+
+真实失败细节：
+
+- `MessageScrollerRecipesTest`（6）：`openingTabsRepositionTheSameSavedTranscriptAndCanRepeat` 四组合（432/360 × 浅/深）期望 182，实际 102/0；`footerTracksTopMiddleAndBottomWithRealKeyboardScrolling`（360 × 浅/深）找不到 "You are at the bottom. You can only scroll up."。parity-g 独立运行复现同样 6 项，与 copy/headingLevel 无关；该页当前无活跃批次。
+- `MenuEscapeLayersTest[dropdown|context-modal|context-nonmodal] > escapeClosesOnlyTheDeepestOpenLayerAndRestoresEachTrigger`（3）：注入按键时找不到 "Leaf" 节点；`MenubarParityTest > horizontalKeyInAnOpenMenuSwitchesMenuAndFocusesItsFirstItem` / `downOpensWithMenuNavigationAndEscapeRestoresTriggerFocus`（2）：Escape/横向键后 Undo、New Tab 焦点未恢复。隔离运行 18 项 5 失败复现，相关文件工作区干净（最后提交 491a06ee），判定 HEAD 既有失败。
+- `ktlint`：app:shared jvmTest 86 条（Argument 换行 22、multiline 18、Missing newline 20、超长行 11 等），28 个文件；其中 `TraceExamplesTest`（本 agent 之前提交）9 条，其余多为已提交批次测试。报告在 `app/shared/build/reports/ktlint/ktlintJvmTestSourceSetCheck/`。
+- `detekt`：两份 commonMain 报告 11,734 + 24,712 条，`Indentation`/`MagicNumber` 为主，覆盖 icons、文档页与生成资源，属既有基线。
+
+结论：构建链路 PASS；收尾前需处理 6 个 MessageScroller、5 个 Menu/Menubar 真实断言失败、86 条 jvmTest ktlint 及两个 detekt metadata 报告。证据与明细见 [final-gates-r1](web-parity/final-gates-r1/README.md)。
+
+### 文案审计 follow-up：补齐官网后续句、Message Scroller h3 层级并复核 29 条改写（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 226 -->
+
+按 task-28 应用 copy-only follow-up：`CalendarDoc` RTL 补官网 Hijri Guide 句（Persian/Hijri/Jalali 预览仍留 residual）；`CardDoc` Spacing 补官网 edge-to-edge 负边距段并映射到 `CardContent` 负向偏移/`Kotlin extension: Edge to Edge`；`CarouselDoc` RTL 补官网 direction 段并映射为 `LocalLayoutDirection`；`CodeBlockDoc` Languages 补官网内置语言/别名列表并保留 Compose 语言加载 out-of-scope 约束；`ContextMenuDoc` RTL 补 `side="inline-end"` 句并映射为 `ContextMenuSide.InlineEnd`；`MarkerDoc` Separator 补 Checkpoint 句与链接；`MessageScrollerMissingRecipes`/`MessageScrollerRecipes` 把 11 个官方 Core Concepts 预览标题设为 `headingLevel = 3`（TOC nested、Copy Page 输出 h3，已归档 message-scroller-headings.json），并补 “Avoiding a Flash on Reload” 的首帧解释；`TraceDoc` Open State 补 `open ?? running` 句（Kotlin 写作 `open ?: running`）。29 条语义改写已复核为 Kotlin 语境可接受，不重写。
+
+顺带修正 parity-f 全仓门禁报告的 2 个旧断言：`DialogExamplesTest` 与 `EmptyExamplesTest` 的 RTL 期望从 “in your app” 改为 “in shadcn/ui”。
+
+聚焦套件 149 项运行：143 通过；`MessageScrollerRecipesTest` 6 项失败为既有滚动测量问题（Expected 182 / actual 102，与文案/层级无关，parity-f 门禁同样报告）。审计 README 已补 Follow-up fixes 节与验证说明；未重建 Wasm、未提交。
+
+### Shared docs page skeleton：r2 手机标题与首个预览卡对齐（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 225 -->
+
+共享文档页骨架 r2（仅共享文件，无组件文档改动）。以当前官网 `8a3536678a…` 用 DOM 实测 Button/Accordion/Carousel 1440×1000 与 390×844 骨架，并在 Canvas 截图上做像素测量（[official-dom.json](web-parity/page-skeleton-r2/official-dom.json)、[measurements.json](web-parity/page-skeleton-r2/measurements.json)）。
+
+- 官方：main top 64、h1 y=112（30/36 semibold、tracking -0.75）、desc 16/24 占 640 的 80%、Base UI 标签行 y=204（16/24、padding 4/0/2、下划线 236）、首个预览卡 y=266、代码区 y=556（14/24.5、行盒 26.5、行号 gutter 与数字 x≈430/正文 x≈455）、卡片后首节 H2 y=712.5。手机 h1 y=80（顶部内边距 24，官网手机头部 56）。
+- 本地修复（仅 `ComponentDetailScreen.kt`）：① 文档列垂直内边距改为 <640dp 时 24dp、否则 48dp —— 修复“手机标题低于官网”残留：手机标题墨迹 122→98（官网88，余下约10px来自本地移动头部64 vs 官网56）；② “Base UI/Kotlin extension”标签到下划线间距 8dp→2dp（官网 tab 下划线仅高出标签2px）—— 首个预览卡上移6px：Button/Accordion/Carousel 卡片顶部 272/296/272→266/290/266，与官网完全一致；卡片底部、代码分隔线同步对齐（Button 555/664）。
+- 代码面板排版实测已接近官网（行号 gutter 64dp、14sp、26.5 行盒、折叠面板108高均一致），未改；TOC/Copy Page/prev-next 未发现明确偏移，未改。
+- 验证：四象限 before/after 各3页（Button/Accordion/Carousel，1440/390×浅深）存于 [before](web-parity/page-skeleton-r2/before) 与 [after](web-parity/page-skeleton-r2/after)，官方象限背景像素逐张校验；CatalogDocumentLayoutTest 14、CatalogNavigationTest 6、ComponentDocumentationTest 8 共28项通过（[tests](web-parity/page-skeleton-r2/tests)）；构建 before `wasm=bbcced4b…`、after `wasm=8145312b…`。
+- 仍保留（已测量未改）：手机内容仍比官网低约10px（本地移动头部64 vs 官网56，属顶栏 chrome，非骨架内边距）；预览卡后章节间距本地32 vs 官网48（同一外层 spacing 同时作用于 header→tab 分组，需结构级调整）；Carousel 预览高度429 vs 官网622.5（属 Carousel 文档自身 minPreviewHeight，不属共享骨架）。详见[page-skeleton-r2](web-parity/page-skeleton-r2/README.md)。
+
+### Slider：官方七配方、RTL 镜像与键盘状态（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 224 -->
+
+重新读取当前官网（MDX、7 个示例、slider.tsx、Nova/Rhea 样式）后重建页面：官方 7 个预览 demo（75/0–100/step1）、Range（25–50/step5）、Multiple Thumbs（10/20/70/step10）、Vertical（两个 160dp）、Controlled（0.3–0.7 温度与读数）、Disabled、RTL（三语工具栏）按序迁移，文案用官方句子；Usage 换成 Kotlin 默认片段；API Reference 改为 Kotlin API 小节并引用 Base UI 链接；Step/Inverted/Commit/Min steps 保留为 4 个 `Kotlin extension:`，删除重复的 default 参数变体。RTL 预览补 `LocalLayoutDirection` 包裹，修正阿拉伯/希伯来语下的填充方向镜像。
+
+**验证**：`SliderPageTest` 7 项通过（顺序/文案、Usage/API、75 起始与语义 SetProgress、range/multiple 的 25/10、controlled 读数与 disabled、键盘 Home/End/step 100→0→1、commit 读数）；Wasm 快照 `02d85afc`。四象限（1440/390×浅深）在最终构建后复核，Nova 4dp 轨道/primary 填充/12dp 白 thumb 与官方一致；交互证据覆盖默认 75、range、three thumbs、vertical、controlled 读数、disabled、RTL 镜像与语言菜单。
+
+**剩余**：API Reference 采用项目 Kotlin 表 + 官方链接，而非官网单段链接；ego 合成指针无法让 Compose Canvas 滑块取得焦点（点击 thumb 后 End/Home 变成页面滚动），因此浏览器键盘/拖动没有通过截图取证，键盘 Home/End/step 由 JVM 语义测试覆盖；完整 role/value/标签辅助技术、多 thumb 动态焦点、真机触屏/指针矩阵仍开放。证据见 `docs/web-parity/slider-r1/`。
+
+### Chart：官方描述、导语与配置/主题/工具提示指南（2026-11-05）
+
+<!-- progress-created: 2026-11-05; order: 223 -->
+
+重新读取当前官网（MDX 602 行、8 个 chart 示例、chart.tsx、Nova/Rhea 样式）并复核渲染后的全部标题后更新页面：description 改为官方 “Beautiful charts. Built using Recharts. Copy and paste into your apps.”；新增官方指南内容——`Component`（含 “Updated: chart … Recharts v3” 提示、Introducing Charts、Browse the Charts Library、组合说明与 Kotlin `ChartContainer`/`BarChart` 示例）、`Updating to Recharts v3` 四条要点、`Chart Config`、`Theming` 及嵌套 `CSS Variables`/`hex, hsl or oklch`/`Using Colors`，示例后补 `Tooltip Props`（5 个属性的 bullets）、`Legend`、`Accessibility`；Kotlin-only 示例保留 `Kotlin extension:` 前缀。官方当前版本没有 `Advanced` 小节，未凭空补造。
+
+**验证**：`ChartExamplesTest` 36 项 + `ChartPageTest` 5 项通过；Wasm 快照 `02d85afc`。最终构建后复核 1440×1000/390×844 浅深四象限（官网主题重新断言并检查像素），浏览器实测系列切换、Add Tooltip 图表键盘 → February/305/200、Legend 双系列、RTL 阿语图表；RTL 三语与系列/解剖图状态另有 JVM 覆盖。
+
+**剩余**：共享文档模型在“顶部预览与 Usage 之间”没有槽位，官方导语/Component 位于 demo 与 Installation 之前，本地只能并入 Usage 后的首个指南节；`Chart Config/Theming` 官方在首个示例之后、`Tooltip Props/Legend/Accessibility` 官方穿插在 Tooltip 与 RTL 之间，本地只能在示例前后成组渲染；官方 `### Props` 表按指南块模型降级为 bullets；官方页面无 Usage 而本地外壳固定渲染；本地用 Canvas 而非 Recharts，更新/代码说明已按 Kotlin 等价改写。证据见 `docs/web-parity/chart-r5/`。
 
 ### Skeleton：官方顺序、RTL文案与浏览器四象限（2026-11-05）
 

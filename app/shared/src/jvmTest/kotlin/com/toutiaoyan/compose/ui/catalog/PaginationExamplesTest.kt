@@ -10,6 +10,7 @@ import androidx.compose.ui.platform.*
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.*
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.catalog.docs.paginationDoc
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.theme.currentTheme
@@ -117,7 +118,26 @@ class PaginationExamplesTest(private val viewport: Int, private val dark: Boolea
         )
         assertTrue(paginationDoc.examples.drop(4).all { it.title.startsWith("Kotlin extension: ") })
         assertTrue(paginationDoc.examples.any { it.title == "Kotlin extension: Controlled" })
-        assertFalse(paginationDoc.examples.any { it.title.contains("(Kotlin)") && it.title.startsWith("Kotlin extension") })
+        assertFalse(
+            paginationDoc.examples.any { it.title.contains("(Kotlin)") && it.title.startsWith("Kotlin extension") },
+        )
+    }
+
+    @Test fun copiedPageKeepsWebGuidanceBetweenTheOfficialRecipesAndBeforeExtensions() {
+        val page = componentPageMarkdown(paginationDoc)
+        val sections =
+            listOf(
+                "## Composition", "Use the following composition", "```text",
+                "## Simple", "## Icons Only", "## Next.js", "## RTL",
+                "## Changelog", "### RTL Support", "## Kotlin extension: Controlled",
+            )
+        val positions = sections.map { page.indexOf(it) }
+        assertTrue(positions.all { it >= 0 }, "Missing source guidance in Copy Page: $positions")
+        assertEquals(positions.sorted(), positions, "Copy Page must retain the source reading order")
+        assertTrue(page.contains("```diff\n+ import Link from \"next/link\""))
+        assertTrue(page.contains("Compose navigation uses `onClick` callbacks"))
+        assertTrue(page.contains("+   text = \"Previous\""))
+        assertTrue(page.contains("+   text = \"Next\""))
     }
 
     @Test fun defaultIsTheStaticSourceCompositionRatherThanAnInventedControlledPager() {

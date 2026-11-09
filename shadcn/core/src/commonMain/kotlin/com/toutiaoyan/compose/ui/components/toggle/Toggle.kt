@@ -33,6 +33,7 @@ import androidx.compose.ui.semantics.semantics
 import com.toutiaoyan.compose.ui.components.button.ButtonAnimation
 import com.toutiaoyan.compose.ui.components.buttongroup.raiseFocusedSiblingZIndex
 import com.toutiaoyan.compose.ui.components.field.LocalFieldSetDisabled
+import com.toutiaoyan.compose.ui.styles.cssStyleable
 import com.toutiaoyan.compose.ui.styles.rememberMinTouchTargetStyle
 import com.toutiaoyan.compose.ui.styles.rememberPressMotionStyle
 import com.toutiaoyan.compose.ui.theme.LocalContentColor
@@ -84,6 +85,40 @@ fun Toggle(
     style: Style = Style,
     content: @Composable () -> Unit,
 ) {
+    Toggle(
+        pressed = pressed,
+        onPressedChange = onPressedChange,
+        modifier = modifier,
+        enabled = enabled,
+        disabled = disabled,
+        variant = variant,
+        size = size,
+        animation = animation,
+        label = label,
+        defaultPressed = defaultPressed,
+        style = style,
+        content = content,
+        iconPlacement = null,
+    )
+}
+
+@OptIn(ExperimentalFoundationStyleApi::class)
+@Composable
+fun Toggle(
+    pressed: Boolean? = null,
+    onPressedChange: ((Boolean) -> Unit)? = null,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    variant: ToggleVariant = ToggleVariant.Default,
+    size: ToggleSize = ToggleSize.Md,
+    animation: ButtonAnimation = ButtonAnimation.Scale,
+    label: String = "",
+    defaultPressed: Boolean = false,
+    style: Style = Style,
+    iconPlacement: ToggleIconPlacement?,
+    content: @Composable () -> Unit,
+) {
     val resolvedEnabled = enabled && !disabled && !LocalFieldSetDisabled.current
     var internalPressed by remember { mutableStateOf(defaultPressed) }
     val isPressed = pressed ?: internalPressed
@@ -129,7 +164,12 @@ fun Toggle(
                 .styleable(styleState, touchTargetStyle then pressStyle),
         contentAlignment = Alignment.Center,
     ) {
-        val chrome = Modifier.styleable(styleState, variant.rememberStyle() then size.rememberStyle(), style)
+        val chrome =
+            Modifier.cssStyleable(
+                styleState,
+                variant.rememberStyle() then size.rememberStyle(iconPlacement),
+                style,
+            )
         val themedContent: @Composable () -> Unit = {
             CompositionLocalProvider(
                 LocalContentColor provides variant.contentColor(currentTheme.colors),
@@ -158,7 +198,7 @@ fun Toggle(
         if (currentTheme.activePreset == StylePreset.Nova) {
             Row(
                 chrome,
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 themedContent()
@@ -187,6 +227,7 @@ fun Toggle(
     style: Style = Style,
 ) {
     Toggle(
+        text = text,
         pressed = pressed,
         onPressedChange = onPressedChange,
         modifier = modifier,
@@ -198,6 +239,40 @@ fun Toggle(
         label = label,
         defaultPressed = defaultPressed,
         style = style,
+        iconPlacement = null,
+    )
+}
+
+@OptIn(ExperimentalFoundationStyleApi::class)
+@Composable
+fun Toggle(
+    text: String,
+    pressed: Boolean? = null,
+    onPressedChange: ((Boolean) -> Unit)? = null,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    variant: ToggleVariant = ToggleVariant.Default,
+    size: ToggleSize = ToggleSize.Md,
+    animation: ButtonAnimation = ButtonAnimation.Scale,
+    label: String = text,
+    defaultPressed: Boolean = false,
+    style: Style = Style,
+    iconPlacement: ToggleIconPlacement?,
+) {
+    Toggle(
+        pressed = pressed,
+        onPressedChange = onPressedChange,
+        modifier = modifier,
+        enabled = enabled,
+        disabled = disabled,
+        variant = variant,
+        size = size,
+        animation = animation,
+        label = label,
+        defaultPressed = defaultPressed,
+        style = style,
+        iconPlacement = iconPlacement,
     ) {
         Text { text }
     }
@@ -221,6 +296,42 @@ fun Toggle(
     invalid: Boolean,
     content: @Composable () -> Unit,
 ) {
+    Toggle(
+        pressed = pressed,
+        onPressedChange = onPressedChange,
+        modifier = modifier,
+        enabled = enabled,
+        disabled = disabled,
+        variant = variant,
+        size = size,
+        animation = animation,
+        label = label,
+        defaultPressed = defaultPressed,
+        style = style,
+        invalid = invalid,
+        content = content,
+        iconPlacement = null,
+    )
+}
+
+@OptIn(ExperimentalFoundationStyleApi::class)
+@Composable
+fun Toggle(
+    pressed: Boolean? = null,
+    onPressedChange: ((Boolean) -> Unit)? = null,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    variant: ToggleVariant = ToggleVariant.Default,
+    size: ToggleSize = ToggleSize.Md,
+    animation: ButtonAnimation = ButtonAnimation.Scale,
+    label: String = "",
+    defaultPressed: Boolean = false,
+    style: Style = Style,
+    invalid: Boolean,
+    iconPlacement: ToggleIconPlacement?,
+    content: @Composable () -> Unit,
+) {
     val theme = currentTheme
     val invalidStyle =
         if (invalid) {
@@ -238,10 +349,21 @@ fun Toggle(
             Style
         }
     Toggle(
-        pressed, onPressedChange,
-        modifier.semantics {
-            if (invalid) error("Invalid selection")
-        },
-        enabled, disabled, variant, size, animation, label, defaultPressed, invalidStyle then style, content,
+        pressed = pressed,
+        onPressedChange = onPressedChange,
+        modifier =
+            modifier.semantics {
+                if (invalid) error("Invalid selection")
+            },
+        enabled = enabled,
+        disabled = disabled,
+        variant = variant,
+        size = size,
+        animation = animation,
+        label = label,
+        defaultPressed = defaultPressed,
+        style = invalidStyle then style,
+        iconPlacement = iconPlacement,
+        content = content,
     )
 }

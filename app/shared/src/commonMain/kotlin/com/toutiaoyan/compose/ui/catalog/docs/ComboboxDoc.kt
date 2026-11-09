@@ -4,7 +4,6 @@ package com.toutiaoyan.compose.ui.catalog.docs
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.style.Style
@@ -126,6 +125,11 @@ val comboboxDoc =
                             ├── ComboboxItem
                             └── ComboboxItem
             """.trimIndent(),
+        compositionMarkdown =
+            "A single-line input and a flat list (see [Basic](#basic)).\n\n" +
+                "Multi-select with `multiple`, chips, and a chips input (see [Multiple](#multiple)).\n\n" +
+                "Nested items per group using `ComboboxCollection` inside each `ComboboxGroup`, " +
+                "with a separator between groups (see [Groups](#groups)).",
         beforeExamples =
             listOf(
                 ComponentGuideSection(
@@ -825,7 +829,11 @@ val comboboxDoc =
                     "Multi-select chips, grouped options and rows. `ComboboxCollection` is a " +
                         "name-parity passthrough because Compose callers already iterate.",
                     listOf(
-                        ApiProperty("ComboboxChips / ComboboxChipsInput", "slot composables", "Required inside multiple"),
+                        ApiProperty(
+                            "ComboboxChips / ComboboxChipsInput",
+                            "slot composables",
+                            "Required inside multiple",
+                        ),
                         ApiProperty("ComboboxChip.showRemove", "Boolean", "true"),
                         ApiProperty("ComboboxGroup.heading", "String?", "null"),
                         ApiProperty("ComboboxItem.onSelect", "(() -> Boolean)?", "null; return true to prevent"),

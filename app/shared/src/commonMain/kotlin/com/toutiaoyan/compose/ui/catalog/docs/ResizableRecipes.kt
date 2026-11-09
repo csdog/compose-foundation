@@ -173,22 +173,23 @@ internal val resizableOfficialExamples =
             minPreviewHeight = 208.dp,
             previewPadding = 0.dp,
             descriptionMarkdown =
-                "The component mirrors in RTL: the first pane starts on the right and dragging " +
-                    "moves the split in the opposite physical direction. See the RTL " +
-                    "configuration guide for the site-level setup.",
+                "To enable RTL support in shadcn/ui, see the RTL configuration guide. The " +
+                    "component mirrors in RTL: the first pane starts on the right and dragging " +
+                    "moves the split in the opposite physical direction.",
             preview = {
-            var language by remember { mutableIntStateOf(1) }
-            RtlPreview(
-                language,
-                listOf(
-                    "English",
-                    "Arabic (العربية)",
-                    "Hebrew (עברית)",
-                ),
-                {
-                    language =
-                        it
-                },
-            ) { ResizableRtlRecipe(language) }
-        }),
+                var language by remember { mutableIntStateOf(1) }
+                RtlPreview(
+                    language,
+                    listOf(
+                        "English",
+                        "Arabic (العربية)",
+                        "Hebrew (עברית)",
+                    ),
+                    {
+                        language =
+                            it
+                    },
+                ) { ResizableRtlRecipe(language) }
+            },
+        ),
     )

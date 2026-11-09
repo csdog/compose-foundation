@@ -34,6 +34,7 @@ val scrollAreaDoc =
             import com.toutiaoyan.compose.ui.components.scrollarea.ScrollType
             import com.toutiaoyan.compose.ui.components.scrollarea.ScrollDir
             """.trimIndent(),
+        beforeCompositionMarkdown = "Use the following composition to build a `ScrollArea`:",
         compositionCode =
             """
             ScrollArea
@@ -479,7 +480,6 @@ val scrollAreaDoc =
             )
         }
 
-
 /**
  * Kotlin-only recipes: the Base UI page does not document these type/dir/lazy variants
  * and the remaining legacy list duplicated the three official previews.
@@ -504,4 +504,3 @@ private fun scrollAreaExtensionExamples(native: List<ComponentExample>): List<Co
                 },
         )
     }
-

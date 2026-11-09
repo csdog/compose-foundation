@@ -10,6 +10,19 @@ internal val scrollerOpeningRecipeCode =
     import androidx.compose.animation.core.animateFloatAsState
     import androidx.compose.animation.core.tween
     import androidx.compose.foundation.background
+    import androidx.compose.foundation.interaction.MutableInteractionSource
+    import androidx.compose.foundation.selection.selectableGroup
+    import androidx.compose.foundation.style.MutableStyleState
+    import androidx.compose.foundation.style.styleable
+    import androidx.compose.foundation.style.then
+    import androidx.compose.ui.focus.FocusRequester
+    import androidx.compose.ui.focus.focusProperties
+    import androidx.compose.ui.focus.focusRequester
+    import androidx.compose.ui.input.key.*
+    import androidx.compose.ui.platform.LocalLayoutDirection
+    import androidx.compose.ui.semantics.Role
+    import androidx.compose.ui.semantics.role
+    import androidx.compose.ui.unit.LayoutDirection
     import androidx.compose.foundation.layout.*
     import androidx.compose.foundation.shape.RoundedCornerShape
     import androidx.compose.foundation.style.hovered
@@ -58,7 +71,7 @@ internal val scrollerOpeningRecipeCode =
     import kotlinx.coroutines.launch
     import kotlinx.coroutines.delay
 
-    private data class ScrollerRecipeMessage(
+    internal data class ScrollerRecipeMessage(
         val id: String,
         val user: Boolean,
         val text: String,
@@ -67,7 +80,7 @@ internal val scrollerOpeningRecipeCode =
     )
 
     @Composable
-    private fun ScrollerRecipeTranscript(
+    internal fun ScrollerRecipeTranscript(
         messages: List<ScrollerRecipeMessage>,
         animateUsers: Boolean = false,
     ) {
@@ -106,7 +119,7 @@ internal val scrollerOpeningRecipeCode =
     }
 
     @Composable
-    private fun ScrollerRecipeFrame(
+    internal fun ScrollerRecipeFrame(
         title: String,
         description: String,
         note: String,
@@ -221,21 +234,13 @@ internal val scrollerOpeningRecipeCode =
                 "Toggle the defaultScrollPosition to see where the transcript starts when you open the thread",
                 modifier,
                 footer = {
-                    Tabs(value = position, onValueChange = { value ->
+                    ScrollerOpeningPositionControls(position) { value ->
                         position = value
                         scope.launch {
                             when (value) {
                                 "start" -> state.scrollToStart()
                                 "end" -> state.scrollToEnd()
                                 else -> state.scrollToMessage("open-3", scrollMargin = 64.dp)
-                            }
-                        }
-                    }, modifier = Modifier.fillMaxWidth()) {
-                        TabsList(Modifier.fillMaxWidth()) {
-                            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(2.dp)) {
-                                listOf("start", "end", "last-anchor").forEach { value ->
-                                    TabsTrigger(value, label = value, modifier = Modifier.weight(1f))
-                                }
                             }
                         }
                     }
@@ -252,6 +257,58 @@ internal val scrollerOpeningRecipeCode =
             }
         }
     }
+
+    /** Position actions replay even when the chosen position is already selected. */
+    @Composable
+    private fun ScrollerOpeningPositionControls(
+        position: String,
+        activate: (String) -> Unit,
+    ) {
+        val values = listOf("start", "end", "last-anchor")
+        val requesters = remember { values.associateWith { FocusRequester() } }
+        val direction = LocalLayoutDirection.current
+        val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+        var requestedFocus by remember { mutableStateOf<String?>(null) }
+        LaunchedEffect(requestedFocus) {
+            requestedFocus?.let { requesters.getValue(it).requestFocus() }
+        }
+        Row(
+            Modifier.fillMaxWidth().selectableGroup().styleable(styleState, rememberTabsListStyle()),
+            horizontalArrangement = Arrangement.spacedBy(2.dp),
+        ) {
+            values.forEachIndexed { index, value ->
+                Button(
+                    onClick = { activate(value) },
+                    variant = ButtonVariant.Ghost,
+                    size = ButtonSize.Sm,
+                    modifier =
+                        Modifier.weight(1f).focusRequester(requesters.getValue(value))
+                            .focusProperties { canFocus = position == value }
+                            .semantics {
+                                role = Role.Tab
+                                selected = position == value
+                            }
+                            .onPreviewKeyEvent { event ->
+                                if (event.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
+                                val next =
+                                    when (event.key) {
+                                        Key.DirectionLeft ->
+                                            (index + if (direction == LayoutDirection.Rtl) 1 else 2) % values.size
+                                        Key.DirectionRight ->
+                                            (index + if (direction == LayoutDirection.Rtl) 2 else 1) % values.size
+                                        Key.MoveHome -> 0
+                                        Key.MoveEnd -> values.lastIndex
+                                        else -> return@onPreviewKeyEvent false
+                                    }
+                                activate(values[next])
+                                requestedFocus = values[next]
+                                true
+                            },
+                    style = rememberTabItemStyle(position == value) then Style { height(25.dp) },
+                ) { Text { value } }
+            }
+        }
+    }
     """.trimIndent()
 
 internal val scrollerCommandsRecipeCode =
@@ -263,6 +320,19 @@ internal val scrollerCommandsRecipeCode =
     import androidx.compose.animation.core.animateFloatAsState
     import androidx.compose.animation.core.tween
     import androidx.compose.foundation.background
+    import androidx.compose.foundation.interaction.MutableInteractionSource
+    import androidx.compose.foundation.selection.selectableGroup
+    import androidx.compose.foundation.style.MutableStyleState
+    import androidx.compose.foundation.style.styleable
+    import androidx.compose.foundation.style.then
+    import androidx.compose.ui.focus.FocusRequester
+    import androidx.compose.ui.focus.focusProperties
+    import androidx.compose.ui.focus.focusRequester
+    import androidx.compose.ui.input.key.*
+    import androidx.compose.ui.platform.LocalLayoutDirection
+    import androidx.compose.ui.semantics.Role
+    import androidx.compose.ui.semantics.role
+    import androidx.compose.ui.unit.LayoutDirection
     import androidx.compose.foundation.layout.*
     import androidx.compose.foundation.shape.RoundedCornerShape
     import androidx.compose.foundation.style.hovered
@@ -311,7 +381,7 @@ internal val scrollerCommandsRecipeCode =
     import kotlinx.coroutines.launch
     import kotlinx.coroutines.delay
 
-    private data class ScrollerRecipeMessage(
+    internal data class ScrollerRecipeMessage(
         val id: String,
         val user: Boolean,
         val text: String,
@@ -320,7 +390,7 @@ internal val scrollerCommandsRecipeCode =
     )
 
     @Composable
-    private fun ScrollerRecipeTranscript(
+    internal fun ScrollerRecipeTranscript(
         messages: List<ScrollerRecipeMessage>,
         animateUsers: Boolean = false,
     ) {
@@ -359,7 +429,7 @@ internal val scrollerCommandsRecipeCode =
     }
 
     @Composable
-    private fun ScrollerRecipeFrame(
+    internal fun ScrollerRecipeFrame(
         title: String,
         description: String,
         note: String,
@@ -560,6 +630,19 @@ internal val scrollerScrollableRecipeCode =
     import androidx.compose.animation.core.animateFloatAsState
     import androidx.compose.animation.core.tween
     import androidx.compose.foundation.background
+    import androidx.compose.foundation.interaction.MutableInteractionSource
+    import androidx.compose.foundation.selection.selectableGroup
+    import androidx.compose.foundation.style.MutableStyleState
+    import androidx.compose.foundation.style.styleable
+    import androidx.compose.foundation.style.then
+    import androidx.compose.ui.focus.FocusRequester
+    import androidx.compose.ui.focus.focusProperties
+    import androidx.compose.ui.focus.focusRequester
+    import androidx.compose.ui.input.key.*
+    import androidx.compose.ui.platform.LocalLayoutDirection
+    import androidx.compose.ui.semantics.Role
+    import androidx.compose.ui.semantics.role
+    import androidx.compose.ui.unit.LayoutDirection
     import androidx.compose.foundation.layout.*
     import androidx.compose.foundation.shape.RoundedCornerShape
     import androidx.compose.foundation.style.hovered
@@ -608,7 +691,7 @@ internal val scrollerScrollableRecipeCode =
     import kotlinx.coroutines.launch
     import kotlinx.coroutines.delay
 
-    private data class ScrollerRecipeMessage(
+    internal data class ScrollerRecipeMessage(
         val id: String,
         val user: Boolean,
         val text: String,
@@ -617,7 +700,7 @@ internal val scrollerScrollableRecipeCode =
     )
 
     @Composable
-    private fun ScrollerRecipeTranscript(
+    internal fun ScrollerRecipeTranscript(
         messages: List<ScrollerRecipeMessage>,
         animateUsers: Boolean = false,
     ) {
@@ -656,7 +739,7 @@ internal val scrollerScrollableRecipeCode =
     }
 
     @Composable
-    private fun ScrollerRecipeFrame(
+    internal fun ScrollerRecipeFrame(
         title: String,
         description: String,
         note: String,
@@ -799,6 +882,19 @@ internal val scrollerVisibilityRecipeCode =
     import androidx.compose.animation.core.animateFloatAsState
     import androidx.compose.animation.core.tween
     import androidx.compose.foundation.background
+    import androidx.compose.foundation.interaction.MutableInteractionSource
+    import androidx.compose.foundation.selection.selectableGroup
+    import androidx.compose.foundation.style.MutableStyleState
+    import androidx.compose.foundation.style.styleable
+    import androidx.compose.foundation.style.then
+    import androidx.compose.ui.focus.FocusRequester
+    import androidx.compose.ui.focus.focusProperties
+    import androidx.compose.ui.focus.focusRequester
+    import androidx.compose.ui.input.key.*
+    import androidx.compose.ui.platform.LocalLayoutDirection
+    import androidx.compose.ui.semantics.Role
+    import androidx.compose.ui.semantics.role
+    import androidx.compose.ui.unit.LayoutDirection
     import androidx.compose.foundation.layout.*
     import androidx.compose.foundation.shape.RoundedCornerShape
     import androidx.compose.foundation.style.hovered
@@ -847,7 +943,7 @@ internal val scrollerVisibilityRecipeCode =
     import kotlinx.coroutines.launch
     import kotlinx.coroutines.delay
 
-    private data class ScrollerRecipeMessage(
+    internal data class ScrollerRecipeMessage(
         val id: String,
         val user: Boolean,
         val text: String,
@@ -856,7 +952,7 @@ internal val scrollerVisibilityRecipeCode =
     )
 
     @Composable
-    private fun ScrollerRecipeTranscript(
+    internal fun ScrollerRecipeTranscript(
         messages: List<ScrollerRecipeMessage>,
         animateUsers: Boolean = false,
     ) {
@@ -895,7 +991,7 @@ internal val scrollerVisibilityRecipeCode =
     }
 
     @Composable
-    private fun ScrollerRecipeFrame(
+    internal fun ScrollerRecipeFrame(
         title: String,
         description: String,
         note: String,
@@ -1174,6 +1270,19 @@ internal val scrollerHistoryRecipeCode =
     import androidx.compose.animation.core.animateFloatAsState
     import androidx.compose.animation.core.tween
     import androidx.compose.foundation.background
+    import androidx.compose.foundation.interaction.MutableInteractionSource
+    import androidx.compose.foundation.selection.selectableGroup
+    import androidx.compose.foundation.style.MutableStyleState
+    import androidx.compose.foundation.style.styleable
+    import androidx.compose.foundation.style.then
+    import androidx.compose.ui.focus.FocusRequester
+    import androidx.compose.ui.focus.focusProperties
+    import androidx.compose.ui.focus.focusRequester
+    import androidx.compose.ui.input.key.*
+    import androidx.compose.ui.platform.LocalLayoutDirection
+    import androidx.compose.ui.semantics.Role
+    import androidx.compose.ui.semantics.role
+    import androidx.compose.ui.unit.LayoutDirection
     import androidx.compose.foundation.layout.*
     import androidx.compose.foundation.shape.RoundedCornerShape
     import androidx.compose.foundation.style.hovered
@@ -1222,7 +1331,7 @@ internal val scrollerHistoryRecipeCode =
     import kotlinx.coroutines.launch
     import kotlinx.coroutines.delay
 
-    private data class ScrollerRecipeMessage(
+    internal data class ScrollerRecipeMessage(
         val id: String,
         val user: Boolean,
         val text: String,
@@ -1231,7 +1340,7 @@ internal val scrollerHistoryRecipeCode =
     )
 
     @Composable
-    private fun ScrollerRecipeTranscript(
+    internal fun ScrollerRecipeTranscript(
         messages: List<ScrollerRecipeMessage>,
         animateUsers: Boolean = false,
     ) {
@@ -1270,7 +1379,7 @@ internal val scrollerHistoryRecipeCode =
     }
 
     @Composable
-    private fun ScrollerRecipeFrame(
+    internal fun ScrollerRecipeFrame(
         title: String,
         description: String,
         note: String,
@@ -1504,6 +1613,19 @@ internal val scrollerContextRecipeCode =
     import androidx.compose.animation.core.animateFloatAsState
     import androidx.compose.animation.core.tween
     import androidx.compose.foundation.background
+    import androidx.compose.foundation.interaction.MutableInteractionSource
+    import androidx.compose.foundation.selection.selectableGroup
+    import androidx.compose.foundation.style.MutableStyleState
+    import androidx.compose.foundation.style.styleable
+    import androidx.compose.foundation.style.then
+    import androidx.compose.ui.focus.FocusRequester
+    import androidx.compose.ui.focus.focusProperties
+    import androidx.compose.ui.focus.focusRequester
+    import androidx.compose.ui.input.key.*
+    import androidx.compose.ui.platform.LocalLayoutDirection
+    import androidx.compose.ui.semantics.Role
+    import androidx.compose.ui.semantics.role
+    import androidx.compose.ui.unit.LayoutDirection
     import androidx.compose.foundation.layout.*
     import androidx.compose.foundation.shape.RoundedCornerShape
     import androidx.compose.foundation.style.hovered
@@ -1552,7 +1674,7 @@ internal val scrollerContextRecipeCode =
     import kotlinx.coroutines.launch
     import kotlinx.coroutines.delay
 
-    private data class ScrollerRecipeMessage(
+    internal data class ScrollerRecipeMessage(
         val id: String,
         val user: Boolean,
         val text: String,
@@ -1561,7 +1683,7 @@ internal val scrollerContextRecipeCode =
     )
 
     @Composable
-    private fun ScrollerRecipeTranscript(
+    internal fun ScrollerRecipeTranscript(
         messages: List<ScrollerRecipeMessage>,
         animateUsers: Boolean = false,
     ) {
@@ -1600,7 +1722,7 @@ internal val scrollerContextRecipeCode =
     }
 
     @Composable
-    private fun ScrollerRecipeFrame(
+    internal fun ScrollerRecipeFrame(
         title: String,
         description: String,
         note: String,

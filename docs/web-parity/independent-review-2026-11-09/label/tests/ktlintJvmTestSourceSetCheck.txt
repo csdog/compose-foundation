@@ -1,0 +1,5 @@
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/MarkerExamplesTest.kt:67:23: A multiline expression should start on a new line (standard:multiline-expression-wrapping)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/MarkerExamplesTest.kt:81:25: A multiline expression should start on a new line (standard:multiline-expression-wrapping)
+
+Summary error count (descending) by rule:
+  standard:multiline-expression-wrapping: 2

@@ -20,6 +20,13 @@ import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
@@ -41,18 +48,33 @@ private data class StepperStep(
     val disabled: Boolean = false,
 )
 
-private class StepperCollector {
-    private val buffer = mutableListOf<StepperStep>()
+private class StepperEntry(val step: State<StepperStep>)
 
-    fun begin() {
-        buffer.clear()
+private class StepperRegistry {
+    var entries by mutableStateOf<List<StepperEntry>>(emptyList())
+        private set
+
+    fun register(entry: StepperEntry) {
+        if (entry !in entries) entries = entries + entry
     }
 
-    fun add(step: StepperStep) {
-        buffer.add(step)
+    fun remove(entry: StepperEntry) {
+        entries = entries - entry
     }
 
-    fun snapshot(): List<StepperStep> = buffer.toList()
+    fun reorder(declarations: List<StepperEntry>) {
+        entries = declarations
+    }
+}
+
+private class StepperCollector(val registry: StepperRegistry) {
+    private val buffer = mutableListOf<StepperEntry>()
+
+    fun add(entry: StepperEntry) {
+        buffer.add(entry)
+    }
+
+    fun snapshot(): List<StepperEntry> = buffer.toList()
 }
 
 private val LocalStepperCollector = staticCompositionLocalOf<StepperCollector?> { null }
@@ -110,14 +132,17 @@ fun Stepper(
     connectorStyle: Style = Style,
     content: @Composable StepperScope.() -> Unit,
 ) {
-    val collector = remember { StepperCollector() }
-    collector.begin()
+    val registry = remember { StepperRegistry() }
+    val steps = registry.entries.map { it.step.value }
+    // A fresh collector invalidates declaration readers, including otherwise skipped helpers.
+    val collector = StepperCollector(registry)
     CompositionLocalProvider(
         LocalStepperCollector provides collector,
         LocalStepperState provides StepperState(currentStep, orientation),
     ) {
         StepperScope().content()
-        val steps = collector.snapshot()
+        val declarations = collector.snapshot()
+        SideEffect { registry.reorder(declarations) }
         when (orientation) {
             StepperOrientation.Horizontal ->
                 HorizontalStepper(steps, currentStep, showLabels, modifier, style, circleStyle, connectorStyle)
@@ -138,7 +163,15 @@ fun StepperScope.StepperItem(
         checkNotNull(LocalStepperCollector.current) {
             "StepperItem must be used inside Stepper { … }"
         }
-    collector.add(StepperStep(title = title, description = description, disabled = disabled))
+    val step = rememberUpdatedState(StepperStep(title = title, description = description, disabled = disabled))
+    val entry = remember { StepperEntry(step) }
+    collector.add(entry)
+    // Publish registration only after commit; independent child composition and disposal
+    // then invalidate the parent's rendered list without changing snapshot state in composition.
+    SideEffect { collector.registry.register(entry) }
+    DisposableEffect(collector.registry, entry) {
+        onDispose { collector.registry.remove(entry) }
+    }
 }
 
 private val StepCircleSize = 32.dp

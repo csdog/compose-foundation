@@ -17,6 +17,8 @@ import com.toutiaoyan.compose.ui.components.input.Input
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
+import kotlin.test.assertFalse
 
 class InputGroupAddonStyleTest : ScreenshotTest() {
     private fun show(
@@ -94,5 +96,48 @@ class InputGroupAddonStyleTest : ScreenshotTest() {
         }
         composeRule.onNodeWithTag("addon").performTouchInput { click(Offset(1f, height / 2f)) }
         composeRule.onNodeWithTag("field").assertIsFocused()
+    }
+
+    @Test fun addonButtonFocusDoesNotSetControlFocusState() {
+        assertOnlyEditableControlOwnsFocus(textarea = false)
+    }
+
+    @Test fun textareaFocusReturnsAfterLeavingAnAddonButton() {
+        assertOnlyEditableControlOwnsFocus(textarea = true)
+    }
+
+    private fun assertOnlyEditableControlOwnsFocus(textarea: Boolean) {
+        var groupFocused = false
+        var showAddon by mutableStateOf(true)
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            InputGroup(Modifier.width(240.dp)) {
+                val focused = inputGroupState().focused
+                SideEffect { groupFocused = focused }
+                if (textarea) {
+                    InputGroupTextarea("", {}, Modifier.testTag("control"))
+                } else {
+                    // Direct Input remains supported, alongside the name-parity wrappers.
+                    Input("", {}, Modifier.testTag("control"))
+                }
+                if (showAddon) {
+                    InputGroupAddon(
+                        if (textarea) InputGroupAddonAlign.BlockEnd else InputGroupAddonAlign.InlineEnd,
+                    ) {
+                        InputGroupButton("Action", {}, Modifier.testTag("action"))
+                    }
+                }
+            }
+        }
+        composeRule.onNodeWithTag("control").requestFocus()
+        composeRule.runOnIdle { assertTrue(groupFocused) }
+        composeRule.onNodeWithTag("action").requestFocus()
+        composeRule.onNodeWithTag("action").assertIsFocused()
+        composeRule.runOnIdle { assertFalse(groupFocused, "Addon focus must not activate the control focus ring") }
+        composeRule.onNodeWithTag("control").requestFocus()
+        composeRule.runOnIdle { assertTrue(groupFocused) }
+        composeRule.onNodeWithTag("action").requestFocus()
+        composeRule.runOnIdle { showAddon = false }
+        composeRule.onNodeWithTag("control").requestFocus()
+        composeRule.runOnIdle { assertTrue(groupFocused, "Removing a focused addon must clear its focus registration") }
     }
 }

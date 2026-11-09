@@ -7,6 +7,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -91,16 +97,19 @@ val inputOTPDoc =
                 ├── InputOTPSlot
                 └── InputOTPSlot
             """.trimIndent(),
-        beforeExamples =
+        compositionMarkdown = "Use the following composition to build an `InputOTP`:",
+        introductionSections =
             listOf(
                 ComponentGuideSection(
                     title = "About",
                     blocks =
                         listOf(
                             ComponentGuideBlock.Paragraph(
-                                "Input OTP is built on top of [input-otp](https://github.com/guilhermerodz/input-otp) " +
-                                    "by [@guilherme_rodz](https://twitter.com/guilherme_rodz). This Kotlin port keeps " +
-                                    "the same slot composition and paste/backspace behavior with an invisible text field.",
+                                "Input OTP is built on top of " +
+                                    "[input-otp](https://github.com/guilhermerodz/input-otp) " +
+                                    "by [@guilherme_rodz](https://twitter.com/guilherme_rodz). " +
+                                    "This Kotlin port keeps the same slot composition and " +
+                                    "paste/backspace behavior with an invisible text field.",
                             ),
                         ),
                 ),
@@ -193,7 +202,9 @@ val inputOTPDoc =
                 ),
                 ComponentExample(
                     title = "Separator",
-                    descriptionMarkdown = "Use the `InputOTPSeparator` component to add a separator between input groups.",
+                    descriptionMarkdown =
+                        "Use the `InputOTPSeparator` component to add a separator between " +
+                            "input groups.",
                     code =
                         """
                         var code by remember { mutableStateOf("") }
@@ -364,7 +375,7 @@ val inputOTPDoc =
                     code =
                         """
                         var code by remember { mutableStateOf("") }
-                        InputOTP(value = code, onValueChange = { code = it }, length = 6, pattern = Regex("[A-Za-z0-9]")) {
+                        InputOTP(value = code, onValueChange = { code = it }, length = 6, pattern = Regex("[A-Za-z0-9]"), keyboardType = KeyboardType.Ascii) {
                             InputOTPGroup { InputOTPSlot(0); InputOTPSlot(1); InputOTPSlot(2) }
                             InputOTPSeparator()
                             InputOTPGroup { InputOTPSlot(3); InputOTPSlot(4); InputOTPSlot(5) }
@@ -377,6 +388,7 @@ val inputOTPDoc =
                             onValueChange = { code = it },
                             length = 6,
                             pattern = Regex("[A-Za-z0-9]"),
+                            keyboardType = KeyboardType.Ascii,
                         ) {
                             InputOTPGroup {
                                 InputOTPSlot(0)
@@ -413,9 +425,25 @@ val inputOTPDoc =
                                         Button("Resend Code", onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Xs)
                                     }
                                     InputOTP(value = code, onValueChange = { code = it }, length = 6) {
-                                        InputOTPGroup { InputOTPSlot(0); InputOTPSlot(1); InputOTPSlot(2) }
-                                        InputOTPSeparator()
-                                        InputOTPGroup { InputOTPSlot(3); InputOTPSlot(4); InputOTPSlot(5) }
+                                        InputOTPGroup(Modifier.height(48.dp)) {
+                                            repeat(3) { index ->
+                                                InputOTPSlot(
+                                                    index,
+                                                    textStyle = TextStyle(fontSize = 20.sp, lineHeight = 28.sp),
+                                                    modifier = Modifier.size(if (index == 0) 44.dp else 45.dp, 48.dp),
+                                                )
+                                            }
+                                        }
+                                        InputOTPSeparator(Modifier.padding(horizontal = 8.dp))
+                                        InputOTPGroup(Modifier.height(48.dp)) {
+                                            repeat(3) { index ->
+                                                InputOTPSlot(
+                                                    index + 3,
+                                                    textStyle = TextStyle(fontSize = 20.sp, lineHeight = 28.sp),
+                                                    modifier = Modifier.size(if (index == 0) 44.dp else 45.dp, 48.dp),
+                                                )
+                                            }
+                                        }
                                     }
                                     FieldDescription("I no longer have access to this email address.")
                                 }
@@ -488,7 +516,11 @@ val inputOTPDoc =
                         ApiProperty("disabled / readOnly / invalid", "Boolean", "false"),
                         ApiProperty("onComplete", "((String) -> Unit)?", "null"),
                         ApiProperty("keyboardType", "KeyboardType", "NumberPassword"),
-                        ApiProperty("content", "(@Composable InputOTPScope.() -> Unit)?", "null (flat row when omitted)"),
+                        ApiProperty(
+                            "content",
+                            "(@Composable InputOTPScope.() -> Unit)?",
+                            "null (flat row when omitted)",
+                        ),
                     ),
                 ),
                 ComponentApiSection(
@@ -497,6 +529,7 @@ val inputOTPDoc =
                         "border and ring to a slot, matching `aria-invalid` in the official recipe.",
                     listOf(
                         ApiProperty("InputOTPSlot.index", "Int", "Required (0-based)"),
+                        ApiProperty("InputOTPSlot.textStyle", "TextStyle", "Default (optional overload)"),
                         ApiProperty("InputOTPSlot.invalid", "Boolean", "false"),
                         ApiProperty("InputOTPSlot.modifier", "Modifier", "Modifier"),
                         ApiProperty("InputOTPGroup.modifier", "Modifier", "Modifier"),
@@ -525,16 +558,26 @@ private fun InputOTPFormPreview() {
                     Button("Resend Code", onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Xs)
                 }
                 InputOTP(value = code, onValueChange = { code = it }, length = 6) {
-                    InputOTPGroup {
-                        InputOTPSlot(0)
-                        InputOTPSlot(1)
-                        InputOTPSlot(2)
+                    InputOTPGroup(Modifier.height(48.dp)) {
+                        repeat(3) { index ->
+                            InputOTPSlot(
+                                index + 0,
+                                textStyle = TextStyle(fontSize = 20.sp, lineHeight = 28.sp),
+                                // Connected slots overlap their shared border by one pixel.
+                                modifier = Modifier.size(if (index == 0) 44.dp else 45.dp, 48.dp),
+                            )
+                        }
                     }
-                    InputOTPSeparator()
-                    InputOTPGroup {
-                        InputOTPSlot(3)
-                        InputOTPSlot(4)
-                        InputOTPSlot(5)
+                    InputOTPSeparator(Modifier.padding(horizontal = 8.dp))
+                    InputOTPGroup(Modifier.height(48.dp)) {
+                        repeat(3) { index ->
+                            InputOTPSlot(
+                                index + 3,
+                                textStyle = TextStyle(fontSize = 20.sp, lineHeight = 28.sp),
+                                // Connected slots overlap their shared border by one pixel.
+                                modifier = Modifier.size(if (index == 0) 44.dp else 45.dp, 48.dp),
+                            )
+                        }
                     }
                 }
                 FieldDescription("I no longer have access to this email address.")

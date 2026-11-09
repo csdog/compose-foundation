@@ -4,6 +4,7 @@ package com.toutiaoyan.compose.ui.catalog.docs
 
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.X
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -19,6 +20,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
@@ -46,967 +49,967 @@ import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.theme.currentTheme
 
 private val dialogExtensionExamples =
-            listOf(
-                ComponentExample(
-                    title = "Edit profile",
-                    code =
-                        """
-                        @Composable
-                        fun DialogParityExample() {
-                            var open by remember { mutableStateOf(false) }
-                            var name by remember { mutableStateOf("Pedro Duarte") }
-                            var username by remember { mutableStateOf("@peduarte") }
-                            val mobile = LocalWindowInfo.current.containerSize.width < with(LocalDensity.current) { 640.dp.roundToPx() }
-                            Dialog(open = open, onOpenChange = { open = it }) {
-                                DialogTrigger("Open Dialog", variant = ButtonVariant.Outline)
-                                DialogContent("Edit profile", description = "Make changes to your profile here. Click save when you're done.") {
-                                    FieldGroup {
-                                        Field("Name") { Input(value = name, onValueChange = { name = it }) }
-                                        Field("Username") { Input(value = username, onValueChange = { username = it }) }
-                                    }
-                                    DialogFooter {
-                                        if (mobile) Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                            Button("Save changes", onClick = { open = false }, modifier = Modifier.fillMaxWidth(), style = Style { width(1f) })
-                                            Button("Cancel", onClick = { open = false }, variant = ButtonVariant.Outline, modifier = Modifier.fillMaxWidth(), style = Style { width(1f) })
-                                        } else {
-                                            Button("Cancel", onClick = { open = false }, variant = ButtonVariant.Outline)
-                                            Button("Save changes", onClick = { open = false })
-                                        }
-                                    }
+    listOf(
+        ComponentExample(
+            title = "Edit profile",
+            code =
+                """
+                @Composable
+                fun DialogParityExample() {
+                    var open by remember { mutableStateOf(false) }
+                    var name by remember { mutableStateOf("Pedro Duarte") }
+                    var username by remember { mutableStateOf("@peduarte") }
+                    val mobile = LocalWindowInfo.current.containerSize.width < with(LocalDensity.current) { 640.dp.roundToPx() }
+                    Dialog(open = open, onOpenChange = { open = it }) {
+                        DialogTrigger("Open Dialog", variant = ButtonVariant.Outline)
+                        DialogContent("Edit profile", description = "Make changes to your profile here. Click save when you're done.") {
+                            FieldGroup {
+                                Field("Name") { Input(value = name, onValueChange = { name = it }) }
+                                Field("Username") { Input(value = username, onValueChange = { username = it }) }
+                            }
+                            DialogFooter {
+                                if (mobile) Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    Button("Save changes", onClick = { open = false }, modifier = Modifier.fillMaxWidth(), style = Style { width(1f) })
+                                    Button("Cancel", onClick = { open = false }, variant = ButtonVariant.Outline, modifier = Modifier.fillMaxWidth(), style = Style { width(1f) })
+                                } else {
+                                    Button("Cancel", onClick = { open = false }, variant = ButtonVariant.Outline)
+                                    Button("Save changes", onClick = { open = false })
                                 }
                             }
                         }
-                        """.trimIndent(),
-                    preview = { DialogParityExample() },
-                ),
-                ComponentExample(
-                    title = "Custom close icon",
-                    code =
-                        """
-                        // Dialog's close button is a plain glyph by default (this
-                        // library takes no icon-library dependency) -- override the closeIcon
-                        // slot with a real vector from any icon set, e.g. Lucide.
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Edit profile",
-                                description = "Make changes to your profile here.",
-                                closeIcon = { DocIcon(Lucide.X) },
-                            ) { }
+                    }
+                }
+                """.trimIndent(),
+            preview = { DialogParityExample() },
+        ),
+        ComponentExample(
+            title = "Custom close icon",
+            code =
+                """
+                // Dialog's close button is a plain glyph by default (this
+                // library takes no icon-library dependency) -- override the closeIcon
+                // slot with a real vector from any icon set, e.g. Lucide.
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Edit profile",
+                        description = "Make changes to your profile here.",
+                        closeIcon = { DocIcon(Lucide.X) },
+                    ) { }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Edit profile",
+                        description = "Make changes to your profile here.",
+                        closeIcon = { DocIcon(Lucide.X) },
+                    ) { }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Without close button",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Edit profile",
+                        description = "Make changes to your profile here.",
+                        showCloseButton = false,
+                    ) {
+                        DialogFooter {
+                            Button("Done", onClick = { open = false })
                         }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Edit profile",
-                                description = "Make changes to your profile here.",
-                                closeIcon = { DocIcon(Lucide.X) },
-                            ) { }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Edit profile",
+                        description = "Make changes to your profile here.",
+                        showCloseButton = false,
+                    ) {
+                        DialogFooter {
+                            Button("Done", onClick = { open = false })
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Without close button",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Edit profile",
-                                description = "Make changes to your profile here.",
-                                showCloseButton = false,
-                            ) {
-                                DialogFooter {
-                                    Button("Done", onClick = { open = false })
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Default close button",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Edit profile",
+                        description = "Make changes to your profile here.",
+                        showCloseButton = true,
+                    ) {
+                        DialogFooter {
+                            Button("Done", onClick = { open = false })
+                        }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Edit profile",
+                        description = "Make changes to your profile here.",
+                        showCloseButton = true,
+                    ) {
+                        DialogFooter {
+                            Button("Done", onClick = { open = false })
+                        }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Scrollable content",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent("Notice", description = "A list that scrolls under the header.") {
+                        ScrollArea(modifier = Modifier.height(160.dp)) {
+                            Column {
+                                repeat(12) { index ->
+                                    Text(modifier = Modifier.padding(vertical = 6.dp)) { "Item ${'$'}index" }
                                 }
                             }
                         }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Edit profile",
-                                description = "Make changes to your profile here.",
-                                showCloseButton = false,
-                            ) {
-                                DialogFooter {
-                                    Button("Done", onClick = { open = false })
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
+                        }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent("Notice", description = "A list that scrolls under the header.") {
+                        ScrollArea(modifier = Modifier.height(160.dp)) {
+                            Column {
+                                repeat(12) { index ->
+                                    Text(modifier = Modifier.padding(vertical = 6.dp)) { "Item $index" }
                                 }
                             }
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default close button",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Edit profile",
-                                description = "Make changes to your profile here.",
-                                showCloseButton = true,
-                            ) {
-                                DialogFooter {
-                                    Button("Done", onClick = { open = false })
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
+                        }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Sticky footer",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent("Notice", description = "Header and footer stay put while the list scrolls.") {
+                        ScrollArea(modifier = Modifier.height(160.dp)) {
+                            Column {
+                                repeat(12) { index ->
+                                    Text(modifier = Modifier.padding(vertical = 6.dp)) { "Item ${'$'}index" }
                                 }
                             }
                         }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Edit profile",
-                                description = "Make changes to your profile here.",
-                                showCloseButton = true,
-                            ) {
-                                DialogFooter {
-                                    Button("Done", onClick = { open = false })
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
+                        }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Notice",
+                        description = "Header and footer stay put while the list scrolls.",
+                    ) {
+                        ScrollArea(modifier = Modifier.height(160.dp)) {
+                            Column {
+                                repeat(12) { index ->
+                                    Text(modifier = Modifier.padding(vertical = 6.dp)) { "Item $index" }
                                 }
                             }
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Scrollable content",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent("Notice", description = "A list that scrolls under the header.") {
-                                ScrollArea(modifier = Modifier.height(160.dp)) {
-                                    Column {
-                                        repeat(12) { index ->
-                                            Text(modifier = Modifier.padding(vertical = 6.dp)) { "Item ${'$'}index" }
-                                        }
-                                    }
-                                }
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent("Notice", description = "A list that scrolls under the header.") {
-                                ScrollArea(modifier = Modifier.height(160.dp)) {
-                                    Column {
-                                        repeat(12) { index ->
-                                            Text(modifier = Modifier.padding(vertical = 6.dp)) { "Item $index" }
-                                        }
-                                    }
-                                }
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Size",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Small dialog")
+                    DialogContent(
+                        "Small",
+                        description = "DialogSize.Sm is 320dp; Default stays 384dp.",
+                        size = DialogSize.Sm,
+                    ) {
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Sticky footer",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent("Notice", description = "Header and footer stay put while the list scrolls.") {
-                                ScrollArea(modifier = Modifier.height(160.dp)) {
-                                    Column {
-                                        repeat(12) { index ->
-                                            Text(modifier = Modifier.padding(vertical = 6.dp)) { "Item ${'$'}index" }
-                                        }
-                                    }
-                                }
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Small dialog")
+                    DialogContent(
+                        "Small",
+                        description = "DialogSize.Sm is 320dp; Default stays 384dp.",
+                        size = DialogSize.Sm,
+                    ) {
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Notice",
-                                description = "Header and footer stay put while the list scrolls.",
-                            ) {
-                                ScrollArea(modifier = Modifier.height(160.dp)) {
-                                    Column {
-                                        repeat(12) { index ->
-                                            Text(modifier = Modifier.padding(vertical = 6.dp)) { "Item $index" }
-                                        }
-                                    }
-                                }
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Default size",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Default size",
+                        description = "DialogSize.Default stays 384dp.",
+                        size = DialogSize.Default,
+                    ) {
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Size",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Small dialog")
-                            DialogContent(
-                                "Small",
-                                description = "DialogSize.Sm is 320dp; Default stays 400dp.",
-                                size = DialogSize.Sm,
-                            ) {
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Default size",
+                        description = "DialogSize.Default stays 384dp.",
+                        size = DialogSize.Default,
+                    ) {
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Small dialog")
-                            DialogContent(
-                                "Small",
-                                description = "DialogSize.Sm is 320dp; Default stays 400dp.",
-                                size = DialogSize.Sm,
-                            ) {
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Non-modal",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }, modal = false) {
+                    DialogTrigger("Open dialog")
+                    DialogContent("Non-modal", description = "The page behind stays interactive.") {
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default size",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Default size",
-                                description = "DialogSize.Default stays 400dp.",
-                                size = DialogSize.Default,
-                            ) {
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }, modal = false) {
+                    DialogTrigger("Open dialog")
+                    DialogContent("Non-modal", description = "The page behind stays interactive.") {
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Default size",
-                                description = "DialogSize.Default stays 400dp.",
-                                size = DialogSize.Default,
-                            ) {
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Modal",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }, modal = true) {
+                    DialogTrigger("Open dialog")
+                    DialogContent("Modal", description = "The page behind is inert.") {
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Non-modal",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }, modal = false) {
-                            DialogTrigger("Open dialog")
-                            DialogContent("Non-modal", description = "The page behind stays interactive.") {
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }, modal = true) {
+                    DialogTrigger("Open dialog")
+                    DialogContent("Modal", description = "The page behind is inert.") {
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }, modal = false) {
-                            DialogTrigger("Open dialog")
-                            DialogContent("Non-modal", description = "The page behind stays interactive.") {
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Default modal",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }, modal = true) {
+                    DialogTrigger("Open dialog")
+                    DialogContent("Modal", description = "The page behind is inert.") {
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Modal",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }, modal = true) {
-                            DialogTrigger("Open dialog")
-                            DialogContent("Modal", description = "The page behind is inert.") {
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }, modal = true) {
+                    DialogTrigger("Open dialog")
+                    DialogContent("Modal", description = "The page behind is inert.") {
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }, modal = true) {
-                            DialogTrigger("Open dialog")
-                            DialogContent("Modal", description = "The page behind is inert.") {
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Non-dismissible",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Notice",
+                        description = "Clicking outside will not close this dialog.",
+                        dismissOnClickOutside = false,
+                    ) {
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default modal",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }, modal = true) {
-                            DialogTrigger("Open dialog")
-                            DialogContent("Modal", description = "The page behind is inert.") {
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Notice",
+                        description = "Clicking outside will not close this dialog.",
+                        dismissOnClickOutside = false,
+                    ) {
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }, modal = true) {
-                            DialogTrigger("Open dialog")
-                            DialogContent("Modal", description = "The page behind is inert.") {
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Default dismiss",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Notice",
+                        description = "Clicking outside closes this dialog.",
+                        dismissOnClickOutside = true,
+                    ) {
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Non-dismissible",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Notice",
-                                description = "Clicking outside will not close this dialog.",
-                                dismissOnClickOutside = false,
-                            ) {
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Notice",
+                        description = "Clicking outside closes this dialog.",
+                        dismissOnClickOutside = true,
+                    ) {
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Notice",
-                                description = "Clicking outside will not close this dialog.",
-                                dismissOnClickOutside = false,
-                            ) {
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Disabled close",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Notice",
+                        description = "The close control is disabled.",
+                        showCloseButton = false,
+                    ) {
+                        DialogClose(disabled = true)
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Notice",
+                        description = "The close control is disabled.",
+                        showCloseButton = false,
+                    ) {
+                        DialogClose(disabled = true)
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Default disabled",
+            code =
+                """
+                Dialog(defaultOpen = false) {
+                    DialogTrigger("Open dialog", disabled = false)
+                    DialogContent("Notice", description = "Starts closed.") {}
+                }
+                """.trimIndent(),
+            preview = {
+                Dialog(defaultOpen = false) {
+                    DialogTrigger("Open dialog", disabled = false)
+                    DialogContent("Notice", description = "Starts closed.") {}
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Prevent pointer dismiss",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Notice",
+                        description = "Clicking the overlay will not close this dialog.",
+                        onPointerDownOutside = { true },
+                    ) {
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default dismiss",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Notice",
-                                description = "Clicking outside closes this dialog.",
-                                dismissOnClickOutside = true,
-                            ) {
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Notice",
+                        description = "Clicking the overlay will not close this dialog.",
+                        onPointerDownOutside = { true },
+                    ) {
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Notice",
-                                description = "Clicking outside closes this dialog.",
-                                dismissOnClickOutside = true,
-                            ) {
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Prevent interact outside",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Notice",
+                        description = "Interacting outside will not close this dialog.",
+                        onInteractOutside = { true },
+                    ) {
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Disabled close",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Notice",
-                                description = "The close control is disabled.",
-                                showCloseButton = false,
-                            ) {
-                                DialogClose(disabled = true)
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Notice",
+                        description = "Interacting outside will not close this dialog.",
+                        onInteractOutside = { true },
+                    ) {
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Notice",
-                                description = "The close control is disabled.",
-                                showCloseButton = false,
-                            ) {
-                                DialogClose(disabled = true)
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Accessible close label",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent {
+                        DialogClose(ariaLabel = "Dismiss dialog")
+                        DialogHeader("Notice", description = "The close button has a custom accessible name.")
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent {
+                        DialogClose(ariaLabel = "Dismiss dialog")
+                        DialogHeader("Notice", description = "The close button has a custom accessible name.")
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Content close label",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Notice",
+                        description = "The built-in close button has a custom accessible name.",
+                        closeAriaLabel = "Dismiss dialog",
+                    ) {
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default disabled",
-                    code =
-                        """
-                        Dialog(defaultOpen = false) {
-                            DialogTrigger("Open dialog", disabled = false)
-                            DialogContent("Notice", description = "Starts closed.") {}
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Notice",
+                        description = "The built-in close button has a custom accessible name.",
+                        closeAriaLabel = "Dismiss dialog",
+                    ) {
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                        """.trimIndent(),
-                    preview = {
-                        Dialog(defaultOpen = false) {
-                            DialogTrigger("Open dialog", disabled = false)
-                            DialogContent("Notice", description = "Starts closed.") {}
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Default close label",
+            code =
+                """
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Notice",
+                        description = "The built-in close button uses the default accessible name.",
+                        closeAriaLabel = "Close",
+                    ) {
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Prevent pointer dismiss",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Notice",
-                                description = "Clicking the overlay will not close this dialog.",
-                                onPointerDownOutside = { true },
-                            ) {
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                var open by remember { mutableStateOf(false) }
+                Dialog(open = open, onOpenChange = { open = it }) {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Notice",
+                        description = "The built-in close button uses the default accessible name.",
+                        closeAriaLabel = "Close",
+                    ) {
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
                         }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Notice",
-                                description = "Clicking the overlay will not close this dialog.",
-                                onPointerDownOutside = { true },
-                            ) {
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Uncontrolled",
+            code =
+                """
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Notice",
+                        description = "Omit open and onOpenChange. Optional defaultOpen starts closed.",
+                    ) {}
+                }
+                """.trimIndent(),
+            preview = {
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent(
+                        "Notice",
+                        description = "Omit open and onOpenChange. Optional defaultOpen starts closed.",
+                    ) {}
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Default open",
+            code =
+                """
+                Dialog(defaultOpen = false) {
+                    DialogTrigger("Open dialog")
+                    DialogContent("Notice", description = "Starts closed.") {}
+                }
+                """.trimIndent(),
+            preview = {
+                Dialog(defaultOpen = false) {
+                    DialogTrigger("Open dialog")
+                    DialogContent("Notice", description = "Starts closed.") {}
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Title and description",
+            code =
+                """
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent {
+                        DialogHeader {
+                            DialogTitle("Notice")
+                            DialogDescription("Compose Title and Description inside Header.")
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Prevent interact outside",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Notice",
-                                description = "Interacting outside will not close this dialog.",
-                                onInteractOutside = { true },
-                            ) {
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent {
+                        DialogHeader {
+                            DialogTitle("Notice")
+                            DialogDescription("Compose Title and Description inside Header.")
                         }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Notice",
-                                description = "Interacting outside will not close this dialog.",
-                                onInteractOutside = { true },
-                            ) {
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Footer",
+            code =
+                """
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent {
+                        DialogHeader {
+                            DialogTitle("Notice")
+                            DialogDescription("Footer holds actions, matching shadcn DialogFooter.")
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Accessible close label",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent {
-                                DialogClose(ariaLabel = "Dismiss dialog")
-                                DialogHeader("Notice", description = "The close button has a custom accessible name.")
-                            }
+                        DialogFooter {
+                            Button("Close", onClick = toggle)
                         }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent {
-                                DialogClose(ariaLabel = "Dismiss dialog")
-                                DialogHeader("Notice", description = "The close button has a custom accessible name.")
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent {
+                        DialogHeader {
+                            DialogTitle("Notice")
+                            DialogDescription("Footer holds actions, matching shadcn DialogFooter.")
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Content close label",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Notice",
-                                description = "The built-in close button has a custom accessible name.",
-                                closeAriaLabel = "Dismiss dialog",
-                            ) {
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                        DialogFooter {
+                            Button("Close", onClick = toggle)
                         }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Notice",
-                                description = "The built-in close button has a custom accessible name.",
-                                closeAriaLabel = "Dismiss dialog",
-                            ) {
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Footer close button",
+            code =
+                """
+                DialogFooter(showCloseButton = true) {
+                    Button("Save")
+                }
+                """.trimIndent(),
+            preview = {
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent {
+                        DialogHeader {
+                            DialogTitle("Notice")
+                            DialogDescription("Footer can render an official Close button.")
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default close label",
-                    code =
-                        """
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Notice",
-                                description = "The built-in close button uses the default accessible name.",
-                                closeAriaLabel = "Close",
-                            ) {
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var open by remember { mutableStateOf(false) }
-                        Dialog(open = open, onOpenChange = { open = it }) {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Notice",
-                                description = "The built-in close button uses the default accessible name.",
-                                closeAriaLabel = "Close",
-                            ) {
-                                DialogFooter {
-                                    Button("Close", onClick = { open = false })
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Uncontrolled",
-                    code =
-                        """
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Notice",
-                                description = "Omit open and onOpenChange. Optional defaultOpen starts closed.",
-                            ) {}
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent(
-                                "Notice",
-                                description = "Omit open and onOpenChange. Optional defaultOpen starts closed.",
-                            ) {}
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default open",
-                    code =
-                        """
-                        Dialog(defaultOpen = false) {
-                            DialogTrigger("Open dialog")
-                            DialogContent("Notice", description = "Starts closed.") {}
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Dialog(defaultOpen = false) {
-                            DialogTrigger("Open dialog")
-                            DialogContent("Notice", description = "Starts closed.") {}
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Title and description",
-                    code =
-                        """
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent {
-                                DialogHeader {
-                                    DialogTitle("Notice")
-                                    DialogDescription("Compose Title and Description inside Header.")
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent {
-                                DialogHeader {
-                                    DialogTitle("Notice")
-                                    DialogDescription("Compose Title and Description inside Header.")
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Footer",
-                    code =
-                        """
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent {
-                                DialogHeader {
-                                    DialogTitle("Notice")
-                                    DialogDescription("Footer holds actions, matching shadcn DialogFooter.")
-                                }
-                                DialogFooter {
-                                    Button("Close", onClick = {})
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent {
-                                DialogHeader {
-                                    DialogTitle("Notice")
-                                    DialogDescription("Footer holds actions, matching shadcn DialogFooter.")
-                                }
-                                DialogFooter {
-                                    Button("Close", onClick = {})
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Footer close button",
-                    code =
-                        """
                         DialogFooter(showCloseButton = true) {
                             Button("Save")
                         }
-                        """.trimIndent(),
-                    preview = {
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent {
-                                DialogHeader {
-                                    DialogTitle("Notice")
-                                    DialogDescription("Footer can render an official Close button.")
-                                }
-                                DialogFooter(showCloseButton = true) {
-                                    Button("Save")
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Header",
+            code =
+                """
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent {
+                        DialogHeader {
+                            DialogTitle("Notice")
+                            DialogDescription("Compose Title and Description inside Header.")
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Header",
-                    code =
-                        """
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent {
-                                DialogHeader {
-                                    DialogTitle("Notice")
-                                    DialogDescription("Compose Title and Description inside Header.")
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent {
+                        DialogHeader {
+                            DialogTitle("Notice")
+                            DialogDescription("Compose Title and Description inside Header.")
                         }
-                        """.trimIndent(),
-                    preview = {
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent {
-                                DialogHeader {
-                                    DialogTitle("Notice")
-                                    DialogDescription("Compose Title and Description inside Header.")
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Trigger",
+            code =
+                """
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent {
+                        DialogHeader {
+                            DialogTitle("Notice")
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Trigger",
-                    code =
-                        """
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent {
-                                DialogHeader {
-                                    DialogTitle("Notice")
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent {
+                        DialogHeader {
+                            DialogTitle("Notice")
                         }
-                        """.trimIndent(),
-                    preview = {
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent {
-                                DialogHeader {
-                                    DialogTitle("Notice")
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Content",
+            code =
+                """
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent {
+                        DialogHeader {
+                            DialogTitle("Notice")
+                            DialogDescription("DialogContent hosts Header, Title, and Description.")
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Content",
-                    code =
-                        """
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent {
-                                DialogHeader {
-                                    DialogTitle("Notice")
-                                    DialogDescription("DialogContent hosts Header, Title, and Description.")
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent {
+                        DialogHeader {
+                            DialogTitle("Notice")
+                            DialogDescription("DialogContent hosts Header, Title, and Description.")
                         }
-                        """.trimIndent(),
-                    preview = {
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent {
-                                DialogHeader {
-                                    DialogTitle("Notice")
-                                    DialogDescription("DialogContent hosts Header, Title, and Description.")
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Title",
+            code =
+                """
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent {
+                        DialogHeader {
+                            DialogTitle("Notice")
+                            DialogDescription("Compose Title and Description inside Header.")
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Title",
-                    code =
-                        """
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent {
-                                DialogHeader {
-                                    DialogTitle("Notice")
-                                    DialogDescription("Compose Title and Description inside Header.")
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent {
+                        DialogHeader {
+                            DialogTitle("Notice")
+                            DialogDescription("Compose Title and Description inside Header.")
                         }
-                        """.trimIndent(),
-                    preview = {
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent {
-                                DialogHeader {
-                                    DialogTitle("Notice")
-                                    DialogDescription("Compose Title and Description inside Header.")
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Close",
+            code =
+                """
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent(showCloseButton = false) {
+                        DialogClose()
+                        DialogHeader {
+                            DialogTitle("Notice")
+                            DialogDescription("DialogClose matches shadcn's close slot.")
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Close",
-                    code =
-                        """
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent(showCloseButton = false) {
-                                DialogClose()
-                                DialogHeader {
-                                    DialogTitle("Notice")
-                                    DialogDescription("DialogClose matches shadcn's close slot.")
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent(showCloseButton = false) {
+                        DialogClose()
+                        DialogHeader {
+                            DialogTitle("Notice")
+                            DialogDescription("DialogClose matches shadcn's close slot.")
                         }
-                        """.trimIndent(),
-                    preview = {
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent(showCloseButton = false) {
-                                DialogClose()
-                                DialogHeader {
-                                    DialogTitle("Notice")
-                                    DialogDescription("DialogClose matches shadcn's close slot.")
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Description",
+            code =
+                """
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent {
+                        DialogHeader {
+                            DialogTitle("Notice")
+                            DialogDescription("DialogDescription matches shadcn's description slot.")
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Description",
-                    code =
-                        """
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent {
-                                DialogHeader {
-                                    DialogTitle("Notice")
-                                    DialogDescription("DialogDescription matches shadcn's description slot.")
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent {
+                        DialogHeader {
+                            DialogTitle("Notice")
+                            DialogDescription("DialogDescription matches shadcn's description slot.")
                         }
-                        """.trimIndent(),
-                    preview = {
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent {
-                                DialogHeader {
-                                    DialogTitle("Notice")
-                                    DialogDescription("DialogDescription matches shadcn's description slot.")
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Overlay",
+            code =
+                """
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent {
+                        DialogHeader {
+                            DialogTitle("Notice")
+                            DialogDescription("DialogOverlay is the scrim composed by DialogContent.")
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Overlay",
-                    code =
-                        """
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent {
-                                DialogHeader {
-                                    DialogTitle("Notice")
-                                    DialogDescription("DialogOverlay is the scrim composed by DialogContent.")
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent {
+                        DialogHeader {
+                            DialogTitle("Notice")
+                            DialogDescription("DialogOverlay is the scrim composed by DialogContent.")
                         }
-                        """.trimIndent(),
-                    preview = {
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent {
-                                DialogHeader {
-                                    DialogTitle("Notice")
-                                    DialogDescription("DialogOverlay is the scrim composed by DialogContent.")
-                                }
-                            }
+                    }
+                }
+            },
+        ),
+        ComponentExample(
+            title = "Portal",
+            code =
+                """
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent {
+                        DialogHeader {
+                            DialogTitle("Notice")
+                            DialogDescription("DialogPortal is the teleport host composed by DialogContent.")
                         }
-                    },
-                ),
-                ComponentExample(
-                    title = "Portal",
-                    code =
-                        """
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent {
-                                DialogHeader {
-                                    DialogTitle("Notice")
-                                    DialogDescription("DialogPortal is the teleport host composed by DialogContent.")
-                                }
-                            }
+                    }
+                }
+                """.trimIndent(),
+            preview = {
+                Dialog {
+                    DialogTrigger("Open dialog")
+                    DialogContent {
+                        DialogHeader {
+                            DialogTitle("Notice")
+                            DialogDescription("DialogPortal is the teleport host composed by DialogContent.")
                         }
-                        """.trimIndent(),
-                    preview = {
-                        Dialog {
-                            DialogTrigger("Open dialog")
-                            DialogContent {
-                                DialogHeader {
-                                    DialogTitle("Notice")
-                                    DialogDescription("DialogPortal is the teleport host composed by DialogContent.")
-                                }
-                            }
-                        }
-                    },
-                ),
-            )
+                    }
+                }
+            },
+        ),
+    )
 
 /** Official recipes promoted into [dialogOfficialExamples]; not repeated as extensions. */
 private val dialogPromotedExamples =
@@ -1046,6 +1049,8 @@ private val dialogOfficialExamples =
                 """
                 var open by remember { mutableStateOf(false) }
                 var link by remember { mutableStateOf("https://ui.shadcn.com/docs/installation") }
+                val desktop =
+                    LocalWindowInfo.current.containerSize.width >= with(LocalDensity.current) { 640.dp.roundToPx() }
                 Dialog(open = open, onOpenChange = { open = it }) {
                     DialogTrigger("Share", variant = ButtonVariant.Outline)
                     // The official example uses sm:max-w-md (448dp).
@@ -1055,7 +1060,10 @@ private val dialogOfficialExamples =
                             description = "Anyone who has this link will be able to view this.",
                         )
                         Input(value = link, onValueChange = { link = it }, readOnly = true)
-                        DialogFooter { Button("Close", onClick = { open = false }) }
+                        DialogFooter {
+                            Button("Close", onClick = { open = false })
+                            if (desktop) Spacer(Modifier.weight(1f))
+                        }
                     }
                 }
                 """.trimIndent(),
@@ -1082,6 +1090,9 @@ private val dialogOfficialExamples =
             code =
                 """
                 var open by remember { mutableStateOf(false) }
+                val maxScrollHeight = with(LocalDensity.current) {
+                    LocalWindowInfo.current.containerSize.height.toDp() / 2
+                }
                 Dialog(open = open, onOpenChange = { open = it }) {
                     DialogTrigger("Sticky Footer", variant = ButtonVariant.Outline)
                     DialogContent(
@@ -1090,7 +1101,7 @@ private val dialogOfficialExamples =
                             "This dialog has a sticky footer that stays visible while the content scrolls.",
                     ) {
                         Column(
-                            Modifier.heightIn(max = 240.dp).clipToBounds()
+                            Modifier.heightIn(max = maxScrollHeight).clipToBounds()
                                 .verticalScroll(rememberScrollState()),
                         ) {
                             repeat(10) {
@@ -1111,6 +1122,9 @@ private val dialogOfficialExamples =
             code =
                 """
                 var open by remember { mutableStateOf(false) }
+                val maxScrollHeight = with(LocalDensity.current) {
+                    LocalWindowInfo.current.containerSize.height.toDp() / 2
+                }
                 Dialog(open = open, onOpenChange = { open = it }) {
                     DialogTrigger("Scrollable Content", variant = ButtonVariant.Outline)
                     DialogContent(
@@ -1118,7 +1132,7 @@ private val dialogOfficialExamples =
                         description = "This is a dialog with scrollable content.",
                     ) {
                         Column(
-                            Modifier.heightIn(max = 240.dp).clipToBounds()
+                            Modifier.heightIn(max = maxScrollHeight).clipToBounds()
                                 .verticalScroll(rememberScrollState()),
                         ) {
                             repeat(10) {
@@ -1134,7 +1148,7 @@ private val dialogOfficialExamples =
             title = "RTL",
             descriptionMarkdown =
                 (
-                    "To enable RTL support in your app, see the [RTL configuration " +
+                    "To enable RTL support in shadcn/ui, see the [RTL configuration " +
                         "guide](https://ui.shadcn.com/docs/rtl). Source shows the Arabic pair; " +
                         "the catalog toolbar also previews English and Hebrew."
                 ),
@@ -1145,6 +1159,8 @@ private val dialogOfficialExamples =
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
                     Theme(fontFamily = catalogArabicFontFamily()) {
                         var open by remember { mutableStateOf(false) }
+                        var name by remember { mutableStateOf("Pedro Duarte") }
+                        var username by remember { mutableStateOf("@peduarte") }
                         Dialog(open = open, onOpenChange = { open = it }) {
                             DialogTrigger("فتح الحوار", variant = ButtonVariant.Outline)
                             DialogContent(
@@ -1153,8 +1169,8 @@ private val dialogOfficialExamples =
                                     "قم بإجراء تغييرات على ملفك الشخصي هنا. انقر فوق حفظ عند الانتهاء.",
                             ) {
                                 FieldGroup {
-                                    Field("الاسم") { Input(value = "Pedro Duarte", onValueChange = {}) }
-                                    Field("اسم المستخدم") { Input(value = "@peduarte", onValueChange = {}) }
+                                    Field("الاسم") { Input(value = name, onValueChange = { name = it }) }
+                                    Field("اسم المستخدم") { Input(value = username, onValueChange = { username = it }) }
                                 }
                                 DialogFooter {
                                     Button("إلغاء", onClick = { open = false }, variant = ButtonVariant.Outline)
@@ -1173,7 +1189,9 @@ private const val loremIpsum =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor " +
         "incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud " +
         "exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure " +
-        "dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+        "dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. " +
+        "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " +
+        "mollit anim id est laborum."
 
 @Composable
 private fun DialogEditProfileRecipe() {
@@ -1202,12 +1220,17 @@ private fun DialogEditProfileRecipe() {
 private fun DialogCustomCloseButtonRecipe() {
     var open by remember { mutableStateOf(false) }
     var link by remember { mutableStateOf("https://ui.shadcn.com/docs/installation") }
+    val desktop =
+        LocalWindowInfo.current.containerSize.width >= with(LocalDensity.current) { 640.dp.roundToPx() }
     Dialog(open = open, onOpenChange = { open = it }) {
         DialogTrigger("Share", variant = ButtonVariant.Outline)
         DialogContent(style = Style { width(448.dp) }) {
             DialogHeader("Share link", description = "Anyone who has this link will be able to view this.")
             Input(value = link, onValueChange = { link = it }, readOnly = true)
-            DialogFooter { Button("Close", onClick = { open = false }) }
+            DialogFooter {
+                Button("Close", onClick = { open = false })
+                if (desktop) Spacer(Modifier.weight(1f))
+            }
         }
     }
 }
@@ -1228,13 +1251,17 @@ private fun DialogNoCloseButtonRecipe() {
 @Composable
 private fun DialogStickyFooterRecipe() {
     var open by remember { mutableStateOf(false) }
+    val maxScrollHeight =
+        with(LocalDensity.current) {
+            LocalWindowInfo.current.containerSize.height.toDp() / 2
+        }
     Dialog(open = open, onOpenChange = { open = it }) {
         DialogTrigger("Sticky Footer", variant = ButtonVariant.Outline)
         DialogContent(
             "Sticky Footer",
             description = "This dialog has a sticky footer that stays visible while the content scrolls.",
         ) {
-            Column(Modifier.heightIn(max = 240.dp).clipToBounds().verticalScroll(rememberScrollState())) {
+            Column(Modifier.heightIn(max = maxScrollHeight).clipToBounds().verticalScroll(rememberScrollState())) {
                 repeat(10) { Text(Modifier.padding(bottom = 16.dp)) { loremIpsum } }
             }
             DialogFooter {
@@ -1247,10 +1274,14 @@ private fun DialogStickyFooterRecipe() {
 @Composable
 private fun DialogScrollableContentRecipe() {
     var open by remember { mutableStateOf(false) }
+    val maxScrollHeight =
+        with(LocalDensity.current) {
+            LocalWindowInfo.current.containerSize.height.toDp() / 2
+        }
     Dialog(open = open, onOpenChange = { open = it }) {
         DialogTrigger("Scrollable Content", variant = ButtonVariant.Outline)
         DialogContent("Scrollable Content", description = "This is a dialog with scrollable content.") {
-            Column(Modifier.heightIn(max = 240.dp).clipToBounds().verticalScroll(rememberScrollState())) {
+            Column(Modifier.heightIn(max = maxScrollHeight).clipToBounds().verticalScroll(rememberScrollState())) {
                 repeat(10) { Text(Modifier.padding(bottom = 16.dp)) { loremIpsum } }
             }
         }
@@ -1315,12 +1346,14 @@ private fun DialogRtlRecipe() {
             ) {
                 val t = dialogTranslations[language]
                 var open by remember(language) { mutableStateOf(false) }
+                var name by remember(language) { mutableStateOf("Pedro Duarte") }
+                var username by remember(language) { mutableStateOf("@peduarte") }
                 Dialog(open = open, onOpenChange = { open = it }) {
                     DialogTrigger(t[0], variant = ButtonVariant.Outline)
                     DialogContent(t[1], description = t[2]) {
                         FieldGroup {
-                            Field(t[3]) { Input(value = "Pedro Duarte", onValueChange = {}) }
-                            Field(t[4]) { Input(value = "@peduarte", onValueChange = {}) }
+                            Field(t[3]) { Input(value = name, onValueChange = { name = it }) }
+                            Field(t[4]) { Input(value = username, onValueChange = { username = it }) }
                         }
                         DialogFooter {
                             Button(t[5], onClick = { open = false }, variant = ButtonVariant.Outline)
@@ -1401,7 +1434,8 @@ private val dialogApiSections =
         ComponentApiSection(
             "DialogFooter",
             (
-                "Right-aligned action row; Nova paints `bg-muted/50` with a top border and " +
+                "Nova actions stretch and stack in reverse below 640dp, then form an end-aligned row. " +
+                    "Nova paints `bg-muted/50` with a top border and " +
                     "bottom `rounded-xl` exactly like `.cn-dialog-footer`. " +
                     "`showCloseButton` appends the official outline Close button."
             ),
@@ -1436,7 +1470,6 @@ private val dialogApiSections =
             ),
         ),
     )
-
 
 val dialogDoc =
     ComponentDoc(

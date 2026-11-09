@@ -61,7 +61,7 @@ private fun TableInvoicesRecipe(
             TableHeadCell(labels[1], Modifier.width(100.dp))
             TableHeadCell(labels[2], Modifier.weight(1f))
             TableHeadCell(labels[3], Modifier.weight(1f))
-            TableHeadCell(labels[4], Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.End))
+            TableHeadCell(labels[4], Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.Right))
         }
         TableBody {
             tableInvoices.take(rows).forEachIndexed { index, invoice ->
@@ -73,14 +73,18 @@ private fun TableInvoicesRecipe(
                     )
                     TableCell(labels[5 + invoice.status], Modifier.weight(1f))
                     TableCell(labels[8 + invoice.method], Modifier.weight(1f))
-                    TableCell(invoice.amount, Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.End))
+                    TableCell(
+                        invoice.amount,
+                        Modifier.width(100.dp),
+                        textStyle = TextStyle(textAlign = TextAlign.Right),
+                    )
                 }
             }
         }
         TableFooter {
             TableRow(Modifier.testTag("table-total")) {
                 TableCell(labels[11], Modifier.weight(1f))
-                TableCell("$2,500.00", Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.End))
+                TableCell("$2,500.00", Modifier.width(100.dp), textStyle = TextStyle(textAlign = TextAlign.Right))
             }
         }
     }
@@ -109,7 +113,7 @@ internal fun TableActionsRecipe() {
         TableHeader {
             TableHeadCell("Product", Modifier.weight(1f))
             TableHeadCell("Price", Modifier.width(100.dp))
-            TableHeadCell("Actions", Modifier.width(80.dp), textStyle = TextStyle(textAlign = TextAlign.End))
+            TableHeadCell("Actions", Modifier.width(80.dp), textStyle = TextStyle(textAlign = TextAlign.Right))
         }
         TableBody {
             products.forEachIndexed { index, (product, price) ->
@@ -173,13 +177,15 @@ internal val tableOfficialExamples =
             code = tableRtlRecipeCode,
             descriptionMarkdown =
                 (
-                    "To enable RTL support in shadcn/ui, see the [RTL configuration guide](https://ui.shadcn.com/docs/rtl)."
+                    "To enable RTL support in shadcn/ui, see the " +
+                        "[RTL configuration guide](https://ui.shadcn.com/docs/rtl)."
                 ),
             previewPadding = 0.dp,
             preview = {
-            var language by remember { mutableIntStateOf(1) }
-            RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
-                TableRtlRecipe(language)
-            }
-        }),
+                var language by remember { mutableIntStateOf(1) }
+                RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
+                    TableRtlRecipe(language)
+                }
+            },
+        ),
     )

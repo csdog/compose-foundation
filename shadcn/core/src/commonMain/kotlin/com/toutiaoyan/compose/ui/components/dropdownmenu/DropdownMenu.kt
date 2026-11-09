@@ -248,11 +248,11 @@ fun DropdownMenu(
             anchorBounds =
             readAnchor,
             initialFocus =
-            { initialFocus.value },
+                { initialFocus.value },
             consumeInitialFocus =
-            { initialFocus.value = DropdownMenuInitialFocus.None },
+                { initialFocus.value = DropdownMenuInitialFocus.None },
             setInitialFocus =
-            { initialFocus.value = it },
+                { initialFocus.value = it },
         )
     CompositionLocalProvider(LocalDropdownMenu provides controller) {
         Box(modifier = modifier.onGloballyPositioned { anchor.value = it.boundsInWindow() }) {
@@ -505,11 +505,12 @@ fun DropdownMenuScope.DropdownMenuItem(
         }
     val destructiveTone = destructive || variant == DropdownMenuItemVariant.Destructive
     val colors = currentTheme.colors
+    val destructiveOpacity = if (currentTheme.isDark) 0.2f else 0.1f
     val destructiveStyle =
         if (LocalContextMenuNova.current && destructiveTone) {
             Style {
-                hovered { background(colors.destructive.copy(alpha = 0.1f)) }
-                focused { background(colors.destructive.copy(alpha = 0.1f)) }
+                hovered { background(colors.destructive.copy(alpha = destructiveOpacity)) }
+                focused { background(colors.destructive.copy(alpha = destructiveOpacity)) }
             }
         } else {
             Style
@@ -518,7 +519,7 @@ fun DropdownMenuScope.DropdownMenuItem(
     val touchTargetStyle = if (LocalContextMenuNova.current) Style else rememberMinTouchTargetStyle()
     Box(
         modifier =
-            modifier.contextMenuNavigation(resolvedEnabled, label)
+            modifier.contextMenuNavigation(resolvedEnabled, textValue ?: label)
                 .semantics {
                     role = Role.Button
                     contentDescription = textValue ?: label
@@ -610,7 +611,7 @@ fun DropdownMenuScope.DropdownMenuCheckboxItem(
     val touchTargetStyle = if (LocalContextMenuNova.current) Style else rememberMinTouchTargetStyle()
     Row(
         modifier =
-            modifier.contextMenuNavigation(resolvedEnabled, label)
+            modifier.contextMenuNavigation(resolvedEnabled, textValue ?: label)
                 .semantics {
                     role = Role.Checkbox
                     toggleableState =
@@ -793,7 +794,7 @@ fun DropdownMenuRadioGroupScope.DropdownMenuRadioItem(
     val touchTargetStyle = if (LocalContextMenuNova.current) Style else rememberMinTouchTargetStyle()
     Row(
         modifier =
-            modifier.contextMenuNavigation(resolvedEnabled, label)
+            modifier.contextMenuNavigation(resolvedEnabled, textValue ?: label)
                 .semantics {
                     role = Role.RadioButton
                     this.selected = selected
@@ -1114,7 +1115,7 @@ fun DropdownMenuSubScope.DropdownMenuSubTrigger(
     val touchTargetStyle = if (LocalContextMenuNova.current) Style else rememberMinTouchTargetStyle()
     Row(
         modifier =
-            modifier.focusRequester(controller.triggerFocus).contextMenuNavigation(resolvedEnabled, label)
+            modifier.focusRequester(controller.triggerFocus).contextMenuNavigation(resolvedEnabled, textValue ?: label)
                 .fillMaxWidth()
                 .onPreviewKeyEvent { event ->
                     if (event.type == KeyEventType.KeyDown &&

@@ -3,6 +3,7 @@ package com.toutiaoyan.compose.ui.catalog
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.*
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
@@ -28,9 +29,12 @@ class CheckboxViewportTest(private val width: Int, private val dark: Boolean) {
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = catalogFontFamily()) {
                 OverlayHost {
-                    Box(Modifier.width((if (width < 640) 325 else 638).dp)) {
-                        Box(Modifier.padding(if (name == "RTL") 0.dp else 40.dp)) {
-                            checkboxDoc.examples.single { it.title == name }.preview()
+                    CompositionLocalProvider(LocalCatalogViewportWidth provides width.dp) {
+                        val example = checkboxDoc.examples.single { it.title == name }
+                        Box(Modifier.width((if (width < 640) 325 else 638).dp).testTag("preview")) {
+                            Box(Modifier.padding(example.previewPadding)) {
+                                example.preview()
+                            }
                         }
                     }
                 }
@@ -42,6 +46,15 @@ class CheckboxViewportTest(private val width: Int, private val dark: Boolean) {
         val results = mutableListOf<TextLayoutResult>()
         rule.onNodeWithText(text).performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(results) }
         return results.single()
+    }
+
+    @Test fun tablePreviewUsesTheOfficialResponsiveInset() {
+        show("Table")
+        val preview = rule.onNodeWithTag("preview").fetchSemanticsNode().boundsInRoot
+        val table = rule.onNodeWithContentDescription("People").fetchSemanticsNode().boundsInRoot
+        val inset = if (width < 768) 16f else 32f
+        assertEquals(inset, table.left - preview.left, .5f)
+        assertEquals(inset, preview.right - table.right, .5f)
     }
 
     @Test fun descriptionHasTwoCompleteTwentyOnePixelLines() {

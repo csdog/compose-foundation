@@ -22,7 +22,10 @@ class FieldExamplesTest {
     private val checkboxes = SemanticsMatcher.expectValue(SemanticsProperties.Role, Role.Checkbox)
     private val radios = SemanticsMatcher.expectValue(SemanticsProperties.Role, Role.RadioButton)
 
-    private fun show(title: String, width: Int = 640) {
+    private fun show(
+        title: String,
+        width: Int = 640,
+    ) {
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null, fontFamily = catalogFontFamily()) {
                 Box(Modifier.width(width.dp)) {
@@ -94,6 +97,7 @@ class FieldExamplesTest {
         assertTrue(byTitle.getValue("Field Group").code.contains("Get notified when tasks you've created"))
         assertTrue(byTitle.getValue("Choice Card").descriptionMarkdown!!.contains("Wrap `Field` components"))
         assertTrue(byTitle.getValue("Field Group").descriptionMarkdown!!.contains("Add `FieldSeparator`"))
+        assertTrue(byTitle.getValue("RTL").descriptionMarkdown!!.contains("in shadcn/ui"))
         assertTrue(byTitle.getValue("RTL").descriptionMarkdown!!.contains("RTL configuration guide"))
         assertTrue(byTitle.getValue("Responsive Layout").descriptionMarkdown!!.contains("448"))
     }

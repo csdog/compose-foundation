@@ -1,0 +1,249 @@
+{
+  "component": "field",
+  "title": "Field",
+  "generatedAt": "2026-11-08T11:42:36.402Z",
+  "localUrl": "http://127.0.0.1:62814/field",
+  "ok": true,
+  "checks": 48,
+  "passed": 48,
+  "failed": 0,
+  "failures": [],
+  "captures": [
+    {
+      "name": "desktop-light",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/field-r2/browser/desktop-light.png",
+      "bytes": 124768,
+      "sha256": "da5a0213a5a1e6e7a4106c35c010e78a6ca7404a4e2c551fcaa2b29921293435",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:62814/field",
+        "theme": "light",
+        "bodyHeight": "calc(13481px + 100vh)",
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 1000
+        },
+        "wasm": [
+          "http://127.0.0.1:62814/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:62814/3cedbfcd5f276a0febfe.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "desktop-dark",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/field-r2/browser/desktop-dark.png",
+      "bytes": 125116,
+      "sha256": "4bb87cde55edf1e7b9e85308b3c1c52503110807a459dc85403f26d06c399f28",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:62814/field",
+        "theme": "dark",
+        "bodyHeight": "calc(13481px + 100vh)",
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 1000
+        },
+        "wasm": [
+          "http://127.0.0.1:62814/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:62814/3cedbfcd5f276a0febfe.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "phone-light",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/field-r2/browser/phone-light.png",
+      "bytes": 46481,
+      "sha256": "ebf741a36bbbe2248f27a5bc3c9d73bdf5afd0cbb724b4b27395d855ba9d9500",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:62814/field",
+        "theme": "light",
+        "bodyHeight": "calc(15948px + 100vh)",
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "wasm": [
+          "http://127.0.0.1:62814/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:62814/3cedbfcd5f276a0febfe.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "phone-dark",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/field-r2/browser/phone-dark.png",
+      "bytes": 47004,
+      "sha256": "b7dce5ae7f2a9bccfe2cdf220a1058e6e227b8ca33f6d40c2a9be746b7661b96",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:62814/field",
+        "theme": "dark",
+        "bodyHeight": "calc(15948px + 100vh)",
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "wasm": [
+          "http://127.0.0.1:62814/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:62814/3cedbfcd5f276a0febfe.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "section-input",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/field-r2/browser/section-input.png",
+      "bytes": 122321,
+      "sha256": "d2aaf7c9ff3e7c4f475ef446ebc278f660733a07228b94391bdc73c9c96ca6f3",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-textarea",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/field-r2/browser/section-textarea.png",
+      "bytes": 121096,
+      "sha256": "9f98294acd3c00512db035c6233e913b89b1178b93e99c0203602eaac3ee1b0a",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-select",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/field-r2/browser/section-select.png",
+      "bytes": 122060,
+      "sha256": "c1888f3b44142cdadb73055bae5066d79bc17874fa3f5cceb5e65928d93126a7",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-slider",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/field-r2/browser/section-slider.png",
+      "bytes": 129332,
+      "sha256": "c646ee8822d635f1efdcbfaf5f11291d23b4389c26b4b236d28367120666f198",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-fieldset",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/field-r2/browser/section-fieldset.png",
+      "bytes": 138609,
+      "sha256": "ec8423413d95d5605c58b995495ed6c0643cc671e759809a23be991e1cef9828",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-checkbox",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/field-r2/browser/section-checkbox.png",
+      "bytes": 135562,
+      "sha256": "5d6f89badc43124e5c1d12a1e2fa755c2fedc7f0a4b54b77fd9a17bdba491f93",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-radio",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/field-r2/browser/section-radio.png",
+      "bytes": 127857,
+      "sha256": "e34c0d0ecfb4c4fafb3b6b2bfc9c2a52c1f64f7312482f58535bec2501b660e7",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-switch",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/field-r2/browser/section-switch.png",
+      "bytes": 132925,
+      "sha256": "88d17f7872998b117279e06917503493b80a6b07b9f4bd4a139484990a2a622d",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-choice-card",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/field-r2/browser/section-choice-card.png",
+      "bytes": 148805,
+      "sha256": "a1530550d65ebe45b64f8d1fea59cfa0530f0bd27e048b7812229553d325132d",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-field-group",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/field-r2/browser/section-field-group.png",
+      "bytes": 133502,
+      "sha256": "492551bd241a6f0ab4f9ea4f40d9e8ce5eb61553e3077cc171ebdc9966056f7f",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-rtl",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/field-r2/browser/section-rtl.png",
+      "bytes": 118766,
+      "sha256": "e33ba52c1ae55ad984f115868825aa73b98c5df90311fa190185b4eb9e29b56f",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-responsive-layout",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/field-r2/browser/section-responsive-layout.png",
+      "bytes": 135847,
+      "sha256": "5f3ed2016f671a36deffd6acca20a0ec105afd1b77ad7e48d04482ecc0ca5c23",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    }
+  ]
+}

@@ -112,20 +112,20 @@ fun Message(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    val nova = currentTheme.activePreset == StylePreset.Nova
-    val rhea = currentTheme.activePreset == StylePreset.Rhea
+    val novaOrRhea =
+        currentTheme.activePreset == StylePreset.Nova || currentTheme.activePreset == StylePreset.Rhea
     val parts = remember { MessageParts() }
     Row(
         modifier =
-            modifier.then(if (nova) Modifier else Modifier.fillMaxWidth())
+            modifier.then(if (novaOrRhea) Modifier else Modifier.fillMaxWidth())
                 .styleable(styleState, rememberMessageRootStyle() then style),
-        horizontalArrangement = Arrangement.spacedBy(if (nova || rhea) 8.dp else twSpacing.sm),
+        horizontalArrangement = Arrangement.spacedBy(if (novaOrRhea) 8.dp else twSpacing.sm),
     ) {
         CompositionLocalProvider(
             LocalMessageAlign provides align,
-            LocalMessageParts provides if (nova || rhea) parts else null,
+            LocalMessageParts provides if (novaOrRhea) parts else null,
             LocalDefaultTextStyle provides
-                if (nova) {
+                if (novaOrRhea) {
                     TextStyle(
                         fontFamily = currentTheme.fontFamily, fontSize = 14.sp, lineHeight = 20.sp,
                         lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
@@ -141,7 +141,7 @@ fun Message(
                             Modifier.align(Alignment.Bottom).offset {
                                 IntOffset(
                                     0,
-                                    if ((nova || rhea) && parts.footerCount > 0) -32.dp.roundToPx() else 0,
+                                    if (novaOrRhea && parts.footerCount > 0) -32.dp.roundToPx() else 0,
                                 )
                             },
                     ) { avatar() }
@@ -230,20 +230,20 @@ private fun MessageContentBody(
     style: Style,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    val nova = currentTheme.activePreset == StylePreset.Nova
-    val rhea = currentTheme.activePreset == StylePreset.Rhea
+    val novaOrRhea =
+        currentTheme.activePreset == StylePreset.Nova || currentTheme.activePreset == StylePreset.Rhea
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Column(
         modifier = modifier.styleable(styleState, rememberMessageRootStyle() then style),
         horizontalAlignment =
-            if (nova &&
+            if (novaOrRhea &&
                 LocalMessageAlign.current == MessageAlign.End
             ) {
                 Alignment.End
             } else {
                 Alignment.Start
             },
-        verticalArrangement = Arrangement.spacedBy(if (nova || rhea) 10.dp else twSpacing.xs),
+        verticalArrangement = Arrangement.spacedBy(if (novaOrRhea) 10.dp else twSpacing.xs),
         content = content,
     )
 }
@@ -274,7 +274,7 @@ fun MessageGroup(
 }
 
 /**
- * A metadata row (e.g. sender name) above a [Message]'s content, aligned to start in Nova and to the message side in legacy presets.
+ * A metadata row (e.g. sender name) above a [Message]'s content, aligned to start in Nova/Rhea and to the message side in legacy presets.
  */
 @Composable
 fun ColumnScope.MessageHeader(
@@ -283,20 +283,22 @@ fun ColumnScope.MessageHeader(
     content: @Composable RowScope.() -> Unit,
 ) {
     val align = LocalMessageAlign.current
-    val nova = currentTheme.activePreset == StylePreset.Nova
+    val novaOrRhea =
+        currentTheme.activePreset == StylePreset.Nova || currentTheme.activePreset == StylePreset.Rhea
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Row(
         modifier =
             modifier
-                .align(if (!nova && align == MessageAlign.End) Alignment.End else Alignment.Start)
+                .align(if (!novaOrRhea && align == MessageAlign.End) Alignment.End else Alignment.Start)
                 .styleable(styleState, rememberMessageMetadataStyle() then style),
-        horizontalArrangement = Arrangement.spacedBy(if (nova) 0.dp else twSpacing.xs),
+        horizontalArrangement = Arrangement.spacedBy(if (novaOrRhea) 0.dp else twSpacing.xs),
         verticalAlignment = Alignment.CenterVertically,
         content = {
             CompositionLocalProvider(
-                LocalContentColor provides if (nova) currentTheme.colors.mutedForeground else LocalContentColor.current,
+                LocalContentColor provides
+                    if (novaOrRhea) currentTheme.colors.mutedForeground else LocalContentColor.current,
                 LocalDefaultTextStyle provides
-                    if (nova) {
+                    if (novaOrRhea) {
                         TextStyle(
                             fontFamily = currentTheme.fontFamily, fontSize = 12.sp, lineHeight = 16.sp,
                             fontWeight = FontWeight.Medium,
@@ -324,7 +326,7 @@ fun ColumnScope.MessageHeader(
     MessageHeader(modifier = modifier, style = style) {
         Text(
             variant =
-                if (currentTheme.activePreset == StylePreset.Nova) {
+                if (currentTheme.activePreset == StylePreset.Nova || currentTheme.activePreset == StylePreset.Rhea) {
                     TextVariant.BodyMedium
                 } else {
                     TextVariant.LabelLarge
@@ -334,7 +336,7 @@ fun ColumnScope.MessageHeader(
 }
 
 /**
- * A metadata row (e.g. timestamp) below a [Message]'s content, aligned to start in Nova and to the message side in legacy presets.
+ * A metadata row (e.g. timestamp) below a [Message]'s content, aligned to start in Nova/Rhea and to the message side in legacy presets.
  */
 @Composable
 fun ColumnScope.MessageFooter(
@@ -343,7 +345,8 @@ fun ColumnScope.MessageFooter(
     content: @Composable RowScope.() -> Unit,
 ) {
     val align = LocalMessageAlign.current
-    val nova = currentTheme.activePreset == StylePreset.Nova
+    val novaOrRhea =
+        currentTheme.activePreset == StylePreset.Nova || currentTheme.activePreset == StylePreset.Rhea
     TrackMessagePart()
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Row(
@@ -351,13 +354,14 @@ fun ColumnScope.MessageFooter(
             modifier
                 .align(if (align == MessageAlign.End) Alignment.End else Alignment.Start)
                 .styleable(styleState, rememberMessageMetadataStyle() then style),
-        horizontalArrangement = Arrangement.spacedBy(if (nova) 0.dp else twSpacing.xs),
+        horizontalArrangement = Arrangement.spacedBy(if (novaOrRhea) 0.dp else twSpacing.xs),
         verticalAlignment = Alignment.CenterVertically,
         content = {
             CompositionLocalProvider(
-                LocalContentColor provides if (nova) currentTheme.colors.mutedForeground else LocalContentColor.current,
+                LocalContentColor provides
+                    if (novaOrRhea) currentTheme.colors.mutedForeground else LocalContentColor.current,
                 LocalDefaultTextStyle provides
-                    if (nova) {
+                    if (novaOrRhea) {
                         TextStyle(
                             fontFamily = currentTheme.fontFamily, fontSize = 12.sp, lineHeight = 16.sp,
                             fontWeight = FontWeight.Medium,
@@ -383,7 +387,7 @@ fun ColumnScope.MessageFooter(
     style: Style = Style,
 ) {
     MessageFooter(modifier = modifier, style = style) {
-        if (currentTheme.activePreset == StylePreset.Nova) {
+        if (currentTheme.activePreset == StylePreset.Nova || currentTheme.activePreset == StylePreset.Rhea) {
             Text { text }
         } else {
             Text(variant = TextVariant.LabelSmall, textStyle = TextColors.Muted) { text }

@@ -46,10 +46,39 @@ import com.toutiaoyan.compose.ui.components.text.Text
 /** Logical icon edge, matching shadcn data-icon inline-start/inline-end. */
 enum class BadgeIconPlacement { Start, End, Both }
 
+/** Badge with a locally remembered interaction source. */
+@OptIn(ExperimentalFoundationStyleApi::class)
+@Composable
+fun Badge(
+    modifier: Modifier = Modifier,
+    variant: BadgeVariant = BadgeVariant.Default,
+    onClick: (() -> Unit)? = null,
+    style: Style = Style,
+    href: String? = null,
+    invalid: Boolean = false,
+    iconPlacement: BadgeIconPlacement? = null,
+    content: @Composable () -> Unit,
+) = Badge(modifier, variant, onClick, style, href, invalid, iconPlacement, interactionSource = null, content = content)
+
+/** Text badge with a locally remembered interaction source. */
+@OptIn(ExperimentalFoundationStyleApi::class)
+@Composable
+fun Badge(
+    text: String,
+    modifier: Modifier = Modifier,
+    variant: BadgeVariant = BadgeVariant.Default,
+    onClick: (() -> Unit)? = null,
+    style: Style = Style,
+    href: String? = null,
+    invalid: Boolean = false,
+    iconPlacement: BadgeIconPlacement? = null,
+) = Badge(text, modifier, variant, onClick, style, href, invalid, iconPlacement, interactionSource = null)
+
 /**
  * Label/tag component. Matches real shadcn badge.tsx: every variant reserves a 1dp
  * border (transparent except Outline), and [onClick] enables the link/`asChild`
- * focus-ring path.
+ * focus-ring path. Pass [interactionSource] to control or inspect hover/press state;
+ * omitting it keeps a remembered source local to this badge.
  *
  * Usage:
  * ```
@@ -68,16 +97,17 @@ fun Badge(
     href: String? = null,
     invalid: Boolean = false,
     iconPlacement: BadgeIconPlacement? = null,
+    interactionSource: MutableInteractionSource?,
     content: @Composable () -> Unit,
 ) {
     val uri = LocalUriHandler.current
     val action = onClick ?: href?.let { { uri.openUri(it) } }
-    val interactionSource = remember { MutableInteractionSource() }
-    val styleState = rememberUpdatedStyleState(interactionSource)
+    val resolvedInteractionSource = interactionSource ?: remember { MutableInteractionSource() }
+    val styleState = rememberUpdatedStyleState(resolvedInteractionSource)
 
     val theme = currentTheme
     val nova = theme.activePreset == StylePreset.Nova
-    val hovered by interactionSource.collectIsHoveredAsState()
+    val hovered by resolvedInteractionSource.collectIsHoveredAsState()
     val foreground =
         when {
             nova && variant == BadgeVariant.Destructive -> theme.colors.destructive
@@ -157,13 +187,13 @@ fun Badge(
             .then(
                 if (action != null) {
                     Modifier.keyboardInputMode().clickable(
-                        interactionSource = interactionSource,
+                        interactionSource = resolvedInteractionSource,
                         indication = null,
                         role = if (href == null) Role.Button else null,
                         onClick = action,
                     )
                 } else if (nova) {
-                    Modifier.hoverable(interactionSource)
+                    Modifier.hoverable(resolvedInteractionSource)
                 } else {
                     Modifier
                 },
@@ -230,6 +260,7 @@ fun Badge(
     href: String? = null,
     invalid: Boolean = false,
     iconPlacement: BadgeIconPlacement? = null,
+    interactionSource: MutableInteractionSource?,
 ) {
     Badge(
         modifier = modifier,
@@ -239,6 +270,7 @@ fun Badge(
         href = href,
         invalid = invalid,
         iconPlacement = iconPlacement,
+        interactionSource = interactionSource,
         content = { Text(maxLines = 1) { text } },
     )
 }
@@ -253,7 +285,17 @@ fun Badge(
     onClick: (() -> Unit)? = null,
     style: Style = Style,
     content: @Composable () -> Unit,
-) = Badge(modifier, variant, onClick, style, href = null, invalid = false, iconPlacement = null, content = content)
+) = Badge(
+    modifier,
+    variant,
+    onClick,
+    style,
+    href = null,
+    invalid = false,
+    iconPlacement = null,
+    interactionSource = null,
+    content = content,
+)
 
 @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
 @OptIn(ExperimentalFoundationStyleApi::class)

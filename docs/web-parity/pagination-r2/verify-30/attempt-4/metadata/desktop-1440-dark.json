@@ -1,0 +1,21 @@
+{
+  "url": "http://127.0.0.1:8772/pagination",
+  "title": "Compose Foundation — Components",
+  "viewport": {
+    "width": 1440,
+    "height": 1000,
+    "dpr": 1
+  },
+  "documentElement": {
+    "width": 1425,
+    "height": 1000
+  },
+  "body": {
+    "x": 0,
+    "y": 0,
+    "width": 1425,
+    "height": 6220.5,
+    "scrollHeight": 6221
+  },
+  "canvases": []
+}

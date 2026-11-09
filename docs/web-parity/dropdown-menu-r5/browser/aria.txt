@@ -1,0 +1,979 @@
+Compose Foundation — Components
+Notifications
+Home
+Components
+Create
+Combobox
+Command
+Context Menu
+Date Picker
+Dialog
+Drawer
+Dropdown Menu
+Empty
+Field
+Hover Card
+Input
+Input Group
+Input OTP
+Item
+Kbd
+Label
+Marker
+Menubar
+Message
+Message Scroller
+Navigation Menu
+Pagination
+Popover
+Progress
+Questionnaire
+Radio Group
+Resizable
+Scroll Area
+Home
+Components
+Create
+Search documentation
+GitHub
+Toggle theme
+New
+Combobox
+Command
+Context Menu
+Date Picker
+Dialog
+Drawer
+Dropdown Menu
+Empty
+Field
+Hover Card
+Input
+Input Group
+Input OTP
+Item
+Kbd
+Label
+Marker
+Menubar
+Message
+Message Scroller
+Navigation Menu
+Pagination
+Popover
+Progress
+Questionnaire
+New
+Radio Group
+Resizable
+Scroll Area
+Search...
+GitHub
+New
+Installation
+Usage
+Composition
+Basic
+Submenu
+Shortcuts
+Icons
+Checkboxes
+Checkboxes Icons
+Radio Group
+Radio Icons
+Destructive
+Avatar
+Complex
+RTL
+Kotlin extension: Inset
+Kotlin extension: Disabled
+Kotlin extension: Non-modal
+Kotlin extension: Non-dismissible
+Kotlin extension: Indeterminate checkbox
+Kotlin extension: Keep open on select
+Kotlin extension: Prevent checkbox toggle
+Kotlin extension: Uncontrolled
+Kotlin API notes
+API Reference
+DropdownMenu
+DropdownMenuContent / SubContent
+Items and submenu triggers
+Copy Page
+Previous: Drawer
+Next: Empty
+On This Page
+Installation
+Usage
+Composition
+Basic
+Submenu
+Shortcuts
+Icons
+Checkboxes
+Checkboxes Icons
+Radio Group
+Radio Icons
+Destructive
+Avatar
+Complex
+RTL
+Kotlin extension: Inset
+Kotlin extension: Disabled
+Kotlin extension: Non-modal
+Kotlin extension: Non-dismissible
+Kotlin extension: Indeterminate checkbox
+Kotlin extension: Keep open on select
+Kotlin extension: Prevent checkbox toggle
+Kotlin extension: Uncontrolled
+Kotlin API notes
+API Reference
+DropdownMenu
+DropdownMenuContent / SubContent
+Items and submenu triggers
+Dropdown Menu
+Copy Page
+Displays a menu to the user — such as a set of actions or functions — triggered by a button.
+Base UI
+Installation
+Usage
+Composition
+Basic
+Submenu
+Shortcuts
+Icons
+Checkboxes
+Checkboxes Icons
+Radio Group
+Radio Icons
+Destructive
+Avatar
+Complex
+RTL
+Kotlin extension: Inset
+Kotlin extension: Disabled
+Kotlin extension: Non-modal
+Kotlin extension: Non-dismissible
+Kotlin extension: Indeterminate checkbox
+Kotlin extension: Keep open on select
+Kotlin extension: Prevent checkbox toggle
+Kotlin extension: Uncontrolled
+Kotlin API notes
+The first thirteen recipes follow the official Base UI page. The additional examples cover Kotlin state and selection APIs. leadingContent supplies optional visuals for checkbox, radio and submenu rows. Long menu content scrolls within the available window space. Avatar uses the bundled shadcn photo; replace the resource in your app.
+API Reference
+Component API
+Component API
+Component API
+Open
+View Code
+Installation
+Copy
+Usage
+Copy
+Copy
+Composition
+Copy
+Basic
+A basic dropdown menu with labels and separators.
+Submenu
+Use DropdownMenuSub to nest secondary actions.
+Shortcuts
+Add DropdownMenuShortcut to show keyboard hints.
+Icons
+Combine icons with labels for quick scanning.
+Checkboxes
+Use DropdownMenuCheckboxItem for toggles.
+Checkboxes Icons
+Add icons to checkbox items.
+Radio Group
+Use DropdownMenuRadioGroup for exclusive choices.
+Radio Icons
+Show radio options with icons.
+Destructive
+Use DropdownMenuItemVariant.Destructive for irreversible actions.
+Avatar
+An account switcher dropdown triggered by an avatar.
+Complex
+A richer example combining groups, icons, and submenus.
+RTL
+To enable RTL support in shadcn/ui, see the RTL configuration guide.
+Kotlin extension: Inset
+Kotlin extension: Disabled
+Kotlin extension: Non-modal
+Kotlin extension: Non-dismissible
+Kotlin extension: Indeterminate checkbox
+Kotlin extension: Keep open on select
+Kotlin extension: Prevent checkbox toggle
+Kotlin extension: Uncontrolled
+Kotlin API notes
+API Reference
+DropdownMenu
+Controlled or local open state and modal input policy.
+DropdownMenuContent / SubContent
+Positioned, height-bounded scrollable panels.
+Items and submenu triggers
+Labels own their semantics; optional leadingContent owns visuals.
+Open
+View Code
+build.gradle.kts
+1
+
+
+2
+
+
+3
+
+
+4
+
+
+5
+
+
+6
+
+
+7
+
+
+8
+
+
+9
+
+
+10
+
+
+11
+
+
+12
+
+
+13
+
+
+14
+
+
+15
+
+
+16
+
+
+17
+
+
+18
+
+
+19
+
+
+20
+
+
+21
+1
+
+
+2
+
+
+3
+
+
+4
+
+
+5
+
+
+6
+
+
+7
+
+
+8
+
+
+9
+
+
+10
+
+
+11
+
+
+12
+
+
+13
+
+
+14
+
+
+15
+
+
+16
+
+
+17
+
+
+18
+
+
+19
+
+
+20
+Open
+View Code
+Open
+View Code
+Open
+View Code
+Open
+View Code
+Open
+View Code
+Notifications
+View Code
+Open
+View Code
+Payment Method
+View Code
+Actions
+View Code
+Open account menu, shadcn
+View Code
+Complex Menu
+View Code
+View Code
+View
+View Code
+Open
+View Code
+Open
+View Code
+Open
+View Code
+View
+View Code
+Open
+View Code
+View
+View Code
+Open
+View Code
+DropdownMenu
+Separator
+Separator
+Separator
+Separator
+DropdownMenuContent / SubContent
+Separator
+Separator
+Separator
+Separator
+Separator
+Separator
+Items and submenu triggers
+Separator
+Separator
+Separator
+Separator
+Separator
+Separator
+Separator
+Separator
+Separator
+Open
+1
+
+
+2
+
+
+3
+// build.gradle.kts — commonMain.dependencies
+
+
+implementation("com.toutiaoyan.compose:ui:0.3.37")
+import androidx.compose.foundation.Image
+
+
+import androidx.compose.foundation.layout.*
+
+
+import androidx.compose.foundation.shape.CircleShape
+
+
+import androidx.compose.foundation.style.Style
+
+
+import androidx.compose.runtime.*
+
+
+import androidx.compose.ui.*
+
+
+import androidx.compose.ui.graphics.*
+
+
+import androidx.compose.ui.graphics.vector.ImageVector
+
+
+import androidx.compose.ui.platform.LocalLayoutDirection
+
+
+import androidx.compose.ui.text.TextStyle
+
+
+import androidx.compose.ui.text.style.LineHeightStyle
+
+
+import androidx.compose.ui.unit.*
+
+
+import com.composables.icons.lucide.*
+
+
+import com.toutiaoyan.compose.ui.components.avatar.*
+
+
+import com.toutiaoyan.compose.ui.components.button.*
+
+
+import com.toutiaoyan.compose.ui.components.dropdownmenu.*
+
+
+import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
+
+
+import com.toutiaoyan.compose.ui.components.text.Text
+
+
+import com.toutiaoyan.compose.ui.theme.currentTheme
+
+
+import org.jetbrains.compose.resources.painterResource
+
+
+// For Avatar, add the photo to your drawable resources and import your generated Res.
+import com.toutiaoyan.compose.ui.components.dropdownmenu.*
+
+
+import com.toutiaoyan.compose.ui.components.button.ButtonVariant
+
+
+import androidx.compose.foundation.style.Style
+
+
+
+
+var open by remember { mutableStateOf(false) }
+
+
+DropdownMenu(open = open, onOpenChange = { open = it }) {
+
+
+    DropdownMenuTrigger("Open", variant = ButtonVariant.Outline)
+
+
+    DropdownMenuContent(style = Style { width(128.dp) }) {
+
+
+        DropdownMenuGroup {
+
+
+            DropdownMenuLabel("My Account")
+
+
+            DropdownMenuItem("Profile", onClick = {})
+
+
+            DropdownMenuItem("Billing", onClick = {})
+
+
+            DropdownMenuItem("Settings", onClick = {})
+
+
+        }
+
+
+        DropdownMenuSeparator()
+
+
+        DropdownMenuItem("GitHub", onClick = {})
+
+
+        DropdownMenuItem("Support", onClick = {})
+
+
+        DropdownMenuItem("API", onClick = {}, disabled = true)
+
+
+    }
+
+
+}
+DropdownMenu
+
+
+├── DropdownMenuTrigger
+
+
+└── DropdownMenuContent
+
+
+    ├── DropdownMenuGroup
+
+
+    │   ├── DropdownMenuLabel
+
+
+    │   ├── DropdownMenuItem
+
+
+    │   ├── DropdownMenuCheckboxItem
+
+
+    │   └── DropdownMenuRadioGroup → DropdownMenuRadioItem
+
+
+    ├── DropdownMenuSeparator
+
+
+    └── DropdownMenuSub
+
+
+        ├── DropdownMenuSubTrigger
+
+
+        └── DropdownMenuSubContent
+Open
+View Code
+Open
+View Code
+Open
+View Code
+Open
+View Code
+Open
+View Code
+Notifications
+View Code
+Open
+View Code
+Payment Method
+View Code
+Actions
+View Code
+Open account menu, shadcn
+View Code
+Complex Menu
+View Code
+Preview language
+Translation information
+افتح القائمة
+View Code
+View
+View Code
+Open
+View Code
+Open
+View Code
+Open
+View Code
+View
+View Code
+Open
+View Code
+View
+View Code
+Open
+View Code
+Property
+Type
+Default
+Property
+Type
+Default
+Property
+Type
+Default
+var open by remember { mutableStateOf(false) }
+
+
+DropdownMenu(open = open, onOpenChange = { open = it }) {
+
+
+    DropdownMenuTrigger("Open", variant = ButtonVariant.Outline)
+Open
+1
+
+
+2
+
+
+3
+Open
+1
+
+
+2
+
+
+3
+Open
+1
+
+
+2
+
+
+3
+Open
+1
+
+
+2
+
+
+3
+Open
+1
+
+
+2
+
+
+3
+Notifications
+1
+
+
+2
+
+
+3
+Open
+1
+
+
+2
+
+
+3
+Payment Method
+1
+
+
+2
+
+
+3
+Actions
+1
+
+
+2
+
+
+3
+LR
+1
+
+
+2
+
+
+3
+Complex Menu
+1
+
+
+2
+
+
+3
+العربية
+Translation information
+افتح القائمة
+1
+
+
+2
+
+
+3
+View
+1
+
+
+2
+
+
+3
+Open
+1
+
+
+2
+
+
+3
+Open
+1
+
+
+2
+
+
+3
+Open
+1
+
+
+2
+
+
+3
+View
+1
+
+
+2
+
+
+3
+Open
+1
+
+
+2
+
+
+3
+View
+1
+
+
+2
+
+
+3
+Open
+1
+
+
+2
+
+
+3
+open / defaultOpen
+Boolean? / Boolean
+null / false
+onOpenChange
+((Boolean) -> Unit)?
+null
+modal
+Boolean
+true
+modifier
+Modifier
+Modifier
+placement / side
+PopupPlacement / PopupPlacement?
+Bottom / null (root); End / null (sub)
+sideOffset
+Dp
+4.dp (root); 0.dp (sub)
+align / alignOffset
+PopupAlign / Dp
+Start / 0.dp (root); Start / -3.dp (sub)
+dismissOnClickOutside
+Boolean
+true
+enter / exit
+EnterTransition / ExitTransition
+PopupTransitions
+modifier / style
+Modifier / Style
+Default
+label / textValue
+String / String?
+Required / null
+leadingContent
+(@Composable () -> Unit)?
+null on checkbox, radio and sub trigger
+enabled / disabled
+Boolean / Boolean
+true / false
+checked / onCheckedChange
+Boolean / (Boolean) -> Unit
+Required on checkbox
+value / onValueChange
+String / (String) -> Unit
+Required on radio group
+onSelect
+(() -> Boolean)?
+null; return true to prevent selection
+inset / indeterminate
+Boolean
+false where supported
+shortcut / variant
+String? / DropdownMenuItemVariant
+null / Default on plain item
+style
+Style
+Style
+var open by remember { mutableStateOf(false) }
+
+
+DropdownMenu(open = open, onOpenChange = { open = it }) {
+
+
+    DropdownMenuTrigger("Open", variant = ButtonVariant.Outline)
+var open by remember { mutableStateOf(false) }
+
+
+DropdownMenu(open = open, onOpenChange = { open = it }) {
+
+
+    DropdownMenuTrigger("Open", variant = ButtonVariant.Outline)
+var open by remember { mutableStateOf(false) }
+
+
+DropdownMenu(open = open, onOpenChange = { open = it }) {
+
+
+    DropdownMenuTrigger("Open", variant = ButtonVariant.Outline)
+var open by remember { mutableStateOf(false) }
+
+
+DropdownMenu(open = open, onOpenChange = { open = it }) {
+
+
+    DropdownMenuTrigger("Open", variant = ButtonVariant.Outline)
+var showStatus by remember { mutableStateOf(true) }
+
+
+var showActivity by remember { mutableStateOf(false) }
+
+
+var showPanel by remember { mutableStateOf(false) }
+var email by remember { mutableStateOf(true) }
+
+
+var sms by remember { mutableStateOf(false) }
+
+
+var push by remember { mutableStateOf(true) }
+var panel by remember { mutableStateOf("bottom") }
+
+
+var open by remember { mutableStateOf(false) }
+
+
+DropdownMenu(open = open, onOpenChange = { open = it }) {
+var payment by remember { mutableStateOf("card") }
+
+
+var open by remember { mutableStateOf(false) }
+
+
+DropdownMenu(open = open, onOpenChange = { open = it }) {
+var open by remember { mutableStateOf(false) }
+
+
+DropdownMenu(open = open, onOpenChange = { open = it }) {
+
+
+    DropdownMenuTrigger("Actions", variant = ButtonVariant.Outline)
+var open by remember { mutableStateOf(false) }
+
+
+DropdownMenu(open = open, onOpenChange = { open = it }) {
+
+
+    DropdownMenuTrigger {
+var email by remember { mutableStateOf(true) }
+
+
+var sms by remember { mutableStateOf(false) }
+
+
+var push by remember { mutableStateOf(true) }
+افتح القائمة
+// Connect language to your picker: 0 English, 1 Arabic, 2 Hebrew.
+
+
+var language by remember { mutableStateOf(1) }
+
+
+CompositionLocalProvider(LocalLayoutDirection provides if (language == 0) LayoutDirection.Ltr else LayoutDirection.Rtl) {
+var open by remember { mutableStateOf(false) }
+
+
+var showStatus by remember { mutableStateOf(true) }
+
+
+DropdownMenu(open = open, onOpenChange = { open = it }) {
+var open by remember { mutableStateOf(false) }
+
+
+DropdownMenu(open = open, onOpenChange = { open = it }) {
+
+
+    DropdownMenuTrigger("Open")
+var open by remember { mutableStateOf(false) }
+
+
+DropdownMenu(open = open, onOpenChange = { open = it }, modal = false) {
+
+
+    DropdownMenuTrigger("Open")
+var open by remember { mutableStateOf(false) }
+
+
+DropdownMenu(open = open, onOpenChange = { open = it }) {
+
+
+    DropdownMenuTrigger("Open")
+var open by remember { mutableStateOf(false) }
+
+
+DropdownMenu(open = open, onOpenChange = { open = it }) {
+
+
+    DropdownMenuTrigger("View")
+var open by remember { mutableStateOf(false) }
+
+
+DropdownMenu(open = open, onOpenChange = { open = it }) {
+
+
+    DropdownMenuTrigger("Open")
+var open by remember { mutableStateOf(false) }
+
+
+DropdownMenu(open = open, onOpenChange = { open = it }) {
+
+
+    DropdownMenuTrigger("View")
+DropdownMenu {
+
+
+    DropdownMenuTrigger("Open")
+
+
+    DropdownMenuContent {

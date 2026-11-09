@@ -156,6 +156,7 @@ val emptyDoc =
                     listOf(
                         ApiProperty("text", "String / () -> String", "Required"),
                         ApiProperty("variant", "TextVariant", "EmptyTitleDefaults.Official"),
+                        ApiProperty("lineBreak", "LineBreak", "EmptyTitleDefaults.Balanced"),
                         ApiProperty("modifier / style", "Modifier / Style", "Default"),
                     ),
                 ),
@@ -167,6 +168,7 @@ val emptyDoc =
                     ),
                     listOf(
                         ApiProperty("text", "String / AnnotatedString / () -> String", "Required"),
+                        ApiProperty("lineBreak", "LineBreak", "EmptyDescriptionDefaults.Balanced"),
                         ApiProperty("modifier / style", "Modifier / Style", "Default"),
                     ),
                 ),
@@ -236,7 +238,9 @@ val emptyDoc =
                 ),
                 ComponentExample(
                     title = "Outline",
-                    descriptionMarkdown = "Use `EmptyVariant.Outline` (the `border` utility) to create an outline empty state.",
+                    descriptionMarkdown =
+                        "Use `EmptyVariant.Outline` (the `border` utility) to create an " +
+                            "outline empty state.",
                     minPreviewHeight = 384.dp,
                     mobileMinPreviewHeight = 384.dp,
                     previewPadding = 0.dp,
@@ -263,7 +267,9 @@ val emptyDoc =
                 ),
                 ComponentExample(
                     title = "Background",
-                    descriptionMarkdown = "Use a `background` style (the `bg-*` and `bg-gradient-*` utilities) to add a background to the empty state.",
+                    descriptionMarkdown =
+                        "Use a `background` style (the `bg-*` and `bg-gradient-*` utilities) " +
+                            "to add a background to the empty state.",
                     minPreviewHeight = 384.dp,
                     mobileMinPreviewHeight = 384.dp,
                     previewPadding = 0.dp,
@@ -274,7 +280,11 @@ val emptyDoc =
                             EmptyHeader {
                                 EmptyMedia(variant = EmptyMediaVariant.Icon) { EmptyRecipeGlyph(EmptyBell) }
                                 EmptyTitle("No Notifications")
-                                EmptyDescription("You're all caught up. New notifications will appear here.", modifier = Modifier.widthIn(max = 320.dp))
+                                EmptyDescription(
+                                    "You're all caught up. New notifications will appear here.",
+                                    modifier = Modifier.widthIn(max = 320.dp),
+                                    lineBreak = EmptyDescriptionDefaults.Pretty,
+                                )
                             }
                             EmptyContent {
                                 Button(onClick = {}, variant = ButtonVariant.Outline) {
@@ -312,6 +322,7 @@ val emptyDoc =
                                             max =
                                                 320.dp,
                                         ),
+                                    lineBreak = EmptyDescriptionDefaults.Pretty,
                                 )
                             }
                             EmptyContent {

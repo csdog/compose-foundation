@@ -428,6 +428,10 @@ val attachmentDoc =
         id = "attachment",
         title = "Attachment",
         description = "Displays a file or image attachment with media, metadata, upload state, and actions.",
+        introMarkdown =
+            "The `Attachment` component displays a file or image attachment, its media, name, " +
+                "and metadata, with optional actions and upload state. Use it for files and images " +
+                "in chat composers, message threads, and upload lists.",
         examplesHeading = null,
         usageImportsCode =
             """
@@ -438,14 +442,20 @@ val attachmentDoc =
             import androidx.compose.ui.graphics.*
             import androidx.compose.ui.graphics.vector.ImageVector
             import androidx.compose.ui.graphics.vector.PathParser
+            import androidx.compose.ui.layout.ContentScale
             import androidx.compose.ui.platform.LocalUriHandler
             import androidx.compose.ui.semantics.contentDescription
             import androidx.compose.ui.semantics.semantics
             import androidx.compose.ui.unit.dp
             import com.toutiaoyan.compose.ui.components.attachment.*
             import com.toutiaoyan.compose.ui.components.dialog.*
+            import com.toutiaoyan.compose.ui.components.spinner.Spinner
             import com.toutiaoyan.compose.ui.theme.LocalContentColor
             import com.composables.icons.lucide.*
+            import org.jetbrains.compose.resources.DrawableResource
+            import org.jetbrains.compose.resources.painterResource
+            // Replace this package and the photo resources with your app's generated resources.
+            import compose_foundation.app.shared.generated.resources.*
             """.trimIndent(),
         usageCode =
             """

@@ -2,18 +2,28 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.composables.icons.lucide.Check
@@ -54,7 +64,13 @@ import com.toutiaoyan.compose.ui.components.popover.PopoverContent
 import com.toutiaoyan.compose.ui.components.popover.PopoverTrigger
 import com.toutiaoyan.compose.ui.components.spinner.Spinner
 import com.toutiaoyan.compose.ui.components.text.Text
+import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
+import com.toutiaoyan.compose.tailwind.core.TwColors
+import com.toutiaoyan.compose.ui.catalog.catalogArabicFontFamily
+import com.toutiaoyan.compose.ui.catalog.catalogHebrewFontFamily
+import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.utils.clipboard.rememberCopyToClipboard
 
 /**
  * Current official page (revision 8a35366):
@@ -80,7 +96,10 @@ val inputGroupDoc =
             import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupInput
             import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupText
             import com.toutiaoyan.compose.ui.components.icon.Icon
-import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupTextarea
+            import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupTextarea
+            import com.toutiaoyan.compose.ui.utils.clipboard.rememberCopyToClipboard
+            import com.composables.icons.lucide.Lucide
+            import com.composables.icons.lucide.Search
             """.trimIndent(),
         usageCode =
             """
@@ -142,7 +161,9 @@ import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupTextarea
                 ComponentExample(
                     title = "inline-start",
                     headingLevel = 3,
-                    descriptionMarkdown = "Use `align=\"inline-start\"` to position the addon at the start of the input. This is the default.",
+                    descriptionMarkdown =
+                        "Use `align=\"inline-start\"` to position the addon at the start of " +
+                            "the input. This is the default.",
                     code =
                         """
                         var query by remember { mutableStateOf("") }
@@ -165,7 +186,11 @@ import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupTextarea
                             Field {
                                 FieldLabel("Input")
                                 InputGroup {
-                                    InputGroupInput(value = query, onValueChange = { query = it }, placeholder = "Search...")
+                                    InputGroupInput(
+                                        value = query,
+                                        onValueChange = { query = it },
+                                        placeholder = "Search...",
+                                    )
                                     InputGroupAddon(align = InputGroupAddonAlign.InlineStart) {
                                         Icon(Lucide.Search)
                                     }
@@ -250,7 +275,14 @@ import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupTextarea
                                         InputGroupAddon(align = InputGroupAddonAlign.BlockStart) {
                                             InputGroupText {
                                                 DocIcon(Lucide.FileCode)
-                                                Text { "script.js" }
+                                                Text(
+                                                    textStyle =
+                                                        TextStyle(
+                                                            fontFamily = FontFamily.Monospace,
+                                                            fontWeight = FontWeight.Medium,
+                                                            color = currentTheme.colors.mutedForeground,
+                                                        ),
+                                                ) { "script.js" }
                                             }
                                             Spacer(Modifier.weight(1f))
                                             InputGroupButton(onClick = {}, size = InputGroupButtonSize.IconXs, label = "Copy") {
@@ -271,7 +303,11 @@ import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupTextarea
                                 Field {
                                     FieldLabel("Input")
                                     InputGroup {
-                                        InputGroupInput(value = name, onValueChange = { name = it }, placeholder = "Enter your name")
+                                        InputGroupInput(
+                                            value = name,
+                                            onValueChange = { name = it },
+                                            placeholder = "Enter your name",
+                                        )
                                         InputGroupAddon(align = InputGroupAddonAlign.BlockStart) {
                                             InputGroupText("Full Name")
                                         }
@@ -289,10 +325,21 @@ import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupTextarea
                                         InputGroupAddon(align = InputGroupAddonAlign.BlockStart) {
                                             InputGroupText {
                                                 DocIcon(Lucide.FileCode)
-                                                Text { "script.js" }
+                                                Text(
+                                                    textStyle =
+                                                        TextStyle(
+                                                            fontFamily = FontFamily.Monospace,
+                                                            fontWeight = FontWeight.Medium,
+                                                            color = currentTheme.colors.mutedForeground,
+                                                        ),
+                                                ) { "script.js" }
                                             }
                                             Spacer(Modifier.weight(1f))
-                                            InputGroupButton(onClick = {}, size = InputGroupButtonSize.IconXs, label = "Copy") {
+                                            InputGroupButton(
+                                                onClick = {},
+                                                size = InputGroupButtonSize.IconXs,
+                                                label = "Copy",
+                                            ) {
                                                 DocIcon(Lucide.Copy)
                                             }
                                         }
@@ -354,7 +401,11 @@ import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupTextarea
                                 Field {
                                     FieldLabel("Input")
                                     InputGroup {
-                                        InputGroupInput(value = amount, onValueChange = { amount = it }, placeholder = "Enter amount")
+                                        InputGroupInput(
+                                            value = amount,
+                                            onValueChange = { amount = it },
+                                            placeholder = "Enter amount",
+                                        )
                                         InputGroupAddon(align = InputGroupAddonAlign.BlockEnd) {
                                             InputGroupText("USD")
                                         }
@@ -457,25 +508,35 @@ import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupTextarea
                     title = "Button",
                     code =
                         """
+                        val copy = rememberCopyToClipboard("https://x.com/shadcn")
+                        var favorite by remember { mutableStateOf(false) }
+                        var url by remember { mutableStateOf("") }
+                        var search by remember { mutableStateOf("") }
                         Column(
                             modifier = Modifier.widthIn(max = 384.dp),
-                            verticalArrangement = Arrangement.spacedBy(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(24.dp),
                         ) {
                             InputGroup {
                                 InputGroupInput(value = "https://x.com/shadcn", onValueChange = {}, readOnly = true)
-                                InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) {
+                                InputGroupAddon(align = InputGroupAddonAlign.InlineEnd, style = Style { contentPaddingEnd(3.2.dp) }) {
                                     InputGroupButton(
-                                        onClick = { copied = !copied },
+                                        onClick = copy.copy,
                                         size = InputGroupButtonSize.IconXs,
                                         label = "Copy",
-                                    ) { if (copied) DocIcon(Lucide.Check) else DocIcon(Lucide.Copy) }
+                                    ) { if (copy.justCopied) DocIcon(Lucide.Check) else DocIcon(Lucide.Copy) }
                                 }
                             }
-                            InputGroup {
-                                InputGroupAddon {
+                            InputGroup(style = Style { shape(CircleShape) }) {
+                                InputGroupAddon(style = Style { contentPaddingStart(3.2.dp) }) {
                                     Popover {
                                         PopoverTrigger {
-                                            InputGroupButton(onClick = {}, size = InputGroupButtonSize.IconXs, label = "Info") {
+                                            InputGroupButton(
+                                                onClick = {},
+                                                size = InputGroupButtonSize.IconXs,
+                                                variant = ButtonVariant.Secondary,
+                                                style = Style { shape(CircleShape) },
+                                                label = "Info",
+                                            ) {
                                                 DocIcon(Lucide.Info)
                                             }
                                         }
@@ -485,17 +546,22 @@ import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupTextarea
                                         }
                                     }
                                 }
-                                InputGroupText("https://")
+                                InputGroupAddon(style = Style { contentPaddingStart(6.dp) }) { InputGroupText("https://") }
                                 InputGroupInput(value = url, onValueChange = { url = it })
-                                InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) {
-                                    InputGroupButton(onClick = { favorite = !favorite }, size = InputGroupButtonSize.IconXs) {
+                                InputGroupAddon(align = InputGroupAddonAlign.InlineEnd, style = Style { contentPaddingEnd(3.2.dp) }) {
+                                    InputGroupButton(
+                                        onClick = { favorite = !favorite },
+                                        size = InputGroupButtonSize.IconXs,
+                                        label = "Favorite",
+                                        style = Style { shape(CircleShape) },
+                                    ) {
                                         DocIcon(Lucide.Star, tint = if (favorite) TwColors.blue600 else currentTheme.colors.mutedForeground)
                                     }
                                 }
                             }
                             InputGroup {
                                 InputGroupInput(value = search, onValueChange = { search = it }, placeholder = "Type to search...")
-                                InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) {
+                                InputGroupAddon(align = InputGroupAddonAlign.InlineEnd, style = Style { contentPaddingEnd(3.2.dp) }) {
                                     InputGroupButton("Search", onClick = {}, variant = ButtonVariant.Secondary)
                                 }
                             }
@@ -508,18 +574,30 @@ import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupTextarea
                     code =
                         """
                         var query by remember { mutableStateOf("") }
+                        val keyRadius = (currentTheme.baseRadius.value - 5.dp).coerceAtLeast(0.dp)
                         InputGroup(modifier = Modifier.widthIn(max = 384.dp)) {
                             InputGroupInput(value = query, onValueChange = { query = it }, placeholder = "Search...")
                             InputGroupAddon { DocIcon(Lucide.Search) }
-                            InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) { Kbd("⌘K") }
+                            InputGroupAddon(
+                                align = InputGroupAddonAlign.InlineEnd,
+                                style = Style { contentPaddingEnd(5.6.dp) },
+                            ) {
+                                Kbd("⌘K", style = Style { shape(RoundedCornerShape(keyRadius)) })
+                            }
                         }
                         """.trimIndent(),
                     preview = {
                         var query by remember { mutableStateOf("") }
+                        val keyRadius = (currentTheme.baseRadius.value - 5.dp).coerceAtLeast(0.dp)
                         InputGroup(modifier = Modifier.widthIn(max = 384.dp)) {
                             InputGroupInput(value = query, onValueChange = { query = it }, placeholder = "Search...")
                             InputGroupAddon { DocIcon(Lucide.Search) }
-                            InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) { Kbd("⌘K") }
+                            InputGroupAddon(
+                                align = InputGroupAddonAlign.InlineEnd,
+                                style = Style { contentPaddingEnd(5.6.dp) },
+                            ) {
+                                Kbd("⌘K", style = Style { shape(RoundedCornerShape(keyRadius)) })
+                            }
                         }
                     },
                 ),
@@ -535,7 +613,7 @@ import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupTextarea
                         ) {
                             InputGroup {
                                 InputGroupInput(value = fileName, onValueChange = { fileName = it }, placeholder = "Enter file name")
-                                InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) {
+                                InputGroupAddon(align = InputGroupAddonAlign.InlineEnd, style = Style { contentPaddingEnd(3.2.dp) }) {
                                     DropdownMenu {
                                         DropdownMenuTrigger {
                                             InputGroupButton(onClick = {}, size = InputGroupButtonSize.IconXs, label = "More") {
@@ -552,7 +630,7 @@ import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupTextarea
                             }
                             InputGroup {
                                 InputGroupInput(value = search, onValueChange = { search = it }, placeholder = "Enter search query")
-                                InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) {
+                                InputGroupAddon(align = InputGroupAddonAlign.InlineEnd, style = Style { contentPaddingEnd(3.2.dp) }) {
                                     DropdownMenu {
                                         DropdownMenuTrigger {
                                             InputGroupButton(onClick = {}) {
@@ -611,17 +689,33 @@ import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupTextarea
                     code =
                         """
                         var code by remember { mutableStateOf("") }
+                        val border = currentTheme.colors.border
                         Column(Modifier.widthIn(max = 448.dp)) {
                             InputGroup {
                                 InputGroupTextarea(
                                     value = code,
                                     onValueChange = { code = it },
+                                    modifier = Modifier.heightIn(min = 200.dp),
                                     placeholder = "console.log('Hello, world!');",
                                 )
-                                InputGroupAddon(align = InputGroupAddonAlign.BlockStart) {
+                                InputGroupAddon(
+                                    align = InputGroupAddonAlign.BlockStart,
+                                    modifier = Modifier.drawBehind {
+                                        val y = size.height - .5.dp.toPx()
+                                        drawLine(border, Offset(0f, y), Offset(size.width, y), 1.dp.toPx())
+                                    },
+                                    style = Style { contentPaddingBottom(8.dp) },
+                                ) {
                                     InputGroupText {
                                         DocIcon(Lucide.FileCode)
-                                        Text { "script.js" }
+                                        Text(
+                                            textStyle =
+                                                TextStyle(
+                                                    fontFamily = FontFamily.Monospace,
+                                                    fontWeight = FontWeight.Medium,
+                                                    color = currentTheme.colors.mutedForeground,
+                                                ),
+                                        ) { "script.js" }
                                     }
                                     Spacer(Modifier.weight(1f))
                                     InputGroupButton(onClick = {}, size = InputGroupButtonSize.IconXs, label = "Refresh") {
@@ -631,7 +725,14 @@ import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupTextarea
                                         DocIcon(Lucide.Copy)
                                     }
                                 }
-                                InputGroupAddon(align = InputGroupAddonAlign.BlockEnd) {
+                                InputGroupAddon(
+                                    align = InputGroupAddonAlign.BlockEnd,
+                                    modifier = Modifier.drawBehind {
+                                        val y = .5.dp.toPx()
+                                        drawLine(border, Offset(0f, y), Offset(size.width, y), 1.dp.toPx())
+                                    },
+                                    style = Style { contentPaddingTop(8.dp) },
+                                ) {
                                     InputGroupText("Line 1, Column 1")
                                     Spacer(Modifier.weight(1f))
                                     InputGroupButton(onClick = {}, size = InputGroupButtonSize.Sm, variant = ButtonVariant.Default) {
@@ -646,15 +747,15 @@ import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupTextarea
                 ComponentExample(
                     title = "Custom Input",
                     descriptionMarkdown =
-                        "Add the `input-group-control` slot to your custom input for automatic focus state handling. " +
-                            "The Compose equivalent of the third-party resize-none textarea is the built-in " +
-                            "`InputGroupTextarea`, which grows with explicit `rows`/`minLines` instead of a DOM size.",
+                        "Use `InputGroupTextarea` for a growing multiline control inside the group. " +
+                            "It registers focus automatically and grows with its content; `minLines` sets " +
+                            "the minimum. Arbitrary custom controls do not register through a DOM slot in Compose.",
                     code =
                         """
                         var text by remember { mutableStateOf("") }
                         Column(Modifier.widthIn(max = 384.dp)) {
                             InputGroup {
-                                InputGroupTextarea(value = text, onValueChange = { text = it }, rows = 3, placeholder = "Autoresize textarea...")
+                                InputGroupTextarea(value = text, onValueChange = { text = it }, minLines = 1, placeholder = "Autoresize textarea...")
                                 InputGroupAddon(align = InputGroupAddonAlign.BlockEnd) {
                                     Spacer(Modifier.weight(1f))
                                     InputGroupButton(onClick = {}, size = InputGroupButtonSize.Sm, variant = ButtonVariant.Default) {
@@ -671,7 +772,7 @@ import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupTextarea
                                 InputGroupTextarea(
                                     value = text,
                                     onValueChange = { text = it },
-                                    rows = 3,
+                                    minLines = 1,
                                     placeholder = "Autoresize textarea...",
                                 )
                                 InputGroupAddon(align = InputGroupAddonAlign.BlockEnd) {
@@ -706,6 +807,13 @@ import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupTextarea
                                 InputGroup {
                                     InputGroupInput(value = searching, onValueChange = {}, placeholder = "جاري البحث...")
                                     InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) { Spinner() }
+                                }
+                                InputGroup {
+                                    InputGroupInput(value = saving, onValueChange = {}, placeholder = "جاري حفظ التغييرات...")
+                                    InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) {
+                                        InputGroupText("جاري الحفظ...")
+                                        Spinner()
+                                    }
                                 }
                                 FieldGroup {
                                     Field {
@@ -766,15 +874,31 @@ import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupTextarea
                     ),
                 ),
                 ComponentApiSection(
-                    "InputGroupInput / InputGroupTextarea",
-                    "Replacements for `Input` / `Textarea` inside a group; they register the unified " +
-                        "input-group focus state. All underlying input/textarea props are passed through.",
+                    "InputGroupInput",
+                    "An `Input` inside a group with automatic group focus registration. " +
+                        "The properties listed here are supported by the wrapper.",
                     listOf(
                         ApiProperty("value / onValueChange", "String / (String) -> Unit", "Required"),
                         ApiProperty("placeholder", "String?", "null"),
                         ApiProperty("disabled / invalid / readOnly", "Boolean", "false"),
-                        ApiProperty("InputGroupInput.type", "InputType", "Text"),
-                        ApiProperty("InputGroupTextarea.rows / minLines", "Int?", "null / 1"),
+                        ApiProperty("type", "InputType", "Text"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "InputGroupTextarea",
+                    "A growing multiline input inside a group with automatic group focus registration. " +
+                        "The properties listed here are supported by the wrapper.",
+                    listOf(
+                        ApiProperty("value / onValueChange", "String / (String) -> Unit", "Required"),
+                        ApiProperty("placeholder", "String?", "null"),
+                        ApiProperty(
+                            "enabled / disabled / invalid / isError / readOnly",
+                            "Boolean",
+                            "true / false / false / false / false",
+                        ),
+                        ApiProperty("rows", "Int?", "null"),
+                        ApiProperty("minLines / maxLines", "Int", "1 / Int.MAX_VALUE"),
+                        ApiProperty("modifier", "Modifier", "Modifier"),
                     ),
                 ),
                 ComponentApiSection(
@@ -857,29 +981,35 @@ private fun InputGroupTextPreview() {
 
 @Composable
 private fun InputGroupButtonsPreview() {
-    var copied by remember { mutableStateOf(false) }
+    val copy = rememberCopyToClipboard("https://x.com/shadcn")
     var favorite by remember { mutableStateOf(false) }
     var url by remember { mutableStateOf("") }
     var search by remember { mutableStateOf("") }
     Column(
         modifier = Modifier.widthIn(max = 384.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(24.dp),
     ) {
         InputGroup {
             InputGroupInput(value = "https://x.com/shadcn", onValueChange = {}, readOnly = true)
-            InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) {
+            InputGroupAddon(align = InputGroupAddonAlign.InlineEnd, style = Style { contentPaddingEnd(3.2.dp) }) {
                 InputGroupButton(
-                    onClick = { copied = !copied },
+                    onClick = copy.copy,
                     size = InputGroupButtonSize.IconXs,
                     label = "Copy",
-                ) { if (copied) DocIcon(Lucide.Check) else DocIcon(Lucide.Copy) }
+                ) { if (copy.justCopied) DocIcon(Lucide.Check) else DocIcon(Lucide.Copy) }
             }
         }
-        InputGroup {
-            InputGroupAddon {
+        InputGroup(style = Style { shape(CircleShape) }) {
+            InputGroupAddon(style = Style { contentPaddingStart(3.2.dp) }) {
                 Popover {
                     PopoverTrigger {
-                        InputGroupButton(onClick = {}, size = InputGroupButtonSize.IconXs, label = "Info") {
+                        InputGroupButton(
+                            onClick = {},
+                            size = InputGroupButtonSize.IconXs,
+                            variant = ButtonVariant.Secondary,
+                            style = Style { shape(CircleShape) },
+                            label = "Info",
+                        ) {
                             DocIcon(Lucide.Info)
                         }
                     }
@@ -889,20 +1019,25 @@ private fun InputGroupButtonsPreview() {
                     }
                 }
             }
-            InputGroupText("https://")
+            InputGroupAddon(style = Style { contentPaddingStart(6.dp) }) { InputGroupText("https://") }
             InputGroupInput(value = url, onValueChange = { url = it })
-            InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) {
-                InputGroupButton(onClick = { favorite = !favorite }, size = InputGroupButtonSize.IconXs) {
+            InputGroupAddon(align = InputGroupAddonAlign.InlineEnd, style = Style { contentPaddingEnd(3.2.dp) }) {
+                InputGroupButton(
+                    onClick = { favorite = !favorite },
+                    size = InputGroupButtonSize.IconXs,
+                    label = "Favorite",
+                    style = Style { shape(CircleShape) },
+                ) {
                     DocIcon(
                         Lucide.Star,
-                        tint = if (favorite) currentTheme.colors.foreground else currentTheme.colors.mutedForeground,
+                        tint = if (favorite) TwColors.blue600 else currentTheme.colors.mutedForeground,
                     )
                 }
             }
         }
         InputGroup {
             InputGroupInput(value = search, onValueChange = { search = it }, placeholder = "Type to search...")
-            InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) {
+            InputGroupAddon(align = InputGroupAddonAlign.InlineEnd, style = Style { contentPaddingEnd(3.2.dp) }) {
                 InputGroupButton("Search", onClick = {}, variant = ButtonVariant.Secondary)
             }
         }
@@ -919,7 +1054,7 @@ private fun InputGroupDropdownPreview() {
     ) {
         InputGroup {
             InputGroupInput(value = fileName, onValueChange = { fileName = it }, placeholder = "Enter file name")
-            InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) {
+            InputGroupAddon(align = InputGroupAddonAlign.InlineEnd, style = Style { contentPaddingEnd(3.2.dp) }) {
                 DropdownMenu {
                     DropdownMenuTrigger {
                         InputGroupButton(onClick = {}, size = InputGroupButtonSize.IconXs, label = "More") {
@@ -936,7 +1071,7 @@ private fun InputGroupDropdownPreview() {
         }
         InputGroup {
             InputGroupInput(value = search, onValueChange = { search = it }, placeholder = "Enter search query")
-            InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) {
+            InputGroupAddon(align = InputGroupAddonAlign.InlineEnd, style = Style { contentPaddingEnd(3.2.dp) }) {
                 DropdownMenu {
                     DropdownMenuTrigger {
                         InputGroupButton(onClick = {}) {
@@ -993,17 +1128,34 @@ private fun InputGroupSpinnerPreview() {
 @Composable
 private fun InputGroupTextareaPreview() {
     var code by remember { mutableStateOf("") }
+    val border = currentTheme.colors.border
     Column(Modifier.widthIn(max = 448.dp)) {
         InputGroup {
             InputGroupTextarea(
                 value = code,
                 onValueChange = { code = it },
+                modifier = Modifier.heightIn(min = 200.dp),
                 placeholder = "console.log('Hello, world!');",
             )
-            InputGroupAddon(align = InputGroupAddonAlign.BlockStart) {
+            InputGroupAddon(
+                align = InputGroupAddonAlign.BlockStart,
+                modifier =
+                    Modifier.testTag("input-group-code-header").drawBehind {
+                        val y = size.height - .5.dp.toPx()
+                        drawLine(border, Offset(0f, y), Offset(size.width, y), 1.dp.toPx())
+                    },
+                style = Style { contentPaddingBottom(8.dp) },
+            ) {
                 InputGroupText {
                     DocIcon(Lucide.FileCode)
-                    Text { "script.js" }
+                    Text(
+                        textStyle =
+                            TextStyle(
+                                fontFamily = FontFamily.Monospace,
+                                fontWeight = FontWeight.Medium,
+                                color = currentTheme.colors.mutedForeground,
+                            ),
+                    ) { "script.js" }
                 }
                 Spacer(Modifier.weight(1f))
                 InputGroupButton(onClick = {}, size = InputGroupButtonSize.IconXs, label = "Refresh") {
@@ -1013,7 +1165,15 @@ private fun InputGroupTextareaPreview() {
                     DocIcon(Lucide.Copy)
                 }
             }
-            InputGroupAddon(align = InputGroupAddonAlign.BlockEnd) {
+            InputGroupAddon(
+                align = InputGroupAddonAlign.BlockEnd,
+                modifier =
+                    Modifier.testTag("input-group-code-footer").drawBehind {
+                        val y = .5.dp.toPx()
+                        drawLine(border, Offset(0f, y), Offset(size.width, y), 1.dp.toPx())
+                    },
+                style = Style { contentPaddingTop(8.dp) },
+            ) {
                 InputGroupText("Line 1, Column 1")
                 Spacer(Modifier.weight(1f))
                 InputGroupButton(onClick = {}, size = InputGroupButtonSize.Sm, variant = ButtonVariant.Default) {
@@ -1030,6 +1190,8 @@ private data class InputGroupRtlText(
     val placeholder: String,
     val results: String,
     val searching: String,
+    val savingChanges: String,
+    val saving: String,
     val textareaLabel: String,
     val textareaPlaceholder: String,
     val characterCount: String,
@@ -1045,6 +1207,8 @@ private val inputGroupRtlTexts =
             "بحث...",
             "١٢ نتيجة",
             "جاري البحث...",
+            "جاري حفظ التغييرات...",
+            "جاري الحفظ...",
             "منطقة النص",
             "اكتب تعليقًا...",
             "٠/٢٨٠",
@@ -1057,6 +1221,8 @@ private val inputGroupRtlTexts =
             "Search...",
             "12 results",
             "Searching...",
+            "Saving changes...",
+            "Saving...",
             "Textarea",
             "Write a comment...",
             "0/280",
@@ -1069,6 +1235,8 @@ private val inputGroupRtlTexts =
             "חפש...",
             "12 תוצאות",
             "מחפש...",
+            "שומר שינויים...",
+            "שומר...",
             "אזור טקסט",
             "כתוב תגובה...",
             "0/280",
@@ -1081,44 +1249,78 @@ private val inputGroupRtlTexts =
 private fun InputGroupRtlPreview() {
     var language by remember { mutableStateOf(0) }
     val text = inputGroupRtlTexts[language]
+    val inherited = currentTheme
     var query by remember { mutableStateOf("") }
     var searching by remember { mutableStateOf("") }
+    var saving by remember { mutableStateOf("") }
     var comment by remember { mutableStateOf("") }
     RtlPreview(language, inputGroupRtlTexts.map { it.language }, { language = it }) {
-        CompositionLocalProvider(LocalLayoutDirection provides text.direction) {
-            Column(
-                modifier = Modifier.widthIn(max = 384.dp),
-                verticalArrangement = Arrangement.spacedBy(24.dp),
-            ) {
-                InputGroup(modifier = Modifier.widthIn(max = 320.dp)) {
-                    InputGroupInput(value = query, onValueChange = { query = it }, placeholder = text.placeholder)
-                    InputGroupAddon { DocIcon(Lucide.Search) }
-                    InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) { InputGroupText(text.results) }
-                }
-                InputGroup {
-                    InputGroupInput(value = searching, onValueChange = { searching = it }, placeholder = text.searching)
-                    InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) { Spinner() }
-                }
-                FieldGroup {
-                    Field {
-                        FieldLabel(text.textareaLabel)
-                        InputGroup {
-                            InputGroupTextarea(
-                                value = comment,
-                                onValueChange = { comment = it },
-                                placeholder = text.textareaPlaceholder,
-                            )
-                            InputGroupAddon(align = InputGroupAddonAlign.BlockEnd) {
-                                InputGroupText(text.characterCount)
-                                Spacer(Modifier.weight(1f))
-                                InputGroupButton(
-                                    onClick = {},
-                                    size = InputGroupButtonSize.Sm,
-                                    variant = ButtonVariant.Default,
-                                ) { Text { text.post } }
-                            }
+        Theme(
+            preset = inherited.activePreset,
+            baseColor = inherited.activeBaseColor,
+            accent = inherited.activeAccent,
+            isDark = inherited.isDark,
+            baseRadius = inherited.baseRadius,
+            ring = inherited.ring,
+            unitSpacing = LocalUnitSpacing.current,
+            minTouchTarget = inherited.minTouchTarget,
+            fontFamily =
+                when (language) {
+                    0 -> catalogArabicFontFamily()
+                    2 -> catalogHebrewFontFamily()
+                    else -> inherited.fontFamily
+                },
+        ) {
+            CompositionLocalProvider(LocalLayoutDirection provides text.direction) {
+                Column(
+                    modifier = Modifier.widthIn(max = 384.dp),
+                    verticalArrangement = Arrangement.spacedBy(24.dp),
+                ) {
+                    InputGroup(modifier = Modifier.widthIn(max = 320.dp)) {
+                        InputGroupInput(value = query, onValueChange = { query = it }, placeholder = text.placeholder)
+                        InputGroupAddon { DocIcon(Lucide.Search) }
+                        InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) { InputGroupText(text.results) }
+                    }
+                    InputGroup {
+                        InputGroupInput(
+                            value = searching,
+                            onValueChange = { searching = it },
+                            placeholder = text.searching,
+                        )
+                        InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) { Spinner() }
+                    }
+                    InputGroup {
+                        InputGroupInput(
+                            value = saving,
+                            onValueChange = { saving = it },
+                            placeholder = text.savingChanges,
+                        )
+                        InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) {
+                            InputGroupText(text.saving)
+                            Spinner()
                         }
-                        FieldDescription(text.textareaDescription)
+                    }
+                    FieldGroup {
+                        Field {
+                            FieldLabel(text.textareaLabel)
+                            InputGroup {
+                                InputGroupTextarea(
+                                    value = comment,
+                                    onValueChange = { comment = it },
+                                    placeholder = text.textareaPlaceholder,
+                                )
+                                InputGroupAddon(align = InputGroupAddonAlign.BlockEnd) {
+                                    InputGroupText(text.characterCount)
+                                    Spacer(Modifier.weight(1f))
+                                    InputGroupButton(
+                                        onClick = {},
+                                        size = InputGroupButtonSize.Sm,
+                                        variant = ButtonVariant.Default,
+                                    ) { Text { text.post } }
+                                }
+                            }
+                            FieldDescription(text.textareaDescription)
+                        }
                     }
                 }
             }

@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.catalog.docs.kbdDoc
 import com.toutiaoyan.compose.ui.components.overlay.OverlayHost
 import com.toutiaoyan.compose.ui.theme.Theme
@@ -42,6 +43,15 @@ class KbdExamplesTest {
         )
         assertEquals(listOf("Kbd", "KbdGroup"), kbdDoc.apiSections.map { it.title })
         assertFalse(kbdDoc.examples.single { it.title == "RTL" }.code.contains("RtlPreview("))
+    }
+
+    @Test fun copiedPageKeepsCompositionGuidanceBeforeItsTreeAndRtlGuideLink() {
+        val markdown = componentPageMarkdown(kbdDoc)
+        val compositionStart = markdown.indexOf("## Composition")
+        val guidance = markdown.indexOf("Use the following composition to build `Kbd` and `KbdGroup`:")
+        val tree = markdown.indexOf("```text", compositionStart)
+        assertTrue(compositionStart >= 0 && guidance > compositionStart && tree > guidance)
+        assertTrue(markdown.contains("[RTL configuration guide](https://ui.shadcn.com/docs/rtl)"))
     }
 
     @Test fun defaultRendersAllActualModifierAndControlKeys() {

@@ -1,0 +1,36 @@
+{
+  "title": "Compose Foundation — Components",
+  "bodyHeight": "calc(5382px + 100vh)",
+  "clientWidth": 1440,
+  "scrollHeight": 6382,
+  "composeRoot": {
+    "x": 0,
+    "y": 0,
+    "width": 1440,
+    "height": 1000,
+    "top": 0,
+    "right": 1440,
+    "bottom": 1000,
+    "left": 0
+  },
+  "canvas": {
+    "x": 0,
+    "y": 0,
+    "width": 1440,
+    "height": 1000,
+    "top": 0,
+    "right": 1440,
+    "bottom": 1000,
+    "left": 0
+  },
+  "canvasBitmap": {
+    "width": 1440,
+    "height": 1000
+  },
+  "canvasCount": 1,
+  "devicePixelRatio": 1,
+  "wasmResources": [
+    "http://127.0.0.1:8765/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8765/f1c944db69f8cf0c1185.wasm"
+  ]
+}

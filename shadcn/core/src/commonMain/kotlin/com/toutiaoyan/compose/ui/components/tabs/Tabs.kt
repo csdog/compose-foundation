@@ -87,7 +87,6 @@ import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import com.toutiaoyan.compose.ui.components.overlay.OverlayAnimMs
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.styles.cssStyleable
@@ -97,6 +96,9 @@ import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextVariant
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
+
+/** Tailwind `transition-all` default duration used by the Nova Tabs chrome. */
+private const val TabsIndicatorTransitionMillis = 150
 
 @Immutable
 private data class TabsController(
@@ -388,7 +390,7 @@ fun TabsScope.TabsList(
 internal fun BoxScope.TabsIndicator(
     modifier: Modifier = Modifier,
     style: Style = Style,
-    animationSpec: AnimationSpec<Float> = tween(OverlayAnimMs),
+    animationSpec: AnimationSpec<Float> = tween(TabsIndicatorTransitionMillis),
 ) {
     val tabs = LocalTabs.current ?: return
     val listState = LocalTabsListState.current ?: return

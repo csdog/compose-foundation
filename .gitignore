@@ -20,6 +20,7 @@ node_modules/
 __pycache__/
 *.py[cod]
 app/desktopApp/bin/
+.agent-runs/
 
 # Local reference checkout of https://github.com/shadcn-ui/ui (see vendor/README.md)
 vendor/**

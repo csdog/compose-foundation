@@ -3,6 +3,10 @@
 package com.toutiaoyan.compose.ui.components.contextmenu
 
 import androidx.compose.foundation.focusable
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.awaitLongPressOrCancellation
@@ -317,6 +321,7 @@ fun ContextMenuScope.ContextMenuContent(
             DropdownMenuScope(onOpenChange = { if (!it) controller.onOpenChange(false) })
         }
     val density = LocalDensity.current
+    val windowHeight = with(density) { LocalWindowInfo.current.containerSize.height.toDp() }
     val nova = currentTheme.activePreset == StylePreset.Nova
     val navigation = remember { ContextMenuNavigation() }
     val escapeLayers = remember { MenuEscapeLayers() }
@@ -373,7 +378,7 @@ fun ContextMenuScope.ContextMenuContent(
                         }
                         Column(
                             modifier =
-                                modifier.overlayOutsideDismiss(
+                                modifier.heightIn(max = windowHeight).overlayOutsideDismiss(
                                     host,
                                     !controller.modal && visibleState.targetState && dismissOnClickOutside,
                                 ) {
@@ -391,7 +396,7 @@ fun ContextMenuScope.ContextMenuContent(
                                         novaWidth = panelWidth,
                                         novaRing = true,
                                     ) then style,
-                                ),
+                                ).verticalScroll(rememberScrollState()),
                         ) {
                             scope.content()
                         }

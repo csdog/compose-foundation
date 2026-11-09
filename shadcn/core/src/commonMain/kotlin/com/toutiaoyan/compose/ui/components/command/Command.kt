@@ -111,6 +111,9 @@ internal class CommandController(
     var onValueChange: ((String) -> Unit)? = null
     val items = mutableStateListOf<CommandNavItem>()
 
+    // Keep mounted rows in composition order while filtering temporarily removes navigation entries.
+    val itemOrder = mutableListOf<Any>()
+
     fun matches(
         value: String,
         keywords: List<String> = emptyList(),
@@ -631,6 +634,10 @@ fun CommandItem(
     val resolvedValue = value ?: label
     val matches = forceMount || ctrl.matches(resolvedValue, keywords)
     val itemId = remember { Any() }
+    DisposableEffect(ctrl, itemId) {
+        ctrl.itemOrder.add(itemId)
+        onDispose { ctrl.itemOrder.remove(itemId) }
+    }
     val group = LocalCommandGroup.current
     DisposableEffect(group, itemId) { onDispose { group?.remove(itemId) } }
     SideEffect { group?.set(itemId, matches) }
@@ -639,7 +646,11 @@ fun CommandItem(
         if (matches) ctrl.visibleCount++
         val nav =
             if (matches) {
-                CommandNavItem(itemId, resolvedValue, resolvedEnabled) { latestSelect() }.also { ctrl.items.add(it) }
+                CommandNavItem(itemId, resolvedValue, resolvedEnabled) { latestSelect() }.also { item ->
+                    val order = ctrl.itemOrder.indexOf(itemId)
+                    val next = ctrl.items.indexOfFirst { ctrl.itemOrder.indexOf(it.id) > order }
+                    ctrl.items.add(if (next < 0) ctrl.items.size else next, item)
+                }
             } else {
                 null
             }

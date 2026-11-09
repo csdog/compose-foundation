@@ -28,16 +28,7 @@ private val traceDescriptions =
                 "Use a `TraceLine` on its own for a step with no detail to show. " +
                     "It reads as plain text."
             ),
-        "Status" to
-            (
-                "Set `status` on `TraceLine` when a step is running, has failed or hasn't " +
-                    "started yet.\n\n" +
-                    "None is for work that is done (\"Ran pnpm install\"). Error is for work " +
-                    "that failed; say so in the title (\"Failed to run pnpm lint\"). Running " +
-                    "is for work in progress, written in the present tense (\"Running pnpm " +
-                    "build\"). Pending is for work that has not started, such as a plan step " +
-                    "(\"Run pnpm test\")."
-            ),
+        "Status" to "Set `status` on `TraceLine` when a step is running, has failed or hasn't started yet.",
         "Description" to
             (
                 "Put secondary text such as a diff stat, a duration or a count in a " +
@@ -152,54 +143,83 @@ val traceDoc =
         usageImportsCode = traceUsageImports,
         usageCode = traceUsageCode,
         compositionCode = traceCompositionCode,
-        beforeExamples =
+        compositionMarkdown =
+            "`TraceLine` is always the line. To make a line do something, wrap it in that thing's trigger.",
+        introMarkdown =
+            "`Trace` is a list of lines. Each line has an icon, a title, and an optional description and status. " +
+                "A line can expand to show more detail, link to a page, or open a dialog or sheet.\n\n" +
+                "Every line has the same shape, so reasoning, tool calls, sources and plans built from `Trace` " +
+                "look and behave the same.\n\n" +
+                "Use `Trace` for the steps an agent takes, like calling a tool, running a subagent " +
+                "or editing a file. " +
+                "Use [Message](/message) for its reply, and [Marker](/marker) for notes and dividers between turns.",
+        introductionSections =
             listOf(
                 ComponentGuideSection(
                     "Built with Trace",
                     listOf(
                         ComponentGuideBlock.Paragraph(
                             (
-                                "`Trace` is a list of lines. Each line has an icon, a title, and an " +
-                                    "optional description and status. A line can expand to show more " +
-                                    "detail, link to a page, or open a dialog or sheet."
-                            ),
-                        ),
-                        ComponentGuideBlock.Paragraph(
-                            (
-                                "Every line has the same shape, so reasoning, tool calls, " +
-                                    "sources and plans built from `Trace` look and behave the same."
-                            ),
-                        ),
-                        ComponentGuideBlock.Paragraph(
-                            (
-                                "Use `Trace` for the steps an agent takes, like calling a tool, " +
-                                    "running a subagent or editing a file. Use Message for its " +
-                                    "reply, and Marker for notes and dividers between turns."
-                            ),
-                        ),
-                        ComponentGuideBlock.Paragraph(
-                            (
                                 "Every pattern below is a composition of `Trace` parts. " +
                                     "See AI Elements for examples and code."
                             ),
                         ),
-                        ComponentGuideBlock.Bullets(
-                            listOf(
-                                "Chain of Thought — A summary that expands into the steps behind it.",
-                                "Plan — The steps the agent plans to take, and how far it has got.",
-                                "Queue — The agent's todo list, split into what is left and what is done.",
-                                "Reasoning — The agent's thinking as it streams.",
-                                "Sources — The links the agent used for a reply.",
-                                "Stack Trace — A failed tool call and its stack frames.",
-                                "Subagent — A subagent run, with its tool calls and result.",
-                                "Task — The steps the agent takes, as it takes them.",
-                                "Terminal — A command the agent runs, with its output as it streams.",
-                                "Test Results — A test run by the agent, with its suites and failures.",
-                                "Tool — A tool call the agent makes, from input to output.",
-                            ),
+                        ComponentGuideBlock.Table(
+                            headers = listOf("Pattern", "Shows"),
+                            rows =
+                                listOf(
+                                    listOf(
+                                        "[Chain of Thought]" +
+                                            "(https://ui.shadcn.com/docs/ai-elements/base/chain-of-thought)",
+                                        "A summary that expands into the steps behind it.",
+                                    ),
+                                    listOf(
+                                        "[Plan](https://ui.shadcn.com/docs/ai-elements/base/plan)",
+                                        "The steps the agent plans to take, and how far it has got.",
+                                    ),
+                                    listOf(
+                                        "[Queue](https://ui.shadcn.com/docs/ai-elements/base/queue)",
+                                        "The agent's todo list, split into what is left and what is done.",
+                                    ),
+                                    listOf(
+                                        "[Reasoning](https://ui.shadcn.com/docs/ai-elements/base/reasoning)",
+                                        "The agent's thinking as it streams.",
+                                    ),
+                                    listOf(
+                                        "[Sources](https://ui.shadcn.com/docs/ai-elements/base/sources)",
+                                        "The links the agent used for a reply.",
+                                    ),
+                                    listOf(
+                                        "[Stack Trace](https://ui.shadcn.com/docs/ai-elements/base/stack-trace)",
+                                        "A failed tool call and its stack frames.",
+                                    ),
+                                    listOf(
+                                        "[Subagent](https://ui.shadcn.com/docs/ai-elements/base/subagent)",
+                                        "A subagent run, with its tool calls and result.",
+                                    ),
+                                    listOf(
+                                        "[Task](https://ui.shadcn.com/docs/ai-elements/base/task)",
+                                        "The steps the agent takes, as it takes them.",
+                                    ),
+                                    listOf(
+                                        "[Terminal](https://ui.shadcn.com/docs/ai-elements/base/terminal)",
+                                        "A command the agent runs, with its output as it streams.",
+                                    ),
+                                    listOf(
+                                        "[Test Results](https://ui.shadcn.com/docs/ai-elements/base/test-results)",
+                                        "A test run by the agent, with its suites and failures.",
+                                    ),
+                                    listOf(
+                                        "[Tool](https://ui.shadcn.com/docs/ai-elements/base/tool)",
+                                        "A tool call the agent makes, from input to output.",
+                                    ),
+                                ),
                         ),
                     ),
                 ),
+            ),
+        beforeExamples =
+            listOf(
                 ComponentGuideSection(
                     "Features",
                     listOf(
@@ -241,6 +261,39 @@ val traceDoc =
                     )
                 }
             },
+        afterExampleSections =
+            mapOf(
+                "Status" to
+                    listOf(
+                        ComponentGuideBlock.Table(
+                            listOf("Status", "Use for"),
+                            listOf(
+                                listOf("none", "Work that is done: \"Ran pnpm install\"."),
+                                listOf(
+                                    "`error`",
+                                    "Work that failed. Say so in the title: \"Failed to run pnpm lint\".",
+                                ),
+                                listOf(
+                                    "`running`",
+                                    "Work in progress. Write the title in the present tense: \"Running pnpm build\".",
+                                ),
+                                listOf(
+                                    "`pending`",
+                                    "Work that has not started, such as a plan step: \"Run pnpm test\".",
+                                ),
+                            ),
+                        ),
+                    ),
+                "Open State" to
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "To open a row while it streams and let the reader's click win, pass `open ?: running`.",
+                        ),
+                        ComponentGuideBlock.Code(traceStreamingOpenCode),
+                    ),
+                "Link" to listOf(ComponentGuideBlock.Code(traceNewTabCode)),
+                "Dialog" to listOf(ComponentGuideBlock.Code(traceDialogTriggerCode)),
+            ),
         afterExamples =
             listOf(
                 ComponentGuideSection(
@@ -269,6 +322,8 @@ val traceDoc =
                                     "pnpm build\" when it errors.",
                                 "The shimmer on a running title stops when the reader prefers " +
                                     "reduced motion. The title still says what is happening.",
+                                "Inside a [Message Scroller](/message-scroller), " +
+                                    "each line is announced once when it is added.",
                                 "`TraceCollapsibleContent` mutes its text. If you put a block with " +
                                     "a muted background inside it, give the block foreground text " +
                                     "so it keeps its contrast. `CodeBlock` sets its own text color.",
@@ -355,9 +410,11 @@ val traceDoc =
                     "TraceCollapsibleTrigger",
                     (
                         "The button that opens and closes the row. Put a `TraceLine` inside it. " +
-                            "It adds a chevron after the line."
+                            "It adds a chevron after the line. Kotlin extension: pass `status` explicitly " +
+                            "to match an error line's chevron color; Compose cannot infer child status."
                     ),
                     listOf(
+                        ApiProperty("status", "TraceStatus?", "null (explicit overload)"),
                         ApiProperty("modifier", "Modifier", "Modifier"),
                         ApiProperty("content", "@Composable () -> Unit", "Required"),
                     ),

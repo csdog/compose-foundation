@@ -43,6 +43,14 @@ data class ComponentDoc(
     val afterApiSections: List<ComponentGuideSection> = emptyList(),
     /** Project-only components show a "Kotlin extension" label instead of the Base UI tab. */
     val isKotlinExtension: Boolean = false,
+    /** Headingless prose following the primary preview, before Installation. */
+    val introMarkdown: String? = null,
+    /** Headingless guidance immediately after the Composition snippet. */
+    val compositionMarkdown: String? = null,
+    /** Headingless source guidance after a recipe's preview and code panel. */
+    val afterExampleSections: Map<String, List<ComponentGuideBlock>> = emptyMap(),
+    /** Headingless guidance immediately before the Composition snippet. */
+    val beforeCompositionMarkdown: String? = null,
 )
 
 /** Prose between the component's recipes, with the same content used by Copy Page. */
@@ -60,6 +68,8 @@ sealed interface ComponentGuideBlock {
     data class Code(val code: String, val language: String? = "kotlin") : ComponentGuideBlock
 
     data class Steps(val items: List<Step>) : ComponentGuideBlock
+
+    data class Table(val headers: List<String>, val rows: List<List<String>>) : ComponentGuideBlock
 
     data class Step(
         val title: String,

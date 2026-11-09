@@ -38,6 +38,11 @@ val itemDoc =
         title = "Item",
         description = "A versatile component for displaying content with media, title, description, and actions.",
         examplesHeading = null,
+        introMarkdown =
+            "The `Item` component is a straightforward flex container that can house " +
+                "nearly any type of content. Use it to display a title, description, and " +
+                "actions. Group it with the `ItemGroup` component to create a list of items.",
+        beforeCompositionMarkdown = "Use the following composition to build an `Item`:",
         usageImportsCode =
             """
             import androidx.compose.foundation.Image
@@ -74,6 +79,14 @@ val itemDoc =
         usageCode =
             """
             Item {
+                ItemMedia(variant = ItemMediaVariant.Icon) {
+                    Image(
+                        Lucide.Home,
+                        contentDescription = null,
+                        modifier = Modifier.size(16.dp),
+                        colorFilter = ColorFilter.tint(currentTheme.colors.foreground),
+                    )
+                }
                 ItemContent { ItemTitle("Title"); ItemDescription("Description") }
                 ItemActions { Button("Action", onClick = {}) }
             }
@@ -160,7 +173,7 @@ val itemDoc =
                 ),
                 ComponentApiSection(
                     "ItemTitle",
-                    "One-line title with ellipsis in Nova.",
+                    "Title wraps by default; set maxLines=1 for ellipsis.",
                     listOf(
                         ApiProperty("text", "String / AnnotatedString", "Required"),
                         ApiProperty("textStyle", "TextStyle", "Default"),
@@ -203,10 +216,6 @@ val itemDoc =
             listOf(
                 ComponentExample(
                     title = "Default",
-                    descriptionMarkdown =
-                        "The `Item` component is a straightforward flex container that can house " +
-                            "nearly any type of content. Use it to display a title, description, and " +
-                            "actions. Group it with the `ItemGroup` component to create a list of items.",
                     minPreviewHeight = 288.dp,
                     mobileMinPreviewHeight = 288.dp,
                     previewPadding = 40.dp,
@@ -322,7 +331,9 @@ val itemDoc =
                 ),
                 ComponentExample(
                     title = "Size",
-                    descriptionMarkdown = "Use the `size` prop to change the size of the item. Available sizes are `default`, `sm`, and `xs`.",
+                    descriptionMarkdown =
+                        "Use the `size` prop to change the size of the item. " +
+                            "Available sizes are `default`, `sm`, and `xs`.",
                     minPreviewHeight = 384.dp,
                     mobileMinPreviewHeight = 384.dp,
                     previewPadding = 40.dp,
@@ -742,7 +753,10 @@ val itemDoc =
                 ),
                 ComponentExample(
                     title = "Link",
-                    descriptionMarkdown = "Use `href` to render the item as a link (the Kotlin equivalent of the `render` prop). The hover and focus states apply to the whole row.",
+                    descriptionMarkdown =
+                        "Use `href` to render the item as a link (the Kotlin equivalent " +
+                            "of the `render` prop). The hover and focus states apply to " +
+                            "the whole row.",
                     minPreviewHeight = 288.dp,
                     mobileMinPreviewHeight = 288.dp,
                     previewPadding = 40.dp,
@@ -887,7 +901,9 @@ val itemDoc =
                 ),
                 ComponentExample(
                     title = "RTL",
-                    descriptionMarkdown = "To enable RTL support in shadcn/ui, see the [RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
+                    descriptionMarkdown =
+                        "To enable RTL support in shadcn/ui, see the " +
+                            "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
                     minPreviewHeight = 352.dp,
                     mobileMinPreviewHeight = 352.dp,
                     previewPadding = 0.dp,

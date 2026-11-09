@@ -2,6 +2,7 @@
 """Keep copied recipes identical to their compiled previews, including helpers/imports."""
 from pathlib import Path
 import re
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / 'app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs'
@@ -23,6 +24,9 @@ for name in ['default', 'overflow', 'horizontal', 'edge', 'size', 'none', 'rtl']
                '    """.trimIndent()', '']
 target = DOCS / 'ScrollFadeRecipeCode.kt'
 generated = '\n'.join(output)
-if not target.exists() or target.read_text() != generated:
+if '--check' in sys.argv:
+    if not target.exists() or target.read_text() != generated:
+        sys.exit('Scroll Fade copied recipes are stale; run scripts/generate_scroll_fade_recipe_code.py')
+elif not target.exists() or target.read_text() != generated:
     target.write_text(generated)
 print('Generated seven standalone recipe snippets from compiled preview source')

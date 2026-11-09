@@ -112,12 +112,12 @@ private val scrollableGroups =
                 CommandRecipeItem("Copy", "Copy", Lucide.Copy, shortcut = "⌘C"),
                 CommandRecipeItem("Cut", "Scissors", Lucide.Scissors, shortcut = "⌘X"),
                 CommandRecipeItem("Paste", "ClipboardPaste", Lucide.ClipboardPaste, shortcut = "⌘V"),
-                CommandRecipeItem("Delete", "Trash", Lucide.Trash, shortcut = "⌘⌫"),
+                CommandRecipeItem("Delete", "Trash", Lucide.Trash, shortcut = "⌫"),
             ),
         "View" to
             listOf(
-                CommandRecipeItem("Grid View", "LayoutGrid", Lucide.LayoutGrid, shortcut = "⌘G"),
-                CommandRecipeItem("List View", "List", Lucide.List, shortcut = "⌘L"),
+                CommandRecipeItem("Grid View", "LayoutGrid", Lucide.LayoutGrid),
+                CommandRecipeItem("List View", "List", Lucide.List),
                 CommandRecipeItem("Zoom In", "ZoomIn", Lucide.ZoomIn, shortcut = "⌘+"),
                 CommandRecipeItem("Zoom Out", "ZoomOut", Lucide.ZoomOut, shortcut = "⌘-"),
             ),
@@ -126,8 +126,8 @@ private val scrollableGroups =
                 CommandRecipeItem("Profile", "User", Lucide.User, shortcut = "⌘P"),
                 CommandRecipeItem("Billing", "CreditCard", Lucide.CreditCard, shortcut = "⌘B"),
                 CommandRecipeItem("Settings", "Settings", Lucide.Settings, shortcut = "⌘S"),
-                CommandRecipeItem("Notifications", "Bell", Lucide.Bell, shortcut = "⌘N"),
-                CommandRecipeItem("Help & Support", "CircleQuestionMark", Lucide.CircleQuestionMark, shortcut = "⌘?"),
+                CommandRecipeItem("Notifications", "Bell", Lucide.Bell),
+                CommandRecipeItem("Help & Support", "CircleQuestionMark", Lucide.CircleQuestionMark),
             ),
         "Tools" to
             listOf(
@@ -165,20 +165,20 @@ private fun commandDialogCode(
                 "\n            }"
         } ?: ""
     return """
-        var open by remember { mutableStateOf(false) }
-        Button("Open Menu", onClick = { open = true }, variant = ButtonVariant.Outline)
-        CommandDialog(open = open, onOpenChange = { open = it }) {
-            CommandInput(placeholder = "Type a command or search...")
-            CommandList {
-                CommandEmpty()
-                CommandGroup(heading = "$group") {
-${commandItemsCode(items)}
-                }$secondGroup
-            }
-        }
+                var open by remember { mutableStateOf(false) }
+                Button("Open Menu", onClick = { open = true }, variant = ButtonVariant.Outline)
+                CommandDialog(open = open, onOpenChange = { open = it }) {
+                    CommandInput(placeholder = "Type a command or search...")
+                    CommandList {
+                        CommandEmpty()
+                        CommandGroup(heading = "$group") {
+        ${commandItemsCode(items)}
+                        }$secondGroup
+                    }
+                }
 
-        $commandItemHelperCode
-    """.trimIndent()
+                $commandItemHelperCode
+        """.trimIndent()
 }
 
 private val commandBasicCode =
@@ -226,26 +226,107 @@ private val commandScrollableCode =
         append(commandItemHelperCode)
     }.trimEnd()
 
+private class CommandRtlCopy(
+    val placeholder: String,
+    val empty: String,
+    val suggestionsHeading: String,
+    val settingsHeading: String,
+    val suggestions: List<CommandRecipeItem>,
+    val settings: List<CommandRecipeItem>,
+)
+
+private val commandRtlCopies =
+    listOf(
+        CommandRtlCopy(
+            "اكتب أمرًا أو ابحث...",
+            "لم يتم العثور على نتائج.",
+            "اقتراحات",
+            "الإعدادات",
+            rtlSuggestions,
+            rtlSettings,
+        ),
+        CommandRtlCopy(
+            "Type a command or search...",
+            "No results found.",
+            "Suggestions",
+            "Settings",
+            suggestions.mapIndexed { index, item ->
+                CommandRecipeItem(item.label, item.iconName, item.icon, disabled = index == 2)
+            },
+            settingsItems,
+        ),
+        CommandRtlCopy(
+            "הקלד פקודה או חפש...",
+            "לא נמצאו תוצאות.",
+            "הצעות",
+            "הגדרות",
+            listOf(
+                CommandRecipeItem("לוח שנה", "Calendar", Lucide.Calendar),
+                CommandRecipeItem("חפש אמוג'י", "Smile", Lucide.Smile),
+                CommandRecipeItem("מחשבון", "Calculator", Lucide.Calculator, disabled = true),
+            ),
+            listOf(
+                CommandRecipeItem("פרופיל", "User", Lucide.User, shortcut = "⌘P"),
+                CommandRecipeItem("חיוב", "CreditCard", Lucide.CreditCard, shortcut = "⌘B"),
+                CommandRecipeItem("הגדרות", "Settings", Lucide.Settings, shortcut = "⌘S"),
+            ),
+        ),
+    )
+
+private val commandRtlLabels = listOf("Arabic (العربية)", "English", "Hebrew (עברית)")
+
 private val commandRtlCode =
-    """
-    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-        Command(modifier = Modifier.widthIn(max = 384.dp)) {
-            CommandInput(placeholder = "اكتب أمرًا أو ابحث...")
-            CommandList {
-                CommandEmpty(text = "لم يتم العثور على نتائج.")
-                CommandGroup(heading = "اقتراحات") {
-${commandItemsCode(rtlSuggestions)}
-                }
-                CommandSeparator()
-                CommandGroup(heading = "الإعدادات") {
-${commandItemsCode(rtlSettings)}
+    buildString {
+        appendLine("var language by remember { mutableStateOf(0) }")
+        appendLine("Row {")
+        commandRtlLabels.forEachIndexed { index, label ->
+            appendLine("    Button(\"$label\", onClick = { language = $index })")
+        }
+        appendLine("}")
+        appendLine("CompositionLocalProvider(")
+        appendLine("    LocalLayoutDirection provides if (language == 1) LayoutDirection.Ltr else LayoutDirection.Rtl,")
+        appendLine(") {")
+        appendLine("    when (language) {")
+        commandRtlCopies.forEachIndexed { index, copy ->
+            appendLine("        $index -> Command(modifier = Modifier.widthIn(max = 384.dp)) {")
+            appendLine("            CommandInput(placeholder = \"${copy.placeholder}\")")
+            appendLine("            CommandList {")
+            appendLine("                CommandEmpty(text = \"${copy.empty}\")")
+            appendLine("                CommandGroup(heading = \"${copy.suggestionsHeading}\") {")
+            appendLine(commandItemsCode(copy.suggestions))
+            appendLine("                }")
+            appendLine("                CommandSeparator()")
+            appendLine("                CommandGroup(heading = \"${copy.settingsHeading}\") {")
+            appendLine(commandItemsCode(copy.settings))
+            appendLine("                }")
+            appendLine("            }")
+            appendLine("        }")
+        }
+        appendLine("    }")
+        appendLine("}")
+        appendLine(commandItemHelperCode)
+    }.trimEnd()
+
+@Composable
+private fun CommandRtlPreview() {
+    var language by remember { mutableStateOf(0) }
+    RtlPreview(language, commandRtlLabels, { language = it }) {
+        CompositionLocalProvider(
+            LocalLayoutDirection provides if (language == 1) LayoutDirection.Ltr else LayoutDirection.Rtl,
+        ) {
+            val copy = commandRtlCopies[language]
+            Command(modifier = Modifier.widthIn(max = 384.dp)) {
+                CommandInput(placeholder = copy.placeholder)
+                CommandList {
+                    CommandEmpty(text = copy.empty)
+                    CommandRecipeGroup(copy.suggestionsHeading, copy.suggestions)
+                    CommandSeparator()
+                    CommandRecipeGroup(copy.settingsHeading, copy.settings)
                 }
             }
         }
     }
-
-    $commandItemHelperCode
-    """.trimIndent()
+}
 
 @Composable
 private fun CommandRecipeRow(item: CommandRecipeItem) {
@@ -292,6 +373,7 @@ private fun CommandRecipeGroup(
 @Composable
 private fun CommandRecipeDialog(
     groups: List<Pair<String, List<CommandRecipeItem>>>,
+    showIcons: Boolean = true,
 ) {
     var open by remember { mutableStateOf(false) }
     Button("Open Menu", onClick = { open = true }, variant = ButtonVariant.Outline)
@@ -301,7 +383,13 @@ private fun CommandRecipeDialog(
             CommandEmpty()
             groups.forEachIndexed { index, (heading, items) ->
                 if (index > 0) CommandSeparator()
-                CommandRecipeGroup(heading, items)
+                if (showIcons) {
+                    CommandRecipeGroup(heading, items)
+                } else {
+                    CommandGroup(heading = heading) {
+                        items.forEach { CommandItem(it.label, onSelect = {}) }
+                    }
+                }
             }
         }
     }
@@ -314,7 +402,7 @@ internal val commandOfficialRecipes =
             descriptionMarkdown = "A simple command menu in a dialog.",
             code = commandBasicCode,
             preview = {
-                CommandRecipeDialog(listOf("Suggestions" to suggestions))
+                CommandRecipeDialog(listOf("Suggestions" to suggestions), showIcons = false)
             },
         ),
         ComponentExample(
@@ -344,20 +432,11 @@ internal val commandOfficialRecipes =
         ),
         ComponentExample(
             title = "RTL",
-            descriptionMarkdown = "To enable RTL support in shadcn/ui, see the RTL configuration guide.",
+            descriptionMarkdown =
+                "To enable RTL support in shadcn/ui, see the " +
+                    "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
             code = commandRtlCode,
-            preview = {
-                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-                    Command(modifier = Modifier.widthIn(max = 384.dp)) {
-                        CommandInput(placeholder = "اكتب أمرًا أو ابحث...")
-                        CommandList {
-                            CommandEmpty(text = "لم يتم العثور على نتائج.")
-                            CommandRecipeGroup("اقتراحات", rtlSuggestions)
-                            CommandSeparator()
-                            CommandRecipeGroup("الإعدادات", rtlSettings)
-                        }
-                    }
-                }
-            },
+            previewPadding = 0.dp,
+            preview = { CommandRtlPreview() },
         ),
     )

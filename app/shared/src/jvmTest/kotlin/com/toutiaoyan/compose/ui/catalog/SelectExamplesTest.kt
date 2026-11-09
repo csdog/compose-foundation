@@ -3,7 +3,6 @@ package com.toutiaoyan.compose.ui.catalog
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
@@ -53,17 +52,19 @@ class SelectExamplesTest {
         )
         assertEquals(null, selectDoc.examplesHeading)
         val markdown = componentPageMarkdown(selectDoc)
-        val order = listOf(
-            "## Align Item With Trigger",
-            "## Groups",
-            "## Scrollable",
-            "## Disabled",
-            "## Invalid",
-            "## RTL",
-        ).map { markdown.indexOf(it) }
+        val order =
+            listOf(
+                "## Align Item With Trigger",
+                "## Groups",
+                "## Scrollable",
+                "## Disabled",
+                "## Invalid",
+                "## RTL",
+            ).map { markdown.indexOf(it) }
         assertTrue(order.all { it >= 0 }, "missing a recipe heading: $order")
         assertEquals(order.sorted(), order)
         assertContains(markdown, "alignItemWithTrigger")
+        assertContains(markdown, "Use the following composition to build a `Select`:")
         assertFalse(markdown.contains("## Examples"))
     }
 
@@ -114,6 +115,39 @@ class SelectExamplesTest {
             rule.onNodeWithContentDescription("Preview language").performClick()
             rule.onAllNodesWithText(label).onLast().performClick()
             rule.onNodeWithText(placeholder).assertIsDisplayed()
+        }
+    }
+
+    @Test fun invalidRecipeIncludesSourceErrorAndAllThreeOptions() {
+        show("Invalid")
+        rule.onNodeWithText("Please select a fruit.").assertIsDisplayed()
+        rule.onNodeWithText("Select a fruit").performClick()
+        rule.onNodeWithText("Blueberry").assertIsDisplayed().performClick()
+        rule.onNodeWithText("Blueberry").assertIsDisplayed()
+    }
+
+    @Test fun alignmentRecipeIncludesSourceDescriptionAndClearOption() {
+        show("Align Item With Trigger")
+        rule.onNodeWithText("Toggle to align the item with the trigger.").assertIsDisplayed()
+        rule.onNodeWithText("Banana").performClick()
+        rule.onNodeWithText("Select a fruit").performClick()
+        rule.onNodeWithText("Select a fruit").assertIsDisplayed()
+    }
+
+    @Test fun rtlRecipeContainsBothSourceGroupsAndAllOptionsInEachLanguage() {
+        show("RTL")
+        for ((language, placeholder, vegetable, lastFruit, lastVegetable) in listOf(
+            listOf("Arabic (العربية)", "اختر فاكهة", "الخضروات", "أناناس", "سبانخ"),
+            listOf("English", "Select a fruit", "Vegetables", "Pineapple", "Spinach"),
+            listOf("Hebrew (עברית)", "בחר פרי", "ירקות", "אננס", "תרד"),
+        )) {
+            rule.onNodeWithContentDescription("Preview language").performClick()
+            rule.onAllNodesWithText(language).onLast().performClick()
+            rule.onNodeWithText(placeholder).performClick()
+            rule.onNodeWithText(lastFruit).assertExists()
+            rule.onNodeWithText(vegetable).assertExists()
+            rule.onNodeWithText(lastVegetable).performScrollTo().performClick()
+            rule.onNodeWithText(lastVegetable).assertIsDisplayed()
         }
     }
 }

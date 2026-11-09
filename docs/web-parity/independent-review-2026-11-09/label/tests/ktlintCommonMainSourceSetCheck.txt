@@ -1,0 +1,16 @@
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/BadgeDoc.kt:165:1: Exceeded max line length (120) (standard:max-line-length)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/EmptyAdditionalRecipes.kt:239:1: Exceeded max line length (120) (standard:max-line-length)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/EmptyDoc.kt:241:1: Exceeded max line length (120) (standard:max-line-length)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/EmptyDoc.kt:268:1: Exceeded max line length (120) (standard:max-line-length)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MessageScrollerMissingRecipes.kt:702:1: Exceeded max line length (120) (standard:max-line-length)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/QuestionnaireDoc.kt:667:1: Exceeded max line length (120) (standard:max-line-length)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/QuestionnaireDoc.kt:950:1: Exceeded max line length (120) (standard:max-line-length)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/QuestionnaireDoc.kt:975:1: Exceeded max line length (120) (standard:max-line-length)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/QuestionnaireDoc.kt:997:1: Exceeded max line length (120) (standard:max-line-length)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ResizableDoc.kt:68:1: Exceeded max line length (120) (standard:max-line-length)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ScrollFadeDoc.kt:56:1: Exceeded max line length (120) (standard:max-line-length)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ScrollFadeDoc.kt:58:1: Exceeded max line length (120) (standard:max-line-length)
+/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/TabsRecipes.kt:305:1: Exceeded max line length (120) (standard:max-line-length)
+
+Summary error count (descending) by rule:
+  standard:max-line-length: 13

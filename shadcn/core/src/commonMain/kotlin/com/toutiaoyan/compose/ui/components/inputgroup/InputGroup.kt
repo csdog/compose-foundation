@@ -80,6 +80,7 @@ internal val LocalInputGroupDisabled = compositionLocalOf { false }
 internal class InputGroupLayoutState {
     val addons = mutableStateMapOf<Any, InputGroupAddonAlign>()
     val controls = mutableStateMapOf<Any, Pair<Boolean, Boolean>>() // invalid, enabled
+    val focusedAddons = mutableStateMapOf<Any, Boolean>()
     val requesters = mutableMapOf<Any, FocusRequester>()
 
     fun focusInput() {
@@ -170,6 +171,7 @@ fun InputGroup(
     val colors = theme.colors
     val nova = theme.activePreset == StylePreset.Nova
     val layoutState = remember { InputGroupLayoutState() }
+    val hasControlFocus = hasFocusWithin && layoutState.focusedAddons.values.none { it }
     val resolvedDisabled = disabled || LocalFieldSetDisabled.current
     val groupDisabled = resolvedDisabled || layoutState.controls.values.any { !it.second }
     val groupInvalid = invalid || layoutState.controls.values.any { it.first }
@@ -177,7 +179,7 @@ fun InputGroup(
     val border =
         when {
             groupInvalid -> colors.destructive
-            hasFocusWithin -> colors.ring
+            hasControlFocus -> colors.ring
             else -> if (nova) colors.input else colors.border
         }
 
@@ -199,7 +201,7 @@ fun InputGroup(
             borderWidth(1.dp)
             borderColor(border)
             shape(RoundedCornerShape(shapes.lg))
-            if (hasFocusWithin) dropShadow(theme.focusRingShadow())
+            if (hasControlFocus) dropShadow(theme.focusRingShadow())
             if (nova && groupInvalid) {
                 dropShadow(
                     Shadow(
@@ -229,7 +231,7 @@ fun InputGroup(
                 LocalInputGroup provides
                     InputGroupState(
                         invalid = groupInvalid,
-                        focused = hasFocusWithin,
+                        focused = hasControlFocus,
                         disabled = groupDisabled,
                     ),
             ) {
@@ -377,7 +379,12 @@ fun InputGroupAddon(
     val nova = theme.activePreset == StylePreset.Nova
     val layoutState = LocalInputGroupLayout.current
     val key = remember { Any() }
-    DisposableEffect(layoutState, key) { onDispose { layoutState?.addons?.remove(key) } }
+    DisposableEffect(layoutState, key) {
+        onDispose {
+            layoutState?.addons?.remove(key)
+            layoutState?.focusedAddons?.remove(key)
+        }
+    }
     SideEffect { layoutState?.addons?.set(key, align) }
     val spacing = twSpacing
     // py-1.5 ≈ 6dp; pl-3/pr-3 = spacing.md; keep xs gap to the control (long-value regression).
@@ -447,6 +454,8 @@ fun InputGroupAddon(
                 modifier
                     .then(InputGroupAddonParentDataModifier(align))
                     .then(widthMod)
+                    // The group ring follows editable control focus, not addon buttons.
+                    .onFocusEvent { layoutState?.focusedAddons?.set(key, it.hasFocus) }
                     .focusProperties { canFocus = false }
                     .clickable(
                         interactionSource = interaction,

@@ -6,6 +6,7 @@
 package com.toutiaoyan.compose.ui.components.attachment
 
 import androidx.compose.foundation.clickable
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.focusable
@@ -34,6 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -115,28 +117,26 @@ private fun AttachmentState.rememberStyle(
     size: AttachmentSize,
     interactive: Boolean,
     focusWithin: Boolean,
+    resolvedStroke: androidx.compose.ui.graphics.Color,
 ): Style {
     val theme = currentTheme
     val colors = theme.colors
     val shapes = twRadius
 
-    // Error: `border-destructive/30`. Idle: dashed via [dashedBorder] (Base
-    // `data-[state=idle]:border-dashed`) — Style has no dash stroke. Others: solid border.
-    val stroke =
-        when (this) {
-            AttachmentState.Error -> colors.destructive.copy(alpha = 0.3f)
-            AttachmentState.Idle -> null
-            else -> colors.border
-        }
-
     val radius = if (theme.activePreset == StylePreset.Nova && size == AttachmentSize.Xs) shapes.lg else shapes.xl
     val nova = theme.activePreset == StylePreset.Nova
-    return remember(this, colors, radius, nova, interactive, focusWithin) {
+    return remember(this, colors, radius, nova, interactive, focusWithin, resolvedStroke) {
         Style {
             background(colors.card)
             shape(RoundedCornerShape(radius))
             borderWidth(1.dp)
-            borderColor(stroke ?: androidx.compose.ui.graphics.Color.Transparent)
+            borderColor(
+                if (this@rememberStyle == AttachmentState.Idle) {
+                    androidx.compose.ui.graphics.Color.Transparent
+                } else {
+                    resolvedStroke
+                },
+            )
             if (nova) {
                 if (interactive) {
                     animate(
@@ -155,6 +155,19 @@ private fun AttachmentState.rememberStyle(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun AttachmentState.animatedBorderColor(): androidx.compose.ui.graphics.Color {
+    val colors = currentTheme.colors
+    val target = if (this == AttachmentState.Error) colors.destructive.copy(alpha = 0.3f) else colors.border
+    // Lifecycle changes replace the Style, so its interaction animation DSL
+    // cannot interpolate this token. A new theme starts at its own color.
+    return if (currentTheme.activePreset == StylePreset.Nova) {
+        key(colors) { animateColorAsState(target, tween(150, easing = FastOutSlowInEasing)).value }
+    } else {
+        target
     }
 }
 
@@ -227,9 +240,10 @@ fun Attachment(
         } else {
             twRadius.xl
         }
+    val stroke = state.animatedBorderColor()
     val idleDash =
         if (state == AttachmentState.Idle) {
-            Modifier.dashedBorder(color = currentTheme.colors.border, corner = corner)
+            Modifier.dashedBorder(color = stroke, corner = corner)
         } else {
             Modifier
         }
@@ -273,7 +287,7 @@ fun Attachment(
                     .onFocusEvent { focusWithin = it.hasFocus }
                     .cssStyleable(
                         styleState,
-                        state.rememberStyle(size, onClick != null, focusWithin) then
+                        state.rememberStyle(size, onClick != null, focusWithin, stroke) then
                             (if (onClick != null) touchTargetStyle then pressStyle else Style) then style,
                     )
                     .then(idleDash)

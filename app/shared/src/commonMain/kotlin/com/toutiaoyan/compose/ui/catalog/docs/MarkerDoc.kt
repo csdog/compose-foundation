@@ -22,6 +22,26 @@ val markerDoc =
         title = "Marker",
         description = "Displays an inline status, system note, bordered row, or labeled separator in a conversation.",
         examplesHeading = null,
+        introMarkdown =
+            "The `Marker` component displays inline conversation markers such as status updates, " +
+                "system notes, bordered rows, and labeled separators. Compose it with " +
+                "[Message](/message) in a conversation thread.",
+        beforeCompositionMarkdown = "Use the following composition to build a marker:",
+        afterExampleSections =
+            mapOf(
+                "Variants" to
+                    listOf(
+                        ComponentGuideBlock.Table(
+                            headers = listOf("Variant", "Description"),
+                            rows =
+                                listOf(
+                                    listOf("`Default`", "An inline marker for status, notes, and actions."),
+                                    listOf("`Border`", "A default marker with a bottom border under the row."),
+                                    listOf("`Separator`", "A centered label with divider lines on each side."),
+                                ),
+                        ),
+                    ),
+            ),
         usageImportsCode =
             """
             import androidx.compose.foundation.layout.*
@@ -96,7 +116,7 @@ val markerDoc =
                                 "Inline, bordered row, and labeled separator variants.",
                                 "Decorative icons are hidden from assistive technology.",
                                 "Compose links and actions using the marker content and modifier.",
-                                "Pair streaming status text with the shimmer utility.",
+                                "Pair streaming status text with the [shimmer](/shimmer) utility.",
                                 "Customize each part through Modifier and Style.",
                             ),
                         ),
@@ -109,22 +129,87 @@ val markerDoc =
                     "Accessibility",
                     listOf(
                         ComponentGuideBlock.Paragraph(
-                            "Use a polite live region for progress updates. A label should describe the state " +
-                                "without relying on the spinner or decorative icon. Compose " +
-                                "liveRegion and URL annotations " +
-                                "are platform adaptations; they are not a native HTML role=status " +
-                                "or anchor DOM element.",
-                        ),
-                        ComponentGuideBlock.Bullets(
-                            listOf(
-                                "Separator and border variants are presentational; meaningful " +
-                                    "section headings remain the caller's responsibility.",
-                                "Keep icons decorative and put the message in MarkerContent.",
-                                "Use a real link annotation for navigation, and a button role for " +
-                                    "actions; test keyboard activation.",
-                            ),
+                            "`Marker` is presentational by default. Choose semantics based on the marker's purpose.",
                         ),
                     ),
+                ),
+                ComponentGuideSection(
+                    "Status and Progress",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "Use a polite live region for streaming or progress updates. This is the Compose " +
+                                "adaptation of HTML `role=status`; it does not create a native HTML status element.",
+                        ),
+                        ComponentGuideBlock.Code(
+                            """
+                            Marker(modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite }) {
+                                MarkerIcon { Spinner() }
+                                MarkerContent("Compacting conversation")
+                            }
+                            """.trimIndent(),
+                        ),
+                    ),
+                    level = 3,
+                ),
+                ComponentGuideSection(
+                    "Labeled Separators",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "A labeled separator needs no separator role. Its lines are decorative and its text " +
+                                "is ordinary content. An HTML separator role hides its child content from " +
+                                "assistive technology; keep meaningful labels exposed.",
+                        ),
+                        ComponentGuideBlock.Code("Marker(\"Today\", variant = MarkerVariant.Separator)"),
+                    ),
+                    level = 3,
+                ),
+                ComponentGuideSection(
+                    "Bordered Markers",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "The bottom border is decorative. Choose a live region, interactive action, or " +
+                                "ordinary content based on the marker's purpose, just as for the default variant.",
+                        ),
+                        ComponentGuideBlock.Code(
+                            """
+                            Marker(variant = MarkerVariant.Border) {
+                                MarkerIcon { Icon(Lucide.FileText, contentDescription = null) }
+                                MarkerContent("Opened implementation notes")
+                            }
+                            """.trimIndent(),
+                        ),
+                    ),
+                    level = 3,
+                ),
+                ComponentGuideSection(
+                    "Decorative Icons",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "In Nova, `MarkerIcon` hides its decorative content from assistive technology. " +
+                                "Put the meaning in `MarkerContent`. For an icon-only marker, provide an " +
+                                "accessible name on the root so it is not announced as empty.",
+                        ),
+                        ComponentGuideBlock.Code(
+                            """
+                            Marker(modifier = Modifier.semantics { contentDescription = "Synced" }) {
+                                MarkerIcon { Icon(Lucide.Check, contentDescription = null) }
+                            }
+                            """.trimIndent(),
+                        ),
+                    ),
+                    level = 3,
+                ),
+                ComponentGuideSection(
+                    "Interactive Markers",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "Compose actions with `Modifier.clickable(role = Role.Button)` and navigation with " +
+                                "`LinkAnnotation.Url`, as in Links and Buttons. The visible marker text supplies " +
+                                "the accessible name. Test keyboard activation. A URL annotation is a platform " +
+                                "adaptation and does not create a native anchor DOM element.",
+                        ),
+                    ),
+                    level = 3,
                 ),
             ),
         examples =
@@ -238,8 +323,8 @@ val markerDoc =
                 ComponentExample(
                     title = "Status",
                     descriptionMarkdown =
-                        "Set `role=\"status\"` and include a `Spinner` for streaming or in-progress " +
-                            "markers so updates are announced.",
+                        "Use `Modifier.semantics { liveRegion = LiveRegionMode.Polite }` and a `Spinner` " +
+                            "for streaming or in-progress markers so updates are announced.",
                     minPreviewHeight = 0.dp,
                     mobileMinPreviewHeight = 0.dp,
                     previewPadding = 40.dp,
@@ -351,7 +436,9 @@ val markerDoc =
                     title = "Separator",
                     descriptionMarkdown =
                         "Use the `separator` variant for labeled dividers, such as dates or section " +
-                            "breaks, in a conversation.",
+                            "breaks, in a conversation. A " +
+                            "[Checkpoint](https://ui.shadcn.com/docs/ai-elements/base/checkpoint) " +
+                            "is a separator with a button that restores the thread to that point.",
                     minPreviewHeight = 0.dp,
                     mobileMinPreviewHeight = 0.dp,
                     previewPadding = 40.dp,
@@ -525,7 +612,9 @@ val markerDoc =
                     minPreviewHeight = 0.dp,
                     mobileMinPreviewHeight = 0.dp,
                     previewPadding = 40.dp,
-                    descriptionMarkdown = "Turn a marker into a link or button with the `render` prop on `Marker`.",
+                    descriptionMarkdown =
+                        "Compose a marker link with `LinkAnnotation.Url`, or an action with " +
+                            "`Modifier.clickable(role = Role.Button)`.",
                     code = markerActionCode,
                     preview = { MarkerActionsRecipe() },
                 ),

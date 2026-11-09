@@ -66,6 +66,79 @@ class TableParityTest(private val dark: Boolean) : ScreenshotTest() {
         assertEquals(20f, text.height, .1f)
     }
 
+    @Test fun colSpanKeepsTheOfficialTrailingAmountColumnAligned() {
+        setThemedContent(darkTheme = dark, stylePreset = StylePreset.Nova) {
+            Table(Modifier.width(300.dp)) {
+                TableHeader(Modifier.testTag("header")) {
+                    TableHead("Invoice", Modifier.weight(1f))
+                    TableHead("Status", Modifier.weight(1f))
+                    TableHead("Method", Modifier.weight(1f))
+                    TableHead("Amount", Modifier.weight(1f).testTag("headAmount"))
+                }
+                TableBody {
+                    TableRow(Modifier.testTag("row"), isLast = true) {
+                        TableCell("INV001", Modifier.weight(1f))
+                        TableCell("Paid", Modifier.weight(1f))
+                        TableCell("Credit Card", Modifier.weight(1f))
+                        TableCell("$250.00", Modifier.weight(1f).testTag("bodyAmount"))
+                    }
+                }
+                TableFooter {
+                    TableRow(isLast = true) {
+                        TableCell("Total", Modifier.testTag("span"), colSpan = 3)
+                        TableCell("$250.00", Modifier.weight(1f).testTag("footerAmount"))
+                    }
+                }
+            }
+        }
+        assertEquals(bounds("headAmount").left, bounds("bodyAmount").left, .1f)
+        assertEquals(bounds("headAmount").left, bounds("footerAmount").left, .1f)
+        assertEquals(bounds("row").right, bounds("footerAmount").right, .1f)
+        assertEquals(bounds("row").left, bounds("span").left, .1f)
+        assertEquals(bounds("footerAmount").left, bounds("span").right, .1f)
+    }
+
+    @Test fun explicitSpansOverrideCallerWeightAndAlignInRtl() {
+        setThemedContent(darkTheme = dark, stylePreset = StylePreset.Nova) {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                Table(Modifier.width(400.dp)) {
+                    TableHeader {
+                        TableHeadCell("Heading", Modifier.weight(1f).testTag("headSpan"), colSpan = 3)
+                        TableHead("Amount", Modifier.weight(1f).testTag("headTail"))
+                    }
+                    TableRow {
+                        TableCell("Total", Modifier.weight(1f).testTag("textSpan"), colSpan = 3)
+                        TableCell(Modifier.weight(1f).testTag("textTail")) { "Amount" }
+                    }
+                    TableRow {
+                        TableCell(
+                            content = { Button("Action", onClick = {}) },
+                            modifier = Modifier.weight(1f).testTag("slotSpan"),
+                            colSpan = 3,
+                        )
+                        TableCell("Amount", Modifier.weight(1f).testTag("slotTail"))
+                    }
+                    TableRow {
+                        TableHead(Modifier.weight(1f).testTag("lambdaHead"), colSpan = 3) { "Heading" }
+                        TableCell(Modifier.weight(1f).testTag("lambdaTail")) { "Amount" }
+                    }
+                    TableRow {
+                        TableCell(Modifier.weight(1f).testTag("lambdaSpan"), colSpan = 3) { "Total" }
+                        TableCell("Amount", Modifier.weight(1f))
+                    }
+                }
+            }
+        }
+        listOf("headSpan", "textSpan", "slotSpan", "lambdaHead", "lambdaSpan").forEach {
+            node(it).assertWidthIsEqualTo(300.dp)
+        }
+        listOf("headTail", "textTail", "slotTail", "lambdaTail").forEach {
+            node(it).assertWidthIsEqualTo(100.dp)
+            assertEquals(bounds("headTail").left, bounds(it).left, .1f)
+        }
+        assertEquals(bounds("headTail").right, bounds("headSpan").left, .1f)
+    }
+
     @Test fun rowIsTransparentAndHoverUsesMutedAtHalfAlpha() {
         var hover = Color.Unspecified
         setThemedContent(darkTheme = dark, stylePreset = StylePreset.Nova) {

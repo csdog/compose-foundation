@@ -42,8 +42,7 @@ val chartDoc =
     ComponentDoc(
         id = "chart",
         title = "Chart",
-        description =
-            "Beautiful charts with configurable series, tooltips and legends.",
+        description = "Beautiful charts. Built using Recharts. Copy and paste into your apps.",
         usageCode =
             """
             import androidx.compose.ui.graphics.Color
@@ -57,6 +56,271 @@ val chartDoc =
             ChartLegend(config = config)
             """.trimIndent(),
         examplesHeading = null,
+        introductionSections =
+            listOf(
+                ComponentGuideSection(
+                    "Component",
+                    listOf(
+                        ComponentGuideBlock.Paragraph(
+                            "Updated: `chart` follows the Recharts v3 API shape. If you are upgrading " +
+                                "existing chart code, see Updating to Recharts v3 below. This Compose port keeps " +
+                                "the same config-driven API but draws the chart with Canvas instead of bundling " +
+                                "Recharts.",
+                        ),
+                        ComponentGuideBlock.Paragraph(
+                            "Introducing Charts. A collection of chart components that you can copy and paste " +
+                                "into your apps.",
+                        ),
+                        ComponentGuideBlock.Paragraph(
+                            "Charts are designed to look great out of the box. They work well with the other " +
+                                "components and are fully customizable to fit your project. " +
+                                "[Browse the Charts Library](https://ui.shadcn.com/charts).",
+                        ),
+                        ComponentGuideBlock.Paragraph(
+                            "The web implementation uses [Recharts](https://recharts.org/) under the hood. The " +
+                                "Compose port mirrors that composition contract: you build a chart from " +
+                                "`ChartContainer`, `BarChart`/`LineChart`, `ChartTooltip` and `ChartLegend`, and " +
+                                "only bring in the pieces you need.",
+                        ),
+                        ComponentGuideBlock.Code(
+                            """
+                            val config = mapOf(
+                                "desktop" to ChartSeries("Desktop", Color(0xFF2563EB)),
+                                "mobile" to ChartSeries("Mobile", Color(0xFF60A5FA)),
+                            )
+                            val data = listOf(
+                                ChartPoint("Jan", mapOf("desktop" to 186f, "mobile" to 80f)),
+                            )
+
+                            ChartContainer(config = config, aspectRatio = 16f / 9f) {
+                                BarChart(
+                                    data = data,
+                                    tooltip = {
+                                        ChartTooltipContent(
+                                            label = it.label,
+                                            config = config,
+                                            values = it.values,
+                                        )
+                                    },
+                                )
+                            }
+                            """.trimIndent(),
+                        ),
+                        ComponentGuideBlock.Paragraph(
+                            "The port does not wrap a charting library either: the chart primitives are plain " +
+                                "Compose, the config is yours, and there is no abstraction lock-in.",
+                        ),
+                    ),
+                ),
+                ComponentGuideSection(
+                    "Updating to Recharts v3",
+                    listOf(
+                        ComponentGuideBlock.Paragraph("If you are updating older chart code to the v3 shape:"),
+                        ComponentGuideBlock.Bullets(
+                            listOf(
+                                "Reference the chart color tokens directly through `ChartSeries.color` (or " +
+                                    "`ChartThemeColors`) instead of wrapping them in a CSS `hsl()` expression.",
+                                "Use `defaultIndex` for the initial tooltip state only; keep persistent active " +
+                                    "shapes in your own chart state.",
+                                "Set the orientation once on the chart root; do not repeat it per bar.",
+                                "Give `ChartContainer` a height or aspect ratio so it can measure on first " +
+                                    "render; `ChartContainerDefaults.InitialDimension` is only a fallback.",
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        beforeExampleSections =
+            mapOf(
+                "Tooltip" to
+                    listOf(
+                        ComponentGuideSection(
+                            "Chart Config",
+                            listOf(
+                                ComponentGuideBlock.Paragraph(
+                                    "The chart config is where you define the labels, icons and colors for a chart.",
+                                ),
+                                ComponentGuideBlock.Paragraph(
+                                    "It is intentionally decoupled from chart data. This allows you to share config " +
+                                        "and color tokens between charts. It can also work independently for " +
+                                        "cases where " +
+                                        "your data or color tokens live remotely or in a different format.",
+                                ),
+                                ComponentGuideBlock.Code(
+                                    """
+                                    val chartConfig = mapOf(
+                                        "desktop" to ChartSeries(
+                                            label = "Desktop",
+                                            icon = { Icon(Lucide.Monitor, Modifier.size(12.dp)) },
+                                            // A color like Color(0xFF2563EB) or a shared theme token
+                                            color = Color(0xFF2563EB),
+                                            // OR a light/dark pair used by the chart renderer
+                                            theme = ChartThemeColors(
+                                                light = Color(0xFF2563EB),
+                                                dark = Color(0xFFDC2626),
+                                            ),
+                                        ),
+                                    )
+                                    """.trimIndent(),
+                                ),
+                            ),
+                        ),
+                        ComponentGuideSection(
+                            "Theming",
+                            listOf(
+                                ComponentGuideBlock.Paragraph(
+                                    "Charts have built-in support for theming. You can use shared color tokens " +
+                                        "(recommended) or color values in any color format, such as hex, hsl or oklch.",
+                                ),
+                            ),
+                        ),
+                        ComponentGuideSection(
+                            "CSS Variables",
+                            listOf(
+                                ComponentGuideBlock.Paragraph(
+                                    "Define your colors once in the theme (the web page lists `--chart-1` through " +
+                                        "`--chart-5` for light and dark), then reference the same values from " +
+                                        "`ChartSeries`.",
+                                ),
+                                ComponentGuideBlock.Code(
+                                    """
+                                    val chartConfig = mapOf(
+                                        "desktop" to ChartSeries(label = "Desktop", color = theme.colors.chart1),
+                                        "mobile" to ChartSeries(label = "Mobile", color = theme.colors.chart2),
+                                    )
+                                    """.trimIndent(),
+                                ),
+                            ),
+                            level = 3,
+                        ),
+                        ComponentGuideSection(
+                            "hex, hsl or oklch",
+                            listOf(
+                                ComponentGuideBlock.Paragraph(
+                                    "You can also define your colors directly in the chart config. Use the color " +
+                                        "format you prefer.",
+                                ),
+                                ComponentGuideBlock.Code(
+                                    """
+                                    val chartConfig = mapOf(
+                                        "desktop" to ChartSeries("Desktop", Color(0xFF2563EB)),
+                                        "mobile" to ChartSeries("Mobile", Oklch(0.5f, 0.2f, 240f).toColor()),
+                                        "tablet" to ChartSeries("Tablet", Color(0xFF60A5FA)),
+                                    )
+                                    """.trimIndent(),
+                                ),
+                            ),
+                            level = 3,
+                        ),
+                        ComponentGuideSection(
+                            "Using Colors",
+                            listOf(
+                                ComponentGuideBlock.Paragraph(
+                                    "To use the theme colors in your chart, reference the series from the config. " +
+                                        "Bars, lines, the tooltip indicator and the legend all resolve the " +
+                                        "same series color.",
+                                ),
+                                ComponentGuideBlock.Code(
+                                    """
+                                    ChartContainer(config = chartConfig) {
+                                        BarChart(data = data, config = chartConfig)
+                                        ChartLegend(config = chartConfig)
+                                    }
+                                    """.trimIndent(),
+                                ),
+                            ),
+                            level = 3,
+                        ),
+                    ),
+                "RTL" to
+                    listOf(
+                        ComponentGuideSection(
+                            "Tooltip Props",
+                            listOf(
+                                ComponentGuideBlock.Paragraph(
+                                    "A chart tooltip contains a label, name, indicator and value. You can turn " +
+                                        "any of these on or off and customize the indicator style.",
+                                ),
+                                ComponentGuideBlock.Bullets(
+                                    listOf(
+                                        "`label` / `labelFormatter` - the config or data key used for the " +
+                                            "tooltip label.",
+                                        "`values` / `valueFormatter` / `formatter` - the value rows; names " +
+                                            "come from the chart config labels.",
+                                        "`indicator` - `ChartIndicator.Dot`, `ChartIndicator.Line` or " +
+                                            "`ChartIndicator.Dashed`.",
+                                        "`hideLabel` - whether to hide the label.",
+                                        "`hideIndicator` - whether to hide the indicator.",
+                                    ),
+                                ),
+                                ComponentGuideBlock.Paragraph(
+                                    "Colors are automatically referenced from the chart config. Use " +
+                                        "`labelFormatter`/`valueFormatter` to customize the displayed keys.",
+                                ),
+                                ComponentGuideBlock.Code(
+                                    """
+                                    BarChart(
+                                        data = data,
+                                        config = chartConfig,
+                                        tooltip = {
+                                            ChartTooltipContent(
+                                                label = it.label,
+                                                config = chartConfig,
+                                                values = it.values,
+                                                indicator = ChartIndicator.Line,
+                                                hideLabel = false,
+                                            )
+                                        },
+                                    )
+                                    """.trimIndent(),
+                                ),
+                            ),
+                        ),
+                        ComponentGuideSection(
+                            "Legend",
+                            listOf(
+                                ComponentGuideBlock.Paragraph(
+                                    "You can use `ChartLegend` / `ChartLegendContent` to add a legend to your chart.",
+                                ),
+                                ComponentGuideBlock.Paragraph(
+                                    "Colors are automatically referenced from the chart config. Use `hideIcon` to " +
+                                        "render the swatch-only legend and `verticalAlign` to place the legend.",
+                                ),
+                                ComponentGuideBlock.Code(
+                                    """
+                                    ChartLegend(
+                                        config = chartConfig,
+                                        verticalAlign = ChartLegendVerticalAlign.Bottom,
+                                    )
+                                    """.trimIndent(),
+                                ),
+                            ),
+                        ),
+                        ComponentGuideSection(
+                            "Accessibility",
+                            listOf(
+                                ComponentGuideBlock.Paragraph(
+                                    "You can turn on the `accessibilityLayer` prop to add an accessible layer " +
+                                        "to your chart. This prop adds keyboard access and screen reader support " +
+                                        "to your charts.",
+                                ),
+                                ComponentGuideBlock.Paragraph(
+                                    "In this port the chart layer is keyboard accessible by default: the plot is " +
+                                        "focusable, arrow keys move the active datum, Home/End jump to the ends, " +
+                                        "Escape " +
+                                        "dismisses the tooltip, and `ariaLabel` names the chart region.",
+                                ),
+                                ComponentGuideBlock.Code(
+                                    """
+                                    ChartContainer(ariaLabel = "Monthly desktop and mobile users") {
+                                        LineChart(data = data, config = chartConfig, accessibilityLayer = true)
+                                    }
+                                    """.trimIndent(),
+                                ),
+                            ),
+                        ),
+                    ),
+            ),
         examples =
             chartOfficialExamples +
                 listOf(

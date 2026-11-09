@@ -39,6 +39,18 @@ class ComponentDocumentationTest {
 
     @Test fun attachmentGuidanceExportAndTocKeepSourceOrderAndReadableFragments() {
         val markdown = componentPageMarkdown(attachmentDoc)
+        val intro = requireNotNull(attachmentDoc.introMarkdown)
+        val preview = markdown.indexOf(attachmentDoc.examples.first().code)
+        val introduction = markdown.indexOf(intro)
+        val installation = markdown.indexOf("## Installation")
+        assertTrue(preview < introduction && introduction < installation)
+        assertEquals(1, markdown.split(intro).size - 1)
+        assertTrue(markdown.substring(preview, introduction).trimEnd().endsWith("```"))
+        assertEquals(
+            markdown.replace("$intro\n\n", ""),
+            componentPageMarkdown(attachmentDoc.copy(introMarkdown = null)),
+        )
+        assertEquals(docSections(attachmentDoc.copy(introMarkdown = null)), docSections(attachmentDoc))
         val headings =
             listOf(
                 "## Composition", "## Features", "## Image", "## States", "## Sizes", "## Group", "## Trigger",
@@ -120,6 +132,14 @@ class ComponentDocumentationTest {
             )
         }
         assertVisible("before-guide-0")
+        val intro = rule.onNode(hasText("Use it for files and images in chat composers", substring = true))
+        intro.assertExists()
+        rule.onNode(
+            hasText("Use it for files and images in chat composers", substring = true) and isHeading(),
+        ).assertDoesNotExist()
+        val introBounds = intro.fetchSemanticsNode().boundsInRoot
+        val installationBounds = rule.onNodeWithTag("heading-installation").fetchSemanticsNode().boundsInRoot
+        assertTrue(introBounds.bottom <= installationBounds.top)
         rule.runOnIdle { scroll.dispatchRawDelta(-scroll.value.toFloat()) }
         rule.onNodeWithText("Copy Page").performClick()
         rule.waitForIdle()

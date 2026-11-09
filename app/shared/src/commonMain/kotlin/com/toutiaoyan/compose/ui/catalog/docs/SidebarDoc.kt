@@ -60,6 +60,7 @@ val sidebarDoc =
         id = "sidebar",
         title = "Sidebar",
         description = "A composable, themeable and customizable sidebar component.",
+        examplesHeading = null,
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.sidebar.*
@@ -88,7 +89,7 @@ val sidebarDoc =
         examples =
             listOf(
                 ComponentExample(
-                    title = "App shell",
+                    title = "Kotlin extension: App shell",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -170,7 +171,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Right",
+                    title = "Kotlin extension: Right",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -232,7 +233,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default side",
+                    title = "Kotlin extension: Default side",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -280,7 +281,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default width",
+                    title = "Kotlin extension: Default width",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -328,7 +329,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Not collapsible",
+                    title = "Kotlin extension: Not collapsible",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -378,7 +379,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default collapsible",
+                    title = "Kotlin extension: Default collapsible",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -428,7 +429,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Keyboard shortcut",
+                    title = "Kotlin extension: Keyboard shortcut",
                     code =
                         """
                         SidebarProvider {
@@ -474,7 +475,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Floating",
+                    title = "Kotlin extension: Floating",
                     code =
                         """
                         SidebarProvider {
@@ -507,7 +508,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Inset",
+                    title = "Kotlin extension: Inset",
                     code =
                         """
                         SidebarProvider {
@@ -540,16 +541,17 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Mobile sheet",
+                    title = "Kotlin extension: Mobile sheet",
                     code =
                         """
-                        SidebarProvider(mobile = true, openMobile = true) {
+                        var open by remember { mutableStateOf(false) }
+                        SidebarProvider(mobile = true, openMobile = open, onOpenMobileChange = { open = it }) {
                             Sidebar { /* … */ }
                             SidebarInset { SidebarTrigger() }
                         }
                         """.trimIndent(),
                     preview = {
-                        var open by remember { mutableStateOf(true) }
+                        var open by remember { mutableStateOf(false) }
                         var active by remember { mutableStateOf("home") }
                         SidebarProvider(
                             openMobile = open,
@@ -574,7 +576,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Official width",
+                    title = "Kotlin extension: Official width",
                     code =
                         """
                         Sidebar(width = SidebarDefaults.Width) { /* 16rem */ }
@@ -604,7 +606,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Icon collapse",
+                    title = "Kotlin extension: Icon collapse",
                     code =
                         """
                         SidebarProvider(
@@ -641,7 +643,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Disabled",
+                    title = "Kotlin extension: Disabled",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -689,7 +691,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default disabled",
+                    title = "Kotlin extension: Default disabled",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -737,7 +739,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default open",
+                    title = "Kotlin extension: Default open",
                     code =
                         """
                         var active by remember { mutableStateOf("home") }
@@ -776,7 +778,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Menu button outline",
+                    title = "Kotlin extension: Menu button outline",
                     code =
                         """
                         var active by remember { mutableStateOf("home") }
@@ -820,7 +822,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Active sub button",
+                    title = "Kotlin extension: Active sub button",
                     code =
                         """
                         var active by remember { mutableStateOf("overview") }
@@ -870,7 +872,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Forced active item",
+                    title = "Kotlin extension: Forced active item",
                     code =
                         """
                         var active by remember { mutableStateOf("inbox") }
@@ -906,7 +908,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Accessible label",
+                    title = "Kotlin extension: Accessible label",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -952,7 +954,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default aria label",
+                    title = "Kotlin extension: Default aria label",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -998,7 +1000,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Rail",
+                    title = "Kotlin extension: Rail",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -1046,7 +1048,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Header",
+                    title = "Kotlin extension: Header",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -1100,7 +1102,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Footer",
+                    title = "Kotlin extension: Footer",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -1154,7 +1156,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Separator",
+                    title = "Kotlin extension: Separator",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -1210,7 +1212,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Group label",
+                    title = "Kotlin extension: Group label",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -1258,7 +1260,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Inset",
+                    title = "Kotlin extension: Inset primitives",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -1300,7 +1302,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Menu",
+                    title = "Kotlin extension: Menu",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -1346,7 +1348,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Trigger",
+                    title = "Kotlin extension: Trigger",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -1388,7 +1390,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Menu badge",
+                    title = "Kotlin extension: Menu badge",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -1430,7 +1432,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Input",
+                    title = "Kotlin extension: Input",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -1480,7 +1482,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Menu skeleton",
+                    title = "Kotlin extension: Menu skeleton",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -1524,7 +1526,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default skeleton icon",
+                    title = "Kotlin extension: Default skeleton icon",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -1566,7 +1568,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Group content",
+                    title = "Kotlin extension: Group content",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -1614,7 +1616,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Menu button",
+                    title = "Kotlin extension: Menu button",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -1656,7 +1658,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default menu button variant",
+                    title = "Kotlin extension: Default menu button variant",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -1706,7 +1708,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default menu button size",
+                    title = "Kotlin extension: Default menu button size",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -1756,7 +1758,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default active",
+                    title = "Kotlin extension: Default active",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -1798,7 +1800,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default tooltip",
+                    title = "Kotlin extension: Default tooltip",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -1840,7 +1842,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Group",
+                    title = "Kotlin extension: Group",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -1882,7 +1884,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Menu sub",
+                    title = "Kotlin extension: Menu sub",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -1932,7 +1934,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Menu action",
+                    title = "Kotlin extension: Menu action",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -1980,7 +1982,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Group action",
+                    title = "Kotlin extension: Group action",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -2042,7 +2044,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Provider",
+                    title = "Kotlin extension: Provider",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -2088,7 +2090,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Menu item",
+                    title = "Kotlin extension: Menu item",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -2132,7 +2134,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Menu sub button",
+                    title = "Kotlin extension: Menu sub button",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -2192,7 +2194,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default sub button size",
+                    title = "Kotlin extension: Default sub button size",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -2264,7 +2266,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Default sub active",
+                    title = "Kotlin extension: Default sub active",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }
@@ -2312,7 +2314,7 @@ val sidebarDoc =
                     },
                 ),
                 ComponentExample(
-                    title = "Menu sub item",
+                    title = "Kotlin extension: Menu sub item",
                     code =
                         """
                         var open by remember { mutableStateOf(true) }

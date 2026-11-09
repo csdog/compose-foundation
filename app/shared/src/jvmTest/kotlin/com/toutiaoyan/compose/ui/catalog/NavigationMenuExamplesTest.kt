@@ -121,6 +121,18 @@ class NavigationMenuExamplesTest(private val viewport: Int, private val dark: Bo
         advance()
     }
 
+    @Test fun delaySupplementActuallyDelaysOpeningAPanel() {
+        show("Kotlin extension: Delay")
+        rule.onNodeWithText("Getting started").performMouseInput {
+            enter(center, delayMillis = 0)
+            moveTo(center, delayMillis = 0)
+        }
+        advance(100)
+        rule.onNodeWithText("Delayed navigation links").assertDoesNotExist()
+        advance(150)
+        rule.onNodeWithText("Delayed navigation links").assertIsDisplayed()
+    }
+
     @Test fun defaultHasSourceLinksAndActionsCloseThePanel() {
         show("Default")
         rule.onNodeWithText("Getting started").assertIsDisplayed()

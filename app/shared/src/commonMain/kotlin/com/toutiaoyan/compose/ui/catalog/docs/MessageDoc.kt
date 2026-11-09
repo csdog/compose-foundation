@@ -37,8 +37,11 @@ private val messageOfficialTitles =
     setOf("Default", "Avatar", "Group", "Header and Footer", "Actions", "Attachment")
 
 private fun messagePageExample(example: ComponentExample): ComponentExample =
-    if (example.title in messageOfficialTitles) example
-    else example.copy(title = "Kotlin extension: " + example.title)
+    if (example.title in messageOfficialTitles) {
+        example
+    } else {
+        example.copy(title = "Kotlin extension: " + example.title)
+    }
 
 private val messageFeatureSections =
     listOf(
@@ -53,6 +56,7 @@ private val messageFeatureSections =
                             "Header and footer slots for sender names, status, and message actions.",
                             "Footer follows the message side; actions stay aligned on `MessageAlign.End` rows.",
                             "`MessageGroup` stacks consecutive messages from the same sender.",
+                            "Customize every part through its `modifier` and `style` parameters.",
                         ),
                     ),
                 ),
@@ -129,6 +133,30 @@ val messageDoc =
         title = "Message",
         description = "Displays a message in a conversation, with optional avatar, header, footer, and alignment.",
         examplesHeading = null,
+        introMarkdown =
+            "The `Message` component lays out a single message in a conversation. It handles the avatar, " +
+                "alignment, header, and footer around the message surface.\n\n" +
+                "For AI apps, you can render reasoning steps, tool calls and assistant messages using `Message`.",
+        beforeCompositionMarkdown =
+            "**Note:** `Message` owns the row layout—avatar, alignment, header, and footer. " +
+                "Render the visible message surface inside it with [Bubble](/bubble). " +
+                "For the scroll container around a conversation, use [MessageScroller](/message-scroller).\n\n" +
+                "Use the following composition to build a message. Use `MessageGroup` to stack " +
+                "consecutive messages from the same sender:",
+        afterExampleSections =
+            mapOf(
+                "Avatar" to
+                    listOf(
+                        ComponentGuideBlock.Table(
+                            headers = listOf("align", "Description"),
+                            rows =
+                                listOf(
+                                    listOf("`Start`", "Align the message to the start of the conversation."),
+                                    listOf("`End`", "Align the message to the end of the conversation."),
+                                ),
+                        ),
+                    ),
+            ),
         usageImportsCode =
             """
             import androidx.compose.foundation.Image
@@ -449,6 +477,9 @@ val messageDoc =
                 ),
                 ComponentExample(
                     title = "Avatar",
+                    descriptionMarkdown =
+                        "Use `MessageAvatar` to render an avatar next to the message. Set `align = " +
+                            "MessageAlign.End` to align the avatar to the end of the message.",
                     code =
                         """
                         val inherited = currentTheme
@@ -584,6 +615,10 @@ val messageDoc =
                 ),
                 ComponentExample(
                     title = "Group",
+                    descriptionMarkdown =
+                        "Use `MessageGroup` to stack consecutive messages from the same sender. Render an " +
+                            "empty `MessageAvatar` on the earlier messages to keep them aligned with " +
+                            "the avatar on the last one.",
                     code =
                         """
                         val inherited = currentTheme
@@ -665,6 +700,9 @@ val messageDoc =
                 ),
                 ComponentExample(
                     title = "Header and Footer",
+                    descriptionMarkdown =
+                        "Use `MessageHeader` for a sender name and `MessageFooter` for metadata such as a " +
+                            "delivery or read status.",
                     code =
                         """
                         val inherited = currentTheme
@@ -735,6 +773,8 @@ val messageDoc =
                 ),
                 ComponentExample(
                     title = "Actions",
+                    descriptionMarkdown =
+                        "Place message-level actions in `MessageFooter`, such as copy, retry, or feedback buttons.",
                     code =
                         """
                         val inherited = currentTheme

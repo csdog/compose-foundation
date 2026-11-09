@@ -83,6 +83,17 @@ class CardExamplesTest(private val width: Int, private val dark: Boolean) {
             componentPageMarkdown(cardDoc),
             "remove the section gap on `CardContent` with the matching negative bottom offset.",
         )
+        val spacingExample = cardDoc.examples[2]
+        val edgeExample = cardDoc.examples[3]
+        val edgeGuidance = "Use negative horizontal offsets"
+        assertFalse(spacingExample.descriptionMarkdown.orEmpty().contains(edgeGuidance))
+        assertTrue(edgeExample.descriptionMarkdown.orEmpty().startsWith(edgeGuidance))
+        assertFalse(edgeExample.showHeading)
+        val markdown = componentPageMarkdown(cardDoc)
+        assertTrue(markdown.indexOf(spacingExample.code) < markdown.indexOf(edgeGuidance))
+        assertTrue(markdown.indexOf(edgeGuidance) < markdown.indexOf(edgeExample.code))
+        assertContains(spacingExample.code, "horizontalAlignment = Alignment.Start")
+        assertFalse(spacingExample.code.contains("spacing = 0.dp"))
         assertContains(
             componentPageMarkdown(cardDoc),
             "Places content in the top-right of the header (logical end in RTL), such as a button or badge.",
@@ -157,6 +168,31 @@ class CardExamplesTest(private val width: Int, private val dark: Boolean) {
             assertEquals(spacing.toFloat(), card.right - field.right)
             rule.onNodeWithText("${spacing}px").performClick().assertIsOn()
         }
+    }
+
+    @Test fun edgeGuidanceRendersBetweenTheSpacingAndEdgePreviews() {
+        val doc =
+            cardDoc.copy(
+                examples =
+                    cardDoc.examples.mapIndexed { index, example ->
+                        example.copy(preview = { Box(Modifier.size(8.dp).testTag("recipe-$index")) })
+                    },
+            )
+        rule.setContent {
+            CompositionLocalProvider(LocalCatalogViewportWidth provides width.dp) {
+                Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
+                    Box(Modifier.requiredSize(width.dp, 1000.dp)) { ComponentDetailContent(doc) }
+                }
+            }
+        }
+        rule.onNodeWithTag("recipe-3").performScrollTo()
+        val spacing = rule.onNodeWithTag("recipe-2").getUnclippedBoundsInRoot()
+        val guidance =
+            rule.onNodeWithText("Use negative horizontal offsets", substring = true)
+                .getUnclippedBoundsInRoot()
+        val edge = rule.onNodeWithTag("recipe-3").getUnclippedBoundsInRoot()
+        assertTrue(spacing.bottom < guidance.top)
+        assertTrue(guidance.bottom < edge.top)
     }
 
     @Test fun rtlSwitchesAllThreeTranslationsAndKeepsInputValues() {

@@ -52,6 +52,8 @@ import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -146,6 +148,7 @@ class NavigationMenuItemScope internal constructor(
 
 private val LocalNavigationMenuItem = staticCompositionLocalOf<NavigationMenuItemScope?> { null }
 private val LocalNavigationMenuPanel = staticCompositionLocalOf { false }
+private val LocalNavigationMenuPanelLinks = staticCompositionLocalOf<MutableList<FocusRequester>?> { null }
 
 /** Reads the nearest [NavigationMenuItem] scope. */
 @Composable
@@ -347,6 +350,15 @@ fun NavigationMenuItemScope.NavigationMenuTrigger(
         onDispose { triggerMounted = false }
     }
     val resolvedEnabled = enabled && !disabled
+    val direction = LocalLayoutDirection.current
+    val openKey =
+        if (controller.orientation == NavigationMenuOrientation.Horizontal) {
+            Key.DirectionDown
+        } else if (direction == LayoutDirection.Rtl) {
+            Key.DirectionLeft
+        } else {
+            Key.DirectionRight
+        }
     var stickyHoverPress by remember { mutableStateOf(false) }
     var triggerHovered by remember { mutableStateOf(false) }
     LaunchedEffect(isOpen) {
@@ -358,8 +370,14 @@ fun NavigationMenuItemScope.NavigationMenuTrigger(
     }
     NavMenuHitTarget(
         modifier =
-            modifier.focusRequester(triggerFocus).onPreviewKeyEvent {
-                if (it.type == KeyEventType.KeyDown && it.key == Key.Escape && isOpen) {
+            modifier.focusRequester(triggerFocus).keyboardInputMode().onPreviewKeyEvent {
+                if (it.type != KeyEventType.KeyDown || !resolvedEnabled) {
+                    false
+                } else if (it.key == openKey) {
+                    keyboardOpened = true
+                    controller.onOpenChange(value)
+                    true
+                } else if (it.key == Key.Escape && isOpen) {
                     controller.onOpenChange(null)
                     true
                 } else {
@@ -440,6 +458,7 @@ fun NavigationMenuItemScope.NavigationMenuContent(
     val controller = navigationMenuController()
     val isOpen = controller.openValue == value
     val panelFocus = remember { FocusRequester() }
+    val panelLinks = remember { mutableListOf<FocusRequester>() }
     LaunchedEffect(isOpen) {
         if (!isOpen && keyboardOpened) {
             if (controller.openValue == null && triggerMounted) triggerFocus.requestFocus()
@@ -474,7 +493,7 @@ fun NavigationMenuItemScope.NavigationMenuContent(
         LaunchedEffect(isOpen, keyboardOpened) {
             if (isOpen && keyboardOpened) {
                 withFrameNanos { }
-                panelFocus.requestFocus()
+                if (panelLinks.firstOrNull()?.requestFocus() != true) panelFocus.requestFocus()
             }
         }
         NavigationMenuPositioner {
@@ -499,6 +518,7 @@ fun NavigationMenuItemScope.NavigationMenuContent(
             ) {
                 CompositionLocalProvider(
                     LocalNavigationMenuPanel provides true,
+                    LocalNavigationMenuPanelLinks provides panelLinks,
                     LocalContentColor provides foreground,
                 ) { content() }
             }
@@ -575,11 +595,18 @@ fun NavigationMenuItemScope.NavigationMenuLink(
 ) {
     val controller = navigationMenuController()
     val inPanel = LocalNavigationMenuPanel.current
+    val panelLinks = LocalNavigationMenuPanelLinks.current
+    val linkFocus = remember { FocusRequester() }
+    val resolvedEnabled = enabled && !disabled
+    DisposableEffect(panelLinks, resolvedEnabled) {
+        if (resolvedEnabled) panelLinks?.add(linkFocus)
+        onDispose { panelLinks?.remove(linkFocus) }
+    }
     NavMenuHitTarget(
-        modifier = modifier,
+        modifier = modifier.focusRequester(linkFocus),
         open = active,
         active = active,
-        enabled = enabled && !disabled,
+        enabled = resolvedEnabled,
         style = style,
         onClick = { _, _, _ ->
             onClick()

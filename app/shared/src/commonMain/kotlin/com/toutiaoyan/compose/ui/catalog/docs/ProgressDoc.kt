@@ -15,16 +15,9 @@ val progressDoc =
                 "import com.toutiaoyan.compose.ui.components.progress.*",
         usageCode = "Progress(value = 33f, max = 100f)",
         examplesHeading = null,
-        compositionCode =
-            """
-            Progress
-            ├── ProgressLabel
-            ├── ProgressValue
-            └── ProgressTrack
-                └── ProgressIndicator
-            """.trimIndent(),
         beforeExamples =
             listOf(
+                ComponentGuideSection("Composition", emptyList()),
                 ComponentGuideSection(
                     "With label and value",
                     listOf(
@@ -38,6 +31,16 @@ val progressDoc =
                                 ProgressValue()
                             }
                             """.trimIndent(),
+                        ),
+                        ComponentGuideBlock.Code(
+                            """
+                            Progress
+                            ├── ProgressLabel
+                            ├── ProgressValue
+                            └── ProgressTrack
+                                └── ProgressIndicator
+                            """.trimIndent(),
+                            language = null,
                         ),
                     ),
                     level = 3,

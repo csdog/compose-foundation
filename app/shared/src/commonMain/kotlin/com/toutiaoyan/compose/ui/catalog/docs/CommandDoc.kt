@@ -198,14 +198,14 @@ val commandDoc =
                     └── CommandItem
             """.trimIndent(),
         examplesHeading = null,
-        beforeExamples =
+        introductionSections =
             listOf(
                 ComponentGuideSection(
                     "About",
                     listOf(
                         ComponentGuideBlock.Paragraph(
-                            "The `Command` component is modelled on the upstream cmdk command menu: " +
-                                "a searchable list with groups, separators and keyboard selection.",
+                            "The upstream `<Command />` component uses the " +
+                                "[`cmdk`](https://github.com/dip/cmdk) component by [Dip](https://www.dip.org/).",
                         ),
                     ),
                 ),
@@ -217,26 +217,13 @@ val commandDoc =
                     code = commandDemoCode,
                     preview = commandDemoPreview,
                 ),
-            ) + commandOfficialRecipes + listOf(
-                ComponentExample(
-                    title = "Kotlin extension: Controlled value",
-                    code =
-                        """
-                        var value by remember { mutableStateOf("") }
-                        Command(value = value, onValueChange = { value = it }) {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                    CommandItem("Search Emoji", onSelect = {})
-                                }
-                            }
-                        }
-                        // value is the highlighted item's value; rejected writes keep the old value.
-                        """.trimIndent(),
-                    preview = {
-                        var value by remember { mutableStateOf("") }
-                        Column(Modifier.widthIn(max = 384.dp)) {
+            ) + commandOfficialRecipes +
+                listOf(
+                    ComponentExample(
+                        title = "Kotlin extension: Controlled value",
+                        code =
+                            """
+                            var value by remember { mutableStateOf("") }
                             Command(value = value, onValueChange = { value = it }) {
                                 CommandInput()
                                 CommandList {
@@ -246,101 +233,120 @@ val commandDoc =
                                     }
                                 }
                             }
-                            SurfaceText("Active: " + value.ifEmpty { "(none)" }, muted = true)
-                        }
-                    },
+                            // value is the highlighted item's value; rejected writes keep the old value.
+                            """.trimIndent(),
+                        preview = {
+                            var value by remember { mutableStateOf("") }
+                            Column(Modifier.widthIn(max = 384.dp)) {
+                                Command(value = value, onValueChange = { value = it }) {
+                                    CommandInput()
+                                    CommandList {
+                                        CommandGroup(heading = "Suggestions") {
+                                            CommandItem("Calendar", onSelect = {})
+                                            CommandItem("Search Emoji", onSelect = {})
+                                        }
+                                    }
+                                }
+                                SurfaceText("Active: " + value.ifEmpty { "(none)" }, muted = true)
+                            }
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Kotlin extension: Custom filter",
+                        code =
+                            """
+                            Command(filter = { query, item -> item.contains(query, ignoreCase = true) }) {
+                                CommandInput()
+                                CommandList {
+                                    CommandEmpty(text = "No results found.")
+                                    CommandGroup(heading = "Suggestions") {
+                                        CommandItem("Calendar", onSelect = {})
+                                        CommandItem("Search Emoji", onSelect = {})
+                                        CommandItem("Calculator", onSelect = {})
+                                    }
+                                }
+                            }
+                            """.trimIndent(),
+                        preview = {
+                            Command(filter = { query, item -> item.contains(query, ignoreCase = true) }) {
+                                CommandInput()
+                                CommandList {
+                                    CommandEmpty()
+                                    CommandGroup(heading = "Suggestions") {
+                                        CommandItem("Calendar", onSelect = {})
+                                        CommandItem("Search Emoji", onSelect = {})
+                                        CommandItem("Calculator", onSelect = {})
+                                    }
+                                }
+                            }
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Kotlin extension: Long list keyboard navigation",
+                        code =
+                            """
+                            Command {
+                                CommandInput()
+                                CommandList {
+                                    repeat(80) { index ->
+                                        CommandItem("Action ${'$'}index", onSelect = {})
+                                    }
+                                }
+                            }
+                            // Arrow keys move the selection; Home/End jump to the first/last item
+                            // and the list scrolls the highlighted row into view.
+                            """.trimIndent(),
+                        preview = {
+                            Command {
+                                CommandInput()
+                                CommandList {
+                                    repeat(80) { index ->
+                                        CommandItem("Action $index", onSelect = {})
+                                    }
+                                }
+                            }
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Kotlin extension: Keywords",
+                        code =
+                            """
+                            Command {
+                                CommandInput()
+                                CommandList {
+                                    CommandGroup(heading = "Suggestions") {
+                                        CommandItem("Calendar", onSelect = {}, keywords = listOf("date", "event"))
+                                        CommandItem("Search Emoji", onSelect = {}, keywords = listOf("smile", "icon"))
+                                    }
+                                }
+                            }
+                            """.trimIndent(),
+                        preview = {
+                            Command {
+                                CommandInput()
+                                CommandList {
+                                    CommandGroup(heading = "Suggestions") {
+                                        CommandItem("Calendar", onSelect = {}, keywords = listOf("date", "event"))
+                                        CommandItem("Search Emoji", onSelect = {}, keywords = listOf("smile", "icon"))
+                                    }
+                                }
+                            }
+                        },
+                    ),
                 ),
-                ComponentExample(
-                    title = "Kotlin extension: Custom filter",
-                    code =
-                        """
-                        Command(filter = { query, item -> item.contains(query, ignoreCase = true) }) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty(text = "No results found.")
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                    CommandItem("Search Emoji", onSelect = {})
-                                    CommandItem("Calculator", onSelect = {})
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command(filter = { query, item -> item.contains(query, ignoreCase = true) }) {
-                            CommandInput()
-                            CommandList {
-                                CommandEmpty()
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {})
-                                    CommandItem("Search Emoji", onSelect = {})
-                                    CommandItem("Calculator", onSelect = {})
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Kotlin extension: Long list keyboard navigation",
-                    code =
-                        """
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                repeat(80) { index ->
-                                    CommandItem("Action ${'$'}index", onSelect = {})
-                                }
-                            }
-                        }
-                        // Arrow keys move the selection; Home/End jump to the first/last item
-                        // and the list scrolls the highlighted row into view.
-                        """.trimIndent(),
-                    preview = {
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                repeat(80) { index ->
-                                    CommandItem("Action $index", onSelect = {})
-                                }
-                            }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Kotlin extension: Keywords",
-                    code =
-                        """
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {}, keywords = listOf("date", "event"))
-                                    CommandItem("Search Emoji", onSelect = {}, keywords = listOf("smile", "icon"))
-                                }
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        Command {
-                            CommandInput()
-                            CommandList {
-                                CommandGroup(heading = "Suggestions") {
-                                    CommandItem("Calendar", onSelect = {}, keywords = listOf("date", "event"))
-                                    CommandItem("Search Emoji", onSelect = {}, keywords = listOf("smile", "icon"))
-                                }
-                            }
-                        }
-                    },
-                ),
-            ),
         apiSections =
             listOf(
                 ComponentApiSection(
                     "Command / CommandDialog",
-                    "Search state, filtering and dialog wrapper.",
+                    "See the [cmdk](https://github.com/dip/cmdk) documentation for more information. " +
+                        "Kotlin API: search state, filtering and dialog wrapper.",
                     listOf(
                         ApiProperty("defaultQuery", "String", "\"\""),
-                        ApiProperty("shouldFilter / filter", "Boolean / (String, String) -> Boolean", "true / substring match"),
+                        ApiProperty(
+                            "shouldFilter / filter",
+                            "Boolean / (String, String) -> Boolean",
+                            "true / substring match",
+                        ),
                         ApiProperty("loop", "Boolean", "true"),
                         ApiProperty("value / onValueChange", "String? / ((String) -> Unit)?", "null"),
                         ApiProperty("open / onOpenChange (dialog)", "Boolean? / ((Boolean) -> Unit)?", "null"),

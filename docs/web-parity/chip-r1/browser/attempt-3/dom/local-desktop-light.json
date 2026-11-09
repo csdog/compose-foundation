@@ -1,0 +1,1274 @@
+{
+  "title": "Compose Foundation — Components",
+  "bodyText": "",
+  "tagCounts": {
+    "DIV": 327,
+    "STYLE": 1,
+    "CANVAS": 1,
+    "BR": 23
+  },
+  "semantic": [
+    {
+      "tag": "CANVAS",
+      "role": "generic",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "presentation",
+      "ariaLabel": "",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "HomeComponentsCreateSearch...GitHubNewQuestionnaireNewRadio GroupResizableScroll AreaSelectSeparatorSheetSidebarSkeletonSliderSpinnerSwitchTableTabsTextareaToas"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Home"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Components"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Create"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Search documentation",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Search..."
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "GitHub"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Toggle theme",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "New"
+    },
+    {
+      "tag": "DIV",
+      "role": "list",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "QuestionnaireNewRadio GroupResizableScroll AreaSelectSeparatorSheetSidebarSkeletonSliderSpinnerSwitchTableTabsTextareaToastToggleToggle GroupTooltipTraceNewUtil"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Questionnaire",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Questionnaire"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Radio Group",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Radio Group"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Resizable",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Resizable"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Scroll Area",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Scroll Area"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Select",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Select"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Separator",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Separator"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Sheet",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Sheet"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Sidebar",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Sidebar"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Skeleton",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Skeleton"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Slider",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Slider"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Spinner",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Spinner"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Switch",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Switch"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Table",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Table"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Tabs",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Tabs"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Textarea",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Textarea"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Toast",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Toast"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Toggle",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Toggle"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Toggle Group",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Toggle Group"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Tooltip",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Tooltip"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Trace",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Trace"
+    },
+    {
+      "tag": "DIV",
+      "role": "heading",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Utils"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Shimmer",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Shimmer"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "scroll-fade",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "scroll-fade"
+    },
+    {
+      "tag": "DIV",
+      "role": "heading",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Extensions"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Chip",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Chip"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Stepper",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Stepper"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Text",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Text"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Copy Page",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Copy Page"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Previous: Checkbox",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Next: Code Block",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Kotlin",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Kotlin"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "View Code",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "View Code"
+    },
+    {
+      "tag": "DIV",
+      "role": "heading",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Installation"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Copy",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "heading",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Usage"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Copy",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Copy",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "heading",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Composition"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Copy",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "heading",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Kotlin extension"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "heading",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Selectable"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Kotlin",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Kotlin"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "View Code",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "View Code"
+    },
+    {
+      "tag": "DIV",
+      "role": "heading",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Selected"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Kotlin",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Kotlin"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "View Code",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "View Code"
+    },
+    {
+      "tag": "DIV",
+      "role": "heading",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Outline"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Outline",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Outline"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "View Code",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "View Code"
+    },
+    {
+      "tag": "DIV",
+      "role": "heading",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Disabled"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Disabled",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Disabled"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "View Code",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "View Code"
+    },
+    {
+      "tag": "DIV",
+      "role": "heading",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Icon"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Verified",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Verified"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "View Code",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "View Code"
+    },
+    {
+      "tag": "DIV",
+      "role": "heading",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Row"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Kotlin",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Kotlin"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Compose",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Compose"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "Multiplatform",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Multiplatform"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": "View Code",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "View Code"
+    },
+    {
+      "tag": "DIV",
+      "role": "heading",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "API Reference"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "heading",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Chip"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": null,
+      "ariaLabel": "Component API",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "PropertyTypeDefaultlabelStringRequiredonClick(() -> Unit)?null (static tag when omitted)selectedBooleanfalsevariantChipVariantSelected when selected, else Defau"
+    },
+    {
+      "tag": "DIV",
+      "role": null,
+      "ariaLabel": "Separator",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": null,
+      "ariaLabel": "Separator",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": null,
+      "ariaLabel": "Separator",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": null,
+      "ariaLabel": "Separator",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": null,
+      "ariaLabel": "Separator",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": null,
+      "ariaLabel": "Separator",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": null,
+      "ariaLabel": "Separator",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": null,
+      "ariaLabel": "Separator",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "heading",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "ChipVariant"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": null,
+      "ariaLabel": "Component API",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "PropertyTypeDefaultDefaultChipVariantSecondary fill with a borderSelectedChipVariantPrimary fillOutlineChipVariantTransparent with a border"
+    },
+    {
+      "tag": "DIV",
+      "role": null,
+      "ariaLabel": "Separator",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": null,
+      "ariaLabel": "Separator",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": null,
+      "ariaLabel": "Separator",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Installation"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Usage"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Composition"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Kotlin extension"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Selectable"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Selected"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Outline"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Disabled"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Icon"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Row"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "API Reference"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "Chip"
+    },
+    {
+      "tag": "DIV",
+      "role": "button",
+      "ariaLabel": null,
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": "ChipVariant"
+    },
+    {
+      "tag": "DIV",
+      "role": null,
+      "ariaLabel": "Notifications",
+      "ariaPressed": null,
+      "ariaSelected": null,
+      "ariaChecked": null,
+      "ariaDisabled": null,
+      "text": ""
+    }
+  ],
+  "html": "<html lang=\"en\" style=\"color-scheme: light; overflow-y: scroll;\"><head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <script>\n        // Document positions belong to the Compose route cache, including browser Back/Forward.\n        history.scrollRestoration = \"manual\";\n    </script>\n    <title>Compose Foundation — Components</title>\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.svg?v=kotlin-gradient\">\n    <link type=\"text/css\" rel=\"stylesheet\" href=\"styles.css\">\n</head>\n<body style=\"text-align: center; align-content: center; height: calc(4593px + 100vh);\">\n    <div id=\"compose-root\"><div style=\"position: relative;\"><div style=\"position: relative;\"></div><div style=\"position: absolute; top: 0px; left: 0px;\"></div></div></div>\n    <script type=\"application/javascript\" src=\"webApp.js\"></script>\n\n\n</body></html>",
+  "ariaSnapshot": "- button \"Home\"\n- button \"Components\"\n- button \"Create\"\n- button \"Search documentation\": Search...\n- button \"GitHub\"\n- button \"Toggle theme\"\n- button \"New\"\n- list:\n  - button \"Questionnaire\"\n  - text: New\n  - button \"Radio Group\"\n  - button \"Resizable\"\n  - button \"Scroll Area\"\n  - button \"Select\"\n  - button \"Separator\"\n  - button \"Sheet\"\n  - button \"Sidebar\"\n  - button \"Skeleton\"\n  - button \"Slider\"\n  - button \"Spinner\"\n  - button \"Switch\"\n  - button \"Table\"\n  - button \"Tabs\"\n  - button \"Textarea\"\n  - button \"Toast\"\n  - button \"Toggle\"\n  - button \"Toggle Group\"\n  - button \"Tooltip\"\n  - button \"Trace\"\n  - text: New\n  - heading \"Utils\"\n  - button \"Shimmer\"\n  - button \"scroll-fade\"\n  - heading \"Extensions\"\n  - button \"Chip\"\n  - button \"Stepper\"\n  - text: New\n  - button \"Text\"\n- text: Chip\n- button \"Copy Page\"\n- 'button \"Previous: Checkbox\"'\n- 'button \"Next: Code Block\"'\n- text: A selectable tag, commonly used for filters or multi-select choices. Kotlin extension\n- button \"Kotlin\"\n- text: \"1 Chip(label = \\\"Kotlin\\\", onClick = {})\"\n- button \"View Code\"\n- heading \"Installation\":\n  - text: Installation\n  - button\n- button\n- text: build.gradle.kts // build.gradle.kts — commonMain.dependencies implementation(\"com.toutiaoyan.compose:ui:0.3.37\")\n- button \"Copy\"\n- heading \"Usage\":\n  - text: Usage\n  - button\n- button\n- text: 1 import com.toutiaoyan.compose.ui.components.chip.Chip\n- button \"Copy\"\n- text: \"1 2 3 4 5 6 var selected by remember { mutableStateOf(false) } Chip( label = \\\"Kotlin\\\", selected = selected, onClick = { selected = !selected }, )\"\n- button \"Copy\"\n- heading \"Composition\":\n  - text: Composition\n  - button\n- button\n- text: Chip ├── leadingIcon (optional slot) └── label\n- button \"Copy\"\n- heading \"Kotlin extension\":\n  - text: Kotlin extension\n  - button\n- button\n- text: \"Chip is a Kotlin extension of this catalog, not an official shadcn/ui component. shadcn only ships Badge, which is a static label, so there is no Base UI reference page or upstream recipe list to mirror. The API below is the current Kotlin source of truth: a selectable tag built from the same tokens as Button/Badge.\"\n- heading \"Selectable\":\n  - text: Selectable\n  - button\n- button\n- text: Pass selected and toggle it from onClick; the default variant follows the selection state.\n- button \"Kotlin\"\n- text: \"1 2 var selected by remember { mutableStateOf(false) } Chip(label = \\\"Kotlin\\\", selected = selected, onClick = { selected = !selected })\"\n- button \"View Code\"\n- heading \"Selected\":\n  - text: Selected\n  - button\n- button\n- text: Pin the selected look with ChipVariant.Selected.\n- button \"Kotlin\"\n- text: \"1 Chip(label = \\\"Kotlin\\\", variant = ChipVariant.Selected, onClick = {})\"\n- button \"View Code\"\n- heading \"Outline\":\n  - text: Outline\n  - button\n- button\n- text: Border-only treatment with ChipVariant.Outline.\n- button \"Outline\"\n- text: \"1 Chip(label = \\\"Outline\\\", variant = ChipVariant.Outline, onClick = {})\"\n- button \"View Code\"\n- heading \"Disabled\":\n  - text: Disabled\n  - button\n- button\n- text: disabled (or enabled = false) removes the click handler and dims the tag.\n- button \"Disabled\"\n- text: \"1 Chip(label = \\\"Disabled\\\", onClick = {}, disabled = true)\"\n- button \"View Code\"\n- heading \"Icon\":\n  - text: Icon\n  - button\n- button\n- text: The optional leadingIcon slot receives its size modifier and inherits the variant content color.\n- button \"Verified\"\n- text: \"1 2 3 Chip( label = \\\"Verified\\\", onClick = {},\"\n- button \"View Code\"\n- heading \"Row\":\n  - text: Row\n  - button\n- button\n- text: Chips compose in a row for filter groups.\n- button \"Kotlin\"\n- button \"Compose\"\n- button \"Multiplatform\"\n- text: \"1 2 3 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) { Chip(label = \\\"Kotlin\\\", selected = true, onClick = {}) Chip(label = \\\"Compose\\\", onClick = {})\"\n- button \"View Code\"\n- heading \"API Reference\":\n  - text: API Reference\n  - button\n- button\n- heading \"Chip\":\n  - text: Chip\n  - button\n- button\n- text: Selectable tag. Invoke with a label; the default variant is Selected when selected = true, otherwise Default. Property Type Default label String Required onClick (() -> Unit)? null (static tag when omitted) selected Boolean false variant ChipVariant Selected when selected, else Default enabled / disabled Boolean true / false leadingIcon (@Composable (Modifier) -> Unit)? null animation ButtonAnimation ButtonAnimation.Scale modifier / style Modifier / Style Default\n- heading \"ChipVariant\":\n  - text: ChipVariant\n  - button\n- button\n- text: \"Content colors: Default uses secondaryForeground, Selected uses primaryForeground, Outline uses foreground. Property Type Default Default ChipVariant Secondary fill with a border Selected ChipVariant Primary fill Outline ChipVariant Transparent with a border On This Page\"\n- button \"Installation\"\n- button \"Usage\"\n- button \"Composition\"\n- button \"Kotlin extension\"\n- button \"Selectable\"\n- button \"Selected\"\n- button \"Outline\"\n- button \"Disabled\"\n- button \"Icon\"\n- button \"Row\"\n- button \"API Reference\"\n- button \"Chip\"\n- button \"ChipVariant\""
+}

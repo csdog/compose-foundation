@@ -4,13 +4,15 @@ internal val buttonGroupDefaultCode =
     """
     @file:OptIn(androidx.compose.foundation.style.ExperimentalFoundationStyleApi::class)
 
-
     import androidx.compose.foundation.layout.*
     import androidx.compose.foundation.style.Style
     import androidx.compose.foundation.style.contentPadding
     import androidx.compose.runtime.*
     import androidx.compose.ui.Alignment
     import androidx.compose.ui.Modifier
+    import androidx.compose.ui.graphics.graphicsLayer
+    import androidx.compose.ui.platform.LocalLayoutDirection
+    import androidx.compose.ui.unit.LayoutDirection
     import androidx.compose.ui.graphics.vector.ImageVector
     import androidx.compose.ui.platform.LocalDensity
     import androidx.compose.ui.platform.LocalWindowInfo
@@ -29,7 +31,11 @@ internal val buttonGroupDefaultCode =
     import com.toutiaoyan.compose.ui.theme.currentTheme
 
     @Composable
-    fun ButtonGroupDefaultRecipe() {
+    fun ButtonGroupDefaultRecipe(language: Int = 1) {
+        val translations = buttonGroupTranslations[language].orEmpty()
+
+        fun translate(label: String): String = translations[label] ?: label
+        val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
         var label by remember { mutableStateOf("personal") }
         val viewport =
             with(LocalDensity.current) {
@@ -47,15 +53,15 @@ internal val buttonGroupDefaultCode =
                                 width(32.dp)
                                 contentPadding(0.dp)
                             },
-                    ) { Icon(Lucide.ArrowLeft) }
+                    ) { Icon(Lucide.ArrowLeft, modifier = Modifier.graphicsLayer { rotationZ = if (rtl) 180f else 0f }) }
                 }
             }
             ButtonGroup {
-                ButtonGroupItem("Archive", onClick = {}, variant = ButtonVariant.Outline)
-                ButtonGroupItem("Report", onClick = {}, variant = ButtonVariant.Outline)
+                ButtonGroupItem(translate("Archive"), onClick = {}, variant = ButtonVariant.Outline)
+                ButtonGroupItem(translate("Report"), onClick = {}, variant = ButtonVariant.Outline)
             }
             ButtonGroup {
-                ButtonGroupItem("Snooze", onClick = {}, variant = ButtonVariant.Outline)
+                ButtonGroupItem(translate("Snooze"), onClick = {}, variant = ButtonVariant.Outline)
                 DropdownMenu {
                     DropdownMenuTrigger {
                         ButtonGroupItem(
@@ -69,47 +75,46 @@ internal val buttonGroupDefaultCode =
                                 },
                         ) { Icon(Lucide.Ellipsis) }
                     }
-                    DropdownMenuContent(align = PopupAlign.End, style = Style { width(160.dp) }) {
+                    DropdownMenuContent(
+                        align = if (rtl) PopupAlign.Start else PopupAlign.End,
+                        style = Style { width(160.dp) },
+                    ) {
                         DropdownMenuGroup {
-                            ActionMenuItem("Mark as Read", Lucide.MailCheck)
-                            ActionMenuItem("Archive", Lucide.Archive)
+                            ActionMenuItem(translate("Mark as Read"), Lucide.MailCheck)
+                            ActionMenuItem(translate("Archive"), Lucide.Archive)
                         }
                         DropdownMenuSeparator()
                         DropdownMenuGroup {
-                            ActionMenuItem("Snooze", Lucide.Clock)
-                            ActionMenuItem("Add to Calendar", Lucide.CalendarPlus)
-                            ActionMenuItem("Add to List", Lucide.ListFilter)
+                            ActionMenuItem(translate("Snooze"), Lucide.Clock)
+                            ActionMenuItem(translate("Add to Calendar"), Lucide.CalendarPlus)
+                            ActionMenuItem(translate("Add to List"), Lucide.ListFilter)
                             DropdownMenuSub {
-                                DropdownMenuSubTrigger("Label As...", leadingContent = { Icon(Lucide.Tag) })
-                                DropdownMenuSubContent(style = Style { width(96.dp) }) {
+                                DropdownMenuSubTrigger(translate("Label As..."), leadingContent = { Icon(Lucide.Tag) })
+                                DropdownMenuSubContent(
+                                    style = Style { width(96.dp) },
+                                ) {
                                     DropdownMenuRadioGroup(value = label, onValueChange = { label = it }) {
                                         DropdownMenuRadioItem(
                                             value = "personal",
-                                            label = "Personal",
-                                            style = Style {
-                                                contentPadding(horizontal = 4.dp, vertical = 4.dp)
-                                            },
+                                            label = translate("Personal"),
+                                            style = Style { contentPadding(horizontal = 4.dp, vertical = 4.dp) },
                                         )
                                         DropdownMenuRadioItem(
                                             value = "work",
-                                            label = "Work",
-                                            style = Style {
-                                                contentPadding(horizontal = 4.dp, vertical = 4.dp)
-                                            },
+                                            label = translate("Work"),
+                                            style = Style { contentPadding(horizontal = 4.dp, vertical = 4.dp) },
                                         )
                                         DropdownMenuRadioItem(
                                             value = "other",
-                                            label = "Other",
-                                            style = Style {
-                                                contentPadding(horizontal = 4.dp, vertical = 4.dp)
-                                            },
+                                            label = translate("Other"),
+                                            style = Style { contentPadding(horizontal = 4.dp, vertical = 4.dp) },
                                         )
                                     }
                                 }
                             }
                         }
                         DropdownMenuSeparator()
-                        DropdownMenuGroup { ActionMenuItem("Trash", Lucide.Trash2, destructive = true) }
+                        DropdownMenuGroup { ActionMenuItem(translate("Trash"), Lucide.Trash2, destructive = true) }
                     }
                 }
             }
@@ -131,4 +136,35 @@ internal val buttonGroupDefaultCode =
         }
     }
 
+    private val buttonGroupTranslations =
+        mapOf(
+            0 to
+                mapOf(
+                    "Archive" to "أرشفة",
+                    "Report" to "تقرير",
+                    "Snooze" to "تأجيل",
+                    "Mark as Read" to "وضع علامة كمقروء",
+                    "Add to Calendar" to "إضافة إلى التقويم",
+                    "Add to List" to "إضافة إلى القائمة",
+                    "Label As..." to "تصنيف كـ...",
+                    "Personal" to "شخصي",
+                    "Work" to "عمل",
+                    "Other" to "آخر",
+                    "Trash" to "سلة المهملات",
+                ),
+            2 to
+                mapOf(
+                    "Archive" to "ארכיון",
+                    "Report" to "דוח",
+                    "Snooze" to "דחה",
+                    "Mark as Read" to "סמן כנקרא",
+                    "Add to Calendar" to "הוסף ליומן",
+                    "Add to List" to "הוסף לרשימה",
+                    "Label As..." to "תייג כ...",
+                    "Personal" to "אישי",
+                    "Work" to "עבודה",
+                    "Other" to "אחר",
+                    "Trash" to "פח",
+                ),
+        )
     """.trimIndent()

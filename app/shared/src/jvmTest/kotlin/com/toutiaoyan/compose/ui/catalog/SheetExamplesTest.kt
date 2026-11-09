@@ -205,18 +205,23 @@ class SheetExamplesTest(private val viewport: Int, private val dark: Boolean) {
         assertTrue(sheetDoc.examples.drop(4).all { it.title.startsWith("Kotlin extension: ") })
         assertEquals(null, sheetDoc.examplesHeading)
         val markdown = componentPageMarkdown(sheetDoc)
-        val order = listOf(
-            "## Composition",
-            "## Side",
-            "## No Close Button",
-            "## RTL",
-            "## API Reference",
-        ).map { markdown.indexOf(it) }
+        val order =
+            listOf(
+                "## Composition",
+                "## Side",
+                "## No Close Button",
+                "## RTL",
+                "## API Reference",
+            ).map { markdown.indexOf(it) }
         assertTrue(order.all { it >= 0 }, "missing a section heading: $order")
         assertEquals(order.sorted(), order)
         assertContains(markdown, "Use the `side` prop on `SheetContent`")
         assertContains(markdown, "showCloseButton = false")
         assertContains(markdown, "Kotlin extension: Side")
         assertFalse(markdown.contains("## Examples"))
+        assertContains(markdown, "Default variant unless overridden")
+        assertContains(markdown, "`SheetClose` renders an icon button")
+        assertContains(markdown, "Footer stacks the actions")
+        assertContains(markdown, "trigger slot overload")
     }
 }

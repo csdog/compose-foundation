@@ -1,8 +1,11 @@
 package com.toutiaoyan.compose.ui.components.checkbox
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.focus.focusRequester
@@ -22,6 +25,54 @@ import kotlin.test.assertEquals
 
 class CheckboxParityTest {
     @get:Rule val rule = createComposeRule()
+
+    @Test fun mouseHitAreaExtendsBeyondTheControlWithoutChangingLayout() {
+        var changes = 0
+        var disabled by mutableStateOf(false)
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, minTouchTarget = null) {
+                Box(Modifier.testTag("hit-area").padding(24.dp)) {
+                    Checkbox(
+                        checked = false,
+                        onCheckedChange = { changes++ },
+                        disabled = disabled,
+                        label = "Hit target",
+                        modifier = Modifier.testTag("control"),
+                    )
+                }
+            }
+        }
+        val bounds = rule.onNodeWithTag("control").fetchSemanticsNode().boundsInRoot
+        assertEquals(16f, bounds.width, .5f)
+        assertEquals(16f, bounds.height, .5f)
+        // Root coordinates: the visible box is [24,40] on each axis.
+        val points = listOf(Offset(13f, 32f), Offset(51f, 32f), Offset(32f, 17f), Offset(32f, 47f))
+        points.forEach { point -> rule.onNodeWithTag("hit-area").performMouseInput { click(point) } }
+        rule.runOnIdle { assertEquals(4, changes) }
+        rule.onNodeWithTag("hit-area").performMouseInput { click(Offset(11f, 32f)) }
+        rule.runOnIdle {
+            assertEquals(4, changes)
+            disabled = true
+        }
+        points.forEach { point -> rule.onNodeWithTag("hit-area").performMouseInput { click(point) } }
+        rule.runOnIdle { assertEquals(4, changes) }
+    }
+
+    @Test fun themeMinimumKeepsItsExistingLayoutAndPointerTarget() {
+        var changes = 0
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, minTouchTarget = 48.dp) {
+                Box(Modifier.testTag("hit-area").padding(24.dp)) {
+                    Checkbox(checked = false, onCheckedChange = { changes++ }, modifier = Modifier.testTag("control"))
+                }
+            }
+        }
+        val bounds = rule.onNodeWithTag("control").fetchSemanticsNode().boundsInRoot
+        assertEquals(48f, bounds.width, .5f)
+        assertEquals(48f, bounds.height, .5f)
+        rule.onNodeWithTag("hit-area").performMouseInput { click(Offset(25f, 25f)) }
+        rule.runOnIdle { assertEquals(1, changes) }
+    }
 
     @Test fun descriptionAlignsTheControlWithTheFirstLine() {
         rule.setContent {

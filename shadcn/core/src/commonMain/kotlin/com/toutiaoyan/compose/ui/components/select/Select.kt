@@ -11,8 +11,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.SubcomposeLayout
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.layout.boundsInRoot
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -32,6 +36,7 @@ import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -122,7 +127,7 @@ class SelectController internal constructor(
 ) {
     fun select(value: Any?) {
         onSelect(value)
-        setOpen(false)
+        if (open) setOpen(false)
     }
 
     fun isSelected(value: Any?): Boolean = selectedEquals(value)
@@ -131,6 +136,15 @@ class SelectController internal constructor(
 }
 
 private data class SelectFocusItem(val value: Any?, val requester: FocusRequester, val enabled: Boolean)
+
+private data class SelectSearchItem(
+    val value: Any?,
+    val label: String,
+    val enabled: Boolean,
+    val activate: () -> Unit,
+)
+
+private val LocalSelectRegistrationOnly = staticCompositionLocalOf { false }
 
 private class SelectKeyboard {
     val trigger = FocusRequester()
@@ -143,6 +157,52 @@ private class SelectKeyboard {
     val pick = mutableMapOf<Any?, () -> Unit>()
     var fromEnd = false
     private var suppressActivationUp = false
+    val labels = mutableMapOf<Any?, String>()
+    var closedItems: List<SelectSearchItem> = emptyList()
+    private var search = ""
+    private var lastType = kotlin.time.TimeSource.Monotonic.markNow()
+
+    fun resetSearch() {
+        search = ""
+    }
+
+    fun typeAhead(
+        event: KeyEvent,
+        closedController: SelectController? = null,
+    ): Boolean {
+        if (event.isCtrlPressed || event.isMetaPressed || event.isAltPressed) return false
+        val char = event.utf16CodePoint.toChar()
+        if (char.isISOControl() || (char.isWhitespace() && search.isEmpty())) return false
+        if (lastType.elapsedNow().inWholeMilliseconds > 750) search = ""
+        val newSession = search.isEmpty()
+        lastType = kotlin.time.TimeSource.Monotonic.markNow()
+        search += char
+        val prefix = if (search.all { it.equals(char, ignoreCase = true) }) char.toString() else search
+        val options =
+            if (closedController != null) {
+                closedItems.filter { it.enabled }
+            } else {
+                items.filter { it.enabled }.sortedBy { centers[it.value] ?: Float.MAX_VALUE }.map { item ->
+                    SelectSearchItem(item.value, labels[item.value].orEmpty(), true) { item.requester.requestFocus() }
+                }
+            }
+        val index =
+            if (newSession && closedController != null) {
+                options.indexOfFirst { closedController.isSelected(it.value) }
+            } else {
+                options.indexOfFirst { it.value == active }
+            }
+        val start = if (prefix.length == 1) index + 1 else index.coerceAtLeast(0)
+        val candidates = options.drop(start) + options.take(start)
+        val match = candidates.firstOrNull { it.label.startsWith(prefix, ignoreCase = true) }
+        if (match != null) {
+            if (closedController != null) active = match.value
+            match.activate()
+        } else if (!char.isWhitespace()) {
+            search = ""
+        }
+        return true
+    }
 
     fun consumeRelease(event: KeyEvent): Boolean {
         if (event.type == KeyEventType.KeyUp && event.key in listOf(Key.Enter, Key.Spacebar) && suppressActivationUp) {
@@ -156,7 +216,7 @@ private class SelectKeyboard {
         key: Key,
         controller: SelectController,
     ): Boolean {
-        val options = items.filter { it.enabled }
+        val options = items.filter { it.enabled }.sortedBy { centers[it.value] ?: Float.MAX_VALUE }
         if (options.isEmpty()) return false
         val index = options.indexOfFirst { it.value == active }
         val target =
@@ -166,6 +226,12 @@ private class SelectKeyboard {
                 Key.MoveHome -> 0
                 Key.MoveEnd -> options.lastIndex
                 Key.Enter, Key.Spacebar -> {
+                    if (key == Key.Spacebar &&
+                        search.isNotEmpty() &&
+                        lastType.elapsedNow().inWholeMilliseconds <= 750
+                    ) {
+                        return false
+                    }
                     suppressActivationUp = true
                     options.getOrNull(index)?.let { pick[it.value]?.invoke() }
                     return index >= 0
@@ -245,6 +311,7 @@ fun <T> Select(
     var wasOpen by remember { mutableStateOf(isOpen) }
     LaunchedEffect(isOpen) {
         if (!isOpen && wasOpen) keyboard.trigger.requestFocus()
+        keyboard.resetSearch()
         wasOpen = isOpen
     }
     val resolvedDisabled = disabled || LocalFieldSetDisabled.current
@@ -356,7 +423,8 @@ fun SelectScope.SelectTrigger(
                         ctrl.setOpen(true)
                         true
                     } else {
-                        false
+                        event.type == KeyEventType.KeyDown && !ctrl.disabled && !ctrl.open &&
+                            keyboard.typeAhead(event, ctrl)
                     }
                 }
                 .semantics(mergeDescendants = true) {
@@ -483,6 +551,24 @@ fun SelectScope.SelectContent(
     val scrollState = rememberScrollState()
     val keyboard = checkNotNull(LocalSelectKeyboard.current)
     val nova = currentTheme.activePreset == StylePreset.Nova
+    DisposableEffect(keyboard) {
+        onDispose { keyboard.closedItems = emptyList() }
+    }
+    if (!ctrl.open) {
+        // Register sanctioned Select parts without measuring, placing, focusing, or
+        // exposing an offscreen copy. Measurable order follows keyed declaration order.
+        SubcomposeLayout {
+            val registrations =
+                subcompose(Unit) {
+                    CompositionLocalProvider(LocalSelectRegistrationOnly provides true) {
+                        SelectContentScope().content()
+                    }
+                }
+            keyboard.closedItems = registrations.mapNotNull { it.layoutId as? SelectSearchItem }
+            layout(0, 0) {}
+        }
+        return
+    }
 
     @Suppress("DEPRECATION")
     val itemAligned =
@@ -544,10 +630,7 @@ fun SelectScope.SelectContent(
                                 keyboard.consumeRelease(event) ||
                                     (
                                         event.type == KeyEventType.KeyDown &&
-                                            keyboard.move(
-                                                event.key,
-                                                ctrl,
-                                            )
+                                            (keyboard.move(event.key, ctrl) || keyboard.typeAhead(event))
                                     )
                             }
                             .styleable(
@@ -674,6 +757,15 @@ fun <T> SelectContentScope.SelectItem(
     val resolvedEnabled = enabled && !disabled
     val isSelected = ctrl.isSelected(value)
     val keyboard = checkNotNull(LocalSelectKeyboard.current)
+    val labelText = textValue ?: ctrl.labelOf(value)
+    if (LocalSelectRegistrationOnly.current) {
+        val registration =
+            SelectSearchItem(value, labelText, resolvedEnabled) {
+                if (onSelect?.invoke() != true) ctrl.select(value)
+            }
+        Layout(content = {}, modifier = Modifier.layoutId(registration)) { _, _ -> layout(0, 0) {} }
+        return
+    }
     val requester = remember { FocusRequester() }
     DisposableEffect(keyboard, value) {
         keyboard.items.add(SelectFocusItem(value, requester, resolvedEnabled))
@@ -681,9 +773,11 @@ fun <T> SelectContentScope.SelectItem(
             keyboard.items.removeAll { it.requester === requester }
             keyboard.pick.remove(value)
             keyboard.centers.remove(value)
+            keyboard.labels.remove(value)
         }
     }
     SideEffect {
+        keyboard.labels[value] = labelText
         keyboard.pick[value] = { if (onSelect?.invoke() != true) ctrl.select(value) }
         val index = keyboard.items.indexOfFirst { it.requester === requester }
         if (index >= 0 &&
@@ -702,12 +796,12 @@ fun <T> SelectContentScope.SelectItem(
         rememberUpdatedStyleState(interactionSource) {
             it.isEnabled = resolvedEnabled
         }
-    val labelText = textValue ?: ctrl.labelOf(value)
+    val isFocused by interactionSource.collectIsFocusedAsState()
     val isHovered by interactionSource.collectIsHoveredAsState()
     val itemContentColor =
         if (!resolvedEnabled) {
             currentTheme.colors.popoverForeground
-        } else if (isHovered) {
+        } else if (isHovered || (currentTheme.activePreset == StylePreset.Nova && isFocused)) {
             currentTheme.colors.accentForeground
         } else {
             currentTheme.colors.popoverForeground
@@ -854,7 +948,12 @@ fun SelectContentScope.SelectGroup(
     heading: String? = null,
     content: @Composable SelectContentScope.() -> Unit,
 ) {
-    Column(modifier = modifier) {
+    if (LocalSelectRegistrationOnly.current) {
+        content()
+        return
+    }
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    Column(modifier = modifier.then(if (nova) Modifier.padding(4.dp) else Modifier)) {
         if (heading != null) {
             SelectLabel(heading)
         }
@@ -868,6 +967,7 @@ fun SelectContentScope.SelectLabel(
     modifier: Modifier = Modifier,
     style: Style = Style,
 ) {
+    if (LocalSelectRegistrationOnly.current) return
     val theme = currentTheme
     val nova = theme.activePreset == StylePreset.Nova
     val labelStyle =
@@ -929,5 +1029,14 @@ fun SelectSeparator(
     modifier: Modifier = Modifier,
     style: Style = Style,
 ) {
-    Separator(modifier = modifier, style = style)
+    if (LocalSelectRegistrationOnly.current) return
+    if (currentTheme.activePreset == StylePreset.Nova) {
+        // CSS my-1 surrounds the line; its -mx-1 overflow is clipped at the
+        // popup edges. A full-width line has that same visible horizontal extent.
+        Box(modifier = modifier.padding(vertical = 4.dp)) {
+            Separator(style = style)
+        }
+    } else {
+        Separator(modifier = modifier, style = style)
+    }
 }

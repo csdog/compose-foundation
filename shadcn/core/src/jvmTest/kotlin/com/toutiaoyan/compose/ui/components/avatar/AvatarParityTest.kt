@@ -7,6 +7,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.ColorPainter
+import androidx.compose.ui.graphics.toPixelMap
+import com.toutiaoyan.compose.ui.theme.Theme
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.SemanticsActions
@@ -21,6 +23,70 @@ import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.*
 
 class AvatarParityTest : ScreenshotTest() {
+    @Test fun borderBlendsOverImageAndFallbackAndUpdatesWithTheme() {
+        var dark by mutableStateOf(false)
+        val photo = Color(.2f, .6f, .8f)
+        val border = Color(.8f, .4f, .2f, .5f)
+        val painter = ColorPainter(photo)
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            val theme = Theme.current
+            CompositionLocalProvider(
+                Theme.LocalTheme provides
+                    theme.copy(
+                        isDark = dark,
+                        colors = theme.colors.copy(border = border, muted = photo),
+                    ),
+            ) {
+                Row {
+                    Avatar(Modifier.testTag("photo")) { AvatarImage(painter) }
+                    Avatar(Modifier.testTag("fallback")) { AvatarFallback {} }
+                }
+            }
+        }
+
+        fun assertColor(
+            expected: Color,
+            actual: Color,
+        ) {
+            // Allow edge antialiasing while distinguishing the 0.1/0.3 blend changes.
+            assertEquals(expected.green, actual.green, .04f)
+            assertEquals(expected.blue, actual.blue, .04f)
+            assertEquals(expected.red, actual.red, .04f)
+        }
+
+        fun assertPixels(expectedEdge: Color) {
+            listOf("photo", "fallback").forEach { tag ->
+                val pixels = composeRule.onNodeWithTag(tag).captureToImage().toPixelMap()
+                assertColor(expectedEdge, pixels[16, 0])
+                assertColor(photo, pixels[16, 16])
+            }
+        }
+        // CSS mix-blend-darken/lighten at 50% opacity, over the same content.
+        assertPixels(Color(.2f, .5f, .5f))
+        composeRule.runOnIdle { dark = true }
+        assertPixels(Color(.5f, .6f, .8f))
+    }
+
+    @Test fun badgePaintsAboveAvatarBorder() {
+        val painter = ColorPainter(Color.White)
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            val theme = Theme.current
+            CompositionLocalProvider(
+                Theme.LocalTheme provides
+                    theme.copy(
+                        colors = theme.colors.copy(border = Color.Red, primary = Color.Green),
+                    ),
+            ) {
+                Avatar(Modifier.testTag("badged-photo")) {
+                    AvatarImage(painter)
+                    AvatarBadge()
+                }
+            }
+        }
+        val pixels = composeRule.onNodeWithTag("badged-photo").captureToImage().toPixelMap()
+        assertEquals(Color.Green, pixels[27, 26])
+    }
+
     @Test fun decodedImageHidesFallbackAndRemovalRestoresIt() {
         var image by mutableStateOf(true)
         val states = mutableListOf<AvatarImageLoadState>()

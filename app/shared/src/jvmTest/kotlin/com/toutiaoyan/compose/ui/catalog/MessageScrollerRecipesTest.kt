@@ -8,6 +8,7 @@ import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.input.InputModeManager
 import androidx.compose.ui.platform.LocalInputModeManager
 import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.graphics.toAwtImage
 import androidx.compose.ui.graphics.Color
@@ -105,6 +106,11 @@ class MessageScrollerRecipesTest(private val width: Int, private val dark: Boole
         rule.onNodeWithTag("opening-viewport").requestFocus().performKeyInput { pressKey(Key.MoveEnd) }
         rule.onNodeWithText("last-anchor").performClick()
         assertEquals(before, rule.onNodeWithTag("open-3").fetchSemanticsNode().boundsInRoot.top, 1f)
+        rule.onNodeWithText("last-anchor").requestFocus().performKeyInput { pressKey(Key.DirectionLeft) }
+        rule.onNodeWithText("end", substring = false).assertIsSelected()
+        rule.onNodeWithText("end", substring = false).performKeyInput { pressKey(Key.MoveHome) }
+        rule.onNodeWithText("start", substring = false).assertIsSelected()
+        rule.onNodeWithTag("open-1").assertIsDisplayed()
     }
 
     @Test fun jumpMenuClosesAndSmoothlyAlignsTheChosenOriginalTurn() {
@@ -132,9 +138,15 @@ class MessageScrollerRecipesTest(private val width: Int, private val dark: Boole
         show("Reading Scroll State")
         rule.onNodeWithText("You are at the top. You can only scroll down.").assertIsDisplayed()
         capture("scrollable")
-        rule.onNodeWithTag("scrollable-viewport").requestFocus().performKeyInput { pressKey(Key.PageDown) }
+        rule.onNodeWithTag("scrollable-viewport").requestFocus().assertIsFocused()
+            .performKeyInput { pressKey(Key.PageDown) }
         rule.onNodeWithText("You can scroll both ways.").assertIsDisplayed()
-        rule.onNodeWithTag("scrollable-viewport").performKeyInput { pressKey(Key.MoveEnd) }
+        rule.onNodeWithTag("scrollable-viewport").assertIsFocused()
+            .performKeyInput { pressKey(Key.MoveEnd) }
+        val range =
+            rule.onNodeWithTag("scrollable-viewport").fetchSemanticsNode()
+                .config[SemanticsProperties.VerticalScrollAxisRange]
+        assertEquals(range.maxValue(), range.value(), 1f, "End must reach the native scroll maximum")
         rule.onNodeWithText("You are at the bottom. You can only scroll up.").assertIsDisplayed()
         rule.onNodeWithTag("scrollable-viewport").performKeyInput { pressKey(Key.MoveHome) }
         rule.onNodeWithText("You are at the top. You can only scroll down.").assertIsDisplayed()

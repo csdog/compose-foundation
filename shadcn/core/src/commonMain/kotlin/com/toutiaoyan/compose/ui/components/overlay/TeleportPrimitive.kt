@@ -221,6 +221,17 @@ fun TeleportPrimitiveScope.Overlay(
     enter: EnterTransition = OverlayTransitions.ScrimEnter,
     exit: ExitTransition = OverlayTransitions.ScrimExit,
 ) {
+    OverlayWithOpacity(color, { 1f }, enter, exit)
+}
+
+/** Drawer-only motion hook; opacity covers the recorded backdrop and scrim together. */
+@Composable
+internal fun TeleportPrimitiveScope.OverlayWithOpacity(
+    color: Color,
+    opacity: () -> Float,
+    enter: EnterTransition,
+    exit: ExitTransition,
+) {
     val interactionSource = remember { MutableInteractionSource() }
     val host = LocalOverlayHost.current
     val blur = host != null && currentTheme.activePreset == StylePreset.Nova
@@ -233,6 +244,7 @@ fun TeleportPrimitiveScope.Overlay(
             modifier =
                 Modifier
                     .fillMaxSize()
+                    .graphicsLayer { alpha = opacity() }
                     .then(
                         if (blur) {
                             Modifier.graphicsLayer {

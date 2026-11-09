@@ -215,15 +215,16 @@ class TabsExamplesTest(private val viewport: Int, private val dark: Boolean) {
         assertTrue(tabsDoc.examples.drop(6).all { it.title.startsWith("Kotlin extension: ") })
         assertEquals(null, tabsDoc.examplesHeading)
         val markdown = componentPageMarkdown(tabsDoc)
-        val order = listOf(
-            "## Composition",
-            "## Line",
-            "## Vertical",
-            "## Disabled",
-            "## Icons",
-            "## RTL",
-            "## API Reference",
-        ).map { markdown.indexOf(it) }
+        val order =
+            listOf(
+                "## Composition",
+                "## Line",
+                "## Vertical",
+                "## Disabled",
+                "## Icons",
+                "## RTL",
+                "## API Reference",
+            ).map { markdown.indexOf(it) }
         assertTrue(order.all { it >= 0 }, "missing a section heading: $order")
         assertEquals(order.sorted(), order)
         assertContains(markdown, "Use the line variant on `TabsList` for a line style.")

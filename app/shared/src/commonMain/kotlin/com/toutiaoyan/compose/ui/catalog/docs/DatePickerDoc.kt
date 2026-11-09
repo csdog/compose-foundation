@@ -4,7 +4,6 @@ package com.toutiaoyan.compose.ui.catalog.docs
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
@@ -21,6 +20,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.LayoutDirection
@@ -46,8 +50,8 @@ import com.toutiaoyan.compose.ui.components.inputgroup.InputGroup
 import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupAddon
 import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupAddonAlign
 import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupButton
-import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupButtonSize
 import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupInput
+import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
 import com.toutiaoyan.compose.ui.components.popover.Popover
 import com.toutiaoyan.compose.ui.components.popover.PopoverContent
 import com.toutiaoyan.compose.ui.components.popover.PopoverScope
@@ -59,6 +63,7 @@ import com.toutiaoyan.compose.ui.theme.currentTheme
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.plus
+import kotlinx.datetime.number
 
 private val monthNames =
     listOf(
@@ -68,7 +73,10 @@ private val monthNames =
 
 private fun formatDate(date: CalendarDate): String = "${monthNames[date.month - 1]} ${date.day}, ${date.year}"
 
-private fun formatShortDate(date: CalendarDate): String = "${monthNames[date.month - 1].take(3)} ${date.day}, ${date.year}"
+private fun formatShortDate(date: CalendarDate): String =
+    "${monthNames[date.month - 1].take(
+        3,
+    )} ${date.day}, ${date.year}"
 
 private fun formatRange(range: CalendarDateRange): String {
     val from = range.from ?: return "Pick a date"
@@ -79,31 +87,69 @@ private fun formatRange(range: CalendarDateRange): String {
 private fun formatDates(dates: Set<CalendarDate>): String =
     if (dates.isEmpty()) "Pick dates" else dates.sorted().joinToString { formatDate(it) }
 
-private fun plusDays(date: CalendarDate, days: Int): CalendarDate {
+private fun plusDays(
+    date: CalendarDate,
+    days: Int,
+): CalendarDate {
     val next = LocalDate(date.year, date.month, date.day).plus(days, DateTimeUnit.DAY)
-    return CalendarDate(next.year, next.monthNumber, next.dayOfMonth)
+    return CalendarDate(next.year, next.month.number, next.day)
 }
 
 /** chrono-node is JavaScript-only; this Kotlin recipe parses the common relative phrases. */
-private fun parseNaturalDate(value: String, today: CalendarDate): CalendarDate? {
+private fun parseNaturalDate(
+    value: String,
+    today: CalendarDate,
+): CalendarDate? {
     val lower = value.trim().lowercase()
     return when {
         lower == "tomorrow" -> plusDays(today, 1)
         lower == "next week" -> plusDays(today, 7)
         lower == "yesterday" -> plusDays(today, -1)
         else -> {
-            Regex("in\\s+(\\d+)\\s+days?").find(lower)?.let { plusDays(today, it.groupValues[1].toInt()) }
+            Regex("in\\s+(\\d+)\\s+days?").matchEntire(lower)?.groupValues?.get(1)?.toIntOrNull()?.let {
+                runCatching { plusDays(today, it) }.getOrNull()
+            }
         }
     }
 }
 
+/** Kotlin input recipe accepts the displayed English date or an ISO calendar date. */
+private fun parseInputDate(value: String): CalendarDate? =
+    runCatching {
+        val text = value.trim()
+        val date =
+            if (Regex("\\d{4}-\\d{2}-\\d{2}").matches(text)) {
+                LocalDate.parse(text)
+            } else {
+                val match = Regex("([A-Za-z]+) (\\d{1,2}), (\\d{4})").matchEntire(text) ?: return null
+                val month = monthNames.indexOfFirst { it.equals(match.groupValues[1], ignoreCase = true) } + 1
+                LocalDate(match.groupValues[3].toInt(), month, match.groupValues[2].toInt())
+            }
+        CalendarDate(date.year, date.month.number, date.day)
+    }.getOrNull()
+
+private fun formatInputDate(date: CalendarDate): String =
+    "${monthNames[date.month - 1]} ${date.day.toString().padStart(2, '0')}, ${date.year}"
+
+private fun Modifier.openDatePicker(onOpen: () -> Unit): Modifier =
+    onPreviewKeyEvent {
+        if (it.type == KeyEventType.KeyDown && it.key == Key.DirectionDown) {
+            onOpen()
+            true
+        } else {
+            false
+        }
+    }
+
+private val arabicMonthNames =
+    listOf(
+        "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
+        "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر",
+    )
+
 private val arabicLocale =
     CalendarLocale(
-        months =
-            listOf(
-                "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
-                "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر",
-            ),
+        months = arabicMonthNames,
         shortMonths =
             listOf(
                 "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
@@ -115,9 +161,7 @@ private val arabicLocale =
         nextMonth = "الشهر التالي",
         firstDayOfWeek = 6,
         pickDate = "اختر تاريخًا",
-        formatDate = { date ->
-            "${date.day} ${monthNames[date.month - 1]} ${date.year}"
-        },
+        formatDate = { date -> "${date.day} ${arabicMonthNames[date.month - 1]} ${date.year}" },
         formatAccessibleDate = { date -> "${date.year}-${date.month}-${date.day}" },
     )
 
@@ -130,7 +174,7 @@ private fun DatePickerRecipe(
     var open by remember { mutableStateOf(false) }
     Popover(open = open, onOpenChange = { open = it }) {
         PopoverTrigger { trigger() }
-        PopoverContent(style = Style { contentPadding(0.dp) }) { content() }
+        PopoverContent(align = PopupAlign.Start, style = Style { contentPadding(0.dp) }) { content() }
     }
 }
 
@@ -201,6 +245,8 @@ private fun DateCalendar(
 
 private val datePickerUsageCode =
     """
+    val today = remember { currentCalendarDate() }
+    val locale = LocalCalendarLocale.current
     var open by remember { mutableStateOf(false) }
     var year by remember { mutableStateOf(today.year) }
     var month by remember { mutableStateOf(today.month) }
@@ -208,15 +254,15 @@ private val datePickerUsageCode =
     Popover(open = open, onOpenChange = { open = it }) {
         PopoverTrigger {
             Button(onClick = toggle, variant = ButtonVariant.Outline) {
-                Text { selected?.let(locale::formatDate) ?: locale.pickDate }
+                Text { selected?.let(locale.formatDate) ?: locale.pickDate }
             }
         }
-        PopoverContent {
+        PopoverContent(align = PopupAlign.Start, style = Style { contentPadding(0.dp) }) {
             Calendar(
                 year = year, month = month,
                 onMonthChange = { y, m -> year = y; month = m },
                 selected = selected,
-                onSelectedChange = { selected = it; open = false },
+                onSelectedChange = { selected = it },
             )
         }
     }
@@ -226,9 +272,10 @@ private val datePickerUsageCode =
 @Composable
 private fun DatePickerField(
     label: String,
+    width: androidx.compose.ui.unit.Dp = 320.dp,
     content: @Composable () -> Unit,
 ) {
-    Field(Modifier.widthIn(max = 320.dp)) {
+    Field(Modifier.widthIn(max = width)) {
         FieldLabel(label)
         content()
     }
@@ -251,6 +298,13 @@ val datePickerDoc =
         title = "Date Picker",
         description = "A date picker component with range and presets.",
         usageCode = datePickerUsageCode,
+        introMarkdown =
+            "The Date Picker is built using a composition of the `Popover` and the `Calendar` components. " +
+                "See installation instructions for [Popover](/popover) and [Calendar](/calendar).",
+        compositionMarkdown =
+            "See the [React DayPicker documentation](https://react-day-picker.js.org) for the upstream behavior. " +
+                "The Kotlin input recipe accepts English month dates (June 01, 2025) or ISO dates (2025-06-01). " +
+                "The natural-language recipe supports tomorrow, yesterday, next week and in N days.",
         compositionCode =
             """
             Popover
@@ -284,7 +338,10 @@ val datePickerDoc =
                                         }
                                     }
                                 }
-                                PopoverContent(style = Style { width(214.dp); contentPadding(0.dp) }) {
+                                PopoverContent(
+                                    align = PopupAlign.Start,
+                                    style = Style { width(214.dp); contentPadding(0.dp) },
+                                ) {
                                     CompositionLocalProvider(LocalCalendarAutoFocus provides true) {
                                         Calendar(
                                             year = year, month = month,
@@ -305,8 +362,9 @@ val datePickerDoc =
                     code =
                         """
                         var open by remember { mutableStateOf(false) }
-                        var year by remember { mutableStateOf(2026) }
-                        var month by remember { mutableStateOf(0) }
+                        val today = remember { currentCalendarDate() }
+                        var year by remember { mutableStateOf(today.year) }
+                        var month by remember { mutableStateOf(today.month) }
                         var selected by remember { mutableStateOf<CalendarDate?>(null) }
                         Field(Modifier.widthIn(max = 176.dp)) {
                             FieldLabel("Date")
@@ -316,7 +374,7 @@ val datePickerDoc =
                                         Text { selected?.let(::formatDate) ?: "Pick a date" }
                                     }
                                 }
-                                PopoverContent {
+                                PopoverContent(align = PopupAlign.Start, style = Style { contentPadding(0.dp) }) {
                                     Calendar(
                                         year = year, month = month,
                                         onMonthChange = { y, m -> year = y; month = m },
@@ -333,7 +391,7 @@ val datePickerDoc =
                         var year by remember { mutableStateOf(today.year) }
                         var month by remember { mutableStateOf(today.month) }
                         var selected by remember { mutableStateOf<CalendarDate?>(null) }
-                        DatePickerField("Date") {
+                        DatePickerField("Date", 176.dp) {
                             Popover(open = open, onOpenChange = { open = it }) {
                                 PopoverTrigger {
                                     DateTrigger(
@@ -342,11 +400,14 @@ val datePickerDoc =
                                         trailingChevron = false,
                                     )
                                 }
-                                PopoverContent(style = Style { contentPadding(0.dp) }) {
+                                PopoverContent(align = PopupAlign.Start, style = Style { contentPadding(0.dp) }) {
                                     DateCalendar(
                                         year = year,
                                         month = month,
-                                        onMonthChange = { y, m -> year = y; month = m },
+                                        onMonthChange = { y, m ->
+                                            year = y
+                                            month = m
+                                        },
                                         selected = selected,
                                         onSelectedChange = { selected = it },
                                     )
@@ -375,7 +436,7 @@ val datePickerDoc =
                                         Text { formatRange(range) }
                                     }
                                 }
-                                PopoverContent {
+                                PopoverContent(align = PopupAlign.Start, style = Style { contentPadding(0.dp) }) {
                                     Calendar(
                                         year = year, month = month,
                                         onMonthChange = { y, m -> year = y; month = m },
@@ -400,23 +461,27 @@ val datePickerDoc =
                                 ),
                             )
                         }
-                        DatePickerField("Date Picker Range") {
+                        DatePickerField("Date Picker Range", 240.dp) {
                             Popover(open = open, onOpenChange = { open = it }) {
                                 PopoverTrigger {
                                     DateTrigger(
                                         text = formatRange(range),
                                         empty = range.from == null,
                                         leadingCalendar = true,
+                                        trailingChevron = false,
                                     )
                                 }
-                                PopoverContent(style = Style { contentPadding(0.dp) }) {
+                                PopoverContent(align = PopupAlign.Start, style = Style { contentPadding(0.dp) }) {
                                     val locale = LocalCalendarLocale.current
                                     val now = remember { currentCalendarDate() }
                                     CompositionLocalProvider(LocalCalendarAutoFocus provides true) {
                                         Calendar(
                                             year = year,
                                             month = month,
-                                            onMonthChange = { y, m -> year = y; month = m },
+                                            onMonthChange = { y, m ->
+                                                year = y
+                                                month = m
+                                            },
                                             selectedRange = range,
                                             today = now,
                                             numberOfMonths = 2,
@@ -448,7 +513,7 @@ val datePickerDoc =
                                         Text { selected?.let(::formatDate) ?: "Select date" }
                                     }
                                 }
-                                PopoverContent {
+                                PopoverContent(align = PopupAlign.Start, style = Style { contentPadding(0.dp) }) {
                                     Calendar(
                                         year = year, month = month,
                                         onMonthChange = { y, m -> year = y; month = m },
@@ -466,7 +531,7 @@ val datePickerDoc =
                         var year by remember { mutableStateOf(today.year) }
                         var month by remember { mutableStateOf(today.month) }
                         var selected by remember { mutableStateOf<CalendarDate?>(null) }
-                        DatePickerField("Date of birth") {
+                        DatePickerField("Date of birth", 176.dp) {
                             Popover(open = open, onOpenChange = { open = it }) {
                                 PopoverTrigger {
                                     DateTrigger(
@@ -475,11 +540,14 @@ val datePickerDoc =
                                         trailingChevron = false,
                                     )
                                 }
-                                PopoverContent(style = Style { contentPadding(0.dp) }) {
+                                PopoverContent(align = PopupAlign.Start, style = Style { contentPadding(0.dp) }) {
                                     DateCalendar(
                                         year = year,
                                         month = month,
-                                        onMonthChange = { y, m -> year = y; month = m },
+                                        onMonthChange = { y, m ->
+                                            year = y
+                                            month = m
+                                        },
                                         selected = selected,
                                         captionLayout = CalendarCaptionLayout.Dropdown,
                                         onSelectedChange = {
@@ -505,7 +573,19 @@ val datePickerDoc =
                         Field(Modifier.widthIn(max = 192.dp)) {
                             FieldLabel("Subscription Date")
                             InputGroup {
-                                InputGroupInput(value = value, onValueChange = { value = it })
+                                InputGroupInput(
+                                    value = value,
+                                    onValueChange = {
+                                        value = it
+                                        parseInputDate(it)?.let { parsed ->
+                                            selected = parsed
+                                            year = parsed.year
+                                            month = parsed.month
+                                        }
+                                    },
+                                    modifier = Modifier.openDatePicker { open = true },
+                                    placeholder = "June 01, 2025",
+                                )
                                 InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) {
                                     Popover(open = open, onOpenChange = { open = it }) {
                                         PopoverTrigger {
@@ -513,14 +593,16 @@ val datePickerDoc =
                                                 Image(Lucide.Calendar, null, Modifier.size(16.dp))
                                             }
                                         }
-                                        PopoverContent {
+                                        PopoverContent(
+                                            align = PopupAlign.End, alignOffset = (-8).dp, sideOffset = 10.dp,
+                                        ) {
                                             Calendar(
                                                 year = year, month = month,
                                                 onMonthChange = { y, m -> year = y; month = m },
                                                 selected = selected,
                                                 onSelectedChange = {
                                                     selected = it
-                                                    value = formatDate(it)
+                                                    value = formatInputDate(it)
                                                     open = false
                                                 },
                                             )
@@ -536,9 +618,21 @@ val datePickerDoc =
                         var selected by remember { mutableStateOf<CalendarDate?>(CalendarDate(2025, 6, 1)) }
                         var year by remember { mutableStateOf(2025) }
                         var month by remember { mutableStateOf(6) }
-                        DatePickerField("Subscription Date") {
+                        DatePickerField("Subscription Date", 192.dp) {
                             InputGroup {
-                                InputGroupInput(value = value, onValueChange = { value = it })
+                                InputGroupInput(
+                                    value = value,
+                                    onValueChange = {
+                                        value = it
+                                        parseInputDate(it)?.let { parsed ->
+                                            selected = parsed
+                                            year = parsed.year
+                                            month = parsed.month
+                                        }
+                                    },
+                                    modifier = Modifier.openDatePicker { open = true },
+                                    placeholder = "June 01, 2025",
+                                )
                                 InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) {
                                     Popover(open = open, onOpenChange = { open = it }) {
                                         PopoverTrigger {
@@ -554,15 +648,23 @@ val datePickerDoc =
                                                 )
                                             }
                                         }
-                                        PopoverContent(style = Style { contentPadding(0.dp) }) {
+                                        PopoverContent(
+                                            align = PopupAlign.End,
+                                            alignOffset = (-8).dp,
+                                            sideOffset = 10.dp,
+                                            style = Style { contentPadding(0.dp) },
+                                        ) {
                                             DateCalendar(
                                                 year = year,
                                                 month = month,
-                                                onMonthChange = { y, m -> year = y; month = m },
+                                                onMonthChange = { y, m ->
+                                                    year = y
+                                                    month = m
+                                                },
                                                 selected = selected,
                                                 onSelectedChange = {
                                                     selected = it
-                                                    value = formatDate(it)
+                                                    value = formatInputDate(it)
                                                     open = false
                                                 },
                                             )
@@ -595,7 +697,7 @@ val datePickerDoc =
                                             Text { selected?.let(::formatDate) ?: "Select date" }
                                         }
                                     }
-                                    PopoverContent {
+                                    PopoverContent(align = PopupAlign.Start, style = Style { contentPadding(0.dp) }) {
                                         Calendar(
                                             year = year, month = month,
                                             onMonthChange = { y, m -> year = y; month = m },
@@ -629,11 +731,17 @@ val datePickerDoc =
                                             empty = selected == null,
                                         )
                                     }
-                                    PopoverContent(style = Style { contentPadding(0.dp) }) {
+                                    PopoverContent(
+                                        align = PopupAlign.Start,
+                                        style = Style { contentPadding(0.dp) },
+                                    ) {
                                         DateCalendar(
                                             year = year,
                                             month = month,
-                                            onMonthChange = { y, m -> year = y; month = m },
+                                            onMonthChange = { y, m ->
+                                                year = y
+                                                month = m
+                                            },
                                             selected = selected,
                                             captionLayout = CalendarCaptionLayout.Dropdown,
                                             onSelectedChange = {
@@ -653,7 +761,8 @@ val datePickerDoc =
                 ),
                 ComponentExample(
                     title = "Natural Language Picker",
-                    descriptionMarkdown = "This component uses the `chrono-node` library to parse natural language dates.",
+                    descriptionMarkdown =
+                        "This component uses the `chrono-node` library to parse natural language dates.",
                     code =
                         """
                         // Kotlin note: chrono-node is JavaScript-only; this recipe replaces it with a
@@ -677,6 +786,7 @@ val datePickerDoc =
                                             month = parsed.month
                                         }
                                     },
+                                    modifier = Modifier.openDatePicker { open = true },
                                     placeholder = "Tomorrow or next week",
                                 )
                                 InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) {
@@ -686,20 +796,25 @@ val datePickerDoc =
                                                 Image(Lucide.Calendar, null, Modifier.size(16.dp))
                                             }
                                         }
-                                        PopoverContent {
+                                        PopoverContent(align = PopupAlign.End, sideOffset = 8.dp) {
                                             Calendar(
                                                 year = year, month = month,
                                                 onMonthChange = { y, m -> year = y; month = m },
                                                 selected = selected,
+                                                captionLayout = CalendarCaptionLayout.Dropdown,
                                                 onSelectedChange = {
                                                     selected = it
-                                                    value = formatDate(it)
+                                                    value = formatInputDate(it)
                                                     open = false
                                                 },
                                             )
                                         }
                                     }
                                 }
+                            }
+                            Text(textStyle = TextColors.Muted) {
+                                "Your post will be published on " +
+                                    "${'$'}{selected?.let(::formatInputDate).orEmpty()}."
                             }
                         }
                         """.trimIndent(),
@@ -722,6 +837,7 @@ val datePickerDoc =
                                             month = parsed.month
                                         }
                                     },
+                                    modifier = Modifier.openDatePicker { open = true },
                                     placeholder = "Tomorrow or next week",
                                 )
                                 InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) {
@@ -739,15 +855,23 @@ val datePickerDoc =
                                                 )
                                             }
                                         }
-                                        PopoverContent(style = Style { contentPadding(0.dp) }) {
+                                        PopoverContent(
+                                            align = PopupAlign.End,
+                                            sideOffset = 8.dp,
+                                            style = Style { contentPadding(0.dp) },
+                                        ) {
                                             DateCalendar(
                                                 year = year,
                                                 month = month,
-                                                onMonthChange = { y, m -> year = y; month = m },
+                                                onMonthChange = { y, m ->
+                                                    year = y
+                                                    month = m
+                                                },
                                                 selected = selected,
+                                                captionLayout = CalendarCaptionLayout.Dropdown,
                                                 onSelectedChange = {
                                                     selected = it
-                                                    value = formatDate(it)
+                                                    value = formatInputDate(it)
                                                     open = false
                                                 },
                                             )
@@ -755,12 +879,18 @@ val datePickerDoc =
                                     }
                                 }
                             }
+                            Text(textStyle = TextColors.Muted) {
+                                "Your post will be published on " +
+                                    "${selected?.let(::formatInputDate).orEmpty()}."
+                            }
                         }
                     },
                 ),
                 ComponentExample(
                     title = "RTL",
-                    descriptionMarkdown = "To enable RTL support in shadcn/ui, see the RTL configuration guide.",
+                    descriptionMarkdown =
+                        "To enable RTL support in shadcn/ui, see the " +
+                            "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
                     code =
                         """
                         // Kotlin note: the catalog ships Arabic month/weekday names instead of a
@@ -771,15 +901,25 @@ val datePickerDoc =
                         ) {
                             var open by remember { mutableStateOf(false) }
                             var selected by remember { mutableStateOf<CalendarDate?>(null) }
-                            var year by remember { mutableStateOf(2026) }
-                            var month by remember { mutableStateOf(0) }
+                            val today = remember { currentCalendarDate() }
+                            var year by remember { mutableStateOf(today.year) }
+                            var month by remember { mutableStateOf(today.month) }
                             Popover(open = open, onOpenChange = { open = it }) {
                                 PopoverTrigger {
-                                    Button(onClick = toggle, variant = ButtonVariant.Outline) {
-                                        Text { selected?.let(::formatDate) ?: "اختر تاريخًا" }
+                                    Button(
+                                        onClick = toggle,
+                                        variant = ButtonVariant.Outline,
+                                        modifier = Modifier.width(212.dp),
+                                    ) {
+                                        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                                            Text(Modifier.weight(1f)) {
+                                                selected?.let(arabicLocale.formatDate) ?: arabicLocale.pickDate
+                                            }
+                                            Image(Lucide.ChevronDown, null, Modifier.size(16.dp))
+                                        }
                                     }
                                 }
-                                PopoverContent {
+                                PopoverContent(align = PopupAlign.Start, style = Style { contentPadding(0.dp) }) {
                                     Calendar(
                                         year = year, month = month,
                                         onMonthChange = { y, m -> year = y; month = m },
@@ -800,25 +940,30 @@ val datePickerDoc =
                             val today = remember { currentCalendarDate() }
                             var year by remember { mutableStateOf(today.year) }
                             var month by remember { mutableStateOf(today.month) }
-                            DatePickerField("التاريخ") {
-                                Popover(open = open, onOpenChange = { open = it }) {
-                                    PopoverTrigger {
-                                        DateTrigger(
-                                            text = selected?.let(::formatDate) ?: "اختر تاريخًا",
-                                            empty = selected == null,
+                            Popover(open = open, onOpenChange = { open = it }) {
+                                PopoverTrigger {
+                                    DateTrigger(
+                                        text = selected?.let(arabicLocale.formatDate) ?: arabicLocale.pickDate,
+                                        empty = selected == null,
+                                        width = 212.dp,
+                                    )
+                                }
+                                PopoverContent(
+                                    align = PopupAlign.Start,
+                                    style = Style { contentPadding(0.dp) },
+                                ) {
+                                    CompositionLocalProvider(LocalCalendarAutoFocus provides true) {
+                                        Calendar(
+                                            year = year,
+                                            month = month,
+                                            onMonthChange = { y, m ->
+                                                year = y
+                                                month = m
+                                            },
+                                            selected = selected,
+                                            today = today,
+                                            onSelectedChange = { selected = it },
                                         )
-                                    }
-                                    PopoverContent(style = Style { contentPadding(0.dp) }) {
-                                        CompositionLocalProvider(LocalCalendarAutoFocus provides true) {
-                                            Calendar(
-                                                year = year,
-                                                month = month,
-                                                onMonthChange = { y, m -> year = y; month = m },
-                                                selected = selected,
-                                                today = today,
-                                                onSelectedChange = { selected = it },
-                                            )
-                                        }
                                     }
                                 }
                             }
@@ -877,12 +1022,15 @@ val datePickerDoc =
                                     trailingChevron = false,
                                 )
                             }
-                            PopoverContent(style = Style { contentPadding(0.dp) }) {
+                            PopoverContent(align = PopupAlign.Start, style = Style { contentPadding(0.dp) }) {
                                 val now = remember { currentCalendarDate() }
                                 Calendar(
                                     year = year,
                                     month = month,
-                                    onMonthChange = { y, m -> year = y; month = m },
+                                    onMonthChange = { y, m ->
+                                        year = y
+                                        month = m
+                                    },
                                     selectedDates = dates,
                                     today = now,
                                     onSelectedDatesChange = { dates = it },
@@ -917,12 +1065,15 @@ val datePickerDoc =
                                     trailingChevron = false,
                                 )
                             }
-                            PopoverContent(style = Style { contentPadding(0.dp) }) {
+                            PopoverContent(align = PopupAlign.Start, style = Style { contentPadding(0.dp) }) {
                                 val now = remember { currentCalendarDate() }
                                 Calendar(
                                     year = year,
                                     month = month,
-                                    onMonthChange = { y, m -> year = y; month = m },
+                                    onMonthChange = { y, m ->
+                                        year = y
+                                        month = m
+                                    },
                                     selected = selected,
                                     today = now,
                                     onSelectedChange = { selected = it },
@@ -941,8 +1092,8 @@ val datePickerDoc =
                             onMonthChange = { y, m -> year = y; month = m },
                             selected = selected,
                             onSelectedChange = { selected = it },
-                            startMonth = CalendarDate(2026, 3, 5),
-                            endMonth = CalendarDate(2026, 6, 20),
+                            fromDate = CalendarDate(2026, 3, 5),
+                            toDate = CalendarDate(2026, 6, 20),
                         )
                         """.trimIndent(),
                     preview = {
@@ -958,17 +1109,20 @@ val datePickerDoc =
                                     trailingChevron = false,
                                 )
                             }
-                            PopoverContent(style = Style { contentPadding(0.dp) }) {
+                            PopoverContent(align = PopupAlign.Start, style = Style { contentPadding(0.dp) }) {
                                 val now = remember { currentCalendarDate() }
                                 Calendar(
                                     year = year,
                                     month = month,
-                                    onMonthChange = { y, m -> year = y; month = m },
+                                    onMonthChange = { y, m ->
+                                        year = y
+                                        month = m
+                                    },
                                     selected = selected,
                                     today = now,
                                     onSelectedChange = { selected = it },
-                                    startMonth = CalendarDate(2026, 3, 5),
-                                    endMonth = CalendarDate(2026, 6, 20),
+                                    fromDate = CalendarDate(2026, 3, 5),
+                                    toDate = CalendarDate(2026, 6, 20),
                                 )
                             }
                         }
@@ -981,13 +1135,30 @@ val datePickerDoc =
                     "Popover + Calendar",
                     "A date picker is a Popover containing a Calendar; there is no DatePicker root component.",
                     listOf(
-                        ApiProperty("selected / onSelectedChange", "CalendarDate? / (CalendarDate) -> Unit", "Required"),
-                        ApiProperty("selectedRange / onSelectedRangeChange", "CalendarDateRange? / (CalendarDateRange) -> Unit", "range mode"),
-                        ApiProperty("selectedDates / onSelectedDatesChange", "Set<CalendarDate> / (Set<CalendarDate>) -> Unit", "multiple mode"),
+                        ApiProperty(
+                            "selected / onSelectedChange",
+                            "CalendarDate? / (CalendarDate) -> Unit",
+                            "Required",
+                        ),
+                        ApiProperty(
+                            "selectedRange / onSelectedRangeChange",
+                            "CalendarDateRange? / (CalendarDateRange) -> Unit",
+                            "range mode",
+                        ),
+                        ApiProperty(
+                            "selectedDates / onSelectedDatesChange",
+                            "Set<CalendarDate> / (Set<CalendarDate>) -> Unit",
+                            "multiple mode",
+                        ),
                         ApiProperty("captionLayout", "CalendarCaptionLayout", "Label (Dropdown for month/year)"),
                         ApiProperty("numberOfMonths", "Int", "1"),
                         ApiProperty("weekStartsOn", "Int", "locale firstDayOfWeek"),
-                        ApiProperty("today / disabled / startMonth / endMonth", "CalendarDate? / (CalendarDate) -> Boolean / CalendarDate?", "null / none / null"),
+                        ApiProperty("fromDate / toDate", "CalendarDate?", "null (inclusive exact-day limits)"),
+                        ApiProperty(
+                            "today / disabled / startMonth / endMonth",
+                            "CalendarDate? / (CalendarDate) -> Boolean / CalendarDate?",
+                            "null / none / null (month-level bounds)",
+                        ),
                     ),
                 ),
             ),

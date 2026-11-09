@@ -38,13 +38,22 @@ class MessageScrollerParityTest : ScreenshotTest() {
         density: Float = 1f,
         spacing: Dp = 0.dp,
         itemPadding: Dp = 0.dp,
+        statusFooter: Boolean = false,
     ) {
         setThemedContent(stylePreset = StylePreset.Nova) {
             CompositionLocalProvider(LocalDensity provides Density(density)) {
                 state = rememberMessageScrollerState(autoScroll = auto, defaultScrollPosition = opening)
                 scope = rememberCoroutineScope()
                 MessageScrollerProvider(state) {
-                    MessageScroller(Modifier.width(240.dp).height(frameHeight.dp).testTag("frame")) {
+                    val footerHeight =
+                        if (statusFooter) {
+                            if (state.scrollable.start && state.scrollable.end) 20 else 40
+                        } else {
+                            0
+                        }
+                    MessageScroller(
+                        Modifier.width(240.dp).height((frameHeight - footerHeight).dp).testTag("frame"),
+                    ) {
                         if (viewport) {
                             MessageScrollerViewport(
                                 Modifier.testTag("viewport"),
@@ -82,6 +91,48 @@ class MessageScrollerParityTest : ScreenshotTest() {
     private fun command(block: suspend () -> Unit) {
         composeRule.runOnIdle { scope.launch { block() } }
         composeRule.waitForIdle()
+    }
+
+    @Test fun nestedGroupItemsKeepTheirOffsetInTheContentCoordinateSpace() {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            CompositionLocalProvider(LocalDensity provides Density(1f)) {
+                state = rememberMessageScrollerState(defaultScrollPosition = MessageScrollerPosition.Start)
+                scope = rememberCoroutineScope()
+                MessageScrollerProvider(state) {
+                    MessageScroller(Modifier.width(240.dp).height(200.dp)) {
+                        MessageScrollerViewport {
+                            MessageScrollerContent(spacing = 0.dp) {
+                                MessageScrollerItem(messageId = "m0") { Box(Modifier.height(60.dp)) }
+                                Box(Modifier.padding(top = 13.dp)) {
+                                    Column {
+                                        (1..9).forEach { index ->
+                                            MessageScrollerItem(messageId = "m$index") {
+                                                Box(Modifier.height(60.dp))
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        command { assertTrue(state.scrollToMessage("m3")) }
+        assertEquals(193, state.scrollState.value)
+    }
+
+    @Test fun keyboardEndKeepsTheEndWhenScrollStatusChangesTheViewportHeight() {
+        show(statusFooter = true)
+        composeRule.onNodeWithTag("viewport").requestFocus().performKeyInput { pressKey(Key.PageDown) }
+        assertTrue(state.scrollable.start && state.scrollable.end)
+        composeRule.onNodeWithTag("viewport").performKeyInput { pressKey(Key.MoveEnd) }
+        composeRule.waitForIdle()
+        assertEquals(state.scrollState.maxValue, state.scrollState.value)
+        assertFalse(state.scrollable.end)
+        composeRule.onNodeWithTag("viewport").performKeyInput { pressKey(Key.MoveHome) }
+        composeRule.waitForIdle()
+        assertEquals(0, state.scrollState.value)
     }
 
     @Test fun shrinkingViewportKeepsTheExistingEndWithoutEnablingOutputFollowing() {

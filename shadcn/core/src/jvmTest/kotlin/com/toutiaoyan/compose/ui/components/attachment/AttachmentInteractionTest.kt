@@ -36,6 +36,57 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class AttachmentInteractionTest : ScreenshotTest() {
+    @Test fun lifecycleBorderInterpolatesAndReversesWithoutChangingLayout() {
+        var state by mutableStateOf(AttachmentState.Done)
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Attachment(Modifier.size(240.dp, 80.dp).testTag("state border"), state = state) { }
+        }
+        val card = composeRule.onNodeWithTag("state border")
+
+        fun sample(): Color {
+            val pixels = card.captureToImage().toPixelMap()
+            return pixels[0, pixels.height / 2]
+        }
+
+        fun distance(
+            a: Color,
+            b: Color,
+        ) = abs(a.red - b.red) + abs(a.green - b.green) + abs(a.blue - b.blue)
+        val bounds = card.fetchSemanticsNode().boundsInRoot
+        val start = sample()
+        composeRule.runOnIdle { state = AttachmentState.Error }
+        val end = sample()
+        assertTrue(distance(start, end) > .05f)
+        composeRule.runOnIdle { state = AttachmentState.Done }
+        sample()
+        composeRule.mainClock.autoAdvance = false
+        try {
+            composeRule.runOnIdle { state = AttachmentState.Error }
+            composeRule.mainClock.advanceTimeByFrame()
+            sample()
+            composeRule.mainClock.advanceTimeBy(48)
+            val entering = sample()
+            assertTrue(
+                distance(entering, start) > .01f && distance(entering, end) > .01f,
+                "Lifecycle border must interpolate between normal and error colors: $entering",
+            )
+            composeRule.runOnIdle { state = AttachmentState.Done }
+            composeRule.mainClock.advanceTimeByFrame()
+            val turning = sample()
+            composeRule.mainClock.advanceTimeBy(80)
+            val returning = sample()
+            assertTrue(
+                distance(returning, start) < distance(turning, start),
+                "Reversal must return toward normal border: $turning -> $returning",
+            )
+            composeRule.mainClock.advanceTimeBy(200)
+            assertColor(start, sample())
+            assertEquals(bounds, card.fetchSemanticsNode().boundsInRoot)
+        } finally {
+            composeRule.mainClock.autoAdvance = true
+        }
+    }
+
     @Test fun actualPointerHoverInterpolatesAndReversesInLightTheme() = assertHoverMotion(false)
 
     @Test fun actualPointerHoverInterpolatesAndReversesInDarkTheme() = assertHoverMotion(true)

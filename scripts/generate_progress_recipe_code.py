@@ -9,7 +9,7 @@ source = (DOCS / 'ProgressRecipes.kt').read_text()
 header = source.split('// region shared', 1)[0]
 header = re.sub(r'^package .*\n', '', header, flags=re.M).strip()
 header = '\n'.join(line for line in header.splitlines() if 'ui.catalog.catalog' not in line and 'import androidx.compose.ui.platform.testTag' not in line)
-header += '\nimport androidx.compose.ui.text.font.FontFamily\nimport compose_foundation.app.shared.generated.resources.*\nimport org.jetbrains.compose.resources.Font'
+header += '\nimport androidx.compose.ui.text.font.FontFamily\nimport androidx.compose.ui.text.font.FontWeight\nimport compose_foundation.app.shared.generated.resources.*\nimport org.jetbrains.compose.resources.Font'
 
 def region(name):
     return source.split('// region ' + name + '\n', 1)[1].split('// endregion ' + name, 1)[0].strip()

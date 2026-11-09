@@ -1,0 +1,12 @@
+{
+  "ktlintCommonMainSourceSetCheck": {
+    "total": 13,
+    "labelOwned": 0,
+    "foreign": 13
+  },
+  "ktlintJvmTestSourceSetCheck": {
+    "total": 2,
+    "labelOwned": 0,
+    "foreign": 2
+  }
+}

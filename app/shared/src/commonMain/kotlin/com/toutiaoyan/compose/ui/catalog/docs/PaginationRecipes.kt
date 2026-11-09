@@ -158,9 +158,10 @@ internal val paginationOfficialExamples =
             code = paginationRtlRecipeCode,
             previewPadding = 0.dp,
             preview = {
-            var language by remember { mutableIntStateOf(1) }
-            RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
-                PaginationRtlRecipe(language)
-            }
-        }),
+                var language by remember { mutableIntStateOf(1) }
+                RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
+                    PaginationRtlRecipe(language)
+                }
+            },
+        ),
     )

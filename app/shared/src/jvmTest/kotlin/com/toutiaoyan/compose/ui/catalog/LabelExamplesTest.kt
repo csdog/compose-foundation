@@ -65,7 +65,18 @@ class LabelExamplesTest {
 
     @Test fun labelInFieldRendersTheOfficialPaymentForm() {
         show("Label in Field")
-        listOf("Payment Method", "Name on Card", "Card Number", "Month", "Year", "CVV", "Billing Address", "Comments", "Submit", "Cancel").forEach {
+        listOf(
+            "Payment Method",
+            "Name on Card",
+            "Card Number",
+            "Month",
+            "Year",
+            "CVV",
+            "Billing Address",
+            "Comments",
+            "Submit",
+            "Cancel",
+        ).forEach {
             rule.onNodeWithText(it).assertExists()
         }
     }
@@ -73,6 +84,40 @@ class LabelExamplesTest {
     @Test fun rtlRecipeShowsTheArabicLabel() {
         show("RTL")
         rule.onNodeWithText("قبول الشروط والأحكام").assertIsDisplayed()
+    }
+
+    @Test fun fieldGuidanceAppearsAfterThePrimaryPreview() {
+        val page = com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown(labelDoc)
+        val guidance = "built-in label, description, and error handling"
+        assertTrue(labelDoc.introMarkdown.orEmpty().contains(guidance))
+        assertTrue(page.indexOf(guidance) < page.indexOf("## Installation"))
+    }
+
+    @Test fun paymentGuidanceAndBillingLabelActivationWork() {
+        show("Label in Field")
+        rule.onNodeWithText("Enter your 16-digit card number").assertExists()
+        rule.onNode(isToggleable()).assertIsOn()
+        rule.onNodeWithText("Same as shipping address").performClick()
+        rule.onNode(isToggleable()).assertIsOff()
+    }
+
+    @Test fun rtlRecipeChangesLanguageAndReversesTheControlRow() {
+        show("RTL")
+
+        fun checkboxLeft() = rule.onNode(isToggleable()).fetchSemanticsNode().boundsInRoot.left
+        val arabicLeft = checkboxLeft()
+        val arabicLabel = rule.onNodeWithText("قبول الشروط والأحكام").fetchSemanticsNode().boundsInRoot
+        assertTrue(arabicLeft > arabicLabel.right, "Arabic puts the checkbox at logical start on the right")
+        rule.onNodeWithContentDescription("Preview language").performClick()
+        rule.onNodeWithText("English").performClick()
+        val englishLabel = rule.onNodeWithText("Accept terms and conditions").fetchSemanticsNode().boundsInRoot
+        assertTrue(checkboxLeft() < englishLabel.left)
+        rule.onNodeWithContentDescription("Preview language").performClick()
+        rule.onNodeWithText("Hebrew (עברית)").performClick()
+        rule.onNodeWithText("קבל תנאים והגבלות").assertIsDisplayed()
+        assertEquals(arabicLeft, checkboxLeft(), 0.1f)
+        rule.onNodeWithText("קבל תנאים והגבלות").performClick()
+        rule.onNode(isToggleable()).assertIsOn()
     }
 
     @Test fun requiredExtensionRendersTheDestructiveMarker() {

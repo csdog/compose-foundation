@@ -10,6 +10,8 @@ import androidx.compose.ui.graphics.toPixelMap
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
+import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.*
 import androidx.compose.ui.unit.*
@@ -155,6 +157,16 @@ class ProgressParityTest : ScreenshotTest() {
         val root = composeRule.onNodeWithTag("root").getUnclippedBoundsInRoot()
         assertTrue(value.top >= label.bottom + 12.dp)
         assertEquals(root.right, value.right)
+    }
+
+    @Test fun novaValueRequestsTabularNumeralsFromTheTextShaper() {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Progress(0.11f, Modifier.width(320.dp)) { ProgressValue() }
+        }
+        val results = mutableListOf<TextLayoutResult>()
+        composeRule.onNodeWithText("11%", useUnmergedTree = true)
+            .performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(results) }
+        assertEquals("tnum", results.single().layoutInput.style.fontFeatureSettings)
     }
 
     @Test fun visibleValueIsHiddenFromAccessibilityLikeBaseUiValue() {

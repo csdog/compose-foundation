@@ -1,0 +1,229 @@
+{
+  "component": "context-menu",
+  "title": "Context Menu",
+  "generatedAt": "2026-11-08T11:35:40.539Z",
+  "localUrl": "http://127.0.0.1:59103/context-menu",
+  "ok": true,
+  "checks": 46,
+  "passed": 46,
+  "failed": 0,
+  "failures": [],
+  "captures": [
+    {
+      "name": "desktop-light",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/context-menu-r2/browser/desktop-light.png",
+      "bytes": 113530,
+      "sha256": "98eff31d09e412325557b88f9a511ae2501965c3dd7c11da15eb9bad770cd888",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:59103/context-menu",
+        "theme": "light",
+        "bodyHeight": "calc(6710px + 100vh)",
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 1000
+        },
+        "wasm": [
+          "http://127.0.0.1:59103/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:59103/3cedbfcd5f276a0febfe.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "desktop-dark",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/context-menu-r2/browser/desktop-dark.png",
+      "bytes": 112990,
+      "sha256": "d884abeb2aad7e7ea44fc0df3dcaa71d8727be0568b771e73edeb74932c518ab",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:59103/context-menu",
+        "theme": "dark",
+        "bodyHeight": "calc(6710px + 100vh)",
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 1000
+        },
+        "wasm": [
+          "http://127.0.0.1:59103/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:59103/3cedbfcd5f276a0febfe.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "phone-light",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/context-menu-r2/browser/phone-light.png",
+      "bytes": 39673,
+      "sha256": "bcfb3b3dc00a24a0e0ea8452a7007e9a6e2298262e69d4436d1f187783b0326d",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:59103/context-menu",
+        "theme": "light",
+        "bodyHeight": "calc(7308px + 100vh)",
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "wasm": [
+          "http://127.0.0.1:59103/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:59103/3cedbfcd5f276a0febfe.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "phone-dark",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/context-menu-r2/browser/phone-dark.png",
+      "bytes": 38977,
+      "sha256": "893e66bfa1667c63c79f7c5a2e53b6b694e40de6dc929cec02f72c9e676e7936",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:59103/context-menu",
+        "theme": "dark",
+        "bodyHeight": "calc(7308px + 100vh)",
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "wasm": [
+          "http://127.0.0.1:59103/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:59103/3cedbfcd5f276a0febfe.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "section-basic",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/context-menu-r2/browser/section-basic.png",
+      "bytes": 88702,
+      "sha256": "49086d271a82916d7b2535494b1ddc76e904e74446d1783ee45c5342f6a4f5fe",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-submenu",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/context-menu-r2/browser/section-submenu.png",
+      "bytes": 90352,
+      "sha256": "93edd8e89f55b955c9de50073c6ff04409ca241491988d0e1de696e87d3b92d0",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-shortcuts",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/context-menu-r2/browser/section-shortcuts.png",
+      "bytes": 89703,
+      "sha256": "a738fbe6da7a8fd5f23b97911eea79a148031705ba41725dbe71a724fc755471",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-groups",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/context-menu-r2/browser/section-groups.png",
+      "bytes": 87014,
+      "sha256": "c7a2319665589c75c9f76e9ef1bdcd9457d8c58f3f5c575a9347f246ccbc612e",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-icons",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/context-menu-r2/browser/section-icons.png",
+      "bytes": 89864,
+      "sha256": "38d3abede25a8d201fd56fbf43b75a43526634785e922479a2d677f7d9b7256a",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-checkboxes",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/context-menu-r2/browser/section-checkboxes.png",
+      "bytes": 97175,
+      "sha256": "c927af2b14c29ece0385533b34eabf628f11617f8763899e6434b6e67fd6ee88",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-radio",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/context-menu-r2/browser/section-radio.png",
+      "bytes": 93432,
+      "sha256": "6dd6f2179a55608720236b7910ebae2bb5803513298c373568dc4a321dbc7323",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-destructive",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/context-menu-r2/browser/section-destructive.png",
+      "bytes": 93049,
+      "sha256": "7c4863f322a6807cbf2dbb3c8caecaaaab273317e3f2db01b00dc761e8121047",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-sides",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/context-menu-r2/browser/section-sides.png",
+      "bytes": 106562,
+      "sha256": "84a7922bc9ba3ad6d45b57c85e670a96cef2896e50ab840f27b14c5cf20caaaf",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-rtl",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/context-menu-r2/browser/section-rtl.png",
+      "bytes": 113174,
+      "sha256": "cdad195b610d71ee35cc919f41ced84e63d8852345f358898892c80d3c58fc97",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    }
+  ]
+}

@@ -36,6 +36,29 @@ import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.Test
 
 class AccordionNovaTest : ScreenshotTest() {
+    @Test fun navigationSkipsTriggerDisabledStateAndTracksReenabling() {
+        var triggerDisabled by mutableStateOf(true)
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Accordion {
+                AccordionItem("a") { AccordionTrigger("First", Modifier.testTag("first")) }
+                AccordionItem("b") {
+                    AccordionTrigger("Middle", Modifier.testTag("middle"), disabled = triggerDisabled)
+                }
+                AccordionItem("c") { AccordionTrigger("Last", Modifier.testTag("last")) }
+            }
+        }
+        composeRule.onNodeWithTag("first").requestFocus()
+        composeRule.onNodeWithTag("first").performKeyInput { pressKey(Key.DirectionDown) }
+        composeRule.onNodeWithTag("last").assertIsFocused()
+        composeRule.runOnIdle { triggerDisabled = false }
+        composeRule.onNodeWithTag("last").performKeyInput { pressKey(Key.DirectionUp) }
+        composeRule.onNodeWithTag("middle").assertIsFocused()
+        composeRule.runOnIdle { triggerDisabled = true }
+        composeRule.onNodeWithTag("first").requestFocus()
+        composeRule.onNodeWithTag("first").performKeyInput { pressKey(Key.DirectionDown) }
+        composeRule.onNodeWithTag("last").assertIsFocused()
+    }
+
     @Test fun novaTriggerUsesCompactPaddingAndToggles() {
         setThemedContent(stylePreset = StylePreset.Nova) {
             Accordion {

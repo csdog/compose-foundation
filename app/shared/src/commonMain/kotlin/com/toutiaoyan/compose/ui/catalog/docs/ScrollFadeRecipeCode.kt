@@ -129,10 +129,14 @@ internal val scrollFadeDefaultRecipeCode =
                     items.forEach { ScrollFadeTile(it, true) }
                 }
             } else {
+                // The "no overflow" recipe intentionally has no fixed height: a nested
+                // verticalScroll would be measured with an infinite max height inside the
+                // docs column (and, in Wasm, throws). Nothing can overflow there, so the
+                // fade modifier is applied to the plain column instead.
+                val scroller = if (height == null) Modifier else Modifier.verticalScroll(state)
                 Column(
-                    viewport.verticalScroll(state).focusable().padding(6.dp),
-                    verticalArrangement =
-                        Arrangement.spacedBy(6.dp),
+                    viewport.then(scroller).focusable().padding(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     items.forEach { ScrollFadeTile(it, false) }
                 }
@@ -293,10 +297,14 @@ internal val scrollFadeOverflowRecipeCode =
                     items.forEach { ScrollFadeTile(it, true) }
                 }
             } else {
+                // The "no overflow" recipe intentionally has no fixed height: a nested
+                // verticalScroll would be measured with an infinite max height inside the
+                // docs column (and, in Wasm, throws). Nothing can overflow there, so the
+                // fade modifier is applied to the plain column instead.
+                val scroller = if (height == null) Modifier else Modifier.verticalScroll(state)
                 Column(
-                    viewport.verticalScroll(state).focusable().padding(6.dp),
-                    verticalArrangement =
-                        Arrangement.spacedBy(6.dp),
+                    viewport.then(scroller).focusable().padding(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     items.forEach { ScrollFadeTile(it, false) }
                 }
@@ -462,10 +470,14 @@ internal val scrollFadeHorizontalRecipeCode =
                     items.forEach { ScrollFadeTile(it, true) }
                 }
             } else {
+                // The "no overflow" recipe intentionally has no fixed height: a nested
+                // verticalScroll would be measured with an infinite max height inside the
+                // docs column (and, in Wasm, throws). Nothing can overflow there, so the
+                // fade modifier is applied to the plain column instead.
+                val scroller = if (height == null) Modifier else Modifier.verticalScroll(state)
                 Column(
-                    viewport.verticalScroll(state).focusable().padding(6.dp),
-                    verticalArrangement =
-                        Arrangement.spacedBy(6.dp),
+                    viewport.then(scroller).focusable().padding(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     items.forEach { ScrollFadeTile(it, false) }
                 }
@@ -626,10 +638,14 @@ internal val scrollFadeEdgeRecipeCode =
                     items.forEach { ScrollFadeTile(it, true) }
                 }
             } else {
+                // The "no overflow" recipe intentionally has no fixed height: a nested
+                // verticalScroll would be measured with an infinite max height inside the
+                // docs column (and, in Wasm, throws). Nothing can overflow there, so the
+                // fade modifier is applied to the plain column instead.
+                val scroller = if (height == null) Modifier else Modifier.verticalScroll(state)
                 Column(
-                    viewport.verticalScroll(state).focusable().padding(6.dp),
-                    verticalArrangement =
-                        Arrangement.spacedBy(6.dp),
+                    viewport.then(scroller).focusable().padding(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     items.forEach { ScrollFadeTile(it, false) }
                 }
@@ -814,10 +830,14 @@ internal val scrollFadeSizeRecipeCode =
                     items.forEach { ScrollFadeTile(it, true) }
                 }
             } else {
+                // The "no overflow" recipe intentionally has no fixed height: a nested
+                // verticalScroll would be measured with an infinite max height inside the
+                // docs column (and, in Wasm, throws). Nothing can overflow there, so the
+                // fade modifier is applied to the plain column instead.
+                val scroller = if (height == null) Modifier else Modifier.verticalScroll(state)
                 Column(
-                    viewport.verticalScroll(state).focusable().padding(6.dp),
-                    verticalArrangement =
-                        Arrangement.spacedBy(6.dp),
+                    viewport.then(scroller).focusable().padding(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     items.forEach { ScrollFadeTile(it, false) }
                 }
@@ -993,10 +1013,14 @@ internal val scrollFadeNoneRecipeCode =
                     items.forEach { ScrollFadeTile(it, true) }
                 }
             } else {
+                // The "no overflow" recipe intentionally has no fixed height: a nested
+                // verticalScroll would be measured with an infinite max height inside the
+                // docs column (and, in Wasm, throws). Nothing can overflow there, so the
+                // fade modifier is applied to the plain column instead.
+                val scroller = if (height == null) Modifier else Modifier.verticalScroll(state)
                 Column(
-                    viewport.verticalScroll(state).focusable().padding(6.dp),
-                    verticalArrangement =
-                        Arrangement.spacedBy(6.dp),
+                    viewport.then(scroller).focusable().padding(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     items.forEach { ScrollFadeTile(it, false) }
                 }
@@ -1178,10 +1202,14 @@ internal val scrollFadeRtlRecipeCode =
                     items.forEach { ScrollFadeTile(it, true) }
                 }
             } else {
+                // The "no overflow" recipe intentionally has no fixed height: a nested
+                // verticalScroll would be measured with an infinite max height inside the
+                // docs column (and, in Wasm, throws). Nothing can overflow there, so the
+                // fade modifier is applied to the plain column instead.
+                val scroller = if (height == null) Modifier else Modifier.verticalScroll(state)
                 Column(
-                    viewport.verticalScroll(state).focusable().padding(6.dp),
-                    verticalArrangement =
-                        Arrangement.spacedBy(6.dp),
+                    viewport.then(scroller).focusable().padding(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     items.forEach { ScrollFadeTile(it, false) }
                 }

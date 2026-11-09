@@ -1,0 +1,2755 @@
+Reusing configuration cache.
+> Task :tailwind-core:generateComposeResClass SKIPPED
+> Task :tailwind-core:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shadcn:core:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shadcn:core:convertXmlValueResourcesForCommonTest NO-SOURCE
+> Task :shadcn:core:generateExpectResourceCollectorsForCommonMain UP-TO-DATE
+> Task :tailwind-core:convertXmlValueResourcesForJvmMain NO-SOURCE
+> Task :shadcn:core:kmpPartiallyResolvedDependenciesChecker
+> Task :shadcn:core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shadcn:core:convertXmlValueResourcesForJvmTest NO-SOURCE
+> Task :shadcn:core:generateComposeResClass UP-TO-DATE
+> Task :tailwind-core:kmpPartiallyResolvedDependenciesChecker
+> Task :shadcn:core:convertXmlValueResourcesForJvmMain NO-SOURCE
+> Task :tailwind-core:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shadcn:core:checkJvmTestComposeLibrariesCompatibility
+> Task :shadcn:core:copyNonXmlValueResourcesForCommonTest NO-SOURCE
+> Task :tailwind-core:copyNonXmlValueResourcesForJvmMain NO-SOURCE
+> Task :shadcn:core:copyNonXmlValueResourcesForJvmTest NO-SOURCE
+> Task :tailwind-core:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shadcn:core:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :tailwind-core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :tailwind-core:prepareComposeResourcesTaskForJvmMain NO-SOURCE
+> Task :shadcn:core:copyNonXmlValueResourcesForJvmMain NO-SOURCE
+> Task :tailwind-core:generateResourceAccessorsForJvmMain SKIPPED
+> Task :shadcn:core:prepareComposeResourcesTaskForJvmTest NO-SOURCE
+> Task :tailwind-core:checkJvmMainComposeLibrariesCompatibility
+> Task :shadcn:core:checkJvmMainComposeLibrariesCompatibility
+> Task :tailwind-core:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shadcn:core:prepareComposeResourcesTaskForCommonTest NO-SOURCE
+> Task :tailwind-core:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shadcn:core:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :tailwind-core:generateActualResourceCollectorsForJvmMain SKIPPED
+> Task :shadcn:core:generateResourceAccessorsForJvmTest NO-SOURCE
+> Task :tailwind-core:assembleJvmMainResources UP-TO-DATE
+> Task :shadcn:core:prepareComposeResourcesTaskForJvmMain NO-SOURCE
+> Task :shadcn:core:generateResourceAccessorsForCommonMain NO-SOURCE
+> Task :shadcn:core:generateResourceAccessorsForCommonTest NO-SOURCE
+> Task :tailwind-core:jvmProcessResources UP-TO-DATE
+> Task :shadcn:core:assembleJvmTestResources UP-TO-DATE
+> Task :shadcn:core:generateResourceAccessorsForJvmMain NO-SOURCE
+> Task :tailwind-core:processJvmMainResources SKIPPED
+> Task :shadcn:core:assembleJvmMainResources UP-TO-DATE
+> Task :shadcn:core:jvmTestProcessResources UP-TO-DATE
+> Task :shadcn:core:processJvmTestResources SKIPPED
+> Task :shadcn:core:generateActualResourceCollectorsForJvmMain UP-TO-DATE
+> Task :shadcn:core:jvmProcessResources UP-TO-DATE
+> Task :shadcn:core:processJvmMainResources SKIPPED
+> Task :tailwind-core:compileKotlinJvm UP-TO-DATE
+> Task :tailwind-core:compileJvmMainJava NO-SOURCE
+> Task :tailwind-core:jvmMainClasses UP-TO-DATE
+> Task :tailwind-core:jvmJar UP-TO-DATE
+> Task :shadcn:core:compileKotlinJvm UP-TO-DATE
+> Task :shadcn:core:compileJvmMainJava NO-SOURCE
+> Task :shadcn:core:jvmMainClasses UP-TO-DATE
+> Task :shadcn:core:jvmJar UP-TO-DATE
+> Task :shadcn:core:compileTestKotlinJvm UP-TO-DATE
+> Task :shadcn:core:compileJvmTestJava NO-SOURCE
+> Task :shadcn:core:jvmTestClasses UP-TO-DATE
+
+> Task :shadcn:core:jvmTest
+
+MenuEscapeLayersTest[jvm] > [dropdown][jvm] > escapeClosesOnlyTheDeepestOpenLayerAndRestoresEachTrigger[dropdown][jvm] FAILED
+    java.lang.AssertionError at MenuEscapeLayersTest.kt:56
+        Caused by: java.lang.AssertionError at MenuEscapeLayersTest.kt:56
+
+MenuEscapeLayersTest[jvm] > [context-modal][jvm] > escapeClosesOnlyTheDeepestOpenLayerAndRestoresEachTrigger[context-modal][jvm] FAILED
+    java.lang.AssertionError at MenuEscapeLayersTest.kt:56
+        Caused by: java.lang.AssertionError at MenuEscapeLayersTest.kt:56
+
+MenuEscapeLayersTest[jvm] > [context-nonmodal][jvm] > escapeClosesOnlyTheDeepestOpenLayerAndRestoresEachTrigger[context-nonmodal][jvm] FAILED
+    java.lang.AssertionError at MenuEscapeLayersTest.kt:56
+        Caused by: java.lang.AssertionError at MenuEscapeLayersTest.kt:56
+
+MenubarParityTest[jvm] > rtlPhysicalLeftAdvancesToTheNextEnabledTrigger[jvm] PASSED
+
+MenubarParityTest[jvm] > labelUsesFourteenTwentyMediumAndCheckboxExposesIndeterminateState[jvm] PASSED
+
+MenubarParityTest[jvm] > selection_nova_dark[jvm] PASSED
+
+MenubarParityTest[jvm] > upOpensAtTheLastItemAndHomeEndMoveBetweenTriggers[jvm] PASSED
+
+MenubarParityTest[jvm] > submenuGetsTheOpenArrowBeforeTopLevelSwitching[jvm] PASSED
+
+MenubarParityTest[jvm] > nova_dark[jvm] PASSED
+
+MenubarParityTest[jvm] > nova_light[jvm] PASSED
+
+MenubarParityTest[jvm] > horizontalKeyInAnOpenMenuSwitchesMenuAndFocusesItsFirstItem[jvm] FAILED
+    java.lang.AssertionError at MenubarParityTest.kt:111
+        Caused by: java.lang.AssertionError at MenubarParityTest.kt:111
+
+MenubarParityTest[jvm] > horizontalKeysSkipDisabledTriggersAndWrapWithoutOpening[jvm] PASSED
+
+MenubarParityTest[jvm] > downOpensWithMenuNavigationAndEscapeRestoresTriggerFocus[jvm] FAILED
+    java.lang.AssertionError at MenubarParityTest.kt:98
+        Caused by: java.lang.AssertionError at MenubarParityTest.kt:98
+
+MenubarParityTest[jvm] > itemContentSlotForwardsRichLabels[jvm] PASSED
+
+MenubarParityTest[jvm] > menu_nova_dark[jvm] PASSED
+
+MenubarParityTest[jvm] > novaBarHas32PixelHeightTwoPixelGapAnd24PixelTrigger[jvm] PASSED
+
+MenubarParityTest[jvm] > selection_nova_light[jvm] PASSED
+
+MenubarParityTest[jvm] > menu_nova_light[jvm] PASSED
+
+StylePresetMatrixTest[jvm] > ring_toggle_light[jvm] PASSED
+
+StylePresetMatrixTest[jvm] > button_focused_dark[jvm] PASSED
+
+StylePresetMatrixTest[jvm] > ring_toggle_dark[jvm] PASSED
+
+StylePresetMatrixTest[jvm] > button_focused_light[jvm] PASSED
+
+StylePresetMatrixTest[jvm] > ring_swatch_dark[jvm] PASSED
+
+StylePresetMatrixTest[jvm] > ring_swatch_light[jvm] PASSED
+
+ScrollFadeScreenshotTest[jvm] > states_light[jvm] PASSED
+
+ScrollFadeScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+ShimmerScreenshotTest[jvm] > states_light[jvm] PASSED
+
+ShimmerScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+AccordionNovaTest[jvm] > lastDividerFollowsKeyedReordering[jvm] PASSED
+
+AccordionNovaTest[jvm] > horizontalLtrReorderFollowsTheCurrentStack[jvm] PASSED
+
+AccordionNovaTest[jvm] > novaTriggerUsesCompactPaddingAndToggles[jvm] PASSED
+
+AccordionNovaTest[jvm] > keptInputRetainsStateAndTabSkipsItWhileHidden[jvm] PASSED
+
+AccordionNovaTest[jvm] > keyboardUsesVisualOrderAfterKeyedReordering[jvm] PASSED
+
+AccordionNovaTest[jvm] > horizontalRtlReorderFollowsTheCurrentStack[jvm] PASSED
+
+AccordionNovaTest[jvm] > externalCollapseReturnsFocusAndHidesKeptContent[jvm] PASSED
+
+AccordionNovaTest[jvm] > cardNestedAccordionUsesThemeForeground[jvm] PASSED
+
+AccordionNovaTest[jvm] > verticalNavigationSkipsDisabledAndSupportsHomeEnd[jvm] PASSED
+
+AccordionNovaTest[jvm] > forceMountHidesSemanticsAndRestoresFocusWithoutDiscardingState[jvm] PASSED
+
+AccordionNovaTest[jvm] > focusRingDoesNotFillTransparentTriggerInterior[jvm] PASSED
+
+AccordionNovaTest[jvm] > horizontalRtlUsesLeftForForwardAndRightForBackward[jvm] PASSED
+
+AccordionNovaTest[jvm] > controlledRootCanRejectChangeAndDisabledItemNeverRequestsIt[jvm] PASSED
+
+AccordionNovaTest[jvm] > animationReversesFromItsCurrentHeight[jvm] PASSED
+
+AccordionNovaTest[jvm] > horizontalRtlUnequalWidthsUseStackOrder[jvm] PASSED
+
+AccordionScreenshotTest[jvm] > collapsed_light[jvm] PASSED
+
+AccordionScreenshotTest[jvm] > expanded_light[jvm] PASSED
+
+AccordionScreenshotTest[jvm] > trigger_focused_dark[jvm] PASSED
+
+AccordionScreenshotTest[jvm] > trigger_focused_light[jvm] PASSED
+
+AccordionScreenshotTest[jvm] > expanded_dark[jvm] PASSED
+
+AccordionScreenshotTest[jvm] > collapsed_dark[jvm] PASSED
+
+AlertNovaActionScreenshotTest[jvm] > actionsLight[jvm] PASSED
+
+AlertNovaActionScreenshotTest[jvm] > actionsDark[jvm] PASSED
+
+AlertNovaTest[jvm] > actionMatchesOfficialBorderRelativeInsetsAndFixedReserve[jvm] PASSED
+
+AlertNovaTest[jvm] > titleAndDescriptionHaveTwoPixelGap[jvm] PASSED
+
+AlertNovaTest[jvm] > titleInheritsCallerContentColor[jvm] PASSED
+
+AlertNovaTest[jvm] > unboundedWidthStillMeasuresVisibleContent[jvm] PASSED
+
+AlertNovaTest[jvm] > destructiveDescriptionUsesNinetyPercentDestructiveAndFourteenPixelText[jvm] PASSED
+
+AlertNovaTest[jvm] > actionHasReservedSpaceAndSurvivesBodyRecomposition[jvm] PASSED
+
+AlertNovaTest[jvm] > callerBodyPaddingSupportsMultipleActionsAcrossDirectionAndRecomposition[jvm] PASSED
+
+AlertNovaTest[jvm] > rtlPlacesIconAtStartAndReservesEndForAction[jvm] PASSED
+
+AlertScreenshotTest[jvm] > states_light[jvm] PASSED
+
+AlertScreenshotTest[jvm] > action_dark[jvm] PASSED
+
+AlertScreenshotTest[jvm] > action_light[jvm] PASSED
+
+AlertScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+AlertDialogMediaScreenshotTest[jvm] > smallMediaDark[jvm] PASSED
+
+AlertDialogMediaScreenshotTest[jvm] > smallMediaLight[jvm] PASSED
+
+AlertDialogMediaScreenshotTest[jvm] > mediaLight[jvm] PASSED
+
+AlertDialogMediaScreenshotTest[jvm] > mediaDark[jvm] PASSED
+
+AlertDialogMediaTest[jvm] > mediaTracksDirectionBreakpointAndRemoval[jvm] PASSED
+
+AlertDialogMediaTest[jvm] > mediaHeaderStillMeasuresInUnboundedWidth[jvm] PASSED
+
+AlertDialogMediaTest[jvm] > smallMediaStaysCenteredOnDesktop[jvm] PASSED
+
+AlertDialogNovaTest[jvm] > headerUsesAlertTypographyAndReactsToSmallSize[jvm] PASSED
+
+AlertDialogNovaTest[jvm] > defaultLight[jvm] PASSED
+
+AlertDialogNovaTest[jvm] > phoneFooterReversesVisualOrderAndButtonsRemainUsable[jvm] PASSED
+
+AlertDialogNovaTest[jvm] > defaultDark[jvm] PASSED
+
+AlertDialogScreenshotTest[jvm] > states_light[jvm] PASSED
+
+AlertDialogScreenshotTest[jvm] > close_button_light[jvm] PASSED
+
+AlertDialogScreenshotTest[jvm] > close_button_dark[jvm] PASSED
+
+AlertDialogScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+AspectRatioLayoutTest[jvm] > styleWidthParticipatesBeforeRatioMeasurement[jvm] PASSED
+
+AspectRatioLayoutTest[jvm] > widthRatioAndChildTrackLiveConstraints[jvm] PASSED
+
+AspectRatioLayoutTest[jvm] > omittedRatioRetainsSquareKotlinDefault[jvm] PASSED
+
+AspectRatioScreenshotTest[jvm] > states_light[jvm] PASSED
+
+AspectRatioScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+AttachmentGroupConstraintsTest[jvm] > explicitRequiredWidthRemainsScrollable[jvm] PASSED
+
+AttachmentGroupConstraintsTest[jvm] > horizontalMinimumAndVerticalCapUseDifferentRules[jvm] PASSED
+
+AttachmentGroupConstraintsTest[jvm] > groupLimitsStayIndependentAndNestedGroupsUseNearestViewport[jvm] PASSED
+
+AttachmentGroupConstraintsTest[jvm] > preferredAndStyleWidthsFollowLiveViewportInBothDirections[jvm] PASSED
+
+AttachmentGroupFadeTest[jvm] > overflowEdgesRevealGraduallyAndMirrorInRtl[jvm] PASSED
+
+AttachmentGroupFadeTest[jvm] > fittingContentDoesNotFade[jvm] PASSED
+
+AttachmentGroupSnapTest[jvm] > changingDirectionUpdatesExistingGroupSnapGeometry[jvm] PASSED
+
+AttachmentGroupSnapTest[jvm] > tabReachesOffscreenActionsAndEnterActivatesOnlyTheFocusedOne[jvm] PASSED
+
+AttachmentGroupSnapTest[jvm] > keyboardCanScrollInsideAnOversizedCard[jvm] PASSED
+
+AttachmentGroupSnapTest[jvm] > wheelSettlesWithoutAddingTouchFlingInertia[jvm] PASSED
+
+AttachmentGroupSnapTest[jvm] > arrowKeysSnapWithoutActivatingIndependentActions[jvm] PASSED
+
+AttachmentGroupSnapTest[jvm] > nonAttachmentContentDoesNotCreateSnapStops[jvm] PASSED
+
+AttachmentGroupSnapTest[jvm] > variableWidthCardsSnapWithLogicalPaddingInBothDirections[jvm] PASSED
+
+AttachmentGroupSnapTest[jvm] > oversizedCardCanSettleInsideItsOwnSnapArea[jvm] PASSED
+
+AttachmentGroupSnapTest[jvm] > horizontalOverflowDoesNotChainToParentAtTheStartingEdge[jvm] PASSED
+
+AttachmentInteractionTest[jvm] > actualPointerHoverInterpolatesAndReversesInLightTheme[jvm] PASSED
+
+AttachmentInteractionTest[jvm] > actualPointerHoverInterpolatesAndReversesInDarkTheme[jvm] PASSED
+
+AttachmentInteractionTest[jvm] > descendantFocusRingsCardWithoutChangingLayoutInBothInputModesAndThemes[jvm] PASSED
+
+AttachmentInteractionTest[jvm] > standaloneTriggerCoversParentAndRespectsZOrderRegardlessOfInsertionOrder[jvm] PASSED
+
+AttachmentInteractionTest[jvm] > standaloneTriggerKeyboardAndBothDisableFlagsFollowLiveChanges[jvm] PASSED
+
+AttachmentLayoutTest[jvm] > longTitleReservesActionsAndTracksWidthAndDirection[jvm] PASSED
+
+AttachmentLayoutTest[jvm] > mediaAndGapsUseNovaSizeAndRootWidthIsAtLeast160[jvm] PASSED
+
+AttachmentLayoutTest[jvm] > legacyPresetStillAllowsCallerStyleOverrides[jvm] PASSED
+
+AttachmentLayoutTest[jvm] > novaLayoutDark[jvm] PASSED
+
+AttachmentLayoutTest[jvm] > mediaSpinnerUsesRootSizeWhileActionsKeepTheirOwnIconSize[jvm] PASSED
+
+AttachmentLayoutTest[jvm] > novaLayoutLight[jvm] PASSED
+
+AttachmentLayoutTest[jvm] > styleWidthAndBackgroundOverrideTheActualCard[jvm] PASSED
+
+AttachmentLayoutTest[jvm] > actionsRemainIndependentlyClickableOnAnInteractiveCard[jvm] PASSED
+
+AttachmentLayoutTest[jvm] > verticalMediaFillsCardAndActionsDoNotConsumeColumnSpace[jvm] PASSED
+
+AttachmentScopeTest[jvm] > oldAndScopedJvmEntryPointsBothExist[jvm] PASSED
+
+AttachmentScopeTest[jvm] > nestedRootsDoNotBorrowOuterSize[jvm] PASSED
+
+AttachmentScopeTest[jvm] > extractedScopeHelpersKeepRootConfiguration[jvm] PASSED
+
+AttachmentScopeTest[jvm] > actionsTrackOrientationAndKeepPhysicalRightInRtl[jvm] PASSED
+
+AttachmentScopeTest[jvm] > mediaCornerTracksRootSizeChanges[jvm] PASSED
+
+AttachmentScreenshotTest[jvm] > vertical_dark[jvm] PASSED
+
+AttachmentScreenshotTest[jvm] > vertical_light[jvm] PASSED
+
+AttachmentScreenshotTest[jvm] > states_light[jvm] PASSED
+
+AttachmentScreenshotTest[jvm] > composer_upload_tray_dark[jvm] PASSED
+
+AttachmentScreenshotTest[jvm] > composer_upload_tray_light[jvm] PASSED
+
+AttachmentScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+AttachmentStateTest[jvm] > processingLambdaTitleInheritsMovingShimmer[jvm] PASSED
+
+AttachmentStateTest[jvm] > rootMediaAndDescriptionFollowLiveStateAndTheme[jvm] PASSED
+
+AttachmentStateTest[jvm] > uploadingTitleInheritsMovingShimmer[jvm] PASSED
+
+AttachmentStateTest[jvm] > explicitDescriptionOverrideAndNestedAttachmentRemainIndependent[jvm] PASSED
+
+AttachmentStateTest[jvm] > imageOpacityTracksLifecycleAndCallerShapeClipsTheImage[jvm] PASSED
+
+AvatarParityTest[jvm] > decodedImageHidesFallbackAndRemovalRestoresIt[jvm] PASSED
+
+AvatarParityTest[jvm] > fallbackUsesTwelveAndFourteenPixelNormalType[jvm] PASSED
+
+AvatarParityTest[jvm] > groupOverlapMirrorsInRtlWithoutChangingWidth[jvm] PASSED
+
+AvatarParityTest[jvm] > loadingDelayAndErrorAreDistinct[jvm] PASSED
+
+AvatarParityTest[jvm] > badgesMirrorToBottomLeftInRtlAndSmallHidesIcon[jvm] PASSED
+
+AvatarScreenshotTest[jvm] > group_overlap_light[jvm] PASSED
+
+AvatarScreenshotTest[jvm] > nova_dark[jvm] PASSED
+
+AvatarScreenshotTest[jvm] > group_count_light[jvm] PASSED
+
+AvatarScreenshotTest[jvm] > nova_light[jvm] PASSED
+
+AvatarScreenshotTest[jvm] > states_light[jvm] PASSED
+
+AvatarScreenshotTest[jvm] > group_count_dark[jvm] PASSED
+
+AvatarScreenshotTest[jvm] > group_overlap_dark[jvm] PASSED
+
+AvatarScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+BadgeExtendedApiTest[jvm] > iconInsetsUseLogicalEdgesAndRetainTheTwentyDpHeight[jvm] PASSED
+
+BadgeExtendedApiTest[jvm] > hrefUsesTheUriHandlerAndAnExplicitCallbackOverridesIt[jvm] PASSED
+
+BadgeExtendedApiTest[jvm] > invalidBorderUsesTheCurrentDestructiveColorInBothThemes[jvm] PASSED
+
+BadgeExtendedApiTest[jvm] > invalidPublishesAnErrorAndCanBeCleared[jvm] PASSED
+
+BadgeNovaParityTest[jvm] > darkMatrix[jvm] PASSED
+
+BadgeNovaParityTest[jvm] > spinnerInheritsBadgeSizeAndContentColor[jvm] PASSED
+
+BadgeNovaParityTest[jvm] > ghostDoesNotPaintAPermanentMutedBackground[jvm] PASSED
+
+BadgeNovaParityTest[jvm] > destructiveTintUpdatesAcrossThemes[jvm] PASSED
+
+BadgeNovaParityTest[jvm] > lightMatrix[jvm] PASSED
+
+BadgeNovaParityTest[jvm] > badgeUsesInlineDimensionsAndDoesNotOverlayItsSlots[jvm] PASSED
+
+BadgeScreenshotTest[jvm] > focused_light[jvm] PASSED
+
+BadgeScreenshotTest[jvm] > variants_light[jvm] PASSED
+
+BadgeScreenshotTest[jvm] > variants_dark[jvm] PASSED
+
+BadgeScreenshotTest[jvm] > focused_dark[jvm] PASSED
+
+BreadcrumbParityTest[jvm] > pageIsSelectedDisabledAndDecorationsHaveNoSpokenLabels[jvm] PASSED
+
+BreadcrumbParityTest[jvm] > listUsesSixPixelGapsAndWrapsAtomicItems[jvm] PASSED
+
+BreadcrumbParityTest[jvm] > linkHoverChangesActualInkInLightAndDark[jvm] PASSED
+
+BreadcrumbParityTest[jvm] > linkHoverChangesActualInkInDark[jvm] PASSED
+
+BreadcrumbParityTest[jvm] > rtlReversesOrderAndKeepsFourPixelItemGap[jvm] PASSED
+
+BreadcrumbScreenshotTest[jvm] > nova_dark[jvm] PASSED
+
+BreadcrumbScreenshotTest[jvm] > nova_light[jvm] PASSED
+
+BreadcrumbScreenshotTest[jvm] > states_light[jvm] PASSED
+
+BreadcrumbScreenshotTest[jvm] > with_ellipsis_light[jvm] PASSED
+
+BreadcrumbScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+BubbleParityTest[jvm] > hoverMixUsesOklchInterpolationForNeutralColors[jvm] PASSED
+
+BubbleParityTest[jvm] > shortReactionDoesNotGrowBubbleAndOverflowButtonReceivesRealPointer[jvm] PASSED
+
+BubbleParityTest[jvm] > actualMessageEndAlignmentIsInheritedWithoutRepeatingTheBubbleAlignProp[jvm] PASSED
+
+BubbleParityTest[jvm] > alignmentMirrorsWithLayoutDirection[jvm] PASSED
+
+BubbleParityTest[jvm] > naturalWidthIsCappedAndGhostCanUseFullRow[jvm] PASSED
+
+BubbleParityTest[jvm] > tintUsesOpaqueRelativeOklchInsteadOfAnAlphaWash[jvm] PASSED
+
+BubbleParityTest[jvm] > interactiveContentIsDisabledAndKeyboardActivatesOnlyWhenEnabled[jvm] PASSED
+
+BubbleScreenshotTest[jvm] > reactions_top_light[jvm] PASSED
+
+BubbleScreenshotTest[jvm] > reactions_top_dark[jvm] PASSED
+
+BubbleScreenshotTest[jvm] > variants_light[jvm] PASSED
+
+BubbleScreenshotTest[jvm] > nova_dark[jvm] PASSED
+
+BubbleScreenshotTest[jvm] > conversation_with_reactions_dark[jvm] PASSED
+
+BubbleScreenshotTest[jvm] > nova_light[jvm] PASSED
+
+BubbleScreenshotTest[jvm] > alignment_dark[jvm] PASSED
+
+BubbleScreenshotTest[jvm] > variants_dark[jvm] PASSED
+
+BubbleScreenshotTest[jvm] > conversation_with_reactions_light[jvm] PASSED
+
+BubbleScreenshotTest[jvm] > tinted_dark[jvm] PASSED
+
+BubbleScreenshotTest[jvm] > alignment_light[jvm] PASSED
+
+BubbleScreenshotTest[jvm] > tinted_light[jvm] PASSED
+
+ButtonCallerSizeTest[jvm] > explicitCallerHeightConstrainsThePaintedChrome[jvm] PASSED
+
+ButtonCallerSizeTest[jvm] > fillWidthPaintsTheWholeRequestedButtonDark[jvm] PASSED
+
+ButtonCallerSizeTest[jvm] > expandedTouchTargetKeepsTheIconChromeSmall[jvm] PASSED
+
+ButtonCallerSizeTest[jvm] > fillWidthPaintsTheWholeRequestedButtonLight[jvm] PASSED
+
+ButtonIconPlacementTest[jvm] > allTextSizesUseLogicalIconInsetsAndRetainHeight[jvm] PASSED
+
+ButtonIconPlacementTest[jvm] > iconOnlyDimensionsAndVegaPaddingAreNotChangedByTheHint[jvm] PASSED
+
+ButtonInvalidStateTest[jvm] > invalidBorderAndRingAreVisibleWithoutFocusAndClearWithoutResizing[jvm] PASSED
+
+ButtonInvalidStateTest[jvm] > explicitStyleCanOverrideTheInvalidBorder[jvm] PASSED
+
+ButtonInvalidStateTest[jvm] > clippedBackgroundKeepsBrushAlphaShapeAndCallerDimensions[jvm] PASSED
+
+ButtonInvalidStateTest[jvm] > fractionalDensityUsesTheSameRoundedPaddingAndCeiledBorderAsStyleMeasurement[jvm] PASSED
+
+ButtonLabelNoWrapTest[jvm] > constrainedStringLabelRetainsEveryWordInBothDirections[jvm] PASSED
+
+ButtonLabelNoWrapTest[jvm] > contentCanOverflowButTheCallerCanExplicitlyClipIt[jvm] PASSED
+
+ButtonNovaParityTest[jvm] > darkMatrix[jvm] PASSED
+
+ButtonNovaParityTest[jvm] > novaLabelColorChangesWithThemeWithoutResize[jvm] PASSED
+
+ButtonNovaParityTest[jvm] > smallDefaultIconUsesItsButtonSize[jvm] PASSED
+
+ButtonNovaParityTest[jvm] > smallLabelUsesNovaTypographyAndThemeFont[jvm] PASSED
+
+ButtonNovaParityTest[jvm] > destructiveBackgroundAndContentFollowLiveTheme[jvm] PASSED
+
+ButtonNovaParityTest[jvm] > vegaLabelColorChangesWithThemeWithoutResize[jvm] PASSED
+
+ButtonNovaParityTest[jvm] > lightMatrix[jvm] PASSED
+
+ButtonScreenshotTest[jvm] > focused_light[jvm] PASSED
+
+ButtonScreenshotTest[jvm] > icon_sizes_light[jvm] PASSED
+
+ButtonScreenshotTest[jvm] > variants_disabled_light[jvm] PASSED
+
+ButtonScreenshotTest[jvm] > variants_disabled_dark[jvm] PASSED
+
+ButtonScreenshotTest[jvm] > variants_light[jvm] PASSED
+
+ButtonScreenshotTest[jvm] > icon_sizes_dark[jvm] PASSED
+
+ButtonScreenshotTest[jvm] > variants_dark[jvm] PASSED
+
+ButtonScreenshotTest[jvm] > unpressed_baseline_light[jvm] PASSED
+
+ButtonScreenshotTest[jvm] > icon_variants_dark[jvm] PASSED
+
+ButtonScreenshotTest[jvm] > focused_dark[jvm] PASSED
+
+ButtonScreenshotTest[jvm] > pressed_light[jvm] PASSED
+
+ButtonScreenshotTest[jvm] > icon_variants_light[jvm] PASSED
+
+ButtonGroupScreenshotTest[jvm] > with_label_light[jvm] PASSED
+
+ButtonGroupScreenshotTest[jvm] > with_label_focused_light[jvm] PASSED
+
+ButtonGroupScreenshotTest[jvm] > with_label_focused_dark[jvm] PASSED
+
+ButtonGroupScreenshotTest[jvm] > states_light[jvm] PASSED
+
+ButtonGroupScreenshotTest[jvm] > with_label_dark[jvm] PASSED
+
+ButtonGroupScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+CalendarParityTest[jvm] > navigationButtonsKeepEnterInsteadOfSelectingTheOldDay[jvm] PASSED
+
+CalendarParityTest[jvm] > customDayContentRetainsTheNativeDisabledActionAndSelection[jvm] PASSED
+
+CalendarParityTest[jvm] > dropdownBoundsStayAnchoredWhenTodayIsNotProvided[jvm] PASSED
+
+CalendarParityTest[jvm] > weekNumbersFollowTheLocaleYearBoundary[jvm] PASSED
+
+CalendarParityTest[jvm] > cursorSkipsDisabledDatesAndMaintainsRealFocusAcrossMonths[jvm] PASSED
+
+CalendarParityTest[jvm] > narrowContainersDoNotWrapDayNumbersOntoTwoLines[jvm] PASSED
+
+CalendarParityTest[jvm] > novaHasVariableWeeksAndCorrectHeaderTableGeometry[jvm] PASSED
+
+CalendarParityTest[jvm] > dropdownUsesTheOfficialHundredYearWindowAndDoesNotNavigateBeyondIt[jvm] PASSED
+
+CalendarParityTest[jvm] > configuredCellSizeAppliesToHeaderDaysAndWeekGutter[jvm] PASSED
+
+CalendarScreenshotTest[jvm] > caption_dropdown_light[jvm] PASSED
+
+CalendarScreenshotTest[jvm] > nova_week_numbers_light[jvm] PASSED
+
+CalendarScreenshotTest[jvm] > nova_dark[jvm] PASSED
+
+CalendarScreenshotTest[jvm] > nova_light[jvm] PASSED
+
+CalendarScreenshotTest[jvm] > states_light[jvm] PASSED
+
+CalendarScreenshotTest[jvm] > nova_range_light[jvm] PASSED
+
+CalendarScreenshotTest[jvm] > nova_week_numbers_dark[jvm] PASSED
+
+CalendarScreenshotTest[jvm] > nova_range_dark[jvm] PASSED
+
+CalendarScreenshotTest[jvm] > caption_dropdown_dark[jvm] PASSED
+
+CalendarScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+DatePickerScreenshotTest[jvm] > states_light[jvm] PASSED
+
+DatePickerScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+CardNovaParityTest[jvm] > darkMatrix[jvm] PASSED
+
+CardNovaParityTest[jvm] > nestedSmallCardDoesNotChangeOuterTypography[jvm] PASSED
+
+CardNovaParityTest[jvm] > footerBleedsToRootEdgesAndActionSharesTheTitleRow[jvm] PASSED
+
+CardNovaParityTest[jvm] > headerCanMeasureInAnUnboundedHorizontalContainer[jvm] PASSED
+
+CardNovaParityTest[jvm] > lightMatrix[jvm] PASSED
+
+CardScreenshotTest[jvm] > spacing_dark[jvm] PASSED
+
+CardScreenshotTest[jvm] > create_account_light[jvm] PASSED
+
+CardScreenshotTest[jvm] > variants_light[jvm] PASSED
+
+CardScreenshotTest[jvm] > spacing_light[jvm] PASSED
+
+CardScreenshotTest[jvm] > variants_dark[jvm] PASSED
+
+CardScreenshotTest[jvm] > create_account_dark[jvm] PASSED
+
+CardScreenshotTest[jvm] > mutedTextSurvivesCardNesting[jvm] PASSED
+
+CardSpacingContractTest[jvm] > firstImageAndFooterKeepFullBoundsAndExplicitPaddingWinsEvenAtTheDefaultValue[jvm] PASSED
+
+CardSpacingContractTest[jvm] > nestedPartsDoNotRemoveOuterInsetAndCallerHeightIsRespected[jvm] PASSED
+
+CardSpacingContractTest[jvm] > rootHasOnlyVerticalInsetWhilePartsFollowDynamicSpacingInBothDirections[jvm] PASSED
+
+CardSpacingContractTest[jvm] > footerHasNoImplicitGapAndCallersCanComposeTheirOwnSpacing[jvm] PASSED
+
+CardSpacingContractTest[jvm] > sectionStyleOverridesInsetAndRootClipsOverflowAtItsRoundedCorners[jvm] PASSED
+
+CarouselParityTest[jvm] > shrinkingDataClampsThePageAndUpdatesBothControls[jvm] PASSED
+
+CarouselParityTest[jvm] > rtlRetainsLogicalNextAndPrevious[jvm] PASSED
+
+CarouselParityTest[jvm] > partialSlidesDisableNextAtTheActualEndAndCanReturn[jvm] PASSED
+
+CarouselParityTest[jvm] > emptyCarouselDisablesBothNavigationButtons[jvm] PASSED
+
+CarouselParityTest[jvm] > rootKeysWorkWhenANavigationControlHasFocus[jvm] PASSED
+
+CarouselScreenshotTest[jvm] > nova_vertical_light[jvm] PASSED
+
+CarouselScreenshotTest[jvm] > nova_default_light[jvm] PASSED
+
+CarouselScreenshotTest[jvm] > overlap_regression_light[jvm] PASSED
+
+CarouselScreenshotTest[jvm] > nova_default_dark[jvm] PASSED
+
+CarouselScreenshotTest[jvm] > nova_rtl_dark[jvm] PASSED
+
+CarouselScreenshotTest[jvm] > nova_vertical_dark[jvm] PASSED
+
+CarouselScreenshotTest[jvm] > states_light[jvm] PASSED
+
+CarouselScreenshotTest[jvm] > nova_rtl_light[jvm] PASSED
+
+CarouselScreenshotTest[jvm] > previous_isolated_size_light[jvm] PASSED
+
+CarouselScreenshotTest[jvm] > nova_sizes_dark[jvm] PASSED
+
+CarouselScreenshotTest[jvm] > nova_sizes_light[jvm] PASSED
+
+CarouselScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+ChartAxisParityTest[jvm] > explicitMaximumCapsLabelsWithoutDroppingTheEndTick[jvm] PASSED
+
+ChartAxisParityTest[jvm] > narrowAndEmptyAxesNeverPlaceAnOversizedLabel[jvm] PASSED
+
+ChartAxisParityTest[jvm] > arabicAxisResizeMatchesAFreshNarrowLayout[jvm] PASSED
+
+ChartAxisParityTest[jvm] > dateLabelsUseTheirFullWidthAndPreserveTheLastDay[jvm] PASSED
+
+ChartAxisParityTest[jvm] > hebrewAxisResizeMatchesAFreshNarrowLayout[jvm] PASSED
+
+ChartAxisParityTest[jvm] > selectedLabelsKeepTheRequiredGap[jvm] PASSED
+
+ChartAxisParityTest[jvm] > arabicTicksReserveTheirActualShapedWidth[jvm] PASSED
+
+ChartAxisParityTest[jvm] > hebrewTicksReserveTheirActualShapedWidth[jvm] PASSED
+
+ChartInteractionParityTest[jvm] > shrinkingDataHidesAnOutOfRangeInitialTooltip[jvm] PASSED
+
+ChartInteractionParityTest[jvm] > initialDimensionDoesNotFreezeMeasuredWidthAndAspect[jvm] PASSED
+
+ChartInteractionParityTest[jvm] > explicitMeasuredHeightWinsOverInitialDimension[jvm] PASSED
+
+ChartInteractionParityTest[jvm] > hitTestingHandlesBoundariesAndReversedDataOrder[jvm] PASSED
+
+ChartInteractionParityTest[jvm] > defaultIndexIsInitialStateAndDoesNotResetUserSelection[jvm] PASSED
+
+ChartInteractionParityTest[jvm] > reversedAxisMakesLeftMoveToTheNextDatum[jvm] PASSED
+
+ChartInteractionParityTest[jvm] > barKeyboardNavigationUpdatesTheRealTooltipAndEscapePreservesFocus[jvm] PASSED
+
+ChartInteractionParityTest[jvm] > lineUsesTheSameKeyboardAndTooltipContract[jvm] PASSED
+
+ChartNumericLayoutParityTest[jvm] > fixedWidthBrowserValueKeepsItsLastDigit[jvm] PASSED
+
+ChartNumericLayoutParityTest[jvm] > nestedLineLabelDoesNotWrapTheSixDigitValue[jvm] PASSED
+
+ChartNumericLayoutParityTest[jvm] > arabicNameDoesNotTruncateTheNumericPayload[jvm] PASSED
+
+ChartPresentationParityTest[jvm] > tooltipSeparatesNameFromFormattedNumber[jvm] PASSED
+
+ChartPresentationParityTest[jvm] > emptyTooltipPayloadRendersNothing[jvm] PASSED
+
+ChartPresentationParityTest[jvm] > legendUsesTwelvePixelTopGapAndNormalTwelveSixteenType[jvm] PASSED
+
+ChartPresentationParityTest[jvm] > tooltipSupportsLabelValueAndWholeRowFormatters[jvm] PASSED
+
+ChartPresentationParityTest[jvm] > inactiveTooltipDoesNotRenderItsPayload[jvm] PASSED
+
+ChartPresentationParityTest[jvm] > hideIconKeepsTheFallbackColorSwatch[jvm] PASSED
+
+ChartPresentationParityTest[jvm] > themeColorsFollowLiveThemeChanges[jvm] PASSED
+
+ChartPresentationParityTest[jvm] > valueFormatterCanOverrideNumericPresentation[jvm] PASSED
+
+ChartPresentationParityTest[jvm] > hideIconReplacesTheCustomIconWithTheSeriesSwatch[jvm] PASSED
+
+ChartScaleParityTest[jvm] > signedAndZeroDomainsKeepFiveTicksAndACrossingBaseline[jvm] PASSED
+
+ChartScaleParityTest[jvm] > smallAndLargeFiniteValuesProduceFinitePositiveSpans[jvm] PASSED
+
+ChartScaleParityTest[jvm] > interactiveSourceDataUsesTheObservedSixHundredMaximum[jvm] PASSED
+
+ChartScaleParityTest[jvm] > firstChartRoundsToThreeHundredTwenty[jvm] PASSED
+
+ChartScreenshotTest[jvm] > line_dark[jvm] PASSED
+
+ChartScreenshotTest[jvm] > bar_dark[jvm] PASSED
+
+ChartScreenshotTest[jvm] > legend_bottom_light[jvm] PASSED
+
+ChartScreenshotTest[jvm] > legend_bottom_dark[jvm] PASSED
+
+ChartScreenshotTest[jvm] > line_light[jvm] PASSED
+
+ChartScreenshotTest[jvm] > initial_dimension_light[jvm] PASSED
+
+ChartScreenshotTest[jvm] > bar_light[jvm] PASSED
+
+ChartScreenshotTest[jvm] > initial_dimension_dark[jvm] PASSED
+
+CheckboxParityTest[jvm] > descriptionAlignsTheControlWithTheFirstLine[jvm] PASSED
+
+CheckboxParityTest[jvm] > disabledFieldPreventsControlAndLabelActivation[jvm] PASSED
+
+CheckboxParityTest[jvm] > plainHorizontalFieldStaysCenteredAndRtlMovesControlToInlineStart[jvm] PASSED
+
+CheckboxParityTest[jvm] > choiceCardPaddingAndControlEachToggleOnceAndKeepTheControlFocus[jvm] PASSED
+
+CheckboxParityTest[jvm] > defaultInteractionUsesOfficialColorMotionWithoutAScaleTransform[jvm] PASSED
+
+CheckboxParityTest[jvm] > indeterminateSpaceSelectsOnceAndControlledRejectionIsRespected[jvm] PASSED
+
+CheckboxScreenshotTest[jvm] > focused_light[jvm] PASSED
+
+CheckboxScreenshotTest[jvm] > states_light[jvm] PASSED
+
+CheckboxScreenshotTest[jvm] > focused_dark[jvm] PASSED
+
+CheckboxScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+ChipScreenshotTest[jvm] > focused_light[jvm] PASSED
+
+ChipScreenshotTest[jvm] > states_light[jvm] PASSED
+
+ChipScreenshotTest[jvm] > focused_dark[jvm] PASSED
+
+ChipScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > otpFocusDark[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > selectArrowNavigationSkipsDisabledAndCommitRestoresTrigger[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > selectEscapeAndUncontrolledOpenNotification[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > matrixDark[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > comboOpenDark[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > comboOpenLight[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > maskedOtpExposesPasswordSemantics[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > comboFocusDark[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > editableComboFiltersKeepsFocusAndSelectsByKeyboard[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > selectKeyboardHonorsPreventSelection[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > selectFocusLight[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > matrixLight[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > comboboxAndSelectInheritFieldSetDisabled[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > comboFocusLight[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > enterReleaseAfterCommitDoesNotReopenSelect[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > otpDisabledInheritsFieldSet[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > autoHighlightedComboboxCommitsWithEnter[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > openSelectItemsHave28DpRowsAnd24DpLabel[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > openComboboxItemsHave28DpRows[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > selectOpenDark[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > selectOpenLight[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > selectFocusDark[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > otpFocusLight[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > otpSixSlotsAre192By32AndTwoGroupsDoNotOverlap[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > editableComboEmptyEscapeAndClear[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > editableComboAndInlineButtonGroupStay32High[jvm] PASSED
+
+ChoiceNovaParityTest[jvm] > otpPasteFiltersAndClipsThenBackspaceEdits[jvm] PASSED
+
+CodeBlockParityTest[jvm] > darkMatrix[jvm] PASSED
+
+CodeBlockParityTest[jvm] > rejectedClipboardWriteDoesNotShowSuccess[jvm] PASSED
+
+CodeBlockParityTest[jvm] > rtlPageKeepsCodeContentLeftToRight[jvm] PASSED
+
+CodeBlockParityTest[jvm] > numberingStartsAtRequestedLineAndPreservesBlankLines[jvm] PASSED
+
+CodeBlockParityTest[jvm] > copyWritesOriginalWhitespaceAndConfirmsForTwoSeconds[jvm] PASSED
+
+CodeBlockParityTest[jvm] > nonScrollableCapClipsInsteadOfScrolling[jvm] PASSED
+
+CodeBlockParityTest[jvm] > contentFocusRingDark[jvm] PASSED
+
+CodeBlockParityTest[jvm] > contentFocusRing[jvm] PASSED
+
+CodeBlockParityTest[jvm] > cappedOutputScrollsVerticallyWithKeyboard[jvm] PASSED
+
+CodeBlockParityTest[jvm] > wrappedCodeStaysWithinNarrowViewport[jvm] PASSED
+
+CodeBlockParityTest[jvm] > lightMatrix[jvm] PASSED
+
+CollapsibleScreenshotTest[jvm] > collapsed_light[jvm] PASSED
+
+CollapsibleScreenshotTest[jvm] > expanded_light[jvm] PASSED
+
+CollapsibleScreenshotTest[jvm] > expanded_dark[jvm] PASSED
+
+CollapsibleScreenshotTest[jvm] > collapsed_dark[jvm] PASSED
+
+ComboboxScreenshotTest[jvm] > chips_light[jvm] PASSED
+
+ComboboxScreenshotTest[jvm] > auto_highlight_dark[jvm] PASSED
+
+ComboboxScreenshotTest[jvm] > clear_light[jvm] PASSED
+
+ComboboxScreenshotTest[jvm] > clear_dark[jvm] PASSED
+
+ComboboxScreenshotTest[jvm] > no_trigger_dark[jvm] PASSED
+
+ComboboxScreenshotTest[jvm] > chips_dark[jvm] PASSED
+
+ComboboxScreenshotTest[jvm] > auto_highlight_light[jvm] PASSED
+
+ComboboxScreenshotTest[jvm] > idle_dark[jvm] PASSED
+
+ComboboxScreenshotTest[jvm] > no_trigger_light[jvm] PASSED
+
+ComboboxScreenshotTest[jvm] > idle_light[jvm] PASSED
+
+CommandScreenshotTest[jvm] > dialog_close_button_dark[jvm] PASSED
+
+CommandScreenshotTest[jvm] > dialog_close_button_light[jvm] PASSED
+
+CommandScreenshotTest[jvm] > states_light[jvm] PASSED
+
+CommandScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+ContextMenuPanelTest[jvm] > openPanelUsesTheOfficialMinWidthAndOneDpInset[jvm] PASSED
+
+ContextMenuPanelTest[jvm] > wideRecipePanelKeepsTheSameFourDpInset[jvm] PASSED
+
+ContextMenuPositionTest[jvm] > alignEndPinsThePanelEndToTheAnchor[jvm] PASSED
+
+ContextMenuPositionTest[jvm] > bottomSideFlipsToTopWhenItWouldOverflowTheWindow[jvm] PASSED
+
+ContextMenuPositionTest[jvm] > inlineSidesFollowLayoutDirection[jvm] PASSED
+
+ContextMenuPositionTest[jvm] > sideOffsetMovesThePanelAwayFromTheCursor[jvm] PASSED
+
+ContextMenuPositionTest[jvm] > nonAbsolutePointsAreRelativeToTheAnchorBounds[jvm] PASSED
+
+ContextMenuPositionTest[jvm] > leftAndTopSidesPlaceThePanelBeforeTheCursorAndFlipAtTheEdge[jvm] PASSED
+
+ContextMenuPositionTest[jvm] > rightSideFlipsToLeftWhenItWouldOverflowTheWindow[jvm] PASSED
+
+ContextMenuPositionTest[jvm] > defaultRightSidePlacesPanelBelowTheCursorAndKeepsAlignOffset[jvm] PASSED
+
+ContextMenuScreenshotTest[jvm] > idle_dark[jvm] PASSED
+
+ContextMenuScreenshotTest[jvm] > idle_light[jvm] PASSED
+
+DialogScreenshotTest[jvm] > close_button_focused_light[jvm] PASSED
+
+DialogScreenshotTest[jvm] > states_light[jvm] PASSED
+
+DialogScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+DrawerScreenshotTest[jvm] > bottom_light[jvm] PASSED
+
+DrawerScreenshotTest[jvm] > bottom_dark[jvm] PASSED
+
+DrawerScreenshotTest[jvm] > edit_profile_dark[jvm] PASSED
+
+DrawerScreenshotTest[jvm] > edit_profile_light[jvm] PASSED
+
+DrawerScreenshotTest[jvm] > top_light[jvm] PASSED
+
+DrawerScreenshotTest[jvm] > end_light[jvm] PASSED
+
+DrawerTest[jvm] > sequential_zero_velocity_keeps_a_short_cancelled_drag_at_its_snap[jvm] PASSED
+
+DrawerTest[jvm] > a_lower_threshold_dismisses_with_a_shorter_drag[jvm] PASSED
+
+DrawerTest[jvm] > fromNumber_maps_fraction_and_absolute_like_base_ui[jvm] PASSED
+
+DrawerTest[jvm] > zero_drag_never_dismisses[jvm] PASSED
+
+DrawerTest[jvm] > a_small_drag_below_the_threshold_springs_back_open[jvm] PASSED
+
+DrawerTest[jvm] > nearest_snap_without_sequential_picks_closest_offset[jvm] PASSED
+
+DrawerTest[jvm] > deeperDrawersContributeToEveryAncestorStack[jvm] PASSED
+
+DrawerTest[jvm] > snap_closing_offsets_put_taller_snaps_nearer_zero[jvm] PASSED
+
+DrawerTest[jvm] > a_drag_past_the_threshold_dismisses[jvm] PASSED
+
+DrawerTest[jvm] > resolvePx_uses_viewport_fraction_or_density[jvm] PASSED
+
+DrawerTest[jvm] > an_unmeasured_drawer_never_dismisses_rather_than_dividing_by_zero[jvm] PASSED
+
+DrawerTest[jvm] > a_drag_exactly_at_the_threshold_dismisses[jvm] PASSED
+
+DrawerTest[jvm] > sequential_snap_uses_physical_offsets_instead_of_list_order[jvm] PASSED
+
+DropdownMenuScreenshotTest[jvm] > nova_dark[jvm] PASSED
+
+DropdownMenuScreenshotTest[jvm] > nova_light[jvm] PASSED
+
+DropdownMenuScreenshotTest[jvm] > states_light[jvm] PASSED
+
+DropdownMenuScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+EmptyParityTest[jvm] > callerStyleCanOverrideTheDefaultContentWidth[jvm] PASSED
+
+EmptyParityTest[jvm] > novaHeaderAndContentHaveTheOfficialMaximumWidth[jvm] PASSED
+
+EmptyParityTest[jvm] > nova_dark[jvm] PASSED
+
+EmptyParityTest[jvm] > nova_light[jvm] PASSED
+
+EmptyParityTest[jvm] > novaTitleDoesNotIntroduceAnUnrequestedHeading[jvm] PASSED
+
+EmptyParityTest[jvm] > novaKeepsItsFullLineBoxesAndUsesEmBasedTracking[jvm] PASSED
+
+EmptyParityTest[jvm] > novaCentersContentInsideAnExplicitHeight[jvm] PASSED
+
+EmptyScreenshotTest[jvm] > spacing_dark[jvm] PASSED
+
+EmptyScreenshotTest[jvm] > outline_dark[jvm] PASSED
+
+EmptyScreenshotTest[jvm] > title_sm_light[jvm] PASSED
+
+EmptyScreenshotTest[jvm] > content_spacing_dark[jvm] PASSED
+
+EmptyScreenshotTest[jvm] > spacing_light[jvm] PASSED
+
+EmptyScreenshotTest[jvm] > rounded_xl_dark[jvm] PASSED
+
+EmptyScreenshotTest[jvm] > content_spacing_light[jvm] PASSED
+
+EmptyScreenshotTest[jvm] > rounded_xl_light[jvm] PASSED
+
+EmptyScreenshotTest[jvm] > states_light[jvm] PASSED
+
+EmptyScreenshotTest[jvm] > md_padding_dark[jvm] PASSED
+
+EmptyScreenshotTest[jvm] > md_padding_light[jvm] PASSED
+
+EmptyScreenshotTest[jvm] > title_sm_dark[jvm] PASSED
+
+EmptyScreenshotTest[jvm] > media_default_light[jvm] PASSED
+
+EmptyScreenshotTest[jvm] > media_default_dark[jvm] PASSED
+
+EmptyScreenshotTest[jvm] > outline_light[jvm] PASSED
+
+EmptyScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+FieldScreenshotTest[jvm] > profile_form_dark[jvm] PASSED
+
+FieldScreenshotTest[jvm] > states_light[jvm] PASSED
+
+FieldScreenshotTest[jvm] > profile_form_light[jvm] PASSED
+
+FieldScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > matrixDark[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > nestedIconGroupKeepsButtonHeight[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > buttonFocusDark[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > toggleVerticalHomeEndAndRtlNavigation[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > sliderFocusLight[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > sliderKeyboardStepsAndCommitsRequestedValue[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > toggleFocusDark[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > novaSliderRemainsVisibleWithoutTouchTargetMinimum[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > groupDisabledInheritsFieldSet[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > sliderFocusDark[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > matrixLight[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > sliderRangeKeyboardCannotCrossNeighborOrMinGap[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > controlledToggleReportsMembershipWithoutChangingCallerState[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > inputGroupHas32DpInlineHeight[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > inputFocusDark[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > singleToggleCanClearAndArrowsOnlyMoveFocus[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > toggleFocusLight[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > buttonFocusLight[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > sliderAccessibleProgressSnaps[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > sliderRtlRightDecrementsAndInvertedRightIncrements[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > clickingAddonFocusesInputAndButtonRetainsOwnAction[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > inputFocusLight[jvm] PASSED
+
+GroupsNovaParityTest[jvm] > removingInvalidControlClearsGroupError[jvm] PASSED
+
+HoverCardFollowupTest[jvm] > movingTriggerInsideFixedRootRepositionsOpenPopup[jvm] PASSED
+
+HoverCardFollowupTest[jvm] > additionalRootContentDoesNotMoveThePopupAnchor[jvm] PASSED
+
+HoverCardFollowupTest[jvm] > focusingContentDoesNotDismissItAndLeavingContentClosesImmediately[jvm] PASSED
+
+HoverCardFollowupTest[jvm] > keyboardBlurClosesWithoutWaitingForHoverCloseDelay[jvm] PASSED
+
+HoverCardParityTest[jvm] > triggerTimingOverridesTheRootAndProvider[jvm] PASSED
+
+HoverCardParityTest[jvm] > physicalAndLogicalSidesResolveSeparatelyInRtl[jvm] PASSED
+
+HoverCardParityTest[jvm] > novaPanelHasNoLayoutBorderAndUsesTheOfficialTextLineBox[jvm] PASSED
+
+HoverCardParityTest[jvm] > defaultOpenAndExternalOpenDoNotCloseOnIdleComposition[jvm] PASSED
+
+HoverCardParityTest[jvm] > hoveringASeparateRootChildDoesNotActivateTheTrigger[jvm] PASSED
+
+HoverCardParityTest[jvm] > nova_dark[jvm] PASSED
+
+HoverCardParityTest[jvm] > nova_light[jvm] PASSED
+
+HoverCardParityTest[jvm] > keyboardFocusOpensAndEscapeClosesWithoutStealingFocus[jvm] PASSED
+
+HoverCardParityTest[jvm] > disabledRootIgnoresThePointer[jvm] PASSED
+
+HoverCardParityTest[jvm] > controlledRejectionDoesNotOpenOrRetryContinuously[jvm] PASSED
+
+HoverCardParityTest[jvm] > aPendingOpenUsesTheLatestCallback[jvm] PASSED
+
+HoverCardParityTest[jvm] > aTouchPressDoesNotOpenAPreview[jvm] PASSED
+
+HoverCardParityTest[jvm] > enteringTheCardCancelsTheCloseTimer[jvm] PASSED
+
+HoverCardParityTest[jvm] > baseDefaultsWaitSixHundredToOpenAndThreeHundredToClose[jvm] PASSED
+
+HoverCardPositioningTest[jvm] > horizontalPlacementIsRetainedWhenThereIsRoom[jvm] PASSED
+
+HoverCardPositioningTest[jvm] > crossAxisRespectsFivePixelViewportInset[jvm] PASSED
+
+HoverCardPositioningTest[jvm] > horizontalBothSidesUnavailableFallsBackBelow[jvm] PASSED
+
+HoverCardPositioningTest[jvm] > bottomCollisionFlipsAbove[jvm] PASSED
+
+HoverCardPositioningTest[jvm] > rtlStartEndAndCenterOffsetsFollowTheLogicalCrossAxis[jvm] PASSED
+
+HoverCardPositioningTest[jvm] > topCollisionFlipsBelow[jvm] PASSED
+
+HoverCardPositioningTest[jvm] > explicitTriggerAnchorRetainsPlatformInsetNormalization[jvm] PASSED
+
+HoverCardScreenshotTest[jvm] > trigger_light[jvm] PASSED
+
+HoverCardScreenshotTest[jvm] > trigger_dark[jvm] PASSED
+
+FormNovaParityTest[jvm] > darkMatrix[jvm] PASSED
+
+FormNovaParityTest[jvm] > novaFieldSpacingUsesTwentyEightAndTwo[jvm] PASSED
+
+FormNovaParityTest[jvm] > inputBackgroundFollowsLiveThemeChanges[jvm] PASSED
+
+FormNovaParityTest[jvm] > controlsKeepTheirDimensionsAndTextareaPlaceholderStartsAtTheTop[jvm] PASSED
+
+FormNovaParityTest[jvm] > focusLight[jvm] PASSED
+
+FormNovaParityTest[jvm] > textareaFocusLight[jvm] PASSED
+
+FormNovaParityTest[jvm] > responsiveFieldsSwitchAtTheContainerMdBreakpoint[jvm] PASSED
+
+FormNovaParityTest[jvm] > textEditingHonorsMaxLengthAndInvalidSemantics[jvm] PASSED
+
+FormNovaParityTest[jvm] > textareaFocusDark[jvm] PASSED
+
+FormNovaParityTest[jvm] > textareaGrowsWithMultilineContent[jvm] PASSED
+
+FormNovaParityTest[jvm] > nestedFieldSetCannotReenableItsDisabledParent[jvm] PASSED
+
+FormNovaParityTest[jvm] > labelsAndSupportingCopyUseNovaTypography[jvm] PASSED
+
+FormNovaParityTest[jvm] > lightMatrix[jvm] PASSED
+
+FormNovaParityTest[jvm] > focusDark[jvm] PASSED
+
+InputScreenshotTest[jvm] > focused_light[jvm] PASSED
+
+InputScreenshotTest[jvm] > focused_with_ring_disabled_light[jvm] PASSED
+
+InputScreenshotTest[jvm] > states_light[jvm] PASSED
+
+InputScreenshotTest[jvm] > focused_dark[jvm] PASSED
+
+InputScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+InputGroupAddonStyleTest[jvm] > topStyleOverridesInsteadOfAddingToDefaultAndPreservesOtherInsets[jvm] PASSED
+
+InputGroupAddonStyleTest[jvm] > defaultStartPaddingRemainsLogicalInRtl[jvm] PASSED
+
+InputGroupAddonStyleTest[jvm] > defaultBlockEndInsetsStaySixAndEight[jvm] PASSED
+
+InputGroupAddonStyleTest[jvm] > clickingAddonPaddingFocusesTheRealEditableControl[jvm] PASSED
+
+InputGroupAddonStyleTest[jvm] > textOverloadForwardsCallerStyle[jvm] PASSED
+
+InputGroupScreenshotTest[jvm] > focused_light[jvm] PASSED
+
+InputGroupScreenshotTest[jvm] > preview_composer_single_line_focused_light[jvm] PASSED
+
+InputGroupScreenshotTest[jvm] > chat_panel_layout_light[jvm] PASSED
+
+InputGroupScreenshotTest[jvm] > long_value_light[jvm] PASSED
+
+InputGroupScreenshotTest[jvm] > states_light[jvm] PASSED
+
+InputGroupScreenshotTest[jvm] > bottom_bar_dark[jvm] PASSED
+
+InputGroupScreenshotTest[jvm] > focused_dark[jvm] PASSED
+
+InputGroupScreenshotTest[jvm] > preview_composer_two_line_focused_light[jvm] PASSED
+
+InputGroupScreenshotTest[jvm] > long_value_dark[jvm] PASSED
+
+InputGroupScreenshotTest[jvm] > bottom_bar_light[jvm] PASSED
+
+InputGroupScreenshotTest[jvm] > chat_panel_layout_dark[jvm] PASSED
+
+InputGroupScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+InputOTPScreenshotTest[jvm] > focused_light[jvm] PASSED
+
+InputOTPScreenshotTest[jvm] > verify_email_light[jvm] PASSED
+
+InputOTPScreenshotTest[jvm] > focused_with_ring_disabled_light[jvm] PASSED
+
+InputOTPScreenshotTest[jvm] > verify_email_dark[jvm] PASSED
+
+InputOTPScreenshotTest[jvm] > states_light[jvm] PASSED
+
+InputOTPScreenshotTest[jvm] > focused_dark[jvm] PASSED
+
+InputOTPScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+ItemParityTest[jvm] > hrefNavigationAndDisabledAreReal[jvm] PASSED
+
+ItemParityTest[jvm] > explicitSingleLineTitleKeepsTheImageRecipeClamp[jvm] PASSED
+
+ItemParityTest[jvm] > addingAndRemovingDescriptionUpdatesMediaAlignment[jvm] PASSED
+
+ItemParityTest[jvm] > extraSmallContentHasZeroGapAndTwelvePixelDescription[jvm] PASSED
+
+ItemParityTest[jvm] > imageMediaFollowsTheItemSizeAndIconHasNoForcedBadge[jvm] PASSED
+
+ItemParityTest[jvm] > nova_dark[jvm] PASSED
+
+ItemParityTest[jvm] > nova_light[jvm] PASSED
+
+ItemParityTest[jvm] > aNonGrowingSecondContentKeepsItsIntrinsicWidth[jvm] PASSED
+
+ItemParityTest[jvm] > novaVariantsReserveTheSameTransparentBorder[jvm] PASSED
+
+ItemParityTest[jvm] > headerAndFooterOccupySeparateFullWidthLines[jvm] PASSED
+
+ItemParityTest[jvm] > groupGapTracksTheSmallestSizeAndExposesListSemantics[jvm] PASSED
+
+ItemParityTest[jvm] > titleWrapsAndDescriptionKeepsTwoLines[jvm] PASSED
+
+ItemScreenshotTest[jvm] > xs_dark[jvm] PASSED
+
+ItemScreenshotTest[jvm] > states_light[jvm] PASSED
+
+ItemScreenshotTest[jvm] > xs_light[jvm] PASSED
+
+ItemScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+KbdParityTest[jvm] > callerStyleOverridesTheKeycapShellAndRenderedForeground[jvm] PASSED
+
+KbdParityTest[jvm] > tooltip_light[jvm] PASSED
+
+KbdParityTest[jvm] > existingStringLambdaKeepsReturningItsUpdatedLabel[jvm] PASSED
+
+KbdParityTest[jvm] > groupTextIsMonospaceButIndividualKeysUseTheThemeSansFamily[jvm] PASSED
+
+KbdParityTest[jvm] > nova_dark[jvm] PASSED
+
+KbdParityTest[jvm] > nova_light[jvm] PASSED
+
+KbdParityTest[jvm] > actualTooltipScopeSwitchesItsKeycapColorsLiveWithTheTheme[jvm] PASSED
+
+KbdParityTest[jvm] > tooltip_dark[jvm] PASSED
+
+KbdParityTest[jvm] > keyInsideAButtonDoesNotConsumeTheButtonsPointerAction[jvm] PASSED
+
+KbdParityTest[jvm] > novaUsesTwentyPixelCapsFourPixelGapAndTwelvePixelText[jvm] PASSED
+
+KbdParityTest[jvm] > contentSlotProvidesTwelvePixelIconsAndFourPixelInnerSpacing[jvm] PASSED
+
+KbdScreenshotTest[jvm] > states_light[jvm] PASSED
+
+KbdScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+LabelScreenshotTest[jvm] > states_light[jvm] PASSED
+
+LabelScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+MarkerParityTest[jvm] > nova_dark[jvm] PASSED
+
+MarkerParityTest[jvm] > nova_light[jvm] PASSED
+
+MarkerParityTest[jvm] > novaUsesFullWidthFourteenTwentyTextAndEightPixelGap[jvm] PASSED
+
+MarkerParityTest[jvm] > separatorCentersItsLabelWithTwelvePixelClearanceBeforeTheLine[jvm] PASSED
+
+MarkerParityTest[jvm] > bottomBorderIsFullyInsideTheLastPixelAndPaddingIsEight[jvm] PASSED
+
+MarkerParityTest[jvm] > emptyMarkerHasSixteenPixelMinimumAndCallerStyleOverridesWidth[jvm] PASSED
+
+MarkerParityTest[jvm] > decorativeIconDoesNotExposeItsChildDescription[jvm] PASSED
+
+MarkerParityTest[jvm] > liveThemeSwitchUpdatesMutedTextColor[jvm] PASSED
+
+MarkerScreenshotTest[jvm] > default_dark[jvm] PASSED
+
+MarkerScreenshotTest[jvm] > separator_light[jvm] PASSED
+
+MarkerScreenshotTest[jvm] > separator_dark[jvm] PASSED
+
+MarkerScreenshotTest[jvm] > default_light[jvm] PASSED
+
+MarkerScreenshotTest[jvm] > border_light[jvm] PASSED
+
+MenubarScreenshotTest[jvm] > idle_dark[jvm] PASSED
+
+MenubarScreenshotTest[jvm] > idle_light[jvm] PASSED
+
+MessageParityTest[jvm] > standaloneContentAndRootAcceptCallerModifierAndStyle[jvm] PASSED
+
+MessageParityTest[jvm] > endAvatarAndContentMirrorWhenLayoutDirectionChanges[jvm] PASSED
+
+MessageParityTest[jvm] > ghost_nova_dark[jvm] PASSED
+
+MessageParityTest[jvm] > avatarClipsOverflowUsingItsFinalCallerOverriddenShape[jvm] PASSED
+
+MessageParityTest[jvm] > avatarHasIntrinsicHeightAndEmptyAvatarOnlyReservesWidth[jvm] PASSED
+
+MessageParityTest[jvm] > nova_dark[jvm] PASSED
+
+MessageParityTest[jvm] > nova_light[jvm] PASSED
+
+MessageParityTest[jvm] > ghost_nova_light[jvm] PASSED
+
+MessageParityTest[jvm] > metadataUsesTwelveSixteenMediumAndUpdatesMutedColorWithTheme[jvm] PASSED
+
+MessageParityTest[jvm] > ghostBubbleRemovesMetadataPaddingAndDisposalRestoresItWithoutLeakingToSibling[jvm] PASSED
+
+MessageParityTest[jvm] > footerPresenceTranslatesAvatarExactlyThirtyTwoAndRemovalRestoresIt[jvm] PASSED
+
+MessageParityTest[jvm] > endMessageKeepsHeaderAtStartAndFooterAtEndAsDocumented[jvm] PASSED
+
+MessageParityTest[jvm] > legacyRowScopeContentCallStillUsesTheWeightedBridge[jvm] PASSED
+
+MessageParityTest[jvm] > noAvatarHasNoPhantomGapAndContentGapIsTen[jvm] PASSED
+
+MessageRheaTest[jvm] > emptyAvatarAndContentSpacingMatchTheRheaConversation[jvm] PASSED
+
+MessageRheaTest[jvm] > rheaBubbleHasTenPixelVerticalPaddingAndOnePixelBorder[jvm] PASSED
+
+MessageScreenshotTest[jvm] > conversation_with_bubbles_dark[jvm] PASSED
+
+MessageScreenshotTest[jvm] > end_aligned_light[jvm] PASSED
+
+MessageScreenshotTest[jvm] > conversation_with_bubbles_light[jvm] PASSED
+
+MessageScreenshotTest[jvm] > start_aligned_dark[jvm] PASSED
+
+MessageScreenshotTest[jvm] > start_aligned_light[jvm] PASSED
+
+MessageScreenshotTest[jvm] > end_aligned_dark[jvm] PASSED
+
+MessageScreenshotTest[jvm] > group_light[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > rowPaddingBelongsToTheMeasuredMessageBoundary[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > shrinkingViewportKeepsTheExistingEndWithoutEnablingOutputFollowing[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > cancellingSmoothCommandClearsItsProgrammaticState[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > visibilityExcludesPreviousPeekBandAndTracksCurrentTurn[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > newTurnKeepsPreviousPeekAndSpacerIsConsumedByStreaming[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > commandsHonorContentPaddingMarginAndAllFourAlignments[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > commandsBeforeAViewportExistsReturnFalse[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > novaContentGapIsTwentyFour[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > nova_dark[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > nova_light[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > prependingPreservesTheSameVisibleMessagePosition[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > keyboardEndCanReachTheLiveEdgeAndFollowLaterAppends[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > providerDefaultsOpenAtEndWithoutFollowingNewContent[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > cancelledOpeningPositionDoesNotKeepTheTranscriptTransparent[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > shortLastTurnOpensAtEndWithoutAddingBlankSpace[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > pointerIntentCancelsAnActiveSmoothCommand[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > thresholdScalesWithDensityInsteadOfUsingPhysicalPixels[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > openingAtLastAnchorOnlyPinsATurnTallerThanTheViewport[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > optedInFollowingHandlesStreamGrowthAndPointerIntentReleasesIt[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > prependPreservationCanBeDisabled[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > reflowAboveTheReadingRowPreservesItsPosition[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > anonymousAnchorDoesNotEraseTheLastNamedCurrentAnchor[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > buttonStopsAcceptingInputWhileItsExitAnimationIsStillMounted[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > readerScrollReleasesAndExplicitEndResumesFollowing[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > newerCommandKeepsItsFollowingModeWhenTheOlderAnimationIsCancelled[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > pointerIntentCancelsAnAnchorWaitingForItsSpacerFrame[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > shrinkingViewportPreservesAReaderWhoIsAwayFromTheEnd[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > commandsReturnFalseAfterViewportUnmountAndVisibilityClears[jvm] PASSED
+
+MessageScrollerParityTest[jvm] > userMutationCancelsOneCorrectionWithoutDetachingTheController[jvm] PASSED
+
+MessageScrollerScreenshotTest[jvm] > icon_override_light[jvm] PASSED
+
+MessageScrollerScreenshotTest[jvm] > chat_panel_light[jvm] PASSED
+
+MessageScrollerScreenshotTest[jvm] > button_start_dark[jvm] PASSED
+
+MessageScrollerScreenshotTest[jvm] > content_items_dark[jvm] PASSED
+
+MessageScrollerScreenshotTest[jvm] > viewport_dark[jvm] PASSED
+
+MessageScrollerScreenshotTest[jvm] > jump_to_bottom_button_light[jvm] PASSED
+
+MessageScrollerScreenshotTest[jvm] > chat_panel_dark[jvm] PASSED
+
+MessageScrollerScreenshotTest[jvm] > short_content_dark[jvm] PASSED
+
+MessageScrollerScreenshotTest[jvm] > button_start_light[jvm] PASSED
+
+MessageScrollerScreenshotTest[jvm] > content_items_light[jvm] PASSED
+
+MessageScrollerScreenshotTest[jvm] > overflowing_content_settles_at_bottom_dark[jvm] PASSED
+
+MessageScrollerScreenshotTest[jvm] > short_content_light[jvm] PASSED
+
+MessageScrollerScreenshotTest[jvm] > viewport_light[jvm] PASSED
+
+MessageScrollerScreenshotTest[jvm] > overflowing_content_settles_at_bottom_light[jvm] PASSED
+
+MessageScrollerTest[jvm] > no_growth_never_auto_scrolls_even_while_following[jvm] PASSED
+
+MessageScrollerTest[jvm] > shrinking_content_never_auto_scrolls[jvm] PASSED
+
+MessageScrollerTest[jvm] > one_pixel_past_the_threshold_releases[jvm] PASSED
+
+MessageScrollerTest[jvm] > at_the_very_bottom_does_not_release_following[jvm] PASSED
+
+MessageScrollerTest[jvm] > no_scrollable_content_is_near_bottom[jvm] PASSED
+
+MessageScrollerTest[jvm] > first_content_arriving_from_empty_auto_scrolls_while_following[jvm] PASSED
+
+MessageScrollerTest[jvm] > exactly_at_threshold_is_near_bottom[jvm] PASSED
+
+MessageScrollerTest[jvm] > scrolling_away_from_the_bottom_releases_following[jvm] PASSED
+
+MessageScrollerTest[jvm] > scrolled_away_past_threshold_is_not_near_bottom[jvm] PASSED
+
+MessageScrollerTest[jvm] > near_bottom_within_threshold_is_true[jvm] PASSED
+
+MessageScrollerTest[jvm] > staying_near_the_bottom_does_not_release_following[jvm] PASSED
+
+MessageScrollerTest[jvm] > exactly_at_the_release_threshold_does_not_release[jvm] PASSED
+
+MessageScrollerTest[jvm] > content_growing_while_following_auto_scrolls[jvm] PASSED
+
+MessageScrollerTest[jvm] > at_the_very_bottom_is_near_bottom[jvm] PASSED
+
+MessageScrollerTest[jvm] > content_growing_while_released_does_not_yank_the_reader_back[jvm] PASSED
+
+NavigationMenuNovaScreenshotTest[jvm] > nova_open_light[jvm] PASSED
+
+NavigationMenuNovaScreenshotTest[jvm] > nova_idle_light[jvm] PASSED
+
+NavigationMenuNovaScreenshotTest[jvm] > nova_open_dark[jvm] PASSED
+
+NavigationMenuNovaScreenshotTest[jvm] > nova_idle_dark[jvm] PASSED
+
+NavigationMenuParityTest[jvm] > selectingAPanelLinkClosesMenuAndRunsItsActionOnce[jvm] PASSED
+
+NavigationMenuParityTest[jvm] > touchActivationTogglesAndDisabledTriggerDoesNotOpen[jvm] PASSED
+
+NavigationMenuParityTest[jvm] > disablingTriggerCancelsPendingHoverOpen[jvm] PASSED
+
+NavigationMenuParityTest[jvm] > linkCanRetainTheOpenPanelWhenCloseOnClickIsFalse[jvm] PASSED
+
+NavigationMenuParityTest[jvm] > baseDefaultsWaitFiftyMillisecondsForOpenAndCloseWithoutStealingHover[jvm] PASSED
+
+NavigationMenuParityTest[jvm] > hoveringATopLevelLinkStillClosesTheOpenPanel[jvm] PASSED
+
+NavigationMenuParityTest[jvm] > anOldLeaveTimerCannotCloseANewerControlledItem[jvm] PASSED
+
+NavigationMenuParityTest[jvm] > novaListDoesNotInsertGapsBetweenItems[jvm] PASSED
+
+NavigationMenuParityTest[jvm] > novaOpenTriggerUsesHalfMutedAndHoverUsesMuted[jvm] PASSED
+
+NavigationMenuParityTest[jvm] > novaTriggerHasSourceHeightAndDecorativeChevronSpace[jvm] PASSED
+
+NavigationMenuParityTest[jvm] > keyboardEnterOpensAndEscapeClosesTheKeyboardPopup[jvm] PASSED
+
+NavigationMenuParityTest[jvm] > pendingHoverOpenUsesLatestControlledCallback[jvm] PASSED
+
+NavigationMenuParityTest[jvm] > triggerAccessibleNameComesFromTheVisibleLabelRatherThanTheInternalId[jvm] PASSED
+
+NavigationMenuParityTest[jvm] > callerStyleOverridesTriggerDimensionsAndNovaPanelHasIntrinsicWidth[jvm] PASSED
+
+NavigationMenuParityTest[jvm] > hoveringAPanelLinkKeepsItOpenUntilSelection[jvm] PASSED
+
+NavigationMenuScreenshotTest[jvm] > item_focused_light[jvm] PASSED
+
+NavigationMenuScreenshotTest[jvm] > idle_dark[jvm] PASSED
+
+NavigationMenuScreenshotTest[jvm] > idle_light[jvm] PASSED
+
+OverlayEscapeTest[jvm] > dialogClosesFromFocusedInput[jvm] PASSED
+
+OverlayEscapeTest[jvm] > sheetClosesFromFocusedInput[jvm] PASSED
+
+PopoverFocusTest[jvm] > pointerOpenedTextTriggerRegainsFocusAfterEscape[jvm] PASSED
+
+PopoverFocusTest[jvm] > pointerOpenedButtonTriggerRegainsFocusAfterEscape[jvm] PASSED
+
+PopupPositionProviderTest[jvm] > end_placement_flips_to_start_when_no_room_on_the_right[jvm] PASSED
+
+PopupPositionProviderTest[jvm] > bottom_placement_sits_below_and_aligned_to_anchor_start[jvm] PASSED
+
+PopupPositionProviderTest[jvm] > bottom_placement_flips_to_top_when_no_room_below[jvm] PASSED
+
+PopupPositionProviderTest[jvm] > bottom_center_applies_alignOffset[jvm] PASSED
+
+PopupPositionProviderTest[jvm] > result_is_always_clamped_within_the_window[jvm] PASSED
+
+PaginationNovaScreenshotTest[jvm] > default_dark[jvm] PASSED
+
+PaginationNovaScreenshotTest[jvm] > rtl_dark[jvm] PASSED
+
+PaginationNovaScreenshotTest[jvm] > rtl_light[jvm] PASSED
+
+PaginationNovaScreenshotTest[jvm] > default_light[jvm] PASSED
+
+PaginationParityTest[jvm] > novaPageLinksAre32SquareWithTwoPixelGap[jvm] PASSED
+
+PaginationParityTest[jvm] > novaPreviousAndNextShowDefaultLabelsOnDesktop[jvm] PASSED
+
+PaginationParityTest[jvm] > keyboardActivationRequestsPageAndControlledRejectionKeepsSelection[jvm] PASSED
+
+PaginationParityTest[jvm] > disabledPageLinkDimsItsActualTextAndCannotActivate[jvm] PASSED
+
+PaginationParityTest[jvm] > minimumTouchTargetKeeps32PixelPageChrome[jvm] PASSED
+
+PaginationParityTest[jvm] > novaEllipsisIs32SquareAndHiddenFromAccessibility[jvm] PASSED
+
+PaginationParityTest[jvm] > localizedSlotUsesVisibleTextAndCallerSizeOverrides[jvm] PASSED
+
+PaginationParityTest[jvm] > directionalLabelsSwitchAt640AndKeepSourcePadding[jvm] PASSED
+
+PaginationParityTest[jvm] > controlledExtensionTracksPageAndAllBoundaryControls[jvm] PASSED
+
+PaginationParityTest[jvm] > previousChevronMirrorsInRtl[jvm] PASSED
+
+PaginationParityTest[jvm] > novaRootUsesAvailableWidthAndCentersItsContents[jvm] PASSED
+
+PaginationScreenshotTest[jvm] > states_light[jvm] PASSED
+
+PaginationScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+PopoverNovaLayoutTest[jvm] > lightPanelSpacing[jvm] PASSED
+
+PopoverNovaLayoutTest[jvm] > stringBodyKeepsTheFullTwentyPixelLineBox[jvm] PASSED
+
+PopoverNovaLayoutTest[jvm] > callerCanOverridePanelWidth[jvm] PASSED
+
+PopoverNovaLayoutTest[jvm] > novaHeaderUsesTwentyPixelLinesAndTwoPixelGap[jvm] PASSED
+
+PopoverNovaLayoutTest[jvm] > darkPanelSpacing[jvm] PASSED
+
+PopoverNovaScreenshotTest[jvm] > basicDark[jvm] PASSED
+
+PopoverNovaScreenshotTest[jvm] > basicLight[jvm] PASSED
+
+PopoverScreenshotTest[jvm] > dimensions_form_dark[jvm] PASSED
+
+PopoverScreenshotTest[jvm] > states_light[jvm] PASSED
+
+PopoverScreenshotTest[jvm] > dimensions_form_light[jvm] PASSED
+
+PopoverScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+ProgressNovaScreenshotTest[jvm] > labelLight[jvm] PASSED
+
+ProgressNovaScreenshotTest[jvm] > labelDark[jvm] PASSED
+
+ProgressNovaScreenshotTest[jvm] > rtlLight[jvm] PASSED
+
+ProgressNovaScreenshotTest[jvm] > rtlDark[jvm] PASSED
+
+ProgressParityTest[jvm] > rootStyleControlsBothTheLabelRowAndTrack[jvm] PASSED
+
+ProgressParityTest[jvm] > invalidAndOutOfRangeNumbersCannotProduceInvalidRangeSemantics[jvm] PASSED
+
+ProgressParityTest[jvm] > accessibilityAndDisplayedValueUpdateWithoutWaitingForTheFillAnimation[jvm] PASSED
+
+ProgressParityTest[jvm] > customValueDescriptionDoesNotReplaceTheAccessibleLabel[jvm] PASSED
+
+ProgressParityTest[jvm] > rtlMirrorsTheAutoMarginAndFillsFromTheRight[jvm] PASSED
+
+ProgressParityTest[jvm] > narrowHeadersWrapAndKeepTheValueAtTheLogicalEnd[jvm] PASSED
+
+ProgressParityTest[jvm] > visibleValueIsHiddenFromAccessibilityLikeBaseUiValue[jvm] PASSED
+
+ProgressParityTest[jvm] > labelAndValueShareOneRowWithAnAutomaticTrackTwelvePixelsBelow[jvm] PASSED
+
+ProgressParityTest[jvm] > indeterminateHasNoFabricatedPercentage[jvm] PASSED
+
+ProgressScreenshotTest[jvm] > label_dark[jvm] PASSED
+
+ProgressScreenshotTest[jvm] > states_light[jvm] PASSED
+
+ProgressScreenshotTest[jvm] > label_light[jvm] PASSED
+
+ProgressScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+QuestionnaireControllerParityTest[jvm] > optionalInvalidAndCustomRequiredErrorsUseTheirOwnMessages[jvm] PASSED
+
+QuestionnaireControllerParityTest[jvm] > disabledNavigationAndSubmissionAreInert[jvm] PASSED
+
+QuestionnaireControllerParityTest[jvm] > aSingleItemSelectsEitherFreeformOrFixedAnswerAndKeepsTheDraft[jvm] PASSED
+
+QuestionnaireControllerParityTest[jvm] > skippingTheFinalOptionalQuestionSubmitsWithoutDiscardingItsDraft[jvm] PASSED
+
+QuestionnaireControllerParityTest[jvm] > firstSingleDefaultWinsWhileOtherDefaultInputTextRemainsAsADraft[jvm] PASSED
+
+QuestionnaireControllerParityTest[jvm] > optionalUnansweredRequiresAnExplicitSkip[jvm] PASSED
+
+QuestionnaireControllerParityTest[jvm] > multiplePayloadUsesCollectionOrderAndAllowsTheFreeformAnswer[jvm] PASSED
+
+QuestionnaireControllerParityTest[jvm] > inputShortcutIncludesTheEnabledFreeformControlAndFocusesFixedAnswers[jvm] PASSED
+
+QuestionnaireControllerParityTest[jvm] > aRejectedControlledInvalidJumpDoesNotForceTheExternalItem[jvm] PASSED
+
+QuestionnaireControllerParityTest[jvm] > submitReturnsToTheFirstInvalidItemEvenAfterAControlledJump[jvm] PASSED
+
+QuestionnaireNovaBehaviorTest[jvm] > initialCollectionShortcutsAndChangedShortcutModeRenderWithoutSelectingAnAnswer[jvm] PASSED
+
+QuestionnaireNovaBehaviorTest[jvm] > firstAndRequiredActionsAreHiddenAndRequiredFailureUsesSourceText[jvm] PASSED
+
+QuestionnaireNovaBehaviorTest[jvm] > radioAndCheckboxRowsExposeTheirActualSelectionState[jvm] PASSED
+
+QuestionnaireNovaBehaviorTest[jvm] > acceptedAndExternalControlledItemChangesActuallyUpdateTheVisibleItem[jvm] PASSED
+
+QuestionnaireNovaBehaviorTest[jvm] > enterOnlyConfirmsAnAlreadySelectedChoice[jvm] PASSED
+
+QuestionnaireNovaBehaviorTest[jvm] > choiceInsetsMatchTheCssBorderPaddingIndicatorAndGap[jvm] PASSED
+
+QuestionnaireNovaBehaviorTest[jvm] > progressCounterMatchesItsOneBasedRangeAndLiveValueText[jvm] PASSED
+
+QuestionnaireNovaBehaviorTest[jvm] > emptyCollectionDoesNotInventAQuestionOrNavigation[jvm] PASSED
+
+QuestionnaireNovaScreenshotTest[jvm] > invalidDark[jvm] PASSED
+
+QuestionnaireNovaScreenshotTest[jvm] > choicesDark[jvm] PASSED
+
+QuestionnaireNovaScreenshotTest[jvm] > choicesLight[jvm] PASSED
+
+QuestionnaireNovaScreenshotTest[jvm] > invalidLight[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > animate_light[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > status_light[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > reset_dark[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > items_dark[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > status_dark[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > navigation_state_dark[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > default_dark[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > without_actions_light[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > reset_light[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > items_light[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > disabled_dark[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > card_dark[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > choice_parts_light[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > resume_dark[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > dialog_dark[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > choice_parts_dark[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > navigation_state_light[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > custom_validation_light[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > without_actions_dark[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > shortcuts_light[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > dialog_light[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > custom_progress_light[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > card_light[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > animate_dark[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > shortcuts_dark[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > custom_validation_dark[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > disabled_light[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > default_light[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > resume_light[jvm] PASSED
+
+QuestionnaireScreenshotTest[jvm] > custom_progress_dark[jvm] PASSED
+
+RadioButtonScreenshotTest[jvm] > focused_light[jvm] PASSED
+
+RadioButtonScreenshotTest[jvm] > states_light[jvm] PASSED
+
+RadioButtonScreenshotTest[jvm] > focused_dark[jvm] PASSED
+
+RadioButtonScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+ResizableInteractionTest[jvm] > rtlPhysicalRightDragShrinksTheLogicalFirstPanel[jvm] PASSED
+
+ResizableInteractionTest[jvm] > customDividerThicknessIsExcludedFromTheResizeDenominator[jvm] PASSED
+
+ResizableInteractionTest[jvm] > verticalKeysAndAccessibleAdjustmentUseTheSameLimits[jvm] PASSED
+
+ResizableInteractionTest[jvm] > coarseTouchTargetWorksNinePixelsAwayFromTheHairline[jvm] PASSED
+
+ResizableInteractionTest[jvm] > arrowKeysUseFivePercentAndHomeEndReachZeroAndFullWithoutWeightErrors[jvm] PASSED
+
+ResizableInteractionTest[jvm] > customLimitsClampTheInitialValueAndKeyboardExtremes[jvm] PASSED
+
+ResizableInteractionTest[jvm] > verticalMouseDragChangesOnlyTheVerticalSplit[jvm] PASSED
+
+ResizableInteractionTest[jvm] > disabledGroupCannotResizeAndHasNoAccessibleAdjustmentAction[jvm] PASSED
+
+ResizableInteractionTest[jvm] > mouseDragWorksFourPixelsAwayFromTheHairline[jvm] PASSED
+
+ResizableInteractionTest[jvm] > changingOrientationCancelsAnAlreadyPressedPointer[jvm] PASSED
+
+ResizableNovaScreenshotTest[jvm] > horizontalDark[jvm] PASSED
+
+ResizableNovaScreenshotTest[jvm] > verticalLight[jvm] PASSED
+
+ResizableNovaScreenshotTest[jvm] > focusLight[jvm] PASSED
+
+ResizableNovaScreenshotTest[jvm] > verticalDark[jvm] PASSED
+
+ResizableNovaScreenshotTest[jvm] > horizontalLight[jvm] PASSED
+
+ResizableNovaScreenshotTest[jvm] > focusDark[jvm] PASSED
+
+ResizablePanelGroupTest[jvm] > dragging_past_the_maximum_clamps_instead_of_collapsing_the_second_panel[jvm] PASSED
+
+ResizablePanelGroupTest[jvm] > dragging_left_decreases_the_first_panels_share[jvm] PASSED
+
+ResizablePanelGroupTest[jvm] > dragging_before_the_container_is_measured_is_a_no_op_not_a_divide_by_zero[jvm] PASSED
+
+ResizablePanelGroupTest[jvm] > dragging_past_the_minimum_clamps_instead_of_collapsing_the_first_panel[jvm] PASSED
+
+ResizablePanelGroupTest[jvm] > dragging_right_increases_the_first_panels_share[jvm] PASSED
+
+ResizableScreenshotTest[jvm] > narrow_first_pane_light[jvm] PASSED
+
+ResizableScreenshotTest[jvm] > without_handle_dark[jvm] PASSED
+
+ResizableScreenshotTest[jvm] > states_light[jvm] PASSED
+
+ResizableScreenshotTest[jvm] > wide_first_pane_light[jvm] PASSED
+
+ResizableScreenshotTest[jvm] > sidebar_and_content_dark[jvm] PASSED
+
+ResizableScreenshotTest[jvm] > sidebar_and_content_light[jvm] PASSED
+
+ResizableScreenshotTest[jvm] > without_handle_light[jvm] PASSED
+
+ResizableScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+LazyScrollAreaScreenshotTest[jvm] > states_light[jvm] PASSED
+
+LazyScrollAreaScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+LazyScrollMetricsTest[jvm] > metrics_null_when_content_fits_in_viewport[jvm] PASSED
+
+LazyScrollMetricsTest[jvm] > metrics_estimate_content_from_average_visible_item_size[jvm] PASSED
+
+LazyScrollMetricsTest[jvm] > metrics_null_when_list_is_empty[jvm] PASSED
+
+LazyScrollMetricsTest[jvm] > metrics_account_for_partial_first_item_offset[jvm] PASSED
+
+ScrollAreaInteractionTest[jvm] > rtlHorizontalThumbAndArrowFollowPhysicalDirection[jvm] PASSED
+
+ScrollAreaInteractionTest[jvm] > twoAxisTracksReserveCornerAndDoNotIntersect[jvm] PASSED
+
+ScrollAreaInteractionTest[jvm] > wheelAndTouchMoveActualViewport[jvm] PASSED
+
+ScrollAreaInteractionTest[jvm] > descendantTextEditorKeepsHomeEndKeysInsteadOfScrollingAncestor[jvm] PASSED
+
+ScrollAreaInteractionTest[jvm] > fittingContentHasNoScrollbarAndNoKeyboardFocusTarget[jvm] PASSED
+
+ScrollAreaInteractionTest[jvm] > trackPressCentersThumbAndSupportsContinuingDrag[jvm] PASSED
+
+ScrollAreaInteractionTest[jvm] > keyboardHomeEndArrowsPagesAndSpaceResizeScrollPosition[jvm] PASSED
+
+ScrollAreaInteractionTest[jvm] > sharedThumbStillDragsActualLazyList[jvm] PASSED
+
+ScrollAreaInteractionTest[jvm] > novaTrackAndThumbHaveSourceInsetsAndAreVisibleBeforeHover[jvm] PASSED
+
+ScrollAreaInteractionTest[jvm] > minimumThumbStaysInsideTrackAtLastPixel[jvm] PASSED
+
+ScrollAreaInteractionTest[jvm] > realMouseThumbDragScrollsContentByTravelRatio[jvm] PASSED
+
+ScrollAreaNovaScreenshotTest[jvm] > horizontalDark[jvm] PASSED
+
+ScrollAreaNovaScreenshotTest[jvm] > verticalLight[jvm] PASSED
+
+ScrollAreaNovaScreenshotTest[jvm] > focusLight[jvm] PASSED
+
+ScrollAreaNovaScreenshotTest[jvm] > verticalDark[jvm] PASSED
+
+ScrollAreaNovaScreenshotTest[jvm] > horizontalLight[jvm] PASSED
+
+ScrollAreaNovaScreenshotTest[jvm] > focusDark[jvm] PASSED
+
+ScrollAreaScreenshotTest[jvm] > states_light[jvm] PASSED
+
+ScrollAreaScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+ScrollThumbMathTest[jvm] > offset_fraction_advances_proportionally_with_scroll_value[jvm] PASSED
+
+ScrollThumbMathTest[jvm] > thumb_fraction_matches_viewport_share_of_the_track[jvm] PASSED
+
+ScrollThumbMathTest[jvm] > drag_delta_is_scaled_up_because_the_thumb_travels_less_than_the_content_scrolls[jvm] PASSED
+
+ScrollThumbMathTest[jvm] > offset_fraction_is_zero_at_the_top_of_the_scroll_range[jvm] PASSED
+
+ScrollThumbMathTest[jvm] > thumb_fraction_is_clamped_so_it_never_disappears_on_very_long_content[jvm] PASSED
+
+ScrollThumbMathTest[jvm] > drag_delta_is_zero_when_there_is_no_room_for_the_thumb_to_travel[jvm] PASSED
+
+ScrollThumbMathTest[jvm] > minimumThumbStillStopsAtEndOfTrack[jvm] PASSED
+
+ScrollThumbMathTest[jvm] > offsetClampsStaleScrollValueAfterContentShrinks[jvm] PASSED
+
+ScrollThumbMathTest[jvm] > thumb_fraction_is_full_when_content_exactly_fills_the_viewport[jvm] PASSED
+
+ScrollThumbMathTest[jvm] > thumbCannotExceedTinyTrack[jvm] PASSED
+
+ScrollThumbMathTest[jvm] > dragging_the_full_travel_distance_reaches_exactly_maxValue[jvm] PASSED
+
+ScrollThumbMathTest[jvm] > unavailableMetricsAndInvalidDragDoNotProduceNan[jvm] PASSED
+
+ScrollTypeTest[jvm] > dir_mapsToLayoutDirection[jvm] PASSED
+
+ScrollTypeTest[jvm] > mayShow_auto_onlyWhenOverflowing[jvm] PASSED
+
+ScrollTypeTest[jvm] > mayShow_scrollAndHover_requireOverflow[jvm] PASSED
+
+ScrollTypeTest[jvm] > mayShow_always_regardlessOfOverflow[jvm] PASSED
+
+SelectLabelLayoutTest[jvm] > arabicOptionsDark[jvm] PASSED
+
+SelectLabelLayoutTest[jvm] > arabicOptionsLight[jvm] PASSED
+
+SelectLabelLayoutTest[jvm] > veryLongLabelKeepsRowHeightAndPanelWidth[jvm] PASSED
+
+SelectLabelLayoutTest[jvm] > novaSelectedValueStaysSingleLineInNarrowSmallTrigger[jvm] PASSED
+
+SelectLabelLayoutTest[jvm] > novaLongSelectedValueHasSingleConstrainedLine[jvm] PASSED
+
+SelectLabelLayoutTest[jvm] > novaLanguageLabelsStaySingleLineAtOfficialAnchorWidth[jvm] PASSED
+
+SelectLabelLayoutTest[jvm] > novaArabicFontMetricsDoNotEnlargeSingleLineOptions[jvm] PASSED
+
+SelectScreenshotTest[jvm] > closed_light[jvm] PASSED
+
+SelectScreenshotTest[jvm] > placeholder_dark[jvm] PASSED
+
+SelectScreenshotTest[jvm] > placeholder_light[jvm] PASSED
+
+SelectScreenshotTest[jvm] > trigger_focused_light[jvm] PASSED
+
+SelectScreenshotTest[jvm] > closed_dark[jvm] PASSED
+
+SelectScreenshotTest[jvm] > item_aligned_dark[jvm] PASSED
+
+SelectScreenshotTest[jvm] > item_aligned_light[jvm] PASSED
+
+SelectValueOverflowScreenshotTest[jvm] > dark[jvm] PASSED
+
+SelectValueOverflowScreenshotTest[jvm] > light[jvm] PASSED
+
+SelectionNovaParityTest[jvm] > darkMatrix[jvm] PASSED
+
+SelectionNovaParityTest[jvm] > checkboxFocusLight[jvm] PASSED
+
+SelectionNovaParityTest[jvm] > novaFocusRingCanBeExplicitlyDisabledAndUpdatesLive[jvm] PASSED
+
+SelectionNovaParityTest[jvm] > radioFocusLight[jvm] PASSED
+
+SelectionNovaParityTest[jvm] > toggleFocusDark[jvm] PASSED
+
+SelectionNovaParityTest[jvm] > radioFocusDark[jvm] PASSED
+
+SelectionNovaParityTest[jvm] > radioArrowsSkipDisabledAndWrap[jvm] PASSED
+
+SelectionNovaParityTest[jvm] > checkboxAndSwitchLabelsToggleUncontrolledState[jvm] PASSED
+
+SelectionNovaParityTest[jvm] > checkboxSpaceCyclesFromIndeterminateToChecked[jvm] PASSED
+
+SelectionNovaParityTest[jvm] > controlledRadioOnlyRequestsAChange[jvm] PASSED
+
+SelectionNovaParityTest[jvm] > visibleControlsUseNovaDimensionsAndInlineTypography[jvm] PASSED
+
+SelectionNovaParityTest[jvm] > checkboxFocusDark[jvm] PASSED
+
+SelectionNovaParityTest[jvm] > toggleFocusLight[jvm] PASSED
+
+SelectionNovaParityTest[jvm] > originalPositionalToggleBooleanStillMeansPressed[jvm] PASSED
+
+SelectionNovaParityTest[jvm] > switchFocusDark[jvm] PASSED
+
+SelectionNovaParityTest[jvm] > lightMatrix[jvm] PASSED
+
+SelectionNovaParityTest[jvm] > rtlRadioArrowsAndHomeEndFollowLogicalOrder[jvm] PASSED
+
+SelectionNovaParityTest[jvm] > switchFocusLight[jvm] PASSED
+
+SelectionNovaParityTest[jvm] > disabledFieldSetBlocksEverySelectionCallback[jvm] PASSED
+
+SeparatorNovaScreenshotTest[jvm] > horizontalDark[jvm] PASSED
+
+SeparatorNovaScreenshotTest[jvm] > verticalLight[jvm] PASSED
+
+SeparatorNovaScreenshotTest[jvm] > verticalDark[jvm] PASSED
+
+SeparatorNovaScreenshotTest[jvm] > horizontalLight[jvm] PASSED
+
+SeparatorParityTest[jvm] > callerCanProvideLocalizedAnnouncements[jvm] PASSED
+
+SeparatorParityTest[jvm] > decorativeExtensionOmitsDefaultAnnouncements[jvm] PASSED
+
+SeparatorParityTest[jvm] > separatorAddsNoImplicitSurroundingSpacing[jvm] PASSED
+
+SeparatorParityTest[jvm] > orientationChangesUpdateLayoutAndAnnouncement[jvm] PASSED
+
+SeparatorParityTest[jvm] > verticalMatchesABoundedParentHeight[jvm] PASSED
+
+SeparatorParityTest[jvm] > baseUiDefaultExposesDescriptionAndOrientationWithoutAnInteractiveRole[jvm] PASSED
+
+SeparatorParityTest[jvm] > explicitStyleOverridesBothSizeAndColor[jvm] PASSED
+
+SeparatorParityTest[jvm] > intrinsicRowStretchesSeparatorToItsTallestContent[jvm] PASSED
+
+SeparatorScreenshotTest[jvm] > states_light[jvm] PASSED
+
+SeparatorScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+SheetLayoutTest[jvm] > unfilledWeightedBodyLeavesOnlyItsUnusedSpaceForAutoMargin[jvm] PASSED
+
+SheetLayoutTest[jvm] > weightedBodyReceivesAllAvailableHeightBeforeFooterAutoMargin[jvm] PASSED
+
+SheetLayoutTest[jvm] > bottomPanelWrapsContentAndHasOnlyItsTopBorder[jvm] PASSED
+
+SheetLayoutTest[jvm] > footerStacksFullWidthActionsAndUsesRemainingTopMargin[jvm] PASSED
+
+SheetLayoutTest[jvm] > topPanelWrapsContentAndHasOnlyItsBottomBorder[jvm] PASSED
+
+SheetLayoutTest[jvm] > darkWeightedPanelKeepsSourceMetricsAndChrome[jvm] PASSED
+
+SheetLayoutTest[jvm] > headerMatchesSixteenPaddingAndTwoGapWithFullLineHeights[jvm] PASSED
+
+SheetLayoutTest[jvm] > rightPanelHasOnlyItsInwardBorder[jvm] PASSED
+
+SheetLayoutTest[jvm] > closeIsTwentyEightAtPhysicalTopRightTwelve[jvm] PASSED
+
+SheetLayoutTest[jvm] > rtlCloseUsesLogicalEndAndFooterStillStretches[jvm] PASSED
+
+SheetLayoutTest[jvm] > headerAndFooterStylesCanOverrideDefaultPadding[jvm] PASSED
+
+SheetLayoutTest[jvm] > leftPanelHasOnlyItsInwardBorder[jvm] PASSED
+
+SheetParityTest[jvm] > keyboardTriggerRestoresFocusAfterClosing[jvm] PASSED
+
+SheetParityTest[jvm] > desktopPanelCapsAt384[jvm] PASSED
+
+SheetParityTest[jvm] > defaultPhysicalRightStaysRightInRtl[jvm] PASSED
+
+SheetParityTest[jvm] > exitMovesFortyPixelsOverTwoHundredMilliseconds[jvm] PASSED
+
+SheetParityTest[jvm] > escapeDismissesAndReturnsKeyboardFocus[jvm] PASSED
+
+SheetParityTest[jvm] > mobileDarkUsesTheSameResponsiveWidth[jvm] PASSED
+
+SheetParityTest[jvm] > logicalEndMovesToLeftInRtl[jvm] PASSED
+
+SheetParityTest[jvm] > desktopDarkUsesTheSameMaximumWidth[jvm] PASSED
+
+SheetParityTest[jvm] > mobilePanelUsesThreeQuartersOfViewport[jvm] PASSED
+
+SheetParityTest[jvm] > smallBreakpointAppliesCapAt640[jvm] PASSED
+
+SheetParityTest[jvm] > outsidePolicyCanVetoDismiss[jvm] PASSED
+
+SheetParityTest[jvm] > sidebarCallerCanOverrideDefaultPanelWidth[jvm] PASSED
+
+SheetParityTest[jvm] > noCloseButtonStillAllowsOutsideDismiss[jvm] PASSED
+
+SheetParityTest[jvm] > controlledOwnerCanRefuseDismissal[jvm] PASSED
+
+SheetParityTest[jvm] > smallBreakpointDoesNotCapWidthEarly[jvm] PASSED
+
+SheetScreenshotTest[jvm] > edit_profile_dark[jvm] PASSED
+
+SheetScreenshotTest[jvm] > edit_profile_light[jvm] PASSED
+
+SheetScreenshotTest[jvm] > states_light[jvm] PASSED
+
+SheetScreenshotTest[jvm] > close_button_light[jvm] PASSED
+
+SheetScreenshotTest[jvm] > close_button_dark[jvm] PASSED
+
+SheetScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+SidebarBorderParityTest[jvm] > fixedSidebarHasNoDefaultBorder[jvm] PASSED
+
+SidebarBorderParityTest[jvm] > inwardBorderMirrorsWithLogicalStartInRtl[jvm] PASSED
+
+SidebarBorderParityTest[jvm] > inwardBorderDark[jvm] PASSED
+
+SidebarBorderParityTest[jvm] > inwardBorderLight[jvm] PASSED
+
+SidebarContentLayoutParityTest[jvm] > [mobile=false,dark=false][jvm] > paddingBelongsToHeaderAndFooterWhileContentHasNoGapOrPadding[mobile=false,dark=false][jvm] PASSED
+
+SidebarContentLayoutParityTest[jvm] > [mobile=false,dark=false][jvm] > longNavigationScrollsWhileHeaderAndFooterStayInPlace[mobile=false,dark=false][jvm] PASSED
+
+SidebarContentLayoutParityTest[jvm] > [mobile=false,dark=true][jvm] > paddingBelongsToHeaderAndFooterWhileContentHasNoGapOrPadding[mobile=false,dark=true][jvm] PASSED
+
+SidebarContentLayoutParityTest[jvm] > [mobile=false,dark=true][jvm] > longNavigationScrollsWhileHeaderAndFooterStayInPlace[mobile=false,dark=true][jvm] PASSED
+
+SidebarContentLayoutParityTest[jvm] > [mobile=true,dark=false][jvm] > paddingBelongsToHeaderAndFooterWhileContentHasNoGapOrPadding[mobile=true,dark=false][jvm] PASSED
+
+SidebarContentLayoutParityTest[jvm] > [mobile=true,dark=false][jvm] > longNavigationScrollsWhileHeaderAndFooterStayInPlace[mobile=true,dark=false][jvm] PASSED
+
+SidebarContentLayoutParityTest[jvm] > [mobile=true,dark=true][jvm] > paddingBelongsToHeaderAndFooterWhileContentHasNoGapOrPadding[mobile=true,dark=true][jvm] PASSED
+
+SidebarContentLayoutParityTest[jvm] > [mobile=true,dark=true][jvm] > longNavigationScrollsWhileHeaderAndFooterStayInPlace[mobile=true,dark=true][jvm] PASSED
+
+SidebarMobileParityTest[jvm] > [viewport=1,440,dark=false][jvm] > defaultMobileWidthZeroRootPaddingAndOutsideClosesOnlyMobile[viewport=1,440,dark=false][jvm] PASSED
+
+SidebarMobileParityTest[jvm] > [viewport=1,440,dark=false][jvm] > callerStyleCanOverrideDefaultMobileWidth[viewport=1,440,dark=false][jvm] PASSED
+
+SidebarMobileParityTest[jvm] > [viewport=1,440,dark=true][jvm] > defaultMobileWidthZeroRootPaddingAndOutsideClosesOnlyMobile[viewport=1,440,dark=true][jvm] PASSED
+
+SidebarMobileParityTest[jvm] > [viewport=1,440,dark=true][jvm] > callerStyleCanOverrideDefaultMobileWidth[viewport=1,440,dark=true][jvm] PASSED
+
+SidebarMobileParityTest[jvm] > [viewport=390,dark=false][jvm] > defaultMobileWidthZeroRootPaddingAndOutsideClosesOnlyMobile[viewport=390,dark=false][jvm] PASSED
+
+SidebarMobileParityTest[jvm] > [viewport=390,dark=false][jvm] > callerStyleCanOverrideDefaultMobileWidth[viewport=390,dark=false][jvm] PASSED
+
+SidebarMobileParityTest[jvm] > [viewport=390,dark=true][jvm] > defaultMobileWidthZeroRootPaddingAndOutsideClosesOnlyMobile[viewport=390,dark=true][jvm] PASSED
+
+SidebarMobileParityTest[jvm] > [viewport=390,dark=true][jvm] > callerStyleCanOverrideDefaultMobileWidth[viewport=390,dark=true][jvm] PASSED
+
+SidebarResponsiveStateTest[jvm] > mobileChangesUseLatestCallbackAndNeverDesktopPersistence[jvm] PASSED
+
+SidebarResponsiveStateTest[jvm] > automaticBreakpointAndEachModesOpenStateSurviveSwitching[jvm] PASSED
+
+SidebarResponsiveStateTest[jvm] > ctrlBInsideProviderTogglesOnlyMobile[jvm] PASSED
+
+SidebarResponsiveStateTest[jvm] > desktopAndMobileSettersAreIndependent[jvm] PASSED
+
+SidebarResponsiveStateTest[jvm] > previouslyStoredToggleUsesTheLatestResponsiveMode[jvm] PASSED
+
+SidebarResponsiveStateTest[jvm] > twoUncontrolledMobileTogglesInOneFrameCancelEachOther[jvm] PASSED
+
+SidebarResponsiveStateTest[jvm] > explicitMobileOverrideWinsOverWindowSize[jvm] PASSED
+
+SidebarResponsiveStateTest[jvm] > disabledShortcutLeavesBothStatesUnchanged[jvm] PASSED
+
+SidebarScreenshotTest[jvm] > mobile_light[jvm] PASSED
+
+SidebarScreenshotTest[jvm] > app_shell_dark[jvm] PASSED
+
+SidebarScreenshotTest[jvm] > floating_dark[jvm] PASSED
+
+SidebarScreenshotTest[jvm] > mobile_dark[jvm] PASSED
+
+SidebarScreenshotTest[jvm] > collapsed_light[jvm] PASSED
+
+SidebarScreenshotTest[jvm] > expanded_light[jvm] PASSED
+
+SidebarScreenshotTest[jvm] > icon_collapsed_light[jvm] PASSED
+
+SidebarScreenshotTest[jvm] > official_width_dark[jvm] PASSED
+
+SidebarScreenshotTest[jvm] > trigger_focused_light[jvm] PASSED
+
+SidebarScreenshotTest[jvm] > icon_collapsed_dark[jvm] PASSED
+
+SidebarScreenshotTest[jvm] > inset_dark[jvm] PASSED
+
+SidebarScreenshotTest[jvm] > inset_light[jvm] PASSED
+
+SidebarScreenshotTest[jvm] > expanded_dark[jvm] PASSED
+
+SidebarScreenshotTest[jvm] > floating_light[jvm] PASSED
+
+SidebarScreenshotTest[jvm] > official_width_light[jvm] PASSED
+
+SidebarScreenshotTest[jvm] > collapsed_dark[jvm] PASSED
+
+SidebarScreenshotTest[jvm] > app_shell_light[jvm] PASSED
+
+SidebarStateParityTest[jvm] > controlledCallbackAndPersistenceUseLatestClosures[jvm] PASSED
+
+SidebarStateParityTest[jvm] > offcanvasReachesZeroAfterTwoHundredMilliseconds[jvm] PASSED
+
+SidebarStateParityTest[jvm] > nonCollapsiblePanelDoesNotForceContextDesktopOpenToTrue[jvm] PASSED
+
+SidebarStateParityTest[jvm] > togglingMobileDoesNotChangeDesktopOpen[jvm] PASSED
+
+SidebarStateParityTest[jvm] > mobileStartsClosedEvenWhenDesktopDefaultsOpen[jvm] PASSED
+
+SidebarStateParityTest[jvm] > offcanvasKeepsRememberedContentWhileClosed[jvm] PASSED
+
+SkeletonParityTest[jvm] > [dark=false][jvm] > pulseDoesNotRecomposeItsConsumerEveryFrame[dark=false][jvm] PASSED
+
+SkeletonParityTest[jvm] > [dark=false][jvm] > explicitReplacementStyleOmitsDefaultChromeAndPulse[dark=false][jvm] PASSED
+
+SkeletonParityTest[jvm] > [dark=false][jvm] > pulseHasTwoSecondCycleAndHalfOpacityAtMidpoint[dark=false][jvm] PASSED
+
+SkeletonParityTest[jvm] > [dark=false][jvm] > chromeUsesMutedAndRoundedMdWithoutPulse[dark=false][jvm] PASSED
+
+SkeletonParityTest[jvm] > [dark=false][jvm] > callerStyleCanKeepChromeAndOverrideCircle[dark=false][jvm] PASSED
+
+SkeletonParityTest[jvm] > [dark=true][jvm] > pulseDoesNotRecomposeItsConsumerEveryFrame[dark=true][jvm] PASSED
+
+SkeletonParityTest[jvm] > [dark=true][jvm] > explicitReplacementStyleOmitsDefaultChromeAndPulse[dark=true][jvm] PASSED
+
+SkeletonParityTest[jvm] > [dark=true][jvm] > pulseHasTwoSecondCycleAndHalfOpacityAtMidpoint[dark=true][jvm] PASSED
+
+SkeletonParityTest[jvm] > [dark=true][jvm] > chromeUsesMutedAndRoundedMdWithoutPulse[dark=true][jvm] PASSED
+
+SkeletonParityTest[jvm] > [dark=true][jvm] > callerStyleCanKeepChromeAndOverrideCircle[dark=true][jvm] PASSED
+
+SkeletonScreenshotTest[jvm] > states_light[jvm] PASSED
+
+SkeletonScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+SliderMappingTest[jvm] > vertical_thumb_center_at_bottom_is_zero[jvm] PASSED
+
+SliderMappingTest[jvm] > unmeasured_track_does_not_divide_by_zero[jvm] PASSED
+
+SliderMappingTest[jvm] > horizontal_thumb_center_at_end_is_one[jvm] PASSED
+
+SliderMappingTest[jvm] > horizontal_thumb_center_at_start_is_zero[jvm] PASSED
+
+SliderScreenshotTest[jvm] > focused_light[jvm] PASSED
+
+SliderScreenshotTest[jvm] > states_light[jvm] PASSED
+
+SliderScreenshotTest[jvm] > focused_dark[jvm] PASSED
+
+SliderScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+SpinnerGeometryTest[jvm] > paintSilhouetteMatchesOfficialSvgAtPublicSizesAndCustomStyle[jvm] PASSED
+
+SpinnerIntrinsicSizeTest[jvm] > intrinsicHintStillHonorsStyleAndCallerModifierSizes[jvm] PASSED
+
+SpinnerIntrinsicSizeTest[jvm] > customVisualFillsTheSizedRootAndKeepsOneLoadingAnnouncement[jvm] PASSED
+
+SpinnerIntrinsicSizeTest[jvm] > intrinsicRowIncludesEachPresetSize[jvm] PASSED
+
+SpinnerMotionTest[jvm] > spinDrawsNewFramesWithoutRecomposingItsCaller[jvm] PASSED
+
+SpinnerScreenshotTest[jvm] > states_light[jvm] PASSED
+
+SpinnerScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+StepperScreenshotTest[jvm] > vertical_dark[jvm] PASSED
+
+StepperScreenshotTest[jvm] > compact_light[jvm] PASSED
+
+StepperScreenshotTest[jvm] > mid_progress_light[jvm] PASSED
+
+StepperScreenshotTest[jvm] > mid_progress_dark[jvm] PASSED
+
+StepperScreenshotTest[jvm] > vertical_light[jvm] PASSED
+
+StepperScreenshotTest[jvm] > compact_dark[jvm] PASSED
+
+DrawerDismissTest[jvm] > exitingChildHonorsParentOutsidePrevention[jvm] PASSED
+
+DrawerDismissTest[jvm] > closingBeforeEnterFinishesKeepsTheExitAnimationMounted[jvm] PASSED
+
+DrawerDismissTest[jvm] > ordinaryDialogDoesNotInheritDrawerExitHandoff[jvm] PASSED
+
+DrawerDismissTest[jvm] > outsideClicksCloseSuccessiveDrawersBeforeExitCompletes[jvm] PASSED
+
+DrawerDismissTest[jvm] > exitingChildHonorsParentDisablePointerDismissal[jvm] PASSED
+
+DrawerIndentTest[jvm] > pageTracksGestureWithoutAdvancingAnimationClock[jvm] PASSED
+
+DrawerIndentTest[jvm] > optInScalesSurfaceAndDisposalRestoresIt[jvm] PASSED
+
+DrawerIndentTest[jvm] > topDrawerFollowsHeldDragAndSpringsBack[jvm] PASSED
+
+DrawerIndentTest[jvm] > ordinaryDrawerDoesNotIndentSurface[jvm] PASSED
+
+DrawerIndentTest[jvm] > snapDrawerFollowsHeldDragBelowLowestSnapAndSpringsBack[jvm] PASSED
+
+DrawerIndentTest[jvm] > leftDrawerFollowsHeldDragAndSpringsBack[jvm] PASSED
+
+DrawerIndentTest[jvm] > registrationKeepsIndentUntilLastDrawerCloses[jvm] PASSED
+
+DrawerIndentTest[jvm] > dismissingDragRestoresPageDuringSettleAndAfterRemoval[jvm] PASSED
+
+DrawerIndentTest[jvm] > multipleDrawersUseTheMostExpandedGesture[jvm] PASSED
+
+DrawerIndentTest[jvm] > rightDrawerFollowsHeldDragAndSpringsBack[jvm] PASSED
+
+DrawerIndentTest[jvm] > draggingRestoresBackgroundBeforeReleaseAndReleaseSpringsBack[jvm] PASSED
+
+DrawerMotionTest[jvm] > parentFollowsShorterFrontDrawerAndRestoresNaturalHeight[jvm] PASSED
+
+DrawerMotionTest[jvm] > parentStackAnimatesAndReversesFromItsCurrentGeometry[jvm] PASSED
+
+DrawerSizingTest[jvm] > fullSnapKeepsViewportInset[jvm] PASSED
+
+DrawerSizingTest[jvm] > bottomFollowsContentHeight[jvm] PASSED
+
+DrawerSizingTest[jvm] > rightDrawerFloatsFromWindowEdges[jvm] PASSED
+
+DrawerSizingTest[jvm] > bottomDrawerFloatsFromSideAndBottomEdges[jvm] PASSED
+
+DrawerSizingTest[jvm] > bottomLongBodyUsesViewportCapAndKeepsFooterVisible[jvm] PASSED
+
+DrawerSizingTest[jvm] > topDrawerFloatsFromSideAndTopEdges[jvm] PASSED
+
+DrawerSizingTest[jvm] > fractionSnapUsesViewportNotCappedPanel[jvm] PASSED
+
+DrawerSizingTest[jvm] > absoluteSnapExposesExactHeight[jvm] PASSED
+
+DrawerSizingTest[jvm] > leftDrawerFloatsFromWindowEdges[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > calendarMonthBoundsDisableNavigationAndDoNotDisableMidMonthDates[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > nonModalDialogAllowsBackgroundAction[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > modalTabCyclesWithinActions[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > popupCalendarOptsIntoSelectedDayInitialFocus[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > dialogBackdropDark[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > hiddenOutsideDaysAreAbsentFromFocusAndAccessibility[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > contextRtlArrowsAndTypeAhead[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > commandEndAndHomeKeepActiveItemInViewport[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > commandDoesNotCommitWhileImeIsComposing[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > defaultHighlightDoesNotScrollAnOffscreenExampleIntoView[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > drawerBackdropDark[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > collapsibleCanReverseMidTransition[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > nestedBackdropLight[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > drawerInitialFocusAndCloseRestoration[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > nonModalContextMenuRemainsKeyboardInteractiveInHost[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > windowCursorFlipsAtEdgesAndIgnoresRootOffset[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > localizedRangeLight[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > keepMountedRetainsInputButRejectsHiddenFocus[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > dialogInitialFocusAndEscapeRestoration[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > calendarChineseLabelsAndRtlDayNavigation[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > controlledSnapChangeMovesPanelWithoutEmittingDismiss[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > contextRestoresTriggerAfterEscape[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > drawerBackdropLight[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > externalCollapseMovesExistingContentFocusToTrigger[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > nestedBackdropDark[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > localizedRangeDark[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > nestedDrawerCloseReturnsToParentAction[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > dialogBackdropLight[jvm] PASSED
+
+SurfacesCompletionTest[jvm] > commandControlledValueDoesNotAcceptUnconfirmedNavigation[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > commandFiltersHeadingAndShowsEmpty[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > inlineLight[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > menuLight[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > dialogDark[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > commandRecompositionRetainsKeyboardHighlight[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > collapsibleDisabledRootDisablesItsButton[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > contextSubmenuArrowNavigationIsIndependent[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > menuDark[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > contextCheckboxStaysOpenAndUpdates[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > commandKeyboardSkipsDisabledAndSupportsHomeEnd[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > dialogLight[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > commandStartsWithFirstEnabledItemHighlighted[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > drawerLight[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > drawerDark[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > collapsibleUncontrolledExpandsAndCloses[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > inlineDark[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > calendarDayIs28PixelsInNova[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > collapsibleControlledOnlyEmitsIntent[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > commandPointerReturnsCustomValue[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > contextKeyboardOpensAndSkipsDisabled[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > dialogEscapeDismisses[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > calendarSelectionEmitsDate[jvm] PASSED
+
+SurfacesNovaParityTest[jvm] > drawerDesktopPanelIs384PixelsWide[jvm] PASSED
+
+SwitchScreenshotTest[jvm] > focused_light[jvm] PASSED
+
+SwitchScreenshotTest[jvm] > sizes_dark[jvm] PASSED
+
+SwitchScreenshotTest[jvm] > states_light[jvm] PASSED
+
+SwitchScreenshotTest[jvm] > focused_dark[jvm] PASSED
+
+SwitchScreenshotTest[jvm] > sizes_light[jvm] PASSED
+
+SwitchScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+TableParityTest[jvm] > [dark=false][jvm] > overflowingColumnsExposeHorizontalScrollAndCanReachLastCell[dark=false][jvm] PASSED
+
+TableParityTest[jvm] > [dark=false][jvm] > physicalRightAndLogicalEndAreDistinctInRtl[dark=false][jvm] PASSED
+
+TableParityTest[jvm] > [dark=false][jvm] > stringLambdaAndComposableCellSlotsBothWork[dark=false][jvm] PASSED
+
+TableParityTest[jvm] > [dark=false][jvm] > headerIsFortyAndBodyUsesFourteenTwentyWithEightPixelPadding[dark=false][jvm] PASSED
+
+TableParityTest[jvm] > [dark=false][jvm] > rowIsTransparentAndHoverUsesMutedAtHalfAlpha[dark=false][jvm] PASSED
+
+TableParityTest[jvm] > [dark=false][jvm] > selectedStateIsExposedToAccessibility[dark=false][jvm] PASSED
+
+TableParityTest[jvm] > [dark=false][jvm] > captionDeclaredFirstRendersBelowRowsWithSixteenPixelMargin[dark=false][jvm] PASSED
+
+TableParityTest[jvm] > [dark=false][jvm] > footerIsHalfMutedWithATopRuleAndNoTrailingRule[dark=false][jvm] PASSED
+
+TableParityTest[jvm] > [dark=true][jvm] > overflowingColumnsExposeHorizontalScrollAndCanReachLastCell[dark=true][jvm] PASSED
+
+TableParityTest[jvm] > [dark=true][jvm] > physicalRightAndLogicalEndAreDistinctInRtl[dark=true][jvm] PASSED
+
+TableParityTest[jvm] > [dark=true][jvm] > stringLambdaAndComposableCellSlotsBothWork[dark=true][jvm] PASSED
+
+TableParityTest[jvm] > [dark=true][jvm] > headerIsFortyAndBodyUsesFourteenTwentyWithEightPixelPadding[dark=true][jvm] PASSED
+
+TableParityTest[jvm] > [dark=true][jvm] > rowIsTransparentAndHoverUsesMutedAtHalfAlpha[dark=true][jvm] PASSED
+
+TableParityTest[jvm] > [dark=true][jvm] > selectedStateIsExposedToAccessibility[dark=true][jvm] PASSED
+
+TableParityTest[jvm] > [dark=true][jvm] > captionDeclaredFirstRendersBelowRowsWithSixteenPixelMargin[dark=true][jvm] PASSED
+
+TableParityTest[jvm] > [dark=true][jvm] > footerIsHalfMutedWithATopRuleAndNoTrailingRule[dark=true][jvm] PASSED
+
+TableScreenshotTest[jvm] > states_light[jvm] PASSED
+
+TableScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+TabsBehaviorParityTest[jvm] > verticalHomeEndAndNonLoopingBoundaryWork[jvm] PASSED
+
+TabsBehaviorParityTest[jvm] > tabExitsTheListThroughOneRovingEntry[jvm] PASSED
+
+TabsBehaviorParityTest[jvm] > keyedReorderUsesCurrentVisualOrderForArrows[jvm] PASSED
+
+TabsBehaviorParityTest[jvm] > controlledRefusalKeepsSelectionWhileFocusMoves[jvm] PASSED
+
+TabsBehaviorParityTest[jvm] > keptPanelPreservesInputButTakesNoSpaceOrFocusWhenHidden[jvm] PASSED
+
+TabsBehaviorParityTest[jvm] > rtlArrowDirectionIsReversed[jvm] PASSED
+
+TabsBehaviorParityTest[jvm] > missingOrDisabledUncontrolledSelectionFallsBack[jvm] PASSED
+
+TabsBehaviorParityTest[jvm] > uncontrolledRootInitiallySelectsFirstEnabledTab[jvm] PASSED
+
+TabsBehaviorParityTest[jvm] > disabledTabIsSkippedAndManualActivationIsSeparate[jvm] PASSED
+
+TabsBehaviorParityTest[jvm] > defaultKeyboardActivationSelectsOnArrow[jvm] PASSED
+
+TabsBehaviorParityTest[jvm] > switchingPanelsRemovesOldContentWithoutAnImplicitFade[jvm] PASSED
+
+TabsBehaviorParityTest[jvm] > savedSetterUsesLatestOwnerCallback[jvm] PASSED
+
+TabsChromeParityTest[jvm] > [dark=false][jvm] > selectedChromeFillsWeightedTriggerOnItsFirstFrame[dark=false][jvm] PASSED
+
+TabsChromeParityTest[jvm] > [dark=false][jvm] > rootHasEightPixelGapAndFourteenTwentyMediumText[dark=false][jvm] PASSED
+
+TabsChromeParityTest[jvm] > [dark=false][jvm] > lineUnderlineIsOutsideTheTriggerAtTheSourceOffset[dark=false][jvm] PASSED
+
+TabsChromeParityTest[jvm] > [dark=false][jvm] > keyboardFocusDoesNotFillTransparentLineTrigger[dark=false][jvm] PASSED
+
+TabsChromeParityTest[jvm] > [dark=true][jvm] > selectedChromeFillsWeightedTriggerOnItsFirstFrame[dark=true][jvm] PASSED
+
+TabsChromeParityTest[jvm] > [dark=true][jvm] > rootHasEightPixelGapAndFourteenTwentyMediumText[dark=true][jvm] PASSED
+
+TabsChromeParityTest[jvm] > [dark=true][jvm] > lineUnderlineIsOutsideTheTriggerAtTheSourceOffset[dark=true][jvm] PASSED
+
+TabsChromeParityTest[jvm] > [dark=true][jvm] > keyboardFocusDoesNotFillTransparentLineTrigger[dark=true][jvm] PASSED
+
+TabsNovaParityTest[jvm] > novaTriggerUsesSixByTwoPaddingAndOnePixelTransparentBorder[jvm] PASSED
+
+TabsNovaParityTest[jvm] > nova_dark[jvm] PASSED
+
+TabsNovaParityTest[jvm] > nova_light[jvm] PASSED
+
+TabsNovaParityTest[jvm] > expandedMobileTriggersKeepTheWholeLabelOnOneLine[jvm] PASSED
+
+TabsScreenshotTest[jvm] > line_dark[jvm] PASSED
+
+TabsScreenshotTest[jvm] > item_focused_light[jvm] PASSED
+
+TabsScreenshotTest[jvm] > line_light[jvm] PASSED
+
+TabsScreenshotTest[jvm] > states_light[jvm] PASSED
+
+TabsScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+TextColorInheritanceTest[jvm] > ancestorStyleUpdatesWithoutThemeOrTextChangeAndCanBeRemoved[jvm] PASSED
+
+TextScreenshotTest[jvm] > styles_dark[jvm] PASSED
+
+TextScreenshotTest[jvm] > colorInheritance_dark[jvm] PASSED
+
+TextScreenshotTest[jvm] > colorInheritance_light[jvm] PASSED
+
+TextScreenshotTest[jvm] > styles_light[jvm] PASSED
+
+TextareaScreenshotTest[jvm] > focused_light[jvm] PASSED
+
+TextareaScreenshotTest[jvm] > states_light[jvm] PASSED
+
+TextareaScreenshotTest[jvm] > focused_dark[jvm] PASSED
+
+TextareaScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+ToastBehaviorParityTest[jvm] > actionDoesNotImplicitlyCloseTheToast[jvm] PASSED
+
+ToastBehaviorParityTest[jvm] > limitedMessagesStillRunTheirTimeouts[jvm] PASSED
+
+ToastBehaviorParityTest[jvm] > replacingTheManagerDoesNotReuseAnOldIdsDeadline[jvm] PASSED
+
+ToastBehaviorParityTest[jvm] > updatingAMessageRestartsItsTimeout[jvm] PASSED
+
+ToastBehaviorParityTest[jvm] > managerUsesFiveSecondDefaultTimeout[jvm] PASSED
+
+ToastBehaviorParityTest[jvm] > defaultRendererHasCloseToastControl[jvm] PASSED
+
+ToastBehaviorParityTest[jvm] > zeroTimeoutIsPersistentAndVisible[jvm] PASSED
+
+ToastBehaviorParityTest[jvm] > explicitActionCanCloseItsOwnId[jvm] PASSED
+
+ToastChromeParityTest[jvm] > [dark=false][jvm] > errorUsesTheDestructiveGlyphInsteadOfAColoredDot[dark=false][jvm] PASSED
+
+ToastChromeParityTest[jvm] > [dark=false][jvm] > cardUsesPopoverFillAndSixteenPixelRoundCorners[dark=false][jvm] PASSED
+
+ToastChromeParityTest[jvm] > [dark=false][jvm] > defaultHasNoGlyphAndStatusAddsExactlySixteenPlusTwelve[dark=false][jvm] PASSED
+
+ToastChromeParityTest[jvm] > [dark=true][jvm] > errorUsesTheDestructiveGlyphInsteadOfAColoredDot[dark=true][jvm] PASSED
+
+ToastChromeParityTest[jvm] > [dark=true][jvm] > cardUsesPopoverFillAndSixteenPixelRoundCorners[dark=true][jvm] PASSED
+
+ToastChromeParityTest[jvm] > [dark=true][jvm] > defaultHasNoGlyphAndStatusAddsExactlySixteenPlusTwelve[dark=true][jvm] PASSED
+
+ToastManagerParityTest[jvm] > closingLoadingFeedbackDoesNotRecreateItAfterCompletion[jvm] PASSED
+
+ToastManagerParityTest[jvm] > promiseFailureIsReportedWithoutAnUncaughtException[jvm] PASSED
+
+ToastManagerParityTest[jvm] > cancellationPropagatesAndRemovesPendingFeedback[jvm] PASSED
+
+ToastManagerParityTest[jvm] > promiseUpdatesOnePersistentLoadingMessageToSuccess[jvm] PASSED
+
+ToastManagerParityTest[jvm] > updateKeepsIdentityAndCannotResurrectDismissedMessages[jvm] PASSED
+
+ToastScreenshotTest[jvm] > states_light[jvm] PASSED
+
+ToastScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+ToggleScreenshotTest[jvm] > focused_light[jvm] PASSED
+
+ToggleScreenshotTest[jvm] > sizes_dark[jvm] PASSED
+
+ToggleScreenshotTest[jvm] > states_light[jvm] PASSED
+
+ToggleScreenshotTest[jvm] > focused_dark[jvm] PASSED
+
+ToggleScreenshotTest[jvm] > sizes_light[jvm] PASSED
+
+ToggleScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+ToggleGroupScreenshotTest[jvm] > states_light[jvm] PASSED
+
+ToggleGroupScreenshotTest[jvm] > states_dark[jvm] PASSED
+
+TooltipBehaviorParityTest[jvm] > keyboardFocusOpensWithoutTheHoverDelay[jvm] PASSED
+
+TooltipBehaviorParityTest[jvm] > escapeSuppressesTheCurrentHoverUntilItLeaves[jvm] PASSED
+
+TooltipBehaviorParityTest[jvm] > escapeClosesWithoutMovingFocusOrReopening[jvm] PASSED
+
+TooltipBehaviorParityTest[jvm] > controlledTooltipRequestsCloseOnlyAfterEscape[jvm] PASSED
+
+TooltipBehaviorParityTest[jvm] > mountingDoesNotReportAnOpenChange[jvm] PASSED
+
+TooltipBehaviorParityTest[jvm] > newlyHoveredSiblingClosesTheFocusedTooltipWithoutStealingFocus[jvm] PASSED
+
+TooltipBehaviorParityTest[jvm] > newlyOpenedSiblingClosesThePreviousHover[jvm] PASSED
+
+TooltipBehaviorParityTest[jvm] > firstHoverWaitsForTheConfiguredDelay[jvm] PASSED
+
+TooltipChromeParityTest[jvm] > arrowDoesNotAddSpaceToThePopupLayout[jvm] PASSED
+
+TooltipChromeParityTest[jvm] > novaChipUsesTwelveBySixPaddingAndNormalTwelveSixteenType[jvm] PASSED
+
+TooltipScreenshotTest[jvm] > arrow_light[jvm] PASSED
+
+TooltipScreenshotTest[jvm] > arrow_dark[jvm] PASSED
+
+TooltipScreenshotTest[jvm] > trigger_light[jvm] PASSED
+
+TooltipScreenshotTest[jvm] > side_offset_4_dark[jvm] PASSED
+
+TooltipScreenshotTest[jvm] > trigger_dark[jvm] PASSED
+
+TooltipScreenshotTest[jvm] > side_offset_4_light[jvm] PASSED
+
+TraceParityTest[jvm] > darkMatrix[jvm] PASSED
+
+TraceParityTest[jvm] > disabledTriggerCannotExpand[jvm] PASSED
+
+TraceParityTest[jvm] > unkeptContentDropsNestedOpenStateWhenTheOuterRowCollapses[jvm] PASSED
+
+TraceParityTest[jvm] > linkRowKeepsTheAccessibleNameForANewTab[jvm] PASSED
+
+TraceParityTest[jvm] > controlledTriggerOnlyRequestsStateChange[jvm] PASSED
+
+TraceParityTest[jvm] > rtlMatrix[jvm] PASSED
+
+TraceParityTest[jvm] > keepMountedPreservesNestedOpenState[jvm] PASSED
+
+TraceParityTest[jvm] > uncontrolledTriggerExpandsAndCollapsesDetails[jvm] PASSED
+
+TraceParityTest[jvm] > keyboardEnterExpandsDetails[jvm] PASSED
+
+TraceParityTest[jvm] > extrasMatrix[jvm] PASSED
+
+TraceParityTest[jvm] > lightMatrix[jvm] PASSED
+
+SwipeGestureTest[jvm] > a_drag_past_the_threshold_dismisses[jvm] PASSED
+
+SwipeGestureTest[jvm] > zero_extent_never_dismisses[jvm] PASSED
+
+SwipeGestureTest[jvm] > a_small_drag_below_the_threshold_does_not_dismiss[jvm] PASSED
+
+RippleShapeTest[jvm] > circleDark[jvm] PASSED
+
+RippleShapeTest[jvm] > ringRemainsOutsideShape[jvm] PASSED
+
+RippleShapeTest[jvm] > genericOutline[jvm] PASSED
+
+RippleShapeTest[jvm] > asymmetricCorners[jvm] PASSED
+
+RippleShapeTest[jvm] > circleLight[jvm] PASSED
+
+CssStyleableTest[jvm] > styleOpacityAppliesToTheOuterShadowAsWellAsTheContent[jvm] PASSED
+
+CssStyleableTest[jvm] > nativeOuterShadowFollowsTheFinalCallerProvidedGenericShape[jvm] PASSED
+
+CssStyleableTest[jvm] > changingOnlyShadowColorRepaintsWithoutAnimationTicks[jvm] PASSED
+
+CssStyleableTest[jvm] > inputFocusAndInvalidRingsDoNotTintTransparentInterior[jvm] PASSED
+
+FocusVisibleTest[jvm] > buttonRingTracksKeyboardModeWithoutMovingFocus[jvm] PASSED
+
+FocusVisibleTest[jvm] > textInputRetainsItsFocusCueInPointerMode[jvm] PASSED
+
+FocusVisibleTest[jvm] > selectRingTracksKeyboardModeWithoutMovingFocus[jvm] PASSED
+
+FocusVisibleTest[jvm] > destructiveButtonUsesTheSameFocusVisiblePolicy[jvm] PASSED
+
+FocusVisibleTest[jvm] > spaceActivatesPointerFocusedCheckboxAndEnablesKeyboardIndicator[jvm] PASSED
+
+ScrollFadeInteractionTest[jvm] > noneRetainsAllContentPixelsAndScrolling[jvm] PASSED
+
+ScrollFadeInteractionTest[jvm] > overlappingRtlGradientKeepsCssLogicalStopOrder[jvm] PASSED
+
+ScrollFadeInteractionTest[jvm] > horizontalAndRtlMasksMirrorTheReadingDirection[jvm] PASSED
+
+ScrollFadeInteractionTest[jvm] > physicalLeftRemainsOnTheLeftInRtl[jvm] PASSED
+
+ScrollFadeInteractionTest[jvm] > halfRevealIsHalfDepthRatherThanInstantFullDepth[jvm] PASSED
+
+ScrollFadeInteractionTest[jvm] > logicalStartInRtlOnlyRevealsTheRightEdgeAfterScrolling[jvm] PASSED
+
+ScrollFadeInteractionTest[jvm] > realTouchScrollingUpdatesTheMaskWithoutComposingTheCaller[jvm] PASSED
+
+ScrollFadeInteractionTest[jvm] > bottomOnlyDoesNotFadeTheTop[jvm] PASSED
+
+ScrollFadeInteractionTest[jvm] > attachmentCappedBridgeKeepsItsFractionAndRevealContract[jvm] PASSED
+
+ScrollFadeInteractionTest[jvm] > fixedAndAsymmetricDepthsOverrideTheDefaultPercentage[jvm] PASSED
+
+ScrollFadeInteractionTest[jvm] > horizontalLtrStartsCrispOnTheLeft[jvm] PASSED
+
+ScrollFadeInteractionTest[jvm] > topOnlyDoesNotFadeTheBottom[jvm] PASSED
+
+ScrollFadeInteractionTest[jvm] > fittingContentDoesNotFadeAndShrinkingOverflowRemovesTheMask[jvm] PASSED
+
+ScrollFadeInteractionTest[jvm] > defaultVerticalMaskTracksStartMiddleAndEndOverAnUnrelatedBackground[jvm] PASSED
+
+ScrollFadeNovaScreenshotTest[jvm] > startDark[jvm] PASSED
+
+ScrollFadeNovaScreenshotTest[jvm] > endDark[jvm] PASSED
+
+ScrollFadeNovaScreenshotTest[jvm] > startLight[jvm] PASSED
+
+ScrollFadeNovaScreenshotTest[jvm] > middleDark[jvm] PASSED
+
+ScrollFadeNovaScreenshotTest[jvm] > middleLight[jvm] PASSED
+
+ScrollFadeNovaScreenshotTest[jvm] > endLight[jvm] PASSED
+
+ScrollFadeTest[jvm] > revealUsesSymmetricCssEaseInOutOverNinetySixPixels[jvm] PASSED
+
+ScrollFadeTest[jvm] > noFadeLeavesAnOpaqueMask[jvm] PASSED
+
+ScrollFadeTest[jvm] > defaultIsCappedAtFortyOnTallViewports[jvm] PASSED
+
+ScrollFadeTest[jvm] > explicitLengthsAndPercentagesBypassDefaultCap[jvm] PASSED
+
+ScrollFadeTest[jvm] > invalidSizesAreRejectedAndZeroExtentIsSafe[jvm] PASSED
+
+ScrollFadeTest[jvm] > trailingAppearsBeforeEnd[jvm] PASSED
+
+ScrollFadeTest[jvm] > leadingIsCrispAtStart[jvm] PASSED
+
+ScrollFadeTest[jvm] > defaultUsesTwelvePercentOnSmallViewports[jvm] PASSED
+
+ScrollFadeTest[jvm] > leadingAppearsAfterStart[jvm] PASSED
+
+ScrollFadeTest[jvm] > overlappingFadesUseCssStopFixupInsteadOfMultiplyingTwoMasks[jvm] PASSED
+
+ScrollFadeTest[jvm] > trailingIsCrispAtEnd[jvm] PASSED
+
+ScrollFadeTest[jvm] > normalGradientHasTwoOpaqueStopsAndTransparentEnds[jvm] PASSED
+
+ScrollFadeTest[jvm] > oversizedLeadingFadePreservesTheVisiblePartOfItsRamp[jvm] PASSED
+
+ShimmerColorMathTest[jvm] > darkBlackUsesPointEightFloorAndRaisesAlpha[jvm] PASSED
+
+ShimmerColorMathTest[jvm] > alphaPremultipliedOklchMidpointHasExpectedLuminance[jvm] PASSED
+
+ShimmerColorMathTest[jvm] > sharedStyleCachesColorsSeparatelyAndKeepsExplicitPeakAlpha[jvm] PASSED
+
+ShimmerColorMathTest[jvm] > powerlessGrayHueBorrowsChromaticEndpointHue[jvm] PASSED
+
+ShimmerColorMathTest[jvm] > lightRelativeColorRetainsRgbAndScalesOriginalAlpha[jvm] PASSED
+
+ShimmerColorMathTest[jvm] > shortestHueCrossesZeroInsteadOfOppositeGreenArc[jvm] PASSED
+
+ShimmerColorMathTest[jvm] > darkLuminanceAtOneMapsToWhiteEvenForSaturatedBase[jvm] PASSED
+
+ShimmerColorMathTest[jvm] > fullyTransparentWhiteDoesNotLeakLuminanceIntoBlackMidpoint[jvm] PASSED
+
+ShimmerCssColorTest[jvm] > darkDefaultPeakUsesRelativeOklchLightness[jvm] PASSED
+
+ShimmerCssColorTest[jvm] > defaultBaseIsTheActualTextColor[jvm] PASSED
+
+ShimmerCssColorTest[jvm] > lightDefaultPeakUsesCurrentColorAtTwentyPercentAlpha[jvm] PASSED
+
+ShimmerCssColorTest[jvm] > explicitTranslucentPeakKeepsItsAlphaInsteadOfCompositingOverBase[jvm] PASSED
+
+ShimmerCurrentColorTest[jvm] > ancestorColorChangeRepaintsWithoutRecomposingTextCaller[jvm] PASSED
+
+ShimmerCurrentColorTest[jvm] > nearerExplicitTextColorOverridesOwnStyleShimmerColor[jvm] PASSED
+
+ShimmerCurrentColorTest[jvm] > rawThenChainAlsoRetainsItsPrecedingOwnColor[jvm] PASSED
+
+ShimmerCurrentColorTest[jvm] > precedingOwnStyleColorCanChangeWhileAnimationClockIsPaused[jvm] PASSED
+
+ShimmerCurrentColorTest[jvm] > explicitBaseParameterStillOverridesTextCurrentColor[jvm] PASSED
+
+ShimmerCurrentColorTest[jvm] > styleShimmerRetainsItsPrecedingOwnColor[jvm] PASSED
+
+ShimmerCurrentColorTest[jvm] > ancestorStyleColorIsCurrentColor[jvm] PASSED
+
+ShimmerCurrentColorTest[jvm] > localContentColorIsCurrentColor[jvm] PASSED
+
+ShimmerTextPaintTest[jvm] > darkStyleShimmerActuallyChangesGlyphPixels[jvm] PASSED
+
+ShimmerTextPaintTest[jvm] > contentBrushAppliesToAnnotatedText[jvm] PASSED
+
+ShimmerTextPaintTest[jvm] > styleShimmerActuallyChangesGlyphPixels[jvm] PASSED
+
+ShimmerTextPaintTest[jvm] > selectionContainerStillPaintsStyleBrush[jvm] PASSED
+
+ShimmerTextPaintTest[jvm] > explicitTextColorStillOverridesOwnStyleSolidColor[jvm] PASSED
+
+ShimmerTextPaintTest[jvm] > contentBrushOverridesSpecifiedPlainTextColor[jvm] PASSED
+
+ShimmerTextPaintTest[jvm] > brushRemovalRestoresSpecifiedSolidColorAndDisabledAnimationStops[jvm] PASSED
+
+ShimmerTextPaintTest[jvm] > modifierAnimationRepaintsWithoutRecomposingCaller[jvm] PASSED
+
+ShimmerTextPaintTest[jvm] > styleAnimationRepaintsWithoutRecomposingCaller[jvm] PASSED
+
+ShimmerTextPaintTest[jvm] > onceStyleChangesPixelsThenKeepsItsFinalFrame[jvm] PASSED
+
+ShimmerTextPaintTest[jvm] > translucentBrushDoesNotMultiplyOriginalTextAlphaTwice[jvm] PASSED
+
+ShimmerTextPaintTest[jvm] > ancestorBrushIsInheritedWithoutTintingWhitespace[jvm] PASSED
+
+AccentRenderingTest[jvm] > darkMatrix[jvm] PASSED
+
+AccentRenderingTest[jvm] > lightMatrix[jvm] PASSED
+
+AccentRenderingTest[jvm] > liveAccentAndBaseChangesRepaintWithoutResizingAndBaseResetsOverrides[jvm] PASSED
+
+AccentSourceTest[jvm] > darkOverridesAndUnmentionedRolesMatchOfficialSource[jvm] PASSED
+
+AccentSourceTest[jvm] > lightOverridesAndUnmentionedRolesMatchOfficialSource[jvm] PASSED
+
+AccentSourceTest[jvm] > baseAccentPreservesPaletteIdentity[jvm] PASSED
+
+BaseColorSourceTest[jvm] > allDarkRolesMatchOfficialRegistry[jvm] PASSED
+
+BaseColorSourceTest[jvm] > allLightRolesMatchOfficialRegistry[jvm] PASSED
+
+ColorContrastTest[jvm] > every Accent overrides primary with sufficient contrast on every base in both light and dark[jvm] PASSED
+
+ColorContrastTest[jvm] > every BaseColor light and dark palette has sufficient contrast[jvm] PASSED
+
+ColorContrastTest[jvm] > default light and dark palettes have sufficient contrast[jvm] PASSED
+
+ThemeRoleRenderingTest[jvm] > disabledInputBackgroundUsesItsOpacityOverTheCurrentSurface[jvm] PASSED
+
+ThemeRoleRenderingTest[jvm] > presetsAndAccentChangesPreserveTheSharedBorderAndInputRoles[jvm] PASSED
+
+ThemeRoleRenderingTest[jvm] > lightInputControlsPreserveTheActualTintedSurface[jvm] PASSED
+
+ThemeRoleRenderingTest[jvm] > controlsPaintTranslucentInputRoleAcrossBasesAndLiveThemeChanges[jvm] PASSED
+
+1333 tests completed, 5 failed
+
+> Task :shadcn:core:jvmTest FAILED
+> Task :shadcn:core:finalizeTestRoborazziJvm SKIPPED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':shadcn:core:jvmTest'.
+> There were failing tests. See the report at: file:///Users/cscs/IdeaProjects/angryecho/compose-foundation/shadcn/core/build/reports/tests/jvmTest/index.html
+
+* Try:
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 42s
+20 actionable tasks: 6 executed, 14 up-to-date
+Configuration cache entry reused.
+EXIT=1

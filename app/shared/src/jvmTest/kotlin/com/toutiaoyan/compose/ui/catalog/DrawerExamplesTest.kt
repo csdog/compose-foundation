@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.test.*
@@ -154,21 +155,53 @@ class DrawerExamplesTest {
         rule.onNodeWithText("@shadcn").assertIsDisplayed()
     }
 
+    @Test fun undismissibleExtensionBlocksOutsidePressButKeepsCloseControl() {
+        show("Kotlin extension: Undismissible")
+        rule.onNodeWithText("Open drawer").performClick()
+        rule.onAllNodes(isRoot()).onLast().performTouchInput { click(Offset(2f, 2f)) }
+        rule.waitForIdle()
+        rule.onNodeWithText("Notice").assertIsDisplayed()
+        rule.onNodeWithContentDescription("Close").performClick()
+        rule.waitForIdle()
+        rule.onNodeWithText("Notice").assertDoesNotExist()
+    }
+
+    @Test fun footerExtensionCloseActionClosesTheDrawer() {
+        show("Kotlin extension: Footer")
+        rule.onNodeWithText("Open drawer").performClick()
+        rule.onNodeWithText("Close").performClick()
+        rule.waitForIdle()
+        rule.onNodeWithText("Notice").assertDoesNotExist()
+    }
+
+    @Test fun exportIncludesMigrationCalloutAndHonestStylingTables() {
+        val markdown = componentPageMarkdown(drawerDoc)
+        val callout = markdown.indexOf("The drawer now follows [Base UI]")
+        assertTrue(callout >= 0 && callout < markdown.indexOf("## Installation"))
+        assertContains(markdown, "| Web variable | Default | Compose behavior |")
+        assertContains(markdown, "| Web attribute | Values / when set | Compose mapping |")
+        assertContains(markdown, "No public swipe-progress state.")
+        assertContains(markdown, "snap points keep an opacity floor of 0.5")
+        assertContains(markdown, "Without the host, the popup fallback has no backdrop capture")
+        assertContains(markdown, "`DrawerScope.nestedOpenCount > 0`")
+    }
+
     @Test fun exportKeepsOfficialSectionsInOrder() {
         val markdown = componentPageMarkdown(drawerDoc)
         assertFalse(markdown.contains("## Examples"))
-        val order = listOf(
-            "## Custom Sizes",
-            "## Styling",
-            "## Position",
-            "## Swipe Handle",
-            "## Nested",
-            "## Non Modal",
-            "## Snap Points",
-            "## Responsive",
-            "## Migrating from Vaul",
-            "## API Reference",
-        ).map { markdown.indexOf(it) }
+        val order =
+            listOf(
+                "## Custom Sizes",
+                "## Styling",
+                "## Position",
+                "## Swipe Handle",
+                "## Nested",
+                "## Non Modal",
+                "## Snap Points",
+                "## Responsive",
+                "## Migrating from Vaul",
+                "## API Reference",
+            ).map { markdown.indexOf(it) }
         assertTrue(order.all { it >= 0 }, "missing a section heading: $order")
         assertEquals(order.sorted(), order)
         assertContains(markdown, "DrawerContent")

@@ -171,7 +171,13 @@ val calendarDoc =
                             "Month and Year Selector" ->
                                 "Use the dropdown caption layout to show month and year menus."
                             "Week Numbers" -> "Use `showWeekNumber` to show week numbers."
-                            "RTL" -> "To enable RTL support in shadcn/ui, see the [RTL configuration guide](https://ui.shadcn.com/docs/rtl)."
+                            "RTL" ->
+                                "To enable RTL support in shadcn/ui, see the " +
+                                    "[RTL configuration guide](https://ui.shadcn.com/docs/rtl). " +
+                                    "See also the [Hijri Guide]" +
+                                    "(https://ui.shadcn.com/docs/components/base/calendar" +
+                                    "#persian--hijri--jalali-calendar) for enabling the " +
+                                    "Persian / Hijri / Jalali calendar."
                             else -> null
                         },
                     preview = { CalendarRecipe(title) },

@@ -11,6 +11,7 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.catalog.docs.itemDoc
 import com.toutiaoyan.compose.ui.components.overlay.OverlayHost
 import com.toutiaoyan.compose.ui.theme.Theme
@@ -116,10 +117,7 @@ class ItemExamplesTest {
                 .contains("RTL configuration guide"),
         )
         assertTrue(
-            itemDoc.examples
-                .single { it.title == "Default" }
-                .descriptionMarkdown!!
-                .contains("straightforward flex container"),
+            itemDoc.introMarkdown!!.contains("straightforward flex container"),
         )
         val vsField = itemDoc.beforeExamples.single { it.title == "Item vs Field" }
         assertEquals(2, vsField.blocks.size)
@@ -128,6 +126,31 @@ class ItemExamplesTest {
                 .markdown
                 .contains("form input such as a checkbox"),
         )
+    }
+
+    @Test fun exportedPageKeepsIntroductionAndCompositionGuidanceAtTheirSourcePositions() {
+        val markdown = componentPageMarkdown(itemDoc)
+        val intro = assertNotNull(itemDoc.introMarkdown)
+        val composition = assertNotNull(itemDoc.beforeCompositionMarkdown)
+        val positions =
+            listOf(
+                itemDoc.examples.first().code,
+                intro,
+                "## Installation",
+                "## Usage",
+                "## Composition",
+                composition,
+                assertNotNull(itemDoc.compositionCode),
+                "## Item vs Field",
+                "## Variant",
+            ).map { text -> markdown.indexOf(text).also { assertTrue(it >= 0, "Missing $text") } }
+        assertEquals(positions.sorted(), positions)
+        assertEquals(1, markdown.split(intro).size - 1)
+        assertNull(itemDoc.examples.first().descriptionMarkdown)
+        assertFalse(markdown.contains("## $composition"))
+        assertTrue(itemDoc.usageCode.contains("ItemMedia(variant = ItemMediaVariant.Icon)"))
+        val withoutLeadIn = componentPageMarkdown(itemDoc.copy(beforeCompositionMarkdown = null))
+        assertEquals(withoutLeadIn, markdown.replace("$composition\n\n", ""))
     }
 
     @Test fun defaultIncludesTheActionAndTheVerifiedProfileLink() {

@@ -45,7 +45,8 @@ class CollapsibleExamplesTest {
     fun controlledStateAndApiReferenceMatchTheOfficialPage() {
         val controlled = collapsibleDoc.beforeExamples.single { it.title == "Controlled State" }
         assertTrue(controlled.blocks.any { it is ComponentGuideBlock.Paragraph })
-        val code = assertIs<ComponentGuideBlock.Code>(controlled.blocks.filterIsInstance<ComponentGuideBlock.Code>().single())
+        val code =
+            assertIs<ComponentGuideBlock.Code>(controlled.blocks.filterIsInstance<ComponentGuideBlock.Code>().single())
         assertTrue(code.code.contains("open = open"))
         assertTrue(code.code.contains("onOpenChange = { open = it }"))
 
@@ -53,6 +54,7 @@ class CollapsibleExamplesTest {
             "Collapsible\n├── CollapsibleTrigger\n└── CollapsibleContent",
             collapsibleDoc.compositionCode,
         )
+        assertEquals("Use the following composition to build a `Collapsible`:", collapsibleDoc.compositionMarkdown)
         val api = collapsibleDoc.afterExamples.single { it.title == "API Reference" }
         val paragraph = assertIs<ComponentGuideBlock.Paragraph>(api.blocks.single())
         assertTrue(
@@ -74,8 +76,13 @@ class CollapsibleExamplesTest {
                 "## RTL",
                 "## API Reference",
             )
-        val positions = headings.map { heading -> markdown.indexOf(heading).also { assertTrue(it >= 0, "missing $heading") } }
+        val positions =
+            headings.map {
+                    heading ->
+                markdown.indexOf(heading).also { assertTrue(it >= 0, "missing $heading") }
+            }
         assertEquals(positions.sorted(), positions)
+        assertTrue(markdown.contains("Use the following composition to build a `Collapsible`:"))
         assertFalse(markdown.contains("## Examples"))
         assertTrue(markdown.contains("## Kotlin extension: Disabled"))
     }
@@ -123,6 +130,23 @@ class CollapsibleExamplesTest {
         rule.onNodeWithTag("collapsible-settings-toggle").performClick()
         rule.waitForIdle()
         rule.onAllNodes(hasSetTextAction()).assertCountEquals(4)
+    }
+
+    @Test
+    fun settingsRadiusFieldsKeepAccessibleNamesWhenExpanded() {
+        val example = collapsibleDoc.examples.single { it.title == "Settings Panel" }
+        rule.setContent { Theme(preset = StylePreset.Nova, minTouchTarget = null) { example.preview() } }
+        rule.onAllNodes(hasSetTextAction() and hasContentDescription("Radius X")).assertCountEquals(1)
+        rule.onAllNodes(hasSetTextAction() and hasContentDescription("Radius Y")).assertCountEquals(1)
+
+        rule.onNodeWithTag("collapsible-settings-toggle").performClick()
+        rule.waitForIdle()
+        rule.onAllNodes(hasSetTextAction() and hasContentDescription("Radius X")).assertCountEquals(2)
+        rule.onAllNodes(hasSetTextAction() and hasContentDescription("Radius Y")).assertCountEquals(2)
+        rule.onAllNodes(hasSetTextAction() and hasContentDescription("Radius X"))[1].performTextReplacement("12")
+        rule.onNodeWithTag("collapsible-settings-toggle").performClick()
+        rule.waitForIdle()
+        rule.onAllNodes(hasSetTextAction() and hasContentDescription("Radius X")).assertCountEquals(1)
     }
 
     @Test

@@ -38,14 +38,15 @@ class ToggleExamplesTest {
         assertTrue(toggleDoc.examples.drop(6).all { it.title.startsWith("Kotlin extension: ") })
         assertEquals(null, toggleDoc.examplesHeading)
         val markdown = componentPageMarkdown(toggleDoc)
-        val order = listOf(
-            "## Outline",
-            "## With Text",
-            "## Size",
-            "## Disabled",
-            "## RTL",
-            "## API Reference",
-        ).map { markdown.indexOf(it) }
+        val order =
+            listOf(
+                "## Outline",
+                "## With Text",
+                "## Size",
+                "## Disabled",
+                "## RTL",
+                "## API Reference",
+            ).map { markdown.indexOf(it) }
         assertTrue(order.all { it >= 0 }, "missing a section heading: $order")
         assertEquals(order.sorted(), order)
         assertContains(markdown, "Use `variant = ToggleVariant.Outline` for an outline style.")

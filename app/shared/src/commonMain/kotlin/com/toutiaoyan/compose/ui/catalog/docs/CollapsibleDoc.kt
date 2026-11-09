@@ -31,6 +31,8 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -90,6 +92,7 @@ val collapsibleDoc =
             ├── CollapsibleTrigger
             └── CollapsibleContent
             """.trimIndent(),
+        compositionMarkdown = "Use the following composition to build a `Collapsible`:",
         examplesHeading = null,
         beforeExamples =
             listOf(
@@ -203,13 +206,33 @@ val collapsibleDoc =
                                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                                             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                                Field(Modifier.weight(1f)) { Input(x, { x = it }, placeholder = "0") }
-                                                Field(Modifier.weight(1f)) { Input(y, { y = it }, placeholder = "0") }
+                                                Field(Modifier.weight(1f)) {
+                                                    Input(
+                                                        x, { x = it }, placeholder = "0",
+                                                        modifier = Modifier.semantics { contentDescription = "Radius X" },
+                                                    )
+                                                }
+                                                Field(Modifier.weight(1f)) {
+                                                    Input(
+                                                        y, { y = it }, placeholder = "0",
+                                                        modifier = Modifier.semantics { contentDescription = "Radius Y" },
+                                                    )
+                                                }
                                             }
                                             CollapsibleContent {
                                                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                                    Field(Modifier.weight(1f)) { Input(x2, { x2 = it }, placeholder = "0") }
-                                                    Field(Modifier.weight(1f)) { Input(y2, { y2 = it }, placeholder = "0") }
+                                                    Field(Modifier.weight(1f)) {
+                                                        Input(
+                                                            x2, { x2 = it }, placeholder = "0",
+                                                            modifier = Modifier.semantics { contentDescription = "Radius X" },
+                                                        )
+                                                    }
+                                                    Field(Modifier.weight(1f)) {
+                                                        Input(
+                                                            y2, { y2 = it }, placeholder = "0",
+                                                            modifier = Modifier.semantics { contentDescription = "Radius Y" },
+                                                        )
+                                                    }
                                                 }
                                             }
                                         }
@@ -408,7 +431,10 @@ private fun DemoText(
 }
 
 @Composable
-private fun InfoRow(title: String, value: String) {
+private fun InfoRow(
+    title: String,
+    value: String,
+) {
     val colors = currentTheme.colors
     Column(
         Modifier.fillMaxWidth()
@@ -430,42 +456,42 @@ private fun CollapsibleDefaultPreview() {
             onOpenChange = { open = it },
             modifier = Modifier.width(350.dp),
         ) {
-        Row(
-            Modifier.fillMaxWidth().padding(horizontal = 16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            DemoText("Order #4189", semibold = true)
-            CollapsibleTrigger(
-                modifier = Modifier.size(32.dp).testTag("collapsible-default-toggle"),
-                style =
-                    Style {
-                        shape(RoundedCornerShape(6.dp))
-                        hovered { background(colors.muted) }
-                    },
+            Row(
+                Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Icon(Lucide.ChevronsUpDown, Modifier.size(16.dp), contentDescription = "Toggle details")
+                DemoText("Order #4189", semibold = true)
+                CollapsibleTrigger(
+                    modifier = Modifier.size(32.dp).testTag("collapsible-default-toggle"),
+                    style =
+                        Style {
+                            shape(RoundedCornerShape(6.dp))
+                            hovered { background(colors.muted) }
+                        },
+                ) {
+                    Icon(Lucide.ChevronsUpDown, Modifier.size(16.dp), contentDescription = "Toggle details")
+                }
             }
-        }
-        Spacer(Modifier.height(8.dp))
-        Row(
-            Modifier.fillMaxWidth().border(1.dp, colors.border, RoundedCornerShape(6.dp))
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            DemoText("Status", muted = true)
-            DemoText("Shipped", medium = true)
-        }
-        CollapsibleContent {
-            Column(
-                Modifier.fillMaxWidth().padding(top = 8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+            Spacer(Modifier.height(8.dp))
+            Row(
+                Modifier.fillMaxWidth().border(1.dp, colors.border, RoundedCornerShape(6.dp))
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                InfoRow("Shipping address", "100 Market St, San Francisco")
-                InfoRow("Items", "2x Studio Headphones")
+                DemoText("Status", muted = true)
+                DemoText("Shipped", medium = true)
             }
-        }
+            CollapsibleContent {
+                Column(
+                    Modifier.fillMaxWidth().padding(top = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    InfoRow("Shipping address", "100 Market St, San Francisco")
+                    InfoRow("Items", "2x Studio Headphones")
+                }
+            }
         }
     }
 }
@@ -476,49 +502,49 @@ private fun CollapsibleBasicPreview() {
     val colors = currentTheme.colors
     Box(Modifier.fillMaxWidth().height(208.dp), contentAlignment = Alignment.TopCenter) {
         Card(Modifier.widthIn(max = 384.dp).fillMaxWidth()) {
-        CardContent {
-            Collapsible(open = open, onOpenChange = { open = it }, modifier = Modifier.fillMaxWidth()) {
-                CollapsibleTrigger(
-                    modifier = Modifier.fillMaxWidth().testTag("collapsible-basic-toggle"),
-                    style =
-                        Style {
-                            shape(RoundedCornerShape(6.dp))
-                            background(if (open) colors.muted else Color.Transparent)
-                            hovered { background(colors.muted) }
-                        },
-                ) {
-                    Row(
-                        Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically,
+            CardContent {
+                Collapsible(open = open, onOpenChange = { open = it }, modifier = Modifier.fillMaxWidth()) {
+                    CollapsibleTrigger(
+                        modifier = Modifier.fillMaxWidth().testTag("collapsible-basic-toggle"),
+                        style =
+                            Style {
+                                shape(RoundedCornerShape(6.dp))
+                                background(if (open) colors.muted else Color.Transparent)
+                                hovered { background(colors.muted) }
+                            },
                     ) {
-                        DemoText("Product details", medium = true)
-                        Icon(
-                            Lucide.ChevronDown,
-                            Modifier.size(16.dp).rotate(if (open) 180f else 0f),
-                            contentDescription = "Toggle details",
-                        )
+                        Row(
+                            Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            DemoText("Product details", medium = true)
+                            Icon(
+                                Lucide.ChevronDown,
+                                Modifier.size(16.dp).rotate(if (open) 180f else 0f),
+                                contentDescription = "Toggle details",
+                            )
+                        }
                     }
-                }
-                CollapsibleContent(
-                    style = Style { background(if (open) colors.muted else Color.Transparent) },
-                ) {
-                    Column(
-                        Modifier.fillMaxWidth().padding(start = 10.dp, end = 10.dp, bottom = 10.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        horizontalAlignment = Alignment.Start,
+                    CollapsibleContent(
+                        style = Style { background(if (open) colors.muted else Color.Transparent) },
                     ) {
-                        DemoText("This panel can be expanded or collapsed to reveal additional content.")
-                        Button(
-                            "Learn More",
-                            onClick = {},
-                            variant = ButtonVariant.Default,
-                            size = ButtonSize.Xs,
-                        )
+                        Column(
+                            Modifier.fillMaxWidth().padding(start = 10.dp, end = 10.dp, bottom = 10.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                            horizontalAlignment = Alignment.Start,
+                        ) {
+                            DemoText("This panel can be expanded or collapsed to reveal additional content.")
+                            Button(
+                                "Learn More",
+                                onClick = {},
+                                variant = ButtonVariant.Default,
+                                size = ButtonSize.Xs,
+                            )
+                        }
                     }
                 }
             }
-        }
         }
     }
 }
@@ -548,16 +574,44 @@ private fun CollapsibleSettingsPreview() {
                             Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
-                            Field(Modifier.weight(1f)) { Input(radiusX, { radiusX = it }, placeholder = "0") }
-                            Field(Modifier.weight(1f)) { Input(radiusY, { radiusY = it }, placeholder = "0") }
+                            Field(Modifier.weight(1f)) {
+                                Input(
+                                    radiusX,
+                                    { radiusX = it },
+                                    placeholder = "0",
+                                    modifier = Modifier.semantics { contentDescription = "Radius X" },
+                                )
+                            }
+                            Field(Modifier.weight(1f)) {
+                                Input(
+                                    radiusY,
+                                    { radiusY = it },
+                                    placeholder = "0",
+                                    modifier = Modifier.semantics { contentDescription = "Radius Y" },
+                                )
+                            }
                         }
                         CollapsibleContent {
                             Row(
                                 Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                             ) {
-                                Field(Modifier.weight(1f)) { Input(radiusX2, { radiusX2 = it }, placeholder = "0") }
-                                Field(Modifier.weight(1f)) { Input(radiusY2, { radiusY2 = it }, placeholder = "0") }
+                                Field(Modifier.weight(1f)) {
+                                    Input(
+                                        radiusX2,
+                                        { radiusX2 = it },
+                                        placeholder = "0",
+                                        modifier = Modifier.semantics { contentDescription = "Radius X" },
+                                    )
+                                }
+                                Field(Modifier.weight(1f)) {
+                                    Input(
+                                        radiusY2,
+                                        { radiusY2 = it },
+                                        placeholder = "0",
+                                        modifier = Modifier.semantics { contentDescription = "Radius Y" },
+                                    )
+                                }
                             }
                         }
                     }
@@ -768,30 +822,30 @@ private fun CollapsibleRtlPreview() {
             Modifier.fillMaxWidth().height(288.dp).padding(40.dp),
             contentAlignment = Alignment.TopCenter,
         ) {
-        val inherited = currentTheme
-        val fontFamily =
-            when (language) {
-                0 -> catalogArabicFontFamily()
-                2 -> catalogHebrewFontFamily()
-                else -> inherited.fontFamily
-            }
-        CompositionLocalProvider(
-            LocalLayoutDirection provides if (language == 1) LayoutDirection.Ltr else LayoutDirection.Rtl,
-        ) {
-            Theme(
-                preset = inherited.activePreset,
-                baseColor = inherited.activeBaseColor,
-                accent = inherited.activeAccent,
-                isDark = inherited.isDark,
-                baseRadius = inherited.baseRadius,
-                ring = inherited.ring,
-                unitSpacing = LocalUnitSpacing.current,
-                minTouchTarget = inherited.minTouchTarget,
-                fontFamily = fontFamily,
+            val inherited = currentTheme
+            val fontFamily =
+                when (language) {
+                    0 -> catalogArabicFontFamily()
+                    2 -> catalogHebrewFontFamily()
+                    else -> inherited.fontFamily
+                }
+            CompositionLocalProvider(
+                LocalLayoutDirection provides if (language == 1) LayoutDirection.Ltr else LayoutDirection.Rtl,
             ) {
-                CollapsibleRtlPanel(rtlCopy[language])
+                Theme(
+                    preset = inherited.activePreset,
+                    baseColor = inherited.activeBaseColor,
+                    accent = inherited.activeAccent,
+                    isDark = inherited.isDark,
+                    baseRadius = inherited.baseRadius,
+                    ring = inherited.ring,
+                    unitSpacing = LocalUnitSpacing.current,
+                    minTouchTarget = inherited.minTouchTarget,
+                    fontFamily = fontFamily,
+                ) {
+                    CollapsibleRtlPanel(rtlCopy[language])
+                }
             }
-        }
         }
     }
 }

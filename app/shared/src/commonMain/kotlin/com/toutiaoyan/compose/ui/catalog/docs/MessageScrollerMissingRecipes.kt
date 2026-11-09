@@ -7,8 +7,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.style.Style
-import androidx.compose.foundation.style.contentPadding
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,6 +28,7 @@ import com.toutiaoyan.compose.ui.components.select.*
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.togglegroup.*
 import com.toutiaoyan.compose.ui.theme.currentTheme
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -53,6 +52,7 @@ internal fun MessageScrollerDemoRecipe() {
     }
     var streaming by remember { mutableStateOf(false) }
     var started by remember { mutableStateOf(false) }
+    var streamJob by remember { mutableStateOf<Job?>(null) }
     val scope = rememberCoroutineScope()
 
     fun send() {
@@ -61,16 +61,17 @@ internal fun MessageScrollerDemoRecipe() {
         val replyId = "demo-2"
         messages = messages + ScrollerRecipeMessage(replyId, false, "")
         streaming = true
-        scope.launch {
-            for (count in 1..demoReply.length) {
-                delay(6)
-                messages =
-                    messages.map {
-                        if (it.id == replyId) it.copy(text = demoReply.take(count)) else it
-                    }
+        streamJob =
+            scope.launch {
+                for (count in 1..demoReply.length) {
+                    delay(6)
+                    messages =
+                        messages.map {
+                            if (it.id == replyId) it.copy(text = demoReply.take(count)) else it
+                        }
+                }
+                streaming = false
             }
-            streaming = false
-        }
     }
 
     MessageScrollerProvider(autoScroll = true) {
@@ -81,11 +82,15 @@ internal fun MessageScrollerDemoRecipe() {
             action = {
                 Button(
                     onClick = {
+                        streamJob?.cancel()
+                        streamJob = null
                         messages = listOf(ScrollerRecipeMessage("demo-1", true, demoPrompt))
                         streaming = false
+                        started = false
                     },
                     variant = ButtonVariant.Outline,
                     size = ButtonSize.Icon,
+                    label = "Reset conversation",
                 ) { DocIcon(Lucide.RefreshCw) }
             },
             footer = {
@@ -360,7 +365,7 @@ internal fun MessageScrollerGroupChatRecipe() {
                                         Message(align = if (me) MessageAlign.End else MessageAlign.Start) {
                                             MessageContent {
                                                 if (!me && item.sender != null) {
-                                                    MessageHeader(item.sender!!)
+                                                    MessageHeader(item.sender)
                                                 }
                                                 Bubble(
                                                     variant =
@@ -432,8 +437,8 @@ internal fun MessageScrollerStreamingRecipe() {
         val replyId = "stream-reply-$turn"
         messages =
             messages +
-                ScrollerRecipeMessage(promptId, true, current.prompt) +
-                ScrollerRecipeMessage(replyId, false, "")
+            ScrollerRecipeMessage(promptId, true, current.prompt) +
+            ScrollerRecipeMessage(replyId, false, "")
         streaming = true
         val reply = current.reply
         scope.launch {
@@ -551,8 +556,8 @@ internal fun MessageScrollerAnimationRecipe() {
         val replyId = "anim-${idCounter++}"
         messages =
             messages +
-                AnimatedMessage(userId, true, current.first, preset) +
-                AnimatedMessage(replyId, false, "", preset)
+            AnimatedMessage(userId, true, current.first, preset) +
+            AnimatedMessage(replyId, false, "", preset)
         streaming = true
         val reply = current.second
         scope.launch {
@@ -701,7 +706,8 @@ internal val messageScrollerPageGuideSections =
                         listOf(
                             "Move only when the reader asked to move; auto-scroll is never the default.",
                             "Follow only while they're following — scrolling away releases the view.",
-                            "Treat every interaction as a signal: selection, keyboard, links and search all stop movement.",
+                            "Treat every interaction as a signal: selection, keyboard, links " +
+                                "and search all stop movement.",
                             "Start a new turn near the top of the viewport so it can be read from the beginning.",
                             "Stream the answer into the screen instead of pushing everything away.",
                             "Keep part of the previous conversation in context.",
@@ -768,12 +774,12 @@ internal val messageScrollerPageAfterSections =
                 listOf(
                     ComponentGuideBlock.Paragraph(
                         (
-                            "The scroll hot path stays outside composition state: position, " +
-                                "anchoring and follow-output are tracked imperatively so streaming " +
-                                "and scrolling do not recompose transcript rows. Visibility " +
-                                "tracking is pay-for-what-you-use — it only runs while something " +
-                                "subscribes to the visibility snapshot. This is comfortable for " +
-                                "hundreds to low thousands of turns."
+                            "The official web implementation keeps scroll work outside React " +
+                                "state and uses content-visibility to skip offscreen painting. " +
+                                "Compose caches measured row geometry and reconciles changes after " +
+                                "a frame. Its visibility snapshot is derived on demand, but all " +
+                                "transcript rows are eagerly composed and measured. Browser " +
+                                "benchmark results do not establish a native transcript size limit."
                         ),
                     ),
                 ),
@@ -784,12 +790,13 @@ internal val messageScrollerPageAfterSections =
                 listOf(
                     ComponentGuideBlock.Paragraph(
                         (
-                            "Virtualization is intentionally left outside the primitive. " +
-                                "MessageScroller renders real, measurable rows and stays fast well " +
-                                "into the thousands of turns. Compose has no DOM and no TanStack " +
-                                "Virtual equivalent in this library; when a transcript is large " +
-                                "enough to need virtualization, supply your own lazy layout inside " +
-                                "MessageScrollerContent and keep stable `messageId` values."
+                            "The official web recipe gives TanStack Virtual ownership of rows " +
+                                "inside the viewport. This Compose implementation uses a vertically " +
+                                "scrolling Column and ScrollState; it has no lazy-layout adapter. " +
+                                "Nesting LazyColumn in MessageScrollerContent does not implement " +
+                                "that recipe: it receives unbounded vertical constraints and uses " +
+                                "a different scroll state. For virtualized transcripts, use a " +
+                                "separate lazy layout and implement its anchoring and commands."
                         ),
                     ),
                 ),
@@ -800,10 +807,12 @@ internal val messageScrollerPageAfterSections =
                 listOf(
                     ComponentGuideBlock.Paragraph(
                         (
-                            "The viewport is a labelled, keyboard-reachable scroll region and the " +
-                                "content is announced as a live region with additions semantics. " +
-                                "`MessageScrollerButton` is a real button; when there is nothing to " +
-                                "scroll toward it is removed from the tab order."
+                            "The viewport is labelled and keyboard focusable. Content supplies " +
+                                "a polite Compose live region; this does not implement the web " +
+                                "role=log, aria-relevant=additions or aria-busy contract, so token " +
+                                "announcement behavior requires platform screen-reader testing. " +
+                                "Inactive scroll buttons cannot receive focus or clicks and are " +
+                                "hidden from accessibility during their exit animation."
                         ),
                     ),
                 ),
@@ -814,11 +823,12 @@ internal val messageScrollerPageAfterSections =
                 listOf(
                     ComponentGuideBlock.Paragraph(
                         (
-                            "The behavior comes from the headless provider/viewport/content/item " +
-                                "split. This library exposes the same primitive surface without the " +
-                                "styled frame: compose MessageScrollerProvider + " +
-                                "MessageScrollerViewport + MessageScrollerContent directly and " +
-                                "bring your own rows."
+                            "The official unstyled primitive is provided by @shadcn/react. " +
+                                "Compose exposes provider state and style parameters instead of a " +
+                                "separate unstyled package. Keep MessageScrollerProvider, the " +
+                                "MessageScroller frame, Viewport, Content and Item in the " +
+                                "composition and customize their styles and rows. The frame owns " +
+                                "the controller lifecycle and is required for scroll commands."
                         ),
                     ),
                 ),
@@ -951,7 +961,6 @@ private val messageScrollerAnimationCode =
     }
     """.trimIndent()
 
-
 @Composable
 private fun ScrollerNoteTile() {
     Box(
@@ -961,11 +970,12 @@ private fun ScrollerNoteTile() {
     ) {
         Text(
             modifier = Modifier.padding(24.dp),
-            textStyle = TextStyle(
-                color = currentTheme.colors.mutedForeground,
-                fontSize = 13.sp,
-                textAlign = TextAlign.Center,
-            ),
+            textStyle =
+                TextStyle(
+                    color = currentTheme.colors.mutedForeground,
+                    fontSize = 13.sp,
+                    textAlign = TextAlign.Center,
+                ),
         ) {
             "The viewport hides pending scroll until the saved position is applied — no flash of the oldest message."
         }
@@ -985,6 +995,7 @@ internal val messageScrollerOfficialPageExamples =
         ),
         ComponentExample(
             title = "Anchoring Turns",
+            headingLevel = 3,
             code = messageScrollerAnchoringCode,
             minPreviewHeight = 700.dp,
             mobileMinPreviewHeight = 700.dp,
@@ -993,6 +1004,7 @@ internal val messageScrollerOfficialPageExamples =
         ),
         ComponentExample(
             title = "Group Chat",
+            headingLevel = 3,
             code = messageScrollerGroupChatCode,
             minPreviewHeight = 700.dp,
             mobileMinPreviewHeight = 700.dp,
@@ -1002,6 +1014,7 @@ internal val messageScrollerOfficialPageExamples =
         messageScrollerOfficialExamples.single { it.title == "Keeping Context Visible" },
         ComponentExample(
             title = "Following the Live Edge",
+            headingLevel = 3,
             code = messageScrollerStreamingCode,
             minPreviewHeight = 700.dp,
             mobileMinPreviewHeight = 700.dp,
@@ -1011,12 +1024,14 @@ internal val messageScrollerOfficialPageExamples =
         messageScrollerOfficialExamples.single { it.title == "Opening Saved Threads" },
         ComponentExample(
             title = "Avoiding a Flash on Reload",
+            headingLevel = 3,
             descriptionMarkdown =
                 (
-                    "A scroll container always opens at the top. When " +
-                        "`defaultScrollPosition` is `end` or `last-anchor`, the styled viewport " +
-                        "stays hidden until that position is applied, so you see the frame " +
-                        "instead of the jump. `start` does not need this."
+                    "A scroll container always opens at the top. HTML has no way to set its scroll " +
+                        "position before the first paint, so a transcript would show the oldest " +
+                        "messages first and jump afterwards. When `defaultScrollPosition` is `end` or " +
+                        "`last-anchor`, the styled viewport stays hidden until that position is " +
+                        "applied, so you see the frame instead of the jump. `start` does not need this."
                 ),
             code = "",
             hideCode = true,
@@ -1027,6 +1042,7 @@ internal val messageScrollerOfficialPageExamples =
         messageScrollerOfficialExamples.single { it.title == "Loading Earlier Messages" },
         ComponentExample(
             title = "Animating New Messages",
+            headingLevel = 3,
             code = messageScrollerAnimationCode,
             minPreviewHeight = 700.dp,
             mobileMinPreviewHeight = 700.dp,

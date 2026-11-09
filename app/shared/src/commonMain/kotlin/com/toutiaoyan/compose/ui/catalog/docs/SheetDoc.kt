@@ -52,7 +52,7 @@ private val sheetApiSections =
                 "`side` picks the edge (`top`/`right`/`bottom`/`left`); Nova uses the official " +
                     "`bg-popover` panel, 1px border and overlay blur. `showCloseButton = false` " +
                     "hides the corner control. Header carries the title/description block; " +
-                    "Footer is the action row."
+                    "Footer stacks the actions."
             ),
             listOf(
                 ApiProperty("side", "SheetSide", "SheetSide.Right"),
@@ -64,12 +64,14 @@ private val sheetApiSections =
         ComponentApiSection(
             "SheetTrigger / SheetClose",
             (
-                "Host slots for the open and dismiss controls; the string overloads render an " +
-                    "outline `Button` wired to toggle/close."
+                "The string trigger renders a `Button` (Default variant unless overridden); " +
+                    "`SheetClose` renders an icon button with an accessible `ariaLabel`."
             ),
             listOf(
                 ApiProperty("text", "String", "Required (string overload)"),
-                ApiProperty("content", "@Composable () -> Unit", "Required (slot overload)"),
+                ApiProperty("content", "@Composable () -> Unit", "Required (trigger slot overload)"),
+                ApiProperty("ariaLabel", "String", "Close (close icon button)"),
+                ApiProperty("icon", "@Composable () -> Unit", "X (close icon button)"),
             ),
         ),
     )

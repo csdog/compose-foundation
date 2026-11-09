@@ -1,0 +1,249 @@
+{
+  "component": "dropdown-menu",
+  "title": "Dropdown Menu",
+  "generatedAt": "2026-11-08T11:41:13.472Z",
+  "localUrl": "http://127.0.0.1:62076/dropdown-menu",
+  "ok": true,
+  "checks": 48,
+  "passed": 48,
+  "failed": 0,
+  "failures": [],
+  "captures": [
+    {
+      "name": "desktop-light",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/dropdown-menu-r5/browser/desktop-light.png",
+      "bytes": 142676,
+      "sha256": "b5339df313083c54fd8f88092ddfa14dd59127ba4276d05d5cca87f1f6c42b05",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:62076/dropdown-menu",
+        "theme": "light",
+        "bodyHeight": "calc(13330px + 100vh)",
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 1000
+        },
+        "wasm": [
+          "http://127.0.0.1:62076/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:62076/3cedbfcd5f276a0febfe.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "desktop-dark",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/dropdown-menu-r5/browser/desktop-dark.png",
+      "bytes": 142186,
+      "sha256": "33151c0c85b192eabd3b5d96b3a9e15c42f771675e2373be61adb8669ef821f3",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:62076/dropdown-menu",
+        "theme": "dark",
+        "bodyHeight": "calc(13330px + 100vh)",
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 1000
+        },
+        "wasm": [
+          "http://127.0.0.1:62076/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:62076/3cedbfcd5f276a0febfe.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "phone-light",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/dropdown-menu-r5/browser/phone-light.png",
+      "bytes": 39003,
+      "sha256": "a3a485bcbc7cd4697621c32b33fffc78ea4f093cc4abeeab1e9d6cb98c1a84ad",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:62076/dropdown-menu",
+        "theme": "light",
+        "bodyHeight": "calc(14596px + 100vh)",
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "wasm": [
+          "http://127.0.0.1:62076/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:62076/3cedbfcd5f276a0febfe.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "phone-dark",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/dropdown-menu-r5/browser/phone-dark.png",
+      "bytes": 38755,
+      "sha256": "820c3a5dd987e95e17a7af7d36a721c24bafdec6b9256689c0653d9ad36671e3",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:62076/dropdown-menu",
+        "theme": "dark",
+        "bodyHeight": "calc(14596px + 100vh)",
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "wasm": [
+          "http://127.0.0.1:62076/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:62076/3cedbfcd5f276a0febfe.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "section-basic",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/dropdown-menu-r5/browser/section-basic.png",
+      "bytes": 124321,
+      "sha256": "0b6acfb14c8b90e07b8affffa61217fe0b7798eac68583bfc92f87ba71842a3b",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-submenu",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/dropdown-menu-r5/browser/section-submenu.png",
+      "bytes": 125714,
+      "sha256": "0523847e4bcd19710603abed578fea12e6f0ba8da4456fa13c6fa1fec91a8035",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-shortcuts",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/dropdown-menu-r5/browser/section-shortcuts.png",
+      "bytes": 124396,
+      "sha256": "30611f22abd29093b0ba367bd1907718aafacd204452c43eb99364e3aac5839a",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-icons",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/dropdown-menu-r5/browser/section-icons.png",
+      "bytes": 124610,
+      "sha256": "be03a9408c868988d0fbf7180360b03884faf99fdd8e4c5608462df92dd9a52f",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-checkboxes",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/dropdown-menu-r5/browser/section-checkboxes.png",
+      "bytes": 128114,
+      "sha256": "1c880658d8ff2ecd9d70a7ad0f0ef7e16f2c2798d22625a3bf820ce55f108ed6",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-checkboxes-icons",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/dropdown-menu-r5/browser/section-checkboxes-icons.png",
+      "bytes": 125632,
+      "sha256": "ff68e34ae1511fbfe0cb692a9a393c743c102f6a5173dead01a54b1329a7cb45",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-radio-group",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/dropdown-menu-r5/browser/section-radio-group.png",
+      "bytes": 126109,
+      "sha256": "62ba05e459aed52b5036f727f5303ad6dd3eda3432d50bc3c3637473c71df09a",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-radio-icons",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/dropdown-menu-r5/browser/section-radio-icons.png",
+      "bytes": 127371,
+      "sha256": "a3be4b26f937c4c7b68795977a7b8838d2ececd1d354449afcf74750c551973f",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-destructive",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/dropdown-menu-r5/browser/section-destructive.png",
+      "bytes": 128601,
+      "sha256": "4b7ffe026250609e4b188c4bf0bddeadcf5381d4e89b0cf4435e89e0bbcc3f5c",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-avatar",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/dropdown-menu-r5/browser/section-avatar.png",
+      "bytes": 124842,
+      "sha256": "5306ff4a8a24673b49f8cd3f1d9d809e4f3abf6c82ceca58a613ec343075c154",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-complex",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/dropdown-menu-r5/browser/section-complex.png",
+      "bytes": 124058,
+      "sha256": "c0082f2216c5ad2a8d4cbd27599a61419db0dd04c6193f5cdf82e25c8eccf675",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-rtl",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/dropdown-menu-r5/browser/section-rtl.png",
+      "bytes": 122178,
+      "sha256": "ea5c8a4646eba6cf566fc013482d0e05644791e830a3a831fd704b95858c28fc",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    }
+  ]
+}

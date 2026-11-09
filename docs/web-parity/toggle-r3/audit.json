@@ -1,0 +1,101 @@
+{
+  "component": "toggle",
+  "stage": "30d-audit",
+  "checkedAt": "2026-11-08T13:05:00+08:00",
+  "status": "incomplete",
+  "official": {
+    "page": "https://ui.shadcn.com/docs/components/base/toggle",
+    "revision": "96da9cc7f1aa10580a3741664e2a77c721206c00",
+    "mdx": {
+      "path": "apps/v4/content/docs/components/base/toggle.mdx",
+      "sha256": "a5268565d3c8fa8479a45fec832dbd5870db58a592a3a729ee469d6f26bb10a3",
+      "description": "A two-state button that can be either on or off."
+    },
+    "component": {
+      "path": "apps/v4/registry/bases/base/ui/toggle.tsx",
+      "sha256": "b53df3a8d6ad7ae3853a5e72f8bbf11e39daababfc8b0e369347b355eb9af120"
+    }
+  },
+  "localSources": {
+    "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/toggle/Toggle.kt": "a8dbc2cd07903011fe4d71c6e7546332da9024e1da57084b4a02468c0973661a",
+    "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/toggle/ToggleStyles.kt": "72f1e6f4afd308b7e27e47162072a8781081f3b895a5af88da941222d16f0711",
+    "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/toggle/ToggleScreenshotTest.kt": "a0a24af510022a3e3b2351ce14284d1f233452397e7a902b6cb40baae82227b4",
+    "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ToggleDoc.kt": "33dd9534b1465ffd086f252fd5e3597aac9193aead3d05bff1f63414b3e35af7",
+    "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ToggleOfficialRecipes.kt": "bc6157fac0d75402b34bbb175519d8ed3775aa4c28f66424d694a2763abf6aba",
+    "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/ToggleExamplesTest.kt": "da206e3aaa4971d6fa049fd1cd344e56367129db555bc591799265027137573e"
+  },
+  "tests": {
+    "ToggleScreenshotTest": {
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ToggleExamplesTest": {
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "lint": {
+    "togglePathsClean": true,
+    "unrelatedFailures": [
+      "MessageScrollerExamplesTest.kt:25",
+      "TextExamplesTest.kt:72",
+      "LabelExamplesTest.kt:68"
+    ],
+    "log": ".agent-runs/toggle/logs/20261108T125025-verify-toggle-lint-30a-11855.log"
+  },
+  "build": {
+    "passed": true,
+    "artifactCount": 46,
+    "aggregateSha256": "7baf037b2e08c941805bb2f19d4a527813b813d48f2418a2abf3938d9df9f9bb",
+    "log": ".agent-runs/toggle/logs/20261108T125349-verify-toggle-build-30b.log"
+  },
+  "browser": {
+    "failures": [],
+    "views": 8,
+    "localPath": "/toggle",
+    "horizontalOverflow": false,
+    "canvasDimensionsMatchDpr": true,
+    "loadedResourcesMatchBuild": true,
+    "meta": "docs/web-parity/toggle-r3/browser/meta.json",
+    "dom": "docs/web-parity/toggle-r3/browser/dom-summary.json",
+    "transitionEvidence": {
+      "hoverMid": "5290175d7c8ab087f7969eb360e5a1877eb6003e7c16e419f314f47408da8a43",
+      "hoverSettled": "5290175d7c8ab087f7969eb360e5a1877eb6003e7c16e419f314f47408da8a43",
+      "pressedMid": "27b880bdcf4e091136034054e3162b5002f057cfb3e36e3f743be72a1dbf94cd",
+      "pressedHeld": "27b880bdcf4e091136034054e3162b5002f057cfb3e36e3f743be72a1dbf94cd"
+    }
+  },
+  "visualReview": {
+    "desktopMain": "docs/web-parity/toggle-r3/audit/local-desktop-light-main.png",
+    "officialMain": "docs/web-parity/toggle-r3/audit/official-desktop-light-main.png",
+    "phoneContactSheet": "docs/web-parity/toggle-r3/audit/phone-light-local-official.png",
+    "interactionContactSheet": "docs/web-parity/toggle-r3/audit/interaction-states.png"
+  },
+  "findings": [
+    {
+      "rule": "I2",
+      "severity": "blocking",
+      "summary": "Local Toggle page description does not match the fixed official MDX/live page.",
+      "expected": "A two-state button that can be either on or off.",
+      "actual": "A two-state button, commonly used for toolbar toggles like bold or italic.",
+      "source": "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ToggleDoc.kt:30"
+    },
+    {
+      "rule": "I7",
+      "severity": "blocking",
+      "summary": "The captured hover-mid and press-mid frames are byte-identical to their settled frames, so the screenshots do not prove intermediate transition behavior.",
+      "evidence": "docs/web-parity/toggle-r3/browser/meta.json#interactions.hashes"
+    },
+    {
+      "rule": "Component checklist 1",
+      "severity": "blocking",
+      "summary": "The new invalid visual state has no focused screenshot assertion.",
+      "evidence": "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/toggle/ToggleScreenshotTest.kt"
+    }
+  ],
+  "nextAction": "Correct the catalog description, add explicit invalid-state and deterministic mid-transition coverage, then rerun the affected 30a/30b/30c evidence before a fresh 30d audit."
+}

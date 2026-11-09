@@ -13,6 +13,7 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.style.LineBreak
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.catalog.docs.emptyDoc
 import com.toutiaoyan.compose.ui.components.overlay.OverlayHost
@@ -107,7 +108,7 @@ class EmptyExamplesTest {
                 .associate { it.title to it.descriptionMarkdown },
         )
         val rtl = emptyDoc.examples.single { it.title == "RTL" }.descriptionMarkdown.orEmpty()
-        assertContains(rtl, "To enable RTL support in your app")
+        assertContains(rtl, "To enable RTL support in shadcn/ui")
         assertContains(rtl, "https://ui.shadcn.com/docs/rtl")
         assertContains(rtl, "catalog toolbar also previews English and Hebrew")
         assertContains(emptyDoc.usageCode, "EmptyMedia(variant = EmptyMediaVariant.Icon)")
@@ -127,6 +128,15 @@ class EmptyExamplesTest {
         assertEquals(40f, photos[1].left - photos[0].left, 0.1f)
         assertEquals(40f, photos[2].left - photos[1].left, 0.1f)
         rule.onNodeWithText("Invite Members").assertIsEnabled()
+    }
+
+    @Test fun backgroundDescriptionUsesTheComposePrettyApproximation() {
+        show("Background")
+        val layouts = mutableListOf<TextLayoutResult>()
+        rule.onNodeWithText(
+            "You're all caught up. New notifications will appear here.",
+        ).performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(layouts) }
+        assertEquals(LineBreak.Paragraph, layouts.single().layoutInput.style.lineBreak)
     }
 
     @Test fun searchInputKeepsEditsAndTheSupportTextIsAnActualLink() {

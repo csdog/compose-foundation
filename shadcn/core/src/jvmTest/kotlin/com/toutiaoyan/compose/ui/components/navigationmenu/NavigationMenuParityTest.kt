@@ -13,6 +13,8 @@ import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toPixelMap
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.*
 import androidx.compose.ui.unit.dp
@@ -247,6 +249,74 @@ class NavigationMenuParityTest : ScreenshotTest() {
         composeRule.onNodeWithText("First panel").assertDoesNotExist()
         composeRule.onNodeWithTag("first").assertIsFocused()
     }
+
+    private fun arrowOpensKeyboardPanel(
+        orientation: NavigationMenuOrientation,
+        direction: LayoutDirection,
+        openKey: Key,
+        otherKey: Key,
+    ) {
+        composeRule.mainClock.autoAdvance = false
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            CompositionLocalProvider(LocalLayoutDirection provides direction) {
+                NavigationMenu(orientation = orientation) {
+                    NavigationMenuList {
+                        NavigationMenuItem("first") {
+                            NavigationMenuTrigger("Getting started", modifier = Modifier.testTag("first"))
+                            NavigationMenuContent(enter = EnterTransition.None, exit = ExitTransition.None) {
+                                Column {
+                                    NavigationMenuLink("Disabled link", onClick = {}, disabled = true)
+                                    NavigationMenuLink(
+                                        "First link",
+                                        onClick = {},
+                                        modifier = Modifier.testTag("first-link"),
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        advance(64)
+        composeRule.onNodeWithTag("first").performSemanticsAction(SemanticsActions.RequestFocus) { it() }
+        composeRule.onNodeWithTag("first").performKeyInput { pressKey(otherKey) }
+        advance(64)
+        composeRule.onNodeWithTag("first-link").assertDoesNotExist()
+        composeRule.onNodeWithTag("first").performSemanticsAction(SemanticsActions.RequestFocus) { it() }
+        composeRule.onNodeWithTag("first").performKeyInput { pressKey(openKey) }
+        advance(64)
+        composeRule.onNodeWithTag("first-link").assertIsDisplayed()
+        composeRule.onNodeWithTag("first-link").assertIsFocused()
+        composeRule.onNodeWithTag("first-link").performKeyInput { pressKey(Key.Escape) }
+        advance(64)
+        composeRule.onNodeWithTag("first-link").assertDoesNotExist()
+        composeRule.onNodeWithTag("first").assertIsFocused()
+    }
+
+    @Test fun horizontalArrowDownOpensKeyboardPanel() =
+        arrowOpensKeyboardPanel(
+            NavigationMenuOrientation.Horizontal,
+            LayoutDirection.Ltr,
+            Key.DirectionDown,
+            Key.DirectionUp,
+        )
+
+    @Test fun verticalArrowRightOpensKeyboardPanel() =
+        arrowOpensKeyboardPanel(
+            NavigationMenuOrientation.Vertical,
+            LayoutDirection.Ltr,
+            Key.DirectionRight,
+            Key.DirectionLeft,
+        )
+
+    @Test fun verticalRtlArrowLeftOpensKeyboardPanel() =
+        arrowOpensKeyboardPanel(
+            NavigationMenuOrientation.Vertical,
+            LayoutDirection.Rtl,
+            Key.DirectionLeft,
+            Key.DirectionRight,
+        )
 
     @Test fun callerStyleOverridesTriggerDimensionsAndNovaPanelHasIntrinsicWidth() {
         setThemedContent(stylePreset = StylePreset.Nova) {

@@ -28,7 +28,9 @@ private fun SkeletonProfile(
     second: Dp,
 ) {
     Row(
-        Modifier.testTag("skeleton-example"),
+        // The source flex row keeps its fixed-width children at their natural width,
+        // even when the centered preview's padded content area is narrower.
+        Modifier.requiredWidth(avatar + 16.dp + maxOf(first, second)).testTag("skeleton-example"),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -163,10 +165,18 @@ internal val skeletonOfficialExamples =
         ComponentExample("Text", code = skeletonTextRecipeCode, preview = { SkeletonTextRecipe() }),
         ComponentExample("Form", code = skeletonFormRecipeCode, preview = { SkeletonFormRecipe() }),
         ComponentExample("Table", code = skeletonTableRecipeCode, preview = { SkeletonTableRecipe() }),
-        ComponentExample("RTL", code = skeletonRtlRecipeCode, previewPadding = 0.dp, preview = {
-            var language by remember { mutableIntStateOf(1) }
-            RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
-                SkeletonRtlRecipe(language)
-            }
-        }),
+        ComponentExample(
+            "RTL",
+            code = skeletonRtlRecipeCode,
+            previewPadding = 0.dp,
+            descriptionMarkdown =
+                "To enable RTL support in shadcn/ui, see the " +
+                    "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
+            preview = {
+                var language by remember { mutableIntStateOf(1) }
+                RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
+                    SkeletonRtlRecipe(language)
+                }
+            },
+        ),
     )

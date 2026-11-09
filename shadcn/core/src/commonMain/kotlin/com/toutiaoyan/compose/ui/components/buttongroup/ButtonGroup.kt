@@ -36,6 +36,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_YES
 import androidx.compose.ui.tooling.preview.Preview
@@ -128,13 +129,10 @@ fun ButtonGroup(
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val groupModifier =
         modifier
-            .then(
-                if (contentDescription != null) {
-                    Modifier.semantics { this.contentDescription = contentDescription }
-                } else {
-                    Modifier
-                },
-            )
+            .semantics {
+                isTraversalGroup = true
+                if (contentDescription != null) this.contentDescription = contentDescription
+            }
             .styleable(styleState, style)
 
     CompositionLocalProvider(

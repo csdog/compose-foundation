@@ -338,8 +338,9 @@ internal val scrollFadeOfficialExamples =
                     "fade in after you scroll away from the start; end edges fade out when you " +
                     "reach the end.",
             preview = {
-            ScrollFadeEdgeRecipe(com.toutiaoyan.compose.ui.catalog.catalogMonoFontFamily())
-        }),
+                ScrollFadeEdgeRecipe(com.toutiaoyan.compose.ui.catalog.catalogMonoFontFamily())
+            },
+        ),
         ComponentExample(
             "Fade Size",
             code = scrollFadeSizeRecipeCode,
@@ -351,8 +352,9 @@ internal val scrollFadeOfficialExamples =
                     "override the shared size. The fade eases in over `revealDistance`, " +
                     "`96dp` by default and independent of the depth.",
             preview = {
-            ScrollFadeSizeRecipe(com.toutiaoyan.compose.ui.catalog.catalogMonoFontFamily())
-        }),
+                ScrollFadeSizeRecipe(com.toutiaoyan.compose.ui.catalog.catalogMonoFontFamily())
+            },
+        ),
         ComponentExample(
             "Disabling the Fade",
             code = scrollFadeNoneRecipeCode,
@@ -361,21 +363,24 @@ internal val scrollFadeOfficialExamples =
                 "Use `enabled = false` to remove the fade. It works in any class order, so the " +
                     "typical use is responsive or stateful.",
             preview = {
-            ScrollFadeNoneRecipe(com.toutiaoyan.compose.ui.catalog.catalogMonoFontFamily())
-        }),
+                ScrollFadeNoneRecipe(com.toutiaoyan.compose.ui.catalog.catalogMonoFontFamily())
+            },
+        ),
         ComponentExample(
             "RTL",
             code = scrollFadeRtlRecipeCode,
             minPreviewHeight = 0.dp,
             previewPadding = 0.dp,
             descriptionMarkdown =
-                "`scrollFade` follows the reading direction. At rest the start edge is crisp " +
-                    "and the end edge fades; in RTL that means a crisp right edge and a fade " +
-                    "on the left, mirrored from LTR.",
+                "To enable RTL support in shadcn/ui, see the RTL configuration guide. " +
+                    "`scrollFade` follows the reading direction: at rest the start edge is " +
+                    "crisp and the end edge fades; in RTL that means a crisp right edge and a " +
+                    "fade on the left, mirrored from LTR.",
             preview = {
-            var language by remember { mutableIntStateOf(1) }
-            RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
-                ScrollFadeRtlRecipe(language)
-            }
-        }),
+                var language by remember { mutableIntStateOf(1) }
+                RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
+                    ScrollFadeRtlRecipe(language)
+                }
+            },
+        ),
     )

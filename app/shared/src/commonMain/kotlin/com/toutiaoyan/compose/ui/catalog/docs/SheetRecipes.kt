@@ -251,8 +251,10 @@ internal val sheetOfficialExamples =
             "Side",
             code = sheetSideRecipeCode,
             descriptionMarkdown =
-                ("Use the `side` prop on `SheetContent` to set the edge of the screen where the " +
-                    "sheet appears. Values are `top`, `right`, `bottom`, or `left`."),
+                (
+                    "Use the `side` prop on `SheetContent` to set the edge of the screen where the " +
+                        "sheet appears. Values are `top`, `right`, `bottom`, or `left`."
+                ),
             preview = { SheetSideRecipe() },
         ),
         ComponentExample(
@@ -270,9 +272,10 @@ internal val sheetOfficialExamples =
                     "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
             previewPadding = 0.dp,
             preview = {
-            var language by remember { mutableIntStateOf(1) }
-            RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
-                SheetRtlRecipe(language)
-            }
-        }),
+                var language by remember { mutableIntStateOf(1) }
+                RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
+                    SheetRtlRecipe(language)
+                }
+            },
+        ),
     )

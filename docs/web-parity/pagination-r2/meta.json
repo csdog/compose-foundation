@@ -2,10 +2,10 @@
   "slug": "pagination",
   "officialUrl": "https://ui.shadcn.com/docs/components/base/pagination",
   "localUrl": "http://127.0.0.1:8772/pagination",
-  "capturedAt": "2026-11-05T05:09:08.131Z",
+  "capturedAt": "2026-11-08T03:39:25.946Z",
   "app": [
     "http://127.0.0.1:8772/658820f72b4617efb380.wasm",
-    "http://127.0.0.1:8772/05a9f4d05293ffae3b86.wasm"
+    "http://127.0.0.1:8772/79e6ab2a172ccddf4912.wasm"
   ],
   "officialDom": {
     "title": "Pagination",
@@ -103,28 +103,28 @@
       "theme": "light",
       "clientWidth": 1425,
       "scrollY": 0,
-      "bodyHeight": "calc(5226.5px + 100vh)"
+      "bodyHeight": "calc(5220.5px + 100vh)"
     },
     "desktop-dark": {
       "url": "http://127.0.0.1:8772/pagination",
       "theme": "dark",
       "clientWidth": 1425,
       "scrollY": 0,
-      "bodyHeight": "calc(5226.5px + 100vh)"
+      "bodyHeight": "calc(5220.5px + 100vh)"
     },
     "phone-light": {
       "url": "http://127.0.0.1:8772/pagination",
       "theme": "light",
       "clientWidth": 375,
       "scrollY": 0,
-      "bodyHeight": "calc(6256.5px + 100vh)"
+      "bodyHeight": "calc(6202.5px + 100vh)"
     },
     "phone-dark": {
       "url": "http://127.0.0.1:8772/pagination",
       "theme": "dark",
       "clientWidth": 375,
       "scrollY": 0,
-      "bodyHeight": "calc(6256.5px + 100vh)"
+      "bodyHeight": "calc(6202.5px + 100vh)"
     }
   },
   "files": {

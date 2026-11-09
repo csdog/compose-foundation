@@ -15,10 +15,7 @@ import com.toutiaoyan.compose.ui.utils.rememberTheme
 fun rememberMessageAvatarStyle(): Style =
     rememberTheme {
         Style {
-            if (theme.activePreset == StylePreset.Nova) {
-                minWidth(32.dp)
-                clip()
-            } else if (theme.activePreset == StylePreset.Rhea) {
+            if (theme.activePreset == StylePreset.Nova || theme.activePreset == StylePreset.Rhea) {
                 minWidth(32.dp)
                 clip()
             } else {
@@ -34,7 +31,7 @@ fun rememberMessageAvatarStyle(): Style =
 internal fun rememberMessageMetadataStyle(): Style {
     val ghost = (LocalMessageParts.current?.ghostCount ?: 0) > 0
     return rememberTheme(ghost) {
-        if (theme.activePreset == StylePreset.Nova) {
+        if (theme.activePreset == StylePreset.Nova || theme.activePreset == StylePreset.Rhea) {
             Style { contentPadding(horizontal = if (ghost) 0.dp else 12.dp, vertical = 0.dp) }
         } else {
             Style
@@ -45,5 +42,9 @@ internal fun rememberMessageMetadataStyle(): Style {
 @Composable
 internal fun rememberMessageRootStyle(): Style =
     rememberTheme {
-        if (theme.activePreset == StylePreset.Nova) Style { width(1f) } else Style
+        if (theme.activePreset == StylePreset.Nova || theme.activePreset == StylePreset.Rhea) {
+            Style { width(1f) }
+        } else {
+            Style
+        }
     }

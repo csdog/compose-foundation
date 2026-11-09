@@ -76,6 +76,7 @@ import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextColors
 import com.toutiaoyan.compose.ui.styles.shimmer
 import com.toutiaoyan.compose.ui.theme.currentTheme
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -211,8 +212,9 @@ val messageScrollerDoc =
                 │       └── MessageScrollerItem
                 └── MessageScrollerButton
             """.trimIndent(),
+        introductionSections = messageScrollerPageGuideSections.take(2),
         beforeExamples =
-            messageScrollerPageGuideSections +
+            messageScrollerPageGuideSections.drop(2) +
                 listOf(
                     ComponentGuideSection(
                         "Kotlin extension: Provider and standalone usage",
@@ -810,6 +812,7 @@ private fun InteractiveChatPanel() {
     var nextId by remember { mutableIntStateOf(1) }
     var composerText by remember { mutableStateOf("") }
     var isStreaming by remember { mutableStateOf(false) }
+    var streamJob by remember { mutableStateOf<Job?>(null) }
     val coroutineScope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
 
@@ -821,14 +824,15 @@ private fun InteractiveChatPanel() {
         val reply = demoReplies[replyId % demoReplies.size]
         messages = messages + ScrollerDemoMessage(replyId, "", isUser = false)
         isStreaming = true
-        coroutineScope.launch {
-            delay(THINKING_DELAY_MILLIS) // lets the shimmering "Thinking…" placeholder actually be seen.
-            for (charCount in 1..reply.length) {
-                delay(STREAM_TICK_MILLIS)
-                messages = messages.map { if (it.id == replyId) it.copy(text = reply.take(charCount)) else it }
+        streamJob =
+            coroutineScope.launch {
+                delay(THINKING_DELAY_MILLIS) // lets the shimmering "Thinking…" placeholder actually be seen.
+                for (charCount in 1..reply.length) {
+                    delay(STREAM_TICK_MILLIS)
+                    messages = messages.map { if (it.id == replyId) it.copy(text = reply.take(charCount)) else it }
+                }
+                isStreaming = false
             }
-            isStreaming = false
-        }
     }
 
     fun sendIfEligible() {
@@ -836,6 +840,8 @@ private fun InteractiveChatPanel() {
     }
 
     fun reset() {
+        streamJob?.cancel()
+        streamJob = null
         messages = listOf(ScrollerDemoMessage(0, "Hi! Ask me anything about MessageScroller.", isUser = false))
         nextId = 1
         composerText = ""
@@ -850,9 +856,13 @@ private fun InteractiveChatPanel() {
                     CardDescription { "How can I help you today?" }
                 }
                 CardAction(modifier = Modifier.align(Alignment.TopEnd)) {
-                    Button(onClick = ::reset, variant = ButtonVariant.Outline, size = ButtonSize.Icon, style = {
-                        shape(CircleShape)
-                    }) {
+                    Button(
+                        onClick = ::reset,
+                        variant = ButtonVariant.Outline,
+                        size = ButtonSize.Icon,
+                        label = "Reset chat panel",
+                        style = { shape(CircleShape) },
+                    ) {
                         DocIcon(Lucide.RefreshCw)
                     }
                 }
@@ -908,6 +918,7 @@ private fun InteractiveChatPanel() {
                     variant = ButtonVariant.Default,
                     size = InputGroupButtonSize.IconSm,
                     enabled = composerText.isNotBlank() && !isStreaming,
+                    label = "Send message",
                 ) {
                     DocIcon(Lucide.Send, tint = currentTheme.colors.primaryForeground)
                 }

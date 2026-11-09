@@ -23,6 +23,13 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.zIndex
 import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.unit.sp
@@ -166,9 +173,36 @@ fun Avatar(
                     size.rememberStyle() then overlapRing then style,
                 ),
             contentAlignment = Alignment.Center,
-            content = content,
-        )
+        ) {
+            content()
+            AvatarBorder()
+        }
     }
+}
+
+/** The official rounded-full ::after border blends with the image, without reserving space. */
+@Composable
+private fun BoxScope.AvatarBorder() {
+    val theme = currentTheme
+    val color = theme.colors.border
+    val blendMode = if (theme.isDark) BlendMode.Lighten else BlendMode.Darken
+    Box(
+        Modifier.matchParentSize().drawWithCache {
+            val width = 1.dp.toPx()
+            val inset = width / 2f
+            val radius = (size.minDimension / 2f - inset).coerceAtLeast(0f)
+            onDrawBehind {
+                drawRoundRect(
+                    color = color,
+                    topLeft = Offset(inset, inset),
+                    size = Size((size.width - width).coerceAtLeast(0f), (size.height - width).coerceAtLeast(0f)),
+                    cornerRadius = CornerRadius(radius),
+                    style = Stroke(width),
+                    blendMode = blendMode,
+                )
+            }
+        },
+    )
 }
 
 /** Convenience: initials [text] as [AvatarFallback]. */
@@ -272,9 +306,10 @@ fun BoxScope.AvatarBadge(
 ) {
     val size = LocalAvatarSize.current
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    // StyleModifier in Compose 1.12.2 leaves zIndex as TODO; use the working parent modifier.
     Box(
         modifier =
-            Modifier.align(Alignment.BottomEnd).then(modifier).cssStyleable(
+            Modifier.align(Alignment.BottomEnd).then(modifier).zIndex(10f).cssStyleable(
                 styleState,
                 size.rememberBadgeStyle() then style,
             ),

@@ -99,8 +99,26 @@ val navigationMenuDoc =
                         ),
                         ComponentGuideBlock.Code(
                             """
-                            NavigationMenuItem {
-                                NavigationMenuLink("Documentation", onClick = { openDocs() })
+                            @file:OptIn(androidx.compose.foundation.style.ExperimentalFoundationStyleApi::class)
+
+                            import androidx.compose.runtime.Composable
+                            import androidx.compose.ui.platform.LocalUriHandler
+                            import com.toutiaoyan.compose.ui.components.navigationmenu.*
+
+                            @Composable
+                            fun DocumentationNavigation() {
+                                val uriHandler = LocalUriHandler.current
+                                NavigationMenu {
+                                    NavigationMenuList {
+                                        NavigationMenuItem(value = "documentation") {
+                                            NavigationMenuLink(
+                                                "Documentation",
+                                                onClick = { uriHandler.openUri("https://ui.shadcn.com/docs") },
+                                                style = rememberNavMenuItemStyle(open = false),
+                                            )
+                                        }
+                                    }
+                                }
                             }
                             """.trimIndent(),
                         ),
@@ -127,7 +145,9 @@ val navigationMenuDoc =
                 ),
                 ComponentApiSection(
                     "NavigationMenuTrigger / NavigationMenuLink",
-                    "Trigger includes the decorative chevron in Nova. Link invokes its action and requests menu close.",
+                    "Trigger includes the decorative chevron in Nova. " +
+                        "Link invokes its action and requests menu close. " +
+                        "Kotlin defaults closeOnClick to true; Base UI defaults it to false.",
                     listOf(
                         ApiProperty("modifier / style", "Modifier / Style", "Default"),
                         ApiProperty("enabled / disabled", "Boolean", "true / false"),
@@ -298,6 +318,10 @@ val navigationMenuDoc =
                                 NavigationMenuItem(value = "home") {
                                     NavigationMenuLink("Home", onClick = {})
                                 }
+                                NavigationMenuItem(value = "getting-started") {
+                                    NavigationMenuTrigger("Getting started")
+                                    NavigationMenuContent { Text { "Delayed navigation links" } }
+                                }
                                 NavigationMenuItem(value = "docs") {
                                     NavigationMenuLink("Docs", onClick = {})
                                 }
@@ -309,6 +333,10 @@ val navigationMenuDoc =
                             NavigationMenuList {
                                 NavigationMenuItem(value = "home") {
                                     NavigationMenuLink("Home", onClick = {})
+                                }
+                                NavigationMenuItem(value = "getting-started") {
+                                    NavigationMenuTrigger("Getting started")
+                                    NavigationMenuContent { Text { "Delayed navigation links" } }
                                 }
                                 NavigationMenuItem(value = "docs") {
                                     NavigationMenuLink("Docs", onClick = {})
@@ -863,8 +891,9 @@ val navigationMenuDoc =
     ).let { native ->
         val curated = listOf("Vertical", "Controlled", "Delay")
         native.copy(
-            examples = navigationMenuOfficialExamples +
-                native.examples.filter { it.title in curated }
-                    .map { it.copy(title = "Kotlin extension: ${it.title}") },
+            examples =
+                navigationMenuOfficialExamples +
+                    native.examples.filter { it.title in curated }
+                        .map { it.copy(title = "Kotlin extension: ${it.title}") },
         )
     }

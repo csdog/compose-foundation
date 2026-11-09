@@ -7,16 +7,19 @@ import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.AlignmentLine
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Measured
 import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.layout.ParentDataModifier
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.constrainHeight
 import androidx.compose.ui.unit.constrainWidth
+import kotlin.math.roundToInt
 
 /**
  * Direct-child kinds inside a [FieldSet], mirroring real shadcn's
@@ -31,12 +34,17 @@ internal enum class FieldSetChildKind {
     Other,
 }
 
+internal data class FieldSetAlignment(
+    val horizontal: Alignment.Horizontal? = null,
+    val line: ((Measured) -> Int)? = null,
+)
+
 internal data class FieldSetChildData(
     val kind: FieldSetChildKind = FieldSetChildKind.Other,
     val dense: Boolean = false,
     val weight: Float? = null,
     val fill: Boolean = true,
-    val align: Alignment.Horizontal? = null,
+    val align: FieldSetAlignment? = null,
     val previous: Any? = null,
 )
 
@@ -45,7 +53,7 @@ private class FieldSetChildModifier(
     private val dense: Boolean? = null,
     private val weight: Float? = null,
     private val fill: Boolean? = null,
-    private val align: Alignment.Horizontal? = null,
+    private val align: FieldSetAlignment? = null,
 ) : ParentDataModifier {
     override fun Density.modifyParentData(parentData: Any?): Any {
         val previous = parentData as? FieldSetChildData
@@ -65,11 +73,13 @@ internal fun Modifier.fieldSetChild(
     dense: Boolean? = null,
 ): Modifier = then(FieldSetChildModifier(kind = kind, dense = dense))
 
-private fun Modifier.fieldSetWeight(weight: Float, fill: Boolean): Modifier =
-    then(FieldSetChildModifier(weight = weight, fill = fill))
+private fun Modifier.fieldSetWeight(
+    weight: Float,
+    fill: Boolean,
+): Modifier = then(FieldSetChildModifier(weight = weight, fill = fill))
 
 private fun Modifier.fieldSetAlign(alignment: Alignment.Horizontal): Modifier =
-    then(FieldSetChildModifier(align = alignment))
+    then(FieldSetChildModifier(align = FieldSetAlignment(horizontal = alignment)))
 
 /**
  * Scope adapter so [FieldSet] keeps its `ColumnScope` content contract while its
@@ -77,16 +87,21 @@ private fun Modifier.fieldSetAlign(alignment: Alignment.Horizontal): Modifier =
  * `weight`/`align` keep their Column meaning for direct children.
  */
 private class FieldSetContentScope : ColumnScope {
-    override fun Modifier.weight(weight: Float, fill: Boolean): Modifier =
-        this.fieldSetWeight(weight, fill)
+    override fun Modifier.weight(
+        weight: Float,
+        fill: Boolean,
+    ): Modifier {
+        require(weight > 0f) { "invalid weight; must be greater than zero" }
+        return this.fieldSetWeight(weight.coerceAtMost(Float.MAX_VALUE), fill)
+    }
 
-    override fun Modifier.align(alignment: Alignment.Horizontal): Modifier =
-        this.fieldSetAlign(alignment)
+    override fun Modifier.align(alignment: Alignment.Horizontal): Modifier = this.fieldSetAlign(alignment)
 
-    // Not used by the field recipes; Column's baseline alignment is left to real Columns.
-    override fun Modifier.alignBy(alignmentLine: VerticalAlignmentLine): Modifier = this
+    override fun Modifier.alignBy(alignmentLine: VerticalAlignmentLine): Modifier =
+        then(FieldSetChildModifier(align = FieldSetAlignment(line = { it[alignmentLine] })))
 
-    override fun Modifier.alignBy(alignmentLineBlock: (Measured) -> Int): Modifier = this
+    override fun Modifier.alignBy(alignmentLineBlock: (Measured) -> Int): Modifier =
+        then(FieldSetChildModifier(align = FieldSetAlignment(line = alignmentLineBlock)))
 }
 
 private val fieldSetContentScope = FieldSetContentScope()
@@ -125,77 +140,77 @@ internal fun FieldSetLayout(
             }
         }
 
-        val totalWeight = data.sumOf { (it?.weight ?: 0f).toDouble() }.toFloat()
+        val totalGap = children.indices.sumOf { gapBefore(it) }
+        val totalWeight = data.sumOf { (it?.weight ?: 0f).toDouble() }
         val placeables = arrayOfNulls<androidx.compose.ui.layout.Placeable>(children.size)
         var fixedHeight = 0
-        var maxWidth = 0
         children.forEachIndexed { index, child ->
-            val itemData = data[index]
-            if (totalWeight > 0f && itemData?.weight != null) return@forEachIndexed
-            val childConstraints = if (constraints.hasBoundedHeight) {
-                Constraints(maxWidth = constraints.maxWidth, maxHeight = constraints.maxHeight)
-            } else {
-                Constraints(maxWidth = constraints.maxWidth)
-            }
-            val placeable = child.measure(childConstraints)
-            placeables[index] = placeable
-            fixedHeight += placeable.height + gapBefore(index)
-            maxWidth = maxOf(maxWidth, placeable.width)
+            if (data[index]?.weight != null) return@forEachIndexed
+            val maxHeight =
+                if (constraints.hasBoundedHeight) {
+                    (constraints.maxHeight - fixedHeight - totalGap).coerceAtLeast(0)
+                } else {
+                    Constraints.Infinity
+                }
+            val item = child.measure(Constraints(maxWidth = constraints.maxWidth, maxHeight = maxHeight))
+            placeables[index] = item
+            fixedHeight += item.height
         }
-        val remaining =
-            if (constraints.hasBoundedHeight) {
-                (constraints.maxHeight - fixedHeight).coerceAtLeast(0)
-            } else {
-                0
+        // Like Column, an unbounded parent distributes only its minimum height.
+        val targetHeight = if (constraints.hasBoundedHeight) constraints.maxHeight else constraints.minHeight
+        val remaining = (targetHeight - fixedHeight - totalGap).coerceAtLeast(0)
+        val allocations =
+            IntArray(children.size) { index ->
+                if (totalWeight > 0.0) {
+                    (remaining * ((data[index]?.weight ?: 0f).toDouble() / totalWeight)).roundToInt()
+                } else {
+                    0
+                }
             }
+        var remainder = remaining - allocations.sum()
         children.forEachIndexed { index, child ->
             val itemData = data[index] ?: return@forEachIndexed
-            val weight = itemData.weight ?: return@forEachIndexed
-            if (totalWeight <= 0f) return@forEachIndexed
-            val height = (remaining * (weight / totalWeight)).toInt()
-            val placeable =
+            if (itemData.weight == null) return@forEachIndexed
+            val adjustment = remainder.compareTo(0)
+            remainder -= adjustment
+            val height = (allocations[index] + adjustment).coerceAtLeast(0)
+            placeables[index] =
                 child.measure(
                     Constraints(
-                        maxWidth = constraints.maxWidth,
+                        minHeight = if (itemData.fill) height else 0,
                         maxHeight = height,
+                        maxWidth = constraints.maxWidth,
                     ),
                 )
-            placeables[index] = placeable
-            maxWidth = maxOf(maxWidth, placeable.width)
         }
         val items = placeables.map { checkNotNull(it) }
-        var totalHeight = 0
-        items.forEachIndexed { index, item ->
-            val itemData = data[index]
-            totalHeight +=
-                if (itemData?.weight != null && totalWeight > 0f) {
-                    itemData.weight?.let { (remaining * (it / totalWeight)).toInt() } ?: item.height
-                } else {
-                    item.height
-                } + gapBefore(index)
-        }
-        totalHeight = constraints.constrainHeight(totalHeight)
-        val width = constraints.constrainWidth(maxWidth)
-        layout(width, totalHeight) {
+        val lines = items.mapIndexed { index, item -> data[index]?.align?.line?.invoke(item) }
+        val beforeLine =
+            (lines.filterNotNull().filter { it != AlignmentLine.Unspecified }.maxOrNull() ?: 0).coerceAtLeast(0)
+        val afterLine =
+            items.indices.maxOfOrNull { index ->
+                val line = lines[index]
+                if (line == null || line == AlignmentLine.Unspecified) 0 else items[index].width - line
+            } ?: 0
+        val width = constraints.constrainWidth(maxOf(items.maxOfOrNull { it.width } ?: 0, beforeLine + afterLine))
+        val height = constraints.constrainHeight(items.sumOf { it.height } + totalGap)
+        layout(width, height) {
             var y = 0
             items.forEachIndexed { index, item ->
                 y += gapBefore(index)
-                val itemData = data[index]
-                val itemHeight =
-                    if (itemData?.weight != null && totalWeight > 0f) {
-                        (remaining * ((itemData.weight ?: 0f) / totalWeight)).toInt()
-                    } else {
-                        item.height
-                    }
+                val alignment = data[index]?.align
+                val line = lines[index]
                 val x =
-                    when (itemData?.align) {
-                        Alignment.Start -> 0
-                        Alignment.CenterHorizontally -> (width - item.width) / 2
-                        Alignment.End -> width - item.width
-                        else -> 0
+                    if (line == AlignmentLine.Unspecified) {
+                        0
+                    } else if (line != null) {
+                        val offset = beforeLine - line
+                        if (layoutDirection == LayoutDirection.Rtl) width - item.width - offset else offset
+                    } else {
+                        (alignment?.horizontal ?: Alignment.Start).align(item.width, width, layoutDirection)
                     }
-                item.placeRelative(x, y)
-                y += itemHeight
+                item.place(x, y)
+                y += item.height
             }
         }
     }

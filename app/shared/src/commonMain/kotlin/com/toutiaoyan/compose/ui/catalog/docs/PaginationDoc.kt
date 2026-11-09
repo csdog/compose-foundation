@@ -673,8 +673,15 @@ val paginationDoc =
     ).let { native ->
         val curated = listOf("Controlled (Kotlin)", "First and last", "Ellipsis")
         native.copy(
-            examples = paginationOfficialExamples +
-                native.examples.filter { it.title in curated }
-                    .map { it.copy(title = "Kotlin extension: " + it.title.removeSuffix(" (Kotlin)")) },
+            beforeCompositionMarkdown = "Use the following composition to build a `Pagination`:",
+            beforeExampleSections =
+                mapOf(
+                    "RTL" to listOf(paginationNextJsGuide),
+                    "Kotlin extension: Controlled" to paginationChangelogGuides,
+                ),
+            examples =
+                paginationOfficialExamples +
+                    native.examples.filter { it.title in curated }
+                        .map { it.copy(title = "Kotlin extension: " + it.title.removeSuffix(" (Kotlin)")) },
         )
     }

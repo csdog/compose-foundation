@@ -1,0 +1,144 @@
+{
+  "slug": "chart",
+  "generatedAt": "2026-11-08T11:18:39.354Z",
+  "localUrl": "http://127.0.0.1:49838/chart",
+  "pinnedRevision": "8a3536678a528cc012b9e62484290e79d0be410f",
+  "checks": 45,
+  "passed": 45,
+  "failed": 0,
+  "failures": [],
+  "captures": [
+    {
+      "view": "desktop-light",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chart-r6/desktop-light.png",
+      "sha256": "32b99dd9dbab9178ccae33ff58aaeb74eb021a4d8b9671628abafbb0d5784b34",
+      "bytes": 156541,
+      "png": {
+        "width": 1440,
+        "height": 1000
+      },
+      "metrics": {
+        "title": "Compose Foundation — Components",
+        "url": "http://127.0.0.1:49838/chart",
+        "theme": "light",
+        "bodyHeight": "calc(22846px + 100vh)",
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 1000
+        },
+        "canvasCount": 0,
+        "svgCount": 0,
+        "devicePixelRatio": 1,
+        "wasm": [
+          "http://127.0.0.1:49838/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:49838/f1c944db69f8cf0c1185.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "view": "desktop-dark",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chart-r6/desktop-dark.png",
+      "sha256": "2c15ab147e62a2d28ee4c0333be973d0163d5e7de94be2aa4d3284b2dbdfae79",
+      "bytes": 157126,
+      "png": {
+        "width": 1440,
+        "height": 1000
+      },
+      "metrics": {
+        "title": "Compose Foundation — Components",
+        "url": "http://127.0.0.1:49838/chart",
+        "theme": "dark",
+        "bodyHeight": "calc(22846px + 100vh)",
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 1000
+        },
+        "canvasCount": 0,
+        "svgCount": 0,
+        "devicePixelRatio": 1,
+        "wasm": [
+          "http://127.0.0.1:49838/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:49838/f1c944db69f8cf0c1185.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "view": "phone-light",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chart-r6/phone-light.png",
+      "sha256": "e25170e4534d752dba504512c1ab095397d702a3066195a464a46a9c8bc099f6",
+      "bytes": 39863,
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "metrics": {
+        "title": "Compose Foundation — Components",
+        "url": "http://127.0.0.1:49838/chart",
+        "theme": "light",
+        "bodyHeight": "calc(25620px + 100vh)",
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "canvasCount": 0,
+        "svgCount": 0,
+        "devicePixelRatio": 1,
+        "wasm": [
+          "http://127.0.0.1:49838/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:49838/f1c944db69f8cf0c1185.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "view": "phone-dark",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/chart-r6/phone-dark.png",
+      "sha256": "7646a744d6c2f7380a0ade3284d1697ec44efa39fe91871c76d0e644541a2b77",
+      "bytes": 40375,
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "metrics": {
+        "title": "Compose Foundation — Components",
+        "url": "http://127.0.0.1:49838/chart",
+        "theme": "dark",
+        "bodyHeight": "calc(25620px + 100vh)",
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "canvasCount": 0,
+        "svgCount": 0,
+        "devicePixelRatio": 1,
+        "wasm": [
+          "http://127.0.0.1:49838/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:49838/f1c944db69f8cf0c1185.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    }
+  ]
+}

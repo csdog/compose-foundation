@@ -12,6 +12,7 @@ val skeletonDoc =
         id = "skeleton",
         title = "Skeleton",
         description = "Use to show a placeholder while content is loading.",
+        examplesHeading = null,
         usageCode =
             """
             import androidx.compose.foundation.layout.size
@@ -32,7 +33,7 @@ val skeletonDoc =
             skeletonOfficialExamples +
                 listOf(
                     ComponentExample(
-                        title = "Shimmer",
+                        title = "Kotlin extension: Shimmer",
                         code = skeletonShimmerRecipeCode,
                         preview = { SkeletonShimmerRecipe() },
                     ),

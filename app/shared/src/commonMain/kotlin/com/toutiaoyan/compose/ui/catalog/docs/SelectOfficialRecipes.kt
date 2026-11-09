@@ -3,7 +3,6 @@
 package com.toutiaoyan.compose.ui.catalog.docs
 
 import androidx.compose.foundation.layout.*
-import com.toutiaoyan.compose.ui.components.text.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,7 +31,7 @@ private val timeZoneGroups =
                 "Alaska Standard Time",
                 "Hawaii Standard Time",
             ),
-        "Europe / Africa" to
+        "Europe & Africa" to
             listOf(
                 "Greenwich Mean Time",
                 "Central European Time",
@@ -50,7 +49,7 @@ private val timeZoneGroups =
                 "Korea Standard Time",
                 "Indonesia Central Standard Time",
             ),
-        "Australia / Pacific" to
+        "Australia & Pacific" to
             listOf(
                 "Australian Western Standard Time",
                 "Australian Central Standard Time",
@@ -79,17 +78,30 @@ internal val selectAlignItemExample =
             ),
         code =
             """
+            val fruitItems = listOf("Apple", "Banana", "Blueberry", "Grapes", "Pineapple")
             var alignItem by remember { mutableStateOf(true) }
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text { "Align Item" }
-                    Switch(checked = alignItem, onCheckedChange = { alignItem = it })
+                    Field(
+                        label = "Align Item",
+                        modifier = Modifier.weight(1f),
+                        description = "Toggle to align the item with the trigger.",
+                    ) {}
+                    Switch(checked = alignItem, onCheckedChange = { alignItem = it }, label = "Align Item")
                 }
                 var fruit by remember { mutableStateOf<String?>("Banana") }
-                Select(value = fruit, onValueChange = { fruit = it }) {
+                Select(value = fruit, onValueChange = { fruit = it }, placeholder = "Select a fruit") {
                     SelectTrigger(Modifier.width(192.dp))
                     SelectContent(alignItemWithTrigger = alignItem) {
-                        SelectGroup { fruitItems.forEach { SelectItem(it) } }
+                        SelectGroup {
+                            val controller = selectState()
+                            SelectItem<String?>(null, textValue = "Select a fruit", onSelect = {
+                                fruit = null
+                                controller.setOpen(false)
+                                true
+                            })
+                            fruitItems.forEach { SelectItem(it) }
+                        }
                     }
                 }
             }
@@ -105,13 +117,25 @@ internal val selectAlignItemExample =
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    Text { "Align Item" }
-                    Switch(checked = alignItem, onCheckedChange = { alignItem = it })
+                    Field(
+                        label = "Align Item",
+                        modifier = Modifier.weight(1f),
+                        description = "Toggle to align the item with the trigger.",
+                    ) {}
+                    Switch(checked = alignItem, onCheckedChange = { alignItem = it }, label = "Align Item")
                 }
-                Select(value = fruit, onValueChange = { fruit = it }) {
+                Select(value = fruit, onValueChange = { fruit = it }, placeholder = "Select a fruit") {
                     SelectTrigger(Modifier.width(192.dp))
                     SelectContent(alignItemWithTrigger = alignItem) {
-                        SelectGroup { fruitItems.forEach { SelectItem(it) } }
+                        SelectGroup {
+                            val controller = selectState()
+                            SelectItem<String?>(null, textValue = "Select a fruit", onSelect = {
+                                fruit = null
+                                controller.setOpen(false)
+                                true
+                            })
+                            fruitItems.forEach { SelectItem(it) }
+                        }
                     }
                 }
             }
@@ -124,6 +148,7 @@ internal val selectGroupsExample =
         descriptionMarkdown = "Use `SelectGroup`, `SelectLabel`, and `SelectSeparator` to organize items.",
         code =
             """
+            var fruit by remember { mutableStateOf<String?>(null) }
             Select(value = fruit, onValueChange = { fruit = it }, placeholder = "Select a fruit") {
                 SelectTrigger(Modifier.width(192.dp))
                 SelectContent {
@@ -172,11 +197,50 @@ internal val selectScrollableExample =
         descriptionMarkdown = "A select with many items that scrolls.",
         code =
             """
+            val timeZoneGroups = listOf(
+                "North America" to listOf(
+                    "Eastern Standard Time",
+                    "Central Standard Time",
+                    "Mountain Standard Time",
+                    "Pacific Standard Time",
+                    "Alaska Standard Time",
+                    "Hawaii Standard Time",
+                ),
+                "Europe & Africa" to listOf(
+                    "Greenwich Mean Time",
+                    "Central European Time",
+                    "Eastern European Time",
+                    "Western European Summer Time",
+                    "Central Africa Time",
+                    "East Africa Time",
+                ),
+                "Asia" to listOf(
+                    "Moscow Time",
+                    "India Standard Time",
+                    "China Standard Time",
+                    "Japan Standard Time",
+                    "Korea Standard Time",
+                    "Indonesia Central Standard Time",
+                ),
+                "Australia & Pacific" to listOf(
+                    "Australian Western Standard Time",
+                    "Australian Central Standard Time",
+                    "Australian Eastern Standard Time",
+                    "New Zealand Standard Time",
+                    "Fiji Time",
+                ),
+                "South America" to listOf(
+                    "Argentina Time",
+                    "Bolivia Time",
+                    "Brasilia Time",
+                    "Chile Standard Time",
+                ),
+            )
+            var zone by remember { mutableStateOf<String?>(null) }
             Select(value = zone, onValueChange = { zone = it }, placeholder = "Select a timezone") {
-                SelectTrigger(Modifier.width(192.dp))
+                SelectTrigger(Modifier.width(256.dp))
                 SelectContent {
-                    timeZoneGroups.forEachIndexed { index, (group, zones) ->
-                        if (index > 0) SelectSeparator()
+                    timeZoneGroups.forEach { (group, zones) ->
                         SelectGroup {
                             SelectLabel(group)
                             zones.forEach { SelectItem(it) }
@@ -188,10 +252,9 @@ internal val selectScrollableExample =
         preview = {
             var zone by remember { mutableStateOf<String?>(null) }
             Select(value = zone, onValueChange = { zone = it }, placeholder = "Select a timezone") {
-                SelectTrigger(Modifier.width(192.dp))
+                SelectTrigger(Modifier.width(256.dp))
                 SelectContent {
-                    timeZoneGroups.forEachIndexed { index, (group, zones) ->
-                        if (index > 0) SelectSeparator()
+                    timeZoneGroups.forEach { (group, zones) ->
                         SelectGroup {
                             SelectLabel(group)
                             zones.forEach { SelectItem(it) }
@@ -207,12 +270,14 @@ internal val selectDisabledExample =
         title = "Disabled",
         code =
             """
+            var fruit by remember { mutableStateOf<String?>(null) }
             Select(value = fruit, onValueChange = { fruit = it }, placeholder = "Select a fruit", disabled = true) {
                 SelectTrigger(Modifier.width(192.dp))
                 SelectContent {
                     SelectGroup {
                         SelectItem("Apple")
                         SelectItem("Banana")
+                        SelectItem("Blueberry")
                         SelectItem("Grapes", disabled = true)
                         SelectItem("Pineapple")
                     }
@@ -232,6 +297,7 @@ internal val selectDisabledExample =
                     SelectGroup {
                         SelectItem("Apple")
                         SelectItem("Banana")
+                        SelectItem("Blueberry")
                         SelectItem("Grapes", disabled = true)
                         SelectItem("Pineapple")
                     }
@@ -251,17 +317,18 @@ internal val selectInvalidExample =
             ),
         code =
             """
-            Field(label = "Fruit", invalid = true) {
+            var fruit by remember { mutableStateOf<String?>(null) }
+            Field(label = "Fruit", invalid = true, error = "Please select a fruit.") {
                 Select(value = fruit, onValueChange = { fruit = it }, placeholder = "Select a fruit", invalid = true) {
                     SelectTrigger(Modifier.width(192.dp))
-                    SelectContent { SelectItem("Apple") ; SelectItem("Banana") }
+                    SelectContent { SelectItem("Apple"); SelectItem("Banana"); SelectItem("Blueberry") }
                 }
             }
             """.trimIndent(),
         preview = {
             var fruit by remember { mutableStateOf<String?>(null) }
             Column(Modifier.widthIn(max = 320.dp)) {
-                Field(label = "Fruit", invalid = true) {
+                Field(label = "Fruit", invalid = true, error = "Please select a fruit.") {
                     Select(
                         value = fruit,
                         onValueChange = { fruit = it },
@@ -272,6 +339,7 @@ internal val selectInvalidExample =
                         SelectContent {
                             SelectItem("Apple")
                             SelectItem("Banana")
+                            SelectItem("Blueberry")
                         }
                     }
                 }
@@ -281,9 +349,33 @@ internal val selectInvalidExample =
 
 private val selectRtlTranslations =
     listOf(
-        listOf("Select a fruit", "Fruits", "Apple", "Banana", "Blueberry"),
-        listOf("اختر فاكهة", "الفواكه", "تفاح", "موز", "عنب"),
-        listOf("בחר פרי", "פירות", "תפוח", "בננה", "ענב"),
+        listOf(
+            "Select a fruit",
+            "Fruits",
+            "Apple",
+            "Banana",
+            "Blueberry",
+            "Grapes",
+            "Pineapple",
+            "Vegetables",
+            "Carrot",
+            "Broccoli",
+            "Spinach",
+        ),
+        listOf(
+            "اختر فاكهة",
+            "الفواكه",
+            "تفاح",
+            "موز",
+            "توت أزرق",
+            "عنب",
+            "أناناس",
+            "الخضروات",
+            "جزر",
+            "بروكلي",
+            "سبانخ",
+        ),
+        listOf("בחר פרי", "פירות", "תפוח", "בננה", "אוכמניה", "ענבים", "אננס", "ירקות", "גזר", "ברוקולי", "תרד"),
     )
 
 internal val selectRtlExample =
@@ -299,13 +391,22 @@ internal val selectRtlExample =
                 Theme(fontFamily = catalogArabicFontFamily()) {
                     var fruit by remember { mutableStateOf<String?>(null) }
                     Select(value = fruit, onValueChange = { fruit = it }, placeholder = "اختر فاكهة") {
-                        SelectTrigger(Modifier.width(192.dp))
+                        SelectTrigger(Modifier.width(128.dp))
                         SelectContent {
                             SelectGroup {
                                 SelectLabel("الفواكه")
                                 SelectItem("تفاح")
                                 SelectItem("موز")
+                                SelectItem("توت أزرق")
                                 SelectItem("عنب")
+                                SelectItem("أناناس")
+                            }
+                            SelectSeparator()
+                            SelectGroup {
+                                SelectLabel("الخضروات")
+                                SelectItem("جزر")
+                                SelectItem("بروكلي")
+                                SelectItem("سبانخ")
                             }
                         }
                     }
@@ -343,13 +444,22 @@ private fun SelectRtlRecipe() {
                 val t = selectRtlTranslations[language]
                 var fruit by remember(language) { mutableStateOf<String?>(null) }
                 Select(value = fruit, onValueChange = { fruit = it }, placeholder = t[0]) {
-                    SelectTrigger(Modifier.width(192.dp))
+                    SelectTrigger(Modifier.width(128.dp))
                     SelectContent {
                         SelectGroup {
                             SelectLabel(t[1])
                             SelectItem(t[2])
                             SelectItem(t[3])
                             SelectItem(t[4])
+                            SelectItem(t[5])
+                            SelectItem(t[6])
+                        }
+                        SelectSeparator()
+                        SelectGroup {
+                            SelectLabel(t[7])
+                            SelectItem(t[8])
+                            SelectItem(t[9])
+                            SelectItem(t[10])
                         }
                     }
                 }
@@ -370,7 +480,8 @@ internal fun selectPageExamples(native: List<ComponentExample>): List<ComponentE
         selectDisabledExample,
         selectInvalidExample,
         selectRtlExample,
-    ) + native
-        .filterNot { it.title in promoted }
-        .map { it.copy(title = "Kotlin extension: " + it.title) }
+    ) +
+        native
+            .filterNot { it.title in promoted }
+            .map { it.copy(title = "Kotlin extension: " + it.title) }
 }

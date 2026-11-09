@@ -1,0 +1,26 @@
+[
+  {
+    "module": "shadcn/core",
+    "task": "ktlintCommonMainSourceSetCheck",
+    "violations": 0,
+    "ownedViolations": 0
+  },
+  {
+    "module": "shadcn/core",
+    "task": "ktlintJvmTestSourceSetCheck",
+    "violations": 0,
+    "ownedViolations": 0
+  },
+  {
+    "module": "app/shared",
+    "task": "ktlintCommonMainSourceSetCheck",
+    "violations": 17,
+    "ownedViolations": 0
+  },
+  {
+    "module": "app/shared",
+    "task": "ktlintJvmTestSourceSetCheck",
+    "violations": 0,
+    "ownedViolations": 0
+  }
+]

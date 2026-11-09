@@ -37,6 +37,7 @@ private fun avatarRecipe(
     initials: String = "CN",
     size: String = "Default",
     badge: String = "",
+    grayscale: Boolean = true,
 ): String =
     """
     Avatar(size = AvatarSize.$size) {
@@ -48,7 +49,9 @@ private fun avatarRecipe(
         AvatarFallback("$initials")
         $badge
     }
-    """.trimIndent()
+    """.trimIndent().let { code ->
+        if (grayscale) code else code.lines().filterNot { "colorFilter =" in it }.joinToString("\n")
+    }
 
 private fun groupRecipe(
     icon: Boolean = false,
@@ -90,7 +93,7 @@ private val avatarDropdownCode =
             modifier = Modifier.semantics { contentDescription = "Open user menu" },
             style = ButtonVariant.Ghost.rememberStyle() then ButtonSize.Icon.rememberStyle() then Style { shape(CircleShape) },
         ) {
-    """.trimIndent() + "\n" + avatarRecipe().prependIndent("        ") + "\n" +
+    """.trimIndent() + "\n" + avatarRecipe(grayscale = false).prependIndent("        ") + "\n" +
         """
             }
             DropdownMenuContent(style = Style { width(128.dp) }) {
@@ -150,7 +153,11 @@ val avatarDoc =
                     (
                         "val onlineColor = if (currentTheme.isDark) TwColors.green800 " +
                             "else TwColors.green600\n"
-                    ) + avatarRecipe(badge = "AvatarBadge(style = Style { background(onlineColor) })"),
+                    ) +
+                        avatarRecipe(
+                            badge = "AvatarBadge(style = Style { background(onlineColor) })",
+                            grayscale = false,
+                        ),
                     descriptionMarkdown =
                         "Use the `AvatarBadge` component to add a badge to the avatar. " +
                             "The badge is positioned at the bottom right of the avatar. " +

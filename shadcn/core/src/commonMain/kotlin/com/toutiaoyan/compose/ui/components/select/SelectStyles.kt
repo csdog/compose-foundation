@@ -89,7 +89,7 @@ fun SelectVariant.rememberPanelStyle(): Style =
             background(colors.popover)
             border(if (theme.activePreset == StylePreset.Nova) colors.foreground.copy(alpha = 0.1f) else colors.border)
             shape(RoundedCornerShape(if (theme.activePreset == StylePreset.Nova) radius.lg else radius.md))
-            contentPadding(if (theme.activePreset == StylePreset.Nova) 4.dp else spacing.xs2)
+            contentPadding(if (theme.activePreset == StylePreset.Nova) 0.dp else spacing.xs2)
             shadowMd()
         }
     }

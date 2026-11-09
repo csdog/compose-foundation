@@ -115,6 +115,9 @@ class SkeletonExamplesTest(private val viewport: Int, private val dark: Boolean)
                 it.title
             },
         )
+        assertEquals(null, skeletonDoc.examplesHeading)
+        assertTrue(skeletonDoc.examples.single { it.title == "RTL" }.descriptionMarkdown!!.contains("shadcn/ui"))
+        assertTrue(skeletonDoc.examples.drop(7).all { it.title.startsWith("Kotlin extension: ") })
         show("Default")
         profile(48, 250, 200)
         node("skeleton-example").assertWidthIsEqualTo(314.dp).assertHeightIsEqualTo(48.dp)
@@ -171,7 +174,7 @@ class SkeletonExamplesTest(private val viewport: Int, private val dark: Boolean)
     }
 
     @Test fun projectShimmerKeepsThreeRowsAndMatchesItsCopiedCode() {
-        show("Shimmer")
+        show("Kotlin extension: Shimmer")
         node("skeleton-example").assertWidthIsEqualTo((if (viewport == 390) 342 else 592).dp)
             .assertHeightIsEqualTo(64.dp)
         repeat(3) { node("skeleton-line-$it").assertHeightIsEqualTo(16.dp) }

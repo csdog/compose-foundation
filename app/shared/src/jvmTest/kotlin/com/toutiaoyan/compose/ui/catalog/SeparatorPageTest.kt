@@ -9,6 +9,7 @@ import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.catalog.docs.separatorDoc
 import com.toutiaoyan.compose.ui.components.overlay.OverlayHost
 import com.toutiaoyan.compose.ui.theme.Theme
@@ -30,6 +31,14 @@ class SeparatorPageTest(private val width: Int, private val dark: Boolean) {
             assertFalse(example.code.contains("testTag("))
             assertTrue(example.code.trimEnd().endsWith("Recipe()"))
         }
+    }
+
+    @Test fun copiedPageRetainsTheOfficialApiReferenceAlongsideComposeAdaptations() {
+        val markdown = componentPageMarkdown(separatorDoc)
+        val api = markdown.substringAfter("## API Reference")
+        assertContains(api, "[Base UI Separator](https://base-ui.com/react/components/separator#api-reference)")
+        assertContains(api, "`decorative`")
+        assertContains(markdown, "it does not provide the native HTML separator role.")
     }
 
     @Test fun rtlBodyAndBundledFontsKeepTwentyPixelSubtitleLines() {

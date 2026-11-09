@@ -16,6 +16,7 @@ import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.catalog.docs.ComponentGuideBlock
 import com.toutiaoyan.compose.ui.catalog.docs.comboboxDoc
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import org.junit.Rule
@@ -52,6 +53,17 @@ class ComboboxExamplesTest(private val width: Int, private val dark: Boolean) {
         assertEquals(null, comboboxDoc.examplesHeading)
         assertTrue(comboboxDoc.compositionCode!!.contains("With chips"))
         assertTrue(comboboxDoc.compositionCode!!.contains("With groups and collection"))
+        assertEquals(
+            "A single-line input and a flat list (see [Basic](#basic)).\n\n" +
+                "Multi-select with `multiple`, chips, and a chips input (see [Multiple](#multiple)).\n\n" +
+                "Nested items per group using `ComboboxCollection` inside each `ComboboxGroup`, " +
+                "with a separator between groups (see [Groups](#groups)).",
+            comboboxDoc.compositionMarkdown,
+        )
+        val markdown = componentPageMarkdown(comboboxDoc)
+        val compositionGuidance = requireNotNull(comboboxDoc.compositionMarkdown)
+        assertTrue(markdown.contains(compositionGuidance))
+        assertTrue(markdown.indexOf(compositionGuidance) < markdown.indexOf("## Custom Items"))
         assertEquals(
             listOf("Custom Items", "Multiple Selection"),
             comboboxDoc.beforeExamples.map { it.title },

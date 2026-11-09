@@ -1,0 +1,860 @@
+{
+  "slug": "tooltip",
+  "capturedAt": "2026-11-08T06:24:10.033567+00:00",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/tooltip",
+  "localUrl": "http://127.0.0.1:50694/tooltip",
+  "viewportList": [
+    [
+      "desktop-light",
+      1440,
+      1000,
+      "light"
+    ],
+    [
+      "desktop-dark",
+      1440,
+      1000,
+      "dark"
+    ],
+    [
+      "phone-light",
+      390,
+      844,
+      "light"
+    ],
+    [
+      "phone-dark",
+      390,
+      844,
+      "dark"
+    ]
+  ],
+  "distribution": {
+    "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/app/webApp/build/dist/wasmJs/productionExecutable",
+    "files": {
+      "index.html": {
+        "sha256": "0febf14ee7bfce11bb793449f281d55ba8242d006a319fdfe6cb0c8b32b31fd5",
+        "bytes": 1231
+      },
+      "webApp.js": {
+        "sha256": "48ef69855cc6b59b50349aab3f18583c2ea100b837794f64bcc11ebd80b2c678",
+        "bytes": 538042
+      }
+    },
+    "wasm": {
+      "22b11d9b2c214c89b6da.wasm": {
+        "sha256": "395dc4c7aced3ed11fc353596b616f4c0471c22b808adbadbb729545de4c701e",
+        "bytes": 12962342
+      },
+      "658820f72b4617efb380.wasm": {
+        "sha256": "08e904ec38a6a81a4809a853acf68022f83905286827e804e88b262c37f2954d",
+        "bytes": 8648883
+      }
+    }
+  },
+  "local": {
+    "desktop-light": {
+      "rootRect": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 1000,
+        "top": 0,
+        "right": 1440,
+        "bottom": 1000,
+        "left": 0
+      },
+      "canvasRect": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 1000,
+        "top": 0,
+        "right": 1440,
+        "bottom": 1000,
+        "left": 0
+      },
+      "canvasBitmap": {
+        "width": 1440,
+        "height": 1000
+      },
+      "devicePixelRatio": 1,
+      "theme": "light",
+      "bodyHeight": "calc(4123px + 100vh)",
+      "clientWidth": 1440,
+      "direction": "ltr",
+      "wasm": [
+        "http://127.0.0.1:50694/658820f72b4617efb380.wasm",
+        "http://127.0.0.1:50694/22b11d9b2c214c89b6da.wasm"
+      ],
+      "file": {
+        "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/tooltip-r3/screenshots/local-desktop-light.png",
+        "sha256": "cd6eecf5b4c132cac4c9bedb440bdba8165e4beb143560523d8d51c9251792eb",
+        "pixels": [
+          1440,
+          1000
+        ]
+      }
+    },
+    "desktop-dark": {
+      "rootRect": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 1000,
+        "top": 0,
+        "right": 1440,
+        "bottom": 1000,
+        "left": 0
+      },
+      "canvasRect": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 1000,
+        "top": 0,
+        "right": 1440,
+        "bottom": 1000,
+        "left": 0
+      },
+      "canvasBitmap": {
+        "width": 1440,
+        "height": 1000
+      },
+      "devicePixelRatio": 1,
+      "theme": "dark",
+      "bodyHeight": "calc(4123px + 100vh)",
+      "clientWidth": 1440,
+      "direction": "ltr",
+      "wasm": [
+        "http://127.0.0.1:50694/658820f72b4617efb380.wasm",
+        "http://127.0.0.1:50694/22b11d9b2c214c89b6da.wasm"
+      ],
+      "file": {
+        "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/tooltip-r3/screenshots/local-desktop-dark.png",
+        "sha256": "da177f6e1f79e6b92e88e11dbff321dcca7de117a6dabc48543538ee29d847c9",
+        "pixels": [
+          1440,
+          1000
+        ]
+      }
+    },
+    "phone-light": {
+      "rootRect": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "canvasRect": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "canvasBitmap": {
+        "width": 390,
+        "height": 844
+      },
+      "devicePixelRatio": 1,
+      "theme": "light",
+      "bodyHeight": "calc(4374px + 100vh)",
+      "clientWidth": 390,
+      "direction": "ltr",
+      "wasm": [
+        "http://127.0.0.1:50694/658820f72b4617efb380.wasm",
+        "http://127.0.0.1:50694/22b11d9b2c214c89b6da.wasm"
+      ],
+      "file": {
+        "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/tooltip-r3/screenshots/local-phone-light.png",
+        "sha256": "2ec13d8da90d50f72430855424b99d444fe5042e7c2d090db11423d66c31f964",
+        "pixels": [
+          390,
+          844
+        ]
+      }
+    },
+    "phone-dark": {
+      "rootRect": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "canvasRect": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "canvasBitmap": {
+        "width": 390,
+        "height": 844
+      },
+      "devicePixelRatio": 1,
+      "theme": "dark",
+      "bodyHeight": "calc(4374px + 100vh)",
+      "clientWidth": 390,
+      "direction": "ltr",
+      "wasm": [
+        "http://127.0.0.1:50694/658820f72b4617efb380.wasm",
+        "http://127.0.0.1:50694/22b11d9b2c214c89b6da.wasm"
+      ],
+      "file": {
+        "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/tooltip-r3/screenshots/local-phone-dark.png",
+        "sha256": "b315f947b5916265e4c08e46e1aef0ce65fd6bb4cd6408ea8cf15b2bfc48a019",
+        "pixels": [
+          390,
+          844
+        ]
+      }
+    }
+  },
+  "official": {
+    "desktop-light": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/tooltip-r3/screenshots/official-desktop-light.png",
+      "sha256": "d1f6047f00d10a822c692a632de67e96acf7830afb414a9857ab883452f4bd3c",
+      "pixels": [
+        1440,
+        1000
+      ]
+    },
+    "desktop-dark": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/tooltip-r3/screenshots/official-desktop-dark.png",
+      "sha256": "a5b4fe000aa842332eb052f2dca1676c313aeb9007489fe337f1dc0775d0dad9",
+      "pixels": [
+        1440,
+        1000
+      ]
+    },
+    "phone-light": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/tooltip-r3/screenshots/official-phone-light.png",
+      "sha256": "7ab363818a6241bc3f69bad79661925916af09dadd98d16884033d5bfe60c950",
+      "pixels": [
+        390,
+        844
+      ]
+    },
+    "phone-dark": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/tooltip-r3/screenshots/official-phone-dark.png",
+      "sha256": "e15aa9ff6edfcf2ae8f05d30fc4243531d1964191e5e9c45dd174aa28ddcdcd6",
+      "pixels": [
+        390,
+        844
+      ]
+    }
+  },
+  "interactions": {
+    "rtl": {
+      "file": {
+        "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/tooltip-r3/screenshots/local-desktop-light-rtl.png",
+        "sha256": "cd6eecf5b4c132cac4c9bedb440bdba8165e4beb143560523d8d51c9251792eb",
+        "pixels": [
+          1440,
+          1000
+        ]
+      },
+      "direction": "rtl"
+    },
+    "hover": {
+      "changedPixels": 3801,
+      "base": {
+        "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/tooltip-r3/screenshots/interaction-hover-base.png",
+        "sha256": "cd6eecf5b4c132cac4c9bedb440bdba8165e4beb143560523d8d51c9251792eb",
+        "pixels": [
+          1440,
+          1000
+        ]
+      },
+      "open": {
+        "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/tooltip-r3/screenshots/interaction-hover-open.png",
+        "sha256": "76409b51c7f24811a22dfc43701dcdb2cf92106557d236bf7bc850f512c423da",
+        "pixels": [
+          1440,
+          1000
+        ]
+      },
+      "target": {
+        "source": "semantic-text",
+        "x": 720.5,
+        "y": 435,
+        "matches": [
+          {
+            "text": "Hover",
+            "label": "Hover",
+            "rect": {
+              "x": 690,
+              "y": 419,
+              "width": 61,
+              "height": 32,
+              "top": 419,
+              "right": 751,
+              "bottom": 451,
+              "left": 690
+            },
+            "tag": "DIV"
+          },
+          {
+            "text": "Hover",
+            "label": "",
+            "rect": {
+              "x": 441,
+              "y": 331,
+              "width": 558,
+              "height": 208,
+              "top": 331,
+              "right": 999,
+              "bottom": 539,
+              "left": 441
+            },
+            "tag": "DIV"
+          }
+        ]
+      },
+      "escapeChangedPixels": 0,
+      "escape": {
+        "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/tooltip-r3/screenshots/interaction-hover-escape.png",
+        "sha256": "cd6eecf5b4c132cac4c9bedb440bdba8165e4beb143560523d8d51c9251792eb",
+        "pixels": [
+          1440,
+          1000
+        ]
+      }
+    },
+    "keyboard": {
+      "tab": 37,
+      "open": {
+        "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/tooltip-r3/screenshots/interaction-keyboard-open.png",
+        "sha256": "14b7c3193645ed5fcce62cfcb2f03b2e59f405f9cbc76752f6426d012e43d42d",
+        "pixels": [
+          1440,
+          1000
+        ]
+      },
+      "accessibilityNames": [
+        "Add to library"
+      ],
+      "accessibilityNodeCount": 17
+    }
+  },
+  "assertions": [
+    {
+      "name": "desktop-light-loaded",
+      "passed": true
+    },
+    {
+      "name": "desktop-light-theme",
+      "passed": true,
+      "detail": "light"
+    },
+    {
+      "name": "desktop-light-bitmap-css-ratio",
+      "passed": true,
+      "detail": {
+        "bitmap": {
+          "width": 1440,
+          "height": 1000
+        },
+        "css": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 1000,
+          "top": 0,
+          "right": 1440,
+          "bottom": 1000,
+          "left": 0
+        },
+        "dpr": 1
+      }
+    },
+    {
+      "name": "desktop-dark-loaded",
+      "passed": true
+    },
+    {
+      "name": "desktop-dark-theme",
+      "passed": true,
+      "detail": "dark"
+    },
+    {
+      "name": "desktop-dark-bitmap-css-ratio",
+      "passed": true,
+      "detail": {
+        "bitmap": {
+          "width": 1440,
+          "height": 1000
+        },
+        "css": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 1000,
+          "top": 0,
+          "right": 1440,
+          "bottom": 1000,
+          "left": 0
+        },
+        "dpr": 1
+      }
+    },
+    {
+      "name": "phone-light-loaded",
+      "passed": true
+    },
+    {
+      "name": "phone-light-theme",
+      "passed": true,
+      "detail": "light"
+    },
+    {
+      "name": "phone-light-bitmap-css-ratio",
+      "passed": true,
+      "detail": {
+        "bitmap": {
+          "width": 390,
+          "height": 844
+        },
+        "css": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844,
+          "top": 0,
+          "right": 390,
+          "bottom": 844,
+          "left": 0
+        },
+        "dpr": 1
+      }
+    },
+    {
+      "name": "phone-dark-loaded",
+      "passed": true
+    },
+    {
+      "name": "phone-dark-theme",
+      "passed": true,
+      "detail": "dark"
+    },
+    {
+      "name": "phone-dark-bitmap-css-ratio",
+      "passed": true,
+      "detail": {
+        "bitmap": {
+          "width": 390,
+          "height": 844
+        },
+        "css": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844,
+          "top": 0,
+          "right": 390,
+          "bottom": 844,
+          "left": 0
+        },
+        "dpr": 1
+      }
+    },
+    {
+      "name": "rtl-direction-applied",
+      "passed": true
+    },
+    {
+      "name": "hover-opens-tooltip",
+      "passed": true,
+      "detail": 3801
+    },
+    {
+      "name": "escape-closes-hover-tooltip",
+      "passed": true,
+      "detail": 0
+    },
+    {
+      "name": "keyboard-focus-finds-state-change",
+      "passed": true,
+      "detail": 37
+    },
+    {
+      "name": "accessibility-trigger-name",
+      "passed": false,
+      "detail": [
+        "Add to library"
+      ]
+    },
+    {
+      "name": "no-page-exceptions",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "consoleDiagnostics": [
+    {
+      "type": "warning",
+      "text": "WebGL: INVALID_ENUM: getParameter: invalid parameter name, WEBGL_debug_renderer_info not enabled"
+    },
+    {
+      "type": "warning",
+      "text": "WebGL: INVALID_ENUM: getParameter: invalid parameter name, WEBGL_debug_renderer_info not enabled"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x11c001b1a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x11c001b1a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "warning",
+      "text": "WebGL: INVALID_ENUM: getParameter: invalid parameter name, WEBGL_debug_renderer_info not enabled"
+    },
+    {
+      "type": "warning",
+      "text": "WebGL: INVALID_ENUM: getParameter: invalid parameter name, WEBGL_debug_renderer_info not enabled"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x11c001c8200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+    },
+    {
+      "type": "error",
+      "text": "Accessing `memory` via `wasmExports` is deprecated. Use `kotlin.wasm.unsafe.wasmMemory` or update dependencies. Read more: https://kotl.in/vr3szr"
+    },
+    {
+      "type": "error",
+      "text": "wasm streaming compile failed: TypeError: WebAssembly compilation aborted: Network error: Response body loading was aborted"
+    },
+    {
+      "type": "error",
+      "text": "falling back to ArrayBuffer instantiation"
+    },
+    {
+      "type": "warning",
+      "text": "WebGL: INVALID_ENUM: getParameter: invalid parameter name, WEBGL_debug_renderer_info not enabled"
+    },
+    {
+      "type": "warning",
+      "text": "WebGL: INVALID_ENUM: getParameter: invalid parameter name, WEBGL_debug_renderer_info not enabled"
+    },
+    {
+      "type": "error",
+      "text": "Accessing `memory` via `wasmExports` is deprecated. Use `kotlin.wasm.unsafe.wasmMemory` or update dependencies. Read more: https://kotl.in/vr3szr"
+    },
+    {
+      "type": "warning",
+      "text": "WebGL: INVALID_ENUM: getParameter: invalid parameter name, WEBGL_debug_renderer_info not enabled"
+    },
+    {
+      "type": "warning",
+      "text": "WebGL: INVALID_ENUM: getParameter: invalid parameter name, WEBGL_debug_renderer_info not enabled"
+    },
+    {
+      "type": "error",
+      "text": "wasm streaming compile failed: TypeError: WebAssembly compilation aborted: Network error: Response body loading was aborted"
+    },
+    {
+      "type": "error",
+      "text": "falling back to ArrayBuffer instantiation"
+    },
+    {
+      "type": "warning",
+      "text": "WebGL: INVALID_ENUM: getParameter: invalid parameter name, WEBGL_debug_renderer_info not enabled"
+    },
+    {
+      "type": "warning",
+      "text": "WebGL: INVALID_ENUM: getParameter: invalid parameter name, WEBGL_debug_renderer_info not enabled"
+    },
+    {
+      "type": "error",
+      "text": "Accessing `memory` via `wasmExports` is deprecated. Use `kotlin.wasm.unsafe.wasmMemory` or update dependencies. Read more: https://kotl.in/vr3szr"
+    },
+    {
+      "type": "warning",
+      "text": "WebGL: INVALID_ENUM: getParameter: invalid parameter name, WEBGL_debug_renderer_info not enabled"
+    },
+    {
+      "type": "warning",
+      "text": "WebGL: INVALID_ENUM: getParameter: invalid parameter name, WEBGL_debug_renderer_info not enabled"
+    },
+    {
+      "type": "error",
+      "text": "Accessing `memory` via `wasmExports` is deprecated. Use `kotlin.wasm.unsafe.wasmMemory` or update dependencies. Read more: https://kotl.in/vr3szr"
+    },
+    {
+      "type": "error",
+      "text": "wasm streaming compile failed: TypeError: WebAssembly compilation aborted: Network error: Response body loading was aborted"
+    },
+    {
+      "type": "error",
+      "text": "falling back to ArrayBuffer instantiation"
+    },
+    {
+      "type": "warning",
+      "text": "WebGL: INVALID_ENUM: getParameter: invalid parameter name, WEBGL_debug_renderer_info not enabled"
+    },
+    {
+      "type": "warning",
+      "text": "WebGL: INVALID_ENUM: getParameter: invalid parameter name, WEBGL_debug_renderer_info not enabled"
+    },
+    {
+      "type": "error",
+      "text": "Accessing `memory` via `wasmExports` is deprecated. Use `kotlin.wasm.unsafe.wasmMemory` or update dependencies. Read more: https://kotl.in/vr3szr"
+    },
+    {
+      "type": "warning",
+      "text": "WebGL: INVALID_ENUM: getParameter: invalid parameter name, WEBGL_debug_renderer_info not enabled"
+    },
+    {
+      "type": "warning",
+      "text": "WebGL: INVALID_ENUM: getParameter: invalid parameter name, WEBGL_debug_renderer_info not enabled"
+    },
+    {
+      "type": "error",
+      "text": "Accessing `memory` via `wasmExports` is deprecated. Use `kotlin.wasm.unsafe.wasmMemory` or update dependencies. Read more: https://kotl.in/vr3szr"
+    },
+    {
+      "type": "warning",
+      "text": "WebGL: INVALID_ENUM: getParameter: invalid parameter name, WEBGL_debug_renderer_info not enabled"
+    },
+    {
+      "type": "warning",
+      "text": "WebGL: INVALID_ENUM: getParameter: invalid parameter name, WEBGL_debug_renderer_info not enabled"
+    },
+    {
+      "type": "error",
+      "text": "Accessing `memory` via `wasmExports` is deprecated. Use `kotlin.wasm.unsafe.wasmMemory` or update dependencies. Read more: https://kotl.in/vr3szr"
+    }
+  ],
+  "pageErrors": [],
+  "officialAccessibility": [
+    {
+      "role": "button",
+      "name": "Search documentation..."
+    },
+    {
+      "role": "button",
+      "name": "Toggle theme"
+    },
+    {
+      "role": "button",
+      "name": "Copy Page"
+    },
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "button",
+      "name": "Toggle"
+    },
+    {
+      "role": "button",
+      "name": "Hover"
+    },
+    {
+      "role": "button",
+      "name": "Copy"
+    },
+    {
+      "role": "button",
+      "name": "Copy"
+    },
+    {
+      "role": "button",
+      "name": "Copy"
+    },
+    {
+      "role": "button",
+      "name": "Left"
+    },
+    {
+      "role": "button",
+      "name": "Top"
+    },
+    {
+      "role": "button",
+      "name": "Bottom"
+    },
+    {
+      "role": "button",
+      "name": "Right"
+    },
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "button",
+      "name": "\u064a\u0633\u0627\u0631"
+    },
+    {
+      "role": "button",
+      "name": "\u0623\u0639\u0644\u0649"
+    },
+    {
+      "role": "button",
+      "name": "\u0623\u0633\u0641\u0644"
+    },
+    {
+      "role": "button",
+      "name": "\u064a\u0645\u064a\u0646"
+    },
+    {
+      "role": "button",
+      "name": "\u0628\u062f\u0627\u064a\u0629 \u0627\u0644\u0633\u0637\u0631"
+    },
+    {
+      "role": "button",
+      "name": "\u0646\u0647\u0627\u064a\u0629 \u0627\u0644\u0633\u0637\u0631"
+    },
+    {
+      "role": "button",
+      "name": "Deploy Now"
+    },
+    {
+      "role": "StaticText",
+      "name": "Hover"
+    },
+    {
+      "role": "StaticText",
+      "name": "Hover"
+    },
+    {
+      "role": "StaticText",
+      "name": "Add to library"
+    },
+    {
+      "role": "button",
+      "name": "Disabled"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Hover"
+    },
+    {
+      "role": "button",
+      "name": "View Code"
+    },
+    {
+      "role": "button",
+      "name": "Copy"
+    },
+    {
+      "role": "button",
+      "name": "Copy"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Hover"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Add to library"
+    },
+    {
+      "role": "button",
+      "name": "View Code"
+    },
+    {
+      "role": "button",
+      "name": "View Code"
+    },
+    {
+      "role": "button",
+      "name": "View Code"
+    },
+    {
+      "role": "button",
+      "name": "View Code"
+    }
+  ],
+  "contactSheets": {
+    "local": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/tooltip-r3/contact-local.png",
+      "sha256": "59dd71812991ce3f9244d535b27954d70594b9f676b5d1c546fa5dfb74915f05",
+      "pixels": [
+        1440,
+        1060
+      ]
+    },
+    "official": {
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/tooltip-r3/contact-official.png",
+      "sha256": "0c510e22573645a342753da4137ddc4e15d966ba2accb0fd8ac9abdd6ea4b215",
+      "pixels": [
+        1440,
+        1060
+      ]
+    }
+  },
+  "officialDom": {
+    "title": "Tooltip",
+    "description": "Copy PagePreviousNext",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "Installation#"
+      },
+      {
+        "tag": "H3",
+        "text": "Run the following command:"
+      },
+      {
+        "tag": "H3",
+        "text": "Add the TooltipProvider to the root of your app."
+      },
+      {
+        "tag": "H2",
+        "text": "Usage#"
+      },
+      {
+        "tag": "H2",
+        "text": "Composition#"
+      },
+      {
+        "tag": "H2",
+        "text": "Side#"
+      },
+      {
+        "tag": "H2",
+        "text": "With Keyboard Shortcut#"
+      },
+      {
+        "tag": "H2",
+        "text": "Disabled Button#"
+      },
+      {
+        "tag": "H2",
+        "text": "RTL#"
+      },
+      {
+        "tag": "H2",
+        "text": "API Reference#"
+      }
+    ],
+    "examples": 5
+  },
+  "officialStatus": "pass",
+  "status": "fail",
+  "failedAssertions": [
+    "accessibility-trigger-name"
+  ]
+}

@@ -40,6 +40,87 @@ val scrollFadeDoc =
         beforeExamples =
             listOf(
                 ComponentGuideSection(
+                    "Utility reference",
+                    listOf(
+                        ComponentGuideBlock.Table(
+                            headers = listOf("Class", "Behavior", "Kotlin equivalent"),
+                            rows =
+                                listOf(
+                                    listOf(
+                                        "`scroll-fade`",
+                                        "Both vertical edges",
+                                        "`scrollFade(state)`",
+                                    ),
+                                    listOf(
+                                        "`scroll-fade-y`",
+                                        "Both vertical edges",
+                                        "`orientation = ScrollFadeOrientation.Vertical`",
+                                    ),
+                                    listOf(
+                                        "`scroll-fade-x`",
+                                        "Both logical horizontal edges",
+                                        "`orientation = ScrollFadeOrientation.Horizontal`",
+                                    ),
+                                    listOf(
+                                        "`scroll-fade-t`",
+                                        "Top edge",
+                                        "`edge = ScrollFadeEdge.Top`",
+                                    ),
+                                    listOf(
+                                        "`scroll-fade-b`",
+                                        "Bottom edge",
+                                        "`edge = ScrollFadeEdge.Bottom`",
+                                    ),
+                                    listOf(
+                                        "`scroll-fade-l`",
+                                        "Physical left edge",
+                                        "`edge = ScrollFadeEdge.Left`",
+                                    ),
+                                    listOf(
+                                        "`scroll-fade-r`",
+                                        "Physical right edge",
+                                        "`edge = ScrollFadeEdge.Right`",
+                                    ),
+                                    listOf(
+                                        "`scroll-fade-s`",
+                                        "Logical start edge, mirrors in RTL",
+                                        "`edge = ScrollFadeEdge.Start`",
+                                    ),
+                                    listOf(
+                                        "`scroll-fade-e`",
+                                        "Logical end edge, mirrors in RTL",
+                                        "`edge = ScrollFadeEdge.End`",
+                                    ),
+                                    listOf(
+                                        "`scroll-fade-<number>`",
+                                        "Spacing-scale depth (4px per unit)",
+                                        "`size = ScrollFadeSize.Length(16.dp)` for `scroll-fade-4`",
+                                    ),
+                                    listOf(
+                                        "`scroll-fade-[<value>]`",
+                                        "Arbitrary length or percentage",
+                                        "`ScrollFadeSize.Length(dp)` or `Fraction(0.15f)`",
+                                    ),
+                                    listOf(
+                                        "`scroll-fade-{t,b,s,e}-<number>`",
+                                        "Per-edge spacing-scale depth",
+                                        "`leadingSize` / `trailingSize` with `Length(dp)`",
+                                    ),
+                                    listOf(
+                                        "`scroll-fade-{t,b,s,e}-[<value>]`",
+                                        "Per-edge arbitrary depth",
+                                        "`leadingSize` / `trailingSize` with `Length` or `Fraction`",
+                                    ),
+                                    listOf(
+                                        "`scroll-fade-none`",
+                                        "Remove the mask",
+                                        "`enabled = false`",
+                                    ),
+                                ),
+                        ),
+                    ),
+                ),
+                ComponentGuideSection(
                     "Kotlin extension: Scroll fade rules",
                     listOf(
                         ComponentGuideBlock.Paragraph(
@@ -53,9 +134,11 @@ val scrollFadeDoc =
                         ),
                         ComponentGuideBlock.Bullets(
                             listOf(
-                                "`ScrollFadeEdge.Both` / `Top` / `Bottom` / `Left` / `Right` / `Start` / `End` choose the faded edges.",
+                                "`ScrollFadeEdge.Both` / `Top` / `Bottom` / `Left` / `Right` / " +
+                                    "`Start` / `End` choose the faded edges.",
                                 "`ScrollFadeEdge.Start` and `End` are logical inline edges that mirror in RTL.",
-                                "`ScrollFadeSize.Default` / `Length(dp)` / `Fraction(0.15f)` set the fade depth; per-edge sizes override it.",
+                                "`ScrollFadeSize.Default` / `Length(dp)` / `Fraction(0.15f)` set the " +
+                                    "fade depth; per-edge sizes override it.",
                                 "`enabled = false` removes the fade in any state or responsive branch.",
                                 "`revealDistance` controls how far you scroll before the fade reaches full depth.",
                             ),
@@ -72,22 +155,29 @@ val scrollFadeDoc =
                     ),
                 ),
             ),
-        afterExamples =
-            listOf(
-                ComponentGuideSection(
-                    "Fallback",
+        beforeExampleSections =
+            mapOf(
+                "RTL" to
                     listOf(
-                        ComponentGuideBlock.Paragraph(
-                            (
-                                "The scroll-aware behavior is driven by the `ScrollState` " +
-                                    "position and eases in over `revealDistance`; no scroll " +
-                                    "listeners are installed. Since the mask is applied to the " +
-                                    "scroll container itself, a visible scrollbar fades with " +
-                                    "the content at the edges."
+                        ComponentGuideSection(
+                            "Fallback",
+                            listOf(
+                                ComponentGuideBlock.Paragraph(
+                                    (
+                                        "The upstream CSS uses scroll-driven animations without JavaScript " +
+                                            "or scroll listeners. Browsers without support use a static fade " +
+                                            "on both edges, or on the selected edge for edge utilities. " +
+                                            "Compose drives the scroll-aware mask from the `ScrollState` " +
+                                            "position and eases in over `revealDistance`; no scroll " +
+                                            "listeners are installed. Since the mask is applied to the " +
+                                            "scroll container itself, a visible scrollbar fades with " +
+                                            "the content at the edges. The upstream `no-scrollbar` utility " +
+                                            "hides it entirely; Compose scrollbars are added separately."
+                                    ),
+                                ),
                             ),
                         ),
                     ),
-                ),
             ),
         examples =
             listOf(

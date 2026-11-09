@@ -1,0 +1,154 @@
+{
+  "slug": "button",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/button",
+  "localUrl": "http://127.0.0.1:8772/button",
+  "capturedAt": "2026-11-05T05:30:13.299Z",
+  "app": [
+    "http://127.0.0.1:8772/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8772/b0bf4ea244121b09d834.wasm"
+  ],
+  "officialDom": {
+    "title": "Button",
+    "description": "Copy PagePreviousNext",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "Installation#"
+      },
+      {
+        "tag": "H2",
+        "text": "Usage#"
+      },
+      {
+        "tag": "H2",
+        "text": "Cursor#"
+      },
+      {
+        "tag": "H2",
+        "text": "Size#"
+      },
+      {
+        "tag": "H2",
+        "text": "Default#"
+      },
+      {
+        "tag": "H2",
+        "text": "Outline#"
+      },
+      {
+        "tag": "H2",
+        "text": "Secondary#"
+      },
+      {
+        "tag": "H2",
+        "text": "Ghost#"
+      },
+      {
+        "tag": "H2",
+        "text": "Destructive#"
+      },
+      {
+        "tag": "H2",
+        "text": "Link#"
+      },
+      {
+        "tag": "H2",
+        "text": "Icon#"
+      },
+      {
+        "tag": "H2",
+        "text": "With Icon#"
+      },
+      {
+        "tag": "H2",
+        "text": "Rounded#"
+      },
+      {
+        "tag": "H2",
+        "text": "Spinner#"
+      },
+      {
+        "tag": "H2",
+        "text": "Button Group#"
+      },
+      {
+        "tag": "H2",
+        "text": "As Link#"
+      },
+      {
+        "tag": "H2",
+        "text": "RTL#"
+      },
+      {
+        "tag": "H2",
+        "text": "API Reference#"
+      },
+      {
+        "tag": "H3",
+        "text": "Button#"
+      }
+    ],
+    "tabs": [
+      "Command",
+      "Manual",
+      "pnpm",
+      "npm",
+      "yarn",
+      "bun"
+    ],
+    "examples": 15,
+    "toc": [],
+    "bodyWidth": {
+      "x": 0,
+      "y": 64,
+      "width": 1080,
+      "height": 9396.96875,
+      "top": 64,
+      "right": 1080,
+      "bottom": 9460.96875,
+      "left": 0
+    },
+    "clientWidth": 1080,
+    "scrollHeight": 9461
+  },
+  "local": {
+    "desktop-light": {
+      "url": "http://127.0.0.1:8772/button",
+      "theme": "light",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(8688.5px + 100vh)"
+    },
+    "desktop-dark": {
+      "url": "http://127.0.0.1:8772/button",
+      "theme": "dark",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(8688.5px + 100vh)"
+    },
+    "phone-light": {
+      "url": "http://127.0.0.1:8772/button",
+      "theme": "light",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(9767px + 100vh)"
+    },
+    "phone-dark": {
+      "url": "http://127.0.0.1:8772/button",
+      "theme": "dark",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(9767px + 100vh)"
+    }
+  },
+  "files": {
+    "official-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/page-skeleton-r2/after/button/official-desktop-light.png",
+    "local-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/page-skeleton-r2/after/button/local-desktop-light.png",
+    "official-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/page-skeleton-r2/after/button/official-desktop-dark.png",
+    "local-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/page-skeleton-r2/after/button/local-desktop-dark.png",
+    "official-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/page-skeleton-r2/after/button/official-phone-light.png",
+    "local-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/page-skeleton-r2/after/button/local-phone-light.png",
+    "official-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/page-skeleton-r2/after/button/official-phone-dark.png",
+    "local-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/page-skeleton-r2/after/button/local-phone-dark.png"
+  }
+}

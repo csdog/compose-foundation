@@ -49,6 +49,11 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.ui.text.TextStyle
+import com.toutiaoyan.compose.ui.styles.cssStyleable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -120,7 +125,9 @@ fun inputOTPState(): InputOTPState {
 
 class InputOTPScope internal constructor()
 
-class InputOTPGroupScope internal constructor()
+class InputOTPGroupScope internal constructor(
+    internal val invalidSlots: MutableMap<Any, Boolean>,
+)
 
 /**
  * A one-time-passcode input matching real shadcn/ui's `input-otp.tsx`:
@@ -315,16 +322,33 @@ fun InputOTPScope.InputOTPGroup(
     modifier: Modifier = Modifier,
     content: @Composable InputOTPGroupScope.() -> Unit,
 ) {
-    inputOTPController()
+    val controller = inputOTPController()
+    val theme = currentTheme
+    val invalidSlots = remember { mutableStateMapOf<Any, Boolean>() }
+    val radius = twRadius.lg
+    val groupInvalid = controller.invalid || invalidSlots.values.any { it }
+    val groupStyle =
+        Style {
+            shape(RoundedCornerShape(radius))
+            if (theme.activePreset == StylePreset.Nova && groupInvalid) {
+                dropShadow(
+                    Shadow(
+                        radius = 0.dp,
+                        spread = 3.dp,
+                        color = theme.colors.destructive.copy(alpha = if (theme.isDark) 0.4f else 0.2f),
+                    ),
+                )
+            }
+        }
     val nova = currentTheme.activePreset == StylePreset.Nova
     val registry = remember { GroupChildRegistry() }
     CompositionLocalProvider(LocalOTPGroupRegistry provides registry) {
         Row(
-            modifier = modifier.height(if (nova) 32.dp else 36.dp),
+            modifier = modifier.height(if (nova) 32.dp else 36.dp).cssStyleable(null, groupStyle),
             horizontalArrangement = Arrangement.spacedBy(if (nova) (-1).dp else twSpacing.sm),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            InputOTPGroupScope().content()
+            InputOTPGroupScope(invalidSlots).content()
         }
     }
 }
@@ -336,8 +360,34 @@ fun InputOTPGroupScope.InputOTPSlot(
     modifier: Modifier = Modifier,
     invalid: Boolean = false,
 ) {
+    InputOTPSlotContent(index, modifier, invalid, TextStyle.Default)
+}
+
+/** Slot typography override, for recipes such as the larger verification form. */
+@Composable
+fun InputOTPGroupScope.InputOTPSlot(
+    index: Int,
+    textStyle: TextStyle,
+    modifier: Modifier = Modifier,
+    invalid: Boolean = false,
+) {
+    InputOTPSlotContent(index, modifier, invalid, textStyle)
+}
+
+@Composable
+private fun InputOTPGroupScope.InputOTPSlotContent(
+    index: Int,
+    modifier: Modifier,
+    invalid: Boolean,
+    textStyle: TextStyle,
+) {
     val ctrl = inputOTPController()
     val resolvedInvalid = invalid || ctrl.invalid
+    val slotKey = remember { Any() }
+    DisposableEffect(invalidSlots, slotKey) {
+        onDispose { invalidSlots.remove(slotKey) }
+    }
+    SideEffect { invalidSlots[slotKey] = resolvedInvalid }
     val char = ctrl.value.getOrNull(index)
     val nova = currentTheme.activePreset == StylePreset.Nova
     val (position, count) = checkNotNull(LocalOTPGroupRegistry.current).register()
@@ -365,6 +415,7 @@ fun InputOTPGroupScope.InputOTPSlot(
         shape = shape,
         overlap = nova && position > 0,
         invalid = resolvedInvalid,
+        textStyle = textStyle,
     )
 }
 
@@ -395,6 +446,7 @@ private fun OtpSlot(
     shape: RoundedCornerShape,
     overlap: Boolean,
     invalid: Boolean = false,
+    textStyle: TextStyle = TextStyle.Default,
 ) {
     val theme = currentTheme
     val nova = theme.activePreset == StylePreset.Nova
@@ -420,7 +472,7 @@ private fun OtpSlot(
             )
             shape(shape)
             if (isActive) dropShadow(theme.focusRingShadow())
-            if (invalid) {
+            if (invalid && (!nova || isActive)) {
                 dropShadow(
                     Shadow(
                         radius = 0.dp,
@@ -432,6 +484,17 @@ private fun OtpSlot(
                     ),
                 )
             }
+        }
+
+    val slotTextStyle =
+        if (nova) {
+            theme.typography.bodyMedium.copy(
+                fontFamily = theme.fontFamily,
+                fontSize = 14.sp,
+                lineHeight = 20.sp,
+            )
+        } else {
+            TextStyle.Default
         }
 
     Box(
@@ -452,16 +515,7 @@ private fun OtpSlot(
     ) {
         Text(
             variant = if (nova) TextVariant.BodySmall else TextVariant.TitleMedium,
-            textStyle =
-                if (nova) {
-                    theme.typography.bodyMedium.copy(
-                        fontFamily = theme.fontFamily,
-                        fontSize = 14.sp,
-                        lineHeight = 20.sp,
-                    )
-                } else {
-                    androidx.compose.ui.text.TextStyle.Default
-                },
+            textStyle = slotTextStyle.merge(textStyle),
         ) {
             when {
                 char == null -> ""

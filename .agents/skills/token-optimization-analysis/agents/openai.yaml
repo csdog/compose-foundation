@@ -1,0 +1,3 @@
+interface:
+  display_name: "Token Optimization Analysis"
+  short_description: "Audit and reduce agent token usage"

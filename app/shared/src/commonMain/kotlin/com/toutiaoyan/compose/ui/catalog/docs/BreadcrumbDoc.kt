@@ -106,7 +106,7 @@ private fun crumbRecipe(kind: String): String {
             middle.prependIndent("        ") +
             "\n        $separator\n        BreadcrumbItem(\"Breadcrumb\")\n    }\n}"
     var result = recipe
-    if (kind in listOf("Custom separator", "Dropdown", "RTL")) {
+    if (kind in listOf("Custom separator", "Collapsed", "Dropdown", "RTL")) {
         result =
             result.replace(
                 (
@@ -117,6 +117,8 @@ private fun crumbRecipe(kind: String): String {
             )
     }
     if (kind in listOf("Custom separator", "Collapsed")) {
+        val componentsUrl =
+            if (kind == "Collapsed") "https://ui.shadcn.com/docs/components" else "https://ui.shadcn.com/components"
         result =
             result.replace(
                 (
@@ -125,7 +127,7 @@ private fun crumbRecipe(kind: String): String {
                 ),
                 (
                     "BreadcrumbItem(\"Components\", onClick = { " +
-                        "uri.openUri(\"/components\") })"
+                        "uri.openUri(\"$componentsUrl\") })"
                 ),
             )
     }
@@ -406,7 +408,7 @@ internal fun BreadcrumbExample(
     val home: () -> Unit = {
         when (kind) {
             "Link component" -> navigation?.navigate("link-component")
-            "Custom separator", "Dropdown", "RTL" -> uri.openUri("/")
+            "Custom separator", "Collapsed", "Dropdown", "RTL" -> uri.openUri("/")
             else -> navigation?.navigate("")
         }
     }
@@ -470,7 +472,8 @@ internal fun BreadcrumbExample(
                 BreadcrumbItem(labels[1], onClick = {
                     when (kind) {
                         "Link component" -> navigation?.navigate("link-component")
-                        "Custom separator", "Collapsed" -> uri.openUri("/components")
+                        "Custom separator" -> uri.openUri("https://ui.shadcn.com/components")
+                        "Collapsed" -> uri.openUri("https://ui.shadcn.com/docs/components")
                         else -> navigation?.navigate("")
                     }
                 })

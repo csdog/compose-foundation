@@ -113,7 +113,7 @@ internal val progressOfficialExamples =
         ComponentExample(
             "Label",
             code = progressLabelRecipeCode,
-            descriptionMarkdown = "Use ProgressLabel and ProgressValue to add a label and value display.",
+            descriptionMarkdown = "Use `ProgressLabel` and `ProgressValue` to add a label and value display.",
             preview = { ProgressLabelRecipe() },
         ),
         ComponentExample(
@@ -127,7 +127,8 @@ internal val progressOfficialExamples =
             code = progressRtlRecipeCode,
             previewPadding = 0.dp,
             descriptionMarkdown =
-                "Switch the preview language to change the label, number format and layout direction.",
+                "To enable RTL support in shadcn/ui, see the " +
+                    "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
             preview = {
                 var language by remember { mutableIntStateOf(1) }
                 Column(Modifier.fillMaxWidth()) {

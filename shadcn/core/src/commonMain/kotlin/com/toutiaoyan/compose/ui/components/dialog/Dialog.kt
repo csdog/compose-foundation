@@ -13,6 +13,10 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.constrainHeight
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import com.toutiaoyan.compose.ui.tokens.StylePreset
@@ -602,7 +606,7 @@ fun DialogDescription(
     )
 }
 
-/** The action-button row at the bottom of a [Dialog], right-aligned.
+/** Actions stack in reverse below 640dp in Nova, and form an end-aligned row otherwise.
  * [showCloseButton] matches current shadcn `DialogFooter` (default `false`).
  */
 @Composable
@@ -616,6 +620,9 @@ fun DialogFooter(
     val controller = dialogController()
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val nova = currentTheme.activePreset == StylePreset.Nova
+    val actionSpacing = twSpacing.sm
+    val stacked =
+        nova && LocalWindowInfo.current.containerSize.width < with(LocalDensity.current) { 640.dp.roundToPx() }
     val colors = currentTheme.colors
     val radius = twRadius.xl
     val bleed =
@@ -663,13 +670,37 @@ fun DialogFooter(
             ).then(border).styleable(styleState, chrome then style),
         horizontalArrangement = Arrangement.spacedBy(twSpacing.sm, Alignment.End),
     ) {
-        content()
-        if (showCloseButton) {
-            Button(
-                text = closeAriaLabel,
-                onClick = { controller.onOpenChange(false) },
-                variant = ButtonVariant.Outline,
-            )
+        val actions: @Composable () -> Unit = {
+            content()
+            if (showCloseButton) {
+                Button(
+                    text = closeAriaLabel,
+                    onClick = { controller.onOpenChange(false) },
+                    variant = ButtonVariant.Outline,
+                )
+            }
+        }
+        if (stacked) {
+            // Keep the public RowScope receiver while matching flex-col-reverse and
+            // cross-axis stretch. The viewport, rather than panel width, selects sm.
+            Layout(content = actions) { measurables, constraints ->
+                val gap = actionSpacing.roundToPx()
+                val width = constraints.maxWidth
+                val children =
+                    measurables.map {
+                        it.measure(constraints.copy(minWidth = width, minHeight = 0))
+                    }
+                val height = children.sumOf { it.height } + gap * (children.size - 1).coerceAtLeast(0)
+                layout(width, constraints.constrainHeight(height)) {
+                    var y = 0
+                    children.asReversed().forEach { child ->
+                        child.placeRelative(0, y)
+                        y += child.height + gap
+                    }
+                }
+            }
+        } else {
+            actions()
         }
     }
 }

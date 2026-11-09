@@ -63,7 +63,7 @@ class CatalogPreviewTest {
         rule.setContent {
             Theme(
                 minTouchTarget = null,
-            ) { inputDoc.examples.single { it.title == "Autofocus" }.preview() }
+            ) { inputDoc.examples.single { it.title == "Kotlin extension: Autofocus" }.preview() }
         }
         rule.onAllNodes(isFocused()).assertCountEquals(0)
         rule.onNodeWithText("Try autofocus").performClick()

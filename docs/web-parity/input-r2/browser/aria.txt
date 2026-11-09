@@ -1,0 +1,600 @@
+Compose Foundation — Components
+Notifications
+Home
+Components
+Create
+Dialog
+Drawer
+Dropdown Menu
+Empty
+Field
+Hover Card
+Input
+Input Group
+Input OTP
+Item
+Kbd
+Label
+Marker
+Menubar
+Message
+Message Scroller
+Navigation Menu
+Pagination
+Popover
+Progress
+Questionnaire
+Radio Group
+Resizable
+Scroll Area
+Select
+Separator
+Sheet
+Sidebar
+Home
+Components
+Create
+Search documentation
+GitHub
+Toggle theme
+New
+Dialog
+Drawer
+Dropdown Menu
+Empty
+Field
+Hover Card
+Input
+Input Group
+Input OTP
+Item
+Kbd
+Label
+Marker
+Menubar
+Message
+Message Scroller
+Navigation Menu
+Pagination
+Popover
+Progress
+Questionnaire
+New
+Radio Group
+Resizable
+Scroll Area
+Select
+Separator
+Sheet
+Sidebar
+Search...
+GitHub
+New
+Installation
+Usage
+Basic
+Field
+Field Group
+Disabled
+Invalid
+File
+Inline
+Grid
+Required
+Badge
+Input Group
+Button Group
+Form
+RTL
+Kotlin extension: Autofocus
+Copy Page
+Previous: Hover Card
+Next: Input Group
+On This Page
+Installation
+Usage
+Basic
+Field
+Field Group
+Disabled
+Invalid
+File
+Inline
+Grid
+Required
+Badge
+Input Group
+Button Group
+Form
+RTL
+Kotlin extension: Autofocus
+Input
+Copy Page
+A text input component for forms and user data entry with built-in styling and accessibility features.
+Base UI
+Installation
+Usage
+Basic
+Field
+Field Group
+Disabled
+Invalid
+File
+Inline
+Grid
+Required
+Badge
+Input Group
+Button Group
+Form
+RTL
+Kotlin extension: Autofocus
+View Code
+Installation
+Copy
+Usage
+Copy
+Copy
+Basic
+Field
+Use Field, FieldLabel, and FieldDescription to create an input with a label and description.
+Field Group
+Use FieldGroup to show multiple Field blocks and to build forms.
+Disabled
+Use the disabled prop to disable the input. To style the disabled state, disable the Field as well.
+Invalid
+Use the invalid prop to mark the input as invalid. To style the invalid state, mark the Field invalid as well.
+File
+Use a file picker for file inputs. Compose has no browser-native type="file" control, so this preview approximates the browser field.
+Inline
+Use Field with orientation = FieldOrientation.Horizontal to create an inline input. Pair it with Button to create a search input with a button.
+Grid
+Use a grid layout to place multiple inputs side by side.
+Required
+Use the required attribute to indicate required inputs.
+Badge
+Use Badge in the label to highlight a recommended field.
+Input Group
+To add icons, text, or buttons inside an input, use the InputGroup component. See the Input Group component for more examples.
+Button Group
+To add buttons to an input, use the ButtonGroup component. See the Button Group component for more examples.
+Form
+A full form example with multiple inputs, a select, and a button.
+RTL
+To enable RTL support in shadcn/ui, see the RTL configuration guide.
+Kotlin extension: Autofocus
+API Key
+Your API key is encrypted and stored securely.
+View Code
+build.gradle.kts
+1
+
+
+2
+
+
+3
+
+
+4
+
+
+5
+
+
+6
+
+
+7
+
+
+8
+
+
+9
+
+
+10
+
+
+11
+
+
+12
+
+
+13
+
+
+14
+
+
+15
+
+
+16
+
+
+17
+
+
+18
+
+
+19
+
+
+20
+1
+
+
+2
+View Code
+View Code
+Reset
+Submit
+View Code
+View Code
+View Code
+Choose File
+View Code
+Search
+View Code
+View Code
+This field is required, required
+View Code
+View Code
+View Code
+View Code
+Evil Rabbit, required
+United States
+Cancel
+Submit
+View Code
+View Code
+Try autofocus
+View Code
+1
+
+
+2
+
+
+3
+// build.gradle.kts — commonMain.dependencies
+
+
+implementation("com.toutiaoyan.compose:ui:0.3.37")
+    import androidx.compose.foundation.layout.*
+
+
+    import androidx.compose.runtime.*
+
+
+    import androidx.compose.ui.Alignment
+
+
+    import androidx.compose.ui.Modifier
+
+
+    import androidx.compose.ui.unit.dp
+
+
+import com.composables.icons.lucide.Info
+
+
+import com.composables.icons.lucide.Lucide
+
+
+    import com.toutiaoyan.compose.ui.components.badge.Badge
+
+
+    import com.toutiaoyan.compose.ui.components.badge.BadgeVariant
+
+
+    import com.toutiaoyan.compose.ui.components.button.Button
+
+
+    import com.toutiaoyan.compose.ui.components.button.ButtonVariant
+
+
+    import com.toutiaoyan.compose.ui.components.buttongroup.*
+
+
+    import com.toutiaoyan.compose.ui.components.field.*
+
+
+    import com.toutiaoyan.compose.ui.components.icon.Icon
+
+
+import com.toutiaoyan.compose.ui.components.input.Input
+
+
+    import com.toutiaoyan.compose.ui.components.input.InputType
+
+
+    import com.toutiaoyan.compose.ui.components.inputgroup.*
+
+
+    import com.toutiaoyan.compose.ui.components.select.*
+
+
+    import com.toutiaoyan.compose.ui.components.text.Text
+
+
+    import com.toutiaoyan.compose.ui.components.text.TextColors
+var text by remember { mutableStateOf("") }
+
+
+Input(text, { text = it }, placeholder = "Enter text")
+View Code
+Username
+Choose a unique username for your account.
+View Code
+Name
+Email
+We'll send updates to this address.
+Reset
+Submit
+View Code
+This field is currently disabled.
+View Code
+Invalid Input
+This field contains validation errors.
+View Code
+Picture
+Choose File
+No file chosen
+Select a picture to upload.
+View Code
+Search
+View Code
+First Name
+Last Name
+View Code
+Required Field
+ *
+This field must be filled out.
+View Code
+Webhook URL
+Beta
+View Code
+Website URL
+https://
+View Code
+Search
+Search
+View Code
+Name
+Email
+We'll never share your email with anyone.
+Phone
+Country
+United States
+Address
+Cancel
+Submit
+View Code
+Preview language
+Translation information
+مفتاح API
+مفتاح API الخاص بك مشفر ومخزن بأمان.
+View Code
+Try autofocus
+View Code
+var apiKey by remember { mutableStateOf("") }
+
+
+Field(Modifier.widthIn(max = 320.dp)) {
+
+
+    FieldLabel("API Key")
+1
+
+
+2
+1
+
+
+2
+
+
+3
+1
+
+
+2
+
+
+3
+Email
+1
+
+
+2
+
+
+3
+1
+
+
+2
+
+
+3
+1
+
+
+2
+
+
+3
+1
+
+
+2
+
+
+3
+1
+
+
+2
+
+
+3
+1
+
+
+2
+
+
+3
+1
+
+
+2
+
+
+3
+https://
+1
+
+
+2
+
+
+3
+Search
+1
+
+
+2
+
+
+3
+1
+
+
+2
+
+
+3
+Arabic (العربية)
+Translation information
+1
+
+
+2
+
+
+3
+1
+
+
+2
+
+
+3
+var text by remember { mutableStateOf("") }
+
+
+Input(text, { text = it }, Modifier.widthIn(max = 320.dp), placeholder = "Enter text")
+var username by remember { mutableStateOf("") }
+
+
+Field(Modifier.widthIn(max = 320.dp)) {
+
+
+    FieldLabel("Username")
+FieldGroup(Modifier.widthIn(max = 320.dp)) {
+
+
+    Field {
+
+
+        FieldLabel("Name")
+Field(Modifier.widthIn(max = 320.dp), disabled = true) {
+
+
+    FieldLabel("Email")
+
+
+    Input(email, { email = it }, type = InputType.Email, placeholder = "Email", disabled = true)
+Field(Modifier.widthIn(max = 320.dp), invalid = true) {
+
+
+    FieldLabel("Invalid Input")
+
+
+    Input(value, { value = it }, placeholder = "Error", invalid = true)
+Field(Modifier.widthIn(max = 320.dp)) {
+
+
+    FieldLabel("Picture")
+
+
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+Field(Modifier.widthIn(max = 320.dp), orientation = FieldOrientation.Horizontal) {
+
+
+    Input(query, { query = it }, Modifier.width(244.dp), type = InputType.Search, placeholder = "Search...")
+
+
+    Button("Search")
+FieldGroup(Modifier.widthIn(max = 384.dp)) {
+
+
+    Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+
+
+        Field("First Name", Modifier.weight(1f)) {
+Field(Modifier.widthIn(max = 320.dp)) {
+
+
+    FieldLabel("Required Field", required = true)
+
+
+    Input(value, { value = it }, placeholder = "This field is required", required = true)
+Field(Modifier.widthIn(max = 320.dp)) {
+
+
+    Row(verticalAlignment = Alignment.CenterVertically) {
+
+
+        FieldLabel("Webhook URL")
+Field(Modifier.widthIn(max = 320.dp)) {
+
+
+    FieldLabel("Website URL")
+
+
+    InputGroup(Modifier.fillMaxWidth()) {
+Field(Modifier.widthIn(max = 320.dp)) {
+
+
+    FieldLabel("Search")
+
+
+    BoxWithConstraints(Modifier.fillMaxWidth()) {
+FieldGroup(Modifier.widthIn(max = 384.dp)) {
+
+
+    Field("Name") { Input(name, { name = it }, placeholder = "Evil Rabbit", required = true) }
+
+
+    Field("Email", description = "We'll never share your email with anyone.") {
+@Composable
+
+
+fun InputRtlExample() {
+
+
+    var language by remember { mutableStateOf(1) } // 0 English, 1 Arabic, 2 Hebrew
+Field("Email") {
+
+
+    Input(value = "", onValueChange = {}, placeholder = "m@example.com", autoFocus = true)
+
+
+}

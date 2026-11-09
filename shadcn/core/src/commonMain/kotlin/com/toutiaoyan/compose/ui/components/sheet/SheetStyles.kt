@@ -17,6 +17,7 @@ fun rememberSheetPanelStyle(): Style =
     rememberTheme {
         Style {
             background(colors.popover)
+            contentColor(colors.popoverForeground)
             dropShadow(
                 Shadow(
                     radius =

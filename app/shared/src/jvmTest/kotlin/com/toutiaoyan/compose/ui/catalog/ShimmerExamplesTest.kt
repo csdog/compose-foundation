@@ -204,20 +204,54 @@ class ShimmerExamplesTest(private val viewport: Int, private val dark: Boolean) 
         capture("rtl")
     }
 
-    @Test fun allNineCopiedRecipesComeFromCompiledSourceAndUseCssStylePaint() {
+    @Test fun allTenCopiedRecipesComeFromCompiledSourceAndUseCssStylePaint() {
         assertEquals(
             listOf(
-                "Default", "With Marker", "Color", "Duration", "Spread", "Angle", "Play Once",
-                "Disabling the Shimmer", "RTL",
+                "Default", "With Marker", "Color", "Duration", "Spread", "Angle", "Reverse",
+                "Play Once", "Disabling the Shimmer", "RTL",
             ),
-            shimmerDoc.examples.take(9).map { it.title },
+            shimmerDoc.examples.take(10).map { it.title },
         )
-        shimmerDoc.examples.take(9).forEach { example ->
+        shimmerDoc.examples.take(10).forEach { example ->
             assertTrue(example.code.contains("import androidx.compose.runtime.*"))
             assertTrue(example.code.contains("private fun ShimmerText"))
             assertTrue(example.code.contains("rememberShimmerStyle"))
         }
         assertTrue(shimmerDoc.examples.single { it.title == "Play Once" }.code.contains("key(replay)"))
         assertTrue(shimmerDoc.examples.single { it.title == "Disabling the Shimmer" }.code.contains("768.dp"))
+        assertTrue(shimmerDoc.examples.single { it.title == "Reverse" }.code.contains("reverse = true"))
+        assertTrue(
+            shimmerDoc.examples.drop(10).all { it.title.startsWith("Kotlin extension: ") },
+            "Kotlin-only recipes must be titled `Kotlin extension: ...`",
+        )
+        assertEquals(null, shimmerDoc.examplesHeading)
+        assertEquals(
+            listOf("Kotlin extension: CSS class mapping"),
+            shimmerDoc.beforeExamples.map { it.title },
+        )
+        assertTrue(shimmerDoc.afterExamples.isEmpty())
+        assertEquals(
+            listOf("Fallback", "Reduced Motion"),
+            shimmerDoc.beforeExampleSections.getValue("RTL").map { it.title },
+        )
+        assertTrue(
+            shimmerDoc.examples.single { it.title == "Spread" }.descriptionMarkdown!!.contains("calc(3ch + 40px)"),
+        )
+        assertTrue(
+            shimmerDoc.examples.single { it.title == "With Marker" }.descriptionMarkdown!!.contains("Marker"),
+        )
+        assertTrue(
+            shimmerDoc.examples.single { it.title == "RTL" }.descriptionMarkdown!!.contains("reading direction"),
+        )
+    }
+
+    @Test fun reverseSweepsOppositeToTheDefaultAtTheSameFrame() {
+        show("Reverse")
+        comparisonLayout()
+        rule.onNodeWithText("shimmer").assertIsDisplayed()
+        rule.onNodeWithText("shimmer-reverse").assertIsDisplayed()
+        advance(960)
+        assertNotEquals(pixels(node("shimmer-forward")), pixels(node("shimmer-reverse")))
+        capture("reverse")
     }
 }

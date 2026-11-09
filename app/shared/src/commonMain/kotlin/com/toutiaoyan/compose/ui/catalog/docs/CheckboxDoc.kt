@@ -2,7 +2,11 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.ui.catalog.catalogViewportWidth
 
 val checkboxDoc =
     ComponentDoc(
@@ -33,8 +37,10 @@ val checkboxDoc =
                 ComponentApiSection(
                     "Checkbox",
                     "Controlled or uncontrolled checkbox; `indeterminate` represents a mixed state. " +
-                        "Nova uses the official150ms color transition without moving the control; " +
-                        "callers can opt into `ButtonAnimation` press motion.",
+                        "Nova uses the official 150ms color transition without moving the control; " +
+                        "callers can opt into `ButtonAnimation` press motion. See the " +
+                        "[Base UI](https://base-ui.com/react/components/checkbox#api-reference) " +
+                        "documentation for more information.",
                     listOf(
                         ApiProperty("checked / defaultChecked", "Boolean? / Boolean", "null / false"),
                         ApiProperty("onCheckedChange", "((Boolean) -> Unit)?", "null"),
@@ -113,7 +119,16 @@ val checkboxDoc =
                         CheckboxGroupRecipe()
                     },
                 ),
-                ComponentExample("Table", checkboxCode("table"), preview = { CheckboxTableRecipe() }),
+                ComponentExample(
+                    "Table",
+                    checkboxCode("table"),
+                    previewPadding = 0.dp,
+                    preview = {
+                        Box(Modifier.padding(if (catalogViewportWidth() < 768.dp) 16.dp else 32.dp)) {
+                            CheckboxTableRecipe()
+                        }
+                    },
+                ),
                 ComponentExample(
                     "RTL",
                     checkboxCode(

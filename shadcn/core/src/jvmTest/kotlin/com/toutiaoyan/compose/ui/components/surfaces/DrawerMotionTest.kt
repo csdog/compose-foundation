@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.*
@@ -17,6 +18,36 @@ import kotlin.test.Test
 import kotlin.test.assertTrue
 
 class DrawerMotionTest : ScreenshotTest() {
+    @Test fun heldChildSwipeRestoresTheParentWithoutAnimationTicks() {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Drawer(defaultOpen = true) {
+                DrawerContent {
+                    Box(Modifier.width(300.dp).height(320.dp).testTag("parent marker"))
+                    Drawer(defaultOpen = true) {
+                        DrawerContent(Modifier.testTag("child panel")) { Box(Modifier.height(220.dp)) }
+                    }
+                }
+            }
+        }
+
+        fun width() = composeRule.onNodeWithTag("parent marker").fetchSemanticsNode().boundsInWindow.width
+
+        val stacked = width()
+        composeRule.mainClock.autoAdvance = false
+        try {
+            composeRule.onNodeWithTag("child panel").performTouchInput {
+                down(center)
+                moveBy(Offset(0f, 20f))
+                moveBy(Offset(0f, 55f))
+            }
+            composeRule.waitForIdle()
+            assertTrue(width() > stacked + 1f, "Held child swipe must unscale the parent: $stacked -> ${width()}")
+            composeRule.onNodeWithTag("child panel").performTouchInput { cancel() }
+        } finally {
+            composeRule.mainClock.autoAdvance = true
+        }
+    }
+
     @Test fun parentFollowsShorterFrontDrawerAndRestoresNaturalHeight() {
         var childOpen by mutableStateOf(false)
         setThemedContent(stylePreset = StylePreset.Nova) {

@@ -4,6 +4,7 @@ package com.toutiaoyan.compose.ui.components.tabs
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.style.Style
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -121,5 +122,54 @@ class TabsChromeParityTest(private val dark: Boolean) : ScreenshotTest() {
         assertEquals(background.red, actual.red, .005f)
         assertEquals(background.green, actual.green, .005f)
         assertEquals(background.blue, actual.blue, .005f)
+    }
+
+    @Test fun indicatorUsesTheNovaOneHundredFiftyMillisecondTransition() {
+        setThemedContent(darkTheme = dark, stylePreset = StylePreset.Nova) {
+            composeRule.mainClock.autoAdvance = false
+            Tabs(defaultValue = "a") {
+                TabsList(
+                    Modifier.width(280.dp).testTag("list"),
+                    indicator = { TabsIndicator(style = Style { background(Color.Red) }) },
+                ) {
+                    Row(Modifier.fillMaxWidth()) {
+                        TabsTrigger(
+                            "a",
+                            "Alpha",
+                            Modifier.weight(1f).testTag("a"),
+                            style = Style { background(Color.Transparent) },
+                        )
+                        TabsTrigger(
+                            "b",
+                            "Beta",
+                            Modifier.weight(1f).testTag("b"),
+                            style = Style { background(Color.Transparent) },
+                        )
+                    }
+                }
+            }
+        }
+
+        fun indicatorLeft(): Int {
+            val pixels = composeRule.onNodeWithTag("list").captureToImage().toPixelMap()
+            return (0 until pixels.width).first { x ->
+                pixels[x, pixels.height / 2].let { it.red > .99f && it.green < .01f && it.blue < .01f }
+            }
+        }
+        composeRule.mainClock.advanceTimeBy(200)
+        val start = indicatorLeft()
+
+        composeRule.onNodeWithTag("b").performClick()
+        composeRule.mainClock.advanceTimeBy(80)
+        val middle = indicatorLeft()
+
+        composeRule.mainClock.advanceTimeBy(90)
+        val finish = indicatorLeft()
+
+        assertTrue(middle > start, "indicator movement should be visible halfway through")
+        assertTrue(middle < finish, "indicator should not settle at the overlay duration")
+
+        composeRule.mainClock.advanceTimeBy(100)
+        assertEquals(finish, indicatorLeft(), "indicator should settle after 150ms")
     }
 }

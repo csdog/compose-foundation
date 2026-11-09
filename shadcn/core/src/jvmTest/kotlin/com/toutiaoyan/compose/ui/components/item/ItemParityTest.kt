@@ -57,6 +57,45 @@ class ItemParityTest : ScreenshotTest() {
         assertTrue(footer.top >= content.bottom + 9f)
     }
 
+    @Test fun headerAndFooterReserveAnEightPixelGapForWideChildrenInBothDirections() {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Column {
+                androidx.compose.ui.unit.LayoutDirection.entries.forEach { direction ->
+                    CompositionLocalProvider(
+                        androidx.compose.ui.platform.LocalLayoutDirection provides direction,
+                    ) {
+                        val prefix = direction.name
+                        ItemHeader(Modifier.width(100.dp)) {
+                            Box(Modifier.size(60.dp, 10.dp).testTag("$prefix-header-first"))
+                            Box(Modifier.size(60.dp, 10.dp).testTag("$prefix-header-second"))
+                        }
+                        ItemFooter(Modifier.width(100.dp)) {
+                            Box(Modifier.size(60.dp, 10.dp).testTag("$prefix-footer-first"))
+                            Box(Modifier.size(60.dp, 10.dp).testTag("$prefix-footer-second"))
+                        }
+                    }
+                }
+            }
+        }
+        androidx.compose.ui.unit.LayoutDirection.entries.forEach { direction ->
+            listOf("header", "footer").forEach { part ->
+                val first =
+                    composeRule.onNodeWithTag("${direction.name}-$part-first").fetchSemanticsNode().boundsInRoot
+                val second =
+                    composeRule.onNodeWithTag("${direction.name}-$part-second").fetchSemanticsNode().boundsInRoot
+                val gap =
+                    if (direction == androidx.compose.ui.unit.LayoutDirection.Ltr) {
+                        second.left - first.right
+                    } else {
+                        first.left - second.right
+                    }
+                assertEquals(8f, gap, 0.1f, "$direction $part must preserve the minimum gap")
+                assertEquals(60f, first.width, 0.1f)
+                assertEquals(32f, second.width, 0.1f)
+            }
+        }
+    }
+
     @Test fun imageMediaFollowsTheItemSizeAndIconHasNoForcedBadge() {
         setThemedContent(stylePreset = StylePreset.Nova) {
             Column(Modifier.width(320.dp)) {

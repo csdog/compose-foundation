@@ -34,7 +34,7 @@ class MenubarParityTest : ScreenshotTest() {
             Menubar(Modifier.width(288.dp).testTag("bar"), value = selected, onValueChange = { selected = it }) {
                 MenubarMenu("file") {
                     MenubarTrigger("File", Modifier.testTag("file"))
-                    MenubarContent {
+                    MenubarContent(Modifier.testTag("file-panel")) {
                         MenubarItem("New Tab", onClick = {})
                         MenubarItem("Disabled", onClick = {}, disabled = true)
                         MenubarItem("Print", onClick = {})
@@ -95,6 +95,7 @@ class MenubarParityTest : ScreenshotTest() {
         show()
         composeRule.onNodeWithTag("file").requestFocus()
         composeRule.onNodeWithTag("file").performKeyInput { pressKey(Key.DirectionDown) }
+        composeRule.onNodeWithTag("file-panel").assertWidthIsEqualTo(144.dp)
         composeRule.onNodeWithText("New Tab").assertIsFocused()
         composeRule.onNodeWithText("New Tab").performKeyInput { pressKey(Key.DirectionDown) }
         composeRule.onNodeWithText("Print").assertIsFocused()
@@ -102,6 +103,17 @@ class MenubarParityTest : ScreenshotTest() {
         composeRule.waitForIdle()
         assertNull(open)
         composeRule.onNodeWithTag("file").assertIsFocused()
+    }
+
+    @Test fun enterOpensAndFocusesTheFirstItem() = opensAndFocusesTheFirstItem(Key.Enter)
+
+    @Test fun spaceOpensAndFocusesTheFirstItem() = opensAndFocusesTheFirstItem(Key.Spacebar)
+
+    private fun opensAndFocusesTheFirstItem(key: Key) {
+        show()
+        composeRule.onNodeWithTag("file").requestFocus().performKeyInput { pressKey(key) }
+        composeRule.onNodeWithText("New Tab").assertIsFocused()
+        assertEquals("file", open)
     }
 
     @Test fun horizontalKeyInAnOpenMenuSwitchesMenuAndFocusesItsFirstItem() {
@@ -130,6 +142,21 @@ class MenubarParityTest : ScreenshotTest() {
         composeRule.onNodeWithText("Share").performKeyInput { pressKey(Key.DirectionRight) }
         composeRule.onNodeWithText("Email link").assertIsDisplayed()
         assertEquals("file", open)
+    }
+
+    @Test fun escapeInSubmenuClosesOnlyThatLayerBeforeRestoringBarFocus() {
+        show()
+        composeRule.onNodeWithTag("file").performClick()
+        composeRule.onNodeWithText("Share").requestFocus()
+        composeRule.onNodeWithText("Share").performKeyInput { pressKey(Key.DirectionRight) }
+        composeRule.onNodeWithText("Email link").assertIsFocused()
+            .performKeyInput { pressKey(Key.Escape) }
+        composeRule.onNodeWithText("Email link").assertDoesNotExist()
+        assertEquals("file", open)
+        composeRule.onNodeWithText("Share").assertIsFocused()
+            .performKeyInput { pressKey(Key.Escape) }
+        assertNull(open)
+        composeRule.onNodeWithTag("file").assertIsFocused()
     }
 
     @Test fun itemContentSlotForwardsRichLabels() {

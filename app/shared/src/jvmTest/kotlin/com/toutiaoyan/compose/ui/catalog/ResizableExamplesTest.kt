@@ -14,6 +14,8 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.*
 import com.toutiaoyan.compose.ui.catalog.docs.resizableDoc
+import com.toutiaoyan.compose.ui.catalog.docs.ComponentGuideBlock
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
@@ -100,6 +102,27 @@ class ResizableExamplesTest(private val viewport: Int, private val dark: Boolean
         assertEquals(null, resizableDoc.examplesHeading)
         assertTrue(resizableDoc.compositionCode!!.contains("ResizableHandle"))
         assertEquals("Accessible resizable panel groups and layouts with keyboard support.", resizableDoc.description)
+    }
+
+    @Test fun sourceGuidanceUsesIntroductionAndTheCompleteMigrationTable() {
+        val about = resizableDoc.introductionSections.single { it.title == "About" }
+        val prose = (about.blocks.single() as ComponentGuideBlock.Paragraph).markdown
+        assertTrue(prose.contains("upstream shadcn/ui"))
+        assertTrue(prose.contains("native two-pane"))
+        assertTrue(resizableDoc.beforeExamples.none { it.title == "About" })
+        assertTrue(resizableDoc.beforeCompositionMarkdown!!.contains("ResizablePanelGroup"))
+        val migration = resizableDoc.afterExamples.single { it.title.startsWith("2025-02-02") }
+        val table = migration.blocks.filterIsInstance<ComponentGuideBlock.Table>().single()
+        assertEquals(listOf("v3", "v4"), table.headers)
+        assertEquals(8, table.rows.size)
+        assertEquals(listOf("`defaultSize={50}`", "`defaultSize=\"50%\"`"), table.rows[3])
+        assertTrue(
+            migration.blocks.filterIsInstance<ComponentGuideBlock.Paragraph>()
+                .any { it.markdown.contains("releases/tag/4.0.0") },
+        )
+        val markdown = componentPageMarkdown(resizableDoc)
+        assertTrue(markdown.indexOf("## About") < markdown.indexOf("## Installation"))
+        assertTrue(markdown.contains("| v3 | v4 |"))
     }
 
     @Test fun nestedSourceDefaultKeepsIndependentRatiosAndSupportsActualDragging() {

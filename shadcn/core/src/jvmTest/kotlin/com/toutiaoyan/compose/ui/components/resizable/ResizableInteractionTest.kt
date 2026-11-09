@@ -201,4 +201,22 @@ class ResizableInteractionTest : ScreenshotTest() {
         mouseDrag(Offset(0f, 20f))
         assertEquals(0.5f + 20f / 199f, fraction(), 0.001f)
     }
+
+    @Test fun fixedHorizontalFractionExcludesTheCustomDividerFromBothPanels() {
+        fixture(initial = 0.25f, handleStyle = Style { width(5.dp) })
+        val first = composeRule.onNodeWithTag("first").getUnclippedBoundsInRoot()
+        val second = composeRule.onNodeWithTag("second").getUnclippedBoundsInRoot()
+        assertEquals(315f * 0.25f, first.width.value, 0.6f)
+        assertEquals(315f * 0.75f, second.width.value, 0.6f)
+        composeRule.onNodeWithTag("handle").assertWidthIsEqualTo(5.dp)
+    }
+
+    @Test fun fixedVerticalFractionExcludesTheCustomDividerFromBothPanels() {
+        fixture(orientation = Orientation.Vertical, initial = 0.75f, handleStyle = Style { height(5.dp) })
+        val first = composeRule.onNodeWithTag("first").getUnclippedBoundsInRoot()
+        val second = composeRule.onNodeWithTag("second").getUnclippedBoundsInRoot()
+        assertEquals(195f * 0.75f, first.height.value, 0.6f)
+        assertEquals(195f * 0.25f, second.height.value, 0.6f)
+        composeRule.onNodeWithTag("handle").assertHeightIsEqualTo(5.dp)
+    }
 }

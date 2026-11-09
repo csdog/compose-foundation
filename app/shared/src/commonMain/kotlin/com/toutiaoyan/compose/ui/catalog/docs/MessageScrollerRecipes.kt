@@ -6,6 +6,19 @@ import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.style.MutableStyleState
+import androidx.compose.foundation.style.styleable
+import androidx.compose.foundation.style.then
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.key.*
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.hovered
@@ -220,21 +233,13 @@ internal fun MessageScrollerOpeningPositionRecipe(modifier: Modifier = Modifier)
             "Toggle the defaultScrollPosition to see where the transcript starts when you open the thread",
             modifier,
             footer = {
-                Tabs(value = position, onValueChange = { value ->
+                ScrollerOpeningPositionControls(position) { value ->
                     position = value
                     scope.launch {
                         when (value) {
                             "start" -> state.scrollToStart()
                             "end" -> state.scrollToEnd()
                             else -> state.scrollToMessage("open-3", scrollMargin = 64.dp)
-                        }
-                    }
-                }, modifier = Modifier.fillMaxWidth()) {
-                    TabsList(Modifier.fillMaxWidth()) {
-                        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(2.dp)) {
-                            listOf("start", "end", "last-anchor").forEach { value ->
-                                TabsTrigger(value, label = value, modifier = Modifier.weight(1f))
-                            }
                         }
                     }
                 }
@@ -248,6 +253,58 @@ internal fun MessageScrollerOpeningPositionRecipe(modifier: Modifier = Modifier)
                 }
                 MessageScrollerButton()
             }
+        }
+    }
+}
+
+/** Position actions replay even when the chosen position is already selected. */
+@Composable
+private fun ScrollerOpeningPositionControls(
+    position: String,
+    activate: (String) -> Unit,
+) {
+    val values = listOf("start", "end", "last-anchor")
+    val requesters = remember { values.associateWith { FocusRequester() } }
+    val direction = LocalLayoutDirection.current
+    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    var requestedFocus by remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(requestedFocus) {
+        requestedFocus?.let { requesters.getValue(it).requestFocus() }
+    }
+    Row(
+        Modifier.fillMaxWidth().selectableGroup().styleable(styleState, rememberTabsListStyle()),
+        horizontalArrangement = Arrangement.spacedBy(2.dp),
+    ) {
+        values.forEachIndexed { index, value ->
+            Button(
+                onClick = { activate(value) },
+                variant = ButtonVariant.Ghost,
+                size = ButtonSize.Sm,
+                modifier =
+                    Modifier.weight(1f).focusRequester(requesters.getValue(value))
+                        .focusProperties { canFocus = position == value }
+                        .semantics {
+                            role = Role.Tab
+                            selected = position == value
+                        }
+                        .onPreviewKeyEvent { event ->
+                            if (event.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
+                            val next =
+                                when (event.key) {
+                                    Key.DirectionLeft ->
+                                        (index + if (direction == LayoutDirection.Rtl) 1 else 2) % values.size
+                                    Key.DirectionRight ->
+                                        (index + if (direction == LayoutDirection.Rtl) 2 else 1) % values.size
+                                    Key.MoveHome -> 0
+                                    Key.MoveEnd -> values.lastIndex
+                                    else -> return@onPreviewKeyEvent false
+                                }
+                            activate(values[next])
+                            requestedFocus = values[next]
+                            true
+                        },
+                style = rememberTabItemStyle(position == value) then Style { height(25.dp) },
+            ) { Text { value } }
         }
     }
 }
@@ -1030,6 +1087,7 @@ internal val messageScrollerOfficialExamples =
     listOf(
         ComponentExample(
             title = "Keeping Context Visible",
+            headingLevel = 3,
             code = scrollerContextRecipeCode,
             minPreviewHeight = 700.dp,
             mobileMinPreviewHeight = 700.dp,
@@ -1038,6 +1096,7 @@ internal val messageScrollerOfficialExamples =
         ),
         ComponentExample(
             title = "Opening Saved Threads",
+            headingLevel = 3,
             code = scrollerOpeningRecipeCode,
             minPreviewHeight = 680.dp,
             mobileMinPreviewHeight = 680.dp,
@@ -1046,6 +1105,7 @@ internal val messageScrollerOfficialExamples =
         ),
         ComponentExample(
             title = "Loading Earlier Messages",
+            headingLevel = 3,
             code = scrollerHistoryRecipeCode,
             minPreviewHeight = 680.dp,
             mobileMinPreviewHeight = 680.dp,
@@ -1060,6 +1120,7 @@ internal val messageScrollerOfficialExamples =
         ),
         ComponentExample(
             title = "Jumping to Messages",
+            headingLevel = 3,
             code = scrollerCommandsRecipeCode,
             minPreviewHeight = 680.dp,
             mobileMinPreviewHeight = 680.dp,
@@ -1068,6 +1129,7 @@ internal val messageScrollerOfficialExamples =
         ),
         ComponentExample(
             title = "Tracking the Reader's Position",
+            headingLevel = 3,
             code = scrollerVisibilityRecipeCode,
             minPreviewHeight = 680.dp,
             mobileMinPreviewHeight = 680.dp,
@@ -1076,6 +1138,7 @@ internal val messageScrollerOfficialExamples =
         ),
         ComponentExample(
             title = "Reading Scroll State",
+            headingLevel = 3,
             code = scrollerScrollableRecipeCode,
             minPreviewHeight = 680.dp,
             mobileMinPreviewHeight = 680.dp,

@@ -70,6 +70,46 @@ class HoverCardFollowupTest : ScreenshotTest() {
         composeRule.onNodeWithText("Inside").assertDoesNotExist()
     }
 
+    @Test fun removingAnInitiallyOpenTriggerClosesTheOrphanedPanel() {
+        var showTrigger by mutableStateOf(true)
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            HoverCard(defaultOpen = true) {
+                if (showTrigger) HoverCardTrigger { Button("Trigger") }
+                HoverCardContent(enter = EnterTransition.None, exit = ExitTransition.None) { Text { "Preview" } }
+            }
+        }
+        composeRule.onNodeWithText("Preview").assertIsDisplayed()
+        composeRule.runOnIdle { showTrigger = false }
+        composeRule.onNodeWithText("Preview").assertDoesNotExist()
+    }
+
+    @Test fun removingAControlledTriggerRequestsCloseUsingTheLatestCallback() {
+        var showTrigger by mutableStateOf(true)
+        var revision by mutableStateOf("old")
+        val calls = mutableListOf<String>()
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            val current = revision
+            HoverCard(open = true, onOpenChange = { calls.add("$current:$it") }) {
+                if (showTrigger) HoverCardTrigger(delay = 0, closeDelay = 300) { Button("Trigger") }
+                HoverCardContent(enter = EnterTransition.None, exit = ExitTransition.None) { Text { "Preview" } }
+            }
+        }
+        composeRule.onNodeWithText("Trigger").performMouseInput {
+            enter(center, delayMillis = 0)
+            moveTo(center, delayMillis = 0)
+        }
+        advance(32)
+        composeRule.runOnIdle { revision = "new" }
+        composeRule.mainClock.autoAdvance = false
+        composeRule.runOnIdle { showTrigger = false }
+        advance(32)
+        assertEquals(listOf("new:false"), calls, "Unmount requests close immediately")
+        advance(1000)
+        assertEquals(listOf("new:false"), calls)
+        // The caller can reject the close request; disposal must not override controlled state.
+        composeRule.onNodeWithText("Preview").assertIsDisplayed()
+    }
+
     @Test fun additionalRootContentDoesNotMoveThePopupAnchor() {
         setThemedContent(stylePreset = StylePreset.Nova) {
             HoverCard(defaultOpen = true) {

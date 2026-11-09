@@ -4,7 +4,6 @@ package com.toutiaoyan.compose.ui.catalog.docs
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -16,8 +15,8 @@ import com.toutiaoyan.compose.ui.components.chip.Chip
 import com.toutiaoyan.compose.ui.components.chip.ChipVariant
 
 /**
- * Kotlin extension page. shadcn/ui ships no Chip component -- its `Badge` is a static
- * label -- so there is no official Base UI page to mirror. This page is titled and marked
+ * Kotlin extension page. shadcn/ui ships no Chip component, so there is no official
+ * Base UI page to mirror. This page is titled and marked
  * as this catalog's own extension and documents the actual Kotlin API; it does not
  * fabricate an official comparison.
  */
@@ -55,8 +54,8 @@ val chipDoc =
                             ComponentGuideBlock.Paragraph(
                                 (
                                     "Chip is a Kotlin extension of this catalog, not an official " +
-                                        "shadcn/ui component. shadcn only ships `Badge`, which is a " +
-                                        "static label, so there is no Base UI reference page or " +
+                                        "shadcn/ui component. Its `Badge` supports labels and links, " +
+                                        "but there is no Base UI Chip reference page or " +
                                         "upstream recipe list to mirror. The API below is the current " +
                                         "Kotlin source of truth: a selectable tag built from the same " +
                                         "tokens as Button/Badge."
@@ -103,7 +102,7 @@ val chipDoc =
                 ComponentExample(
                     title = "Disabled",
                     descriptionMarkdown =
-                        "`disabled` (or `enabled = false`) removes the click handler and dims the tag.",
+                        "`disabled` (or `enabled = false`) prevents click activation and dims the tag.",
                     code = """Chip(label = "Disabled", onClick = {}, disabled = true)""",
                     preview = { Chip(label = "Disabled", onClick = {}, disabled = true) },
                 ),

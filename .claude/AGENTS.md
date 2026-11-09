@@ -1,7 +1,9 @@
 # AGENTS.md — compose-foundation
 
 This project uses [kmm-agent-skills](https://github.com/ronjunevaldoz/kmm-agent-skills).
-Skills are installed in `.claude/skills/`.
+The existing KMM skills remain in `.claude/skills/`. Codex-native project token workflows
+are installed in `.agents/skills/`, which Codex scans from the current directory to the
+repository root.
 
 ## Project overview
 
@@ -58,10 +60,33 @@ dry-run wired, not yet released)
 | Platform-specific implementations | `kotlin-multiplatform-expect-actual`                                                      |
 | Catalog app navigation            | `kotlin-multiplatform-navigation`                                                         |
 | Unit / integration tests          | `kotlin-multiplatform-unit-testing` (JVM / screenshot tests are wired; see `docs/visual-testing.md`)                            |
+| Token usage analysis / optimization | `token-optimization-analysis`                                                            |
+| Token-efficient long parity work  | `token-efficient-compose-workflow`                                                        |
 | Code quality (detekt, ktlint)     | `kotlin-multiplatform-code-quality`                                                       |
 | CI automation                     | `kotlin-multiplatform-ci-github-actions`                                                  |
 | Architecture audit                | `kotlin-multiplatform-audit`                                                              |
 | Harvest consumer lessons          | `kotlin-multiplatform-audit` (`--harvest` mode via `/kmm-harvest-lessons`)                |
+
+## Token-efficient execution
+
+For any request to analyze token usage, investigate context growth, compare workflows, or
+reduce agent cost, use `token-optimization-analysis` first. Its audit covers actual
+Codex/DSH usage, repo-visible fixed context, duplicate reads, tool-output volume, and cheap
+subagent routing. Do not optimize from cache-hit percentage alone.
+
+For long shadcn parity batches, follow `token-efficient-compose-workflow`. Keep one
+component per execution session, at most two concurrent workers, and carry state through
+`.agent-runs/<component>/progress.md` instead of the conversation transcript. Route verbose
+commands through `scripts/agent_run.sh`; only the relevant tail enters model context while
+the full log remains on disk. Use `scripts/token_efficiency.py report` to measure DSH usage
+and context composition before changing the workflow.
+
+For unattended queues, use `scripts/run_unfinished_components.py --execute --background`.
+The Python driver is the sole scheduler; do not add a nested review coordinator or
+model polling loop. Stage workers do not spawn agents. Report only terminal results,
+blockers, evidence paths, and decisions requiring action. Read status on demand;
+background execution does not itself deliver chat notifications. For token analysis,
+include descendants with `scripts/agent_tree_usage.py --thread <root-thread-id>`.
 
 ## Module graph
 
@@ -227,9 +252,17 @@ dry-run wired, not yet released)
     `ContextMenu`, `Command`, `Combobox`, `HoverCard`,
     `NavigationMenu`'s panel) → `popover`/`onPopover`; `Sidebar` → `sidebar`/
     `onSidebar` for the rail, `sidebarAccent`/`onSidebarAccent` for the active menu item,
-    `sidebarBorder` for its edge divider. **`Dialog`/`Sheet`/`Drawer`
-    stay on plain `background`** -- confirmed against real dialog.tsx/sheet.tsx source,
-    they use `bg-background`, not `bg-popover`, unlike every anchored-popup component.
+    `sidebarBorder` for its edge divider. **`AlertDialog`/`Dialog`/`Sheet`/`Drawer` use `popover`/`popoverForeground`
+    for the pinned Nova and Rhea styles.** At shadcn revision
+    `8a3536678a528cc012b9e62484290e79d0be410f`, `style-nova.css` and `style-rhea.css`
+    define `bg-popover text-popover-foreground` on `.cn-alert-dialog-content`,
+    `.cn-dialog-content`, `.cn-sheet-content`, and `.cn-drawer-popup`. Read the matching
+    style CSS as well as the wrapper; the old plain-background guidance came from
+    wrapper-only/historical evidence. Durable HTTP-200 bodies and SHA256 records are
+    in `.agent-runs/review-sheet/evidence/source-manifest.json` (Nova SHA256
+    `fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e`, Rhea SHA256
+    `bac4eff75a0e21d9dd90ce40634937f54730471d8f7fa50ca67b317892cf908f`).
+    This correction does not redefine historical styles.
     `Tooltip` stays on `onSurface`/`background` (inverted) -- confirmed against
     real tooltip.tsx's `bg-foreground text-background`, a genuinely different pattern
     from the popover family, not a card/popover role at all.

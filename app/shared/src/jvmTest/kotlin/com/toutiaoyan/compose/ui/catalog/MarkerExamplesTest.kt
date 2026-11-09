@@ -11,6 +11,7 @@ import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.catalog.docs.markerDoc
 import com.toutiaoyan.compose.ui.components.overlay.OverlayHost
 import com.toutiaoyan.compose.ui.theme.Theme
@@ -59,6 +60,37 @@ class MarkerExamplesTest {
         )
         assertEquals(listOf("Marker", "MarkerIcon", "MarkerContent"), markerDoc.apiSections.map { it.title })
         assertFalse(markerDoc.usageCode.contains("components.*"))
+    }
+
+    @Test fun copiedPageExplainsVariantsAndAccessibleKotlinCompositionInReadingOrder() {
+        val markdown = componentPageMarkdown(markerDoc)
+        val ordered =
+            listOf(
+                "[Message](/message)",
+                "## Installation",
+                "Use the following composition",
+                "## Features",
+                "| Variant | Description |",
+                "## Status",
+                "### Status and Progress",
+                "### Labeled Separators",
+                "### Bordered Markers",
+                "### Decorative Icons",
+                "### Interactive Markers",
+                "## API Reference",
+            )
+        val positions =
+            ordered.map { text ->
+                markdown.indexOf(text).also { assertTrue(it >= 0, "Missing guidance: $text") }
+            }
+        assertEquals(positions.sorted(), positions)
+        assertTrue(markdown.contains("liveRegion = LiveRegionMode.Polite"))
+        assertTrue(markdown.contains("Role.Button"))
+        assertTrue(markdown.contains("LinkAnnotation.Url"))
+        assertFalse(markdown.contains("with the `render` prop"))
+        assertFalse(markdown.contains("Set `role=\"status\"`"))
+        assertFalse(markdown.contains("LocalDocNavigation"))
+        assertFalse(markdown.contains("testTag"))
     }
 
     @Test fun defaultContainsAllFourConversationMarkers() {

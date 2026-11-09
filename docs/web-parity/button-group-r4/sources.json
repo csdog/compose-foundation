@@ -1,0 +1,83 @@
+{
+  "component": "button-group",
+  "officialRevision": "42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9",
+  "retrievedAt": "2026-11-07T22:54:30+0800",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/button-group",
+  "files": [
+    {
+      "path": "sources/button-group.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/content/docs/components/base/button-group.mdx",
+      "sha256": "5a955ee44d95ea6e1d10a3c549f8f6fa13ce3da32714a7e375a5e85e3f23b97e"
+    },
+    {
+      "path": "sources/button-group-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/button-group-demo.tsx",
+      "sha256": "432deb944856e33e73d9e880b7e81532f4ccc8a339f55b8891f38f1b3aa34abd"
+    },
+    {
+      "path": "sources/button-group-orientation.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/button-group-orientation.tsx",
+      "sha256": "7763f84b6693e4e3bcc25ff070031c911e2c12da0a138c17707eb7dd867079e2"
+    },
+    {
+      "path": "sources/button-group-size.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/button-group-size.tsx",
+      "sha256": "61676fd3513b8aa9a5784fc98455fcedc67925658993de9e73360244599411f3"
+    },
+    {
+      "path": "sources/button-group-nested.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/button-group-nested.tsx",
+      "sha256": "22839babf181b1771831b289e4743c64529df2db9751c5f6c69a65b4b9acc203"
+    },
+    {
+      "path": "sources/button-group-separator.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/button-group-separator.tsx",
+      "sha256": "464d03834e71719cc2b6d1845a14646aae0a4ad62b793c43c24a731a893e35cf"
+    },
+    {
+      "path": "sources/button-group-split.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/button-group-split.tsx",
+      "sha256": "0a04a8b314bfcfc773ad3e1becb0d123f531716ced7215fb94deb49885cc4c10"
+    },
+    {
+      "path": "sources/button-group-input.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/button-group-input.tsx",
+      "sha256": "4545f4191d9fa07b86d7ad28cd150b68a1a39c875233251ad38976cca8d029a7"
+    },
+    {
+      "path": "sources/button-group-input-group.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/button-group-input-group.tsx",
+      "sha256": "e49b3a2facf6bedd4b0f9541d9ec2a379ee3f6f3fec1f64b20d1020a3aef1452"
+    },
+    {
+      "path": "sources/button-group-dropdown.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/button-group-dropdown.tsx",
+      "sha256": "89de8790c2686f662528dbb07029de586d56ba439ba5216a2430971aaf7a7617"
+    },
+    {
+      "path": "sources/button-group-select.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/button-group-select.tsx",
+      "sha256": "96ae1d7e4353746a31014f19bcb6fff2b39bcbad49e71aa695398ede3e2d7deb"
+    },
+    {
+      "path": "sources/button-group-popover.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/button-group-popover.tsx",
+      "sha256": "0132c2ce16508e7cc7e3d3061f1b457bdd9f0fe6a4ce89d7c8dd198a971473d7"
+    },
+    {
+      "path": "sources/button-group-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/examples/base/button-group-rtl.tsx",
+      "sha256": "f37349afc12a54f8ce0764b28f4cbb62f56a46c99ffbaf5ea0f1f925517936dc"
+    },
+    {
+      "path": "sources/button-group.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/registry/bases/base/ui/button-group.tsx",
+      "sha256": "23c66d61df078fb1604fa7ba3ad8d16550adbb2243af36584bb94d62f014914f"
+    },
+    {
+      "path": "sources/style-nova.css",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/42f3bb63b46a69e52a24bd005cdc9ec15ba7a7b9/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+    }
+  ]
+}

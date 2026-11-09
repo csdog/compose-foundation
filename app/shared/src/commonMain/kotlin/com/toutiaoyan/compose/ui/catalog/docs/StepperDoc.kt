@@ -303,7 +303,7 @@ val stepperDoc =
                             }
                             Row {
                                 Button("Back", onClick = { step = (step - 1).coerceAtLeast(0) }, variant = ButtonVariant.Outline)
-                                Button("Complete Step", onClick = { }, variant = ButtonVariant.Secondary)
+                                Button("Complete Step", onClick = { step = (step + 1).coerceAtMost(2) }, variant = ButtonVariant.Secondary)
                                 Button("Next", onClick = { step = (step + 1).coerceAtMost(2) })
                             }
                         }
@@ -325,7 +325,11 @@ val stepperDoc =
                                     onClick = { step = (step - 1).coerceAtLeast(0) },
                                     variant = ButtonVariant.Outline,
                                 )
-                                Button("Complete Step", onClick = { }, variant = ButtonVariant.Secondary)
+                                Button(
+                                    "Complete Step",
+                                    onClick = { step = (step + 1).coerceAtMost(2) },
+                                    variant = ButtonVariant.Secondary,
+                                )
                                 Button("Next", onClick = { step = (step + 1).coerceAtMost(2) })
                             }
                         }
@@ -335,10 +339,11 @@ val stepperDoc =
                     title = "Form step",
                     code =
                         """
+                        var submitted by remember { mutableStateOf(false) }
                         var firstName by remember { mutableStateOf("") }
                         var lastName by remember { mutableStateOf("") }
                         Column {
-                            Stepper(currentStep = 0) {
+                            Stepper(currentStep = if (submitted) 1 else 0) {
                                 StepperItem("Personal Info")
                                 StepperItem("Contact Info")
                                 StepperItem("Address")
@@ -349,17 +354,19 @@ val stepperDoc =
                             Field("Last Name") {
                                 Input(value = lastName, onValueChange = { lastName = it })
                             }
-                            Button("Next", onClick = {})
+                            Button("Next", onClick = { submitted = true })
+                            if (submitted) Text { "Personal information complete" }
                         }
                         """.trimIndent(),
                     preview = {
+                        var submitted by remember { mutableStateOf(false) }
                         var firstName by remember { mutableStateOf("") }
                         var lastName by remember { mutableStateOf("") }
                         Column(
                             modifier = Modifier.width(320.dp),
                             verticalArrangement = Arrangement.spacedBy(twSpacing.md),
                         ) {
-                            Stepper(currentStep = 0) {
+                            Stepper(currentStep = if (submitted) 1 else 0) {
                                 StepperItem("Personal Info")
                                 StepperItem("Contact Info")
                                 StepperItem("Address")
@@ -378,7 +385,8 @@ val stepperDoc =
                                     modifier = Modifier.fillMaxWidth(),
                                 )
                             }
-                            Button("Next", onClick = {})
+                            Button("Next", onClick = { submitted = true })
+                            if (submitted) Text { "Personal information complete" }
                         }
                     },
                 ),

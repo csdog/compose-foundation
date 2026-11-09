@@ -189,6 +189,7 @@ fun ProgressValue(
         textStyle =
             if (currentTheme.activePreset == StylePreset.Nova) {
                 TextColors.Muted.copy(
+                    fontFeatureSettings = "tnum",
                     fontSize = 14.sp,
                     lineHeight = 20.sp,
                     lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),

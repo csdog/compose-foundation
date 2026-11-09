@@ -1,5 +1,12 @@
 package com.toutiaoyan.compose.ui.catalog
 
+import androidx.compose.foundation.interaction.HoverInteraction
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -10,6 +17,10 @@ import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.catalog.docs.traceDoc
+import com.toutiaoyan.compose.ui.catalog.docs.TraceTriggerLine
+import com.toutiaoyan.compose.ui.components.trace.TraceTitle
+import com.toutiaoyan.compose.ui.theme.LocalContentColor
+import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.components.overlay.OverlayHost
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
@@ -207,6 +218,7 @@ class TraceExamplesTest {
         rule.onNodeWithText("Send message").assertIsDisplayed()
         rule.onNodeWithText("Thought").assertDoesNotExist()
         rule.onNodeWithText("Send message").performClick()
+        rule.mainClock.advanceTimeBy(5000)
         rule.onNodeWithText("Thought").assertIsDisplayed()
         rule.onNodeWithText("Image optimization is the bottleneck.", substring = true).assertIsDisplayed()
         rule.onNodeWithText("Reset").performClick()
@@ -216,6 +228,7 @@ class TraceExamplesTest {
     @Test fun toolStartsEmptyAndSendMessageRendersTheThreeToolRows() {
         show("Tool")
         rule.onNodeWithText("Send message").performClick()
+        rule.mainClock.advanceTimeBy(4000)
         listOf(
             "Ran node --version",
             "Ran npm --version",
@@ -226,16 +239,158 @@ class TraceExamplesTest {
         rule.onNodeWithText("11.6.2").assertIsDisplayed()
     }
 
+    @Test fun reasoningStreamsAndTheReadersCollapseWins() {
+        show("Reasoning")
+        rule.mainClock.autoAdvance = false
+        rule.onNodeWithText("Send message").performClick()
+        rule.mainClock.advanceTimeBy(32)
+        rule.onNodeWithText("Thinking").assertIsDisplayed().assertHasNoClickAction()
+        rule.onNodeWithText("Reset").assertDoesNotExist()
+        rule.mainClock.advanceTimeBy(600)
+        rule.onNodeWithText("The build log", substring = true).assertIsDisplayed()
+        rule.onNodeWithText("Thinking").performClick()
+        rule.mainClock.advanceTimeBy(300)
+        rule.onNodeWithText("The build log", substring = true).assertDoesNotExist()
+        rule.mainClock.advanceTimeBy(600)
+        rule.onNodeWithText("The build log", substring = true).assertDoesNotExist()
+        rule.mainClock.advanceTimeBy(4000)
+        rule.onNodeWithText("Thought").assertIsDisplayed()
+        rule.onNodeWithText("Reset").performClick()
+        rule.mainClock.advanceTimeBy(32)
+        rule.onNodeWithText("Thought").assertDoesNotExist()
+        rule.onNodeWithText("Send message").performClick()
+        rule.mainClock.advanceTimeBy(700)
+        rule.onNodeWithText("The build log", substring = true).assertIsDisplayed()
+    }
+
+    @Test fun toolsRunInOrderAndOnlyCompletedToolsExpand() {
+        show("Tool")
+        rule.mainClock.autoAdvance = false
+        rule.onNodeWithText("Send message").performClick()
+        rule.mainClock.advanceTimeBy(32)
+        rule.onNodeWithText("Running node --version").assertIsDisplayed().assertHasNoClickAction()
+        rule.onNodeWithText("Running npm --version").assertDoesNotExist()
+        rule.onNodeWithText("Reset").assertDoesNotExist()
+        rule.mainClock.advanceTimeBy(1000)
+        rule.onNodeWithText("Ran node --version").performClick()
+        rule.mainClock.advanceTimeBy(250)
+        rule.onNodeWithText("v24.18.0").assertIsDisplayed()
+        rule.onNodeWithText("Running npm --version").assertIsDisplayed()
+        rule.mainClock.advanceTimeBy(700)
+        rule.onNodeWithText("Running pnpm --version").assertIsDisplayed()
+        rule.mainClock.advanceTimeBy(1600)
+        rule.onNodeWithText("Failed to run pnpm --version").performClick()
+        rule.mainClock.advanceTimeBy(250)
+        rule.onNodeWithText("command not found: pnpm").assertIsDisplayed()
+        rule.onNodeWithText("Reset").assertIsDisplayed()
+    }
+
+    @Test fun replayClearsTheFinishedTurnAndStreamsItAgain() {
+        show("Default")
+        rule.mainClock.autoAdvance = false
+        rule.onNodeWithText("Replay").performClick()
+        rule.mainClock.advanceTimeBy(32)
+        rule.onNodeWithText("Why does pnpm install fail in CI?").assertIsDisplayed()
+        rule.onNodeWithText("Thinking").assertIsDisplayed()
+        rule.onNodeWithText("Ran pnpm --version").assertDoesNotExist()
+        rule.onNodeWithText("Used 2 sources").assertDoesNotExist()
+        rule.onNodeWithText("Replay").assertDoesNotExist()
+        rule.mainClock.advanceTimeBy(1700)
+        rule.onNodeWithText("Running pnpm --version").assertIsDisplayed()
+        rule.mainClock.advanceTimeBy(7000)
+        rule.onNodeWithText("Used 2 sources").assertIsDisplayed()
+        rule.onNodeWithText("Failed to run pnpm install --frozen-lockfile").assertIsDisplayed()
+        rule.onNodeWithText("Replay").assertIsDisplayed()
+    }
+
     @Test fun guideSectionsMatchTheOfficialPageCopy() {
-        val titles = traceDoc.beforeExamples.map { it.title } + traceDoc.afterExamples.map { it.title }
+        val titles =
+            traceDoc.introductionSections.map { it.title } +
+                traceDoc.beforeExamples.map { it.title } + traceDoc.afterExamples.map { it.title }
         assertEquals(listOf("Built with Trace", "Features", "Accessibility"), titles)
-        assertEquals(7, (traceDoc.afterExamples.first().blocks.last() as
-            com.toutiaoyan.compose.ui.catalog.docs.ComponentGuideBlock.Bullets).items.size)
         assertEquals(
-            listOf("Trace", "TraceLine", "TraceIcon", "TraceTitle", "TraceDescription",
-                "TraceCollapsible", "TraceCollapsibleTrigger", "TraceCollapsibleContent", "TraceLink"),
+            8,
+            (
+                traceDoc.afterExamples.first().blocks.last() as
+                    com.toutiaoyan.compose.ui.catalog.docs.ComponentGuideBlock.Bullets
+            ).items.size,
+        )
+        assertEquals(
+            listOf(
+                "Trace", "TraceLine", "TraceIcon", "TraceTitle", "TraceDescription",
+                "TraceCollapsible", "TraceCollapsibleTrigger", "TraceCollapsibleContent", "TraceLink",
+            ),
             traceDoc.apiSections.map { it.title },
         )
+    }
+
+    @Test fun compoundTriggerHoverTracksTheCurrentThemeAndReturnsToMuted() {
+        val source = MutableInteractionSource()
+        var dark by mutableStateOf(false)
+        var observed = Color.Unspecified
+        var muted = Color.Unspecified
+        var foreground = Color.Unspecified
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, isDark = dark) {
+                val colors = currentTheme.colors
+                SideEffect {
+                    muted = colors.mutedForeground
+                    foreground = colors.foreground
+                }
+                TraceTriggerLine(interactionSource = source) {
+                    val contentColor = LocalContentColor.current
+                    SideEffect { observed = contentColor }
+                    TraceTitle("Open results")
+                }
+            }
+        }
+        rule.runOnIdle { assertEquals(muted, observed) }
+        val enter = HoverInteraction.Enter()
+        rule.runOnIdle { source.tryEmit(enter) }
+        rule.runOnIdle { assertEquals(foreground, observed) }
+        rule.runOnIdle { dark = true }
+        rule.runOnIdle { assertEquals(foreground, observed) }
+        rule.runOnIdle { source.tryEmit(HoverInteraction.Exit(enter)) }
+        rule.runOnIdle { assertEquals(muted, observed) }
+    }
+
+    @Test fun sourceTablesAndSupplementalCodeKeepTheirContentAndPosition() {
+        val patterns =
+            traceDoc.introductionSections.single().blocks.last() as
+                com.toutiaoyan.compose.ui.catalog.docs.ComponentGuideBlock.Table
+        assertEquals(listOf("Pattern", "Shows"), patterns.headers)
+        assertEquals(11, patterns.rows.size)
+        val statuses =
+            traceDoc.afterExampleSections.getValue("Status").single() as
+                com.toutiaoyan.compose.ui.catalog.docs.ComponentGuideBlock.Table
+        assertEquals(listOf("Status", "Use for"), statuses.headers)
+        assertEquals(4, statuses.rows.size)
+        val markdown = componentPageMarkdown(traceDoc)
+        assertTrue(markdown.indexOf("Every line has the same shape") < markdown.indexOf("## Built with Trace"))
+        assertTrue(markdown.indexOf("## Built with Trace") < markdown.indexOf("## Installation"))
+        assertTrue(markdown.contains("| Pattern | Shows |"))
+        assertTrue(markdown.contains("| Status | Use for |"))
+        val openStart = markdown.indexOf("## Open State")
+        val linkStart = markdown.indexOf("## Link", openStart)
+        val openSection = markdown.substring(openStart, linkStart)
+        assertTrue(openSection.contains("open ?: running"))
+        assertTrue(openSection.indexOf("To open a row while it streams") > openSection.indexOf("Show the pnpm output"))
+        val linkSection = markdown.substring(linkStart, markdown.indexOf("## Dialog", linkStart))
+        assertTrue(linkSection.contains("Install Astro (opens in a new tab)"))
+        assertTrue(markdown.contains("Inside a [Message Scroller](/message-scroller), each line is announced once"))
+    }
+
+    @Test fun guideTablesRenderEveryCellWithoutAnExtraHeading() {
+        rule.setContent {
+            Theme(preset = StylePreset.Nova) {
+                GuideBlocks(traceDoc.afterExampleSections.getValue("Status"))
+            }
+        }
+        rule.onNodeWithText("Status").assertIsDisplayed()
+        rule.onNodeWithText("Use for").assertIsDisplayed()
+        rule.onNodeWithText("Work that is done", substring = true).assertIsDisplayed()
+        rule.onNodeWithText("Work that has not started", substring = true).assertIsDisplayed()
+        rule.onAllNodes(isHeading()).assertCountEquals(2)
     }
 
     @Test fun copyPageMarkdownKeepsTheRecipeOrderAndUsage() {

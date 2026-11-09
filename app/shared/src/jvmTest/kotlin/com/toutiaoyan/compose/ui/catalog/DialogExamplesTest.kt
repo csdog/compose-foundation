@@ -1,5 +1,12 @@
 package com.toutiaoyan.compose.ui.catalog
 
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.platform.WindowInfo
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -98,6 +105,9 @@ class DialogExamplesTest {
         rule.onNodeWithText("Share link").assertIsDisplayed()
         rule.onNodeWithText("Anyone who has this link will be able to view this.").assertIsDisplayed()
         rule.onNodeWithText("https://ui.shadcn.com/docs/installation").assertIsDisplayed()
+        val header = rule.onNodeWithText("Share link").fetchSemanticsNode().boundsInRoot
+        val close = rule.onNodeWithText("Close").fetchSemanticsNode().boundsInRoot
+        assertEquals(header.left, close.left, .5f)
         rule.onNodeWithText("Close").performClick()
         rule.waitForIdle()
         rule.onNodeWithText("Share link").assertDoesNotExist()
@@ -131,6 +141,39 @@ class DialogExamplesTest {
         // The body is the only scroll container; the header and title stay outside it.
         rule.onAllNodes(hasScrollAction()).assertCountEquals(1)
         rule.onAllNodesWithText("Lorem ipsum dolor sit amet", substring = true).assertCountEquals(10)
+    }
+
+    @Test fun scrollableRecipeUsesHalfTheViewportAndKeepsTheCompleteParagraphs() {
+        var viewport by mutableStateOf(IntSize(560, 600))
+        val window =
+            object : WindowInfo {
+                override val isWindowFocused = true
+                override val containerSize get() = viewport
+            }
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, minTouchTarget = null) {
+                CompositionLocalProvider(LocalWindowInfo provides window) {
+                    OverlayHost { dialogDoc.examples.single { it.title == "Scrollable Content" }.preview() }
+                }
+            }
+        }
+        rule.onNodeWithText("Scrollable Content").performClick()
+
+        fun scrollHeight() = rule.onNode(hasScrollAction()).fetchSemanticsNode().boundsInRoot.height
+        assertEquals(300f, scrollHeight(), .5f)
+        rule.onAllNodesWithText("sunt in culpa qui officia deserunt mollit anim id est laborum.", substring = true)
+            .assertCountEquals(10)
+        rule.runOnIdle { viewport = IntSize(560, 480) }
+        assertEquals(240f, scrollHeight(), .5f)
+    }
+
+    @Test fun footerExtensionCloseActionDismisses() {
+        show("Kotlin extension: Footer")
+        rule.onNodeWithText("Open dialog").performClick()
+        rule.onNodeWithText("Notice").assertIsDisplayed()
+        rule.onNodeWithText("Close").performClick()
+        rule.waitForIdle()
+        rule.onNodeWithText("Notice").assertDoesNotExist()
     }
 
     @Test fun disabledCloseControlDoesNotDismissTheDialog() {
@@ -170,21 +213,43 @@ class DialogExamplesTest {
         }
     }
 
+    @Test fun rtlProfileFieldsAcceptEditsInEveryPreviewLanguage() {
+        show("RTL")
+        for ((label, trigger) in listOf(
+            "Arabic (العربية)" to "فتح الحوار",
+            "English" to "Open Dialog",
+            "Hebrew (עברית)" to "פתח דיאלוג",
+        )) {
+            rule.onNodeWithContentDescription("Preview language").performClick()
+            rule.onAllNodesWithText(label).onLast().performClick()
+            rule.onNodeWithText(trigger).performClick()
+            rule.onNodeWithText("Pedro Duarte").performTextReplacement("Updated name")
+            rule.onNodeWithText("@peduarte").performTextReplacement("@updated")
+            rule.onNodeWithText("Updated name").assertIsDisplayed()
+            rule.onNodeWithText("@updated").assertIsDisplayed()
+            rule.onAllNodes(isRoot()).onLast().performKeyInput { pressKey(Key.Escape) }
+            rule.waitUntil(3_000) {
+                rule.onAllNodesWithText("Updated name").fetchSemanticsNodes().isEmpty()
+            }
+        }
+    }
+
     @Test fun exportKeepsOfficialCopyCompositionAndKotlinApi() {
         val markdown = componentPageMarkdown(dialogDoc)
         assertContains(markdown, "DialogContent")
         assertFalse(markdown.contains("## Examples"))
-        val sections = listOf(
-            "## Custom Close Button",
-            "## No Close Button",
-            "## Sticky Footer",
-            "## Scrollable Content",
-            "## RTL",
-            "## API Reference",
-        ).map { markdown.indexOf(it) }
+        val sections =
+            listOf(
+                "## Custom Close Button",
+                "## No Close Button",
+                "## Sticky Footer",
+                "## Scrollable Content",
+                "## RTL",
+                "## API Reference",
+            ).map { markdown.indexOf(it) }
         assertTrue(sections.all { it >= 0 }, "missing a recipe heading: $sections")
         assertEquals(sections.sorted(), sections)
-        assertContains(markdown, "To enable RTL support in your app")
+        assertContains(markdown, "To enable RTL support in shadcn/ui")
         assertContains(markdown, "Kotlin extension: Size")
         assertContains(markdown, "DialogTrigger")
         assertFalse(markdown.contains("EmojiText"))

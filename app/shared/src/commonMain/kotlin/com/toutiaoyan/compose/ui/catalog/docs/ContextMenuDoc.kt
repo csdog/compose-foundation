@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
@@ -654,10 +653,13 @@ val contextMenuDoc =
                     title = "RTL",
                     descriptionMarkdown =
                         "To enable RTL support in shadcn/ui, see the " +
-                            "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
+                            "[RTL configuration guide](https://ui.shadcn.com/docs/rtl). Use " +
+                            "`side = ContextMenuSide.InlineEnd` to place the menu on the logical right " +
+                            "side of the trigger.",
                     code =
                         """
                         var people by remember { mutableStateOf("pedro") }
+                        var urls by remember { mutableStateOf(false) }
                         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
                             ContextMenu {
                                 ContextMenuTrigger { ContextMenuDemoTrigger("انقر بزر الماوس الأيمن هنا") }
@@ -687,7 +689,7 @@ val contextMenuDoc =
                                     ContextMenuSeparator()
                                     ContextMenuGroup {
                                         ContextMenuCheckboxItem("إظهار الإشارات المرجعية", checked = true, onCheckedChange = {})
-                                        ContextMenuCheckboxItem("إظهار عناوين URL الكاملة", checked = false, onCheckedChange = {})
+                                        ContextMenuCheckboxItem("إظهار عناوين URL الكاملة", checked = urls, onCheckedChange = { urls = it })
                                     }
                                     ContextMenuSeparator()
                                     ContextMenuGroup {
@@ -934,6 +936,7 @@ private fun ContextMenuRtlPreview() {
     var language by remember { mutableStateOf(0) }
     val text = contextMenuRtlTexts[language]
     var people by remember { mutableStateOf("pedro") }
+    var urls by remember { mutableStateOf(false) }
     RtlPreview(language, contextMenuRtlTexts.map { it.language }, { language = it }) {
         CompositionLocalProvider(LocalLayoutDirection provides text.direction) {
             ContextMenu {
@@ -980,7 +983,7 @@ private fun ContextMenuRtlPreview() {
                     ContextMenuSeparator()
                     ContextMenuGroup {
                         ContextMenuCheckboxItem(text.showBookmarks, checked = true, onCheckedChange = {})
-                        ContextMenuCheckboxItem(text.showFullUrls, checked = false, onCheckedChange = {})
+                        ContextMenuCheckboxItem(text.showFullUrls, checked = urls, onCheckedChange = { urls = it })
                     }
                     ContextMenuSeparator()
                     ContextMenuGroup {

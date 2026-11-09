@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="InputGroupExamplesTest[jvm]" tests="52" skipped="0" failures="0" errors="0" timestamp="2026-11-08T23:48:18.538Z" hostname="Apples-MacBook-Pro.local" time="2.781">
+  <properties/>
+  <testcase name="codeEditorHasHeaderAndFooterDividers[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.645"/>
+  <testcase name="copyButtonWritesTheOfficialUrlToClipboard[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.128"/>
+  <testcase name="officialPageOrderAndCopyMatchCurrentOfficialPage[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.016"/>
+  <testcase name="disabledAndInvalidGroupStatesKeepInputSemantics[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.048"/>
+  <testcase name="everyOfficialPreviewRendersAtBothWidths[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.261"/>
+  <testcase name="kbdRecipeRendersTheShortcut[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.024"/>
+  <testcase name="codeTextareaPreservesOfficialMinimumHeight[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.025"/>
+  <testcase name="favoriteSelectionUsesTheOfficialBlue[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.043"/>
+  <testcase name="rtlPreviewSwitchesLanguages[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.181"/>
+  <testcase name="demoAddonContentAndBlockEndFooterRender[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.021"/>
+  <testcase name="spinnerRecipeExposesAllFourLoadingIndicators[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.026"/>
+  <testcase name="blockEndTextareaShowsCountAndPostAction[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.025"/>
+  <testcase name="secureUrlFieldStaysBeforeItsTrailingFavoriteButton[width=390, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.025"/>
+  <testcase name="codeEditorHasHeaderAndFooterDividers[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.023"/>
+  <testcase name="copyButtonWritesTheOfficialUrlToClipboard[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.04"/>
+  <testcase name="officialPageOrderAndCopyMatchCurrentOfficialPage[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.012"/>
+  <testcase name="disabledAndInvalidGroupStatesKeepInputSemantics[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.021"/>
+  <testcase name="everyOfficialPreviewRendersAtBothWidths[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.117"/>
+  <testcase name="kbdRecipeRendersTheShortcut[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.02"/>
+  <testcase name="codeTextareaPreservesOfficialMinimumHeight[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.019"/>
+  <testcase name="favoriteSelectionUsesTheOfficialBlue[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.034"/>
+  <testcase name="rtlPreviewSwitchesLanguages[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.115"/>
+  <testcase name="demoAddonContentAndBlockEndFooterRender[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.02"/>
+  <testcase name="spinnerRecipeExposesAllFourLoadingIndicators[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.021"/>
+  <testcase name="blockEndTextareaShowsCountAndPostAction[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.022"/>
+  <testcase name="secureUrlFieldStaysBeforeItsTrailingFavoriteButton[width=390, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.022"/>
+  <testcase name="codeEditorHasHeaderAndFooterDividers[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.02"/>
+  <testcase name="copyButtonWritesTheOfficialUrlToClipboard[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.03"/>
+  <testcase name="officialPageOrderAndCopyMatchCurrentOfficialPage[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.013"/>
+  <testcase name="disabledAndInvalidGroupStatesKeepInputSemantics[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.02"/>
+  <testcase name="everyOfficialPreviewRendersAtBothWidths[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.098"/>
+  <testcase name="kbdRecipeRendersTheShortcut[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.019"/>
+  <testcase name="codeTextareaPreservesOfficialMinimumHeight[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.019"/>
+  <testcase name="favoriteSelectionUsesTheOfficialBlue[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.03"/>
+  <testcase name="rtlPreviewSwitchesLanguages[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.102"/>
+  <testcase name="demoAddonContentAndBlockEndFooterRender[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.017"/>
+  <testcase name="spinnerRecipeExposesAllFourLoadingIndicators[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.02"/>
+  <testcase name="blockEndTextareaShowsCountAndPostAction[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.019"/>
+  <testcase name="secureUrlFieldStaysBeforeItsTrailingFavoriteButton[width=1,440, dark=false][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.018"/>
+  <testcase name="codeEditorHasHeaderAndFooterDividers[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.017"/>
+  <testcase name="copyButtonWritesTheOfficialUrlToClipboard[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.027"/>
+  <testcase name="officialPageOrderAndCopyMatchCurrentOfficialPage[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.013"/>
+  <testcase name="disabledAndInvalidGroupStatesKeepInputSemantics[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.018"/>
+  <testcase name="everyOfficialPreviewRendersAtBothWidths[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.082"/>
+  <testcase name="kbdRecipeRendersTheShortcut[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.018"/>
+  <testcase name="codeTextareaPreservesOfficialMinimumHeight[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.019"/>
+  <testcase name="favoriteSelectionUsesTheOfficialBlue[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.027"/>
+  <testcase name="rtlPreviewSwitchesLanguages[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.099"/>
+  <testcase name="demoAddonContentAndBlockEndFooterRender[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.018"/>
+  <testcase name="spinnerRecipeExposesAllFourLoadingIndicators[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.02"/>
+  <testcase name="blockEndTextareaShowsCountAndPostAction[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.02"/>
+  <testcase name="secureUrlFieldStaysBeforeItsTrailingFavoriteButton[width=1,440, dark=true][jvm]" classname="com.toutiaoyan.compose.ui.catalog.InputGroupExamplesTest" time="0.02"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

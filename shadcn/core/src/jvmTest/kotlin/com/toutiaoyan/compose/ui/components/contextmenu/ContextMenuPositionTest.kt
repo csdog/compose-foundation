@@ -65,19 +65,31 @@ class ContextMenuPositionTest {
     @Test fun inlineSidesFollowLayoutDirection() {
         assertEquals(
             IntOffset(356, 104),
-            provider(IntOffset(500, 100), side = ContextMenuSide.InlineStart).position(layoutDirection = LayoutDirection.Ltr),
+            provider(
+                IntOffset(500, 100),
+                side = ContextMenuSide.InlineStart,
+            ).position(layoutDirection = LayoutDirection.Ltr),
         )
         assertEquals(
             IntOffset(500, 104),
-            provider(IntOffset(500, 100), side = ContextMenuSide.InlineStart).position(layoutDirection = LayoutDirection.Rtl),
+            provider(
+                IntOffset(500, 100),
+                side = ContextMenuSide.InlineStart,
+            ).position(layoutDirection = LayoutDirection.Rtl),
         )
         assertEquals(
             IntOffset(500, 104),
-            provider(IntOffset(500, 100), side = ContextMenuSide.InlineEnd).position(layoutDirection = LayoutDirection.Ltr),
+            provider(
+                IntOffset(500, 100),
+                side = ContextMenuSide.InlineEnd,
+            ).position(layoutDirection = LayoutDirection.Ltr),
         )
         assertEquals(
             IntOffset(356, 104),
-            provider(IntOffset(500, 100), side = ContextMenuSide.InlineEnd).position(layoutDirection = LayoutDirection.Rtl),
+            provider(
+                IntOffset(500, 100),
+                side = ContextMenuSide.InlineEnd,
+            ).position(layoutDirection = LayoutDirection.Rtl),
         )
     }
 

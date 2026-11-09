@@ -29,16 +29,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.PointerType
 import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
@@ -81,6 +85,7 @@ internal class PopoverController(
 
 internal class PopoverFocusState {
     var presented by mutableStateOf(false)
+    var openedByTouch = false
     var returnFocus: (() -> Boolean)? = null
 }
 
@@ -127,6 +132,10 @@ class PopoverScope internal constructor(
  * [defaultOpen]) for uncontrolled, matching Radix `open` / `defaultOpen` /
  * `onOpenChange`. Outside click and Escape close via [onOpenChange]`(false)`.
  *
+ * [modal] retains the native popup default of `true` for compatibility. It controls
+ * popup focus ownership; `false` keeps the owner interactive. This is not the full
+ * Base UI modality contract (scroll locking and document interaction suppression).
+ *
  * Usage:
  * ```
  * var open by remember { mutableStateOf(false) }
@@ -164,7 +173,19 @@ fun Popover(
     }
     val controller = PopoverController(open = isOpen, onOpenChange = setOpen, modal = modal, focus = focus)
     CompositionLocalProvider(LocalPopover provides controller) {
-        Box(modifier = modifier) {
+        Box(
+            modifier =
+                modifier.onKeyEvent { event ->
+                    // A non-focusable popup leaves keyboard events on its owner.
+                    // Bubble so a nested popover can consume Escape first.
+                    if (!modal && isOpen && event.type == KeyEventType.KeyDown && event.key == Key.Escape) {
+                        setOpen(false)
+                        true
+                    } else {
+                        false
+                    }
+                },
+        ) {
             PopoverScope(controller).content()
         }
     }
@@ -209,11 +230,19 @@ fun PopoverScope.PopoverTrigger(
                 .pointerInput(controller.focus, returnFocus) {
                     awaitPointerEventScope {
                         while (true) {
-                            if (awaitPointerEvent(PointerEventPass.Initial).type == PointerEventType.Press) {
+                            val event = awaitPointerEvent(PointerEventPass.Initial)
+                            if (event.type == PointerEventType.Press) {
+                                controller.focus.openedByTouch = event.changes.any { it.type == PointerType.Touch }
                                 controller.focus.returnFocus = returnFocus
                             }
                         }
                     }
+                }
+                .onPreviewKeyEvent { event ->
+                    if (event.type == KeyEventType.KeyDown && (event.key == Key.Enter || event.key == Key.Spacebar)) {
+                        controller.focus.openedByTouch = false
+                    }
+                    false
                 }
                 .keyboardInputMode()
                 .semantics {
@@ -304,6 +333,7 @@ fun PopoverScope.PopoverContent(
             enter = enter,
             exit = exit,
         ) {
+            val focusManager = LocalFocusManager.current
             DisposableEffect(controller.focus, controller.modal) {
                 if (controller.modal) controller.focus.presented = true
                 onDispose { if (controller.modal) controller.focus.presented = false }
@@ -311,7 +341,11 @@ fun PopoverScope.PopoverContent(
             LaunchedEffect(controller.open, controller.modal) {
                 if (controller.open && controller.modal) {
                     withFrameNanos { }
-                    if (!panelHasFocus) panelFocus.requestFocus()
+                    if (!panelHasFocus && panelFocus.requestFocus() && !controller.focus.openedByTouch) {
+                        // Enter searches descendants and leaves focus on the panel if
+                        // none can take it. Touch avoids opening a virtual keyboard.
+                        focusManager.moveFocus(FocusDirection.Enter)
+                    }
                 }
             }
             CompositionLocalProvider(
@@ -320,7 +354,7 @@ fun PopoverScope.PopoverContent(
             ) {
                 Column(
                     modifier =
-                        Modifier.keyboardInputMode().onPreviewKeyEvent { event ->
+                        Modifier.keyboardInputMode().onKeyEvent { event ->
                             if (controller.open && event.type == KeyEventType.KeyDown && event.key == Key.Escape) {
                                 controller.onOpenChange(false)
                                 true

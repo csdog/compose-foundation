@@ -116,7 +116,7 @@ fun Modifier.shimmer(
         val spreadPx = with(density) { spread.toPx() }
         val highlightColor = color ?: defaultShimmerHighlight(isLight = theme.isLight)
         val sweepReverse =
-            reverse xor (layoutDirection == LayoutDirection.Rtl)
+            reverse || (layoutDirection == LayoutDirection.Rtl)
         val progress = rememberShimmerProgress(durationMillis = durationMillis, once = once)
 
         // BlendMode.SrcAtop needs an offscreen compositing layer to composite only
@@ -186,7 +186,7 @@ fun rememberShimmerStyle(
     val highlight = color?.takeIf { it.isSpecified }
     val resolvedBase = baseColor?.takeIf { it.isSpecified }
     val colors = remember(highlight, theme.isLight) { ShimmerColorCache(highlight, dark = !theme.isLight) }
-    val sweepReverse = reverse xor (layoutDirection == LayoutDirection.Rtl)
+    val sweepReverse = reverse || (layoutDirection == LayoutDirection.Rtl)
     val progress = rememberShimmerProgress(durationMillis = durationMillis, once = once)
 
     // Style observes the animation in its own paint scope rather than the caller's

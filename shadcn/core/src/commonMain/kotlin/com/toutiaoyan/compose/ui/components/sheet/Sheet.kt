@@ -66,6 +66,7 @@ import com.toutiaoyan.compose.ui.components.icon.Icon
 import com.toutiaoyan.compose.ui.components.icon.IconVariant
 import com.toutiaoyan.compose.ui.icons.X
 import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.theme.LocalContentColor
 import com.toutiaoyan.compose.ui.components.overlay.Content
 import com.toutiaoyan.compose.ui.components.overlay.Overlay
 import com.toutiaoyan.compose.ui.components.overlay.TeleportPrimitive
@@ -388,23 +389,25 @@ fun SheetScope.SheetContent(
                     top = if (physicalSide == SheetSide.Bottom) 1.dp else 0.dp,
                     bottom = if (physicalSide == SheetSide.Top) 1.dp else 0.dp,
                 )
-            Box(modifier = panelModifier) {
-                SheetColumn(
-                    Modifier.fillMaxWidth().then(
-                        if (physicalSide == SheetSide.Left || physicalSide == SheetSide.Right) {
-                            Modifier.fillMaxHeight()
-                        } else {
-                            Modifier
-                        },
-                    ),
-                    content = content,
-                )
-                if (showCloseButton) {
-                    SheetClose(
-                        modifier = Modifier.align(Alignment.TopEnd).offset(x = (-12).dp, y = 12.dp),
-                        ariaLabel = closeAriaLabel,
-                        icon = closeIcon,
+            CompositionLocalProvider(LocalContentColor provides currentTheme.colors.popoverForeground) {
+                Box(modifier = panelModifier) {
+                    SheetColumn(
+                        Modifier.fillMaxWidth().then(
+                            if (physicalSide == SheetSide.Left || physicalSide == SheetSide.Right) {
+                                Modifier.fillMaxHeight()
+                            } else {
+                                Modifier
+                            },
+                        ),
+                        content = content,
                     )
+                    if (showCloseButton) {
+                        SheetClose(
+                            modifier = Modifier.align(Alignment.TopEnd).offset(x = (-12).dp, y = 12.dp),
+                            ariaLabel = closeAriaLabel,
+                            icon = closeIcon,
+                        )
+                    }
                 }
             }
         }

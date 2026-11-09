@@ -134,7 +134,8 @@ val badgeDoc =
             import com.toutiaoyan.compose.ui.components.badge.BadgeVariant
             """.trimIndent(),
         usageCode = "Badge(\"Badge\", variant = BadgeVariant.Default)",
-        compositionCode = "Badge {\n    Text { \"Badge\" }\n}",
+        // Official base/badge page has no Composition section; keep this page on that shape.
+        compositionCode = null,
         examplesHeading = null,
         examples =
             listOf("Default", "Variants", "With Icon", "With Spinner", "Link", "Custom Colors", "RTL").mapIndexed {
@@ -161,7 +162,8 @@ val badgeDoc =
                                 "Customize colors with `Style`, using the light and dark palette steps " +
                                     "appropriate to the current theme."
                             6 ->
-                                "To enable RTL support in shadcn/ui, see the [RTL configuration guide](https://ui.shadcn.com/docs/rtl)."
+                                "To enable RTL support in shadcn/ui, see the [RTL configuration " +
+                                    "guide](https://ui.shadcn.com/docs/rtl)."
                             else -> null
                         },
                     preview = { if (index == 6) BadgeRtlRecipe() else BadgeRecipe(index) },
@@ -180,6 +182,7 @@ val badgeDoc =
                         ApiProperty("onClick", "(() -> Unit)?", "null; overrides href navigation"),
                         ApiProperty("invalid", "Boolean", "false"),
                         ApiProperty("iconPlacement", "BadgeIconPlacement?", "null"),
+                        ApiProperty("interactionSource", "MutableInteractionSource?", "null"),
                         ApiProperty("style", "Style", "Style"),
                         ApiProperty("content", "@Composable () -> Unit", "required for slot overload"),
                     ),

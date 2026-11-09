@@ -1,0 +1,130 @@
+{
+  "slug": "carousel",
+  "officialUrl": "https://ui.shadcn.com/docs/components/base/carousel",
+  "localUrl": "http://127.0.0.1:8772/carousel",
+  "capturedAt": "2026-11-05T05:26:07.148Z",
+  "app": [
+    "http://127.0.0.1:8772/658820f72b4617efb380.wasm",
+    "http://127.0.0.1:8772/7c77bd0a3e75fe8e9471.wasm"
+  ],
+  "officialDom": {
+    "title": "Carousel",
+    "description": "Copy PagePreviousNext",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "About#"
+      },
+      {
+        "tag": "H2",
+        "text": "Installation#"
+      },
+      {
+        "tag": "H2",
+        "text": "Usage#"
+      },
+      {
+        "tag": "H2",
+        "text": "Composition#"
+      },
+      {
+        "tag": "H2",
+        "text": "Sizes#"
+      },
+      {
+        "tag": "H2",
+        "text": "Spacing#"
+      },
+      {
+        "tag": "H2",
+        "text": "Orientation#"
+      },
+      {
+        "tag": "H2",
+        "text": "Options#"
+      },
+      {
+        "tag": "H2",
+        "text": "API#"
+      },
+      {
+        "tag": "H2",
+        "text": "Events#"
+      },
+      {
+        "tag": "H2",
+        "text": "Plugins#"
+      },
+      {
+        "tag": "H2",
+        "text": "RTL#"
+      },
+      {
+        "tag": "H2",
+        "text": "API Reference#"
+      }
+    ],
+    "tabs": [
+      "Command",
+      "Manual",
+      "pnpm",
+      "npm",
+      "yarn",
+      "bun"
+    ],
+    "examples": 7,
+    "toc": [],
+    "bodyWidth": {
+      "x": 0,
+      "y": 64,
+      "width": 1080,
+      "height": 10970.953125,
+      "top": 64,
+      "right": 1080,
+      "bottom": 11034.953125,
+      "left": 0
+    },
+    "clientWidth": 1080,
+    "scrollHeight": 11035
+  },
+  "local": {
+    "desktop-light": {
+      "url": "http://127.0.0.1:8772/carousel",
+      "theme": "light",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(8283.5px + 100vh)"
+    },
+    "desktop-dark": {
+      "url": "http://127.0.0.1:8772/carousel",
+      "theme": "dark",
+      "clientWidth": 1425,
+      "scrollY": 0,
+      "bodyHeight": "calc(8283.5px + 100vh)"
+    },
+    "phone-light": {
+      "url": "http://127.0.0.1:8772/carousel",
+      "theme": "light",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(8968px + 100vh)"
+    },
+    "phone-dark": {
+      "url": "http://127.0.0.1:8772/carousel",
+      "theme": "dark",
+      "clientWidth": 375,
+      "scrollY": 0,
+      "bodyHeight": "calc(8968px + 100vh)"
+    }
+  },
+  "files": {
+    "official-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/page-skeleton-r2/before/carousel/official-desktop-light.png",
+    "local-desktop-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/page-skeleton-r2/before/carousel/local-desktop-light.png",
+    "official-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/page-skeleton-r2/before/carousel/official-desktop-dark.png",
+    "local-desktop-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/page-skeleton-r2/before/carousel/local-desktop-dark.png",
+    "official-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/page-skeleton-r2/before/carousel/official-phone-light.png",
+    "local-phone-light": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/page-skeleton-r2/before/carousel/local-phone-light.png",
+    "official-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/page-skeleton-r2/before/carousel/official-phone-dark.png",
+    "local-phone-dark": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/page-skeleton-r2/before/carousel/local-phone-dark.png"
+  }
+}

@@ -31,7 +31,9 @@ internal val skeletonDefaultRecipeCode =
         second: Dp,
     ) {
         Row(
-            Modifier.testTag("skeleton-example"),
+            // The source flex row keeps its fixed-width children at their natural width,
+            // even when the centered preview's padded content area is narrower.
+            Modifier.requiredWidth(avatar + 16.dp + maxOf(first, second)).testTag("skeleton-example"),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -82,7 +84,9 @@ internal val skeletonAvatarRecipeCode =
         second: Dp,
     ) {
         Row(
-            Modifier.testTag("skeleton-example"),
+            // The source flex row keeps its fixed-width children at their natural width,
+            // even when the centered preview's padded content area is narrower.
+            Modifier.requiredWidth(avatar + 16.dp + maxOf(first, second)).testTag("skeleton-example"),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -133,7 +137,9 @@ internal val skeletonCardRecipeCode =
         second: Dp,
     ) {
         Row(
-            Modifier.testTag("skeleton-example"),
+            // The source flex row keeps its fixed-width children at their natural width,
+            // even when the centered preview's padded content area is narrower.
+            Modifier.requiredWidth(avatar + 16.dp + maxOf(first, second)).testTag("skeleton-example"),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -192,7 +198,9 @@ internal val skeletonTextRecipeCode =
         second: Dp,
     ) {
         Row(
-            Modifier.testTag("skeleton-example"),
+            // The source flex row keeps its fixed-width children at their natural width,
+            // even when the centered preview's padded content area is narrower.
+            Modifier.requiredWidth(avatar + 16.dp + maxOf(first, second)).testTag("skeleton-example"),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -250,7 +258,9 @@ internal val skeletonFormRecipeCode =
         second: Dp,
     ) {
         Row(
-            Modifier.testTag("skeleton-example"),
+            // The source flex row keeps its fixed-width children at their natural width,
+            // even when the centered preview's padded content area is narrower.
+            Modifier.requiredWidth(avatar + 16.dp + maxOf(first, second)).testTag("skeleton-example"),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -314,7 +324,9 @@ internal val skeletonTableRecipeCode =
         second: Dp,
     ) {
         Row(
-            Modifier.testTag("skeleton-example"),
+            // The source flex row keeps its fixed-width children at their natural width,
+            // even when the centered preview's padded content area is narrower.
+            Modifier.requiredWidth(avatar + 16.dp + maxOf(first, second)).testTag("skeleton-example"),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -376,7 +388,9 @@ internal val skeletonRtlRecipeCode =
         second: Dp,
     ) {
         Row(
-            Modifier.testTag("skeleton-example"),
+            // The source flex row keeps its fixed-width children at their natural width,
+            // even when the centered preview's padded content area is narrower.
+            Modifier.requiredWidth(avatar + 16.dp + maxOf(first, second)).testTag("skeleton-example"),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -431,7 +445,9 @@ internal val skeletonShimmerRecipeCode =
         second: Dp,
     ) {
         Row(
-            Modifier.testTag("skeleton-example"),
+            // The source flex row keeps its fixed-width children at their natural width,
+            // even when the centered preview's padded content area is narrower.
+            Modifier.requiredWidth(avatar + 16.dp + maxOf(first, second)).testTag("skeleton-example"),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {

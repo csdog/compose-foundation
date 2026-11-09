@@ -38,6 +38,7 @@ val resizableDoc =
                 ResizablePanel(second, "Two")
             }
             """.trimIndent(),
+        beforeCompositionMarkdown = "Use the following composition to build a `ResizablePanelGroup`:",
         compositionCode =
             """
             ResizablePanelGroup
@@ -45,15 +46,16 @@ val resizableDoc =
             ├── ResizableHandle
             └── ResizablePanel
             """.trimIndent(),
-        beforeExamples =
+        introductionSections =
             listOf(
                 ComponentGuideSection(
                     "About",
                     listOf(
                         ComponentGuideBlock.Paragraph(
-                            "The `Resizable` component is built on top of " +
+                            "The upstream shadcn/ui `Resizable` component is built on top of " +
                                 "[react-resizable-panels](https://github.com/bvaughn/react-resizable-panels) " +
-                                "by [bvaughn](https://github.com/bvaughn).",
+                                "by [bvaughn](https://github.com/bvaughn). " +
+                                "This Compose implementation provides native two-pane resizing.",
                         ),
                     ),
                 ),
@@ -65,7 +67,8 @@ val resizableDoc =
                     listOf(
                         ComponentGuideBlock.Paragraph(
                             "See the [react-resizable-panels](" +
-                                "https://github.com/bvaughn/react-resizable-panels/tree/main/packages/react-resizable-panels" +
+                                "https://github.com/bvaughn/react-resizable-panels/" +
+                                "tree/main/packages/react-resizable-panels" +
                                 ") documentation.",
                         ),
                     ),
@@ -83,17 +86,28 @@ val resizableDoc =
                 ComponentGuideSection(
                     "2025-02-02 react-resizable-panels v4",
                     listOf(
-                        ComponentGuideBlock.Bullets(
-                            listOf(
-                                "`PanelGroup` → `Group`",
-                                "`PanelResizeHandle` → `Separator`",
-                                "`direction` prop → `orientation` prop",
-                                "`defaultSize={50}` → `defaultSize=\"50%\"`",
-                                "`onLayout` → `onLayoutChange`",
-                                "`ImperativePanelHandle` → `PanelImperativeHandle`",
-                                "`ref` prop on Panel → `panelRef` prop",
-                                "`data-panel-group-direction` → `aria-orientation`",
-                            ),
+                        ComponentGuideBlock.Paragraph(
+                            "Updated to upstream `react-resizable-panels` v4. See the " +
+                                "[v4.0.0 release notes](" +
+                                "https://github.com/bvaughn/react-resizable-panels/releases/tag/4.0.0) " +
+                                "for full details.",
+                        ),
+                        ComponentGuideBlock.Paragraph(
+                            "If you use the upstream React primitives directly, note the following changes:",
+                        ),
+                        ComponentGuideBlock.Table(
+                            headers = listOf("v3", "v4"),
+                            rows =
+                                listOf(
+                                    listOf("`PanelGroup`", "`Group`"),
+                                    listOf("`PanelResizeHandle`", "`Separator`"),
+                                    listOf("`direction` prop", "`orientation` prop"),
+                                    listOf("`defaultSize={50}`", "`defaultSize=\"50%\"`"),
+                                    listOf("`onLayout`", "`onLayoutChange`"),
+                                    listOf("`ImperativePanelHandle`", "`PanelImperativeHandle`"),
+                                    listOf("`ref` prop on Panel", "`panelRef` prop"),
+                                    listOf("`data-panel-group-direction`", "`aria-orientation`"),
+                                ),
                         ),
                     ),
                     level = 3,
@@ -490,7 +504,6 @@ val resizableDoc =
                 examples = resizableOfficialExamples + resizableExtensionExamples(native.examples),
             )
         }
-
 
 /**
  * Kotlin-only recipes. Everything else in the legacy list is a duplicate of the four

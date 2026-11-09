@@ -48,6 +48,7 @@ val popoverDoc =
                 }
             }
             """.trimIndent(),
+        beforeCompositionMarkdown = "Use the following composition to build a `Popover`:",
         compositionCode =
             """
             Popover
@@ -550,8 +551,9 @@ val popoverDoc =
         .let { native ->
             val curated = listOf("Non-modal", "Placement", "Uncontrolled")
             native.copy(
-                examples = popoverOfficialExamples +
-                    native.examples.filter { it.title in curated }
-                        .map { it.copy(title = "Kotlin extension: ${it.title}") },
+                examples =
+                    popoverOfficialExamples +
+                        native.examples.filter { it.title in curated }
+                            .map { it.copy(title = "Kotlin extension: ${it.title}") },
             )
         }

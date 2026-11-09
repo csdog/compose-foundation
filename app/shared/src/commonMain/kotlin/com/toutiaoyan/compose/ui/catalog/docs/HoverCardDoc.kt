@@ -87,10 +87,14 @@ val hoverCardDoc =
                             ),
                         ),
                         ComponentGuideBlock.Code(
-                            (
-                                "HoverCardTrigger(delay = 100, closeDelay = 200) { " +
-                                    "Button(\"Hover\", onClick = {}) }"
-                            ),
+                            """
+                            HoverCard {
+                                HoverCardTrigger(delay = 100, closeDelay = 200) {
+                                    Button("Hover", onClick = {}, variant = ButtonVariant.Link)
+                                }
+                                HoverCardContent { Text { "Content" } }
+                            }
+                            """.trimIndent(),
                         ),
                     ),
                 ),
@@ -105,10 +109,16 @@ val hoverCardDoc =
                             ),
                         ),
                         ComponentGuideBlock.Code(
-                            (
-                                "HoverCardContent(side = HoverCardSide.Top, align = " +
-                                    "PopupAlign.Start) { Text { \"Content\" } }"
-                            ),
+                            """
+                            HoverCard {
+                                HoverCardTrigger {
+                                    Button("Hover", onClick = {}, variant = ButtonVariant.Link)
+                                }
+                                HoverCardContent(side = HoverCardSide.Top, align = PopupAlign.Start) {
+                                    Text { "Content" }
+                                }
+                            }
+                            """.trimIndent(),
                         ),
                     ),
                 ),

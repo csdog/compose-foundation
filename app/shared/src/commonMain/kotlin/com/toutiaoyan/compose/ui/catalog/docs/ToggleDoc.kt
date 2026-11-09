@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.components.toggle.Toggle
+import com.toutiaoyan.compose.ui.components.toggle.ToggleIconPlacement
 import com.toutiaoyan.compose.ui.components.toggle.ToggleSize
 import com.toutiaoyan.compose.ui.components.toggle.ToggleVariant
 import com.toutiaoyan.compose.ui.components.emojitext.EmojiText
@@ -26,7 +27,7 @@ val toggleDoc =
     ComponentDoc(
         id = "toggle",
         title = "Toggle",
-        description = "A two-state button, commonly used for toolbar toggles like bold or italic.",
+        description = "A two-state button that can be either on or off.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.toggle.Toggle
@@ -47,163 +48,168 @@ val toggleDoc =
         examples =
             togglePageExamples(
                 listOf(
-                ComponentExample(
-                    title = "Default",
-                    code =
-                        """
-                        var bookmarked by remember { mutableStateOf(false) }
-                        Toggle(pressed = bookmarked, onPressedChange = { bookmarked = it }, label = "Toggle bookmark", variant = ToggleVariant.Outline, size = ToggleSize.Sm) {
-                            Icon(if (bookmarked) FilledBookmark else Lucide.Bookmark)
-                            Text { "Bookmark" }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var bookmarked by remember { mutableStateOf(false) }
-                        Toggle(pressed = bookmarked, onPressedChange = {
-                            bookmarked = it
-                        }, label = "Toggle bookmark", variant = ToggleVariant.Outline, size = ToggleSize.Sm) {
-                            Icon(if (bookmarked) FilledBookmark else Lucide.Bookmark)
-                            Text { "Bookmark" }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default variant",
-                    code =
-                        """
-                        var bold by remember { mutableStateOf(false) }
-                        Toggle("Bold", pressed = bold, onPressedChange = { bold = it }, variant = ToggleVariant.Default)
-                        """.trimIndent(),
-                    preview = {
-                        var bold by remember { mutableStateOf(false) }
-                        Toggle(
-                            "Bold",
-                            pressed = bold,
-                            onPressedChange = { bold = it },
-                            variant = ToggleVariant.Default,
-                        )
-                    },
-                ),
-                ComponentExample(
-                    title = "Outline",
-                    code =
-                        """
-                        var italic by remember { mutableStateOf(false) }
-                        Toggle("Italic", pressed = italic, onPressedChange = { italic = it }, variant = ToggleVariant.Outline)
-                        """.trimIndent(),
-                    preview = {
-                        var italic by remember { mutableStateOf(false) }
-                        Toggle(
-                            "Italic",
-                            pressed = italic,
-                            onPressedChange = { italic = it },
-                            variant = ToggleVariant.Outline,
-                        )
-                    },
-                ),
-                ComponentExample(
-                    title = "Sizes",
-                    code =
-                        """
-                        Toggle("Sm", pressed = true, onPressedChange = {}, size = ToggleSize.Sm)
-                        Toggle("Md", pressed = true, onPressedChange = {})
-                        Toggle("Lg", pressed = true, onPressedChange = {}, size = ToggleSize.Lg)
-                        """.trimIndent(),
-                    preview = {
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    ComponentExample(
+                        title = "Default",
+                        code =
+                            """
+                            var bookmarked by remember { mutableStateOf(false) }
+                            Toggle(pressed = bookmarked, onPressedChange = { bookmarked = it }, label = "Toggle bookmark", variant = ToggleVariant.Outline, size = ToggleSize.Sm, iconPlacement = ToggleIconPlacement.Start) {
+                                Icon(if (bookmarked) FilledBookmark else Lucide.Bookmark)
+                                Text { "Bookmark" }
+                            }
+                            """.trimIndent(),
+                        preview = {
+                            var bookmarked by remember { mutableStateOf(false) }
+                            Toggle(
+                                pressed = bookmarked,
+                                onPressedChange = { bookmarked = it },
+                                label = "Toggle bookmark",
+                                variant = ToggleVariant.Outline,
+                                size = ToggleSize.Sm,
+                                iconPlacement = ToggleIconPlacement.Start,
+                            ) {
+                                Icon(if (bookmarked) FilledBookmark else Lucide.Bookmark)
+                                Text { "Bookmark" }
+                            }
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Default variant",
+                        code =
+                            """
+                            var bold by remember { mutableStateOf(false) }
+                            Toggle("Bold", pressed = bold, onPressedChange = { bold = it }, variant = ToggleVariant.Default)
+                            """.trimIndent(),
+                        preview = {
+                            var bold by remember { mutableStateOf(false) }
+                            Toggle(
+                                "Bold",
+                                pressed = bold,
+                                onPressedChange = { bold = it },
+                                variant = ToggleVariant.Default,
+                            )
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Outline",
+                        code =
+                            """
+                            var italic by remember { mutableStateOf(false) }
+                            Toggle("Italic", pressed = italic, onPressedChange = { italic = it }, variant = ToggleVariant.Outline)
+                            """.trimIndent(),
+                        preview = {
+                            var italic by remember { mutableStateOf(false) }
+                            Toggle(
+                                "Italic",
+                                pressed = italic,
+                                onPressedChange = { italic = it },
+                                variant = ToggleVariant.Outline,
+                            )
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Sizes",
+                        code =
+                            """
                             Toggle("Sm", pressed = true, onPressedChange = {}, size = ToggleSize.Sm)
                             Toggle("Md", pressed = true, onPressedChange = {})
                             Toggle("Lg", pressed = true, onPressedChange = {}, size = ToggleSize.Lg)
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Default size",
-                    code =
-                        """
-                        var bold by remember { mutableStateOf(false) }
-                        Toggle("Bold", pressed = bold, onPressedChange = { bold = it }, size = ToggleSize.Md)
-                        """.trimIndent(),
-                    preview = {
-                        var bold by remember { mutableStateOf(false) }
-                        Toggle(
-                            "Bold",
-                            pressed = bold,
-                            onPressedChange = { bold = it },
-                            size = ToggleSize.Md,
-                        )
-                    },
-                ),
-                ComponentExample(
-                    title = "Disabled",
-                    code = """Toggle("Bold", pressed = true, onPressedChange = null, disabled = true)""",
-                    preview = { Toggle("Bold", pressed = true, onPressedChange = null, disabled = true) },
-                ),
-                ComponentExample(
-                    title = "Default disabled",
-                    code = """Toggle("Bold", pressed = false, onPressedChange = {}, disabled = false)""",
-                    preview = { Toggle("Bold", pressed = false, onPressedChange = {}, disabled = false) },
-                ),
-                ComponentExample(
-                    title = "With text",
-                    code =
-                        """
-                        var italic by remember { mutableStateOf(false) }
-                        Toggle(pressed = italic, onPressedChange = { italic = it }, variant = ToggleVariant.Outline) {
+                            """.trimIndent(),
+                        preview = {
                             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                EmojiText("𝐼")
-                                Text { "Italic" }
+                                Toggle("Sm", pressed = true, onPressedChange = {}, size = ToggleSize.Sm)
+                                Toggle("Md", pressed = true, onPressedChange = {})
+                                Toggle("Lg", pressed = true, onPressedChange = {}, size = ToggleSize.Lg)
                             }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var italic by remember { mutableStateOf(false) }
-                        Toggle(
-                            pressed = italic,
-                            onPressedChange = { italic = it },
-                            variant = ToggleVariant.Outline,
-                        ) {
-                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                EmojiText("𝐼")
-                                Text { "Italic" }
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Default size",
+                        code =
+                            """
+                            var bold by remember { mutableStateOf(false) }
+                            Toggle("Bold", pressed = bold, onPressedChange = { bold = it }, size = ToggleSize.Md)
+                            """.trimIndent(),
+                        preview = {
+                            var bold by remember { mutableStateOf(false) }
+                            Toggle(
+                                "Bold",
+                                pressed = bold,
+                                onPressedChange = { bold = it },
+                                size = ToggleSize.Md,
+                            )
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Disabled",
+                        code = """Toggle("Bold", pressed = true, onPressedChange = null, disabled = true)""",
+                        preview = { Toggle("Bold", pressed = true, onPressedChange = null, disabled = true) },
+                    ),
+                    ComponentExample(
+                        title = "Default disabled",
+                        code = """Toggle("Bold", pressed = false, onPressedChange = {}, disabled = false)""",
+                        preview = { Toggle("Bold", pressed = false, onPressedChange = {}, disabled = false) },
+                    ),
+                    ComponentExample(
+                        title = "With text",
+                        code =
+                            """
+                            var italic by remember { mutableStateOf(false) }
+                            Toggle(pressed = italic, onPressedChange = { italic = it }, variant = ToggleVariant.Outline) {
+                                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    EmojiText("𝐼")
+                                    Text { "Italic" }
+                                }
                             }
-                        }
-                    },
+                            """.trimIndent(),
+                        preview = {
+                            var italic by remember { mutableStateOf(false) }
+                            Toggle(
+                                pressed = italic,
+                                onPressedChange = { italic = it },
+                                variant = ToggleVariant.Outline,
+                            ) {
+                                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    EmojiText("𝐼")
+                                    Text { "Italic" }
+                                }
+                            }
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Uncontrolled",
+                        code =
+                            """
+                            Toggle("Bold", defaultPressed = true)
+                            """.trimIndent(),
+                        preview = { Toggle("Bold", defaultPressed = true) },
+                    ),
+                    ComponentExample(
+                        title = "Default pressed",
+                        code =
+                            """
+                            Toggle("Bold", defaultPressed = false)
+                            """.trimIndent(),
+                        preview = { Toggle("Bold", defaultPressed = false) },
+                    ),
+                    ComponentExample(
+                        title = "Accessible label",
+                        code =
+                            """
+                            var bold by remember { mutableStateOf(false) }
+                            Toggle("Bold", pressed = bold, onPressedChange = { bold = it }, label = "Bold")
+                            """.trimIndent(),
+                        preview = {
+                            var bold by remember { mutableStateOf(false) }
+                            Toggle("Bold", pressed = bold, onPressedChange = { bold = it }, label = "Bold")
+                        },
+                    ),
+                    ComponentExample(
+                        title = "Default label",
+                        code = """Toggle("Bold", defaultPressed = false, label = "Bold")""",
+                        preview = { Toggle("Bold", defaultPressed = false, label = "Bold") },
+                    ),
                 ),
-                ComponentExample(
-                    title = "Uncontrolled",
-                    code =
-                        """
-                        Toggle("Bold", defaultPressed = true)
-                        """.trimIndent(),
-                    preview = { Toggle("Bold", defaultPressed = true) },
-                ),
-                ComponentExample(
-                    title = "Default pressed",
-                    code =
-                        """
-                        Toggle("Bold", defaultPressed = false)
-                        """.trimIndent(),
-                    preview = { Toggle("Bold", defaultPressed = false) },
-                ),
-                ComponentExample(
-                    title = "Accessible label",
-                    code =
-                        """
-                        var bold by remember { mutableStateOf(false) }
-                        Toggle("Bold", pressed = bold, onPressedChange = { bold = it }, label = "Bold")
-                        """.trimIndent(),
-                    preview = {
-                        var bold by remember { mutableStateOf(false) }
-                        Toggle("Bold", pressed = bold, onPressedChange = { bold = it }, label = "Bold")
-                    },
-                ),
-                ComponentExample(
-                    title = "Default label",
-                    code = """Toggle("Bold", defaultPressed = false, label = "Bold")""",
-                    preview = { Toggle("Bold", defaultPressed = false, label = "Bold") },
-                ),
-            ),
             ),
     )
 

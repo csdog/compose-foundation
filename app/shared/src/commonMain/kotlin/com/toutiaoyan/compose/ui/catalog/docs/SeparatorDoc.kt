@@ -28,7 +28,9 @@ val separatorDoc =
             listOf(
                 ComponentApiSection(
                     "Separator",
-                    "A horizontal or vertical dividing line.",
+                    "A horizontal or vertical dividing line. See the " +
+                        "[Base UI Separator](https://base-ui.com/react/components/separator#api-reference) " +
+                        "documentation for the upstream API.",
                     listOf(
                         ApiProperty("orientation", "SeparatorOrientation", "Horizontal"),
                         ApiProperty("decorative", "Boolean", "false"),

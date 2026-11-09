@@ -210,6 +210,20 @@ fun CollapsibleScope.TraceCollapsibleTrigger(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
+    TraceCollapsibleTrigger(status = null, modifier = modifier, content = content)
+}
+
+/**
+ * Explicit status for the trigger's own chevron. Unlike CSS `:has`, Compose
+ * cannot infer a nested line's status; pass the same status to the trigger and line.
+ * The original overload remains available for existing callers.
+ */
+@Composable
+fun CollapsibleScope.TraceCollapsibleTrigger(
+    status: TraceStatus?,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
+) {
     val theme = currentTheme
     val radius = twRadius.md
     val source = remember { MutableInteractionSource() }
@@ -224,7 +238,12 @@ fun CollapsibleScope.TraceCollapsibleTrigger(
             },
     ) {
         CompositionLocalProvider(
-            LocalContentColor provides if (hovered) theme.colors.foreground else theme.colors.mutedForeground,
+            LocalContentColor provides
+                when {
+                    status == TraceStatus.Error -> theme.colors.destructive
+                    hovered -> theme.colors.foreground
+                    else -> theme.colors.mutedForeground
+                },
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {
                 Box(Modifier.weight(1f, fill = false)) { content() }

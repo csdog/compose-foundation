@@ -130,8 +130,11 @@ private val menubarTranslations =
 private val menubarOfficialTitles = setOf("Default", "Checkbox", "Radio", "Submenu", "With Icons", "RTL")
 
 private fun menubarPageExample(example: ComponentExample): ComponentExample =
-    if (example.title in menubarOfficialTitles) example
-    else example.copy(title = "Kotlin extension: " + example.title)
+    if (example.title in menubarOfficialTitles) {
+        example
+    } else {
+        example.copy(title = "Kotlin extension: " + example.title)
+    }
 
 private val menubarApiSections =
     listOf(

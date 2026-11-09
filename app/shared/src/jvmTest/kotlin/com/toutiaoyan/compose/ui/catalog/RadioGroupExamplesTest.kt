@@ -57,6 +57,12 @@ class RadioGroupExamplesTest {
                 "can be checked at a time.",
             radioGroupDoc.description,
         )
+        listOf("Fieldset", "Invalid", "RTL").forEach { title ->
+            assertTrue(radioGroupDoc.examples.single { it.title == title }.code.contains("var selected by remember"))
+        }
+        assertTrue(radioGroupDoc.examples.single { it.title == "Description" }.code.contains("Minimal spacing"))
+        assertTrue(radioGroupDoc.examples.single { it.title == "Disabled" }.code.contains("option3"))
+        assertFalse(radioGroupDoc.examples.single { it.title == "RTL" }.code.contains("copy.defaultValue"))
         assertNull(radioGroupDoc.examplesHeading)
         assertFalse(radioGroupDoc.examples.first().showHeading)
         assertEquals(
@@ -74,6 +80,7 @@ class RadioGroupExamplesTest {
         listOf("RadioGroup", "RadioGroupItem", "Label").forEach {
             assertTrue(radioGroupDoc.usageCode.contains(it), it)
         }
+        assertEquals("Use the following composition to build a `RadioGroup`:", radioGroupDoc.beforeCompositionMarkdown)
         assertEquals("RadioGroup\n├── RadioGroupItem\n└── RadioGroupItem", radioGroupDoc.compositionCode)
         assertEquals(
             listOf("RadioGroup", "RadioGroupItem", "RadioGroupItem (with text)"),
@@ -91,9 +98,11 @@ class RadioGroupExamplesTest {
         rule.onNodeWithText("Compact").performClick()
         rule.waitForIdle()
         radios()[2].assertIsSelected()
+        rule.onNodeWithContentDescription("Compact").assertIsFocused()
         rule.onNodeWithText("Default").performClick()
         rule.waitForIdle()
         radios()[0].assertIsSelected()
+        rule.onNodeWithContentDescription("Default").assertIsFocused()
         assertEquals(1, selectedRadios().fetchSemanticsNodes().size)
     }
 
@@ -105,6 +114,7 @@ class RadioGroupExamplesTest {
         rule.onNodeWithText("Compact").performClick()
         rule.waitForIdle()
         radios()[2].assertIsSelected()
+        rule.onNodeWithContentDescription("Compact").assertIsFocused()
     }
 
     @Test fun choiceCardClickSelectsThePlan() {
@@ -118,6 +128,7 @@ class RadioGroupExamplesTest {
         rule.onAllNodes(isSelectable())[2].assertIsSelected()
         assertEquals(1, selectedRadios().fetchSemanticsNodes().size)
         rule.onNodeWithTag("radio-card-enterprise").assertExists()
+        rule.onNodeWithContentDescription("Enterprise").assertIsFocused()
     }
 
     @Test fun fieldsetShowsLegendAndOptions() {

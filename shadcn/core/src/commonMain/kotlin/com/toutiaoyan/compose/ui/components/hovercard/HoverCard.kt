@@ -82,6 +82,7 @@ internal class HoverCardController(
     val onTriggerHoverChange: (Boolean) -> Unit,
     val onTriggerFocusChange: (Boolean) -> Unit,
     val onTriggerDelayChange: (Int?, Int?) -> Unit,
+    val onTriggerUnmount: () -> Unit,
 )
 
 private val LocalHoverCard = staticCompositionLocalOf<HoverCardController?> { null }
@@ -225,6 +226,20 @@ fun HoverCard(
                 triggerOpenDelay = opening
                 triggerCloseDelay = closing
             },
+            onTriggerUnmount = {
+                // Base UI closes immediately when its active trigger is removed.
+                // Clear activity as well, so controlled rejection cannot start another close timer.
+                hasBeenActive = false
+                closeForFocusLoss = false
+                triggerHovered = false
+                triggerFocused = false
+                contentHovered = false
+                triggerDisabled = false
+                triggerOpenDelay = null
+                triggerCloseDelay = null
+                anchor.trigger = null
+                if (latestOpen) latestSetOpen(false)
+            },
         )
     CompositionLocalProvider(LocalHoverCard provides controller) {
         Box(
@@ -258,18 +273,14 @@ fun HoverCardScope.HoverCardTrigger(
     val controller = hoverCardController()
     val interactionSource = remember { MutableInteractionSource() }
     val hovered = interactionSource.collectIsHoveredAsState().value
+    val latestController by rememberUpdatedState(controller)
     SideEffect {
         controller.onTriggerDisabledChange(disabled)
         controller.onTriggerDelayChange(delay, closeDelay)
         controller.onTriggerHoverChange(hovered)
     }
     DisposableEffect(Unit) {
-        onDispose {
-            controller.onTriggerDisabledChange(false)
-            controller.onTriggerDelayChange(null, null)
-            controller.onTriggerHoverChange(false)
-            controller.onTriggerFocusChange(false)
-        }
+        onDispose { latestController.onTriggerUnmount() }
     }
     Box(
         modifier =

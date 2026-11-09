@@ -136,15 +136,15 @@ val cardDoc =
                     "Spacing",
                     544,
                     "In addition to the `size` parameter, you can use the `spacing` parameter to control " +
-                        "the spacing between sections and the inset of card parts. Use negative horizontal " +
-                        "offsets to make content go edge to edge while keeping it aligned with the card inset. " +
-                        "When the edge-to-edge content sits above a footer, remove the section gap on " +
-                        "`CardContent` with the matching negative bottom offset.",
+                        "the spacing between sections and the inset of card parts.",
                 ),
                 cardExample(
                     3,
                     "Edge to Edge",
                     384,
+                    "Use negative horizontal offsets to make content go edge to edge while keeping it " +
+                        "aligned with the card inset. When the edge-to-edge content sits above a footer, " +
+                        "remove the section gap on `CardContent` with the matching negative bottom offset.",
                 ),
                 cardExample(4, "Image", 512, "Add an image before the card header to create a card with an image."),
                 cardExample(

@@ -1,0 +1,61 @@
+{
+ "retrievedAt": "2026-11-05",
+ "revision": "8a3536678a528cc012b9e62484290e79d0be410f",
+ "files": [
+  {
+   "file": "shimmer.mdx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/content/docs/utils/shimmer.mdx",
+   "sha256": "9a269ebb0d5bb33bfdef6e003ed36bed65d605103611a78db3fc92c18d7044c0"
+  },
+  {
+   "file": "examples/base/shimmer-demo.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/shimmer-demo.tsx",
+   "sha256": "8b06196aed398d8e0bbbbfe0d29d53ebda9c09e545f849f2f323dabb08ab9c2b"
+  },
+  {
+   "file": "examples/base/shimmer-marker.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/shimmer-marker.tsx",
+   "sha256": "bff048307f0bbb82a660469af7ccc5676cafa28ef36ebce9ddd4da27e4450eb2"
+  },
+  {
+   "file": "examples/base/shimmer-color.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/shimmer-color.tsx",
+   "sha256": "b6d18a81d3a8d11929a0389bcc9486ecdd9475d0c308941b26bda1d14cd518db"
+  },
+  {
+   "file": "examples/base/shimmer-duration.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/shimmer-duration.tsx",
+   "sha256": "fdc7961408cf750c905466d591bc15c9a69eab13fb58669d2b53446249ae2e79"
+  },
+  {
+   "file": "examples/base/shimmer-spread.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/shimmer-spread.tsx",
+   "sha256": "38183888c28e7206203dfe07f6f7c360c86740ee75a72ed4d1238cb59518770d"
+  },
+  {
+   "file": "examples/base/shimmer-angle.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/shimmer-angle.tsx",
+   "sha256": "60db18a0ae91ed4872fbf39eecec3e9cf75ad1d3338bd7fc31e0280612ec2f0a"
+  },
+  {
+   "file": "examples/base/shimmer-once.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/shimmer-once.tsx",
+   "sha256": "5109aff61376c1b37238283458e7ca7021d6c78031baf830b3d3a64707c86615"
+  },
+  {
+   "file": "examples/base/shimmer-none.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/shimmer-none.tsx",
+   "sha256": "b5bc3ed0527870e8e5e6357e3c71f311a39fba66e282e8f3266d54d586942b4e"
+  },
+  {
+   "file": "examples/base/shimmer-rtl.tsx",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/examples/base/shimmer-rtl.tsx",
+   "sha256": "4b8fe681dfa9b46072753b2974790695b9bb44e29d3b1a995ae8bc30023eff29"
+  },
+  {
+   "file": "style-nova.css",
+   "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8a3536678a528cc012b9e62484290e79d0be410f/apps/v4/registry/styles/style-nova.css",
+   "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+  }
+ ]
+}

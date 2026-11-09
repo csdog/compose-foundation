@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.runtime.Composable
@@ -83,6 +82,7 @@ private fun LabelInFieldDemo() {
                 Field {
                     FieldLabel("Card Number")
                     Input(number, { number = it }, placeholder = "1234 5678 9012 3456", required = true)
+                    FieldDescription("Enter your 16-digit card number")
                 }
                 Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                     Field(Modifier.weight(1f)) {
@@ -127,7 +127,7 @@ private fun LabelInFieldDemo() {
             FieldGroup {
                 Field(orientation = FieldOrientation.Horizontal) {
                     Checkbox(checked = sameAddress, onCheckedChange = { sameAddress = it })
-                    FieldLabel("Same as shipping address")
+                    FieldLabel("Same as shipping address", modifier = Modifier.clickable { sameAddress = !sameAddress })
                 }
             }
         }
@@ -158,20 +158,46 @@ private fun LabelInFieldDemo() {
     }
 }
 
-private val labelInFieldCode =
-    """
-    Field {
-        FieldLabel("Email")
-        Input(value = "", onValueChange = {}, placeholder = "you@example.com")
-        FieldDescription("Use the email that receives your invoices.")
+@Composable
+private fun LabelRtlDemo() {
+    var language by remember { mutableStateOf(1) }
+    var checked by remember { mutableStateOf(false) }
+    Column(Modifier.fillMaxWidth()) {
+        RtlPreviewToolbar(
+            language,
+            listOf("English", "Arabic (العربية)", "Hebrew (עברית)"),
+            { language = it },
+        )
+        CompositionLocalProvider(
+            LocalLayoutDirection provides if (language == 0) LayoutDirection.Ltr else LayoutDirection.Rtl,
+        ) {
+            Row(
+                Modifier.testTag("label-rtl-body").fillMaxWidth().padding(40.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Checkbox(checked = checked, onCheckedChange = { checked = it })
+                Label(
+                    when (language) {
+                        0 -> "Accept terms and conditions"
+                        1 -> "قبول الشروط والأحكام"
+                        else -> "קבל תנאים והגבלות"
+                    },
+                    modifier = Modifier.clickable { checked = !checked },
+                )
+            }
+        }
     }
-    """.trimIndent()
+}
 
 val labelDoc =
     ComponentDoc(
         id = "label",
         title = "Label",
         description = "Renders an accessible label associated with controls.",
+        introMarkdown =
+            "For form fields, use the [Field](https://ui.shadcn.com/docs/components/base/field) component " +
+                "which includes built-in label, description, and error handling.",
         usageCode =
             """
             import com.toutiaoyan.compose.ui.components.label.Label
@@ -190,7 +216,9 @@ val labelDoc =
                     title = "Label in Field",
                     descriptionMarkdown =
                         "For form fields, use the `Field` component which includes built-in `FieldLabel`, " +
-                            "`FieldDescription`, and `FieldError` components.",
+                            "`FieldDescription`, and `FieldError` components.\n\n" +
+                            "```kotlin\nField {\n    FieldLabel(\"Your email address\")\n" +
+                            "    Input(value = \"\", onValueChange = {})\n}\n```",
                     minPreviewHeight = 850.dp,
                     mobileMinPreviewHeight = 800.dp,
                     previewPadding = 24.dp,
@@ -199,54 +227,13 @@ val labelDoc =
                 ),
                 ComponentExample(
                     title = "RTL",
-                    descriptionMarkdown = "To enable RTL support in shadcn/ui, see the RTL configuration guide.",
+                    descriptionMarkdown =
+                        "To enable RTL support in shadcn/ui, see the " +
+                            "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
                     minPreviewHeight = 288.dp,
                     previewPadding = 0.dp,
-                    code =
-                        """
-                        var language by remember { mutableStateOf(1) }
-                        CompositionLocalProvider(LocalLayoutDirection provides if (language == 0) LayoutDirection.Ltr else LayoutDirection.Rtl) {
-                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                Checkbox(checked = checked, onCheckedChange = { checked = it })
-                                Label(if (language == 0) "Accept terms and conditions" else "قبول الشروط والأحكام")
-                            }
-                        }
-                        """.trimIndent(),
-                    preview = {
-                        var language by remember { mutableStateOf(1) }
-                        var checked by remember { mutableStateOf(false) }
-                        Column(Modifier.fillMaxWidth()) {
-                            RtlPreviewToolbar(
-                                language,
-                                listOf("English", "Arabic (العربية)", "Hebrew (עברית)"),
-                                { language = it },
-                            )
-                            Row(
-                                Modifier.testTag("label-rtl-body").fillMaxWidth().padding(40.dp),
-                                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                CompositionLocalProvider(
-                                    LocalLayoutDirection provides
-                                        if (language == 0) {
-                                            LayoutDirection.Ltr
-                                        } else {
-                                            LayoutDirection.Rtl
-                                        },
-                                ) {
-                                    Checkbox(checked = checked, onCheckedChange = { checked = it })
-                                    Label(
-                                        if (language == 0) {
-                                            "Accept terms and conditions"
-                                        } else {
-                                            "قبول الشروط والأحكام"
-                                        },
-                                        modifier = Modifier.clickable { checked = !checked },
-                                    )
-                                }
-                            }
-                        }
-                    },
+                    code = labelRtlCode,
+                    preview = { LabelRtlDemo() },
                 ),
                 ComponentExample(
                     title = "Kotlin extension: Required",
@@ -263,7 +250,10 @@ val labelDoc =
             listOf(
                 ComponentApiSection(
                     "Label",
-                    "A passive text label; pair it with the control it names.",
+                    "A passive text label; pair it with the control it names. " +
+                        "Use a click or focus modifier for control activation, as shown in the examples. " +
+                        "See the [Base UI Label API](https://base-ui.com/react/components/label#api-reference) " +
+                        "for the upstream HTML API.",
                     listOf(
                         ApiProperty("text", "String", "Required"),
                         ApiProperty("required", "Boolean", "false"),

@@ -184,8 +184,8 @@ internal val scrollAreaOfficialExamples =
             minPreviewHeight = 0.dp,
             previewHeight = 288.dp,
             descriptionMarkdown =
-                "Use `ScrollBar` with `orientation = ScrollAreaOrientation.Horizontal` for " +
-                    "horizontal scrolling.",
+                "Set `orientation = ScrollAreaOrientation.Horizontal` on `ScrollArea` for " +
+                    "horizontal scrolling; it adds a horizontal `ScrollBar` automatically.",
             preview = { ScrollAreaHorizontalRecipe() },
         ),
         ComponentExample(
@@ -194,12 +194,14 @@ internal val scrollAreaOfficialExamples =
             minPreviewHeight = 0.dp,
             previewPadding = 0.dp,
             descriptionMarkdown =
-                "The scroll position and scrollbar mirror in RTL. See the RTL configuration " +
-                    "guide for the site-level setup.",
+                "To enable RTL support in shadcn/ui, see the " +
+                    "[RTL configuration guide](https://ui.shadcn.com/docs/rtl). The " +
+                    "scroll position and scrollbar mirror in RTL.",
             preview = {
-            var language by remember { mutableIntStateOf(1) }
-            RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
-                ScrollAreaRtlRecipe(language)
-            }
-        }),
+                var language by remember { mutableIntStateOf(1) }
+                RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
+                    ScrollAreaRtlRecipe(language)
+                }
+            },
+        ),
     )

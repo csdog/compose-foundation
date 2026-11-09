@@ -21,6 +21,7 @@ import androidx.compose.foundation.text.selection.DisableSelection
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,6 +39,12 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.layout
+import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.unit.constrainHeight
+import androidx.compose.ui.unit.constrainWidth
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.semantics.hideFromAccessibility
@@ -64,12 +71,19 @@ sealed interface CodeBlockLineVariant {
     data object Highlighted : CodeBlockLineVariant
 }
 
+// Measurement-only state shared by the content grid and its line-number cells. It is derived
+// from every current label before any row is measured, with no snapshot/layout feedback.
+internal class CodeBlockGutter {
+    var width: Int = 0
+}
+
 class CodeBlockContentScope internal constructor(
     context: CodeBlockContext,
     internal val numbered: Boolean,
     internal val startLine: Int,
     internal val wrap: Boolean,
     internal val textStyle: TextStyle,
+    internal val gutter: CodeBlockGutter,
 ) : CodeBlockPartsScope(context)
 
 @Composable
@@ -116,7 +130,9 @@ fun CodeBlockScope.CodeBlockContent(
             fontSize = if (context.size == CodeBlockSize.Sm) 12.sp else 14.sp,
             lineHeight = if (context.size == CodeBlockSize.Sm) 19.5.sp else 22.75.sp,
         ).merge(textStyle)
-    val scope = CodeBlockContentScope(context, lineNumbers, startLine, wrap, mono)
+    val gutter = remember { CodeBlockGutter() }
+    val textMeasurer = rememberTextMeasurer()
+    val scope = CodeBlockContentScope(context, lineNumbers, startLine, wrap, mono, gutter)
     val verticalScrollState = rememberScrollState()
     val horizontalScrollState = rememberScrollState()
     val scopeCoroutine = rememberCoroutineScope()
@@ -152,55 +168,78 @@ fun CodeBlockScope.CodeBlockContent(
                 else -> false
             }
         }
-    BoxWithConstraints(
-        modifier =
-            modifier.fillMaxWidth().codeSlot(CodeSlot.Content)
-                .then(
-                    when {
-                        maxHeight == null -> Modifier
-                        scrollable ->
-                            Modifier.heightIn(max = maxHeight)
-                                .scrollFade(
-                                    verticalScrollState,
-                                    orientation = ScrollFadeOrientation.Vertical,
-                                )
-                                .verticalScroll(verticalScrollState)
-                        else ->
-                            Modifier.heightIn(max = maxHeight)
-                                .clipToBounds()
-                                // Official `max-h-* + scroll-fade-y + overflow-y-hidden`: the clipped
-                                // block keeps the trailing fade even though it cannot scroll.
-                                .clippedScrollFade()
-                    },
-                )
-                .then(
-                    if (wrap) {
-                        Modifier
-                    } else {
-                        // Official `scroll-fade-x` on the content: horizontal edges fade while scrolling.
-                        Modifier.scrollFade(horizontalScrollState, orientation = ScrollFadeOrientation.Horizontal)
-                    },
-                )
-                .onFocusChanged { context.onContentFocus(it.isFocused) }
-                .then(keyboardScroll)
-                .focusable(),
-    ) {
-        val viewportWidth = maxWidth
-        // Official code content always sets dir="ltr"; only the header follows the page direction.
-        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+    // The viewport modifiers must share the code's LTR direction, including horizontal fades.
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+        BoxWithConstraints(
+            modifier =
+                modifier.fillMaxWidth().codeSlot(CodeSlot.Content)
+                    .then(
+                        when {
+                            maxHeight == null -> Modifier
+                            scrollable ->
+                                Modifier.heightIn(max = maxHeight)
+                                    .scrollFade(
+                                        verticalScrollState,
+                                        orientation = ScrollFadeOrientation.Vertical,
+                                    )
+                                    .verticalScroll(verticalScrollState)
+                            else ->
+                                Modifier.heightIn(max = maxHeight)
+                                    .clipToBounds()
+                                    // Official `max-h-* + scroll-fade-y + overflow-y-hidden`: the clipped
+                                    // block keeps the trailing fade even though it cannot scroll.
+                                    .clippedScrollFade()
+                        },
+                    )
+                    .then(
+                        if (wrap) {
+                            Modifier
+                        } else {
+                            // Official `scroll-fade-x` on the content: horizontal edges fade while scrolling.
+                            Modifier.scrollFade(horizontalScrollState, orientation = ScrollFadeOrientation.Horizontal)
+                        },
+                    )
+                    .onFocusChanged { context.onContentFocus(it.isFocused) }
+                    .then(keyboardScroll)
+                    .focusable(),
+        ) {
+            val viewportWidth = maxWidth
             SelectionContainer {
                 val scrolling = if (wrap) Modifier else Modifier.horizontalScroll(horizontalScrollState)
                 Column(scrolling) {
-                    Column(
-                        if (wrap) {
-                            Modifier.fillMaxWidth()
-                        } else {
-                            Modifier.widthIn(
-                                min = viewportWidth,
-                            ).width(IntrinsicSize.Max)
-                        },
-                    ) {
-                        scope.content()
+                    Layout(
+                        modifier =
+                            if (wrap) {
+                                Modifier.fillMaxWidth()
+                            } else {
+                                Modifier.widthIn(
+                                    min = viewportWidth,
+                                ).width(IntrinsicSize.Max)
+                            },
+                        content = { scope.content() },
+                    ) { lines, constraints ->
+                        gutter.width =
+                            if (lineNumbers) {
+                                maxOf(
+                                    24.dp.roundToPx(),
+                                    lines.maxOfOrNull { line ->
+                                        val label = (line.layoutId as? Int)?.toString().orEmpty()
+                                        textMeasurer.measure(label, style = mono, softWrap = false).size.width
+                                    } ?: 0,
+                                )
+                            } else {
+                                0
+                            }
+                        val children = lines.map { it.measure(constraints.copy(minHeight = 0)) }
+                        val width = constraints.constrainWidth(children.maxOfOrNull { it.width } ?: 0)
+                        val height = constraints.constrainHeight(children.sumOf { it.height })
+                        layout(width, height) {
+                            var y = 0
+                            children.forEach { child ->
+                                child.placeRelative(0, y)
+                                y += child.height
+                            }
+                        }
                     }
                 }
             }
@@ -240,13 +279,10 @@ fun CodeBlockContentScope.CodeBlockLine(
             CodeBlockLineVariant.Removed -> theme.colors.destructive.copy(alpha = 0.1f)
             else -> androidx.compose.ui.graphics.Color.Transparent
         }
-    Box(modifier = modifier.fillMaxWidth().drawBehind { drawRect(background) }) {
+    Box(modifier = modifier.layoutId(lineNumber ?: "").fillMaxWidth().drawBehind { drawRect(background) }) {
         Row(
             modifier =
-                Modifier.fillMaxWidth().drawBehind {
-                    drawRect(background)
-                    // The +/- markers are drawn outside the selectable code and numbering gutter.
-                }.padding(
+                Modifier.fillMaxWidth().padding(
                     horizontal = inset,
                 ).heightIn(min = if (context.size == CodeBlockSize.Sm) 19.5.dp else 22.75.dp),
             verticalAlignment = Alignment.Top,
@@ -256,7 +292,16 @@ fun CodeBlockContentScope.CodeBlockLine(
                     BasicText(
                         text = lineNumber?.toString().orEmpty(),
                         // Official line numbers are hidden from screen readers.
-                        modifier = Modifier.width(24.dp).semantics { hideFromAccessibility() },
+                        modifier =
+                            Modifier.layout { measurable, constraints ->
+                                val cell =
+                                    measurable.measure(
+                                        constraints.copy(minWidth = gutter.width, maxWidth = gutter.width),
+                                    )
+                                layout(cell.width, cell.height) { cell.placeRelative(0, 0) }
+                            }.semantics { hideFromAccessibility() },
+                        maxLines = 1,
+                        softWrap = false,
                         style =
                             textStyle.copy(
                                 color = theme.colors.mutedForeground,

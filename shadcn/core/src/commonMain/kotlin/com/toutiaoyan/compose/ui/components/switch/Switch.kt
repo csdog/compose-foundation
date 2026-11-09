@@ -1,5 +1,8 @@
 package com.toutiaoyan.compose.ui.components.switch
 import com.toutiaoyan.compose.ui.utils.keyboardInputMode
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.runtime.key
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.animateDpAsState
@@ -19,6 +22,7 @@ import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.rememberUpdatedStyleState
 import androidx.compose.foundation.style.styleable
+import androidx.compose.foundation.style.checked
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -112,6 +116,30 @@ fun Switch(
         }
     val theme = currentTheme
     val nova = theme.activePreset == StylePreset.Nova
+    val uncheckedTrackColor =
+        theme.colors.input.copy(
+            alpha = theme.colors.input.alpha * if (theme.isDark) 0.8f else 1f,
+        )
+    val trackColor = if (isChecked) theme.colors.primary else uncheckedTrackColor
+    // The wrapper transitions the root background; the thumb only transitions its transform.
+    // A new palette starts at its own color instead of interpolating stale theme tokens.
+    val animatedTrackColor =
+        if (nova) {
+            key(theme.colors) {
+                animateColorAsState(trackColor, tween(150, easing = FastOutSlowInEasing)).value
+            }
+        } else {
+            trackColor
+        }
+    val trackMotionStyle =
+        if (nova) {
+            Style {
+                background(animatedTrackColor)
+                checked { background(animatedTrackColor) }
+            }
+        } else {
+            Style
+        }
     val errorColor = theme.colors.destructive
     val invalidStyle =
         if (invalid) {
@@ -195,7 +223,11 @@ fun Switch(
                             width = size.trackWidth,
                             height = if (nova && size == SwitchSize.Default) 18.4.dp else size.trackHeight,
                         )
-                        .cssStyleable(styleState, rememberSwitchTrackStyle() then invalidStyle, style),
+                        .cssStyleable(
+                            styleState,
+                            rememberSwitchTrackStyle() then trackMotionStyle then invalidStyle,
+                            style,
+                        ),
                 content = content,
             )
         }

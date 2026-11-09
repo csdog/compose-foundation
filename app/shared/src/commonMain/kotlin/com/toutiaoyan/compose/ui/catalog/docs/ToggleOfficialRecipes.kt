@@ -17,6 +17,7 @@ import com.toutiaoyan.compose.ui.catalog.catalogHebrewFontFamily
 import com.toutiaoyan.compose.ui.components.icon.Icon
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.toggle.Toggle
+import com.toutiaoyan.compose.ui.components.toggle.ToggleIconPlacement
 import com.toutiaoyan.compose.ui.components.toggle.ToggleSize
 import com.toutiaoyan.compose.ui.components.toggle.ToggleVariant
 import com.toutiaoyan.compose.ui.theme.Theme
@@ -48,6 +49,7 @@ private val toggleRtlExample =
                         label = "تبديل الإشارة المرجعية",
                         variant = ToggleVariant.Outline,
                         size = ToggleSize.Sm,
+                        iconPlacement = ToggleIconPlacement.Start,
                     ) {
                         Icon(Lucide.Bookmark)
                         Text { "إشارة مرجعية" }
@@ -92,6 +94,7 @@ private fun ToggleRtlRecipe() {
                         label = labels[1],
                         variant = ToggleVariant.Outline,
                         size = ToggleSize.Sm,
+                        iconPlacement = ToggleIconPlacement.Start,
                     ) {
                         Icon(Lucide.Bookmark)
                         Text { labels[0] }
@@ -118,7 +121,8 @@ internal fun togglePageExamples(native: List<ComponentExample>): List<ComponentE
         ),
         byTitle.getValue("Disabled"),
         toggleRtlExample,
-    ) + native
-        .filterNot { it.title in promoted }
-        .map { it.copy(title = "Kotlin extension: " + it.title) }
+    ) +
+        native
+            .filterNot { it.title in promoted }
+            .map { it.copy(title = "Kotlin extension: " + it.title) }
 }

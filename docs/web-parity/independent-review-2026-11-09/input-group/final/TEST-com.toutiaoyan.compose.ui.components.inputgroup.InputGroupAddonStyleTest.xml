@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="InputGroupAddonStyleTest[jvm]" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-08T23:46:23.344Z" hostname="Apples-MacBook-Pro.local" time="1.775">
+  <properties/>
+  <testcase name="topStyleOverridesInsteadOfAddingToDefaultAndPreservesOtherInsets[jvm]" classname="com.toutiaoyan.compose.ui.components.inputgroup.InputGroupAddonStyleTest" time="0.828"/>
+  <testcase name="defaultStartPaddingRemainsLogicalInRtl[jvm]" classname="com.toutiaoyan.compose.ui.components.inputgroup.InputGroupAddonStyleTest" time="0.036"/>
+  <testcase name="textareaFocusReturnsAfterLeavingAnAddonButton[jvm]" classname="com.toutiaoyan.compose.ui.components.inputgroup.InputGroupAddonStyleTest" time="0.613"/>
+  <testcase name="defaultBlockEndInsetsStaySixAndEight[jvm]" classname="com.toutiaoyan.compose.ui.components.inputgroup.InputGroupAddonStyleTest" time="0.034"/>
+  <testcase name="clickingAddonPaddingFocusesTheRealEditableControl[jvm]" classname="com.toutiaoyan.compose.ui.components.inputgroup.InputGroupAddonStyleTest" time="0.131"/>
+  <testcase name="textOverloadForwardsCallerStyle[jvm]" classname="com.toutiaoyan.compose.ui.components.inputgroup.InputGroupAddonStyleTest" time="0.03"/>
+  <testcase name="addonButtonFocusDoesNotSetControlFocusState[jvm]" classname="com.toutiaoyan.compose.ui.components.inputgroup.InputGroupAddonStyleTest" time="0.1"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

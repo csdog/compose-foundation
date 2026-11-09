@@ -302,13 +302,15 @@ internal val tabsOfficialExamples =
             code = tabsRtlRecipeCode,
             descriptionMarkdown =
                 (
-                    "To enable RTL support in shadcn/ui, see the [RTL configuration guide](https://ui.shadcn.com/docs/rtl)."
+                    "To enable RTL support in shadcn/ui, see the [RTL configuration " +
+                        "guide](https://ui.shadcn.com/docs/rtl)."
                 ),
             previewPadding = 0.dp,
             preview = {
-            var language by remember { mutableIntStateOf(1) }
-            RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
-                TabsRtlRecipe(language)
-            }
-        }),
+                var language by remember { mutableIntStateOf(1) }
+                RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
+                    TabsRtlRecipe(language)
+                }
+            },
+        ),
     )

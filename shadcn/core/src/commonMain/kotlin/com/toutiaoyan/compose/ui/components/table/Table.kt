@@ -59,6 +59,7 @@ private val LocalTableFooter = staticCompositionLocalOf { false }
  * header row separated by a bottom border, body rows separated by hairlines, cells
  * left-aligned with consistent padding. Rows are plain [Row]s (`cells` receives a
  * [RowScope]) so callers can freely use `Modifier.weight` per column.
+ * Use `colSpan` on heads or cells for HTML-style spanning across weighted columns.
  *
  * Row chrome is Style-driven — override with [style] on header/body rows.
  *
@@ -214,7 +215,18 @@ fun RowScope.TableHead(
     modifier: Modifier = Modifier,
     style: Style = Style,
 ) {
-    TableHeadCell(text = text, modifier = modifier, style = style)
+    TableHead(text = text, modifier = modifier, style = style, colSpan = 1)
+}
+
+/** [colSpan] spans across equal-weight columns in the same row, overriding caller weight. */
+@Composable
+fun RowScope.TableHead(
+    text: String,
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+    colSpan: Int,
+) {
+    TableHeadCell(text = text, modifier = modifier, style = style, colSpan = colSpan)
 }
 
 @Composable
@@ -226,6 +238,18 @@ fun RowScope.TableHead(
     text: () -> String,
 ) {
     TableHead(text = text(), modifier = modifier, style = style)
+}
+
+@Composable
+@JvmName("TableHeadLambdaColSpan")
+@OverloadResolutionByLambdaReturnType
+fun RowScope.TableHead(
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+    colSpan: Int,
+    text: () -> String,
+) {
+    TableHead(text = text(), modifier = modifier, style = style, colSpan = colSpan)
 }
 
 private fun tableTypography(medium: Boolean = false): TextStyle =
@@ -245,6 +269,18 @@ private fun tableAlignment(style: TextStyle): Alignment =
         else -> Alignment.CenterStart
     }
 
+/**
+ * Maps a span to equal weighted columns. Prepend the weight because the first
+ * parent-data modifier wins when a caller also supplies Modifier.weight.
+ */
+private fun RowScope.spanModifier(
+    modifier: Modifier,
+    colSpan: Int,
+): Modifier {
+    require(colSpan > 0) { "colSpan must be greater than 0" }
+    return if (colSpan == 1) modifier else Modifier.weight(colSpan.toFloat()).then(modifier)
+}
+
 @Composable
 fun RowScope.TableHeadCell(
     text: String,
@@ -252,9 +288,21 @@ fun RowScope.TableHeadCell(
     style: Style = Style,
     textStyle: TextStyle = TextStyle.Default,
 ) {
+    TableHeadCell(text, modifier, style, textStyle, colSpan = 1)
+}
+
+/** [colSpan] spans across equal-weight columns in the same row, overriding caller weight. */
+@Composable
+fun RowScope.TableHeadCell(
+    text: String,
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+    textStyle: TextStyle = TextStyle.Default,
+    colSpan: Int,
+) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Box(
-        modifier.styleable(
+        spanModifier(modifier, colSpan).styleable(
             styleState,
             Style {
                 height(40.dp)
@@ -275,9 +323,22 @@ fun RowScope.TableCell(
     style: Style = Style,
     textStyle: TextStyle = TextStyle.Default,
 ) {
+    TableCell(text, modifier, muted, style, textStyle, colSpan = 1)
+}
+
+/** [colSpan] spans across equal-weight columns in the same row, overriding caller weight. */
+@Composable
+fun RowScope.TableCell(
+    text: String,
+    modifier: Modifier = Modifier,
+    muted: Boolean = false,
+    style: Style = Style,
+    textStyle: TextStyle = TextStyle.Default,
+    colSpan: Int,
+) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Box(
-        modifier.styleable(styleState, Style { contentPadding(8.dp) } then style),
+        spanModifier(modifier, colSpan).styleable(styleState, Style { contentPadding(8.dp) } then style),
         contentAlignment = tableAlignment(textStyle),
     ) {
         Text(
@@ -298,9 +359,22 @@ fun RowScope.TableCell(
     style: Style = Style,
     contentAlignment: Alignment = Alignment.CenterStart,
 ) {
+    TableCell(content, modifier, style, contentAlignment, colSpan = 1)
+}
+
+/** [colSpan] spans across equal-weight columns in the same row, overriding caller weight. */
+@Composable
+@JvmName("TableCellContentColSpan")
+fun RowScope.TableCell(
+    content: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+    contentAlignment: Alignment = Alignment.CenterStart,
+    colSpan: Int,
+) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Box(
-        modifier.styleable(styleState, Style { contentPadding(8.dp) } then style),
+        spanModifier(modifier, colSpan).styleable(styleState, Style { contentPadding(8.dp) } then style),
         contentAlignment = contentAlignment,
     ) {
         content()
@@ -317,6 +391,19 @@ fun RowScope.TableCell(
     text: () -> String,
 ) {
     TableCell(text = text(), modifier = modifier, muted = muted, style = style)
+}
+
+@Composable
+@JvmName("TableCellLambdaColSpan")
+@OverloadResolutionByLambdaReturnType
+fun RowScope.TableCell(
+    modifier: Modifier = Modifier,
+    muted: Boolean = false,
+    style: Style = Style,
+    colSpan: Int,
+    text: () -> String,
+) {
+    TableCell(text = text(), modifier = modifier, muted = muted, style = style, colSpan = colSpan)
 }
 
 /** A caption below a [Table], matching real shadcn/ui's `TableCaption`. */

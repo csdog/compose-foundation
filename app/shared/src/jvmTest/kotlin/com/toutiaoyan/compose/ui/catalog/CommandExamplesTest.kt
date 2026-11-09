@@ -58,7 +58,35 @@ class CommandExamplesTest {
         )
         assertTrue(commandDoc.examples.drop(6).all { it.title.startsWith("Kotlin extension: ") })
         assertNotNull(commandDoc.compositionCode)
-        assertEquals("About", commandDoc.beforeExamples.single().title)
+        assertEquals("About", commandDoc.introductionSections.single().title)
+    }
+
+    @Test fun generatedRecipeCodeContainsOnlyExpandedRowsAndBalancedScopes() {
+        val expectedRows = mapOf("Shortcuts" to 3, "Groups" to 6, "RTL" to 18)
+        expectedRows.forEach { (title, count) ->
+            val code = commandDoc.examples.single { it.title == title }.code
+            assertTrue(!code.contains("commandItemsCode"), "$title leaks a generator call into copied code")
+            assertEquals(count, Regex("CommandExampleItem\\(\"").findAll(code).count(), title)
+            var depth = 0
+            code.forEach { char ->
+                if (char == '{') depth++
+                if (char == '}') depth--
+                assertTrue(depth >= 0, "$title closes a scope before opening it")
+            }
+            assertEquals(0, depth, "$title has unbalanced scopes")
+        }
+    }
+
+    @Test fun sourceAttributionAndScrollableShortcutsMatchPinnedExamples() {
+        val about = commandDoc.introductionSections.single().blocks.single().toString()
+        assertTrue(about.contains("https://github.com/dip/cmdk"))
+        assertTrue(about.contains("https://www.dip.org/"))
+        assertTrue(commandDoc.apiSections.first().descriptionMarkdown.contains("https://github.com/dip/cmdk"))
+        val code = commandDoc.examples.single { it.title == "Scrollable" }.code
+        assertTrue(code.contains("Lucide.Trash, shortcut = \"⌫\""))
+        listOf("LayoutGrid", "List", "Bell", "CircleQuestionMark").forEach { icon ->
+            assertTrue(!code.contains("Lucide.$icon, shortcut"), "Unexpected shortcut on $icon")
+        }
     }
 
     @Test fun demoRecipeUsesTheOfficialDemoContent() {
@@ -68,6 +96,23 @@ class CommandExamplesTest {
         rule.onNodeWithText("Search Emoji").assertIsDisplayed()
         rule.onNodeWithText("Calculator").assertIsNotEnabled()
         rule.onAllNodesWithText("Settings").assertCountEquals(2)
+    }
+
+    @Test fun clearingSearchRestoresVisualKeyboardOrder() {
+        show("Default")
+        rule.onNode(hasSetTextAction()).performTextInput("Settings")
+        rule.onNode(hasSetTextAction()).performTextClearance()
+        rule.onNode(hasSetTextAction()).performKeyInput {
+            pressKey(Key.MoveHome)
+            pressKey(Key.Enter)
+        }
+        rule.onNodeWithText("Selected: Calendar").assertIsDisplayed()
+        rule.onNode(hasSetTextAction()).performKeyInput {
+            pressKey(Key.DirectionDown)
+            pressKey(Key.DirectionDown)
+            pressKey(Key.Enter)
+        }
+        rule.onNodeWithText("Selected: Profile").assertIsDisplayed()
     }
 
     @Test fun basicRecipeOpensItsDialog() {
@@ -89,6 +134,19 @@ class CommandExamplesTest {
         rule.onNodeWithText("اقتراحات").assertIsDisplayed()
         rule.onAllNodesWithText("الإعدادات").assertCountEquals(2)
         rule.onNodeWithText("التقويم").assertIsDisplayed()
+    }
+
+    @Test fun rtlRecipeSwitchesToEnglishAndHebrew() {
+        show("RTL")
+        rule.onNodeWithContentDescription("Preview language").performClick()
+        rule.onNodeWithText("English").performClick()
+        rule.onNodeWithText("Calendar").assertIsDisplayed()
+        rule.onNodeWithText("Calculator").assertIsNotEnabled()
+        rule.onNodeWithContentDescription("Preview language").performClick()
+        rule.onNodeWithText("Hebrew (עברית)").performClick()
+        rule.onNodeWithText("לוח שנה").assertIsDisplayed()
+        rule.onNodeWithText("מחשבון").assertIsNotEnabled()
+        assertTrue(commandDoc.examples.single { it.title == "RTL" }.code.contains("לוח שנה"))
     }
 
     @Test fun longListHomeAndEndScrollToTheEdges() {

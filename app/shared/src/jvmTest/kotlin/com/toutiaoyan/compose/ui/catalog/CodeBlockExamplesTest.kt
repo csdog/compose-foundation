@@ -4,12 +4,19 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toPixelMap
+import com.toutiaoyan.compose.ui.catalog.docs.LocalTextDownloader
+import com.toutiaoyan.compose.ui.theme.currentTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.catalog.docs.ComponentGuideBlock
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.catalog.docs.codeBlockDoc
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
@@ -102,7 +109,8 @@ class CodeBlockExamplesTest {
         assertEquals("Features", features.title)
         val featureItems = (features.blocks.single() as ComponentGuideBlock.Bullets).items
         assertEquals(6, featureItems.size)
-        assertTrue(featureItems[0].startsWith("It streams cheaply."))
+        assertTrue(featureItems[0].contains("individual code lines"))
+        assertFalse(featureItems.joinToString().contains("one text node"))
         assertTrue(featureItems.any { it.contains("Syntax highlighting is out of scope") })
 
         val accessibility = codeBlockDoc.afterExamples.single()
@@ -111,6 +119,115 @@ class CodeBlockExamplesTest {
         assertEquals(8, accessibilityItems.size)
         assertTrue(accessibilityItems.any { it.contains("Line numbers are hidden from screen readers") })
         assertTrue(accessibilityItems.any { it.contains("focus") })
+    }
+
+    @Test fun restoredProseAppearsInCopyPageInOfficialOrder() {
+        val intro = requireNotNull(codeBlockDoc.introMarkdown)
+        assertTrue(intro.contains("logs and diffs"))
+        assertTrue(intro.contains("syntax highlighting is out of scope"))
+        assertTrue(codeBlockDoc.compositionMarkdown!!.contains("Use lines when you need line variants"))
+        val page = componentPageMarkdown(codeBlockDoc)
+        assertTrue(page.indexOf("logs and diffs") < page.indexOf("## Installation"))
+        assertTrue(page.indexOf("## Composition") < page.indexOf("Use lines when you need line variants"))
+        assertTrue(page.indexOf("Use lines when you need line variants") < page.indexOf("## Features"))
+        val withoutProse = componentPageMarkdown(codeBlockDoc.copy(introMarkdown = null, compositionMarkdown = null))
+        assertFalse(withoutProse.contains("logs and diffs"))
+        assertFalse(withoutProse.contains("highlighted token rendering is caller-provided"))
+        assertEquals(page.lines().filter { it.startsWith("#") }, withoutProse.lines().filter { it.startsWith("#") })
+    }
+
+    @Test fun compositionGuidanceRendersWithoutAddingATocEntry() {
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, minTouchTarget = null) {
+                ComponentDetailContent(codeBlockDoc.copy(examples = emptyList()))
+            }
+        }
+        rule.onNodeWithText("Use lines when you need line variants", substring = true).assertExists()
+        assertEquals(
+            docSections(codeBlockDoc.copy(compositionMarkdown = null)),
+            docSections(codeBlockDoc),
+        )
+    }
+
+    private fun assertDownloaded(
+        title: String,
+        filename: String,
+        expected: String,
+    ) {
+        var downloaded: Pair<String, String>? = null
+        rule.setContent {
+            CompositionLocalProvider(LocalTextDownloader provides { value, name -> downloaded = value to name }) {
+                Theme(preset = StylePreset.Nova, minTouchTarget = null) {
+                    codeBlockDoc.examples.single { it.title == title }.preview()
+                }
+            }
+        }
+        rule.onNodeWithContentDescription("Download").performClick()
+        assertEquals(expected to filename, downloaded)
+    }
+
+    @Test fun demoDownloadsTheExactRouteSource() =
+        assertDownloaded(
+            "Default",
+            "route.ts",
+            """
+            import { streamText } from "ai"
+
+            export async function POST(request: Request) {
+              const { messages } = await request.json()
+
+              const result = streamText({
+                model: "anthropic/claude-sonnet-4.5",
+                system: "You are a helpful assistant. Answer in one short paragraph.",
+                messages,
+              })
+
+              return result.toUIMessageStreamResponse()
+            }
+            """.trimIndent(),
+        )
+
+    @Test fun actionsDownloadTheExactLintOutput() =
+        assertDownloaded(
+            "Actions",
+            "lint.log",
+            """
+            $ pnpm lint
+            apps/web/components/message-list.tsx
+              18:22  error  'messages' is possibly 'undefined'. Add a guard before calling map  @typescript-eslint/no-unsafe-call
+              42:7   warning  React Hook React.useEffect has a missing dependency: 'scrollToBottom'  react-hooks/exhaustive-deps
+
+            ✖ 2 problems (1 error, 1 warning)
+            """.trimIndent(),
+        )
+
+    @Test fun unsupportedDownloadIsDisabledAndLabelled() {
+        rule.setContent {
+            CompositionLocalProvider(LocalTextDownloader provides null) {
+                Theme(preset = StylePreset.Nova) { codeBlockDoc.examples.first().preview() }
+            }
+        }
+        rule.onNodeWithContentDescription("Download unavailable on this platform").assertIsNotEnabled()
+    }
+
+    @Test fun floatingCopyUsesOpaqueSurfaceOnLiveThemeSwitch() {
+        val dark = mutableStateOf(true)
+        var expected = Color.Unspecified
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, minTouchTarget = null, isDark = dark.value) {
+                expected = currentTheme.colors.background
+                codeBlockDoc.examples.single { it.title == "Floating Actions" }.preview()
+            }
+        }
+        rule.onNodeWithContentDescription("Copy").requestFocus()
+
+        fun assertSurface() {
+            val pixels = rule.onNodeWithTag("floating-actions").captureToImage().toPixelMap()
+            assertEquals(expected, pixels[pixels.width / 2, 3], "The outer ring must not tint the opaque surface")
+        }
+        assertSurface()
+        rule.runOnIdle { dark.value = false }
+        assertSurface()
     }
 
     @Test fun demoKeepsOfficialRouteCodeHeaderAndHighlightedLines() {
@@ -122,6 +239,11 @@ class CodeBlockExamplesTest {
         assertTrue(demo.code.contains("index in 5..9"))
         assertTrue(demo.code.contains("CodeBlockLineVariant.Highlighted"))
         assertTrue(demo.code.contains("Icon(Lucide.Download)"))
+        assertTrue(demo.code.contains("onDownload: (String, String) -> Unit"))
+        assertFalse(demo.code.contains("LocalTextDownloader"))
+        assertTrue(
+            codeBlockDoc.examples.single { it.title == "Actions" }.code.contains("onDownload(output, \"lint.log\")"),
+        )
         assertTrue(demo.code.contains("label = \"Wrap lines\""))
     }
 
@@ -143,7 +265,8 @@ class CodeBlockExamplesTest {
         show("Start Line")
         rule.onNodeWithText("app/dashboard/page.tsx").assertIsDisplayed()
         rule.onNodeWithText("995").assertIsDisplayed()
-        rule.onNodeWithText("1004").assertIsDisplayed()
+        rule.onNodeWithText("1005").assertIsDisplayed()
+        assertTrue(codeBlockDoc.examples.single { it.title == "Diff" }.code.contains("forEachIndexed { index, line ->"))
     }
 
     @Test fun heightCapsTheOutputAndKeyboardEndRevealsTheLastLine() {

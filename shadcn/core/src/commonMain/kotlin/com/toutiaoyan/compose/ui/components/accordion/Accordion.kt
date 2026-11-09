@@ -147,6 +147,7 @@ private class AccordionNavState {
     var measuredOrder: List<String> = emptyList()
     val itemOrder = mutableStateListOf<String>()
     val itemEnabled = mutableStateMapOf<String, Boolean>()
+    val triggerEnabled = mutableStateMapOf<String, Boolean>()
     private val focusRequesters = mutableMapOf<String, FocusRequester>()
     val positions = mutableMapOf<String, Offset>()
 
@@ -155,6 +156,7 @@ private class AccordionNavState {
     fun unregister(value: String) {
         itemOrder.remove(value)
         itemEnabled.remove(value)
+        triggerEnabled.remove(value)
         focusRequesters.remove(value)
         positions.remove(value)
     }
@@ -532,6 +534,11 @@ fun AccordionItemScope.AccordionTrigger(
     content: @Composable () -> Unit,
 ) {
     val resolvedDisabled = this.disabled || disabled
+    val nav = LocalAccordionNav.current
+    SideEffect { nav?.triggerEnabled?.set(value, !resolvedDisabled) }
+    DisposableEffect(nav, value) {
+        onDispose { nav?.triggerEnabled?.remove(value) }
+    }
     val interactionSource = remember { MutableInteractionSource() }
     val styleState = rememberUpdatedStyleState(interactionSource)
     val hovered by interactionSource.collectIsHoveredAsState()
@@ -573,7 +580,6 @@ fun AccordionItemScope.AccordionTrigger(
     val pressStyle = rememberPressMotionStyle()
     val touchTargetStyle = rememberMinTouchTargetStyle()
     val resolvedIcon = icon ?: LocalAccordionIcon.current
-    val nav = LocalAccordionNav.current
     val requester = nav?.requester(value)
     val loop = accordionController().loop
     Row(
@@ -812,7 +818,7 @@ private fun handleAccordionKey(
     val enabled =
         // Both keyboard orientations share the vertically stacked shadcn layout.
         // Current y positions preserve keyed order even when RTL items have different widths.
-        nav.itemOrder.filter { nav.itemEnabled[it] != false }.sortedBy {
+        nav.itemOrder.filter { nav.itemEnabled[it] != false && nav.triggerEnabled[it] != false }.sortedBy {
             nav.positions[it]?.y ?: 0f
         }
     if (enabled.isEmpty()) return false

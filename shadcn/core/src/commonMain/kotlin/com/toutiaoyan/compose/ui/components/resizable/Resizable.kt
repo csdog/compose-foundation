@@ -99,6 +99,8 @@ private class ResizableBounds(
     val currentFraction: () -> Float,
     val availableExtent: () -> Float,
     val onHandleExtent: (Float) -> Unit,
+    val onPointerStart: () -> Unit,
+    val onPointerDrag: (Float) -> Unit,
 )
 
 private val LocalResizableBounds = staticCompositionLocalOf<ResizableBounds?> { null }
@@ -185,6 +187,21 @@ fun ResizablePanelGroup(
     }
     val state = ResizableState(current, resolvedOrientation, onHandleDrag)
     val region = remember { ResizablePointerRegion() }
+    val pointerDrag = remember { ResizableDragAccumulator() }
+    // A gesture uses one frozen geometry/constraint frame, like the upstream hit region.
+    DisposableEffect(
+        region,
+        resolvedOrientation,
+        minFraction,
+        maxFraction,
+        rtl,
+        disabled,
+        contentExtentPx,
+        handleExtentPx,
+    ) {
+        region.cancelGesture?.invoke()
+        onDispose { region.cancelGesture?.invoke() }
+    }
     val bounds =
         ResizableBounds(
             region,
@@ -195,6 +212,10 @@ fun ResizablePanelGroup(
             { fraction.coerceIn(minFraction, maxFraction) },
             extent,
             { handleExtentPx = it },
+            { pointerDrag.start(fraction.coerceIn(minFraction, maxFraction), extent()) },
+            { delta ->
+                if (!disabled) fraction = pointerDrag.drag(delta, minFraction, maxFraction, rtl)
+            },
         )
     CompositionLocalProvider(LocalResizable provides state, LocalResizableBounds provides bounds) {
         if (resolvedOrientation == Orientation.Horizontal) {
@@ -286,10 +307,11 @@ fun ResizableHandle(
         region.horizontal = horizontal
         region.enabled = !resolvedDisabled
         region.onStart = {
+            bounds?.onPointerStart?.invoke()
             inputMode.requestInputMode(InputMode.Touch)
             if (state != null) focus.requestFocus()
         }
-        region.onDelta = resolvedDrag
+        region.onDelta = if (onDrag == null && bounds != null) bounds.onPointerDrag else resolvedDrag
     }
     DisposableEffect(region) {
         onDispose {

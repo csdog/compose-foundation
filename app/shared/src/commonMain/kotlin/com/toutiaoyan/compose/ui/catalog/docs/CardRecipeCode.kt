@@ -354,9 +354,9 @@ private val cardRecipeCodes =
                 @Composable
                 private fun CardSpacingRecipe() {
                     var spacing by remember { mutableStateOf("16") }
-                    Column(Modifier.widthIn(max = 384.dp).fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                    Column(Modifier.widthIn(max = 384.dp).fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.Start) {
                         ToggleGroup(value = setOf(spacing), onValueChange = { values -> values.firstOrNull()?.let { spacing = it } }, type = ToggleGroupType.Single,
-                            variant = ToggleVariant.Outline, size = ToggleSize.Sm, spacing = 0.dp, contentDescription = "Card spacing") {
+                            variant = ToggleVariant.Outline, size = ToggleSize.Sm, contentDescription = "Card spacing") {
                             listOf("16", "20", "24", "32").forEach { ToggleGroupItem(it, "${'$'}{it}px") }
                         }
                         CardLogin(spacing.toInt())

@@ -44,7 +44,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.sp
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.styles.cssStyleable
@@ -514,6 +516,21 @@ fun RowScope.ItemActions(
     }
 }
 
+// Reserve Nova's gap-2 while retaining justify-between placement for surplus space.
+private val ItemSpreadArrangement =
+    object : Arrangement.Horizontal {
+        override val spacing: Dp = 8.dp
+
+        override fun Density.arrange(
+            totalSize: Int,
+            sizes: IntArray,
+            layoutDirection: LayoutDirection,
+            outPositions: IntArray,
+        ) {
+            with(Arrangement.SpaceBetween) { arrange(totalSize, sizes, layoutDirection, outPositions) }
+        }
+    }
+
 /** Full-width heading row inside an [Item]. Matches shadcn's `ItemHeader`. */
 @Composable
 fun ItemHeader(
@@ -524,7 +541,8 @@ fun ItemHeader(
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Row(
         modifier = modifier.fillMaxWidth().styleable(styleState, style),
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement =
+            if (currentTheme.activePreset == StylePreset.Nova) ItemSpreadArrangement else Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         content = content,
     )
@@ -552,7 +570,8 @@ fun ItemFooter(
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Row(
         modifier = modifier.fillMaxWidth().styleable(styleState, style),
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement =
+            if (currentTheme.activePreset == StylePreset.Nova) ItemSpreadArrangement else Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         content = content,
     )

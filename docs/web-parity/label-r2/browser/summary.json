@@ -1,0 +1,169 @@
+{
+  "component": "label",
+  "title": "Label",
+  "generatedAt": "2026-11-08T12:03:13.060Z",
+  "localUrl": "http://127.0.0.1:57177/label",
+  "ok": true,
+  "checks": 40,
+  "passed": 40,
+  "failed": 0,
+  "failures": [],
+  "captures": [
+    {
+      "name": "desktop-light",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/label-r2/browser/desktop-light.png",
+      "bytes": 104031,
+      "sha256": "36f9bcd7566d9891e8610dc1d20ebf8813ce0ba7a33d4a18e9045c06b000cee6",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:57177/label",
+        "theme": "light",
+        "bodyHeight": "calc(3068px + 100vh)",
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 1000
+        },
+        "wasm": [
+          "http://127.0.0.1:57177/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:57177/35f06a0c63c1c9785967.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "desktop-dark",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/label-r2/browser/desktop-dark.png",
+      "bytes": 103842,
+      "sha256": "db9b690cac78bf18ff4bbd38e34364885a7deca86bc74194be610be75f468785",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:57177/label",
+        "theme": "dark",
+        "bodyHeight": "calc(3068px + 100vh)",
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 1000
+        },
+        "wasm": [
+          "http://127.0.0.1:57177/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:57177/35f06a0c63c1c9785967.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "phone-light",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/label-r2/browser/phone-light.png",
+      "bytes": 37880,
+      "sha256": "c8adf7508a8589ed02dc7891d48b33c12395143f02b14e40680d811b1b5571b8",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:57177/label",
+        "theme": "light",
+        "bodyHeight": "calc(3361px + 100vh)",
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "wasm": [
+          "http://127.0.0.1:57177/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:57177/35f06a0c63c1c9785967.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "phone-dark",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/label-r2/browser/phone-dark.png",
+      "bytes": 37481,
+      "sha256": "2486f6e9e4ea37658e4f3177b24d092dcbceeb8c98b48a4abf08e7f6087d50c7",
+      "png": {
+        "width": 390,
+        "height": 844
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:57177/label",
+        "theme": "dark",
+        "bodyHeight": "calc(3361px + 100vh)",
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "wasm": [
+          "http://127.0.0.1:57177/658820f72b4617efb380.wasm",
+          "http://127.0.0.1:57177/35f06a0c63c1c9785967.wasm"
+        ]
+      },
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "name": "section-label-in-field",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/label-r2/browser/section-label-in-field.png",
+      "bytes": 102082,
+      "sha256": "24ecb16be4c9c0d6cfd7ce51104012859daa178d3c1ff7fcf318cc4b75a4ee5a",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-rtl",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/label-r2/browser/section-rtl.png",
+      "bytes": 94732,
+      "sha256": "64dd400655a140bdf3c864bf280b09896160afb3146c663db42e45c6768fe6d6",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-kotlin-extension-required",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/label-r2/browser/section-kotlin-extension-required.png",
+      "bytes": 79977,
+      "sha256": "885b74e29d89ccef02650dacf021fccede435fd97837d79045a05a4fc66e400f",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "section-kotlin-extension-disabled",
+      "path": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/docs/web-parity/label-r2/browser/section-kotlin-extension-disabled.png",
+      "bytes": 87726,
+      "sha256": "9de0d7737214d0a5d0c3555100d0fa5a0b529b0a31dbd46ffd111a87613a63c4",
+      "png": {
+        "width": 1440,
+        "height": 1000
+      }
+    }
+  ]
+}

@@ -236,7 +236,10 @@ internal val emptyAdditionalExamples =
         ),
         ComponentExample(
             title = "RTL",
-            descriptionMarkdown = "To enable RTL support in your app, see the [RTL configuration guide](https://ui.shadcn.com/docs/rtl). Source shows the Arabic pair; the catalog toolbar also previews English and Hebrew.",
+            descriptionMarkdown =
+                "To enable RTL support in shadcn/ui, see the [RTL configuration " +
+                    "guide](https://ui.shadcn.com/docs/rtl). Source shows the Arabic pair; " +
+                    "the catalog toolbar also previews English and Hebrew.",
             minPreviewHeight = 352.dp,
             mobileMinPreviewHeight = 352.dp,
             previewPadding = 0.dp,

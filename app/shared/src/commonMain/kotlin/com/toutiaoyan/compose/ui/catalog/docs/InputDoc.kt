@@ -2,6 +2,7 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -17,10 +18,17 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.composables.icons.lucide.Info
@@ -62,33 +70,23 @@ private val inputRtlCode =
     """
     @Composable
     fun InputRtlExample() {
-        var language by remember { mutableStateOf(1) } // 0 English, 1 Arabic, 2 Hebrew
-        val inherited = currentTheme
+        // 0 English, 1 Arabic, 2 Hebrew; supply a font covering the chosen language.
+        var language by remember { mutableStateOf(1) }
         var apiKey by remember { mutableStateOf("") }
+        val translations = listOf(
+            "API Key" to "Your API key is encrypted and stored securely.",
+            "مفتاح API" to "مفتاح API الخاص بك مشفر ومخزن بأمان.",
+            "מפתח API" to "מפתח ה-API שלך מוצפן ונשמר בצורה מאובטחת.",
+        )
+        val (label, description) = translations[language]
+        val focus = remember { FocusRequester() }
         CompositionLocalProvider(
             LocalLayoutDirection provides if (language == 0) LayoutDirection.Ltr else LayoutDirection.Rtl,
         ) {
-            Theme(
-                preset = inherited.activePreset,
-                baseColor = inherited.activeBaseColor,
-                accent = inherited.activeAccent,
-                isDark = inherited.isDark,
-                baseRadius = inherited.baseRadius,
-                ring = inherited.ring,
-                unitSpacing = LocalUnitSpacing.current,
-                minTouchTarget = inherited.minTouchTarget,
-                fontFamily = when (language) {
-                    1 -> catalogArabicFontFamily()
-                    2 -> catalogHebrewFontFamily()
-                    else -> inherited.fontFamily
-                },
-            ) {
-                val t = inputRtlTranslations[language]
-                Field(Modifier.widthIn(max = 320.dp)) {
-                    FieldLabel(t.apiKey)
-                    Input(apiKey, { apiKey = it }, type = InputType.Password, placeholder = "sk-...")
-                    FieldDescription(t.description)
-                }
+            Field(Modifier.widthIn(max = 320.dp)) {
+                FieldLabel(label, Modifier.focusProperties { canFocus = false }.clickable { focus.requestFocus() })
+                Input(apiKey, { apiKey = it }, Modifier.focusRequester(focus).semantics { contentDescription = label }, type = InputType.Password, placeholder = "sk-...")
+                FieldDescription(description)
             }
         }
     }
@@ -98,13 +96,22 @@ private val inputRtlCode =
 
 private val inputImports =
     """
+    import androidx.compose.foundation.clickable
     import androidx.compose.foundation.layout.*
     import androidx.compose.runtime.*
     import androidx.compose.ui.Alignment
     import androidx.compose.ui.Modifier
+    import androidx.compose.ui.focus.FocusRequester
+    import androidx.compose.ui.focus.focusProperties
+    import androidx.compose.ui.focus.focusRequester
+    import androidx.compose.ui.platform.LocalLayoutDirection
+    import androidx.compose.ui.semantics.contentDescription
+    import androidx.compose.ui.semantics.semantics
+    import androidx.compose.ui.text.style.TextOverflow
+    import androidx.compose.ui.unit.LayoutDirection
     import androidx.compose.ui.unit.dp
-import com.composables.icons.lucide.Info
-import com.composables.icons.lucide.Lucide
+    import com.composables.icons.lucide.Info
+    import com.composables.icons.lucide.Lucide
     import com.toutiaoyan.compose.ui.components.badge.Badge
     import com.toutiaoyan.compose.ui.components.badge.BadgeVariant
     import com.toutiaoyan.compose.ui.components.button.Button
@@ -112,7 +119,7 @@ import com.composables.icons.lucide.Lucide
     import com.toutiaoyan.compose.ui.components.buttongroup.*
     import com.toutiaoyan.compose.ui.components.field.*
     import com.toutiaoyan.compose.ui.components.icon.Icon
-import com.toutiaoyan.compose.ui.components.input.Input
+    import com.toutiaoyan.compose.ui.components.input.Input
     import com.toutiaoyan.compose.ui.components.input.InputType
     import com.toutiaoyan.compose.ui.components.inputgroup.*
     import com.toutiaoyan.compose.ui.components.select.*
@@ -149,8 +156,9 @@ val inputDoc =
                         """
                         var apiKey by remember { mutableStateOf("") }
                         Field(Modifier.widthIn(max = 320.dp)) {
-                            FieldLabel("API Key")
-                            Input(apiKey, { apiKey = it }, type = InputType.Password, placeholder = "sk-...")
+                            val inputFocus0 = remember { FocusRequester() }
+                            FieldLabel("API Key", Modifier.focusProperties { canFocus = false }.clickable { inputFocus0.requestFocus() })
+                            Input(apiKey, { apiKey = it }, Modifier.focusRequester(inputFocus0).semantics { contentDescription = "API Key" }, type = InputType.Password, placeholder = "sk-...")
                             FieldDescription("Your API key is encrypted and stored securely.")
                         }
                         """.trimIndent(),
@@ -174,8 +182,9 @@ val inputDoc =
                         """
                         var username by remember { mutableStateOf("") }
                         Field(Modifier.widthIn(max = 320.dp)) {
-                            FieldLabel("Username")
-                            Input(username, { username = it }, placeholder = "Enter your username")
+                            val inputFocus0 = remember { FocusRequester() }
+                            FieldLabel("Username", Modifier.focusProperties { canFocus = false }.clickable { inputFocus0.requestFocus() })
+                            Input(username, { username = it }, Modifier.focusRequester(inputFocus0).semantics { contentDescription = "Username" }, placeholder = "Enter your username")
                             FieldDescription("Choose a unique username for your account.")
                         }
                         """.trimIndent(),
@@ -187,14 +196,18 @@ val inputDoc =
                         "Use `FieldGroup` to show multiple `Field` blocks and to build forms.",
                     code =
                         """
+                        var name by remember { mutableStateOf("") }
+                        var email by remember { mutableStateOf("") }
                         FieldGroup(Modifier.widthIn(max = 320.dp)) {
                             Field {
-                                FieldLabel("Name")
-                                Input(name, { name = it }, placeholder = "Jordan Lee")
+                                val inputFocus0 = remember { FocusRequester() }
+                                FieldLabel("Name", Modifier.focusProperties { canFocus = false }.clickable { inputFocus0.requestFocus() })
+                                Input(name, { name = it }, Modifier.focusRequester(inputFocus0).semantics { contentDescription = "Name" }, placeholder = "Jordan Lee")
                             }
                             Field {
-                                FieldLabel("Email")
-                                Input(email, { email = it }, type = InputType.Email, placeholder = "name@example.com")
+                                val inputFocus1 = remember { FocusRequester() }
+                                FieldLabel("Email", Modifier.focusProperties { canFocus = false }.clickable { inputFocus1.requestFocus() })
+                                Input(email, { email = it }, Modifier.focusRequester(inputFocus1).semantics { contentDescription = "Email" }, type = InputType.Email, placeholder = "name@example.com")
                                 FieldDescription("We'll send updates to this address.")
                             }
                             Field(orientation = FieldOrientation.Horizontal) {
@@ -212,6 +225,7 @@ val inputDoc =
                             "disable the `Field` as well.",
                     code =
                         """
+                        var email by remember { mutableStateOf("") }
                         Field(Modifier.widthIn(max = 320.dp), disabled = true) {
                             FieldLabel("Email")
                             Input(email, { email = it }, type = InputType.Email, placeholder = "Email", disabled = true)
@@ -227,9 +241,11 @@ val inputDoc =
                             "state, mark the `Field` invalid as well.",
                     code =
                         """
+                        var value by remember { mutableStateOf("") }
                         Field(Modifier.widthIn(max = 320.dp), invalid = true) {
-                            FieldLabel("Invalid Input")
-                            Input(value, { value = it }, placeholder = "Error", invalid = true)
+                            val inputFocus0 = remember { FocusRequester() }
+                            FieldLabel("Invalid Input", Modifier.focusProperties { canFocus = false }.clickable { inputFocus0.requestFocus() })
+                            Input(value, { value = it }, Modifier.focusRequester(inputFocus0).semantics { contentDescription = "Invalid Input" }, placeholder = "Error", invalid = true)
                             FieldDescription("This field contains validation errors.")
                         }
                         """.trimIndent(),
@@ -238,17 +254,29 @@ val inputDoc =
                 ComponentExample(
                     title = "File",
                     descriptionMarkdown =
-                        "Use a file picker for file inputs. Compose has no browser-native " +
-                            "`type=\"file\"` control, so this preview approximates the browser field.",
+                        "Choose a file with the browser or desktop file chooser. This catalog preview " +
+                            "shows its filename without reading or uploading the file. Android and iOS " +
+                            "catalogs disable the action until a picker is connected.",
                     code =
                         """
-                        Field(Modifier.widthIn(max = 320.dp)) {
-                            FieldLabel("Picture")
-                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                                Button("Choose File", variant = ButtonVariant.Outline)
-                                Text("No file chosen", textStyle = TextColors.Muted)
+                        // Supply the platform chooser; null result means cancelled.
+                        @Composable
+                        fun PictureInput(pickFile: (((String?) -> Unit) -> Unit)?) {
+                            var filename by remember { mutableStateOf<String?>(null) }
+                            val onResult by rememberUpdatedState<(String?) -> Unit>({ selected ->
+                                if (selected != null) filename = selected
+                            })
+                            val focus = remember { FocusRequester() }
+                            val choose = { pickFile?.invoke { onResult(it) }; Unit }
+                            Field(Modifier.widthIn(max = 320.dp)) {
+                                FieldLabel("Picture", Modifier.focusProperties { canFocus = false }.clickable(enabled = pickFile != null) { focus.requestFocus(); choose() }, disabled = pickFile == null)
+                                Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                                    Button("Choose File", enabled = pickFile != null, modifier = Modifier.focusRequester(focus), label = "Choose File: Picture", onClick = choose, variant = ButtonVariant.Outline)
+                                    Text(filename ?: "No file chosen", modifier = Modifier.weight(1f), maxLines = 1, overflow = TextOverflow.Ellipsis, textStyle = TextColors.Muted)
+                                }
+                                FieldDescription("Select a picture to upload.")
+                                if (pickFile == null) FieldDescription("File selection is unavailable on this platform.")
                             }
-                            FieldDescription("Select a picture to upload.")
                         }
                         """.trimIndent(),
                     preview = { InputFileRecipe() },
@@ -260,6 +288,7 @@ val inputDoc =
                             "inline input. Pair it with `Button` to create a search input with a button.",
                     code =
                         """
+                        var query by remember { mutableStateOf("") }
                         Field(Modifier.widthIn(max = 320.dp), orientation = FieldOrientation.Horizontal) {
                             Input(query, { query = it }, Modifier.width(244.dp), type = InputType.Search, placeholder = "Search...")
                             Button("Search")
@@ -273,13 +302,19 @@ val inputDoc =
                     previewPadding = 24.dp,
                     code =
                         """
+                        var first by remember { mutableStateOf("") }
+                        var last by remember { mutableStateOf("") }
                         FieldGroup(Modifier.widthIn(max = 384.dp)) {
                             Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                                Field("First Name", Modifier.weight(1f)) {
-                                    Input(first, { first = it }, placeholder = "Jordan")
+                                Field(Modifier.weight(1f)) {
+                                    val inputFocus0 = remember { FocusRequester() }
+                                    FieldLabel("First Name", Modifier.focusProperties { canFocus = false }.clickable { inputFocus0.requestFocus() })
+                                    Input(first, { first = it }, Modifier.focusRequester(inputFocus0).semantics { contentDescription = "First Name" }, placeholder = "Jordan")
                                 }
-                                Field("Last Name", Modifier.weight(1f)) {
-                                    Input(last, { last = it }, placeholder = "Lee")
+                                Field(Modifier.weight(1f)) {
+                                    val inputFocus1 = remember { FocusRequester() }
+                                    FieldLabel("Last Name", Modifier.focusProperties { canFocus = false }.clickable { inputFocus1.requestFocus() })
+                                    Input(last, { last = it }, Modifier.focusRequester(inputFocus1).semantics { contentDescription = "Last Name" }, placeholder = "Lee")
                                 }
                             }
                         }
@@ -291,9 +326,11 @@ val inputDoc =
                     descriptionMarkdown = "Use the `required` attribute to indicate required inputs.",
                     code =
                         """
+                        var value by remember { mutableStateOf("") }
                         Field(Modifier.widthIn(max = 320.dp)) {
-                            FieldLabel("Required Field", required = true)
-                            Input(value, { value = it }, placeholder = "This field is required", required = true)
+                            val inputFocus0 = remember { FocusRequester() }
+                            FieldLabel("Required Field", Modifier.focusProperties { canFocus = false }.clickable { inputFocus0.requestFocus() }, required = true)
+                            Input(value, { value = it }, Modifier.focusRequester(inputFocus0).semantics { contentDescription = "Required Field, required" }, placeholder = "This field is required", required = true)
                             FieldDescription("This field must be filled out.")
                         }
                         """.trimIndent(),
@@ -304,13 +341,15 @@ val inputDoc =
                     descriptionMarkdown = "Use `Badge` in the label to highlight a recommended field.",
                     code =
                         """
+                        var value by remember { mutableStateOf("") }
                         Field(Modifier.widthIn(max = 320.dp)) {
+                            val inputFocus0 = remember { FocusRequester() }
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                FieldLabel("Webhook URL")
+                                FieldLabel("Webhook URL", Modifier.focusProperties { canFocus = false }.clickable { inputFocus0.requestFocus() })
                                 Box(Modifier.weight(1f))
                                 Badge("Beta", variant = BadgeVariant.Secondary)
                             }
-                            Input(value, { value = it }, type = InputType.Url, placeholder = "https://api.example.com/webhook")
+                            Input(value, { value = it }, Modifier.focusRequester(inputFocus0).semantics { contentDescription = "Webhook URL" }, type = InputType.Url, placeholder = "https://api.example.com/webhook")
                         }
                         """.trimIndent(),
                     preview = { InputBadgeRecipe() },
@@ -322,10 +361,12 @@ val inputDoc =
                             "See the Input Group component for more examples.",
                     code =
                         """
+                        var value by remember { mutableStateOf("") }
                         Field(Modifier.widthIn(max = 320.dp)) {
-                            FieldLabel("Website URL")
+                            val inputFocus0 = remember { FocusRequester() }
+                            FieldLabel("Website URL", Modifier.focusProperties { canFocus = false }.clickable { inputFocus0.requestFocus() })
                             InputGroup(Modifier.fillMaxWidth()) {
-                                InputGroupInput(value, { value = it }, placeholder = "example.com")
+                                InputGroupInput(value, { value = it }, Modifier.focusRequester(inputFocus0).semantics { contentDescription = "Website URL" }, placeholder = "example.com")
                                 InputGroupAddon("https://")
                                 InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) { Icon(Lucide.Info) }
                             }
@@ -340,11 +381,13 @@ val inputDoc =
                             "Group component for more examples.",
                     code =
                         """
+                        var query by remember { mutableStateOf("") }
                         Field(Modifier.widthIn(max = 320.dp)) {
-                            FieldLabel("Search")
+                            val inputFocus0 = remember { FocusRequester() }
+                            FieldLabel("Search", Modifier.focusProperties { canFocus = false }.clickable { inputFocus0.requestFocus() })
                             BoxWithConstraints(Modifier.fillMaxWidth()) {
                                 ButtonGroup(style = rememberButtonGroupOutlineStyle()) {
-                                    Input(query, { query = it }, Modifier.width(maxWidth - 67.dp), placeholder = "Type to search...")
+                                    Input(query, { query = it }, Modifier.width((maxWidth - 67.dp).coerceAtLeast(120.dp)).focusRequester(inputFocus0).semantics { contentDescription = "Search" }, placeholder = "Type to search...")
                                     ButtonGroupItem("Search", onClick = {}, variant = ButtonVariant.Outline)
                                 }
                             }
@@ -360,23 +403,44 @@ val inputDoc =
                     previewPadding = 40.dp,
                     code =
                         """
+                        var name by remember { mutableStateOf("") }
+                        var email by remember { mutableStateOf("") }
+                        var phone by remember { mutableStateOf("") }
+                        var country by remember { mutableStateOf<String?>("us") }
+                        var address by remember { mutableStateOf("") }
+                        val countries = listOf("United States" to "us", "United Kingdom" to "uk", "Canada" to "ca")
                         FieldGroup(Modifier.widthIn(max = 384.dp)) {
-                            Field("Name") { Input(name, { name = it }, placeholder = "Evil Rabbit", required = true) }
-                            Field("Email", description = "We'll never share your email with anyone.") {
-                                Input(email, { email = it }, type = InputType.Email, placeholder = "john@example.com")
+                            Field {
+                                val inputFocus0 = remember { FocusRequester() }
+                                FieldLabel("Name", Modifier.focusProperties { canFocus = false }.clickable { inputFocus0.requestFocus() })
+                                Input(name, { name = it }, Modifier.focusRequester(inputFocus0).semantics { contentDescription = "Name, required" }, placeholder = "Evil Rabbit", required = true)
+                            }
+                            Field {
+                                val inputFocus1 = remember { FocusRequester() }
+                                FieldLabel("Email", Modifier.focusProperties { canFocus = false }.clickable { inputFocus1.requestFocus() })
+                                Input(email, { email = it }, Modifier.focusRequester(inputFocus1).semantics { contentDescription = "Email" }, type = InputType.Email, placeholder = "john@example.com")
+                                FieldDescription("We'll never share your email with anyone.")
                             }
                             Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                                Field("Phone", Modifier.weight(1f)) {
-                                    Input(phone, { phone = it }, type = InputType.Tel, placeholder = "+1 (555) 123-4567")
+                                Field(Modifier.weight(1f)) {
+                                    val inputFocus2 = remember { FocusRequester() }
+                                    FieldLabel("Phone", Modifier.focusProperties { canFocus = false }.clickable { inputFocus2.requestFocus() })
+                                    Input(phone, { phone = it }, Modifier.focusRequester(inputFocus2).semantics { contentDescription = "Phone" }, type = InputType.Tel, placeholder = "+1 (555) 123-4567")
                                 }
-                                Field("Country", Modifier.weight(1f)) {
-                                    Select<String?>(value = country, onValueChange = { country = it }, placeholder = "United States") {
-                                        SelectTrigger(Modifier.fillMaxWidth())
+                                Field(Modifier.weight(1f)) {
+                                    val inputFocus3 = remember { FocusRequester() }
+                                    FieldLabel("Country", Modifier.focusProperties { canFocus = false }.clickable { inputFocus3.requestFocus() })
+                                    Select<String?>(value = country, onValueChange = { country = it }, placeholder = "United States", label = { selected -> countries.firstOrNull { it.second == selected }?.first ?: "United States" }) {
+                                        SelectTrigger(Modifier.fillMaxWidth().focusRequester(inputFocus3).semantics { contentDescription = "Country" })
                                         SelectContent { countries.forEach { (label, value) -> SelectItem<String?>(value, textValue = label) } }
                                     }
                                 }
                             }
-                            Field("Address") { Input(address, { address = it }, placeholder = "123 Main St") }
+                            Field {
+                                val inputFocus4 = remember { FocusRequester() }
+                                FieldLabel("Address", Modifier.focusProperties { canFocus = false }.clickable { inputFocus4.requestFocus() })
+                                Input(address, { address = it }, Modifier.focusRequester(inputFocus4).semantics { contentDescription = "Address" }, placeholder = "123 Main St")
+                            }
                             Field(orientation = FieldOrientation.Horizontal) {
                                 Button("Cancel", variant = ButtonVariant.Outline)
                                 Button("Submit")
@@ -395,18 +459,78 @@ val inputDoc =
                     code = inputRtlCode,
                     preview = { InputRtlRecipe() },
                 ),
+                ComponentExample(
+                    title = "Kotlin extension: Autofocus",
+                    code =
+                        """
+                        var email by remember { mutableStateOf("") }
+                        val focus = remember { FocusRequester() }
+                        Field {
+                            FieldLabel("Email", Modifier.focusProperties { canFocus = false }.clickable { focus.requestFocus() })
+                            Input(value = email, onValueChange = { email = it }, modifier = Modifier.focusRequester(focus).semantics { contentDescription = "Email" }, placeholder = "m@example.com", autoFocus = true)
+                        }
+                        """.trimIndent(),
+                    preview = {
+                        AutofocusPreview {
+                            var email by remember { mutableStateOf("") }
+                            InputRecipeField("Email") { input ->
+                                Input(
+                                    value = email,
+                                    onValueChange = { email = it },
+                                    modifier = input,
+                                    placeholder = "m@example.com",
+                                    autoFocus = true,
+                                )
+                            }
+                        }
+                    },
+                ),
             ),
     )
 
 // region recipes
 
 @Composable
+private fun InputRecipeField(
+    label: String,
+    modifier: Modifier = Modifier,
+    description: String? = null,
+    required: Boolean = false,
+    showRequired: Boolean = required,
+    invalid: Boolean = false,
+    trailingLabel: (@Composable () -> Unit)? = null,
+    content: @Composable (Modifier) -> Unit,
+) {
+    val focus = remember { FocusRequester() }
+    Field(modifier, invalid = invalid) {
+        val labelModifier = Modifier.focusProperties { canFocus = false }.clickable { focus.requestFocus() }
+        if (trailingLabel == null) {
+            FieldLabel(label, labelModifier, required = showRequired)
+        } else {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                FieldLabel(label, labelModifier, required = showRequired)
+                Box(Modifier.weight(1f))
+                trailingLabel()
+            }
+        }
+        content(
+            Modifier.focusRequester(focus).semantics {
+                contentDescription = if (required) "$label, required" else label
+            },
+        )
+        if (description != null) FieldDescription(description)
+    }
+}
+
+@Composable
 private fun InputDemoRecipe() {
     var apiKey by remember { mutableStateOf("") }
-    Field(Modifier.widthIn(max = 320.dp)) {
-        FieldLabel("API Key")
-        Input(apiKey, { apiKey = it }, type = InputType.Password, placeholder = "sk-...")
-        FieldDescription("Your API key is encrypted and stored securely.")
+    InputRecipeField(
+        "API Key",
+        Modifier.widthIn(max = 320.dp),
+        "Your API key is encrypted and stored securely.",
+    ) { input ->
+        Input(apiKey, { apiKey = it }, input, type = InputType.Password, placeholder = "sk-...")
     }
 }
 
@@ -419,10 +543,12 @@ private fun InputBasicRecipe() {
 @Composable
 private fun InputFieldRecipe() {
     var username by remember { mutableStateOf("") }
-    Field(Modifier.widthIn(max = 320.dp)) {
-        FieldLabel("Username")
-        Input(username, { username = it }, placeholder = "Enter your username")
-        FieldDescription("Choose a unique username for your account.")
+    InputRecipeField(
+        "Username",
+        Modifier.widthIn(max = 320.dp),
+        "Choose a unique username for your account.",
+    ) { input ->
+        Input(username, { username = it }, input, placeholder = "Enter your username")
     }
 }
 
@@ -431,14 +557,11 @@ private fun InputFieldGroupRecipe() {
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     FieldGroup(Modifier.widthIn(max = 320.dp)) {
-        Field {
-            FieldLabel("Name")
-            Input(name, { name = it }, placeholder = "Jordan Lee")
+        InputRecipeField("Name") { input ->
+            Input(name, { name = it }, input, placeholder = "Jordan Lee")
         }
-        Field {
-            FieldLabel("Email")
-            Input(email, { email = it }, type = InputType.Email, placeholder = "name@example.com")
-            FieldDescription("We'll send updates to this address.")
+        InputRecipeField("Email", description = "We'll send updates to this address.") { input ->
+            Input(email, { email = it }, input, type = InputType.Email, placeholder = "name@example.com")
         }
         Field(orientation = FieldOrientation.Horizontal) {
             Button("Reset", variant = ButtonVariant.Outline)
@@ -460,25 +583,58 @@ private fun InputDisabledRecipe() {
 @Composable
 private fun InputInvalidRecipe() {
     var value by remember { mutableStateOf("") }
-    Field(Modifier.widthIn(max = 320.dp), invalid = true) {
-        FieldLabel("Invalid Input")
-        Input(value, { value = it }, placeholder = "Error", invalid = true)
-        FieldDescription("This field contains validation errors.")
+    InputRecipeField(
+        "Invalid Input",
+        Modifier.widthIn(max = 320.dp),
+        "This field contains validation errors.",
+        invalid = true,
+    ) { input ->
+        Input(value, { value = it }, input, placeholder = "Error", invalid = true)
     }
 }
 
 @Composable
 private fun InputFileRecipe() {
+    val picker = LocalFilePicker.current
+    var filename by remember { mutableStateOf<String?>(null) }
+    val onResult by rememberUpdatedState<(String?) -> Unit>({ selected ->
+        if (selected != null) filename = selected
+    })
+    val focus = remember { FocusRequester() }
+    val choose = {
+        picker?.invoke { onResult(it) }
+        Unit
+    }
     Field(Modifier.widthIn(max = 320.dp)) {
-        FieldLabel("Picture")
+        FieldLabel(
+            "Picture",
+            Modifier.focusProperties { canFocus = false }.clickable(enabled = picker != null) {
+                focus.requestFocus()
+                choose()
+            },
+            disabled = picker == null,
+        )
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Button("Choose File", variant = ButtonVariant.Outline)
-            Text(textStyle = TextColors.Muted) { "No file chosen" }
+            Button(
+                "Choose File",
+                enabled = picker != null,
+                modifier = Modifier.focusRequester(focus),
+                label = "Choose File: Picture",
+                onClick = choose,
+                variant = ButtonVariant.Outline,
+            )
+            Text(
+                modifier = Modifier.weight(1f),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                textStyle = TextColors.Muted,
+            ) { filename ?: "No file chosen" }
         }
         FieldDescription("Select a picture to upload.")
+        if (picker == null) FieldDescription("File selection is unavailable on this platform.")
     }
 }
 
@@ -498,11 +654,11 @@ private fun InputGridRecipe() {
     var last by remember { mutableStateOf("") }
     FieldGroup(Modifier.widthIn(max = 384.dp)) {
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            Field("First Name", Modifier.weight(1f)) {
-                Input(first, { first = it }, placeholder = "Jordan")
+            InputRecipeField("First Name", Modifier.weight(1f)) { input ->
+                Input(first, { first = it }, input, placeholder = "Jordan")
             }
-            Field("Last Name", Modifier.weight(1f)) {
-                Input(last, { last = it }, placeholder = "Lee")
+            InputRecipeField("Last Name", Modifier.weight(1f)) { input ->
+                Input(last, { last = it }, input, placeholder = "Lee")
             }
         }
     }
@@ -511,33 +667,34 @@ private fun InputGridRecipe() {
 @Composable
 private fun InputRequiredRecipe() {
     var value by remember { mutableStateOf("") }
-    Field(Modifier.widthIn(max = 320.dp)) {
-        FieldLabel("Required Field", required = true)
-        Input(value, { value = it }, placeholder = "This field is required", required = true)
-        FieldDescription("This field must be filled out.")
+    InputRecipeField(
+        "Required Field",
+        Modifier.widthIn(max = 320.dp),
+        "This field must be filled out.",
+        required = true,
+    ) { input ->
+        Input(value, { value = it }, input, placeholder = "This field is required", required = true)
     }
 }
 
 @Composable
 private fun InputBadgeRecipe() {
     var value by remember { mutableStateOf("") }
-    Field(Modifier.widthIn(max = 320.dp)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            FieldLabel("Webhook URL")
-            Box(Modifier.weight(1f))
-            Badge("Beta", variant = BadgeVariant.Secondary)
-        }
-        Input(value, { value = it }, type = InputType.Url, placeholder = "https://api.example.com/webhook")
+    InputRecipeField(
+        "Webhook URL",
+        Modifier.widthIn(max = 320.dp),
+        trailingLabel = { Badge("Beta", variant = BadgeVariant.Secondary) },
+    ) { input ->
+        Input(value, { value = it }, input, type = InputType.Url, placeholder = "https://api.example.com/webhook")
     }
 }
 
 @Composable
 private fun InputGroupRecipe() {
     var value by remember { mutableStateOf("") }
-    Field(Modifier.widthIn(max = 320.dp)) {
-        FieldLabel("Website URL")
+    InputRecipeField("Website URL", Modifier.widthIn(max = 320.dp)) { input ->
         InputGroup(Modifier.fillMaxWidth()) {
-            InputGroupInput(value, { value = it }, placeholder = "example.com")
+            InputGroupInput(value, { value = it }, input, placeholder = "example.com")
             InputGroupAddon("https://")
             InputGroupAddon(align = InputGroupAddonAlign.InlineEnd) {
                 Icon(Lucide.Info)
@@ -549,14 +706,13 @@ private fun InputGroupRecipe() {
 @Composable
 private fun InputButtonGroupRecipe() {
     var query by remember { mutableStateOf("") }
-    Field(Modifier.widthIn(max = 320.dp)) {
-        FieldLabel("Search")
+    InputRecipeField("Search", Modifier.widthIn(max = 320.dp)) { input ->
         BoxWithConstraints(Modifier.fillMaxWidth()) {
             ButtonGroup(style = rememberButtonGroupOutlineStyle()) {
                 Input(
                     query,
                     { query = it },
-                    Modifier.width((maxWidth - 67.dp).coerceAtLeast(120.dp)),
+                    input.width((maxWidth - 67.dp).coerceAtLeast(120.dp)),
                     placeholder = "Type to search...",
                 )
                 ButtonGroupItem("Search", onClick = {}, variant = ButtonVariant.Outline)
@@ -573,24 +729,24 @@ private fun InputFormRecipe() {
     var country by remember { mutableStateOf<String?>("us") }
     var address by remember { mutableStateOf("") }
     FieldGroup(Modifier.widthIn(max = 384.dp)) {
-        Field("Name") {
-            Input(name, { name = it }, placeholder = "Evil Rabbit", required = true)
+        InputRecipeField("Name", required = true, showRequired = false) { input ->
+            Input(name, { name = it }, input, placeholder = "Evil Rabbit", required = true)
         }
-        Field("Email", description = "We'll never share your email with anyone.") {
-            Input(email, { email = it }, type = InputType.Email, placeholder = "john@example.com")
+        InputRecipeField("Email", description = "We'll never share your email with anyone.") { input ->
+            Input(email, { email = it }, input, type = InputType.Email, placeholder = "john@example.com")
         }
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            Field("Phone", Modifier.weight(1f)) {
-                Input(phone, { phone = it }, type = InputType.Tel, placeholder = "+1 (555) 123-4567")
+            InputRecipeField("Phone", Modifier.weight(1f)) { input ->
+                Input(phone, { phone = it }, input, type = InputType.Tel, placeholder = "+1 (555) 123-4567")
             }
-            Field("Country", Modifier.weight(1f)) {
+            InputRecipeField("Country", Modifier.weight(1f)) { input ->
                 Select<String?>(
                     value = country,
                     onValueChange = { country = it },
                     placeholder = "United States",
                     label = { value -> inputCountries.firstOrNull { it.second == value }?.first ?: "United States" },
                 ) {
-                    SelectTrigger(Modifier.fillMaxWidth())
+                    SelectTrigger(input.fillMaxWidth())
                     SelectContent {
                         inputCountries.forEach { (label, value) ->
                             SelectItem<String?>(value, textValue = label)
@@ -599,8 +755,8 @@ private fun InputFormRecipe() {
                 }
             }
         }
-        Field("Address") {
-            Input(address, { address = it }, placeholder = "123 Main St")
+        InputRecipeField("Address") { input ->
+            Input(address, { address = it }, input, placeholder = "123 Main St")
         }
         Field(orientation = FieldOrientation.Horizontal) {
             Button("Cancel", variant = ButtonVariant.Outline)
@@ -657,10 +813,8 @@ private fun InputRtlRecipe() {
                     fontFamily = font,
                 ) {
                     val t = inputRtlTranslations[language]
-                    Field(Modifier.widthIn(max = 320.dp)) {
-                        FieldLabel(t.apiKey)
-                        Input(apiKey, { apiKey = it }, type = InputType.Password, placeholder = "sk-...")
-                        FieldDescription(t.description)
+                    InputRecipeField(t.apiKey, Modifier.widthIn(max = 320.dp), t.description) { input ->
+                        Input(apiKey, { apiKey = it }, input, type = InputType.Password, placeholder = "sk-...")
                     }
                 }
             }
@@ -669,5 +823,3 @@ private fun InputRtlRecipe() {
 }
 
 // endregion
-
-

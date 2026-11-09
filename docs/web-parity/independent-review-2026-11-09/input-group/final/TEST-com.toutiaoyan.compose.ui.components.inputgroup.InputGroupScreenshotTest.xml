@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="InputGroupScreenshotTest[jvm]" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-11-08T23:46:25.120Z" hostname="Apples-MacBook-Pro.local" time="0.901">
+  <properties/>
+  <testcase name="focused_light[jvm]" classname="com.toutiaoyan.compose.ui.components.inputgroup.InputGroupScreenshotTest" time="0.089"/>
+  <testcase name="preview_composer_single_line_focused_light[jvm]" classname="com.toutiaoyan.compose.ui.components.inputgroup.InputGroupScreenshotTest" time="0.122"/>
+  <testcase name="chat_panel_layout_light[jvm]" classname="com.toutiaoyan.compose.ui.components.inputgroup.InputGroupScreenshotTest" time="0.131"/>
+  <testcase name="long_value_light[jvm]" classname="com.toutiaoyan.compose.ui.components.inputgroup.InputGroupScreenshotTest" time="0.037"/>
+  <testcase name="states_light[jvm]" classname="com.toutiaoyan.compose.ui.components.inputgroup.InputGroupScreenshotTest" time="0.079"/>
+  <testcase name="bottom_bar_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.inputgroup.InputGroupScreenshotTest" time="0.128"/>
+  <testcase name="focused_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.inputgroup.InputGroupScreenshotTest" time="0.109"/>
+  <testcase name="preview_composer_two_line_focused_light[jvm]" classname="com.toutiaoyan.compose.ui.components.inputgroup.InputGroupScreenshotTest" time="0.085"/>
+  <testcase name="long_value_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.inputgroup.InputGroupScreenshotTest" time="0.027"/>
+  <testcase name="bottom_bar_light[jvm]" classname="com.toutiaoyan.compose.ui.components.inputgroup.InputGroupScreenshotTest" time="0.027"/>
+  <testcase name="chat_panel_layout_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.inputgroup.InputGroupScreenshotTest" time="0.026"/>
+  <testcase name="states_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.inputgroup.InputGroupScreenshotTest" time="0.04"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

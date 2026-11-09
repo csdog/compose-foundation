@@ -56,7 +56,11 @@ internal class ContextMenuPointPositionProvider(
                     if (layoutDirection == LayoutDirection.Rtl) ContextMenuSide.Left else ContextMenuSide.Right
                 else -> side
             }
-        fun cross(anchor: Int, size: Int): Int =
+
+        fun cross(
+            anchor: Int,
+            size: Int,
+        ): Int =
             when (align) {
                 PopupAlign.Start -> anchor + alignOffsetPx
                 PopupAlign.Center -> anchor - size / 2 + alignOffsetPx

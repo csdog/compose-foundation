@@ -2,13 +2,20 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
+import com.toutiaoyan.compose.ui.theme.currentTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.runtime.Composable
@@ -18,23 +25,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.components.card.Card
 import com.toutiaoyan.compose.ui.components.card.CardAction
 import com.toutiaoyan.compose.ui.components.card.CardContent
 import com.toutiaoyan.compose.ui.components.card.CardFooter
 import com.toutiaoyan.compose.ui.components.card.CardHeader
-import com.toutiaoyan.compose.ui.components.card.CardTitle
-import com.toutiaoyan.compose.ui.components.card.CardDescription
 import com.toutiaoyan.compose.ui.components.dialog.Dialog
 import com.toutiaoyan.compose.ui.components.dialog.DialogContent
-import com.toutiaoyan.compose.ui.components.dialog.DialogDescription
 import com.toutiaoyan.compose.ui.components.dialog.DialogFooter
 import com.toutiaoyan.compose.ui.components.dialog.DialogHeader
-import com.toutiaoyan.compose.ui.components.dialog.DialogTitle
 import com.toutiaoyan.compose.ui.components.dialog.DialogTrigger
-import com.toutiaoyan.compose.ui.components.input.InputType
 import com.toutiaoyan.compose.ui.components.questionnaire.Questionnaire
 import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireActions
 import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireChoice
@@ -55,11 +56,27 @@ import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireSkip
 import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireSubmit
 import com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireTitle
 import com.toutiaoyan.compose.ui.components.questionnaire.questionnaireState
+import com.toutiaoyan.compose.ui.components.button.Button
+import com.toutiaoyan.compose.ui.components.button.ButtonVariant
+import com.toutiaoyan.compose.ui.components.toast.ToastState
+import com.toutiaoyan.compose.ui.components.toast.rememberToastState
 import com.toutiaoyan.compose.ui.components.select.Select
 import com.toutiaoyan.compose.ui.components.select.SelectContent
 import com.toutiaoyan.compose.ui.components.select.SelectItem
 import com.toutiaoyan.compose.ui.components.select.SelectSize
 import com.toutiaoyan.compose.ui.components.select.SelectTrigger
+
+@Composable
+private fun rememberQuestionnaireFeedback(): ToastState {
+    val toast = rememberToastState()
+    QuestionnaireSourceToast(toast)
+    return toast
+}
+
+private fun Map<String, List<String>>.answer(
+    name: String,
+    fallback: String = "None",
+): String = get(name).orEmpty().joinToString(", ").ifBlank { fallback }
 
 private val questionnaireCollection =
     listOf(
@@ -113,7 +130,17 @@ private fun contentWidth() = Modifier.widthIn(max = 448.dp).fillMaxWidth()
 
 @Composable
 private fun MultipleSelectionPreview() {
-    Questionnaire(modifier = contentWidth(), onSubmit = { }) {
+    val toast = rememberQuestionnaireFeedback()
+    Questionnaire(
+        modifier = contentWidth(),
+        onSubmit = { answers ->
+            toast.show(
+                "Context selected",
+                description =
+                    "Context: ${answers.answer("context")}",
+            )
+        },
+    ) {
         QuestionnaireProgress()
         QuestionnaireItem("context", required = true, multiple = true) {
             QuestionnaireTitle("What context should the agent inspect?")
@@ -132,7 +159,17 @@ private fun MultipleSelectionPreview() {
 
 @Composable
 private fun FreeformAnswerPreview() {
-    Questionnaire(modifier = contentWidth(), onSubmit = { }) {
+    val toast = rememberQuestionnaireFeedback()
+    Questionnaire(
+        modifier = contentWidth(),
+        onSubmit = { answers ->
+            toast.show(
+                "Approach selected",
+                description =
+                    "Approach: ${answers.answer("approach")}",
+            )
+        },
+    ) {
         QuestionnaireProgress()
         QuestionnaireItem("approach", required = true) {
             QuestionnaireTitle("How should the agent approach this refactor?")
@@ -154,15 +191,27 @@ private fun FreeformAnswerPreview() {
 
 @Composable
 private fun ExplicitSkipPreview() {
+    val toast = rememberQuestionnaireFeedback()
     Questionnaire(
         modifier = contentWidth(),
         items =
             listOf(
                 com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition("task", required = true),
                 com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition("constraints"),
-                com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition("review", required = true),
+                com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition(
+                    "review",
+                    required = true,
+                ),
             ),
-        onSubmit = { },
+        onSubmit = { answers ->
+            toast.show(
+                "Agent brief submitted",
+                description =
+                    "Task: ${answers.answer("task")} · " +
+                        "Constraints: ${answers.answer("constraints", "Skipped")} · " +
+                        "Review: ${answers.answer("review")}",
+            )
+        },
     ) {
         QuestionnaireProgress()
         QuestionnaireItem("task", required = true) {
@@ -229,14 +278,25 @@ private fun ShortcutsPreview() {
 
 @Composable
 private fun QuestionnaireListShortcuts(shortcuts: QuestionnaireShortcuts) {
+    val toast = rememberQuestionnaireFeedback()
     Questionnaire(
         modifier = contentWidth(),
         items =
             listOf(
-                com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition("action", required = true),
+                com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition(
+                    "action",
+                    required = true,
+                ),
             ),
         shortcuts = shortcuts,
-        onSubmit = { },
+        onSubmit = { answers ->
+            toast.show(
+                "Next action selected",
+                description =
+                    "Action: ${answers.answer("action")} · " +
+                        "Shortcuts: ${shortcuts.name.lowercase()}",
+            )
+        },
     ) {
         QuestionnaireItem("action", required = true) {
             QuestionnaireTitle("What should the agent do next?")
@@ -254,6 +314,7 @@ private fun QuestionnaireListShortcuts(shortcuts: QuestionnaireShortcuts) {
 
 @Composable
 private fun CustomValidationPreview() {
+    val toast = rememberQuestionnaireFeedback()
     var item by remember { mutableStateOf("detail") }
     var errors by remember { mutableStateOf<Map<String, String>>(emptyMap()) }
     val definitions =
@@ -276,7 +337,14 @@ private fun CustomValidationPreview() {
                     emptyMap()
                 }
             errors = next
-            if (next.isNotEmpty()) item = "detail"
+            if (next.isNotEmpty()) {
+                item = "detail"
+            } else {
+                toast.show(
+                    "Agent response configured",
+                    description = "Detail: ${answers.answer("detail")} · Audience: ${answers.answer("audience")}",
+                )
+            }
         },
     ) {
         Card(Modifier.fillMaxWidth()) {
@@ -294,8 +362,16 @@ private fun CustomValidationPreview() {
                 }
                 CardContent {
                     QuestionnaireChoices {
-                        QuestionnaireChoice("summary", "Concise summary")
-                        QuestionnaireChoice("complete", "Complete answer")
+                        QuestionnaireChoice(
+                            "summary",
+                            "Concise summary",
+                            onCheckedChange = { if (it) errors = errors - "detail" },
+                        )
+                        QuestionnaireChoice(
+                            "complete",
+                            "Complete answer",
+                            onCheckedChange = { if (it) errors = errors - "detail" },
+                        )
                     }
                     QuestionnaireError(text = errors["detail"])
                 }
@@ -314,8 +390,16 @@ private fun CustomValidationPreview() {
                 }
                 CardContent {
                     QuestionnaireChoices {
-                        QuestionnaireChoice("team", "My team")
-                        QuestionnaireChoice("public", "Public audience")
+                        QuestionnaireChoice(
+                            "team",
+                            "My team",
+                            onCheckedChange = { if (it) errors = errors - "audience" },
+                        )
+                        QuestionnaireChoice(
+                            "public",
+                            "Public audience",
+                            onCheckedChange = { if (it) errors = errors - "audience" },
+                        )
                     }
                     QuestionnaireError(text = errors["audience"])
                 }
@@ -342,62 +426,78 @@ private val checkpoints =
 
 @Composable
 private fun ControlledPreview() {
+    val toast = rememberQuestionnaireFeedback()
     var item by remember { mutableStateOf("scope") }
     val label = checkpoints.firstOrNull { it.name == item }?.label ?: item
     Questionnaire(
-            modifier = Modifier.widthIn(max = 448.dp).fillMaxWidth(),
-            item = item,
-            onItemChange = { item = it },
-            items =
-                checkpoints.map {
-                    com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition(it.name, required = true)
-                },
-            onSubmit = { },
-        ) {
-            QuestionnaireProgress { state -> "Checkpoint ${state.current} of ${state.total}: $label" }
-            QuestionnaireItem("scope", required = true) {
-                QuestionnaireTitle("What may the agent change?")
-                QuestionnaireDescription("The host stores the active checkpoint while Questionnaire navigates.")
-                QuestionnaireChoices {
-                    QuestionnaireChoice("component", "Only the target component")
-                    QuestionnaireChoice("tests", "Component and related tests")
-                    QuestionnaireChoice("feature", "The complete feature area")
-                }
-                QuestionnaireError()
+        modifier = Modifier.widthIn(max = 448.dp).fillMaxWidth(),
+        item = item,
+        onItemChange = { item = it },
+        items =
+            checkpoints.map {
+                com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition(
+                    it.name,
+                    required = true,
+                )
+            },
+        onSubmit = { answers ->
+            toast.show(
+                "Agent workflow configured",
+                description =
+                    "Scope: ${answers.answer("scope")} · " +
+                        "Verification: ${answers.answer("checks")} · " +
+                        "Output: ${answers.answer("output")}",
+            )
+        },
+    ) {
+        QuestionnaireProgress { state -> "Checkpoint ${state.current} of ${state.total}: $label" }
+        QuestionnaireItem("scope", required = true) {
+            QuestionnaireTitle("What may the agent change?")
+            QuestionnaireDescription("The host stores the active checkpoint while Questionnaire navigates.")
+            QuestionnaireChoices {
+                QuestionnaireChoice("component", "Only the target component")
+                QuestionnaireChoice("tests", "Component and related tests")
+                QuestionnaireChoice("feature", "The complete feature area")
             }
-            QuestionnaireItem("checks", required = true) {
-                QuestionnaireTitle("Which verification level should it use?")
-                QuestionnaireChoices {
-                    QuestionnaireChoice("targeted", "Targeted tests")
-                    QuestionnaireChoice("package", "Package tests and typecheck")
-                    QuestionnaireChoice("full", "Full workspace verification")
-                }
-                QuestionnaireError()
-            }
-            QuestionnaireItem("output", required = true) {
-                QuestionnaireTitle("What should the agent return when finished?")
-                QuestionnaireChoices {
-                    QuestionnaireChoice("summary", "Concise summary")
-                    QuestionnaireChoice("diff", "Summary with changed files")
-                    QuestionnaireChoice("handoff", "Detailed implementation handoff")
-                }
-                QuestionnaireError()
-            }
-            QuestionnaireActions {
-                QuestionnairePrevious()
-                QuestionnaireNext("Next")
-                QuestionnaireSubmit("Save workflow")
-            }
+            QuestionnaireError()
         }
+        QuestionnaireItem("checks", required = true) {
+            QuestionnaireTitle("Which verification level should it use?")
+            QuestionnaireChoices {
+                QuestionnaireChoice("targeted", "Targeted tests")
+                QuestionnaireChoice("package", "Package tests and typecheck")
+                QuestionnaireChoice("full", "Full workspace verification")
+            }
+            QuestionnaireError()
+        }
+        QuestionnaireItem("output", required = true) {
+            QuestionnaireTitle("What should the agent return when finished?")
+            QuestionnaireChoices {
+                QuestionnaireChoice("summary", "Concise summary")
+                QuestionnaireChoice("diff", "Summary with changed files")
+                QuestionnaireChoice("handoff", "Detailed implementation handoff")
+            }
+            QuestionnaireError()
+        }
+        QuestionnaireActions {
+            QuestionnairePrevious()
+            QuestionnaireNext("Next")
+            QuestionnaireSubmit("Save workflow")
+        }
+    }
 }
 
 @Composable
 private fun ResumePreview() {
+    val toast = rememberQuestionnaireFeedback()
     Questionnaire(
         modifier = contentWidth(),
         items =
             listOf(
-                com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition("change", required = true),
+                com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition(
+                    "change",
+                    required = true,
+                ),
                 com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition(
                     "verification",
                     required = true,
@@ -406,7 +506,15 @@ private fun ResumePreview() {
                 com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition("notes"),
             ),
         defaultItem = "verification",
-        onSubmit = { },
+        onSubmit = { answers ->
+            toast.show(
+                "Draft updated",
+                description =
+                    "Migration: ${answers.answer("change")} · " +
+                        "Verification: ${answers.answer("verification")} · " +
+                        "Notes: ${answers.answer("notes")}",
+            )
+        },
     ) {
         QuestionnaireProgress()
         QuestionnaireItem("change", required = true) {
@@ -438,7 +546,26 @@ private fun ResumePreview() {
             )
         }
         QuestionnaireActions {
-            QuestionnaireReset()
+            val state = questionnaireState()
+            Button(
+                text = "Reset changes",
+                modifier =
+                    Modifier.heightIn(
+                        min =
+                            if (LocalWindowInfo.current.containerSize.width <
+                                with(LocalDensity.current) { 640.dp.roundToPx() }
+                            ) {
+                                44.dp
+                            } else {
+                                0.dp
+                            },
+                    ),
+                variant = ButtonVariant.Outline,
+                onClick = {
+                    state.reset()
+                    toast.show("Saved answers restored")
+                },
+            )
             QuestionnairePrevious()
             QuestionnaireNext("Next")
             QuestionnaireSubmit("Update draft")
@@ -448,8 +575,21 @@ private fun ResumePreview() {
 
 @Composable
 private fun ConditionalItemsPreview() {
+    val toast = rememberQuestionnaireFeedback()
     var runtime by remember { mutableStateOf("local") }
-    Questionnaire(modifier = contentWidth(), defaultItem = "runtime", onSubmit = { }) {
+    Questionnaire(
+        modifier = contentWidth(),
+        defaultItem = "runtime",
+        onSubmit = { answers ->
+            toast.show(
+                "Execution plan saved",
+                description =
+                    "Runtime: ${answers.answer("runtime")} · " +
+                        "Environment: ${answers.answer("environment", "Not applicable")} · " +
+                        "Approval: ${answers.answer("approval")}",
+            )
+        },
+    ) {
         QuestionnaireProgress()
         QuestionnaireItem("runtime", required = true) {
             QuestionnaireTitle("Where should the agent run?")
@@ -498,6 +638,7 @@ private fun ConditionalItemsPreview() {
 
 @Composable
 private fun NavigationStatePreview() {
+    val toast = rememberQuestionnaireFeedback()
     Questionnaire(
         modifier = contentWidth(),
         items =
@@ -511,7 +652,14 @@ private fun NavigationStatePreview() {
                     required = true,
                 ),
             ),
-        onSubmit = { },
+        onSubmit = { answers ->
+            toast.show(
+                "Permissions saved",
+                description =
+                    "Permission: ${answers.answer("permission")} · " +
+                        "Verification: ${answers.answer("verification")}",
+            )
+        },
     ) {
         val state = questionnaireState()
         QuestionnaireProgress()
@@ -550,6 +698,7 @@ private fun NavigationStatePreview() {
 
 @Composable
 private fun CustomProgressPreview() {
+    val toast = rememberQuestionnaireFeedback()
     Questionnaire(
         modifier = contentWidth(),
         items =
@@ -557,9 +706,32 @@ private fun CustomProgressPreview() {
                 com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition(it, required = true)
             },
         defaultItem = "scope",
-        onSubmit = { },
+        onSubmit = { answers ->
+            toast.show(
+                "Pull request plan ready",
+                description =
+                    "Scope: ${answers.answer("scope")} · " +
+                        "Commits: ${answers.answer("strategy")} · " +
+                        "Tests: ${answers.answer("tests")} · " +
+                        "Delivery: ${answers.answer("delivery")}",
+            )
+        },
     ) {
-        QuestionnaireProgress { state -> "Checkpoint ${state.current} of ${state.total}" }
+        val progress = questionnaireState()
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                repeat(progress.count) { index ->
+                    Box(
+                        Modifier.weight(1f).height(6.dp)
+                            .background(
+                                if (index <= progress.index) currentTheme.colors.primary else currentTheme.colors.muted,
+                                RoundedCornerShape(50),
+                            ).testTag("questionnaire-progress-segment-$index"),
+                    )
+                }
+            }
+            QuestionnaireProgress { state -> "Checkpoint ${state.current} of ${state.total}" }
+        }
         QuestionnaireItem("scope", required = true) {
             QuestionnaireTitle("How large is the change?")
             QuestionnaireChoices {
@@ -606,6 +778,7 @@ private fun CustomProgressPreview() {
 
 @Composable
 private fun AnimatedItemsPreview() {
+    val toast = rememberQuestionnaireFeedback()
     Questionnaire(
         modifier = contentWidth(),
         defaultItem = "task",
@@ -614,7 +787,15 @@ private fun AnimatedItemsPreview() {
             listOf("task", "review", "delivery").map {
                 com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition(it, required = true)
             },
-        onSubmit = { },
+        onSubmit = { answers ->
+            toast.show(
+                "Agent workflow saved",
+                description =
+                    "Task: ${answers.answer("task")} · " +
+                        "Review: ${answers.answer("review")} · " +
+                        "Delivery: ${answers.answer("delivery")}",
+            )
+        },
     ) {
         QuestionnaireProgress()
         QuestionnaireItem("task", required = true) {
@@ -657,7 +838,20 @@ private fun AnimatedItemsPreview() {
 
 @Composable
 private fun CardPreview() {
-    Questionnaire(modifier = contentWidth(), defaultItem = "task", shortcuts = QuestionnaireShortcuts.Numbers, onSubmit = { }) {
+    val toast = rememberQuestionnaireFeedback()
+    Questionnaire(
+        modifier = contentWidth(),
+        defaultItem = "task",
+        shortcuts = QuestionnaireShortcuts.Numbers,
+        onSubmit = { answers ->
+            toast.show(
+                "Agent task created",
+                description =
+                    "Task: ${answers.answer("task")} · " +
+                        "Handoff: ${answers.answer("output")}",
+            )
+        },
+    ) {
         Card(Modifier.fillMaxWidth()) {
             QuestionnaireItem("task", required = true) {
                 CardHeader {
@@ -702,48 +896,60 @@ private fun CardPreview() {
 
 @Composable
 private fun DialogPreview() {
+    val toast = rememberQuestionnaireFeedback()
     var open by remember { mutableStateOf(false) }
     Dialog(open = open, onOpenChange = { open = it }) {
         DialogTrigger("Open clarification")
-            DialogContent {
-                DialogHeader {
-                    DialogTitle("Clarification")
-                    DialogDescription("Answer so the agent can continue. Close is host-owned.")
-                }
-                Questionnaire(
-                    modifier = Modifier.fillMaxWidth(),
-                    defaultItem = "scope",
-                    items =
-                        listOf("scope", "tests").map {
-                            com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition(
-                                it,
-                                required = true,
-                            )
-                        },
-                    onSubmit = { open = false },
-                ) {
-                    QuestionnaireItem("scope", required = true) {
+        DialogContent {
+            Questionnaire(
+                modifier = Modifier.fillMaxWidth(),
+                defaultItem = "scope",
+                items =
+                    listOf("scope", "tests").map {
+                        com.toutiaoyan.compose.ui.components.questionnaire.QuestionnaireItemDefinition(
+                            it,
+                            required = true,
+                        )
+                    },
+                onSubmit = { answers ->
+                    toast.show(
+                        "Clarification sent",
+                        description =
+                            "Scope: ${answers.answer("scope")} · " +
+                                "Verification: ${answers.answer("tests")}",
+                    )
+                    open = false
+                },
+            ) {
+                QuestionnaireItem("scope", required = true) {
+                    DialogHeader {
+                        QuestionnaireProgress()
                         QuestionnaireTitle("Which files are in scope?")
                         QuestionnaireDescription("Choose how broadly the agent can update the workspace.")
-                        QuestionnaireChoices {
-                            QuestionnaireChoice("component", "Component only")
-                            QuestionnaireChoice("feature", "Complete feature directory")
-                            QuestionnaireChoice("workspace", "Any related workspace file")
-                        }
-                        QuestionnaireError()
                     }
-                    QuestionnaireItem("tests", required = true) {
+                    QuestionnaireChoices {
+                        QuestionnaireChoice("component", "Component only")
+                        QuestionnaireChoice("feature", "Complete feature directory")
+                        QuestionnaireChoice("workspace", "Any related workspace file")
+                    }
+                    QuestionnaireError()
+                }
+                QuestionnaireItem("tests", required = true) {
+                    DialogHeader {
+                        QuestionnaireProgress()
                         QuestionnaireTitle("How much verification is needed?")
                         QuestionnaireDescription("Choose the checks the agent should run before handoff.")
-                        QuestionnaireChoices {
-                            QuestionnaireChoice("targeted", "Targeted tests")
-                            QuestionnaireChoice("package", "Package tests")
-                            QuestionnaireChoice("full", "Full workspace verification")
-                        }
-                        QuestionnaireError()
                     }
+                    QuestionnaireChoices {
+                        QuestionnaireChoice("targeted", "Targeted tests")
+                        QuestionnaireChoice("package", "Package tests")
+                        QuestionnaireChoice("full", "Full workspace verification")
+                    }
+                    QuestionnaireError()
+                }
                 DialogFooter {
-                    QuestionnaireActions {
+                    Button(text = "Cancel", onClick = { open = false }, variant = ButtonVariant.Outline)
+                    QuestionnaireActions(Modifier.weight(1f)) {
                         QuestionnairePrevious()
                         QuestionnaireNext("Next")
                         QuestionnaireSubmit("Send answer")
@@ -885,26 +1091,43 @@ val questionnaireDoc =
                     prompt = "What should we prototype next?",
                     description = "Choose a direction or write your own.",
                     choices = listOf(
-                        QuestionnaireChoiceDefinition("delegation", "Delegation", "Show how work moves to a specialist."),
-                        QuestionnaireChoiceDefinition("questions", "Question prompts", "Show choices while the interface waits."),
+                        QuestionnaireChoiceDefinition(
+                            "delegation", "Delegation", "Show how work moves to a specialist.",
+                        ),
+                        QuestionnaireChoiceDefinition(
+                            "questions", "Question prompts", "Show choices while the interface waits.",
+                        ),
                         QuestionnaireChoiceDefinition("both", "Both together"),
                     ),
                     input = QuestionnaireInputDefinition("Another answer", "Type another answer…"),
+                ),
+                QuestionnaireItemDefinition(
+                    name = "detail",
+                    prompt = "How much detail should it include?",
+                    description = "Skip this if you are not sure yet.",
+                    choices = listOf(
+                        QuestionnaireChoiceDefinition("focused", "Focused"),
+                        QuestionnaireChoiceDefinition("complete", "Complete flow"),
+                    ),
                 ),
             )
 
             Questionnaire(items = items, onSubmit = { answers -> }) {
                 QuestionnaireProgress()
-                QuestionnaireItem("direction", required = true) {
-                    QuestionnaireTitle("What should we prototype next?")
-                    QuestionnaireDescription("Choose a direction or write your own.")
-                    QuestionnaireChoices {
-                        QuestionnaireChoice("delegation", "Delegation")
-                        QuestionnaireChoice("questions", "Question prompts")
-                        QuestionnaireChoice("both", "Both together")
-                        QuestionnaireInput(placeholder = "Type another answer…")
+                items.forEach { question ->
+                    QuestionnaireItem(question.name, required = question.required) {
+                        QuestionnaireTitle(question.prompt)
+                        question.description?.let { QuestionnaireDescription(it) }
+                        QuestionnaireChoices {
+                            question.choices.forEach { choice ->
+                                QuestionnaireChoice(choice.value, choice.label, description = choice.description)
+                            }
+                            question.input?.let { input ->
+                                QuestionnaireInput(contentDescription = input.label, placeholder = input.placeholder)
+                            }
+                        }
+                        QuestionnaireError()
                     }
-                    QuestionnaireError()
                 }
                 QuestionnaireActions {
                     QuestionnairePrevious()
@@ -931,6 +1154,13 @@ val questionnaireDoc =
                 ├── QuestionnaireNext
                 └── QuestionnaireSubmit
             """.trimIndent(),
+        beforeCompositionMarkdown =
+            "Define the collection once: pass it to `Questionnaire` for server-rendered progress, actions, " +
+                "and shortcuts, then map it into the parts.",
+        compositionMarkdown =
+            "Questionnaire owns the ordered items, active item, answer state, validation, progress, and navigation. " +
+                "The containing page, card, dialog, or drawer owns close and cancellation behavior, persistence, " +
+                "transport, and branching.",
         examplesHeading = null,
         beforeExamples =
             listOf(
@@ -939,7 +1169,8 @@ val questionnaireDoc =
                     listOf(
                         ComponentGuideBlock.Paragraph(
                             "Pass `items` to server-render the active item, progress, actions, and answer " +
-                                "shortcuts. See the [headless Questionnaire](https://ui.shadcn.com/docs/react/questionnaire) " +
+                                "shortcuts. See the [headless Questionnaire]" +
+                                "(https://ui.shadcn.com/docs/react/questionnaire) " +
                                 "for the complete behavior.",
                         ),
                     ),
@@ -951,9 +1182,10 @@ val questionnaireDoc =
                     "Accessibility",
                     listOf(
                         ComponentGuideBlock.Paragraph(
-                            "`QuestionnaireItem` renders a `fieldset`, and `QuestionnaireTitle` renders its " +
-                                "`legend`. Descriptions and active errors are associated with the current item, " +
-                                "and invalid items and answer controls expose an invalid state.",
+                            "In the official web component, `QuestionnaireItem` renders a `fieldset`, and " +
+                                "`QuestionnaireTitle` renders its `legend`. Compose groups the active question " +
+                                "and marks its title as a heading. Active errors and invalid answer controls " +
+                                "expose an error state through Compose semantics.",
                         ),
                         ComponentGuideBlock.Paragraph(
                             "Fixed choices preserve native radio and checkbox behavior. Progress is exposed as " +
@@ -964,7 +1196,8 @@ val questionnaireDoc =
                         ComponentGuideBlock.Paragraph(
                             "Always give `QuestionnaireInput` an accessible name with a visible label, " +
                                 "`contentDescription`, or a labelled field. A placeholder is not a label. See the " +
-                                "[Questionnaire accessibility guide](https://ui.shadcn.com/docs/react/questionnaire#accessibility) " +
+                                "[Questionnaire accessibility guide]" +
+                                "(https://ui.shadcn.com/docs/react/questionnaire#accessibility) " +
                                 "for labeling custom compositions and the complete keyboard behavior.",
                         ),
                     ),
@@ -986,7 +1219,8 @@ val questionnaireDoc =
                     listOf(
                         ComponentGuideBlock.Paragraph(
                             "The props, data attributes, and render states for every part are documented on the " +
-                                "[@shadcn/react Questionnaire](https://ui.shadcn.com/docs/react/questionnaire#api-reference) " +
+                                "[@shadcn/react Questionnaire]" +
+                                "(https://ui.shadcn.com/docs/react/questionnaire#api-reference) " +
                                 "page. The styled components inherit the corresponding unstyled props. " +
                                 "Navigation components also accept Button `size` and `variant` props, and " +
                                 "`QuestionnaireActions` is a styled-only layout helper.",
@@ -1111,8 +1345,14 @@ val questionnaireDoc =
                             ) {
                                 QuestionnaireItem("detail", required = true, invalid = errors.containsKey("detail")) {
                                     QuestionnaireChoices {
-                                        QuestionnaireChoice("summary", "Concise summary")
-                                        QuestionnaireChoice("complete", "Complete answer")
+                                        QuestionnaireChoice(
+                                            "summary", "Concise summary",
+                                            onCheckedChange = { if (it) errors = errors - "detail" },
+                                        )
+                                        QuestionnaireChoice(
+                                            "complete", "Complete answer",
+                                            onCheckedChange = { if (it) errors = errors - "detail" },
+                                        )
                                     }
                                     QuestionnaireError(text = errors["detail"])
                                 }
@@ -1124,8 +1364,9 @@ val questionnaireDoc =
                     ComponentExample(
                         title = "Controlled",
                         minPreviewHeight = 520.dp,
-                        descriptionMarkdown = "Control the active item from host state, such as returning to an " +
-                            "invalid step.",
+                        descriptionMarkdown =
+                            "Control the active item from host state, such as returning to an " +
+                                "invalid step.",
                         code =
                             """
                             var item by remember { mutableStateOf("scope") }
@@ -1222,8 +1463,22 @@ val questionnaireDoc =
                         descriptionMarkdown = "Use the Progress render state to build a custom progress indicator.",
                         code =
                             """
-                            QuestionnaireProgress { state ->
-                                "Checkpoint ${'$'}{state.current} of ${'$'}{state.total}"
+                            val progress = questionnaireState()
+                            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                                Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                    repeat(progress.count) { index ->
+                                        Box(
+                                            Modifier.weight(1f).height(6.dp).background(
+                                                if (index <= progress.index) currentTheme.colors.primary
+                                                else currentTheme.colors.muted,
+                                                RoundedCornerShape(50),
+                                            ),
+                                        )
+                                    }
+                                }
+                                QuestionnaireProgress { state ->
+                                    "Checkpoint ${'$'}{state.current} of ${'$'}{state.total}"
+                                }
                             }
                             """.trimIndent(),
                         preview = { CustomProgressPreview() },
@@ -1288,14 +1543,36 @@ val questionnaireDoc =
                             Dialog(open = open, onOpenChange = { open = it }) {
                                 DialogTrigger("Open clarification")
                                 DialogContent {
-                                    DialogHeader {
-                                        DialogTitle("Clarification")
-                                        DialogDescription("Answer so the agent can continue. Close is host-owned.")
-                                    }
                                     Questionnaire(items = items, onSubmit = { open = false }) {
-                                        QuestionnaireItem("scope", required = true) { /* … */ }
+                                        QuestionnaireItem("scope", required = true) {
+                                            DialogHeader {
+                                                QuestionnaireProgress()
+                                                QuestionnaireTitle("Which files are in scope?")
+                                                QuestionnaireDescription(
+                                                    "Choose how broadly the agent can update the workspace.",
+                                                )
+                                            }
+                                            QuestionnaireChoices { /* scope choices */ }
+                                            QuestionnaireError()
+                                        }
+                                        QuestionnaireItem("tests", required = true) {
+                                            DialogHeader {
+                                                QuestionnaireProgress()
+                                                QuestionnaireTitle("How much verification is needed?")
+                                                QuestionnaireDescription(
+                                                    "Choose the checks the agent should run before handoff.",
+                                                )
+                                            }
+                                            QuestionnaireChoices { /* verification choices */ }
+                                            QuestionnaireError()
+                                        }
                                         DialogFooter {
-                                            QuestionnaireActions {
+                                            Button(
+                                                text = "Cancel",
+                                                onClick = { open = false },
+                                                variant = ButtonVariant.Outline,
+                                            )
+                                            QuestionnaireActions(Modifier.weight(1f)) {
                                                 QuestionnairePrevious()
                                                 QuestionnaireNext("Next")
                                                 QuestionnaireSubmit("Send answer")

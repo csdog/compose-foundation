@@ -10,11 +10,13 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.toutiaoyan.compose.ui.components.button.Button
@@ -48,8 +50,8 @@ internal fun DrawerSwipeDirection.contentAlignment(): Alignment =
     when (this) {
         DrawerSwipeDirection.Up -> Alignment.TopCenter
         DrawerSwipeDirection.Down -> Alignment.BottomCenter
-        DrawerSwipeDirection.Left -> Alignment.CenterStart
-        DrawerSwipeDirection.Right -> Alignment.CenterEnd
+        DrawerSwipeDirection.Left -> AbsoluteAlignment.CenterLeft
+        DrawerSwipeDirection.Right -> AbsoluteAlignment.CenterRight
     }
 
 internal fun DrawerSwipeDirection.dragOrientation(): Orientation =
@@ -76,6 +78,39 @@ internal class DrawerNestHost(
     private val parent: DrawerNestHost? = null,
     private val direction: DrawerSwipeDirection = DrawerSwipeDirection.Down,
 ) {
+    var swipeProgress by mutableStateOf<() -> Float>({ 0f })
+        private set
+    private val swipeDepth: Int = (parent?.swipeDepth ?: 0) + 1
+    private val childSwipes = mutableStateListOf<Pair<DrawerNestHost, () -> Float>>()
+    val nestedSwipeProgress: Float
+        get() = childSwipes.asReversed().maxByOrNull { it.first.swipeDepth }?.second?.invoke() ?: 0f
+
+    fun attachSwipeProgress(progress: () -> Float) {
+        swipeProgress = progress
+        parent?.registerChildSwipe(this, direction, progress)
+    }
+
+    fun detachSwipeProgress() {
+        swipeProgress = { 0f }
+        parent?.unregisterChildSwipe(this)
+    }
+
+    private fun registerChildSwipe(
+        child: DrawerNestHost,
+        childDirection: DrawerSwipeDirection,
+        progress: () -> Float,
+    ) {
+        if (childDirection != direction) return
+        childSwipes.removeAll { it.first === child }
+        childSwipes.add(child to progress)
+        parent?.registerChildSwipe(child, childDirection, progress)
+    }
+
+    private fun unregisterChildSwipe(child: DrawerNestHost) {
+        childSwipes.removeAll { it.first === child }
+        parent?.unregisterChildSwipe(child)
+    }
+
     var naturalHeightPx by mutableFloatStateOf(0f)
         private set
     var frontmostHeightPx by mutableFloatStateOf(0f)

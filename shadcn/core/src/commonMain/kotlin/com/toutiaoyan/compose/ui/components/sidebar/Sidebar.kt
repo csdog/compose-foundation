@@ -251,7 +251,7 @@ fun SidebarProvider(
         LocalSidebarState provides state,
         LocalSidebarLayout provides layout,
     ) {
-        Row(modifier = rowModifier) { content() }
+        SidebarProviderLayout(modifier = rowModifier) { content() }
     }
 }
 
@@ -344,6 +344,7 @@ fun Sidebar(
         Box(
             modifier =
                 modifier
+                    .sidebarProviderChild(SidebarProviderChild.Rail)
                     .width(animatedWidth)
                     .then(clipModifier)
                     .then(ariaModifier)
@@ -381,6 +382,7 @@ fun Sidebar(
         Box(
             modifier =
                 modifier
+                    .sidebarProviderChild(SidebarProviderChild.Rail)
                     .width(animatedWidth)
                     .then(clipModifier)
                     .then(ariaModifier)
@@ -443,6 +445,7 @@ fun SidebarInset(
         Column(
             modifier =
                 modifier
+                    .sidebarProviderChild(SidebarProviderChild.Inset)
                     .padding(start = start, top = edge, end = end, bottom = edge)
                     .styleable(
                         styleState,
@@ -453,10 +456,12 @@ fun SidebarInset(
     } else {
         Column(
             modifier =
-                modifier.styleable(
-                    styleState,
-                    rememberSidebarInsetStyle() then style,
-                ),
+                modifier
+                    .sidebarProviderChild(SidebarProviderChild.Inset)
+                    .styleable(
+                        styleState,
+                        rememberSidebarInsetStyle() then style,
+                    ),
             content = content,
         )
     }

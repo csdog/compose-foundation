@@ -107,7 +107,33 @@ class BreadcrumbExamplesTest {
         }
         rule.onNodeWithText("Home").performClick()
         rule.onNodeWithText("Components").performClick()
-        assertEquals(listOf("/", "/components"), visited)
+        assertEquals(listOf("/", "https://ui.shadcn.com/components"), visited)
+        assertTrue(
+            breadcrumbDoc.examples.single { it.title == "Custom separator" }.code
+                .contains("uri.openUri(\"https://ui.shadcn.com/components\")"),
+        )
+    }
+
+    @Test fun collapsedLinksUseOfficialHomeAndDocsTargetsInPreviewAndCode() {
+        val visited = mutableListOf<String>()
+        val example = breadcrumbDoc.examples.single { it.title == "Collapsed" }
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, minTouchTarget = null) {
+                CompositionLocalProvider(
+                    LocalUriHandler provides
+                        object : UriHandler {
+                            override fun openUri(uri: String) {
+                                visited += uri
+                            }
+                        },
+                ) { example.preview() }
+            }
+        }
+        rule.onNodeWithText("Home").performClick()
+        rule.onNodeWithText("Components").performClick()
+        assertEquals(listOf("/", "https://ui.shadcn.com/docs/components"), visited)
+        assertTrue(example.code.contains("uri.openUri(\"/\")"))
+        assertTrue(example.code.contains("uri.openUri(\"https://ui.shadcn.com/docs/components\")"))
     }
 
     @Test fun rtlLanguageAndTranslatedMenuSwitchTogether() {

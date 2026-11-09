@@ -19,6 +19,7 @@ internal val progressDefaultRecipeCode =
     import com.toutiaoyan.compose.ui.components.slider.Slider
     import kotlinx.coroutines.delay
     import androidx.compose.ui.text.font.FontFamily
+    import androidx.compose.ui.text.font.FontWeight
     import compose_foundation.app.shared.generated.resources.*
     import org.jetbrains.compose.resources.Font
 
@@ -55,6 +56,7 @@ internal val progressLabelRecipeCode =
     import com.toutiaoyan.compose.ui.components.slider.Slider
     import kotlinx.coroutines.delay
     import androidx.compose.ui.text.font.FontFamily
+    import androidx.compose.ui.text.font.FontWeight
     import compose_foundation.app.shared.generated.resources.*
     import org.jetbrains.compose.resources.Font
 
@@ -89,6 +91,7 @@ internal val progressControlledRecipeCode =
     import com.toutiaoyan.compose.ui.components.slider.Slider
     import kotlinx.coroutines.delay
     import androidx.compose.ui.text.font.FontFamily
+    import androidx.compose.ui.text.font.FontWeight
     import compose_foundation.app.shared.generated.resources.*
     import org.jetbrains.compose.resources.Font
 
@@ -138,6 +141,7 @@ internal val progressRtlRecipeCode =
     import com.toutiaoyan.compose.ui.components.slider.Slider
     import kotlinx.coroutines.delay
     import androidx.compose.ui.text.font.FontFamily
+    import androidx.compose.ui.text.font.FontWeight
     import compose_foundation.app.shared.generated.resources.*
     import org.jetbrains.compose.resources.Font
 
