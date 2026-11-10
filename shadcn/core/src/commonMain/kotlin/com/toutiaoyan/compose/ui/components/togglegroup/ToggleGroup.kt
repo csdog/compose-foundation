@@ -34,6 +34,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.CompositeShader
+import androidx.compose.ui.graphics.LinearGradientShader
+import androidx.compose.ui.graphics.Shader
+import androidx.compose.ui.graphics.ShaderBrush
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
@@ -49,6 +57,16 @@ import com.toutiaoyan.compose.ui.components.toggle.Toggle
 import com.toutiaoyan.compose.ui.components.toggle.ToggleSize
 import com.toutiaoyan.compose.ui.components.toggle.ToggleVariant
 
+/** Local change veto; DOM native-event payloads are intentionally not exposed. */
+class ToggleGroupChangeDetails internal constructor() {
+    var isCanceled: Boolean = false
+        private set
+
+    fun cancel() {
+        isCanceled = true
+    }
+}
+
 enum class ToggleGroupType { Single, Multiple }
 
 enum class ToggleGroupOrientation { Horizontal, Vertical }
@@ -63,16 +81,21 @@ internal class ToggleGroupController(
     val type: ToggleGroupType,
     val value: Set<String>,
     val onValueChange: (Set<String>) -> Unit,
-    val variant: ToggleVariant,
-    val size: ToggleSize,
+    val variant: ToggleVariant?,
+    val size: ToggleSize?,
     val orientation: ToggleGroupOrientation,
     val spacing: Dp,
     val disabled: Boolean,
     val registry: GroupChildRegistry,
+    val loopFocus: Boolean,
+    val requestValueChange: (Set<String>, ToggleGroupChangeDetails) -> Unit,
 ) {
     fun isPressed(itemValue: String) = itemValue in value
 
-    fun toggle(itemValue: String) {
+    fun toggle(
+        itemValue: String,
+        details: ToggleGroupChangeDetails,
+    ) {
         val pressed = isPressed(itemValue)
         val next =
             when {
@@ -81,7 +104,7 @@ internal class ToggleGroupController(
                 pressed -> value - itemValue
                 else -> value + itemValue
             }
-        onValueChange(next)
+        requestValueChange(next, details)
     }
 }
 
@@ -126,11 +149,23 @@ class ToggleGroupScope internal constructor()
  * └── ToggleGroupItem
  * ```
  *
- * Real shadcn strips per-item corners/borders via CSS; here the group draws a
- * single shared border ([ToggleVariant.Outline] only) and each item is
- * borderless. Focused items raise `zIndex(10)` so the ring isn't clipped by a
+ * Nova strips each connected item's leading border paint while preserving its full
+ * bounds and zero-gap arrangement. Historical presets with an explicit Outline root
+ * draw a shared border and borderless items. Focused items raise `zIndex(10)` so the ring isn't clipped by a
  * neighbor (`focus-visible:z-10`). [type] is [ToggleGroupType.Multiple] (toggle membership) or
  * [ToggleGroupType.Single] (at most one selected).
+ *
+ * Root variant/size override item presets when supplied. Omitted root presets let
+ * each item choose its own variant/size, falling back to Default/Md.
+ *
+ * Since 0.3.40, Set roots default to Single, matching Base UI. Pass
+ * `type = ToggleGroupType.Multiple` to retain independent membership toggles.
+ *
+ * Item values must be nonempty and unique within this group; invalid identities throw
+ * [IllegalArgumentException]. Empty children are supported. Empty visible labels require
+ * a nonempty accessible [ToggleGroupItem] label (use its content slot for custom visuals).
+ *
+ * [loopFocus] defaults to true; set it to false to stop arrow focus at enabled endpoints.
  *
  * Usage:
  * ```
@@ -148,22 +183,68 @@ fun ToggleGroup(
     value: Set<String>? = null,
     onValueChange: ((Set<String>) -> Unit)? = null,
     modifier: Modifier = Modifier,
-    type: ToggleGroupType = ToggleGroupType.Multiple,
-    variant: ToggleVariant = ToggleVariant.Default,
-    size: ToggleSize = ToggleSize.Md,
+    type: ToggleGroupType = ToggleGroupType.Single,
+    variant: ToggleVariant? = null,
+    size: ToggleSize? = null,
     orientation: ToggleGroupOrientation = ToggleGroupOrientation.Horizontal,
     spacing: Dp = ToggleGroupDefaults.Spacing,
     defaultValue: Set<String> = emptySet(),
     disabled: Boolean = false,
     style: Style = Style,
     contentDescription: String? = null,
+    loopFocus: Boolean,
+    content: @Composable ToggleGroupScope.() -> Unit,
+) {
+    ToggleGroup(
+        value = value,
+        onValueChange = onValueChange,
+        modifier = modifier,
+        type = type,
+        variant = variant,
+        size = size,
+        orientation = orientation,
+        spacing = spacing,
+        defaultValue = defaultValue,
+        disabled = disabled,
+        style = style,
+        contentDescription = contentDescription,
+        loopFocus = loopFocus,
+        content = content,
+        onValueChangeRequest = { _, _ -> },
+    )
+}
+
+/**
+ * Cancellable change overload. Call `details.cancel()` to stop the update.
+ * Item callbacks precede the group request; accepted notifications precede internal commit.
+ * String roots expose empty/singleton Sets in the request. DOM event payloads are not exposed.
+ */
+@Composable
+fun ToggleGroup(
+    value: Set<String>? = null,
+    onValueChange: ((Set<String>) -> Unit)? = null,
+    modifier: Modifier = Modifier,
+    type: ToggleGroupType = ToggleGroupType.Single,
+    variant: ToggleVariant? = null,
+    size: ToggleSize? = null,
+    orientation: ToggleGroupOrientation = ToggleGroupOrientation.Horizontal,
+    spacing: Dp = ToggleGroupDefaults.Spacing,
+    defaultValue: Set<String> = emptySet(),
+    disabled: Boolean = false,
+    style: Style = Style,
+    contentDescription: String? = null,
+    loopFocus: Boolean = true,
+    onValueChangeRequest: (Set<String>, ToggleGroupChangeDetails) -> Unit,
     content: @Composable ToggleGroupScope.() -> Unit,
 ) {
     var internalValue by remember { mutableStateOf(defaultValue) }
     val current = value ?: internalValue
-    val setValue: (Set<String>) -> Unit = { next ->
-        if (value == null) internalValue = next
-        onValueChange?.invoke(next)
+    val requestValueChange: (Set<String>, ToggleGroupChangeDetails) -> Unit = { next, details ->
+        onValueChangeRequest(next, details)
+        if (!details.isCanceled) {
+            onValueChange?.invoke(next)
+            if (value == null) internalValue = next
+        }
     }
     val registry = remember { GroupChildRegistry() }
     val navigation = remember { ToggleGroupNavigation() }
@@ -172,13 +253,15 @@ fun ToggleGroup(
         ToggleGroupController(
             type = type,
             value = current,
-            onValueChange = setValue,
+            onValueChange = { requestValueChange(it, ToggleGroupChangeDetails()) },
+            requestValueChange = requestValueChange,
             variant = variant,
             size = size,
             orientation = orientation,
             spacing = spacing,
             disabled = disabled || LocalFieldSetDisabled.current,
             registry = registry,
+            loopFocus = loopFocus,
         )
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val spaced = spacing > 0.dp
@@ -213,17 +296,13 @@ fun ToggleGroup(
                 Row(
                     modifier = labelledModifier,
                     horizontalArrangement =
-                        Arrangement.spacedBy(
-                            if (nova && !spaced && variant == ToggleVariant.Outline) (-1).dp else spacing,
-                        ),
+                        Arrangement.spacedBy(spacing),
                 ) { scope.content() }
             ToggleGroupOrientation.Vertical ->
                 Column(
                     modifier = labelledModifier,
                     verticalArrangement =
-                        Arrangement.spacedBy(
-                            if (nova && !spaced && variant == ToggleVariant.Outline) (-1).dp else spacing,
-                        ),
+                        Arrangement.spacedBy(spacing),
                 ) { scope.content() }
         }
     }
@@ -239,13 +318,54 @@ fun ToggleGroup(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     type: ToggleGroupType = ToggleGroupType.Single,
-    variant: ToggleVariant = ToggleVariant.Default,
-    size: ToggleSize = ToggleSize.Md,
+    variant: ToggleVariant? = null,
+    size: ToggleSize? = null,
     orientation: ToggleGroupOrientation = ToggleGroupOrientation.Horizontal,
     spacing: Dp = ToggleGroupDefaults.Spacing,
     disabled: Boolean = false,
     style: Style = Style,
     contentDescription: String? = null,
+    loopFocus: Boolean,
+    content: @Composable ToggleGroupScope.() -> Unit,
+) {
+    ToggleGroup(
+        value = value,
+        onValueChange = onValueChange,
+        modifier = modifier,
+        type = type,
+        variant = variant,
+        size = size,
+        orientation = orientation,
+        spacing = spacing,
+        disabled = disabled,
+        style = style,
+        contentDescription = contentDescription,
+        loopFocus = loopFocus,
+        content = content,
+        onValueChangeRequest = { _, _ -> },
+    )
+}
+
+/**
+ * Cancellable change overload. Call `details.cancel()` to stop the update.
+ * Item callbacks precede the group request; accepted notifications precede internal commit.
+ * String roots expose empty/singleton Sets in the request. DOM event payloads are not exposed.
+ */
+@Composable
+fun ToggleGroup(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    type: ToggleGroupType = ToggleGroupType.Single,
+    variant: ToggleVariant? = null,
+    size: ToggleSize? = null,
+    orientation: ToggleGroupOrientation = ToggleGroupOrientation.Horizontal,
+    spacing: Dp = ToggleGroupDefaults.Spacing,
+    disabled: Boolean = false,
+    style: Style = Style,
+    contentDescription: String? = null,
+    loopFocus: Boolean = true,
+    onValueChangeRequest: (Set<String>, ToggleGroupChangeDetails) -> Unit,
     content: @Composable ToggleGroupScope.() -> Unit,
 ) {
     ToggleGroup(
@@ -260,6 +380,8 @@ fun ToggleGroup(
         disabled = disabled,
         style = style,
         contentDescription = contentDescription,
+        loopFocus = loopFocus,
+        onValueChangeRequest = onValueChangeRequest,
         content = content,
     )
 }
@@ -273,13 +395,52 @@ fun ToggleGroup(
     defaultValue: String,
     modifier: Modifier = Modifier,
     type: ToggleGroupType = ToggleGroupType.Single,
-    variant: ToggleVariant = ToggleVariant.Default,
-    size: ToggleSize = ToggleSize.Md,
+    variant: ToggleVariant? = null,
+    size: ToggleSize? = null,
     orientation: ToggleGroupOrientation = ToggleGroupOrientation.Horizontal,
     spacing: Dp = ToggleGroupDefaults.Spacing,
     disabled: Boolean = false,
     style: Style = Style,
     contentDescription: String? = null,
+    loopFocus: Boolean,
+    content: @Composable ToggleGroupScope.() -> Unit,
+) {
+    ToggleGroup(
+        defaultValue = defaultValue,
+        modifier = modifier,
+        type = type,
+        variant = variant,
+        size = size,
+        orientation = orientation,
+        spacing = spacing,
+        disabled = disabled,
+        style = style,
+        contentDescription = contentDescription,
+        loopFocus = loopFocus,
+        content = content,
+        onValueChangeRequest = { _, _ -> },
+    )
+}
+
+/**
+ * Cancellable change overload. Call `details.cancel()` to stop the update.
+ * Item callbacks precede the group request; accepted notifications precede internal commit.
+ * String roots expose empty/singleton Sets in the request. DOM event payloads are not exposed.
+ */
+@Composable
+fun ToggleGroup(
+    defaultValue: String,
+    modifier: Modifier = Modifier,
+    type: ToggleGroupType = ToggleGroupType.Single,
+    variant: ToggleVariant? = null,
+    size: ToggleSize? = null,
+    orientation: ToggleGroupOrientation = ToggleGroupOrientation.Horizontal,
+    spacing: Dp = ToggleGroupDefaults.Spacing,
+    disabled: Boolean = false,
+    style: Style = Style,
+    contentDescription: String? = null,
+    loopFocus: Boolean = true,
+    onValueChangeRequest: (Set<String>, ToggleGroupChangeDetails) -> Unit,
     content: @Composable ToggleGroupScope.() -> Unit,
 ) {
     ToggleGroup(
@@ -293,6 +454,8 @@ fun ToggleGroup(
         disabled = disabled,
         style = style,
         contentDescription = contentDescription,
+        loopFocus = loopFocus,
+        onValueChangeRequest = onValueChangeRequest,
         content = content,
     )
 }
@@ -306,9 +469,46 @@ fun ToggleGroupScope.ToggleGroupItem(
     disabled: Boolean = false,
     label: String = value,
     style: Style = Style,
+    variant: ToggleVariant? = null,
+    size: ToggleSize? = null,
     content: @Composable () -> Unit,
 ) {
+    ToggleGroupItem(
+        value = value,
+        modifier = modifier,
+        enabled = enabled,
+        disabled = disabled,
+        label = label,
+        style = style,
+        variant = variant,
+        size = size,
+        content = content,
+        onPressedChange = { _, _ -> },
+    )
+}
+
+/**
+ * Cancellable change overload. Call `details.cancel()` to stop the update.
+ * Item callbacks precede the group request; accepted notifications precede internal commit.
+ * String roots expose empty/singleton Sets in the request. DOM event payloads are not exposed.
+ */
+@Composable
+fun ToggleGroupScope.ToggleGroupItem(
+    value: String,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    label: String = value,
+    style: Style = Style,
+    variant: ToggleVariant? = null,
+    size: ToggleSize? = null,
+    onPressedChange: (Boolean, ToggleGroupChangeDetails) -> Unit,
+    content: @Composable () -> Unit,
+) {
+    require(value.isNotEmpty()) { "ToggleGroupItem value must be nonempty" }
     val controller = toggleGroupController()
+    val resolvedVariant = controller.variant ?: variant ?: ToggleVariant.Default
+    val resolvedSize = controller.size ?: size ?: ToggleSize.Md
     val (index, count) = controller.registry.register()
     val nova = currentTheme.activePreset == StylePreset.Nova
     val rounded = if (nova) twRadius.lg else twRadius.md
@@ -332,6 +532,7 @@ fun ToggleGroupScope.ToggleGroupItem(
     val requester = remember { FocusRequester() }
     val resolvedEnabled = enabled && !disabled && !controller.disabled && !LocalFieldSetDisabled.current
     DisposableEffect(navigation, value) {
+        require(value !in navigation.order) { "ToggleGroupItem values must be unique within a group: $value" }
         navigation.order.add(value)
         onDispose {
             navigation.order.remove(value)
@@ -340,6 +541,17 @@ fun ToggleGroupScope.ToggleGroupItem(
     }
     androidx.compose.runtime.SideEffect { navigation.items[value] = requester to resolvedEnabled }
     val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+    val borderColor = if (nova) currentTheme.colors.input else currentTheme.colors.border
+    val borderPixels = with(androidx.compose.ui.platform.LocalDensity.current) { 1.dp.toPx() }
+    val connectedBorder =
+        remember(borderColor, borderPixels, rtl, controller.orientation) {
+            ConnectedItemBorder(
+                borderColor,
+                borderPixels,
+                controller.orientation == ToggleGroupOrientation.Horizontal,
+                rtl,
+            )
+        }
     val navigationModifier =
         Modifier.focusRequester(requester).focusProperties {
             val available = navigation.order.filter { navigation.items[it]?.second == true }
@@ -369,8 +581,18 @@ fun ToggleGroupScope.ToggleGroupItem(
             val current = available.indexOf(value).coerceAtLeast(0)
             val target =
                 when (event.key) {
-                    forward -> (current + 1) % available.size
-                    backward -> (current - 1 + available.size) % available.size
+                    forward ->
+                        if (controller.loopFocus) {
+                            (current + 1) % available.size
+                        } else {
+                            (current + 1).coerceAtMost(available.lastIndex)
+                        }
+                    backward ->
+                        if (controller.loopFocus) {
+                            (current - 1 + available.size) % available.size
+                        } else {
+                            (current - 1).coerceAtLeast(0)
+                        }
                     Key.MoveHome -> 0
                     Key.MoveEnd -> available.lastIndex
                     else -> return@onPreviewKeyEvent false
@@ -383,17 +605,27 @@ fun ToggleGroupScope.ToggleGroupItem(
         pressed = controller.isPressed(value),
         onPressedChange = {
             navigation.focused = value
-            controller.toggle(value)
+            requester.requestFocus()
+            val details = ToggleGroupChangeDetails()
+            onPressedChange(!controller.isPressed(value), details)
+            if (!details.isCanceled) controller.toggle(value, details)
         },
         modifier = modifier.then(navigationModifier),
         enabled = resolvedEnabled,
-        variant = controller.variant,
-        size = controller.size,
+        variant = resolvedVariant,
+        size = resolvedSize,
         label = label,
         style =
             Style {
-                shape(itemShape)
+                if (!nova || !spaced) shape(itemShape)
                 if (controller.variant == ToggleVariant.Outline && !spaced && !nova) borderWidth(0.dp)
+                // Remove only this item's leading border paint. Background, focus shadow,
+                // measurement and hit bounds retain the complete resolved item shape.
+                if (!spaced && (nova || controller.variant == null) &&
+                    resolvedVariant == ToggleVariant.Outline && index > 0
+                ) {
+                    borderBrush(connectedBorder)
+                }
                 if (nova && !spaced) contentPadding(horizontal = 8.dp, vertical = 0.dp)
             } then style,
         content = content,
@@ -409,6 +641,38 @@ fun ToggleGroupScope.ToggleGroupItem(
     enabled: Boolean = true,
     disabled: Boolean = false,
     style: Style = Style,
+    variant: ToggleVariant? = null,
+    size: ToggleSize? = null,
+) {
+    ToggleGroupItem(
+        value = value,
+        label = label,
+        modifier = modifier,
+        enabled = enabled,
+        disabled = disabled,
+        style = style,
+        variant = variant,
+        size = size,
+        onPressedChange = { _, _ -> },
+    )
+}
+
+/**
+ * Cancellable change overload. Call `details.cancel()` to stop the update.
+ * Item callbacks precede the group request; accepted notifications precede internal commit.
+ * String roots expose empty/singleton Sets in the request. DOM event payloads are not exposed.
+ */
+@Composable
+fun ToggleGroupScope.ToggleGroupItem(
+    value: String,
+    label: String,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    style: Style = Style,
+    variant: ToggleVariant? = null,
+    size: ToggleSize? = null,
+    onPressedChange: (Boolean, ToggleGroupChangeDetails) -> Unit,
 ) {
     ToggleGroupItem(
         value = value,
@@ -417,7 +681,182 @@ fun ToggleGroupScope.ToggleGroupItem(
         disabled = disabled,
         label = label,
         style = style,
+        variant = variant,
+        size = size,
+        onPressedChange = onPressedChange,
     ) {
         Text { label }
+    }
+}
+
+/** Compatibility overload retaining the original positional and trailing-lambda API. */
+@Composable
+fun ToggleGroup(
+    value: Set<String>? = null,
+    onValueChange: ((Set<String>) -> Unit)? = null,
+    modifier: Modifier = Modifier,
+    type: ToggleGroupType = ToggleGroupType.Single,
+    variant: ToggleVariant? = null,
+    size: ToggleSize? = null,
+    orientation: ToggleGroupOrientation = ToggleGroupOrientation.Horizontal,
+    spacing: Dp = ToggleGroupDefaults.Spacing,
+    defaultValue: Set<String> = emptySet(),
+    disabled: Boolean = false,
+    style: Style = Style,
+    contentDescription: String? = null,
+    content: @Composable ToggleGroupScope.() -> Unit,
+) {
+    ToggleGroup(
+        value = value,
+        onValueChange = onValueChange,
+        modifier = modifier,
+        type = type,
+        variant = variant,
+        size = size,
+        orientation = orientation,
+        spacing = spacing,
+        defaultValue = defaultValue,
+        disabled = disabled,
+        style = style,
+        contentDescription = contentDescription,
+        loopFocus = true,
+        content = content,
+    )
+}
+
+/** Compatibility overload retaining the original positional and trailing-lambda API. */
+@Composable
+fun ToggleGroup(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    type: ToggleGroupType = ToggleGroupType.Single,
+    variant: ToggleVariant? = null,
+    size: ToggleSize? = null,
+    orientation: ToggleGroupOrientation = ToggleGroupOrientation.Horizontal,
+    spacing: Dp = ToggleGroupDefaults.Spacing,
+    disabled: Boolean = false,
+    style: Style = Style,
+    contentDescription: String? = null,
+    content: @Composable ToggleGroupScope.() -> Unit,
+) {
+    ToggleGroup(
+        value = value,
+        onValueChange = onValueChange,
+        modifier = modifier,
+        type = type,
+        variant = variant,
+        size = size,
+        orientation = orientation,
+        spacing = spacing,
+        disabled = disabled,
+        style = style,
+        contentDescription = contentDescription,
+        loopFocus = true,
+        content = content,
+    )
+}
+
+/** Compatibility overload retaining the original positional and trailing-lambda API. */
+@Composable
+fun ToggleGroup(
+    defaultValue: String,
+    modifier: Modifier = Modifier,
+    type: ToggleGroupType = ToggleGroupType.Single,
+    variant: ToggleVariant? = null,
+    size: ToggleSize? = null,
+    orientation: ToggleGroupOrientation = ToggleGroupOrientation.Horizontal,
+    spacing: Dp = ToggleGroupDefaults.Spacing,
+    disabled: Boolean = false,
+    style: Style = Style,
+    contentDescription: String? = null,
+    content: @Composable ToggleGroupScope.() -> Unit,
+) {
+    ToggleGroup(
+        defaultValue = defaultValue,
+        modifier = modifier,
+        type = type,
+        variant = variant,
+        size = size,
+        orientation = orientation,
+        spacing = spacing,
+        disabled = disabled,
+        style = style,
+        contentDescription = contentDescription,
+        loopFocus = true,
+        content = content,
+    )
+}
+
+/** Compatibility overload for the original positional content API. */
+@Composable
+fun ToggleGroupScope.ToggleGroupItem(
+    value: String,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    label: String = value,
+    style: Style = Style,
+    content: @Composable () -> Unit,
+) {
+    ToggleGroupItem(value, modifier, enabled, disabled, label, style, null, null, content)
+}
+
+/** Compatibility overload for the original label API. */
+@Composable
+fun ToggleGroupScope.ToggleGroupItem(
+    value: String,
+    label: String,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    style: Style = Style,
+) {
+    ToggleGroupItem(value, label, modifier, enabled, disabled, style, null, null)
+}
+
+/** Removes only the leading side, preserving perpendicular borders, fill and outer focus shadow. */
+private class ConnectedItemBorder(
+    private val color: Color,
+    private val width: Float,
+    private val horizontal: Boolean,
+    private val rtl: Boolean,
+) : ShaderBrush() {
+    override fun createShader(size: Size): Shader {
+        val extent = if (horizontal) size.width else size.height
+        val edge = (width / extent.coerceAtLeast(1f)).coerceAtMost(1f)
+        val reverse = horizontal && rtl
+        val leadingSide =
+            LinearGradientShader(
+                from = Offset.Zero,
+                to = if (horizontal) Offset(size.width, 0f) else Offset(0f, size.height),
+                colors =
+                    if (reverse) {
+                        listOf(Color.White, Color.White, Color.Transparent, Color.Transparent)
+                    } else {
+                        listOf(Color.Transparent, Color.Transparent, Color.White, Color.White)
+                    },
+                colorStops = if (reverse) listOf(0f, 1f - edge, 1f - edge, 1f) else listOf(0f, edge, edge, 1f),
+            )
+        val crossExtent = if (horizontal) size.height else size.width
+        val crossEdge = (width / crossExtent.coerceAtLeast(1f)).coerceIn(0f, .5f)
+        val perimeter =
+            LinearGradientShader(
+                from = Offset.Zero,
+                to = if (horizontal) Offset(0f, size.height) else Offset(size.width, 0f),
+                colors =
+                    listOf(
+                        Color.White,
+                        Color.White,
+                        Color.Transparent,
+                        Color.Transparent,
+                        Color.White,
+                        Color.White,
+                    ),
+                colorStops = listOf(0f, crossEdge, crossEdge, 1f - crossEdge, 1f - crossEdge, 1f),
+            )
+        val mask = CompositeShader(leadingSide, perimeter, BlendMode.SrcOver)
+        val tint = LinearGradientShader(Offset.Zero, Offset(1f, 0f), listOf(color, color))
+        return CompositeShader(mask, tint, BlendMode.SrcIn)
     }
 }

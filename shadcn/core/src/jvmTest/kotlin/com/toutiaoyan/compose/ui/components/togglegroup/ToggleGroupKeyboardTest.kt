@@ -19,6 +19,7 @@ class ToggleGroupKeyboardTest {
     private fun navigation(
         vertical: Boolean,
         rtl: Boolean,
+        loopFocus: Boolean = true,
     ) {
         rule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
@@ -28,6 +29,7 @@ class ToggleGroupKeyboardTest {
                     Column {
                         Toggle("Before", pressed = false, onPressedChange = {})
                         ToggleGroup(
+                            loopFocus = loopFocus,
                             orientation =
                                 if (vertical) {
                                     ToggleGroupOrientation.Vertical
@@ -38,6 +40,7 @@ class ToggleGroupKeyboardTest {
                             ToggleGroupItem("a", "Alpha")
                             ToggleGroupItem("b", "Beta", disabled = true)
                             ToggleGroupItem("c", "Gamma")
+                            ToggleGroupItem("d", "Disabled last", disabled = true)
                         }
                         Toggle("After", pressed = false, onPressedChange = {})
                     }
@@ -77,7 +80,13 @@ class ToggleGroupKeyboardTest {
         rule.onNodeWithText("Before").assertIsFocused().performKeyInput { pressKey(Key.Tab) }
         alpha.assertIsFocused().performKeyInput { pressKey(forward) }
         gamma.assertIsFocused().assertIsOff().performKeyInput { pressKey(forward) }
-        alpha.assertIsFocused().performKeyInput { pressKey(backward) }
+        if (loopFocus) {
+            alpha.assertIsFocused().performKeyInput { pressKey(backward) }
+        } else {
+            gamma.assertIsFocused().performKeyInput { pressKey(Key.MoveHome) }
+            alpha.assertIsFocused().performKeyInput { pressKey(backward) }
+            alpha.assertIsFocused().performKeyInput { pressKey(Key.MoveEnd) }
+        }
         gamma.assertIsFocused().performKeyInput { pressKey(Key.MoveHome) }
         alpha.assertIsFocused().performKeyInput { pressKey(Key.MoveEnd) }
         gamma.assertIsFocused().performKeyInput { pressKey(Key.Spacebar) }
@@ -90,6 +99,34 @@ class ToggleGroupKeyboardTest {
         gamma.assertIsFocused().assertIsOn()
         rule.onNodeWithText("Beta").assertIsNotEnabled()
     }
+
+    @Test fun mouseSelectionOwnsSubsequentKeyboardInput() {
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, minTouchTarget = null) {
+                ToggleGroup {
+                    ToggleGroupItem("a", "Alpha")
+                    ToggleGroupItem("b", "Beta")
+                    ToggleGroupItem("c", "Gamma")
+                }
+            }
+        }
+        rule.onNodeWithText("Alpha").requestFocus().assertIsFocused()
+        val gamma = rule.onNodeWithText("Gamma")
+        gamma.performMouseInput { click() }
+        gamma.assertIsFocused().assertIsOn().performKeyInput {
+            pressKey(Key.DirectionLeft)
+            pressKey(Key.Spacebar)
+        }
+        rule.onNodeWithText("Beta").assertIsFocused().assertIsOn()
+    }
+
+    @Test fun horizontalLtrWithoutLoop() = navigation(vertical = false, rtl = false, loopFocus = false)
+
+    @Test fun horizontalRtlWithoutLoop() = navigation(vertical = false, rtl = true, loopFocus = false)
+
+    @Test fun verticalLtrWithoutLoop() = navigation(vertical = true, rtl = false, loopFocus = false)
+
+    @Test fun verticalRtlWithoutLoop() = navigation(vertical = true, rtl = true, loopFocus = false)
 
     @Test fun horizontalLtr() = navigation(vertical = false, rtl = false)
 

@@ -1,5 +1,9 @@
 package com.toutiaoyan.compose.ui.catalog
 
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.toPixelMap
+import androidx.compose.ui.graphics.Color
+import com.toutiaoyan.compose.ui.theme.currentTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -9,6 +13,7 @@ import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.catalog.docs.PreviewCodeSection
 import com.toutiaoyan.compose.ui.catalog.docs.toggleGroupDoc
@@ -43,6 +48,10 @@ class ToggleGroupExamplesTest {
             ),
             toggleGroupDoc.examples.map { it.title },
         )
+        assertEquals(
+            "Use `variant=\"outline\"` for an outline style.",
+            toggleGroupDoc.examples.single { it.title == "Outline" }.descriptionMarkdown,
+        )
         assertTrue(
             toggleGroupDoc.examples.single { it.title == "Size" }
                 .descriptionMarkdown.orEmpty()
@@ -64,13 +73,49 @@ class ToggleGroupExamplesTest {
         assertTrue(toggleGroupDoc.compositionCode.orEmpty().contains("ToggleGroupItem"))
     }
 
-    @Test fun outlineRecipeKeepsTheLiteralAllSelection() {
+    @Test fun outlineRecipeReplacesAndDeselectsTheSelection() {
         show("Outline")
         rule.onNodeWithText("All").assertIsOn()
         rule.onNodeWithText("Missed").assertIsOff()
         rule.onNodeWithText("Missed").performClick()
         rule.onNodeWithText("Missed").assertIsOn()
-        rule.onNodeWithText("All").assertIsOn()
+        rule.onNodeWithText("All").assertIsOff()
+        rule.onNodeWithText("Missed").performClick().assertIsOff()
+    }
+
+    @Test fun sizeRowsReplaceAndDeselectIndependently() {
+        show("Size")
+        repeat(2) { index ->
+            rule.onAllNodesWithText("Top")[index].assertIsOn()
+            rule.onAllNodesWithText("Bottom")[index].performClick().assertIsOn()
+            rule.onAllNodesWithText("Top")[index].assertIsOff()
+            rule.onAllNodesWithText("Bottom")[index].performClick().assertIsOff()
+        }
+    }
+
+    @Test fun spacingRecipeReplacesAndDeselects() {
+        show("Spacing")
+        rule.onNodeWithText("Top").assertIsOn()
+        rule.onNodeWithText("Bottom").performClick().assertIsOn()
+        rule.onNodeWithText("Top").assertIsOff()
+        rule.onNodeWithText("Bottom").performClick().assertIsOff()
+    }
+
+    @Test fun rtlRecipeReplacesAndDeselects() {
+        show("RTL")
+        rule.onNodeWithText("قائمة").assertIsOn()
+        rule.onNodeWithText("شبكة").performClick().assertIsOn()
+        rule.onNodeWithText("قائمة").assertIsOff()
+        rule.onNodeWithText("شبكة").performClick().assertIsOff()
+    }
+
+    @Test fun singleSelectionIsExplicitInOfficialRecipeCode() {
+        listOf("Outline", "Size", "Spacing", "Disabled", "RTL").forEach { title ->
+            val code = toggleGroupDoc.examples.single { it.title == title }.code
+            val groups = code.lineSequence().filter { it.trimStart().startsWith("ToggleGroup(") }.toList()
+            assertEquals(if (title == "Size") 2 else 1, groups.size)
+            assertTrue(groups.all { "type = ToggleGroupType.Single" in it }, title)
+        }
     }
 
     @Test fun singleSelectRecipeDeselectsTheActiveItem() {
@@ -95,9 +140,10 @@ class ToggleGroupExamplesTest {
 
     @Test fun disabledRecipeDoesNotToggle() {
         show("Disabled")
-        rule.onNodeWithContentDescription("Toggle bold").assertIsOn()
-        rule.onNodeWithContentDescription("Toggle bold").performClick()
-        rule.onNodeWithContentDescription("Toggle bold").assertIsOn()
+        listOf("Toggle bold", "Toggle italic", "Toggle strikethrough").forEach { label ->
+            rule.onNodeWithContentDescription(label).assertIsNotEnabled().assertIsOff()
+                .performClick().assertIsOff()
+        }
     }
 
     @Test fun customSurfaceAndDescriptionFollowSelection() {
@@ -111,6 +157,80 @@ class ToggleGroupExamplesTest {
         light.performClick().assertIsOn()
         normal.assertIsOff()
         rule.onNodeWithText("Use font-light to set the font weight.").assertExists()
+    }
+
+    @Test fun customInlineCodePaintAndTypographyFollowThemeAndSelection() {
+        val dark = mutableStateOf(false)
+        var muted = Color.Unspecified
+        var mono: androidx.compose.ui.text.font.FontFamily? = null
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, isDark = dark.value, minTouchTarget = null) {
+                muted = currentTheme.colors.muted
+                mono = catalogMonoFontFamily()
+                toggleGroupDoc.examples.single { it.title == "Custom" }.preview()
+            }
+        }
+        listOf(false, true, false).forEach { isDark ->
+            rule.runOnIdle { dark.value = isDark }
+            listOf("Light", "Normal", "Medium", "Bold").forEach { label ->
+                rule.onNodeWithContentDescription(label).performClick()
+                val code = "font-${label.lowercase()}"
+                rule.onNodeWithText("Use $code to set the font weight.").assertExists()
+                val chip = rule.onNodeWithTag("font-weight-code", useUnmergedTree = true)
+                chip.assertHeightIsEqualTo(21.dp)
+                rule.onNodeWithTag("font-weight-description").assertHeightIsEqualTo(21.dp)
+                val layouts = mutableListOf<TextLayoutResult>()
+                rule.onNodeWithText(code, useUnmergedTree = true)
+                    .performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(layouts) }
+                val layout = layouts.single()
+                assertEquals(mono, layout.layoutInput.style.fontFamily)
+                assertEquals(14.sp, layout.layoutInput.style.fontSize)
+                assertEquals(1, layout.lineCount)
+                val pixels = chip.captureToImage().toPixelMap()
+                assertEquals(muted, pixels[pixels.width / 2, 1], "muted chip fill, dark=$isDark")
+                assertTrue(pixels[0, 0].alpha < 1f, "rounded chip corner")
+            }
+        }
+        val code = toggleGroupDoc.examples.single { it.title == "Custom" }.code
+        assertTrue(code.contains("FontWeightDescription(fontWeight)"))
+        assertTrue(code.contains("Placeholder(slotWidth, 21.sp, PlaceholderVerticalAlign.TextCenter)"))
+        assertTrue(code.contains("catalogMonoFontFamily()"))
+    }
+
+    @Test fun customTextLineBoxesHaveThePinnedGapAndCenteredStack() {
+        show("Custom")
+        val samples = rule.onAllNodesWithText("Aa", useUnmergedTree = true)
+        listOf("Light", "Normal", "Medium", "Bold").forEachIndexed { index, label ->
+            val card = rule.onNodeWithContentDescription(label).fetchSemanticsNode().boundsInRoot
+            val layouts = mutableListOf<TextLayoutResult>()
+            samples[index].performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(layouts) }
+            val layout = layouts.single()
+            assertEquals(24.sp, layout.layoutInput.style.fontSize)
+            assertEquals(24.sp, layout.layoutInput.style.lineHeight)
+            assertEquals(1, layout.lineCount)
+            assertTrue(!layout.isLineEllipsized(0))
+            assertEquals(2, layout.getLineEnd(0))
+            val sample =
+                rule.onNodeWithTag("font-sample-${label.lowercase()}", useUnmergedTree = true)
+                    .fetchSemanticsNode().boundsInRoot
+            val glyph = samples[index].fetchSemanticsNode().boundsInRoot
+            assertEquals(sample.center.y, glyph.center.y, 0.5f, "$label unclipped glyph center")
+            val caption =
+                rule.onNodeWithTag("font-caption-${label.lowercase()}", useUnmergedTree = true)
+                    .fetchSemanticsNode().boundsInRoot
+            with(rule.density) {
+                assertEquals(24.dp.toPx(), sample.height, 0.5f, "$label sample line box")
+                assertEquals(16.dp.toPx(), caption.height, 0.5f, "$label caption line box")
+                assertEquals(4.dp.toPx(), caption.top - sample.bottom, 0.5f, "$label text gap")
+                assertEquals(44.dp.toPx(), caption.bottom - sample.top, 0.5f, "$label stack height")
+            }
+            assertEquals(card.center.y, (sample.top + caption.bottom) / 2, 0.5f, "$label centered stack")
+        }
+    }
+
+    @Test fun customDisplayedCodePreservesThePinnedTextGap() {
+        val code = toggleGroupDoc.examples.single { it.title == "Custom" }.code
+        assertTrue(code.contains("verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically)"))
     }
 
     @Test fun customLabelsRenderOnOneLineInsideTheirCards() {

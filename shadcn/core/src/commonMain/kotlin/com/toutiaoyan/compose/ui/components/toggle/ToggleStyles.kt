@@ -1,6 +1,9 @@
 @file:OptIn(ExperimentalFoundationStyleApi::class)
 
 package com.toutiaoyan.compose.ui.components.toggle
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
@@ -64,12 +67,23 @@ fun ToggleVariant.rememberStyle(): Style {
             colors.foreground.copy(alpha = 0.08f).compositeOver(
                 if (theme.activePreset == StylePreset.Nova) colors.muted else colors.secondary,
             )
+        // Foundation interpolates straight color channels. Transparent black would
+        // darken a light surface mid-fade; preserve the destination RGB at zero alpha.
+        // The resting fill remains fully transparent over any caller surface.
+        val transparentSurface =
+            if (theme.activePreset == StylePreset.Nova) colors.muted.copy(alpha = 0f) else Color.Transparent
+        val colorTransition =
+            if (theme.activePreset == StylePreset.Nova) {
+                tween<Float>(durationMillis = 150, easing = FastOutSlowInEasing)
+            } else {
+                spring<Float>()
+            }
         when (receiver) {
             ToggleVariant.Default ->
                 Style {
-                    background(Color.Transparent)
+                    background(transparentSurface)
                     contentColor(foreground)
-                    animate {
+                    animate(toSpec = colorTransition, fromSpec = colorTransition) {
                         hovered { background(colors.muted) }
                         checked {
                             background(
@@ -86,10 +100,10 @@ fun ToggleVariant.rememberStyle(): Style {
 
             ToggleVariant.Outline ->
                 Style {
-                    background(Color.Transparent)
+                    background(transparentSurface)
                     contentColor(foreground)
                     border(if (theme.activePreset == StylePreset.Nova) colors.input else colors.border)
-                    animate {
+                    animate(toSpec = colorTransition, fromSpec = colorTransition) {
                         hovered {
                             background(
                                 if (theme.activePreset == StylePreset.Nova) colors.muted else colors.secondary,

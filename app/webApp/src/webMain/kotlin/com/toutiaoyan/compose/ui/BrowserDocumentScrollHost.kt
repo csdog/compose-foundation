@@ -44,16 +44,26 @@ internal class BrowserDocumentScrollHost : DocumentScrollHost {
             // with the browser's previous route position while waiting for the first measurement.
             snapshotFlow { state.maxValue }.first { it != Int.MAX_VALUE }
 
+            var programmaticScrollY: Double? = null
+
             fun updateBrowser() {
                 body.style.height = "calc(100vh + ${state.maxValue / pixelsPerCssPixel}px)"
                 val desired = state.value / pixelsPerCssPixel.toDouble()
                 if (kotlin.math.abs(window.scrollY - desired) > .5 / pixelsPerCssPixel) {
                     window.scrollTo(0.0, desired)
+                    // Native scroll events arrive later, after Compose may advance another frame.
+                    // Ignore our echo so scrollTo does not cancel animateScrollTo mid-flight.
+                    programmaticScrollY = window.scrollY
                 }
             }
             val browserScrolls = Channel<Int>(Channel.CONFLATED)
             val listener: (Event) -> Unit = {
-                browserScrolls.trySend((window.scrollY * pixelsPerCssPixel).roundToInt())
+                val browserY = window.scrollY
+                val expectedY = programmaticScrollY
+                programmaticScrollY = null
+                if (expectedY == null || kotlin.math.abs(browserY - expectedY) > .5 / pixelsPerCssPixel) {
+                    browserScrolls.trySend((browserY * pixelsPerCssPixel).roundToInt())
+                }
             }
             window.addEventListener("scroll", listener)
             try {

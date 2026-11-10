@@ -316,7 +316,7 @@ class GroupsNovaParityTest : ScreenshotTest() {
         var requested: Set<String>? = null
         composeRule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
-                ToggleGroup(value = setOf("a"), onValueChange = { requested = it }) {
+                ToggleGroup(type = ToggleGroupType.Multiple, value = setOf("a"), onValueChange = { requested = it }) {
                     ToggleGroupItem("a", "Alpha")
                     ToggleGroupItem("b", "Beta")
                 }

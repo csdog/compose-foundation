@@ -19,6 +19,7 @@ import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.icons.NovaChevronRight
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -81,7 +82,6 @@ import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuItem
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuTrigger
 import com.toutiaoyan.compose.ui.styles.focusRingShadow
 import com.toutiaoyan.compose.ui.styles.rememberMinTouchTargetStyle
-import com.toutiaoyan.compose.ui.styles.rememberPressMotionStyle
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextVariant
@@ -994,13 +994,13 @@ fun CalendarGrid(
                             state.onFocusedDateChange(cell.date)
                         },
                         style = dayStyle(cell),
-                    ) {
-                        if (dayContent != null) {
-                            dayContent(cell)
-                        } else {
-                            CalendarDayText(cell, state.isSelectedDay(cell.date))
-                        }
-                    }
+                        content =
+                            if (dayContent == null) {
+                                null
+                            } else {
+                                { dayContent(cell) }
+                            },
+                    )
                 }
             }
         }
@@ -1187,7 +1187,7 @@ private fun CalendarNavButton(
         rememberUpdatedStyleState(interactionSource) {
             it.isEnabled = enabled
         }
-    val pressStyle = rememberPressMotionStyle()
+    val pressStyle = rememberCalendarPressMotionStyle(interactionSource)
     val touchTargetStyle = if (currentTheme.activePreset == StylePreset.Nova) Style else rememberMinTouchTargetStyle()
     Box(
         modifier =
@@ -1282,7 +1282,8 @@ fun CalendarDayButton(
     val theme = currentTheme
     val interactionSource = remember { MutableInteractionSource() }
     val styleState = rememberUpdatedStyleState(interactionSource) { it.isEnabled = !isDisabled && !outsideHidden }
-    val pressStyle = rememberPressMotionStyle()
+    val isHovered by interactionSource.collectIsHoveredAsState()
+    val pressStyle = rememberCalendarPressMotionStyle(interactionSource)
     val touchTargetStyle = if (currentTheme.activePreset == StylePreset.Nova) Style else rememberMinTouchTargetStyle()
     val cellStyle =
         Style {
@@ -1302,7 +1303,13 @@ fun CalendarDayButton(
                 }
                 if (hasFocus && !isDisabled) dropShadow(theme.focusRingShadow())
                 hovered {
-                    background(theme.colors.muted.copy(alpha = if (theme.isDark) 0.5f else 1f))
+                    background(
+                        if (nova && isSelected && !theme.isDark) {
+                            theme.colors.primary
+                        } else {
+                            theme.colors.muted.copy(alpha = if (theme.isDark) 0.5f else 1f)
+                        },
+                    )
                 }
                 if (isDisabled) {
                     alpha(0.5f)
@@ -1354,7 +1361,7 @@ fun CalendarDayButton(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
-                if (content != null) content() else CalendarDayText(cell, isSelected)
+                if (content != null) content() else CalendarDayText(cell, isSelected, nova && theme.isDark && isHovered)
             }
         }
     }
@@ -1364,9 +1371,11 @@ fun CalendarDayButton(
 private fun CalendarDayText(
     cell: CalendarCell,
     selected: Boolean,
+    darkNovaHover: Boolean,
 ) {
     val color =
         when {
+            darkNovaHover -> currentTheme.colors.foreground
             selected -> currentTheme.colors.primaryForeground
             !cell.inCurrentMonth ||
                 LocalCalendar.current?.isDisabled(cell.date) == true ->

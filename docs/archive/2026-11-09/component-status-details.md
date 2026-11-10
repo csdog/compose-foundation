@@ -50,6 +50,8 @@
 
 - [ ] Calendar (`calendar`)：恢复验证 32 tests、owning lint、Wasm 与四象限 browser 32/32 均通过且输入/产物 hash 当前匹配；30d audit 确认仍缺真正 Persian/Jalali 引擎与官方交互预览、Kotlin 等价 Changelog/RTL Support 指南，不能作为平台差异豁免。需 implementation/fixer 后独立 review 与受影响 gate 复验，不再重复未修改的验证。原生菜单和 locale 已按本地等价 API 分类。见 [audit](../../../.agent-runs/calendar/audit-recovery/summary.json)、[handoff](../../../.agent-runs/calendar/progress.md)。
 
+2026-11-10 续验关闭：历史 CAL-A1/CAL-A2 已由真实 Jalali 引擎、交互预览及迁移指南解决；目录滚动、悬停和按压动画修复后，65 tests、10 unchanged goldens、5 lint、JS/Wasm、浏览器实测及独立审查通过。原段落保留为当时记录，当前状态以规范清单为准；已知 Wasm DOM/ARIA 恢复限制按 I16 单列，不宣称读屏验收通过。见[当前验收证据](../../../.agent-runs/calendar/acceptance-20261110/evidence.md)。
+
 ## card
 
 - [x] Card (`card`)：r4 固定当前官方 `main` 为 `42f3bb63…`，归档 MDX、六个示例、Base UI wrapper 与 Nova CSS。将官网嵌入 Spacing 的 Edge to Edge 配方从错误的 `Kotlin extension:` 标题纠正，并移除本地额外说明；390dp Password/Forgot 2px 间距与官方一致并新增回归。共享文档模型新增 API 后章节槽位，为 Card 补 Kotlin 等价 Changelog 与三步 Spacing Variable 迁移，步骤不再污染 TOC。目录 20/20、共享文档 8/8、core 17/17 通过；当前 Wasm `c575ab2d…` 下完成四象限、64 张六配方/API/Changelog 分节和 6 个 spacing/RTL 交互取证。共享文档壳、Geist/阿希字形、代码面板、原生滚动条与 Canvas 语义作为明确平台差异，见 [card-r4](../../web-parity/card-r4/README.md)。

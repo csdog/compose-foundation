@@ -7,11 +7,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
-import androidx.compose.foundation.style.rememberUpdatedStyleState
+import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -61,6 +62,9 @@ fun toggleState(): ToggleState =
  * follows the final resolved `shape()`, not just whatever this composable's own
  * variant style declares.
  *
+ * Nova has no implicit press transform; other presets retain the legacy scale.
+ * Callers can explicitly opt into any [ButtonAnimation] for every preset.
+ *
  * Usage:
  * ```
  * var bold by remember { mutableStateOf(false) }
@@ -79,7 +83,8 @@ fun Toggle(
     disabled: Boolean = false,
     variant: ToggleVariant = ToggleVariant.Default,
     size: ToggleSize = ToggleSize.Md,
-    animation: ButtonAnimation = ButtonAnimation.Scale,
+    animation: ButtonAnimation =
+        if (currentTheme.activePreset == StylePreset.Nova) ButtonAnimation.None else ButtonAnimation.Scale,
     label: String = "",
     defaultPressed: Boolean = false,
     style: Style = Style,
@@ -112,7 +117,8 @@ fun Toggle(
     disabled: Boolean = false,
     variant: ToggleVariant = ToggleVariant.Default,
     size: ToggleSize = ToggleSize.Md,
-    animation: ButtonAnimation = ButtonAnimation.Scale,
+    animation: ButtonAnimation =
+        if (currentTheme.activePreset == StylePreset.Nova) ButtonAnimation.None else ButtonAnimation.Scale,
     label: String = "",
     defaultPressed: Boolean = false,
     style: Style = Style,
@@ -135,10 +141,14 @@ fun Toggle(
     val pressStyle = rememberPressMotionStyle(animation)
     val touchTargetStyle = rememberMinTouchTargetStyle()
     val styleState =
-        rememberUpdatedStyleState(interactionSource) {
-            it.isChecked = isPressed
-            it.isEnabled = resolvedEnabled
+        remember(interactionSource) {
+            MutableStyleState(interactionSource).apply { isChecked = isPressed }
         }
+    styleState.isEnabled = resolvedEnabled
+    // Foundation 1.12.2 loses checked transitions when its snapshot flags are written
+    // in the same composition that updates the styled node. Publish later, like
+    // interaction-source events, while semantics and callbacks keep the current value.
+    LaunchedEffect(styleState, isPressed) { styleState.isChecked = isPressed }
 
     Box(
         modifier =
@@ -221,7 +231,8 @@ fun Toggle(
     disabled: Boolean = false,
     variant: ToggleVariant = ToggleVariant.Default,
     size: ToggleSize = ToggleSize.Md,
-    animation: ButtonAnimation = ButtonAnimation.Scale,
+    animation: ButtonAnimation =
+        if (currentTheme.activePreset == StylePreset.Nova) ButtonAnimation.None else ButtonAnimation.Scale,
     label: String = text,
     defaultPressed: Boolean = false,
     style: Style = Style,
@@ -254,7 +265,8 @@ fun Toggle(
     disabled: Boolean = false,
     variant: ToggleVariant = ToggleVariant.Default,
     size: ToggleSize = ToggleSize.Md,
-    animation: ButtonAnimation = ButtonAnimation.Scale,
+    animation: ButtonAnimation =
+        if (currentTheme.activePreset == StylePreset.Nova) ButtonAnimation.None else ButtonAnimation.Scale,
     label: String = text,
     defaultPressed: Boolean = false,
     style: Style = Style,
@@ -289,7 +301,8 @@ fun Toggle(
     disabled: Boolean = false,
     variant: ToggleVariant = ToggleVariant.Default,
     size: ToggleSize = ToggleSize.Md,
-    animation: ButtonAnimation = ButtonAnimation.Scale,
+    animation: ButtonAnimation =
+        if (currentTheme.activePreset == StylePreset.Nova) ButtonAnimation.None else ButtonAnimation.Scale,
     label: String = "",
     defaultPressed: Boolean = false,
     style: Style = Style,
@@ -324,7 +337,8 @@ fun Toggle(
     disabled: Boolean = false,
     variant: ToggleVariant = ToggleVariant.Default,
     size: ToggleSize = ToggleSize.Md,
-    animation: ButtonAnimation = ButtonAnimation.Scale,
+    animation: ButtonAnimation =
+        if (currentTheme.activePreset == StylePreset.Nova) ButtonAnimation.None else ButtonAnimation.Scale,
     label: String = "",
     defaultPressed: Boolean = false,
     style: Style = Style,

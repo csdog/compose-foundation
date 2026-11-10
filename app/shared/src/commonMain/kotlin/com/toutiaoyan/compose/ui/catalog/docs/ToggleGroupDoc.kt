@@ -2,6 +2,18 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
+import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.text.InlineTextContent
+import androidx.compose.foundation.text.appendInlineContent
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.*
+import androidx.compose.ui.text.style.LineHeightStyle
+import com.toutiaoyan.compose.ui.catalog.catalogMonoFontFamily
+import com.toutiaoyan.compose.ui.theme.currentTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +29,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.unit.constrainHeight
+import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
@@ -28,7 +44,6 @@ import com.composables.icons.lucide.Italic
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.Underline
 import com.toutiaoyan.compose.ui.components.field.Field
-import com.toutiaoyan.compose.ui.components.field.FieldDescription
 import com.toutiaoyan.compose.ui.components.field.FieldLabel
 import com.toutiaoyan.compose.ui.components.icon.Icon
 import com.toutiaoyan.compose.ui.components.text.Text
@@ -39,6 +54,77 @@ import com.toutiaoyan.compose.ui.components.togglegroup.ToggleGroup
 import com.toutiaoyan.compose.ui.components.togglegroup.ToggleGroupDefaults
 import com.toutiaoyan.compose.ui.components.togglegroup.ToggleGroupItem
 import com.toutiaoyan.compose.ui.components.togglegroup.ToggleGroupOrientation
+import com.toutiaoyan.compose.ui.components.togglegroup.ToggleGroupType
+
+// Skia floors leading-none at natural font metrics. CSS keeps the declared line box and
+// permits glyph overflow; measure unconstrained and center without clipping or scaling.
+@Composable
+private fun FontWeightLineBox(
+    height: TextUnit,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
+) {
+    Layout(content = content, modifier = modifier) { measurables, constraints ->
+        val text = measurables.single().measure(constraints.copy(minHeight = 0, maxHeight = Constraints.Infinity))
+        val lineHeight = constraints.constrainHeight(height.roundToPx())
+        layout(text.width, lineHeight) {
+            text.placeRelative(0, (lineHeight - text.height) / 2)
+        }
+    }
+}
+
+@Composable
+private fun FontWeightDescription(fontWeight: String) {
+    val theme = currentTheme
+    val density = LocalDensity.current
+    val code = "font-$fontWeight"
+    val proseStyle =
+        theme.typography.bodyMedium.copy(
+            fontSize = 14.sp,
+            lineHeight = 21.sp,
+            fontWeight = FontWeight.Normal,
+            color = theme.colors.mutedForeground,
+            lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+        )
+    val codeStyle = proseStyle.copy(fontFamily = catalogMonoFontFamily())
+    val measured = rememberTextMeasurer().measure(code, codeStyle, softWrap = false)
+    val slotWidth = with(density) { (measured.size.width + 8.dp.toPx()).toSp() }
+    BasicText(
+        text =
+            buildAnnotatedString {
+                append("Use ")
+                appendInlineContent("weight", code)
+                append(" to set the font weight.")
+            },
+        modifier = Modifier.testTag("font-weight-description"),
+        style = proseStyle,
+        inlineContent =
+            mapOf(
+                "weight" to
+                    InlineTextContent(
+                        Placeholder(slotWidth, 21.sp, PlaceholderVerticalAlign.TextCenter),
+                    ) {
+                        FontWeightLineBox(21.sp, Modifier.testTag("font-weight-code")) {
+                            BasicText(
+                                code,
+                                style = codeStyle,
+                                softWrap = false,
+                                modifier =
+                                    Modifier.drawBehind {
+                                        // CSS inline padding paints outside the unchanged 21px line box.
+                                        drawRoundRect(
+                                            color = theme.colors.muted,
+                                            topLeft = Offset(0f, -2.dp.toPx()),
+                                            size = Size(size.width, size.height + 4.dp.toPx()),
+                                            cornerRadius = CornerRadius(8.dp.toPx()),
+                                        )
+                                    }.padding(horizontal = 4.dp),
+                            )
+                        }
+                    },
+            ),
+    )
+}
 
 private val toggleGroupRtlLabels =
     listOf(
@@ -56,6 +142,7 @@ private fun ToggleGroupIconDemo(
     spacing: androidx.compose.ui.unit.Dp = ToggleGroupDefaults.Spacing,
     disabled: Boolean = false,
     variant: ToggleVariant = ToggleVariant.Outline,
+    type: ToggleGroupType = ToggleGroupType.Multiple,
 ) {
     ToggleGroup(
         value = value,
@@ -64,6 +151,7 @@ private fun ToggleGroupIconDemo(
         size = size,
         spacing = spacing,
         disabled = disabled,
+        type = type,
         orientation = if (vertical) ToggleGroupOrientation.Vertical else ToggleGroupOrientation.Horizontal,
         modifier = Modifier.testTag("toggle-group-recipe"),
     ) {
@@ -85,6 +173,7 @@ private fun ToggleGroupTextDemo(
 ) {
     ToggleGroup(
         value = active,
+        type = ToggleGroupType.Single,
         onValueChange = onValueChange,
         variant = ToggleVariant.Outline,
         size = size,
@@ -130,31 +219,41 @@ private fun ToggleGroupFontWeightDemo() {
                     Column(
                         modifier = Modifier.wrapContentWidth(unbounded = true),
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
+                        verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically),
                     ) {
-                        Text(
-                            textStyle =
-                                androidx.compose.ui.text.TextStyle(
-                                    fontSize = 24.sp,
-                                    lineHeight = 24.sp,
-                                    fontWeight = weight,
-                                ),
-                        ) { "Aa" }
-                        Text(textStyle = TextColors.Muted.copy(fontSize = 12.sp, lineHeight = 16.sp)) {
-                            value.replaceFirstChar { it.uppercase() }
+                        FontWeightLineBox(24.sp, Modifier.testTag("font-sample-$value")) {
+                            Text(
+                                textStyle =
+                                    androidx.compose.ui.text.TextStyle(
+                                        fontSize = 24.sp,
+                                        lineHeight = 24.sp,
+                                        fontWeight = weight,
+                                    ),
+                            ) { "Aa" }
+                        }
+                        FontWeightLineBox(16.sp, Modifier.testTag("font-caption-$value")) {
+                            Text(
+                                textStyle =
+                                    TextColors.Muted.copy(
+                                        fontSize = 12.sp,
+                                        lineHeight = 16.sp,
+                                    ),
+                            ) {
+                                value.replaceFirstChar { it.uppercase() }
+                            }
                         }
                     }
                 }
             }
         }
-        FieldDescription("Use font-$fontWeight to set the font weight.")
+        FontWeightDescription(fontWeight)
     }
 }
 
 private val toggleGroupDefaultCode =
     """
     var value by remember { mutableStateOf(emptySet<String>()) }
-    ToggleGroup(value = value, onValueChange = { value = it }, variant = ToggleVariant.Outline) {
+    ToggleGroup(type = ToggleGroupType.Multiple, value = value, onValueChange = { value = it }, variant = ToggleVariant.Outline) {
         ToggleGroupItem("bold", label = "Toggle bold") { Icon(Lucide.Bold) }
         ToggleGroupItem("italic", label = "Toggle italic") { Icon(Lucide.Italic) }
         ToggleGroupItem("underline", label = "Toggle strikethrough") { Icon(Lucide.Underline) }
@@ -164,7 +263,7 @@ private val toggleGroupDefaultCode =
 private val toggleGroupOutlineCode =
     """
     var value by remember { mutableStateOf(setOf("all")) }
-    ToggleGroup(value = value, onValueChange = { value = it }, variant = ToggleVariant.Outline) {
+    ToggleGroup(type = ToggleGroupType.Single, value = value, onValueChange = { value = it }, variant = ToggleVariant.Outline) {
         ToggleGroupItem("all") { Text { "All" } }
         ToggleGroupItem("missed") { Text { "Missed" } }
     }
@@ -172,12 +271,12 @@ private val toggleGroupOutlineCode =
 
 private val toggleGroupSizesCode =
     """
-    ToggleGroup(defaultValue = setOf("top"), variant = ToggleVariant.Outline, size = ToggleSize.Sm) {
+    ToggleGroup(type = ToggleGroupType.Single, defaultValue = setOf("top"), variant = ToggleVariant.Outline, size = ToggleSize.Sm) {
         listOf("top", "bottom", "left", "right").forEach { value ->
             ToggleGroupItem(value) { Text { value.replaceFirstChar { it.uppercase() } } }
         }
     }
-    ToggleGroup(defaultValue = setOf("top"), variant = ToggleVariant.Outline) {
+    ToggleGroup(type = ToggleGroupType.Single, defaultValue = setOf("top"), variant = ToggleVariant.Outline) {
         listOf("top", "bottom", "left", "right").forEach { value ->
             ToggleGroupItem(value) { Text { value.replaceFirstChar { it.uppercase() } } }
         }
@@ -186,7 +285,7 @@ private val toggleGroupSizesCode =
 
 private val toggleGroupSpacingCode =
     """
-    ToggleGroup(defaultValue = setOf("top"), variant = ToggleVariant.Outline, size = ToggleSize.Sm, spacing = 8.dp) {
+    ToggleGroup(type = ToggleGroupType.Single, defaultValue = setOf("top"), variant = ToggleVariant.Outline, size = ToggleSize.Sm, spacing = 8.dp) {
         listOf("top", "bottom", "left", "right").forEach { value ->
             ToggleGroupItem(value) { Text { value.replaceFirstChar { it.uppercase() } } }
         }
@@ -211,7 +310,7 @@ private val toggleGroupVerticalCode =
 
 private val toggleGroupDisabledCode =
     """
-    ToggleGroup(defaultValue = setOf("bold"), disabled = true, variant = ToggleVariant.Outline) {
+    ToggleGroup(type = ToggleGroupType.Single, disabled = true, variant = ToggleVariant.Default) {
         ToggleGroupItem("bold", label = "Toggle bold") { Icon(Lucide.Bold) }
         ToggleGroupItem("italic", label = "Toggle italic") { Icon(Lucide.Italic) }
         ToggleGroupItem("underline", label = "Toggle strikethrough") { Icon(Lucide.Underline) }
@@ -220,6 +319,70 @@ private val toggleGroupDisabledCode =
 
 private val toggleGroupFontWeightCode =
     """
+    @Composable
+    private fun FontWeightLineBox(
+        height: TextUnit,
+        modifier: Modifier = Modifier,
+        content: @Composable () -> Unit,
+    ) {
+        Layout(content = content, modifier = modifier) { measurables, constraints ->
+            val text = measurables.single().measure(constraints.copy(minHeight = 0, maxHeight = Constraints.Infinity))
+            val lineHeight = constraints.constrainHeight(height.roundToPx())
+            layout(text.width, lineHeight) {
+                text.placeRelative(0, (lineHeight - text.height) / 2)
+            }
+        }
+    }
+
+    @Composable
+    private fun FontWeightDescription(fontWeight: String) {
+        val theme = currentTheme
+        val density = LocalDensity.current
+        val code = "font-${'$'}fontWeight"
+        val proseStyle = theme.typography.bodyMedium.copy(
+            fontSize = 14.sp,
+            lineHeight = 21.sp,
+            fontWeight = FontWeight.Normal,
+            color = theme.colors.mutedForeground,
+            lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+        )
+        val codeStyle = proseStyle.copy(fontFamily = catalogMonoFontFamily())
+        val measured = rememberTextMeasurer().measure(code, codeStyle, softWrap = false)
+        val slotWidth = with(density) { (measured.size.width + 8.dp.toPx()).toSp() }
+        BasicText(
+            text = buildAnnotatedString {
+                append("Use ")
+                appendInlineContent("weight", code)
+                append(" to set the font weight.")
+            },
+            modifier = Modifier.testTag("font-weight-description"),
+            style = proseStyle,
+            inlineContent = mapOf(
+                "weight" to InlineTextContent(
+                    Placeholder(slotWidth, 21.sp, PlaceholderVerticalAlign.TextCenter),
+                ) {
+                    FontWeightLineBox(21.sp, Modifier.testTag("font-weight-code")) {
+                        BasicText(
+                            code,
+                            style = codeStyle,
+                            softWrap = false,
+                            modifier = Modifier.drawBehind {
+                                // CSS inline padding paints outside the unchanged 21px line box.
+                                drawRoundRect(
+                                    color = theme.colors.muted,
+                                    topLeft = Offset(0f, -2.dp.toPx()),
+                                    size = Size(size.width, size.height + 4.dp.toPx()),
+                                    cornerRadius = CornerRadius(8.dp.toPx()),
+                                )
+                            }.padding(horizontal = 4.dp),
+                        )
+                    }
+                },
+            ),
+        )
+    }
+
+
     var fontWeight by remember { mutableStateOf("normal") }
     Field {
         FieldLabel("Font Weight")
@@ -230,28 +393,52 @@ private val toggleGroupFontWeightCode =
                 ToggleGroupItem(value, label = value.replaceFirstChar { it.uppercase() },
                     style = Style { width(64.dp); height(64.dp); shape(RoundedCornerShape(12.dp)) }) {
                     Column(modifier = Modifier.wrapContentWidth(unbounded = true),
+                        verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically),
                         horizontalAlignment = Alignment.CenterHorizontally) {
+                        FontWeightLineBox(24.sp) {
                         Text(textStyle = TextStyle(fontSize = 24.sp, lineHeight = 24.sp,
-                            fontWeight = weight)) { "Aa" }
-                        Text(textStyle = TextColors.Muted.copy(fontSize = 12.sp, lineHeight = 16.sp)) {
+                                fontWeight = weight)) { "Aa" }
+                        }
+                        FontWeightLineBox(16.sp) {
+                        Text(
+                            textStyle =
+                                TextColors.Muted.copy(
+                                    fontSize = 12.sp,
+                                    lineHeight = 16.sp,
+                                ),
+                        ) {
                             value.replaceFirstChar { it.uppercase() }
+                        }
                         }
                     }
                 }
             }
         }
-        FieldDescription("Use font-${'$'}fontWeight to set the font weight.")
+        FontWeightDescription(fontWeight)
     }
     """.trimIndent()
 
 private val toggleGroupRtlCode =
     """
+    val translations = listOf(
+        listOf("List", "Grid", "Cards"),
+        listOf("قائمة", "شبكة", "بطاقات"),
+        listOf("רשימה", "רשת", "כרטיסים"),
+    )
     var language by remember { mutableStateOf(1) }
     var value by remember { mutableStateOf(setOf("list")) }
-    CompositionLocalProvider(LocalLayoutDirection provides if (language == 0) LayoutDirection.Ltr else LayoutDirection.Rtl) {
-        ToggleGroup(value = value, onValueChange = { value = it }, variant = ToggleVariant.Outline) {
-            listOf("list", "grid", "cards").forEach { key ->
-                ToggleGroupItem(key, label = key) { Text { translatedLabel(language, key) } }
+    Column {
+        Row {
+            listOf("English", "Arabic (العربية)", "Hebrew (עברית)").forEachIndexed { index, name ->
+                Button(onClick = { language = index }) { Text { name } }
+            }
+        }
+        CompositionLocalProvider(LocalLayoutDirection provides if (language == 0) LayoutDirection.Ltr else LayoutDirection.Rtl) {
+            ToggleGroup(type = ToggleGroupType.Single, value = value, onValueChange = { value = it }, variant = ToggleVariant.Outline) {
+                listOf("list", "grid", "cards").forEachIndexed { index, key ->
+                    val label = translations[language][index]
+                    ToggleGroupItem(key, label = label) { Text { label } }
+                }
             }
         }
     }
@@ -301,7 +488,7 @@ val toggleGroupDoc =
                     "Connected (spacing 0) or spaced two-state buttons; single or multiple selection.",
                     listOf(
                         ApiProperty("value / defaultValue", "Set<String>? / Set<String>", "null / emptySet()"),
-                        ApiProperty("type", "ToggleGroupType", "Multiple"),
+                        ApiProperty("type", "ToggleGroupType", "Single"),
                         ApiProperty("variant / size", "ToggleVariant / ToggleSize", "Default / Md"),
                         ApiProperty("spacing", "Dp", "8.dp (2 in CSS units)"),
                         ApiProperty("orientation / disabled", "ToggleGroupOrientation / Boolean", "Horizontal / false"),
@@ -329,6 +516,7 @@ val toggleGroupDoc =
                 ),
                 ComponentExample(
                     title = "Outline",
+                    descriptionMarkdown = "Use `variant=\"outline\"` for an outline style.",
                     code = toggleGroupOutlineCode,
                     preview = {
                         var value by remember { mutableStateOf(setOf("all")) }
@@ -391,7 +579,13 @@ val toggleGroupDoc =
                     title = "Disabled",
                     code = toggleGroupDisabledCode,
                     preview = {
-                        ToggleGroupIconDemo(setOf("bold"), {}, disabled = true)
+                        ToggleGroupIconDemo(
+                            emptySet(),
+                            {},
+                            disabled = true,
+                            variant = ToggleVariant.Default,
+                            type = ToggleGroupType.Single,
+                        )
                     },
                 ),
                 ComponentExample(
@@ -425,6 +619,7 @@ val toggleGroupDoc =
                                     horizontalAlignment = Alignment.CenterHorizontally,
                                 ) {
                                     ToggleGroup(
+                                        type = ToggleGroupType.Single,
                                         value = value,
                                         onValueChange = { value = it },
                                         variant = ToggleVariant.Outline,
@@ -467,7 +662,7 @@ val toggleGroupDoc =
                     code =
                         """
                         var value by remember { mutableStateOf(setOf("bold")) }
-                        ToggleGroup(value = value, onValueChange = { value = it }, spacing = 0.dp) {
+                        ToggleGroup(type = ToggleGroupType.Multiple, value = value, onValueChange = { value = it }, spacing = 0.dp) {
                             ToggleGroupItem("bold", "B")
                             ToggleGroupItem("italic", "I")
                             ToggleGroupItem("underline", "U")
@@ -475,7 +670,12 @@ val toggleGroupDoc =
                         """.trimIndent(),
                     preview = {
                         var value by remember { mutableStateOf(setOf("bold")) }
-                        ToggleGroup(value = value, onValueChange = { value = it }, spacing = 0.dp) {
+                        ToggleGroup(
+                            type = ToggleGroupType.Multiple,
+                            value = value,
+                            onValueChange = { value = it },
+                            spacing = 0.dp,
+                        ) {
                             ToggleGroupItem("bold", "B")
                             ToggleGroupItem("italic", "I")
                             ToggleGroupItem("underline", "U")

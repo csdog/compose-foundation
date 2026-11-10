@@ -1,7 +1,7 @@
 # Web 对齐验收状态
 
-整理日期：2026-11-09。当前保存状态为 **38 / 67 项已勾选，29 项未完成**。
-批处理已于 2026-11-09 按用户要求恢复，按未完成清单倒序逐组件修复、复验和验收；当前运行信息见[批次记录](../.agent-runs/batches/latest.json)。
+更新日期：2026-11-10。当前保存状态为 **39 / 67 项已勾选，28 项未完成**。
+本轮仅继续 Calendar 验收，未启动全队列；历史运行信息见[批次记录](../.agent-runs/batches/latest.json)。
 文档整理本身不构成验收；勾选只在组件证据与当前源码校验通过后更新。
 
 ## 状态口径
@@ -32,7 +32,7 @@
 - [x] Bubble (`bubble`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#bubble) · [交接](../.agent-runs/bubble/progress.md)。
 - [x] Button (`button`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#button) · [交接](../.agent-runs/button/progress.md)。
 - [x] Button Group (`button-group`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#button-group) · [交接](../.agent-runs/button-group/progress.md)。
-- [ ] Calendar (`calendar`)：停止时阻塞：Changelog 目录跳转位置异常。[范围与证据](archive/2026-11-09/component-status-details.md#calendar) · [交接](../.agent-runs/calendar/progress.md)。
+- [x] Calendar (`calendar`)：2026-11-10 验收通过：65 tests、10 unchanged goldens、5 lint、JS/Wasm、四象限与菜单/范围/主题/导航浏览器实测及独立审查通过。已修复目录滚动、选中悬停与按压动画；Wasm DOM/ARIA 平台限制按 I16 明确记录。[当前证据](../.agent-runs/calendar/acceptance-20261110/evidence.md) · [独立审查](../.agent-runs/calendar/acceptance-20261110/independent-audit.md) · [交接](../.agent-runs/calendar/progress.md)。
 - [x] Card (`card`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#card) · [交接](../.agent-runs/card/progress.md)。
 - [x] Carousel (`carousel`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#carousel) · [交接](../.agent-runs/carousel/progress.md)。
 - [x] Code Block (`code-block`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#code-block)。

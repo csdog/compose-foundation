@@ -2,10 +2,14 @@
 
 package com.toutiaoyan.compose.ui.components.calendar
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.style.Style
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toPixelMap
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.SemanticsActions
@@ -15,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.ScreenshotTest
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.tokens.StylePreset
+import com.toutiaoyan.compose.ui.theme.Theme
 import kotlin.test.*
 
 class CalendarParityTest : ScreenshotTest() {
@@ -262,5 +267,58 @@ class CalendarParityTest : ScreenshotTest() {
             assertEquals(11, month)
             assertEquals(CalendarDate(3176, 12, 1), state!!.focusedDate)
         }
+    }
+
+    @Test fun callerShapeUpdatesLiveAndThemeKeepsSelection() {
+        var radius by mutableStateOf(0.dp)
+        var dark by mutableStateOf(false)
+        composeRule.setContent {
+            Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
+                Box(Modifier.background(Color.Red)) {
+                    Calendar(
+                        2026,
+                        11,
+                        { _, _ -> },
+                        CalendarDate(2026, 11, 15),
+                        {},
+                        modifier = Modifier.testTag("live-calendar"),
+                        style =
+                            Style {
+                                background(Color.Green)
+                                shape(RoundedCornerShape(radius))
+                            },
+                    )
+                }
+            }
+        }
+
+        fun cornerGreen(): Float {
+            val image = composeRule.onNodeWithTag("live-calendar").captureToImage().toPixelMap()
+            val point = with(composeRule.density) { 2.dp.roundToPx() }
+            return image[point, point].green
+        }
+        assertTrue(cornerGreen() > .9f, "Square caller shape must paint the corner")
+        composeRule.runOnIdle { radius = 20.dp }
+        assertTrue(cornerGreen() < .4f, "Live rounded caller shape must remove the same corner pixel")
+        composeRule.runOnIdle { dark = true }
+        assertTrue(cornerGreen() < .4f, "Theme change must retain the caller shape")
+        composeRule.onNodeWithContentDescription("2026-11-15").assertIsSelected()
+    }
+
+    @Test fun novaSelectedDayKeepsPrimaryFillWhileHoveredInLightTheme() {
+        var expected = Color.Unspecified
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            expected = com.toutiaoyan.compose.ui.theme.currentTheme.colors.primary
+            Calendar(2026, 11, { _, _ -> }, CalendarDate(2026, 11, 15), {})
+        }
+        val day = composeRule.onNodeWithContentDescription("2026-11-15")
+        day.performMouseInput { moveTo(center) }
+        composeRule.waitForIdle()
+        day.assertIsSelected()
+        val pixels = day.captureToImage().toPixelMap()
+        val fill = pixels[with(composeRule.density) { 5.dp.roundToPx() }, pixels.height / 2]
+        assertEquals(expected.red, fill.red, .005f)
+        assertEquals(expected.green, fill.green, .005f)
+        assertEquals(expected.blue, fill.blue, .005f)
     }
 }

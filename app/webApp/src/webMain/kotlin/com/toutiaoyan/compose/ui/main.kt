@@ -2,39 +2,50 @@
 
 package com.toutiaoyan.compose.ui
 
-import androidx.compose.runtime.snapshotFlow
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.ui.unit.dp
-import com.toutiaoyan.compose.ui.catalog.LocalCatalogViewportWidth
-import com.toutiaoyan.compose.ui.catalog.LocalDocumentScrollHost
-import kotlinx.browser.document
-import org.w3c.dom.HTMLElement
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
-import org.w3c.dom.events.Event
-import org.w3c.dom.events.KeyboardEvent
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.ComposeViewport
-import com.toutiaoyan.compose.ui.navigation.AppRouter
-import com.toutiaoyan.compose.ui.navigation.WebLinks
-import com.toutiaoyan.compose.ui.navigation.RouteKey
 import com.toutiaoyan.compose.ui.catalog.DocLocation
 import com.toutiaoyan.compose.ui.catalog.DocNavigation
+import com.toutiaoyan.compose.ui.catalog.LocalCatalogViewportWidth
 import com.toutiaoyan.compose.ui.catalog.LocalDocNavigation
+import com.toutiaoyan.compose.ui.catalog.LocalDocumentScrollHost
+import com.toutiaoyan.compose.ui.catalog.documentTitle
+import com.toutiaoyan.compose.ui.navigation.AppRouter
+import com.toutiaoyan.compose.ui.navigation.RouteKey
+import com.toutiaoyan.compose.ui.navigation.WebLinks
+import com.toutiaoyan.compose.ui.verification.ToggleGroupConnectedFixture
+import com.toutiaoyan.compose.ui.verification.ToggleGroupConnectedFixtureConfig
+import kotlinx.browser.document
 import kotlinx.browser.window
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import org.w3c.dom.HTMLElement
+import org.w3c.dom.events.Event
+import org.w3c.dom.events.KeyboardEvent
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
     val initialDarkModeOverride = readThemePreference()
     applyBrowserColorScheme(initialDarkModeOverride)
+    val connectedFixture = ToggleGroupConnectedFixtureConfig.fromPath(window.location.pathname)
     ComposeViewport("compose-root") {
+        if (connectedFixture != null) {
+            ToggleGroupConnectedFixture(
+                config = connectedFixture,
+                isDark = initialDarkModeOverride ?: window.matchMedia("(prefers-color-scheme: dark)").matches,
+            )
+            return@ComposeViewport
+        }
         var viewportWidth by remember { mutableStateOf(window.innerWidth.dp) }
         DisposableEffect(Unit) {
             val listener: (Event) -> Unit = { viewportWidth = window.innerWidth.dp }
@@ -87,6 +98,7 @@ private suspend fun bindAppRouterToBrowser(
         window.addEventListener("hashchange", hashListener)
         try {
             snapshotFlow { appRouter.current }.collect { route ->
+                document.title = route.documentTitle
                 val path = route.path
                 if (window.location.pathname != path) {
                     window.history.pushState(null, "", path)

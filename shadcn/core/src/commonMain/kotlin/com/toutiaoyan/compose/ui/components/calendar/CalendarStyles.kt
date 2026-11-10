@@ -6,6 +6,15 @@ import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.interaction.InteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.styles.rememberPressMotionStyle
 import androidx.compose.foundation.style.hovered
 import androidx.compose.foundation.style.contentPadding
 import androidx.compose.runtime.Composable
@@ -55,3 +64,17 @@ fun rememberCalendarDayCellChromeStyle(cellSize: Dp? = null): Style =
             shape(RoundedCornerShape(radius.md))
         }
     }
+
+@Composable
+internal fun rememberCalendarPressMotionStyle(interactionSource: InteractionSource): Style {
+    val legacy = rememberPressMotionStyle()
+    if (currentTheme.activePreset != StylePreset.Nova) return legacy
+    val isPressed by interactionSource.collectIsPressedAsState()
+    val offset =
+        animateFloatAsState(
+            targetValue = if (isPressed) 1f else 0f,
+            animationSpec = tween(durationMillis = 150, easing = FastOutSlowInEasing),
+            label = "Calendar press",
+        )
+    return remember(offset) { Style { translationY(offset.value.dp.toPx()) } }
+}
