@@ -23,6 +23,21 @@ sys.modules[SPEC.name] = orchestrator
 SPEC.loader.exec_module(orchestrator)
 
 
+def bind_required(run, ids, entries=None):
+    root = run.parent.parent
+    source = root / 'Example.kt'
+    source.write_text('class Example')
+    inputs = {'Example.kt': hashlib.sha256(source.read_bytes()).hexdigest()}
+    matrix = {'required': ids, 'inputs': ['Example.kt']}
+    matrix['sha256'] = orchestrator.control.matrix_digest(matrix)
+    (run / 'required-verification.json').write_text(json.dumps(matrix))
+    orchestrator.control.freeze_matrix(run)
+    if entries is not None:
+        for entry in entries:
+            entry['inputs'] = inputs
+    return inputs
+
+
 class StageSelectionTests(unittest.TestCase):
     def test_acceptance_receipt_checks_all_gates_and_current_source(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -97,7 +112,8 @@ class StageSelectionTests(unittest.TestCase):
 class BlockerProtocolTests(unittest.TestCase):
     def test_progress_counts_new_checks_after_first_128_entries(self):
         with tempfile.TemporaryDirectory() as tmp:
-            run = Path(tmp)
+            run = Path(tmp) / '.agent-runs/chart'
+            run.mkdir(parents=True)
             progress = run / 'progress.md'
             progress.write_text('## Next\n1. Continue 30c-browser\n')
             evidence = run / 'summary.json'
@@ -105,9 +121,10 @@ class BlockerProtocolTests(unittest.TestCase):
             digest = hashlib.sha256(evidence.read_bytes()).hexdigest()
             entries = [{'id': f'check-{i}', 'status': 'passed', 'evidence': evidence.name, 'sha256': digest} for i in range(128)]
             ledger = run / 'verification-progress.json'
+            bind_required(run, [entry['id'] for entry in entries] + ['new-keyboard-check'], entries)
             ledger.write_text(json.dumps({'completed': entries}))
             before = orchestrator.verification_checkpoint(progress)
-            entries.append({'id': 'new-keyboard-check', 'status': 'passed', 'evidence': evidence.name, 'sha256': digest})
+            entries.append({'id': 'new-keyboard-check', 'status': 'passed', 'evidence': evidence.name, 'sha256': digest, 'inputs': entries[0]['inputs']})
             ledger.write_text(json.dumps({'completed': entries}))
             after = orchestrator.verification_checkpoint(progress)
             self.assertEqual(frozenset({'new-keyboard-check'}), after[1] - before[1])
@@ -124,12 +141,13 @@ class BlockerProtocolTests(unittest.TestCase):
             progress.write_text('## Next\n1. Continue 30c-browser\n')
             event = root / 'events.jsonl'
             event.write_text('')
+            inputs = bind_required(run, ['keyboard'])
             def execute(*args, **kwargs):
                 evidence = run / 'keyboard.json'
                 evidence.write_text('{"passed":true}')
                 (run / 'verification-progress.json').write_text(json.dumps({'completed': [
                     {'id': 'keyboard', 'status': 'passed', 'evidence': evidence.name,
-                     'sha256': hashlib.sha256(evidence.read_bytes()).hexdigest()}]}))
+                     'sha256': hashlib.sha256(evidence.read_bytes()).hexdigest(), 'inputs': inputs}]}))
                 return orchestrator.RunResult(0, None, orchestrator.TokenUsage(), 1, False, False,
                                               'CONTEXT_HANDOFF 30-verify', event, root / 'last.md')
             args = orchestrator.parse_args(['--component', 'chart', '--project-root', str(root), '--max-attempts', '1'])
@@ -144,8 +162,8 @@ class BlockerProtocolTests(unittest.TestCase):
     def test_coverage_progress_requires_matching_local_evidence(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            run = root / 'run'
-            run.mkdir()
+            run = root / '.agent-runs/example'
+            run.mkdir(parents=True)
             progress = run / 'progress.md'
             progress.write_text('## Next\n1. Complete 30c-browser\n')
             evidence = run / 'result.json'
@@ -157,6 +175,7 @@ class BlockerProtocolTests(unittest.TestCase):
                 {'id': 'outside', 'status': 'passed', 'evidence': '../outside.json', 'sha256': hashlib.sha256(outside.read_bytes()).hexdigest()},
                 {'id': 'missing', 'status': 'passed', 'evidence': 'absent.json', 'sha256': '0' * 64},
             ]
+            bind_required(run, ['keyboard', 'outside', 'missing'], entries)
             (run / 'verification-progress.json').write_text(json.dumps({'completed': entries}))
             self.assertEqual(('30c-browser', frozenset({'keyboard'})), orchestrator.verification_checkpoint(progress))
             evidence.write_text('changed')
@@ -175,6 +194,7 @@ class BlockerProtocolTests(unittest.TestCase):
             progress.write_text('## Next\n1. Complete 30c-browser\n')
             event = root / 'events.jsonl'
             event.write_text('')
+            inputs = bind_required(run, ['check-1', 'check-2', 'check-3'])
             entries = []
             def execute(*args, **kwargs):
                 number = len(entries) + 1
@@ -182,7 +202,7 @@ class BlockerProtocolTests(unittest.TestCase):
                     evidence = run / f'check-{number}.json'
                     evidence.write_text(json.dumps({'check': number, 'passed': True}))
                     entries.append({'id': f'check-{number}', 'status': 'passed', 'evidence': evidence.name,
-                                    'sha256': hashlib.sha256(evidence.read_bytes()).hexdigest()})
+                                    'sha256': hashlib.sha256(evidence.read_bytes()).hexdigest(), 'inputs': inputs})
                     (run / 'verification-progress.json').write_text(json.dumps({'completed': entries}))
                 final = 'CONTEXT_HANDOFF 30-verify' if number <= 3 else 'STAGE_DONE 30-verify'
                 return orchestrator.RunResult(0, None, orchestrator.TokenUsage(), 1, False, False,

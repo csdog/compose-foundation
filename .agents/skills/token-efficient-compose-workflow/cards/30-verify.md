@@ -9,6 +9,11 @@ Work units:
 1. `30a-tests`: run the focused JVM test suites and owning ktlint tasks through
    `scripts/agent_run.sh`. Use one command for tests and one for lint; do not enumerate
    individual tests when the focused task already covers them.
+   When progress already records the current macOS AWT/AppKit pre-assertion abort
+   and a successful identical approved retry, run the next focused native JVM wrapper
+   command through approved escalation immediately. Preserve the worker sandbox and
+   exact task/filter scope; avoid reproducing the same known permission denial once
+   per session. Assertion failures and new signatures still require diagnosis.
 2. `30b-build`: run the current-worktree build required by the component, including the
    Wasm distribution when browser evidence is required. Reuse a recorded successful build
    if the relevant source hash is unchanged.
@@ -25,6 +30,10 @@ Work units:
    do not relaunch it. Switch once to an installed headless Playwright runtime and request
    escalation for the single bounded verifier command. A sandbox-only permission failure
    is not a product blocker until that escalated batch retry fails.
+   If this run already records the same host Mach-service denial and a successful
+   approved headless batch, launch subsequent bounded headless verifier commands via
+   approved escalation immediately. Do not repeat the known GUI/sandbox startup failure
+   in every continuation. Retain fresh browser contexts and the worker sandbox.
 4. `30d-audit`: consume the test XML, logs, build hash, browser summary, and source hashes.
    Compare deterministic evidence before visual judgment. Do not repeat any passed unit.
 
@@ -35,13 +44,23 @@ canonical checklist and pinned source. Include visual comparison, browser intera
 state transitions, boundary inputs and semantics wherever applicable. A generic page
 capture or mechanical assertion count does not complete missing required coverage.
 
-Browser coverage may span bounded sessions within the same 30c unit. Write
-`$RUN_DIR/verification-progress.json` with `completed` entries shaped as
-`{"id":"stable-check-id","status":"passed","evidence":"relative/summary.json","sha256":"actual file sha256"}`.
-Use evidence files inside RUN_DIR and stable IDs; preserve existing completed entries.
-Record remaining checks in progress.md. New hash-bound completed IDs count as progress;
-rewritten prose, timestamps or repeated captures of the same check do not. This ledger
-is continuation telemetry, not proof of overall acceptance.
+Browser coverage may span bounded sessions within the same 30c unit. Before the
+first continuation, derive `required-verification.json` from the canonical residuals:
+`required` is the finite list of mandatory check IDs; `inputs` maps each ID to its
+repository-relative relevant source/harness/config paths. Set `sha256` with
+`component_execution_control.matrix_digest(matrix)`. The driver freezes this plan
+in `required-verification.lock.json`. Never enlarge, shrink or replace the frozen
+plan to extend execution. A genuine scope correction requires operator review.
+
+Write `verification-progress.json` with `completed` entries:
+`{"id":"required-id","status":"passed","evidence":"relative/summary.json","sha256":"artifact sha256","inputs":{"path/to/source.kt":"current sha256"}}`.
+Input keys must exactly match that check's frozen relevant inputs. Evidence must
+remain inside RUN_DIR. Preserve valid prior checks. Only new required passes with
+matching current inputs advance continuation; extra diagnostics, stage-name changes,
+rewritten prose and timestamps do not. Missing/legacy coverage bindings are unknown,
+not accepted progress. The ledger is telemetry, not overall acceptance proof.
+The component's persisted session, time and input budgets apply across all stages
+and restarts. A checkpoint cannot renew them. Do not restart a budget-exhausted run.
 
 Missing required evidence is assigned verification work, not an external blocker.
 Audit must return uncovered applicable checks to the owning 30a/30b/30c unit: list exact

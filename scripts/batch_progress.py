@@ -5,6 +5,7 @@ import json
 import time
 from collections import Counter
 from pathlib import Path
+import component_execution_control as control
 
 
 def read_json(path: Path, default=None):
@@ -30,6 +31,7 @@ def snapshot(root: Path) -> dict:
     pending = []
     errors = []
     recoveries = []
+    components = []
     counts = Counter()
     for row in results:
         status = row['status']
@@ -39,17 +41,24 @@ def snapshot(root: Path) -> dict:
         if row['status'] in ('acceptance_pending', 'verification_pending'):
             pending.append({'component': row['slug'], 'reason': row.get('reason'), 'status': row['status']})
         run = root / '.agent-runs' / row['slug'] / 'orchestrator'
+        try:
+            budget = control.read_json(run.parent / 'execution-budget.json', {})
+            _, coverage = control.coverage(run.parent)
+            components.append({'component': row['slug'], 'budget': budget, 'coverage': coverage,
+                               'last_advanced_at': control.read_json(run.parent / 'continuation-state.json', {}).get('last_advanced_at')})
+        except (OSError, ValueError, TypeError):
+            components.append({'component': row['slug'], 'telemetry_error': 'invalid execution telemetry'})
         if row['status'] == 'running':
             live = read_json(run / 'live.json', {})
             # Only show telemetry from this invocation, not a previous attempt.
             if live.get('updated_at', '') < row['started_at']:
                 live = {}
             current.append({'component': row['slug'], 'started_at': row['started_at'], **live})
-        if status in ('blocked', 'infrastructure_blocked', 'init_failed'):
+        if status in ('blocked', 'infrastructure_blocked', 'init_failed', 'budget_exhausted'):
             records = read_json(run / 'runs.json', {}).get('runs', [])
             last = records[-1] if records else {}
-            reason = last.get('reason') or row.get('reason')
-            if last.get('status') == 'blocked' and last.get('message_log'):
+            reason = row.get('reason') if status == 'budget_exhausted' else last.get('reason') or row.get('reason')
+            if status != 'budget_exhausted' and last.get('status') == 'blocked' and last.get('message_log'):
                 try:
                     from codex_stage_orchestrator import blocker_reason, last_nonempty_line
                     message = Path(last['message_log']).read_text()
@@ -86,7 +95,7 @@ def snapshot(root: Path) -> dict:
             'recoveries': recoveries,
             'acceptance_pending': pending,
             'running': [row['component'] for row in current], 'current': current,
-            'errors': errors, 'state': str(root / '.agent-runs/batch-state.json')}
+            'errors': errors, 'components': components, 'state': str(root / '.agent-runs/batch-state.json')}
 
 
 def render(state: dict) -> str:
@@ -97,6 +106,17 @@ def render(state: dict) -> str:
                      f"last event={row.get('updated_at', row['started_at'])} | {row.get('event_type', '')}")
     if not state['active'] and state['current']:
         lines.append('Interrupted: saved running state is stale; no batch lock is held.')
+    for row in state.get('components', []):
+        budget = row.get('budget', {})
+        limits = budget.get('limits', {})
+        coverage = row.get('coverage', {})
+        lines.append(f"{row['component']} | cumulative sessions={budget.get('sessions', 'unknown')}/{limits.get('sessions', 'unknown')} | "
+                     f"input={budget.get('input_tokens', 'unknown')}/{limits.get('input_tokens', 'unknown')} | "
+                     f"observed input={budget.get('observed_input_tokens', 'unknown')} | estimated charge={budget.get('estimated_input_tokens', 'unknown')} | "
+                     f"seconds={budget.get('seconds', 'unknown')}/{limits.get('seconds', 'unknown')} | "
+                     f"required remaining={coverage.get('remaining') if coverage.get('remaining') is not None else 'unknown'} | "
+                     f"last advancement={row.get('last_advanced_at') or 'unknown'} | "
+                     f"{budget.get('stop_reason') or coverage.get('reason') or 'input-bound coverage'}")
     for row in state.get('recoveries', []):
         lines.append(f"RECOVERY_PENDING {row['component']} | {row['stage']} | {row['reason']}")
     for row in state.get('acceptance_pending', []):

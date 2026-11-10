@@ -118,5 +118,29 @@ class ProgressTests(unittest.TestCase):
             self.assertEqual(0, progress.watch(Path(tmp), .1))
 
 
-if __name__ == '__main__':
+
+class CumulativeProgressTests(unittest.TestCase):
+    def test_budget_stop_and_unknown_coverage_are_visible(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run = root / '.agent-runs/chart'
+            (run / 'orchestrator').mkdir(parents=True)
+            (run.parent / 'batch-state.json').write_text(json.dumps({'results': [
+                {'slug': 'chart', 'status': 'budget_exhausted', 'reason': 'component budget exhausted', 'started_at': 'now'}]}))
+            (run / 'orchestrator/runs.json').write_text(json.dumps({'runs': [
+                {'stage': '30-verify', 'status': 'context_handoff', 'reason': 'agent requested continuation'}]}))
+            (run / 'execution-budget.json').write_text(json.dumps({'sessions': 24, 'input_tokens': 20000000,
+                'seconds': 7000, 'limits': {'sessions': 24, 'input_tokens': 20000000, 'seconds': 7200},
+                'stop_reason': 'component cumulative input_tokens budget exhausted'}))
+            (run / 'continuation-state.json').write_text(json.dumps({'last_advanced_at': '2026-11-11T04:00:00+08:00'}))
+            state = progress.snapshot(root)
+            output = progress.render(state)
+            self.assertEqual('component budget exhausted', state['errors'][0]['reason'])
+            self.assertIn('sessions=24/24', output)
+            self.assertIn('input=20000000/20000000', output)
+            self.assertIn('required remaining=unknown', output)
+            self.assertIn('last advancement=2026-11-11T04:00:00+08:00', output)
+
+
+if __name__ == "__main__":
     unittest.main()

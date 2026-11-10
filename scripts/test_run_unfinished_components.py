@@ -25,6 +25,16 @@ sys.modules[SPEC.name] = batch
 SPEC.loader.exec_module(batch)
 
 
+def write_verification_route(run):
+    last = json.loads((run / 'orchestrator/runs.json').read_text())['runs'][-1]
+    (run / 'failure-routing.json').write_text(json.dumps({
+        'kind': 'verification_only', 'resume_stage': '30-verify', 'failed_stage': last['stage'],
+        'progress_sha256': hashlib.sha256((run / 'progress.log').read_bytes()).hexdigest(),
+        'message_sha256': hashlib.sha256(Path(last['message_log']).read_bytes()).hexdigest(),
+        'record_sha256': hashlib.sha256(json.dumps(last, sort_keys=True).encode()).hexdigest(),
+    }))
+
+
 class BatchTests(unittest.TestCase):
     def test_reverse_order_precedes_limit_and_includes_blocked_for_repair(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -82,6 +92,107 @@ class BatchTests(unittest.TestCase):
             self.assertEqual(2, count)
             self.assertEqual('20-implement', json.loads((run / 'recovery.json').read_text())['stage'])
             self.assertIn('--require-acceptance-receipt', worker.call_args.args[0])
+
+    def test_verification_only_blocker_resumes_verify_on_startup_and_in_loop(self):
+        for initial_failure in (True, False):
+            with self.subTest(initial_failure=initial_failure), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                run = root / '.agent-runs/example'
+                reports = run / 'orchestrator'
+                reports.mkdir(parents=True)
+                (run / 'progress.md').write_text('Existing implementation and evidence')
+                (run / 'progress.log').write_text(
+                    '20-implement FAIL\n' if initial_failure else '30-verify rotate\n')
+                message = reports / 'blocked.txt'
+                message.write_text('阻塞：尚缺浏览器验证证据；当前没有已确认的生产缺陷可供修复。\nSTAGE_BLOCKED 20-implement\n')
+                records = reports / 'runs.json'
+                records.write_text(json.dumps({'runs': [{'stage': '20-implement', 'status': 'blocked',
+                                                        'message_log': str(message)}]}))
+                write_verification_route(run)
+                observed = []
+
+                def driver(*args, **kwargs):
+                    observed.append((run / 'progress.log').read_text().splitlines()[-1])
+                    if not initial_failure and len(observed) == 1:
+                        with (run / 'progress.log').open('a') as f:
+                            f.write('30-verify FAIL\n')
+                        message.write_text('Blocker: Missing browser verification evidence; no confirmed production defect.\nSTAGE_BLOCKED 30-verify\n')
+                        records.write_text(json.dumps({'runs': [{'stage': '30-verify', 'status': 'blocked',
+                                                                'message_log': str(message)}]}))
+                        write_verification_route(run)
+                    return SimpleNamespace(returncode=2)
+
+                args = batch.parse_args(['--project-root', str(root), '--complete-components',
+                                         '--max-component-passes', '1' if initial_failure else '2'])
+                with patch.object(batch.subprocess, 'run', side_effect=driver):
+                    batch.execute_component(batch.Component('Example', 'example'), args)
+                self.assertEqual(['30-verify rotate'] * len(observed), observed)
+                self.assertIn('FAIL', (run / 'progress.log').read_text())
+                self.assertTrue(message.exists())
+
+    def test_failure_routing_preserves_product_repairs_and_rejects_stale_reports(self):
+        for record_stage, reason in [
+            ('20-implement', 'Blocker: browser transition is wrong; production defect confirmed.'),
+            ('30-verify', 'Blocker: Missing browser verification; no confirmed production defect.'),
+            ('20-implement', 'Blocker: No production edits yet; missing browser verification.'),
+        ]:
+            with self.subTest(record_stage=record_stage, reason=reason), tempfile.TemporaryDirectory() as tmp:
+                run = Path(tmp)
+                reports = run / 'orchestrator'
+                reports.mkdir()
+                message = reports / 'blocked.txt'
+                message.write_text(reason + f'\nSTAGE_BLOCKED {record_stage}\n')
+                (reports / 'runs.json').write_text(json.dumps({'runs': [
+                    {'stage': record_stage, 'status': 'blocked', 'message_log': str(message)}]}))
+                self.assertEqual('20-implement', batch.failure_resume_stage(run, '20-implement'))
+
+    def test_same_stage_new_failure_or_changed_message_rejects_old_route(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run = Path(tmp)
+            reports = run / 'orchestrator'
+            reports.mkdir()
+            (run / 'progress.log').write_text('20-implement FAIL\n')
+            message = reports / 'blocked.txt'
+            message.write_text('Missing verification, no confirmed production defect.\nSTAGE_BLOCKED 20-implement\n')
+            records = reports / 'runs.json'
+            records.write_text(json.dumps({'runs': [{'stage': '20-implement', 'status': 'blocked',
+                                                    'message_log': str(message)}]}))
+            write_verification_route(run)
+            self.assertEqual('30-verify', batch.failure_resume_stage(run, '20-implement'))
+            original = message.read_text()
+            for reason in [
+                'Blocker: Missing browser verification; no production defect fix has been applied; production defect confirmed.',
+                'Blocker: Missing verification; no confirmed production defect.\nLater: shared production defect confirmed.',
+            ]:
+                message.write_text(reason + '\nSTAGE_BLOCKED 20-implement\n')
+                self.assertEqual('20-implement', batch.failure_resume_stage(run, '20-implement'))
+            message.write_text(original)
+            original_records = records.read_text()
+            payload = json.loads(original_records)
+            payload['runs'][-1]['thread_id'] = 'different-attempt'
+            records.write_text(json.dumps(payload))
+            self.assertEqual('20-implement', batch.failure_resume_stage(run, '20-implement'))
+            records.write_text(original_records)
+            with (run / 'progress.log').open('a') as f:
+                f.write('20-implement rotate\n20-implement FAIL\n')
+            self.assertEqual('20-implement', batch.failure_resume_stage(run, '20-implement'))
+
+    def test_blocked_fixer_is_not_blindly_repeated(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run = root / '.agent-runs/example'
+            run.mkdir(parents=True)
+            (run / 'progress.log').write_text('20-implement rotate\n')
+            (run / 'progress.md').write_text('A real external blocker')
+            def driver(*args, **kwargs):
+                with (run / 'progress.log').open('a') as f:
+                    f.write('20-implement FAIL\n')
+                return SimpleNamespace(returncode=2)
+            args = batch.parse_args(['--project-root', str(root), '--complete-components', '--max-component-passes', '3'])
+            with patch.object(batch.subprocess, 'run', side_effect=driver) as worker:
+                result = batch.execute_component(batch.Component('Example', 'example'), args)
+            self.assertEqual('blocked', result[1])
+            self.assertEqual(1, worker.call_count)
 
     def test_detached_batch_finishes_without_polling_or_a_model(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -159,6 +270,33 @@ class BatchTests(unittest.TestCase):
             self.assertIsNone(batch.skip_reason(done))
             self.assertEqual("blocked by committed FAIL", batch.skip_reason(failed))
             self.assertIsNone(batch.skip_reason(active))
+
+
+
+class PersistentBudgetBatchTests(unittest.TestCase):
+    def test_forwards_limits_and_stops_without_completion_retry(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run = root / '.agent-runs/example'
+            run.mkdir(parents=True)
+            (run / 'progress.md').write_text('checkpoint')
+            args = batch.parse_args(['--project-root', str(root), '--complete-components',
+                '--max-component-sessions', '3', '--max-component-input-tokens', '900', '--max-component-seconds', '100'])
+            command = batch.orchestrator_command(batch.Component('Example', 'example'), args)
+            for flag, value in [('--max-component-sessions', '3'), ('--max-component-input-tokens', '900'), ('--max-component-seconds', '100')]:
+                self.assertEqual(value, command[command.index(flag) + 1])
+            with patch.object(batch.subprocess, 'run', return_value=SimpleNamespace(returncode=6)) as worker:
+                code, status, _ = batch.execute_component(batch.Component('Example', 'example'), args)
+                self.assertEqual((6, 'budget_exhausted'), (code, status))
+                self.assertEqual(1, worker.call_count)
+
+    def test_batch_exit_code_preserves_budget_stop(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'docs').mkdir()
+            (root / 'docs/shadcn-web-progress.md').write_text('- [ ] Example (`example`)\n')
+            with patch.object(batch, 'initialize_component', return_value=0), patch.object(batch, 'execute_component', return_value=(6, 'budget_exhausted', 'spent')):
+                self.assertEqual(6, batch.run_main(['--project-root', str(root), '--execute', '--complete-components']))
 
 
 if __name__ == "__main__":

@@ -190,3 +190,61 @@ current relevant source_hashes including component Kotlin. Missing/changed proof
 restores the checkbox to unchecked and retains a verification checkpoint. The
 canonical checkbox and summary count are synchronized only after receipt validation;
 existing historical checkmarks are not blanket reaccepted.
+
+
+### Verification-only failure recovery
+
+A fixer reporting a terminal blocker is not blindly rerun by completion mode.
+After inspecting a verification-only blocker, the operator may write
+`failure-routing.json` with `kind: verification_only`, `resume_stage: 30-verify`,
+`failed_stage`, and SHA256 bindings named `progress_sha256`, `message_sha256`,
+`record_sha256`. These bind the complete progress.log, blocked message bytes and
+latest runs.json record (JSON serialized with sorted keys), respectively.
+Stage workers must not infer or grant this operator route from free-form wording.
+A new FAIL, changed message or new record invalidates the route. Missing or stale
+routes retain repair behavior. Historical FAIL/evidence are preserved; routing is
+not gate acceptance. Operators can alternatively reopen an inspected checkpoint
+under the batch lock using the existing recovery API.
+
+
+## Persistent component limits (2026-11-11)
+
+Both batch and direct orchestrator execution enforce the same defaults: 24 sessions,
+20,000,000 cumulative input tokens (cached input included), and 7,200 active seconds
+per component. `--max-component-sessions`, `--max-component-input-tokens` and
+`--max-component-seconds` explicitly set the limits; changing a limit never clears
+spent usage. `execution-budget.json` reserves a launch before starting a worker.
+A crashed reservation is conservatively charged in full. Existing runs are imported
+once; missing historical durations are conservatively estimated at 600 seconds per
+session, marked `historical_time_estimated`. This can stop old over-budget components
+immediately. Never delete the ledger to recover a checkpoint.
+
+Exit 6 means cumulative budget exhaustion, not success or ordinary blocked repair.
+The batch stops at that component. The current session receives only the remaining
+time/input allowance; observed CLI/session counters are sampled without model calls
+(every five seconds for session logs). Input limits act at observed request boundaries:
+an in-flight request can overshoot before its usage is reported. Missing/incomplete
+usage is conservatively charged against the reserved allowance. `input_tokens` in the
+budget file is the charged budget, with `observed_input_tokens` and
+`estimated_input_tokens` displayed separately; original runs.json usage remains the
+measured usage source and is never overwritten by these estimates. All handoffs emit
+input warnings; warnings are separate from the persistent hard stop. Direct execution
+holds a component lock, preventing simultaneous launches against its state.
+
+Continuation requires a frozen finite mandatory coverage matrix and current relevant
+input hashes (see the Stage 30 card). Legacy unbound ledger IDs cannot extend a run.
+A higher stage name alone, regression, or added optional diagnostic is not progress.
+Two stalled handoffs persist across restarts. Status displays settled cumulative usage,
+limits, remaining mandatory checks and the last effective advancement; unknown coverage
+is printed as unknown, never zero. Completed evidence remains reusable per check when
+its relevant inputs match.
+
+`failure-inputs.json` remembers blocked-stage input fingerprints across process restarts.
+Rewording progress does not permit a retry. Frozen relevant inputs are used where present;
+otherwise the source/config tree is conservatively fingerprinted. Legacy failures without
+a signature stop and bind first, rather than assume remediation. A failed verification
+may enter its owning implementation stage once; a blocked fixer cannot repeat unchanged.
+For diagnosed environment blockers, `environment-inputs.json` may list actual toolchain
+receipt files/cache directories whose contents or permission/ownership changes are relevant.
+Use measured environment inputs, not a timestamp-only retry note. These files do not waive
+any acceptance gate. No queue restart or operator budget increase is automatic.

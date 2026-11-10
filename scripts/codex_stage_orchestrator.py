@@ -44,6 +44,7 @@ import subprocess
 import sys
 import threading
 import time
+import component_execution_control as control
 from dataclasses import asdict, dataclass
 from datetime import datetime
 from pathlib import Path
@@ -437,8 +438,8 @@ Reuse only the tasks covered by a matching current input manifest; never infer a
 unlisted task passed. Otherwise rerun the owning task.
 
 Initial reads:
-1. {plan_path}, sections 2-6
-2. {skill_path}
+1. {plan_path}: locate rules cited by the current residual; read only those sections
+2. {skill_path}: consult only instructions needed for the assigned work unit
 3. {card_path}
 4. {progress_path}
 
@@ -495,6 +496,11 @@ If any card-required command, including Gradle validation, a read-only source
 lookup or bounded browser batch, is blocked only by sandbox permission, retry
 that exact command once with escalation
 before recording an environment blocker.
+
+Continuation coverage must use the driver-frozen required-verification.json IDs.
+Each passed ledger entry must include an inputs mapping of repository-relative source
+paths to current SHA256 values. Extra diagnostics never extend the component budget.
+Do not broaden or replace an existing frozen matrix to obtain further continuations.
 
 Context rule: if the last prompt approaches {context_target_tokens:,} tokens, the
 session is compacted, repeated tool output threatens the payload limit, or you
@@ -876,6 +882,7 @@ def run_codex(
     message_log: Path,
     max_actions: int,
     max_seconds: int,
+    max_input_tokens: int = 0,
 ) -> RunResult:
     event_log.parent.mkdir(parents=True, exist_ok=True)
     message_log.parent.mkdir(parents=True, exist_ok=True)
@@ -887,16 +894,18 @@ def run_codex(
     action_count = 0
     budget_terminated = False
     timeout_terminated = False
+    progress_lock = threading.Lock()
     def publish_progress(event_type: str) -> None:
-        path = event_log.parent.parent / "live.json"
-        temporary = path.with_suffix(".json.tmp")
-        temporary.write_text(json.dumps({
-            "stage": event_log.parent.name,
-            "updated_at": datetime.now().astimezone().isoformat(timespec="seconds"),
-            "event_type": event_type, "thread_id": thread_id,
-            "actions": action_count, "usage": asdict(usage), "event_log": str(event_log),
-        }) + "\n", encoding="utf-8")
-        temporary.replace(path)
+        with progress_lock:
+            path = event_log.parent.parent / "live.json"
+            temporary = path.with_suffix(".json.tmp")
+            temporary.write_text(json.dumps({
+                "stage": event_log.parent.name,
+                "updated_at": datetime.now().astimezone().isoformat(timespec="seconds"),
+                "event_type": event_type, "thread_id": thread_id,
+                "actions": action_count, "usage": asdict(usage), "event_log": str(event_log),
+            }) + "\n", encoding="utf-8")
+            temporary.replace(path)
 
     publish_progress("starting")
     with event_log.open("w", encoding="utf-8") as raw:
@@ -926,6 +935,26 @@ def run_codex(
             except ProcessLookupError:
                 process.terminate()
 
+        monitor_stop = threading.Event()
+        def monitor_input_budget() -> None:
+            nonlocal budget_terminated, usage
+            while not monitor_stop.wait(5):
+                if process.poll() is not None:
+                    return
+                recovered = recover_session_usage(thread_id)
+                if recovered and recovered.input_tokens > usage.input_tokens:
+                    usage = recovered
+                    publish_progress('usage.sample')
+                if max_input_tokens and usage.input_tokens >= max_input_tokens:
+                    budget_terminated = True
+                    try:
+                        os.killpg(process.pid, signal.SIGTERM)
+                    except ProcessLookupError:
+                        pass
+                    return
+        monitor = threading.Thread(target=monitor_input_budget, daemon=True)
+        if max_input_tokens:
+            monitor.start()
         watchdog = (
             threading.Timer(max_seconds, terminate_for_timeout)
             if max_seconds > 0
@@ -948,7 +977,14 @@ def run_codex(
                     print(f"thread: {thread_id}")
                 found_usage = extract_usage(event)
                 if found_usage:
-                    usage = found_usage
+                    if found_usage.input_tokens >= usage.input_tokens:
+                        usage = found_usage
+                    if max_input_tokens and usage.input_tokens >= max_input_tokens:
+                        budget_terminated = True
+                        try:
+                            os.killpg(process.pid, signal.SIGTERM)
+                        except ProcessLookupError:
+                            pass
                 publish_progress(str(event.get("type", "event")))
                 item = event.get("item")
                 if (
@@ -969,6 +1005,9 @@ def run_codex(
                         except ProcessLookupError:
                             process.terminate()
                         break
+        monitor_stop.set()
+        if max_input_tokens:
+            monitor.join(timeout=6)
         if watchdog:
             watchdog.cancel()
         try:
@@ -1137,39 +1176,22 @@ def verification_checkpoint(progress_path: Path) -> tuple[str | None, frozenset[
     prose, timestamps or an already-completed check does not advance coverage.
     """
     unit = next_verification_unit(progress_path)
-    run_dir = progress_path.parent.resolve()
-    try:
-        payload = json.loads((run_dir / "verification-progress.json").read_text())
-        entries = payload.get("completed", [])
-    except (OSError, ValueError, AttributeError):
-        return unit, frozenset()
-    if not isinstance(entries, list):
-        return unit, frozenset()
-    completed = set()
-    evidence_hashes: dict[Path, str | None] = {}
-    for entry in entries:
-        if not isinstance(entry, dict) or entry.get("status") != "passed":
-            continue
-        check_id, evidence, digest = (entry.get(key) for key in ("id", "evidence", "sha256"))
-        if not all(isinstance(value, str) and value for value in (check_id, evidence, digest)):
-            continue
-        path = (run_dir / evidence).resolve()
-        if not path.is_relative_to(run_dir):
-            continue
+    return unit, control.coverage(progress_path.parent)[0]
+
+
+def execute_stage(**kwargs) -> int:
+    import fcntl
+    run = kwargs['args'].run_dir
+    run.mkdir(parents=True, exist_ok=True)
+    with (run / 'execution.lock').open('a') as lock:
         try:
-            if path not in evidence_hashes:
-                evidence_hashes[path] = (
-                    hashlib.sha256(path.read_bytes()).hexdigest()
-                    if path.stat().st_size <= 32 * 1024 * 1024 else None
-                )
-            if evidence_hashes[path] == digest:
-                completed.add(check_id)
-        except OSError:
-            evidence_hashes[path] = None
-    return unit, frozenset(completed)
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            raise RuntimeError('another component execution owns this checkpoint')
+        return _execute_stage(**kwargs)
 
 
-def execute_stage(
+def _execute_stage(
     *,
     args: argparse.Namespace,
     project_root: Path,
@@ -1188,8 +1210,20 @@ def execute_stage(
         raise RuntimeError(f"missing Stage card: {card_path}")
     action_budget = args.max_actions or STAGE_ACTION_BUDGETS[stage]
 
-    unchanged_handoffs = 0
+    continuation = control.read_json(args.run_dir / 'continuation-state.json', {})
+    unchanged_handoffs = continuation.get('unchanged_handoffs', 0)
+    control.freeze_matrix(args.run_dir)
     for attempt in range(1, args.max_attempts + 1):
+        inputs_digest = control.failure_digest(project_root, args.run_dir)
+        if not control.retry_allowed(args.run_dir, stage, inputs_digest):
+            print(f'UNCHANGED_FAILURE: {stage}; repair inputs before retrying', file=sys.stderr)
+            return 2
+        allowance = control.reserve(args.run_dir, args.max_component_sessions,
+                                    args.max_component_input_tokens, args.max_component_seconds,
+                                    args.max_seconds or args.max_component_seconds)
+        if allowance is None:
+            print('COMPONENT_BUDGET_EXHAUSTED: checkpoint preserved; no automatic reset', file=sys.stderr)
+            return 6
         previous_checkpoint = verification_checkpoint(progress_path) if stage == "30-verify" else (None, frozenset())
         previous_unit = previous_checkpoint[0]
         progress_tail = read_text_tail(
@@ -1213,7 +1247,7 @@ def execute_stage(
             stage=stage,
             context_target_tokens=args.context_target_tokens,
             max_actions=action_budget,
-            max_seconds=args.max_seconds,
+            max_seconds=allowance['seconds'],
             attempt=attempt,
             progress_tail=progress_tail,
             commands_tail=commands_tail,
@@ -1235,14 +1269,21 @@ def execute_stage(
         )
         print(f"\n[{stage}] attempt {attempt}/{args.max_attempts}")
         print(f"event_log: {event_log}")
+        session_started = time.monotonic()
         result = run_codex(
             command,
             project_root=project_root,
             event_log=event_log,
             message_log=message_log,
             max_actions=action_budget,
-            max_seconds=args.max_seconds,
+            max_seconds=allowance['seconds'],
+            max_input_tokens=allowance['input_tokens'],
         )
+        elapsed = time.monotonic() - session_started
+        control.finish(args.run_dir, elapsed, result.usage.input_tokens if result.usage_complete else max(result.usage.input_tokens, allowance['input_tokens']),
+                       observed_input_tokens=result.usage.input_tokens)
+        if result.usage.input_tokens > args.warn_stage_input_tokens:
+            print(f'warning: session input exceeded watch target: {result.usage.input_tokens:,}')
         decision = classify_outcome(
             stage,
             result.returncode,
@@ -1252,10 +1293,16 @@ def execute_stage(
             timeout_terminated=result.timeout_terminated,
         )
         advanced = False
-        if decision.status == "context_handoff" and previous_unit:
+        if decision.status == "context_handoff":
+            control.freeze_matrix(args.run_dir)
             checkpoint = verification_checkpoint(progress_path)
-            advanced = checkpoint[0] != previous_unit or bool(checkpoint[1] - previous_checkpoint[1])
+            advanced = (control.advanced(previous_checkpoint, checkpoint) if stage == '30-verify'
+                        else control.failure_digest(project_root, args.run_dir) != inputs_digest)
             unchanged_handoffs = 0 if advanced else unchanged_handoffs + 1
+            continuation.update(unchanged_handoffs=unchanged_handoffs)
+            if advanced:
+                continuation['last_advanced_at'] = datetime.now().astimezone().isoformat(timespec='seconds')
+            control.write_json(args.run_dir / 'continuation-state.json', continuation)
             if unchanged_handoffs >= 2:
                 decision = StageDecision("blocked", f"No work-unit advancement or new hash-bound coverage after two handoffs: {previous_unit}; inspect progress.md blocker")
         record = {
@@ -1268,6 +1315,8 @@ def execute_stage(
             .isoformat(timespec="seconds"),
             "thread_id": result.thread_id,
             "returncode": result.returncode,
+            "elapsed_seconds": elapsed,
+            "inputs_sha256": inputs_digest,
             "usage": asdict(result.usage),
             "usage_source": result.usage_source,
             "usage_complete": result.usage_complete,
@@ -1280,8 +1329,12 @@ def execute_stage(
             record,
         )
         append_loop_record(args.run_dir, record)
+        if decision.status == 'blocked':
+            control.record_failure(args.run_dir, stage, control.failure_digest(project_root, args.run_dir))
 
         if decision.status == "stage_done":
+            continuation.update(unchanged_handoffs=0, last_advanced_at=datetime.now().astimezone().isoformat(timespec='seconds'))
+            control.write_json(args.run_dir / 'continuation-state.json', continuation)
             try:
                 verify_handoff_or_fail(project_root, args.run_dir, stage)
             except RuntimeError:
@@ -1314,12 +1367,6 @@ def execute_stage(
                     return 4
                 if checklist_accepted(project_root, args.component):
                     update_component_checkbox(project_root, args.component, True)
-            if result.usage.prompt_tokens > args.warn_stage_input_tokens:
-                print(
-                    "warning: Stage cumulative input exceeded the watch target:"
-                    f" {result.usage.prompt_tokens:,}"
-                    f" > {args.warn_stage_input_tokens:,}"
-                )
             append_contract_mark(args.run_dir, stage, "ok")
             advance_run_state(args.run_dir, stage)
             if STATE_AFTER_STAGE[stage] == "complete":
@@ -1331,6 +1378,10 @@ def execute_stage(
                     return 4
             print(f"[{stage}] completed")
             return 0
+
+        if control.load_budget(args.run_dir)['input_tokens'] >= args.max_component_input_tokens:
+            print('COMPONENT_BUDGET_EXHAUSTED: input allowance reached; checkpoint preserved', file=sys.stderr)
+            return 6
 
         if decision.status in {
             "context_handoff",
@@ -1352,6 +1403,8 @@ def execute_stage(
             print(f"[{stage}] failed: {decision.reason}", file=sys.stderr)
             if decision.status == "infrastructure_blocked":
                 return 3
+        if decision.status not in {'context_handoff', 'context_overflow', 'action_budget', 'session_timeout'}:
+            control.record_failure(args.run_dir, stage, control.failure_digest(project_root, args.run_dir))
         append_contract_mark(args.run_dir, stage, "FAIL")
         return 2
 
@@ -1443,6 +1496,9 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         default="auto",
         help="Stage ID, or auto to route from the last progress.log ok mark",
     )
+    parser.add_argument('--max-component-sessions', type=int, default=control.DEFAULT_SESSIONS)
+    parser.add_argument('--max-component-input-tokens', type=int, default=control.DEFAULT_INPUT_TOKENS)
+    parser.add_argument('--max-component-seconds', type=int, default=control.DEFAULT_SECONDS)
     parser.add_argument("--max-attempts", type=int, default=6)
     parser.add_argument(
         "--context-target-tokens",
@@ -1456,7 +1512,7 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         "--warn-stage-input-tokens",
         type=int,
         default=2_000_000,
-        help="warning threshold for the Stage's cumulative model input",
+        help="warning threshold for one session input; component limits are enforced separately",
     )
     parser.add_argument(
         "--max-actions",
@@ -1520,6 +1576,8 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         args.stages = parse_stages(args.stages)
     except ValueError as error:
         parser.error(str(error))
+    if min(args.max_component_sessions, args.max_component_input_tokens, args.max_component_seconds) < 1:
+        parser.error('component budgets must be positive')
     if args.max_attempts < 1:
         parser.error("--max-attempts must be at least 1")
     if args.context_target_tokens < 1:
@@ -1617,7 +1675,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 stage=stage,
                 state_path=state_path,
             )
-        except (OSError, RuntimeError) as error:
+        except (OSError, RuntimeError, ValueError, TypeError, KeyError) as error:
             print(f"ERROR: {error}", file=sys.stderr)
             return 1
         if stage_status == 3:
@@ -1629,6 +1687,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         if stage_status == 4:
             print(f"HANDOFF COMPLETE, ACCEPTANCE PENDING: {progress_path}")
             return 4
+        if stage_status == 6:
+            print(f'COMPONENT BUDGET EXHAUSTED: {progress_path}')
+            return 6
         if stage_status == 5:
             print(f"VERIFICATION CHECKPOINT PENDING: {progress_path}")
             return 5

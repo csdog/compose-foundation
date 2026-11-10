@@ -11,12 +11,14 @@ from __future__ import annotations
 
 import argparse
 import fcntl
+import hashlib
 import json
 import math
 import re
 import shlex
 import subprocess
 import sys
+import component_execution_control as control
 from dataclasses import asdict, dataclass
 from datetime import datetime
 from pathlib import Path
@@ -84,6 +86,8 @@ def classify_process_result(returncode: int) -> tuple[str, str | None]:
         return "completed", None
     if returncode == 4:
         return "acceptance_pending", "Handoff finished; canonical component acceptance remains open"
+    if returncode == 6:
+        return 'budget_exhausted', 'Component cumulative budget exhausted; checkpoint preserved; explicit limit increase required'
     if returncode == 5:
         return "verification_pending", "Session cap reached with verified progress; resume the saved verification checkpoint"
     if returncode == 3:
@@ -137,6 +141,8 @@ def orchestrator_command(
         "--codex",
         args.codex,
     ]
+    for option in ('max_component_sessions', 'max_component_input_tokens', 'max_component_seconds'):
+        command.extend(['--' + option.replace('_', '-'), str(getattr(args, option))])
     if args.max_actions is not None:
         command.extend(["--max-actions", str(args.max_actions)])
     if args.model:
@@ -148,6 +154,37 @@ def orchestrator_command(
     return command
 
 
+def failure_resume_stage(run_dir: Path, failed_stage: str) -> str:
+    """Honor an operator's explicit route only for its exact blocked failure."""
+    fallback = '20-implement' if failed_stage in {'10-baseline', '20-implement', '30-verify', '40-handoff'} else failed_stage
+    if failed_stage not in {'20-implement', '30-verify', '40-handoff'}:
+        return fallback
+    try:
+        route = json.loads((run_dir / 'failure-routing.json').read_text())
+        last = json.loads((run_dir / 'orchestrator/runs.json').read_text())['runs'][-1]
+        if (route.get('kind') != 'verification_only' or route.get('resume_stage') != '30-verify'
+                or route.get('failed_stage') != failed_stage
+                or last.get('stage') != failed_stage or last.get('status') != 'blocked'):
+            return fallback
+        path = Path(last['message_log']).resolve()
+        if not path.is_relative_to(run_dir.resolve()) or path.stat().st_size > 65536:
+            return fallback
+        message = path.read_bytes()
+        from codex_stage_orchestrator import last_nonempty_line
+        if last_nonempty_line(message.decode()) != f'STAGE_BLOCKED {failed_stage}':
+            return fallback
+        bindings = {
+            'progress_sha256': hashlib.sha256((run_dir / 'progress.log').read_bytes()).hexdigest(),
+            'message_sha256': hashlib.sha256(message).hexdigest(),
+            'record_sha256': hashlib.sha256(json.dumps(last, sort_keys=True).encode()).hexdigest(),
+        }
+        if all(route.get(key) == digest for key, digest in bindings.items()):
+            return '30-verify'
+    except (OSError, ValueError, KeyError, IndexError, TypeError, AttributeError):
+        pass
+    return fallback
+
+
 def execute_component(component: Component, args: argparse.Namespace) -> tuple[int, str, str | None]:
     from codex_stage_orchestrator import (acceptance_problem, checklist_accepted,
                                          latest_progress_mark, pending_resume_stage,
@@ -157,8 +194,8 @@ def execute_component(component: Component, args: argparse.Namespace) -> tuple[i
     passes = args.max_component_passes if args.complete_components else 1
     if (args.repair_blocked or args.complete_components) and latest_tao_status(run) == 'FAIL':
         mark = latest_progress_mark(run)
-        stage = '20-implement' if mark and mark[0] in {'10-baseline', '20-implement', '30-verify', '40-handoff'} else (mark[0] if mark else '00-scope')
-        reopen_checkpoint(run, stage, 'User authorized actual component/shared-dependency fixes and full acceptance. Read the recorded failure, diagnose and repair production or verifier causes, then reverify; do not repeat an unchanged failed verification.')
+        stage = failure_resume_stage(run, mark[0]) if mark else '00-scope'
+        reopen_checkpoint(run, stage, 'Resume the inspected failure in its owning work unit. Explicit missing verification evidence without a confirmed production defect stays in verification; actual defects require repair. Preserve evidence and do not retry unchanged failures.')
     for attempt in range(1, passes + 1):
         print(f'COMPONENT_PASS {component.slug} {attempt}/{passes}', flush=True)
         with (run / 'batch-driver.log').open('a', encoding='utf-8') as output:
@@ -181,7 +218,7 @@ def execute_component(component: Component, args: argparse.Namespace) -> tuple[i
                     path.write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + '\n')
                 returncode = 4
                 status, reason = classify_process_result(returncode)
-        if status in {'completed', 'infrastructure_blocked'} or not args.complete_components:
+        if status in {'completed', 'infrastructure_blocked', 'budget_exhausted'} or not args.complete_components:
             return returncode, status, reason
         if attempt == passes:
             return returncode, status, reason
@@ -192,10 +229,13 @@ def execute_component(component: Component, args: argparse.Namespace) -> tuple[i
         if returncode == 4:
             stage = pending_resume_stage(run)
         elif returncode == 2 and mark and mark[1] == 'FAIL':
-            stage = '20-implement' if mark[0] in {'10-baseline', '20-implement', '30-verify', '40-handoff'} else mark[0]
+            stage = failure_resume_stage(run, mark[0])
+            if mark[0] == '20-implement' and stage == '20-implement':
+                # A fixer already reported a terminal blocker; do not repeat it.
+                return returncode, status, reason
         else:
             return returncode, status, reason
-        reopen_checkpoint(run, stage, 'Bounded completion loop: repair the recorded component/shared production or test-harness defect, preserve current passing evidence, and return through verification/audit to actual acceptance. Component scope explicitly permits the shared dependency repair necessary for this component. Do not modify scheduling scripts or lower acceptance rules.')
+        reopen_checkpoint(run, stage, 'Bounded completion loop: perform the recorded missing verification or repair the confirmed component/shared or test-harness defect in its owning stage, preserve passing evidence, and return through verification/audit to actual acceptance. Component scope explicitly permits the shared dependency repair necessary for this component. Do not modify scheduling scripts or lower acceptance rules.')
     raise AssertionError('component pass loop did not return')
 
 
@@ -255,6 +295,9 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         default="",
         help="comma-separated component slugs to skip",
     )
+    parser.add_argument('--max-component-sessions', type=int, default=control.DEFAULT_SESSIONS)
+    parser.add_argument('--max-component-input-tokens', type=int, default=control.DEFAULT_INPUT_TOKENS)
+    parser.add_argument('--max-component-seconds', type=int, default=control.DEFAULT_SECONDS)
     parser.add_argument("--max-attempts", type=int, default=6)
     parser.add_argument("--max-seconds", type=int, default=600)
     parser.add_argument("--max-actions", type=int)
@@ -275,6 +318,8 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         parser.error("--interval must be finite and at least 0.1 seconds")
     if args.limit < 0:
         parser.error("--limit cannot be negative")
+    if min(args.max_component_sessions, args.max_component_input_tokens, args.max_component_seconds) < 1:
+        parser.error('component budgets must be positive')
     if args.max_attempts < 1:
         parser.error("--max-attempts must be positive")
     if args.max_component_passes < 1:
@@ -437,6 +482,7 @@ def run_main(argv: Sequence[str] | None = None) -> int:
             print('Completion mode stopped at unresolved component; checkpoint preserved, no scan-and-skip.', flush=True)
             break
 
+    exhausted = sum(result.status == 'budget_exhausted' for result in results)
     completed = sum(result.status == "completed" for result in results)
     blocked = sum(result.status == "blocked" for result in results)
     pending = sum(result.status in {"acceptance_pending", "verification_pending"} for result in results)
@@ -445,9 +491,11 @@ def run_main(argv: Sequence[str] | None = None) -> int:
     )
     print(
         f"Batch complete: {completed} accepted, {pending} acceptance-pending, {blocked} blocked, "
-        f"{infrastructure} infrastructure-blocked, "
-        f"{len(results) - completed - pending - blocked - infrastructure} skipped/other"
+        f"{infrastructure} infrastructure-blocked, {exhausted} budget-exhausted, "
+        f"{len(results) - completed - pending - blocked - infrastructure - exhausted} skipped/other"
     )
+    if any(result.status == 'budget_exhausted' for result in results):
+        return 6
     if infrastructure:
         return 3
     return 2 if blocked else (4 if pending else 0)
