@@ -14,8 +14,7 @@
 ## 工作入口
 
 - [验收计划与规则](shadcn-web-plan.md)
-- [批处理与断点操作](../scripts/BATCH_EXECUTION.md)
-- [停止时的运行状态](../.agent-runs/batch-state.json)
+- [历史批次状态](../.agent-runs/batch-state.json)
 - [完整历史进度](archive/2026-11-09/shadcn-web-progress.md)
 - [按组件查阅历史验收范围与证据](archive/2026-11-09/component-status-details.md)
 

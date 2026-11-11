@@ -69,31 +69,29 @@ Geist 来源：`vercel/geist-font@b5d164a0c066c2c9bfcd5ab65dd8244551f0ac06`；
   并从 `progress.md` 继续，不读取上一线程 transcript。
 - **G4**：如果 Stage 因上下文保护提前停止，保留当前 Stage ID，在新线程中重建同一
   Stage goal。
-- **G5**：每个 Stage goal 必须声明组件、slug、Stage ID、对应 card、工作目录、
+- **G5**：每个 Stage goal 必须声明组件、slug、Stage ID、工作目录、
   修改边界、验证命令和完成条件。
 
-Stage 与 card 固定对应：
+验收阶段与历史交接标记：
 
-| Stage | Card | 退出标记 |
+| Stage | 工作内容 | 退出标记 |
 | --- | --- | --- |
-| `00-scope` | `00-scope.md` | `STAGE_DONE 00-scope` |
-| `10-baseline` | `10-baseline.md` | `STAGE_DONE 10-baseline` |
-| `20-implement` | `20-implement.md` | `STAGE_DONE 20-implement` |
-| `30-verify` | `30-verify.md` | `STAGE_DONE 30-verify` |
-| `40-handoff` | `40-handoff.md` | `STAGE_DONE 40-handoff` |
+| `00-scope` | 固定上游来源和验收范围 | `STAGE_DONE 00-scope` |
+| `10-baseline` | 保存当前行为和对照证据 | `STAGE_DONE 10-baseline` |
+| `20-implement` | 实施范围内修复 | `STAGE_DONE 20-implement` |
+| `30-verify` | 验证并独立审查 | `STAGE_DONE 30-verify` |
+| `40-handoff` | 整理凭证并更新清单 | `STAGE_DONE 40-handoff` |
 
 ### 3.2 必读上下文
 
-- **C1**：读取
-  [token-efficient-compose-workflow](../.agents/skills/token-efficient-compose-workflow/SKILL.md)。
-- **C2**：只读取当前 Stage card、当前组件的 `progress.md`、card 明确指定的文件，
-  以及 `shadcn-web-progress.md` 中当前组件的条目。
+- **C1**：读取本计划中适用于当前任务的规则。
+- **C2**：查阅当前组件的 `progress.md`（如有）、清单条目及相关证据。
 - **C3**：禁止预加载其他组件文件、完整历史 transcript、全部源码树或无关日志。
-- **C4**：如果 Skill、card 或组件 handoff 无法读取，停止并报告，不凭记忆执行。
+- **C4**：缺少必要的验收输入时，记录缺口并补齐证据。
 
 ### 3.3 修改边界
 
-- **M1**：只修改当前 card 明确要求的文件，不顺便处理其他组件。
+- **M1**：只修改当前阶段范围内的文件，不顺便处理其他组件。
 - **M2**：保留用户和其他 agent 的既有改动；不得重写历史或执行破坏性 reset。
 - **M3**：不提交、不推送、不发布线上版本。
 - **M4**：共享代码变更必须列出受影响组件和验证范围。
@@ -116,24 +114,6 @@ Stage 与 card 固定对应：
   python3 scripts/token_efficiency.py check-session \
     --session "$DSH_SESSION_ID" --max-prompt 300000
   ```
-
-- **T4A**：Codex 会话使用仓库内 TAO/Codex driver。默认 dry-run，只有显式
-  `--execute` 才启动模型：
-
-  ```bash
-  python3 scripts/codex_stage_orchestrator.py \
-    --component <component-slug> --component-name "<Component Name>" \
-    --execute --approve-for-me
-  ```
-
-  driver 从 `progress.log` 最后一个 `ok` 自动选择下一 Stage；每次 attempt 使用
-  fresh thread；工具动作预算默认 scope/baseline 30、implement 50、verify 60、
-  handoff 40；单 session 默认 600 秒 watchdog；同一 Stage 需要轮转时记录 `rotate`，真实失败
-  记录 `FAIL` 且自动停止。详细 handoff 仍是 `progress.md`，运行审计写入
-  `loop_log.jsonl` 和 `orchestrator/runs.json`。CLI 自动压缩默认使用
-  `model_auto_compact_token_limit=250000` 和
-  `model_auto_compact_token_limit_scope="body_after_prefix"`；`--compact-threshold 0`
-  表示沿用宿主/模型默认值。
 
 - **T5**：`check-session` 返回 2、上下文利用率超过 70%，或工具输出占比超过 50%
   时，更新 handoff 并由新线程继续。
@@ -180,8 +160,8 @@ Stage 与 card 固定对应：
   失败，必须用完全相同命令升级重试一次；仍失败后才记录环境阻塞。GUI 浏览器不可用
   时优先切换到已安装的 headless Playwright，不反复启动 GUI。
 
-- **T14**：发生 compaction 后，必须重新读取 `progress.md`、当前 git 状态和 card
-  指定证据，确认摘要没有丢失路径、失败指纹、未完成项或用户约束，再从当前状态继续。
+- **T14**：发生 compaction 后，必须重新读取 `progress.md`、当前 git 状态和相关
+  验收证据，确认摘要没有丢失路径、失败指纹、未完成项或用户约束，再从当前状态继续。
 
 - **T15**：效率按每个完成组件衡量，至少记录完成项、模型调用数、prompt
   中位数/p95、缓存命中率、送模图片数、压缩次数和最终质量结果。高缓存命中率不能
@@ -214,13 +194,13 @@ Stage 与 card 固定对应：
 
 | 编号 | 角色 | 读取 | 允许操作 | 输出 | 禁止 |
 | --- | --- | --- | --- | --- | --- |
-| `R1` | Orchestrator | plan、progress、当前 card、紧凑证据摘要 | 选择 Stage、检查 gate、维护 handoff | 下一 action、阻塞、汇总指标 | 不替代 implementer 写业务代码，不读取整份历史 |
-| `R2` | Implementer | 当前 card、原需求、progress、指定源码和测试 | 修改当前 Stage 允许的文件，运行快速聚焦检查 | diff、修改路径、已知风险 | 不审查自己的实现，不运行完整 survey build |
+| `R1` | Orchestrator | plan、progress、当前验收范围、紧凑证据摘要 | 选择 Stage、检查 gate、维护 handoff | 下一 action、阻塞、汇总指标 | 不替代 implementer 写业务代码，不读取整份历史 |
+| `R2` | Implementer | 当前验收范围、原需求、progress、指定源码和测试 | 修改当前 Stage 允许的文件，运行快速聚焦检查 | diff、修改路径、已知风险 | 不审查自己的实现，不运行完整 survey build |
 | `R3` | Reviewer | 规则、原需求、diff、必要源码行 | 只读检查，提出带文件/行/规则依据的问题 | finding 列表和严重度 | 不修改文件，不看 implementer 完整推理 |
 | `R4` | Fixer | confirmed findings、相关 diff 和最小源码片段 | 只修复已确认问题 | 精确修复和复验路径 | 不扩大范围，不自行接受或关闭 finding |
 | `R5` | Verifier | 验收要求、changed paths、test command、失败证据 | 只运行机械验证并保存 XML/截图/日志 | pass/fail、证据路径、失败指纹 | 不实现功能，不降低验收标准 |
 | `R6` | Build/Test Daemon | 当前工作树 hash 和固定构建/测试命令 | 作为唯一进程执行批量 survey build/test，生成编号结果 | `build-output-rN.txt` 或测试结果队列 | 不是 LLM agent，不做语义判断 |
-| `R7` | Rule Owner | 重复失败、review finding、progress | 修改 plan/card/rulebook 或批准豁免 | 规则 amendment、重新生成范围 | 不逐实例手补同一类错误 |
+| `R7` | Rule Owner | 重复失败、review finding、progress | 修改 plan/rulebook 或批准豁免 | 规则 amendment、重新生成范围 | 不逐实例手补同一类错误 |
 
 角色执行要求：
 
@@ -234,9 +214,9 @@ Stage 与 card 固定对应：
 - **R11**：Reviewer 提出 correctness、memory/semantics、公共行为或回归风险时必须
   由 Fixer 或新的修复会话处理；纯格式问题可以由原 Implementer 修复。
 - **R12**：同一失败签名出现三次，或 Reviewer 在多处发现同一模式时，停止逐实例
-  修复，交给 Rule Owner 修改 plan/card 并指定重新生成范围。
+  修复，交给 Rule Owner 修改 plan 并指定重新生成范围。
 - **R13**：一个组件同一时间最多一个 Implementer。只有相互独立的组件可以并行；
-  总 active workers 不超过 token-efficient workflow 规定的上限。
+  最多同时运行两个互相独立的 worker。
 - **R14**：角色间只传递文件路径、diff、验收要求、失败指纹、证据路径和短摘要；
   不传完整 transcript、实现者完整思维链、全部源码或完整测试日志。
 - **R15**：Reviewer 和 Verifier 必须拥有独立上下文。如果当前执行器无法创建独立
@@ -318,7 +298,7 @@ Stage 与 card 固定对应：
 
 - **V1**：运行当前组件和页面最窄但充分的聚焦测试；窄测试不能支持更大范围结论。
 - **V2**：运行 owning module/source-set 的 ktlint；失败必须区分新增问题和既有问题。
-- **V3**：涉及共享或多平台代码时，运行当前 card 要求的 JVM、JS、Wasm 或平台编译。
+- **V3**：涉及共享或多平台代码时，运行当前验收范围要求的 JVM、JS、Wasm 或平台编译。
 - **V4**：使用当前 Wasm/本地构建完成浅深、桌面和手机浏览器检查。
 - **V5**：组件改动增加有意义的尺寸、像素或行为回归；禁止批量刷新掩盖差异。
 - **V6**：测试、lint、构建和浏览器证据分别记录，不能互相替代。
@@ -330,7 +310,7 @@ Stage 与 card 固定对应：
 
 只有以下条件全部成立，才能把当前 Stage goal 标记为 complete：
 
-1. 当前 card 的全部要求已满足。
+1. 当前阶段的全部要求已满足。
 2. 本 Stage 要求的修改均已落盘。
 3. 测试、lint、构建或浏览器证据覆盖对应验收范围。
 4. 未解决问题已分类，并有准确文件路径和失败证据。
@@ -343,46 +323,11 @@ Stage 与 card 固定对应：
 
 Stage 完成后立即停止，不进入下一 Stage。整个组件尚未完成不能作为扩展本轮范围的理由。
 
-## 7. Stage Goal 启动模板
+## 7. 开始组件验收
 
-下面是唯一需要复制的 goal 入口。goal 不在模板里重复规则；执行时必须读取本文件
-第 2–6 节，以其中的编号要求为准。
-
-```text
-/goal 在 <PROJECT_ROOT> 执行 <COMPONENT_NAME>（<component-slug>）
-Web parity 的 Stage <STAGE_ID>（<STAGE_CARD_FILE>）。
-
-本 goal 只完成这个 Stage。必须使用
-$token-efficient-compose-workflow，并读取：
-1. docs/shadcn-web-plan.md 第 2–6 节
-2. .agents/skills/token-efficient-compose-workflow/SKILL.md
-3. .agents/skills/token-efficient-compose-workflow/cards/<STAGE_CARD_FILE>
-4. .agent-runs/<component-slug>/progress.md（如果存在）
-
-严格遵守 B、G、C、M、T、H、I、V 编号要求，只修改当前 card 明确要求的文件。
-严格执行 R1-R17：声明本轮角色；高风险 Stage 使用独立 Reviewer；需要独立验证时
-不得由 Implementer 自审。角色间只传 diff、路径、失败指纹和紧凑证据。
-截图、contact sheet、DOM、XML 和完整日志只落盘并传递路径与摘要；模型只看切好的
-局部图或明确异常区域。不得对 contact sheet 使用 detail original，同一图片 hash
-不得在本会话重复查看。最多并行两个独立 worker。重复机械检查优先使用一个 bounded
-batch script，不把断言拆成多次工具调用。除非 runtime 明确暴露 PTC `run_code`
-transport，否则禁止请求或模拟 PTC。
-完成后更新 progress.md，运行 card 指定验证、handoff validator 和 git diff --check。
-如果 Skill/card 无法读取，停止并报告。250k 时准备 handoff；300k 或 check-session
-返回 2 时停止当前线程。连续两个 turn 无新证据或发生 compaction 后先重读
-progress.md 和当前状态。完成当前 Stage 后立即停止，最后一行输出：
-STAGE_DONE <STAGE_ID>
-```
-
-占位符：
-
-| 占位符 | 值 |
-| --- | --- |
-| `<PROJECT_ROOT>` | `compose-foundation` 的绝对路径 |
-| `<COMPONENT_NAME>` | 组件显示名 |
-| `<component-slug>` | 组件目录和 handoff 使用的 slug |
-| `<STAGE_ID>` | 第 3.1 节中的 Stage ID |
-| `<STAGE_CARD_FILE>` | 与 Stage 同名的 card 文件 |
+按需选择组件与阶段，记录工作目录、修改边界、验证命令和完成条件。已有交接时从
+`.agent-runs/<component-slug>/progress.md` 恢复，优先复用输入未变的证据。按本计划
+执行验证与独立审查，全部适用门槛通过后更新清单。
 
 ## 8. 组件完成与总计划完成
 

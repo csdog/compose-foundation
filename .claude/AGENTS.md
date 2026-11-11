@@ -61,7 +61,6 @@ dry-run wired, not yet released)
 | Catalog app navigation            | `kotlin-multiplatform-navigation`                                                         |
 | Unit / integration tests          | `kotlin-multiplatform-unit-testing` (JVM / screenshot tests are wired; see `docs/visual-testing.md`)                            |
 | Token usage analysis / optimization | `token-optimization-analysis`                                                            |
-| Token-efficient long parity work  | `token-efficient-compose-workflow`                                                        |
 | Code quality (detekt, ktlint)     | `kotlin-multiplatform-code-quality`                                                       |
 | CI automation                     | `kotlin-multiplatform-ci-github-actions`                                                  |
 | Architecture audit                | `kotlin-multiplatform-audit`                                                              |
@@ -74,21 +73,10 @@ reduce agent cost, use `token-optimization-analysis` first. Its audit covers act
 Codex/DSH usage, repo-visible fixed context, duplicate reads, tool-output volume, and cheap
 subagent routing. Do not optimize from cache-hit percentage alone.
 
-For long shadcn parity batches, follow `token-efficient-compose-workflow`. Keep one
-component per execution session, at most two concurrent workers, and carry state through
-`.agent-runs/<component>/progress.md` instead of the conversation transcript. Route verbose
-commands through `scripts/agent_run.sh`; only the relevant tail enters model context while
-the full log remains on disk. Use `scripts/token_efficiency.py report` to measure DSH usage
-and context composition before changing the workflow.
-
-For unattended queues, use `scripts/run_unfinished_components.py --execute --background`.
-The Python driver is the sole scheduler; do not add a nested review coordinator or
-model polling loop. Stage workers do not spawn coordination agents. A single bounded
-fresh read-only reviewer is permitted where plan R10/R15 requires independent review;
-it cannot delegate or schedule components. Report only terminal results,
-blockers, evidence paths, and decisions requiring action. Read status on demand;
-background execution does not itself deliver chat notifications. For token analysis,
-include descendants with `scripts/agent_tree_usage.py --thread <root-thread-id>`.
+For shadcn parity work, use the acceptance criteria in `docs/shadcn-web-plan.md`
+and the component checklist in `docs/shadcn-web-progress.md`. Keep evidence and
+handoff notes in the component's run directory. Use `scripts/agent_run.sh` for
+verbose commands and `scripts/agent_tree_usage.py` to measure descendant usage.
 
 ## Module graph
 

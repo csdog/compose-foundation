@@ -137,9 +137,6 @@ published savings claims without a same-outcome measurement.
 
 ## Existing Project Workflows
 
-- For long Compose parity batches, continue with
-  `token-efficient-compose-workflow`: one component per fresh session and Scope → Baseline →
-  Implement → Verify → Handoff cards.
 - For DSH historical usage and handoff validation, reuse `scripts/token_efficiency.py`; do
   not fork its accounting logic.
 - For DSH tool-surface reduction, evaluate `dsh-ops` through the measurements above. Its
