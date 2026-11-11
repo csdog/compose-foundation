@@ -264,3 +264,18 @@ class ExecutionControlTests(unittest.TestCase):
         self.assertEqual(100, state['input_tokens'])
         self.assertEqual(7, state['observed_input_tokens'])
         self.assertEqual(93, state['estimated_input_tokens'])
+
+    def test_new_round_preserves_history_and_caps_even_larger_cli_limits(self):
+        state = {'sessions': 165, 'input_tokens': 249099187, 'observed_input_tokens': 249099187,
+                 'estimated_input_tokens': 0, 'seconds': 99000,
+                 'round': {'id': 'new', 'baseline': {'sessions': 165, 'input_tokens': 249099187, 'seconds': 99000},
+                           'limits': {'sessions': 1, 'input_tokens': 100, 'seconds': 30}}}
+        control.write_json(self.run / 'execution-budget.json', state)
+        allowance = control.reserve(self.run, 1000, 999999999, 999999, 600)
+        self.assertEqual({'seconds': 30, 'input_tokens': 100}, allowance)
+        control.finish(self.run, 1, 7)
+        self.assertIsNone(control.reserve(self.run, 1000, 999999999, 999999, 600))
+        state = control.load_budget(self.run)
+        self.assertEqual(166, state['sessions'])
+        self.assertEqual(249099194, state['input_tokens'])
+        self.assertEqual(165, state['round']['baseline']['sessions'])

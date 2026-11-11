@@ -28,7 +28,7 @@ import kotlin.test.Test
 import kotlin.test.assertTrue
 
 class ToggleGroupItemPresetsTest : ScreenshotTest() {
-    @Test fun connectedItemOutlineHasSingleSeamsWithoutRootVariant() {
+    @Test fun connectedItemOutlineKeepsPresetSeams() {
         var preset by mutableStateOf(StylePreset.Vega)
         var vertical by mutableStateOf(false)
         var dark by mutableStateOf(false)
@@ -98,9 +98,13 @@ class ToggleGroupItemPresetsTest : ScreenshotTest() {
                                             }
                                         return color.red > .99f && color.green < .01f && color.blue < .01f
                                     }
-                                    // Both perpendicular edges must continue across the removed leading side.
+                                    val physicalRtl = nextPreset == StylePreset.Nova && !nextVertical && nextRtl
+                                    // Sample both perpendicular borders at the edge the mask removes.
+                                    // In Nova RTL this is opposite the logical seam.
+                                    val maskedEdge = if (physicalRtl) (item.left - bounds.left).toInt() else seam
+                                    val inward = if (!nextVertical && nextRtl && !physicalRtl) -1 else 1
                                     for (distance in 0..2) {
-                                        val along = seam + if (!vertical && rtl) -distance else distance
+                                        val along = maskedEdge + inward * distance
                                         for (far in listOf(false, true)) {
                                             val pixel =
                                                 if (vertical) {
@@ -116,7 +120,14 @@ class ToggleGroupItemPresetsTest : ScreenshotTest() {
                                         }
                                     }
                                     val colored = (-2..2).count { !red(it) }
-                                    val expected = if (mixed && index == 1) 0 else 1
+                                    // Nova removes the physical left edge, leaving two borders beside the
+                                    // first RTL item. Vega removes the logical leading edge.
+                                    val expected =
+                                        if (physicalRtl) {
+                                            if (index == 1 && !mixed) 2 else 1
+                                        } else {
+                                            if (mixed && index == 1) 0 else 1
+                                        }
                                     assertTrue(
                                         colored == expected,
                                         "Expected $expected border pixels, got $colored mixed=$mixed " +

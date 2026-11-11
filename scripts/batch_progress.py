@@ -110,6 +110,13 @@ def render(state: dict) -> str:
         budget = row.get('budget', {})
         limits = budget.get('limits', {})
         coverage = row.get('coverage', {})
+        current_round = budget.get('round')
+        if current_round:
+            spent = {key: max(0, budget.get(key, 0) - current_round['baseline'][key]) for key in ('sessions', 'input_tokens', 'seconds')}
+            lines.append(f"{row['component']} | round={current_round['id']} | "
+                         f"sessions={spent['sessions']}/{current_round['limits']['sessions']} | "
+                         f"input={spent['input_tokens']}/{current_round['limits']['input_tokens']} | "
+                         f"seconds={spent['seconds']:.1f}/{current_round['limits']['seconds']}")
         lines.append(f"{row['component']} | cumulative sessions={budget.get('sessions', 'unknown')}/{limits.get('sessions', 'unknown')} | "
                      f"input={budget.get('input_tokens', 'unknown')}/{limits.get('input_tokens', 'unknown')} | "
                      f"observed input={budget.get('observed_input_tokens', 'unknown')} | estimated charge={budget.get('estimated_input_tokens', 'unknown')} | "

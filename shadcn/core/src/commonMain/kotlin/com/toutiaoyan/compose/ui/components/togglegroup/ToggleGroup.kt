@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
@@ -527,7 +528,13 @@ fun ToggleGroupScope.ToggleGroupItem(
                 rounded,
             )
         }
-    val itemShape = RoundedCornerShape(corners.topStart, corners.topEnd, corners.bottomEnd, corners.bottomStart)
+    val itemShape =
+        if (nova && !spaced) {
+            // Nova's first/last corner utilities address physical edges, even in RTL.
+            AbsoluteRoundedCornerShape(corners.topStart, corners.topEnd, corners.bottomEnd, corners.bottomStart)
+        } else {
+            RoundedCornerShape(corners.topStart, corners.topEnd, corners.bottomEnd, corners.bottomStart)
+        }
     val navigation = checkNotNull(LocalToggleGroupNavigation.current)
     val requester = remember { FocusRequester() }
     val resolvedEnabled = enabled && !disabled && !controller.disabled && !LocalFieldSetDisabled.current
@@ -543,13 +550,15 @@ fun ToggleGroupScope.ToggleGroupItem(
     val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
     val borderColor = if (nova) currentTheme.colors.input else currentTheme.colors.border
     val borderPixels = with(androidx.compose.ui.platform.LocalDensity.current) { 1.dp.toPx() }
+    val horizontal = controller.orientation == ToggleGroupOrientation.Horizontal
+    val removeRight = horizontal && rtl && !nova
     val connectedBorder =
-        remember(borderColor, borderPixels, rtl, controller.orientation) {
+        remember(borderColor, borderPixels, horizontal, removeRight) {
             ConnectedItemBorder(
                 borderColor,
                 borderPixels,
-                controller.orientation == ToggleGroupOrientation.Horizontal,
-                rtl,
+                horizontal,
+                removeRight,
             )
         }
     val navigationModifier =
@@ -815,28 +824,23 @@ fun ToggleGroupScope.ToggleGroupItem(
     ToggleGroupItem(value, label, modifier, enabled, disabled, style, null, null)
 }
 
-/** Removes only the leading side, preserving perpendicular borders, fill and outer focus shadow. */
+/** Masks the joined edge while retaining both perpendicular borders. */
 private class ConnectedItemBorder(
     private val color: Color,
     private val width: Float,
     private val horizontal: Boolean,
-    private val rtl: Boolean,
+    private val removeRight: Boolean,
 ) : ShaderBrush() {
     override fun createShader(size: Size): Shader {
         val extent = if (horizontal) size.width else size.height
         val edge = (width / extent.coerceAtLeast(1f)).coerceAtMost(1f)
-        val reverse = horizontal && rtl
+        val end = if (horizontal) Offset(size.width, 0f) else Offset(0f, size.height)
         val leadingSide =
             LinearGradientShader(
-                from = Offset.Zero,
-                to = if (horizontal) Offset(size.width, 0f) else Offset(0f, size.height),
-                colors =
-                    if (reverse) {
-                        listOf(Color.White, Color.White, Color.Transparent, Color.Transparent)
-                    } else {
-                        listOf(Color.Transparent, Color.Transparent, Color.White, Color.White)
-                    },
-                colorStops = if (reverse) listOf(0f, 1f - edge, 1f - edge, 1f) else listOf(0f, edge, edge, 1f),
+                from = if (removeRight) end else Offset.Zero,
+                to = if (removeRight) Offset.Zero else end,
+                colors = listOf(Color.Transparent, Color.Transparent, Color.White, Color.White),
+                colorStops = listOf(0f, edge, edge, 1f),
             )
         val crossExtent = if (horizontal) size.height else size.width
         val crossEdge = (width / crossExtent.coerceAtLeast(1f)).coerceIn(0f, .5f)

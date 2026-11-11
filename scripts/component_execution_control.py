@@ -77,6 +77,10 @@ def load_budget(run):
 def reserve(run, max_sessions, max_input_tokens, max_seconds, session_seconds):
     state = load_budget(run)
     limits = {'sessions': max_sessions, 'input_tokens': max_input_tokens, 'seconds': max_seconds}
+    current_round = state.get('round')
+    if current_round:
+        limits = {key: min(limit, current_round['baseline'][key] + current_round['limits'][key]) for key, limit in limits.items()}
+    max_sessions, max_input_tokens, max_seconds = (limits[key] for key in ('sessions', 'input_tokens', 'seconds'))
     state['limits'] = limits
     exhausted = next((key for key, limit in limits.items() if state[key] >= limit), None)
     if exhausted:
@@ -202,7 +206,8 @@ def coverage(run):
             valid = True
             for relative, expected in inputs.items():
                 source = (root / relative).resolve()
-                if not source.is_relative_to(root) or source.is_relative_to(root / '.agent-runs') or file_hash(source) != expected:
+                run_source = source.is_relative_to(run / 'scope') or (source.is_relative_to(run / 'verify/browser') and source.suffix in {'.py', '.mjs', '.js', '.ts', '.tsx', '.css', '.html'})
+                if not source.is_relative_to(root) or (source.is_relative_to(root / '.agent-runs') and not run_source) or file_hash(source) != expected:
                     valid = False
                     break
             if valid:

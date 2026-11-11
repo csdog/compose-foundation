@@ -1,6 +1,6 @@
 # Web 对齐验收状态
 
-更新日期：2026-11-10。当前保存状态为 **39 / 67 项已勾选，28 项未完成**。
+更新日期：2026-11-11。当前保存状态为 **40 / 67 项已勾选，27 项未完成**。
 本轮仅继续 Calendar 验收，未启动全队列；历史运行信息见[批次记录](../.agent-runs/batches/latest.json)。
 文档整理本身不构成验收；勾选只在组件证据与当前源码校验通过后更新。
 
@@ -86,7 +86,7 @@
 - [x] Textarea (`textarea`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#textarea)。
 - [ ] Toast (`toast`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#toast) · [交接](../.agent-runs/toast/progress.md)。
 - [ ] Toggle (`toggle`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#toggle) · [交接](../.agent-runs/toggle/progress.md)。
-- [ ] Toggle Group (`toggle-group`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#toggle-group) · [交接](../.agent-runs/toggle-group/progress.md)。
+- [x] Toggle Group (`toggle-group`)：2026-11-11 验收通过。补齐 Changelog、Custom 卡片样式与 View Code、Single 键盘操作和 Connected Outline 的验收证据。74 项聚焦测试、5 项 lint、JVM/JS/Wasm 构建、544 项浏览器断言、机械审计和独立审查通过。I7/I16 验收范围见审计。[验收凭证](../.agent-runs/toggle-group/acceptance.json) · [审计](../.agent-runs/toggle-group/verify/acceptance-provenance/audit/report.md) · [历史范围](archive/2026-11-09/component-status-details.md#toggle-group) · [交接](../.agent-runs/toggle-group/progress.md)。
 - [x] Tooltip (`tooltip`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#tooltip) · [交接](../.agent-runs/tooltip/progress.md)。
 
 ## 历史进度
