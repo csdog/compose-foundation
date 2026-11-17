@@ -93,6 +93,14 @@ class MarkerExamplesTest {
         assertFalse(markdown.contains("testTag"))
     }
 
+    @Test fun copiedLinkRecipeUsesTheCallersSamePageNavigation() {
+        val code = markerDoc.examples.single { it.title == "Links and Buttons" }.code
+        assertTrue(code.contains("fun MarkerActionsRecipe(onOpenLink: () -> Unit)"))
+        assertTrue(code.contains("MarkerLinkAction(onOpenLink)"))
+        assertFalse(code.contains("LocalUriHandler"))
+        assertFalse(code.contains("MarkerActionsRecipe()"))
+    }
+
     @Test fun defaultContainsAllFourConversationMarkers() {
         show("Default")
         listOf("Switched to a new branch", "Thinking...", "Conversation compacted", "Explored 4 files").forEach {

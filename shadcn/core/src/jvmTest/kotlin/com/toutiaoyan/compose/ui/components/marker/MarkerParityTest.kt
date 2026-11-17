@@ -7,12 +7,15 @@ import androidx.compose.foundation.style.Style
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.*
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.test.*
 import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.style.ResolvedTextDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.ScreenshotTest
 import com.toutiaoyan.compose.ui.components.text.Text
@@ -56,6 +59,29 @@ class MarkerParityTest : ScreenshotTest() {
         }
         composeRule.onNodeWithContentDescription("decorative").assertDoesNotExist()
         composeRule.onNodeWithText("Synced").assertIsDisplayed()
+    }
+
+    @Test fun arabicMarkerUsesLogicalStartAndKeepsSeparatorCentered() {
+        val label = "تمت المزامنة"
+        val divider = "اليوم"
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                Column(Modifier.width(280.dp)) {
+                    Marker {
+                        MarkerIcon(Modifier.testTag("rtl-icon")) { Box(Modifier.size(16.dp)) }
+                        MarkerContent(label)
+                    }
+                    Marker(divider, Modifier.testTag("rtl-separator"), MarkerVariant.Separator)
+                }
+            }
+        }
+        val iconBounds = composeRule.onNodeWithTag("rtl-icon").fetchSemanticsNode().boundsInRoot
+        val labelBounds = composeRule.onNodeWithText(label).assertIsDisplayed().fetchSemanticsNode().boundsInRoot
+        assertEquals(8f, iconBounds.left - labelBounds.right, 0.1f)
+        assertEquals(ResolvedTextDirection.Rtl, layout(label).getParagraphDirection(0))
+        val separator = composeRule.onNodeWithTag("rtl-separator").fetchSemanticsNode().boundsInRoot
+        val text = composeRule.onNodeWithText(divider).assertIsDisplayed().fetchSemanticsNode().boundsInRoot
+        assertEquals(separator.center.x, text.center.x, 0.5f)
     }
 
     @Test fun emptyMarkerHasSixteenPixelMinimumAndCallerStyleOverridesWidth() {

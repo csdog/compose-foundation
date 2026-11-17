@@ -91,6 +91,27 @@ class MarkerInteractionTest(private val width: Int, private val dark: Boolean) {
         }
     }
 
+    @Test fun buttonColorsPassThroughIntermediateValuesOnHoverAndLeave() {
+        show()
+        val button = rule.onNodeWithTag("marker-button")
+        val label = "Revert this change"
+        rule.mainClock.autoAdvance = false
+        button.performMouseInput { enter(center) }
+        rule.mainClock.advanceTimeBy(64)
+        val entering = layout(label).layoutInput.style.color
+        assertTrue(entering.red > minOf(muted.red, foreground.red))
+        assertTrue(entering.red < maxOf(muted.red, foreground.red))
+        rule.mainClock.advanceTimeBy(160)
+        assertEquals(foreground, layout(label).layoutInput.style.color)
+        button.performMouseInput { exit() }
+        rule.mainClock.advanceTimeBy(64)
+        val leaving = layout(label).layoutInput.style.color
+        assertTrue(leaving.red > minOf(muted.red, foreground.red))
+        assertTrue(leaving.red < maxOf(muted.red, foreground.red))
+        rule.mainClock.advanceTimeBy(160)
+        assertEquals(muted, layout(label).layoutInput.style.color)
+    }
+
     @Test fun rootPointerAndEnterActivateTheLocalAnnotatedLinkExactlyOnce() {
         show()
         val text = layout("View the pull request").layoutInput.text
@@ -111,8 +132,10 @@ class MarkerInteractionTest(private val width: Int, private val dark: Boolean) {
         show()
         rule.onNodeWithText("View the pull request").performTouchInput { click(center) }
         assertEquals(listOf("#links-and-buttons"), opened)
+        rule.onNodeWithTag("marker-link").performKeyInput { pressKey(Key.Enter) }
+        assertEquals(List(2) { "#links-and-buttons" }, opened)
         rule.onNodeWithTag("marker-link").performTouchInput { click(Offset(8f, center.y)) }
-        assertEquals(listOf("#links-and-buttons", "#links-and-buttons"), opened)
+        assertEquals(List(3) { "#links-and-buttons" }, opened)
     }
 
     companion object {
