@@ -2,9 +2,12 @@
 
 package com.toutiaoyan.compose.ui.components.input
 
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.disabled
+import androidx.compose.foundation.style.animate
+import androidx.compose.foundation.style.focused
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.contentPadding
@@ -66,6 +69,9 @@ internal val InputType.visualTransformation: VisualTransformation
             else -> VisualTransformation.None
         }
 
+internal const val NovaInputColorDurationMillis = 150
+internal val NovaInputColorTransition = tween<Float>(NovaInputColorDurationMillis)
+
 /** base-nova Input tokens (`.cn-input`). */
 object InputDefaults {
     /** Official `h-8`. */
@@ -91,30 +97,34 @@ fun InputVariant.rememberStyle(): Style {
         when (receiver) {
             InputVariant.Default ->
                 Style {
-                    background(
-                        if (theme.activePreset == StylePreset.Nova) {
-                            if (theme.isDark) {
-                                colors.input.copy(
-                                    alpha = colors.input.alpha * 0.3f,
-                                )
-                            } else {
-                                Color.Transparent
-                            }
-                        } else {
-                            colors.background
-                        },
-                    )
-                    contentColor(colors.foreground)
-                    border(if (theme.activePreset == StylePreset.Nova) colors.input else colors.border)
-                    // Official `px-2.5 py-1`
+                    val nova = theme.activePreset == StylePreset.Nova
+                    if (nova) {
+                        border(colors.input)
+                        animate(NovaInputColorTransition) {
+                            val fill = colors.input.copy(alpha = colors.input.alpha * 0.3f)
+                            background(if (theme.isDark) fill else Color.Transparent)
+                            contentColor(colors.foreground)
+                            borderColor(colors.input)
+                        }
+                    } else {
+                        background(colors.background)
+                        contentColor(colors.foreground)
+                        border(colors.border)
+                    }
+                    // Official `px-2.5 py-1`.
                     contentPadding(horizontal = spacing.scale2p5, vertical = spacing.scale1)
                     textStyle(theme.typography.bodyMedium)
-                    shape(RoundedCornerShape(radius.lg))
                     focusRingAlways(RoundedCornerShape(radius.lg))
                     disabledDim()
-                    if (theme.activePreset == StylePreset.Nova) {
+                    if (nova) {
+                        focused {
+                            animate(NovaInputColorTransition) { borderColor(colors.ring) }
+                        }
                         disabled {
-                            background(colors.input.copy(alpha = colors.input.alpha * if (theme.isDark) 0.8f else 0.5f))
+                            animate(NovaInputColorTransition) {
+                                val opacity = if (theme.isDark) 0.8f else 0.5f
+                                background(colors.input.copy(alpha = colors.input.alpha * opacity))
+                            }
                         }
                     }
                 }

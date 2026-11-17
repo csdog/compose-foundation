@@ -9,10 +9,14 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.fillWidth
+import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -28,14 +32,18 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.composables.icons.lucide.Info
 import com.composables.icons.lucide.Lucide
 import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
 import com.toutiaoyan.compose.ui.catalog.catalogArabicFontFamily
 import com.toutiaoyan.compose.ui.catalog.catalogHebrewFontFamily
+import com.toutiaoyan.compose.ui.catalog.catalogViewportWidth
 import com.toutiaoyan.compose.ui.components.badge.Badge
 import com.toutiaoyan.compose.ui.components.badge.BadgeVariant
 import com.toutiaoyan.compose.ui.components.button.Button
@@ -50,7 +58,10 @@ import com.toutiaoyan.compose.ui.components.field.FieldLabel
 import com.toutiaoyan.compose.ui.components.field.FieldOrientation
 import com.toutiaoyan.compose.ui.components.icon.Icon
 import com.toutiaoyan.compose.ui.components.input.Input
+import com.toutiaoyan.compose.ui.components.input.InputDefaults
 import com.toutiaoyan.compose.ui.components.input.InputType
+import com.toutiaoyan.compose.ui.components.input.InputVariant
+import com.toutiaoyan.compose.ui.components.input.rememberStyle
 import com.toutiaoyan.compose.ui.components.inputgroup.InputGroup
 import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupAddon
 import com.toutiaoyan.compose.ui.components.inputgroup.InputGroupAddonAlign
@@ -60,7 +71,6 @@ import com.toutiaoyan.compose.ui.components.select.SelectContent
 import com.toutiaoyan.compose.ui.components.select.SelectItem
 import com.toutiaoyan.compose.ui.components.select.SelectTrigger
 import com.toutiaoyan.compose.ui.components.text.Text
-import com.toutiaoyan.compose.ui.components.text.TextColors
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.theme.currentTheme
 
@@ -98,18 +108,27 @@ private val inputImports =
     """
     import androidx.compose.foundation.clickable
     import androidx.compose.foundation.layout.*
+    import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
+    import androidx.compose.foundation.style.Style
+    import androidx.compose.foundation.style.fillWidth
+    import androidx.compose.foundation.style.then
     import androidx.compose.runtime.*
     import androidx.compose.ui.Alignment
     import androidx.compose.ui.Modifier
     import androidx.compose.ui.focus.FocusRequester
     import androidx.compose.ui.focus.focusProperties
     import androidx.compose.ui.focus.focusRequester
+    import androidx.compose.ui.platform.LocalDensity
     import androidx.compose.ui.platform.LocalLayoutDirection
+    import androidx.compose.ui.platform.LocalWindowInfo
     import androidx.compose.ui.semantics.contentDescription
     import androidx.compose.ui.semantics.semantics
+    import androidx.compose.ui.semantics.stateDescription
+    import androidx.compose.ui.text.font.FontWeight
     import androidx.compose.ui.text.style.TextOverflow
     import androidx.compose.ui.unit.LayoutDirection
     import androidx.compose.ui.unit.dp
+    import androidx.compose.ui.unit.sp
     import com.composables.icons.lucide.Info
     import com.composables.icons.lucide.Lucide
     import com.toutiaoyan.compose.ui.components.badge.Badge
@@ -120,11 +139,15 @@ private val inputImports =
     import com.toutiaoyan.compose.ui.components.field.*
     import com.toutiaoyan.compose.ui.components.icon.Icon
     import com.toutiaoyan.compose.ui.components.input.Input
+    import com.toutiaoyan.compose.ui.components.input.InputDefaults
     import com.toutiaoyan.compose.ui.components.input.InputType
+    import com.toutiaoyan.compose.ui.components.input.InputVariant
+    import com.toutiaoyan.compose.ui.components.input.rememberStyle
     import com.toutiaoyan.compose.ui.components.inputgroup.*
     import com.toutiaoyan.compose.ui.components.select.*
     import com.toutiaoyan.compose.ui.components.text.Text
     import com.toutiaoyan.compose.ui.components.text.TextColors
+    import com.toutiaoyan.compose.ui.theme.currentTheme
     """.trimIndent()
 
 private val inputCountries =
@@ -260,6 +283,7 @@ val inputDoc =
                     code =
                         """
                         // Supply the platform chooser; null result means cancelled.
+                        @OptIn(ExperimentalFoundationStyleApi::class)
                         @Composable
                         fun PictureInput(pickFile: (((String?) -> Unit) -> Unit)?) {
                             var filename by remember { mutableStateOf<String?>(null) }
@@ -268,11 +292,42 @@ val inputDoc =
                             })
                             val focus = remember { FocusRequester() }
                             val choose = { pickFile?.invoke { onResult(it) }; Unit }
+                            val height = InputDefaults.Height
+                            val chrome = InputVariant.Default.rememberStyle() then Style {
+                                fillWidth()
+                                height(height)
+                            }
+                            val theme = currentTheme
+                            val compact = with(LocalDensity.current) {
+                                LocalWindowInfo.current.containerSize.width < 768.dp.roundToPx()
+                            }
+                            val labelStyle = theme.typography.bodyMedium.copy(fontFamily = theme.fontFamily, color = theme.colors.foreground)
+                            val filenameStyle = if (compact) labelStyle.copy(fontSize = 16.sp) else labelStyle
+                            val displayedFilename = filename ?: "No file chosen"
                             Field(Modifier.widthIn(max = 320.dp)) {
                                 FieldLabel("Picture", Modifier.focusProperties { canFocus = false }.clickable(enabled = pickFile != null) { focus.requestFocus(); choose() }, disabled = pickFile == null)
-                                Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                                    Button("Choose File", enabled = pickFile != null, modifier = Modifier.focusRequester(focus), label = "Choose File: Picture", onClick = choose, variant = ButtonVariant.Outline)
-                                    Text(filename ?: "No file chosen", modifier = Modifier.weight(1f), maxLines = 1, overflow = TextOverflow.Ellipsis, textStyle = TextColors.Muted)
+                                Button(
+                                    enabled = pickFile != null,
+                                    modifier = Modifier.fillMaxWidth().height(height).focusRequester(focus)
+                                        .semantics { stateDescription = displayedFilename },
+                                    label = "Choose File: Picture",
+                                    onClick = choose,
+                                    variant = ButtonVariant.Outline,
+                                    style = chrome,
+                                ) {
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                    ) {
+                                        Text(textStyle = labelStyle.copy(fontSize = 14.sp, fontWeight = FontWeight.Medium)) { "Choose File" }
+                                        Text(
+                                            modifier = Modifier.weight(1f),
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis,
+                                            textStyle = filenameStyle,
+                                        ) { displayedFilename }
+                                    }
                                 }
                                 FieldDescription("Select a picture to upload.")
                                 if (pickFile == null) FieldDescription("File selection is unavailable on this platform.")
@@ -605,6 +660,17 @@ private fun InputFileRecipe() {
         picker?.invoke { onResult(it) }
         Unit
     }
+    val inputHeight = InputDefaults.Height
+    val dimensions =
+        Style {
+            fillWidth()
+            height(inputHeight)
+        }
+    val chrome = InputVariant.Default.rememberStyle() then dimensions
+    val theme = currentTheme
+    val labelStyle = theme.typography.bodyMedium.copy(fontFamily = theme.fontFamily, color = theme.colors.foreground)
+    val filenameStyle = if (catalogViewportWidth() < 768.dp) labelStyle.copy(fontSize = 16.sp) else labelStyle
+    val displayedFilename = filename ?: "No file chosen"
     Field(Modifier.widthIn(max = 320.dp)) {
         FieldLabel(
             "Picture",
@@ -614,24 +680,29 @@ private fun InputFileRecipe() {
             },
             disabled = picker == null,
         )
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically,
+        Button(
+            enabled = picker != null,
+            modifier =
+                Modifier.fillMaxWidth().height(inputHeight).focusRequester(focus)
+                    .semantics { stateDescription = displayedFilename },
+            label = "Choose File: Picture",
+            onClick = choose,
+            variant = ButtonVariant.Outline,
+            style = chrome,
         ) {
-            Button(
-                "Choose File",
-                enabled = picker != null,
-                modifier = Modifier.focusRequester(focus),
-                label = "Choose File: Picture",
-                onClick = choose,
-                variant = ButtonVariant.Outline,
-            )
-            Text(
-                modifier = Modifier.weight(1f),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                textStyle = TextColors.Muted,
-            ) { filename ?: "No file chosen" }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(textStyle = labelStyle.copy(fontSize = 14.sp, fontWeight = FontWeight.Medium)) { "Choose File" }
+                Text(
+                    modifier = Modifier.weight(1f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    textStyle = filenameStyle,
+                ) { displayedFilename }
+            }
         }
         FieldDescription("Select a picture to upload.")
         if (picker == null) FieldDescription("File selection is unavailable on this platform.")

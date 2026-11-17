@@ -1,10 +1,13 @@
 package com.toutiaoyan.compose.ui.components.input
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.animate
 import androidx.compose.foundation.style.focused
 import androidx.compose.foundation.style.rememberUpdatedStyleState
 import androidx.compose.foundation.style.then
@@ -119,8 +122,10 @@ fun Input(
     val errorStyle =
         if (resolvedError) {
             Style {
-                borderColor(if (nova && theme.isDark) errorColor.copy(alpha = errorColor.alpha * 0.5f) else errorColor)
                 if (nova) {
+                    animate(NovaInputColorTransition) {
+                        borderColor(if (theme.isDark) errorColor.copy(alpha = errorColor.alpha * 0.5f) else errorColor)
+                    }
                     dropShadow(
                         Shadow(
                             radius = 0.dp,
@@ -128,6 +133,8 @@ fun Input(
                             color = errorColor.copy(alpha = if (theme.isDark) 0.4f else 0.2f),
                         ),
                     )
+                } else {
+                    borderColor(errorColor)
                 }
             }
         } else {
@@ -135,10 +142,20 @@ fun Input(
         }
     val compactViewport =
         with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width < 768.dp.roundToPx() }
+    val foreground =
+        if (nova && variant == InputVariant.Default) {
+            animateColorAsState(
+                theme.colors.foreground,
+                tween(NovaInputColorDurationMillis),
+                label = "Input foreground",
+            ).value
+        } else {
+            theme.colors.foreground
+        }
     val inputTypography =
         theme.typography.bodyMedium.copy(
             fontFamily = if (nova) theme.fontFamily else theme.typography.bodyMedium.fontFamily,
-            color = theme.colors.foreground,
+            color = foreground,
             fontSize = if (nova && compactViewport) 16.sp else theme.typography.bodyMedium.fontSize,
             lineHeight = if (nova && compactViewport) 24.sp else theme.typography.bodyMedium.lineHeight,
         )
@@ -247,7 +264,7 @@ fun Input(
         // this the value text stays near-black in dark mode (same lesson as
         // ChipVariant.contentColor: text color must be passed explicitly).
         textStyle = inputTypography,
-        cursorBrush = SolidColor(currentTheme.colors.foreground),
+        cursorBrush = SolidColor(foreground),
         modifier =
             modifier
                 .fillMaxWidth()
