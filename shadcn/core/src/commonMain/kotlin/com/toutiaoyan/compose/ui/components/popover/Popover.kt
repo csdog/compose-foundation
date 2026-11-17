@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
@@ -26,6 +27,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
@@ -40,12 +43,14 @@ import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.isShiftPressed
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.hideFromAccessibility
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
@@ -58,7 +63,6 @@ import androidx.compose.ui.text.font.FontWeight
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
 import com.toutiaoyan.compose.tailwind.core.twSpacing
-import com.toutiaoyan.compose.ui.components.overlay.AnchoredPopup
 import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
 import com.toutiaoyan.compose.ui.components.overlay.PopupPlacement
 import com.toutiaoyan.compose.ui.components.overlay.PopupTransitions
@@ -73,6 +77,7 @@ import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.utils.keyboardInputMode
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
+import kotlinx.coroutines.launch
 
 internal class PopoverController(
     val open: Boolean,
@@ -81,12 +86,33 @@ internal class PopoverController(
     val focus: PopoverFocusState,
 ) {
     fun toggle() = onOpenChange(!open)
+
+    fun dismissWithEscape() {
+        focus.restoreOnDismissal = true
+        onOpenChange(false)
+    }
+
+    fun dismissAfterTab(direction: FocusDirection) {
+        focus.restoreOnDismissal = true
+        focus.exitDirection = direction
+        onOpenChange(false)
+    }
+
+    fun dismissFromOutside() {
+        focus.restoreOnDismissal = false
+        onOpenChange(false)
+    }
 }
 
 internal class PopoverFocusState {
     var presented by mutableStateOf(false)
     var openedByTouch = false
+    var restoreOnDismissal = false
+    var focusAtTrigger by mutableStateOf(false)
+    var exitDirection: FocusDirection? by mutableStateOf(null)
+    var triggerPresses = 0
     var returnFocus: (() -> Boolean)? = null
+    var restoreTouchHost: (() -> Unit)? = null
 }
 
 private val LocalPopover = staticCompositionLocalOf<PopoverController?> { null }
@@ -132,9 +158,9 @@ class PopoverScope internal constructor(
  * [defaultOpen]) for uncontrolled, matching Radix `open` / `defaultOpen` /
  * `onOpenChange`. Outside click and Escape close via [onOpenChange]`(false)`.
  *
- * [modal] retains the native popup default of `true` for compatibility. It controls
- * popup focus ownership; `false` keeps the owner interactive. This is not the full
- * Base UI modality contract (scroll locking and document interaction suppression).
+ * [modal] defaults to `true` for compatibility. Pass `false` to let outside pointer
+ * interactions reach the owner. On Web, Desktop and iOS the panel can take keyboard
+ * focus in both modes. This flag does not lock document scrolling.
  *
  * Usage:
  * ```
@@ -162,13 +188,30 @@ fun Popover(
         onOpenChange?.invoke(next)
     }
     val focus = remember { PopoverFocusState() }
+    val ownerFocus = LocalFocusManager.current
     var wasPresented by remember { mutableStateOf(false) }
     LaunchedEffect(isOpen, focus.presented) {
         if (focus.presented) wasPresented = true
         if (!isOpen && !focus.presented && wasPresented) {
             withFrameNanos { }
-            focus.returnFocus?.invoke()
+            if (modal || focus.restoreOnDismissal) {
+                focus.restoreTouchHost?.invoke()
+                val restored = focus.returnFocus?.invoke() == true
+                val direction = focus.exitDirection
+                if (restored && direction != null) ownerFocus.moveFocus(direction)
+            }
+            focus.exitDirection = null
+            focus.focusAtTrigger = false
+            focus.restoreTouchHost = null
+            focus.restoreOnDismissal = false
             wasPresented = false
+        }
+    }
+    LaunchedEffect(isOpen, focus.focusAtTrigger) {
+        if (isOpen && focus.focusAtTrigger) {
+            withFrameNanos { }
+            focus.restoreTouchHost?.invoke()
+            focus.returnFocus?.invoke()
         }
     }
     val controller = PopoverController(open = isOpen, onOpenChange = setOpen, modal = modal, focus = focus)
@@ -176,10 +219,9 @@ fun Popover(
         Box(
             modifier =
                 modifier.onKeyEvent { event ->
-                    // A non-focusable popup leaves keyboard events on its owner.
-                    // Bubble so a nested popover can consume Escape first.
+                    // Escape can reach the owner when a nested layer leaves it focused.
                     if (!modal && isOpen && event.type == KeyEventType.KeyDown && event.key == Key.Escape) {
-                        setOpen(false)
+                        controller.dismissWithEscape()
                         true
                     } else {
                         false
@@ -232,7 +274,10 @@ fun PopoverScope.PopoverTrigger(
                         while (true) {
                             val event = awaitPointerEvent(PointerEventPass.Initial)
                             if (event.type == PointerEventType.Press) {
-                                controller.focus.openedByTouch = event.changes.any { it.type == PointerType.Touch }
+                                controller.focus.triggerPresses++
+                                val touch = event.changes.any { it.type == PointerType.Touch }
+                                controller.focus.openedByTouch = touch
+                                controller.focus.restoreTouchHost = if (touch) popoverTouchHostFocus(event) else null
                                 controller.focus.returnFocus = returnFocus
                             }
                         }
@@ -241,8 +286,20 @@ fun PopoverScope.PopoverTrigger(
                 .onPreviewKeyEvent { event ->
                     if (event.type == KeyEventType.KeyDown && (event.key == Key.Enter || event.key == Key.Spacebar)) {
                         controller.focus.openedByTouch = false
+                        controller.focus.restoreTouchHost = null
                     }
-                    false
+                    if (event.type == KeyEventType.KeyDown && event.key == Key.Tab &&
+                        controller.open && controller.focus.focusAtTrigger
+                    ) {
+                        if (event.isShiftPressed) {
+                            controller.dismissAfterTab(FocusDirection.Previous)
+                        } else {
+                            controller.focus.focusAtTrigger = false
+                        }
+                        true
+                    } else {
+                        false
+                    }
                 }
                 .keyboardInputMode()
                 .semantics {
@@ -304,6 +361,8 @@ fun PopoverScope.PopoverContent(
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val panelFocus = remember { FocusRequester() }
     var panelHasFocus by remember { mutableStateOf(false) }
+    var childHasFocus by remember { mutableStateOf(false) }
+    var initialFocusGiven by remember { mutableStateOf(false) }
     val foreground = currentTheme.colors.popoverForeground
     val nova = currentTheme.activePreset == StylePreset.Nova
     val bodyTypography =
@@ -320,59 +379,135 @@ fun PopoverScope.PopoverContent(
         } else {
             LocalDefaultTextStyle.current
         }
+    val properties =
+        popoverPopupProperties(
+            controller.modal,
+            controller.open,
+            dismissOnClickOutside,
+            focusPanel = !controller.focus.focusAtTrigger,
+        )
+    val focusable = properties.focusable
+    val latestController by rememberUpdatedState(controller)
+    val dismissalScope = rememberCoroutineScope()
     PopoverPortal {
-        AnchoredPopup(
+        PopoverPopup(
             open = controller.open,
-            onDismissRequest = { controller.onOpenChange(false) },
+            onDismissRequest = {
+                if (controller.modal) {
+                    controller.dismissFromOutside()
+                } else {
+                    // Skiko reports outside press before delivering the same press to the trigger.
+                    val presses = controller.focus.triggerPresses
+                    dismissalScope.launch {
+                        withFrameNanos { }
+                        if (latestController.open && presses == controller.focus.triggerPresses) {
+                            latestController.dismissFromOutside()
+                        }
+                    }
+                }
+            },
+            onWindowEscape = controller::dismissWithEscape,
             placement = side ?: placement,
             offset = sideOffset,
             align = align,
             alignOffset = alignOffset,
-            dismissOnClickOutside = dismissOnClickOutside,
-            focusable = controller.modal,
+            properties = properties,
             enter = enter,
             exit = exit,
         ) {
             val focusManager = LocalFocusManager.current
-            DisposableEffect(controller.focus, controller.modal) {
-                if (controller.modal) controller.focus.presented = true
-                onDispose { if (controller.modal) controller.focus.presented = false }
+            DisposableEffect(controller.focus, focusable) {
+                if (focusable) controller.focus.presented = true
+                onDispose { if (focusable) controller.focus.presented = false }
             }
-            LaunchedEffect(controller.open, controller.modal) {
-                if (controller.open && controller.modal) {
+            LaunchedEffect(controller.open, focusable) {
+                if (controller.open && focusable) {
                     withFrameNanos { }
+                    controller.focus.restoreTouchHost?.invoke()
                     if (!panelHasFocus && panelFocus.requestFocus() && !controller.focus.openedByTouch) {
                         // Enter searches descendants and leaves focus on the panel if
                         // none can take it. Touch avoids opening a virtual keyboard.
                         focusManager.moveFocus(FocusDirection.Enter)
                     }
+                    initialFocusGiven = true
+                } else {
+                    initialFocusGiven = false
                 }
             }
+            LaunchedEffect(controller.open, controller.focus.exitDirection) {
+                if (controller.open && controller.focus.exitDirection != null) {
+                    // A controlled owner can decline the dismissal request.
+                    withFrameNanos { }
+                    if (latestController.open) {
+                        controller.focus.exitDirection = null
+                        panelFocus.requestFocus()
+                    }
+                }
+            }
+            val allowTabExit = controller.open && !controller.modal && focusable && initialFocusGiven
             CompositionLocalProvider(
                 LocalContentColor provides foreground,
                 LocalDefaultTextStyle provides bodyTypography,
             ) {
-                Column(
+                Box(
                     modifier =
                         Modifier.keyboardInputMode().onKeyEvent { event ->
-                            if (controller.open && event.type == KeyEventType.KeyDown && event.key == Key.Escape) {
-                                controller.onOpenChange(false)
-                                true
-                            } else {
-                                false
+                            when {
+                                !controller.open || event.type != KeyEventType.KeyDown -> false
+                                event.key == Key.Escape -> {
+                                    controller.dismissWithEscape()
+                                    true
+                                }
+                                event.key == Key.Tab && event.isShiftPressed &&
+                                    allowTabExit && panelHasFocus && !childHasFocus -> {
+                                    controller.focus.focusAtTrigger = true
+                                    true
+                                }
+                                else -> false
                             }
                         }.focusRequester(panelFocus)
-                            .onFocusChanged { panelHasFocus = it.hasFocus }
-                            .then(modifier).focusable(enabled = controller.modal).styleable(
-                                styleState,
-                                rememberPopoverContentStyle() then style,
-                            ),
-                    verticalArrangement = Arrangement.spacedBy(if (nova) 10.dp else 0.dp),
-                    content = content,
-                )
+                            .onFocusChanged {
+                                panelHasFocus = it.hasFocus
+                                childHasFocus = it.hasFocus && !it.isFocused
+                            }.then(modifier).focusable(enabled = focusable).pointerInput(controller.focus) {
+                                awaitPointerEventScope {
+                                    while (true) {
+                                        val event = awaitPointerEvent(PointerEventPass.Initial)
+                                        if (event.type == PointerEventType.Press) {
+                                            controller.focus.focusAtTrigger = false
+                                        }
+                                    }
+                                }
+                            },
+                    propagateMinConstraints = true,
+                ) {
+                    PopoverTabBoundary(allowTabExit && childHasFocus) {
+                        controller.focus.focusAtTrigger = true
+                    }
+                    Column(
+                        modifier = Modifier.styleable(styleState, rememberPopoverContentStyle() then style),
+                        verticalArrangement = Arrangement.spacedBy(if (nova) 10.dp else 0.dp),
+                        content = content,
+                    )
+                    PopoverTabBoundary(allowTabExit) { controller.dismissAfterTab(FocusDirection.Next) }
+                }
             }
         }
     }
+}
+
+/** Keeps tab order inside the panel connected to the trigger's owner. */
+@Composable
+private fun PopoverTabBoundary(
+    enabled: Boolean,
+    onFocus: () -> Unit,
+) {
+    Box(
+        Modifier.size(0.dp)
+            .semantics { hideFromAccessibility() }
+            .onFocusChanged { if (enabled && it.isFocused) onFocus() }
+            .focusable(enabled),
+    )
 }
 
 /** String-body overload of [PopoverContent]. */

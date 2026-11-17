@@ -2,6 +2,7 @@ package com.toutiaoyan.compose.ui.components.popover
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -45,6 +46,36 @@ class PopoverBehaviorTest : ScreenshotTest() {
         composeRule.onNodeWithText("Open").requestFocus().performKeyInput { pressKey(Key.Escape) }
         composeRule.runOnIdle { assertEquals(listOf("new:false"), calls) }
         composeRule.onNodeWithText("Body").assertIsDisplayed()
+    }
+
+    @Test fun nonModalTabReturnsToTriggerAndExitsAfterLastPanelTarget() {
+        setThemedContent {
+            Column {
+                Popover(modal = false) {
+                    PopoverTrigger("Open")
+                    PopoverContent(enter = EnterTransition.None, exit = ExitTransition.None) {
+                        Button("First")
+                        Button("Second")
+                    }
+                }
+                Button("After")
+            }
+        }
+        val trigger = composeRule.onNodeWithText("Open")
+        val first = composeRule.onNodeWithText("First")
+        val second = composeRule.onNodeWithText("Second")
+        trigger.performClick()
+        first.assertIsFocused().performKeyInput {
+            keyDown(Key.ShiftLeft)
+            pressKey(Key.Tab)
+            keyUp(Key.ShiftLeft)
+        }
+        first.assertIsDisplayed()
+        trigger.assertIsFocused().performKeyInput { pressKey(Key.Tab) }
+        first.assertIsFocused().performKeyInput { pressKey(Key.Tab) }
+        second.assertIsFocused().performKeyInput { pressKey(Key.Tab) }
+        first.assertDoesNotExist()
+        composeRule.onNodeWithText("After").assertIsFocused()
     }
 
     @Test fun modalInitialFocusSkipsDisabledChildAndEntersFirstEnabledChild() {

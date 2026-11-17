@@ -38,7 +38,7 @@ val popoverDoc =
             import com.toutiaoyan.compose.ui.components.popover.PopoverDescription
             import com.toutiaoyan.compose.ui.components.button.ButtonVariant
 
-            Popover {
+            Popover(modal = false) {
                 PopoverTrigger("Open Popover", variant = ButtonVariant.Outline)
                 PopoverContent {
                     PopoverHeader {
@@ -56,6 +56,33 @@ val popoverDoc =
             └── PopoverContent
             """.trimIndent(),
         examplesHeading = null,
+        apiSections =
+            listOf(
+                ComponentApiSection(
+                    "Popover",
+                    "See the [Base UI Popover API](https://base-ui.com/react/components/popover#api-reference). " +
+                        "The official examples allow outside interaction with `modal = false`. " +
+                        "The Kotlin default remains `true` for existing callers.",
+                    listOf(
+                        ApiProperty("open", "Boolean?", "null"),
+                        ApiProperty("onOpenChange", "((Boolean) -> Unit)?", "null"),
+                        ApiProperty("defaultOpen", "Boolean", "false"),
+                        ApiProperty("modal", "Boolean", "true"),
+                    ),
+                ),
+                ComponentApiSection(
+                    "PopoverContent",
+                    "Places the panel beside its trigger. Use PopoverHeader, PopoverTitle and " +
+                        "PopoverDescription for the heading and supporting text.",
+                    listOf(
+                        ApiProperty("side / placement", "PopupPlacement? / PopupPlacement", "null / Bottom"),
+                        ApiProperty("align", "PopupAlign", "Center"),
+                        ApiProperty("sideOffset / alignOffset", "Dp", "4.dp / 0.dp"),
+                        ApiProperty("dismissOnClickOutside", "Boolean", "true"),
+                        ApiProperty("enter / exit", "EnterTransition / ExitTransition", "Theme default"),
+                    ),
+                ),
+            ),
         examples =
             listOf(
                 ComponentExample(

@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -43,7 +44,8 @@ private fun PopoverDimensionInput(
 ) {
     var value by remember { mutableStateOf(initialValue) }
     val focus = remember { FocusRequester() }
-    val labelModifier = Modifier.width(labelWidth).clickable { focus.requestFocus() }
+    val labelModifier =
+        Modifier.width(labelWidth).focusProperties { canFocus = false }.clickable { focus.requestFocus() }
     if (field) FieldLabel(label, modifier = labelModifier) else Label(label, modifier = labelModifier)
     Input(
         value,
@@ -57,7 +59,7 @@ private fun PopoverDimensionInput(
 // region default
 @Composable
 internal fun PopoverDefaultRecipe() {
-    Popover {
+    Popover(modal = false) {
         PopoverTrigger("Open popover", variant = ButtonVariant.Outline)
         PopoverContent(style = Style { width(320.dp) }, modifier = Modifier.testTag("popover-panel")) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
@@ -111,7 +113,7 @@ internal fun PopoverDefaultRecipe() {
 // region basic
 @Composable
 internal fun PopoverBasicRecipe() {
-    Popover {
+    Popover(modal = false) {
         PopoverTrigger("Open Popover", variant = ButtonVariant.Outline)
         PopoverContent(align = PopupAlign.Start, modifier = Modifier.testTag("popover-panel")) {
             PopoverHeader("Dimensions", popoverDescription)
@@ -134,7 +136,7 @@ internal fun PopoverAlignRecipe() {
                     align,
                 ),
             ->
-            Popover {
+            Popover(modal = false) {
                 PopoverTrigger(label, variant = ButtonVariant.Outline, size = ButtonSize.Sm)
                 PopoverContent(
                     "Aligned to " + label.lowercase(),
@@ -151,7 +153,7 @@ internal fun PopoverAlignRecipe() {
 // region form
 @Composable
 internal fun PopoverFormRecipe() {
-    Popover {
+    Popover(modal = false) {
         PopoverTrigger("Open Popover", variant = ButtonVariant.Outline)
         PopoverContent(
             align = PopupAlign.Start,
@@ -216,7 +218,7 @@ internal fun PopoverRtlRecipe(language: Int = 1) {
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     sides.forEachIndexed { index, side ->
-                        Popover {
+                        Popover(modal = false) {
                             PopoverTrigger(
                                 translations[
                                     if (row == 0) {

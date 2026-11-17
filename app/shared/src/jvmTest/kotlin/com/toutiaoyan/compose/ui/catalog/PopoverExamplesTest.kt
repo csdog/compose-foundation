@@ -121,6 +121,7 @@ class PopoverExamplesTest(private val viewport: Int, private val dark: Boolean) 
         show("Default")
         open("Open popover")
         rule.onNodeWithTag("popover-panel").assertWidthIsEqualTo(320.dp).assertHeightIsEqualTo(230.dp)
+        rule.onNodeWithContentDescription("Width").assertIsFocused()
         listOf("Width" to "100%", "Max. width" to "300px", "Height" to "25px", "Max. height" to "none")
             .forEach { (label, value) ->
                 rule.onNodeWithContentDescription(label).assertTextEquals(value)
