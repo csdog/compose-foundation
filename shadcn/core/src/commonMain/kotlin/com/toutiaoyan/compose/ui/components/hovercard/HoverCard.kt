@@ -4,15 +4,6 @@ package com.toutiaoyan.compose.ui.components.hovercard
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
-import androidx.compose.animation.slideIn
-import androidx.compose.animation.core.tween
-import androidx.compose.ui.graphics.TransformOrigin
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
@@ -64,7 +55,6 @@ import com.toutiaoyan.compose.tailwind.core.twSpacing
 import com.toutiaoyan.compose.ui.components.overlay.AnchoredPopup
 import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
 import com.toutiaoyan.compose.ui.components.overlay.PopupPlacement
-import com.toutiaoyan.compose.ui.components.overlay.PopupTransitions
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextColors
 import com.toutiaoyan.compose.ui.components.text.TextVariant
@@ -324,8 +314,8 @@ fun HoverCardScope.HoverCardContent(
     sideOffset: Dp = 4.dp,
     alignOffset: Dp = 4.dp,
     dismissOnClickOutside: Boolean = true,
-    enter: EnterTransition = rememberHoverCardEnter(side ?: placement),
-    exit: ExitTransition = rememberHoverCardExit(side ?: placement),
+    enter: EnterTransition = HoverCardDefaultEnter,
+    exit: ExitTransition = HoverCardDefaultExit,
     content: @Composable () -> Unit,
 ) {
     val controller = hoverCardController()
@@ -409,8 +399,8 @@ fun HoverCardScope.HoverCardContent(
     sideOffset: Dp = 4.dp,
     alignOffset: Dp = 4.dp,
     dismissOnClickOutside: Boolean = true,
-    enter: EnterTransition = rememberHoverCardEnter(side.placement(LocalLayoutDirection.current)),
-    exit: ExitTransition = rememberHoverCardExit(side.placement(LocalLayoutDirection.current)),
+    enter: EnterTransition = HoverCardDefaultEnter,
+    exit: ExitTransition = HoverCardDefaultExit,
     content: @Composable () -> Unit,
 ) {
     HoverCardContent(
@@ -439,8 +429,8 @@ fun HoverCardScope.HoverCardContent(
     sideOffset: Dp = 4.dp,
     alignOffset: Dp = 4.dp,
     dismissOnClickOutside: Boolean = true,
-    enter: EnterTransition = rememberHoverCardEnter(side ?: placement),
-    exit: ExitTransition = rememberHoverCardExit(side ?: placement),
+    enter: EnterTransition = HoverCardDefaultEnter,
+    exit: ExitTransition = HoverCardDefaultExit,
 ) {
     HoverCardContent(
         modifier = modifier,
@@ -474,8 +464,8 @@ fun HoverCardScope.HoverCardContent(
     sideOffset: Dp = 4.dp,
     alignOffset: Dp = 4.dp,
     dismissOnClickOutside: Boolean = true,
-    enter: EnterTransition = rememberHoverCardEnter(side ?: placement),
-    exit: ExitTransition = rememberHoverCardExit(side ?: placement),
+    enter: EnterTransition = HoverCardDefaultEnter,
+    exit: ExitTransition = HoverCardDefaultExit,
     content: @Composable () -> Unit,
 ) {
     HoverCardContent(
@@ -585,37 +575,4 @@ fun HoverCardDescription(
         style = style,
         text = text,
     )
-}
-
-private fun hoverCardOrigin(side: PopupPlacement): TransformOrigin =
-    when (side) {
-        PopupPlacement.Bottom -> TransformOrigin(0.5f, 0f)
-        PopupPlacement.Top -> TransformOrigin(0.5f, 1f)
-        PopupPlacement.Start -> TransformOrigin(1f, 0.5f)
-        PopupPlacement.End -> TransformOrigin(0f, 0.5f)
-    }
-
-@Composable
-private fun rememberHoverCardEnter(side: PopupPlacement): EnterTransition {
-    if (currentTheme.activePreset != StylePreset.Nova) return PopupTransitions.Enter
-    val distance = with(LocalDensity.current) { 8.dp.roundToPx() }
-    return remember(side, distance) {
-        val offset =
-            when (side) {
-                PopupPlacement.Bottom -> IntOffset(0, -distance)
-                PopupPlacement.Top -> IntOffset(0, distance)
-                PopupPlacement.Start -> IntOffset(distance, 0)
-                PopupPlacement.End -> IntOffset(-distance, 0)
-            }
-        fadeIn(tween(100)) + scaleIn(tween(100), initialScale = 0.95f, transformOrigin = hoverCardOrigin(side)) +
-            slideIn(tween(100)) { offset }
-    }
-}
-
-@Composable
-private fun rememberHoverCardExit(side: PopupPlacement): ExitTransition {
-    if (currentTheme.activePreset != StylePreset.Nova) return PopupTransitions.Exit
-    return remember(side) {
-        fadeOut(tween(100)) + scaleOut(tween(100), targetScale = 0.95f, transformOrigin = hoverCardOrigin(side))
-    }
 }

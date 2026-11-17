@@ -1,9 +1,11 @@
 package com.toutiaoyan.compose.ui.components.hovercard
 
+import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.window.PopupPositionProvider
 import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
 import com.toutiaoyan.compose.ui.components.overlay.PopupPlacement
+import com.toutiaoyan.compose.ui.components.overlay.PopupPositionResult
 import kotlin.math.roundToInt
 
 /** Base UI PreviewCard defaults: 5px collision inset and fallback to the end of the perpendicular axis. */
@@ -19,7 +21,14 @@ internal class HoverCardCollisionPositionProvider(
         windowSize: IntSize,
         layoutDirection: LayoutDirection,
         popupContentSize: IntSize,
-    ): IntOffset {
+    ): IntOffset = calculatePositionResult(anchorBounds, windowSize, layoutDirection, popupContentSize).offset
+
+    internal fun calculatePositionResult(
+        anchorBounds: IntRect,
+        windowSize: IntSize,
+        layoutDirection: LayoutDirection,
+        popupContentSize: IntSize,
+    ): PopupPositionResult {
         val a = anchorBounds
         val s = popupContentSize
 
@@ -74,9 +83,38 @@ internal class HoverCardCollisionPositionProvider(
                 PopupAlign.Center -> ((start + end - size) / 2f + if (rtl) -alignOffset else alignOffset).roundToInt()
             }
         val point = if (vertical) IntOffset(cross, main(side)) else IntOffset(main(side), cross)
-        return IntOffset(
-            point.x.coerceIn(padding, (windowSize.width - s.width - padding).coerceAtLeast(padding)),
-            point.y.coerceIn(padding, (windowSize.height - s.height - padding).coerceAtLeast(padding)),
+
+        fun clamp(
+            position: Int,
+            available: Int,
+        ): Int {
+            val max = available.coerceAtLeast(0)
+            val inset = padding.coerceAtMost(max / 2)
+            return position.coerceIn(inset, max - inset)
+        }
+
+        val origin = IntOffset(clamp(point.x, windowSize.width - s.width), clamp(point.y, windowSize.height - s.height))
+        val pivotX =
+            when (side) {
+                PopupPlacement.Start -> a.left.toFloat()
+                PopupPlacement.End -> a.right.toFloat()
+                else -> (a.left + a.right) / 2f
+            }
+        val pivotY =
+            when (side) {
+                PopupPlacement.Top -> a.top.toFloat()
+                PopupPlacement.Bottom -> a.bottom.toFloat()
+                else -> (a.top + a.bottom) / 2f
+            }
+        return PopupPositionResult(
+            offset = origin,
+            bounds = IntRect(origin, s),
+            physicalSide = side,
+            transformOrigin =
+                TransformOrigin(
+                    if (s.width == 0) 0.5f else (pivotX - origin.x) / s.width,
+                    if (s.height == 0) 0.5f else (pivotY - origin.y) / s.height,
+                ),
         )
     }
 }

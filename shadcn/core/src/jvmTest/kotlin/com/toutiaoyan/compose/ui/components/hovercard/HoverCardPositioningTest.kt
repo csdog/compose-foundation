@@ -1,5 +1,6 @@
 package com.toutiaoyan.compose.ui.components.hovercard
 
+import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.unit.*
 import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
 import com.toutiaoyan.compose.ui.components.overlay.PopupPlacement
@@ -23,6 +24,59 @@ class HoverCardPositioningTest {
 
     @Test fun horizontalBothSidesUnavailableFallsBackBelow() {
         assertEquals(IntOffset(5, 336), position(PopupPlacement.Start, IntRect(65, 300, 113, 332)))
+    }
+
+    @Test fun animationOriginFollowsTheAnchorAfterHorizontalFallbackAndClamping() {
+        val result =
+            HoverCardCollisionPositionProvider(PopupPlacement.Start, 4, PopupAlign.Center, 4, 5)
+                .calculatePositionResult(
+                    IntRect(65, 300, 113, 332),
+                    IntSize(375, 1000),
+                    LayoutDirection.Ltr,
+                    IntSize(256, 84),
+                )
+        assertEquals(PopupPlacement.Bottom, result.physicalSide)
+        assertEquals(IntRect(5, 336, 261, 420), result.bounds)
+        assertEquals(TransformOrigin(84f / 256f, -4f / 84f), result.transformOrigin)
+    }
+
+    @Test fun horizontalAnimationOriginKeepsTheOffsetAndCrossAxisAlignment() {
+        val result =
+            HoverCardCollisionPositionProvider(PopupPlacement.Start, 4, PopupAlign.Center, 4, 5)
+                .calculatePositionResult(
+                    IntRect(590, 516, 638, 548),
+                    IntSize(1425, 1000),
+                    LayoutDirection.Ltr,
+                    IntSize(256, 84),
+                )
+        assertEquals(IntRect(330, 494, 586, 578), result.bounds)
+        assertEquals(TransformOrigin(260f / 256f, 38f / 84f), result.transformOrigin)
+    }
+
+    @Test fun animationOriginTracksTheTriggerAcrossAVerticalFlip() {
+        val result =
+            HoverCardCollisionPositionProvider(PopupPlacement.Bottom, 4, PopupAlign.Center, 4, 5)
+                .calculatePositionResult(
+                    IntRect(100, 150, 148, 182),
+                    IntSize(375, 200),
+                    LayoutDirection.Ltr,
+                    IntSize(256, 84),
+                )
+        assertEquals(PopupPlacement.Top, result.physicalSide)
+        assertEquals(TransformOrigin(119f / 256f, 88f / 84f), result.transformOrigin)
+    }
+
+    @Test fun fullWidthAnimationOriginUsesTheDrawablePopupBounds() {
+        val result =
+            HoverCardCollisionPositionProvider(PopupPlacement.Bottom, 4, PopupAlign.Center, 4, 5)
+                .calculatePositionResult(
+                    IntRect(100, 150, 148, 182),
+                    IntSize(256, 500),
+                    LayoutDirection.Ltr,
+                    IntSize(256, 84),
+                )
+        assertEquals(IntRect(0, 186, 256, 270), result.bounds)
+        assertEquals(TransformOrigin(124f / 256f, -4f / 84f), result.transformOrigin)
     }
 
     @Test fun crossAxisRespectsFivePixelViewportInset() {

@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.*
 import com.toutiaoyan.compose.ui.ScreenshotTest
 import com.toutiaoyan.compose.ui.components.button.Button
 import com.toutiaoyan.compose.ui.components.button.ButtonVariant
+import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
 import com.toutiaoyan.compose.ui.components.overlay.PopupPlacement
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.tokens.StylePreset
@@ -57,6 +58,68 @@ class HoverCardParityTest : ScreenshotTest() {
         ) {
             Text { "Preview" }
         }
+    }
+
+    @Test fun reopeningDuringDefaultExitDoesNotRestartTheEnterSlide() {
+        verifyExitReversal(HoverCardDefaultEnter)
+    }
+
+    @Test fun reopeningWithExplicitEnterContinuesTheDefaultExitScale() {
+        verifyExitReversal(EnterTransition.None)
+    }
+
+    private fun verifyExitReversal(enter: EnterTransition) {
+        var open by mutableStateOf(false)
+        var mounts = 0
+        var disposals = 0
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Box(Modifier.size(120.dp, 40.dp)) {
+                HoverCardPopup(
+                    open = open,
+                    anchor = remember { HoverCardAnchor() },
+                    onDismissRequest = {},
+                    placement = PopupPlacement.Bottom,
+                    offset = 4.dp,
+                    align = PopupAlign.Center,
+                    alignOffset = 0.dp,
+                    dismissOnClickOutside = false,
+                    enter = enter,
+                    exit = HoverCardDefaultExit,
+                ) {
+                    DisposableEffect(Unit) {
+                        mounts++
+                        onDispose { disposals++ }
+                    }
+                    Box(Modifier.size(100.dp, 60.dp).testTag("motion-panel"))
+                }
+            }
+        }
+        val panel = composeRule.onNodeWithTag("motion-panel")
+        composeRule.mainClock.autoAdvance = false
+        composeRule.runOnIdle { open = true }
+        advance(500)
+        val settled = panel.fetchSemanticsNode().boundsInWindow
+
+        composeRule.runOnIdle { open = false }
+        advance(64)
+        val exiting = panel.fetchSemanticsNode().boundsInWindow
+        assertTrue(exiting.width in (settled.width * .95f)..(settled.width - 1f))
+
+        composeRule.runOnIdle { open = true }
+        advance(16)
+        val reversing = panel.fetchSemanticsNode().boundsInWindow
+        assertTrue(reversing.width < settled.width - .5f, "The exit scale must ease back to full size")
+        assertEquals(exiting.top, reversing.top, 1f, "Reopening must keep the current slide position")
+        advance(500)
+        assertEquals(settled, panel.fetchSemanticsNode().boundsInWindow)
+        composeRule.runOnIdle {
+            assertEquals(1, mounts)
+            assertEquals(0, disposals)
+            open = false
+        }
+        advance(500)
+        panel.assertDoesNotExist()
+        composeRule.runOnIdle { assertEquals(1, disposals) }
     }
 
     @Test fun defaultOpenAndExternalOpenDoNotCloseOnIdleComposition() {
