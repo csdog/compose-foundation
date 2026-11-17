@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
@@ -29,6 +30,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.input.key.*
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.runtime.Composable
@@ -50,6 +52,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.offset
 import androidx.compose.ui.graphics.shadow.Shadow
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.components.button.ButtonAnimation
@@ -91,7 +94,8 @@ fun RadioButton(
     disabled: Boolean = false,
     invalid: Boolean = false,
     required: Boolean = false,
-    animation: ButtonAnimation = ButtonAnimation.Scale,
+    animation: ButtonAnimation =
+        if (currentTheme.activePreset == StylePreset.Nova) ButtonAnimation.None else ButtonAnimation.Scale,
     label: String = "",
     style: Style = Style,
     content: @Composable () -> Unit = { RadioGroupIndicator() },
@@ -99,6 +103,9 @@ fun RadioButton(
     val resolvedEnabled = enabled && !disabled && !LocalFieldSetDisabled.current
     val theme = currentTheme
     val nova = theme.activePreset == StylePreset.Nova
+    val layoutMinimum = theme.minTouchTarget?.coerceAtLeast(16.dp) ?: 16.dp
+    val horizontalHitPadding = if (nova) ((40.dp - layoutMinimum) / 2).coerceAtLeast(0.dp) else 0.dp
+    val verticalHitPadding = if (nova) ((32.dp - layoutMinimum) / 2).coerceAtLeast(0.dp) else 0.dp
     val errorColor = theme.colors.destructive
     val invalidStyle =
         if (invalid) {
@@ -137,7 +144,7 @@ fun RadioButton(
     Box(
         modifier =
             modifier
-                .semantics {
+                .semantics(mergeDescendants = true) {
                     if (invalid) error("Invalid selection")
                     if (label.isNotEmpty()) {
                         contentDescription = if (required) "$label, required" else label
@@ -147,6 +154,17 @@ fun RadioButton(
                     }
                 }
                 .keyboardInputMode()
+                .layout { measurable, constraints ->
+                    val horizontal = horizontalHitPadding.roundToPx()
+                    val vertical = verticalHitPadding.roundToPx()
+                    val child =
+                        measurable.measure(
+                            constraints.offset(horizontal = horizontal * 2, vertical = vertical * 2),
+                        )
+                    layout(child.width - horizontal * 2, child.height - vertical * 2) {
+                        child.placeRelative(-horizontal, -vertical)
+                    }
+                }
                 .selectable(
                     selected = selected,
                     onClick = { onClick?.invoke() },
@@ -155,6 +173,7 @@ fun RadioButton(
                     interactionSource = interactionSource,
                     indication = null,
                 )
+                .padding(horizontal = horizontalHitPadding, vertical = verticalHitPadding)
                 .styleable(styleState, touchTargetStyle then pressStyle),
         contentAlignment = Alignment.Center,
     ) {
@@ -202,7 +221,8 @@ fun RadioGroupItem(
     enabled: Boolean = true,
     disabled: Boolean = false,
     invalid: Boolean = false,
-    animation: ButtonAnimation = ButtonAnimation.Scale,
+    animation: ButtonAnimation =
+        if (currentTheme.activePreset == StylePreset.Nova) ButtonAnimation.None else ButtonAnimation.Scale,
     label: String = "",
     style: Style = Style,
 ) {
@@ -352,7 +372,8 @@ fun RadioGroupScope.RadioGroupItem(
     enabled: Boolean = true,
     disabled: Boolean = false,
     invalid: Boolean = false,
-    animation: ButtonAnimation = ButtonAnimation.Scale,
+    animation: ButtonAnimation =
+        if (currentTheme.activePreset == StylePreset.Nova) ButtonAnimation.None else ButtonAnimation.Scale,
     label: String = "",
     style: Style = Style,
 ) {
@@ -377,7 +398,8 @@ fun RadioGroupScope.RadioGroupItem(
     }
     SideEffect { navigation.enabled[value] = resolvedEnabled }
     val keys =
-        Modifier.focusRequester(requester)
+        Modifier.keyboardInputMode()
+            .focusRequester(requester)
             .onGloballyPositioned { navigation.positions[value] = it.positionInRoot() }
             .focusProperties {
                 val entry =
@@ -436,7 +458,8 @@ fun RadioGroupScope.RadioGroupItem(
     enabled: Boolean = true,
     disabled: Boolean = false,
     invalid: Boolean = false,
-    animation: ButtonAnimation = ButtonAnimation.Scale,
+    animation: ButtonAnimation =
+        if (currentTheme.activePreset == StylePreset.Nova) ButtonAnimation.None else ButtonAnimation.Scale,
     style: Style = Style,
 ) {
     val radio =

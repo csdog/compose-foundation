@@ -6,6 +6,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.dp
@@ -31,6 +34,14 @@ class RadioGroupExamplesTest {
             }
         }
         rule.waitForIdle()
+    }
+
+    private fun assertNormalLabel(text: String) {
+        val layouts = mutableListOf<TextLayoutResult>()
+        rule.onNodeWithText(text, useUnmergedTree = true).performSemanticsAction(
+            SemanticsActions.GetTextLayoutResult,
+        ) { it(layouts) }
+        assertEquals(FontWeight.Normal, layouts.single().layoutInput.style.fontWeight)
     }
 
     private fun radios() = rule.onAllNodes(isSelectable())
@@ -62,7 +73,9 @@ class RadioGroupExamplesTest {
         }
         assertTrue(radioGroupDoc.examples.single { it.title == "Description" }.code.contains("Minimal spacing"))
         assertTrue(radioGroupDoc.examples.single { it.title == "Disabled" }.code.contains("option3"))
-        assertFalse(radioGroupDoc.examples.single { it.title == "RTL" }.code.contains("copy.defaultValue"))
+        val rtlCode = radioGroupDoc.examples.single { it.title == "RTL" }.code
+        assertTrue(rtlCode.contains("val copy = radioRtlCopy[language]"))
+        listOf("افتراضي", "Default", "ברירת מחדל").forEach { assertTrue(rtlCode.contains(it), it) }
         assertNull(radioGroupDoc.examplesHeading)
         assertFalse(radioGroupDoc.examples.first().showHeading)
         assertEquals(
@@ -82,13 +95,22 @@ class RadioGroupExamplesTest {
         }
         assertEquals("Use the following composition to build a `RadioGroup`:", radioGroupDoc.beforeCompositionMarkdown)
         assertEquals("RadioGroup\n├── RadioGroupItem\n└── RadioGroupItem", radioGroupDoc.compositionCode)
-        assertEquals(
-            listOf("RadioGroup", "RadioGroupItem", "RadioGroupItem (with text)"),
-            radioGroupDoc.apiSections.map { it.title },
-        )
+        val reference =
+            radioGroupDoc.beforeExampleSections.getValue("Kotlin extension: Horizontal orientation").single()
+        assertEquals("API Reference", reference.title)
         assertTrue(
-            radioGroupDoc.apiSections.first().descriptionMarkdown.contains("base-ui.com/react/components/radio-group"),
+            (reference.blocks.single() as com.toutiaoyan.compose.ui.catalog.docs.ComponentGuideBlock.Paragraph)
+                .markdown.contains("base-ui.com/react/components/radio-group"),
         )
+        assertTrue(radioGroupDoc.apiSections.isEmpty())
+        val kotlinApi = radioGroupDoc.afterExamples.single()
+        assertEquals("Kotlin extension: API", kotlinApi.title)
+        assertEquals(
+            3,
+            kotlinApi.blocks.filterIsInstance<com.toutiaoyan.compose.ui.catalog.docs.ComponentGuideBlock.Table>().size,
+        )
+        assertTrue(radioGroupDoc.usageCode.contains("RadioGroupItem(value, label = label)"))
+        assertTrue(radioGroupDoc.usageCode.contains("radioGroupState().onValueChange"))
     }
 
     @Test fun defaultStartsOnComfortableAndLabelClickSelects() {
@@ -137,6 +159,7 @@ class RadioGroupExamplesTest {
         rule.onNodeWithText("Yearly and lifetime plans offer significant savings.").assertIsDisplayed()
         listOf("Monthly ($9.99/month)", "Yearly ($99.99/year)", "Lifetime ($299.99)").forEach {
             rule.onNodeWithText(it).assertIsDisplayed()
+            assertNormalLabel(it)
         }
         rule.onNodeWithText("Yearly ($99.99/year)").performClick()
         rule.waitForIdle()
@@ -145,6 +168,7 @@ class RadioGroupExamplesTest {
 
     @Test fun disabledItemCannotBeSelectedAndIsSkippedByArrows() {
         show("Disabled")
+        listOf("Disabled", "Option 2", "Option 3").forEach(::assertNormalLabel)
         rule.onNodeWithText("Disabled").performClick()
         rule.waitForIdle()
         // The first item stays disabled; Option 2 remains the only selection.
@@ -181,6 +205,7 @@ class RadioGroupExamplesTest {
         rule.onNodeWithText("Choose how you want to receive notifications.").assertIsDisplayed()
         listOf("Email only", "SMS only", "Both Email & SMS").forEach {
             rule.onNodeWithText(it).assertIsDisplayed()
+            assertNormalLabel(it)
         }
         assertEquals(3, radios().fetchSemanticsNodes().size)
         radios()[0].assertIsSelected()

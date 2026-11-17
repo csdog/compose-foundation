@@ -3,6 +3,8 @@
 package com.toutiaoyan.compose.ui.catalog.docs
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -21,6 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
 import com.toutiaoyan.compose.ui.catalog.catalogArabicFontFamily
@@ -150,7 +154,11 @@ private fun RadioGroupScope.DescribedRow(option: DescribedOption) {
 @Composable
 private fun RadioGroupDescriptionPreview() {
     var selected by remember { mutableStateOf("comfortable") }
-    RadioGroup(value = selected, onValueChange = { selected = it }, modifier = Modifier.testTag("radio-description")) {
+    RadioGroup(
+        value = selected,
+        onValueChange = { selected = it },
+        modifier = Modifier.width(IntrinsicSize.Max).testTag("radio-description"),
+    ) {
         describedOptions.forEach { option ->
             DescribedRow(option)
         }
@@ -215,6 +223,7 @@ private fun SubscriptionPlanRows() {
                     RadioGroupItem(value, label = label)
                     FieldLabel(
                         label,
+                        textStyle = TextStyle(fontWeight = FontWeight.Normal),
                         modifier = Modifier.focusProperties { canFocus = false }.clickable { select(value) },
                     )
                 }
@@ -231,16 +240,21 @@ private fun RadioGroupFieldsetPreview() {
 @Composable
 private fun RadioGroupDisabledPreview() {
     var selected by remember { mutableStateOf("option2") }
-    RadioGroup(value = selected, onValueChange = { selected = it }, modifier = Modifier.testTag("radio-disabled")) {
+    RadioGroup(
+        value = selected,
+        onValueChange = { selected = it },
+        modifier = Modifier.width(IntrinsicSize.Max).testTag("radio-disabled"),
+    ) {
         val select = radioGroupState().onValueChange
         Field(orientation = FieldOrientation.Horizontal, disabled = true) {
             RadioGroupItem("option1", disabled = true, label = "Disabled")
-            FieldLabel("Disabled")
+            FieldLabel("Disabled", textStyle = TextStyle(fontWeight = FontWeight.Normal))
         }
         Field(orientation = FieldOrientation.Horizontal) {
             RadioGroupItem("option2", label = "Option 2")
             FieldLabel(
                 "Option 2",
+                textStyle = TextStyle(fontWeight = FontWeight.Normal),
                 modifier = Modifier.focusProperties { canFocus = false }.clickable { select("option2") },
             )
         }
@@ -248,6 +262,7 @@ private fun RadioGroupDisabledPreview() {
             RadioGroupItem("option3", label = "Option 3")
             FieldLabel(
                 "Option 3",
+                textStyle = TextStyle(fontWeight = FontWeight.Normal),
                 modifier = Modifier.focusProperties { canFocus = false }.clickable { select("option3") },
             )
         }
@@ -274,6 +289,7 @@ private fun RadioGroupInvalidPreview() {
                     RadioGroupItem(value, invalid = true, label = label)
                     FieldLabel(
                         label,
+                        textStyle = TextStyle(fontWeight = FontWeight.Normal),
                         modifier = Modifier.focusProperties { canFocus = false }.clickable { select(value) },
                     )
                 }
@@ -307,24 +323,33 @@ private fun RadioGroupRtlPreview() {
                 minTouchTarget = inherited.minTouchTarget,
                 fontFamily = fontFamily,
             ) {
-                val copy = radioRtlCopy[language]
-                val options =
-                    listOf(
-                        DescribedOption("default", copy.defaultValue, copy.defaultDescription),
-                        DescribedOption("comfortable", copy.comfortable, copy.comfortableDescription),
-                        DescribedOption("compact", copy.compact, copy.compactDescription),
-                    )
-                var selected by remember(language) { mutableStateOf("comfortable") }
-                Box(Modifier.testTag("radio-rtl").widthIn(max = 448.dp).fillMaxWidth()) {
-                    RadioGroup(
-                        value = selected,
-                        onValueChange = { selected = it },
-                        modifier = Modifier.testTag("radio-rtl-group"),
-                    ) {
-                        options.forEach { option ->
-                            DescribedRow(option)
-                        }
-                    }
+                RadioGroupRtlContent(language)
+            }
+        }
+    }
+}
+
+@Composable
+private fun RadioGroupRtlContent(language: Int = 0) {
+    CompositionLocalProvider(
+        LocalLayoutDirection provides if (language == 1) LayoutDirection.Ltr else LayoutDirection.Rtl,
+    ) {
+        val copy = radioRtlCopy[language]
+        val options =
+            listOf(
+                DescribedOption("default", copy.defaultValue, copy.defaultDescription),
+                DescribedOption("comfortable", copy.comfortable, copy.comfortableDescription),
+                DescribedOption("compact", copy.compact, copy.compactDescription),
+            )
+        var selected by remember(language) { mutableStateOf("comfortable") }
+        Box(Modifier.testTag("radio-rtl")) {
+            RadioGroup(
+                value = selected,
+                onValueChange = { selected = it },
+                modifier = Modifier.width(IntrinsicSize.Max).testTag("radio-rtl-group"),
+            ) {
+                options.forEach { option ->
+                    DescribedRow(option)
                 }
             }
         }
@@ -361,6 +386,55 @@ private fun RadioGroupRequiredPreview() {
     }
 }
 
+private val radioGroupKotlinApi =
+    listOf(
+        ComponentApiSection(
+            "RadioGroup",
+            "Groups the items with single-selection semantics. Pass `value` + `onValueChange` for a " +
+                "controlled group, or `defaultValue` for an uncontrolled one. See the " +
+                "[Base UI Radio Group](https://base-ui.com/react/components/radio-group#api-reference) " +
+                "documentation for the original props.",
+            properties =
+                listOf(
+                    ApiProperty("value", "String?", "null"),
+                    ApiProperty("onValueChange", "((String) -> Unit)?", "null"),
+                    ApiProperty("defaultValue", "String", "\"\""),
+                    ApiProperty("orientation", "RadioGroupOrientation", "Vertical"),
+                    ApiProperty("disabled", "Boolean", "false"),
+                    ApiProperty("required", "Boolean", "false"),
+                    ApiProperty("contentDescription", "String?", "null"),
+                    ApiProperty("modifier", "Modifier", "Modifier"),
+                    ApiProperty("style", "Style", "Style"),
+                ),
+        ),
+        ComponentApiSection(
+            "RadioGroupItem",
+            "One circle bound to the parent group's value. Arrow keys move and select, wrapping at " +
+                "the ends and skipping disabled items; Home/End jump to the ends and the group is a " +
+                "single Tab stop.",
+            properties =
+                listOf(
+                    ApiProperty("value", "String", "required"),
+                    ApiProperty("enabled", "Boolean", "true"),
+                    ApiProperty("disabled", "Boolean", "false"),
+                    ApiProperty("invalid", "Boolean", "false"),
+                    ApiProperty("animation", "ButtonAnimation", "None (Nova), Scale (other presets)"),
+                    ApiProperty("label", "String", "\"\""),
+                    ApiProperty("modifier", "Modifier", "Modifier"),
+                    ApiProperty("style", "Style", "Style"),
+                ),
+        ),
+        ComponentApiSection(
+            "RadioGroupItem (with text)",
+            "Convenience row that draws the circle, a label and an optional description.",
+            properties =
+                listOf(
+                    ApiProperty("text", "String", "required"),
+                    ApiProperty("description", "String?", "null"),
+                ),
+        ),
+    )
+
 val radioGroupDoc =
     ComponentDoc(
         id = "radio-group",
@@ -369,7 +443,11 @@ val radioGroupDoc =
             "A set of checkable buttons—known as radio buttons—where no more than one of the buttons " +
                 "can be checked at a time.",
         usageImportsCode =
-            "import androidx.compose.foundation.layout.*\n" +
+            "import androidx.compose.foundation.clickable\n" +
+                "import androidx.compose.foundation.layout.*\n" +
+                "import androidx.compose.runtime.*\n" +
+                "import androidx.compose.ui.Alignment\n" +
+                "import androidx.compose.ui.focus.focusProperties\n" +
                 "import androidx.compose.ui.Modifier\n" +
                 "import androidx.compose.ui.unit.dp\n" +
                 "import com.toutiaoyan.compose.ui.components.label.Label\n" +
@@ -379,14 +457,14 @@ val radioGroupDoc =
             val options = listOf("option-one" to "Option One", "option-two" to "Option Two")
             var choice by remember { mutableStateOf("option-one") }
             RadioGroup(value = choice, onValueChange = { choice = it }) {
+                val select = radioGroupState().onValueChange
                 options.forEach { (value, label) ->
                     Row(
-                        Modifier.clickable { choice = value },
                         horizontalArrangement = Arrangement.spacedBy(12.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        RadioGroupItem(value)
-                        Label(label)
+                        RadioGroupItem(value, label = label)
+                        Label(label, Modifier.focusProperties { canFocus = false }.clickable { select(value) })
                     }
                 }
             }
@@ -399,50 +477,35 @@ val radioGroupDoc =
             └── RadioGroupItem
             """.trimIndent(),
         examplesHeading = null,
-        apiSections =
+        beforeExampleSections =
+            mapOf(
+                "Kotlin extension: Horizontal orientation" to
+                    listOf(
+                        ComponentGuideSection(
+                            "API Reference",
+                            listOf(
+                                ComponentGuideBlock.Paragraph(
+                                    "See the [Base UI Radio Group]" +
+                                        "(https://base-ui.com/react/components/radio-group#api-reference) " +
+                                        "documentation.",
+                                ),
+                            ),
+                        ),
+                    ),
+            ),
+        afterExamples =
             listOf(
-                ComponentApiSection(
-                    "RadioGroup",
-                    "Groups the items with single-selection semantics. Pass `value` + `onValueChange` for a " +
-                        "controlled group, or `defaultValue` for an uncontrolled one. See the " +
-                        "[Base UI Radio Group](https://base-ui.com/react/components/radio-group#api-reference) " +
-                        "documentation for the original props.",
-                    properties =
+                ComponentGuideSection(
+                    "Kotlin extension: API",
+                    radioGroupKotlinApi.flatMap { section ->
                         listOf(
-                            ApiProperty("value", "String?", "null"),
-                            ApiProperty("onValueChange", "((String) -> Unit)?", "null"),
-                            ApiProperty("defaultValue", "String", "\"\""),
-                            ApiProperty("orientation", "RadioGroupOrientation", "Vertical"),
-                            ApiProperty("disabled", "Boolean", "false"),
-                            ApiProperty("required", "Boolean", "false"),
-                            ApiProperty("contentDescription", "String?", "null"),
-                            ApiProperty("style", "Style", "Style"),
-                        ),
-                ),
-                ComponentApiSection(
-                    "RadioGroupItem",
-                    "One circle bound to the parent group's value. Arrow keys move and select, wrapping at " +
-                        "the ends and skipping disabled items; Home/End jump to the ends and the group is a " +
-                        "single Tab stop.",
-                    properties =
-                        listOf(
-                            ApiProperty("value", "String", "required"),
-                            ApiProperty("enabled", "Boolean", "true"),
-                            ApiProperty("disabled", "Boolean", "false"),
-                            ApiProperty("invalid", "Boolean", "false"),
-                            ApiProperty("animation", "ButtonAnimation", "Scale"),
-                            ApiProperty("label", "String", "\"\""),
-                            ApiProperty("style", "Style", "Style"),
-                        ),
-                ),
-                ComponentApiSection(
-                    "RadioGroupItem (with text)",
-                    "Convenience row that draws the circle, a label and an optional description.",
-                    properties =
-                        listOf(
-                            ApiProperty("text", "String", "required"),
-                            ApiProperty("description", "String?", "null"),
-                        ),
+                            ComponentGuideBlock.Paragraph("**" + section.title + "** " + section.descriptionMarkdown),
+                            ComponentGuideBlock.Table(
+                                headers = listOf("Property", "Type", "Default"),
+                                rows = section.properties.map { listOf(it.name, it.type, it.defaultValue) },
+                            ),
+                        )
+                    },
                 ),
             ),
         examples =
@@ -450,141 +513,40 @@ val radioGroupDoc =
                 ComponentExample(
                     title = "Default",
                     showHeading = false,
-                    code =
-                        """
-                        var selected by remember { mutableStateOf("comfortable") }
-                        RadioGroup(value = selected, onValueChange = { selected = it }) {
-                            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                                RadioGroupItem("default")
-                                Label("Default")
-                            }
-                            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                                RadioGroupItem("comfortable")
-                                Label("Comfortable")
-                            }
-                            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                                RadioGroupItem("compact")
-                                Label("Compact")
-                            }
-                        }
-                        """.trimIndent(),
+                    code = radioGroupDefaultRecipeCode,
                     preview = { RadioGroupDemoPreview() },
                 ),
                 ComponentExample(
                     title = "Description",
                     descriptionMarkdown = "Radio group items with a description using the `Field` component.",
-                    code =
-                        """
-                        var selected by remember { mutableStateOf("comfortable") }
-                        RadioGroup(value = selected, onValueChange = { selected = it }) {
-                            Field(orientation = FieldOrientation.Horizontal) {
-                                RadioGroupItem("default")
-                                FieldContent {
-                                    FieldLabel("Default")
-                                    FieldDescription("Standard spacing for most use cases.")
-                                }
-                            }
-                            Field(orientation = FieldOrientation.Horizontal) {
-                                RadioGroupItem("comfortable")
-                                FieldContent {
-                                    FieldLabel("Comfortable")
-                                    FieldDescription("More space between elements.")
-                                }
-                            }
-                            Field(orientation = FieldOrientation.Horizontal) {
-                                RadioGroupItem("compact", label = "Compact")
-                                FieldContent {
-                                    FieldLabel("Compact")
-                                    FieldDescription("Minimal spacing for dense layouts.")
-                                }
-                            }
-                        }
-                        """.trimIndent(),
+                    code = radioGroupDescriptionRecipeCode,
                     preview = { RadioGroupDescriptionPreview() },
                 ),
                 ComponentExample(
                     title = "Choice Card",
                     descriptionMarkdown =
                         "Use `FieldLabel` to wrap the entire `Field` for a clickable card-style selection.",
-                    code =
-                        """
-                        var selected by remember { mutableStateOf("plus") }
-                        RadioGroup(value = selected, onValueChange = { selected = it }) {
-                            FieldLabel(onClick = { selected = "plus" }, selected = selected == "plus") {
-                                Field(orientation = FieldOrientation.Horizontal) {
-                                    FieldContent {
-                                        FieldTitle("Plus")
-                                        FieldDescription("For individuals and small teams.")
-                                    }
-                                    RadioGroupItem("plus")
-                                }
-                            }
-                            // Pro and Enterprise use the same composition.
-                        }
-                        """.trimIndent(),
+                    code = radioGroupChoiceCardRecipeCode,
                     preview = { RadioGroupChoiceCardPreview() },
                 ),
                 ComponentExample(
                     title = "Fieldset",
                     descriptionMarkdown =
                         "Use `FieldSet` and `FieldLegend` to group radio items with a label and description.",
-                    code =
-                        """
-                        var selected by remember { mutableStateOf("monthly") }
-                        FieldSet(legend = "Subscription Plan", legendVariant = FieldLegendVariant.Label) {
-                            FieldDescription("Yearly and lifetime plans offer significant savings.")
-                            RadioGroup(value = selected, onValueChange = { selected = it }) {
-                                Field(orientation = FieldOrientation.Horizontal) {
-                                    RadioGroupItem("monthly")
-                                    FieldLabel("Monthly (\$9.99/month)")
-                                }
-                                // Yearly and Lifetime use the same row.
-                            }
-                        }
-                        """.trimIndent(),
+                    code = radioGroupFieldsetRecipeCode,
                     preview = { RadioGroupFieldsetPreview() },
                 ),
                 ComponentExample(
                     title = "Disabled",
                     descriptionMarkdown = "Use the `disabled` prop on `RadioGroup` to disable all items.",
-                    code =
-                        """
-                        var selected by remember { mutableStateOf("option2") }
-                        RadioGroup(value = selected, onValueChange = { selected = it }) {
-                            Field(orientation = FieldOrientation.Horizontal, disabled = true) {
-                                RadioGroupItem("option1", disabled = true)
-                                FieldLabel("Disabled")
-                            }
-                            Field(orientation = FieldOrientation.Horizontal) {
-                                RadioGroupItem("option2")
-                                FieldLabel("Option 2")
-                            }
-                            Field(orientation = FieldOrientation.Horizontal) {
-                                RadioGroupItem("option3", label = "Option 3")
-                                FieldLabel("Option 3")
-                            }
-                        }
-                        """.trimIndent(),
+                    code = radioGroupDisabledRecipeCode,
                     preview = { RadioGroupDisabledPreview() },
                 ),
                 ComponentExample(
                     title = "Invalid",
                     descriptionMarkdown =
                         "Use `invalid` on `RadioGroupItem` and `Field` to show validation errors.",
-                    code =
-                        """
-                        var selected by remember { mutableStateOf("email") }
-                        FieldSet(legend = "Notification Preferences", legendVariant = FieldLegendVariant.Label) {
-                            FieldDescription("Choose how you want to receive notifications.")
-                            RadioGroup(value = selected, onValueChange = { selected = it }) {
-                                Field(orientation = FieldOrientation.Horizontal, invalid = true) {
-                                    RadioGroupItem("email", invalid = true)
-                                    FieldLabel("Email only")
-                                }
-                                // SMS only and Both Email & SMS use the same invalid row.
-                            }
-                        }
-                        """.trimIndent(),
+                    code = radioGroupInvalidRecipeCode,
                     preview = { RadioGroupInvalidPreview() },
                 ),
                 ComponentExample(
@@ -593,31 +555,7 @@ val radioGroupDoc =
                     descriptionMarkdown =
                         "To enable RTL support in shadcn/ui, see the " +
                             "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
-                    code =
-                        """
-                        var selected by remember { mutableStateOf("comfortable") }
-                        val options = listOf(
-                            Triple("default", "افتراضي", "تباعد قياسي لمعظم حالات الاستخدام."),
-                            Triple("comfortable", "مريح", "مساحة أكبر بين العناصر."),
-                            Triple("compact", "مضغوط", "تباعد أدنى للتخطيطات الكثيفة."),
-                        )
-                        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-                            RadioGroup(value = selected, onValueChange = { selected = it }) {
-                                val select = radioGroupState().onValueChange
-                                options.forEach { (value, label, description) ->
-                                    Field(orientation = FieldOrientation.Horizontal) {
-                                        RadioGroupItem(value, label = label)
-                                        FieldContent {
-                                            FieldLabel(label, modifier = Modifier
-                                                .focusProperties { canFocus = false }
-                                                .clickable { select(value) })
-                                            FieldDescription(description)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        """.trimIndent(),
+                    code = radioGroupRTLRecipeCode,
                     preview = { RadioGroupRtlPreview() },
                 ),
                 ComponentExample(
@@ -625,15 +563,7 @@ val radioGroupDoc =
                     descriptionMarkdown =
                         "`orientation = RadioGroupOrientation.Horizontal` lays the group out in a row " +
                             "(the official page only shows the vertical grid).",
-                    code =
-                        """
-                        var selected by remember { mutableStateOf("a") }
-                        RadioGroup(value = selected, onValueChange = { selected = it },
-                            orientation = RadioGroupOrientation.Horizontal) {
-                            RadioGroupItem("a"); Label("Option A")
-                            RadioGroupItem("b"); Label("Option B")
-                        }
-                        """.trimIndent(),
+                    code = radioGroupHorizontalRecipeCode,
                     preview = { RadioGroupHorizontalPreview() },
                 ),
                 ComponentExample(
@@ -641,14 +571,7 @@ val radioGroupDoc =
                     descriptionMarkdown =
                         "`required = true` exposes the required state to the field set while keeping the " +
                             "same single-selection behavior.",
-                    code =
-                        """
-                        var selected by remember { mutableStateOf("a") }
-                        RadioGroup(value = selected, onValueChange = { selected = it }, required = true) {
-                            RadioGroupItem("a"); Label("Option A")
-                            RadioGroupItem("b"); Label("Option B")
-                        }
-                        """.trimIndent(),
+                    code = radioGroupRequiredRecipeCode,
                     preview = { RadioGroupRequiredPreview() },
                 ),
             ),

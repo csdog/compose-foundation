@@ -7,6 +7,7 @@ import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.selected
 import androidx.compose.runtime.Composable
 import com.toutiaoyan.compose.ui.tokens.StylePreset
+import com.toutiaoyan.compose.ui.components.field.LocalFieldLabelChoice
 import androidx.compose.ui.graphics.Color
 import com.toutiaoyan.compose.ui.utils.rememberTheme
 import com.toutiaoyan.compose.ui.styles.border
@@ -32,7 +33,12 @@ fun rememberRadioButtonStyle(): Style =
                 background(colors.primary)
                 borderColor(colors.primary)
             }
-            focusRing(RoundedCornerShape(radius.full))
+            val controlShape = RoundedCornerShape(radius.full)
+            if (theme.activePreset == StylePreset.Nova && LocalFieldLabelChoice.currentValue) {
+                shape(controlShape)
+            } else {
+                focusRing(controlShape)
+            }
             disabledDim()
         }
     }

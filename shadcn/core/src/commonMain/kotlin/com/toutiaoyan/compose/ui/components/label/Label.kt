@@ -60,6 +60,7 @@ internal fun LabelImpl(
     disabled: Boolean,
     style: Style,
     fieldLabel: Boolean = false,
+    textStyle: TextStyle = TextStyle.Default,
 ) {
     val theme = currentTheme
     val nova = theme.activePreset == StylePreset.Nova
@@ -78,19 +79,20 @@ internal fun LabelImpl(
         } else {
             TextStyle.Default
         }
-    val textModifier = if (nova) Modifier.labelLineBox(typography.lineHeight) else Modifier
+    val resolvedTypography = typography.merge(textStyle)
+    val textModifier = if (nova) Modifier.labelLineBox(resolvedTypography.lineHeight) else Modifier
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Row(modifier = modifier.alpha(if (nova && disabled) 0.5f else 1f).styleable(styleState, style)) {
         Text(
             modifier = textModifier,
             variant = TextVariant.LabelLarge,
-            textStyle = if (!nova && disabled) TextColors.Muted else typography,
+            textStyle = if (!nova && disabled) TextColors.Muted.merge(resolvedTypography) else resolvedTypography,
         ) { text }
         if (required) {
             Text(
                 modifier = textModifier,
                 variant = TextVariant.LabelLarge,
-                textStyle = typography.copy(color = currentTheme.colors.destructive),
+                textStyle = resolvedTypography.copy(color = currentTheme.colors.destructive),
             ) { " *" }
         }
     }
