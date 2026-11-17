@@ -143,6 +143,30 @@ class InputOTPExamplesTest(private val width: Int, private val dark: Boolean) {
         assertEquals(28.sp, layouts.single().layoutInput.style.lineHeight)
     }
 
+    @Test fun formShowsAllSixDigitsWhenTheCardNarrows() {
+        var availableWidth by mutableIntStateOf(560)
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = catalogFontFamily()) {
+                Box(Modifier.requiredSize(availableWidth.dp, 620.dp)) {
+                    inputOTPDoc.examples.single { it.title == "Form" }.preview()
+                }
+            }
+        }
+        rule.onNodeWithText("Verification code").performClick()
+        rule.onNode(hasSetTextAction()).assertIsFocused().performTextInput("123456")
+        for (width in listOf(255, 325, 560)) {
+            rule.runOnIdle { availableWidth = width }
+            val field = rule.onNode(hasSetTextAction()).fetchSemanticsNode().boundsInRoot
+            val digits = (1..6).map { rule.onNodeWithText(it.toString()).fetchSemanticsNode().boundsInRoot }
+            assertEquals(48f, field.height, absoluteTolerance = 1f)
+            if (width >= 325) {
+                assertEquals(304f, field.width, absoluteTolerance = 1f)
+            }
+            assertTrue(digits.all { it.width > 0 && it.left >= field.left && it.right <= field.right })
+            assertTrue(digits.zipWithNext().all { (a, b) -> a.right <= b.left })
+        }
+    }
+
     @Test fun controlledPreviewReflectsTypedDigits() {
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = catalogFontFamily()) {

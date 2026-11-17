@@ -2,13 +2,17 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.contentPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.TextStyle
@@ -20,10 +24,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import com.composables.icons.lucide.Lucide
+import com.composables.icons.lucide.RefreshCw
 import com.toutiaoyan.compose.ui.components.button.Button
 import com.toutiaoyan.compose.ui.components.button.ButtonSize
 import com.toutiaoyan.compose.ui.components.button.ButtonVariant
@@ -34,6 +44,7 @@ import com.toutiaoyan.compose.ui.components.card.CardHeader
 import com.toutiaoyan.compose.ui.components.field.Field
 import com.toutiaoyan.compose.ui.components.field.FieldDescription
 import com.toutiaoyan.compose.ui.components.field.FieldLabel
+import com.toutiaoyan.compose.ui.components.icon.Icon
 import com.toutiaoyan.compose.ui.components.inputotp.InputOTP
 import com.toutiaoyan.compose.ui.components.inputotp.InputOTPGroup
 import com.toutiaoyan.compose.ui.components.inputotp.InputOTPSeparator
@@ -406,59 +417,88 @@ val inputOTPDoc =
                 ),
                 ComponentExample(
                     title = "Form",
+                    previewPadding = 0.dp,
                     code =
                         """
                         var code by remember { mutableStateOf("") }
-                        Card(Modifier.widthIn(max = 448.dp)) {
-                            CardHeader(
-                                title = "Verify your login",
-                                description = "Enter the verification code we sent to your email address: m@example.com.",
-                            )
-                            CardContent {
-                                Field {
-                                    Row(
-                                        Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.SpaceBetween,
-                                        verticalAlignment = Alignment.CenterVertically,
-                                    ) {
-                                        FieldLabel("Verification code")
-                                        Button("Resend Code", onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Xs)
-                                    }
-                                    InputOTP(value = code, onValueChange = { code = it }, length = 6) {
-                                        InputOTPGroup(Modifier.height(48.dp)) {
-                                            repeat(3) { index ->
-                                                InputOTPSlot(
-                                                    index,
-                                                    textStyle = TextStyle(fontSize = 20.sp, lineHeight = 28.sp),
-                                                    modifier = Modifier.size(if (index == 0) 44.dp else 45.dp, 48.dp),
-                                                )
-                                            }
-                                        }
-                                        InputOTPSeparator(Modifier.padding(horizontal = 8.dp))
-                                        InputOTPGroup(Modifier.height(48.dp)) {
-                                            repeat(3) { index ->
-                                                InputOTPSlot(
-                                                    index + 3,
-                                                    textStyle = TextStyle(fontSize = 20.sp, lineHeight = 28.sp),
-                                                    modifier = Modifier.size(if (index == 0) 44.dp else 45.dp, 48.dp),
-                                                )
-                                            }
-                                        }
-                                    }
-                                    FieldDescription("I no longer have access to this email address.")
+                        val focus = remember { FocusRequester() }
+                        BoxWithConstraints(Modifier.widthIn(max = 336.dp)) {
+                            val density = LocalDensity.current
+                            val insetPixels =
+                                with(density) {
+                                    ((constraints.maxWidth - 304.dp.roundToPx()) / 2)
+                                        .coerceIn(8.dp.roundToPx(), 16.dp.roundToPx())
                                 }
-                            }
-                            CardFooter {
-                                Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                    Button("Verify", onClick = {}, modifier = Modifier.fillMaxWidth())
-                                    Text(textStyle = TextColors.Muted) {
-                                        "Having trouble signing in? Contact support"
+                            val inset = with(density) { insetPixels.toDp() }
+                            val slotWidth =
+                                with(density) {
+                                    val available = constraints.maxWidth - 2 * insetPixels - 40.dp.roundToPx()
+                                    (available / 6).coerceIn(0, 44.dp.roundToPx()).toDp()
+                                }
+                            val sectionStyle = Style { contentPadding(horizontal = inset, vertical = 0.dp) }
+
+                            Card {
+                                CardHeader(
+                                    title = "Verify your login",
+                                    description = "Enter the verification code we sent to your email address: m@example.com.",
+                                    style = sectionStyle,
+                                )
+                                CardContent(style = sectionStyle) {
+                                    Field {
+                                        Row(
+                                            Modifier.fillMaxWidth(),
+                                            horizontalArrangement = Arrangement.SpaceBetween,
+                                            verticalAlignment = Alignment.CenterVertically,
+                                        ) {
+                                            FieldLabel(
+                                                "Verification code",
+                                                Modifier.focusProperties { canFocus = false }.clickable { focus.requestFocus() },
+                                            )
+                                            Button(
+                                                onClick = {},
+                                                label = "Resend Code",
+                                                variant = ButtonVariant.Outline,
+                                                size = ButtonSize.Xs,
+                                            ) {
+                                                Icon(Lucide.RefreshCw, Modifier.size(12.dp))
+                                                Text { "Resend Code" }
+                                            }
+                                        }
+                                        InputOTP(
+                                            value = code,
+                                            onValueChange = { code = it },
+                                            length = 6,
+                                            modifier = Modifier.focusRequester(focus),
+                                            contentDescription = "Verification code",
+                                        ) {
+                                            repeat(2) { group ->
+                                                if (group == 1) InputOTPSeparator(Modifier.padding(horizontal = 4.dp))
+                                                InputOTPGroup(Modifier.height(48.dp)) {
+                                                    repeat(3) { slot ->
+                                                        InputOTPSlot(
+                                                            group * 3 + slot,
+                                                            textStyle = TextStyle(fontSize = 20.sp, lineHeight = 28.sp),
+                                                            modifier = Modifier.size(slotWidth + if (slot == 0) 0.dp else 1.dp, 48.dp),
+                                                        )
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        FieldDescription("I no longer have access to this email address.")
+                                    }
+                                }
+                                CardFooter(style = Style { contentPadding(horizontal = inset, vertical = 16.dp) }) {
+                                    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                                        Button("Verify", onClick = {}, modifier = Modifier.fillMaxWidth())
+                                        Text(textStyle = TextColors.Muted) {
+                                            "Having trouble signing in? Contact support"
+                                        }
                                     }
                                 }
                             }
                         }
                         """.trimIndent(),
-                    preview = { InputOTPFormPreview() },
+                    preview = { InputOTPFormPreview(Modifier.padding(vertical = 40.dp)) },
                 ),
                 ComponentExample(
                     title = "RTL",
@@ -540,53 +580,81 @@ val inputOTPDoc =
     )
 
 @Composable
-private fun InputOTPFormPreview() {
+private fun InputOTPFormPreview(modifier: Modifier = Modifier) {
     var code by remember { mutableStateOf("") }
-    Card(Modifier.widthIn(max = 448.dp)) {
-        CardHeader(
-            title = "Verify your login",
-            description = "Enter the verification code we sent to your email address: m@example.com.",
-        )
-        CardContent {
-            Field {
-                Row(
-                    Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    FieldLabel("Verification code")
-                    Button("Resend Code", onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Xs)
-                }
-                InputOTP(value = code, onValueChange = { code = it }, length = 6) {
-                    InputOTPGroup(Modifier.height(48.dp)) {
-                        repeat(3) { index ->
-                            InputOTPSlot(
-                                index + 0,
-                                textStyle = TextStyle(fontSize = 20.sp, lineHeight = 28.sp),
-                                // Connected slots overlap their shared border by one pixel.
-                                modifier = Modifier.size(if (index == 0) 44.dp else 45.dp, 48.dp),
-                            )
-                        }
-                    }
-                    InputOTPSeparator(Modifier.padding(horizontal = 8.dp))
-                    InputOTPGroup(Modifier.height(48.dp)) {
-                        repeat(3) { index ->
-                            InputOTPSlot(
-                                index + 3,
-                                textStyle = TextStyle(fontSize = 20.sp, lineHeight = 28.sp),
-                                // Connected slots overlap their shared border by one pixel.
-                                modifier = Modifier.size(if (index == 0) 44.dp else 45.dp, 48.dp),
-                            )
-                        }
-                    }
-                }
-                FieldDescription("I no longer have access to this email address.")
+    val focus = remember { FocusRequester() }
+    BoxWithConstraints(modifier.widthIn(max = 336.dp)) {
+        val density = LocalDensity.current
+        val insetPixels =
+            with(density) {
+                ((constraints.maxWidth - 304.dp.roundToPx()) / 2)
+                    .coerceIn(8.dp.roundToPx(), 16.dp.roundToPx())
             }
-        }
-        CardFooter {
-            Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Button("Verify", onClick = {}, modifier = Modifier.fillMaxWidth())
-                Text(textStyle = TextColors.Muted) { "Having trouble signing in? Contact support" }
+        val inset = with(density) { insetPixels.toDp() }
+        val slotWidth =
+            with(density) {
+                val available = constraints.maxWidth - 2 * insetPixels - 40.dp.roundToPx()
+                (available / 6).coerceIn(0, 44.dp.roundToPx()).toDp()
+            }
+        val sectionStyle = Style { contentPadding(horizontal = inset, vertical = 0.dp) }
+
+        Card {
+            CardHeader(
+                title = "Verify your login",
+                description = "Enter the verification code we sent to your email address: m@example.com.",
+                style = sectionStyle,
+            )
+            CardContent(style = sectionStyle) {
+                Field {
+                    Row(
+                        Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        FieldLabel(
+                            "Verification code",
+                            Modifier.focusProperties { canFocus = false }.clickable { focus.requestFocus() },
+                        )
+                        Button(
+                            onClick = {},
+                            label = "Resend Code",
+                            variant = ButtonVariant.Outline,
+                            size = ButtonSize.Xs,
+                        ) {
+                            Icon(Lucide.RefreshCw, Modifier.size(12.dp))
+                            Text { "Resend Code" }
+                        }
+                    }
+                    InputOTP(
+                        value = code,
+                        onValueChange = { code = it },
+                        length = 6,
+                        modifier = Modifier.focusRequester(focus),
+                        contentDescription = "Verification code",
+                    ) {
+                        repeat(2) { group ->
+                            if (group == 1) InputOTPSeparator(Modifier.padding(horizontal = 4.dp))
+                            InputOTPGroup(Modifier.height(48.dp)) {
+                                repeat(3) { slot ->
+                                    InputOTPSlot(
+                                        group * 3 + slot,
+                                        textStyle = TextStyle(fontSize = 20.sp, lineHeight = 28.sp),
+                                        modifier = Modifier.size(slotWidth + if (slot == 0) 0.dp else 1.dp, 48.dp),
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    FieldDescription("I no longer have access to this email address.")
+                }
+            }
+            CardFooter(style = Style { contentPadding(horizontal = inset, vertical = 16.dp) }) {
+                Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Button("Verify", onClick = {}, modifier = Modifier.fillMaxWidth())
+                    Text(textStyle = TextColors.Muted) {
+                        "Having trouble signing in? Contact support"
+                    }
+                }
             }
         }
     }
