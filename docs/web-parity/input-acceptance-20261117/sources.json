@@ -1,0 +1,113 @@
+{
+  "revision": "968d8cb9dc42ae5d52e8fd356cf84596ec832a26",
+  "files": [
+    {
+      "path": ".agent-runs/input/goal-20261117/official/input.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/content/docs/components/base/input.mdx",
+      "sha256": "39c7395ca281c3fc7029159b65b9a08747dc8fca92495ae935a49d5a11cc1225",
+      "previous": "39c7395ca281c3fc7029159b65b9a08747dc8fca92495ae935a49d5a11cc1225"
+    },
+    {
+      "path": ".agent-runs/input/goal-20261117/official/input.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/registry/bases/base/ui/input.tsx",
+      "sha256": "00213ec177e4556e69b6680128c18023d859a8e4eaf4106fbcf6abdc4f2c419b",
+      "previous": "00213ec177e4556e69b6680128c18023d859a8e4eaf4106fbcf6abdc4f2c419b"
+    },
+    {
+      "path": ".agent-runs/input/goal-20261117/official/style-nova.css",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e",
+      "previous": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+    },
+    {
+      "path": ".agent-runs/input/goal-20261117/official/examples/base/input-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-demo.tsx",
+      "sha256": "b5aa22ce583b4cb4f78dda93f907fa9ad7823dd8db3edbc80769cf8581d0913f",
+      "previous": "b5aa22ce583b4cb4f78dda93f907fa9ad7823dd8db3edbc80769cf8581d0913f"
+    },
+    {
+      "path": ".agent-runs/input/goal-20261117/official/examples/base/input-basic.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-basic.tsx",
+      "sha256": "6a77ec6e5b8a6f21a7fdaa5f0e341422dc6d2bda493a0345d542c922ba71451f",
+      "previous": "6a77ec6e5b8a6f21a7fdaa5f0e341422dc6d2bda493a0345d542c922ba71451f"
+    },
+    {
+      "path": ".agent-runs/input/goal-20261117/official/examples/base/input-field.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-field.tsx",
+      "sha256": "0fdfae08d6640c432cdbb9dc6317e7362f4370b6a1ec3ba3fa9bfdc0e4485673",
+      "previous": "0fdfae08d6640c432cdbb9dc6317e7362f4370b6a1ec3ba3fa9bfdc0e4485673"
+    },
+    {
+      "path": ".agent-runs/input/goal-20261117/official/examples/base/input-fieldgroup.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-fieldgroup.tsx",
+      "sha256": "954a4c79f88150be38f205358eae4765d5dd87f76137468fc13662589b46a2ed",
+      "previous": "954a4c79f88150be38f205358eae4765d5dd87f76137468fc13662589b46a2ed"
+    },
+    {
+      "path": ".agent-runs/input/goal-20261117/official/examples/base/input-disabled.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-disabled.tsx",
+      "sha256": "b9f19e42b5057ee571d33bc9e129e89795f958781a158dbc6f6ca512b1974379",
+      "previous": "b9f19e42b5057ee571d33bc9e129e89795f958781a158dbc6f6ca512b1974379"
+    },
+    {
+      "path": ".agent-runs/input/goal-20261117/official/examples/base/input-invalid.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-invalid.tsx",
+      "sha256": "b94045af4b7dd838e3cec7f95f959f9971b1eeafae01ddd822d4d5c0b5335ee3",
+      "previous": "b94045af4b7dd838e3cec7f95f959f9971b1eeafae01ddd822d4d5c0b5335ee3"
+    },
+    {
+      "path": ".agent-runs/input/goal-20261117/official/examples/base/input-file.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-file.tsx",
+      "sha256": "89bb4ee1f39b27ec4419822ed6c3bf7dbc6e283d711553d90cf204a5d2b850fa",
+      "previous": "89bb4ee1f39b27ec4419822ed6c3bf7dbc6e283d711553d90cf204a5d2b850fa"
+    },
+    {
+      "path": ".agent-runs/input/goal-20261117/official/examples/base/input-inline.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-inline.tsx",
+      "sha256": "0cd3ae2bc590e53a9dd1297ee115747a0287d6c61ded8bb8cbc9cf39fb836359",
+      "previous": "0cd3ae2bc590e53a9dd1297ee115747a0287d6c61ded8bb8cbc9cf39fb836359"
+    },
+    {
+      "path": ".agent-runs/input/goal-20261117/official/examples/base/input-grid.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-grid.tsx",
+      "sha256": "acff97ef04ee16139fb1be832c9bb8362e8117a68e2bdd539a0dad0cbdabff10",
+      "previous": "acff97ef04ee16139fb1be832c9bb8362e8117a68e2bdd539a0dad0cbdabff10"
+    },
+    {
+      "path": ".agent-runs/input/goal-20261117/official/examples/base/input-required.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-required.tsx",
+      "sha256": "cda60233dd5c1b376b4cff37b81a6c1e884ef589fd077b89f1afb0f8dd36c98a",
+      "previous": "cda60233dd5c1b376b4cff37b81a6c1e884ef589fd077b89f1afb0f8dd36c98a"
+    },
+    {
+      "path": ".agent-runs/input/goal-20261117/official/examples/base/input-badge.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-badge.tsx",
+      "sha256": "2629e2047165fbe07f568c548429b598250f1047d450f0dfe6f0e7eef29884b9",
+      "previous": "2629e2047165fbe07f568c548429b598250f1047d450f0dfe6f0e7eef29884b9"
+    },
+    {
+      "path": ".agent-runs/input/goal-20261117/official/examples/base/input-input-group.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-input-group.tsx",
+      "sha256": "f5f4a6ad38c79b48b77775e046c67bd26251a92d21d1badde73c799c554b816c",
+      "previous": "f5f4a6ad38c79b48b77775e046c67bd26251a92d21d1badde73c799c554b816c"
+    },
+    {
+      "path": ".agent-runs/input/goal-20261117/official/examples/base/input-button-group.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-button-group.tsx",
+      "sha256": "f842ecd17663a70fd5b33512f1aa001cfc26c8f3730e41a7385ef86819a5d21e",
+      "previous": "f842ecd17663a70fd5b33512f1aa001cfc26c8f3730e41a7385ef86819a5d21e"
+    },
+    {
+      "path": ".agent-runs/input/goal-20261117/official/examples/base/input-form.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-form.tsx",
+      "sha256": "12b07dbd02b5a2c8afc2cfce4a0357b2be0efc556232b1d4c617c50d802909a3",
+      "previous": "12b07dbd02b5a2c8afc2cfce4a0357b2be0efc556232b1d4c617c50d802909a3"
+    },
+    {
+      "path": ".agent-runs/input/goal-20261117/official/examples/base/input-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-rtl.tsx",
+      "sha256": "2ae25ce9ea069cbae5e9a6e0bb533a212df5f1fa92b7c3b43aadcbe6895be41c",
+      "previous": "2ae25ce9ea069cbae5e9a6e0bb533a212df5f1fa92b7c3b43aadcbe6895be41c"
+    }
+  ]
+}
