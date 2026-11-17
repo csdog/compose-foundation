@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.toPixelMap
 import com.toutiaoyan.compose.tailwind.core.TwColors
 import com.toutiaoyan.compose.ui.theme.currentTheme
+import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.platform.ClipEntry
 import androidx.compose.ui.platform.Clipboard
 import androidx.compose.ui.platform.LocalClipboard
@@ -130,6 +131,61 @@ class InputGroupExamplesTest(private val width: Int, private val dark: Boolean) 
         rule.onNodeWithContentDescription("Copy").performClick()
         rule.waitForIdle()
         assertEquals("https://x.com/shadcn", copied)
+    }
+
+    @Test fun dropdownButtonsOpenTheirOwnMenusAndCloseOnSelection() {
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
+                inputGroupDoc.examples.single { it.title == "Dropdown" }.preview()
+            }
+        }
+        val settings = rule.onNodeWithText("Settings")
+        val documentation = rule.onNodeWithText("Documentation")
+        rule.onNodeWithContentDescription("More").performClick()
+        settings.assertIsDisplayed()
+        documentation.assertDoesNotExist()
+        settings.performClick()
+        settings.assertDoesNotExist()
+
+        rule.onNodeWithText("Search In...").performClick()
+        documentation.assertIsDisplayed()
+        settings.assertDoesNotExist()
+        documentation.performClick()
+        documentation.assertDoesNotExist()
+    }
+
+    @Test fun dropdownArrowAndActivationKeysFocusTheExpectedRowAndRestoreTheTrigger() {
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
+                inputGroupDoc.examples.single { it.title == "Dropdown" }.preview()
+            }
+        }
+        val more = rule.onNodeWithContentDescription("More")
+        val search = rule.onNodeWithText("Search In...")
+        more.requestFocus().performKeyInput { pressKey(Key.Enter) }
+        rule.onNodeWithText("Settings").assertIsFocused().performKeyInput { pressKey(Key.Escape) }
+        rule.onNodeWithText("Settings").assertDoesNotExist()
+        more.assertIsFocused()
+
+        search.requestFocus().performKeyInput { pressKey(Key.DirectionUp) }
+        rule.onNodeWithText("Changelog").assertIsFocused().performKeyInput { pressKey(Key.Escape) }
+        rule.onNodeWithText("Changelog").assertDoesNotExist()
+        search.assertIsFocused().performKeyInput { pressKey(Key.Spacebar) }
+        rule.onNodeWithText("Documentation").assertIsFocused()
+    }
+
+    @Test fun informationButtonOpensTheSecurityPopover() {
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
+                inputGroupDoc.examples.single { it.title == "Button" }.preview()
+            }
+        }
+        rule.onNodeWithContentDescription("Info").performClick()
+        val title = rule.onNodeWithText("Your connection is not secure.").assertIsDisplayed().fetchSemanticsNode()
+        val detail =
+            rule.onNodeWithText("You should not enter any sensitive information on this site.")
+                .assertIsDisplayed().fetchSemanticsNode()
+        assertEquals(4f, detail.boundsInRoot.top - title.boundsInRoot.bottom, absoluteTolerance = 1f)
     }
 
     @Test fun secureUrlFieldStaysBeforeItsTrailingFavoriteButton() {

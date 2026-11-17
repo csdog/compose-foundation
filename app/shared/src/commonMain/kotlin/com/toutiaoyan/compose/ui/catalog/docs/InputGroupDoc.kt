@@ -7,7 +7,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.runtime.Composable
@@ -18,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
@@ -26,6 +29,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.composables.icons.lucide.Check
 import com.composables.icons.lucide.ChevronDown
 import com.composables.icons.lucide.Copy
@@ -66,6 +70,7 @@ import com.toutiaoyan.compose.ui.components.spinner.Spinner
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
 import com.toutiaoyan.compose.tailwind.core.TwColors
+import com.toutiaoyan.compose.tailwind.core.twRadius
 import com.toutiaoyan.compose.ui.catalog.catalogArabicFontFamily
 import com.toutiaoyan.compose.ui.catalog.catalogHebrewFontFamily
 import com.toutiaoyan.compose.ui.theme.Theme
@@ -531,7 +536,7 @@ val inputGroupDoc =
                                     Popover {
                                         PopoverTrigger {
                                             InputGroupButton(
-                                                onClick = {},
+                                                onClick = toggle,
                                                 size = InputGroupButtonSize.IconXs,
                                                 variant = ButtonVariant.Secondary,
                                                 style = Style { shape(CircleShape) },
@@ -540,9 +545,17 @@ val inputGroupDoc =
                                                 DocIcon(Lucide.Info)
                                             }
                                         }
-                                        PopoverContent(align = PopupAlign.Start) {
-                                            Text { "Your connection is not secure." }
-                                            Text { "You should not enter any sensitive information on this site." }
+                                        val popupRadius = twRadius.xl
+                                        PopoverContent(
+                                            align = PopupAlign.Start,
+                                            style = Style { shape(RoundedCornerShape(popupRadius)) },
+                                        ) {
+                                            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                                                Text(textStyle = TextStyle(fontWeight = FontWeight.Medium)) {
+                                                    "Your connection is not secure."
+                                                }
+                                                Text { "You should not enter any sensitive information on this site." }
+                                            }
                                         }
                                     }
                                 }
@@ -615,8 +628,8 @@ val inputGroupDoc =
                                 InputGroupInput(value = fileName, onValueChange = { fileName = it }, placeholder = "Enter file name")
                                 InputGroupAddon(align = InputGroupAddonAlign.InlineEnd, style = Style { contentPaddingEnd(3.2.dp) }) {
                                     DropdownMenu {
-                                        DropdownMenuTrigger {
-                                            InputGroupButton(onClick = {}, size = InputGroupButtonSize.IconXs, label = "More") {
+                                        DropdownMenuTrigger(label = "More") { trigger, onClick ->
+                                            InputGroupButton(onClick, trigger, size = InputGroupButtonSize.IconXs, label = "More") {
                                                 DocIcon(Lucide.Ellipsis)
                                             }
                                         }
@@ -632,10 +645,24 @@ val inputGroupDoc =
                                 InputGroupInput(value = search, onValueChange = { search = it }, placeholder = "Enter search query")
                                 InputGroupAddon(align = InputGroupAddonAlign.InlineEnd, style = Style { contentPaddingEnd(3.2.dp) }) {
                                     DropdownMenu {
-                                        DropdownMenuTrigger {
-                                            InputGroupButton(onClick = {}) {
-                                                Text { "Search In..." }
-                                                DocIcon(Lucide.ChevronDown)
+                                        DropdownMenuTrigger(label = "Search In...") { trigger, onClick ->
+                                            InputGroupButton(onClick, trigger) {
+                                                Row(
+                                                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                                    verticalAlignment = Alignment.CenterVertically,
+                                                ) {
+                                                    Text(
+                                                        textStyle =
+                                                            TextStyle(
+                                                                fontSize = 12.sp,
+                                                                lineHeight = 16.sp,
+                                                                fontWeight = FontWeight.Medium,
+                                                            ),
+                                                    ) {
+                                                        "Search In..."
+                                                    }
+                                                    DocIcon(Lucide.ChevronDown, Modifier.size(12.dp))
+                                                }
                                             }
                                         }
                                         DropdownMenuContent(align = PopupAlign.End, sideOffset = 8.dp, alignOffset = (-4).dp) {
@@ -1004,7 +1031,7 @@ private fun InputGroupButtonsPreview() {
                 Popover {
                     PopoverTrigger {
                         InputGroupButton(
-                            onClick = {},
+                            onClick = toggle,
                             size = InputGroupButtonSize.IconXs,
                             variant = ButtonVariant.Secondary,
                             style = Style { shape(CircleShape) },
@@ -1013,9 +1040,17 @@ private fun InputGroupButtonsPreview() {
                             DocIcon(Lucide.Info)
                         }
                     }
-                    PopoverContent(align = PopupAlign.Start) {
-                        Text { "Your connection is not secure." }
-                        Text { "You should not enter any sensitive information on this site." }
+                    val popupRadius = twRadius.xl
+                    PopoverContent(
+                        align = PopupAlign.Start,
+                        style = Style { shape(RoundedCornerShape(popupRadius)) },
+                    ) {
+                        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                            Text(textStyle = TextStyle(fontWeight = FontWeight.Medium)) {
+                                "Your connection is not secure."
+                            }
+                            Text { "You should not enter any sensitive information on this site." }
+                        }
                     }
                 }
             }
@@ -1056,8 +1091,8 @@ private fun InputGroupDropdownPreview() {
             InputGroupInput(value = fileName, onValueChange = { fileName = it }, placeholder = "Enter file name")
             InputGroupAddon(align = InputGroupAddonAlign.InlineEnd, style = Style { contentPaddingEnd(3.2.dp) }) {
                 DropdownMenu {
-                    DropdownMenuTrigger {
-                        InputGroupButton(onClick = {}, size = InputGroupButtonSize.IconXs, label = "More") {
+                    DropdownMenuTrigger(label = "More") { trigger, onClick ->
+                        InputGroupButton(onClick, trigger, size = InputGroupButtonSize.IconXs, label = "More") {
                             DocIcon(Lucide.Ellipsis)
                         }
                     }
@@ -1073,10 +1108,24 @@ private fun InputGroupDropdownPreview() {
             InputGroupInput(value = search, onValueChange = { search = it }, placeholder = "Enter search query")
             InputGroupAddon(align = InputGroupAddonAlign.InlineEnd, style = Style { contentPaddingEnd(3.2.dp) }) {
                 DropdownMenu {
-                    DropdownMenuTrigger {
-                        InputGroupButton(onClick = {}) {
-                            Text { "Search In..." }
-                            DocIcon(Lucide.ChevronDown)
+                    DropdownMenuTrigger(label = "Search In...") { trigger, onClick ->
+                        InputGroupButton(onClick, trigger) {
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Text(
+                                    textStyle =
+                                        TextStyle(
+                                            fontSize = 12.sp,
+                                            lineHeight = 16.sp,
+                                            fontWeight = FontWeight.Medium,
+                                        ),
+                                ) {
+                                    "Search In..."
+                                }
+                                DocIcon(Lucide.ChevronDown, Modifier.size(12.dp))
+                            }
                         }
                     }
                     DropdownMenuContent(align = PopupAlign.End, sideOffset = 8.dp, alignOffset = (-4).dp) {

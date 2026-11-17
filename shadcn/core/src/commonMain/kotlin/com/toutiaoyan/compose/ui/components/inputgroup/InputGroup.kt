@@ -2,6 +2,8 @@
 
 package com.toutiaoyan.compose.ui.components.inputgroup
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.style.contentPadding
@@ -36,6 +38,7 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
@@ -55,6 +58,7 @@ import com.toutiaoyan.compose.ui.components.button.ButtonSize
 import com.toutiaoyan.compose.ui.components.button.ButtonVariant
 import com.toutiaoyan.compose.ui.components.input.Input
 import com.toutiaoyan.compose.ui.components.input.InputType
+import com.toutiaoyan.compose.ui.components.input.NovaInputColorDurationMillis
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.textarea.Textarea
 import com.toutiaoyan.compose.ui.components.text.TextColors
@@ -176,12 +180,30 @@ fun InputGroup(
     val groupDisabled = resolvedDisabled || layoutState.controls.values.any { !it.second }
     val groupInvalid = invalid || layoutState.controls.values.any { it.first }
     val shapes = twRadius
-    val border =
+    val borderColor =
         when {
             groupInvalid -> colors.destructive
             hasControlFocus -> colors.ring
             else -> if (nova) colors.input else colors.border
         }
+
+    val tint =
+        when {
+            groupDisabled -> if (theme.isDark) 0.8f else 0.5f
+            theme.isDark -> 0.3f
+            else -> 0f
+        }
+    val border by if (nova) {
+        animateColorAsState(borderColor, tween(NovaInputColorDurationMillis))
+    } else {
+        rememberUpdatedState(borderColor)
+    }
+    val fill = if (nova) colors.input.copy(alpha = colors.input.alpha * tint) else colors.background
+    val background by if (nova) {
+        animateColorAsState(fill, tween(NovaInputColorDurationMillis))
+    } else {
+        rememberUpdatedState(fill)
+    }
 
     val containerStyle =
         Style {
@@ -189,17 +211,9 @@ fun InputGroup(
             // base-nova `.cn-input-group`: `h-8 rounded-lg`
             // (`h-auto` when block addons present — minHeight lets Layout grow)
             minHeight(32.dp)
-            val tint =
-                if (groupDisabled) {
-                    if (theme.isDark) 0.8f else 0.5f
-                } else if (theme.isDark) {
-                    0.3f
-                } else {
-                    0f
-                }
-            background(if (nova) colors.input.copy(alpha = colors.input.alpha * tint) else colors.background)
-            borderWidth(1.dp)
+            background(background)
             borderColor(border)
+            borderWidth(1.dp)
             shape(RoundedCornerShape(shapes.lg))
             if (hasControlFocus) dropShadow(theme.focusRingShadow())
             if (nova && groupInvalid) {

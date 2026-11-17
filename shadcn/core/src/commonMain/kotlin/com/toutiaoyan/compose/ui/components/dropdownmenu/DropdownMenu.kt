@@ -345,6 +345,50 @@ fun DropdownMenuScope.DropdownMenuTrigger(
 }
 
 /**
+ * Uses a caller-rendered button as the single menu trigger.
+ *
+ * Apply the supplied modifier and click handler to the same focusable control.
+ */
+@Composable
+fun DropdownMenuScope.DropdownMenuTrigger(
+    label: String,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    render: @Composable (Modifier, () -> Unit) -> Unit,
+) {
+    val controller = dropdownMenuController()
+    val triggerModifier =
+        modifier.contextMenuNavigation(enabled, label)
+            .semantics {
+                stateDescription = if (controller.open) "Expanded" else "Collapsed"
+            }
+            .onPreviewKeyEvent { event ->
+                when (event.key) {
+                    Key.Enter, Key.Spacebar, Key.DirectionDown, Key.DirectionUp -> {
+                        if (!enabled) return@onPreviewKeyEvent false
+                        if (event.type == KeyEventType.KeyDown) {
+                            if (!controller.open) {
+                                val focus =
+                                    if (event.key == Key.DirectionUp) {
+                                        DropdownMenuInitialFocus.Last
+                                    } else {
+                                        DropdownMenuInitialFocus.First
+                                    }
+                                controller.onOpenChangeWithFocus(focus)
+                            } else if (event.key == Key.Enter || event.key == Key.Spacebar) {
+                                controller.dismiss()
+                            }
+                        }
+                        // Keep the rendered button from handling the same key as a second click.
+                        true
+                    }
+                    else -> false
+                }
+            }
+    render(triggerModifier, controller::toggle)
+}
+
+/**
  * The anchored panel of a [DropdownMenu]
  * (`min-w-56 rounded-md border bg-popover p-1 shadow-md`).
  */
