@@ -26,8 +26,13 @@ import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,6 +40,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.progressBarRangeInfo
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
@@ -55,6 +62,14 @@ private val LocalProgressValue = staticCompositionLocalOf<Float?> { null }
 
 private val LocalProgressIndeterminate = staticCompositionLocalOf { false }
 
+private class ProgressName(text: String) {
+    var text by mutableStateOf(text)
+}
+
+private val LocalProgressNames = staticCompositionLocalOf<MutableList<ProgressName>?> { null }
+
+private fun progressPercentage(fraction: Float): String = "${(fraction * 100f).roundToInt()}%"
+
 /** Logical fraction of the nearest [Progress]; indicator width animates independently. */
 class ProgressState(val value: Float)
 
@@ -74,6 +89,7 @@ fun progressState(): ProgressState {
  *
  * [style] applies to the root. The content slot adds labels or other content;
  * the root always appends its track, matching the official component.
+ * The accessibility range uses [max]. [getValueLabel] receives the normalized fraction.
  * Use standalone [ProgressTrack] and [ProgressIndicator] for a custom track.
  *
  * Usage:
@@ -98,7 +114,11 @@ fun Progress(
     style: Style = Style,
     content: (@Composable () -> Unit)? = null,
 ) {
-    val fraction = if (!max.isFinite() || max <= 0f || value.isNaN()) 0f else (value / max).coerceIn(0f, 1f)
+    val validMax = max.isFinite() && max > 0f
+    val rangeMax = if (validMax) max else 1f
+    val current = if (validMax && !value.isNaN()) value.coerceIn(0f, max) else 0f
+    val fraction = current / rangeMax
+    val names = remember { mutableStateListOf<ProgressName>() }
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val semanticsModifier =
         Modifier.semantics(mergeDescendants = true) {
@@ -107,18 +127,21 @@ fun Progress(
                     ProgressBarRangeInfo.Indeterminate
                 } else {
                     ProgressBarRangeInfo(
-                        current = fraction,
-                        range = 0f..1f,
+                        current = current,
+                        range = 0f..rangeMax,
                         steps = 0,
                     )
                 }
-            if (getValueLabel != null && !indeterminate) {
-                stateDescription = getValueLabel(fraction)
+            val name = names.map { it.text }.filter { it.isNotBlank() }.joinToString(", ")
+            if (name.isNotEmpty()) contentDescription = name
+            if (!indeterminate) {
+                stateDescription = getValueLabel?.invoke(fraction) ?: progressPercentage(fraction)
             }
         }
     CompositionLocalProvider(
         LocalProgressValue provides fraction,
         LocalProgressIndeterminate provides indeterminate,
+        LocalProgressNames provides names,
     ) {
         ProgressRootLayout(modifier.then(semanticsModifier).styleable(styleState, Style { width(1f) } then style)) {
             content?.invoke()
@@ -156,6 +179,13 @@ fun ProgressLabel(
     style: Style = Style,
 ) {
     progressState()
+    val names = LocalProgressNames.current
+    val name = remember { ProgressName(text) }
+    SideEffect { name.text = text }
+    DisposableEffect(names, name) {
+        names?.add(name)
+        onDispose { names?.remove(name) }
+    }
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Text(
         variant = TextVariant.BodySmall,
@@ -183,26 +213,30 @@ fun ProgressValue(
 ) {
     val state = progressState()
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    val label = text ?: if (LocalProgressIndeterminate.current) "" else "${(state.value * 100f).roundToInt()}%"
-    Text(
-        variant = TextVariant.BodySmall,
-        textStyle =
-            if (currentTheme.activePreset == StylePreset.Nova) {
-                TextColors.Muted.copy(
-                    fontFeatureSettings = "tnum",
-                    fontSize = 14.sp,
-                    lineHeight = 20.sp,
-                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
-                )
-            } else {
-                TextColors.Muted
-            },
+    val label = text ?: if (LocalProgressIndeterminate.current) "" else progressPercentage(state.value)
+    Box(
         modifier =
-            modifier.semantics { hideFromAccessibility() }.layoutId(ProgressValueLayoutId).styleable(
-                styleState,
-                style,
-            ),
-    ) { label }
+            modifier
+                .layoutId(ProgressValueLayoutId)
+                .clearAndSetSemantics { hideFromAccessibility() },
+        propagateMinConstraints = true,
+    ) {
+        Text(
+            variant = TextVariant.BodySmall,
+            textStyle =
+                if (currentTheme.activePreset == StylePreset.Nova) {
+                    TextColors.Muted.copy(
+                        fontFeatureSettings = "tnum",
+                        fontSize = 14.sp,
+                        lineHeight = 20.sp,
+                        lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+                    )
+                } else {
+                    TextColors.Muted
+                },
+            modifier = Modifier.styleable(styleState, style),
+        ) { label }
+    }
 }
 
 /** Filled portion of a [Progress] track. Matches shadcn's `ProgressIndicator`. */

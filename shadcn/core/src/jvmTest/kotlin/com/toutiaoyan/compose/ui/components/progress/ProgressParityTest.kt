@@ -6,6 +6,8 @@ import androidx.compose.runtime.*
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.layout.width
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.toPixelMap
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
@@ -13,9 +15,14 @@ import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.test.*
 import androidx.compose.ui.unit.*
 import com.toutiaoyan.compose.ui.ScreenshotTest
+import com.toutiaoyan.compose.ui.theme.Theme
+import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.tokens.Radius
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.*
 
@@ -91,16 +98,55 @@ class ProgressParityTest : ScreenshotTest() {
     }
 
     @Test fun indeterminateHasNoFabricatedPercentage() {
+        composeRule.mainClock.autoAdvance = false
         setThemedContent(stylePreset = StylePreset.Nova) {
             Progress(0.42f, Modifier.width(200.dp).testTag("root"), indeterminate = true) { ProgressValue() }
         }
-        composeRule.onNodeWithTag("root").assert(
+        val root = composeRule.onNodeWithTag("root")
+        root.assert(
             SemanticsMatcher.expectValue(
                 SemanticsProperties.ProgressBarRangeInfo,
                 ProgressBarRangeInfo.Indeterminate,
             ),
         )
+        root.assert(SemanticsMatcher.keyNotDefined(SemanticsProperties.StateDescription))
         composeRule.onNodeWithText("42%", useUnmergedTree = true).assertDoesNotExist()
+
+        fun firstFilledPixel(): Int {
+            val pixels = root.captureToImage().toPixelMap()
+            return (2 until pixels.width - 2).first { pixels[it, pixels.height - 2].red < 0.3f }
+        }
+
+        composeRule.mainClock.advanceTimeBy(380)
+        val first = firstFilledPixel()
+        composeRule.mainClock.advanceTimeBy(250)
+        assertTrue(firstFilledPixel() > first + 30)
+    }
+
+    @Test fun theTrackRepaintsAndKeepsItsPillShapeAcrossThemeChanges() {
+        var dark by mutableStateOf(false)
+        var radius by mutableStateOf(Radius(10.dp))
+        var primary = Color.Unspecified
+        composeRule.setContent {
+            Theme(preset = StylePreset.Nova, isDark = dark, baseRadius = radius) {
+                primary = currentTheme.colors.primary
+                Progress(1f, Modifier.width(200.dp).testTag("root"))
+            }
+        }
+        val root = composeRule.onNodeWithTag("root")
+        val light = root.captureToImage().toPixelMap()
+        val lightFill = light[50, 2]
+        assertEquals(primary.toArgb(), lightFill.toArgb())
+        composeRule.runOnIdle {
+            dark = true
+            radius = Radius(0.dp)
+        }
+        val darkPixels = root.captureToImage().toPixelMap()
+        val darkFill = darkPixels[50, 2]
+        assertEquals(primary.toArgb(), darkFill.toArgb())
+        assertNotEquals(lightFill, darkFill)
+        assertNotEquals(darkFill, darkPixels[0, 0])
+        root.assertHeightIsEqualTo(4.dp)
     }
 
     @Test fun invalidAndOutOfRangeNumbersCannotProduceInvalidRangeSemantics() {
@@ -142,7 +188,30 @@ class ProgressParityTest : ScreenshotTest() {
                 "Half complete",
             ),
         )
+        composeRule.onNodeWithTag("root").assertContentDescriptionEquals("Upload")
         composeRule.onNodeWithTag("root").assertTextContains("Upload")
+    }
+
+    @Test fun accessibleLabelFollowsTheRenderedLabelAndRespectsAnExplicitName() {
+        var label by mutableStateOf<String?>("Upload")
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Progress(56f, max = 100f, modifier = Modifier.testTag("root")) {
+                label?.let { ProgressLabel(it) }
+            }
+            Progress(
+                0.5f,
+                Modifier.testTag("explicit").semantics { contentDescription = "Explicit name" },
+            ) {
+                ProgressLabel("Visible label")
+            }
+        }
+        val root = composeRule.onNodeWithTag("root")
+        root.assertContentDescriptionEquals("Upload")
+        composeRule.runOnIdle { label = "تقدم الرفع" }
+        root.assertContentDescriptionEquals("تقدم الرفع")
+        composeRule.runOnIdle { label = null }
+        root.assert(SemanticsMatcher.keyNotDefined(SemanticsProperties.ContentDescription))
+        composeRule.onNodeWithTag("explicit").assertContentDescriptionEquals("Explicit name")
     }
 
     @Test fun narrowHeadersWrapAndKeepTheValueAtTheLogicalEnd() {
@@ -171,12 +240,13 @@ class ProgressParityTest : ScreenshotTest() {
 
     @Test fun visibleValueIsHiddenFromAccessibilityLikeBaseUiValue() {
         setThemedContent(stylePreset = StylePreset.Nova) {
-            Progress(0.56f, Modifier.width(320.dp)) {
+            Progress(0.56f, Modifier.width(320.dp).testTag("root")) {
                 ProgressLabel("Upload progress")
                 ProgressValue()
             }
         }
         composeRule.onNodeWithText("56%", useUnmergedTree = true)
-            .assert(SemanticsMatcher.keyIsDefined(SemanticsProperties.HideFromAccessibility))
+            .assert(hasAnyAncestor(SemanticsMatcher.keyIsDefined(SemanticsProperties.HideFromAccessibility)))
+        composeRule.onNodeWithTag("root").assertTextEquals("Upload progress")
     }
 }

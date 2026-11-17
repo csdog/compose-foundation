@@ -83,9 +83,14 @@ class ProgressExamplesTest(private val viewport: Int, private val dark: Boolean)
         }
     }
 
-    private fun fraction() =
+    private fun progressRange() =
         rule.onNodeWithTag("progress-recipe").fetchSemanticsNode()
-            .config[SemanticsProperties.ProgressBarRangeInfo].current
+            .config[SemanticsProperties.ProgressBarRangeInfo]
+
+    private fun fraction(): Float {
+        val progress = progressRange()
+        return progress.current / progress.range.endInclusive
+    }
 
     private fun capture(
         name: String,
@@ -117,6 +122,10 @@ class ProgressExamplesTest(private val viewport: Int, private val dark: Boolean)
             assertFalse(it.code.contains("progressDoc"))
         }
         show("Label")
+        val range = progressRange()
+        assertEquals(0f..100f, range.range)
+        assertEquals(56f, range.current)
+        rule.onNodeWithTag("progress-recipe").assertContentDescriptionEquals("Upload progress")
         rule.onNodeWithText("Upload progress", useUnmergedTree = true).assertIsDisplayed()
         rule.onNodeWithText("56%", useUnmergedTree = true).assertIsDisplayed()
         rule.onNodeWithTag("progress-recipe").assertHeightIsEqualTo(36.dp)

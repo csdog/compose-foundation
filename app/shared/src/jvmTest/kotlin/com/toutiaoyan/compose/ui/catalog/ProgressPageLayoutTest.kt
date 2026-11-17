@@ -66,7 +66,10 @@ class ProgressPageLayoutTest(private val viewport: Int, private val dark: Boolea
         assertNull(progressDoc.examplesHeading)
         assertNull(progressDoc.compositionCode)
         assertEquals(3, progressDoc.examples.count { !it.descriptionMarkdown.isNullOrBlank() })
-        assertTrue(progressDoc.afterExamples.isNotEmpty())
+        assertEquals(
+            "Kotlin extension: Progress conventions",
+            progressDoc.afterApiSections.single().title,
+        )
         val rtlCode = progressDoc.examples.single { it.title == "RTL" }.code
         assertContains(rtlCode, "FontWeight.Normal")
         assertContains(rtlCode, "FontWeight.Medium")
@@ -88,6 +91,9 @@ class ProgressPageLayoutTest(private val viewport: Int, private val dark: Boolea
                 "Progress(value = 56f",
                 "└── ProgressIndicator",
                 "## Label",
+                "## RTL",
+                "## API Reference",
+                "## Kotlin extension: Progress conventions",
             )
         val offsets =
             fragments.map { fragment ->

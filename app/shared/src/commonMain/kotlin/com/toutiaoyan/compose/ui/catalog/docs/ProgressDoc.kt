@@ -46,18 +46,18 @@ val progressDoc =
                     level = 3,
                 ),
             ),
-        afterExamples =
+        afterApiSections =
             listOf(
                 ComponentGuideSection(
-                    "Kotlin conventions and accessibility",
+                    "Kotlin extension: Progress conventions",
                     listOf(
                         ComponentGuideBlock.Paragraph(
                             "Kotlin uses a fraction by default: Progress(0.6f) is 60%. " +
                                 "The official recipes pass max = 100f explicitly. Use indeterminate = true " +
                                 "for unknown progress; ProgressValue then omits the percentage. " +
-                                "Compose exposes a normalized progress range and hides the duplicate value text. " +
-                                "Native HTML naming, min/null/format/render props and screen-reader behavior " +
-                                "are not equivalent APIs.",
+                                "The accessible range uses max. ProgressLabel names the bar, and ProgressValue " +
+                                "keeps the visible percentage out of the accessibility tree. " +
+                                "Use getValueLabel to describe the normalized fraction in your own words.",
                         ),
                         ComponentGuideBlock.Code(
                             """
