@@ -142,17 +142,18 @@ class MessageParityTest : ScreenshotTest() {
         check()
     }
 
-    @Test fun endMessageKeepsHeaderAtStartAndFooterAtEndAsDocumented() {
+    @Test fun endMessageAlignsHeaderBubbleAndFooterOnTheEndSide() {
         setThemedContent(stylePreset = StylePreset.Nova) {
             Message(Modifier.width(320.dp).testTag("row"), align = MessageAlign.End) {
                 MessageHeader("Sender", Modifier.testTag("header"))
-                Bubble("Hello")
+                Bubble("Hello", Modifier.testTag("body"))
                 MessageFooter("Delivered", Modifier.testTag("footer"))
             }
         }
         val row = composeRule.onNodeWithTag("row").fetchSemanticsNode().boundsInRoot
-        assertEquals(row.left, composeRule.onNodeWithTag("header").fetchSemanticsNode().boundsInRoot.left, 0.1f)
-        assertEquals(row.right, composeRule.onNodeWithTag("footer").fetchSemanticsNode().boundsInRoot.right, 0.1f)
+        listOf("header", "body", "footer").forEach { tag ->
+            assertEquals(row.right, composeRule.onNodeWithTag(tag).fetchSemanticsNode().boundsInRoot.right, 0.1f)
+        }
     }
 
     @Test fun standaloneContentAndRootAcceptCallerModifierAndStyle() {
@@ -184,13 +185,23 @@ class MessageParityTest : ScreenshotTest() {
             ) {
                 Message(Modifier.width(320.dp).testTag("row"), align = MessageAlign.End, avatar = {
                     MessageAvatar(Modifier.testTag("avatar")) { Box(Modifier.size(32.dp)) }
-                }) { Text { "Body" } }
+                }) {
+                    MessageHeader("المرسل", Modifier.testTag("sender"))
+                    Bubble("هذه رسالة من محادثة", Modifier.testTag("message"))
+                    MessageFooter("تم التسليم", Modifier.testTag("status"))
+                }
             }
         }
-        val row = composeRule.onNodeWithTag("row").fetchSemanticsNode().boundsInRoot
-        assertEquals(row.right, composeRule.onNodeWithTag("avatar").fetchSemanticsNode().boundsInRoot.right, 0.1f)
+
+        fun bounds(tag: String) = composeRule.onNodeWithTag(tag).fetchSemanticsNode().boundsInRoot
+
+        val messageParts = listOf("sender", "message", "status")
+        val avatarGap = 8f
+        assertEquals(bounds("row").right, bounds("avatar").right, 0.1f)
+        messageParts.forEach { assertEquals(bounds("avatar").left - avatarGap, bounds(it).right, 0.1f) }
         composeRule.runOnIdle { rtl = true }
-        assertEquals(row.left, composeRule.onNodeWithTag("avatar").fetchSemanticsNode().boundsInRoot.left, 0.1f)
+        assertEquals(bounds("row").left, bounds("avatar").left, 0.1f)
+        messageParts.forEach { assertEquals(bounds("avatar").right + avatarGap, bounds(it).left, 0.1f) }
     }
 
     @Test fun avatarClipsOverflowUsingItsFinalCallerOverriddenShape() {

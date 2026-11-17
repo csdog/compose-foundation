@@ -11,6 +11,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.semantics.*
 import androidx.compose.ui.text.*
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.*
 import com.composables.icons.lucide.*
 import compose_foundation.app.shared.generated.resources.*
@@ -168,6 +169,7 @@ val messageDoc =
             import androidx.compose.ui.semantics.*
             import androidx.compose.ui.text.*
             import androidx.compose.ui.text.font.FontWeight
+            import androidx.compose.ui.text.style.LineHeightStyle
             import androidx.compose.ui.unit.*
             import com.composables.icons.lucide.*
             import compose_foundation.app.shared.generated.resources.*
@@ -232,7 +234,7 @@ val messageDoc =
                 ),
                 ComponentApiSection(
                     "MessageGroup",
-                    "Stacks consecutive messages with an 8dp Nova gap.",
+                    "Stacks consecutive messages with an 8dp gap in Nova and Rhea.",
                     listOf(
                         ApiProperty("content", "@Composable ColumnScope.() -> Unit", "Required"),
                         ApiProperty("modifier / style", "Modifier / Style", "Default"),
@@ -241,7 +243,7 @@ val messageDoc =
                 ComponentApiSection(
                     "MessageAvatar",
                     (
-                        "Intrinsic avatar slot, min-width32dp. Empty content reserves " +
+                        "Intrinsic avatar slot, at least 32dp wide. Empty content reserves " +
                             "only the column width."
                     ),
                     listOf(
@@ -263,8 +265,7 @@ val messageDoc =
                 ComponentApiSection(
                     "MessageHeader",
                     (
-                        "Metadata above a bubble; Nova follows the documentation " +
-                            "start-alignment rule."
+                        "Metadata above a bubble, aligned to the message side."
                     ),
                     listOf(
                         ApiProperty("text / content", "String / @Composable RowScope.() -> Unit", "Required"),
@@ -275,7 +276,7 @@ val messageDoc =
                     "MessageFooter",
                     (
                         "Metadata or actions aligned to the message side. Presence " +
-                            "shifts avatar up32dp in Nova."
+                            "shifts the avatar up 32dp in Nova and Rhea."
                     ),
                     listOf(
                         ApiProperty("text / content", "String / @Composable RowScope.() -> Unit", "Required"),
@@ -291,7 +292,8 @@ val messageDoc =
                         """
                         val inherited = currentTheme
                         Theme(
-                            preset = StylePreset.Nova, baseColor = inherited.activeBaseColor,
+                            preset = StylePreset.Rhea, baseColor = inherited.activeBaseColor,
+                            ring = StylePreset.Rhea.ring.copy(enabled = true),
                             accent = Accent.Blue, isDark = inherited.isDark,
                             baseRadius = inherited.baseRadius, fontFamily = inherited.fontFamily, minTouchTarget = null,
                         ) {
@@ -343,7 +345,23 @@ val messageDoc =
                                     }
                                 }) {
                                     BubbleGroup {
-                                        Bubble("It's always a one-line change 😭.", variant = BubbleVariant.Muted)
+                                        Bubble(variant = BubbleVariant.Muted) {
+                                            BubbleContent {
+                                                EmojiText(
+                                                    "It's always a one-line change 😭.",
+                                                    typography = TextVariant.BodyMedium,
+                                                    textStyle =
+                                                        TextStyle(
+                                                            lineHeight = 22.75.sp,
+                                                            lineHeightStyle =
+                                                                LineHeightStyle(
+                                                                    LineHeightStyle.Alignment.Center,
+                                                                    LineHeightStyle.Trim.None,
+                                                                ),
+                                                        ),
+                                                )
+                                            }
+                                        }
                                         Bubble(variant = BubbleVariant.Muted) {
                                             BubbleContent("Alright, let me take a look.")
                                             BubbleReactions(
@@ -372,9 +390,10 @@ val messageDoc =
                     preview = {
                         val inherited = currentTheme
                         Theme(
-                            preset = StylePreset.Nova,
+                            preset = StylePreset.Rhea,
                             baseColor = inherited.activeBaseColor,
                             accent = Accent.Blue,
+                            ring = StylePreset.Rhea.ring.copy(enabled = true),
                             isDark = inherited.isDark,
                             baseRadius = inherited.baseRadius,
                             fontFamily = inherited.fontFamily,
@@ -444,7 +463,23 @@ val messageDoc =
                                     }
                                 }) {
                                     BubbleGroup {
-                                        Bubble("It's always a one-line change 😭.", variant = BubbleVariant.Muted)
+                                        Bubble(variant = BubbleVariant.Muted) {
+                                            BubbleContent {
+                                                EmojiText(
+                                                    "It's always a one-line change 😭.",
+                                                    typography = TextVariant.BodyMedium,
+                                                    textStyle =
+                                                        TextStyle(
+                                                            lineHeight = 22.75.sp,
+                                                            lineHeightStyle =
+                                                                LineHeightStyle(
+                                                                    LineHeightStyle.Alignment.Center,
+                                                                    LineHeightStyle.Trim.None,
+                                                                ),
+                                                        ),
+                                                )
+                                            }
+                                        }
                                         Bubble(variant = BubbleVariant.Muted) {
                                             BubbleContent("Alright, let me take a look.")
                                             BubbleReactions(
@@ -484,7 +519,8 @@ val messageDoc =
                         """
                         val inherited = currentTheme
                         Theme(
-                            preset = StylePreset.Nova, baseColor = inherited.activeBaseColor,
+                            preset = StylePreset.Rhea, baseColor = inherited.activeBaseColor,
+                            ring = StylePreset.Rhea.ring.copy(enabled = true),
                             accent = Accent.Blue, isDark = inherited.isDark,
                             baseRadius = inherited.baseRadius, fontFamily = inherited.fontFamily, minTouchTarget = null,
                         ) {
@@ -540,9 +576,10 @@ val messageDoc =
                     preview = {
                         val inherited = currentTheme
                         Theme(
-                            preset = StylePreset.Nova,
+                            preset = StylePreset.Rhea,
                             baseColor = inherited.activeBaseColor,
                             accent = Accent.Blue,
+                            ring = StylePreset.Rhea.ring.copy(enabled = true),
                             isDark = inherited.isDark,
                             baseRadius = inherited.baseRadius,
                             fontFamily = inherited.fontFamily,
@@ -623,7 +660,8 @@ val messageDoc =
                         """
                         val inherited = currentTheme
                         Theme(
-                            preset = StylePreset.Nova, baseColor = inherited.activeBaseColor,
+                            preset = StylePreset.Rhea, baseColor = inherited.activeBaseColor,
+                            ring = StylePreset.Rhea.ring.copy(enabled = true),
                             accent = Accent.Blue, isDark = inherited.isDark,
                             baseRadius = inherited.baseRadius, fontFamily = inherited.fontFamily, minTouchTarget = null,
                         ) {
@@ -656,9 +694,10 @@ val messageDoc =
                     preview = {
                         val inherited = currentTheme
                         Theme(
-                            preset = StylePreset.Nova,
+                            preset = StylePreset.Rhea,
                             baseColor = inherited.activeBaseColor,
                             accent = Accent.Blue,
+                            ring = StylePreset.Rhea.ring.copy(enabled = true),
                             isDark = inherited.isDark,
                             baseRadius = inherited.baseRadius,
                             fontFamily = inherited.fontFamily,
@@ -707,7 +746,8 @@ val messageDoc =
                         """
                         val inherited = currentTheme
                         Theme(
-                            preset = StylePreset.Nova, baseColor = inherited.activeBaseColor,
+                            preset = StylePreset.Rhea, baseColor = inherited.activeBaseColor,
+                            ring = StylePreset.Rhea.ring.copy(enabled = true),
                             accent = Accent.Blue, isDark = inherited.isDark,
                             baseRadius = inherited.baseRadius, fontFamily = inherited.fontFamily, minTouchTarget = null,
                         ) {
@@ -738,9 +778,10 @@ val messageDoc =
                     preview = {
                         val inherited = currentTheme
                         Theme(
-                            preset = StylePreset.Nova,
+                            preset = StylePreset.Rhea,
                             baseColor = inherited.activeBaseColor,
                             accent = Accent.Blue,
+                            ring = StylePreset.Rhea.ring.copy(enabled = true),
                             isDark = inherited.isDark,
                             baseRadius = inherited.baseRadius,
                             fontFamily = inherited.fontFamily,
@@ -779,7 +820,8 @@ val messageDoc =
                         """
                         val inherited = currentTheme
                         Theme(
-                            preset = StylePreset.Nova, baseColor = inherited.activeBaseColor,
+                            preset = StylePreset.Rhea, baseColor = inherited.activeBaseColor,
+                            ring = StylePreset.Rhea.ring.copy(enabled = true),
                             accent = Accent.Blue, isDark = inherited.isDark,
                             baseRadius = inherited.baseRadius, fontFamily = inherited.fontFamily, minTouchTarget = null,
                         ) {
@@ -829,9 +871,10 @@ val messageDoc =
                     preview = {
                         val inherited = currentTheme
                         Theme(
-                            preset = StylePreset.Nova,
+                            preset = StylePreset.Rhea,
                             baseColor = inherited.activeBaseColor,
                             accent = Accent.Blue,
+                            ring = StylePreset.Rhea.ring.copy(enabled = true),
                             isDark = inherited.isDark,
                             baseRadius = inherited.baseRadius,
                             fontFamily = inherited.fontFamily,
@@ -945,7 +988,8 @@ val messageDoc =
                         """
                         val inherited = currentTheme
                         Theme(
-                            preset = StylePreset.Nova, baseColor = inherited.activeBaseColor,
+                            preset = StylePreset.Rhea, baseColor = inherited.activeBaseColor,
+                            ring = StylePreset.Rhea.ring.copy(enabled = true),
                             accent = Accent.Blue, isDark = inherited.isDark,
                             baseRadius = inherited.baseRadius, fontFamily = inherited.fontFamily, minTouchTarget = null,
                         ) {
@@ -992,9 +1036,10 @@ val messageDoc =
                     preview = {
                         val inherited = currentTheme
                         Theme(
-                            preset = StylePreset.Nova,
+                            preset = StylePreset.Rhea,
                             baseColor = inherited.activeBaseColor,
                             accent = Accent.Blue,
+                            ring = StylePreset.Rhea.ring.copy(enabled = true),
                             isDark = inherited.isDark,
                             baseRadius = inherited.baseRadius,
                             fontFamily = inherited.fontFamily,

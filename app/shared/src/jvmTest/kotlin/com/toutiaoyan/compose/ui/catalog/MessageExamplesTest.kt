@@ -3,6 +3,10 @@ package com.toutiaoyan.compose.ui.catalog
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.InputMode
+import androidx.compose.ui.input.InputModeManager
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.platform.LocalInputModeManager
 import androidx.compose.ui.semantics.*
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
@@ -17,9 +21,11 @@ import kotlin.test.*
 
 class MessageExamplesTest {
     @get:Rule val rule = createComposeRule()
+    private lateinit var inputModeManager: InputModeManager
 
     private fun show(title: String) {
         rule.setContent {
+            inputModeManager = LocalInputModeManager.current
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                 OverlayHost {
                     Box(Modifier.width(560.dp).height(1000.dp), contentAlignment = Alignment.TopCenter) {
@@ -55,6 +61,7 @@ class MessageExamplesTest {
             "Deploying to prod real quick.",
             "It's 4:55 PM. On a Friday.",
             "It's a one-line change.",
+            "It's always a one-line change 😭.",
             "Alright, let me take a look.",
             "Delivered",
             "Oliver is typing...",
@@ -97,6 +104,12 @@ class MessageExamplesTest {
             rule.onNodeWithContentDescription(it).assertHasClickAction().assertIsEnabled()
         }
         rule.onNodeWithText("Failed to send").assertIsDisplayed()
+        rule.runOnIdle { inputModeManager.requestInputMode(InputMode.Keyboard) }
+        rule.onNodeWithContentDescription("Copy").requestFocus()
+        listOf("Copy", "Like", "Dislike").forEach { label ->
+            rule.onNodeWithContentDescription(label).assertIsFocused().performKeyInput { pressKey(Key.Tab) }
+        }
+        rule.onNodeWithContentDescription("Retry").assertIsFocused()
     }
 
     @Test fun attachmentRecipeContainsTheImagePdfAndDownloadControl() {

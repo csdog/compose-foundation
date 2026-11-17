@@ -3,6 +3,8 @@
 package com.toutiaoyan.compose.ui.components.message
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.style.Style
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -15,6 +17,7 @@ import com.toutiaoyan.compose.ui.components.bubble.BubbleVariant
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toPixelMap
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.ScreenshotTest
 import com.toutiaoyan.compose.ui.components.bubble.Bubble
@@ -79,7 +82,7 @@ class MessageRheaTest : ScreenshotTest() {
                 assertEquals(FontWeight.Medium, style.fontWeight)
                 assertEquals(muted, style.color)
             }
-            assertEquals(bounds("row").left, bounds("header").left, .1f)
+            assertEquals(bounds("row").right, bounds("header").right, .1f)
             assertEquals(bounds("row").right, bounds("footer").right, .1f)
             val sender = composeRule.onNodeWithText("Sender").fetchSemanticsNode().boundsInRoot
             assertEquals(inset, sender.left - bounds("header").left, .1f)
@@ -92,6 +95,28 @@ class MessageRheaTest : ScreenshotTest() {
         check(0f)
         composeRule.runOnIdle { ghost = false }
         check(12f)
+    }
+
+    @Test fun bubbleShapeUpdatesWhenTheThemeSwitchesFromRheaToNova() {
+        var preset by mutableStateOf(StylePreset.Rhea)
+        composeRule.setContent {
+            Theme(preset = preset) {
+                Box(Modifier.background(Color.White)) {
+                    BubbleContent(
+                        "Message",
+                        Modifier.testTag("surface"),
+                        style = Style { background(Color.Blue) },
+                    )
+                }
+            }
+        }
+        val surface = composeRule.onNodeWithTag("surface")
+        val rounded = surface.captureToImage().toPixelMap()
+        assertNotEquals(Color.Blue, rounded[5, 5])
+        assertEquals(Color.Blue, rounded[rounded.width / 2, 5])
+        composeRule.runOnIdle { preset = StylePreset.Nova }
+        val compact = surface.captureToImage().toPixelMap()
+        assertEquals(Color.Blue, compact[5, 5])
     }
 
     @Test fun rheaBubbleHasTenPixelVerticalPaddingAndOnePixelBorder() {

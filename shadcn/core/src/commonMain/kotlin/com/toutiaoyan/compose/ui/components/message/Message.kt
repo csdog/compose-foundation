@@ -274,7 +274,7 @@ fun MessageGroup(
 }
 
 /**
- * A metadata row (e.g. sender name) above a [Message]'s content, aligned to start in Nova/Rhea and to the message side in legacy presets.
+ * A metadata row (e.g. sender name) above a [Message]'s content, aligned to the message side.
  */
 @Composable
 fun ColumnScope.MessageHeader(
@@ -289,7 +289,7 @@ fun ColumnScope.MessageHeader(
     Row(
         modifier =
             modifier
-                .align(if (!novaOrRhea && align == MessageAlign.End) Alignment.End else Alignment.Start)
+                .align(if (align == MessageAlign.End) Alignment.End else Alignment.Start)
                 .styleable(styleState, rememberMessageMetadataStyle() then style),
         horizontalArrangement = Arrangement.spacedBy(if (novaOrRhea) 0.dp else twSpacing.xs),
         verticalAlignment = Alignment.CenterVertically,
