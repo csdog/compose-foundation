@@ -347,25 +347,24 @@ fun DropdownMenuScope.DropdownMenuTrigger(
 /**
  * Uses a caller-rendered button as the single menu trigger.
  *
- * Apply the supplied modifier and click handler to the same focusable control.
+ * Apply the supplied modifier and click handler to the same control.
+ * The rendered control owns its enabled state.
  */
 @Composable
 fun DropdownMenuScope.DropdownMenuTrigger(
     label: String,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
     render: @Composable (Modifier, () -> Unit) -> Unit,
 ) {
     val controller = dropdownMenuController()
     val triggerModifier =
-        modifier.contextMenuNavigation(enabled, label)
+        modifier.contextMenuNavigation(enabled = true, label = label)
             .semantics {
                 stateDescription = if (controller.open) "Expanded" else "Collapsed"
             }
             .onPreviewKeyEvent { event ->
                 when (event.key) {
                     Key.Enter, Key.Spacebar, Key.DirectionDown, Key.DirectionUp -> {
-                        if (!enabled) return@onPreviewKeyEvent false
                         if (event.type == KeyEventType.KeyDown) {
                             if (!controller.open) {
                                 val focus =
