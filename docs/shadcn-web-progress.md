@@ -1,7 +1,7 @@
 # Web 对齐验收状态
 
-更新日期：2026-11-18。当前保存状态为 **49 / 67 项已勾选，18 项未完成**。
-本次更新 Message 验收记录。Chart 保持未勾选并跳过。
+更新日期：2026-11-18。当前保存状态为 **50 / 67 项已勾选，17 项未完成**。
+本次更新 Navigation Menu 验收记录。Chart 保持未勾选并跳过。
 文档整理本身不构成验收；勾选只在组件证据与当前源码校验通过后更新。
 
 ## 状态口径
@@ -60,7 +60,7 @@
 - [x] Menubar (`menubar`)：2026-11-18 验收通过。补齐顶层和二级菜单的键盘路径、模态悬停、混合指针和 Nova 子菜单尺寸。33 项 JVM、截图基准及所属 lint 通过，当前 JS/Wasm 核对 360 个示例位置，独立终审通过。[验收](web-parity/menubar-acceptance-20261118/README.md) · [来源](web-parity/menubar-acceptance-20261118/sources.json) · [终审](web-parity/menubar-acceptance-20261118/independent-review.md) · [交接](../.agent-runs/menubar/progress.md)。
 - [x] Message (`message`)：2026-11-18 验收通过。修复结束侧 Header、Rhea 配方、键盘焦点和内联 emoji。39 项 JVM、截图基准及所属 lint 通过，当前 JS/Wasm 核对 104 个示例位置，独立终审通过。[验收](web-parity/message-acceptance-20261118/README.md) · [来源](web-parity/message-acceptance-20261118/sources.json) · [终审](web-parity/message-acceptance-20261118/independent-review.md) · [交接](../.agent-runs/message/progress.md)。
 - [x] Message Scroller (`message-scroller`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#message-scroller)。
-- [ ] Navigation Menu (`navigation-menu`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#navigation-menu) · [交接](../.agent-runs/navigation-menu/progress.md)。
+- [x] Navigation Menu (`navigation-menu`)：2026-11-18 验收通过。修复共享弹层动画、Tab 焦点往返和悬停菜单 Escape。52 项 JVM、截图基准及所属 lint 通过，当前 JS/Wasm 核对 40 个示例位置，独立终审通过。[验收](web-parity/navigation-menu-acceptance-20261118/README.md) · [来源](web-parity/navigation-menu-acceptance-20261118/sources.json) · [终审](web-parity/navigation-menu-acceptance-20261118/independent-review.md) · [交接](../.agent-runs/navigation-menu/progress.md)。
 - [x] Pagination (`pagination`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#pagination) · [交接](../.agent-runs/pagination/progress.md)。
 - [ ] Popover (`popover`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#popover) · [交接](../.agent-runs/popover/progress.md)。
 - [ ] Progress (`progress`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#progress) · [交接](../.agent-runs/progress/progress.md)。

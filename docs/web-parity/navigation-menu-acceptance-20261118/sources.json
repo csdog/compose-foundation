@@ -1,0 +1,88 @@
+{
+  "shadcnUi": {
+    "revision": "968d8cb9dc42ae5d52e8fd356cf84596ec832a26",
+    "files": [
+      {
+        "path": ".agent-runs/navigation-menu/goal-20261118/official/apps/v4/registry/bases/base/ui/navigation-menu.tsx",
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/registry/bases/base/ui/navigation-menu.tsx",
+        "sha256": "37074909a349319adc1f90ab122c46730103b5bf752915de27fb10ab25b90f65",
+        "previous": "37074909a349319adc1f90ab122c46730103b5bf752915de27fb10ab25b90f65"
+      },
+      {
+        "path": ".agent-runs/navigation-menu/goal-20261118/official/apps/v4/content/docs/components/base/navigation-menu.mdx",
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/content/docs/components/base/navigation-menu.mdx",
+        "sha256": "dd2698a2b4d07e0ddecf51415640205b843464cd9802492ee58837b05df88412",
+        "previous": "dd2698a2b4d07e0ddecf51415640205b843464cd9802492ee58837b05df88412"
+      },
+      {
+        "path": ".agent-runs/navigation-menu/goal-20261118/official/apps/v4/examples/base/navigation-menu-demo.tsx",
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/navigation-menu-demo.tsx",
+        "sha256": "b801ab39c314dd6f7de2e1e32ddc8fadfed6d9d3e1b9978512f8ed27829d3b0e",
+        "previous": "b801ab39c314dd6f7de2e1e32ddc8fadfed6d9d3e1b9978512f8ed27829d3b0e"
+      },
+      {
+        "path": ".agent-runs/navigation-menu/goal-20261118/official/apps/v4/examples/base/navigation-menu-rtl.tsx",
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/navigation-menu-rtl.tsx",
+        "sha256": "b758255d0338f0bab219d6948d68e013062a030617db6109ee1f6210ea55712b",
+        "previous": "b758255d0338f0bab219d6948d68e013062a030617db6109ee1f6210ea55712b"
+      },
+      {
+        "path": ".agent-runs/navigation-menu/goal-20261118/official/apps/v4/registry/styles/style-nova.css",
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/registry/styles/style-nova.css",
+        "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e",
+        "previous": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+      },
+      {
+        "path": ".agent-runs/navigation-menu/goal-20261118/official/apps/v4/package.json",
+        "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/package.json",
+        "sha256": "ec967c97c0229cacd4088b566faa2f574d9c210b136877d634360f617c4b79be",
+        "previous": "f3692cbcc60e47d84859acecd97fbf0cf37358514b317fe05cd8be67ec98b1e9"
+      }
+    ]
+  },
+  "baseUi": {
+    "version": "1.6.0",
+    "files": [
+      {
+        "path": ".agent-runs/navigation-menu/goal-20261118/base-ui/NavigationMenuRoot.tsx",
+        "url": "https://raw.githubusercontent.com/mui/base-ui/v1.6.0/packages/react/src/navigation-menu/root/NavigationMenuRoot.tsx",
+        "sha256": "387d0e404a59580666c1df81964ee3e8cc1f24ad9d8d913d39ed2c6bc462cb92"
+      },
+      {
+        "path": ".agent-runs/navigation-menu/goal-20261118/base-ui/NavigationMenuTrigger.tsx",
+        "url": "https://raw.githubusercontent.com/mui/base-ui/v1.6.0/packages/react/src/navigation-menu/trigger/NavigationMenuTrigger.tsx",
+        "sha256": "0ee4e4a0b00ce216a2295a6f7994eb31bcbd74982053ec2f75e1bc39bc4a93df"
+      },
+      {
+        "path": ".agent-runs/navigation-menu/goal-20261118/base-ui/NavigationMenuLink.tsx",
+        "url": "https://raw.githubusercontent.com/mui/base-ui/v1.6.0/packages/react/src/navigation-menu/link/NavigationMenuLink.tsx",
+        "sha256": "1db7bce5e28ac28956015d8bac7152a559177216c4393d533920c65a6f8f4eb2"
+      },
+      {
+        "path": ".agent-runs/navigation-menu/goal-20261118/base-ui/NavigationMenuPositioner.tsx",
+        "url": "https://raw.githubusercontent.com/mui/base-ui/v1.6.0/packages/react/src/navigation-menu/positioner/NavigationMenuPositioner.tsx",
+        "sha256": "ac18e31f9924ba0077b613aa41ef9fb5047f4720dde941aa7f3b4760bae23e2c"
+      },
+      {
+        "path": ".agent-runs/navigation-menu/goal-20261118/base-ui/NavigationMenuPopup.tsx",
+        "url": "https://raw.githubusercontent.com/mui/base-ui/v1.6.0/packages/react/src/navigation-menu/popup/NavigationMenuPopup.tsx",
+        "sha256": "3e743d55f51df739d37d9ea4dcb2af36c12100f2ef285c13defe328c8dc512e3"
+      },
+      {
+        "path": ".agent-runs/navigation-menu/goal-20261118/base-ui/NavigationMenuViewport.tsx",
+        "url": "https://raw.githubusercontent.com/mui/base-ui/v1.6.0/packages/react/src/navigation-menu/viewport/NavigationMenuViewport.tsx",
+        "sha256": "fceba65985704656d44023c8f3b89b9fc0232dc99918a70f7a40c3107eb52f8b"
+      },
+      {
+        "path": ".agent-runs/navigation-menu/goal-20261118/base-ui/NavigationMenuContent.tsx",
+        "url": "https://raw.githubusercontent.com/mui/base-ui/v1.6.0/packages/react/src/navigation-menu/content/NavigationMenuContent.tsx",
+        "sha256": "ce62676e2c3130be45a30bc0fe7804b5bebe2316411666417141a3fc80fda3f7"
+      },
+      {
+        "path": ".agent-runs/navigation-menu/goal-20261118/base-ui/NavigationMenuList.tsx",
+        "url": "https://raw.githubusercontent.com/mui/base-ui/v1.6.0/packages/react/src/navigation-menu/list/NavigationMenuList.tsx",
+        "sha256": "144c55cc596724fd37085d5dcb603e18dca45e7a0f207723246b83871189bc6d"
+      }
+    ]
+  }
+}
