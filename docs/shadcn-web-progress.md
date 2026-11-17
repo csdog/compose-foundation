@@ -1,7 +1,7 @@
 # Web 对齐验收状态
 
-更新日期：2026-11-18。当前保存状态为 **47 / 67 项已勾选，20 项未完成**。
-本次更新 Marker 验收记录。Chart 保持未勾选并跳过。
+更新日期：2026-11-18。当前保存状态为 **48 / 67 项已勾选，19 项未完成**。
+本次更新 Menubar 验收记录。Chart 保持未勾选并跳过。
 文档整理本身不构成验收；勾选只在组件证据与当前源码校验通过后更新。
 
 ## 状态口径
@@ -57,7 +57,7 @@
 - [x] Kbd (`kbd`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#kbd) · [交接](../.agent-runs/kbd/progress.md)。
 - [x] Label (`label`)：2026-11-18 验收通过。补齐标签关联、付款表单下拉值、RTL 布局和复制代码。12 项 JVM、两张基准图及 lint 通过，当前 JS/Wasm 通过 40 个配方视图，独立终审通过。[验收](web-parity/label-acceptance-20261118/README.md) · [来源](web-parity/label-acceptance-20261118/sources.json) · [终审](web-parity/label-acceptance-20261118/independent-review.md) · [交接](../.agent-runs/label/progress.md)。
 - [x] Marker (`marker`)：2026-11-18 验收通过。修复悬停过渡、键盘轮廓、顶部提示和复制示例。37 项 JVM、截图基准及 lint 通过，JS/Wasm 通过 64 个配方视图，独立终审通过。[验收](web-parity/marker-acceptance-20261118/README.md) · [来源](web-parity/marker-acceptance-20261118/sources.json) · [终审](web-parity/marker-acceptance-20261118/independent-review.md) · [交接](../.agent-runs/marker/progress.md)。
-- [ ] Menubar (`menubar`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#menubar) · [交接](../.agent-runs/menubar/progress.md)。
+- [x] Menubar (`menubar`)：2026-11-18 验收通过。补齐顶层和二级菜单的键盘路径、模态悬停、混合指针和 Nova 子菜单尺寸。33 项 JVM、截图基准及所属 lint 通过，当前 JS/Wasm 核对 360 个示例位置，独立终审通过。[验收](web-parity/menubar-acceptance-20261118/README.md) · [来源](web-parity/menubar-acceptance-20261118/sources.json) · [终审](web-parity/menubar-acceptance-20261118/independent-review.md) · [交接](../.agent-runs/menubar/progress.md)。
 - [ ] Message (`message`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#message) · [交接](../.agent-runs/message/progress.md)。
 - [x] Message Scroller (`message-scroller`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#message-scroller)。
 - [ ] Navigation Menu (`navigation-menu`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#navigation-menu) · [交接](../.agent-runs/navigation-menu/progress.md)。
