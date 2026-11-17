@@ -1,7 +1,7 @@
 # Web 对齐验收状态
 
-更新日期：2026-11-11。当前保存状态为 **40 / 67 项已勾选，27 项未完成**。
-本轮仅继续 Calendar 验收，未启动全队列；历史运行信息见[批次记录](../.agent-runs/batches/latest.json)。
+更新日期：2026-11-17。当前保存状态为 **41 / 67 项已勾选，26 项未完成**。
+本次更新 Hover Card 验收记录。Chart 保持未勾选并跳过。
 文档整理本身不构成验收；勾选只在组件证据与当前源码校验通过后更新。
 
 ## 状态口径
@@ -49,7 +49,7 @@
 - [ ] Dropdown Menu (`dropdown-menu`)：停止时阻塞：焦点和 Escape 交互待诊断。[范围与证据](archive/2026-11-09/component-status-details.md#dropdown-menu) · [交接](../.agent-runs/dropdown-menu/progress.md)。
 - [ ] Empty (`empty`)：停止时阻塞：语言弹层关闭后的辅助功能树恢复异常。[范围与证据](archive/2026-11-09/component-status-details.md#empty) · [交接](../.agent-runs/empty/progress.md)。
 - [ ] Field (`field`)：停止时阻塞：页面标题未随组件路由更新。[范围与证据](archive/2026-11-09/component-status-details.md#field) · [交接](../.agent-runs/field/progress.md)。
-- [ ] Hover Card (`hover-card`)：停止时阻塞：浏览器关闭行为待诊断。[范围与证据](archive/2026-11-09/component-status-details.md#hover-card) · [交接](../.agent-runs/hover-card/progress.md)。
+- [x] Hover Card (`hover-card`)：2026-11-17 验收通过。63 项聚焦 JVM、四张截图基准和所属 lint 通过。当前 JS/Wasm 验证指针过渡、键盘和 Escape、碰撞动画、三语 RTL、主题与目录导航，共绑定 422 条实际响应。独立终审通过。[验收](web-parity/hover-card-acceptance-20261117/README.md) · [来源](web-parity/hover-card-acceptance-20261117/sources.json) · [终审](web-parity/hover-card-acceptance-20261117/independent-review.md) · [交接](../.agent-runs/hover-card/progress.md)。
 - [ ] Input (`input`)：停止时阻塞：动态形状、过渡帧及文件按钮专项证据缺失。[范围与证据](archive/2026-11-09/component-status-details.md#input) · [交接](../.agent-runs/input/progress.md)。
 - [ ] Input Group (`input-group`)：停止时阻塞：More / Search In 下拉按钮回调未实现。[范围与证据](archive/2026-11-09/component-status-details.md#input-group) · [交接](../.agent-runs/input-group/progress.md)。
 - [ ] Input OTP (`input-otp`)：停止时阻塞：手机 Form 布局裁切。[范围与证据](archive/2026-11-09/component-status-details.md#input-otp) · [交接](../.agent-runs/input-otp/progress.md)。

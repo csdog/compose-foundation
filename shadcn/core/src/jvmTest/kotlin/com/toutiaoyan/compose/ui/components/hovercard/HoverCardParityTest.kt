@@ -9,6 +9,7 @@ import androidx.compose.foundation.style.Style
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toPixelMap
 import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.input.InputModeManager
 import androidx.compose.ui.input.key.Key
@@ -19,6 +20,7 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import androidx.compose.ui.unit.*
 import com.toutiaoyan.compose.ui.ScreenshotTest
@@ -28,6 +30,7 @@ import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
 import com.toutiaoyan.compose.ui.components.overlay.PopupPlacement
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.assertPaintedTextColor
+import com.toutiaoyan.compose.ui.tokens.Radius
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.*
 
@@ -187,6 +190,43 @@ class HoverCardParityTest : ScreenshotTest() {
         advance(180)
         assertEquals(listOf(false, false), calls)
         composeRule.onNodeWithText("Preview").assertDoesNotExist()
+    }
+
+    @Test fun openNovaPanelRepaintsWhenThemeAndRadiusChange() {
+        var dark by mutableStateOf(false)
+        var radius by mutableStateOf(0.dp)
+        composeRule.setContent {
+            Theme(preset = StylePreset.Nova, isDark = dark, baseRadius = Radius(radius)) {
+                HoverCard(open = true) {
+                    HoverCardTrigger("Trigger")
+                    HoverCardContent(
+                        modifier = Modifier.testTag("live-panel"),
+                        enter = EnterTransition.None,
+                        exit = ExitTransition.None,
+                    ) {
+                        Spacer(Modifier.height(48.dp))
+                    }
+                }
+            }
+        }
+        val panel = composeRule.onNodeWithTag("live-panel")
+        val lightSquare = panel.captureToImage().toPixelMap()
+        val centerX = lightSquare.width / 2
+        val centerY = lightSquare.height / 2
+        assertTrue(lightSquare[centerX, centerY].red > 0.8f)
+
+        composeRule.runOnIdle { dark = true }
+        val darkSquare = panel.captureToImage().toPixelMap()
+        assertTrue(darkSquare[centerX, centerY].red < 0.3f)
+
+        composeRule.runOnIdle { radius = 24.dp }
+        val darkRound = panel.captureToImage().toPixelMap()
+        assertEquals(darkSquare[centerX, centerY], darkRound[centerX, centerY])
+        assertNotEquals(darkSquare[2, 2], darkRound[2, 2])
+
+        composeRule.runOnIdle { radius = 0.dp }
+        val restored = panel.captureToImage().toPixelMap()
+        assertEquals(darkSquare[2, 2], restored[2, 2])
     }
 
     @Test fun defaultOpenAndExternalOpenDoNotCloseOnIdleComposition() {
