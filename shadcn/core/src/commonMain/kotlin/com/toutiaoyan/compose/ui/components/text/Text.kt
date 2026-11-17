@@ -48,6 +48,9 @@ import kotlin.jvm.JvmName
 
 internal val LocalDefaultTextStyle = staticCompositionLocalOf { TextStyle.Default }
 
+// Preserve ancestor Style color when a component opts into selection for its content.
+internal val LocalInheritSelectableTextColor = staticCompositionLocalOf { false }
+
 /**
  * Usage:
  * ```
@@ -169,7 +172,7 @@ private fun TextImpl(
     val specifiedColor = merged.color.takeIf { it.isSpecified }
     val ambientColor = LocalContentColor.current
     val fallbackColor = if (ambientColor.isSpecified) ambientColor else theme.colors.foreground
-    val inSelection = LocalSelectionRegistrar.current != null
+    val useSelectionFallback = LocalSelectionRegistrar.current != null && !LocalInheritSelectableTextColor.current
     val inheritedContentColor = remember { InheritedContentColor() }
     // ColorProducer is consumed in BasicText's draw phase. Ancestor Style updates
     // can repaint text without remeasurement or a state write back to composition.
@@ -177,7 +180,7 @@ private fun TextImpl(
         ColorProducer {
             val inherited = inheritedContentColor.node
             val color =
-                if (specifiedColor != null || inSelection) {
+                if (specifiedColor != null || useSelectionFallback) {
                     specifiedColor ?: fallbackColor
                 } else {
                     inherited?.inheritedColor()?.takeIf { it.isSpecified } ?: fallbackColor

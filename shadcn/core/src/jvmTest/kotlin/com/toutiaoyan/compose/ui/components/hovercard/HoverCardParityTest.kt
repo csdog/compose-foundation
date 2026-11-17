@@ -5,8 +5,10 @@ package com.toutiaoyan.compose.ui.components.hovercard
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.style.Style
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.input.InputModeManager
 import androidx.compose.ui.input.key.Key
@@ -25,6 +27,7 @@ import com.toutiaoyan.compose.ui.components.button.ButtonVariant
 import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
 import com.toutiaoyan.compose.ui.components.overlay.PopupPlacement
 import com.toutiaoyan.compose.ui.components.text.Text
+import com.toutiaoyan.compose.ui.components.text.assertPaintedTextColor
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.*
 
@@ -120,6 +123,70 @@ class HoverCardParityTest : ScreenshotTest() {
         advance(500)
         panel.assertDoesNotExist()
         composeRule.runOnIdle { assertEquals(1, disposals) }
+    }
+
+    @Test fun selectableContentKeepsTheCallerStyleTextColor() {
+        val color = Color(0xFFB31A7B)
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            HoverCard(defaultOpen = true) {
+                HoverCardTrigger("Trigger")
+                HoverCardContent(style = Style { contentColor(color) }, enter = EnterTransition.None) {
+                    Text { "Selectable preview" }
+                }
+            }
+        }
+        composeRule.onNodeWithText("Selectable preview").assertPaintedTextColor(color)
+    }
+
+    @Test fun escapeCancelsPendingOpenUntilThePointerEntersAgain() {
+        lateinit var mode: InputModeManager
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            mode = LocalInputModeManager.current
+            HoverCard(defaultOpen = true) { Trigger(delay = 500) }
+        }
+        composeRule.runOnIdle { mode.requestInputMode(InputMode.Keyboard) }
+        composeRule.mainClock.autoAdvance = false
+        val trigger = composeRule.onNodeWithText("Trigger")
+        trigger.requestFocus()
+        enter()
+        trigger.performKeyInput { pressKey(Key.Escape) }
+        advance(700)
+        composeRule.onNodeWithText("Preview").assertDoesNotExist()
+        trigger.performMouseInput { exit(delayMillis = 0) }
+        advance(32)
+        enter()
+        advance(600)
+        composeRule.onNodeWithText("Preview").assertIsDisplayed()
+    }
+
+    @Test fun leavingStillRequestsCloseWhenTheOwnerDeclinesEscape() {
+        lateinit var mode: InputModeManager
+        val calls = mutableListOf<Boolean>()
+        var open by mutableStateOf(true)
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            mode = LocalInputModeManager.current
+            HoverCard(
+                open = open,
+                onOpenChange = {
+                    calls.add(it)
+                    if (calls.size == 2) open = it
+                },
+            ) { Trigger(delay = 500, closeDelay = 100) }
+        }
+        composeRule.runOnIdle { mode.requestInputMode(InputMode.Keyboard) }
+        composeRule.mainClock.autoAdvance = false
+        val trigger = composeRule.onNodeWithText("Trigger")
+        trigger.requestFocus()
+        enter()
+        trigger.performKeyInput { pressKey(Key.Escape) }
+        advance(64)
+        assertEquals(listOf(false), calls)
+        composeRule.onNodeWithText("Preview").assertIsDisplayed()
+        composeRule.runOnIdle { mode.requestInputMode(InputMode.Touch) }
+        trigger.performMouseInput { exit(delayMillis = 0) }
+        advance(180)
+        assertEquals(listOf(false, false), calls)
+        composeRule.onNodeWithText("Preview").assertDoesNotExist()
     }
 
     @Test fun defaultOpenAndExternalOpenDoNotCloseOnIdleComposition() {

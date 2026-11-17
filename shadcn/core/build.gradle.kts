@@ -66,6 +66,15 @@ kotlin {
         }
     }
 
+    applyDefaultHierarchyTemplate {
+        common {
+            group("web") {
+                withJs()
+                withWasmJs()
+            }
+        }
+    }
+
     sourceSets {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
@@ -95,6 +104,9 @@ kotlin {
             implementation(libs.kotlin.test)
             implementation(libs.androidx.testExt.junit)
             implementation(libs.androidx.espresso.core)
+        }
+        named("webMain") {
+            dependencies { implementation(libs.kotlinx.browser) }
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)

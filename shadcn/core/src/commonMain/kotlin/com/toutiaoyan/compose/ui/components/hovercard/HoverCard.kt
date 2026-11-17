@@ -15,6 +15,7 @@ import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.styleable
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
@@ -42,6 +43,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.sp
 import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
+import com.toutiaoyan.compose.ui.components.text.LocalInheritSelectableTextColor
 import com.toutiaoyan.compose.ui.theme.LocalContentColor
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
@@ -169,6 +171,7 @@ fun HoverCard(
     }
     val anchor = remember { HoverCardAnchor() }
     var closeForFocusLoss by remember { mutableStateOf(false) }
+    var dismissedByEscape by remember { mutableStateOf(false) }
     var triggerHovered by remember { mutableStateOf(false) }
     var triggerFocused by remember { mutableStateOf(false) }
     var contentHovered by remember { mutableStateOf(false) }
@@ -179,18 +182,27 @@ fun HoverCard(
     val isActive =
         !disabled && !triggerDisabled && !closeForFocusLoss &&
             (triggerHovered || (triggerFocused && keyboard) || (contentHovered && !disableHoverableContent))
+    val canOpenFromActivity = isActive && !dismissedByEscape
     val resolvedDelay = triggerOpenDelay ?: openDelay ?: delayMillis ?: LocalHoverCardDelayMillis.current
     val resolvedClose = triggerCloseDelay ?: closeDelay ?: closeDelayMillis ?: LocalHoverCardCloseDelayMillis.current
     val latestSetOpen by rememberUpdatedState(setOpen)
     val latestOpen by rememberUpdatedState(isOpen)
     var hasBeenActive by remember { mutableStateOf(false) }
-    LaunchedEffect(isActive, resolvedDelay, resolvedClose, closeForFocusLoss) {
+    val dismissByEscape: () -> Unit = {
+        if (latestOpen) {
+            dismissedByEscape = true
+            latestSetOpen(false)
+        }
+    }
+    LaunchedEffect(isActive, canOpenFromActivity, resolvedDelay, resolvedClose, closeForFocusLoss) {
         if (closeForFocusLoss) {
             if (latestOpen) latestSetOpen(false)
         } else if (isActive) {
             hasBeenActive = true
-            if (resolvedDelay > 0) delay(resolvedDelay.toLong())
-            if (!latestOpen) latestSetOpen(true)
+            if (canOpenFromActivity && !latestOpen) {
+                if (resolvedDelay > 0) delay(resolvedDelay.toLong())
+                if (!dismissedByEscape && !latestOpen) latestSetOpen(true)
+            }
         } else if (hasBeenActive) {
             if (resolvedClose > 0) delay(resolvedClose.toLong())
             if (latestOpen) latestSetOpen(false)
@@ -204,12 +216,18 @@ fun HoverCard(
             onContentHoverChange = { contentHovered = it },
             onTriggerDisabledChange = { triggerDisabled = it },
             onTriggerHoverChange = {
-                if (it && !triggerHovered) closeForFocusLoss = false
+                if (it && !triggerHovered) {
+                    closeForFocusLoss = false
+                    dismissedByEscape = false
+                }
                 triggerHovered = it
             },
             onTriggerFocusChange = {
                 if (triggerFocused && !it) closeForFocusLoss = true
-                if (it) closeForFocusLoss = false
+                if (it && !triggerFocused) {
+                    closeForFocusLoss = false
+                    dismissedByEscape = false
+                }
                 triggerFocused = it
             },
             onTriggerDelayChange = { opening, closing ->
@@ -221,6 +239,7 @@ fun HoverCard(
                 // Clear activity as well, so controlled rejection cannot start another close timer.
                 hasBeenActive = false
                 closeForFocusLoss = false
+                dismissedByEscape = false
                 triggerHovered = false
                 triggerFocused = false
                 contentHovered = false
@@ -231,6 +250,7 @@ fun HoverCard(
                 if (latestOpen) latestSetOpen(false)
             },
         )
+    if (isOpen) HoverCardWindowEscape(triggerHovered || contentHovered, dismissByEscape)
     CompositionLocalProvider(LocalHoverCard provides controller) {
         Box(
             modifier =
@@ -239,7 +259,7 @@ fun HoverCard(
                     anchor.root = IntRect(bounds.topLeft.round(), bounds.bottomRight.round())
                 }.onPreviewKeyEvent {
                     if (it.key == Key.Escape && it.type == KeyEventType.KeyDown && isOpen) {
-                        setOpen(false)
+                        dismissByEscape()
                         true
                     } else {
                         false
@@ -370,7 +390,15 @@ fun HoverCardScope.HoverCardContent(
                         } else {
                             LocalDefaultTextStyle.current
                         },
-                ) { content() }
+                ) {
+                    if (nova) {
+                        CompositionLocalProvider(LocalInheritSelectableTextColor provides true) {
+                            SelectionContainer(content = content)
+                        }
+                    } else {
+                        content()
+                    }
+                }
             }
         }
     }
