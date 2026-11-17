@@ -1,7 +1,7 @@
 # Web 对齐验收状态
 
-更新日期：2026-11-17。当前保存状态为 **42 / 67 项已勾选，25 项未完成**。
-本次更新 Input 验收记录。Chart 保持未勾选并跳过。
+更新日期：2026-11-17。当前保存状态为 **43 / 67 项已勾选，24 项未完成**。
+本次更新 Input Group 验收记录。Chart 保持未勾选并跳过。
 文档整理本身不构成验收；勾选只在组件证据与当前源码校验通过后更新。
 
 ## 状态口径
@@ -51,7 +51,7 @@
 - [ ] Field (`field`)：停止时阻塞：页面标题未随组件路由更新。[范围与证据](archive/2026-11-09/component-status-details.md#field) · [交接](../.agent-runs/field/progress.md)。
 - [x] Hover Card (`hover-card`)：2026-11-17 验收通过。63 项聚焦 JVM、四张截图基准和所属 lint 通过。当前 JS/Wasm 验证指针过渡、键盘和 Escape、碰撞动画、三语 RTL、主题与目录导航，共绑定 422 条实际响应。独立终审通过。[验收](web-parity/hover-card-acceptance-20261117/README.md) · [来源](web-parity/hover-card-acceptance-20261117/sources.json) · [终审](web-parity/hover-card-acceptance-20261117/independent-review.md) · [交接](../.agent-runs/hover-card/progress.md)。
 - [x] Input (`input`)：2026-11-17 验收通过。Nova 150 ms 颜色过渡、即时焦点环及 File 控件已修复。39 项聚焦 JVM、截图校验与所属 lint 通过。当前 JS/Wasm 通过 120 个配方视图、原生文件操作、三语方向与路由复验，已取得独立终审。[验收](web-parity/input-acceptance-20261117/README.md) · [来源](web-parity/input-acceptance-20261117/sources.json) · [终审](web-parity/input-acceptance-20261117/independent-review.md) · [交接](../.agent-runs/input/progress.md)。
-- [ ] Input Group (`input-group`)：停止时阻塞：More / Search In 下拉按钮回调未实现。[范围与证据](archive/2026-11-09/component-status-details.md#input-group) · [交接](../.agent-runs/input-group/progress.md)。
+- [x] Input Group (`input-group`)：2026-11-17 验收通过。More、Search In、Info 交互及 Nova 150 ms 颜色过渡已修复。101 项聚焦 JVM、截图校验和所属 lint 通过。当前 JS/Wasm 通过 112 个配方视图、真实剪贴板、弹层翻转、三语和路由复验，独立终审通过。[验收](web-parity/input-group-acceptance-20261117/README.md) · [来源](web-parity/input-group-acceptance-20261117/sources.json) · [终审](web-parity/input-group-acceptance-20261117/independent-review.md) · [交接](../.agent-runs/input-group/progress.md)。
 - [ ] Input OTP (`input-otp`)：停止时阻塞：手机 Form 布局裁切。[范围与证据](archive/2026-11-09/component-status-details.md#input-otp) · [交接](../.agent-runs/input-otp/progress.md)。
 - [ ] Item (`item`)：已有验证进展；会话预算结束，保留续跑断点。[范围与证据](archive/2026-11-09/component-status-details.md#item) · [交接](../.agent-runs/item/progress.md)。
 - [x] Kbd (`kbd`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#kbd) · [交接](../.agent-runs/kbd/progress.md)。
