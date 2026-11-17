@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.constrainWidth
 import androidx.compose.ui.unit.constrainHeight
 import androidx.compose.ui.unit.Constraints
@@ -17,32 +16,21 @@ import androidx.compose.ui.unit.sp
 import com.toutiaoyan.compose.ui.components.button.*
 import com.toutiaoyan.compose.ui.components.hovercard.*
 import com.toutiaoyan.compose.ui.components.text.Text
-import com.toutiaoyan.compose.ui.theme.currentTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.ui.platform.LocalDensity
 
-/** CSS flex decides wrapping using fractional widths, before Compose rounds each button up. */
+/** Keep the Nova/Geist flex breakpoint independent of Compose's integer button measurements. */
 @Composable
 internal fun HoverCardSidesRecipe(modifier: Modifier = Modifier) {
     val sides = listOf(HoverCardSide.Left, HoverCardSide.Top, HoverCardSide.Bottom, HoverCardSide.Right)
-    val measurer = rememberTextMeasurer()
-    val labelStyle =
-        TextStyle(
-            fontFamily = currentTheme.fontFamily,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Medium,
-            letterSpacing = 0.sp,
-        )
     val density = LocalDensity.current
-    val chrome = with(density) { 22.dp.toPx() } // px-2.5 plus the two 1dp borders, as in the source Md Outline buttons.
-    val ideal =
-        sides.map {
-            val label = measurer.measure(it.name, labelStyle)
-            // Intrinsic width is rounded up by Skia; cursor positions retain glyph advances.
-            val advance = label.getHorizontalPosition(it.name.length, true) - label.getHorizontalPosition(0, true)
-            kotlin.math.abs(advance) + chrome
-        }
+    val chrome = with(density) { 22.dp.toPx() }
+    val fontScale = with(density) { 14.sp.toPx() / 14f }
+    // Inline text advances at Geist Medium 14px, from the Base UI Sides recipe's
+    // measured border boxes minus its 20px padding and 2px border.
+    val advances = listOf(26.3125f, 23.4375f, 47.921875f, 34.78125f)
+    val ideal = advances.map { chrome + it * fontScale }
     val gap = with(density) { 8.dp.roundToPx() }
     Layout(
         modifier = modifier.fillMaxWidth(),
@@ -83,11 +71,16 @@ internal fun HoverCardSidesRecipe(modifier: Modifier = Modifier) {
         layout(width, height) {
             var y = 0
             rows.forEachIndexed { line, row ->
-                // A subpixel CSS fit may exceed integer layout by a pixel. Keep the complete line centered.
-                var x = (width - rowWidths[line]) / 2
-                row.forEach { i ->
+                // Fit integer widths inside a row that fits under the CSS measurements.
+                val spaces = row.lastIndex
+                val overflow = (rowWidths[line] - width).coerceIn(0, gap * spaces)
+                var x = (width - rowWidths[line] + overflow) / 2
+                row.forEachIndexed { index, i ->
                     items[i].placeRelative(x, y)
-                    x += items[i].width + gap
+                    if (index < spaces) {
+                        val reduction = overflow / spaces + if (index < overflow % spaces) 1 else 0
+                        x += items[i].width + gap - reduction
+                    }
                 }
                 y += rowHeights[line] + gap
             }
