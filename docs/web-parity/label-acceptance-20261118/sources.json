@@ -1,0 +1,41 @@
+{
+  "revision": "968d8cb9dc42ae5d52e8fd356cf84596ec832a26",
+  "files": [
+    {
+      "path": ".agent-runs/label/goal-20261117/official/apps/v4/content/docs/components/base/label.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/content/docs/components/base/label.mdx",
+      "sha256": "7e84849ed5c8f4101e12b79de7567c07c77871f7c59f173b4ea471b3b35d04f0",
+      "previous": "7e84849ed5c8f4101e12b79de7567c07c77871f7c59f173b4ea471b3b35d04f0"
+    },
+    {
+      "path": ".agent-runs/label/goal-20261117/official/apps/v4/registry/bases/base/ui/label.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/registry/bases/base/ui/label.tsx",
+      "sha256": "d11f6ddea1304473d829329f36238c164dbee9fe04c038fd169d70d352b75704",
+      "previous": "d11f6ddea1304473d829329f36238c164dbee9fe04c038fd169d70d352b75704"
+    },
+    {
+      "path": ".agent-runs/label/goal-20261117/official/apps/v4/examples/base/label-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/label-demo.tsx",
+      "sha256": "10b1d4ad4e9af1f8f16905dc4f2e50ecf87b0da1829fe9225e16025f334c8c37",
+      "previous": "10b1d4ad4e9af1f8f16905dc4f2e50ecf87b0da1829fe9225e16025f334c8c37"
+    },
+    {
+      "path": ".agent-runs/label/goal-20261117/official/apps/v4/examples/base/label-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/label-rtl.tsx",
+      "sha256": "785cc6f2e3c656351c69de088a05b2d63e2cda700d519d1cfc32f89793f81a99",
+      "previous": "785cc6f2e3c656351c69de088a05b2d63e2cda700d519d1cfc32f89793f81a99"
+    },
+    {
+      "path": ".agent-runs/label/goal-20261117/official/apps/v4/examples/base/field-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/field-demo.tsx",
+      "sha256": "4ac44250626b200412bd8d7f933bfb9ad227b97e6f5c8e73164c0a6b792dc7cf",
+      "previous": "4ac44250626b200412bd8d7f933bfb9ad227b97e6f5c8e73164c0a6b792dc7cf"
+    },
+    {
+      "path": ".agent-runs/label/goal-20261117/official/apps/v4/registry/styles/style-nova.css",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e",
+      "previous": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+    }
+  ]
+}

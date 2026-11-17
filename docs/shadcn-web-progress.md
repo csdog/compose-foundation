@@ -1,7 +1,7 @@
 # Web 对齐验收状态
 
-更新日期：2026-11-17。当前保存状态为 **45 / 67 项已勾选，22 项未完成**。
-本次更新 Item 验收记录。Chart 保持未勾选并跳过。
+更新日期：2026-11-18。当前保存状态为 **46 / 67 项已勾选，21 项未完成**。
+本次更新 Label 验收记录。Chart 保持未勾选并跳过。
 文档整理本身不构成验收；勾选只在组件证据与当前源码校验通过后更新。
 
 ## 状态口径
@@ -55,7 +55,7 @@
 - [x] Input OTP (`input-otp`)：2026-11-17 验收通过。修复手机 Form、等宽插槽、实际文本框命名、Nova 过渡与 RTL 编辑。49 项 JVM、截图校验及 lint 通过。当前 JS/Wasm 通过 80 个配方视图、粘贴与删除、三语、路由及动画复验，独立终审通过。[验收](web-parity/input-otp-acceptance-20261117/README.md) · [来源](web-parity/input-otp-acceptance-20261117/sources.json) · [终审](web-parity/input-otp-acceptance-20261117/independent-review.md) · [交接](../.agent-runs/input-otp/progress.md)。
 - [x] Item (`item`)：2026-11-17 验收通过。修复同页与安全新标签页导航、手机 Header、Dropdown 焦点和 Nova 动画。44 项 JVM、6 张基准图及 lint 通过，当前 JS/Wasm 通过 88 个配方视图，独立终审通过。[验收](web-parity/item-acceptance-20261117/README.md) · [来源](web-parity/item-acceptance-20261117/sources.json) · [终审](web-parity/item-acceptance-20261117/independent-review.md) · [交接](../.agent-runs/item/progress.md)。
 - [x] Kbd (`kbd`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#kbd) · [交接](../.agent-runs/kbd/progress.md)。
-- [ ] Label (`label`)：用户主动停止于 30-verify，保留断点。[范围与证据](archive/2026-11-09/component-status-details.md#label) · [交接](../.agent-runs/label/progress.md)。
+- [x] Label (`label`)：2026-11-18 验收通过。补齐标签关联、付款表单下拉值、RTL 布局和复制代码。12 项 JVM、两张基准图及 lint 通过，当前 JS/Wasm 通过 40 个配方视图，独立终审通过。[验收](web-parity/label-acceptance-20261118/README.md) · [来源](web-parity/label-acceptance-20261118/sources.json) · [终审](web-parity/label-acceptance-20261118/independent-review.md) · [交接](../.agent-runs/label/progress.md)。
 - [ ] Marker (`marker`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#marker) · [交接](../.agent-runs/marker/progress.md)。
 - [ ] Menubar (`menubar`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#menubar) · [交接](../.agent-runs/menubar/progress.md)。
 - [ ] Message (`message`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#message) · [交接](../.agent-runs/message/progress.md)。
