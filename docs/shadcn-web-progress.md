@@ -1,7 +1,7 @@
 # Web 对齐验收状态
 
-更新日期：2026-11-18。当前保存状态为 **51 / 67 项已勾选，16 项未完成**。
-本次更新 Popover 验收记录。Chart 保持未勾选并跳过。
+更新日期：2026-11-18。当前保存状态为 **52 / 67 项已勾选，15 项未完成**。
+本次更新 Progress 验收记录。Chart 保持未勾选并跳过。
 文档整理本身不构成验收；勾选只在组件证据与当前源码校验通过后更新。
 
 ## 状态口径
@@ -63,7 +63,7 @@
 - [x] Navigation Menu (`navigation-menu`)：2026-11-18 验收通过。修复共享弹层动画、Tab 焦点往返和悬停菜单 Escape。52 项 JVM、截图基准及所属 lint 通过，当前 JS/Wasm 核对 40 个示例位置，独立终审通过。[验收](web-parity/navigation-menu-acceptance-20261118/README.md) · [来源](web-parity/navigation-menu-acceptance-20261118/sources.json) · [终审](web-parity/navigation-menu-acceptance-20261118/independent-review.md) · [交接](../.agent-runs/navigation-menu/progress.md)。
 - [x] Pagination (`pagination`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#pagination) · [交接](../.agent-runs/pagination/progress.md)。
 - [x] Popover (`popover`)：2026-11-18 验收通过。修复触屏 Escape 与焦点恢复、非模态 Tab 边界和 Nova 碰撞动画。48 项 JVM、截图基准及所属 lint 通过，当前 JS/Wasm 核对 64 个示例位置，独立终审通过。[验收](web-parity/popover-acceptance-20261118/README.md) · [来源](web-parity/popover-acceptance-20261118/sources.json) · [终审](web-parity/popover-acceptance-20261118/independent-review.md) · [交接](../.agent-runs/popover/progress.md)。
-- [ ] Progress (`progress`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#progress) · [交接](../.agent-runs/progress/progress.md)。
+- [x] Progress (`progress`)：2026-11-18 验收通过。修复无障碍标签和原始数值范围。52 项 JVM、八张截图基准及所属 lint 通过，当前 JS/Wasm 核对 32 个示例位置和进度动画，独立终审通过。[验收](web-parity/progress-acceptance-20261118/README.md) · [来源](web-parity/progress-acceptance-20261118/sources.json) · [终审](web-parity/progress-acceptance-20261118/independent-review.md) · [交接](../.agent-runs/progress/progress.md)。
 - [ ] Questionnaire (`questionnaire`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#questionnaire) · [交接](../.agent-runs/questionnaire/progress.md)。
 - [ ] Radio Group (`radio-group`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#radio-group) · [交接](../.agent-runs/radio-group/progress.md)。
 - [x] Resizable (`resizable`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#resizable)。
