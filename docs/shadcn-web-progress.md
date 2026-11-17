@@ -1,7 +1,7 @@
 # Web 对齐验收状态
 
-更新日期：2026-11-18。当前保存状态为 **52 / 67 项已勾选，15 项未完成**。
-本次更新 Progress 验收记录。Chart 保持未勾选并跳过。
+更新日期：2026-11-18。当前保存状态为 **53 / 67 项已勾选，14 项未完成**。
+本次更新 Questionnaire 验收记录。Chart 保持未勾选并跳过。
 文档整理本身不构成验收；勾选只在组件证据与当前源码校验通过后更新。
 
 ## 状态口径
@@ -64,7 +64,7 @@
 - [x] Pagination (`pagination`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#pagination) · [交接](../.agent-runs/pagination/progress.md)。
 - [x] Popover (`popover`)：2026-11-18 验收通过。修复触屏 Escape 与焦点恢复、非模态 Tab 边界和 Nova 碰撞动画。48 项 JVM、截图基准及所属 lint 通过，当前 JS/Wasm 核对 64 个示例位置，独立终审通过。[验收](web-parity/popover-acceptance-20261118/README.md) · [来源](web-parity/popover-acceptance-20261118/sources.json) · [终审](web-parity/popover-acceptance-20261118/independent-review.md) · [交接](../.agent-runs/popover/progress.md)。
 - [x] Progress (`progress`)：2026-11-18 验收通过。修复无障碍标签和原始数值范围。52 项 JVM、八张截图基准及所属 lint 通过，当前 JS/Wasm 核对 32 个示例位置和进度动画，独立终审通过。[验收](web-parity/progress-acceptance-20261118/README.md) · [来源](web-parity/progress-acceptance-20261118/sources.json) · [终审](web-parity/progress-acceptance-20261118/independent-review.md) · [交接](../.agent-runs/progress/progress.md)。
-- [ ] Questionnaire (`questionnaire`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#questionnaire) · [交接](../.agent-runs/questionnaire/progress.md)。
+- [x] Questionnaire (`questionnaire`)：2026-11-18 验收通过。修复手机/桌面预览、入场与减少动态效果、进度语义、题目错误名称和十四份复制代码。99 项 Questionnaire JVM、29 项共享回归、34 张截图校验及 lint 通过，当前 JS/Wasm 核对 144 个配方位置和实际流程，独立终审通过。Canvas 焦点与代理坐标边界见验收。[验收](web-parity/questionnaire-acceptance-20261118/README.md) · [来源](web-parity/questionnaire-acceptance-20261118/sources.json) · [终审](web-parity/questionnaire-acceptance-20261118/independent-review.md) · [交接](../.agent-runs/questionnaire/progress.md)。
 - [ ] Radio Group (`radio-group`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#radio-group) · [交接](../.agent-runs/radio-group/progress.md)。
 - [x] Resizable (`resizable`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#resizable)。
 - [x] Scroll Area (`scroll-area`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#scroll-area)。
