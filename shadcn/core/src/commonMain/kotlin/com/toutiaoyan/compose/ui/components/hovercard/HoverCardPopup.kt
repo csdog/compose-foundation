@@ -30,8 +30,11 @@ import com.toutiaoyan.compose.ui.components.overlay.PopupPositionProvider as Def
 internal val HoverCardDefaultEnter = fadeIn(tween(0))
 internal val HoverCardDefaultExit = fadeOut(tween(0))
 
-/** Coordinates are consumed only by the popup measure policy, without recomposing either sibling. */
+/** Window coordinates shared by the popup positioner and Web pointer transit. */
 internal class HoverCardAnchor {
+    val pointerSurface = HoverCardPointerSurface()
+    var popup by mutableStateOf<PopupPositionResult?>(null)
+    var popupOwner: Any? = null
     var root by mutableStateOf<IntRect?>(null)
     var trigger by mutableStateOf<IntRect?>(null)
 }
@@ -91,6 +94,15 @@ internal fun HoverCardPopup(
     val defaultExit = exit === HoverCardDefaultExit
     val animatePosition = nova && (defaultEnter || defaultExit)
     val geometry = remember { mutableStateOf<PopupPositionResult?>(null) }
+    val owner = remember { Any() }
+    DisposableEffect(anchor, nova) {
+        onDispose {
+            if (anchor.popupOwner === owner) {
+                anchor.popupOwner = null
+                anchor.popup = null
+            }
+        }
+    }
     val collisionPadding = with(LocalDensity.current) { 5.dp.roundToPx() }
     val position =
         remember(anchor, placement, offsetPx, align, alignOffsetPx, nova, collisionPadding) {
@@ -100,7 +112,11 @@ internal fun HoverCardPopup(
                 } else {
                     DefaultPopupPositionProvider(placement, offsetPx, align, alignOffsetPx)
                 }
-            HoverCardPositionProvider(anchor, delegate) { geometry.value = it }
+            HoverCardPositionProvider(anchor, delegate) {
+                geometry.value = it
+                anchor.popupOwner = owner
+                anchor.popup = it
+            }
         }
     Popup(
         popupPositionProvider = position,

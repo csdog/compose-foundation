@@ -175,13 +175,21 @@ fun HoverCard(
     var triggerHovered by remember { mutableStateOf(false) }
     var triggerFocused by remember { mutableStateOf(false) }
     var contentHovered by remember { mutableStateOf(false) }
+    var pointerInTransit by remember { mutableStateOf(false) }
     var triggerDisabled by remember { mutableStateOf(false) }
     var triggerOpenDelay by remember { mutableStateOf<Int?>(null) }
     var triggerCloseDelay by remember { mutableStateOf<Int?>(null) }
     val keyboard = LocalInputModeManager.current.inputMode == InputMode.Keyboard
+    val allowTransit =
+        isOpen && !disabled && !triggerDisabled && !disableHoverableContent && !dismissedByEscape &&
+            currentTheme.activePreset == StylePreset.Nova
+    val activeTransit = allowTransit && pointerInTransit
     val isActive =
         !disabled && !triggerDisabled && !closeForFocusLoss &&
-            (triggerHovered || (triggerFocused && keyboard) || (contentHovered && !disableHoverableContent))
+            (
+                triggerHovered || (triggerFocused && keyboard) ||
+                    (contentHovered && !disableHoverableContent) || activeTransit
+            )
     val canOpenFromActivity = isActive && !dismissedByEscape
     val resolvedDelay = triggerOpenDelay ?: openDelay ?: delayMillis ?: LocalHoverCardDelayMillis.current
     val resolvedClose = triggerCloseDelay ?: closeDelay ?: closeDelayMillis ?: LocalHoverCardCloseDelayMillis.current
@@ -243,6 +251,7 @@ fun HoverCard(
                 triggerHovered = false
                 triggerFocused = false
                 contentHovered = false
+                pointerInTransit = false
                 triggerDisabled = false
                 triggerOpenDelay = null
                 triggerCloseDelay = null
@@ -250,7 +259,10 @@ fun HoverCard(
                 if (latestOpen) latestSetOpen(false)
             },
         )
-    if (isOpen) HoverCardWindowEscape(triggerHovered || contentHovered, dismissByEscape)
+    if (allowTransit) {
+        anchor.pointerSurface.ObserveTransit(anchor, triggerHovered, contentHovered) { pointerInTransit = it }
+    }
+    if (isOpen) HoverCardWindowEscape(triggerHovered || contentHovered || activeTransit, dismissByEscape)
     CompositionLocalProvider(LocalHoverCard provides controller) {
         Box(
             modifier =
@@ -292,9 +304,15 @@ fun HoverCardScope.HoverCardTrigger(
     DisposableEffect(Unit) {
         onDispose { latestController.onTriggerUnmount() }
     }
+    val triggerModifier =
+        if (currentTheme.activePreset == StylePreset.Nova && !disabled) {
+            controller.anchor.pointerSurface.observeTrigger(modifier)
+        } else {
+            modifier
+        }
     Box(
         modifier =
-            modifier
+            triggerModifier
                 .onGloballyPositioned {
                     val bounds = it.boundsInWindow()
                     controller.anchor.trigger = IntRect(bounds.topLeft.round(), bounds.bottomRight.round())
