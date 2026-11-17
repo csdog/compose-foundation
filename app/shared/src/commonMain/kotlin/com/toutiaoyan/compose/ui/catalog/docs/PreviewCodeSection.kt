@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
 import com.toutiaoyan.compose.ui.components.button.Button
 import com.toutiaoyan.compose.ui.components.button.ButtonSize
 import com.toutiaoyan.compose.ui.components.button.ButtonVariant
@@ -52,10 +53,24 @@ fun PreviewCodeSection(
     previewHeight: Dp? = null,
     previewVerticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
     desktopPreviewInsetStart: Dp = 0.dp,
+    mobilePreviewPadding: Dp? = null,
+    mobilePreviewVerticalAlignment: Alignment.Vertical? = null,
     preview: @Composable () -> Unit,
 ) {
     val mobile = catalogViewportWidth() < 640.dp
     val effectiveMinHeight = if (mobile) mobileMinPreviewHeight ?: minPreviewHeight else minPreviewHeight
+    val padding = if (mobile) mobilePreviewPadding ?: previewPadding else previewPadding
+    val verticalAlignment =
+        if (mobile) mobilePreviewVerticalAlignment ?: previewVerticalAlignment else previewVerticalAlignment
+    val previewAlignment =
+        remember(verticalAlignment) {
+            Alignment { size, space, direction ->
+                IntOffset(
+                    Alignment.CenterHorizontally.align(size.width, space.width, direction),
+                    verticalAlignment.align(size.height, space.height),
+                )
+            }
+        }
     var showCode by remember(code) { mutableStateOf(false) }
     val shape = RoundedCornerShape(16.dp)
     val colors = currentTheme.colors
@@ -84,8 +99,8 @@ fun PreviewCodeSection(
                                     effectiveMinHeight,
                                 )
                             },
-                        ).padding(previewPadding),
-                contentAlignment = Alignment.Center,
+                        ).padding(padding),
+                contentAlignment = if (previewHeight == null) previewAlignment else Alignment.Center,
             ) {
                 if (previewHeight != null) {
                     // CSS flex centering allows the chart aspect ratio to exceed the padded
@@ -93,7 +108,7 @@ fun PreviewCodeSection(
                     Box(
                         Modifier.fillMaxHeight().wrapContentHeight(
                             align =
-                            previewVerticalAlignment,
+                            verticalAlignment,
                             unbounded =
                             true,
                         ),

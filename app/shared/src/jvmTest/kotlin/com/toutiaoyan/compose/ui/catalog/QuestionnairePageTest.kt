@@ -1,14 +1,25 @@
 package com.toutiaoyan.compose.ui.catalog
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.platform.WindowInfo
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.catalog.docs.questionnaireDoc
+import com.toutiaoyan.compose.ui.catalog.docs.PreviewCodeSection
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import org.junit.Rule
@@ -20,6 +31,41 @@ import kotlin.test.assertTrue
 
 class QuestionnairePageTest {
     @get:Rule val rule = createComposeRule()
+
+    @Test fun previewsAlignToThePaddedStartOnPhonesAndEndOnDesktop() {
+        var viewportWidth by mutableIntStateOf(390)
+        val default = questionnaireDoc.examples.first()
+        rule.setContent {
+            val original = LocalWindowInfo.current
+            val window =
+                remember(viewportWidth, original) {
+                    object : WindowInfo by original {
+                        override val containerSize = IntSize(viewportWidth, 800)
+                    }
+                }
+            CompositionLocalProvider(LocalWindowInfo provides window) {
+                Theme(preset = StylePreset.Nova, minTouchTarget = null) {
+                    PreviewCodeSection(
+                        code = "",
+                        modifier = Modifier.width((if (viewportWidth == 390) 340 else 638).dp).testTag("frame"),
+                        minPreviewHeight = default.minPreviewHeight,
+                        previewPadding = default.previewPadding,
+                        previewVerticalAlignment = default.previewVerticalAlignment,
+                        mobilePreviewPadding = default.mobilePreviewPadding,
+                        mobilePreviewVerticalAlignment = default.mobilePreviewVerticalAlignment,
+                        hideCode = true,
+                    ) {
+                        Box(Modifier.size(100.dp, 80.dp).testTag("content"))
+                    }
+                }
+            }
+        }
+        val frame = rule.onNodeWithTag("frame")
+        val content = rule.onNodeWithTag("content")
+        assertEquals(17.dp, content.getUnclippedBoundsInRoot().top - frame.getUnclippedBoundsInRoot().top)
+        rule.runOnIdle { viewportWidth = 1440 }
+        assertEquals(33.dp, frame.getUnclippedBoundsInRoot().bottom - content.getUnclippedBoundsInRoot().bottom)
+    }
 
     private fun show(title: String) {
         rule.setContent {
@@ -64,7 +110,7 @@ class QuestionnairePageTest {
         assertNull(questionnaireDoc.examplesHeading)
         assertFalse(questionnaireDoc.examples.first().showHeading)
         assertEquals(
-            "Server Rendering",
+            "Initial Composition",
             questionnaireDoc.beforeExamples.single().title,
         )
         assertEquals(
@@ -105,11 +151,12 @@ class QuestionnairePageTest {
             "│   └── QuestionnaireError",
             "└── QuestionnaireActions",
         ).forEach { assertTrue(composition.contains(it), it) }
-        val serverRendering = questionnaireDoc.beforeExamples.single()
-        val serverText =
-            (serverRendering.blocks.single() as com.toutiaoyan.compose.ui.catalog.docs.ComponentGuideBlock.Paragraph)
+        val initialComposition = questionnaireDoc.beforeExamples.single()
+        val initialText =
+            (initialComposition.blocks.single() as com.toutiaoyan.compose.ui.catalog.docs.ComponentGuideBlock.Paragraph)
                 .markdown
-        assertTrue(serverText.contains("Pass `items` to server-render"))
+        assertTrue(initialText.contains("uses `items` to render the first state on the server"))
+        assertTrue(initialText.contains("first composition"))
 
         val accessibility = questionnaireDoc.afterExamples.first()
         assertEquals(3, accessibility.blocks.size)

@@ -196,8 +196,7 @@ internal val questionnaireOfficialExamples =
             "Default",
             showHeading = false,
             code = questionnaireDefaultRecipeCode,
-            minPreviewHeight = 540.dp,
-            mobileMinPreviewHeight = 640.dp,
+            minPreviewHeight = 560.dp,
             preview = { QuestionnaireDefaultRecipe() },
         ),
     )

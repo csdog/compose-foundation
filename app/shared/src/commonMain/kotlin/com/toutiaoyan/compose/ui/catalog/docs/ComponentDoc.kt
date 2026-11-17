@@ -22,6 +22,8 @@ data class ComponentExample(
     val showHeading: Boolean = true,
     /** Nested step examples use level 3; ordinary recipes remain level 2. */
     val headingLevel: Int = 2,
+    val mobilePreviewPadding: Dp? = null,
+    val mobilePreviewVerticalAlignment: Alignment.Vertical? = null,
     val preview: @Composable () -> Unit,
 )
 

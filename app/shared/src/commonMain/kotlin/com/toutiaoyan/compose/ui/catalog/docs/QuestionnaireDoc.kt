@@ -1155,8 +1155,8 @@ val questionnaireDoc =
                 └── QuestionnaireSubmit
             """.trimIndent(),
         beforeCompositionMarkdown =
-            "Define the collection once: pass it to `Questionnaire` for server-rendered progress, actions, " +
-                "and shortcuts, then map it into the parts.",
+            "Define the collection once and pass it to `Questionnaire` so the initial composition can resolve " +
+                "progress, actions, and shortcuts. Use the same collection to compose the item parts.",
         compositionMarkdown =
             "Questionnaire owns the ordered items, active item, answer state, validation, progress, and navigation. " +
                 "The containing page, card, dialog, or drawer owns close and cancellation behavior, persistence, " +
@@ -1165,13 +1165,13 @@ val questionnaireDoc =
         beforeExamples =
             listOf(
                 ComponentGuideSection(
-                    "Server Rendering",
+                    "Initial Composition",
                     listOf(
                         ComponentGuideBlock.Paragraph(
-                            "Pass `items` to server-render the active item, progress, actions, and answer " +
-                                "shortcuts. See the [headless Questionnaire]" +
-                                "(https://ui.shadcn.com/docs/react/questionnaire) " +
-                                "for the complete behavior.",
+                            "The upstream [headless Questionnaire]" +
+                                "(https://ui.shadcn.com/docs/react/questionnaire) uses `items` to render the first " +
+                                "state on the server. In Compose, the collection makes the active item, progress, " +
+                                "actions, and answer shortcuts available on the first composition.",
                         ),
                     ),
                 ),
@@ -1183,15 +1183,15 @@ val questionnaireDoc =
                     listOf(
                         ComponentGuideBlock.Paragraph(
                             "In the official web component, `QuestionnaireItem` renders a `fieldset`, and " +
-                                "`QuestionnaireTitle` renders its `legend`. Compose groups the active question " +
-                                "and marks its title as a heading. Active errors and invalid answer controls " +
-                                "expose an error state through Compose semantics.",
+                                "`QuestionnaireTitle` renders its `legend`. Compose names the active focus target " +
+                                "with the question title, description and any validation error. The visible title " +
+                                "is a heading, and invalid answer controls expose an error state.",
                         ),
                         ComponentGuideBlock.Paragraph(
-                            "Fixed choices preserve native radio and checkbox behavior. Progress is exposed as " +
-                                "a named progressbar, navigation uses real buttons, and inactive items and " +
+                            "Fixed choices expose radio or checkbox roles and their selection state. Progress is " +
+                                "a named progressbar. Navigation uses buttons. Inactive items and " +
                                 "actions are hidden and inert. Successful navigation focuses the newly active " +
-                                "item; failed validation focuses an available answer control.",
+                                "item. Failed validation focuses an available answer control.",
                         ),
                         ComponentGuideBlock.Paragraph(
                             "Always give `QuestionnaireInput` an accessible name with a visible label, " +
@@ -1243,23 +1243,7 @@ val questionnaireDoc =
                         minPreviewHeight = 420.dp,
                         descriptionMarkdown =
                             "Use `multiple` for an item that accepts more than one fixed answer.",
-                        code =
-                            """
-                            Questionnaire(items = items) {
-                                QuestionnaireItem("context", required = true, multiple = true) {
-                                    QuestionnaireTitle("What context should the agent inspect?")
-                                    QuestionnaireDescription("Select every source that may affect the implementation.")
-                                    QuestionnaireChoices {
-                                        QuestionnaireChoice("source", "Relevant source files")
-                                        QuestionnaireChoice("tests", "Existing tests")
-                                        QuestionnaireChoice("docs", "Architecture documentation")
-                                        QuestionnaireChoice("history", "Recent commit history")
-                                    }
-                                    QuestionnaireError()
-                                }
-                                QuestionnaireActions { QuestionnaireSubmit("Share context") }
-                            }
-                            """.trimIndent(),
+                        code = questionnaireMultipleSelectionRecipeCode,
                         preview = { MultipleSelectionPreview() },
                     ),
                     ComponentExample(
@@ -1268,16 +1252,7 @@ val questionnaireDoc =
                         descriptionMarkdown =
                             "Compose `QuestionnaireInput` with fixed choices when the user can provide another " +
                                 "answer.",
-                        code =
-                            """
-                            QuestionnaireItem("approach", required = true) {
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("incremental", "Make the smallest safe change")
-                                    QuestionnaireChoice("module", "Refactor one module at a time")
-                                    QuestionnaireInput(placeholder = "Describe another approach…")
-                                }
-                            }
-                            """.trimIndent(),
+                        code = questionnaireFreeformAnswerRecipeCode,
                         preview = { FreeformAnswerPreview() },
                     ),
                     ComponentExample(
@@ -1285,43 +1260,14 @@ val questionnaireDoc =
                         minPreviewHeight = 520.dp,
                         descriptionMarkdown =
                             "Add `QuestionnaireSkip` when an optional item may be intentionally left unanswered.",
-                        code =
-                            """
-                            Questionnaire(items = items) {
-                                QuestionnaireProgress()
-                                QuestionnaireItem("task", required = true) { /* … */ }
-                                QuestionnaireItem("constraints") { /* optional */ }
-                                QuestionnaireItem("review", required = true) { /* … */ }
-                                QuestionnaireActions {
-                                    QuestionnairePrevious()
-                                    QuestionnaireSkip()
-                                    QuestionnaireNext("Next")
-                                    QuestionnaireSubmit("Submit brief")
-                                }
-                            }
-                            """.trimIndent(),
+                        code = questionnaireExplicitSkipRecipeCode,
                         preview = { ExplicitSkipPreview() },
                     ),
                     ComponentExample(
                         title = "Shortcuts",
                         minPreviewHeight = 480.dp,
                         descriptionMarkdown = "Assign a letter or number key to each answer with `shortcuts`.",
-                        code =
-                            """
-                            var shortcuts by remember { mutableStateOf(QuestionnaireShortcuts.Letters) }
-                            Select(value = "Letters", onValueChange = { shortcuts = QuestionnaireShortcuts.Letters }) {
-                                SelectTrigger(Modifier.width(160.dp), size = SelectSize.Sm, accessibilityLabel = "Shortcut style")
-                                SelectContent {
-                                    SelectItem("No shortcuts")
-                                    SelectItem("Letters")
-                                    SelectItem("Numbers")
-                                }
-                            }
-                            Questionnaire(items = items, shortcuts = shortcuts) {
-                                QuestionnaireItem("action", required = true) { /* … */ }
-                                QuestionnaireActions { QuestionnaireSubmit("Confirm action") }
-                            }
-                            """.trimIndent(),
+                        code = questionnaireShortcutsRecipeCode,
                         preview = { ShortcutsPreview() },
                     ),
                     ComponentExample(
@@ -1330,35 +1276,7 @@ val questionnaireDoc =
                         descriptionMarkdown =
                             "Combine controlled navigation with an external schema to return to an invalid item " +
                                 "and present its error.",
-                        code =
-                            """
-                            var item by remember { mutableStateOf("detail") }
-                            var errors by remember { mutableStateOf<Map<String, String>>(emptyMap()) }
-                            Questionnaire(
-                                item = item,
-                                onItemChange = { item = it },
-                                items = items,
-                                onSubmit = { answers ->
-                                    errors = validate(answers)
-                                    if (errors.isNotEmpty()) item = "detail"
-                                },
-                            ) {
-                                QuestionnaireItem("detail", required = true, invalid = errors.containsKey("detail")) {
-                                    QuestionnaireChoices {
-                                        QuestionnaireChoice(
-                                            "summary", "Concise summary",
-                                            onCheckedChange = { if (it) errors = errors - "detail" },
-                                        )
-                                        QuestionnaireChoice(
-                                            "complete", "Complete answer",
-                                            onCheckedChange = { if (it) errors = errors - "detail" },
-                                        )
-                                    }
-                                    QuestionnaireError(text = errors["detail"])
-                                }
-                                QuestionnaireActions { QuestionnaireSubmit("Validate answers") }
-                            }
-                            """.trimIndent(),
+                        code = questionnaireCustomValidationRecipeCode,
                         preview = { CustomValidationPreview() },
                     ),
                     ComponentExample(
@@ -1367,24 +1285,7 @@ val questionnaireDoc =
                         descriptionMarkdown =
                             "Control the active item from host state, such as returning to an " +
                                 "invalid step.",
-                        code =
-                            """
-                            var item by remember { mutableStateOf("scope") }
-                            Questionnaire(
-                                item = item,
-                                onItemChange = { item = it },
-                                items = items,
-                                onSubmit = { },
-                            ) {
-                                QuestionnaireProgress { state -> "Checkpoint ${'$'}{state.current} of ${'$'}{state.total}" }
-                                QuestionnaireItem("scope", required = true) { /* … */ }
-                                QuestionnaireActions {
-                                    QuestionnairePrevious()
-                                    QuestionnaireNext("Next")
-                                    QuestionnaireSubmit("Save workflow")
-                                }
-                            }
-                            """.trimIndent(),
+                        code = questionnaireControlledRecipeCode,
                         preview = { ControlledPreview() },
                     ),
                     ComponentExample(
@@ -1393,45 +1294,14 @@ val questionnaireDoc =
                         descriptionMarkdown =
                             "Restore a saved active item and default answers, then reset changes back to that " +
                                 "saved state.",
-                        code =
-                            """
-                            Questionnaire(defaultItem = "verification", items = items) {
-                                QuestionnaireItem("change", required = true) {
-                                    QuestionnaireChoice("incremental", "Incremental migration", defaultChecked = true)
-                                    QuestionnaireChoice("cutover", "Single cutover")
-                                }
-                                QuestionnaireItem("verification", required = true, multiple = true) {
-                                    QuestionnaireChoice("tests", "Run migration tests", defaultChecked = true)
-                                    QuestionnaireChoice("typecheck", "Run the typecheck", defaultChecked = true)
-                                }
-                                QuestionnaireInput(contentDescription = "Saved migration note", defaultValue = "…")
-                                QuestionnaireActions {
-                                    QuestionnaireReset()
-                                    QuestionnairePrevious()
-                                    QuestionnaireNext("Next")
-                                    QuestionnaireSubmit("Update draft")
-                                }
-                            }
-                            """.trimIndent(),
+                        code = questionnaireResumeRecipeCode,
                         preview = { ResumePreview() },
                     ),
                     ComponentExample(
                         title = "Conditional Items",
                         minPreviewHeight = 520.dp,
                         descriptionMarkdown = "Disable items that do not apply to the user's earlier answers.",
-                        code =
-                            """
-                            var runtime by remember { mutableStateOf("local") }
-                            QuestionnaireItem("runtime", required = true) {
-                                QuestionnaireChoices {
-                                    QuestionnaireChoice("local", "Local workspace", checked = runtime == "local",
-                                        onCheckedChange = { if (it) runtime = "local" })
-                                    QuestionnaireChoice("cloud", "Cloud workspace", checked = runtime == "cloud",
-                                        onCheckedChange = { if (it) runtime = "cloud" })
-                                }
-                            }
-                            QuestionnaireItem("environment", required = true, disabled = runtime != "cloud") { /* … */ }
-                            """.trimIndent(),
+                        code = questionnaireConditionalItemsRecipeCode,
                         preview = { ConditionalItemsPreview() },
                     ),
                     ComponentExample(
@@ -1439,48 +1309,14 @@ val questionnaireDoc =
                         minPreviewHeight = 480.dp,
                         descriptionMarkdown =
                             "Read item status to opt into disabled navigation and custom action styling.",
-                        code =
-                            """
-                            val state = questionnaireState()
-                            QuestionnaireItem("permission", required = true) { /* … */ }
-                            QuestionnaireActions {
-                                QuestionnairePrevious()
-                                QuestionnaireNext(
-                                    enabled = state.status != QuestionnaireItemStatus.Unanswered,
-                                    text = "Next",
-                                )
-                                QuestionnaireSubmit(
-                                    enabled = state.status != QuestionnaireItemStatus.Unanswered,
-                                    text = "Save permissions",
-                                )
-                            }
-                            """.trimIndent(),
+                        code = questionnaireNavigationStateRecipeCode,
                         preview = { NavigationStatePreview() },
                     ),
                     ComponentExample(
                         title = "Custom Progress",
                         minPreviewHeight = 520.dp,
                         descriptionMarkdown = "Use the Progress render state to build a custom progress indicator.",
-                        code =
-                            """
-                            val progress = questionnaireState()
-                            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                                    repeat(progress.count) { index ->
-                                        Box(
-                                            Modifier.weight(1f).height(6.dp).background(
-                                                if (index <= progress.index) currentTheme.colors.primary
-                                                else currentTheme.colors.muted,
-                                                RoundedCornerShape(50),
-                                            ),
-                                        )
-                                    }
-                                }
-                                QuestionnaireProgress { state ->
-                                    "Checkpoint ${'$'}{state.current} of ${'$'}{state.total}"
-                                }
-                            }
-                            """.trimIndent(),
+                        code = questionnaireCustomProgressRecipeCode,
                         preview = { CustomProgressPreview() },
                     ),
                     ComponentExample(
@@ -1488,17 +1324,7 @@ val questionnaireDoc =
                         minPreviewHeight = 520.dp,
                         descriptionMarkdown =
                             "Animate the active item while keeping progress and navigation stationary.",
-                        code =
-                            """
-                            Questionnaire(animate = true, items = items) {
-                                QuestionnaireProgress()
-                                QuestionnaireItem("direction", required = true) { /* … */ }
-                                QuestionnaireActions {
-                                    QuestionnaireNext("Next")
-                                    QuestionnaireSubmit()
-                                }
-                            }
-                            """.trimIndent(),
+                        code = questionnaireAnimatedItemsRecipeCode,
                         preview = { AnimatedItemsPreview() },
                     ),
                     ComponentExample(
@@ -1507,28 +1333,7 @@ val questionnaireDoc =
                         descriptionMarkdown =
                             "Compose Questionnaire with Card slots while keeping the question title and " +
                                 "description semantic.",
-                        code =
-                            """
-                            Questionnaire(items = items, shortcuts = QuestionnaireShortcuts.Numbers) {
-                                Card {
-                                    QuestionnaireItem("task", required = true) {
-                                        CardHeader {
-                                            QuestionnaireTitle("What should the agent work on?")
-                                            QuestionnaireDescription("Choose the task that should be handled next.")
-                                            QuestionnaireProgress()
-                                        }
-                                        CardContent { QuestionnaireChoices { /* … */ } }
-                                    }
-                                    CardFooter {
-                                        QuestionnaireActions {
-                                            QuestionnairePrevious()
-                                            QuestionnaireNext("Next")
-                                            QuestionnaireSubmit("Create task")
-                                        }
-                                    }
-                                }
-                            }
-                            """.trimIndent(),
+                        code = questionnaireCardRecipeCode,
                         preview = { CardPreview() },
                     ),
                     ComponentExample(
@@ -1537,51 +1342,7 @@ val questionnaireDoc =
                         descriptionMarkdown =
                             "Compose Questionnaire inside a Dialog while keeping cancellation and dismissal " +
                                 "host-owned.",
-                        code =
-                            """
-                            var open by remember { mutableStateOf(false) }
-                            Dialog(open = open, onOpenChange = { open = it }) {
-                                DialogTrigger("Open clarification")
-                                DialogContent {
-                                    Questionnaire(items = items, onSubmit = { open = false }) {
-                                        QuestionnaireItem("scope", required = true) {
-                                            DialogHeader {
-                                                QuestionnaireProgress()
-                                                QuestionnaireTitle("Which files are in scope?")
-                                                QuestionnaireDescription(
-                                                    "Choose how broadly the agent can update the workspace.",
-                                                )
-                                            }
-                                            QuestionnaireChoices { /* scope choices */ }
-                                            QuestionnaireError()
-                                        }
-                                        QuestionnaireItem("tests", required = true) {
-                                            DialogHeader {
-                                                QuestionnaireProgress()
-                                                QuestionnaireTitle("How much verification is needed?")
-                                                QuestionnaireDescription(
-                                                    "Choose the checks the agent should run before handoff.",
-                                                )
-                                            }
-                                            QuestionnaireChoices { /* verification choices */ }
-                                            QuestionnaireError()
-                                        }
-                                        DialogFooter {
-                                            Button(
-                                                text = "Cancel",
-                                                onClick = { open = false },
-                                                variant = ButtonVariant.Outline,
-                                            )
-                                            QuestionnaireActions(Modifier.weight(1f)) {
-                                                QuestionnairePrevious()
-                                                QuestionnaireNext("Next")
-                                                QuestionnaireSubmit("Send answer")
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            """.trimIndent(),
+                        code = questionnaireDialogRecipeCode,
                         preview = { DialogPreview() },
                     ),
                     ComponentExample(
@@ -1642,4 +1403,20 @@ val questionnaireDoc =
                         preview = { ResetExtensionPreview() },
                     ),
                 ),
-    )
+    ).let { doc ->
+        doc.copy(
+            examples =
+                doc.examples.map { example ->
+                    if (example.title.startsWith("Kotlin extension:")) {
+                        example
+                    } else {
+                        example.copy(
+                            previewPadding = 32.dp,
+                            mobilePreviewPadding = 16.dp,
+                            previewVerticalAlignment = Alignment.Bottom,
+                            mobilePreviewVerticalAlignment = Alignment.Top,
+                        )
+                    }
+                },
+        )
+    }

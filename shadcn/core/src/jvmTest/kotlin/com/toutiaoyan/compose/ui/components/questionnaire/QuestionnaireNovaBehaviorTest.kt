@@ -5,16 +5,104 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.*
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.LayoutDirection
 import com.toutiaoyan.compose.ui.ScreenshotTest
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.*
 
 class QuestionnaireNovaBehaviorTest : ScreenshotTest() {
+    @Test fun arabicAndHebrewMirrorChoicesAndKeepNavigationWorking() {
+        var language by mutableStateOf(0)
+        val titles = listOf("ما الخطوة التالية؟", "What should happen next?", "מה הצעד הבא?")
+        val answers = listOf("مراجعة التغييرات", "Review the changes", "סקירת השינויים")
+        val nextTitles = listOf("متى يبدأ العمل؟", "When should work begin?", "מתי להתחיל?")
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            val direction = if (language == 1) LayoutDirection.Ltr else LayoutDirection.Rtl
+            CompositionLocalProvider(LocalLayoutDirection provides direction) {
+                key(language) {
+                    Questionnaire(modifier = Modifier.width(308.dp), shortcuts = QuestionnaireShortcuts.Letters) {
+                        QuestionnaireProgress(Modifier.testTag("progress"))
+                        QuestionnaireItem("first", required = true) {
+                            QuestionnaireTitle(titles[language])
+                            QuestionnaireChoices {
+                                QuestionnaireChoice("review") {
+                                    QuestionnaireChoiceLabel(answers[language], Modifier.testTag("answer"))
+                                }
+                            }
+                        }
+                        QuestionnaireItem("second", modifier = Modifier.testTag("next-item")) {
+                            QuestionnaireTitle(nextTitles[language])
+                        }
+                        QuestionnaireActions { QuestionnaireNext("Next") }
+                    }
+                }
+            }
+        }
+        for (index in titles.indices) {
+            composeRule.runOnIdle { language = index }
+            composeRule.onNodeWithText(titles[index]).assertIsDisplayed()
+            val answer = composeRule.onNodeWithTag("answer", useUnmergedTree = true)
+            val labelBounds = answer.getUnclippedBoundsInRoot()
+            val keyBounds = composeRule.onNodeWithText("A", useUnmergedTree = true).getUnclippedBoundsInRoot()
+            if (index == 1) {
+                assertTrue(labelBounds.right < keyBounds.left)
+            } else {
+                assertTrue(keyBounds.right < labelBounds.left)
+            }
+            composeRule.onNodeWithText(answers[index]).performClick()
+            composeRule.onNodeWithText("Next").performClick()
+            composeRule.onNodeWithTag("next-item")
+                .assertContentDescriptionEquals(nextTitles[index])
+                .assertIsFocused()
+            composeRule.onNodeWithTag("progress").assert(
+                SemanticsMatcher.expectValue(
+                    SemanticsProperties.ProgressBarRangeInfo,
+                    ProgressBarRangeInfo(2f, 1f..2f),
+                ),
+            )
+        }
+    }
+
+    @Test fun animatedItemSlidesIntoPlaceWhileActionsStayStill() {
+        composeRule.mainClock.autoAdvance = false
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Questionnaire(animate = true, modifier = Modifier.width(320.dp)) {
+                QuestionnaireItem("first") {
+                    QuestionnaireTitle("First question")
+                    QuestionnaireChoices { QuestionnaireChoice("a", "First answer") }
+                }
+                QuestionnaireItem("second", modifier = Modifier.testTag("second")) {
+                    QuestionnaireTitle("Second question")
+                    QuestionnaireDescription("Choose one answer")
+                    QuestionnaireChoices { QuestionnaireChoice("b", "Second answer") }
+                }
+                QuestionnaireActions(Modifier.testTag("actions")) {
+                    QuestionnaireNext("Next")
+                    QuestionnaireSubmit("Submit")
+                }
+            }
+        }
+        composeRule.mainClock.advanceTimeBy(400)
+        composeRule.onNodeWithText("First answer").performClick()
+        composeRule.mainClock.advanceTimeByFrame()
+        composeRule.onNodeWithText("Next").performClick()
+        composeRule.mainClock.advanceTimeBy(48)
+        val item = composeRule.onNodeWithTag("second")
+        val actions = composeRule.onNodeWithTag("actions")
+        val movingTop = item.getUnclippedBoundsInRoot().top
+        val actionsTop = actions.getUnclippedBoundsInRoot().top
+        composeRule.mainClock.advanceTimeBy(350)
+        assertTrue(movingTop > item.getUnclippedBoundsInRoot().top + 3.dp)
+        assertEquals(actionsTop, actions.getUnclippedBoundsInRoot().top)
+        item.assertContentDescriptionEquals("Second question\nChoose one answer").assertIsFocused()
+    }
+
     @Test fun radioAndCheckboxRowsExposeTheirActualSelectionState() {
         setThemedContent(stylePreset = StylePreset.Nova) {
             Questionnaire(modifier = Modifier.width(320.dp)) {
@@ -85,7 +173,7 @@ class QuestionnaireNovaBehaviorTest : ScreenshotTest() {
                     ProgressBarRangeInfo(
                         1f,
                         1f..3f,
-                        1,
+                        0,
                     ),
                 ),
             )

@@ -3,6 +3,8 @@
 package com.toutiaoyan.compose.ui.components.questionnaire
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
@@ -848,6 +850,14 @@ class QuestionnaireScope internal constructor()
 
 private val LocalQuestionnaireItemName = staticCompositionLocalOf<String?> { null }
 
+private class QuestionnaireItemLabels {
+    var title by mutableStateOf("")
+    var description by mutableStateOf("")
+    var errorMessage by mutableStateOf<String?>(null)
+}
+
+private val LocalQuestionnaireItemLabels = staticCompositionLocalOf<QuestionnaireItemLabels?> { null }
+
 private val LocalQuestionnaireChoiceValue = staticCompositionLocalOf<String?> { null }
 
 private val LocalQuestionnaireChoiceSelected = staticCompositionLocalOf { false }
@@ -1010,7 +1020,7 @@ fun QuestionnaireScope.QuestionnaireProgress(
                             ProgressBarRangeInfo(
                                 current = current.toFloat(),
                                 range = 1f..total.toFloat(),
-                                steps = (total - 2).coerceAtLeast(0),
+                                steps = 0,
                             )
                     }
                     this.contentDescription = progressName
@@ -1063,6 +1073,7 @@ fun QuestionnaireScope.QuestionnaireItem(
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val shouldAnimate = animate ?: ctrl.animate
     val itemError = ctrl.errorMessage(name)
+    val labels = remember(name) { QuestionnaireItemLabels() }
     val itemFocusRequester = remember { FocusRequester() }
     LaunchedEffect(ctrl.activeName, ctrl.pendingItemFocus) {
         if (ctrl.pendingItemFocus == name) {
@@ -1075,14 +1086,29 @@ fun QuestionnaireScope.QuestionnaireItem(
             .fillMaxWidth()
             .focusRequester(itemFocusRequester)
             .focusable()
-            .semantics { if (itemError != null) error(itemError) }
+            .semantics {
+                val message = itemError?.let { labels.errorMessage ?: it }
+                val announcement = listOfNotNull(labels.title, labels.description, message).filter { it.isNotBlank() }
+                if (announcement.isNotEmpty()) contentDescription = announcement.joinToString("\n")
+                if (message != null) error(message)
+            }
             .styleable(styleState, style)
-    CompositionLocalProvider(LocalQuestionnaireItemName provides name) {
+    CompositionLocalProvider(
+        LocalQuestionnaireItemName provides name,
+        LocalQuestionnaireItemLabels provides labels,
+    ) {
         if (shouldAnimate) {
             val slidePx = with(LocalDensity.current) { 8.dp.roundToPx() }
+            val visibility = remember(name) { MutableTransitionState(false).apply { targetState = true } }
+            val enter =
+                if (questionnaireAllowsMotion()) {
+                    fadeIn(tween(300)) + slideInVertically(tween(300)) { slidePx }
+                } else {
+                    EnterTransition.None
+                }
             AnimatedVisibility(
-                visible = true,
-                enter = fadeIn(tween(300)) + slideInVertically(tween(300)) { slidePx },
+                visibleState = visibility,
+                enter = enter,
             ) {
                 Column(
                     modifier = itemModifier,
@@ -1120,6 +1146,13 @@ fun QuestionnaireScope.QuestionnaireTitle(
     modifier: Modifier = Modifier,
     style: Style = Style,
 ) {
+    val labels = LocalQuestionnaireItemLabels.current
+    DisposableEffect(labels, text) {
+        labels?.title = text
+        onDispose {
+            if (labels != null && labels.title == text) labels.title = ""
+        }
+    }
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Text(
         modifier = modifier.semantics { heading() }.styleable(styleState, style),
@@ -1150,6 +1183,13 @@ fun QuestionnaireScope.QuestionnaireDescription(
     modifier: Modifier = Modifier,
     style: Style = Style,
 ) {
+    val labels = LocalQuestionnaireItemLabels.current
+    DisposableEffect(labels, text) {
+        labels?.description = text
+        onDispose {
+            if (labels != null && labels.description == text) labels.description = ""
+        }
+    }
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     Text(
         modifier = modifier.styleable(styleState, style),
@@ -1545,6 +1585,13 @@ fun QuestionnaireScope.QuestionnaireError(
     val name = LocalQuestionnaireItemName.current ?: return
     val fallback = ctrl.errorMessage(name) ?: return
     val message = text ?: fallback
+    val labels = LocalQuestionnaireItemLabels.current
+    DisposableEffect(labels, message) {
+        labels?.errorMessage = message
+        onDispose {
+            if (labels != null && labels.errorMessage == message) labels.errorMessage = null
+        }
+    }
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val destructive = currentTheme.colors.destructive
     Text(

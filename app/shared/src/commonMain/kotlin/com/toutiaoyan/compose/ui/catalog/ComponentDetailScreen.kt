@@ -264,6 +264,8 @@ internal fun ComponentDetailContent(
                                     hideCode = example.hideCode,
                                     previewHeight = example.previewHeight,
                                     previewVerticalAlignment = example.previewVerticalAlignment,
+                                    mobilePreviewPadding = example.mobilePreviewPadding,
+                                    mobilePreviewVerticalAlignment = example.mobilePreviewVerticalAlignment,
                                     desktopPreviewInsetStart = example.desktopPreviewInsetStart,
                                     descriptionMarkdown = example.descriptionMarkdown,
                                     preview = example.preview,
@@ -355,6 +357,8 @@ internal fun ComponentDetailContent(
                                                 hideCode = example.hideCode,
                                                 previewHeight = example.previewHeight,
                                                 previewVerticalAlignment = example.previewVerticalAlignment,
+                                                mobilePreviewPadding = example.mobilePreviewPadding,
+                                                mobilePreviewVerticalAlignment = example.mobilePreviewVerticalAlignment,
                                                 desktopPreviewInsetStart = example.desktopPreviewInsetStart,
                                                 descriptionMarkdown =
                                                     example.descriptionMarkdown,
