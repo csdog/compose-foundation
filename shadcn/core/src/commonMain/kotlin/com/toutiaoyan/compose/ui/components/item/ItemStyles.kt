@@ -2,9 +2,11 @@
 
 package com.toutiaoyan.compose.ui.components.item
 
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.animate
 import androidx.compose.foundation.style.contentPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -15,12 +17,16 @@ import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.components.dropdownmenu.LocalDropdownMenuContent
 import com.toutiaoyan.compose.ui.styles.border
 import com.toutiaoyan.compose.ui.styles.focusRing
+import com.toutiaoyan.compose.ui.styles.focusVisible
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.utils.rememberTheme
 
 enum class ItemVariant { Default, Outline, Muted }
 
 enum class ItemSize { Default, Sm, Xs }
+
+internal const val NovaItemColorDurationMillis = 100
+private val NovaItemBorderTransition = tween<Float>(NovaItemColorDurationMillis)
 
 @Composable
 fun ItemVariant.rememberStyle(size: ItemSize = ItemSize.Default): Style {
@@ -57,8 +63,15 @@ fun ItemVariant.rememberStyle(size: ItemSize = ItemSize.Default): Style {
             val corners = RoundedCornerShape(if (nova) radius.lg else radius.md)
             shape(corners)
             if (nova) {
-                border(if (variant == ItemVariant.Outline) colors.border else Color.Transparent)
+                val outline = if (variant == ItemVariant.Outline) colors.border else Color.Transparent
+                border(outline)
+                animate(NovaItemBorderTransition) { borderColor(outline) }
                 focusRing(corners)
+                if (ring.enabled) {
+                    focusVisible {
+                        animate(NovaItemBorderTransition) { borderColor(colors.ring) }
+                    }
+                }
             } else if (variant == ItemVariant.Outline) {
                 border(colors.border)
             }

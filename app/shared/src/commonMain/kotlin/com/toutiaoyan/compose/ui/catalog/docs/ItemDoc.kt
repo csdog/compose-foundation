@@ -15,12 +15,15 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.*
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
 import com.composables.icons.lucide.*
+import com.toutiaoyan.compose.ui.catalog.LocalDocExternalLink
+import com.toutiaoyan.compose.ui.catalog.LocalDocNavigation
 import com.toutiaoyan.compose.ui.components.avatar.*
 import com.toutiaoyan.compose.ui.components.button.*
 import com.toutiaoyan.compose.ui.components.dropdownmenu.*
@@ -221,15 +224,18 @@ val itemDoc =
                     previewPadding = 40.dp,
                     code =
                         """
-                        Column(Modifier.widthIn(max = 448.dp).fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(24.dp)) {
-                            Item(variant = ItemVariant.Outline) {
-                                ItemContent { ItemTitle("Basic Item"); ItemDescription("A simple item with title and description.") }
-                                ItemActions { Button("Action", onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Sm) }
-                            }
-                            Item(variant = ItemVariant.Outline, size = ItemSize.Sm, href = "#") {
-                                ItemMedia { ItemDemoGlyph(Lucide.BadgeCheck, 20.dp) }
-                                ItemContent { ItemTitle("Your profile has been verified.") }
-                                ItemActions { ItemDemoGlyph(Lucide.ChevronRight) }
+                        @Composable
+                        fun ItemDemo(openOnSamePage: () -> Unit) {
+                            Column(Modifier.widthIn(max = 448.dp).fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(24.dp)) {
+                                Item(variant = ItemVariant.Outline) {
+                                    ItemContent { ItemTitle("Basic Item"); ItemDescription("A simple item with title and description.") }
+                                    ItemActions { Button("Action", onClick = {}, variant = ButtonVariant.Outline, size = ButtonSize.Sm) }
+                                }
+                                Item(variant = ItemVariant.Outline, size = ItemSize.Sm, href = "#", onClick = openOnSamePage) {
+                                    ItemMedia { ItemDemoGlyph(Lucide.BadgeCheck, 20.dp) }
+                                    ItemContent { ItemTitle("Your profile has been verified.") }
+                                    ItemActions { ItemDemoGlyph(Lucide.ChevronRight) }
+                                }
                             }
                         }
 
@@ -240,6 +246,7 @@ val itemDoc =
                         }
                         """.trimIndent(),
                     preview = {
+                        val samePage = rememberItemPageLink()
                         Column(
                             Modifier.widthIn(
                                 max =
@@ -265,7 +272,12 @@ val itemDoc =
                                     )
                                 }
                             }
-                            Item(variant = ItemVariant.Outline, size = ItemSize.Sm, href = "#") {
+                            Item(
+                                variant = ItemVariant.Outline,
+                                size = ItemSize.Sm,
+                                href = "#",
+                                onClick = samePage,
+                            ) {
                                 ItemMedia { ItemDemoGlyph(Lucide.BadgeCheck, 20.dp) }
                                 ItemContent { ItemTitle("Your profile has been verified.") }
                                 ItemActions { ItemDemoGlyph(Lucide.ChevronRight) }
@@ -546,33 +558,37 @@ val itemDoc =
                     previewPadding = 40.dp,
                     code =
                         """
-                        val songs = listOf(
-                            listOf("Midnight City Lights", "Neon Dreams", "Electric Nights", "3:45"),
-                            listOf("Coffee Shop Conversations", "The Morning Brew", "Urban Stories", "4:05"),
-                            listOf("Digital Rain", "Cyber Symphony", "Binary Beats", "3:30"),
-                        )
-                        val covers = listOf(Res.drawable.item_song_0, Res.drawable.item_song_1, Res.drawable.item_song_2)
-                        val muted = currentTheme.colors.mutedForeground
-                        ItemGroup(Modifier.widthIn(max = 448.dp).fillMaxWidth(), spacing = 16.dp) {
-                            songs.forEachIndexed { index, song ->
-                                Item(variant = ItemVariant.Outline, href = "#") {
-                                    ItemMedia(variant = ItemMediaVariant.Image) {
-                                        Image(painterResource(covers[index]), song[0], Modifier.fillMaxSize(), contentScale = ContentScale.Crop,
-                                            colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) }))
+                        @Composable
+                        fun ItemImageDemo(openOnSamePage: () -> Unit) {
+                            val songs = listOf(
+                                listOf("Midnight City Lights", "Neon Dreams", "Electric Nights", "3:45"),
+                                listOf("Coffee Shop Conversations", "The Morning Brew", "Urban Stories", "4:05"),
+                                listOf("Digital Rain", "Cyber Symphony", "Binary Beats", "3:30"),
+                            )
+                            val covers = listOf(Res.drawable.item_song_0, Res.drawable.item_song_1, Res.drawable.item_song_2)
+                            val muted = currentTheme.colors.mutedForeground
+                            ItemGroup(Modifier.widthIn(max = 448.dp).fillMaxWidth(), spacing = 16.dp) {
+                                songs.forEachIndexed { index, song ->
+                                    Item(variant = ItemVariant.Outline, href = "#", onClick = openOnSamePage) {
+                                        ItemMedia(variant = ItemMediaVariant.Image) {
+                                            Image(painterResource(covers[index]), song[0], Modifier.fillMaxSize(), contentScale = ContentScale.Crop,
+                                                colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) }))
+                                        }
+                                        ItemContent {
+                                            ItemTitle(buildAnnotatedString {
+                                                append(song[0] + " - ")
+                                                withStyle(SpanStyle(color = muted)) { append(song[2]) }
+                                            }, maxLines = 1)
+                                            ItemDescription(song[1])
+                                        }
+                                        ItemContent(fill = false) { ItemDescription(song[3], textStyle = TextStyle(textAlign = TextAlign.Center)) }
                                     }
-                                    ItemContent {
-                                        ItemTitle(buildAnnotatedString {
-                                            append(song[0] + " - ")
-                                            withStyle(SpanStyle(color = muted)) { append(song[2]) }
-                                        }, maxLines = 1)
-                                        ItemDescription(song[1])
-                                    }
-                                    ItemContent(fill = false) { ItemDescription(song[3], textStyle = TextStyle(textAlign = TextAlign.Center)) }
                                 }
                             }
                         }
                         """.trimIndent(),
                     preview = {
+                        val samePage = rememberItemPageLink()
                         val songs =
                             listOf(
                                 listOf("Midnight City Lights", "Neon Dreams", "Electric Nights", "3:45"),
@@ -584,7 +600,7 @@ val itemDoc =
                         val muted = currentTheme.colors.mutedForeground
                         ItemGroup(Modifier.widthIn(max = 448.dp).fillMaxWidth(), spacing = 16.dp) {
                             songs.forEachIndexed { index, song ->
-                                Item(variant = ItemVariant.Outline, href = "#") {
+                                Item(variant = ItemVariant.Outline, href = "#", onClick = samePage) {
                                     ItemMedia(variant = ItemMediaVariant.Image) {
                                         Image(
                                             painterResource(covers[index]),
@@ -696,80 +712,81 @@ val itemDoc =
                     descriptionMarkdown = "Use `ItemHeader` to add a header above the item content.",
                     minPreviewHeight = 384.dp,
                     mobileMinPreviewHeight = 384.dp,
-                    previewPadding = 40.dp,
+                    previewPadding = 0.dp,
                     code =
                         """
-                        val models = listOf(
-                            "v0-1.5-sm" to "Everyday tasks and UI generation.",
-                            "v0-1.5-lg" to "Advanced thinking or reasoning.",
-                            "v0-2.0-mini" to "Open Source model for everyone.",
-                        )
-                        val photos = listOf(Res.drawable.item_model_0, Res.drawable.item_model_1, Res.drawable.item_model_2)
-                        ItemGroup(Modifier.widthIn(max = 576.dp).fillMaxWidth()) {
-                            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                                models.forEachIndexed { index, model ->
-                                    Item(Modifier.weight(1f), variant = ItemVariant.Outline) {
-                                        ItemHeader {
-                                            Image(painterResource(photos[index]), model.first,
-                                                Modifier.fillMaxWidth().aspectRatio(1f).clip(RoundedCornerShape(2.dp)), contentScale = ContentScale.Crop)
+                        @OptIn(ExperimentalLayoutApi::class)
+                        @Composable
+                        fun ItemHeaderDemo() {
+                            val models =
+                                listOf(
+                                    "v0-1.5-sm" to "Everyday tasks and UI generation.",
+                                    "v0-1.5-lg" to "Advanced thinking or reasoning.",
+                                    "v0-2.0-mini" to "Open Source model for everyone.",
+                                )
+                            val photos = listOf(Res.drawable.item_model_0, Res.drawable.item_model_1, Res.drawable.item_model_2)
+                            BoxWithConstraints(Modifier.widthIn(max = 576.dp)) {
+                                val columns =
+                                    when {
+                                        maxWidth >= 304.dp -> 3
+                                        maxWidth >= 200.dp -> 2
+                                        else -> 1
+                                    }
+                                val cardWidth =
+                                    with(LocalDensity.current) {
+                                        ((constraints.maxWidth - (columns - 1) * 16.dp.roundToPx()) / columns).toDp()
+                                    }
+                                ItemGroup {
+                                    FlowRow(
+                                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                                        maxItemsInEachRow = columns,
+                                    ) {
+                                        models.forEachIndexed { index, model ->
+                                            Item(Modifier.width(cardWidth).fillMaxRowHeight(), variant = ItemVariant.Outline) {
+                                                ItemHeader {
+                                                    Image(
+                                                        painterResource(photos[index]),
+                                                        model.first,
+                                                        Modifier.fillMaxWidth().aspectRatio(1f).clip(RoundedCornerShape(2.dp)),
+                                                        contentScale = ContentScale.Crop,
+                                                    )
+                                                }
+                                                ItemContent {
+                                                    ItemTitle(model.first)
+                                                    ItemDescription(model.second)
+                                                }
+                                            }
                                         }
-                                        ItemContent { ItemTitle(model.first); ItemDescription(model.second) }
                                     }
                                 }
                             }
                         }
                         """.trimIndent(),
-                    preview = {
-                        val models =
-                            listOf(
-                                "v0-1.5-sm" to "Everyday tasks and UI generation.",
-                                "v0-1.5-lg" to "Advanced thinking or reasoning.",
-                                "v0-2.0-mini" to "Open Source model for everyone.",
-                            )
-                        val photos =
-                            listOf(Res.drawable.item_model_0, Res.drawable.item_model_1, Res.drawable.item_model_2)
-                        ItemGroup(Modifier.widthIn(max = 576.dp).fillMaxWidth()) {
-                            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                                models.forEachIndexed { index, model ->
-                                    Item(Modifier.weight(1f), variant = ItemVariant.Outline) {
-                                        ItemHeader {
-                                            Image(
-                                                painterResource(photos[index]),
-                                                model.first,
-                                                Modifier.fillMaxWidth().aspectRatio(1f).clip(RoundedCornerShape(2.dp)),
-                                                contentScale =
-                                                    ContentScale.Crop,
-                                            )
-                                        }
-                                        ItemContent {
-                                            ItemTitle(model.first)
-                                            ItemDescription(model.second)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
+                    preview = { ItemHeaderPreview() },
                 ),
                 ComponentExample(
                     title = "Link",
                     descriptionMarkdown =
                         "Use `href` to render the item as a link (the Kotlin equivalent " +
                             "of the `render` prop). The hover and focus states apply to " +
-                            "the whole row.",
+                            "the whole row. Supply `onClick` to control how the destination opens.",
                     minPreviewHeight = 288.dp,
                     mobileMinPreviewHeight = 288.dp,
                     previewPadding = 40.dp,
                     code =
                         """
-                        Column(Modifier.widthIn(max = 448.dp).fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                            Item(href = "#") {
-                                ItemContent { ItemTitle("Visit our documentation"); ItemDescription("Learn how to get started with our components.") }
-                                ItemActions { ItemDemoGlyph(Lucide.ChevronRight) }
-                            }
-                            Item(variant = ItemVariant.Outline, href = "#") {
-                                ItemContent { ItemTitle("External resource"); ItemDescription("Opens in a new tab with security attributes.") }
-                                ItemActions { ItemDemoGlyph(Lucide.ExternalLink) }
+                        @Composable
+                        fun ItemLinks(openOnSamePage: () -> Unit, openExternalLink: () -> Unit) {
+                            Column(Modifier.widthIn(max = 448.dp).fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                                Item(href = "#", onClick = openOnSamePage) {
+                                    ItemContent { ItemTitle("Visit our documentation"); ItemDescription("Learn how to get started with our components.") }
+                                    ItemActions { ItemDemoGlyph(Lucide.ChevronRight) }
+                                }
+                                Item(variant = ItemVariant.Outline, href = "#", onClick = openExternalLink) {
+                                    ItemContent { ItemTitle("External resource"); ItemDescription("Opens in a new tab with security attributes.") }
+                                    ItemActions { ItemDemoGlyph(Lucide.ExternalLink) }
+                                }
                             }
                         }
 
@@ -780,6 +797,8 @@ val itemDoc =
                         }
                         """.trimIndent(),
                     preview = {
+                        val samePage = rememberItemPageLink()
+                        val openExternalLink = LocalDocExternalLink.current
                         Column(
                             Modifier.widthIn(
                                 max =
@@ -788,14 +807,18 @@ val itemDoc =
                             verticalArrangement =
                                 Arrangement.spacedBy(16.dp),
                         ) {
-                            Item(href = "#") {
+                            Item(href = "#", onClick = samePage) {
                                 ItemContent {
                                     ItemTitle("Visit our documentation")
                                     ItemDescription("Learn how to get started with our components.")
                                 }
                                 ItemActions { ItemDemoGlyph(Lucide.ChevronRight) }
                             }
-                            Item(variant = ItemVariant.Outline, href = "#") {
+                            Item(
+                                variant = ItemVariant.Outline,
+                                href = "#",
+                                onClick = openExternalLink?.let { open -> { open("#") } },
+                            ) {
                                 ItemContent {
                                     ItemTitle("External resource")
                                     ItemDescription("Opens in a new tab with security attributes.")
@@ -813,8 +836,8 @@ val itemDoc =
                     code =
                         """
                         DropdownMenu {
-                            DropdownMenuTrigger {
-                                Button(onClick = toggle, variant = ButtonVariant.Outline) {
+                            DropdownMenuTrigger(label = "Select") { trigger, onClick ->
+                                Button(onClick = onClick, modifier = trigger, variant = ButtonVariant.Outline) {
                                     Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
                                         Text { "Select" }
                                         ItemDemoGlyph(Lucide.ChevronDown)
@@ -860,8 +883,8 @@ val itemDoc =
                         """.trimIndent(),
                     preview = {
                         DropdownMenu {
-                            DropdownMenuTrigger {
-                                Button(onClick = toggle, variant = ButtonVariant.Outline) {
+                            DropdownMenuTrigger(label = "Select") { trigger, onClick ->
+                                Button(onClick = onClick, modifier = trigger, variant = ButtonVariant.Outline) {
                                     Row(
                                         horizontalArrangement =
                                             Arrangement.spacedBy(6.dp),
@@ -919,12 +942,69 @@ val itemDoc =
                             Box(
                                 Modifier.testTag("item-rtl-body").fillMaxWidth().heightIn(min = 288.dp).padding(40.dp),
                                 contentAlignment = Alignment.Center,
-                            ) { ItemRtlRecipe(language) }
+                            ) { ItemRtlRecipe(rememberItemPageLink(), language) }
                         }
                     },
                 ),
             ),
     )
+
+@Composable
+internal fun rememberItemPageLink(): () -> Unit {
+    val navigation = LocalDocNavigation.current
+    val uri = LocalUriHandler.current
+    return remember(navigation, uri) {
+        { if (navigation != null) navigation.navigate("") else uri.openUri("#") }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun ItemHeaderPreview() {
+    val models =
+        listOf(
+            "v0-1.5-sm" to "Everyday tasks and UI generation.",
+            "v0-1.5-lg" to "Advanced thinking or reasoning.",
+            "v0-2.0-mini" to "Open Source model for everyone.",
+        )
+    val photos = listOf(Res.drawable.item_model_0, Res.drawable.item_model_1, Res.drawable.item_model_2)
+    BoxWithConstraints(Modifier.widthIn(max = 576.dp).padding(vertical = 40.dp)) {
+        val columns =
+            when {
+                maxWidth >= 304.dp -> 3
+                maxWidth >= 200.dp -> 2
+                else -> 1
+            }
+        val cardWidth =
+            with(LocalDensity.current) {
+                ((constraints.maxWidth - (columns - 1) * 16.dp.roundToPx()) / columns).toDp()
+            }
+        ItemGroup {
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                maxItemsInEachRow = columns,
+            ) {
+                models.forEachIndexed { index, model ->
+                    Item(Modifier.width(cardWidth).fillMaxRowHeight(), variant = ItemVariant.Outline) {
+                        ItemHeader {
+                            Image(
+                                painterResource(photos[index]),
+                                model.first,
+                                Modifier.fillMaxWidth().aspectRatio(1f).clip(RoundedCornerShape(2.dp)),
+                                contentScale = ContentScale.Crop,
+                            )
+                        }
+                        ItemContent {
+                            ItemTitle(model.first)
+                            ItemDescription(model.second)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 @Composable
 private fun ItemDemoGlyph(

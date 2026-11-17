@@ -20,6 +20,9 @@ interface DocNavigation {
 
 val LocalDocNavigation = staticCompositionLocalOf<DocNavigation?> { null }
 
+/** Optional browser bridge for examples that explicitly open a new tab without a referrer. */
+val LocalDocExternalLink = staticCompositionLocalOf<((String) -> Unit)?> { null }
+
 internal data class DocHeadingLink(val fragment: String, val onClick: () -> Unit)
 
 internal val LocalDocHeadingLinks = staticCompositionLocalOf<Map<String, DocHeadingLink>> { emptyMap() }

@@ -15,6 +15,10 @@ internal val itemRtlRecipeCode =
     import androidx.compose.ui.graphics.vector.ImageVector
     import androidx.compose.ui.platform.LocalLayoutDirection
     import androidx.compose.ui.unit.*
+    import androidx.compose.ui.text.font.FontFamily
+    import androidx.compose.ui.text.font.FontWeight
+    import compose_foundation.app.shared.generated.resources.*
+    import org.jetbrains.compose.resources.Font
     import com.composables.icons.lucide.*
     import com.toutiaoyan.compose.ui.components.button.*
     import com.toutiaoyan.compose.ui.components.item.*
@@ -24,7 +28,10 @@ internal val itemRtlRecipeCode =
     import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
 
     @Composable
-    fun ItemRtlRecipe(language: Int = 1) {
+    fun ItemRtlRecipe(
+        openOnSamePage: () -> Unit,
+        language: Int = 1,
+    ) {
         val inherited = currentTheme
         val font =
             when (language) {
@@ -62,7 +69,7 @@ internal val itemRtlRecipeCode =
                             )
                         }
                     }
-                    Item(variant = ItemVariant.Outline, size = ItemSize.Sm, href = "#") {
+                    Item(variant = ItemVariant.Outline, size = ItemSize.Sm, href = "#", onClick = openOnSamePage) {
                         ItemMedia { ItemRtlGlyph(Lucide.BadgeCheck, 20.dp) }
                         ItemContent { ItemTitle(t.getValue("verifiedTitle")) }
                         ItemActions { ItemRtlGlyph(Lucide.ChevronRight) }
@@ -102,6 +109,4 @@ internal val itemRtlRecipeCode =
                 "verifiedTitle" to "הפרופיל שלך אומת.",
             ),
         )
-
-    ItemRtlRecipe()
     """.trimIndent()

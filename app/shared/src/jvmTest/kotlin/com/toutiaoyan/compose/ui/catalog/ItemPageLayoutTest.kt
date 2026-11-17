@@ -99,6 +99,8 @@ class ItemPageLayoutTest(private val phone: Boolean, private val dark: Boolean) 
         val code = itemDoc.examples.single { it.title == "RTL" }.code
         assertFalse(code.contains("ui.catalog"))
         assertFalse(code.contains("testTag"))
-        assertTrue(code.trimEnd().endsWith("ItemRtlRecipe()"))
+        assertTrue(code.contains("openOnSamePage: () -> Unit"))
+        assertTrue(code.contains("onClick = openOnSamePage"))
+        assertTrue(code.contains("import androidx.compose.ui.text.font.FontFamily"))
     }
 }

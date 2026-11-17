@@ -33,7 +33,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.CollectionInfo
 import androidx.compose.ui.semantics.CollectionItemInfo
 import androidx.compose.ui.semantics.collectionInfo
@@ -130,19 +129,14 @@ fun Item(
     val hovered = interactionSource.collectIsHoveredAsState().value
     val linkStyle =
         if (nova && href != null) {
+            val muted = currentTheme.colors.muted
             val target =
-                if (hovered && resolvedEnabled) {
-                    currentTheme.colors.muted
-                } else {
-                    if (variant == ItemVariant.Muted) {
-                        currentTheme.colors.muted.copy(
-                            alpha = 0.5f,
-                        )
-                    } else {
-                        Color.Transparent
-                    }
+                when {
+                    hovered && resolvedEnabled -> muted
+                    variant == ItemVariant.Muted -> muted.copy(alpha = 0.5f)
+                    else -> muted.copy(alpha = 0f)
                 }
-            val animatedBackground = animateColorAsState(target, tween(100))
+            val animatedBackground = animateColorAsState(target, tween(NovaItemColorDurationMillis))
             rememberTheme(animatedBackground) { Style { background(animatedBackground.value) } }
         } else {
             Style

@@ -2,14 +2,17 @@ package com.toutiaoyan.compose.ui.catalog
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.catalog.docs.itemDoc
@@ -23,9 +26,16 @@ class ItemExamplesTest {
     @get:Rule val rule = createComposeRule()
     private val visited = mutableListOf<String>()
 
-    private fun show(title: String) {
+    private fun show(
+        title: String,
+        width: () -> Dp = { 680.dp },
+        navigation: DocNavigation? = null,
+        externalLink: () -> ((String) -> Unit)? = { null },
+    ) {
         rule.setContent {
             CompositionLocalProvider(
+                LocalDocNavigation provides navigation,
+                LocalDocExternalLink provides externalLink(),
                 LocalUriHandler provides
                     object : UriHandler {
                         override fun openUri(uri: String) {
@@ -35,7 +45,7 @@ class ItemExamplesTest {
             ) {
                 Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                     OverlayHost {
-                        Box(Modifier.width(680.dp).height(650.dp), contentAlignment = Alignment.Center) {
+                        Box(Modifier.width(width()).height(650.dp), contentAlignment = Alignment.Center) {
                             itemDoc.examples.single { it.title == title }.preview()
                         }
                     }
@@ -220,6 +230,64 @@ class ItemExamplesTest {
         rule.onNodeWithText("evilrabbit@vercel.com").assertIsDisplayed()
         rule.onNodeWithText("maxleiter").performClick()
         rule.onNodeWithText("maxleiter@vercel.com").assertDoesNotExist()
+    }
+
+    @Test fun headerKeepsThreeColumnsAtPhoneWidthAndWrapsOnNarrowerScreens() {
+        val width = mutableStateOf(325.dp)
+        show("Header", width = { width.value })
+
+        fun photo(name: String) = rule.onNodeWithContentDescription(name).assertIsDisplayed()
+
+        val first = photo("v0-1.5-sm")
+        val second = photo("v0-1.5-lg")
+        val third = photo("v0-2.0-mini")
+        first.assertWidthIsAtLeast(60.dp)
+        assertEquals(first.getUnclippedBoundsInRoot().top, second.getUnclippedBoundsInRoot().top)
+        assertEquals(first.getUnclippedBoundsInRoot().top, third.getUnclippedBoundsInRoot().top)
+
+        rule.runOnIdle { width.value = 255.dp }
+        assertEquals(first.getUnclippedBoundsInRoot().top, second.getUnclippedBoundsInRoot().top)
+        assertTrue(third.getUnclippedBoundsInRoot().top > first.getUnclippedBoundsInRoot().bottom)
+    }
+
+    @Test fun samePageAndExternalLinksUseTheirOwnNavigationActions() {
+        val fragments = mutableListOf<String>()
+        val externalUrls = mutableListOf<String>()
+        val externalLink = mutableStateOf<((String) -> Unit)?>(null)
+        val navigation =
+            object : DocNavigation {
+                override val location = DocLocation("item", "link")
+
+                override fun navigate(fragment: String) {
+                    fragments += fragment
+                }
+            }
+        show("Link", navigation = navigation, externalLink = { externalLink.value })
+
+        rule.onNodeWithText("Visit our documentation").performClick()
+        assertEquals(listOf(""), fragments)
+        assertTrue(visited.isEmpty())
+
+        rule.onNodeWithText("External resource").performClick()
+        assertEquals(listOf("#"), visited)
+        assertEquals(listOf(""), fragments)
+
+        rule.runOnIdle { externalLink.value = { externalUrls += it } }
+        rule.onNodeWithText("External resource").performClick()
+        assertEquals(listOf("#"), externalUrls)
+        assertEquals(listOf("#"), visited)
+    }
+
+    @Test fun dropdownHasOneKeyboardTriggerAndEscapeRestoresFocus() {
+        show("Dropdown")
+        rule.onAllNodes(hasText("Select") and hasClickAction()).assertCountEquals(1)
+        val trigger = rule.onNodeWithText("Select")
+        trigger.requestFocus().assertIsFocused()
+        trigger.performKeyInput { pressKey(Key.Enter) }
+        val firstEntry = rule.onNodeWithText("shadcn@vercel.com").assertIsDisplayed()
+        firstEntry.performKeyInput { pressKey(Key.Escape) }
+        firstEntry.assertDoesNotExist()
+        trigger.assertIsFocused()
     }
 
     @Test fun rtlChangesTheCopyAndMovesTheActionToTheOtherSide() {

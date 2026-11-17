@@ -15,6 +15,7 @@ import androidx.compose.ui.window.ComposeViewport
 import com.toutiaoyan.compose.ui.catalog.DocLocation
 import com.toutiaoyan.compose.ui.catalog.DocNavigation
 import com.toutiaoyan.compose.ui.catalog.LocalCatalogViewportWidth
+import com.toutiaoyan.compose.ui.catalog.LocalDocExternalLink
 import com.toutiaoyan.compose.ui.catalog.LocalDocNavigation
 import com.toutiaoyan.compose.ui.catalog.LocalDocumentScrollHost
 import com.toutiaoyan.compose.ui.catalog.documentTitle
@@ -65,6 +66,7 @@ fun main() {
         val docNavigation = remember { BrowserDocNavigation() }
         CompositionLocalProvider(
             LocalDocNavigation provides docNavigation,
+            LocalDocExternalLink provides { href -> window.open(href, "_blank", "noopener,noreferrer") },
             LocalCatalogViewportWidth provides viewportWidth,
             LocalDocumentScrollHost provides documentScrollHost,
         ) {
@@ -136,7 +138,11 @@ private class BrowserDocNavigation : DocNavigation {
 
     override fun navigate(fragment: String) {
         val hash = "#$fragment"
-        if (window.location.hash != hash) {
+        val currentHash = window.location.hash
+        val atTarget =
+            currentHash == hash ||
+                (fragment.isEmpty() && currentHash.isEmpty() && window.location.href.endsWith('#'))
+        if (!atTarget) {
             window.history.pushState(null, "", window.location.pathname + window.location.search + hash)
         }
         // A second click must scroll again even if the URL already has this hash.

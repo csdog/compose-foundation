@@ -23,7 +23,10 @@ import com.toutiaoyan.compose.ui.catalog.catalogArabicFontFamily
 import com.toutiaoyan.compose.ui.catalog.catalogHebrewFontFamily
 
 @Composable
-internal fun ItemRtlRecipe(language: Int = 1) {
+internal fun ItemRtlRecipe(
+    openOnSamePage: () -> Unit,
+    language: Int = 1,
+) {
     val inherited = currentTheme
     val font =
         when (language) {
@@ -59,7 +62,7 @@ internal fun ItemRtlRecipe(language: Int = 1) {
                         )
                     }
                 }
-                Item(variant = ItemVariant.Outline, size = ItemSize.Sm, href = "#") {
+                Item(variant = ItemVariant.Outline, size = ItemSize.Sm, href = "#", onClick = openOnSamePage) {
                     ItemMedia { ItemRtlGlyph(Lucide.BadgeCheck, 20.dp) }
                     ItemContent { ItemTitle(t.getValue("verifiedTitle")) }
                     ItemActions { ItemRtlGlyph(Lucide.ChevronRight) }
