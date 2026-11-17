@@ -167,6 +167,41 @@ class InputOTPExamplesTest(private val width: Int, private val dark: Boolean) {
         }
     }
 
+    @Test fun splitRecipesKeepEqualSlotWidthsAtNarrowSizes() {
+        var title by mutableStateOf("Separator")
+        var availableWidth by mutableIntStateOf(245)
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = catalogFontFamily()) {
+                Box(Modifier.requiredSize(availableWidth.dp, 300.dp)) {
+                    key(title) { inputOTPDoc.examples.single { it.title == title }.preview() }
+                }
+            }
+        }
+        for (recipe in listOf("Separator", "Invalid")) {
+            rule.runOnIdle { title = recipe }
+            val field = rule.onNode(hasSetTextAction())
+            field.performTextReplacement("123456")
+            for (available in listOf(200, 245, 325)) {
+                rule.runOnIdle { availableWidth = available }
+                val bounds = field.fetchSemanticsNode().boundsInRoot
+                val digits = (1..6).map { rule.onNodeWithText(it.toString()).fetchSemanticsNode().boundsInRoot }
+                val spans = digits.chunked(2).map { (a, b) -> b.center.x - a.center.x }
+                assertTrue(digits.all { it.width > 0 && it.left >= bounds.left && it.right <= bounds.right })
+                for (span in spans) assertEquals(spans.first(), span, absoluteTolerance = 1f)
+            }
+        }
+    }
+
+    @Test fun patternLabelNamesAndFocusesTheEditableSemanticsNode() {
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
+                inputOTPDoc.examples.single { it.title == "Pattern" }.preview()
+            }
+        }
+        rule.onNodeWithText("Digits Only").performClick()
+        rule.onNode(hasSetTextAction() and hasContentDescription("Digits Only")).assertIsFocused()
+    }
+
     @Test fun controlledPreviewReflectsTypedDigits() {
         rule.setContent {
             Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null, fontFamily = catalogFontFamily()) {

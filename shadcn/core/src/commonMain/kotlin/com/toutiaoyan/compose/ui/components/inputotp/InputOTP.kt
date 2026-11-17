@@ -243,11 +243,6 @@ fun InputOTP(
         Box(
             modifier =
                 modifier
-                    .semantics {
-                        contentDescription?.let { this.contentDescription = it }
-                        if (!resolvedEnabled) disabled()
-                        if (invalid) error("Invalid one-time password")
-                    }
                     .onGloballyPositioned { rootBounds.value = it.boundsInRoot() }
                     .then(
                         if (nova) {
@@ -311,7 +306,12 @@ fun InputOTP(
                 },
                 enabled = resolvedEnabled,
                 readOnly = readOnly,
-                modifier = Modifier.matchParentSize().focusRequester(focusRequester),
+                modifier =
+                    Modifier.matchParentSize().focusRequester(focusRequester).semantics {
+                        contentDescription?.let { this.contentDescription = it }
+                        if (!resolvedEnabled) disabled()
+                        if (invalid) error("Invalid one-time password")
+                    },
                 interactionSource = interactionSource,
                 singleLine = true,
                 textStyle = currentTheme.typography.bodyMedium.copy(color = Color.Transparent),

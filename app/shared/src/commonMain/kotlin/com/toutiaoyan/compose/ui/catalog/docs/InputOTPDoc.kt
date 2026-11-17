@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
@@ -171,14 +172,20 @@ val inputOTPDoc =
                         import com.toutiaoyan.compose.ui.components.inputotp.*
 
                         var code by remember { mutableStateOf("") }
+                        val focus = remember { FocusRequester() }
                         Column(Modifier.widthIn(max = 384.dp), horizontalAlignment = Alignment.Start) {
                             Field {
-                                FieldLabel("Digits Only")
+                                FieldLabel(
+                                    "Digits Only",
+                                    Modifier.focusProperties { canFocus = false }.clickable { focus.requestFocus() },
+                                )
                                 InputOTP(
                                     value = code,
                                     onValueChange = { code = it },
                                     length = 6,
                                     pattern = Regex("[0-9]"),
+                                    modifier = Modifier.focusRequester(focus),
+                                    contentDescription = "Digits Only",
                                 ) {
                                     InputOTPGroup {
                                         InputOTPSlot(0)
@@ -194,14 +201,20 @@ val inputOTPDoc =
                         """.trimIndent(),
                     preview = {
                         var code by remember { mutableStateOf("") }
+                        val focus = remember { FocusRequester() }
                         Column(Modifier.widthIn(max = 384.dp), horizontalAlignment = Alignment.Start) {
                             Field {
-                                FieldLabel("Digits Only")
+                                FieldLabel(
+                                    "Digits Only",
+                                    Modifier.focusProperties { canFocus = false }.clickable { focus.requestFocus() },
+                                )
                                 InputOTP(
                                     value = code,
                                     onValueChange = { code = it },
                                     length = 6,
                                     pattern = Regex("[0-9]"),
+                                    modifier = Modifier.focusRequester(focus),
+                                    contentDescription = "Digits Only",
                                 ) {
                                     InputOTPGroup {
                                         InputOTPSlot(0)
@@ -218,6 +231,7 @@ val inputOTPDoc =
                 ),
                 ComponentExample(
                     title = "Separator",
+                    previewPadding = 0.dp,
                     descriptionMarkdown =
                         "Use the `InputOTPSeparator` component to add a separator between " +
                             "input groups.",
@@ -232,25 +246,7 @@ val inputOTPDoc =
                             InputOTPGroup { InputOTPSlot(4); InputOTPSlot(5) }
                         }
                         """.trimIndent(),
-                    preview = {
-                        var code by remember { mutableStateOf("") }
-                        InputOTP(value = code, onValueChange = { code = it }, length = 6) {
-                            InputOTPGroup {
-                                InputOTPSlot(0)
-                                InputOTPSlot(1)
-                            }
-                            InputOTPSeparator()
-                            InputOTPGroup {
-                                InputOTPSlot(2)
-                                InputOTPSlot(3)
-                            }
-                            InputOTPSeparator()
-                            InputOTPGroup {
-                                InputOTPSlot(4)
-                                InputOTPSlot(5)
-                            }
-                        }
-                    },
+                    preview = { InputOTPSplitPreview(invalid = false) },
                 ),
                 ComponentExample(
                     title = "Disabled",
@@ -325,6 +321,7 @@ val inputOTPDoc =
                 ),
                 ComponentExample(
                     title = "Invalid",
+                    previewPadding = 0.dp,
                     descriptionMarkdown = "Use `invalid` on the slots to show an error state.",
                     code =
                         """
@@ -337,25 +334,7 @@ val inputOTPDoc =
                             InputOTPGroup { InputOTPSlot(4, invalid = true); InputOTPSlot(5, invalid = true) }
                         }
                         """.trimIndent(),
-                    preview = {
-                        var value by remember { mutableStateOf("000000") }
-                        InputOTP(value = value, onValueChange = { value = it }, length = 6, invalid = true) {
-                            InputOTPGroup {
-                                InputOTPSlot(0, invalid = true)
-                                InputOTPSlot(1, invalid = true)
-                            }
-                            InputOTPSeparator()
-                            InputOTPGroup {
-                                InputOTPSlot(2, invalid = true)
-                                InputOTPSlot(3, invalid = true)
-                            }
-                            InputOTPSeparator()
-                            InputOTPGroup {
-                                InputOTPSlot(4, invalid = true)
-                                InputOTPSlot(5, invalid = true)
-                            }
-                        }
-                    },
+                    preview = { InputOTPSplitPreview(invalid = true) },
                 ),
                 ComponentExample(
                     title = "Four Digits",
@@ -584,6 +563,33 @@ val inputOTPDoc =
                 ),
             ),
     )
+
+@Composable
+private fun InputOTPSplitPreview(invalid: Boolean) {
+    var value by remember { mutableStateOf(if (invalid) "000000" else "") }
+    BoxWithConstraints(Modifier.padding(vertical = 40.dp).widthIn(max = 256.dp)) {
+        val density = LocalDensity.current
+        val separatorPixels =
+            with(density) {
+                ((constraints.maxWidth - 224.dp.roundToPx()) / 2).coerceIn(8.dp.roundToPx(), 16.dp.roundToPx())
+            }
+        val separator = with(density) { separatorPixels.toDp() }
+        val slot =
+            with(density) {
+                val available = constraints.maxWidth - 32.dp.roundToPx() - 2 * separatorPixels
+                (available / 6).coerceIn(0, 32.dp.roundToPx()).toDp()
+            }
+        InputOTP(value = value, onValueChange = { value = it }, length = 6, invalid = invalid) {
+            repeat(3) { group ->
+                if (group > 0) InputOTPSeparator(Modifier.width(separator))
+                InputOTPGroup {
+                    InputOTPSlot(group * 2, Modifier.width(slot))
+                    InputOTPSlot(group * 2 + 1, Modifier.width(slot + 1.dp))
+                }
+            }
+        }
+    }
+}
 
 @Composable
 private fun InputOTPFormPreview(modifier: Modifier = Modifier) {
