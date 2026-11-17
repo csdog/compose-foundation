@@ -4,9 +4,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.width
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.catalog.docs.fieldDoc
 import com.toutiaoyan.compose.ui.theme.Theme
@@ -128,8 +130,14 @@ class FieldExamplesTest {
         rule.onAllNodes(radios).assertCountEquals(2)
         rule.onAllNodes(radios)[0].assertIsSelected()
         rule.onNodeWithText("Virtual Machine").performClick()
-        rule.onAllNodes(radios)[1].assertIsSelected()
+        rule.onNode(radios and hasContentDescription("Virtual Machine. Access a cluster to run GPU workloads."))
+            .assertIsSelected()
         rule.onAllNodes(radios)[0].assertIsNotSelected()
+    }
+
+    @Test fun radioRecipeExposesTheVisibleOptionName() {
+        show("Radio")
+        rule.onNode(radios and hasContentDescription("Monthly (\$9.99/month)")).assertIsSelected()
     }
 
     @Test fun responsiveFieldsSwitchToARowAtWideContainerWidth() {
@@ -148,12 +156,61 @@ class FieldExamplesTest {
 
     @Test fun switchRecipeTogglesFromItsLabelAndTrack() {
         show("Switch")
-        val toggle = rule.onNode(isToggleable())
+        val toggle = rule.onNode(isToggleable() and hasContentDescription("Multi-factor authentication"))
         toggle.assertIsOff()
         rule.onNodeWithText("Multi-factor authentication").performClick()
         toggle.assertIsOn()
         toggle.performClick()
         toggle.assertIsOff()
+    }
+
+    @Test fun sliderRecipeNamesTheControlAndUpdatesItsBudget() {
+        show("Slider")
+        val slider = rule.onNodeWithContentDescription("Price Range")
+        slider.assert(SemanticsMatcher.expectValue(SemanticsProperties.Role, Role.ValuePicker))
+        slider.performSemanticsAction(SemanticsActions.SetProgress) { setProgress ->
+            assertTrue(setProgress(210f))
+        }
+        rule.onNodeWithText("Set your budget range (\$210 - 800).").assertIsDisplayed()
+    }
+
+    @Test fun defaultSubmitFocusesTheFirstRequiredFieldAndAdvancesAfterEditing() {
+        show("Default")
+        val submit = rule.onNodeWithText("Submit")
+        val name = rule.onNodeWithContentDescription("Evil Rabbit, required")
+        val number = rule.onNodeWithContentDescription("1234 5678 9012 3456, required")
+        val cvv = rule.onNodeWithContentDescription("123, required")
+        val error = rule.onNodeWithText("Please fill out this field.")
+
+        error.assertDoesNotExist()
+        submit.performClick()
+        name.assertIsFocused()
+        error.assertExists()
+        name.performTextInput("Ada")
+        error.assertDoesNotExist()
+        submit.performClick()
+        number.assertIsFocused().performTextInput("1234")
+        submit.performClick()
+        cvv.assertIsFocused().performTextInput("123")
+        submit.performClick()
+        error.assertDoesNotExist()
+        name.assert(SemanticsMatcher.expectValue(SemanticsProperties.EditableText, AnnotatedString("")))
+    }
+
+    @Test fun responsiveSubmitValidatesTheNameAtNarrowWidth() {
+        show("Responsive Layout", width = 360)
+        rule.onNodeWithText("Submit").performClick()
+        rule.onNodeWithContentDescription("Evil Rabbit, required").assertIsFocused()
+        rule.onNodeWithText("Please fill out this field.").assertExists()
+    }
+
+    @Test fun rtlSubmitShowsLocalizedRequiredFeedback() {
+        show("RTL")
+        rule.onNodeWithText("إرسال").performClick()
+        rule.onNodeWithContentDescription("Evil Rabbit, required").assertIsFocused()
+        rule.onNodeWithText("يرجى ملء هذا الحقل.").assertExists()
+        rule.onNodeWithText("إلغاء").performClick()
+        rule.onNodeWithText("يرجى ملء هذا الحقل.").assertDoesNotExist()
     }
 
     @Test fun rtlRecipeShowsArabicLabelsAndSeparator() {

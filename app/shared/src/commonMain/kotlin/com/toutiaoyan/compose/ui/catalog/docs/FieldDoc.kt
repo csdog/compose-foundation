@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,6 +46,7 @@ import com.toutiaoyan.compose.ui.components.checkbox.Checkbox
 import com.toutiaoyan.compose.ui.components.field.Field
 import com.toutiaoyan.compose.ui.components.field.FieldContent
 import com.toutiaoyan.compose.ui.components.field.FieldDescription
+import com.toutiaoyan.compose.ui.components.field.FieldError
 import com.toutiaoyan.compose.ui.components.field.FieldGroup
 import com.toutiaoyan.compose.ui.components.field.FieldLabel
 import com.toutiaoyan.compose.ui.components.field.FieldLegend
@@ -123,8 +125,8 @@ private val fieldDemoCode =
             }
         }
         Field(orientation = FieldOrientation.Horizontal) {
-            Button("Submit")
-            Button("Cancel", variant = ButtonVariant.Outline, onClick = { /* reset */ })
+            Button("Submit", onClick = submit)
+            Button("Cancel", variant = ButtonVariant.Outline, onClick = reset)
         }
     }
     """.trimIndent()
@@ -166,7 +168,7 @@ private val fieldChoiceCardCode =
                             FieldTitle("Kubernetes")
                             FieldDescription("Run GPU workloads on a K8s cluster.")
                         }
-                        RadioGroupItem("kubernetes")
+                        RadioGroupItem("kubernetes", label = "Kubernetes. Run GPU workloads on a K8s cluster.")
                     }
                 }
                 FieldLabel(selected = environment == "vm", onClick = { environment = "vm" }) {
@@ -175,7 +177,7 @@ private val fieldChoiceCardCode =
                             FieldTitle("Virtual Machine")
                             FieldDescription("Access a cluster to run GPU workloads.")
                         }
-                        RadioGroupItem("vm")
+                        RadioGroupItem("vm", label = "Virtual Machine. Access a cluster to run GPU workloads.")
                     }
                 }
             }
@@ -282,7 +284,7 @@ private val fieldRtlCode =
                         }
                     }
                     Field(orientation = FieldOrientation.Horizontal) {
-                        Button(t.submit)
+                        Button(t.submit, onClick = submit)
                         Button(t.cancel, variant = ButtonVariant.Outline)
                     }
                 }
@@ -306,7 +308,7 @@ private val fieldResponsiveCode =
                     Input(name, { name = it }, placeholder = "Evil Rabbit", required = true, modifier = Modifier.width(192.dp))
                 }
                 Field(orientation = FieldOrientation.Responsive) {
-                    Button("Submit")
+                    Button("Submit", onClick = submit)
                     Button("Cancel", variant = ButtonVariant.Outline)
                 }
             }
@@ -477,7 +479,9 @@ val fieldDoc =
                             "See the [Form](https://ui.shadcn.com/docs/forms) documentation for building " +
                                 "forms with the `Field` component and React Hook Form, Tanstack Form, or " +
                                 "Formisch. Compose hoists form state to the caller instead of depending " +
-                                "on a form library.",
+                                "on a form library. In the form previews, Submit focuses the first empty " +
+                                "required field. " +
+                                "Once the required fields are filled, submitting resets the preview.",
                         ),
                     ),
                 ),
@@ -673,11 +677,20 @@ val fieldDoc =
                     previewPadding = 40.dp,
                     code =
                         """
+                        var range by remember { mutableStateOf(200f..800f) }
                         Field(Modifier.widthIn(max = 320.dp)) {
                             FieldTitle("Price Range")
-                            Text { "Set your budget range (${'$'}${'$'}200 - ${'$'}${'$'}800)." }
-                            Slider(value = 200f..800f, onValueChange = { range = it },
-                                valueRange = 0f..1000f, step = 10f, modifier = Modifier.padding(top = 8.dp))
+                            FieldDescription(
+                                "Set your budget range (\${'$'}${'$'}{range.start.toInt()} - ${'$'}{range.endInclusive.toInt()}).",
+                            )
+                            Slider(
+                                value = range,
+                                onValueChange = { range = it },
+                                modifier = Modifier.padding(top = 8.dp),
+                                valueRange = 0f..1000f,
+                                step = 10f,
+                                label = "Price Range",
+                            )
                         }
                         """.trimIndent(),
                     preview = { FieldSliderRecipe() },
@@ -727,15 +740,15 @@ val fieldDoc =
                             FieldDescription("Yearly and lifetime plans offer significant savings.")
                             RadioGroup(value = plan, onValueChange = { plan = it }, contentDescription = "Subscription Plan") {
                                 Field(orientation = FieldOrientation.Horizontal) {
-                                    RadioGroupItem("monthly")
+                                    RadioGroupItem("monthly", label = "Monthly (${'$'}9.99/month)")
                                     FieldLabel("Monthly (${'$'}9.99/month)", Modifier.clickable { plan = "monthly" })
                                 }
                                 Field(orientation = FieldOrientation.Horizontal) {
-                                    RadioGroupItem("yearly")
+                                    RadioGroupItem("yearly", label = "Yearly (${'$'}99.99/year)")
                                     FieldLabel("Yearly (${'$'}99.99/year)", Modifier.clickable { plan = "yearly" })
                                 }
                                 Field(orientation = FieldOrientation.Horizontal) {
-                                    RadioGroupItem("lifetime")
+                                    RadioGroupItem("lifetime", label = "Lifetime (${'$'}299.99)")
                                     FieldLabel("Lifetime (${'$'}299.99)", Modifier.clickable { plan = "lifetime" })
                                 }
                             }
@@ -749,9 +762,10 @@ val fieldDoc =
                     previewPadding = 40.dp,
                     code =
                         """
+                        val label = "Multi-factor authentication"
                         Field(orientation = FieldOrientation.Horizontal, modifier = Modifier.width(IntrinsicSize.Max)) {
-                            FieldLabel("Multi-factor authentication", Modifier.clickable { enabled = !enabled })
-                            Switch(checked = enabled, onCheckedChange = { enabled = it })
+                            FieldLabel(label, Modifier.clickable { enabled = !enabled })
+                            Switch(checked = enabled, onCheckedChange = { enabled = it }, label = label)
                         }
                         """.trimIndent(),
                     preview = { FieldSwitchRecipe() },
@@ -885,7 +899,7 @@ private fun RadioGroupScope.FieldRadioRow(
 ) {
     val focus = remember { FocusRequester() }
     Field(orientation = FieldOrientation.Horizontal) {
-        RadioGroupItem(value, modifier = Modifier.focusRequester(focus))
+        RadioGroupItem(value, modifier = Modifier.focusRequester(focus), label = text)
         FieldNormalLabel(
             text,
             onClick = {
@@ -911,25 +925,90 @@ private val departments =
         "Operations",
     )
 
+private class RequiredPreviewText {
+    var value by mutableStateOf("")
+        private set
+    var missing by mutableStateOf(false)
+        private set
+    private val focus = FocusRequester()
+    private var focusRequest by mutableStateOf(0)
+
+    fun edit(value: String) {
+        this.value = value
+        if (value.isNotEmpty()) missing = false
+    }
+
+    fun reset() {
+        value = ""
+        missing = false
+    }
+
+    fun reportMissing() {
+        missing = true
+        focusRequest++
+    }
+
+    @Composable
+    fun Input(
+        placeholder: String,
+        modifier: Modifier = Modifier,
+    ) {
+        LaunchedEffect(focusRequest) {
+            if (missing) focus.requestFocus()
+        }
+        Input(
+            value = value,
+            onValueChange = ::edit,
+            modifier = modifier.focusRequester(focus),
+            placeholder = placeholder,
+            invalid = missing,
+            required = true,
+        )
+    }
+}
+
+private fun submitFieldPreview(
+    vararg inputs: RequiredPreviewText,
+    onValid: () -> Unit,
+) {
+    val missing = inputs.firstOrNull { it.value.isEmpty() }
+    if (missing == null) onValid() else missing.reportMissing()
+}
+
+private const val requiredFieldMessage = "Please fill out this field."
+
 @Composable
 private fun FieldDemoRecipe() {
-    var name by remember { mutableStateOf("") }
-    var number by remember { mutableStateOf("") }
-    var cvv by remember { mutableStateOf("") }
+    val name = remember { RequiredPreviewText() }
+    val number = remember { RequiredPreviewText() }
+    val cvv = remember { RequiredPreviewText() }
     var month by remember { mutableStateOf<String?>(null) }
     var year by remember { mutableStateOf<String?>(null) }
     var comments by remember { mutableStateOf("") }
     var sameAddress by remember { mutableStateOf(true) }
+    val reset = {
+        name.reset()
+        number.reset()
+        cvv.reset()
+        month = null
+        year = null
+        comments = ""
+        sameAddress = true
+    }
     FieldGroup(Modifier.widthIn(max = 448.dp)) {
         FieldSet {
             FieldLegend("Payment Method")
             FieldDescription(fieldDescriptionCopy)
             FieldGroup {
-                Field("Name on Card") {
-                    Input(name, { name = it }, placeholder = "Evil Rabbit", required = true)
+                Field("Name on Card", error = requiredFieldMessage.takeIf { name.missing }) {
+                    name.Input("Evil Rabbit")
                 }
-                Field("Card Number", description = "Enter your 16-digit card number") {
-                    Input(number, { number = it }, placeholder = "1234 5678 9012 3456", required = true)
+                Field(
+                    "Card Number",
+                    description = "Enter your 16-digit card number",
+                    error = requiredFieldMessage.takeIf { number.missing },
+                ) {
+                    number.Input("1234 5678 9012 3456")
                 }
                 Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                     Field("Month", Modifier.weight(1f)) {
@@ -958,8 +1037,8 @@ private fun FieldDemoRecipe() {
                             }
                         }
                     }
-                    Field("CVV", Modifier.weight(1f)) {
-                        Input(cvv, { cvv = it }, placeholder = "123", required = true)
+                    Field("CVV", Modifier.weight(1f), error = requiredFieldMessage.takeIf { cvv.missing }) {
+                        cvv.Input("123")
                     }
                 }
             }
@@ -990,20 +1069,8 @@ private fun FieldDemoRecipe() {
             }
         }
         Field(orientation = FieldOrientation.Horizontal) {
-            Button("Submit")
-            Button(
-                "Cancel",
-                variant = ButtonVariant.Outline,
-                onClick = {
-                    name = ""
-                    number = ""
-                    cvv = ""
-                    month = null
-                    year = null
-                    comments = ""
-                    sameAddress = true
-                },
-            )
+            Button("Submit", onClick = { submitFieldPreview(name, number, cvv, onValid = reset) })
+            Button("Cancel", variant = ButtonVariant.Outline, onClick = reset)
         }
     }
 }
@@ -1077,7 +1144,7 @@ private fun FieldSliderRecipe() {
                 withStyle(SpanStyle(fontWeight = FontWeight.Medium)) {
                     append(range.start.toInt().toString())
                 }
-                append(" - $")
+                append(" - ")
                 withStyle(SpanStyle(fontWeight = FontWeight.Medium)) {
                     append(range.endInclusive.toInt().toString())
                 }
@@ -1089,6 +1156,7 @@ private fun FieldSliderRecipe() {
             onValueChange = { range = it },
             valueRange = 0f..1000f,
             step = 10f,
+            label = "Price Range",
             modifier = Modifier.padding(top = 8.dp),
         )
     }
@@ -1172,15 +1240,21 @@ private fun FieldRadioRecipe() {
 private fun FieldSwitchRecipe() {
     var enabled by remember { mutableStateOf(false) }
     val focus = remember { FocusRequester() }
+    val label = "Multi-factor authentication"
     Field(orientation = FieldOrientation.Horizontal, modifier = Modifier.width(IntrinsicSize.Max)) {
         FieldLabel(
-            "Multi-factor authentication",
+            label,
             Modifier.focusProperties { canFocus = false }.clickable {
                 enabled = !enabled
                 focus.requestFocus()
             },
         )
-        Switch(checked = enabled, onCheckedChange = { enabled = it }, modifier = Modifier.focusRequester(focus))
+        Switch(
+            checked = enabled,
+            onCheckedChange = { enabled = it },
+            modifier = Modifier.focusRequester(focus),
+            label = label,
+        )
     }
 }
 
@@ -1236,7 +1310,7 @@ private fun RadioGroupScope.ChoiceCardOption(
                 FieldTitle(title)
                 FieldDescription(description)
             }
-            RadioGroupItem(value, modifier = Modifier.focusRequester(focus))
+            RadioGroupItem(value, modifier = Modifier.focusRequester(focus), label = "$title. $description")
         }
     }
 }
@@ -1282,27 +1356,22 @@ private fun FieldResponsiveRecipe() {
         Modifier.fillMaxWidth().padding(if (mobile) 24.dp else 40.dp),
         contentAlignment = Alignment.Center,
     ) {
-        var name by remember { mutableStateOf("") }
+        val name = remember { RequiredPreviewText() }
         FieldGroup(Modifier.widthIn(max = 512.dp)) {
             FieldSet {
                 FieldLegend("Profile")
                 FieldDescription("Fill in your profile information.")
                 FieldGroup {
-                    Field(orientation = FieldOrientation.Responsive) {
+                    Field(orientation = FieldOrientation.Responsive, invalid = name.missing) {
                         FieldContent {
                             FieldLabel("Name")
                             FieldDescription("Provide your full name for identification")
+                            if (name.missing) FieldError(requiredFieldMessage)
                         }
-                        Input(
-                            name,
-                            { name = it },
-                            placeholder = "Evil Rabbit",
-                            required = true,
-                            modifier = Modifier.width(192.dp),
-                        )
+                        name.Input("Evil Rabbit", Modifier.width(192.dp))
                     }
                     Field(orientation = FieldOrientation.Responsive) {
-                        Button("Submit")
+                        Button("Submit", onClick = { submitFieldPreview(name, onValid = name::reset) })
                         Button("Cancel", variant = ButtonVariant.Outline)
                     }
                 }
@@ -1332,6 +1401,7 @@ private class FieldRtlStrings(
     val commentsPlaceholder: String,
     val submit: String,
     val cancel: String,
+    val requiredFieldMessage: String,
     val months: List<String>,
 )
 
@@ -1368,6 +1438,7 @@ private val fieldRtlTranslations =
             commentsPlaceholder = "Add any additional comments",
             submit = "Submit",
             cancel = "Cancel",
+            requiredFieldMessage = requiredFieldMessage,
             months = months,
         ),
         FieldRtlStrings(
@@ -1387,6 +1458,7 @@ private val fieldRtlTranslations =
             commentsPlaceholder = "أضف أي تعليقات إضافية",
             submit = "إرسال",
             cancel = "إلغاء",
+            requiredFieldMessage = "يرجى ملء هذا الحقل.",
             months = listOf("ش.ش") + (1..12).map { arabicDigits(it.toString().padStart(2, '0')) },
         ),
         FieldRtlStrings(
@@ -1406,6 +1478,7 @@ private val fieldRtlTranslations =
             commentsPlaceholder = "הוסף הערות נוספות",
             submit = "שלח",
             cancel = "בטל",
+            requiredFieldMessage = "יש למלא את השדה הזה.",
             months = months,
         ),
     )
@@ -1455,23 +1528,36 @@ private fun FieldRtlRecipe() {
 
 @Composable
 private fun FieldRtlPaymentForm(t: FieldRtlStrings) {
-    var name by remember { mutableStateOf("") }
-    var number by remember { mutableStateOf("") }
-    var cvv by remember { mutableStateOf("") }
+    val name = remember { RequiredPreviewText() }
+    val number = remember { RequiredPreviewText() }
+    val cvv = remember { RequiredPreviewText() }
     var month by remember { mutableStateOf<String?>(null) }
     var year by remember { mutableStateOf<String?>(null) }
     var comments by remember { mutableStateOf("") }
     var sameAddress by remember { mutableStateOf(true) }
+    val reset = {
+        name.reset()
+        number.reset()
+        cvv.reset()
+        month = null
+        year = null
+        comments = ""
+        sameAddress = true
+    }
     FieldGroup(Modifier.widthIn(max = 448.dp)) {
         FieldSet {
             FieldLegend(t.paymentMethod)
             FieldDescription(t.secureTransactions)
             FieldGroup {
-                Field(t.nameOnCard) {
-                    Input(name, { name = it }, placeholder = "Evil Rabbit", required = true)
+                Field(t.nameOnCard, error = t.requiredFieldMessage.takeIf { name.missing }) {
+                    name.Input("Evil Rabbit")
                 }
-                Field(t.cardNumber, description = t.cardNumberDescription) {
-                    Input(number, { number = it }, placeholder = "1234 5678 9012 3456", required = true)
+                Field(
+                    t.cardNumber,
+                    description = t.cardNumberDescription,
+                    error = t.requiredFieldMessage.takeIf { number.missing },
+                ) {
+                    number.Input("1234 5678 9012 3456")
                 }
                 Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                     Field(t.month, Modifier.weight(1f)) {
@@ -1490,8 +1576,8 @@ private fun FieldRtlPaymentForm(t: FieldRtlStrings) {
                             SelectContent { (2024..2029).forEach { SelectItem(it.toString()) } }
                         }
                     }
-                    Field(t.cvv, Modifier.weight(1f)) {
-                        Input(cvv, { cvv = it }, placeholder = "123", required = true)
+                    Field(t.cvv, Modifier.weight(1f), error = t.requiredFieldMessage.takeIf { cvv.missing }) {
+                        cvv.Input("123")
                     }
                 }
             }
@@ -1519,20 +1605,8 @@ private fun FieldRtlPaymentForm(t: FieldRtlStrings) {
             }
         }
         Field(orientation = FieldOrientation.Horizontal) {
-            Button(t.submit)
-            Button(
-                t.cancel,
-                variant = ButtonVariant.Outline,
-                onClick = {
-                    name = ""
-                    number = ""
-                    cvv = ""
-                    month = null
-                    year = null
-                    comments = ""
-                    sameAddress = true
-                },
-            )
+            Button(t.submit, onClick = { submitFieldPreview(name, number, cvv, onValid = reset) })
+            Button(t.cancel, variant = ButtonVariant.Outline, onClick = reset)
         }
     }
 }

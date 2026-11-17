@@ -110,6 +110,7 @@ internal class SliderController(
     val focusRequesters: List<FocusRequester> = emptyList(),
     val currentValues: () -> List<Float>,
     val onValuesCommit: ((List<Float>) -> Unit)? = null,
+    val thumbDescription: ((Int) -> String)? = null,
 ) {
     val interactionSource: MutableInteractionSource
         get() = interactionSources.first()
@@ -401,6 +402,75 @@ private fun SliderImpl(
             Style
         }
 
+    val separateThumbSemantics = sliderWebThumbSemantics && values.size > 1
+    val rangeSemantics =
+        if (separateThumbSemantics) {
+            Modifier
+        } else {
+            Modifier.semantics(mergeDescendants = true) {
+                role = Role.ValuePicker
+                val valueText = getValueLabel?.invoke(first)
+                val description =
+                    when {
+                        label.isNotEmpty() && valueText != null -> "$label, $valueText"
+                        valueText != null -> valueText
+                        label.isNotEmpty() -> label
+                        else -> null
+                    }
+                if (description != null) {
+                    contentDescription = description
+                }
+                if (!enabled) {
+                    disabled()
+                }
+                progressBarRangeInfo =
+                    ProgressBarRangeInfo(
+                        current = first,
+                        range = valueRange,
+                        steps = sliderSemanticsSteps(rangeSpan, step),
+                    )
+                setProgress { target ->
+                    if (!enabled) {
+                        false
+                    } else {
+                        val snapped = snapSliderValue(target, valueRange, step)
+                        val committed =
+                            if (values.size <= 1) {
+                                listOf(snapped)
+                            } else {
+                                val index = values.indices.minBy { abs(values[it] - snapped) }
+                                val gap =
+                                    if (minStepsBetweenThumbs <= 0) {
+                                        0f
+                                    } else {
+                                        minStepsBetweenThumbs * (if (step > 0f) step else 1f)
+                                    }
+                                val minBound =
+                                    if (index == 0) valueRange.start else values[index - 1] + gap
+                                val maxBound =
+                                    if (index == values.lastIndex) {
+                                        valueRange.endInclusive
+                                    } else {
+                                        values[index + 1] - gap
+                                    }
+                                if (minBound > maxBound) {
+                                    values
+                                } else {
+                                    values.toMutableList().also {
+                                        it[index] = snapped.coerceIn(minBound, maxBound)
+                                    }
+                                }
+                            }
+                        if (values.size <= 1 || committed !== values) {
+                            onValuesChange(committed)
+                        }
+                        currentCommit.value?.invoke(committed)
+                        true
+                    }
+                }
+            }
+        }
+
     Box(
         modifier =
             modifier
@@ -412,68 +482,7 @@ private fun SliderImpl(
             modifier =
                 Modifier
                     .matchParentSize()
-                    .semantics(mergeDescendants = true) {
-                        role = Role.ValuePicker
-                        val valueText = getValueLabel?.invoke(first)
-                        val description =
-                            when {
-                                label.isNotEmpty() && valueText != null -> "$label, $valueText"
-                                valueText != null -> valueText
-                                label.isNotEmpty() -> label
-                                else -> null
-                            }
-                        if (description != null) {
-                            contentDescription = description
-                        }
-                        if (!enabled) {
-                            disabled()
-                        }
-                        progressBarRangeInfo =
-                            ProgressBarRangeInfo(
-                                current = first,
-                                range = valueRange,
-                                steps = sliderSemanticsSteps(rangeSpan, step),
-                            )
-                        setProgress { target ->
-                            if (!enabled) {
-                                false
-                            } else {
-                                val snapped = snapSliderValue(target, valueRange, step)
-                                val committed =
-                                    if (values.size <= 1) {
-                                        listOf(snapped)
-                                    } else {
-                                        val index = values.indices.minBy { abs(values[it] - snapped) }
-                                        val gap =
-                                            if (minStepsBetweenThumbs <= 0) {
-                                                0f
-                                            } else {
-                                                minStepsBetweenThumbs * (if (step > 0f) step else 1f)
-                                            }
-                                        val minBound =
-                                            if (index == 0) valueRange.start else values[index - 1] + gap
-                                        val maxBound =
-                                            if (index == values.lastIndex) {
-                                                valueRange.endInclusive
-                                            } else {
-                                                values[index + 1] - gap
-                                            }
-                                        if (minBound > maxBound) {
-                                            values
-                                        } else {
-                                            values.toMutableList().also {
-                                                it[index] = snapped.coerceIn(minBound, maxBound)
-                                            }
-                                        }
-                                    }
-                                if (values.size <= 1 || committed !== values) {
-                                    onValuesChange(committed)
-                                }
-                                currentCommit.value?.invoke(committed)
-                                true
-                            }
-                        }
-                    }
+                    .then(rangeSemantics)
                     .alpha(if (enabled) 1f else 0.5f),
             contentAlignment = if (vertical) Alignment.BottomCenter else Alignment.CenterStart,
         ) {
@@ -510,6 +519,18 @@ private fun SliderImpl(
                     focusRequesters = focusRequesters,
                     currentValues = { currentValues.value },
                     onValuesCommit = { currentCommit.value?.invoke(it) },
+                    thumbDescription =
+                        if (separateThumbSemantics) {
+                            { index ->
+                                listOfNotNull(
+                                    label.takeIf { it.isNotBlank() },
+                                    "Thumb ${index + 1} of ${values.size}",
+                                    getValueLabel?.invoke(values[index]),
+                                ).joinToString(", ")
+                            }
+                        } else {
+                            null
+                        },
                 )
             CompositionLocalProvider(LocalSlider provides controller) {
                 Box(
@@ -718,6 +739,10 @@ internal fun SliderThumb(
                     true
                 }
                 .semantics {
+                    slider.thumbDescription?.let {
+                        role = Role.ValuePicker
+                        contentDescription = it(index)
+                    }
                     progressBarRangeInfo =
                         ProgressBarRangeInfo(
                             slider.state.values[index],
