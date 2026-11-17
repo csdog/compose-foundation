@@ -2,6 +2,15 @@
 
 package com.toutiaoyan.compose.ui.components.inputotp
 
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.CubicBezierEasing
+import androidx.compose.animation.core.animateDp
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.keyframes
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.updateTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.width
@@ -63,6 +72,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.semantics.contentDescription
@@ -70,10 +80,12 @@ import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.tailwind.core.twRadius
 import com.toutiaoyan.compose.tailwind.core.twSpacing
 import com.toutiaoyan.compose.ui.components.field.LocalFieldSetDisabled
+import com.toutiaoyan.compose.ui.components.input.NovaInputColorDurationMillis
 import com.toutiaoyan.compose.ui.components.separator.Separator
 import com.toutiaoyan.compose.ui.components.separator.SeparatorOrientation
 import com.toutiaoyan.compose.ui.components.text.Text
@@ -450,39 +462,55 @@ private fun OtpSlot(
 ) {
     val theme = currentTheme
     val nova = theme.activePreset == StylePreset.Nova
+    val fill =
+        if (nova && theme.isDark) {
+            theme.colors.input.copy(alpha = theme.colors.input.alpha * 0.3f).compositeOver(theme.colors.background)
+        } else {
+            theme.colors.background
+        }
+    val border =
+        when {
+            invalid -> theme.colors.destructive
+            isActive -> theme.colors.ring
+            nova -> theme.colors.input
+            else -> theme.colors.border
+        }
+    val focusRing = theme.focusRingShadow()
+    val errorRing =
+        Shadow(
+            radius = 0.dp,
+            spread = 3.dp,
+            color = theme.colors.destructive.copy(alpha = if (theme.isDark) 0.4f else 0.2f),
+        )
     val slotStyle =
-        Style {
-            background(
-                if (nova && theme.isDark) {
-                    theme.colors.input.copy(
-                        alpha = theme.colors.input.alpha * 0.3f,
-                    ).compositeOver(theme.colors.background)
-                } else {
-                    theme.colors.background
-                },
-            )
-            borderWidth(1.dp)
-            borderColor(
-                when {
-                    invalid -> theme.colors.destructive
-                    isActive -> theme.colors.ring
-                    nova -> theme.colors.input
-                    else -> theme.colors.border
-                },
-            )
-            shape(shape)
-            if (isActive) dropShadow(theme.focusRingShadow())
-            if (invalid && (!nova || isActive)) {
-                dropShadow(
-                    Shadow(
-                        radius = 0.dp,
-                        spread = 3.dp,
-                        color =
-                            theme.colors.destructive.copy(
-                                alpha = if (theme.isDark) 0.4f else 0.2f,
-                            ),
+        if (nova) {
+            val ring = if (invalid) errorRing else focusRing
+            val paint =
+                animateOtpSlot(
+                    OtpSlotPaint(
+                        fill = fill,
+                        border = border,
+                        ring = if (isActive) ring.color else ring.color.copy(alpha = 0f),
+                        spread = if (isActive) ring.spread else 0.dp,
                     ),
                 )
+            Style {
+                background(paint.fill)
+                borderWidth(1.dp)
+                borderColor(paint.border)
+                shape(shape)
+                if (paint.spread > 0.dp && paint.ring.alpha > 0f) {
+                    dropShadow(Shadow(radius = 0.dp, spread = paint.spread, color = paint.ring))
+                }
+            }
+        } else {
+            Style {
+                background(fill)
+                borderWidth(1.dp)
+                borderColor(border)
+                shape(shape)
+                if (isActive) dropShadow(focusRing)
+                if (invalid) dropShadow(errorRing)
             }
         }
 
@@ -524,12 +552,57 @@ private fun OtpSlot(
             }
         }
         if (nova && isActive && char == null) {
+            val opacity =
+                rememberInfiniteTransition(label = "OTP caret").animateFloat(
+                    initialValue = 1f,
+                    targetValue = 1f,
+                    animationSpec = infiniteRepeatable(OtpCaretBlink),
+                    label = "opacity",
+                )
             Box(
-                Modifier.width(1.dp).height(16.dp).background(theme.colors.foreground),
+                Modifier.width(1.dp).height(16.dp)
+                    .graphicsLayer { alpha = opacity.value }
+                    .background(theme.colors.foreground),
             )
         }
     }
 }
+
+private data class OtpSlotPaint(
+    val fill: Color,
+    val border: Color,
+    val ring: Color,
+    val spread: Dp,
+)
+
+@Composable
+private fun animateOtpSlot(target: OtpSlotPaint): OtpSlotPaint {
+    val transition = updateTransition(targetState = target, label = "OTP slot")
+    val fill by transition.animateColor(transitionSpec = { tween(NovaInputColorDurationMillis) }, label = "fill") {
+        it.fill
+    }
+    val border by transition.animateColor(transitionSpec = { tween(NovaInputColorDurationMillis) }, label = "border") {
+        it.border
+    }
+    val ring by transition.animateColor(transitionSpec = { tween(NovaInputColorDurationMillis) }, label = "ring") {
+        it.ring
+    }
+    val spread by transition.animateDp(transitionSpec = { tween(NovaInputColorDurationMillis) }, label = "spread") {
+        it.spread
+    }
+    return OtpSlotPaint(fill, border, ring, spread)
+}
+
+private val OtpCaretBlink =
+    keyframes {
+        val easeOut = CubicBezierEasing(0f, 0f, .58f, 1f)
+        durationMillis = 1000
+        1f at 0 using easeOut
+        0f at 200
+        0f at 500 using easeOut
+        1f at 700
+        1f at 1000
+    }
 
 /** Horizontal minus between separate OTP groups. */
 @Composable

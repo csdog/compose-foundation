@@ -34,6 +34,9 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.RefreshCw
+import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
+import com.toutiaoyan.compose.ui.catalog.catalogArabicFontFamily
+import com.toutiaoyan.compose.ui.catalog.catalogHebrewFontFamily
 import com.toutiaoyan.compose.ui.components.button.Button
 import com.toutiaoyan.compose.ui.components.button.ButtonSize
 import com.toutiaoyan.compose.ui.components.button.ButtonVariant
@@ -51,6 +54,8 @@ import com.toutiaoyan.compose.ui.components.inputotp.InputOTPSeparator
 import com.toutiaoyan.compose.ui.components.inputotp.InputOTPSlot
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextColors
+import com.toutiaoyan.compose.ui.theme.Theme
+import com.toutiaoyan.compose.ui.theme.currentTheme
 
 /**
  * Current official page (revision 8a35366):
@@ -507,11 +512,12 @@ val inputOTPDoc =
                             "[RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
                     code =
                         """
+                        var code by remember { mutableStateOf("123456") }
                         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
                             Column(Modifier.widthIn(max = 320.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                                 Field {
                                     FieldLabel("رمز التحقق")
-                                    InputOTP(value = "123456", onValueChange = {}, length = 6) {
+                                    InputOTP(value = code, onValueChange = { code = it }, length = 6) {
                                         InputOTPGroup {
                                             InputOTPSlot(0)
                                             InputOTPSlot(1)
@@ -676,20 +682,45 @@ private val inputOTPRtlTexts =
 @Composable
 private fun InputOTPRtlPreview() {
     var language by remember { mutableStateOf(0) }
+    var code by remember { mutableStateOf("123456") }
+    val focus = remember { FocusRequester() }
     val text = inputOTPRtlTexts[language]
+    val inherited = currentTheme
     RtlPreview(language, inputOTPRtlTexts.map { it.language }, { language = it }) {
+        val font =
+            when (language) {
+                0 -> catalogArabicFontFamily()
+                2 -> catalogHebrewFontFamily()
+                else -> inherited.fontFamily
+            }
         CompositionLocalProvider(LocalLayoutDirection provides text.direction) {
-            Column(Modifier.widthIn(max = 320.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Field {
-                    FieldLabel(text.verificationCode)
-                    InputOTP(value = "123456", onValueChange = {}, length = 6) {
-                        InputOTPGroup {
-                            InputOTPSlot(0)
-                            InputOTPSlot(1)
-                            InputOTPSlot(2)
-                            InputOTPSlot(3)
-                            InputOTPSlot(4)
-                            InputOTPSlot(5)
+            Theme(
+                preset = inherited.activePreset,
+                baseColor = inherited.activeBaseColor,
+                accent = inherited.activeAccent,
+                isDark = inherited.isDark,
+                baseRadius = inherited.baseRadius,
+                ring = inherited.ring,
+                unitSpacing = LocalUnitSpacing.current,
+                minTouchTarget = inherited.minTouchTarget,
+                fontFamily = font,
+            ) {
+                Column(Modifier.widthIn(max = 320.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Field {
+                        FieldLabel(
+                            text.verificationCode,
+                            Modifier.focusProperties { canFocus = false }.clickable { focus.requestFocus() },
+                        )
+                        InputOTP(
+                            value = code,
+                            onValueChange = { code = it },
+                            length = 6,
+                            modifier = Modifier.focusRequester(focus),
+                            contentDescription = text.verificationCode,
+                        ) {
+                            InputOTPGroup {
+                                repeat(6) { InputOTPSlot(it) }
+                            }
                         }
                     }
                 }
