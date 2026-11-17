@@ -138,6 +138,7 @@ val navigationMenuDoc =
                         ApiProperty("value / defaultValue", "String?", "null"),
                         ApiProperty("onValueChange", "((String?) -> Unit)?", "null"),
                         ApiProperty("orientation", "NavigationMenuOrientation", "Horizontal"),
+                        ApiProperty("align", "PopupAlign", "Start"),
                         ApiProperty("delayDuration / closeDelayDuration", "Int", "50 / 50"),
                         ApiProperty("skipDelayDuration", "Int", "300"),
                         ApiProperty("ariaLabel", "String?", "null"),

@@ -9,6 +9,8 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.focusable
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.foundation.clickable
@@ -31,8 +33,10 @@ import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.currentCompositionLocalContext
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -46,6 +50,7 @@ import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.PointerType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.isShiftPressed
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.type
@@ -53,7 +58,12 @@ import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.IntRect
+import androidx.compose.ui.unit.round
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -66,6 +76,8 @@ import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.hideFromAccessibility
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.role
@@ -75,6 +87,7 @@ import androidx.compose.ui.semantics.stateDescription
 import com.toutiaoyan.compose.tailwind.core.twSpacing
 import com.toutiaoyan.compose.ui.components.overlay.AnchoredPopup
 import com.toutiaoyan.compose.ui.components.overlay.PopupPlacement
+import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
 import com.toutiaoyan.compose.ui.components.overlay.PopupTransitions
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextVariant
@@ -93,6 +106,7 @@ internal class NavigationMenuController(
     val delayDuration: Int,
     val skipDelayDuration: Int,
     val closeDelayDuration: Int,
+    val viewport: NavigationMenuViewportState,
     private val lastCloseMark: () -> TimeSource.Monotonic.ValueTimeMark?,
     private val onClosed: () -> Unit,
 ) {
@@ -142,13 +156,26 @@ class NavigationMenuItemScope internal constructor(
     val value: String,
 ) {
     internal var keyboardOpened by mutableStateOf(false)
+    internal var keyboardSession by mutableStateOf(false)
     internal val triggerFocus = FocusRequester()
     internal var triggerMounted = false
+    internal var rootFocusReturn by mutableStateOf<FocusRequester?>(null)
+    internal var exitTabDirection by mutableStateOf<FocusDirection?>(null)
 }
 
 private val LocalNavigationMenuItem = staticCompositionLocalOf<NavigationMenuItemScope?> { null }
 private val LocalNavigationMenuPanel = staticCompositionLocalOf { false }
-private val LocalNavigationMenuPanelLinks = staticCompositionLocalOf<MutableList<FocusRequester>?> { null }
+private val LocalNavigationMenuPanelEnabled = staticCompositionLocalOf { true }
+
+private class NavigationMenuPanelFocus {
+    val links = mutableListOf<FocusRequester>()
+    val disabled = mutableSetOf<FocusRequester>()
+    var focused: FocusRequester? = null
+
+    fun enabledLinks(): List<FocusRequester> = links.filter { it !in disabled }
+}
+
+private val LocalNavigationMenuPanelLinks = staticCompositionLocalOf<NavigationMenuPanelFocus?> { null }
 
 /** Reads the nearest [NavigationMenuItem] scope. */
 @Composable
@@ -206,6 +233,41 @@ fun NavigationMenu(
     closeDelayDuration: Int = 50,
     content: @Composable NavigationMenuScope.() -> Unit,
 ) {
+    NavigationMenu(
+        align = PopupAlign.Start,
+        modifier = modifier,
+        orientation = orientation,
+        delayDuration = delayDuration,
+        skipDelayDuration = skipDelayDuration,
+        value = value,
+        onValueChange = onValueChange,
+        defaultValue = defaultValue,
+        ariaLabel = ariaLabel,
+        closeDelayDuration = closeDelayDuration,
+        content = content,
+    )
+}
+
+/** Navigation menu with explicit cross-axis alignment for its viewport. */
+@Composable
+fun NavigationMenu(
+    align: PopupAlign,
+    modifier: Modifier = Modifier,
+    orientation: NavigationMenuOrientation = NavigationMenuOrientation.Horizontal,
+    delayDuration: Int = 50,
+    skipDelayDuration: Int = 300,
+    value: String? = null,
+    onValueChange: ((String?) -> Unit)? = null,
+    defaultValue: String? = null,
+    ariaLabel: String? = null,
+    closeDelayDuration: Int = 50,
+    content: @Composable NavigationMenuScope.() -> Unit,
+) {
+    val direction = LocalLayoutDirection.current
+    val viewport =
+        remember(align, orientation, direction) {
+            NavigationMenuViewportState(align, orientation, direction)
+        }
     var lastCloseMark by remember { mutableStateOf<TimeSource.Monotonic.ValueTimeMark?>(null) }
     var internalOpen by remember { mutableStateOf(defaultValue) }
     val controlled = onValueChange != null
@@ -225,6 +287,7 @@ fun NavigationMenu(
             delayDuration = delayDuration.coerceAtLeast(0),
             skipDelayDuration = skipDelayDuration.coerceAtLeast(0),
             closeDelayDuration = closeDelayDuration.coerceAtLeast(0),
+            viewport = viewport,
             lastCloseMark = { lastCloseMark },
             onClosed = { lastCloseMark = TimeSource.Monotonic.markNow() },
         )
@@ -238,6 +301,7 @@ fun NavigationMenu(
                 },
         ) {
             NavigationMenuScope().content()
+            NavigationMenuSharedViewport(viewport, openValue) { setOpen(null) }
         }
     }
 }
@@ -294,6 +358,9 @@ fun NavigationMenuListScope.NavigationMenuItem(
     var hoverArmed by remember { mutableStateOf(false) }
     val hovered = triggerHovered || contentHovered
     val latestController by rememberUpdatedState(controller)
+    LaunchedEffect(controller.openValue) {
+        if (controller.openValue != value) scope.keyboardSession = false
+    }
     LaunchedEffect(
         hovered,
         value,
@@ -307,11 +374,17 @@ fun NavigationMenuListScope.NavigationMenuItem(
                 delay(controller.delayDuration.toLong())
             }
             hoverArmed = true
-            if (latestController.openValue != value) scope.keyboardOpened = false
-            latestController.onOpenChange(value)
+            if (latestController.openValue != value) {
+                scope.keyboardOpened = false
+                scope.keyboardSession = false
+                latestController.onOpenChange(value)
+            }
         } else if (hoverArmed) {
             delay(controller.closeDelayDuration.toLong())
-            if (latestController.openValue == value) latestController.onOpenChange(null)
+            // A focusable popup can emit a pointer exit on the trigger as it takes keyboard focus.
+            if (latestController.openValue == value && !scope.keyboardSession) {
+                latestController.onOpenChange(null)
+            }
             hoverArmed = false
         }
     }
@@ -322,7 +395,15 @@ fun NavigationMenuListScope.NavigationMenuItem(
                 onContentHoverChange = { contentHovered = it },
             )
         }
-    Box {
+    val viewport = controller.viewport
+    DisposableEffect(viewport, value) {
+        onDispose { viewport.anchors.remove(value) }
+    }
+    Box(
+        Modifier.onGloballyPositioned { coordinates ->
+            viewport.anchors[value] = IntRect(coordinates.positionInWindow().round(), coordinates.size)
+        },
+    ) {
         CompositionLocalProvider(
             LocalNavigationMenuItemBox provides this,
             LocalNavigationMenuItem provides scope,
@@ -331,6 +412,64 @@ fun NavigationMenuListScope.NavigationMenuItem(
             scope.content()
         }
     }
+}
+
+@Composable
+private fun Modifier.navigationMenuTopLevelFocus(
+    value: String,
+    requester: FocusRequester,
+    enabled: Boolean,
+    controller: NavigationMenuController,
+): Modifier {
+    val viewport = controller.viewport
+    val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+    DisposableEffect(viewport, value, requester) {
+        viewport.rootFocus[value] = requester
+        onDispose {
+            if (viewport.rootFocus[value] === requester) {
+                viewport.rootFocus.remove(value)
+                viewport.disabledFocus.remove(value)
+            }
+        }
+    }
+    SideEffect { if (enabled) viewport.disabledFocus.remove(value) else viewport.disabledFocus.add(value) }
+    return focusRequester(requester)
+        .onPreviewKeyEvent { event ->
+            if (event.type != KeyEventType.KeyDown || !enabled) {
+                false
+            } else if (event.key == Key.Escape && controller.openValue != null) {
+                controller.onOpenChange(null)
+                true
+            } else {
+                val step =
+                    when (controller.orientation) {
+                        NavigationMenuOrientation.Horizontal ->
+                            when (event.key) {
+                                Key.DirectionLeft -> if (rtl) 1 else -1
+                                Key.DirectionRight -> if (rtl) -1 else 1
+                                else -> 0
+                            }
+                        NavigationMenuOrientation.Vertical ->
+                            when (event.key) {
+                                Key.DirectionUp -> -1
+                                Key.DirectionDown -> 1
+                                else -> 0
+                            }
+                    }
+                if (step != 0) {
+                    viewport.adjacentFocus(value, step)?.requestFocus()
+                    true
+                } else {
+                    if (event.key == Key.Tab && controller.openValue != null &&
+                        (event.isShiftPressed || controller.openValue != value) &&
+                        viewport.adjacentFocus(value, if (event.isShiftPressed) -1 else 1) == null
+                    ) {
+                        controller.onOpenChange(null)
+                    }
+                    false
+                }
+            }
+        }
 }
 
 /** Trigger that opens [NavigationMenuContent]. Matches shadcn's `NavigationMenuTrigger`. */
@@ -370,26 +509,30 @@ fun NavigationMenuItemScope.NavigationMenuTrigger(
     }
     NavMenuHitTarget(
         modifier =
-            modifier.focusRequester(triggerFocus).keyboardInputMode().onPreviewKeyEvent {
-                if (it.type != KeyEventType.KeyDown || !resolvedEnabled) {
-                    false
-                } else if (it.key == openKey) {
-                    keyboardOpened = true
-                    controller.onOpenChange(value)
-                    true
-                } else if (it.key == Key.Escape && isOpen) {
-                    controller.onOpenChange(null)
-                    true
-                } else {
-                    false
-                }
-            },
+            modifier.navigationMenuTopLevelFocus(value, triggerFocus, resolvedEnabled, controller)
+                .keyboardInputMode().onPreviewKeyEvent {
+                    if (it.type != KeyEventType.KeyDown || !resolvedEnabled) {
+                        false
+                    } else if (it.key == Key.Tab && !it.isShiftPressed && isOpen) {
+                        keyboardOpened = true
+                        keyboardSession = true
+                        true
+                    } else if (it.key == openKey) {
+                        keyboardOpened = true
+                        keyboardSession = true
+                        controller.onOpenChange(value)
+                        true
+                    } else {
+                        false
+                    }
+                },
         open = isOpen,
         expanded = isOpen,
         enabled = resolvedEnabled,
         style = style,
         onClick = { hovered, keyboard, expandedOnPress ->
             keyboardOpened = keyboard
+            keyboardSession = keyboard
             if (hovered && stickyHoverPress) {
                 controller.onOpenChange(value)
             } else {
@@ -458,10 +601,22 @@ fun NavigationMenuItemScope.NavigationMenuContent(
     val controller = navigationMenuController()
     val isOpen = controller.openValue == value
     val panelFocus = remember { FocusRequester() }
-    val panelLinks = remember { mutableListOf<FocusRequester>() }
-    LaunchedEffect(isOpen) {
+    val panelLinks = remember { NavigationMenuPanelFocus() }
+    val rootFocusManager = LocalFocusManager.current
+    LaunchedEffect(isOpen, rootFocusReturn) {
+        val returning = rootFocusReturn
+        if (returning != null) {
+            withFrameNanos { }
+            returning.requestFocus()
+            rootFocusReturn = null
+        }
         if (!isOpen && keyboardOpened) {
-            if (controller.openValue == null && triggerMounted) triggerFocus.requestFocus()
+            val direction = exitTabDirection
+            exitTabDirection = null
+            if (controller.openValue == null && triggerMounted) {
+                triggerFocus.requestFocus()
+                if (direction != null) rootFocusManager.moveFocus(direction)
+            }
             keyboardOpened = false
         }
     }
@@ -470,8 +625,6 @@ fun NavigationMenuItemScope.NavigationMenuContent(
     val hoverSource = remember { MutableInteractionSource() }
     val contentHovered by hoverSource.collectIsHoveredAsState()
     val latestHover by rememberUpdatedState(hover)
-    LaunchedEffect(contentHovered) { latestHover?.onContentHoverChange(contentHovered) }
-    DisposableEffect(Unit) { onDispose { latestHover?.onContentHoverChange(false) } }
     val placement =
         side
             ?: if (controller.orientation == NavigationMenuOrientation.Vertical) {
@@ -479,49 +632,111 @@ fun NavigationMenuItemScope.NavigationMenuContent(
             } else {
                 PopupPlacement.Bottom
             }
-    AnchoredPopup(
-        open = isOpen,
-        onDismissRequest = { controller.onOpenChange(null) },
-        placement = placement,
-        offset = sideOffset,
-        alignOffset = alignOffset,
-        dismissOnClickOutside = dismissOnClickOutside,
-        focusable = keyboardOpened && isOpen,
-        enter = enter,
-        exit = exit,
-    ) {
-        LaunchedEffect(isOpen, keyboardOpened) {
-            if (isOpen && keyboardOpened) {
+    val render: @Composable (active: Boolean, ownChrome: Boolean) -> Unit = { active, ownChrome ->
+        LaunchedEffect(active, keyboardOpened) {
+            if (active && keyboardOpened) {
                 withFrameNanos { }
-                if (panelLinks.firstOrNull()?.requestFocus() != true) panelFocus.requestFocus()
+                if (panelLinks.enabledLinks().firstOrNull()?.requestFocus() != true) panelFocus.requestFocus()
             }
         }
+        LaunchedEffect(active, contentHovered) { latestHover?.onContentHoverChange(active && contentHovered) }
+        DisposableEffect(Unit) { onDispose { latestHover?.onContentHoverChange(false) } }
         NavigationMenuPositioner {
             Box(
                 modifier =
                     modifier
-                        .onPreviewKeyEvent {
-                            if (it.type == KeyEventType.KeyDown && it.key == Key.Escape && isOpen) {
+                        .then(if (active) Modifier else Modifier.clearAndSetSemantics { hideFromAccessibility() })
+                        .onPreviewKeyEvent { event ->
+                            if (event.type != KeyEventType.KeyDown || !active) {
+                                false
+                            } else if (event.key == Key.Escape) {
+                                exitTabDirection = null
                                 controller.onOpenChange(null)
                                 true
+                            } else if (event.key == Key.Tab) {
+                                val links = panelLinks.enabledLinks()
+                                val boundary = if (event.isShiftPressed) links.firstOrNull() else links.lastOrNull()
+                                if (boundary == null || panelLinks.focused !== boundary) {
+                                    false
+                                } else {
+                                    val rootTarget =
+                                        if (event.isShiftPressed) {
+                                            triggerFocus
+                                        } else {
+                                            controller.viewport.adjacentFocus(value, 1)
+                                        }
+                                    if (rootTarget != null) {
+                                        keyboardOpened = false
+                                        rootFocusReturn = rootTarget
+                                    } else {
+                                        exitTabDirection = FocusDirection.Next
+                                        controller.onOpenChange(null)
+                                    }
+                                    true
+                                }
                             } else {
                                 false
                             }
                         }
                         .focusRequester(panelFocus)
-                        .focusable(enabled = keyboardOpened && isOpen)
-                        .hoverable(hoverSource)
-                        .styleable(
-                            panelStyleState,
-                            rememberNavMenuPanelStyle() then style,
+                        .focusable(enabled = keyboardOpened && active)
+                        .hoverable(hoverSource, enabled = active)
+                        .then(
+                            if (ownChrome) {
+                                Modifier.styleable(panelStyleState, rememberNavMenuPanelStyle() then style)
+                            } else {
+                                Modifier.padding(4.dp)
+                            },
                         ),
             ) {
                 CompositionLocalProvider(
                     LocalNavigationMenuPanel provides true,
+                    LocalNavigationMenuPanelEnabled provides active,
                     LocalNavigationMenuPanelLinks provides panelLinks,
                     LocalContentColor provides foreground,
                 ) { content() }
             }
+        }
+    }
+    val shared =
+        currentTheme.activePreset == StylePreset.Nova &&
+            style === Style && enter === PopupTransitions.Enter && exit === PopupTransitions.Exit
+    if (shared) {
+        val viewport = controller.viewport
+        val locals by rememberUpdatedState(currentCompositionLocalContext)
+        val currentRender by rememberUpdatedState(render)
+        val panel =
+            remember(this, placement, sideOffset, alignOffset, dismissOnClickOutside) {
+                NavigationMenuPanel(
+                    side = placement,
+                    sideOffset = sideOffset,
+                    alignOffset = alignOffset,
+                    dismissOnClickOutside = dismissOnClickOutside,
+                    focusable = { keyboardOpened },
+                    keyboardSession = { keyboardSession },
+                ) { active ->
+                    CompositionLocalProvider(locals) { currentRender(active, false) }
+                }
+            }
+        DisposableEffect(viewport, value, panel) {
+            viewport.panels[value] = panel
+            onDispose { if (viewport.panels[value] === panel) viewport.panels.remove(value) }
+        }
+    } else {
+        if (isOpen && !keyboardSession) NavigationMenuWindowEscape { controller.onOpenChange(null) }
+        AnchoredPopup(
+            open = isOpen,
+            onDismissRequest = { controller.onOpenChange(null) },
+            placement = placement,
+            offset = sideOffset,
+            align = controller.viewport.align,
+            alignOffset = alignOffset,
+            dismissOnClickOutside = dismissOnClickOutside,
+            focusable = keyboardOpened && isOpen,
+            enter = enter,
+            exit = exit,
+        ) {
+            render(isOpen, true)
         }
     }
 }
@@ -554,7 +769,7 @@ fun NavigationMenuItemScope.NavigationMenuContent(
 /**
  * Positioning host for [NavigationMenuContent]. Matches Base UI
  * `NavigationMenuPositioner` (Portal + Positioner + Popup + Viewport).
- * Shared-viewport morph between items is not ported — layout passthrough.
+ * Groups caller-provided positioner content. [NavigationMenu] owns the floating viewport.
  */
 @Composable
 fun NavigationMenuPositioner(
@@ -597,13 +812,32 @@ fun NavigationMenuItemScope.NavigationMenuLink(
     val inPanel = LocalNavigationMenuPanel.current
     val panelLinks = LocalNavigationMenuPanelLinks.current
     val linkFocus = remember { FocusRequester() }
-    val resolvedEnabled = enabled && !disabled
-    DisposableEffect(panelLinks, resolvedEnabled) {
-        if (resolvedEnabled) panelLinks?.add(linkFocus)
-        onDispose { panelLinks?.remove(linkFocus) }
+    val resolvedEnabled = enabled && !disabled && LocalNavigationMenuPanelEnabled.current
+    DisposableEffect(panelLinks, linkFocus) {
+        panelLinks?.links?.add(linkFocus)
+        onDispose {
+            panelLinks?.links?.remove(linkFocus)
+            panelLinks?.disabled?.remove(linkFocus)
+            if (panelLinks?.focused === linkFocus) panelLinks.focused = null
+        }
     }
+    SideEffect {
+        if (resolvedEnabled) panelLinks?.disabled?.remove(linkFocus) else panelLinks?.disabled?.add(linkFocus)
+    }
+    val focusModifier =
+        if (inPanel) {
+            modifier.focusRequester(linkFocus).onFocusChanged {
+                if (it.isFocused) {
+                    panelLinks?.focused = linkFocus
+                } else if (panelLinks?.focused === linkFocus) {
+                    panelLinks.focused = null
+                }
+            }
+        } else {
+            modifier.navigationMenuTopLevelFocus(value, linkFocus, resolvedEnabled, controller)
+        }
     NavMenuHitTarget(
-        modifier = modifier.focusRequester(linkFocus),
+        modifier = focusModifier,
         open = active,
         active = active,
         enabled = resolvedEnabled,

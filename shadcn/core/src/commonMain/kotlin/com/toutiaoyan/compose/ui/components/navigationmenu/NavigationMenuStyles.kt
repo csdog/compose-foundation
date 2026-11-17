@@ -80,8 +80,14 @@ internal fun rememberNavMenuLinkStyle(
     }
 
 @Composable
-fun rememberNavMenuPanelStyle(): Style =
-    rememberTheme {
+fun rememberNavMenuPanelStyle(): Style = rememberNavMenuSurfaceStyle(includeContentPadding = true)
+
+@Composable
+internal fun rememberNavMenuViewportStyle(): Style = rememberNavMenuSurfaceStyle(includeContentPadding = false)
+
+@Composable
+private fun rememberNavMenuSurfaceStyle(includeContentPadding: Boolean): Style =
+    rememberTheme(includeContentPadding) {
         val nova = theme.activePreset == StylePreset.Nova
         Style {
             if (!nova) width(320.dp)
@@ -112,7 +118,7 @@ fun rememberNavMenuPanelStyle(): Style =
             } else {
                 border(colors.border)
             }
-            contentPadding(if (nova) 4.dp else spacing.lg)
+            if (includeContentPadding) contentPadding(if (nova) 4.dp else spacing.lg)
         }
     }
 

@@ -13,6 +13,7 @@ import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toPixelMap
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.platform.testTag
@@ -20,7 +21,10 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.ScreenshotTest
 import com.toutiaoyan.compose.ui.components.text.Text
+import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
 import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.theme.Theme
+import com.toutiaoyan.compose.ui.tokens.Radius
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.*
 
@@ -317,6 +321,167 @@ class NavigationMenuParityTest : ScreenshotTest() {
             Key.DirectionLeft,
             Key.DirectionRight,
         )
+
+    @Test fun switchingNovaPanelsKeepsOneViewportAndInterpolatesItsWidth() {
+        var selected by mutableStateOf<String?>("first")
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Box(Modifier.padding(start = 150.dp)) {
+                NavigationMenu(align = PopupAlign.Center, value = selected, onValueChange = { selected = it }) {
+                    NavigationMenuList {
+                        NavigationMenuItem("first") {
+                            NavigationMenuTrigger("First", Modifier.testTag("small-anchor"))
+                            NavigationMenuContent { Box(Modifier.size(80.dp, 32.dp)) }
+                        }
+                        NavigationMenuItem("second") {
+                            NavigationMenuTrigger("Second", Modifier.testTag("wide-anchor"))
+                            NavigationMenuContent { Box(Modifier.size(200.dp, 64.dp)) }
+                        }
+                    }
+                }
+            }
+        }
+
+        val popup = composeRule.onNodeWithTag(NavigationMenuViewportTag, useUnmergedTree = true)
+
+        fun assertCenteredOn(tag: String) {
+            val trigger = composeRule.onNodeWithTag(tag).fetchSemanticsNode().boundsInWindow
+            val surface = popup.fetchSemanticsNode().boundsInWindow
+            assertEquals(trigger.center.x, surface.center.x, 1.01f)
+            assertEquals(trigger.bottom + 8f, surface.top, 1.01f)
+        }
+
+        popup.assertWidthIsEqualTo(88.dp)
+        assertCenteredOn("small-anchor")
+        composeRule.mainClock.autoAdvance = false
+        composeRule.runOnIdle { selected = "second" }
+        advance(84)
+        val intermediate = popup.getUnclippedBoundsInRoot()
+        val during = intermediate.right - intermediate.left
+        assertTrue(during > 88.dp && during < 208.dp, "Expected an intermediate viewport width, got $during")
+        composeRule.onAllNodes(isPopup(), useUnmergedTree = true).assertCountEquals(1)
+        advance(400)
+        popup.assertWidthIsEqualTo(208.dp)
+        assertCenteredOn("wide-anchor")
+    }
+
+    @Test fun openViewportRepaintsWhenTheThemeChanges() {
+        var dark by mutableStateOf(false)
+        var radius by mutableStateOf(Radius(10.dp))
+        var popoverColor = Color.Unspecified
+        composeRule.setContent {
+            Theme(preset = StylePreset.Nova, isDark = dark, baseRadius = radius) {
+                popoverColor = currentTheme.colors.popover
+                NavigationMenu(defaultValue = "first") {
+                    NavigationMenuList {
+                        NavigationMenuItem("first") {
+                            NavigationMenuTrigger("First")
+                            NavigationMenuContent { Box(Modifier.size(120.dp, 44.dp)) }
+                        }
+                    }
+                }
+            }
+        }
+
+        val viewport = composeRule.onNodeWithTag(NavigationMenuViewportTag)
+
+        fun pixel(corner: Boolean = false): Int {
+            val image = viewport.captureToImage().toPixelMap()
+            return (if (corner) image[2, 2] else image[image.width / 2, image.height / 2]).toArgb()
+        }
+
+        val light = pixel()
+        assertEquals(popoverColor.toArgb(), light)
+        composeRule.runOnIdle { dark = true }
+        val darkPixel = pixel()
+        assertEquals(popoverColor.toArgb(), darkPixel)
+        assertNotEquals(light, darkPixel)
+        assertNotEquals(darkPixel, pixel(corner = true))
+        composeRule.runOnIdle { radius = Radius(0.dp) }
+        assertEquals(darkPixel, pixel(corner = true))
+        viewport.assertWidthIsEqualTo(128.dp)
+    }
+
+    @Test fun pointerExitDoesNotCloseThePanelAfterKeyboardTakesFocus() {
+        var selection by mutableStateOf<String?>(null)
+        composeRule.mainClock.autoAdvance = false
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            NavigationMenu(delayDuration = 0, value = selection, onValueChange = { selection = it }) {
+                NavigationMenuList {
+                    NavigationMenuItem("first") {
+                        NavigationMenuTrigger("First", Modifier.testTag("first"))
+                        NavigationMenuContent {
+                            NavigationMenuLink("Link", {}, Modifier.testTag("link"))
+                        }
+                    }
+                }
+            }
+        }
+        hover("first")
+        advance(70)
+        assertEquals("first", selection)
+        val trigger = composeRule.onNodeWithTag("first")
+        trigger.requestFocus().performKeyInput { pressKey(Key.DirectionDown) }
+        advance(80)
+        trigger.performMouseInput { exit(delayMillis = 0) }
+        advance(220)
+        assertEquals("first", selection)
+        composeRule.onNodeWithTag("link").assertIsFocused()
+    }
+
+    @Test fun enablingAnEarlierLinkPreservesThePanelTabOrder() {
+        var firstEnabled by mutableStateOf(false)
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            NavigationMenu {
+                NavigationMenuList {
+                    NavigationMenuItem("first") {
+                        NavigationMenuTrigger("First", Modifier.testTag("first"))
+                        NavigationMenuContent {
+                            Column {
+                                NavigationMenuLink("Before", {}, Modifier.testTag("before"), enabled = firstEnabled)
+                                NavigationMenuLink("After", {}, Modifier.testTag("after"))
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        composeRule.onNodeWithTag("first").requestFocus().performKeyInput { pressKey(Key.DirectionDown) }
+        val after = composeRule.onNodeWithTag("after").assertIsFocused()
+        composeRule.runOnIdle { firstEnabled = true }
+        after.performKeyInput { withKeyDown(Key.ShiftLeft) { pressKey(Key.Tab) } }
+        composeRule.onNodeWithTag("before").assertIsFocused()
+    }
+
+    @Test fun panelTabReturnsToTheTriggerOrItsNextTopLevelSibling() {
+        var selected by mutableStateOf<String?>(null)
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            NavigationMenu(value = selected, onValueChange = { selected = it }) {
+                NavigationMenuList {
+                    NavigationMenuItem("first") {
+                        NavigationMenuTrigger("First", Modifier.testTag("first"))
+                        NavigationMenuContent {
+                            Column {
+                                NavigationMenuLink("First link", {}, Modifier.testTag("first-link"))
+                                NavigationMenuLink("Last link", {}, Modifier.testTag("last-link"))
+                            }
+                        }
+                    }
+                    NavigationMenuItem("second") {
+                        NavigationMenuLink("Second", {}, Modifier.testTag("second"))
+                    }
+                }
+            }
+        }
+        val first = composeRule.onNodeWithTag("first")
+        val firstLink = composeRule.onNodeWithTag("first-link")
+        first.requestFocus().performKeyInput { pressKey(Key.DirectionDown) }
+        firstLink.assertIsFocused().performKeyInput { withKeyDown(Key.ShiftLeft) { pressKey(Key.Tab) } }
+        first.assertIsFocused().performKeyInput { pressKey(Key.Tab) }
+        firstLink.assertIsFocused().performKeyInput { pressKey(Key.Tab) }
+        composeRule.onNodeWithTag("last-link").assertIsFocused().performKeyInput { pressKey(Key.Tab) }
+        composeRule.onNodeWithTag("second").assertIsFocused().performKeyInput { pressKey(Key.Escape) }
+        assertNull(selected)
+    }
 
     @Test fun callerStyleOverridesTriggerDimensionsAndNovaPanelHasIntrinsicWidth() {
         setThemedContent(stylePreset = StylePreset.Nova) {
