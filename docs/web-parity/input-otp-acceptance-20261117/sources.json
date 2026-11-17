@@ -1,0 +1,83 @@
+{
+  "revision": "968d8cb9dc42ae5d52e8fd356cf84596ec832a26",
+  "files": [
+    {
+      "path": ".agent-runs/input-otp/goal-20261117/official/apps/v4/content/docs/components/base/input-otp.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/content/docs/components/base/input-otp.mdx",
+      "sha256": "bc3af0765b342e0f40c0ae3aa01bf26effb9a626749b57cd0f1752bd9961fd2b",
+      "previous": "bc3af0765b342e0f40c0ae3aa01bf26effb9a626749b57cd0f1752bd9961fd2b"
+    },
+    {
+      "path": ".agent-runs/input-otp/goal-20261117/official/apps/v4/registry/bases/base/ui/input-otp.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/registry/bases/base/ui/input-otp.tsx",
+      "sha256": "8f540b9de861859602b3fbfffa5af76045877498aad5401aa4d1e8d94e1f8922",
+      "previous": "8f540b9de861859602b3fbfffa5af76045877498aad5401aa4d1e8d94e1f8922"
+    },
+    {
+      "path": ".agent-runs/input-otp/goal-20261117/official/apps/v4/registry/styles/style-nova.css",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e",
+      "previous": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e"
+    },
+    {
+      "path": ".agent-runs/input-otp/goal-20261117/official/apps/v4/examples/base/input-otp-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-otp-demo.tsx",
+      "sha256": "60282187c19216a2961d6d6b0a7efa36f378ec7b9cbef15fd42cbc268390b041",
+      "previous": "60282187c19216a2961d6d6b0a7efa36f378ec7b9cbef15fd42cbc268390b041"
+    },
+    {
+      "path": ".agent-runs/input-otp/goal-20261117/official/apps/v4/examples/base/input-otp-pattern.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-otp-pattern.tsx",
+      "sha256": "3c038701d078d12bcc043507a7e422dc1f2e5cc74b2867c7ef2ae61ceec271e0",
+      "previous": "3c038701d078d12bcc043507a7e422dc1f2e5cc74b2867c7ef2ae61ceec271e0"
+    },
+    {
+      "path": ".agent-runs/input-otp/goal-20261117/official/apps/v4/examples/base/input-otp-separator.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-otp-separator.tsx",
+      "sha256": "03abe532e33a1b99bc3d0cb62b4d63d0762c830521d164b07c6ff00cafc56774",
+      "previous": "03abe532e33a1b99bc3d0cb62b4d63d0762c830521d164b07c6ff00cafc56774"
+    },
+    {
+      "path": ".agent-runs/input-otp/goal-20261117/official/apps/v4/examples/base/input-otp-disabled.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-otp-disabled.tsx",
+      "sha256": "db6f70c9fa05a11a0e8158673a6ed448eb085562786ca4cbee037699a56aead9",
+      "previous": "db6f70c9fa05a11a0e8158673a6ed448eb085562786ca4cbee037699a56aead9"
+    },
+    {
+      "path": ".agent-runs/input-otp/goal-20261117/official/apps/v4/examples/base/input-otp-controlled.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-otp-controlled.tsx",
+      "sha256": "5ea554f9448b5eff972a42f94bc69bda5bd84fb5fd9437f3bedcdafc43ed3762",
+      "previous": "5ea554f9448b5eff972a42f94bc69bda5bd84fb5fd9437f3bedcdafc43ed3762"
+    },
+    {
+      "path": ".agent-runs/input-otp/goal-20261117/official/apps/v4/examples/base/input-otp-invalid.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-otp-invalid.tsx",
+      "sha256": "1b34272f970da77a2f42471f8bf565819c69cb3addaa310f3fa9c4439307c951",
+      "previous": "1b34272f970da77a2f42471f8bf565819c69cb3addaa310f3fa9c4439307c951"
+    },
+    {
+      "path": ".agent-runs/input-otp/goal-20261117/official/apps/v4/examples/base/input-otp-four-digits.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-otp-four-digits.tsx",
+      "sha256": "5c98ef9d7d68ab5263aa5f3c63c91d0886503091e51649825c865e557cfd1400",
+      "previous": "5c98ef9d7d68ab5263aa5f3c63c91d0886503091e51649825c865e557cfd1400"
+    },
+    {
+      "path": ".agent-runs/input-otp/goal-20261117/official/apps/v4/examples/base/input-otp-alphanumeric.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-otp-alphanumeric.tsx",
+      "sha256": "5f16efa15a038550bafe61ec6211b8473e3f654371b56c760bcfad9514687cd9",
+      "previous": "5f16efa15a038550bafe61ec6211b8473e3f654371b56c760bcfad9514687cd9"
+    },
+    {
+      "path": ".agent-runs/input-otp/goal-20261117/official/apps/v4/examples/base/input-otp-form.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-otp-form.tsx",
+      "sha256": "b9d5ae044ff050c01e15738abf0ccea64497de7234a59094ea4c18e63f7e06a6",
+      "previous": "b9d5ae044ff050c01e15738abf0ccea64497de7234a59094ea4c18e63f7e06a6"
+    },
+    {
+      "path": ".agent-runs/input-otp/goal-20261117/official/apps/v4/examples/base/input-otp-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/input-otp-rtl.tsx",
+      "sha256": "7620c619cd9693b308713f7fc735417ed0b22020b9db74dbb0eea60cf099c9c7",
+      "previous": "7620c619cd9693b308713f7fc735417ed0b22020b9db74dbb0eea60cf099c9c7"
+    }
+  ]
+}
