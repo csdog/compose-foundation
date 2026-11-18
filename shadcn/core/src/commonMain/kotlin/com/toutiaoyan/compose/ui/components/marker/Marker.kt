@@ -55,16 +55,18 @@ fun Marker(
     style: Style = Style,
     content: @Composable RowScope.() -> Unit,
 ) {
-    val nova = currentTheme.activePreset == StylePreset.Nova
+    val preset = currentTheme.activePreset
+    val isNovaOrRhea = preset == StylePreset.Nova || preset == StylePreset.Rhea
     val borderColor = currentTheme.colors.border
+    val contentColor = if (isNovaOrRhea) currentTheme.colors.mutedForeground else LocalContentColor.current
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val bottomBorderModifier =
         if (variant == MarkerVariant.Border) {
             Modifier.drawBehind {
                 drawLine(
                     color = borderColor,
-                    start = Offset(0f, size.height - if (nova) 0.5.dp.toPx() else 0f),
-                    end = Offset(size.width, size.height - if (nova) 0.5.dp.toPx() else 0f),
+                    start = Offset(0f, size.height - if (isNovaOrRhea) 0.5.dp.toPx() else 0f),
+                    end = Offset(size.width, size.height - if (isNovaOrRhea) 0.5.dp.toPx() else 0f),
                     strokeWidth = 1.dp.toPx(),
                 )
             }
@@ -80,15 +82,15 @@ fun Marker(
                     styleState,
                     variant.rememberStyle() then style,
                 ),
-        horizontalArrangement = Arrangement.spacedBy(if (nova) 8.dp else twSpacing.sm),
+        horizontalArrangement = Arrangement.spacedBy(if (isNovaOrRhea) 8.dp else twSpacing.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        if (variant == MarkerVariant.Separator) MarkerLine(nova, leading = true)
+        if (variant == MarkerVariant.Separator) MarkerLine(isNovaOrRhea, leading = true)
         CompositionLocalProvider(
-            LocalContentColor provides if (nova) currentTheme.colors.mutedForeground else LocalContentColor.current,
-            LocalInlineIconSize provides if (nova) 16.dp else LocalInlineIconSize.current,
+            LocalContentColor provides contentColor,
+            LocalInlineIconSize provides if (isNovaOrRhea) 16.dp else LocalInlineIconSize.current,
             LocalDefaultTextStyle provides
-                if (nova) {
+                if (isNovaOrRhea) {
                     TextStyle(
                         fontFamily = currentTheme.fontFamily,
                         fontSize = 14.sp,
@@ -99,7 +101,7 @@ fun Marker(
                     LocalDefaultTextStyle.current
                 },
         ) { content() }
-        if (variant == MarkerVariant.Separator) MarkerLine(nova)
+        if (variant == MarkerVariant.Separator) MarkerLine(isNovaOrRhea)
     }
 }
 
@@ -118,14 +120,14 @@ fun Marker(
 
 @Composable
 private fun RowScope.MarkerLine(
-    nova: Boolean,
+    hasInnerMargin: Boolean,
     leading: Boolean = false,
 ) {
     Box(
         modifier =
             Modifier.weight(1f)
                 .then(
-                    if (nova) {
+                    if (hasInnerMargin) {
                         Modifier.padding(
                             start =
                                 if (leading) {
@@ -156,10 +158,11 @@ fun MarkerIcon(
     content: @Composable () -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    val nova = currentTheme.activePreset == StylePreset.Nova
+    val preset = currentTheme.activePreset
+    val isNovaOrRhea = preset == StylePreset.Nova || preset == StylePreset.Rhea
     val iconStyle =
-        remember(nova) {
-            if (nova) {
+        remember(isNovaOrRhea) {
+            if (isNovaOrRhea) {
                 Style {
                     width(16.dp)
                     height(16.dp)
@@ -171,9 +174,9 @@ fun MarkerIcon(
     Box(
         modifier =
             modifier
-                .then(if (nova) Modifier.clearAndSetSemantics {} else Modifier.width(16.dp))
+                .then(if (isNovaOrRhea) Modifier.clearAndSetSemantics {} else Modifier.width(16.dp))
                 .styleable(styleState, iconStyle then style),
-        contentAlignment = if (nova) Alignment.Center else Alignment.TopStart,
+        contentAlignment = if (isNovaOrRhea) Alignment.Center else Alignment.TopStart,
     ) { content() }
 }
 

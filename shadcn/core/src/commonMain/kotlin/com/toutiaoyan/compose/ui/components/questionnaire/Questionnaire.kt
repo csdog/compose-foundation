@@ -113,6 +113,7 @@ import com.toutiaoyan.compose.ui.styles.cssStyleable
 import com.toutiaoyan.compose.ui.utils.keyboardInputMode
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
+import com.toutiaoyan.compose.ui.utils.platformAllowsMotion
 
 /**
  * Multi-step questionnaire matching real shadcn/ui's `questionnaire.tsx`:
@@ -1101,7 +1102,7 @@ fun QuestionnaireScope.QuestionnaireItem(
             val slidePx = with(LocalDensity.current) { 8.dp.roundToPx() }
             val visibility = remember(name) { MutableTransitionState(false).apply { targetState = true } }
             val enter =
-                if (questionnaireAllowsMotion()) {
+                if (platformAllowsMotion()) {
                     fadeIn(tween(300)) + slideInVertically(tween(300)) { slidePx }
                 } else {
                     EnterTransition.None

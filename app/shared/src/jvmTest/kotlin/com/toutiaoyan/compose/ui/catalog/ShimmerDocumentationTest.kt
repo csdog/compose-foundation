@@ -19,6 +19,7 @@ class ShimmerDocumentationTest {
         )
         assertEquals(1, headings.count { it == "Fallback" })
         assertEquals(1, headings.count { it == "Reduced Motion" })
+        assertTrue(markdown.contains("On Web, shimmer observes `prefers-reduced-motion`"))
     }
 
     @Test
@@ -38,6 +39,7 @@ class ShimmerDocumentationTest {
         assertTrue(table.rows.all { it.size == 3 })
         val markdown = componentPageMarkdown(shimmerDoc)
         assertTrue(markdown.contains("font-relative lengths and percentage spreads are not supported"))
+        assertTrue(markdown.contains("The source previews measure `calc(3ch + 40px)` using their actual font."))
         val spread = markdown.indexOf("## Spread")
         val arbitraryLength = markdown.indexOf("For a one-off length")
         assertTrue(arbitraryLength > spread && arbitraryLength < markdown.indexOf("## Angle"))

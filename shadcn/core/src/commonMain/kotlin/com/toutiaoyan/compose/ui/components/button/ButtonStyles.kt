@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.toutiaoyan.compose.tailwind.core.TwRadiusScale
 import com.toutiaoyan.compose.ui.tokens.Colors
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.utils.rememberTheme
@@ -87,6 +88,7 @@ fun ButtonVariant.rememberStyle(): Style {
     val receiver = this
     return rememberTheme(receiver) {
         val isNova = theme.activePreset == StylePreset.Nova
+        val isRhea = theme.activePreset == StylePreset.Rhea
         (
             if (isNova) {
                 Style {
@@ -119,6 +121,8 @@ fun ButtonVariant.rememberStyle(): Style {
                                     alpha =
                                         colors.input.alpha * 0.3f,
                                 )
+                            } else if (isRhea && isDark) {
+                                Color.Transparent
                             } else {
                                 colors.background
                             },
@@ -129,15 +133,19 @@ fun ButtonVariant.rememberStyle(): Style {
                             background(
                                 if (isNova && isDark) {
                                     colors.input.copy(alpha = colors.input.alpha * 0.5f)
-                                } else if (isNova) {
+                                } else if (isRhea && isDark) {
+                                    colors.input.copy(alpha = colors.input.alpha * 0.3f)
+                                } else if (isNova || isRhea) {
                                     colors.muted
                                 } else {
                                     colors.secondary
                                 },
                             )
-                            contentColor(if (isNova) colors.foreground else colors.secondaryForeground)
+                            contentColor(if (isNova || isRhea) colors.foreground else colors.secondaryForeground)
                         }
-                        focusRing(RoundedCornerShape(radius.lg))
+                        val corner = if (isRhea) TwRadiusScale.fromBaseRadius(baseRadius.value).xl2 else radius.lg
+                        focusRing(RoundedCornerShape(corner))
+                        if (isRhea) fontWeight(FontWeight.Medium)
                         disabledDim()
                     }
 
@@ -297,8 +305,10 @@ fun ButtonSize.rememberStyle(): Style {
             // base-nova `sm`: `h-7 px-2.5`
             ButtonSize.Sm ->
                 Style {
-                    contentPadding(horizontal = spacing.scale2p5, vertical = 0.dp)
-                    fontSize(12.8.sp)
+                    val isRhea = theme.activePreset == StylePreset.Rhea
+                    contentPadding(horizontal = if (isRhea) spacing.scale3 else spacing.scale2p5, vertical = 0.dp)
+                    fontSize(if (isRhea) 14.sp else 12.8.sp)
+                    if (isRhea) fontWeight(FontWeight.Medium)
                     if (theme.activePreset == StylePreset.Nova) shape(RoundedCornerShape(minOf(radius.md, 12.dp)))
                     height(28.dp)
                 }

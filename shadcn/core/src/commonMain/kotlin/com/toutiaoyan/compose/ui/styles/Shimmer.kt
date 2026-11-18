@@ -53,6 +53,7 @@ import com.toutiaoyan.compose.ui.components.text.TextColors
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.tokens.BaseColor
+import com.toutiaoyan.compose.ui.utils.platformAllowsMotion
 import com.toutiaoyan.compose.tailwind.core.dp
 import com.toutiaoyan.compose.tailwind.core.spacing
 import kotlin.math.PI
@@ -108,7 +109,7 @@ fun Modifier.shimmer(
     once: Boolean = false,
 ): Modifier =
     composed {
-        if (!enabled) return@composed this
+        if (!enabled || !platformAllowsMotion()) return@composed this
 
         val theme = Theme.LocalTheme.current
         val layoutDirection = LocalLayoutDirection.current
@@ -177,7 +178,7 @@ fun rememberShimmerStyle(
     reverse: Boolean = false,
     once: Boolean = false,
 ): Style {
-    if (!enabled) return Style
+    if (!enabled || !platformAllowsMotion()) return Style
 
     val theme = Theme.LocalTheme.current
     val layoutDirection = LocalLayoutDirection.current

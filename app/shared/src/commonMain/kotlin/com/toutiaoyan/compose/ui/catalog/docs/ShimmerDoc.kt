@@ -1,17 +1,4 @@
-@file:OptIn(androidx.compose.foundation.style.ExperimentalFoundationStyleApi::class)
-
 package com.toutiaoyan.compose.ui.catalog.docs
-
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.toutiaoyan.compose.ui.components.text.Text
-import com.toutiaoyan.compose.ui.components.text.TextColors
-import com.toutiaoyan.compose.ui.styles.rememberShimmerStyle
-import com.toutiaoyan.compose.ui.styles.shimmer
-import com.toutiaoyan.compose.tailwind.core.dp
-import com.toutiaoyan.compose.tailwind.core.spacing
 
 val shimmerDoc =
     ComponentDoc(
@@ -91,7 +78,8 @@ val shimmerDoc =
                         ComponentGuideBlock.Paragraph(
                             "The Style content brush follows the CSS text-fill behavior. " +
                                 "`Modifier.shimmer()` is a Kotlin overlay extension for blocks and groups. " +
-                                "The default spread is a fixed 64.dp approximation of `calc(3ch + 40px)`; " +
+                                "The source previews measure `calc(3ch + 40px)` using their actual font. " +
+                                "The Kotlin default spread is a fixed 64.dp approximation; " +
                                 "font-relative lengths and percentage spreads are not supported by the Dp API.",
                         ),
                         ComponentGuideBlock.Paragraph(
@@ -126,12 +114,10 @@ val shimmerDoc =
                             "Reduced Motion",
                             listOf(
                                 ComponentGuideBlock.Paragraph(
-                                    "When the user prefers reduced motion, the CSS animation is disabled " +
-                                        "automatically. Compose animations honor a host-provided " +
-                                        "`MotionDurationScale` of zero, finishing the sweep and restoring " +
-                                        "normal text. This utility does not itself query browser " +
-                                        "`prefers-reduced-motion`; callers can pass `enabled = false` " +
-                                        "when a platform preference is available.",
+                                    "On Web, shimmer observes `prefers-reduced-motion` and renders static " +
+                                        "content while the preference is active. Native Compose animations " +
+                                        "honor a host-provided `MotionDurationScale` of zero. " +
+                                        "Use `enabled = false` to disable the effect explicitly.",
                                 ),
                             ),
                         ),
@@ -153,83 +139,15 @@ val shimmerDoc =
             ),
         usageCode =
             """
+            import androidx.compose.runtime.Composable
             import com.toutiaoyan.compose.ui.components.text.Text
             import com.toutiaoyan.compose.ui.components.text.TextColors
             import com.toutiaoyan.compose.ui.styles.rememberShimmerStyle
 
-            Text(textStyle = TextColors.Muted, style = rememberShimmerStyle()) { "Generating response…" }
+            @Composable
+            fun ShimmerUsage() {
+                Text(textStyle = TextColors.Muted, style = rememberShimmerStyle()) { "Generating response…" }
+            }
             """.trimIndent(),
-        examples =
-            listOf(
-                ComponentExample(
-                    title = "Kotlin extension: Overlay modifier",
-                    code =
-                        """
-                        Text(textStyle = TextColors.Muted, modifier = Modifier.shimmer()) { "Generating response…" }
-                        """.trimIndent(),
-                    preview = {
-                        Text(textStyle = TextColors.Muted, modifier = Modifier.shimmer()) {
-                            "Generating response…"
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Kotlin extension: Style content brush",
-                    code =
-                        """
-                        Text(textStyle = TextColors.Muted, style = rememberShimmerStyle()) { "Generating response…" }
-                        """.trimIndent(),
-                    preview = {
-                        Text(textStyle = TextColors.Muted, style = rememberShimmerStyle()) {
-                            "Generating response…"
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Kotlin extension: Duration, angle, spread",
-                    code =
-                        """
-                        Text(textStyle = TextColors.Muted, modifier = Modifier.shimmer(durationMillis = 1000)) { "…" }
-                        Text(textStyle = TextColors.Muted, modifier = Modifier.shimmer(angleDegrees = 45f)) { "…" }
-                        Text(textStyle = TextColors.Muted, modifier = Modifier.shimmer(spread = 24.spacing.dp)) { "…" }
-                        """.trimIndent(),
-                    preview = {
-                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Text(
-                                textStyle = TextColors.Muted,
-                                modifier = Modifier.shimmer(durationMillis = 1000),
-                            ) { "duration 1000" }
-                            Text(
-                                textStyle = TextColors.Muted,
-                                modifier = Modifier.shimmer(angleDegrees = 45f),
-                            ) { "angle 45°" }
-                            Text(
-                                textStyle = TextColors.Muted,
-                                modifier = Modifier.shimmer(spread = 24.spacing.dp),
-                            ) { "spread-24" }
-                        }
-                    },
-                ),
-                ComponentExample(
-                    title = "Kotlin extension: Reverse and once",
-                    code =
-                        """
-                        Text(textStyle = TextColors.Muted, modifier = Modifier.shimmer(reverse = true)) { "…" }
-                        Text(textStyle = TextColors.Muted, modifier = Modifier.shimmer(once = true, durationMillis = 1100)) { "…" }
-                        """.trimIndent(),
-                    preview = {
-                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Text(
-                                textStyle = TextColors.Muted,
-                                modifier = Modifier.shimmer(reverse = true),
-                            ) { "reverse" }
-                            Text(
-                                textStyle = TextColors.Muted,
-                                modifier = Modifier.shimmer(once = true, durationMillis = 1100),
-                            ) { "once" }
-                        }
-                    },
-                ),
-            ),
+        examples = shimmerOfficialExamples + shimmerKotlinExamples,
     )
-        .let { native -> native.copy(examples = shimmerOfficialExamples + native.examples) }

@@ -31,11 +31,19 @@ class MarkerParityTest : ScreenshotTest() {
         return results.single()
     }
 
-    @Test fun novaUsesFullWidthFourteenTwentyTextAndEightPixelGap() {
-        setThemedContent(stylePreset = StylePreset.Nova) {
+    @Test fun novaUsesFullWidthFourteenTwentyTextAndEightPixelGap() = checkMarkerGeometry(StylePreset.Nova)
+
+    @Test fun rheaUsesFullWidthFourteenTwentyTextAndEightPixelGap() = checkMarkerGeometry(StylePreset.Rhea)
+
+    private fun checkMarkerGeometry(preset: StylePreset) {
+        var muted = Color.Unspecified
+        setThemedContent(stylePreset = preset) {
+            muted = currentTheme.colors.mutedForeground
             Box(Modifier.width(280.dp)) {
                 Marker(Modifier.testTag("marker")) {
-                    MarkerIcon(Modifier.testTag("icon")) { Box(Modifier.size(16.dp)) }
+                    MarkerIcon(Modifier.testTag("icon")) {
+                        Text(modifier = Modifier.semantics { contentDescription = "decorative" }) { "!" }
+                    }
                     MarkerContent("Explored 4 files")
                 }
             }
@@ -45,9 +53,12 @@ class MarkerParityTest : ScreenshotTest() {
             composeRule.onNodeWithTag("icon").assertWidthIsEqualTo(16.dp).assertHeightIsEqualTo(16.dp)
                 .fetchSemanticsNode().boundsInRoot
         val text = composeRule.onNodeWithText("Explored 4 files").fetchSemanticsNode().boundsInRoot
+        composeRule.onNodeWithContentDescription("decorative").assertDoesNotExist()
         assertEquals(8f, text.left - icon.right, 0.1f)
-        assertEquals(14f, layout("Explored 4 files").layoutInput.style.fontSize.value)
-        assertEquals(20f, layout("Explored 4 files").layoutInput.style.lineHeight.value)
+        val textStyle = layout("Explored 4 files").layoutInput.style
+        assertEquals(14f, textStyle.fontSize.value)
+        assertEquals(20f, textStyle.lineHeight.value)
+        assertEquals(muted, textStyle.color)
     }
 
     @Test fun decorativeIconDoesNotExposeItsChildDescription() {
@@ -119,9 +130,13 @@ class MarkerParityTest : ScreenshotTest() {
         assertEquals(border, image[0, image.height - 1])
     }
 
-    @Test fun separatorCentersItsLabelWithTwelvePixelClearanceBeforeTheLine() {
+    @Test fun separatorCentersItsLabelWithTwelvePixelClearanceBeforeTheLine() = checkSeparatorGeometry(StylePreset.Nova)
+
+    @Test fun rheaSeparatorCentersItsLabelWithTwelvePixelClearance() = checkSeparatorGeometry(StylePreset.Rhea)
+
+    private fun checkSeparatorGeometry(preset: StylePreset) {
         var border = Color.Unspecified
-        setThemedContent(stylePreset = StylePreset.Nova) {
+        setThemedContent(stylePreset = preset) {
             border = currentTheme.colors.border
             Marker("Today", Modifier.width(240.dp).testTag("separator"), variant = MarkerVariant.Separator)
         }

@@ -13,14 +13,15 @@ import androidx.compose.ui.unit.dp
 fun MarkerVariant.rememberStyle(): Style {
     val receiver = this
     return rememberTheme(receiver) {
-        val nova = theme.activePreset == StylePreset.Nova
+        val preset = theme.activePreset
+        val isNovaOrRhea = preset == StylePreset.Nova || preset == StylePreset.Rhea
         Style {
-            if (nova) {
+            if (isNovaOrRhea) {
                 width(1f)
                 minHeight(16.dp)
                 contentColor(colors.mutedForeground)
             }
-            if (receiver == MarkerVariant.Border) contentPaddingBottom(if (nova) 8.dp else spacing.sm)
+            if (receiver == MarkerVariant.Border) contentPaddingBottom(if (isNovaOrRhea) 8.dp else spacing.sm)
         }
     }
 }

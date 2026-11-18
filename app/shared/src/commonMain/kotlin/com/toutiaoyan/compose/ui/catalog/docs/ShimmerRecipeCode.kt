@@ -7,6 +7,8 @@ internal val shimmerDefaultRecipeCode =
 
 
     import androidx.compose.foundation.layout.*
+    import androidx.compose.foundation.style.Style
+    import androidx.compose.foundation.style.pressed
     import androidx.compose.runtime.*
     import androidx.compose.ui.Alignment
     import androidx.compose.ui.Modifier
@@ -20,23 +22,63 @@ internal val shimmerDefaultRecipeCode =
     import androidx.compose.ui.semantics.semantics
     import androidx.compose.ui.text.TextStyle
     import androidx.compose.ui.text.font.FontFamily
+    import androidx.compose.ui.text.rememberTextMeasurer
     import androidx.compose.ui.text.style.LineHeightStyle
     import androidx.compose.ui.text.style.TextAlign
     import androidx.compose.ui.unit.*
     import com.toutiaoyan.compose.tailwind.core.TwColors
+    import com.toutiaoyan.compose.tailwind.core.dp
+    import com.toutiaoyan.compose.tailwind.core.spacing
     import com.toutiaoyan.compose.ui.components.button.*
     import com.toutiaoyan.compose.ui.components.marker.*
     import com.toutiaoyan.compose.ui.components.spinner.Spinner
     import com.toutiaoyan.compose.ui.components.text.Text
-    import com.toutiaoyan.compose.ui.styles.DefaultShimmerSpread
+    import com.toutiaoyan.compose.ui.components.text.TextColors
     import com.toutiaoyan.compose.ui.styles.rememberShimmerStyle
+    import com.toutiaoyan.compose.ui.styles.shimmer
+    import com.toutiaoyan.compose.ui.theme.Theme
     import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.ui.tokens.StylePreset
+    import kotlin.math.abs
 
     private const val ShimmerMessage = "Generating response…"
 
     @Composable
+    private fun ShimmerSourceTheme(content: @Composable () -> Unit) {
+        val inherited = currentTheme
+        Theme(
+            preset = StylePreset.Rhea,
+            baseColor = inherited.activeBaseColor,
+            accent = inherited.activeAccent,
+            isDark = inherited.isDark,
+            baseRadius = inherited.baseRadius,
+            fontFamily = inherited.fontFamily,
+            ring = StylePreset.Rhea.ring.copy(enabled = true),
+            minTouchTarget = null,
+            content = content,
+        )
+    }
+
+    @Composable
     private fun shimmerViewportWidth(): Dp =
         with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
+
+    @Composable
+    private fun shimmerRecipeTextStyle() =
+        TextStyle(
+            color = currentTheme.colors.mutedForeground,
+            fontFamily = currentTheme.fontFamily,
+            fontSize = 14.sp,
+            lineHeight = 20.sp,
+            lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+        )
+
+    @Composable
+    private fun shimmerRecipeSpread(style: TextStyle): Dp {
+        val zero = rememberTextMeasurer().measure("0", style = style, softWrap = false)
+        val advance = abs(zero.getHorizontalPosition(1, true) - zero.getHorizontalPosition(0, true))
+        return with(LocalDensity.current) { (3f * advance).toDp() } + 40.dp
+    }
 
     @Composable
     private fun ShimmerText(
@@ -45,21 +87,16 @@ internal val shimmerDefaultRecipeCode =
         enabled: Boolean = true,
         color: Color? = null,
         duration: Int = 2000,
-        spread: Dp = DefaultShimmerSpread,
+        spread: Dp = Dp.Unspecified,
         angle: Float = 20f,
         reverse: Boolean = false,
         once: Boolean = false,
     ) {
+        val textStyle = shimmerRecipeTextStyle()
+        val resolvedSpread = if (spread == Dp.Unspecified) shimmerRecipeSpread(textStyle) else spread
         Text(
             modifier,
-            textStyle =
-                TextStyle(
-                    color = currentTheme.colors.mutedForeground,
-                    fontSize = 14.sp,
-                    lineHeight = 20.sp,
-                    textAlign = TextAlign.Center,
-                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
-                ),
+            textStyle = textStyle.copy(textAlign = TextAlign.Center),
             style =
                 rememberShimmerStyle(
                     enabled =
@@ -69,7 +106,7 @@ internal val shimmerDefaultRecipeCode =
                     durationMillis =
                     duration,
                     spread =
-                    spread,
+                    resolvedSpread,
                     angleDegrees =
                     angle,
                     reverse =
@@ -134,9 +171,10 @@ internal val shimmerDefaultRecipeCode =
     }
 
     @Composable
-    internal fun ShimmerDefaultRecipe() {
-        Box(Modifier.testTag("shimmer-example")) { ShimmerText(modifier = Modifier.testTag("shimmer-text")) }
-    }
+    internal fun ShimmerDefaultRecipe() =
+        ShimmerSourceTheme {
+            Box(Modifier.testTag("shimmer-example")) { ShimmerText(modifier = Modifier.testTag("shimmer-text")) }
+        }
     """.trimIndent()
 
 internal val shimmerMarkerRecipeCode =
@@ -145,6 +183,8 @@ internal val shimmerMarkerRecipeCode =
 
 
     import androidx.compose.foundation.layout.*
+    import androidx.compose.foundation.style.Style
+    import androidx.compose.foundation.style.pressed
     import androidx.compose.runtime.*
     import androidx.compose.ui.Alignment
     import androidx.compose.ui.Modifier
@@ -158,23 +198,63 @@ internal val shimmerMarkerRecipeCode =
     import androidx.compose.ui.semantics.semantics
     import androidx.compose.ui.text.TextStyle
     import androidx.compose.ui.text.font.FontFamily
+    import androidx.compose.ui.text.rememberTextMeasurer
     import androidx.compose.ui.text.style.LineHeightStyle
     import androidx.compose.ui.text.style.TextAlign
     import androidx.compose.ui.unit.*
     import com.toutiaoyan.compose.tailwind.core.TwColors
+    import com.toutiaoyan.compose.tailwind.core.dp
+    import com.toutiaoyan.compose.tailwind.core.spacing
     import com.toutiaoyan.compose.ui.components.button.*
     import com.toutiaoyan.compose.ui.components.marker.*
     import com.toutiaoyan.compose.ui.components.spinner.Spinner
     import com.toutiaoyan.compose.ui.components.text.Text
-    import com.toutiaoyan.compose.ui.styles.DefaultShimmerSpread
+    import com.toutiaoyan.compose.ui.components.text.TextColors
     import com.toutiaoyan.compose.ui.styles.rememberShimmerStyle
+    import com.toutiaoyan.compose.ui.styles.shimmer
+    import com.toutiaoyan.compose.ui.theme.Theme
     import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.ui.tokens.StylePreset
+    import kotlin.math.abs
 
     private const val ShimmerMessage = "Generating response…"
 
     @Composable
+    private fun ShimmerSourceTheme(content: @Composable () -> Unit) {
+        val inherited = currentTheme
+        Theme(
+            preset = StylePreset.Rhea,
+            baseColor = inherited.activeBaseColor,
+            accent = inherited.activeAccent,
+            isDark = inherited.isDark,
+            baseRadius = inherited.baseRadius,
+            fontFamily = inherited.fontFamily,
+            ring = StylePreset.Rhea.ring.copy(enabled = true),
+            minTouchTarget = null,
+            content = content,
+        )
+    }
+
+    @Composable
     private fun shimmerViewportWidth(): Dp =
         with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
+
+    @Composable
+    private fun shimmerRecipeTextStyle() =
+        TextStyle(
+            color = currentTheme.colors.mutedForeground,
+            fontFamily = currentTheme.fontFamily,
+            fontSize = 14.sp,
+            lineHeight = 20.sp,
+            lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+        )
+
+    @Composable
+    private fun shimmerRecipeSpread(style: TextStyle): Dp {
+        val zero = rememberTextMeasurer().measure("0", style = style, softWrap = false)
+        val advance = abs(zero.getHorizontalPosition(1, true) - zero.getHorizontalPosition(0, true))
+        return with(LocalDensity.current) { (3f * advance).toDp() } + 40.dp
+    }
 
     @Composable
     private fun ShimmerText(
@@ -183,21 +263,16 @@ internal val shimmerMarkerRecipeCode =
         enabled: Boolean = true,
         color: Color? = null,
         duration: Int = 2000,
-        spread: Dp = DefaultShimmerSpread,
+        spread: Dp = Dp.Unspecified,
         angle: Float = 20f,
         reverse: Boolean = false,
         once: Boolean = false,
     ) {
+        val textStyle = shimmerRecipeTextStyle()
+        val resolvedSpread = if (spread == Dp.Unspecified) shimmerRecipeSpread(textStyle) else spread
         Text(
             modifier,
-            textStyle =
-                TextStyle(
-                    color = currentTheme.colors.mutedForeground,
-                    fontSize = 14.sp,
-                    lineHeight = 20.sp,
-                    textAlign = TextAlign.Center,
-                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
-                ),
+            textStyle = textStyle.copy(textAlign = TextAlign.Center),
             style =
                 rememberShimmerStyle(
                     enabled =
@@ -207,7 +282,7 @@ internal val shimmerMarkerRecipeCode =
                     durationMillis =
                     duration,
                     spread =
-                    spread,
+                    resolvedSpread,
                     angleDegrees =
                     angle,
                     reverse =
@@ -272,21 +347,23 @@ internal val shimmerMarkerRecipeCode =
     }
 
     @Composable
-    internal fun ShimmerMarkerRecipe() {
-        Column(
-            Modifier.widthIn(max = 384.dp).fillMaxWidth().testTag("shimmer-example"),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            Marker(Modifier.fillMaxWidth().semantics { liveRegion = LiveRegionMode.Polite }) {
-                MarkerIcon { Spinner() }
-                MarkerContent("Thinking...", style = rememberShimmerStyle())
+    internal fun ShimmerMarkerRecipe() =
+        ShimmerSourceTheme {
+            val shimmer = rememberShimmerStyle(spread = shimmerRecipeSpread(shimmerRecipeTextStyle()))
+            Column(
+                Modifier.widthIn(max = 384.dp).fillMaxWidth().testTag("shimmer-example"),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                Marker(Modifier.fillMaxWidth().semantics { liveRegion = LiveRegionMode.Polite }) {
+                    MarkerIcon { Spinner() }
+                    MarkerContent(style = shimmer) { Text { "Thinking..." } }
+                }
+                Marker(
+                    Modifier.fillMaxWidth().semantics { liveRegion = LiveRegionMode.Polite },
+                    variant = MarkerVariant.Separator,
+                ) { MarkerContent(style = shimmer) { Text { "Reading 4 files" } } }
             }
-            Marker(
-                Modifier.fillMaxWidth().semantics { liveRegion = LiveRegionMode.Polite },
-                variant = MarkerVariant.Separator,
-            ) { MarkerContent("Reading 4 files", style = rememberShimmerStyle()) }
         }
-    }
     """.trimIndent()
 
 internal val shimmerColorRecipeCode =
@@ -295,6 +372,8 @@ internal val shimmerColorRecipeCode =
 
 
     import androidx.compose.foundation.layout.*
+    import androidx.compose.foundation.style.Style
+    import androidx.compose.foundation.style.pressed
     import androidx.compose.runtime.*
     import androidx.compose.ui.Alignment
     import androidx.compose.ui.Modifier
@@ -308,23 +387,63 @@ internal val shimmerColorRecipeCode =
     import androidx.compose.ui.semantics.semantics
     import androidx.compose.ui.text.TextStyle
     import androidx.compose.ui.text.font.FontFamily
+    import androidx.compose.ui.text.rememberTextMeasurer
     import androidx.compose.ui.text.style.LineHeightStyle
     import androidx.compose.ui.text.style.TextAlign
     import androidx.compose.ui.unit.*
     import com.toutiaoyan.compose.tailwind.core.TwColors
+    import com.toutiaoyan.compose.tailwind.core.dp
+    import com.toutiaoyan.compose.tailwind.core.spacing
     import com.toutiaoyan.compose.ui.components.button.*
     import com.toutiaoyan.compose.ui.components.marker.*
     import com.toutiaoyan.compose.ui.components.spinner.Spinner
     import com.toutiaoyan.compose.ui.components.text.Text
-    import com.toutiaoyan.compose.ui.styles.DefaultShimmerSpread
+    import com.toutiaoyan.compose.ui.components.text.TextColors
     import com.toutiaoyan.compose.ui.styles.rememberShimmerStyle
+    import com.toutiaoyan.compose.ui.styles.shimmer
+    import com.toutiaoyan.compose.ui.theme.Theme
     import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.ui.tokens.StylePreset
+    import kotlin.math.abs
 
     private const val ShimmerMessage = "Generating response…"
 
     @Composable
+    private fun ShimmerSourceTheme(content: @Composable () -> Unit) {
+        val inherited = currentTheme
+        Theme(
+            preset = StylePreset.Rhea,
+            baseColor = inherited.activeBaseColor,
+            accent = inherited.activeAccent,
+            isDark = inherited.isDark,
+            baseRadius = inherited.baseRadius,
+            fontFamily = inherited.fontFamily,
+            ring = StylePreset.Rhea.ring.copy(enabled = true),
+            minTouchTarget = null,
+            content = content,
+        )
+    }
+
+    @Composable
     private fun shimmerViewportWidth(): Dp =
         with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
+
+    @Composable
+    private fun shimmerRecipeTextStyle() =
+        TextStyle(
+            color = currentTheme.colors.mutedForeground,
+            fontFamily = currentTheme.fontFamily,
+            fontSize = 14.sp,
+            lineHeight = 20.sp,
+            lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+        )
+
+    @Composable
+    private fun shimmerRecipeSpread(style: TextStyle): Dp {
+        val zero = rememberTextMeasurer().measure("0", style = style, softWrap = false)
+        val advance = abs(zero.getHorizontalPosition(1, true) - zero.getHorizontalPosition(0, true))
+        return with(LocalDensity.current) { (3f * advance).toDp() } + 40.dp
+    }
 
     @Composable
     private fun ShimmerText(
@@ -333,21 +452,16 @@ internal val shimmerColorRecipeCode =
         enabled: Boolean = true,
         color: Color? = null,
         duration: Int = 2000,
-        spread: Dp = DefaultShimmerSpread,
+        spread: Dp = Dp.Unspecified,
         angle: Float = 20f,
         reverse: Boolean = false,
         once: Boolean = false,
     ) {
+        val textStyle = shimmerRecipeTextStyle()
+        val resolvedSpread = if (spread == Dp.Unspecified) shimmerRecipeSpread(textStyle) else spread
         Text(
             modifier,
-            textStyle =
-                TextStyle(
-                    color = currentTheme.colors.mutedForeground,
-                    fontSize = 14.sp,
-                    lineHeight = 20.sp,
-                    textAlign = TextAlign.Center,
-                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
-                ),
+            textStyle = textStyle.copy(textAlign = TextAlign.Center),
             style =
                 rememberShimmerStyle(
                     enabled =
@@ -357,7 +471,7 @@ internal val shimmerColorRecipeCode =
                     durationMillis =
                     duration,
                     spread =
-                    spread,
+                    resolvedSpread,
                     angleDegrees =
                     angle,
                     reverse =
@@ -422,16 +536,17 @@ internal val shimmerColorRecipeCode =
     }
 
     @Composable
-    internal fun ShimmerColorRecipe() {
-        Column(
-            Modifier.testTag("shimmer-example"),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            ShimmerText(color = TwColors.blue500.copy(alpha = .6f), modifier = Modifier.testTag("shimmer-blue"))
-            ShimmerText(color = Color(0xFF378ADD), modifier = Modifier.testTag("shimmer-custom"))
+    internal fun ShimmerColorRecipe() =
+        ShimmerSourceTheme {
+            Column(
+                Modifier.testTag("shimmer-example"),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                ShimmerText(color = TwColors.blue500.copy(alpha = .6f), modifier = Modifier.testTag("shimmer-blue"))
+                ShimmerText(color = Color(0xFF378ADD), modifier = Modifier.testTag("shimmer-custom"))
+            }
         }
-    }
     """.trimIndent()
 
 internal val shimmerDurationRecipeCode =
@@ -440,6 +555,8 @@ internal val shimmerDurationRecipeCode =
 
 
     import androidx.compose.foundation.layout.*
+    import androidx.compose.foundation.style.Style
+    import androidx.compose.foundation.style.pressed
     import androidx.compose.runtime.*
     import androidx.compose.ui.Alignment
     import androidx.compose.ui.Modifier
@@ -453,23 +570,63 @@ internal val shimmerDurationRecipeCode =
     import androidx.compose.ui.semantics.semantics
     import androidx.compose.ui.text.TextStyle
     import androidx.compose.ui.text.font.FontFamily
+    import androidx.compose.ui.text.rememberTextMeasurer
     import androidx.compose.ui.text.style.LineHeightStyle
     import androidx.compose.ui.text.style.TextAlign
     import androidx.compose.ui.unit.*
     import com.toutiaoyan.compose.tailwind.core.TwColors
+    import com.toutiaoyan.compose.tailwind.core.dp
+    import com.toutiaoyan.compose.tailwind.core.spacing
     import com.toutiaoyan.compose.ui.components.button.*
     import com.toutiaoyan.compose.ui.components.marker.*
     import com.toutiaoyan.compose.ui.components.spinner.Spinner
     import com.toutiaoyan.compose.ui.components.text.Text
-    import com.toutiaoyan.compose.ui.styles.DefaultShimmerSpread
+    import com.toutiaoyan.compose.ui.components.text.TextColors
     import com.toutiaoyan.compose.ui.styles.rememberShimmerStyle
+    import com.toutiaoyan.compose.ui.styles.shimmer
+    import com.toutiaoyan.compose.ui.theme.Theme
     import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.ui.tokens.StylePreset
+    import kotlin.math.abs
 
     private const val ShimmerMessage = "Generating response…"
 
     @Composable
+    private fun ShimmerSourceTheme(content: @Composable () -> Unit) {
+        val inherited = currentTheme
+        Theme(
+            preset = StylePreset.Rhea,
+            baseColor = inherited.activeBaseColor,
+            accent = inherited.activeAccent,
+            isDark = inherited.isDark,
+            baseRadius = inherited.baseRadius,
+            fontFamily = inherited.fontFamily,
+            ring = StylePreset.Rhea.ring.copy(enabled = true),
+            minTouchTarget = null,
+            content = content,
+        )
+    }
+
+    @Composable
     private fun shimmerViewportWidth(): Dp =
         with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
+
+    @Composable
+    private fun shimmerRecipeTextStyle() =
+        TextStyle(
+            color = currentTheme.colors.mutedForeground,
+            fontFamily = currentTheme.fontFamily,
+            fontSize = 14.sp,
+            lineHeight = 20.sp,
+            lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+        )
+
+    @Composable
+    private fun shimmerRecipeSpread(style: TextStyle): Dp {
+        val zero = rememberTextMeasurer().measure("0", style = style, softWrap = false)
+        val advance = abs(zero.getHorizontalPosition(1, true) - zero.getHorizontalPosition(0, true))
+        return with(LocalDensity.current) { (3f * advance).toDp() } + 40.dp
+    }
 
     @Composable
     private fun ShimmerText(
@@ -478,21 +635,16 @@ internal val shimmerDurationRecipeCode =
         enabled: Boolean = true,
         color: Color? = null,
         duration: Int = 2000,
-        spread: Dp = DefaultShimmerSpread,
+        spread: Dp = Dp.Unspecified,
         angle: Float = 20f,
         reverse: Boolean = false,
         once: Boolean = false,
     ) {
+        val textStyle = shimmerRecipeTextStyle()
+        val resolvedSpread = if (spread == Dp.Unspecified) shimmerRecipeSpread(textStyle) else spread
         Text(
             modifier,
-            textStyle =
-                TextStyle(
-                    color = currentTheme.colors.mutedForeground,
-                    fontSize = 14.sp,
-                    lineHeight = 20.sp,
-                    textAlign = TextAlign.Center,
-                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
-                ),
+            textStyle = textStyle.copy(textAlign = TextAlign.Center),
             style =
                 rememberShimmerStyle(
                     enabled =
@@ -502,7 +654,7 @@ internal val shimmerDurationRecipeCode =
                     durationMillis =
                     duration,
                     spread =
-                    spread,
+                    resolvedSpread,
                     angleDegrees =
                     angle,
                     reverse =
@@ -567,11 +719,12 @@ internal val shimmerDurationRecipeCode =
     }
 
     @Composable
-    internal fun ShimmerDurationRecipe() {
-        ShimmerComparison("shimmer", "shimmer-duration-1000", {
-            ShimmerText(modifier = Modifier.testTag("shimmer-default"))
-        }, { ShimmerText(duration = 1000, modifier = Modifier.testTag("shimmer-fast")) })
-    }
+    internal fun ShimmerDurationRecipe() =
+        ShimmerSourceTheme {
+            ShimmerComparison("shimmer", "shimmer-duration-1000", {
+                ShimmerText(modifier = Modifier.testTag("shimmer-default"))
+            }, { ShimmerText(duration = 1000, modifier = Modifier.testTag("shimmer-fast")) })
+        }
     """.trimIndent()
 
 internal val shimmerSpreadRecipeCode =
@@ -580,6 +733,8 @@ internal val shimmerSpreadRecipeCode =
 
 
     import androidx.compose.foundation.layout.*
+    import androidx.compose.foundation.style.Style
+    import androidx.compose.foundation.style.pressed
     import androidx.compose.runtime.*
     import androidx.compose.ui.Alignment
     import androidx.compose.ui.Modifier
@@ -593,23 +748,63 @@ internal val shimmerSpreadRecipeCode =
     import androidx.compose.ui.semantics.semantics
     import androidx.compose.ui.text.TextStyle
     import androidx.compose.ui.text.font.FontFamily
+    import androidx.compose.ui.text.rememberTextMeasurer
     import androidx.compose.ui.text.style.LineHeightStyle
     import androidx.compose.ui.text.style.TextAlign
     import androidx.compose.ui.unit.*
     import com.toutiaoyan.compose.tailwind.core.TwColors
+    import com.toutiaoyan.compose.tailwind.core.dp
+    import com.toutiaoyan.compose.tailwind.core.spacing
     import com.toutiaoyan.compose.ui.components.button.*
     import com.toutiaoyan.compose.ui.components.marker.*
     import com.toutiaoyan.compose.ui.components.spinner.Spinner
     import com.toutiaoyan.compose.ui.components.text.Text
-    import com.toutiaoyan.compose.ui.styles.DefaultShimmerSpread
+    import com.toutiaoyan.compose.ui.components.text.TextColors
     import com.toutiaoyan.compose.ui.styles.rememberShimmerStyle
+    import com.toutiaoyan.compose.ui.styles.shimmer
+    import com.toutiaoyan.compose.ui.theme.Theme
     import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.ui.tokens.StylePreset
+    import kotlin.math.abs
 
     private const val ShimmerMessage = "Generating response…"
 
     @Composable
+    private fun ShimmerSourceTheme(content: @Composable () -> Unit) {
+        val inherited = currentTheme
+        Theme(
+            preset = StylePreset.Rhea,
+            baseColor = inherited.activeBaseColor,
+            accent = inherited.activeAccent,
+            isDark = inherited.isDark,
+            baseRadius = inherited.baseRadius,
+            fontFamily = inherited.fontFamily,
+            ring = StylePreset.Rhea.ring.copy(enabled = true),
+            minTouchTarget = null,
+            content = content,
+        )
+    }
+
+    @Composable
     private fun shimmerViewportWidth(): Dp =
         with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
+
+    @Composable
+    private fun shimmerRecipeTextStyle() =
+        TextStyle(
+            color = currentTheme.colors.mutedForeground,
+            fontFamily = currentTheme.fontFamily,
+            fontSize = 14.sp,
+            lineHeight = 20.sp,
+            lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+        )
+
+    @Composable
+    private fun shimmerRecipeSpread(style: TextStyle): Dp {
+        val zero = rememberTextMeasurer().measure("0", style = style, softWrap = false)
+        val advance = abs(zero.getHorizontalPosition(1, true) - zero.getHorizontalPosition(0, true))
+        return with(LocalDensity.current) { (3f * advance).toDp() } + 40.dp
+    }
 
     @Composable
     private fun ShimmerText(
@@ -618,21 +813,16 @@ internal val shimmerSpreadRecipeCode =
         enabled: Boolean = true,
         color: Color? = null,
         duration: Int = 2000,
-        spread: Dp = DefaultShimmerSpread,
+        spread: Dp = Dp.Unspecified,
         angle: Float = 20f,
         reverse: Boolean = false,
         once: Boolean = false,
     ) {
+        val textStyle = shimmerRecipeTextStyle()
+        val resolvedSpread = if (spread == Dp.Unspecified) shimmerRecipeSpread(textStyle) else spread
         Text(
             modifier,
-            textStyle =
-                TextStyle(
-                    color = currentTheme.colors.mutedForeground,
-                    fontSize = 14.sp,
-                    lineHeight = 20.sp,
-                    textAlign = TextAlign.Center,
-                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
-                ),
+            textStyle = textStyle.copy(textAlign = TextAlign.Center),
             style =
                 rememberShimmerStyle(
                     enabled =
@@ -642,7 +832,7 @@ internal val shimmerSpreadRecipeCode =
                     durationMillis =
                     duration,
                     spread =
-                    spread,
+                    resolvedSpread,
                     angleDegrees =
                     angle,
                     reverse =
@@ -707,11 +897,12 @@ internal val shimmerSpreadRecipeCode =
     }
 
     @Composable
-    internal fun ShimmerSpreadRecipe() {
-        ShimmerComparison("shimmer-spread-4", "shimmer-spread-24", {
-            ShimmerText(spread = 16.dp, modifier = Modifier.testTag("shimmer-narrow"))
-        }, { ShimmerText(spread = 96.dp, modifier = Modifier.testTag("shimmer-wide")) })
-    }
+    internal fun ShimmerSpreadRecipe() =
+        ShimmerSourceTheme {
+            ShimmerComparison("shimmer-spread-4", "shimmer-spread-24", {
+                ShimmerText(spread = 16.dp, modifier = Modifier.testTag("shimmer-narrow"))
+            }, { ShimmerText(spread = 96.dp, modifier = Modifier.testTag("shimmer-wide")) })
+        }
     """.trimIndent()
 
 internal val shimmerAngleRecipeCode =
@@ -720,6 +911,8 @@ internal val shimmerAngleRecipeCode =
 
 
     import androidx.compose.foundation.layout.*
+    import androidx.compose.foundation.style.Style
+    import androidx.compose.foundation.style.pressed
     import androidx.compose.runtime.*
     import androidx.compose.ui.Alignment
     import androidx.compose.ui.Modifier
@@ -733,23 +926,63 @@ internal val shimmerAngleRecipeCode =
     import androidx.compose.ui.semantics.semantics
     import androidx.compose.ui.text.TextStyle
     import androidx.compose.ui.text.font.FontFamily
+    import androidx.compose.ui.text.rememberTextMeasurer
     import androidx.compose.ui.text.style.LineHeightStyle
     import androidx.compose.ui.text.style.TextAlign
     import androidx.compose.ui.unit.*
     import com.toutiaoyan.compose.tailwind.core.TwColors
+    import com.toutiaoyan.compose.tailwind.core.dp
+    import com.toutiaoyan.compose.tailwind.core.spacing
     import com.toutiaoyan.compose.ui.components.button.*
     import com.toutiaoyan.compose.ui.components.marker.*
     import com.toutiaoyan.compose.ui.components.spinner.Spinner
     import com.toutiaoyan.compose.ui.components.text.Text
-    import com.toutiaoyan.compose.ui.styles.DefaultShimmerSpread
+    import com.toutiaoyan.compose.ui.components.text.TextColors
     import com.toutiaoyan.compose.ui.styles.rememberShimmerStyle
+    import com.toutiaoyan.compose.ui.styles.shimmer
+    import com.toutiaoyan.compose.ui.theme.Theme
     import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.ui.tokens.StylePreset
+    import kotlin.math.abs
 
     private const val ShimmerMessage = "Generating response…"
 
     @Composable
+    private fun ShimmerSourceTheme(content: @Composable () -> Unit) {
+        val inherited = currentTheme
+        Theme(
+            preset = StylePreset.Rhea,
+            baseColor = inherited.activeBaseColor,
+            accent = inherited.activeAccent,
+            isDark = inherited.isDark,
+            baseRadius = inherited.baseRadius,
+            fontFamily = inherited.fontFamily,
+            ring = StylePreset.Rhea.ring.copy(enabled = true),
+            minTouchTarget = null,
+            content = content,
+        )
+    }
+
+    @Composable
     private fun shimmerViewportWidth(): Dp =
         with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
+
+    @Composable
+    private fun shimmerRecipeTextStyle() =
+        TextStyle(
+            color = currentTheme.colors.mutedForeground,
+            fontFamily = currentTheme.fontFamily,
+            fontSize = 14.sp,
+            lineHeight = 20.sp,
+            lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+        )
+
+    @Composable
+    private fun shimmerRecipeSpread(style: TextStyle): Dp {
+        val zero = rememberTextMeasurer().measure("0", style = style, softWrap = false)
+        val advance = abs(zero.getHorizontalPosition(1, true) - zero.getHorizontalPosition(0, true))
+        return with(LocalDensity.current) { (3f * advance).toDp() } + 40.dp
+    }
 
     @Composable
     private fun ShimmerText(
@@ -758,21 +991,16 @@ internal val shimmerAngleRecipeCode =
         enabled: Boolean = true,
         color: Color? = null,
         duration: Int = 2000,
-        spread: Dp = DefaultShimmerSpread,
+        spread: Dp = Dp.Unspecified,
         angle: Float = 20f,
         reverse: Boolean = false,
         once: Boolean = false,
     ) {
+        val textStyle = shimmerRecipeTextStyle()
+        val resolvedSpread = if (spread == Dp.Unspecified) shimmerRecipeSpread(textStyle) else spread
         Text(
             modifier,
-            textStyle =
-                TextStyle(
-                    color = currentTheme.colors.mutedForeground,
-                    fontSize = 14.sp,
-                    lineHeight = 20.sp,
-                    textAlign = TextAlign.Center,
-                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
-                ),
+            textStyle = textStyle.copy(textAlign = TextAlign.Center),
             style =
                 rememberShimmerStyle(
                     enabled =
@@ -782,7 +1010,7 @@ internal val shimmerAngleRecipeCode =
                     durationMillis =
                     duration,
                     spread =
-                    spread,
+                    resolvedSpread,
                     angleDegrees =
                     angle,
                     reverse =
@@ -847,11 +1075,12 @@ internal val shimmerAngleRecipeCode =
     }
 
     @Composable
-    internal fun ShimmerAngleRecipe() {
-        ShimmerComparison("shimmer", "shimmer-angle-45", {
-            ShimmerText(modifier = Modifier.testTag("shimmer-default"))
-        }, { ShimmerText(angle = 45f, modifier = Modifier.testTag("shimmer-angle")) })
-    }
+    internal fun ShimmerAngleRecipe() =
+        ShimmerSourceTheme {
+            ShimmerComparison("shimmer", "shimmer-angle-45", {
+                ShimmerText(modifier = Modifier.testTag("shimmer-default"))
+            }, { ShimmerText(angle = 45f, modifier = Modifier.testTag("shimmer-angle")) })
+        }
     """.trimIndent()
 
 internal val shimmerReverseRecipeCode =
@@ -860,6 +1089,8 @@ internal val shimmerReverseRecipeCode =
 
 
     import androidx.compose.foundation.layout.*
+    import androidx.compose.foundation.style.Style
+    import androidx.compose.foundation.style.pressed
     import androidx.compose.runtime.*
     import androidx.compose.ui.Alignment
     import androidx.compose.ui.Modifier
@@ -873,23 +1104,63 @@ internal val shimmerReverseRecipeCode =
     import androidx.compose.ui.semantics.semantics
     import androidx.compose.ui.text.TextStyle
     import androidx.compose.ui.text.font.FontFamily
+    import androidx.compose.ui.text.rememberTextMeasurer
     import androidx.compose.ui.text.style.LineHeightStyle
     import androidx.compose.ui.text.style.TextAlign
     import androidx.compose.ui.unit.*
     import com.toutiaoyan.compose.tailwind.core.TwColors
+    import com.toutiaoyan.compose.tailwind.core.dp
+    import com.toutiaoyan.compose.tailwind.core.spacing
     import com.toutiaoyan.compose.ui.components.button.*
     import com.toutiaoyan.compose.ui.components.marker.*
     import com.toutiaoyan.compose.ui.components.spinner.Spinner
     import com.toutiaoyan.compose.ui.components.text.Text
-    import com.toutiaoyan.compose.ui.styles.DefaultShimmerSpread
+    import com.toutiaoyan.compose.ui.components.text.TextColors
     import com.toutiaoyan.compose.ui.styles.rememberShimmerStyle
+    import com.toutiaoyan.compose.ui.styles.shimmer
+    import com.toutiaoyan.compose.ui.theme.Theme
     import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.ui.tokens.StylePreset
+    import kotlin.math.abs
 
     private const val ShimmerMessage = "Generating response…"
 
     @Composable
+    private fun ShimmerSourceTheme(content: @Composable () -> Unit) {
+        val inherited = currentTheme
+        Theme(
+            preset = StylePreset.Rhea,
+            baseColor = inherited.activeBaseColor,
+            accent = inherited.activeAccent,
+            isDark = inherited.isDark,
+            baseRadius = inherited.baseRadius,
+            fontFamily = inherited.fontFamily,
+            ring = StylePreset.Rhea.ring.copy(enabled = true),
+            minTouchTarget = null,
+            content = content,
+        )
+    }
+
+    @Composable
     private fun shimmerViewportWidth(): Dp =
         with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
+
+    @Composable
+    private fun shimmerRecipeTextStyle() =
+        TextStyle(
+            color = currentTheme.colors.mutedForeground,
+            fontFamily = currentTheme.fontFamily,
+            fontSize = 14.sp,
+            lineHeight = 20.sp,
+            lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+        )
+
+    @Composable
+    private fun shimmerRecipeSpread(style: TextStyle): Dp {
+        val zero = rememberTextMeasurer().measure("0", style = style, softWrap = false)
+        val advance = abs(zero.getHorizontalPosition(1, true) - zero.getHorizontalPosition(0, true))
+        return with(LocalDensity.current) { (3f * advance).toDp() } + 40.dp
+    }
 
     @Composable
     private fun ShimmerText(
@@ -898,21 +1169,16 @@ internal val shimmerReverseRecipeCode =
         enabled: Boolean = true,
         color: Color? = null,
         duration: Int = 2000,
-        spread: Dp = DefaultShimmerSpread,
+        spread: Dp = Dp.Unspecified,
         angle: Float = 20f,
         reverse: Boolean = false,
         once: Boolean = false,
     ) {
+        val textStyle = shimmerRecipeTextStyle()
+        val resolvedSpread = if (spread == Dp.Unspecified) shimmerRecipeSpread(textStyle) else spread
         Text(
             modifier,
-            textStyle =
-                TextStyle(
-                    color = currentTheme.colors.mutedForeground,
-                    fontSize = 14.sp,
-                    lineHeight = 20.sp,
-                    textAlign = TextAlign.Center,
-                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
-                ),
+            textStyle = textStyle.copy(textAlign = TextAlign.Center),
             style =
                 rememberShimmerStyle(
                     enabled =
@@ -922,7 +1188,7 @@ internal val shimmerReverseRecipeCode =
                     durationMillis =
                     duration,
                     spread =
-                    spread,
+                    resolvedSpread,
                     angleDegrees =
                     angle,
                     reverse =
@@ -987,13 +1253,14 @@ internal val shimmerReverseRecipeCode =
     }
 
     @Composable
-    internal fun ShimmerReverseRecipe() {
-        ShimmerComparison("shimmer", "shimmer-reverse", {
-            ShimmerText(modifier = Modifier.testTag("shimmer-forward"))
-        }, {
-            ShimmerText(modifier = Modifier.testTag("shimmer-reverse"), reverse = true)
-        })
-    }
+    internal fun ShimmerReverseRecipe() =
+        ShimmerSourceTheme {
+            ShimmerComparison("shimmer", "shimmer-reverse", {
+                ShimmerText(modifier = Modifier.testTag("shimmer-forward"))
+            }, {
+                ShimmerText(modifier = Modifier.testTag("shimmer-reverse"), reverse = true)
+            })
+        }
     """.trimIndent()
 
 internal val shimmerOnceRecipeCode =
@@ -1002,6 +1269,8 @@ internal val shimmerOnceRecipeCode =
 
 
     import androidx.compose.foundation.layout.*
+    import androidx.compose.foundation.style.Style
+    import androidx.compose.foundation.style.pressed
     import androidx.compose.runtime.*
     import androidx.compose.ui.Alignment
     import androidx.compose.ui.Modifier
@@ -1015,23 +1284,63 @@ internal val shimmerOnceRecipeCode =
     import androidx.compose.ui.semantics.semantics
     import androidx.compose.ui.text.TextStyle
     import androidx.compose.ui.text.font.FontFamily
+    import androidx.compose.ui.text.rememberTextMeasurer
     import androidx.compose.ui.text.style.LineHeightStyle
     import androidx.compose.ui.text.style.TextAlign
     import androidx.compose.ui.unit.*
     import com.toutiaoyan.compose.tailwind.core.TwColors
+    import com.toutiaoyan.compose.tailwind.core.dp
+    import com.toutiaoyan.compose.tailwind.core.spacing
     import com.toutiaoyan.compose.ui.components.button.*
     import com.toutiaoyan.compose.ui.components.marker.*
     import com.toutiaoyan.compose.ui.components.spinner.Spinner
     import com.toutiaoyan.compose.ui.components.text.Text
-    import com.toutiaoyan.compose.ui.styles.DefaultShimmerSpread
+    import com.toutiaoyan.compose.ui.components.text.TextColors
     import com.toutiaoyan.compose.ui.styles.rememberShimmerStyle
+    import com.toutiaoyan.compose.ui.styles.shimmer
+    import com.toutiaoyan.compose.ui.theme.Theme
     import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.ui.tokens.StylePreset
+    import kotlin.math.abs
 
     private const val ShimmerMessage = "Generating response…"
 
     @Composable
+    private fun ShimmerSourceTheme(content: @Composable () -> Unit) {
+        val inherited = currentTheme
+        Theme(
+            preset = StylePreset.Rhea,
+            baseColor = inherited.activeBaseColor,
+            accent = inherited.activeAccent,
+            isDark = inherited.isDark,
+            baseRadius = inherited.baseRadius,
+            fontFamily = inherited.fontFamily,
+            ring = StylePreset.Rhea.ring.copy(enabled = true),
+            minTouchTarget = null,
+            content = content,
+        )
+    }
+
+    @Composable
     private fun shimmerViewportWidth(): Dp =
         with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
+
+    @Composable
+    private fun shimmerRecipeTextStyle() =
+        TextStyle(
+            color = currentTheme.colors.mutedForeground,
+            fontFamily = currentTheme.fontFamily,
+            fontSize = 14.sp,
+            lineHeight = 20.sp,
+            lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+        )
+
+    @Composable
+    private fun shimmerRecipeSpread(style: TextStyle): Dp {
+        val zero = rememberTextMeasurer().measure("0", style = style, softWrap = false)
+        val advance = abs(zero.getHorizontalPosition(1, true) - zero.getHorizontalPosition(0, true))
+        return with(LocalDensity.current) { (3f * advance).toDp() } + 40.dp
+    }
 
     @Composable
     private fun ShimmerText(
@@ -1040,21 +1349,16 @@ internal val shimmerOnceRecipeCode =
         enabled: Boolean = true,
         color: Color? = null,
         duration: Int = 2000,
-        spread: Dp = DefaultShimmerSpread,
+        spread: Dp = Dp.Unspecified,
         angle: Float = 20f,
         reverse: Boolean = false,
         once: Boolean = false,
     ) {
+        val textStyle = shimmerRecipeTextStyle()
+        val resolvedSpread = if (spread == Dp.Unspecified) shimmerRecipeSpread(textStyle) else spread
         Text(
             modifier,
-            textStyle =
-                TextStyle(
-                    color = currentTheme.colors.mutedForeground,
-                    fontSize = 14.sp,
-                    lineHeight = 20.sp,
-                    textAlign = TextAlign.Center,
-                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
-                ),
+            textStyle = textStyle.copy(textAlign = TextAlign.Center),
             style =
                 rememberShimmerStyle(
                     enabled =
@@ -1064,7 +1368,7 @@ internal val shimmerOnceRecipeCode =
                     durationMillis =
                     duration,
                     spread =
-                    spread,
+                    resolvedSpread,
                     angleDegrees =
                     angle,
                     reverse =
@@ -1129,17 +1433,24 @@ internal val shimmerOnceRecipeCode =
     }
 
     @Composable
-    internal fun ShimmerOnceRecipe() {
-        var replay by remember { mutableIntStateOf(0) }
-        Column(
-            Modifier.testTag("shimmer-example"),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            key(replay) { ShimmerText(duration = 1100, once = true, modifier = Modifier.testTag("shimmer-once")) }
-            Button("Replay", variant = ButtonVariant.Outline, size = ButtonSize.Sm, onClick = { replay++ })
+    internal fun ShimmerOnceRecipe() =
+        ShimmerSourceTheme {
+            var replay by remember { mutableIntStateOf(0) }
+            Column(
+                Modifier.testTag("shimmer-example"),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                key(replay) { ShimmerText(duration = 1100, once = true, modifier = Modifier.testTag("shimmer-once")) }
+                Button(
+                    "Replay",
+                    variant = ButtonVariant.Outline,
+                    size = ButtonSize.Sm,
+                    style = Style { pressed { translationY(1.dp.toPx()) } },
+                    onClick = { replay++ },
+                )
+            }
         }
-    }
     """.trimIndent()
 
 internal val shimmerNoneRecipeCode =
@@ -1148,6 +1459,8 @@ internal val shimmerNoneRecipeCode =
 
 
     import androidx.compose.foundation.layout.*
+    import androidx.compose.foundation.style.Style
+    import androidx.compose.foundation.style.pressed
     import androidx.compose.runtime.*
     import androidx.compose.ui.Alignment
     import androidx.compose.ui.Modifier
@@ -1161,23 +1474,63 @@ internal val shimmerNoneRecipeCode =
     import androidx.compose.ui.semantics.semantics
     import androidx.compose.ui.text.TextStyle
     import androidx.compose.ui.text.font.FontFamily
+    import androidx.compose.ui.text.rememberTextMeasurer
     import androidx.compose.ui.text.style.LineHeightStyle
     import androidx.compose.ui.text.style.TextAlign
     import androidx.compose.ui.unit.*
     import com.toutiaoyan.compose.tailwind.core.TwColors
+    import com.toutiaoyan.compose.tailwind.core.dp
+    import com.toutiaoyan.compose.tailwind.core.spacing
     import com.toutiaoyan.compose.ui.components.button.*
     import com.toutiaoyan.compose.ui.components.marker.*
     import com.toutiaoyan.compose.ui.components.spinner.Spinner
     import com.toutiaoyan.compose.ui.components.text.Text
-    import com.toutiaoyan.compose.ui.styles.DefaultShimmerSpread
+    import com.toutiaoyan.compose.ui.components.text.TextColors
     import com.toutiaoyan.compose.ui.styles.rememberShimmerStyle
+    import com.toutiaoyan.compose.ui.styles.shimmer
+    import com.toutiaoyan.compose.ui.theme.Theme
     import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.ui.tokens.StylePreset
+    import kotlin.math.abs
 
     private const val ShimmerMessage = "Generating response…"
 
     @Composable
+    private fun ShimmerSourceTheme(content: @Composable () -> Unit) {
+        val inherited = currentTheme
+        Theme(
+            preset = StylePreset.Rhea,
+            baseColor = inherited.activeBaseColor,
+            accent = inherited.activeAccent,
+            isDark = inherited.isDark,
+            baseRadius = inherited.baseRadius,
+            fontFamily = inherited.fontFamily,
+            ring = StylePreset.Rhea.ring.copy(enabled = true),
+            minTouchTarget = null,
+            content = content,
+        )
+    }
+
+    @Composable
     private fun shimmerViewportWidth(): Dp =
         with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
+
+    @Composable
+    private fun shimmerRecipeTextStyle() =
+        TextStyle(
+            color = currentTheme.colors.mutedForeground,
+            fontFamily = currentTheme.fontFamily,
+            fontSize = 14.sp,
+            lineHeight = 20.sp,
+            lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+        )
+
+    @Composable
+    private fun shimmerRecipeSpread(style: TextStyle): Dp {
+        val zero = rememberTextMeasurer().measure("0", style = style, softWrap = false)
+        val advance = abs(zero.getHorizontalPosition(1, true) - zero.getHorizontalPosition(0, true))
+        return with(LocalDensity.current) { (3f * advance).toDp() } + 40.dp
+    }
 
     @Composable
     private fun ShimmerText(
@@ -1186,21 +1539,16 @@ internal val shimmerNoneRecipeCode =
         enabled: Boolean = true,
         color: Color? = null,
         duration: Int = 2000,
-        spread: Dp = DefaultShimmerSpread,
+        spread: Dp = Dp.Unspecified,
         angle: Float = 20f,
         reverse: Boolean = false,
         once: Boolean = false,
     ) {
+        val textStyle = shimmerRecipeTextStyle()
+        val resolvedSpread = if (spread == Dp.Unspecified) shimmerRecipeSpread(textStyle) else spread
         Text(
             modifier,
-            textStyle =
-                TextStyle(
-                    color = currentTheme.colors.mutedForeground,
-                    fontSize = 14.sp,
-                    lineHeight = 20.sp,
-                    textAlign = TextAlign.Center,
-                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
-                ),
+            textStyle = textStyle.copy(textAlign = TextAlign.Center),
             style =
                 rememberShimmerStyle(
                     enabled =
@@ -1210,7 +1558,7 @@ internal val shimmerNoneRecipeCode =
                     durationMillis =
                     duration,
                     spread =
-                    spread,
+                    resolvedSpread,
                     angleDegrees =
                     angle,
                     reverse =
@@ -1275,17 +1623,18 @@ internal val shimmerNoneRecipeCode =
     }
 
     @Composable
-    internal fun ShimmerNoneRecipe() {
-        val enabled = shimmerViewportWidth() < 768.dp
-        Column(
-            Modifier.testTag("shimmer-example"),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            ShimmerText(enabled = enabled, modifier = Modifier.testTag("shimmer-responsive"))
-            ShimmerLabel("shimmer md:shimmer-none")
+    internal fun ShimmerNoneRecipe() =
+        ShimmerSourceTheme {
+            val enabled = shimmerViewportWidth() < 768.dp
+            Column(
+                Modifier.testTag("shimmer-example"),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                ShimmerText(enabled = enabled, modifier = Modifier.testTag("shimmer-responsive"))
+                ShimmerLabel("shimmer md:shimmer-none")
+            }
         }
-    }
     """.trimIndent()
 
 internal val shimmerRtlRecipeCode =
@@ -1294,6 +1643,8 @@ internal val shimmerRtlRecipeCode =
 
 
     import androidx.compose.foundation.layout.*
+    import androidx.compose.foundation.style.Style
+    import androidx.compose.foundation.style.pressed
     import androidx.compose.runtime.*
     import androidx.compose.ui.Alignment
     import androidx.compose.ui.Modifier
@@ -1307,23 +1658,63 @@ internal val shimmerRtlRecipeCode =
     import androidx.compose.ui.semantics.semantics
     import androidx.compose.ui.text.TextStyle
     import androidx.compose.ui.text.font.FontFamily
+    import androidx.compose.ui.text.rememberTextMeasurer
     import androidx.compose.ui.text.style.LineHeightStyle
     import androidx.compose.ui.text.style.TextAlign
     import androidx.compose.ui.unit.*
     import com.toutiaoyan.compose.tailwind.core.TwColors
+    import com.toutiaoyan.compose.tailwind.core.dp
+    import com.toutiaoyan.compose.tailwind.core.spacing
     import com.toutiaoyan.compose.ui.components.button.*
     import com.toutiaoyan.compose.ui.components.marker.*
     import com.toutiaoyan.compose.ui.components.spinner.Spinner
     import com.toutiaoyan.compose.ui.components.text.Text
-    import com.toutiaoyan.compose.ui.styles.DefaultShimmerSpread
+    import com.toutiaoyan.compose.ui.components.text.TextColors
     import com.toutiaoyan.compose.ui.styles.rememberShimmerStyle
+    import com.toutiaoyan.compose.ui.styles.shimmer
+    import com.toutiaoyan.compose.ui.theme.Theme
     import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.ui.tokens.StylePreset
+    import kotlin.math.abs
 
     private const val ShimmerMessage = "Generating response…"
 
     @Composable
+    private fun ShimmerSourceTheme(content: @Composable () -> Unit) {
+        val inherited = currentTheme
+        Theme(
+            preset = StylePreset.Rhea,
+            baseColor = inherited.activeBaseColor,
+            accent = inherited.activeAccent,
+            isDark = inherited.isDark,
+            baseRadius = inherited.baseRadius,
+            fontFamily = inherited.fontFamily,
+            ring = StylePreset.Rhea.ring.copy(enabled = true),
+            minTouchTarget = null,
+            content = content,
+        )
+    }
+
+    @Composable
     private fun shimmerViewportWidth(): Dp =
         with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
+
+    @Composable
+    private fun shimmerRecipeTextStyle() =
+        TextStyle(
+            color = currentTheme.colors.mutedForeground,
+            fontFamily = currentTheme.fontFamily,
+            fontSize = 14.sp,
+            lineHeight = 20.sp,
+            lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
+        )
+
+    @Composable
+    private fun shimmerRecipeSpread(style: TextStyle): Dp {
+        val zero = rememberTextMeasurer().measure("0", style = style, softWrap = false)
+        val advance = abs(zero.getHorizontalPosition(1, true) - zero.getHorizontalPosition(0, true))
+        return with(LocalDensity.current) { (3f * advance).toDp() } + 40.dp
+    }
 
     @Composable
     private fun ShimmerText(
@@ -1332,21 +1723,16 @@ internal val shimmerRtlRecipeCode =
         enabled: Boolean = true,
         color: Color? = null,
         duration: Int = 2000,
-        spread: Dp = DefaultShimmerSpread,
+        spread: Dp = Dp.Unspecified,
         angle: Float = 20f,
         reverse: Boolean = false,
         once: Boolean = false,
     ) {
+        val textStyle = shimmerRecipeTextStyle()
+        val resolvedSpread = if (spread == Dp.Unspecified) shimmerRecipeSpread(textStyle) else spread
         Text(
             modifier,
-            textStyle =
-                TextStyle(
-                    color = currentTheme.colors.mutedForeground,
-                    fontSize = 14.sp,
-                    lineHeight = 20.sp,
-                    textAlign = TextAlign.Center,
-                    lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
-                ),
+            textStyle = textStyle.copy(textAlign = TextAlign.Center),
             style =
                 rememberShimmerStyle(
                     enabled =
@@ -1356,7 +1742,7 @@ internal val shimmerRtlRecipeCode =
                     durationMillis =
                     duration,
                     spread =
-                    spread,
+                    resolvedSpread,
                     angleDegrees =
                     angle,
                     reverse =
@@ -1421,15 +1807,226 @@ internal val shimmerRtlRecipeCode =
     }
 
     @Composable
-    internal fun ShimmerRtlRecipe() {
-        ShimmerComparison("dir=\"ltr\"", "dir=\"rtl\"", {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-                ShimmerText(modifier = Modifier.testTag("shimmer-ltr"))
-            }
-        }, {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-                ShimmerText("جارٍ إنشاء الرد…", modifier = Modifier.testTag("shimmer-rtl"))
-            }
-        })
+    internal fun ShimmerRtlRecipe() =
+        ShimmerSourceTheme {
+            ShimmerComparison("dir=\"ltr\"", "dir=\"rtl\"", {
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                    ShimmerText(modifier = Modifier.testTag("shimmer-ltr"))
+                }
+            }, {
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                    ShimmerText("جارٍ إنشاء الرد…", modifier = Modifier.testTag("shimmer-rtl"))
+                }
+            })
+        }
+    """.trimIndent()
+
+internal val shimmerOverlayModifierRecipeCode =
+    """
+    @file:OptIn(androidx.compose.foundation.style.ExperimentalFoundationStyleApi::class)
+
+
+    import androidx.compose.foundation.layout.*
+    import androidx.compose.foundation.style.Style
+    import androidx.compose.foundation.style.pressed
+    import androidx.compose.runtime.*
+    import androidx.compose.ui.Alignment
+    import androidx.compose.ui.Modifier
+    import androidx.compose.ui.graphics.Color
+    import androidx.compose.ui.platform.LocalDensity
+    import androidx.compose.ui.platform.LocalLayoutDirection
+    import androidx.compose.ui.platform.LocalWindowInfo
+    import androidx.compose.ui.platform.testTag
+    import androidx.compose.ui.semantics.LiveRegionMode
+    import androidx.compose.ui.semantics.liveRegion
+    import androidx.compose.ui.semantics.semantics
+    import androidx.compose.ui.text.TextStyle
+    import androidx.compose.ui.text.font.FontFamily
+    import androidx.compose.ui.text.rememberTextMeasurer
+    import androidx.compose.ui.text.style.LineHeightStyle
+    import androidx.compose.ui.text.style.TextAlign
+    import androidx.compose.ui.unit.*
+    import com.toutiaoyan.compose.tailwind.core.TwColors
+    import com.toutiaoyan.compose.tailwind.core.dp
+    import com.toutiaoyan.compose.tailwind.core.spacing
+    import com.toutiaoyan.compose.ui.components.button.*
+    import com.toutiaoyan.compose.ui.components.marker.*
+    import com.toutiaoyan.compose.ui.components.spinner.Spinner
+    import com.toutiaoyan.compose.ui.components.text.Text
+    import com.toutiaoyan.compose.ui.components.text.TextColors
+    import com.toutiaoyan.compose.ui.styles.rememberShimmerStyle
+    import com.toutiaoyan.compose.ui.styles.shimmer
+    import com.toutiaoyan.compose.ui.theme.Theme
+    import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.ui.tokens.StylePreset
+    import kotlin.math.abs
+
+    @Composable
+    internal fun ShimmerOverlayModifierRecipe() {
+        Text(textStyle = TextColors.Muted, modifier = Modifier.shimmer()) {
+            "Generating response…"
+        }
+    }
+    """.trimIndent()
+
+internal val shimmerStyleContentBrushRecipeCode =
+    """
+    @file:OptIn(androidx.compose.foundation.style.ExperimentalFoundationStyleApi::class)
+
+
+    import androidx.compose.foundation.layout.*
+    import androidx.compose.foundation.style.Style
+    import androidx.compose.foundation.style.pressed
+    import androidx.compose.runtime.*
+    import androidx.compose.ui.Alignment
+    import androidx.compose.ui.Modifier
+    import androidx.compose.ui.graphics.Color
+    import androidx.compose.ui.platform.LocalDensity
+    import androidx.compose.ui.platform.LocalLayoutDirection
+    import androidx.compose.ui.platform.LocalWindowInfo
+    import androidx.compose.ui.platform.testTag
+    import androidx.compose.ui.semantics.LiveRegionMode
+    import androidx.compose.ui.semantics.liveRegion
+    import androidx.compose.ui.semantics.semantics
+    import androidx.compose.ui.text.TextStyle
+    import androidx.compose.ui.text.font.FontFamily
+    import androidx.compose.ui.text.rememberTextMeasurer
+    import androidx.compose.ui.text.style.LineHeightStyle
+    import androidx.compose.ui.text.style.TextAlign
+    import androidx.compose.ui.unit.*
+    import com.toutiaoyan.compose.tailwind.core.TwColors
+    import com.toutiaoyan.compose.tailwind.core.dp
+    import com.toutiaoyan.compose.tailwind.core.spacing
+    import com.toutiaoyan.compose.ui.components.button.*
+    import com.toutiaoyan.compose.ui.components.marker.*
+    import com.toutiaoyan.compose.ui.components.spinner.Spinner
+    import com.toutiaoyan.compose.ui.components.text.Text
+    import com.toutiaoyan.compose.ui.components.text.TextColors
+    import com.toutiaoyan.compose.ui.styles.rememberShimmerStyle
+    import com.toutiaoyan.compose.ui.styles.shimmer
+    import com.toutiaoyan.compose.ui.theme.Theme
+    import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.ui.tokens.StylePreset
+    import kotlin.math.abs
+
+    @Composable
+    internal fun ShimmerStyleContentBrushRecipe() {
+        Text(textStyle = TextColors.Muted, style = rememberShimmerStyle()) {
+            "Generating response…"
+        }
+    }
+    """.trimIndent()
+
+internal val shimmerDurationAngleSpreadRecipeCode =
+    """
+    @file:OptIn(androidx.compose.foundation.style.ExperimentalFoundationStyleApi::class)
+
+
+    import androidx.compose.foundation.layout.*
+    import androidx.compose.foundation.style.Style
+    import androidx.compose.foundation.style.pressed
+    import androidx.compose.runtime.*
+    import androidx.compose.ui.Alignment
+    import androidx.compose.ui.Modifier
+    import androidx.compose.ui.graphics.Color
+    import androidx.compose.ui.platform.LocalDensity
+    import androidx.compose.ui.platform.LocalLayoutDirection
+    import androidx.compose.ui.platform.LocalWindowInfo
+    import androidx.compose.ui.platform.testTag
+    import androidx.compose.ui.semantics.LiveRegionMode
+    import androidx.compose.ui.semantics.liveRegion
+    import androidx.compose.ui.semantics.semantics
+    import androidx.compose.ui.text.TextStyle
+    import androidx.compose.ui.text.font.FontFamily
+    import androidx.compose.ui.text.rememberTextMeasurer
+    import androidx.compose.ui.text.style.LineHeightStyle
+    import androidx.compose.ui.text.style.TextAlign
+    import androidx.compose.ui.unit.*
+    import com.toutiaoyan.compose.tailwind.core.TwColors
+    import com.toutiaoyan.compose.tailwind.core.dp
+    import com.toutiaoyan.compose.tailwind.core.spacing
+    import com.toutiaoyan.compose.ui.components.button.*
+    import com.toutiaoyan.compose.ui.components.marker.*
+    import com.toutiaoyan.compose.ui.components.spinner.Spinner
+    import com.toutiaoyan.compose.ui.components.text.Text
+    import com.toutiaoyan.compose.ui.components.text.TextColors
+    import com.toutiaoyan.compose.ui.styles.rememberShimmerStyle
+    import com.toutiaoyan.compose.ui.styles.shimmer
+    import com.toutiaoyan.compose.ui.theme.Theme
+    import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.ui.tokens.StylePreset
+    import kotlin.math.abs
+
+    @Composable
+    internal fun ShimmerDurationAngleSpreadRecipe() {
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text(
+                textStyle = TextColors.Muted,
+                modifier = Modifier.shimmer(durationMillis = 1000),
+            ) { "duration 1000" }
+            Text(
+                textStyle = TextColors.Muted,
+                modifier = Modifier.shimmer(angleDegrees = 45f),
+            ) { "angle 45°" }
+            Text(
+                textStyle = TextColors.Muted,
+                modifier = Modifier.shimmer(spread = 24.spacing.dp),
+            ) { "spread-24" }
+        }
+    }
+    """.trimIndent()
+
+internal val shimmerReverseAndOnceRecipeCode =
+    """
+    @file:OptIn(androidx.compose.foundation.style.ExperimentalFoundationStyleApi::class)
+
+
+    import androidx.compose.foundation.layout.*
+    import androidx.compose.foundation.style.Style
+    import androidx.compose.foundation.style.pressed
+    import androidx.compose.runtime.*
+    import androidx.compose.ui.Alignment
+    import androidx.compose.ui.Modifier
+    import androidx.compose.ui.graphics.Color
+    import androidx.compose.ui.platform.LocalDensity
+    import androidx.compose.ui.platform.LocalLayoutDirection
+    import androidx.compose.ui.platform.LocalWindowInfo
+    import androidx.compose.ui.platform.testTag
+    import androidx.compose.ui.semantics.LiveRegionMode
+    import androidx.compose.ui.semantics.liveRegion
+    import androidx.compose.ui.semantics.semantics
+    import androidx.compose.ui.text.TextStyle
+    import androidx.compose.ui.text.font.FontFamily
+    import androidx.compose.ui.text.rememberTextMeasurer
+    import androidx.compose.ui.text.style.LineHeightStyle
+    import androidx.compose.ui.text.style.TextAlign
+    import androidx.compose.ui.unit.*
+    import com.toutiaoyan.compose.tailwind.core.TwColors
+    import com.toutiaoyan.compose.tailwind.core.dp
+    import com.toutiaoyan.compose.tailwind.core.spacing
+    import com.toutiaoyan.compose.ui.components.button.*
+    import com.toutiaoyan.compose.ui.components.marker.*
+    import com.toutiaoyan.compose.ui.components.spinner.Spinner
+    import com.toutiaoyan.compose.ui.components.text.Text
+    import com.toutiaoyan.compose.ui.components.text.TextColors
+    import com.toutiaoyan.compose.ui.styles.rememberShimmerStyle
+    import com.toutiaoyan.compose.ui.styles.shimmer
+    import com.toutiaoyan.compose.ui.theme.Theme
+    import com.toutiaoyan.compose.ui.theme.currentTheme
+    import com.toutiaoyan.compose.ui.tokens.StylePreset
+    import kotlin.math.abs
+
+    @Composable
+    internal fun ShimmerReverseAndOnceRecipe() {
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text(
+                textStyle = TextColors.Muted,
+                modifier = Modifier.shimmer(reverse = true),
+            ) { "reverse" }
+            Text(
+                textStyle = TextColors.Muted,
+                modifier = Modifier.shimmer(once = true, durationMillis = 1100),
+            ) { "once" }
+        }
     }
     """.trimIndent()

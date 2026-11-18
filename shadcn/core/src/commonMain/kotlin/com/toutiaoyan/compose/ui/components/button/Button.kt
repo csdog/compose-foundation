@@ -53,6 +53,7 @@ import androidx.compose.ui.text.font.FontWeight
 import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
 import com.toutiaoyan.compose.ui.components.icon.LocalInlineIconSize
 import com.toutiaoyan.compose.ui.tokens.StylePreset
+import com.toutiaoyan.compose.ui.modifiers.DefaultRippleIndication
 import com.toutiaoyan.compose.ui.modifiers.RippleIndication
 import com.toutiaoyan.compose.ui.theme.LocalContentColor
 import com.toutiaoyan.compose.ui.theme.LocalTextDecoration
@@ -119,14 +120,18 @@ fun Button(
 
     val theme = currentTheme
     val isNova = theme.activePreset == StylePreset.Nova
+    val isRhea = theme.activePreset == StylePreset.Rhea
+    val isRheaOutline = isRhea && variant == ButtonVariant.Outline
+    val isRheaSmall = isRhea && size == ButtonSize.Sm
+    val isNovaSmall = isNova && (size == ButtonSize.Xs || size == ButtonSize.Sm)
     val labelStyle =
-        if (isNova) {
+        if (isNova || isRheaOutline || isRheaSmall) {
             theme.typography.labelLarge.copy(
                 fontFamily = theme.fontFamily,
                 fontSize =
                     when (size) {
                         ButtonSize.Xs -> 12.sp
-                        ButtonSize.Sm -> 12.8.sp
+                        ButtonSize.Sm -> if (isRhea) 14.sp else 12.8.sp
                         else -> 14.sp
                     },
                 lineHeight = if (size == ButtonSize.Xs) 16.sp else 20.sp,
@@ -149,7 +154,8 @@ fun Button(
     val isHovered by interactionSource.collectIsHoveredAsState()
     val linkDecoration =
         if (variant == ButtonVariant.Link && isHovered) TextDecoration.Underline else null
-    val resolvedIndication = indication ?: LocalIndication.current
+    val resolvedIndication =
+        indication ?: LocalIndication.current.takeUnless { isRheaOutline && it === DefaultRippleIndication }
     val clipIndication = (resolvedIndication as? RippleIndication)?.bounded != false
     val indicationShape = remember { mutableStateOf<Shape>(RectangleShape) }
     val direction = LocalLayoutDirection.current
@@ -158,13 +164,14 @@ fun Button(
             val normal =
                 when (size) {
                     ButtonSize.Xs -> spacing.scale2
-                    ButtonSize.Sm, ButtonSize.Md, ButtonSize.Lg -> spacing.scale2p5
+                    ButtonSize.Sm -> if (isRhea) spacing.scale3 else spacing.scale2p5
+                    ButtonSize.Md, ButtonSize.Lg -> spacing.scale2p5
                     else -> null
                 }
-            if (!isNova || iconPlacement == null || normal == null) {
+            if ((!isNova && !isRheaSmall) || iconPlacement == null || normal == null) {
                 Style
             } else {
-                val icon = if (size == ButtonSize.Xs || size == ButtonSize.Sm) spacing.scale1p5 else spacing.scale2
+                val icon = if (isNovaSmall) spacing.scale1p5 else spacing.scale2
                 val start = if (iconPlacement != ButtonIconPlacement.End) icon else normal
                 val end = if (iconPlacement != ButtonIconPlacement.Start) icon else normal
                 Style {
@@ -251,13 +258,15 @@ fun Button(
                             ButtonSize.Sm -> 14.dp
                             else -> 16.dp
                         }
+                    } else if (isRheaSmall) {
+                        16.dp
                     } else {
                         null
                     },
                 LocalTextDecoration provides linkDecoration,
             ) {
                 val feedback =
-                    if (variant == ButtonVariant.Link) {
+                    if (variant == ButtonVariant.Link || resolvedIndication == null) {
                         Modifier
                     } else {
                         Modifier.graphicsLayer {
@@ -271,7 +280,7 @@ fun Button(
                             .buttonCssStyleable(
                                 styleState,
                                 chromeStyle,
-                                nova = isNova,
+                                clipBackgroundToPadding = isNova || isRheaOutline,
                             )
                             .then(if (isNova) Modifier else feedback),
                     contentAlignment = Alignment.Center,
@@ -279,7 +288,7 @@ fun Button(
                     Row(
                         horizontalArrangement =
                             Arrangement.spacedBy(
-                                if (isNova && (size == ButtonSize.Xs || size == ButtonSize.Sm)) 4.dp else 6.dp,
+                                if (isRheaSmall || isNovaSmall) 4.dp else 6.dp,
                                 Alignment.CenterHorizontally,
                             ),
                         verticalAlignment = Alignment.CenterVertically,

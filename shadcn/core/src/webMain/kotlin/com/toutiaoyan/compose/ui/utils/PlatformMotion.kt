@@ -1,4 +1,4 @@
-package com.toutiaoyan.compose.ui.components.questionnaire
+package com.toutiaoyan.compose.ui.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -10,7 +10,7 @@ import kotlinx.browser.window
 import org.w3c.dom.events.Event
 
 @Composable
-internal actual fun questionnaireAllowsMotion(): Boolean {
+internal actual fun platformAllowsMotion(): Boolean {
     val preference = remember { window.matchMedia("(prefers-reduced-motion: reduce)") }
     var reduced by remember(preference) { mutableStateOf(preference.matches) }
     DisposableEffect(preference) {

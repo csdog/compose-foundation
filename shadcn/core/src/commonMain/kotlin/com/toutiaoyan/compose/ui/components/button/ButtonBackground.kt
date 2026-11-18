@@ -37,21 +37,24 @@ fun Modifier.buttonStyle(
     size: ButtonSize = ButtonSize.Md,
     style: Style = Style,
     styleState: StyleState? = null,
-): Modifier =
-    buttonCssStyleable(
+): Modifier {
+    val preset = currentTheme.activePreset
+    val clipBackground = preset == StylePreset.Nova || (preset == StylePreset.Rhea && variant == ButtonVariant.Outline)
+    return buttonCssStyleable(
         styleState,
         variant.rememberStyle() then size.rememberStyle() then style,
-        nova = currentTheme.activePreset == StylePreset.Nova,
+        clipBackgroundToPadding = clipBackground,
     )
+}
 
-/** Paint the Nova background inside its border, within Style's opacity/transform layer. */
+/** Paint the padding-clipped background inside its border, within Style's opacity/transform layer. */
 @Composable
 internal fun Modifier.buttonCssStyleable(
     state: StyleState?,
     style: Style,
-    nova: Boolean,
+    clipBackgroundToPadding: Boolean,
 ): Modifier {
-    if (!nova) return cssStyleable(state, style)
+    if (!clipBackgroundToPadding) return cssStyleable(state, style)
     val background = remember { ButtonPaddingBackground() }
     val wrapped =
         remember(style) {
