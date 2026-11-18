@@ -112,3 +112,83 @@
 - `ac979ed1` 独立提交 DropdownMenu 焦点意图的状态归属，移除 1 个已提交 baseline ID。44 项菜单 JVM 用例包含 8 项快照，全部通过。连同先前组件提交，已提交 baseline 为 5,369 个 ID。整合工作区仍为 5,364 个 ID，差额来自随原组件改动保留的结构清理。两个提交使用独立索引，原文件字节和原暂存差异均已核对。[提交与 JVM 结果](../.agent-runs/code-review-95c932b6/scoped-commits.json)
 - 两轮规定范围均已审查。已确认的 Toast 悬挂提示、JS 启动、宿主监听覆盖、普通 HTTP 启动与目录滚动问题都有组件提交和前后证据。干净源码的 1,615 个相关输入与提交逐文件一致，仓库级 Detekt 和 ktlint 均通过。保留的工作区原始版本仍与通过 1,957 项 JVM 用例及双 Web 构建的 1,648 个输入一致。[干净提交的 Detekt 覆盖](../.agent-runs/code-review-95c932b6/committed-detekt-coverage.json)
 - 用户已有的菜单视觉、Empty 排版和 Space 捕获改动及其结构清理保留在工作区，随各自组件变更整合。正式 CI 仍只拦 baseline 外的告警，ktlint 负责格式。历史全量核心 JVM 的 Checkbox 中间帧和两项 Switch 反向动画失败记录在基线检查。本轮记录的 Gradle Windows 包装脚本 CRLF 空白来自已有的包装器更新，审查提交的差异检查通过。
+
+## 全组件扩展进度
+
+清单取自 `shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components` 的直接子目录。平台实现及跨组件测试按对应组件归档。人工审查和 Detekt 清理均验收后才算完成。已归档的旧批次证据可复用，存在重叠改动时记录具体文件及验证范围。
+
+| 组件源码包 | 人工审查 | Detekt 清理 | 证据与待办 |
+| --- | --- | --- | --- |
+| `accordion` | 待审 | 待审 |  |
+| `alert` | 待审 | 待审 |  |
+| `alertdialog` | 待审 | 待审 |  |
+| `aspectratio` | 待审 | 待审 |  |
+| `attachment` | 待审 | 待审 |  |
+| `avatar` | 待审 | 待审 |  |
+| `badge` | 待审 | 待审 |  |
+| `breadcrumb` | 待审 | 待审 |  |
+| `bubble` | 待审 | 待审 |  |
+| `button` | 待审 | 待审 |  |
+| `buttongroup` | 待审 | 待审 |  |
+| `calendar` | 待审 | 局部清理 | 已处理日历周索引和算法私有代码。 |
+| `card` | 待审 | 待审 |  |
+| `carousel` | 待审 | 待审 |  |
+| `chart` | 待审 | 待审 |  |
+| `checkbox` | 待审 | 待审 |  |
+| `chip` | 待审 | 待审 |  |
+| `codeblock` | 待审 | 待审 |  |
+| `collapsible` | 待审 | 待审 |  |
+| `combobox` | 待审 | 待审 |  |
+| `command` | 待审 | 待审 |  |
+| `contextmenu` | 局部审查 | 局部清理 | 已有共享菜单和子菜单测试证据。 |
+| `dialog` | 待审 | 待审 |  |
+| `drawer` | 进行中 | 待逐项 | 已修复右侧外边距，见下方首项记录。 |
+| `dropdownmenu` | 已验收 | 已验收 | 菜单复审、独立提交及 Chromium 记录。 |
+| `emojitext` | 待审 | 待审 |  |
+| `empty` | 局部审查 | 局部清理 | 已有排版搜索和边框的 JVM 与 Web 证据。 |
+| `field` | 待审 | 待审 |  |
+| `hovercard` | 待审 | 待审 |  |
+| `icon` | 待审 | 待审 |  |
+| `input` | 待审 | 待审 |  |
+| `inputgroup` | 待审 | 待审 |  |
+| `inputotp` | 待审 | 待审 |  |
+| `item` | 待审 | 待审 |  |
+| `kbd` | 待审 | 待审 |  |
+| `label` | 待审 | 待审 |  |
+| `marker` | 待审 | 待审 |  |
+| `menubar` | 局部审查 | 局部清理 | 已有悬停、焦点与 Canvas 适配证据。 |
+| `message` | 待审 | 待审 |  |
+| `messagescroller` | 待审 | 待审 |  |
+| `navigationmenu` | 待审 | 待审 |  |
+| `overlay` | 已验收 | 已验收 | 前两轮及第一批记录。 |
+| `pagination` | 待审 | 待审 |  |
+| `popover` | 待审 | 待审 |  |
+| `progress` | 待审 | 待审 |  |
+| `questionnaire` | 待审 | 局部清理 | 已处理快捷键上限。 |
+| `radiobutton` | 待审 | 待审 |  |
+| `resizable` | 待审 | 待审 |  |
+| `scrollarea` | 待审 | 待审 |  |
+| `select` | 已验收 | 已验收 | 前两轮及第一批记录。 |
+| `separator` | 待审 | 待审 |  |
+| `sheet` | 已验收 | 已验收 | 第二轮及第二批记录。 |
+| `sidebar` | 待审 | 局部清理 | 已处理动画时长。 |
+| `skeleton` | 待审 | 待审 |  |
+| `slider` | 已验收 | 已验收 | 第二轮及第二批记录。 |
+| `spinner` | 待审 | 待审 |  |
+| `stepper` | 待审 | 待审 |  |
+| `switch` | 待审 | 待审 |  |
+| `table` | 待审 | 待审 |  |
+| `tabs` | 待审 | 待审 |  |
+| `text` | 待审 | 待审 |  |
+| `textarea` | 待审 | 待审 |  |
+| `toast` | 已验收 | 已验收 | 前两轮及第一批记录。 |
+| `toggle` | 已验收 | 已验收 | 第二轮及第二批记录。 |
+| `togglegroup` | 待审 | 待审 |  |
+| `tooltip` | 待审 | 待审 |  |
+| `trace` | 待审 | 待审 |  |
+
+### Drawer 外边距回归
+
+- `DrawerContent.kt:96` 与 `DrawerSizingTest.kt:57`。Nova 右侧 Drawer 改为贴边后失去原有留白。提交 `c52276e4` 恢复右、上、下三边的 8 dp，以及与之对应的面板高度。左、上、下方向的现有定位和其他主题保持原行为。
+- JVM 修复前报告 `Top gap: 0.0`。修复后 56 项核心 Drawer 与 13 项目录 Drawer JVM 测试通过。核心与共享目录的 Detekt、ktlint 通过。Chromium 在 JS 和 Wasm 上分别测得修复前 0 px、修复后 8 px。[浏览器前后对照](../.agent-runs/code-review-95c932b6/drawer-right-inset.json)
+- Drawer 其余状态、手势和现存 baseline ID 仍在全组件审查范围内。
