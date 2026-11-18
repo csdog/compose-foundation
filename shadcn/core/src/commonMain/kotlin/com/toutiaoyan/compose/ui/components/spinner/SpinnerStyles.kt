@@ -8,11 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.utils.rememberTheme
 
+internal val DefaultSpinnerSize = 16.dp
+
 @Composable
 fun rememberSpinnerStyle(): Style =
     rememberTheme {
         Style {
-            width(16.dp)
-            height(16.dp)
+            width(DefaultSpinnerSize)
+            height(DefaultSpinnerSize)
         }
     }

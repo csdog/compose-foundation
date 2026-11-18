@@ -66,71 +66,81 @@ class SpinnerGeometryTest {
                 }
             }
         }
-        for (night in listOf(false, true)) for (size in listOf(12, 16, 24, 20)) {
-            composeRule.runOnIdle {
-                dark = night
-                pixels = size
-            }
-            val node = composeRule.onNodeWithTag("spinner")
-            val actual = node.captureToImage().toPixelMap()
-            assertEquals(size, actual.width)
-            assertEquals(size.toFloat(), node.fetchSemanticsNode().boundsInRoot.width, .1f)
-            // Independent oracle: the original official SVG rendered by Chromium,
-            // with animation removed and controlled colors (see spinner-oracle.json).
-            val name = "/spinner/loader-circle-$size-${if (night) "dark" else "light"}.png"
-            val reference = checkNotNull(javaClass.getResourceAsStream(name)).use { ImageIO.read(it) }
-            val background = if (night) Color(0xff0a0a0a) else Color.White
-
-            fun contrast(red: Float): Float =
-                if (night) {
-                    ((red - background.red) / (1f - background.red)).coerceIn(
-                        0f,
-                        1f,
-                    )
-                } else {
-                    1f - red
+        for (night in listOf(false, true)) {
+            for (size in listOf(12, 16, 24, 20)) {
+                composeRule.runOnIdle {
+                    dark = night
+                    pixels = size
                 }
-            val drawn = Array(size) { y -> FloatArray(size) { x -> contrast(actual[x, y].red) } }
-            val expected =
-                Array(
-                    size,
-                ) { y -> FloatArray(size) { x -> contrast(((reference.getRGB(x, y) shr 16) and 255) / 255f) } }
-
-            fun nearby(
-                ink: Array<FloatArray>,
-                x: Int,
-                y: Int,
-            ): Boolean =
-                (max(0, y - 1)..min(size - 1, y + 1)).any { yy ->
-                    (max(0, x - 1)..min(size - 1, x + 1)).any { xx -> ink[yy][xx] > .1f }
-                }
-            for (y in 0 until size) for (x in 0 until size) {
-                if (drawn[y][x] > .1f) {
-                    assertTrue(
-                        nearby(expected, x, y),
-                        "Unexpected ink at $x,$y ($size, dark=$night)",
-                    )
-                }
-                if (expected[y][x] > .1f) {
-                    assertTrue(
-                        nearby(drawn, x, y),
-                        "Missing SVG silhouette at $x,$y ($size, dark=$night)",
-                    )
-                }
-            }
-            val area = drawn.sumOf { row -> row.sum().toDouble() }
-            val expectedArea = expected.sumOf { row -> row.sum().toDouble() }
-            // The oracle's quantized coverage and Compose's continuous edge AA
-            // differ. Allow a 0.1px band along this glyph's ~4*size perimeter;
-            // keep the silhouette and empty viewport boundary checks independent.
-            assertTrue(
-                abs(area - expectedArea) <= .4 * size,
-                "Stroke coverage $area differs from SVG $expectedArea ($size, dark=$night)",
-            )
-            for (i in 0 until size) {
-                assertEquals(background, actual[i, 0], "Top edge must remain outside the ink")
-                assertEquals(background, actual[0, i], "Left edge must remain outside the ink")
+                assertPaintMatchesSvg(size, night)
             }
         }
     }
+
+    private fun assertPaintMatchesSvg(
+        size: Int,
+        night: Boolean,
+    ) {
+        val node = composeRule.onNodeWithTag("spinner")
+        val actual = node.captureToImage().toPixelMap()
+        assertEquals(size, actual.width)
+        assertEquals(size.toFloat(), node.fetchSemanticsNode().boundsInRoot.width, .1f)
+        // Independent oracle: the official SVG rendered by Chromium without animation.
+        val name = "/spinner/loader-circle-$size-${if (night) "dark" else "light"}.png"
+        val reference = checkNotNull(javaClass.getResourceAsStream(name)).use { ImageIO.read(it) }
+        val background = if (night) Color(0xff0a0a0a) else Color.White
+
+        fun contrast(red: Float): Float =
+            if (night) ((red - background.red) / (1f - background.red)).coerceIn(0f, 1f) else 1f - red
+
+        val drawn = Array(size) { y -> FloatArray(size) { x -> contrast(actual[x, y].red) } }
+        val expected =
+            Array(size) { y -> FloatArray(size) { x -> contrast(((reference.getRGB(x, y) shr 16) and 255) / 255f) } }
+        assertInkMatches(drawn, expected, size, night)
+
+        for (i in 0 until size) {
+            assertEquals(background, actual[i, 0], "Top edge must remain outside the ink")
+            assertEquals(background, actual[0, i], "Left edge must remain outside the ink")
+        }
+    }
+
+    private fun assertInkMatches(
+        drawn: Array<FloatArray>,
+        expected: Array<FloatArray>,
+        size: Int,
+        night: Boolean,
+    ) {
+        for (y in 0 until size) {
+            for (x in 0 until size) {
+                assertInkAt(drawn, expected, x, y, "$size, dark=$night")
+            }
+        }
+        val area = drawn.sumOf { row -> row.sum().toDouble() }
+        val expectedArea = expected.sumOf { row -> row.sum().toDouble() }
+        // Quantized and continuous edge AA differ. Allow a 0.1px band around a ~4*size perimeter.
+        assertTrue(
+            abs(area - expectedArea) <= .4 * size,
+            "Stroke coverage $area differs from SVG $expectedArea ($size, dark=$night)",
+        )
+    }
+
+    private fun assertInkAt(
+        drawn: Array<FloatArray>,
+        expected: Array<FloatArray>,
+        x: Int,
+        y: Int,
+        fixture: String,
+    ) {
+        if (drawn[y][x] > .1f) assertTrue(hasNearbyInk(expected, x, y), "Unexpected ink at $x,$y ($fixture)")
+        if (expected[y][x] > .1f) assertTrue(hasNearbyInk(drawn, x, y), "Missing SVG silhouette at $x,$y ($fixture)")
+    }
+
+    private fun hasNearbyInk(
+        ink: Array<FloatArray>,
+        x: Int,
+        y: Int,
+    ): Boolean =
+        (max(0, y - 1)..min(ink.lastIndex, y + 1)).any { yy ->
+            (max(0, x - 1)..min(ink.lastIndex, x + 1)).any { xx -> ink[yy][xx] > .1f }
+        }
 }

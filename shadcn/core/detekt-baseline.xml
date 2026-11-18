@@ -139,7 +139,6 @@
     <ID>CyclomaticComplexMethod:Slider.kt$@Composable internal fun SliderRange(modifier: Modifier = Modifier)</ID>
     <ID>CyclomaticComplexMethod:Slider.kt$@Composable internal fun SliderThumb( modifier: Modifier = Modifier, index: Int = 0, interactionSource: MutableInteractionSource = LocalSlider.current?.interactionSourceFor(index) ?: remember { MutableInteractionSource() }, style: Style = Style, )</ID>
     <ID>CyclomaticComplexMethod:Slider.kt$@OptIn(ExperimentalFoundationStyleApi::class) @Composable private fun SliderImpl( values: List&lt;Float&gt;, onValuesChange: (List&lt;Float&gt;) -&gt; Unit, modifier: Modifier, valueRange: ClosedFloatingPointRange&lt;Float&gt;, step: Float, enabled: Boolean, orientation: SliderOrientation, inverted: Boolean, minStepsBetweenThumbs: Int, label: String, getValueLabel: ((Float) -&gt; String)? = null, onValuesCommit: ((List&lt;Float&gt;) -&gt; Unit)? = null, content: @Composable BoxScope.() -&gt; Unit, )</ID>
-    <ID>CyclomaticComplexMethod:SpinnerGeometryTest.kt$SpinnerGeometryTest$@Test fun paintSilhouetteMatchesOfficialSvgAtPublicSizesAndCustomStyle()</ID>
     <ID>CyclomaticComplexMethod:Switch.kt$@OptIn(ExperimentalFoundationStyleApi::class) @Composable fun Switch( checked: Boolean? = null, onCheckedChange: ((Boolean) -&gt; Unit)? = null, modifier: Modifier = Modifier, enabled: Boolean = true, disabled: Boolean = false, size: SwitchSize = SwitchSize.Default, invalid: Boolean = false, required: Boolean = false, animation: ButtonAnimation = ButtonAnimation.Scale, label: String = "", defaultChecked: Boolean = false, style: Style = Style, content: @Composable BoxScope.() -&gt; Unit = { SwitchThumb() }, )</ID>
     <ID>CyclomaticComplexMethod:Tabs.kt$@Composable fun TabsListScope.TabsTrigger( value: String, modifier: Modifier = Modifier, enabled: Boolean = true, disabled: Boolean = false, style: Style = Style, content: @Composable () -&gt; Unit, )</ID>
     <ID>CyclomaticComplexMethod:Tabs.kt$private fun handleTabsKey( tabs: TabsController, listState: TabsListState, current: String, event: KeyEvent, direction: LayoutDirection, ): Boolean</ID>
@@ -257,7 +256,6 @@
     <ID>LongMethod:Slider.kt$@Composable internal fun SliderThumb( modifier: Modifier = Modifier, index: Int = 0, interactionSource: MutableInteractionSource = LocalSlider.current?.interactionSourceFor(index) ?: remember { MutableInteractionSource() }, style: Style = Style, )</ID>
     <ID>LongMethod:Slider.kt$@Composable private fun Modifier.sliderPointerInput(controller: SliderController): Modifier</ID>
     <ID>LongMethod:Slider.kt$@OptIn(ExperimentalFoundationStyleApi::class) @Composable private fun SliderImpl( values: List&lt;Float&gt;, onValuesChange: (List&lt;Float&gt;) -&gt; Unit, modifier: Modifier, valueRange: ClosedFloatingPointRange&lt;Float&gt;, step: Float, enabled: Boolean, orientation: SliderOrientation, inverted: Boolean, minStepsBetweenThumbs: Int, label: String, getValueLabel: ((Float) -&gt; String)? = null, onValuesCommit: ((List&lt;Float&gt;) -&gt; Unit)? = null, content: @Composable BoxScope.() -&gt; Unit, )</ID>
-    <ID>LongMethod:SpinnerGeometryTest.kt$SpinnerGeometryTest$@Test fun paintSilhouetteMatchesOfficialSvgAtPublicSizesAndCustomStyle()</ID>
     <ID>LongMethod:Switch.kt$@OptIn(ExperimentalFoundationStyleApi::class) @Composable fun Switch( checked: Boolean? = null, onCheckedChange: ((Boolean) -&gt; Unit)? = null, modifier: Modifier = Modifier, enabled: Boolean = true, disabled: Boolean = false, size: SwitchSize = SwitchSize.Default, invalid: Boolean = false, required: Boolean = false, animation: ButtonAnimation = ButtonAnimation.Scale, label: String = "", defaultChecked: Boolean = false, style: Style = Style, content: @Composable BoxScope.() -&gt; Unit = { SwitchThumb() }, )</ID>
     <ID>LongMethod:Switch.kt$@OptIn(ExperimentalFoundationStyleApi::class) @Composable fun Switch( text: String, checked: Boolean? = null, onCheckedChange: ((Boolean) -&gt; Unit)? = null, modifier: Modifier = Modifier, description: String? = null, enabled: Boolean = true, disabled: Boolean = false, size: SwitchSize = SwitchSize.Default, invalid: Boolean = false, required: Boolean = false, animation: ButtonAnimation = ButtonAnimation.Scale, label: String = text, defaultChecked: Boolean = false, style: Style = Style, )</ID>
     <ID>LongMethod:Tabs.kt$@Composable fun TabsListScope.TabsTrigger( value: String, modifier: Modifier = Modifier, enabled: Boolean = true, disabled: Boolean = false, style: Style = Style, content: @Composable () -&gt; Unit, )</ID>
@@ -3432,8 +3430,6 @@
     <ID>MagicNumber:SlightlySmiling.kt$25.54f</ID>
     <ID>MagicNumber:SlightlySmiling.kt$25f</ID>
     <ID>MagicNumber:SlightlySmiling.kt$28f</ID>
-    <ID>MagicNumber:Spinner.kt$18f</ID>
-    <ID>MagicNumber:Spinner.kt$24f</ID>
     <ID>MagicNumber:Stepper.kt$0.5f</ID>
     <ID>MagicNumber:StylePreset.kt$StylePreset.Mira$0.9f</ID>
     <ID>MagicNumber:StylePreset.kt$StylePreset.Sera$1.15f</ID>
@@ -4409,7 +4405,6 @@
     <ID>MatchingDeclarationName:SelectScrollTarget.kt$SelectScrollItemBounds</ID>
     <ID>MatchingDeclarationName:SeparatorStyles.kt$SeparatorOrientation</ID>
     <ID>MatchingDeclarationName:SidebarProviderLayout.kt$SidebarProviderChild</ID>
-    <ID>MatchingDeclarationName:Spinner.kt$SpinnerSize</ID>
     <ID>MatchingDeclarationName:Switch.kt$SwitchState</ID>
     <ID>MatchingDeclarationName:SwitchStyles.kt$SwitchSize</ID>
     <ID>MatchingDeclarationName:Toggle.kt$ToggleState</ID>
@@ -4422,7 +4417,6 @@
     <ID>NestedBlockDepth:ButtonIconPlacementTest.kt$ButtonIconPlacementTest$@Test fun allTextSizesUseLogicalIconInsetsAndRetainHeight()</ID>
     <ID>NestedBlockDepth:Combobox.kt$ComboboxEditing$fun key( event: KeyEvent, ctrl: ComboboxController, ): Boolean</ID>
     <ID>NestedBlockDepth:MessageScrollerState.kt$MessageScrollerState$internal suspend fun reconcileLayout()</ID>
-    <ID>NestedBlockDepth:SpinnerGeometryTest.kt$SpinnerGeometryTest$@Test fun paintSilhouetteMatchesOfficialSvgAtPublicSizesAndCustomStyle()</ID>
     <ID>NestedBlockDepth:ThemeRoleRenderingTest.kt$ThemeRoleRenderingTest$@Test fun controlsPaintTranslucentInputRoleAcrossBasesAndLiveThemeChanges()</ID>
     <ID>NestedBlockDepth:ToggleGroupItemPresetsTest.kt$ToggleGroupItemPresetsTest$@Test fun connectedItemOutlineKeepsPresetSeams()</ID>
     <ID>NestedBlockDepth:ToggleScreenshotTest.kt$ToggleScreenshotTest$@Test fun icon_placement_uses_logical_asymmetric_padding()</ID>

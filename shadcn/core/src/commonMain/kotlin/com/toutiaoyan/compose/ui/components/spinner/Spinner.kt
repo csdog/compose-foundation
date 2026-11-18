@@ -40,6 +40,9 @@ import androidx.compose.ui.layout.IntrinsicMeasureScope
 import com.toutiaoyan.compose.tailwind.modifiers.animateSpin
 import com.toutiaoyan.compose.ui.theme.currentTheme
 
+private const val LOADER_VIEW_BOX_UNITS = 24f
+private const val LOADER_DIAMETER_UNITS = 18f
+
 /**
  * A spinning loading indicator. Real shadcn/ui's `spinner.tsx` renders Lucide's
  * `Loader2Icon` (a circle with one open gap) with `animate-spin` via
@@ -57,8 +60,6 @@ import com.toutiaoyan.compose.ui.theme.currentTheme
  * Spinner(modifier = Modifier.size(24.dp))
  * ```
  */
-enum class SpinnerSize { Default, Sm, Lg }
-
 @Composable
 fun Spinner(
     modifier: Modifier = Modifier,
@@ -71,8 +72,8 @@ fun Spinner(
         Canvas(Modifier.fillMaxSize()) {
             // Lucide LoaderCircle: 24-unit viewBox, r=9, stroke=2, 288° sweep.
             // Scale the path and stroke together, keeping its ink inside the viewport.
-            val unit = this.size.minDimension / 24f
-            val diameter = 18f * unit
+            val unit = this.size.minDimension / LOADER_VIEW_BOX_UNITS
+            val diameter = LOADER_DIAMETER_UNITS * unit
             drawArc(
                 color = color,
                 startAngle = 0f,
@@ -119,7 +120,7 @@ fun Spinner(
     val measuredStyle =
         remember(mergedStyle, preferredSize) {
             Style {
-                dimensions.reset(preferredSize ?: 16.dp)
+                dimensions.reset(preferredSize ?: DefaultSpinnerSize)
                 SpinnerDimensionScope(this, dimensions).apply(mergedStyle)
             }
         }
@@ -142,9 +143,9 @@ fun Spinner(
 
 /** Declared Style dimensions are cached during Style evaluation, without snapshot state writes. */
 private class SpinnerIntrinsicDimensions {
-    var fallback = 16.dp
-    var width = 16.dp
-    var height = 16.dp
+    var fallback = DefaultSpinnerSize
+    var width = DefaultSpinnerSize
+    var height = DefaultSpinnerSize
     var minWidth = 0.dp
     var minHeight = 0.dp
     var maxWidth = Dp.Infinity
