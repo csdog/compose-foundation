@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.constrainHeight
 
-internal const val ProgressValueLayoutId = "progress-value"
+internal const val PROGRESS_VALUE_LAYOUT_ID = "progress-value"
 
 /** Flex-wrap with gap-3, a logical auto margin on Value, and an always-full-width final track. */
 @Composable
@@ -30,7 +30,7 @@ internal fun ProgressRootLayout(
                 used = 0
             }
             if (rows.last().isNotEmpty()) used += gap
-            rows.last().add(placeable to (measurable.layoutId == ProgressValueLayoutId))
+            rows.last().add(placeable to (measurable.layoutId == PROGRESS_VALUE_LAYOUT_ID))
             used += placeable.width
         }
         val track = measurables.last().measure(loose.copy(minWidth = width))

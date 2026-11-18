@@ -3300,9 +3300,6 @@
     <ID>MagicNumber:PrayHands.kt$7.5f</ID>
     <ID>MagicNumber:PrayHands.kt$9f</ID>
     <ID>MagicNumber:PressedScale.kt$0.97f</ID>
-    <ID>MagicNumber:Progress.kt$0.3f</ID>
-    <ID>MagicNumber:Progress.kt$100f</ID>
-    <ID>MagicNumber:Progress.kt$150</ID>
     <ID>MagicNumber:Pushpin.kt$0.19f</ID>
     <ID>MagicNumber:Pushpin.kt$0.33f</ID>
     <ID>MagicNumber:Pushpin.kt$0.59f</ID>
@@ -4513,7 +4510,6 @@
     <ID>TopLevelPropertyNaming:NavigationMenuSharedViewport.kt$private const val ViewportDuration = 350</ID>
     <ID>TopLevelPropertyNaming:NavigationMenuSharedViewport.kt$private const val ViewportExitDuration = 150</ID>
     <ID>TopLevelPropertyNaming:PopoverPopup.kt$private const val PopoverMotionDuration = 100</ID>
-    <ID>TopLevelPropertyNaming:ProgressLayout.kt$internal const val ProgressValueLayoutId = "progress-value"</ID>
     <ID>TopLevelPropertyNaming:RippleIndication.kt$private const val FadeInMs = 75</ID>
     <ID>TopLevelPropertyNaming:RippleIndication.kt$private const val FadeOutMs = 150</ID>
     <ID>TopLevelPropertyNaming:RippleIndication.kt$private const val RadiusInMs = 225</ID>

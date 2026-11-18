@@ -4,7 +4,10 @@ package com.toutiaoyan.compose.ui.components.progress
 
 import androidx.compose.runtime.*
 import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -27,6 +30,21 @@ import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.*
 
 class ProgressParityTest : ScreenshotTest() {
+    @Test fun unboundedDeterminateTrackMeasuresWithoutAnExplicitWidth() = assertUnboundedTrack(indeterminate = false)
+
+    @Test fun unboundedIndeterminateTrackMeasuresWithoutAnExplicitWidth() = assertUnboundedTrack(indeterminate = true)
+
+    private fun assertUnboundedTrack(indeterminate: Boolean) {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Row(Modifier.horizontalScroll(rememberScrollState())) {
+                ProgressTrack(Modifier.testTag("unbounded track")) {
+                    ProgressIndicator(value = 0.5f, indeterminate = indeterminate)
+                }
+            }
+        }
+        composeRule.onNodeWithTag("unbounded track").assertHeightIsEqualTo(4.dp)
+    }
+
     @Test fun labelAndValueShareOneRowWithAnAutomaticTrackTwelvePixelsBelow() {
         setThemedContent(stylePreset = StylePreset.Nova) {
             Progress(56f, max = 100f, modifier = Modifier.width(320.dp).testTag("root")) {

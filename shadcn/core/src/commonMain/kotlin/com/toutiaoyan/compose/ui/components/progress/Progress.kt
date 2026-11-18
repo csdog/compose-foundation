@@ -58,6 +58,10 @@ import com.toutiaoyan.compose.ui.components.text.TextColors
 import com.toutiaoyan.compose.ui.components.text.TextVariant
 import kotlin.math.roundToInt
 
+private const val PERCENT_SCALE = 100f
+private const val INDETERMINATE_WIDTH_FRACTION = 0.3f
+private const val DETERMINATE_WIDTH_MILLIS = 150
+
 private val LocalProgressValue = staticCompositionLocalOf<Float?> { null }
 
 private val LocalProgressIndeterminate = staticCompositionLocalOf { false }
@@ -68,7 +72,7 @@ private class ProgressName(text: String) {
 
 private val LocalProgressNames = staticCompositionLocalOf<MutableList<ProgressName>?> { null }
 
-private fun progressPercentage(fraction: Float): String = "${(fraction * 100f).roundToInt()}%"
+private fun progressPercentage(fraction: Float): String = "${(fraction * PERCENT_SCALE).roundToInt()}%"
 
 /** Logical fraction of the nearest [Progress]; indicator width animates independently. */
 class ProgressState(val value: Float)
@@ -217,7 +221,7 @@ fun ProgressValue(
     Box(
         modifier =
             modifier
-                .layoutId(ProgressValueLayoutId)
+                .layoutId(PROGRESS_VALUE_LAYOUT_ID)
                 .clearAndSetSemantics { hideFromAccessibility() },
         propagateMinConstraints = true,
     ) {
@@ -264,8 +268,9 @@ fun BoxScope.ProgressIndicator(
         BoxWithConstraints(
             modifier = modifier.fillMaxHeight().fillMaxWidth().align(Alignment.CenterStart),
         ) {
-            val barWidth = maxWidth * 0.3f
-            val travel = maxWidth + barWidth
+            val availableWidth = if (constraints.hasBoundedWidth) maxWidth else minWidth
+            val barWidth = availableWidth * INDETERMINATE_WIDTH_FRACTION
+            val travel = availableWidth + barWidth
             Box(
                 modifier =
                     Modifier
@@ -279,7 +284,7 @@ fun BoxScope.ProgressIndicator(
         val animatedValue =
             animateFloatAsState(
                 if (value.isNaN()) 0f else value.coerceIn(0f, 1f),
-                animationSpec = tween(150, easing = FastOutSlowInEasing),
+                animationSpec = tween(DETERMINATE_WIDTH_MILLIS, easing = FastOutSlowInEasing),
                 label = "progress-width",
             )
         Box(
@@ -287,7 +292,13 @@ fun BoxScope.ProgressIndicator(
                 modifier
                     .fillMaxHeight()
                     .layout { measurable, constraints ->
-                        val width = (constraints.maxWidth * animatedValue.value).roundToInt()
+                        // Infinity is a constraint sentinel. A track without a width starts from its minimum.
+                        val width =
+                            if (constraints.hasBoundedWidth) {
+                                (constraints.maxWidth * animatedValue.value).roundToInt()
+                            } else {
+                                constraints.minWidth
+                            }
                         val fill = measurable.measure(constraints.copy(minWidth = width, maxWidth = width))
                         layout(fill.width, fill.height) { fill.placeRelative(0, 0) }
                     }
