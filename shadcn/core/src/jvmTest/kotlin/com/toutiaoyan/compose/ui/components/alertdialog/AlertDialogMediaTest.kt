@@ -19,6 +19,29 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class AlertDialogMediaTest : ScreenshotTest() {
+    @Test fun compactFooterMeasuresAndPreservesActionOrderInUnboundedWidth() {
+        val window =
+            object : WindowInfo {
+                override val isWindowFocused = true
+                override val containerSize = IntSize(390, 844)
+            }
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            CompositionLocalProvider(LocalWindowInfo provides window) {
+                Row(Modifier.horizontalScroll(rememberScrollState())) {
+                    AlertDialogFooter {
+                        Box(Modifier.width(48.dp).height(24.dp).testTag("cancel"))
+                        Box(Modifier.width(80.dp).height(24.dp).testTag("continue"))
+                    }
+                }
+            }
+        }
+        val cancel = composeRule.onNodeWithTag("cancel").getUnclippedBoundsInRoot()
+        val proceed = composeRule.onNodeWithTag("continue").getUnclippedBoundsInRoot()
+        assertEquals(80.dp, cancel.width)
+        assertEquals(80.dp, proceed.width)
+        assertEquals(8.dp, cancel.top - proceed.bottom)
+    }
+
     @Test fun mediaTracksDirectionBreakpointAndRemoval() {
         var viewport by mutableStateOf(IntSize(1024, 768))
         var direction by mutableStateOf(LayoutDirection.Ltr)

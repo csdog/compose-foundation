@@ -42,8 +42,6 @@ import androidx.compose.ui.text.style.TextAlign
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.components.overlay.overlayTypography
 import com.toutiaoyan.compose.ui.components.text.TextColors
-import androidx.compose.ui.unit.constrainWidth
-import androidx.compose.ui.unit.constrainHeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlin.experimental.ExperimentalTypeInference
@@ -70,15 +68,23 @@ import com.toutiaoyan.compose.ui.components.overlay.OverlayTransitions
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.theme.currentTheme
 
-private enum class AlertDialogHeaderPart { Media }
+private val AlertDialogCompactBreakpoint = 640.dp
+private val AlertDialogCompactFooterInset = 16.dp
+private const val ALERT_DIALOG_TITLE_FONT_SP = 16
+private const val ALERT_DIALOG_TITLE_LINE_HEIGHT_SP = 24
 
 private val LocalAlertDialogStretchActions = staticCompositionLocalOf { false }
 private val LocalAlertDialogSize = staticCompositionLocalOf { DialogSize.Default }
 
 @Composable
+private fun isCompactAlertDialogViewport(): Boolean {
+    val breakpointPx = with(LocalDensity.current) { AlertDialogCompactBreakpoint.roundToPx() }
+    return LocalWindowInfo.current.containerSize.width < breakpointPx
+}
+
+@Composable
 private fun centeredAlertHeader(): Boolean =
-    LocalAlertDialogSize.current == DialogSize.Sm ||
-        LocalWindowInfo.current.containerSize.width < with(LocalDensity.current) { 640.dp.roundToPx() }
+    LocalAlertDialogSize.current == DialogSize.Sm || isCompactAlertDialogViewport()
 
 object AlertDialogDefaults {
     /**
@@ -213,7 +219,7 @@ fun DialogScope.AlertDialogContent(
     scrimExit: ExitTransition = OverlayTransitions.ScrimExit,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    val mobile = LocalWindowInfo.current.containerSize.width < with(LocalDensity.current) { 640.dp.roundToPx() }
+    val mobile = isCompactAlertDialogViewport()
     val ringColor = currentTheme.colors.foreground.copy(alpha = 0.1f)
     val alertChrome =
         if (currentTheme.activePreset == StylePreset.Nova) {
@@ -299,47 +305,8 @@ fun AlertDialogHeader(
     val state = remember { MutableStyleState(MutableInteractionSource()) }
     val centered = centeredAlertHeader()
     Column(modifier = modifier.fillMaxWidth().styleable(state, style)) {
-        Layout(content = { content() }) { measurables, constraints ->
-            val loose = constraints.copy(minWidth = 0, minHeight = 0)
-            val mediaNode = measurables.firstOrNull { it.layoutId == AlertDialogHeaderPart.Media }
-            val media = mediaNode?.measure(loose)
-            val gap = 6.dp.roundToPx()
-            val mediaBottomMargin = 8.dp.roundToPx()
-            val mediaColumn = if (media != null && !centered) media.width + 16.dp.roundToPx() else 0
-            val bodyWidth =
-                if (constraints.hasBoundedWidth) {
-                    (constraints.maxWidth - mediaColumn).coerceAtLeast(
-                        0,
-                    )
-                } else {
-                    constraints.maxWidth
-                }
-            val body = measurables.filter { it !== mediaNode }.map { it.measure(loose.copy(maxWidth = bodyWidth)) }
-            val width =
-                constraints.constrainWidth(
-                    if (constraints.hasBoundedWidth) {
-                        constraints.maxWidth
-                    } else {
-                        maxOf((body.maxOfOrNull { it.width } ?: 0) + mediaColumn, media?.width ?: 0)
-                    },
-                )
-            val bodyHeight = body.sumOf { it.height } + gap * (body.size - 1).coerceAtLeast(0)
-            val mediaHeight = if (media == null) 0 else media.height + mediaBottomMargin
-            val height =
-                if (centered && media != null) {
-                    mediaHeight + (if (body.isNotEmpty()) gap else 0) + bodyHeight
-                } else {
-                    maxOf(bodyHeight, mediaHeight)
-                }
-            layout(width, constraints.constrainHeight(height)) {
-                media?.placeRelative(if (centered) (width - media.width) / 2 else 0, 0)
-                var y = if (centered && media != null) mediaHeight + (if (body.isNotEmpty()) gap else 0) else 0
-                body.forEach { child ->
-                    child.placeRelative(if (centered) (width - child.width) / 2 else mediaColumn, y)
-                    y += child.height + gap
-                }
-            }
-        }
+        val measurePolicy = remember(centered) { alertDialogHeaderMeasurePolicy(centered) }
+        Layout(content = { content() }, measurePolicy = measurePolicy)
     }
 }
 
@@ -410,7 +377,7 @@ fun AlertDialogTitle(
     Text(
         modifier = modifier.semantics { heading() },
         textStyle =
-            overlayTypography(16, 24, medium = true).copy(
+            overlayTypography(ALERT_DIALOG_TITLE_FONT_SP, ALERT_DIALOG_TITLE_LINE_HEIGHT_SP, medium = true).copy(
                 textAlign = if (centeredAlertHeader()) TextAlign.Center else TextAlign.Start,
             ),
         style = style,
@@ -466,11 +433,11 @@ fun AlertDialogFooter(
         Style {
             background(colors.muted.copy(alpha = 0.5f))
             shape(RoundedCornerShape(bottomStart = radius, bottomEnd = radius))
-            contentPadding(16.dp)
+            contentPadding(AlertDialogCompactFooterInset)
         }
     val bleed =
         Modifier.layout { measurable, constraints ->
-            val inset = 16.dp.roundToPx()
+            val inset = AlertDialogCompactFooterInset.roundToPx()
             val child = measurable.measure(constraints.offset(horizontal = inset * 2))
             layout((child.width - inset * 2).coerceAtLeast(0), (child.height - inset).coerceAtLeast(0)) {
                 child.placeRelative(-inset, 0)
@@ -483,40 +450,13 @@ fun AlertDialogFooter(
         }.padding(top = 1.dp).styleable(state, chrome, style),
     ) {
         // Keep the public RowScope slot; only compact Nova changes placement.
-        Layout(content = {
-            CompositionLocalProvider(LocalAlertDialogStretchActions provides true) { content() }
-        }) { measurables, constraints ->
-            val gap = 8.dp.roundToPx()
-            val count = measurables.size
-            val width = constraints.maxWidth
-            val cellWidth = if (small) ((width - gap) / 2).coerceAtLeast(0) else width
-            val children =
-                measurables.map {
-                    it.measure(constraints.copy(minWidth = cellWidth, maxWidth = cellWidth, minHeight = 0))
-                }
-            val rows = if (small) children.chunked(2) else emptyList()
-            val height =
-                if (small) {
-                    rows.sumOf { row -> row.maxOf { it.height } } + gap * (rows.size - 1).coerceAtLeast(0)
-                } else {
-                    children.sumOf { it.height } + gap * (count - 1).coerceAtLeast(0)
-                }
-            layout(width, constraints.constrainHeight(height)) {
-                if (small) {
-                    var y = 0
-                    rows.forEach { row ->
-                        row.forEachIndexed { column, child -> child.placeRelative(column * (cellWidth + gap), y) }
-                        y += row.maxOf { it.height } + gap
-                    }
-                } else {
-                    var y = 0
-                    children.asReversed().forEach { child ->
-                        child.placeRelative(0, y)
-                        y += child.height + gap
-                    }
-                }
-            }
-        }
+        val measurePolicy = remember(small) { alertDialogFooterMeasurePolicy(small) }
+        Layout(
+            content = {
+                CompositionLocalProvider(LocalAlertDialogStretchActions provides true) { content() }
+            },
+            measurePolicy = measurePolicy,
+        )
     }
 }
 
