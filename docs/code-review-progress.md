@@ -121,12 +121,12 @@
 | --- | --- | --- | --- |
 | `accordion` | 待审 | 待审 |  |
 | `alert` | 已验收 | 已验收 | 旧主题操作按钮随插槽生命周期挂载，`fb4b0d85`。 |
-| `alertdialog` | 待审 | 待审 |  |
+| `alertdialog` | 已验收 | 已验收 | 修复 Nova 紧凑页脚的无界测量，`7c6d03b8`。 |
 | `aspectratio` | 已验收 | 已验收 | 尺寸级联、比例输入和目录示例已复核。 |
 | `attachment` | 待审 | 待审 |  |
 | `avatar` | 已验收 | 已验收 | 图片卸载只通知当前观察者，`98edb377`。 |
-| `badge` | 待审 | 待审 |  |
-| `breadcrumb` | 待审 | 待审 |  |
+| `badge` | 已验收 | 已验收 | 共用旧主题变体几何，分离交互与图标样式，`22737976`。 |
+| `breadcrumb` | 已验收 | 已验收 | 复用换行布局及悬停样式，`dcfa5f72`。 |
 | `bubble` | 待审 | 待审 |  |
 | `button` | 待审 | 待审 |  |
 | `buttongroup` | 待审 | 待审 |  |
@@ -214,3 +214,10 @@
 - `Alert.kt:148,320`。旧主题根组件重组时会清空操作插槽，改变宽度后按钮从语义树消失。修复后，Lyra 的按钮在尺寸更新后可见，移除插槽时随即消失。Nova 测量规则独立，Alert 两个变体共用相同的背景、边框和圆角构造。两条存量 ID 已移除。公开便捷重载、共置的变体类型及 Nova CSS 留位尺寸保留。
 - `AvatarImage.kt:74,134,155,188`。在更换观察者后移除图片，旧观察者原来收到 `Success, Idle`。修复后旧观察者仅收到 `Success`，当前观察者收到 `Idle`，并显示回退。异步和矢量路径复用卸载逻辑。分组尺寸优先级、负间距、镜像和徽标叠放已有 JVM 覆盖。一条存量 ID 已移除。三个公开图片重载、共置尺寸定义和官方 `-space-x-2` 规格保留。
 - 两模块 Detekt 和 ktlint 通过。核心干净源码扫描覆盖 554 个 Kotlin 文件，已提交 baseline 从 4,528 条减至 4,521 条，零新增。100 项 JVM 用例中 96 项通过。四项 Alert 快照在相同环境的修复前源码上也失败，前后实际 PNG 的 SHA-256 逐一相同，保留仓库基准。Chromium 在 JS/Wasm 均确认 Progress 的 `56%` 及可访问范围、Alert 操作点击和 Avatar 首字母回退。[回归、像素比对与浏览器证据](../.agent-runs/code-review-95c932b6/component-review-progress-alert-avatar.json)
+
+### AlertDialog、Badge 和 Breadcrumb 验收
+
+- `AlertDialogLayout.kt:57` 与 `AlertDialogMediaTest.kt:22`。Nova 紧凑页脚原来把无界宽度哨兵 2,147,483,647 作为按钮的实际宽度，导致横向滚动容器中的页脚抛出 `IllegalArgumentException`。`7c6d03b8` 按按钮固有宽度测量无界页脚。新增用例实测两个操作等宽、保持手机端反序且间隔 8 dp。核心还覆盖小尺寸双列、RTL 媒体排布、Tab 限制与 Escape 焦点恢复。清理四条存量 ID，保留公开重载、旧 getter 和原主题规格。
+- `BadgeStyles.kt:105` 与 `BadgeExtendedApiTest.kt:77`。`22737976` 合并旧主题变体相同的边框预留、内边距、字号和焦点圈。保留 Ghost 原字重及各变体配色。Nova 的交互、图标边距和文字摆放分离。断言继续覆盖双方向和全部图标位置组合，以及回调优先级、键盘激活、无效态和既有 JVM 签名。清理四条存量 ID，公开参数数目及共置类型的记录保留。
+- `BreadcrumbStyles.kt:28,41`。`dcfa5f72` 复用根和列表的换行规则，并具名标注悬停时间、禁用透明度和 RTL 旋转角度。当前页可访问名称和分隔元素的装饰语义已有覆盖，标签可点击性、Tab 顺序和菜单交互通过回归。清理三条存量 ID。
+- 核心扫描覆盖 556 个 Kotlin 文件，提交的 Detekt baseline 从 4,521 条减至 4,510 条，零新增。核心及目录模块的 Detekt、ktlint 通过。含像素校验的 67 项 JVM 用例中 53 项通过，另外 14 项在修复前同样失败，实测 PNG 的 SHA-256 前后逐一相同。最终 46 项行为回归单独复跑通过。两套 Web 构建在 Chromium 均验证手机 AlertDialog 按钮反序和 Escape 关闭、Badge 跳转 `#link`、Breadcrumb 当前页名称与折叠菜单。[回归、像素比对及浏览器证据](../.agent-runs/code-review-95c932b6/component-review-alertdialog-badge-breadcrumb.json)
