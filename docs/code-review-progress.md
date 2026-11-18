@@ -73,6 +73,13 @@
 - JS 与 Wasm 目录应用构建通过。Chromium 四组用例覆盖两个运行时的普通按钮和头像按钮。两种按钮均可用鼠标打开，按 Escape 关闭后可用 Enter 和 Space 从原按钮重新打开。普通按钮另验证了 ArrowDown 和 ArrowUp。Wasm 用例加载了应用 Wasm，四组均无页面异常。[浏览器结果](../.agent-runs/code-review-95c932b6/dropdown-menu-chromium.json)
 - 提交 `0eb6a4f1` 后，复扫与工作区一致的隔离副本，核心 Detekt 仍报告 25 条 baseline 之外的告警。DropdownMenu 实现和两份测试占 11 条，另有 Menubar、ContextMenu、Empty 和 Text 的告警。保留当前 baseline 与规则阈值，逐条位置见报告。[Detekt 结果](../.agent-runs/code-review-95c932b6/dropdown-menu-detekt.json)
 
+## Empty、Text 和 Menubar 的工作区告警
+
+- `EmptyDescriptionWrap.kt` 把两次二分搜索集中到同一边界查找，分离缓存与候选选择，明确原有长度、行数和测量次数限制。`EmptyBorder.kt` 用可空描边颜色表达是否描边，保留绘制层次。`EmptyDescriptionWrapTest.kt` 将布置和断言分开。
+- `Text.kt` 把段落修饰符与 BasicText 绘制分开，保留纯字符串走引擎继承排版的条件。原本因函数级注解变化而失配的两个 ID 恢复匹配。`Menubar.kt` 简化悬停切换条件，Web 的 `MenubarPointerSurface.kt` 保留最近的有效 Canvas。
+- 与同范围的 573 份 Kotlin 源码对照，核心工作区的 baseline 外告警从 25 降到 12，零新增，正式 baseline 未修改。余下 8 条在 DropdownMenu 实现，4 条在 DropdownMenu 和 ContextMenu 测试。7 个文件原有改动仍在工作区，清理随相应组件改动保留。[Detekt 前后对照](../.agent-runs/code-review-95c932b6/core-wip-detekt-cleanup.json)
+- 核心 `ktlintCheck`、76 个相关 JVM 用例（其中 26 个快照用例）与两种 Web 构建通过。Chromium 在 JS 和 Wasm 中均通过了 Menubar 打开后的悬停切换和 Escape 关闭。Empty 的默认与 RTL 示例在两个运行时分别取得相同的文本边界和截图哈希。[浏览器结果](../.agent-runs/code-review-95c932b6/core-wip-chromium.json)
+
 ## 目录交付复核
 
 - 最终提交 `704a785b` 的 1,614 个输入与验证副本一致。JS/Wasm 双构建、两个目录模块的 ktlint 和 Detekt，以及 27 个目录 JVM 测试通过。两模块 Detekt 报告均为零。[输入核对](../.agent-runs/cursor-review-goal-20261118/delivery/committed-inputs.json) · [验证记录](../.agent-runs/cursor-review-goal-20261118/delivery/verification.json)
@@ -84,6 +91,14 @@
 - Chromium 使用同一套路由与断言对照。原产物的 JS 和 Wasm 在 `http://catalog.test` 都报 `TypeError`。修复后两个产物在普通 HTTP 和 localhost 共四组都成功挂载。每组均确认片段条目 ID 与原条目不同，后退和前进分别恢复对应的 ID。另在 localhost 复核了锚点滚动与宿主 `popstate` 处理器。对应 JS/Wasm 构建、Web 和共享目录的 `ktlintCheck` 均通过。[修复前](../.agent-runs/code-review-95c932b6/catalog-http-before.json) · [修复后](../.agent-runs/code-review-95c932b6/catalog-http-after.json) · [滚动和监听器](../.agent-runs/code-review-95c932b6/catalog-current-history.json)
 - `BrowserDocHistory.kt` 合并历史条目的空值与所有权检查，仅在直接调用内嵌 JS 的函数上标注 Detekt 的 `UnusedParameter` 误报。8 个参数均在 JS 表达式中使用。`main.kt` 单独判断页面位置变化。`BrowserDocumentScrollHost.kt` 分离 Canvas 选择与原生事件监听。`DocumentScrollBridge.kt` 明确半个 Compose 像素的容差，原顺序决定是否保留恢复位置。
 - 原工作区的 Web 目录模块 11 条、共享目录模块 2 条告警均已消除；两模块的 Detekt 与 ktlint 通过，baseline 未改动。24 项导航和滚动 JVM 测试、最终 JS/Wasm 构建和上述 Chromium 回归通过。构建与工作区的 1,648 个输入逐文件一致。清理涉及未提交的目录导航文件，随该批改动留在工作区。[原告警](../.agent-runs/code-review-95c932b6/catalog-local-detekt.json) · [复测结果](../.agent-runs/code-review-95c932b6/catalog-cleanup-verification.json)
+
+## 菜单清理与最终验证
+
+- `DropdownMenu.kt` 集中处理首项、末项与指针打开的焦点意图，把根面板和子面板的关闭按键与布局分开。保留菜单退出中重开时的状态观察位置、焦点返回和最深层优先关闭顺序。两个公开面板签名及默认表达式与本轮修改前逐字一致。
+- `DropdownMenuLiveStyleTest.kt`、`DropdownMenuArabicLayoutTest.kt` 和 `ContextMenuPanelTest.kt` 分开测试布置、测量和断言，保留原断言及诊断输出。剩余 12 条告警中，10 条通过代码清理消除。另两条公开参数告警仅配对更新原 baseline ID，对应现有默认过渡引用变化。相同源码范围内零新增原始问题 ID。
+- 确认 6 个旧 baseline ID 在当前改动中已解决，核心 baseline 从 4,545 降到 4,539，全仓从 5,370 降到 5,364。仓库级 `ktlintCheck` 和 `detekt` 通过。强制重跑确认七个含源码的任务均实际执行，共 969 个 Kotlin 文件，核心模块覆盖 9 个源集和 573 个文件。根目录下两个源代码为空的聚合项目按预期跳过。[ID 对照与 JVM 结果](../.agent-runs/code-review-95c932b6/menu-final-detekt-and-jvm.json) · [扫描覆盖](../.agent-runs/code-review-95c932b6/final-detekt-coverage.json)
+- 与当前工作区逐文件一致的 1,648 个输入通过 444 项核心 JVM 回归、1,513 项目录共享模块全量 JVM 测试，以及 JS/Wasm 双构建。Chromium 在两种运行时均验证了 DropdownMenu 关闭后键盘重开、Menubar 悬停切换和 Shift+Tab 返回子菜单触发器、Escape 按层关闭，以及普通 HTTP 下目录启动和历史恢复。[DropdownMenu](../.agent-runs/code-review-95c932b6/final-dropdown-keyboard.json) · [Menubar](../.agent-runs/code-review-95c932b6/final-menubar-nested.json) · [目录 HTTP](../.agent-runs/code-review-95c932b6/final-catalog-http.json)
+- 两轮各组件的审查发现及可独立提交的修复见上表。清理和验证均已落到当前工作区。菜单收尾与 baseline 更新依赖尚未提交的组件改动，普通 HTTP 修复依赖尚未提交的 `BrowserDocHistory.kt` 及目录导航改动。对应组件整合时一起提交。历史全量核心 JVM 的 Checkbox 中间帧和 Switch 动画反向基线失败仍由前文记录。
 
 ## Chromium 实测
 
