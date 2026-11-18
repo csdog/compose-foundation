@@ -7,6 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.platform.WindowInfo
+import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.IntSize
@@ -43,18 +44,65 @@ class SidebarExamplesTest {
         }
     }
 
-    @Test fun pageKeepsOfficialTitleAndDescriptionAndKotlinExtensionTitles() {
+    @Test fun pagePreservesOfficialOrderAndAllExistingKotlinExamples() {
         assertEquals("Sidebar", sidebarDoc.title)
         assertEquals("A composable, themeable and customizable sidebar component.", sidebarDoc.description)
-        assertTrue(sidebarDoc.examples.isNotEmpty())
-        assertTrue(
-            sidebarDoc.examples.all { it.title.startsWith("Kotlin extension: ") },
-            "The official app-shell demo is not migrated yet, so every recipe is a Kotlin extension",
-        )
-        assertEquals("Kotlin extension: App shell", sidebarDoc.examples.first().title)
-        assertTrue(sidebarDoc.examples.any { it.title == "Kotlin extension: Mobile sheet" })
-        assertTrue(sidebarDoc.examples.any { it.title == "Kotlin extension: Inset" })
-        assertTrue(sidebarDoc.examples.any { it.title == "Kotlin extension: Inset primitives" })
+        assertEquals(listOf("Default", "Controlled Sidebar", "RTL"), sidebarDoc.examples.take(3).map { it.title })
+        assertTrue(sidebarDoc.examples.drop(3).all { it.title.startsWith("Kotlin extension: ") })
+        assertEquals(48, sidebarDoc.examples.drop(3).size)
+        assertEquals("Kotlin extension: App shell", sidebarDoc.examples[3].title)
+        val sections = docSections(sidebarDoc).map { it.title }
+        val ordered =
+            listOf(
+                "Installation", "Usage", "Composition", "Structure", "SidebarProvider", "Sidebar", "useSidebar",
+                "SidebarHeader", "SidebarFooter", "SidebarContent", "SidebarGroup", "SidebarMenu", "SidebarMenuButton",
+                "SidebarMenuAction", "SidebarMenuSub", "SidebarMenuBadge", "SidebarMenuSkeleton", "SidebarTrigger",
+                "SidebarRail", "Controlled Sidebar", "Theming", "Styling", "RTL", "Changelog", "RTL Support",
+            )
+        assertEquals(ordered, sections.filter { it in ordered })
+    }
+
+    @Test fun officialDefaultOpensTeamsAndRetainsThePlaygroundSubmenuAcrossIconCollapse() {
+        show("Default")
+        val playground = rule.onNodeWithContentDescription("Playground")
+        playground.assert(SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, "Expanded"))
+        rule.onNodeWithText("History").assertIsDisplayed()
+        rule.onNodeWithContentDescription("Acme Inc").performClick()
+        rule.onNodeWithText("Acme Corp.").performClick()
+        rule.onNodeWithContentDescription("Acme Corp.").assertIsDisplayed()
+        rule.onNodeWithTag("sidebar-demo-trigger").performClick()
+        rule.mainClock.advanceTimeBy(260)
+        rule.onNodeWithText("History").assertDoesNotExist()
+        rule.onNodeWithTag("sidebar-demo-trigger").performClick()
+        rule.mainClock.advanceTimeBy(260)
+        rule.onNodeWithText("History").assertIsDisplayed()
+        playground.performClick()
+        playground.assert(SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, "Collapsed"))
+        rule.onNodeWithText("History").assertDoesNotExist()
+        playground.performClick()
+        playground.assert(SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, "Expanded"))
+        rule.onNodeWithText("History").assertIsDisplayed()
+    }
+
+    @Test fun officialRtlChangesThePanelSideWhenTheLanguageChanges() {
+        show("RTL")
+        val arabicPanel = rule.onNodeWithTag("sidebar-demo-panel").getBoundsInRoot()
+        val arabicInset = rule.onNodeWithTag("sidebar-demo-inset").getBoundsInRoot()
+        val language = rule.onNodeWithContentDescription("Preview language")
+        val arabicLanguage = language.getBoundsInRoot()
+        assertTrue(arabicPanel.left >= arabicInset.right)
+        assertEquals(arabicInset.left.value + 16f, arabicLanguage.left.value, 0.1f)
+        assertEquals(arabicInset.top.value + 16f, arabicLanguage.top.value, 0.1f)
+        rule.onNodeWithText("شركة أكمي").assertIsDisplayed()
+        language.performClick()
+        rule.onNodeWithText("English").performClick()
+        val englishPanel = rule.onNodeWithTag("sidebar-demo-panel").getBoundsInRoot()
+        val englishInset = rule.onNodeWithTag("sidebar-demo-inset").getBoundsInRoot()
+        val englishLanguage = language.getBoundsInRoot()
+        assertTrue(englishPanel.right <= englishInset.left)
+        assertEquals(englishInset.right.value - 16f, englishLanguage.right.value, 0.1f)
+        assertEquals(englishInset.top.value + 16f, englishLanguage.top.value, 0.1f)
+        rule.onNodeWithText("Acme Inc").assertIsDisplayed()
     }
 
     @Test fun mobileSheetExampleStartsClosedAndTheTriggerOpensIt() {

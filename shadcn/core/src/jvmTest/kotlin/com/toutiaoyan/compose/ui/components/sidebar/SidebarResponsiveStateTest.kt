@@ -11,12 +11,15 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.unit.IntSize
 import com.toutiaoyan.compose.ui.ScreenshotTest
 import com.toutiaoyan.compose.ui.components.button.Button
+import com.toutiaoyan.compose.ui.components.input.Input
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.*
 
 class SidebarResponsiveStateTest : ScreenshotTest() {
     @Test fun automaticBreakpointAndEachModesOpenStateSurviveSwitching() {
         var width by mutableIntStateOf(767)
         lateinit var state: SidebarState
+        lateinit var contentIdentity: Any
         setThemedContent {
             val original = LocalWindowInfo.current
             val window =
@@ -28,10 +31,15 @@ class SidebarResponsiveStateTest : ScreenshotTest() {
             CompositionLocalProvider(LocalWindowInfo provides window) {
                 SidebarProvider {
                     val current = sidebarState()
-                    SideEffect { state = current }
+                    val identity = remember { Any() }
+                    SideEffect {
+                        state = current
+                        contentIdentity = identity
+                    }
                 }
             }
         }
+        val initialContentIdentity = composeRule.runOnIdle { contentIdentity }
         composeRule.runOnIdle {
             assertTrue(state.isMobile)
             assertFalse(state.openMobile)
@@ -62,7 +70,34 @@ class SidebarResponsiveStateTest : ScreenshotTest() {
         composeRule.runOnIdle {
             assertTrue(state.isMobile)
             assertTrue(state.openMobile)
+            assertSame(initialContentIdentity, contentIdentity)
         }
+    }
+
+    @Test fun mobileTriggerSharesTouchAndKeyboardFocusWithItsDrawer() {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            SidebarProvider(mobile = true) {
+                Sidebar(Modifier.testTag("drawer")) {
+                    Input(value = "Profile", onValueChange = {}, modifier = Modifier.testTag("drawer-input"))
+                }
+                SidebarInset { SidebarTrigger(Modifier.testTag("drawer-trigger")) }
+            }
+        }
+
+        val trigger = composeRule.onNodeWithTag("drawer-trigger")
+        val drawer = composeRule.onNodeWithTag("drawer", useUnmergedTree = true)
+        val input = composeRule.onNodeWithTag("drawer-input")
+        trigger.performTouchInput { click() }
+        input.assertIsDisplayed().assertIsNotFocused()
+        drawer.performKeyInput { pressKey(Key.Tab) }
+        input.assertIsFocused().performKeyInput { pressKey(Key.Escape) }
+        drawer.assertDoesNotExist()
+
+        trigger.performSemanticsAction(SemanticsActions.RequestFocus) { it() }
+        trigger.assertIsFocused().performKeyInput { pressKey(Key.Enter) }
+        input.assertIsFocused().performKeyInput { pressKey(Key.Escape) }
+        drawer.assertDoesNotExist()
+        trigger.assertIsFocused()
     }
 
     @Test fun explicitMobileOverrideWinsOverWindowSize() {

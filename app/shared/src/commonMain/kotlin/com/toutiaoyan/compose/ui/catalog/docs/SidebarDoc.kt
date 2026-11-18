@@ -17,6 +17,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.ui.catalog.catalogArabicFontFamily
+import com.toutiaoyan.compose.ui.catalog.catalogHebrewFontFamily
 import com.toutiaoyan.compose.ui.components.breadcrumb.Breadcrumb
 import com.toutiaoyan.compose.ui.components.breadcrumb.BreadcrumbLink
 import com.toutiaoyan.compose.ui.components.breadcrumb.BreadcrumbPage
@@ -54,6 +56,9 @@ import com.toutiaoyan.compose.ui.components.kbd.Kbd
 import com.toutiaoyan.compose.ui.components.kbd.KbdGroup
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.card.CardSize
+import compose_foundation.app.shared.generated.resources.Res
+import compose_foundation.app.shared.generated.resources.avatar_shadcn
+import org.jetbrains.compose.resources.painterResource
 
 val sidebarDoc =
     ComponentDoc(
@@ -61,33 +66,50 @@ val sidebarDoc =
         title = "Sidebar",
         description = "A composable, themeable and customizable sidebar component.",
         examplesHeading = null,
-        usageCode =
-            """
-            import com.toutiaoyan.compose.ui.components.sidebar.*
-            import com.toutiaoyan.compose.ui.components.text.Text
-
-            var open by remember { mutableStateOf(true) }
-            SidebarProvider(open = open, onOpenChange = { open = it }) {
-                Sidebar {
-                    SidebarGroup {
-                        SidebarGroupLabel("Application")
-                        SidebarGroupContent {
-                            SidebarMenu {
-                                SidebarMenuItem("Home", onClick = {}, isActive = true)
-                                SidebarMenuItem("Inbox", onClick = {})
-                                SidebarMenuItem("Settings", onClick = {})
-                            }
-                        }
-                    }
-                }
-                SidebarInset {
-                    SidebarTrigger()
-                    Text { "Main content" }
-                }
-            }
-            """.trimIndent(),
+        usageCode = sidebarUsageCode,
+        compositionCode = sidebarCompositionCode,
+        beforeCompositionMarkdown = "Use this composition to build a sidebar layout.",
+        introMarkdown =
+            "A sidebar that collapses to icons. " +
+                "Browse the [Blocks Library](https://ui.shadcn.com/blocks) for app layouts.",
+        beforeExamples = sidebarGuide,
+        beforeExampleSections =
+            mapOf(
+                "RTL" to sidebarBeforeRtlGuide,
+                "Kotlin extension: App shell" to sidebarChangelogGuide,
+            ),
         examples =
             listOf(
+                ComponentExample(
+                    title = "Default",
+                    code = sidebarDefaultRecipeCode,
+                    previewPadding = 0.dp,
+                    minPreviewHeight = 420.dp,
+                    showHeading = false,
+                    preview = { SidebarDefaultRecipe(painterResource(Res.drawable.avatar_shadcn)) },
+                ),
+                ComponentExample(
+                    title = "Controlled Sidebar",
+                    code = sidebarControlledRecipeCode,
+                    previewPadding = 0.dp,
+                    minPreviewHeight = 260.dp,
+                    descriptionMarkdown = "Pass `open` and `onOpenChange` to control desktop visibility.",
+                    preview = { SidebarControlledRecipe() },
+                ),
+                ComponentExample(
+                    title = "RTL",
+                    code = sidebarRtlRecipeCode,
+                    previewPadding = 0.dp,
+                    minPreviewHeight = 420.dp,
+                    descriptionMarkdown = "See the [RTL configuration guide](https://ui.shadcn.com/docs/rtl).",
+                    preview = {
+                        SidebarRtlRecipe(
+                            catalogArabicFontFamily(),
+                            catalogHebrewFontFamily(),
+                            painterResource(Res.drawable.avatar_shadcn),
+                        )
+                    },
+                ),
                 ComponentExample(
                     title = "Kotlin extension: App shell",
                     code =

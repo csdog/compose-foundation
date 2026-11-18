@@ -11,6 +11,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusGroup
+import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +21,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -33,8 +36,11 @@ import androidx.compose.foundation.style.styleable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.movableContentOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
@@ -43,6 +49,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.foundation.style.then
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.constrainWidth
 import androidx.compose.ui.semantics.paneTitle
@@ -51,6 +58,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.ParentDataModifier
@@ -74,7 +84,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.toutiaoyan.compose.ui.icons.Menu
+import com.toutiaoyan.compose.ui.components.button.Button
+import com.toutiaoyan.compose.ui.components.button.ButtonSize
+import com.toutiaoyan.compose.ui.components.button.ButtonVariant
+import com.toutiaoyan.compose.ui.icons.NovaPanelLeft
 import com.toutiaoyan.compose.ui.components.icon.Icon
 import com.toutiaoyan.compose.ui.styles.rememberMinTouchTargetStyle
 import com.toutiaoyan.compose.ui.styles.rememberPressMotionStyle
@@ -84,8 +97,9 @@ import com.toutiaoyan.compose.ui.components.input.Input
 import com.toutiaoyan.compose.ui.components.tooltip.Tooltip
 import com.toutiaoyan.compose.ui.components.tooltip.TooltipContent
 import com.toutiaoyan.compose.ui.components.tooltip.TooltipTrigger
-import com.toutiaoyan.compose.ui.components.sheet.Sheet
 import com.toutiaoyan.compose.ui.components.sheet.SheetContent
+import com.toutiaoyan.compose.ui.components.sheet.SheetHost
+import com.toutiaoyan.compose.ui.components.sheet.SheetScope
 import com.toutiaoyan.compose.ui.components.sheet.SheetSide
 import com.toutiaoyan.compose.ui.components.separator.Separator
 import com.toutiaoyan.compose.ui.components.skeleton.Skeleton
@@ -128,6 +142,9 @@ private val LocalSidebarLayout =
     compositionLocalOf<SidebarLayout> {
         error("Sidebar/SidebarInset must be used within a SidebarProvider")
     }
+
+private val LocalSidebarMobileWidth = compositionLocalOf<Dp?> { null }
+private val LocalSidebarSheetScope = staticCompositionLocalOf<SheetScope?> { null }
 
 /** Reads the nearest [SidebarProvider] state. Matches shadcn's `useSidebar()`. */
 @Composable
@@ -240,18 +257,36 @@ fun SidebarProvider(
             modifier
         }
     val rowModifier =
-        if (layout.variant == SidebarVariant.Inset) {
+        if (layout.variant == SidebarVariant.Inset && !isMobile) {
             sized
                 .background(currentTheme.colors.sidebar)
                 .then(shortcutModifier)
         } else {
             sized.then(shortcutModifier)
         }
+    val currentContent by rememberUpdatedState(content)
+    val providerLayout =
+        remember {
+            movableContentOf<Modifier> { placement ->
+                SidebarProviderLayout(modifier = placement, content = currentContent)
+            }
+        }
     CompositionLocalProvider(
         LocalSidebarState provides state,
         LocalSidebarLayout provides layout,
+        LocalSidebarMobileWidth provides (SidebarDefaults.MobileWidth.takeIf { mobile == true }),
     ) {
-        SidebarProviderLayout(modifier = rowModifier) { content() }
+        if (isMobile && collapsible != SidebarCollapsible.None) {
+            SheetHost(open = isOpenMobile, onOpenChange = setOpenMobile) {
+                CompositionLocalProvider(LocalSidebarSheetScope provides this) {
+                    providerLayout(rowModifier)
+                }
+            }
+        } else {
+            CompositionLocalProvider(LocalSidebarSheetScope provides null) {
+                providerLayout(rowModifier)
+            }
+        }
     }
 }
 
@@ -325,18 +360,14 @@ fun Sidebar(
         }
     if (state.mobile && state.collapsible != SidebarCollapsible.None) {
         val sheetSide = if (side == SidebarSide.End) SheetSide.End else SheetSide.Start
-        Sheet(
-            open = state.openMobile,
-            onOpenChange = state.setOpenMobile,
+        val sheet = checkNotNull(LocalSidebarSheetScope.current)
+        sheet.SheetContent(
+            modifier = modifier.then(ariaModifier).semantics { paneTitle = ariaLabel ?: "Sidebar" },
+            side = sheetSide,
+            showCloseButton = false,
+            style = rememberSidebarMobileStyle(LocalSidebarMobileWidth.current) then style,
         ) {
-            SheetContent(
-                modifier = modifier.then(ariaModifier).semantics { paneTitle = ariaLabel ?: "Sidebar" },
-                side = sheetSide,
-                showCloseButton = false,
-                style = rememberSidebarMobileStyle() then style,
-            ) {
-                Column(Modifier.fillMaxSize(), content = content)
-            }
+            Column(Modifier.fillMaxSize(), content = content)
         }
         return
     }
@@ -344,7 +375,11 @@ fun Sidebar(
         Box(
             modifier =
                 modifier
-                    .sidebarProviderChild(SidebarProviderChild.Rail)
+                    .sidebarProviderChild(
+                        SidebarProviderChild.Rail,
+                        side = side,
+                        showsInwardBorder = state.collapsible != SidebarCollapsible.None,
+                    )
                     .width(animatedWidth)
                     .then(clipModifier)
                     .then(ariaModifier)
@@ -382,7 +417,7 @@ fun Sidebar(
         Box(
             modifier =
                 modifier
-                    .sidebarProviderChild(SidebarProviderChild.Rail)
+                    .sidebarProviderChild(SidebarProviderChild.Rail, side = side)
                     .width(animatedWidth)
                     .then(clipModifier)
                     .then(ariaModifier)
@@ -437,7 +472,7 @@ fun SidebarInset(
     val layout = LocalSidebarLayout.current
     val state = LocalSidebarState.current
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    if (layout.variant == SidebarVariant.Inset) {
+    if (layout.variant == SidebarVariant.Inset && !state.isMobile) {
         val edge = twSpacing.sm
         val collapsed = !state.open && state.collapsible != SidebarCollapsible.None
         val start = if (layout.side == SidebarSide.Start && !collapsed) 0.dp else edge
@@ -467,83 +502,66 @@ fun SidebarInset(
     }
 }
 
-/** A hamburger-style button that toggles the nearest [SidebarProvider]'s open state. */
+/** A panel button that toggles the nearest [SidebarProvider]'s open state. */
 @Composable
 fun SidebarTrigger(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     disabled: Boolean = false,
     style: Style = Style,
-    // A self-generated ImageVector, not a third-party icon-set dependency (this library
-    // still takes none -- see README) -- text glyphs don't render on WasmJS (Skia has no
-    // browser emoji-font fallback). Override with any icon set (e.g. this repo's own demo
-    // app passes a real Lucide Bars3 here -- see SidebarDoc.kt).
-    icon: @Composable () -> Unit = { Icon(Menu, tint = currentTheme.colors.foreground) },
+    icon: @Composable () -> Unit = {
+        val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+        Icon(NovaPanelLeft, Modifier.scale(scaleX = if (rtl) -1f else 1f, scaleY = 1f))
+    },
 ) {
     val state = LocalSidebarState.current
-    val resolvedEnabled = enabled && !disabled
-    val interactionSource = remember { MutableInteractionSource() }
-    val styleState = remember { MutableStyleState(interactionSource) }
-    val pressStyle = rememberPressMotionStyle()
-    val touchTargetStyle = rememberMinTouchTargetStyle()
-    Box(
-        modifier =
-            modifier
-                .semantics {
-                    role = Role.Button
-                    contentDescription = "Toggle Sidebar"
-                    if (!resolvedEnabled) disabled()
-                }
-                .keyboardInputMode()
-                .clickable(
-                    interactionSource = interactionSource,
-                    indication = null,
-                    enabled = resolvedEnabled,
-                    role = Role.Button,
-                    onClick = state.toggle,
-                )
-                .styleable(styleState, touchTargetStyle then pressStyle),
-        contentAlignment = Alignment.Center,
-    ) {
-        Box(
-            modifier = Modifier.styleable(styleState, rememberSidebarTriggerStyle(), style),
-        ) {
-            icon()
-        }
-    }
+    val sheet = LocalSidebarSheetScope.current
+    Button(
+        onClick = sheet?.toggle ?: state.toggle,
+        modifier = sheet?.triggerModifier(modifier) ?: modifier,
+        enabled = enabled,
+        disabled = disabled,
+        label = "Toggle Sidebar",
+        variant = ButtonVariant.Ghost,
+        size = ButtonSize.IconSm,
+        style = style,
+        content = icon,
+    )
 }
 
-/**
- * Edge toggle for the nearest [SidebarProvider]. Matches shadcn's `SidebarRail`.
- * Not shown by the default [Sidebar] layout.
- */
+/** Desktop edge toggle. Place it beside its [Sidebar] in the provider to attach it to the panel edge. */
 @Composable
 fun SidebarRail(
     modifier: Modifier = Modifier,
     style: Style = Style,
 ) {
     val state = LocalSidebarState.current
+    if (state.isMobile) return
     val interactionSource = remember { MutableInteractionSource() }
     val styleState = remember { MutableStyleState(interactionSource) }
-    val pressStyle = rememberPressMotionStyle()
-    val touchTargetStyle = rememberMinTouchTargetStyle()
+    val hovered by interactionSource.collectIsHoveredAsState()
+    val border = currentTheme.colors.sidebarBorder
+    val fallbackSize = maxOf(currentTheme.minTouchTarget ?: 16.dp, 16.dp)
     Box(
         modifier =
             modifier
-                .semantics {
-                    role = Role.Button
-                    contentDescription = "Toggle Sidebar"
-                }
-                .keyboardInputMode()
+                .sidebarProviderChild(SidebarProviderChild.RailToggle)
+                .defaultMinSize(minWidth = fallbackSize, minHeight = fallbackSize)
+                .drawBehind {
+                    if (hovered) {
+                        val direction = if (layoutDirection == LayoutDirection.Rtl) -1 else 1
+                        val x = size.width / 2f + direction * 1.dp.toPx()
+                        drawLine(border, Offset(x, 0f), Offset(x, size.height), strokeWidth = 2.dp.toPx())
+                    }
+                }.semantics { contentDescription = "Toggle Sidebar" }
+                .focusProperties { canFocus = false }
                 .clickable(
                     interactionSource = interactionSource,
                     indication = null,
                     role = Role.Button,
                     onClick = state.toggle,
-                )
-                .styleable(styleState, touchTargetStyle then pressStyle then rememberSidebarTriggerStyle() then style),
-        contentAlignment = Alignment.Center,
-    ) {}
+                ).styleable(styleState, style),
+    )
 }
 
 @Composable
@@ -709,6 +727,7 @@ internal class SidebarMenuController(
 )
 
 private val LocalSidebarMenu = staticCompositionLocalOf<SidebarMenuController?> { null }
+private val LocalSidebarMenuItemInteraction = staticCompositionLocalOf<State<Boolean>?> { null }
 
 /** Active destination of the nearest selection-convenience [SidebarMenu]. */
 class SidebarMenuState(
@@ -806,11 +825,25 @@ fun SidebarMenuScope.SidebarMenuItem(
     style: Style = Style,
     content: @Composable SidebarMenuItemScope.() -> Unit,
 ) {
-    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val interactionSource = remember { MutableInteractionSource() }
+    val styleState = remember { MutableStyleState(interactionSource) }
+    val hovered = interactionSource.collectIsHoveredAsState()
+    var focusWithin by remember { mutableStateOf(false) }
+    val interacting = remember(hovered) { derivedStateOf { hovered.value || focusWithin } }
     val overlayEnd = twSpacing.scale1
     Layout(
-        modifier = modifier.fillMaxWidth().styleable(styleState, style),
-        content = { SidebarMenuItemScope().content() },
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .hoverable(interactionSource)
+                .onFocusEvent { focusWithin = it.hasFocus }
+                .focusGroup()
+                .styleable(styleState, style),
+        content = {
+            CompositionLocalProvider(LocalSidebarMenuItemInteraction provides interacting) {
+                SidebarMenuItemScope().content()
+            }
+        },
     ) { measurables, constraints ->
         val overlayMeasurables =
             measurables.filter { it.parentData is SidebarMenuItemOverlayParentData }
@@ -1156,8 +1189,31 @@ fun SidebarMenuAction(
     label: String = "More",
     style: Style = Style,
     content: @Composable () -> Unit,
+) = SidebarMenuAction(onClick, modifier, label, style, showOnHover = false, content = content)
+
+/**
+ * With [showOnHover], paint the desktop action while its item is hovered, contains
+ * keyboard focus, or has an [expanded] menu. The action remains interactive at rest.
+ */
+@Composable
+fun SidebarMenuAction(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    label: String = "More",
+    style: Style = Style,
+    showOnHover: Boolean,
+    expanded: Boolean = false,
+    content: @Composable () -> Unit,
 ) {
-    if (sidebarState().iconCollapsed) return
+    val state = sidebarState()
+    if (state.iconCollapsed) return
+    val itemInteraction = LocalSidebarMenuItemInteraction.current
+    val visibility =
+        if (showOnHover && !state.isMobile && !expanded && itemInteraction != null) {
+            Modifier.drawWithContent { if (itemInteraction.value) drawContent() }
+        } else {
+            Modifier
+        }
     val interactionSource = remember { MutableInteractionSource() }
     val styleState = remember { MutableStyleState(interactionSource) }
     val pressStyle = rememberPressMotionStyle()
@@ -1166,6 +1222,7 @@ fun SidebarMenuAction(
         modifier =
             modifier
                 .sidebarMenuItemOverlay()
+                .then(visibility)
                 .semantics {
                     role = Role.Button
                     contentDescription = label
@@ -1211,12 +1268,9 @@ fun SidebarMenuSub(
                     bottom = twSpacing.scale0p5,
                 )
                 .drawBehind {
-                    drawLine(
-                        color = borderColor,
-                        start = Offset(0f, 0f),
-                        end = Offset(0f, size.height),
-                        strokeWidth = 1.dp.toPx(),
-                    )
+                    val stroke = 1.dp.toPx()
+                    val x = if (layoutDirection == LayoutDirection.Rtl) size.width - stroke / 2f else stroke / 2f
+                    drawLine(borderColor, Offset(x, 0f), Offset(x, size.height), strokeWidth = stroke)
                 }
                 .padding(horizontal = twSpacing.scale2p5)
                 .styleable(styleState, style),

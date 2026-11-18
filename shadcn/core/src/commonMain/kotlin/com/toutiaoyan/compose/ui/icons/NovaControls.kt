@@ -94,3 +94,20 @@ internal val NovaEllipsis by lazy {
         }
     }
 }
+
+internal val NovaPanelLeft by lazy {
+    controlGlyph("NovaPanelLeft") {
+        moveTo(5f, 3f)
+        lineTo(19f, 3f)
+        arcTo(2f, 2f, 0f, false, true, 21f, 5f)
+        lineTo(21f, 19f)
+        arcTo(2f, 2f, 0f, false, true, 19f, 21f)
+        lineTo(5f, 21f)
+        arcTo(2f, 2f, 0f, false, true, 3f, 19f)
+        lineTo(3f, 5f)
+        arcTo(2f, 2f, 0f, false, true, 5f, 3f)
+        close()
+        moveTo(9f, 3f)
+        lineTo(9f, 21f)
+    }
+}

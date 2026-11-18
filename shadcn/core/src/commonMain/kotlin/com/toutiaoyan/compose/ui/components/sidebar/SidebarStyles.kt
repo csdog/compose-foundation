@@ -11,6 +11,7 @@ import androidx.compose.foundation.style.pressed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.shadow.Shadow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.tailwind.core.TwShadow
 import com.toutiaoyan.compose.ui.styles.border
@@ -49,10 +50,10 @@ fun rememberSidebarContentStyle(): Style =
 internal fun rememberSidebarSectionStyle(): Style = rememberTheme { Style { contentPadding(spacing.sm) } }
 
 @Composable
-internal fun rememberSidebarMobileStyle(): Style =
-    rememberTheme {
+internal fun rememberSidebarMobileStyle(width: Dp?): Style =
+    rememberTheme(width) {
         Style {
-            width(SidebarDefaults.MobileWidth)
+            if (width != null) width(width)
             background(colors.sidebar)
             contentPadding(0.dp)
         }

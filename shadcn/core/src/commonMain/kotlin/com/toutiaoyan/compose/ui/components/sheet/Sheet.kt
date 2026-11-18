@@ -213,6 +213,10 @@ class SheetScope internal constructor(
     val open: Boolean get() = controller.open
 
     val toggle: () -> Unit get() = controller::toggle
+
+    @Composable
+    internal fun triggerModifier(modifier: Modifier): Modifier =
+        modifier.overlayTriggerFocus().trackSheetTriggerTouch(controller.triggerInteraction)
 }
 
 /**
@@ -261,6 +265,20 @@ fun Sheet(
     modal: Boolean = true,
     content: @Composable SheetScope.() -> Unit,
 ) {
+    SheetHost(open, onOpenChange, defaultOpen, modal) {
+        val scope = this
+        Box(modifier = modifier) { scope.content() }
+    }
+}
+
+@Composable
+internal fun SheetHost(
+    open: Boolean?,
+    onOpenChange: ((Boolean) -> Unit)?,
+    defaultOpen: Boolean = false,
+    modal: Boolean = true,
+    content: @Composable SheetScope.() -> Unit,
+) {
     var internalOpen by remember { mutableStateOf(defaultOpen) }
     var touchActivation by remember { mutableStateOf<SheetTouchActivation?>(null) }
     val triggerInteraction = remember { SheetTriggerInteraction() }
@@ -278,9 +296,7 @@ fun Sheet(
     val controller = SheetController(isOpen, setOpen, modal, triggerInteraction, touchActivation)
     OverlayFocusOwner(open = isOpen, modal = modal) {
         CompositionLocalProvider(LocalSheet provides controller) {
-            Box(modifier = modifier) {
-                SheetScope(controller).content()
-            }
+            SheetScope(controller).content()
         }
     }
 }
@@ -304,9 +320,7 @@ fun SheetScope.SheetTrigger(
     val resolvedEnabled = enabled && !disabled
     Box(
         modifier =
-            modifier
-                .overlayTriggerFocus()
-                .trackSheetTriggerTouch(controller.triggerInteraction)
+            triggerModifier(modifier)
                 .semantics {
                     role = Role.Button
                     stateDescription = if (controller.open) "Expanded" else "Collapsed"
@@ -335,11 +349,10 @@ fun SheetScope.SheetTrigger(
     size: ButtonSize = ButtonSize.Md,
     style: Style = Style,
 ) {
-    val controller = sheetController()
     Button(
         text,
         modifier =
-            modifier.overlayTriggerFocus().trackSheetTriggerTouch(controller.triggerInteraction).semantics {
+            triggerModifier(modifier).semantics {
                 stateDescription = if (open) "Expanded" else "Collapsed"
             },
         onClick = toggle,
