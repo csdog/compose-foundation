@@ -83,12 +83,32 @@ class SliderPageTest {
 
     @Test fun pageKeepsOfficialUsageAndBaseUiApiReference() {
         assertTrue(sliderDoc.usageCode.contains("Slider("))
-        assertTrue(sliderDoc.usageImportsCode!!.contains("components.slider.*"))
+        assertTrue(sliderDoc.usageCode.contains("mutableStateOf(33f)"))
+        assertEquals("import com.toutiaoyan.compose.ui.components.slider.Slider", sliderDoc.usageImportsCode)
         val api = sliderDoc.apiSections.single()
         assertEquals("Slider", api.title)
         assertTrue(api.descriptionMarkdown.contains("base-ui.com/react/components/slider"))
         assertTrue(api.properties.any { it.name == "value / values" })
         assertTrue(api.properties.any { it.name == "orientation" })
+    }
+
+    @Test fun copiedExamplesIncludeTheirStateLayoutAndImports() {
+        val clips = sliderDoc.examples.associate { it.title to it.code }
+        (clips.values + sliderDoc.usageCode).forEach { code ->
+            assertTrue("import com.toutiaoyan.compose.ui.components.slider.Slider\n" in code)
+            assertTrue("@Composable\ninternal fun Slider" in code)
+            assertTrue("by remember" in code)
+        }
+        assertEquals(
+            2,
+            "orientation = SliderOrientation.Vertical".toRegex().findAll(clips.getValue("Vertical")).count(),
+        )
+        assertTrue("Label(\"Temperature\")" in clips.getValue("Controlled"))
+        assertTrue("values.joinToString" in clips.getValue("Controlled"))
+        assertTrue("disabled = true" in clips.getValue("Disabled"))
+        assertTrue("LocalLayoutDirection provides direction" in clips.getValue("RTL"))
+        assertTrue("language == \"ar\" || language == \"he\"" in clips.getValue("RTL"))
+        assertFalse("RtlPreview(" in clips.getValue("RTL").substringAfter("internal fun SliderRtlPreview("))
     }
 
     @Test fun defaultStartsAtSeventyFiveAndAcceptsSemanticValueChanges() {

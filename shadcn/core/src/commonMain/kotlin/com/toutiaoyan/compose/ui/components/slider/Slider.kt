@@ -38,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.pointer.PointerType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.semantics.Role
@@ -48,8 +49,10 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.setProgress
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.components.field.LocalFieldSetDisabled
+import com.toutiaoyan.compose.ui.components.overlay.captureTouchCanvasFocus
 import com.toutiaoyan.compose.ui.styles.rememberMinTouchTargetStyle
 import kotlin.math.abs
 import kotlin.math.roundToInt
@@ -80,6 +83,24 @@ private fun snapSliderValue(
     if (step <= 0f) return coerced
     val n = ((coerced - range.start) / step).roundToInt()
     return (range.start + n * step).coerceIn(range.start, range.endInclusive)
+}
+
+internal fun sliderKeyboardTarget(
+    value: Float,
+    range: ClosedFloatingPointRange<Float>,
+    step: Float,
+    direction: Int,
+    coarse: Boolean,
+    webBehavior: Boolean,
+): Float {
+    val unit = if (step > 0f) step else (range.endInclusive - range.start) / 100f
+    val absoluteCoarse = coarse && webBehavior && step > 0f && step <= 10f
+    if (absoluteCoarse) {
+        // Base UI aligns the starting value to the fine grid, then applies its 10-unit large step.
+        return snapSliderValue(value, range, step) + direction * 10f
+    }
+    val delta = if (coarse) unit * 10 else unit
+    return snapSliderValue(value + direction * delta, range, step)
 }
 
 @Immutable
@@ -122,25 +143,53 @@ internal class SliderController(
         onValuesCommit?.invoke(values)
     }
 
+    private val minimumGap =
+        if (state.minStepsBetweenThumbs <= 0) {
+            0f
+        } else {
+            state.minStepsBetweenThumbs * (if (state.step > 0f) state.step else 1f)
+        }
+
     fun updateThumb(
         index: Int,
         raw: Float,
+        snapToStep: Boolean = true,
     ): List<Float> {
         val current = currentValues()
         if (index !in current.indices) return current
         val range = state.valueRange
-        val gap =
-            if (state.minStepsBetweenThumbs <= 0) {
-                0f
-            } else {
-                state.minStepsBetweenThumbs * (if (state.step > 0f) state.step else 1f)
-            }
-        val minBound = if (index == 0) range.start else current[index - 1] + gap
-        val maxBound = if (index == current.lastIndex) range.endInclusive else current[index + 1] - gap
+        val minBound = if (index == 0) range.start else current[index - 1] + minimumGap
+        val maxBound = if (index == current.lastIndex) range.endInclusive else current[index + 1] - minimumGap
         if (minBound > maxBound) return current
-        val coerced = snapSliderValue(raw, range, state.step).coerceIn(minBound, maxBound)
+        val target = if (snapToStep) snapSliderValue(raw, range, state.step) else raw
+        val coerced = target.coerceIn(minBound, maxBound)
         if (coerced == current[index]) return current
         val next = current.toMutableList().also { it[index] = coerced }
+        state.onValuesChange(next)
+        return next
+    }
+
+    fun dragThumb(
+        index: Int,
+        raw: Float,
+        current: List<Float>,
+    ): List<Float> {
+        if (index !in current.indices) return current
+        val range = state.valueRange
+        val minBound = range.start + index * minimumGap
+        val maxBound = range.endInclusive - (current.lastIndex - index) * minimumGap
+        if (minBound > maxBound) return current
+        val next = current.toMutableList()
+        next[index] = snapSliderValue(raw, range, state.step).coerceIn(minBound, maxBound)
+        for (neighbor in index + 1..current.lastIndex) {
+            val upperBound = range.endInclusive - (current.lastIndex - neighbor) * minimumGap
+            next[neighbor] = maxOf(next[neighbor], next[neighbor - 1] + minimumGap).coerceAtMost(upperBound)
+        }
+        for (neighbor in index - 1 downTo 0) {
+            val lowerBound = range.start + neighbor * minimumGap
+            next[neighbor] = minOf(next[neighbor], next[neighbor + 1] - minimumGap).coerceAtLeast(lowerBound)
+        }
+        if (next == current) return current
         state.onValuesChange(next)
         return next
     }
@@ -178,6 +227,43 @@ internal fun sliderVisualFractionAlongTrack(
             (position.x - thumbSizePx / 2f) / usable
         }
     return visual
+}
+
+internal data class SliderPointerTarget(val index: Int, val grabOffsetPx: Float?)
+
+internal fun sliderPointerTarget(
+    position: Offset,
+    size: IntSize,
+    thumbSizePx: Float,
+    vertical: Boolean,
+    range: ClosedFloatingPointRange<Float>,
+    values: List<Float>,
+    reverse: Boolean,
+): SliderPointerTarget {
+    val radius = thumbSizePx / 2f
+    val length = if (vertical) size.height else size.width
+    val usable = (length - thumbSizePx).coerceAtLeast(0f)
+    val axisPosition = if (vertical) size.height - position.y else position.x
+    val crossOffset = if (vertical) position.x - size.width / 2f else position.y - size.height / 2f
+    val span = range.endInclusive - range.start
+    val centers =
+        values.map { value ->
+            val fraction = if (span == 0f) 0f else ((value - range.start) / span).coerceIn(0f, 1f)
+            radius + usable * (if (reverse) 1f - fraction else fraction)
+        }
+    var hit =
+        centers.indexOfLast { center ->
+            val axisOffset = center - axisPosition
+            axisOffset * axisOffset + crossOffset * crossOffset <= radius * radius
+        }
+    if (hit >= 0) {
+        if (values[hit] == range.endInclusive) {
+            while (hit > 0 && values[hit - 1] == range.endInclusive) hit--
+        }
+        return SliderPointerTarget(hit, axisPosition - centers[hit])
+    }
+    val closest = centers.indices.reversed().minBy { abs(centers[it] - axisPosition) }
+    return SliderPointerTarget(closest, null)
 }
 
 // Compose accessibility divides the range into steps + 1 intervals.
@@ -389,20 +475,16 @@ private fun SliderImpl(
     val first = values.first()
     val vertical = orientation == SliderOrientation.Vertical
     val geometryStyle =
-        if (nova) {
-            Style {
-                if (vertical) {
-                    minWidth(thumbSize)
-                    minHeight(160.dp)
-                } else {
-                    minHeight(thumbSize)
-                }
+        Style {
+            if (vertical) {
+                minWidth(thumbSize)
+                if (nova) minHeight(160.dp)
+            } else {
+                minHeight(thumbSize)
             }
-        } else {
-            Style
         }
 
-    val separateThumbSemantics = sliderWebThumbSemantics && values.size > 1
+    val separateThumbSemantics = sliderUsesWebBehavior && values.size > 1
     val rangeSemantics =
         if (separateThumbSemantics) {
             Modifier
@@ -560,11 +642,13 @@ private fun Modifier.sliderPointerInput(controller: SliderController): Modifier 
     ) {
         val thumbSizePx = controller.thumbSize.toPx()
         awaitEachGesture {
+            val down = awaitFirstDown()
             val slider = latest.value
             if (!slider.state.enabled) return@awaitEachGesture
-            val down = awaitFirstDown()
+            val restoreCanvasFocus = if (down.type == PointerType.Touch) captureTouchCanvasFocus(currentEvent) else null
             down.consume()
             val vertical = slider.state.orientation == SliderOrientation.Vertical
+            val reverse = slider.state.inverted xor (!vertical && slider.rtl)
 
             fun valueAt(position: Offset): Float {
                 val visual =
@@ -575,25 +659,47 @@ private fun Modifier.sliderPointerInput(controller: SliderController): Modifier 
                         thumbSizePx = thumbSizePx,
                         vertical = vertical,
                     )
-                val valueFraction =
-                    if (slider.state.inverted xor (!vertical && slider.rtl)) 1f - visual else visual
+                val valueFraction = if (reverse) 1f - visual else visual
                 return slider.state.valueRange.start +
                     valueFraction.coerceIn(0f, 1f) * slider.rangeSpan
             }
-            val raw = valueAt(down.position)
-            val index = slider.thumbIndexFor(raw)
+            var controlledValues = slider.currentValues()
+            val (index, grabOffset) =
+                sliderPointerTarget(
+                    position = down.position,
+                    size = size,
+                    thumbSizePx = thumbSizePx,
+                    vertical = vertical,
+                    range = slider.state.valueRange,
+                    values = controlledValues,
+                    reverse = reverse,
+                )
+            val offset = if (vertical) Offset(0f, grabOffset ?: 0f) else Offset(-(grabOffset ?: 0f), 0f)
+            restoreCanvasFocus?.invoke()
             slider.focusRequesters.getOrNull(index)?.requestFocus()
             val press = PressInteraction.Press(down.position)
             val source = slider.interactionSourceFor(index)
             source.tryEmit(press)
-            slider.updateThumb(index, raw)
+            var gestureValues =
+                if (grabOffset == null) {
+                    slider.dragThumb(index, valueAt(down.position), controlledValues)
+                } else {
+                    controlledValues
+                }
             var completed = false
             try {
                 completed =
                     drag(down.id) { change ->
                         change.consume()
-                        slider.updateThumb(index, valueAt(change.position))
+                        val current = slider.currentValues()
+                        // Several pointer moves can arrive before the controlled values recompose.
+                        if (current != controlledValues) {
+                            controlledValues = current
+                            gestureValues = current
+                        }
+                        gestureValues = slider.dragThumb(index, valueAt(change.position + offset), gestureValues)
                     }
+                if (completed) restoreCanvasFocus?.invoke()
                 slider.commit()
             } finally {
                 source.tryEmit(if (completed) PressInteraction.Release(press) else PressInteraction.Cancel(press))
@@ -719,23 +825,35 @@ internal fun SliderThumb(
                 .onPreviewKeyEvent { event ->
                     if (!slider.state.enabled || event.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
                     val state = slider.state
-                    val unit = if (state.step > 0f) state.step else slider.rangeSpan / 100f
-                    val delta = if (event.isShiftPressed) unit * 10 else unit
                     val reverse = if (state.inverted xor slider.rtl) -1 else 1
-                    val value = state.values[index]
+                    val current = state.values[index]
                     val target =
                         when (event.key) {
-                            Key.MoveHome -> state.valueRange.start
-                            Key.MoveEnd -> state.valueRange.endInclusive
-                            Key.PageUp -> value + unit * 10
-                            Key.PageDown -> value - unit * 10
-                            Key.DirectionRight -> value + delta * reverse
-                            Key.DirectionLeft -> value - delta * reverse
-                            Key.DirectionUp -> value + delta * (if (state.inverted) -1 else 1)
-                            Key.DirectionDown -> value - delta * (if (state.inverted) -1 else 1)
-                            else -> return@onPreviewKeyEvent false
+                            Key.MoveHome -> snapSliderValue(state.valueRange.start, state.valueRange, state.step)
+                            Key.MoveEnd -> snapSliderValue(state.valueRange.endInclusive, state.valueRange, state.step)
+                            else -> {
+                                val direction =
+                                    when (event.key) {
+                                        Key.PageUp -> 1
+                                        Key.PageDown -> -1
+                                        Key.DirectionRight -> reverse
+                                        Key.DirectionLeft -> -reverse
+                                        Key.DirectionUp -> if (state.inverted) -1 else 1
+                                        Key.DirectionDown -> if (state.inverted) 1 else -1
+                                        else -> return@onPreviewKeyEvent false
+                                    }
+                                sliderKeyboardTarget(
+                                    value = current,
+                                    range = state.valueRange,
+                                    step = state.step,
+                                    direction = direction,
+                                    coarse =
+                                        event.key == Key.PageUp || event.key == Key.PageDown || event.isShiftPressed,
+                                    webBehavior = sliderUsesWebBehavior,
+                                )
+                            }
                         }
-                    slider.commit(slider.updateThumb(index, target))
+                    slider.commit(slider.updateThumb(index, target, snapToStep = false))
                     true
                 }
                 .semantics {

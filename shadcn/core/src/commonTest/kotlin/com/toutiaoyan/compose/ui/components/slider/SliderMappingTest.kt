@@ -1,6 +1,7 @@
 package com.toutiaoyan.compose.ui.components.slider
 
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.unit.IntSize
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -61,5 +62,59 @@ class SliderMappingTest {
                 vertical = false,
             )
         assertEquals(0f, visual, 0.001f)
+    }
+
+    @Test
+    fun directThumbHitStoresTheGrabOffset() {
+        val hit =
+            sliderPointerTarget(
+                position = Offset(35f, 24f),
+                size = IntSize(112, 48),
+                thumbSizePx = 12f,
+                vertical = false,
+                range = 0f..100f,
+                values = listOf(25f, 50f),
+                reverse = false,
+            )
+        assertEquals(SliderPointerTarget(index = 0, grabOffsetPx = 4f), hit)
+    }
+
+    @Test
+    fun trackMidpointChoosesTheLaterThumb() {
+        val hit =
+            sliderPointerTarget(
+                position = Offset(43.5f, 24f),
+                size = IntSize(112, 48),
+                thumbSizePx = 12f,
+                vertical = false,
+                range = 0f..100f,
+                values = listOf(25f, 50f),
+                reverse = false,
+            )
+        assertEquals(SliderPointerTarget(index = 1, grabOffsetPx = null), hit)
+    }
+
+    @Test
+    fun directHitAtOverlappingVerticalMaximumStartsWithTheFirstThumb() {
+        val hit =
+            sliderPointerTarget(
+                position = Offset(24f, 10f),
+                size = IntSize(48, 112),
+                thumbSizePx = 12f,
+                vertical = true,
+                range = 0f..100f,
+                values = listOf(100f, 100f),
+                reverse = false,
+            )
+        assertEquals(SliderPointerTarget(index = 0, grabOffsetPx = -4f), hit)
+    }
+
+    @Test
+    fun webCoarseKeysUseAnAbsoluteStepOnlyForSmallDiscreteSteps() {
+        assertEquals(22f, sliderKeyboardTarget(12f, 0f..100f, 4f, 1, coarse = true, webBehavior = true))
+        assertEquals(25f, sliderKeyboardTarget(35f, 0f..100f, 5f, -1, coarse = true, webBehavior = true))
+        assertEquals(75f, sliderKeyboardTarget(25f, 0f..100f, 5f, 1, coarse = true, webBehavior = false))
+        assertEquals(600f, sliderKeyboardTarget(100f, 0f..1000f, 50f, 1, coarse = true, webBehavior = true))
+        assertEquals(0.35f, sliderKeyboardTarget(0.25f, 0f..1f, 0f, 1, coarse = true, webBehavior = true), 0.0001f)
     }
 }
