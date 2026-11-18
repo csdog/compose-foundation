@@ -63,12 +63,27 @@
 
 - 核心模块扫描 553 个 Kotlin 文件，问题 ID 从 4,583 降至 4,547，全仓 baseline 从 5,408 降至 5,372。新增 ID 为零。未采用会搬移复杂度告警或改变浮点边界判断的候选改写。[Detekt 前后对照](../.agent-runs/code-review-95c932b6/detekt-cleanup/baseline-delta.json)
 - 核心 `detekt` 与 `ktlintCheck` 通过。相关 JVM 全部通过，共 394 个组件用例和 182 个目录用例。产品交互与视觉值保持原语义，本次验证使用现有 JVM 和快照用例。Checkbox 中间帧和 Switch 两项动画反向仍是已记录的全量 JVM 基线问题。[Gradle 结果](../.agent-runs/code-review-95c932b6/detekt-cleanup/gradle.json) · [JVM 统计](../.agent-runs/code-review-95c932b6/detekt-cleanup/jvm.json)
-- DropdownMenu 仍待整合后复审。已有暂存内容保持原样。
+- DropdownMenu 独立清理已提交为 `0eb6a4f1`。在 `DropdownMenu.kt` 的复选项与单选项之间共用标签渲染，保留各自的语义、指示器和点击行为。子菜单悬停关闭延迟仍为 100 ms，由具名常量明确单位。子菜单与锚点的 -3 dp 对齐偏移保留现有 Base UI 默认值，公开参数保留现有调用契约。
+- 相同 553 个 Kotlin 文件的 Detekt 对照确认移除复选项 `LongMethod` 与悬停延迟 `MagicNumber` 两个存量 ID，零新增。核心 baseline 降至 4,545，全仓降至 5,370。核心 `detekt`、`ktlintCheck` 和 44 项菜单 JVM 测试通过，包含 8 项现有快照。[清理与验证结果](../.agent-runs/code-review-95c932b6/detekt-cleanup/dropdown-menu.json)
+
+## DropdownMenu 复审
+
+- 核查 `DropdownMenu.kt` 中字符串触发器的键盘事件消费、非模态 Escape 的关闭顺序、Nova 弹层在退出中重开的焦点处理，以及 Menubar 与 ContextMenu 共用的弹层和样式。当前源码的本地复审未确认新回归。
+- 从与当前工作区 1,650 个输入一致的隔离副本运行。DropdownMenu 和共享弹层 57 项、目录示例 22 项、Menubar 和 ContextMenu 45 项 JVM 测试通过。`:shadcn:core:ktlintCheck` 通过。前次完整浏览器与截图验收后，部分源码哈希已有变化。[前次验收](web-parity/dropdown-menu-acceptance-20261113/README.md)
+- JS 与 Wasm 目录应用构建通过。Chromium 四组用例覆盖两个运行时的普通按钮和头像按钮。两种按钮均可用鼠标打开，按 Escape 关闭后可用 Enter 和 Space 从原按钮重新打开。普通按钮另验证了 ArrowDown 和 ArrowUp。Wasm 用例加载了应用 Wasm，四组均无页面异常。[浏览器结果](../.agent-runs/code-review-95c932b6/dropdown-menu-chromium.json)
+- 提交 `0eb6a4f1` 后，复扫与工作区一致的隔离副本，核心 Detekt 仍报告 25 条 baseline 之外的告警。DropdownMenu 实现和两份测试占 11 条，另有 Menubar、ContextMenu、Empty 和 Text 的告警。保留当前 baseline 与规则阈值，逐条位置见报告。[Detekt 结果](../.agent-runs/code-review-95c932b6/dropdown-menu-detekt.json)
 
 ## 目录交付复核
 
 - 最终提交 `704a785b` 的 1,614 个输入与验证副本一致。JS/Wasm 双构建、两个目录模块的 ktlint 和 Detekt，以及 27 个目录 JVM 测试通过。两模块 Detekt 报告均为零。[输入核对](../.agent-runs/cursor-review-goal-20261118/delivery/committed-inputs.json) · [验证记录](../.agent-runs/cursor-review-goal-20261118/delivery/verification.json)
 - 本地 `app/webApp/build.gradle.kts` 的字体生成任务改为先注册再配置。ktlint 通过，重新生成的 Kotlin 文件逐字节一致。该格式修正随原本的字体配置改动留在工作区。[局部补丁](../.agent-runs/cursor-review-goal-20261118/delivery/local-web-build-format.patch)
+
+## 当前目录导航复核
+
+- `app/webApp/src/webMain/kotlin/com/toutiaoyan/compose/ui/BrowserDocHistory.kt:109` 在普通 HTTP 主机上调用仅在安全上下文可用的 `crypto.randomUUID()`，导致目录初始化失败。现根据运行时能力选择 UUID 或四个随机 32 位值，历史条目仍使用不透明字符串。该文件和依赖它的滚动改动都在当前工作区中，兼容修复随原改动保留，待整合时一并提交。
+- Chromium 使用同一套路由与断言对照。原产物的 JS 和 Wasm 在 `http://catalog.test` 都报 `TypeError`。修复后两个产物在普通 HTTP 和 localhost 共四组都成功挂载。每组均确认片段条目 ID 与原条目不同，后退和前进分别恢复对应的 ID。另在 localhost 复核了锚点滚动与宿主 `popstate` 处理器。对应 JS/Wasm 构建、Web 和共享目录的 `ktlintCheck` 均通过。[修复前](../.agent-runs/code-review-95c932b6/catalog-http-before.json) · [修复后](../.agent-runs/code-review-95c932b6/catalog-http-after.json) · [滚动和监听器](../.agent-runs/code-review-95c932b6/catalog-current-history.json)
+- `BrowserDocHistory.kt` 合并历史条目的空值与所有权检查，仅在直接调用内嵌 JS 的函数上标注 Detekt 的 `UnusedParameter` 误报。8 个参数均在 JS 表达式中使用。`main.kt` 单独判断页面位置变化。`BrowserDocumentScrollHost.kt` 分离 Canvas 选择与原生事件监听。`DocumentScrollBridge.kt` 明确半个 Compose 像素的容差，原顺序决定是否保留恢复位置。
+- 原工作区的 Web 目录模块 11 条、共享目录模块 2 条告警均已消除；两模块的 Detekt 与 ktlint 通过，baseline 未改动。24 项导航和滚动 JVM 测试、最终 JS/Wasm 构建和上述 Chromium 回归通过。构建与工作区的 1,648 个输入逐文件一致。清理涉及未提交的目录导航文件，随该批改动留在工作区。[原告警](../.agent-runs/code-review-95c932b6/catalog-local-detekt.json) · [复测结果](../.agent-runs/code-review-95c932b6/catalog-cleanup-verification.json)
 
 ## Chromium 实测
 
