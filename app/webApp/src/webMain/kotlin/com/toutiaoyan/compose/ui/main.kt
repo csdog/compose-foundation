@@ -89,13 +89,14 @@ private suspend fun bindAppRouterToBrowser(
 ) {
     coroutineScope {
         var committedPath = window.location.pathname
-        window.onpopstate = {
+        val popStateListener: (Event) -> Unit = {
             // Router observers can already have reacted; compare committed browser paths.
             val restoreScroll = window.location.pathname != committedPath
             committedPath = window.location.pathname
             navigateFromBrowser(appRouter)
             docs.sync(restoreScroll = restoreScroll, force = restoreScroll)
         }
+        window.addEventListener("popstate", popStateListener)
         val hashListener: (Event) -> Unit = { docs.sync() }
         window.addEventListener("hashchange", hashListener)
         try {
@@ -109,7 +110,7 @@ private suspend fun bindAppRouterToBrowser(
                 docs.sync()
             }
         } finally {
-            window.onpopstate = null
+            window.removeEventListener("popstate", popStateListener)
             window.removeEventListener("hashchange", hashListener)
         }
     }
