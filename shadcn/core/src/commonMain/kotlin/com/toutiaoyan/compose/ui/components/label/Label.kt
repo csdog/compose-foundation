@@ -30,6 +30,8 @@ import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
 import kotlin.math.roundToInt
 
+private const val NOVA_DISABLED_LABEL_ALPHA = 0.5f
+
 /**
  * A form-field label. Purely presentational -- Compose has no HTML `for` attribute
  * to wire up, so association with a field is just visual (place it directly above
@@ -80,9 +82,15 @@ internal fun LabelImpl(
             TextStyle.Default
         }
     val resolvedTypography = typography.merge(textStyle)
-    val textModifier = if (nova) Modifier.labelLineBox(resolvedTypography.lineHeight) else Modifier
+    val lineHeight = resolvedTypography.lineHeight
+    val textModifier =
+        if (nova && lineHeight.isSp && lineHeight.value > 0f) Modifier.labelLineBox(lineHeight) else Modifier
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Row(modifier = modifier.alpha(if (nova && disabled) 0.5f else 1f).styleable(styleState, style)) {
+    Row(
+        modifier =
+            modifier.alpha(if (nova && disabled) NOVA_DISABLED_LABEL_ALPHA else 1f)
+                .styleable(styleState, style),
+    ) {
         Text(
             modifier = textModifier,
             variant = TextVariant.LabelLarge,
@@ -119,11 +127,12 @@ private fun Modifier.labelLineBox(lineHeight: TextUnit): Modifier =
         val child = measurable.measure(constraints)
         val first = child[FirstBaseline]
         val last = child[LastBaseline]
+        val linePixels = lineHeight.toPx()
+        val hasBaselines = first != AlignmentLine.Unspecified && last != AlignmentLine.Unspecified
         val target =
-            if (first != AlignmentLine.Unspecified && last != AlignmentLine.Unspecified) {
+            if (hasBaselines && linePixels.isFinite() && linePixels > 0f) {
                 // Baselines are integer pixels; infer the count before rounding the total
                 // height so fractional line heights do not accumulate one pixel per line.
-                val linePixels = lineHeight.toPx()
                 val lines = ((last - first) / linePixels).roundToInt() + 1
                 constraints.constrainHeight((linePixels * lines).roundToInt())
             } else {
