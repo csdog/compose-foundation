@@ -1,7 +1,7 @@
 # Web 对齐验收状态
 
-更新日期：2026-11-18。当前保存状态为 **57 / 67 项已勾选，10 项未完成**。
-本次更新 Shimmer 验收记录。Chart 保持未勾选并跳过。
+更新日期：2026-11-18。当前保存状态为 **58 / 67 项已勾选，9 项未完成**。
+本次更新 Sidebar 验收记录。Chart 保持未勾选并跳过。
 文档整理本身不构成验收；勾选只在组件证据与当前源码校验通过后更新。
 
 ## 状态口径
@@ -73,7 +73,7 @@
 - [x] Separator (`separator`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#separator)。
 - [x] Sheet (`sheet`)：2026-11-18 验收通过。修复触摸打开时的输入焦点与 Web Tab 派发、受控关闭焦点、独立 Usage 代码和官方 API 顺序。133 项 JVM、37 项截图校验及所属 lint 通过。当前 JS/Wasm 七个浏览器批次通过，285 条实际响应与产物匹配，独立终审通过。[验收](web-parity/sheet-acceptance-20261118/README.md) · [来源](web-parity/sheet-acceptance-20261118/sources.json) · [终审](web-parity/sheet-acceptance-20261118/independent-review.md) · [交接](../.agent-runs/sheet/progress.md)。
 - [x] Shimmer (`shimmer`)：2026-11-18 验收通过。补齐 Rhea 示例、实时减少动态效果、Marker 与 Replay，295 项 JVM、9 项 lint 和 15 份 Kotlin 片段通过。当前 JS、Wasm、Desktop 构建与 80 个浏览器场景、剪贴板及独立审查通过。[验收与范围](web-parity/shimmer-acceptance-20261118/README.md) · [独立审查](web-parity/shimmer-acceptance-20261118/independent-review.md) · [交接](../.agent-runs/shimmer/progress.md)。
-- [ ] Sidebar (`sidebar`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#sidebar) · [交接](../.agent-runs/sidebar/progress.md)。
+- [x] Sidebar (`sidebar`)：2026-11-18 验收通过。补齐官方示例和三语 RTL，修复 Rail、项目操作与手机 Sheet 焦点。139 项聚焦 JVM（含 Sheet 回归）、17 张 Sidebar 参考、9 项 lint、三端构建、当前浏览器验证与独立审查通过。[验收与范围](web-parity/sidebar-acceptance-20261118/README.md) · [独立审查](web-parity/sidebar-acceptance-20261118/independent-review.md) · [交接](../.agent-runs/sidebar/progress.md)。
 - [x] Skeleton (`skeleton`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#skeleton) · [交接](../.agent-runs/skeleton/progress.md)。
 - [ ] Slider (`slider`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#slider) · [交接](../.agent-runs/slider/progress.md)。
 - [x] Spinner (`spinner`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#spinner)。

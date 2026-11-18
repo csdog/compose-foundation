@@ -1,0 +1,506 @@
+[
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/sidebar_app_shell_dark.png",
+    "originalSha256": "15b21d98afe3577c76c10eb8e29624ab4f7c0b605c897e57247068da50b62d47",
+    "beforeImplementationSha256": "444f876e665dfc230b1d831d43d3eab2a1602c70c16f1e3902d378f702a1ca46",
+    "currentSha256": "a32cc20a8695e02916eeb9dd999150b6bc39b76df64bd8fe82dbca19de4260db",
+    "dimensions": [
+      1024,
+      308
+    ],
+    "assessment": "Existing Vega palette and panel chrome, with new PanelLeft trigger size in the inset header and reflow of adjacent header.",
+    "originalToBefore": {
+      "bbox": [
+        24,
+        24,
+        555,
+        284
+      ],
+      "changedPixels": 67399
+    },
+    "beforeToInitialCurrent": {
+      "bbox": [
+        288,
+        39,
+        559,
+        110
+      ],
+      "changedPixels": 5402
+    }
+  },
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/sidebar_app_shell_light.png",
+    "originalSha256": "8218f4a6595c923c3903248c3b702d0ed15fc8a61d4d82555d3ce9a8dcd0cd33",
+    "beforeImplementationSha256": "d2205c3981a627af10c34cf64b56ea17dc81de6906eabaaab36b51fc8b8d338c",
+    "currentSha256": "0770e5e451ede640c1fe78a702d3d160c7ae543094429415769dd00e848d7683",
+    "dimensions": [
+      1024,
+      308
+    ],
+    "assessment": "Existing Vega palette and panel chrome, with new PanelLeft trigger size in the inset header and reflow of adjacent header.",
+    "originalToBefore": {
+      "bbox": [
+        24,
+        24,
+        555,
+        284
+      ],
+      "changedPixels": 60396
+    },
+    "beforeToInitialCurrent": {
+      "bbox": [
+        288,
+        39,
+        559,
+        110
+      ],
+      "changedPixels": 4373
+    }
+  },
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/sidebar_collapsed_dark.png",
+    "originalSha256": "e77ed1f071598a1ed3a5f08c65cbe6bb1a38981778c575aa22699251633dbbcb",
+    "beforeImplementationSha256": "aba69b435bdff2980d9dcf9c0b369cacdd36144991fd55e894758273ac081735",
+    "currentSha256": "2b6ae3500b713f7d243ccd28894a9e95579d5c3b199fa16f3498a81db8e99a17",
+    "dimensions": [
+      1024,
+      248
+    ],
+    "assessment": "Existing 200px one-column panel edge drift and intentional trigger glyph/size change.",
+    "originalToBefore": {
+      "bbox": [
+        23,
+        24,
+        24,
+        224
+      ],
+      "changedPixels": 200
+    },
+    "beforeToInitialCurrent": {
+      "bbox": [
+        25,
+        31,
+        110,
+        67
+      ],
+      "changedPixels": 860
+    }
+  },
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/sidebar_collapsed_light.png",
+    "originalSha256": "2c51a10003fe4f106cf71690db7d0cb2a6a3b1cbd56532fff8e41289b5def216",
+    "beforeImplementationSha256": "301e9c2f83db439cfbba7de3085d0d45acb05844833ff1b0a0d98fe3b4904441",
+    "currentSha256": "eb84fda58006506776d6dcb7370d6f1c6ada9722bc5702f00c2c39f525c8f477",
+    "dimensions": [
+      1024,
+      248
+    ],
+    "assessment": "Existing 200px one-column panel edge drift and intentional trigger glyph/size change.",
+    "originalToBefore": {
+      "bbox": [
+        23,
+        24,
+        24,
+        224
+      ],
+      "changedPixels": 200
+    },
+    "beforeToInitialCurrent": {
+      "bbox": [
+        25,
+        31,
+        110,
+        67
+      ],
+      "changedPixels": 858
+    }
+  },
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/sidebar_expanded_dark.png",
+    "originalSha256": "b3c824dbe8e1b47d8c306d33e778b256e329e3f0601cbc5614f1c453e40594dd",
+    "beforeImplementationSha256": "82d7cfb5b252184fa1cec5dea5203823533ab5a5006453cd65782b1a4acdacb6",
+    "currentSha256": "582f50e6cf23960475fd67ed0c3140fc524d770baf9e98a7e2720e1614f213d7",
+    "dimensions": [
+      1024,
+      248
+    ],
+    "assessment": "Existing Vega palette and panel border, with an intentional trigger content-side chrome change.",
+    "originalToBefore": {
+      "bbox": [
+        24,
+        24,
+        280,
+        224
+      ],
+      "changedPixels": 44180
+    },
+    "beforeToInitialCurrent": {
+      "bbox": [
+        281,
+        31,
+        366,
+        67
+      ],
+      "changedPixels": 860
+    }
+  },
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/sidebar_expanded_light.png",
+    "originalSha256": "2eef1bf72c2b351fe55107191c4ea97fcc25b92de813d4dbc845e3604beb1a3e",
+    "beforeImplementationSha256": "7b56cf5a96bab7210243f353f197d1a98ce37a00f69982bf9dfc04dac6d55405",
+    "currentSha256": "4d157ce0c89831acaf1ad69d475c497845f2ea1db36dc9e3ce2fffee63781ed8",
+    "dimensions": [
+      1024,
+      248
+    ],
+    "assessment": "Existing Vega palette and panel border, with an intentional trigger content-side chrome change.",
+    "originalToBefore": {
+      "bbox": [
+        24,
+        24,
+        280,
+        224
+      ],
+      "changedPixels": 44236
+    },
+    "beforeToInitialCurrent": {
+      "bbox": [
+        281,
+        31,
+        366,
+        67
+      ],
+      "changedPixels": 858
+    }
+  },
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/sidebar_floating_dark.png",
+    "originalSha256": "05ec638803d07fb0571bb2cc668a99becee5b0b90df457a952d53bd42222220d",
+    "beforeImplementationSha256": "c3f67aa72494c1aaedd35d18fecf675ee8ee8186dde05b7270e3c99f8ddc19ec",
+    "currentSha256": "a0b43ee201dedf22147c4704c7444437a29947e28b7c888b8913a4e39970cfcf",
+    "dimensions": [
+      1024,
+      248
+    ],
+    "assessment": "Existing Vega palette and padded shell, with the trigger glyph and button chrome on the content side.",
+    "originalToBefore": {
+      "bbox": [
+        32,
+        32,
+        272,
+        216
+      ],
+      "changedPixels": 37583
+    },
+    "beforeToInitialCurrent": {
+      "bbox": [
+        281,
+        31,
+        366,
+        67
+      ],
+      "changedPixels": 860
+    }
+  },
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/sidebar_floating_light.png",
+    "originalSha256": "7f479ace335b4718cd5875b7793cf80ecb5b518443465be2202a22b866e21df7",
+    "beforeImplementationSha256": "1799daf9e3967ac6761dc834e79ba53f9408b3dfe192c7c5ae11166902cc35b3",
+    "currentSha256": "c66a31abf0d07821a2c36b239eed657c86b41745dfa37e87536444335a1b675b",
+    "dimensions": [
+      1024,
+      248
+    ],
+    "assessment": "Existing Vega palette and padded shell, with the trigger glyph and button chrome on the content side.",
+    "originalToBefore": {
+      "bbox": [
+        32,
+        32,
+        272,
+        216
+      ],
+      "changedPixels": 36884
+    },
+    "beforeToInitialCurrent": {
+      "bbox": [
+        281,
+        31,
+        366,
+        67
+      ],
+      "changedPixels": 858
+    }
+  },
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/sidebar_icon_collapsed_dark.png",
+    "originalSha256": "de89db406c9abe02394dcdc984b4636b68de9521999801451fef3b200cef6bff",
+    "beforeImplementationSha256": "020ff30b5ab4cf7f24f16a692ce3f75cd847e37e2ba73cabd8ea40101498cdb2",
+    "currentSha256": "ed912533b3636748d20c44711af4af3fff710e87055bb31e5485b4c4fe42bda4",
+    "dimensions": [
+      1024,
+      248
+    ],
+    "assessment": "Existing Vega palette and inner divider, with trigger geometry updated in the narrow rail state.",
+    "originalToBefore": {
+      "bbox": [
+        24,
+        24,
+        72,
+        224
+      ],
+      "changedPixels": 8713
+    },
+    "beforeToInitialCurrent": {
+      "bbox": [
+        73,
+        31,
+        158,
+        67
+      ],
+      "changedPixels": 860
+    }
+  },
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/sidebar_icon_collapsed_light.png",
+    "originalSha256": "92d76e5a46f68160e5cb8c29c103f6f927892bb0a7f0df9565e07ae6a03ab489",
+    "beforeImplementationSha256": "f6ddc653a2e9ba4f3211432a18e305b0c08f0d2dacf36a42ac91ba8fd87e0b19",
+    "currentSha256": "d63cf4dea0bcdf06ef1ab96ee502a3c1381a95e5be149bc2a6761f4e0d18ce82",
+    "dimensions": [
+      1024,
+      248
+    ],
+    "assessment": "Existing Vega palette and inner divider, with trigger geometry updated in the narrow rail state.",
+    "originalToBefore": {
+      "bbox": [
+        24,
+        24,
+        72,
+        224
+      ],
+      "changedPixels": 8706
+    },
+    "beforeToInitialCurrent": {
+      "bbox": [
+        73,
+        31,
+        158,
+        67
+      ],
+      "changedPixels": 858
+    }
+  },
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/sidebar_inset_dark.png",
+    "originalSha256": "142b2d39455ca669d6c00b4edb380acbd79a63c809e07bb79a94fa918f874ceb",
+    "beforeImplementationSha256": "ff4e62086497b10a3b2f13ad20e22b4b28a7b8b4c764871bc24c0e92fa15ca13",
+    "currentSha256": "5e5ff3092e7f317f0a5d194a91e5ba1cee21c39263ce2f1cfb38784b38692b5c",
+    "dimensions": [
+      1024,
+      248
+    ],
+    "assessment": "Existing Vega palette and padded shell, with the trigger glyph and button chrome on the content side.",
+    "originalToBefore": {
+      "bbox": [
+        32,
+        32,
+        272,
+        216
+      ],
+      "changedPixels": 37620
+    },
+    "beforeToInitialCurrent": {
+      "bbox": [
+        281,
+        39,
+        366,
+        75
+      ],
+      "changedPixels": 860
+    },
+    "insetWrapperFollowup": {
+      "reference": "shadcn/core/src/jvmTest/snapshots/sidebar_inset_dark.png",
+      "previousSha256": "ce791b48cf4e8d54bd9f9215b7fe054e81953ea19316a9355dfac777d0afef9b",
+      "currentSha256": "5e5ff3092e7f317f0a5d194a91e5ba1cee21c39263ce2f1cfb38784b38692b5c",
+      "repeatPath": ".agent-runs/sidebar/goal-20261118/inset-repeated-goldens/images/sidebar_inset_dark_actual.png",
+      "wrapperRgbChange": [
+        10,
+        23
+      ],
+      "wrapperChangedPixels": 18396,
+      "shadowChangedPixels": 1694,
+      "source": "apps/v4/registry/bases/base/ui/sidebar.tsx:141 has-data-[variant=inset]:bg-sidebar"
+    }
+  },
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/sidebar_inset_light.png",
+    "originalSha256": "eb601640cc8ac8a2e49bf0193b779bced00d6b4a25ad2728b8e00203d143ec75",
+    "beforeImplementationSha256": "31da7841d3f7ca593e8668c7d5eb07f27022cd97c242bfa48b0824ad9b7a02ee",
+    "currentSha256": "88b12c8f309c4965f8cf3d1a5834cbd29d6beca753a7f41e1a765f4d7116d5c8",
+    "dimensions": [
+      1024,
+      248
+    ],
+    "assessment": "Existing Vega palette and padded shell, with the trigger glyph and button chrome on the content side.",
+    "originalToBefore": {
+      "bbox": [
+        32,
+        32,
+        272,
+        216
+      ],
+      "changedPixels": 37676
+    },
+    "beforeToInitialCurrent": {
+      "bbox": [
+        281,
+        39,
+        366,
+        75
+      ],
+      "changedPixels": 858
+    },
+    "insetWrapperFollowup": {
+      "reference": "shadcn/core/src/jvmTest/snapshots/sidebar_inset_light.png",
+      "previousSha256": "032997f5c2785a97288238183e437099169e3525d731d352f908e8e40b7fa2d8",
+      "currentSha256": "88b12c8f309c4965f8cf3d1a5834cbd29d6beca753a7f41e1a765f4d7116d5c8",
+      "repeatPath": ".agent-runs/sidebar/goal-20261118/inset-repeated-goldens/images/sidebar_inset_light_actual.png",
+      "wrapperRgbChange": [
+        255,
+        250
+      ],
+      "wrapperChangedPixels": 18324,
+      "shadowChangedPixels": 1690,
+      "source": "apps/v4/registry/bases/base/ui/sidebar.tsx:141 has-data-[variant=inset]:bg-sidebar"
+    }
+  },
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/sidebar_mobile_dark.png",
+    "originalSha256": "743815d703575bcca5c6a4595ce0fe153f40c782987bf66dbcc33ad856a0346c",
+    "beforeImplementationSha256": "bccad6ae65a6e066b99a1bf9ccbdef4479c802ea21c0b6b09fb9ee3da0847e4e",
+    "currentSha256": "bccad6ae65a6e066b99a1bf9ccbdef4479c802ea21c0b6b09fb9ee3da0847e4e",
+    "dimensions": [
+      1024,
+      768
+    ],
+    "assessment": "Existing full-screen Vega scrim/reference offset. Forced width, drawer content and rendered pixels remain byte-stable.",
+    "originalToBefore": {
+      "bbox": [
+        0,
+        0,
+        1024,
+        768
+      ],
+      "changedPixels": 779049
+    },
+    "beforeToInitialCurrent": {
+      "bbox": null,
+      "changedPixels": 0
+    }
+  },
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/sidebar_mobile_light.png",
+    "originalSha256": "420eefa404db9bc74485de998460490cab3115bc2c7f2b61bf2293a60e36bbab",
+    "beforeImplementationSha256": "e7c8852fa6a041f7c14247f998e0aa5d5ceb21c4942ae61bceecf8f6eee2c99c",
+    "currentSha256": "e7c8852fa6a041f7c14247f998e0aa5d5ceb21c4942ae61bceecf8f6eee2c99c",
+    "dimensions": [
+      1024,
+      768
+    ],
+    "assessment": "Existing full-screen Vega scrim/reference offset. Forced width, drawer content and rendered pixels remain byte-stable.",
+    "originalToBefore": {
+      "bbox": [
+        0,
+        0,
+        1024,
+        768
+      ],
+      "changedPixels": 778271
+    },
+    "beforeToInitialCurrent": {
+      "bbox": null,
+      "changedPixels": 0
+    }
+  },
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/sidebar_official_width_dark.png",
+    "originalSha256": "b3c824dbe8e1b47d8c306d33e778b256e329e3f0601cbc5614f1c453e40594dd",
+    "beforeImplementationSha256": "82d7cfb5b252184fa1cec5dea5203823533ab5a5006453cd65782b1a4acdacb6",
+    "currentSha256": "582f50e6cf23960475fd67ed0c3140fc524d770baf9e98a7e2720e1614f213d7",
+    "dimensions": [
+      1024,
+      248
+    ],
+    "assessment": "Existing Vega palette and panel border, with an intentional trigger content-side chrome change.",
+    "originalToBefore": {
+      "bbox": [
+        24,
+        24,
+        280,
+        224
+      ],
+      "changedPixels": 44180
+    },
+    "beforeToInitialCurrent": {
+      "bbox": [
+        281,
+        31,
+        366,
+        67
+      ],
+      "changedPixels": 860
+    }
+  },
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/sidebar_official_width_light.png",
+    "originalSha256": "2eef1bf72c2b351fe55107191c4ea97fcc25b92de813d4dbc845e3604beb1a3e",
+    "beforeImplementationSha256": "7b56cf5a96bab7210243f353f197d1a98ce37a00f69982bf9dfc04dac6d55405",
+    "currentSha256": "4d157ce0c89831acaf1ad69d475c497845f2ea1db36dc9e3ce2fffee63781ed8",
+    "dimensions": [
+      1024,
+      248
+    ],
+    "assessment": "Existing Vega palette and panel border, with an intentional trigger content-side chrome change.",
+    "originalToBefore": {
+      "bbox": [
+        24,
+        24,
+        280,
+        224
+      ],
+      "changedPixels": 44236
+    },
+    "beforeToInitialCurrent": {
+      "bbox": [
+        281,
+        31,
+        366,
+        67
+      ],
+      "changedPixels": 858
+    }
+  },
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/sidebar_trigger_focused_light.png",
+    "originalSha256": "301e9c2f83db439cfbba7de3085d0d45acb05844833ff1b0a0d98fe3b4904441",
+    "beforeImplementationSha256": "301e9c2f83db439cfbba7de3085d0d45acb05844833ff1b0a0d98fe3b4904441",
+    "currentSha256": "eb84fda58006506776d6dcb7370d6f1c6ada9722bc5702f00c2c39f525c8f477",
+    "dimensions": [
+      1024,
+      248
+    ],
+    "assessment": "Intentional new PanelLeft icon and 28dp Ghost/IconSm chrome in the Vega focused fixture.",
+    "originalToBefore": {
+      "bbox": null,
+      "changedPixels": 0
+    },
+    "beforeToInitialCurrent": {
+      "bbox": [
+        25,
+        31,
+        110,
+        67
+      ],
+      "changedPixels": 858
+    }
+  }
+]
