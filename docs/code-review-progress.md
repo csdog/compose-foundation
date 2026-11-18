@@ -122,7 +122,7 @@
 | `accordion` | 待审 | 待审 |  |
 | `alert` | 待审 | 待审 |  |
 | `alertdialog` | 待审 | 待审 |  |
-| `aspectratio` | 待审 | 待审 |  |
+| `aspectratio` | 已验收 | 已验收 | 尺寸级联、比例输入和目录示例已复核。 |
 | `attachment` | 待审 | 待审 |  |
 | `avatar` | 待审 | 待审 |  |
 | `badge` | 待审 | 待审 |  |
@@ -142,7 +142,7 @@
 | `command` | 待审 | 待审 |  |
 | `contextmenu` | 局部审查 | 局部清理 | 已有共享菜单和子菜单测试证据。 |
 | `dialog` | 待审 | 待审 |  |
-| `drawer` | 进行中 | 待逐项 | 已修复右侧外边距，见下方首项记录。 |
+| `drawer` | 已验收 | 已验收 | `c52276e4` 修复留白，`f97109ce` 清理状态与布局。 |
 | `dropdownmenu` | 已验收 | 已验收 | 菜单复审、独立提交及 Chromium 记录。 |
 | `emojitext` | 待审 | 待审 |  |
 | `empty` | 局部审查 | 局部清理 | 已有排版搜索和边框的 JVM 与 Web 证据。 |
@@ -169,10 +169,10 @@
 | `resizable` | 待审 | 待审 |  |
 | `scrollarea` | 待审 | 待审 |  |
 | `select` | 已验收 | 已验收 | 前两轮及第一批记录。 |
-| `separator` | 待审 | 待审 |  |
+| `separator` | 已验收 | 已验收 | 方向、装饰语义和样式覆盖已复核。 |
 | `sheet` | 已验收 | 已验收 | 第二轮及第二批记录。 |
 | `sidebar` | 待审 | 局部清理 | 已处理动画时长。 |
-| `skeleton` | 待审 | 待审 |  |
+| `skeleton` | 已验收 | 已验收 | 替换样式、脉冲和目录布局已复核。 |
 | `slider` | 已验收 | 已验收 | 第二轮及第二批记录。 |
 | `spinner` | 待审 | 待审 |  |
 | `stepper` | 待审 | 待审 |  |
@@ -191,4 +191,12 @@
 
 - `DrawerContent.kt:96` 与 `DrawerSizingTest.kt:57`。Nova 右侧 Drawer 改为贴边后失去原有留白。提交 `c52276e4` 恢复右、上、下三边的 8 dp，以及与之对应的面板高度。左、上、下方向的现有定位和其他主题保持原行为。
 - JVM 修复前报告 `Top gap: 0.0`。修复后 56 项核心 Drawer 与 13 项目录 Drawer JVM 测试通过。核心与共享目录的 Detekt、ktlint 通过。Chromium 在 JS 和 Wasm 上分别测得修复前 0 px、修复后 8 px。[浏览器前后对照](../.agent-runs/code-review-95c932b6/drawer-right-inset.json)
-- Drawer 其余状态、手势和现存 baseline ID 仍在全组件审查范围内。
+
+### Drawer、AspectRatio、Separator 和 Skeleton 验收
+
+- Drawer 核对受控开关、关闭优先级、Portal 的最新回调、缩进/嵌套注册的释放、锚点裁切和手势系数。右侧外边距缺陷的前后验证见上一节。Kotlin 提交 `f97109ce` 将 `Drawer.kt` 的注册生命周期、`DrawerContent.kt` 的尺寸计算和 `DrawerSnapPoint.kt` 的顺序吸附选择拆开。删除三个无引用的内部方向函数与只写不读的内部指针配置。动画时间、覆盖层透明度与禁用透明度具名且数值沿用。
+- Drawer 同范围扫描移除 9 个 ID，另将一条内部构造器规则记录对应到删去未用字段后的签名，规则阈值保持。剩余 23 个 ID 已核对。公开参数和默认值属于调用契约，两个命名命中来自相邻摆放的尺寸或方向声明，曲线控制点、半轴中心和行高来自当前动效及排版定义。面板的长函数仍共同拥有锚点、动画和释放顺序。手势测试的时序留在一个用例内以保留按帧断言。完整 ID 与验证见报告。[Drawer 前后对照](../.agent-runs/code-review-95c932b6/component-review-drawer-batch.json)
+- `AspectRatio.kt:36` 在入口拒绝零、负数和非有限比例，样式尺寸先参与测量，内容保留各自的裁切与无障碍所有权。核心 5 项、目录 6 项 JVM 通过，相关源码和测试无存量 ID。[既有 Web 验收](web-parity/aspect-ratio-r5/README.md)
+- `Separator.kt:42` 的水平/垂直尺寸、装饰态与可覆盖语义已核对。核心 14 项、目录 38 项 JVM 通过。保留 `SeparatorStyles.kt` 中与样式共置的公开方向枚举及其一条文件命名规则记录。分隔线原生 ARIA role 的平台差异沿用现有记录。[既有 Web 验收](web-parity/separator-r3/README.md)
+- `Skeleton.kt:32` 的调用方替换样式和 `SkeletonStyles.kt:37` 的主题圆角、背景与脉冲已核对。核心 12 项、目录 48 项 JVM 通过，相关源码和测试无存量 ID。脉冲逐帧重组的回归测试通过。[既有 Web 验收](web-parity/skeleton-r2/README.md)
+- 本批 192 项 JVM 测试通过，目录模块 Detekt、ktlint 通过。初轮核心格式检查报出三处长行。修正后核心 Detekt、ktlint 与最终 56 项 Drawer JVM 回归通过。本批现有浏览器证据覆盖视觉和交互，本次 Drawer 结构清理沿用相同的阶段、阈值和数值。
