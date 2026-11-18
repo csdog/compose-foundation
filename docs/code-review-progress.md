@@ -50,6 +50,20 @@
 - 核心模块全量 JVM 运行 1,698 个测试，Select 焦点恢复、Checkbox 动画中间帧以及 Switch 浅色和深色动画反向各有一项失败。用原构建配置单独重跑这四项，复现相同断言失败。[全量结果](../.agent-runs/code-review-95c932b6/detekt-gradle/jvm-full.json) · [改动前对照](../.agent-runs/code-review-95c932b6/detekt-gradle/jvm-control.json)
 - 已有的本地源码改动额外引入 33 个 Detekt 问题 ID，仍会触发检查。上述 baseline 仅依据已提交源码生成。
 
+## Detekt 三批存量清理
+
+| 提交 | 文件与影响 | 处理结果 |
+| --- | --- | --- |
+| `807706d8` | `SelectPopupGeometry.kt:34`、`Select.kt:201`、`SelectScrollTarget.kt:6` | 分离对齐和浮动两条计算路径，共用滚动箭头预留高度，明确连续滚动间隔。 |
+| `807706d8` | `MenuPopup.kt:33`、`Toast.kt:64`、`NovaToastViewport.kt:76` | 共用弹层缩放计算，保留原浮点运算与缓动曲线。给 Toast 关闭等待时间命名，符合已有常量规范。整批移除 8 个 ID。[第一批 Detekt 对照](../.agent-runs/code-review-95c932b6/detekt-cleanup/batch-1.json) |
+| `807706d8` | `ChoiceNovaParityTest.kt:215` | 原测试在提交选项前错误地断言焦点跳过禁用项。新用例覆盖 Nova 约定：禁用项可获焦，Enter 无效，选中启用项后焦点回到触发器。原配置的失败和新用例的通过均有 JVM 记录。 |
+| `25dcd3b4` | `Sheet.kt:101`、`Slider.kt:82` | 明确面板宽度、断点和动效单位，保留 Slider 整控件禁用透明度。Toggle 的参数和交互实现保留，单纯拆分欠缺收益。移除 6 个 ID。[第二批 Detekt 对照](../.agent-runs/code-review-95c932b6/detekt-cleanup/batch-2.json) |
+| `e4cb3b27` | `Calendar.kt:97`、`CalendarLocale.kt:36`、`Questionnaire.kt:563`、`Sidebar.kt:322` | 统一日历周索引和边界，删除无引用的私有 Gregorian 月长计算。问卷快捷键上限取自实际键表，Sidebar 动画时长有明确单位。保留公开参数和日历算法查找表。移除 22 个 ID。[第三批 Detekt 对照](../.agent-runs/code-review-95c932b6/detekt-cleanup/batch-3.json) |
+
+- 核心模块扫描 553 个 Kotlin 文件，问题 ID 从 4,583 降至 4,547，全仓 baseline 从 5,408 降至 5,372。新增 ID 为零。未采用会搬移复杂度告警或改变浮点边界判断的候选改写。[Detekt 前后对照](../.agent-runs/code-review-95c932b6/detekt-cleanup/baseline-delta.json)
+- 核心 `detekt` 与 `ktlintCheck` 通过。相关 JVM 全部通过，共 394 个组件用例和 182 个目录用例。产品交互与视觉值保持原语义，本次验证使用现有 JVM 和快照用例。Checkbox 中间帧和 Switch 两项动画反向仍是已记录的全量 JVM 基线问题。[Gradle 结果](../.agent-runs/code-review-95c932b6/detekt-cleanup/gradle.json) · [JVM 统计](../.agent-runs/code-review-95c932b6/detekt-cleanup/jvm.json)
+- `app/webApp` 的历史监听器修复仍与本地导航改动重叠。DropdownMenu 也有重叠修改，待整合后复审。保留上述本地改动和已有暂存内容。
+
 ## Chromium 实测
 
 - Select 在最终的 JS/Wasm 构建中验证 DPR 2 下的弹层高度、外部点击和滚轮锁定。Toast 在两种运行时验证桌面和触屏交互，覆盖队列、计时与焦点。
