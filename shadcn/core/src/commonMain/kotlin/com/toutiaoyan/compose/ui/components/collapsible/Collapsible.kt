@@ -29,6 +29,7 @@ import androidx.compose.foundation.style.rememberUpdatedStyleState
 import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.focus.FocusRequester
@@ -41,6 +42,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
@@ -51,8 +53,30 @@ import com.toutiaoyan.compose.ui.components.button.ButtonSize
 import com.toutiaoyan.compose.ui.components.button.ButtonVariant
 import com.toutiaoyan.compose.ui.components.text.Text
 
+private const val COLLAPSIBLE_NOVA_MOTION_MILLIS = 200
+
 internal class CollapsibleFocus {
-    var returnTo: FocusRequester? = null
+    private val mountedTriggers = linkedSetOf<FocusRequester>()
+    private var lastFocused: FocusRequester? = null
+
+    fun register(requester: FocusRequester) {
+        mountedTriggers.add(requester)
+    }
+
+    fun unregister(requester: FocusRequester) {
+        mountedTriggers.remove(requester)
+        if (lastFocused === requester) lastFocused = null
+    }
+
+    fun markFocused(requester: FocusRequester) {
+        if (requester in mountedTriggers) lastFocused = requester
+    }
+
+    fun restore(): Boolean {
+        val previous = lastFocused
+        return previous?.requestFocus() == true ||
+            mountedTriggers.toList().any { it !== previous && it.requestFocus() }
+    }
 }
 
 internal class CollapsibleController(
@@ -75,9 +99,16 @@ private fun collapsibleController(): CollapsibleController =
     }
 
 @Composable
-private fun Modifier.collapsibleTriggerFocus(focus: CollapsibleFocus): Modifier {
+private fun Modifier.collapsibleTriggerFocus(
+    focus: CollapsibleFocus,
+    enabled: Boolean,
+): Modifier {
     val requester = remember { FocusRequester() }
-    return focusRequester(requester).onFocusChanged { if (it.isFocused) focus.returnTo = requester }
+    DisposableEffect(focus, requester, enabled) {
+        if (enabled) focus.register(requester)
+        onDispose { focus.unregister(requester) }
+    }
+    return focusRequester(requester).onFocusChanged { if (it.isFocused) focus.markFocused(requester) }
 }
 
 /** Reads the nearest [Collapsible] scope. Matches Radix `useCollapsible`. */
@@ -245,7 +276,7 @@ fun CollapsibleScope.CollapsibleTrigger(
     val styleState = rememberUpdatedStyleState(interactionSource) { it.isEnabled = triggerEnabled }
     Box(
         modifier =
-            modifier.collapsibleTriggerFocus(controller.focus)
+            modifier.collapsibleTriggerFocus(controller.focus, triggerEnabled)
                 .semantics {
                     role = Role.Button
                     stateDescription = if (controller.open) "Expanded" else "Collapsed"
@@ -284,7 +315,7 @@ fun CollapsibleScope.CollapsibleTrigger(
             variant = variant,
             size = size,
             modifier =
-                modifier.collapsibleTriggerFocus(ctrl.focus).semantics {
+                modifier.collapsibleTriggerFocus(ctrl.focus, enabled && !disabled && ctrl.enabled).semantics {
                     stateDescription = if (ctrl.open) "Expanded" else "Collapsed"
                 },
             style = style,
@@ -324,7 +355,7 @@ fun CollapsibleScope.CollapsibleContent(
     enter: EnterTransition =
         if (currentTheme.activePreset == StylePreset.Nova) {
             expandVertically(
-                tween(200),
+                tween(COLLAPSIBLE_NOVA_MOTION_MILLIS),
             )
         } else {
             fadeIn() + expandVertically()
@@ -332,7 +363,7 @@ fun CollapsibleScope.CollapsibleContent(
     exit: ExitTransition =
         if (currentTheme.activePreset == StylePreset.Nova) {
             shrinkVertically(
-                tween(200),
+                tween(COLLAPSIBLE_NOVA_MOTION_MILLIS),
             )
         } else {
             fadeOut() + shrinkVertically()
@@ -343,8 +374,11 @@ fun CollapsibleScope.CollapsibleContent(
 ) {
     val controller = collapsibleController()
     var contentHasFocus by remember { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
     LaunchedEffect(controller.open) {
-        if (!controller.open && contentHasFocus) controller.focus.returnTo?.requestFocus()
+        if (!controller.open && contentHasFocus && !controller.focus.restore()) {
+            focusManager.clearFocus(force = true)
+        }
     }
     val contentStyleState = remember { MutableStyleState(MutableInteractionSource()) }
     // The gap lives *inside* AnimatedVisibility, not as Arrangement.spacedBy on
@@ -396,7 +430,7 @@ fun CollapsibleScope.CollapsibleContent(
     enter: EnterTransition =
         if (currentTheme.activePreset == StylePreset.Nova) {
             expandVertically(
-                tween(200),
+                tween(COLLAPSIBLE_NOVA_MOTION_MILLIS),
             )
         } else {
             fadeIn() + expandVertically()
@@ -404,7 +438,7 @@ fun CollapsibleScope.CollapsibleContent(
     exit: ExitTransition =
         if (currentTheme.activePreset == StylePreset.Nova) {
             shrinkVertically(
-                tween(200),
+                tween(COLLAPSIBLE_NOVA_MOTION_MILLIS),
             )
         } else {
             fadeOut() + shrinkVertically()
