@@ -56,6 +56,7 @@ import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.tailwind.core.twRadius
@@ -73,7 +74,7 @@ object DrawerDefaults {
     /** `calc(100dvh - 6rem)` cap for vertical drawers. */
     val VerticalMaxHeightInset = 96.dp
 
-    /** Base Nova defaults to an attached panel (`--drawer-inset: 0px`). */
+    /** Base Nova window inset for attached panels (`--drawer-inset: 0px`). */
     val WindowInset = 0.dp
     val CornerRadius = 14.dp
     val SideInset = WindowInset
@@ -91,6 +92,11 @@ object DrawerDefaults {
     /** Base `--peek: 1rem`. */
     val NestedPeek = 16.dp
 }
+
+private val NovaRightWindowInset = 8.dp
+
+private val DrawerSwipeDirection.novaWindowInset: Dp
+    get() = if (this == DrawerSwipeDirection.Right) NovaRightWindowInset else DrawerDefaults.WindowInset
 
 internal val DrawerMotionEasing = CubicBezierEasing(0.22f, 1f, 0.36f, 1f)
 internal const val DrawerMotionMillis = 450
@@ -195,7 +201,7 @@ internal fun DrawerContentImpl(
         drawer.hasSnapPoints && swipeDirection.isVertical()
 
     val floating = currentTheme.activePreset == StylePreset.Nova
-    val insetPx = with(LocalDensity.current) { DrawerDefaults.WindowInset.roundToPx() }
+    val insetPx = with(LocalDensity.current) { swipeDirection.novaWindowInset.roundToPx() }
     val panelAlignment =
         if (floating) {
             Alignment { size, space, _ ->
@@ -442,7 +448,7 @@ private fun DrawerDismissPanel(
             DrawerSwipeDirection.Left, DrawerSwipeDirection.Right ->
                 if (currentTheme.activePreset == StylePreset.Nova) {
                     Modifier.height(
-                        (maxHeight - DrawerDefaults.SideInset * 2).coerceAtLeast(0.dp),
+                        (maxHeight - swipeDirection.novaWindowInset * 2).coerceAtLeast(0.dp),
                     ).width(
                         if (maxWidth >= 640.dp) {
                             DrawerDefaults.SideMaxWidth

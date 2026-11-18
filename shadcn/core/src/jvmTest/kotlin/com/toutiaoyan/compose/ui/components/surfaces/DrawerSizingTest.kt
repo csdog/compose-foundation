@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.*
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.ScreenshotTest
 import com.toutiaoyan.compose.ui.components.button.Button
@@ -23,7 +24,10 @@ import kotlin.test.assertTrue
 import kotlin.math.abs
 
 class DrawerSizingTest : ScreenshotTest() {
-    private fun assertAttachedSide(direction: DrawerSwipeDirection) {
+    private fun assertSideGap(
+        direction: DrawerSwipeDirection,
+        expectedGap: Dp,
+    ) {
         var viewportWidth = 0f
         var viewportHeight = 0f
         var density = 1f
@@ -32,11 +36,11 @@ class DrawerSizingTest : ScreenshotTest() {
             viewportWidth = LocalWindowInfo.current.containerSize.width.toFloat()
             viewportHeight = LocalWindowInfo.current.containerSize.height.toFloat()
             Drawer(defaultOpen = true, swipeDirection = direction) {
-                DrawerContent(Modifier.testTag("panel")) { DrawerHeader("Attached side") }
+                DrawerContent(Modifier.testTag("panel")) { DrawerHeader("Side drawer") }
             }
         }
         val panel = composeRule.onNodeWithTag("panel").fetchSemanticsNode().boundsInWindow
-        val inset = 0f
+        val inset = expectedGap.value * density
         assertTrue(abs(panel.top - inset) < 2f, "Top gap: ${panel.top}")
         assertTrue(abs(viewportHeight - panel.bottom - inset) < 2f, "Bottom gap: ${viewportHeight - panel.bottom}")
         val sideGap = if (direction == DrawerSwipeDirection.Left) panel.left else viewportWidth - panel.right
@@ -48,9 +52,9 @@ class DrawerSizingTest : ScreenshotTest() {
         )
     }
 
-    @Test fun leftDrawerAttachesToWindowEdges() = assertAttachedSide(DrawerSwipeDirection.Left)
+    @Test fun leftDrawerAttachesToWindowEdges() = assertSideGap(DrawerSwipeDirection.Left, 0.dp)
 
-    @Test fun rightDrawerAttachesToWindowEdges() = assertAttachedSide(DrawerSwipeDirection.Right)
+    @Test fun rightDrawerLeavesEightDpAroundItsViewportEdges() = assertSideGap(DrawerSwipeDirection.Right, 8.dp)
 
     private fun assertAttachedVertical(direction: DrawerSwipeDirection) {
         var viewportWidth = 0f

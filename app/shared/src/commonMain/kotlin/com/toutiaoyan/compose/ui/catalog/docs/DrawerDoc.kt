@@ -1471,7 +1471,7 @@ private val drawerGuideSections =
                                 listOf(
                                     "`--drawer-inset`",
                                     "`0px`",
-                                    "Nova uses `DrawerDefaults.WindowInset` (0dp); panels attach to the viewport.",
+                                    "Right Nova drawers leave an 8dp gap. Other directions attach to the viewport.",
                                 ),
                                 listOf(
                                     "`--drawer-bleed-background`",
