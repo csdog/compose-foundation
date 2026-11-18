@@ -1,7 +1,7 @@
 # Web 对齐验收状态
 
-更新日期：2026-11-18。当前保存状态为 **54 / 67 项已勾选，13 项未完成**。
-本次更新 Radio Group 验收记录。Chart 保持未勾选并跳过。
+更新日期：2026-11-18。当前保存状态为 **55 / 67 项已勾选，12 项未完成**。
+本次更新 Select 验收记录。Chart 保持未勾选并跳过。
 文档整理本身不构成验收；勾选只在组件证据与当前源码校验通过后更新。
 
 ## 状态口径
@@ -69,7 +69,7 @@
 - [x] Resizable (`resizable`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#resizable)。
 - [x] Scroll Area (`scroll-area`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#scroll-area)。
 - [x] Scroll Fade (`scroll-fade`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#scroll-fade)。
-- [ ] Select (`select`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#select) · [交接](../.agent-runs/select/progress.md)。
+- [x] Select (`select`)：2026-11-18 验收通过。修复实际文本对齐、触摸滚动箭头、禁用与受控焦点、退出动画和非模态对齐滚动锁。221 项 JVM、113 项截图校验、9 项 lint 及 42 份代码独立编译通过。当前 JS/Wasm 十个浏览器批次通过，629 条实际响应与产物匹配，独立终审通过。[验收](web-parity/select-acceptance-20261118/README.md) · [来源](web-parity/select-acceptance-20261118/sources.json) · [终审](web-parity/select-acceptance-20261118/independent-review.md) · [交接](../.agent-runs/select/progress.md)。
 - [x] Separator (`separator`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#separator)。
 - [ ] Sheet (`sheet`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#sheet) · [交接](../.agent-runs/sheet/progress.md)。
 - [ ] Shimmer (`shimmer`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#shimmer) · [交接](../.agent-runs/shimmer/progress.md)。
