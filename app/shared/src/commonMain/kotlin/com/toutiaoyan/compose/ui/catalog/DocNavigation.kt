@@ -8,7 +8,7 @@ data class DocLocation(
     val fragment: String,
     val revision: Int = 0,
     val animate: Boolean = false,
-    /** A history traversal to another route restores that route's existing ScrollState. */
+    /** Skip seeking for a cross-route cached position or a saved fragmentless same-route entry. */
     val restoreScroll: Boolean = false,
 )
 

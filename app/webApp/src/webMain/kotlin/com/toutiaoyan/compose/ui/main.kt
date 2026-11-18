@@ -61,9 +61,15 @@ fun main() {
                 container.removeEventListener("wheel", wheelListener)
             }
         }
-        val documentScrollHost = remember { BrowserDocumentScrollHost() }
-        val searchRequests = remember { browserSearchRequests() }
         val docNavigation = remember { BrowserDocNavigation() }
+        val documentScrollHost =
+            remember {
+                BrowserDocumentScrollHost(
+                    history = docNavigation.history,
+                    positionToRestore = { docNavigation.entryRestorePosition },
+                )
+            }
+        val searchRequests = remember { browserSearchRequests() }
         CompositionLocalProvider(
             LocalDocNavigation provides docNavigation,
             LocalDocExternalLink provides { href -> window.open(href, "_blank", "noopener,noreferrer") },
@@ -88,13 +94,9 @@ private suspend fun bindAppRouterToBrowser(
     docs: BrowserDocNavigation,
 ) {
     coroutineScope {
-        var committedPath = window.location.pathname
         val popStateListener: (Event) -> Unit = {
-            // Router observers can already have reacted; compare committed browser paths.
-            val restoreScroll = window.location.pathname != committedPath
-            committedPath = window.location.pathname
+            docs.sync(traversal = true, force = true)
             navigateFromBrowser(appRouter)
-            docs.sync(restoreScroll = restoreScroll, force = restoreScroll)
         }
         window.addEventListener("popstate", popStateListener)
         val hashListener: (Event) -> Unit = { docs.sync() }
@@ -104,8 +106,7 @@ private suspend fun bindAppRouterToBrowser(
                 document.title = route.documentTitle
                 val path = route.path
                 if (window.location.pathname != path) {
-                    window.history.pushState(null, "", path)
-                    committedPath = path
+                    docs.history.push(path)
                 }
                 docs.sync()
             }
@@ -118,22 +119,47 @@ private suspend fun bindAppRouterToBrowser(
 
 private fun browserDocLocation(): DocLocation =
     DocLocation(
-        componentId = (WebLinks.resolve(window.location.href) as? RouteKey.ComponentDetail)?.componentId,
+        componentId =
+            when (val route = WebLinks.resolve(window.location.href)) {
+                is RouteKey.ComponentDetail -> route.componentId
+                RouteKey.Introduction -> "introduction"
+                else -> null
+            },
         fragment = window.location.hash.removePrefix("#"),
     )
 
 private class BrowserDocNavigation : DocNavigation {
-    override var location by mutableStateOf(browserDocLocation())
+    val history = BrowserDocHistory()
+    private var committedPath = window.location.pathname
+    var entryRestorePosition: Double? = history.restorePosition.takeIf { window.location.hash.isNotEmpty() }
+        private set
+    override var location by mutableStateOf(browserDocLocation().copy(restoreScroll = entryRestorePosition != null))
         private set
 
     fun sync(
         animate: Boolean = false,
         force: Boolean = false,
-        restoreScroll: Boolean = false,
+        traversal: Boolean = false,
     ) {
+        val crossRoute = traversal && window.location.pathname != committedPath
+        val entryChanged = history.sync(traversal, crossRoute)
         val next = browserDocLocation()
-        if (force || next.componentId != location.componentId || next.fragment != location.fragment) {
-            location = next.copy(revision = location.revision + 1, animate = animate, restoreScroll = restoreScroll)
+        committedPath = window.location.pathname
+        val locationChanged = next.componentId != location.componentId || next.fragment != location.fragment
+        if (force || entryChanged || locationChanged) {
+            // Only traversal departures retain fragment offsets; explicit pushes re-seek on return.
+            entryRestorePosition =
+                if (traversal) {
+                    history.positionForTraversal(next.fragment.isNotEmpty(), crossRoute)
+                } else {
+                    null
+                }
+            location =
+                next.copy(
+                    revision = location.revision + 1,
+                    animate = animate,
+                    restoreScroll = crossRoute || entryRestorePosition != null,
+                )
         }
     }
 
@@ -144,7 +170,7 @@ private class BrowserDocNavigation : DocNavigation {
             currentHash == hash ||
                 (fragment.isEmpty() && currentHash.isEmpty() && window.location.href.endsWith('#'))
         if (!atTarget) {
-            window.history.pushState(null, "", window.location.pathname + window.location.search + hash)
+            history.push(window.location.pathname + window.location.search + hash)
         }
         // A second click must scroll again even if the URL already has this hash.
         sync(animate = true, force = true)

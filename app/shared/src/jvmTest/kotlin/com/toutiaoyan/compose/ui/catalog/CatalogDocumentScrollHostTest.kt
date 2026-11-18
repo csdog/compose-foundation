@@ -28,7 +28,7 @@ class CatalogDocumentScrollHostTest {
         val stops = mutableListOf<ScrollState?>()
         val docs =
             object : DocNavigation {
-                override var location by mutableStateOf(DocLocation(null, ""))
+                override var location by mutableStateOf(DocLocation("introduction", ""))
 
                 override fun navigate(fragment: String) {
                     location =
@@ -92,6 +92,7 @@ class CatalogDocumentScrollHostTest {
         rule.runOnIdle { docs.navigate("") }
         rule.waitForIdle()
         assertEquals(0, accordion.value, "A new empty-fragment navigation still starts at the top")
-        assertEquals(4, starts.size)
+        assertEquals(5, starts.size, "A same-document location revision must rebind the browser entry position")
+        assertSame(accordion, starts.last(), "Entry restoration keeps the route's cached ScrollState")
     }
 }

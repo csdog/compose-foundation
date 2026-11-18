@@ -24,6 +24,7 @@ import com.toutiaoyan.compose.ui.components.text.TextVariant
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import kotlin.math.roundToInt
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 
 internal data class DocSection(
     val id: String,
@@ -59,6 +60,8 @@ internal class DocAnchors {
             updates.receive()
         }
     }
+
+    val changes = updates.receiveAsFlow()
 
     fun offsetOf(id: String): Int? {
         val parent = content?.takeIf { it.isAttached } ?: return null

@@ -108,8 +108,7 @@ internal fun ComponentDetailContent(
             val section =
                 sections.firstOrNull { it.fragment == location.fragment || it.id == location.fragment }
                     ?: return@LaunchedEffect
-            val target = anchors.awaitOffsetOf(section.id)
-            if (location.animate) scrollState.animateScrollTo(target) else scrollState.scrollTo(target)
+            scrollState.followDocumentAnchor(anchors, section.id, animated = location.animate)
         }
     }
     val activeSection by remember(anchors, sections, scrollState) {
@@ -124,7 +123,9 @@ internal fun ComponentDetailContent(
         if (navigation != null) {
             navigation.navigate(section.fragment)
         } else {
-            anchors.offsetOf(id)?.let { target -> scope.launch { scrollState.animateScrollTo(target) } }
+            anchors.offsetOf(id)?.let { target ->
+                scope.launch { scrollState.seekDocumentAnchor(target, animated = true) }
+            }
         }
     }
     val copy = rememberCopyToClipboard(pageText)

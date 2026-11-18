@@ -10,6 +10,7 @@ import androidx.compose.foundation.style.contentPadding
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalDensity
 import com.toutiaoyan.compose.ui.catalog.LocalDocumentScrollHost
+import com.toutiaoyan.compose.ui.catalog.LocalDocNavigation
 import com.toutiaoyan.compose.ui.catalog.LocalCatalogViewportWidth
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.withFrameNanos
@@ -120,8 +121,18 @@ fun CatalogNavDisplay(
         }
     val documentHost = LocalDocumentScrollHost.current
     val pixelsPerCssPixel = LocalDensity.current.density
-    LaunchedEffect(documentHost, activeDocumentScroll, pixelsPerCssPixel) {
-        documentHost?.bind(activeDocumentScroll, pixelsPerCssPixel)
+    val documentLocation = LocalDocNavigation.current?.location
+    val activeDocumentId =
+        when (current) {
+            is RouteKey.ComponentDetail -> current.componentId
+            RouteKey.Introduction -> "introduction"
+            RouteKey.Create -> null
+        }
+    LaunchedEffect(documentHost, activeDocumentScroll, pixelsPerCssPixel, documentLocation) {
+        // The router can recompose before the browser commits its new history entry.
+        if (documentLocation == null || documentLocation.componentId == activeDocumentId) {
+            documentHost?.bind(activeDocumentScroll, pixelsPerCssPixel)
+        }
     }
 
     var drawerOpen by remember { mutableStateOf(false) }
