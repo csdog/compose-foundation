@@ -1,5 +1,8 @@
 package com.toutiaoyan.compose.ui.components.toggle
 import com.toutiaoyan.compose.ui.utils.keyboardInputMode
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +29,11 @@ import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
 import com.toutiaoyan.compose.ui.components.icon.LocalInlineIconSize
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.PointerType
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
@@ -34,6 +42,7 @@ import androidx.compose.ui.semantics.semantics
 import com.toutiaoyan.compose.ui.components.button.ButtonAnimation
 import com.toutiaoyan.compose.ui.components.buttongroup.raiseFocusedSiblingZIndex
 import com.toutiaoyan.compose.ui.components.field.LocalFieldSetDisabled
+import com.toutiaoyan.compose.ui.components.overlay.captureTouchCanvasFocus
 import com.toutiaoyan.compose.ui.styles.cssStyleable
 import com.toutiaoyan.compose.ui.styles.rememberMinTouchTargetStyle
 import com.toutiaoyan.compose.ui.styles.rememberPressMotionStyle
@@ -44,6 +53,27 @@ import com.toutiaoyan.compose.ui.components.text.Text
 class ToggleState(val pressed: Boolean)
 
 private val LocalToggle = staticCompositionLocalOf<ToggleState?> { null }
+
+private class ToggleTouchFocus {
+    var restoreCanvasFocus: (() -> Unit)? = null
+}
+
+private fun Modifier.trackToggleTouch(state: ToggleTouchFocus): Modifier =
+    pointerInput(state) {
+        awaitEachGesture {
+            val down = awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
+            val restore = if (down.type == PointerType.Touch) captureTouchCanvasFocus(currentEvent) else null
+            if (restore != null && waitForUpOrCancellation(pass = PointerEventPass.Initial) != null) {
+                // Expose the callback to toggleable only during the release's Main pass.
+                state.restoreCanvasFocus = restore
+                try {
+                    awaitPointerEvent(PointerEventPass.Final)
+                } finally {
+                    state.restoreCanvasFocus = null
+                }
+            }
+        }
+    }
 
 /** Reads the nearest [Toggle]. */
 @Composable
@@ -137,7 +167,11 @@ fun Toggle(
         } else {
             null
         }
+    val canToggle = resolvedEnabled && setPressed != null
     val interactionSource = remember { MutableInteractionSource() }
+    val focusRequester = remember { FocusRequester() }
+    val touchFocus = remember { ToggleTouchFocus() }
+    val touchFocusModifier = if (canToggle) Modifier.trackToggleTouch(touchFocus) else Modifier
     val pressStyle = rememberPressMotionStyle(animation)
     val touchTargetStyle = rememberMinTouchTargetStyle()
     val styleState =
@@ -163,10 +197,18 @@ fun Toggle(
                     }
                 }
                 .keyboardInputMode()
+                .then(touchFocusModifier)
+                .focusRequester(focusRequester)
                 .toggleable(
                     value = isPressed,
-                    onValueChange = { setPressed?.invoke(it) },
-                    enabled = resolvedEnabled && setPressed != null,
+                    onValueChange = {
+                        touchFocus.restoreCanvasFocus?.let { restore ->
+                            restore()
+                            focusRequester.requestFocus()
+                        }
+                        setPressed?.invoke(it)
+                    },
+                    enabled = canToggle,
                     role = if (currentTheme.activePreset == StylePreset.Nova) Role.Button else Role.Checkbox,
                     interactionSource = interactionSource,
                     indication = null,

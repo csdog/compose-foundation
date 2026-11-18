@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.dp
@@ -35,11 +36,25 @@ class ToggleExamplesTest {
             listOf("Default", "Outline", "With Text", "Size", "Disabled", "RTL"),
             toggleDoc.examples.take(6).map { it.title },
         )
-        assertTrue(toggleDoc.examples.drop(6).all { it.title.startsWith("Kotlin extension: ") })
+        assertEquals(
+            listOf(
+                "Default variant",
+                "Default size",
+                "Default disabled",
+                "Uncontrolled",
+                "Default pressed",
+                "Accessible label",
+                "Default label",
+                "Invalid",
+            ).map { "Kotlin extension: $it" },
+            toggleDoc.examples.drop(6).map { it.title },
+        )
         assertEquals(null, toggleDoc.examplesHeading)
         val markdown = componentPageMarkdown(toggleDoc)
         val order =
             listOf(
+                "## Installation",
+                "## Usage",
                 "## Outline",
                 "## With Text",
                 "## Size",
@@ -49,9 +64,14 @@ class ToggleExamplesTest {
             ).map { markdown.indexOf(it) }
         assertTrue(order.all { it >= 0 }, "missing a section heading: $order")
         assertEquals(order.sorted(), order)
+        assertEquals("import com.toutiaoyan.compose.ui.components.toggle.Toggle", toggleDoc.usageImportsCode)
+        assertEquals("Toggle(\"Toggle\")", toggleDoc.usageCode)
+        assertContains(markdown, "[Base UI Toggle](https://base-ui.com/react/components/toggle#api-reference)")
+        assertEquals(1, markdown.lineSequence().count { it == "## API Reference" })
         assertContains(markdown, "Use `variant = ToggleVariant.Outline` for an outline style.")
         assertContains(markdown, "Use the `size` prop to change the size of the toggle.")
         assertFalse(markdown.contains("## Examples"))
+        assertFalse(markdown.contains("## Default"))
     }
 
     @Test fun demoIsTheOfficialBookmarkToggle() {
@@ -62,28 +82,77 @@ class ToggleExamplesTest {
         rule.onNodeWithContentDescription("Toggle bookmark").assertIsOn()
     }
 
-    @Test fun outlineAndTextToggleStillPress() {
+    @Test fun outlineTogglesItalicAndBoldIndependently() {
         show("Outline")
-        rule.onNodeWithText("Italic").performClick()
-        rule.onNodeWithText("Italic").assertIsOn()
+        val italic = rule.onNodeWithContentDescription("Toggle italic")
+        val bold = rule.onNodeWithContentDescription("Toggle bold")
+        italic.assertIsOff().performClick()
+        italic.assertIsOn()
+        bold.assertIsOff().performClick()
+        bold.assertIsOn()
+        italic.performClick()
+        italic.assertIsOff()
+        bold.assertIsOn()
     }
 
-    @Test fun disabledToggleDoesNotChangeState() {
+    @Test fun textRecipeTogglesItalic() {
+        show("With Text")
+        val italic = rule.onNodeWithContentDescription("Toggle italic")
+        italic.assertIsOff().performClick()
+        italic.assertIsOn()
+        rule.onNodeWithText("Italic").assertIsDisplayed()
+    }
+
+    @Test fun sizeFixturesStartOffAndToggleIndependently() {
+        show("Size")
+        val small = rule.onNodeWithContentDescription("Toggle small")
+        val medium = rule.onNodeWithContentDescription("Toggle default")
+        val large = rule.onNodeWithContentDescription("Toggle large")
+        small.assertIsOff()
+        medium.assertIsOff().performClick()
+        medium.assertIsOn()
+        large.assertIsOff().performClick()
+        large.assertIsOn()
+        small.assertIsOff().performClick()
+        small.assertIsOn()
+    }
+
+    @Test fun disabledVariantsAreBothOff() {
         show("Disabled")
-        val disabled = rule.onAllNodes(hasClickAction() and isNotEnabled()).onFirst()
-        disabled.assertExists()
+        rule.onNodeWithContentDescription("Toggle disabled").assertIsNotEnabled().assertIsOff()
+        rule.onNodeWithContentDescription("Toggle disabled outline").assertIsNotEnabled().assertIsOff()
     }
 
-    @Test fun rtlPreviewSwitchesBetweenTranslations() {
+    @Test fun defaultDisabledExtensionTogglesWhileEnabled() {
+        show("Kotlin extension: Default disabled")
+        val toggle = rule.onNodeWithContentDescription("Bold")
+        toggle.assertIsEnabled().assertIsOff().performClick()
+        toggle.assertIsOn().performClick()
+        toggle.assertIsOff()
+    }
+
+    @Test fun rtlPreviewKeepsBookmarkStateAcrossTranslations() {
         show("RTL")
+        val bookmark = rule.onNodeWithContentDescription("Toggle bookmark")
+        rule.onNodeWithText("إشارة مرجعية").assertIsDisplayed()
+        bookmark.assertIsOff().performClick()
         for ((label, toggleLabel) in listOf(
-            "Arabic (العربية)" to "إشارة مرجعية",
             "English" to "Bookmark",
             "Hebrew (עברית)" to "סימנייה",
+            "Arabic (العربية)" to "إشارة مرجعية",
         )) {
             rule.onNodeWithContentDescription("Preview language").performClick()
             rule.onAllNodesWithText(label).onLast().performClick()
             rule.onNodeWithText(toggleLabel).assertIsDisplayed()
+            bookmark.assertIsOn()
         }
+    }
+
+    @Test fun invalidExtensionClearsItsErrorWhenConfirmed() {
+        show("Kotlin extension: Invalid")
+        val toggle = rule.onNodeWithContentDescription("Confirm selection")
+        val invalid = SemanticsMatcher.expectValue(SemanticsProperties.Error, "Invalid selection")
+        toggle.assertIsOff().assert(invalid).performClick()
+        toggle.assertIsOn().assert(!invalid)
     }
 }

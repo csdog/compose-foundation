@@ -1,0 +1,32 @@
+--- a/gradle/compose-web-ui/build.gradle.kts
++++ b/gradle/compose-web-ui/build.gradle.kts
+@@ -121,6 +121,29 @@
+         sources[listener] = radioText.replace(radioSelectedOld, radioSelectedNew)
+             .replace(radioCheckedOld, radioCheckedNew).toByteArray(Charsets.UTF_8)
+         check(sha(sources.getValue(listener)) == "2d3fc02987caa82bf87e7db98aaf9b38854f99e2d452b3b02454a8efcbb0817e") { "Radio listener postimage mismatch" }
++        // A two-state button exposes pressed; checkboxes, switches, and radios use checked.
++        val togglePressed = """
++            |        val toggleState = config.getOrNull(SemanticsProperties.ToggleableState)
++            |        val buttonPressed = toggleState?.takeIf { roleId == AriaRoleId.Button }
++            |        if (buttonPressed != null) {
++            |            htmlNode.setAttribute("aria-pressed", buttonPressed.toAriaChecked())
++            |        } else {
++            |            htmlNode.removeAttribute("aria-pressed")
++            |        }
++            |        if (roleId == AriaRoleId.RadioButton && SemanticsProperties.Selected in config) {
++            |            htmlNode.setAttribute("aria-checked", config[SemanticsProperties.Selected].toString())
++            |        } else if (toggleState != null && buttonPressed == null) {
++            |            htmlNode.setAttribute("aria-checked", toggleState.toAriaChecked())
++            |        } else {
++            |            htmlNode.removeAttribute("aria-checked")
++            |        }
++        """.trimMargin()
++        val toggleListener = sources.getValue(listener).toString(Charsets.UTF_8)
++        check(toggleListener.indexOf(radioCheckedNew) == toggleListener.lastIndexOf(radioCheckedNew) && radioCheckedNew in toggleListener) {
++            "Toggle pressed patch context mismatch"
++        }
++        sources[listener] = toggleListener.replace(radioCheckedNew, togglePressed).toByteArray(Charsets.UTF_8)
++        check(sha(sources.getValue(listener)) == "754ab9699688c3f0bb9c7cabc2e709c99b901046cec8b02624506e14e7fba4a7") { "Toggle pressed postimage mismatch" }
+         // Browser ContextMenu events must reach every Web Compose key handler as Key.Menu.
+         val keyEvent = "webMain/androidx/compose/ui/input/key/KeyEvent.web.kt"
+         val keyBefore = sources.getValue(keyEvent)

@@ -2,14 +2,28 @@
 
 package com.toutiaoyan.compose.ui.catalog.docs
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.StrokeJoin
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import com.composables.icons.lucide.Bold
 import com.composables.icons.lucide.Bookmark
+import com.composables.icons.lucide.Italic
 import com.composables.icons.lucide.Lucide
 import com.toutiaoyan.compose.tailwind.core.LocalUnitSpacing
 import com.toutiaoyan.compose.ui.catalog.catalogArabicFontFamily
@@ -17,51 +31,134 @@ import com.toutiaoyan.compose.ui.catalog.catalogHebrewFontFamily
 import com.toutiaoyan.compose.ui.components.icon.Icon
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.toggle.Toggle
-import com.toutiaoyan.compose.ui.components.toggle.ToggleIconPlacement
 import com.toutiaoyan.compose.ui.components.toggle.ToggleSize
 import com.toutiaoyan.compose.ui.components.toggle.ToggleVariant
+import com.toutiaoyan.compose.ui.components.toggle.toggleState
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.theme.currentTheme
 
-private val toggleRtlLabels =
-    listOf(
-        listOf("Bookmark", "Toggle bookmark"),
-        listOf("إشارة مرجعية", "تبديل الإشارة المرجعية"),
-        listOf("סימנייה", "החלף סימנייה"),
-    )
+// region usage
+@Composable
+internal fun ToggleUsagePreview() {
+    Toggle("Toggle")
+}
+// endregion usage
 
-private val toggleRtlExample =
-    ComponentExample(
-        title = "RTL",
-        descriptionMarkdown =
-            (
-                "To enable RTL support in shadcn/ui, see the [RTL configuration guide](https://ui.shadcn.com/docs/rtl)."
-            ),
-        previewPadding = 0.dp,
-        code =
-            """
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-                Theme(fontFamily = catalogArabicFontFamily()) {
-                    var bookmarked by remember { mutableStateOf(false) }
-                    Toggle(
-                        pressed = bookmarked,
-                        onPressedChange = { bookmarked = it },
-                        label = "تبديل الإشارة المرجعية",
-                        variant = ToggleVariant.Outline,
-                        size = ToggleSize.Sm,
-                        iconPlacement = ToggleIconPlacement.Start,
-                    ) {
-                        Icon(Lucide.Bookmark)
-                        Text { "إشارة مرجعية" }
-                    }
-                }
-            }
-            """.trimIndent(),
-        preview = { ToggleRtlRecipe() },
-    )
+// region default
+@Composable
+internal fun ToggleDemoPreview() {
+    BookmarkToggle(text = "Bookmark")
+}
+// endregion default
+
+// region outline
+@Composable
+internal fun ToggleOutlinePreview() {
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        itemVerticalAlignment = Alignment.CenterVertically,
+    ) {
+        Toggle(label = "Toggle italic", variant = ToggleVariant.Outline) {
+            Icon(Lucide.Italic)
+            Text { "Italic" }
+        }
+        Toggle(label = "Toggle bold", variant = ToggleVariant.Outline) {
+            Icon(Lucide.Bold)
+            Text { "Bold" }
+        }
+    }
+}
+// endregion outline
+
+// region text
+@Composable
+internal fun ToggleWithTextPreview() {
+    Toggle(label = "Toggle italic") {
+        Icon(Lucide.Italic)
+        Text { "Italic" }
+    }
+}
+// endregion text
+
+// region size
+@Composable
+internal fun ToggleSizePreview() {
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        itemVerticalAlignment = Alignment.CenterVertically,
+    ) {
+        Toggle("Small", variant = ToggleVariant.Outline, size = ToggleSize.Sm, label = "Toggle small")
+        Toggle("Default", variant = ToggleVariant.Outline, label = "Toggle default")
+        Toggle("Large", variant = ToggleVariant.Outline, size = ToggleSize.Lg, label = "Toggle large")
+    }
+}
+// endregion size
+
+// region disabled
+@Composable
+internal fun ToggleDisabledPreview() {
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        itemVerticalAlignment = Alignment.CenterVertically,
+    ) {
+        Toggle("Disabled", disabled = true, label = "Toggle disabled")
+        Toggle("Disabled", disabled = true, variant = ToggleVariant.Outline, label = "Toggle disabled outline")
+    }
+}
+// endregion disabled
+
+// region rtl
+@Composable
+internal fun ToggleRtlPreview(language: String = "ar") {
+    val text =
+        when (language) {
+            "ar" -> "إشارة مرجعية"
+            "he" -> "סימנייה"
+            else -> "Bookmark"
+        }
+    val direction = if (language == "ar" || language == "he") LayoutDirection.Rtl else LayoutDirection.Ltr
+    CompositionLocalProvider(LocalLayoutDirection provides direction) {
+        BookmarkToggle(text)
+    }
+}
+// endregion rtl
+
+// region bookmark
+@Composable
+private fun BookmarkToggle(text: String) {
+    Toggle(label = "Toggle bookmark", variant = ToggleVariant.Outline, size = ToggleSize.Sm) {
+        Icon(if (toggleState().pressed) FilledBookmark else Lucide.Bookmark)
+        Text { text }
+    }
+}
+
+private val FilledBookmark by lazy {
+    ImageVector.Builder("FilledBookmark", 24.dp, 24.dp, 24f, 24f).apply {
+        path(
+            fill = SolidColor(Color.Black),
+            stroke = SolidColor(Color.Black),
+            strokeLineWidth = 2f,
+            strokeLineCap = StrokeCap.Round,
+            strokeLineJoin = StrokeJoin.Round,
+        ) {
+            moveTo(19f, 21f)
+            lineTo(12f, 17f)
+            lineTo(5f, 21f)
+            lineTo(5f, 5f)
+            curveTo(5f, 3.9f, 5.9f, 3f, 7f, 3f)
+            lineTo(17f, 3f)
+            curveTo(18.1f, 3f, 19f, 3.9f, 19f, 5f)
+            close()
+        }
+    }.build()
+}
+// endregion bookmark
 
 @Composable
-private fun ToggleRtlRecipe() {
+internal fun ToggleRtlCatalogPreview() {
     var language by remember { mutableIntStateOf(1) }
     val inherited = currentTheme
     RtlPreview(language, listOf("English", "Arabic (العربية)", "Hebrew (עברית)"), { language = it }) {
@@ -71,58 +168,87 @@ private fun ToggleRtlRecipe() {
                 2 -> catalogHebrewFontFamily()
                 else -> inherited.fontFamily
             }
-        CompositionLocalProvider(
-            LocalLayoutDirection provides if (language == 0) LayoutDirection.Ltr else LayoutDirection.Rtl,
+        Theme(
+            preset = inherited.activePreset,
+            baseColor = inherited.activeBaseColor,
+            accent = inherited.activeAccent,
+            isDark = inherited.isDark,
+            baseRadius = inherited.baseRadius,
+            ring = inherited.ring,
+            unitSpacing = LocalUnitSpacing.current,
+            minTouchTarget = inherited.minTouchTarget,
+            fontFamily = font,
         ) {
-            Theme(
-                preset = inherited.activePreset,
-                baseColor = inherited.activeBaseColor,
-                accent = inherited.activeAccent,
-                isDark = inherited.isDark,
-                baseRadius = inherited.baseRadius,
-                ring = inherited.ring,
-                unitSpacing = LocalUnitSpacing.current,
-                minTouchTarget = inherited.minTouchTarget,
-                fontFamily = font,
-            ) {
-                val labels = toggleRtlLabels[language]
-                var bookmarked by remember(language) { mutableStateOf(false) }
-                Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    Toggle(
-                        pressed = bookmarked,
-                        onPressedChange = { bookmarked = it },
-                        label = labels[1],
-                        variant = ToggleVariant.Outline,
-                        size = ToggleSize.Sm,
-                        iconPlacement = ToggleIconPlacement.Start,
-                    ) {
-                        Icon(Lucide.Bookmark)
-                        Text { labels[0] }
-                    }
-                }
-            }
+            ToggleRtlPreview(language = listOf("en", "ar", "he")[language])
         }
     }
 }
 
-/** Official six sections first, then the existing Compose-only examples. */
-internal fun togglePageExamples(native: List<ComponentExample>): List<ComponentExample> {
-    val byTitle = native.associateBy { it.title }
-    val promoted = setOf("Default", "Outline", "With text", "Sizes", "Disabled")
-    return listOf(
-        byTitle.getValue("Default"),
-        byTitle.getValue("Outline").copy(
-            descriptionMarkdown = "Use `variant = ToggleVariant.Outline` for an outline style.",
-        ),
-        byTitle.getValue("With text").copy(title = "With Text"),
-        byTitle.getValue("Sizes").copy(
-            title = "Size",
-            descriptionMarkdown = "Use the `size` prop to change the size of the toggle.",
-        ),
-        byTitle.getValue("Disabled"),
-        toggleRtlExample,
-    ) +
-        native
-            .filterNot { it.title in promoted }
-            .map { it.copy(title = "Kotlin extension: " + it.title) }
+// region defaultVariant
+@Composable
+internal fun ToggleDefaultVariantPreview() {
+    var bold by remember { mutableStateOf(false) }
+    Toggle("Bold", pressed = bold, onPressedChange = { bold = it }, variant = ToggleVariant.Default)
 }
+// endregion defaultVariant
+
+// region defaultSize
+@Composable
+internal fun ToggleDefaultSizePreview() {
+    var bold by remember { mutableStateOf(false) }
+    Toggle("Bold", pressed = bold, onPressedChange = { bold = it }, size = ToggleSize.Md)
+}
+// endregion defaultSize
+
+// region defaultDisabled
+@Composable
+internal fun ToggleDefaultDisabledPreview() {
+    var bold by remember { mutableStateOf(false) }
+    Toggle("Bold", pressed = bold, onPressedChange = { bold = it }, disabled = false)
+}
+// endregion defaultDisabled
+
+// region uncontrolled
+@Composable
+internal fun ToggleUncontrolledPreview() {
+    Toggle("Bold", defaultPressed = true)
+}
+// endregion uncontrolled
+
+// region defaultPressed
+@Composable
+internal fun ToggleDefaultPressedPreview() {
+    Toggle("Bold", defaultPressed = false)
+}
+// endregion defaultPressed
+
+// region accessibleLabel
+@Composable
+internal fun ToggleAccessibleLabelPreview() {
+    var bold by remember { mutableStateOf(false) }
+    Toggle("Bold", pressed = bold, onPressedChange = { bold = it }, label = "Bold")
+}
+// endregion accessibleLabel
+
+// region defaultLabel
+@Composable
+internal fun ToggleDefaultLabelPreview() {
+    Toggle("Bold", defaultPressed = false, label = "Bold")
+}
+// endregion defaultLabel
+
+// region invalid
+@Composable
+internal fun ToggleInvalidPreview() {
+    var confirmed by remember { mutableStateOf(false) }
+    Toggle(
+        pressed = confirmed,
+        onPressedChange = { confirmed = it },
+        label = "Confirm selection",
+        variant = ToggleVariant.Outline,
+        invalid = !confirmed,
+    ) {
+        Text { "Confirm selection" }
+    }
+}
+// endregion invalid
