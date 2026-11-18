@@ -213,5 +213,5 @@ internal fun InlineDocParagraph(
     }
 }
 
-private val inlineMarkdown = Regex("""`([^`]+)`|\[([^]]+)\]\(([^)]+)\)""")
+private val inlineMarkdown = Regex("""`([^`]+)`|\[([^\]]+)\]\(([^)]+)\)""")
 private val codeWords = Regex("""[^\s-]+-?|\s+""")
