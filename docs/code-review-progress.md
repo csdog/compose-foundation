@@ -31,7 +31,7 @@
 | `Slider.kt:81`、`:104` | 控制器和根节点无障碍动作分别定义滑块间最小距离。键盘大步进使用了几个语义不同的数字。 | 已共享间距规则并命名步长 | `50f33ddb`。23 个 Slider 测试通过，保留 Web 绝对大步进及其他平台的步幅倍数。 |
 | `TouchCanvasFocus.kt:15`、`Sheet.kt:252`、`Toggle.kt:147` | 两处都在指针释放的 Main 阶段向点击处理器暂存触摸信息，且各自负责取消清理。 | 已共享触摸释放生命周期 | `cd15c448`。37 个 Sheet、15 个 Toggle 测试通过。Sheet 保留原生触摸识别，Toggle 仅在捕获到恢复动作时恢复焦点。Slider 拖动与 Popover 非模态交互保留独立路径。 |
 | `app/webApp/src/webMain/kotlin/com/toutiaoyan/compose/ui/main.kt:106`、`:122` | 路由绑定直接写入和清空 `window.onpopstate`，覆盖宿主已有处理器。 | 暂缓，文件有用户的导航改动 | Chromium 在 JS/Wasm 中均复现。可正常执行锚点导航、后退和前进，但浏览器派发了 `popstate`，预先注册的宿主处理器调用为 0。整合导航改动后改用成对注册与移除。[导航复现记录](../.agent-runs/code-review-95c932b6/catalog-history.json) |
-| `build.gradle.kts:39` 的 Detekt 配置 | 核心模块默认 Gradle Detekt 任务解析依赖后以 `NO-SOURCE` 跳过，任务成功不代表扫描了 KMP 源码。 | 独立 CLI 已覆盖本轮检查，Gradle 配置待单独处理 | 任务输入为 0，构建脚本已有本地改动。直接修复 CI 输入还需处理现有告警。[任务证据](../.agent-runs/code-review-95c932b6/gradle-detekt-coverage.json) |
+| `build.gradle.kts` 的 Detekt 配置 | 核心模块原先以 `NO-SOURCE` 跳过，读到 0 个输入文件。 | 已配置 Gradle 扫描 KMP 源码，并为存量问题生成模块 baseline | 检查和 baseline 生成使用同一份源码范围。详见下方 Gradle Detekt 记录。 |
 
 ## 基线检查
 
@@ -40,6 +40,15 @@
 - 目录测试首次编译遇到 JVM 堆不足，改用隔离输出与更大的堆后通过。最终 294 个 JVM 测试通过，包含 237 个组件及 57 个目录相关用例。核心模块 ktlint、目录共享源码与 JVM 测试 ktlint、Web 源码 ktlint 通过。JS 与 Wasm 分别生成 49 和 45 个产物文件。
 - Detekt 1.23.7 CLI 使用仓库配置和同版本格式插件。以 `95c932b6` 对比本轮所改的 12 个文件，告警从 604 条降到 573 条，无新增的按文件和规则统计项。全模块报告仍有既有告警，包括 Select、Toast 的长函数。保留现有组合生命周期与测试覆盖，避免仅为降低行数而拆分状态所有者。[本地 Detekt 记录](../.agent-runs/code-review-95c932b6/detekt-summary.json)
 - [本地 JVM、ktlint 和构建证据](../.agent-runs/code-review-95c932b6/native-and-distributions.json)
+
+## Gradle Detekt 跟进
+
+- Cursor 修改 Gradle 配置后，检查和 baseline 生成共用各模块的 `src/**/*.kt`，排除生成目录。移除 Detekt 格式插件，缩进、换行、修饰符顺序和导入格式由 ktlint 配置负责。
+- 以 `0989319b` 的已提交源码生成 baseline。7 个模块共扫描 939 个 Kotlin 文件，5 个模块记录了 5,408 个存量问题 ID。CI 沿用 `ktlintCheck detekt --continue`，`maxIssues: 0` 会拦截 baseline 之外的 Detekt 问题。用 `detektBaseline` 生成初始清单，日常 CI 只读取该清单。[源码覆盖](../.agent-runs/code-review-95c932b6/detekt-gradle/baseline-coverage.json) · [存量问题统计](../.agent-runs/code-review-95c932b6/detekt-gradle/baseline-summary.json)
+- 隔离副本运行 CI 同款命令通过。临时在 `iosMain` 中引入一条 `MagicNumber`，Gradle Detekt 报出该告警并失败。放在 `generated` 中的另一条告警被排除。两个临时文件均已移除。[新增告警试验](../.agent-runs/code-review-95c932b6/detekt-gradle/probe.xml)
+- 清理临时文件后，核心 Detekt 重新扫描 553 个文件并通过。相关 JVM 测试共 418 个通过，包括 236 个组件测试及 182 个目录测试。[Detekt 复测](../.agent-runs/code-review-95c932b6/detekt-gradle/final-coverage.json) · [JVM 结果](../.agent-runs/code-review-95c932b6/detekt-gradle/jvm-scoped.json)
+- 核心模块全量 JVM 运行 1,698 个测试，Select 焦点恢复、Checkbox 动画中间帧以及 Switch 浅色和深色动画反向各有一项失败。用原构建配置单独重跑这四项，复现相同断言失败。[全量结果](../.agent-runs/code-review-95c932b6/detekt-gradle/jvm-full.json) · [改动前对照](../.agent-runs/code-review-95c932b6/detekt-gradle/jvm-control.json)
+- 已有的本地源码改动额外引入 33 个 Detekt 问题 ID，仍会触发检查。上述 baseline 仅依据已提交源码生成。
 
 ## Chromium 实测
 

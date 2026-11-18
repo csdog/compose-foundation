@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ConstructorParameterNaming:Config.kt$AppConfig$val BACKEND_BASE_URL: String</ID>
+    <ID>MatchingDeclarationName:Config.kt$AppConfig</ID>
+  </CurrentIssues>
+</SmellBaseline>

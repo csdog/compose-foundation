@@ -1,0 +1,707 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ComplexCondition:AlertExamplesTest.kt$AlertExamplesTest$abs(actual.red - expected.red) &lt; .025f &amp;&amp; abs(actual.green - expected.green) &lt; .025f &amp;&amp; abs(actual.blue - expected.blue) &lt; .025f &amp;&amp; actual.alpha &gt; .9f</ID>
+    <ID>ComplexCondition:AvatarExamplesTest.kt$AvatarExamplesTest$color.alpha &gt; .9f &amp;&amp; ( abs(color.red - color.green) &gt; .05f || abs(color.green - color.blue) &gt; .05f || abs(color.red - color.blue) &gt; .05f )</ID>
+    <ID>ComplexCondition:CatalogNavDisplay.kt$event.type == KeyEventType.KeyDown &amp;&amp; event.key == Key.K &amp;&amp; ( event.isCtrlPressed || event.isMetaPressed )</ID>
+    <ID>ComplexCondition:CreatePreviewCards.kt$(title == "Overview" &amp;&amp; index == 0) || (title == "Account" &amp;&amp; index == 1)</ID>
+    <ID>CyclomaticComplexMethod:BadgeRecipes.kt$@Composable internal fun BadgeRecipe( kind: Int, language: Int = 0, )</ID>
+    <ID>CyclomaticComplexMethod:BreadcrumbDoc.kt$@Composable internal fun BreadcrumbExample( kind: String, language: Int = 1, )</ID>
+    <ID>CyclomaticComplexMethod:ButtonRecipes.kt$@Composable internal fun ButtonRecipe( kind: Int, language: Int = 0, )</ID>
+    <ID>CyclomaticComplexMethod:CalendarDoc.kt$@Composable private fun CalendarRecipeBody(title: String)</ID>
+    <ID>CyclomaticComplexMethod:CalendarRecipeCode.kt$internal fun calendarRecipeCode(title: String): String</ID>
+    <ID>CyclomaticComplexMethod:CarouselDoc.kt$@Composable private fun CarouselRecipe( title: String, language: Int = 1, )</ID>
+    <ID>CyclomaticComplexMethod:CarouselDoc.kt$private fun carouselCode(title: String): String</ID>
+    <ID>CyclomaticComplexMethod:CatalogNavDisplay.kt$@Composable fun CatalogNavDisplay( backStack: NavBackStack&lt;RouteKey&gt;, appRouter: AppRouter, stylePreset: StylePreset, onStylePresetChange: (StylePreset) -&gt; Unit, baseColor: BaseColor, onBaseColorChange: (BaseColor) -&gt; Unit, accent: Accent, onAccentChange: (Accent) -&gt; Unit, isDarkMode: Boolean, onToggleDarkMode: (Boolean) -&gt; Unit, searchRequests: Flow&lt;Unit&gt; = emptyFlow(), )</ID>
+    <ID>CyclomaticComplexMethod:ChartRecipes.kt$@Composable internal fun ChartInteractiveRecipe()</ID>
+    <ID>CyclomaticComplexMethod:CodeBlock.kt$private fun highlightKotlin( code: String, isLight: Boolean, ): AnnotatedString</ID>
+    <ID>CyclomaticComplexMethod:ComponentDetailScreen.kt$@Composable internal fun ComponentDetailContent( doc: ComponentDoc, onNavigateComponent: (String) -&gt; Unit = {}, scrollState: ScrollState = rememberScrollState(), )</ID>
+    <ID>CyclomaticComplexMethod:ComponentDetailScreen.kt$@Composable internal fun GuideBlocks(blocks: List&lt;ComponentGuideBlock&gt;)</ID>
+    <ID>CyclomaticComplexMethod:ComponentMarkdown.kt$internal fun componentPageMarkdown(doc: ComponentDoc): String</ID>
+    <ID>CyclomaticComplexMethod:CreateCustomizer.kt$@Composable private fun CreateCustomizerPickers( stylePreset: StylePreset, onStylePresetChange: (StylePreset) -&gt; Unit, baseColor: BaseColor, onBaseColorChange: (BaseColor) -&gt; Unit, accent: Accent, onAccentChange: (Accent) -&gt; Unit, chartColor: String, onChartColorChange: (String) -&gt; Unit, headingFont: String, onHeadingFontChange: (String) -&gt; Unit, bodyFont: String, onBodyFontChange: (String) -&gt; Unit, iconLibrary: String, onIconLibraryChange: (String) -&gt; Unit, radius: String, onRadiusChange: (String) -&gt; Unit, menuColor: String, onMenuColorChange: (String) -&gt; Unit, menuAccent: String, onMenuAccentChange: (String) -&gt; Unit, componentBase: String, onComponentBaseChange: (String) -&gt; Unit, compact: Boolean, )</ID>
+    <ID>CyclomaticComplexMethod:InlineDocCode.kt$@Composable internal fun InlineDocParagraph( markdown: String, fontSize: TextUnit, lineHeight: TextUnit, )</ID>
+    <ID>CyclomaticComplexMethod:MessageScrollerDoc.kt$@Composable @Preview private fun InteractiveChatPanel()</ID>
+    <ID>CyclomaticComplexMethod:MessageScrollerMissingRecipes.kt$@Composable internal fun MessageScrollerGroupChatRecipe()</ID>
+    <ID>CyclomaticComplexMethod:PreviewCodeSection.kt$@Composable fun PreviewCodeSection( code: String, modifier: Modifier = Modifier, title: String? = null, headingLevel: Int = 2, minPreviewHeight: Dp = 288.dp, mobileMinPreviewHeight: Dp? = null, previewPadding: Dp = 40.dp, descriptionMarkdown: String? = null, headingAnchor: String? = null, previewBackground: (@Composable () -&gt; Color)? = null, hideCode: Boolean = false, previewHeight: Dp? = null, previewVerticalAlignment: Alignment.Vertical = Alignment.CenterVertically, desktopPreviewInsetStart: Dp = 0.dp, mobilePreviewPadding: Dp? = null, mobilePreviewVerticalAlignment: Alignment.Vertical? = null, preview: @Composable () -&gt; Unit, )</ID>
+    <ID>CyclomaticComplexMethod:ToggleGroupConnectedFixtureTest.kt$ToggleGroupConnectedFixtureTest$private fun verify( vertical: Boolean, rtl: Boolean, dark: Boolean, disableMiddle: Boolean = true, )</ID>
+    <ID>DestructuringDeclarationWithTooManyEntries:CreateChartColorTest.kt$CreateChartColorTest$val (name, mode, index, css) = line.split('\t')</ID>
+    <ID>DestructuringDeclarationWithTooManyEntries:HoverCardBrowserParityTest.kt$HoverCardBrowserParityTest$(label, trigger, name, price)</ID>
+    <ID>DestructuringDeclarationWithTooManyEntries:ProgressPageLayoutTest.kt$ProgressPageLayoutTest$(current, next, label, value, rtl)</ID>
+    <ID>DestructuringDeclarationWithTooManyEntries:SelectExamplesTest.kt$SelectExamplesTest$(language, placeholder, vegetable, lastFruit, lastVegetable)</ID>
+    <ID>ForEachOnRange:FieldDoc.kt$2024..2029</ID>
+    <ID>ForEachOnRange:PaginationRecipes.kt$1..3</ID>
+    <ID>ForEachOnRange:PaginationRecipes.kt$1..5</ID>
+    <ID>ForEachOnRange:SeparatorRecipes.kt$1..3</ID>
+    <ID>FunctionNaming:MainViewController.kt$@Suppress("ktlint:standard:function-naming") fun MainViewController()</ID>
+    <ID>LongMethod:AccordionRtlPreviewTest.kt$AccordionRtlPreviewTest$@Test fun languageToolbarIsOutsideFixedPreviewAndSwitchesTheOpenAnswer()</ID>
+    <ID>LongMethod:AlertDialogExamplesTest.kt$AlertDialogExamplesTest$@Test fun exportContainsRealExamplesCompositionAndKotlinApi()</ID>
+    <ID>LongMethod:AlertDialogExamplesTest.kt$AlertDialogExamplesTest$@Test fun rtlPreviewChangesLanguageAndBothDialogSizesUseTranslation()</ID>
+    <ID>LongMethod:AvatarExamplesTest.kt$AvatarExamplesTest$@Test fun docsKeepOfficialRecipesFirstAndLabelKotlinFallback()</ID>
+    <ID>LongMethod:BadgeExamplesTest.kt$BadgeExamplesTest$@Test fun officialRecipesAndLogicalIconsRemainVisibleAtBothWidths()</ID>
+    <ID>LongMethod:BadgeRecipes.kt$@Composable internal fun BadgeRecipe( kind: Int, language: Int = 0, )</ID>
+    <ID>LongMethod:BreadcrumbDoc.kt$@Composable internal fun BreadcrumbExample( kind: String, language: Int = 1, )</ID>
+    <ID>LongMethod:BreadcrumbDoc.kt$private fun crumbRecipe(kind: String): String</ID>
+    <ID>LongMethod:BubbleDoc.kt$@Composable internal fun BubbleExample(title: String)</ID>
+    <ID>LongMethod:ButtonAsLinkRecipe.kt$@Composable private fun ButtonTextLink( text: String, href: String, onOpen: (() -&gt; Unit)? = null, )</ID>
+    <ID>LongMethod:ButtonExamplesTest.kt$ButtonExamplesTest$@Test fun recipesShowOfficialLabelsSizesAndLoadingState()</ID>
+    <ID>LongMethod:ButtonGroupDefaultRecipe.kt$@Composable internal fun ButtonGroupDefaultRecipe(language: Int = 1)</ID>
+    <ID>LongMethod:ButtonRecipes.kt$@Composable internal fun ButtonRecipe( kind: Int, language: Int = 0, )</ID>
+    <ID>LongMethod:CalendarDoc.kt$@Composable private fun CalendarRecipeBody(title: String)</ID>
+    <ID>LongMethod:CalendarDoc.kt$private fun calendarRtlLocale(language: Int): CalendarLocale</ID>
+    <ID>LongMethod:CalendarRecipeCode.kt$internal fun calendarRecipeCode(title: String): String</ID>
+    <ID>LongMethod:CardExamplesTest.kt$CardExamplesTest$@Test fun sixOfficialRecipesHaveTheirContentAndSectionStructure()</ID>
+    <ID>LongMethod:CarouselDoc.kt$@Composable private fun CarouselRecipe( title: String, language: Int = 1, )</ID>
+    <ID>LongMethod:CarouselDoc.kt$private fun carouselCode(title: String): String</ID>
+    <ID>LongMethod:CatalogNavDisplay.kt$@Composable fun CatalogNavDisplay( backStack: NavBackStack&lt;RouteKey&gt;, appRouter: AppRouter, stylePreset: StylePreset, onStylePresetChange: (StylePreset) -&gt; Unit, baseColor: BaseColor, onBaseColorChange: (BaseColor) -&gt; Unit, accent: Accent, onAccentChange: (Accent) -&gt; Unit, isDarkMode: Boolean, onToggleDarkMode: (Boolean) -&gt; Unit, searchRequests: Flow&lt;Unit&gt; = emptyFlow(), )</ID>
+    <ID>LongMethod:CatalogSearchDialog.kt$@Composable fun CatalogSearchDialog( onDismiss: () -&gt; Unit, onNavigate: (RouteKey) -&gt; Unit, )</ID>
+    <ID>LongMethod:CatalogSidebar.kt$@Composable fun CatalogSidebar( currentRoute: RouteKey, onEntryClick: (RouteKey) -&gt; Unit, modifier: Modifier = Modifier, )</ID>
+    <ID>LongMethod:CatalogTopBar.kt$@Composable fun CatalogTopBar( isDarkMode: Boolean, onToggleDarkMode: (Boolean) -&gt; Unit, isOnCreateRoute: Boolean = false, onNavigateHome: () -&gt; Unit = {}, onNavigateToComponents: () -&gt; Unit = {}, onNavigateToCreate: () -&gt; Unit = {}, onGetCode: () -&gt; Unit = {}, isCompact: Boolean = false, onOpenNavigation: () -&gt; Unit = {}, onSearch: () -&gt; Unit = {}, searchButtonModifier: Modifier = Modifier, )</ID>
+    <ID>LongMethod:ChartPageTest.kt$ChartPageTest$@Test fun pageAddsOfficialGuideSectionsInOrder()</ID>
+    <ID>LongMethod:ChartRecipes.kt$@Composable internal fun ChartInteractiveRecipe()</ID>
+    <ID>LongMethod:ChartRecipes.kt$@Composable internal fun ChartTooltipAnatomyRecipe()</ID>
+    <ID>LongMethod:CheckboxExampleCode.kt$internal fun checkboxCode(name: String): String</ID>
+    <ID>LongMethod:CodeBlock.kt$@Composable fun CodeBlock( code: String, modifier: Modifier = Modifier, showCopyButton: Boolean = true, lineNumbers: Boolean = false, language: String? = "Kotlin", title: String? = null, maxHeight: Dp? = null, shape: Shape = RoundedCornerShape(18.dp), )</ID>
+    <ID>LongMethod:CollapsibleDoc.kt$@Composable private fun CollapsibleSettingsPreview()</ID>
+    <ID>LongMethod:ComponentDetailScreen.kt$@Composable internal fun ComponentDetailContent( doc: ComponentDoc, onNavigateComponent: (String) -&gt; Unit = {}, scrollState: ScrollState = rememberScrollState(), )</ID>
+    <ID>LongMethod:ComponentDetailScreen.kt$@Composable internal fun GuideBlocks(blocks: List&lt;ComponentGuideBlock&gt;)</ID>
+    <ID>LongMethod:ComponentDetailScreen.kt$internal fun docSections(doc: ComponentDoc): List&lt;DocSection&gt;</ID>
+    <ID>LongMethod:ContextMenuDoc.kt$@Composable private fun ContextMenuRtlPreview()</ID>
+    <ID>LongMethod:ContextMenuExamplesTest.kt$ContextMenuExamplesTest$@Test fun officialPageOrderAndCopyMatchCurrentOfficialPage()</ID>
+    <ID>LongMethod:CreateCustomizer.kt$@Composable fun CreateCustomizer( stylePreset: StylePreset, onStylePresetChange: (StylePreset) -&gt; Unit, baseColor: BaseColor, onBaseColorChange: (BaseColor) -&gt; Unit, accent: Accent, onAccentChange: (Accent) -&gt; Unit, chartColor: String, onChartColorChange: (String) -&gt; Unit, modifier: Modifier = Modifier, docked: Boolean = false, /** Official `--customizer-width`: 48→192dp, 2xl 56→224dp. */ railWidth: Dp = 192.dp, /** When incremented, opens the Get Code dialog (header DesignerActions). */ getCodeRequest: Int = 0, onOpenCommandPalette: () -&gt; Unit = {}, )</ID>
+    <ID>LongMethod:CreateCustomizer.kt$@Composable internal fun &lt;T&gt; PresetSelectorRow( label: String, value: String, options: List&lt;T&gt;, onValueChange: (T) -&gt; Unit, optionLabel: (T) -&gt; String, modifier: Modifier = Modifier, swatch: @Composable () -&gt; Unit, optionSwatch: (@Composable (T) -&gt; Unit)? = null, )</ID>
+    <ID>LongMethod:CreateCustomizer.kt$@Composable private fun CreateCustomizerPickers( stylePreset: StylePreset, onStylePresetChange: (StylePreset) -&gt; Unit, baseColor: BaseColor, onBaseColorChange: (BaseColor) -&gt; Unit, accent: Accent, onAccentChange: (Accent) -&gt; Unit, chartColor: String, onChartColorChange: (String) -&gt; Unit, headingFont: String, onHeadingFontChange: (String) -&gt; Unit, bodyFont: String, onBodyFontChange: (String) -&gt; Unit, iconLibrary: String, onIconLibraryChange: (String) -&gt; Unit, radius: String, onRadiusChange: (String) -&gt; Unit, menuColor: String, onMenuColorChange: (String) -&gt; Unit, menuAccent: String, onMenuAccentChange: (String) -&gt; Unit, componentBase: String, onComponentBaseChange: (String) -&gt; Unit, compact: Boolean, )</ID>
+    <ID>LongMethod:CreatePage.kt$@Composable fun CreatePage( stylePreset: StylePreset, onStylePresetChange: (StylePreset) -&gt; Unit, baseColor: BaseColor, onBaseColorChange: (BaseColor) -&gt; Unit, accent: Accent, onAccentChange: (Accent) -&gt; Unit, modifier: Modifier = Modifier, /** Bumped by header Get Code (DesignerActions). */ getCodeRequest: Int = 0, )</ID>
+    <ID>LongMethod:CreatePreview02Cards.kt$@Composable fun CreatePreview02LiveWaveformCard(modifier: Modifier = Modifier)</ID>
+    <ID>LongMethod:CreatePreview02Cards.kt$@Composable fun CreatePreview02ReportBugCard(modifier: Modifier = Modifier)</ID>
+    <ID>LongMethod:CreatePreview02Cards.kt$@Composable fun CreatePreview02ShippingAddressCard(modifier: Modifier = Modifier)</ID>
+    <ID>LongMethod:CreatePreviewCards.kt$@Composable fun CreatePayoutThresholdCard(modifier: Modifier = Modifier)</ID>
+    <ID>LongMethod:CreatePreviewCards.kt$@Composable fun CreateUiElementsCard(modifier: Modifier = Modifier)</ID>
+    <ID>LongMethod:DocTypography.kt$@Composable internal fun DocHeading( text: String, modifier: Modifier = Modifier, level: Int = 2, anchorId: String? = null, )</ID>
+    <ID>LongMethod:EmptyLearnMore.kt$@Composable internal fun EmptyLearnMore( text: String, rtl: Boolean = false, inlineEnd: Boolean = false, )</ID>
+    <ID>LongMethod:FieldDoc.kt$@Composable private fun FieldDemoRecipe()</ID>
+    <ID>LongMethod:FieldDoc.kt$@Composable private fun FieldRtlPaymentForm(t: FieldRtlStrings)</ID>
+    <ID>LongMethod:HoverCardDoc.kt$@Composable private fun HoverCardRtlRecipe()</ID>
+    <ID>LongMethod:HoverCardSidesRecipe.kt$@Composable internal fun HoverCardSidesRecipe(modifier: Modifier = Modifier)</ID>
+    <ID>LongMethod:InlineDocCode.kt$@Composable internal fun InlineDocParagraph( markdown: String, fontSize: TextUnit, lineHeight: TextUnit, )</ID>
+    <ID>LongMethod:InputGroupDoc.kt$@Composable private fun InputGroupButtonsPreview()</ID>
+    <ID>LongMethod:InputGroupDoc.kt$@Composable private fun InputGroupRtlPreview()</ID>
+    <ID>LongMethod:InputGroupExamplesTest.kt$InputGroupExamplesTest$@Test fun officialPageOrderAndCopyMatchCurrentOfficialPage()</ID>
+    <ID>LongMethod:InputOTPDoc.kt$@Composable private fun InputOTPFormPreview(modifier: Modifier = Modifier)</ID>
+    <ID>LongMethod:LabelDoc.kt$@Composable private fun LabelInFieldDemo()</ID>
+    <ID>LongMethod:MessageScrollerDoc.kt$@Composable @Preview private fun InteractiveChatPanel()</ID>
+    <ID>LongMethod:MessageScrollerExamplesTest.kt$MessageScrollerExamplesTest$@Test fun officialPageOrderGuidesAndKotlinExtensions()</ID>
+    <ID>LongMethod:MessageScrollerMissingRecipes.kt$@Composable internal fun MessageScrollerAnchoringRecipe()</ID>
+    <ID>LongMethod:MessageScrollerMissingRecipes.kt$@Composable internal fun MessageScrollerAnimationRecipe()</ID>
+    <ID>LongMethod:MessageScrollerMissingRecipes.kt$@Composable internal fun MessageScrollerGroupChatRecipe()</ID>
+    <ID>LongMethod:MessageScrollerRecipes.kt$@Composable internal fun MessageScrollerHistoryRecipe( modifier: Modifier = Modifier, toast: ToastState? = null, )</ID>
+    <ID>LongMethod:MessageScrollerRecipes.kt$@Composable internal fun MessageScrollerPreviousContextRecipe(modifier: Modifier = Modifier)</ID>
+    <ID>LongMethod:MessageScrollerRecipes.kt$@Composable internal fun ScrollerRecipeFrame( title: String, description: String, note: String, modifier: Modifier = Modifier, action: (@Composable () -&gt; Unit)? = null, footer: (@Composable () -&gt; Unit)? = null, transcript: @Composable () -&gt; Unit, )</ID>
+    <ID>LongMethod:MessageScrollerRecipes.kt$@Composable private fun ScrollerTranscriptOutline()</ID>
+    <ID>LongMethod:NavigationMenuRecipes.kt$@Composable private fun NavigationMenuRecipeBody( words: Map&lt;String, String&gt;, modifier: Modifier = Modifier, )</ID>
+    <ID>LongMethod:PreviewCodeSection.kt$@Composable fun PreviewCodeSection( code: String, modifier: Modifier = Modifier, title: String? = null, headingLevel: Int = 2, minPreviewHeight: Dp = 288.dp, mobileMinPreviewHeight: Dp? = null, previewPadding: Dp = 40.dp, descriptionMarkdown: String? = null, headingAnchor: String? = null, previewBackground: (@Composable () -&gt; Color)? = null, hideCode: Boolean = false, previewHeight: Dp? = null, previewVerticalAlignment: Alignment.Vertical = Alignment.CenterVertically, desktopPreviewInsetStart: Dp = 0.dp, mobilePreviewPadding: Dp? = null, mobilePreviewVerticalAlignment: Alignment.Vertical? = null, preview: @Composable () -&gt; Unit, )</ID>
+    <ID>LongMethod:QuestionnaireDoc.kt$@Composable private fun ConditionalItemsPreview()</ID>
+    <ID>LongMethod:QuestionnaireDoc.kt$@Composable private fun ControlledPreview()</ID>
+    <ID>LongMethod:QuestionnaireDoc.kt$@Composable private fun CustomProgressPreview()</ID>
+    <ID>LongMethod:QuestionnaireDoc.kt$@Composable private fun CustomValidationPreview()</ID>
+    <ID>LongMethod:QuestionnaireDoc.kt$@Composable private fun DialogPreview()</ID>
+    <ID>LongMethod:QuestionnaireDoc.kt$@Composable private fun ExplicitSkipPreview()</ID>
+    <ID>LongMethod:QuestionnaireDoc.kt$@Composable private fun ResumePreview()</ID>
+    <ID>LongMethod:QuestionnaireFeedbackTest.kt$QuestionnaireFeedbackTest.Companion$@JvmStatic @Parameterized.Parameters(name = "{0}") fun recipes()</ID>
+    <ID>LongMethod:QuestionnaireRecipes.kt$@Composable internal fun QuestionnaireDefaultRecipe()</ID>
+    <ID>LongMethod:RtlPreview.kt$@Composable internal fun RtlPreviewToolbar( language: Int, labels: List&lt;String&gt;, onLanguageChange: (Int) -&gt; Unit, )</ID>
+    <ID>LongMethod:SkeletonPhonePreviewTest.kt$SkeletonPhonePreviewTest$@Test fun phonePreviewPreservesSourceProfileGeometryInsideRealChrome()</ID>
+    <ID>LongMethod:SpinnerExampleCode.kt$internal fun spinnerCode(name: String): String</ID>
+    <ID>LongMethod:SurfaceParityExamples.kt$@Composable internal fun DrawerParityExample()</ID>
+    <ID>LongMethod:TextColorInheritanceTest.kt$TextColorInheritanceTest$@Test fun taggedTexts_paintExpectedColors()</ID>
+    <ID>LongMethod:TextPreviewTest.kt$@Composable internal fun TextColorInheritanceContent()</ID>
+    <ID>LongMethod:ThemingPage.kt$@Composable private fun ThemingContent()</ID>
+    <ID>LongMethod:ToggleGroupConnectedFixtureTest.kt$ToggleGroupConnectedFixtureTest$private fun verify( vertical: Boolean, rtl: Boolean, dark: Boolean, disableMiddle: Boolean = true, )</ID>
+    <ID>LongMethod:ToggleGroupDoc.kt$@Composable private fun ToggleGroupFontWeightDemo()</ID>
+    <ID>LongMethod:TooltipRecipes.kt$@Composable internal fun TooltipRtlRecipe(language: Int = 1)</ID>
+    <ID>LongMethod:TraceRecipes.kt$@Composable internal fun TraceDemoPreview()</ID>
+    <ID>LongMethod:TraceRecipes.kt$@Composable internal fun TraceTurnPreview()</ID>
+    <ID>LongParameterList:AspectRatioDoc.kt$( title: String, ratio: Float, maxWidth: Dp, ratioCode: String, description: String? = null, height: Dp = 288.dp, )</ID>
+    <ID>LongParameterList:AttachmentDoc.kt$( title: String, description: String?, icon: ImageVector = Lucide.FileText, state: AttachmentState = AttachmentState.Done, size: AttachmentSize = AttachmentSize.Default, modifier: Modifier = Modifier.fillMaxWidth(), actions: (@Composable AttachmentScope.() -&gt; Unit)? = null, )</ID>
+    <ID>LongParameterList:BubbleDoc.kt$( text: String, variant: BubbleVariant = BubbleVariant.Default, align: MessageAlign = MessageAlign.Start, emoji: List&lt;String&gt; = emptyList(), label: String = "", side: BubbleReactionsSide = BubbleReactionsSide.Bottom, reactionAlign: MessageAlign = MessageAlign.End, )</ID>
+    <ID>LongParameterList:CatalogNavDisplay.kt$( backStack: NavBackStack&lt;RouteKey&gt;, appRouter: AppRouter, stylePreset: StylePreset, onStylePresetChange: (StylePreset) -&gt; Unit, baseColor: BaseColor, onBaseColorChange: (BaseColor) -&gt; Unit, accent: Accent, onAccentChange: (Accent) -&gt; Unit, isDarkMode: Boolean, onToggleDarkMode: (Boolean) -&gt; Unit, searchRequests: Flow&lt;Unit&gt; = emptyFlow(), )</ID>
+    <ID>LongParameterList:CatalogTopBar.kt$( isDarkMode: Boolean, onToggleDarkMode: (Boolean) -&gt; Unit, isOnCreateRoute: Boolean = false, onNavigateHome: () -&gt; Unit = {}, onNavigateToComponents: () -&gt; Unit = {}, onNavigateToCreate: () -&gt; Unit = {}, onGetCode: () -&gt; Unit = {}, isCompact: Boolean = false, onOpenNavigation: () -&gt; Unit = {}, onSearch: () -&gt; Unit = {}, searchButtonModifier: Modifier = Modifier, )</ID>
+    <ID>LongParameterList:CheckboxRecipes.kt$( title: String, description: String? = null, defaultChecked: Boolean = false, disabled: Boolean = false, invalid: Boolean = false, plainLabel: Boolean = false, normalWeight: Boolean = false, )</ID>
+    <ID>LongParameterList:CodeBlock.kt$( code: String, modifier: Modifier = Modifier, showCopyButton: Boolean = true, lineNumbers: Boolean = false, language: String? = "Kotlin", title: String? = null, maxHeight: Dp? = null, shape: Shape = RoundedCornerShape(18.dp), )</ID>
+    <ID>LongParameterList:CollapsibleDoc.kt$CollapsibleRtlCopy$( val orderNumber: String, val status: String, val shipped: String, val shippingAddress: String, val address: String, val items: String, val itemsDescription: String, )</ID>
+    <ID>LongParameterList:CreateCustomizer.kt$( label: String, value: String, options: List&lt;T&gt;, onValueChange: (T) -&gt; Unit, optionLabel: (T) -&gt; String, modifier: Modifier = Modifier, swatch: @Composable () -&gt; Unit, optionSwatch: (@Composable (T) -&gt; Unit)? = null, )</ID>
+    <ID>LongParameterList:CreateCustomizer.kt$( stylePreset: StylePreset, baseColor: BaseColor, accent: Accent, chartColor: String, headingFont: String, bodyFont: String, iconLibrary: String, radius: String, )</ID>
+    <ID>LongParameterList:CreateCustomizer.kt$( stylePreset: StylePreset, onStylePresetChange: (StylePreset) -&gt; Unit, baseColor: BaseColor, onBaseColorChange: (BaseColor) -&gt; Unit, accent: Accent, onAccentChange: (Accent) -&gt; Unit, chartColor: String, onChartColorChange: (String) -&gt; Unit, headingFont: String, onHeadingFontChange: (String) -&gt; Unit, bodyFont: String, onBodyFontChange: (String) -&gt; Unit, iconLibrary: String, onIconLibraryChange: (String) -&gt; Unit, radius: String, onRadiusChange: (String) -&gt; Unit, menuColor: String, onMenuColorChange: (String) -&gt; Unit, menuAccent: String, onMenuAccentChange: (String) -&gt; Unit, componentBase: String, onComponentBaseChange: (String) -&gt; Unit, compact: Boolean, )</ID>
+    <ID>LongParameterList:CreateCustomizer.kt$( stylePreset: StylePreset, onStylePresetChange: (StylePreset) -&gt; Unit, baseColor: BaseColor, onBaseColorChange: (BaseColor) -&gt; Unit, accent: Accent, onAccentChange: (Accent) -&gt; Unit, chartColor: String, onChartColorChange: (String) -&gt; Unit, modifier: Modifier = Modifier, docked: Boolean = false, /** Official `--customizer-width`: 48→192dp, 2xl 56→224dp. */ railWidth: Dp = 192.dp, /** When incremented, opens the Get Code dialog (header DesignerActions). */ getCodeRequest: Int = 0, onOpenCommandPalette: () -&gt; Unit = {}, )</ID>
+    <ID>LongParameterList:CreatePage.kt$( stylePreset: StylePreset, onStylePresetChange: (StylePreset) -&gt; Unit, baseColor: BaseColor, onBaseColorChange: (BaseColor) -&gt; Unit, accent: Accent, onAccentChange: (Accent) -&gt; Unit, modifier: Modifier = Modifier, /** Bumped by header Get Code (DesignerActions). */ getCodeRequest: Int = 0, )</ID>
+    <ID>LongParameterList:CreatePreview02Cards.kt$( modifier: Modifier, title: String, description: String? = null, action: @Composable (() -&gt; Unit)? = null, footer: @Composable (() -&gt; Unit)? = null, content: @Composable ColumnScope.() -&gt; Unit, )</ID>
+    <ID>LongParameterList:CreatePreview02Cards.kt$( modifier: Modifier, title: String?, description: String?, emptyTitle: String, emptyDescription: String, button: String, )</ID>
+    <ID>LongParameterList:DatePickerDoc.kt$( year: Int, month: Int, onMonthChange: (Int, Int) -&gt; Unit, selected: CalendarDate?, onSelectedChange: (CalendarDate) -&gt; Unit, captionLayout: CalendarCaptionLayout = CalendarCaptionLayout.Label, numberOfMonths: Int = 1, )</ID>
+    <ID>LongParameterList:FieldDoc.kt$FieldRtlStrings$( val paymentMethod: String, val secureTransactions: String, val nameOnCard: String, val cardNumber: String, val cardNumberDescription: String, val month: String, val year: String, val cvv: String, val monthPlaceholder: String, val billingAddress: String, val billingAddressDescription: String, val sameAsShipping: String, val comments: String, val commentsPlaceholder: String, val submit: String, val cancel: String, val requiredFieldMessage: String, val months: List&lt;String&gt;, )</ID>
+    <ID>LongParameterList:InputDoc.kt$( label: String, modifier: Modifier = Modifier, description: String? = null, required: Boolean = false, showRequired: Boolean = required, invalid: Boolean = false, trailingLabel: (@Composable () -&gt; Unit)? = null, content: @Composable (Modifier) -&gt; Unit, )</ID>
+    <ID>LongParameterList:LabelDoc.kt$( name: String, placeholder: String, value: String?, onValueChange: (String?) -&gt; Unit, options: List&lt;String&gt;, modifier: Modifier, )</ID>
+    <ID>LongParameterList:MessageScrollerRecipes.kt$( title: String, description: String, note: String, modifier: Modifier = Modifier, action: (@Composable () -&gt; Unit)? = null, footer: (@Composable () -&gt; Unit)? = null, transcript: @Composable () -&gt; Unit, )</ID>
+    <ID>LongParameterList:PreviewCodeSection.kt$( code: String, modifier: Modifier = Modifier, title: String? = null, headingLevel: Int = 2, minPreviewHeight: Dp = 288.dp, mobileMinPreviewHeight: Dp? = null, previewPadding: Dp = 40.dp, descriptionMarkdown: String? = null, headingAnchor: String? = null, previewBackground: (@Composable () -&gt; Color)? = null, hideCode: Boolean = false, previewHeight: Dp? = null, previewVerticalAlignment: Alignment.Vertical = Alignment.CenterVertically, desktopPreviewInsetStart: Dp = 0.dp, mobilePreviewPadding: Dp? = null, mobilePreviewVerticalAlignment: Alignment.Vertical? = null, preview: @Composable () -&gt; Unit, )</ID>
+    <ID>LongParameterList:ScrollFadeRecipes.kt$( items: List&lt;String&gt;, tag: String, modifier: Modifier = Modifier, height: Dp? = 288.dp, horizontal: Boolean = false, edge: ScrollFadeEdge = ScrollFadeEdge.Both, size: ScrollFadeSize = ScrollFadeSize.Default, enabled: Boolean = true, )</ID>
+    <ID>LongParameterList:SheetExamplesTest.kt$SheetExamplesTest$( language: Int, open: String, name: String, username: String, save: String, close: String, )</ID>
+    <ID>LongParameterList:ShimmerRecipes.kt$( value: String = ShimmerMessage, modifier: Modifier = Modifier, enabled: Boolean = true, color: Color? = null, duration: Int = 2000, spread: Dp = Dp.Unspecified, angle: Float = 20f, reverse: Boolean = false, once: Boolean = false, )</ID>
+    <ID>LongParameterList:ToggleGroupDoc.kt$( value: Set&lt;String&gt;, onValueChange: (Set&lt;String&gt;) -&gt; Unit, vertical: Boolean = false, size: ToggleSize = ToggleSize.Md, spacing: androidx.compose.ui.unit.Dp = ToggleGroupDefaults.Spacing, disabled: Boolean = false, variant: ToggleVariant = ToggleVariant.Outline, type: ToggleGroupType = ToggleGroupType.Multiple, )</ID>
+    <ID>LongParameterList:TraceRecipes.kt$( command: String, output: String, running: Boolean, failed: Boolean = false, defaultOpen: Boolean = false, completedIcon: ImageVector = Lucide.Terminal, )</ID>
+    <ID>LongParameterList:TraceRecipes.kt$( icon: ImageVector, title: String, status: TraceStatus? = null, description: String? = null, descriptionMono: Boolean = false, trailing: ImageVector? = null, )</ID>
+    <ID>LongParameterList:TraceRecipes.kt$( title: String, output: String, defaultOpen: Boolean = false, open: Boolean? = null, onOpenChange: ((Boolean) -&gt; Unit)? = null, destructive: Boolean = false, icon: ImageVector = Lucide.Terminal, )</ID>
+    <ID>LoopWithTooManyJumpStatements:TextColorInheritanceTest.kt$TextColorInheritanceTest$for</ID>
+    <ID>MagicNumber:AccordionDoc.kt$180f</ID>
+    <ID>MagicNumber:AccordionDoc.kt$3</ID>
+    <ID>MagicNumber:AspectRatioDoc.kt$.0722f</ID>
+    <ID>MagicNumber:AspectRatioDoc.kt$.2126f</ID>
+    <ID>MagicNumber:AspectRatioDoc.kt$.7152f</ID>
+    <ID>MagicNumber:AspectRatioDoc.kt$0.2f</ID>
+    <ID>MagicNumber:AspectRatioDoc.kt$16f</ID>
+    <ID>MagicNumber:AspectRatioDoc.kt$9f</ID>
+    <ID>MagicNumber:AttachmentDoc.kt$0xFFF8F8F8</ID>
+    <ID>MagicNumber:AttachmentPreviewIcon.kt$24f</ID>
+    <ID>MagicNumber:BadgeRecipes.kt$3</ID>
+    <ID>MagicNumber:BadgeRecipes.kt$4</ID>
+    <ID>MagicNumber:BadgeRecipes.kt$5</ID>
+    <ID>MagicNumber:BadgeRecipes.kt$6</ID>
+    <ID>MagicNumber:BreadcrumbDoc.kt$3</ID>
+    <ID>MagicNumber:BubbleDoc.kt$16</ID>
+    <ID>MagicNumber:BubbleDoc.kt$180</ID>
+    <ID>MagicNumber:BubbleDoc.kt$180f</ID>
+    <ID>MagicNumber:BubbleDoc.kt$32</ID>
+    <ID>MagicNumber:BubbleDoc.kt$48</ID>
+    <ID>MagicNumber:ButtonDoc.kt$10</ID>
+    <ID>MagicNumber:ButtonDoc.kt$11</ID>
+    <ID>MagicNumber:ButtonDoc.kt$12</ID>
+    <ID>MagicNumber:ButtonDoc.kt$3</ID>
+    <ID>MagicNumber:ButtonDoc.kt$4</ID>
+    <ID>MagicNumber:ButtonDoc.kt$5</ID>
+    <ID>MagicNumber:ButtonDoc.kt$6</ID>
+    <ID>MagicNumber:ButtonDoc.kt$7</ID>
+    <ID>MagicNumber:ButtonDoc.kt$8</ID>
+    <ID>MagicNumber:ButtonDoc.kt$9</ID>
+    <ID>MagicNumber:ButtonGroupDefaultRecipe.kt$180f</ID>
+    <ID>MagicNumber:ButtonRecipes.kt$10</ID>
+    <ID>MagicNumber:ButtonRecipes.kt$11</ID>
+    <ID>MagicNumber:ButtonRecipes.kt$12</ID>
+    <ID>MagicNumber:ButtonRecipes.kt$14</ID>
+    <ID>MagicNumber:ButtonRecipes.kt$180f</ID>
+    <ID>MagicNumber:ButtonRecipes.kt$3</ID>
+    <ID>MagicNumber:ButtonRecipes.kt$4</ID>
+    <ID>MagicNumber:ButtonRecipes.kt$5</ID>
+    <ID>MagicNumber:ButtonRecipes.kt$6</ID>
+    <ID>MagicNumber:ButtonRecipes.kt$7</ID>
+    <ID>MagicNumber:ButtonRecipes.kt$8</ID>
+    <ID>MagicNumber:ButtonRecipes.kt$9</ID>
+    <ID>MagicNumber:CalendarDoc.kt$0.5f</ID>
+    <ID>MagicNumber:CalendarDoc.kt$10</ID>
+    <ID>MagicNumber:CalendarDoc.kt$12</ID>
+    <ID>MagicNumber:CalendarDoc.kt$14</ID>
+    <ID>MagicNumber:CalendarDoc.kt$2025</ID>
+    <ID>MagicNumber:CalendarDoc.kt$26</ID>
+    <ID>MagicNumber:CalendarDoc.kt$3</ID>
+    <ID>MagicNumber:CalendarDoc.kt$30</ID>
+    <ID>MagicNumber:CalendarDoc.kt$4</ID>
+    <ID>MagicNumber:CalendarDoc.kt$6</ID>
+    <ID>MagicNumber:CalendarDoc.kt$62</ID>
+    <ID>MagicNumber:CalendarDoc.kt$7</ID>
+    <ID>MagicNumber:CalendarDoc.kt$8</ID>
+    <ID>MagicNumber:CardDoc.kt$3</ID>
+    <ID>MagicNumber:CardDoc.kt$384</ID>
+    <ID>MagicNumber:CardDoc.kt$4</ID>
+    <ID>MagicNumber:CardDoc.kt$480</ID>
+    <ID>MagicNumber:CardDoc.kt$5</ID>
+    <ID>MagicNumber:CardDoc.kt$512</ID>
+    <ID>MagicNumber:CardDoc.kt$544</ID>
+    <ID>MagicNumber:CardRecipes.kt$.0722f</ID>
+    <ID>MagicNumber:CardRecipes.kt$.2126f</ID>
+    <ID>MagicNumber:CardRecipes.kt$.4f</ID>
+    <ID>MagicNumber:CardRecipes.kt$.6f</ID>
+    <ID>MagicNumber:CardRecipes.kt$.7152f</ID>
+    <ID>MagicNumber:CardRecipes.kt$16f</ID>
+    <ID>MagicNumber:CardRecipes.kt$3</ID>
+    <ID>MagicNumber:CardRecipes.kt$4</ID>
+    <ID>MagicNumber:CardRecipes.kt$5</ID>
+    <ID>MagicNumber:CardRecipes.kt$9f</ID>
+    <ID>MagicNumber:CarouselDoc.kt$16</ID>
+    <ID>MagicNumber:CarouselDoc.kt$24</ID>
+    <ID>MagicNumber:CarouselDoc.kt$3</ID>
+    <ID>MagicNumber:CarouselDoc.kt$30</ID>
+    <ID>MagicNumber:CarouselDoc.kt$32</ID>
+    <ID>MagicNumber:CarouselDoc.kt$36</ID>
+    <ID>MagicNumber:CarouselDoc.kt$4</ID>
+    <ID>MagicNumber:CarouselDoc.kt$40</ID>
+    <ID>MagicNumber:CarouselDoc.kt$5</ID>
+    <ID>MagicNumber:CatalogSearchDialog.kt$0.6f</ID>
+    <ID>MagicNumber:CatalogSearchDialog.kt$SearchPanelAlignment$0.15f</ID>
+    <ID>MagicNumber:CatalogSidebar.kt$5</ID>
+    <ID>MagicNumber:ChartDoc.kt$0xFF2563EB</ID>
+    <ID>MagicNumber:ChartDoc.kt$0xFF60A5FA</ID>
+    <ID>MagicNumber:ChartDoc.kt$120f</ID>
+    <ID>MagicNumber:ChartDoc.kt$130f</ID>
+    <ID>MagicNumber:ChartDoc.kt$140f</ID>
+    <ID>MagicNumber:ChartDoc.kt$186f</ID>
+    <ID>MagicNumber:ChartDoc.kt$190f</ID>
+    <ID>MagicNumber:ChartDoc.kt$200f</ID>
+    <ID>MagicNumber:ChartDoc.kt$209f</ID>
+    <ID>MagicNumber:ChartDoc.kt$214f</ID>
+    <ID>MagicNumber:ChartDoc.kt$237f</ID>
+    <ID>MagicNumber:ChartDoc.kt$305f</ID>
+    <ID>MagicNumber:ChartDoc.kt$73f</ID>
+    <ID>MagicNumber:ChartDoc.kt$80f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$0xFF2563EB</ID>
+    <ID>MagicNumber:ChartRecipes.kt$0xFF60A5FA</ID>
+    <ID>MagicNumber:ChartRecipes.kt$1000f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$110f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$120f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$122f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$12486f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$1286f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$130f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$137f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$138f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$140f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$148f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$150f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$167f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$170f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$175f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$180f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$186f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$190f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$193f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$200f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$209f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$210f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$214f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$215f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$220f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$222f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$224f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$230f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$237f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$240f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$242f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$243f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$245f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$250f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$260f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$261f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$290f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$292f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$3</ID>
+    <ID>MagicNumber:ChartRecipes.kt$301f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$305f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$315f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$320f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$327f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$340f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$342f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$350f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$360f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$364f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$373f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$380f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$383f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$387f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$4</ID>
+    <ID>MagicNumber:ChartRecipes.kt$409f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$40f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$410f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$420f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$446f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$454f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$59f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$6</ID>
+    <ID>MagicNumber:ChartRecipes.kt$7</ID>
+    <ID>MagicNumber:ChartRecipes.kt$73f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$75f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$80f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$89f</ID>
+    <ID>MagicNumber:ChartRecipes.kt$97f</ID>
+    <ID>MagicNumber:CheckboxRecipes.kt$3</ID>
+    <ID>MagicNumber:CodeBlock.kt$0x948B8B8B</ID>
+    <ID>MagicNumber:CodeBlock.kt$0xFF0550AE</ID>
+    <ID>MagicNumber:CodeBlock.kt$0xFF0A3069</ID>
+    <ID>MagicNumber:CodeBlock.kt$0xFF161616</ID>
+    <ID>MagicNumber:CodeBlock.kt$0xFF1F2328</ID>
+    <ID>MagicNumber:CodeBlock.kt$0xFF6E7781</ID>
+    <ID>MagicNumber:CodeBlock.kt$0xFF747474</ID>
+    <ID>MagicNumber:CodeBlock.kt$0xFF953800</ID>
+    <ID>MagicNumber:CodeBlock.kt$0xFF99FFE4</ID>
+    <ID>MagicNumber:CodeBlock.kt$0xFFA0A0A0</ID>
+    <ID>MagicNumber:CodeBlock.kt$0xFFA1A1A1</ID>
+    <ID>MagicNumber:CodeBlock.kt$0xFFA4A4A4</ID>
+    <ID>MagicNumber:CodeBlock.kt$0xFFCF222E</ID>
+    <ID>MagicNumber:CodeBlock.kt$0xFFF8F8F8</ID>
+    <ID>MagicNumber:CodeBlock.kt$0xFFFFC799</ID>
+    <ID>MagicNumber:CodeBlock.kt$3</ID>
+    <ID>MagicNumber:CodeBlock.kt$4</ID>
+    <ID>MagicNumber:CodeBlock.kt$5</ID>
+    <ID>MagicNumber:CodeBlockDoc.kt$12</ID>
+    <ID>MagicNumber:CodeBlockDoc.kt$180f</ID>
+    <ID>MagicNumber:CodeBlockDoc.kt$3</ID>
+    <ID>MagicNumber:CodeBlockDoc.kt$40</ID>
+    <ID>MagicNumber:CodeBlockDoc.kt$7</ID>
+    <ID>MagicNumber:CollapsibleDoc.kt$180f</ID>
+    <ID>MagicNumber:CollapsibleDoc.kt$90f</ID>
+    <ID>MagicNumber:CommandDoc.kt$80</ID>
+    <ID>MagicNumber:ComponentDetailScreen.kt$.3f</ID>
+    <ID>MagicNumber:ComponentDetailScreen.kt$.5f</ID>
+    <ID>MagicNumber:ComponentDetailScreen.kt$0.8f</ID>
+    <ID>MagicNumber:ComponentDetailScreen.kt$1.25f</ID>
+    <ID>MagicNumber:ComponentDetailScreen.kt$1.75f</ID>
+    <ID>MagicNumber:ComponentDetailScreen.kt$1.9f</ID>
+    <ID>MagicNumber:ComponentDetailScreen.kt$15f</ID>
+    <ID>MagicNumber:ComponentDetailScreen.kt$17.5f</ID>
+    <ID>MagicNumber:ComponentDetailScreen.kt$18.9f</ID>
+    <ID>MagicNumber:ComponentDetailScreen.kt$24</ID>
+    <ID>MagicNumber:ContextMenuDoc.kt$16f</ID>
+    <ID>MagicNumber:ContextMenuDoc.kt$9f</ID>
+    <ID>MagicNumber:CreateCustomizer.kt$8</ID>
+    <ID>MagicNumber:CreatePreview01ExtraCards.kt$.5f</ID>
+    <ID>MagicNumber:CreatePreview01ExtraCards.kt$.68f</ID>
+    <ID>MagicNumber:CreatePreview01ExtraCards.kt$.8f</ID>
+    <ID>MagicNumber:CreatePreview01ExtraCards.kt$100f</ID>
+    <ID>MagicNumber:CreatePreview01ExtraCards.kt$128</ID>
+    <ID>MagicNumber:CreatePreview01ExtraCards.kt$15f</ID>
+    <ID>MagicNumber:CreatePreview01ExtraCards.kt$20f</ID>
+    <ID>MagicNumber:CreatePreview01ExtraCards.kt$3</ID>
+    <ID>MagicNumber:CreatePreview01ExtraCards.kt$30f</ID>
+    <ID>MagicNumber:CreatePreview01ExtraCards.kt$40f</ID>
+    <ID>MagicNumber:CreatePreview01ExtraCards.kt$50f</ID>
+    <ID>MagicNumber:CreatePreview01ExtraCards.kt$60f</ID>
+    <ID>MagicNumber:CreatePreview01ExtraCards.kt$70f</ID>
+    <ID>MagicNumber:CreatePreview01ExtraCards.kt$80f</ID>
+    <ID>MagicNumber:CreatePreview01ExtraCards.kt$85f</ID>
+    <ID>MagicNumber:CreatePreview01ExtraCards.kt$90f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.25f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.26f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.28f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.2f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.31f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.32f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.36f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.3f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.44f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.45f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.48f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.4f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.52f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.55f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.56f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.58f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.5f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.61f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.62f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.65f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.66f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.68f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.6f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.72f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.73f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.75f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.76f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.78f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.7f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.82f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.84f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.8f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.91f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.95f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$.9f</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$28</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$3</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$4</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$5</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$56</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$6</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$8</ID>
+    <ID>MagicNumber:CreatePreview02Cards.kt$80</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$.18f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$.32f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$.36f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$.45f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$.53f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$.54f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$.55f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$.5f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$.62f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$.63f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$.65f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$.72f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$.74f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$.76f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$.7f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$.82f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$.84f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$.8f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$.9f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$1100f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$1300f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$1400f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$21f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$2500f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$750f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$800f</ID>
+    <ID>MagicNumber:CreatePreviewCards.kt$900f</ID>
+    <ID>MagicNumber:CreatePreviewLayout.kt$7</ID>
+    <ID>MagicNumber:CreatePreviewLayout.kt$8</ID>
+    <ID>MagicNumber:CreateWelcomeDialog.kt$0xFF0A0A0A</ID>
+    <ID>MagicNumber:CreateWelcomeDialog.kt$0xFFF5F5F5</ID>
+    <ID>MagicNumber:CreateWelcomeDialog.kt$1.2f</ID>
+    <ID>MagicNumber:DatePickerDoc.kt$20</ID>
+    <ID>MagicNumber:DatePickerDoc.kt$2025</ID>
+    <ID>MagicNumber:DatePickerDoc.kt$2026</ID>
+    <ID>MagicNumber:DatePickerDoc.kt$3</ID>
+    <ID>MagicNumber:DatePickerDoc.kt$5</ID>
+    <ID>MagicNumber:DatePickerDoc.kt$6</ID>
+    <ID>MagicNumber:DatePickerDoc.kt$7</ID>
+    <ID>MagicNumber:DatePickerDoc.kt$9</ID>
+    <ID>MagicNumber:DialogDoc.kt$10</ID>
+    <ID>MagicNumber:DialogDoc.kt$12</ID>
+    <ID>MagicNumber:DialogDoc.kt$3</ID>
+    <ID>MagicNumber:DialogDoc.kt$4</ID>
+    <ID>MagicNumber:DialogDoc.kt$5</ID>
+    <ID>MagicNumber:DialogDoc.kt$6</ID>
+    <ID>MagicNumber:DocCopyIcons.kt$24f</ID>
+    <ID>MagicNumber:EmptyAdditionalRecipes.kt$0.75f</ID>
+    <ID>MagicNumber:EmptyAdditionalRecipes.kt$3</ID>
+    <ID>MagicNumber:EmptyAdditionalRecipes.kt$4</ID>
+    <ID>MagicNumber:EmptyLearnMore.kt$270f</ID>
+    <ID>MagicNumber:EmptyRecipeIcons.kt$24f</ID>
+    <ID>MagicNumber:FieldDoc.kt$12</ID>
+    <ID>MagicNumber:FieldDoc.kt$200f</ID>
+    <ID>MagicNumber:FieldDoc.kt$2024</ID>
+    <ID>MagicNumber:FieldDoc.kt$2029</ID>
+    <ID>MagicNumber:FieldDoc.kt$800f</ID>
+    <ID>MagicNumber:HoverCardSidesRecipe.kt$14f</ID>
+    <ID>MagicNumber:HoverCardSidesRecipe.kt$23.4375f</ID>
+    <ID>MagicNumber:HoverCardSidesRecipe.kt$26.3125f</ID>
+    <ID>MagicNumber:HoverCardSidesRecipe.kt$34.78125f</ID>
+    <ID>MagicNumber:HoverCardSidesRecipe.kt$47.921875f</ID>
+    <ID>MagicNumber:InlineDocCode.kt$.125f</ID>
+    <ID>MagicNumber:InlineDocCode.kt$.35f</ID>
+    <ID>MagicNumber:InlineDocCode.kt$.3f</ID>
+    <ID>MagicNumber:InlineDocCode.kt$.85f</ID>
+    <ID>MagicNumber:InlineDocCode.kt$3</ID>
+    <ID>MagicNumber:InputOTPDoc.kt$3</ID>
+    <ID>MagicNumber:InputOTPDoc.kt$4</ID>
+    <ID>MagicNumber:InputOTPDoc.kt$5</ID>
+    <ID>MagicNumber:InputOTPDoc.kt$6</ID>
+    <ID>MagicNumber:ItemDoc.kt$3</ID>
+    <ID>MagicNumber:LabelDoc.kt$12</ID>
+    <ID>MagicNumber:LabelDoc.kt$2024</ID>
+    <ID>MagicNumber:LabelDoc.kt$2029</ID>
+    <ID>MagicNumber:MarkerActionRecipes.kt$150</ID>
+    <ID>MagicNumber:MessageScrollerDoc.kt$10</ID>
+    <ID>MagicNumber:MessageScrollerDoc.kt$11</ID>
+    <ID>MagicNumber:MessageScrollerMissingRecipes.kt$0.9f</ID>
+    <ID>MagicNumber:MessageScrollerMissingRecipes.kt$260</ID>
+    <ID>MagicNumber:MessageScrollerMissingRecipes.kt$48</ID>
+    <ID>MagicNumber:MessageScrollerMissingRecipes.kt$6</ID>
+    <ID>MagicNumber:MessageScrollerRecipes.kt$0.16f</ID>
+    <ID>MagicNumber:MessageScrollerRecipes.kt$0.3f</ID>
+    <ID>MagicNumber:MessageScrollerRecipes.kt$0.6f</ID>
+    <ID>MagicNumber:MessageScrollerRecipes.kt$1000</ID>
+    <ID>MagicNumber:MessageScrollerRecipes.kt$12</ID>
+    <ID>MagicNumber:MessageScrollerRecipes.kt$260</ID>
+    <ID>MagicNumber:MessageScrollerRecipes.kt$35</ID>
+    <ID>MagicNumber:MessageScrollerRecipes.kt$39</ID>
+    <ID>MagicNumber:MessageScrollerRecipes.kt$42</ID>
+    <ID>MagicNumber:MessageScrollerRecipes.kt$5</ID>
+    <ID>MagicNumber:MessageScrollerRecipes.kt$50</ID>
+    <ID>MagicNumber:MessageScrollerRecipes.kt$64</ID>
+    <ID>MagicNumber:PaginationDoc.kt$5</ID>
+    <ID>MagicNumber:PaginationRecipes.kt$3</ID>
+    <ID>MagicNumber:PaginationRecipes.kt$5</ID>
+    <ID>MagicNumber:PopoverRecipes.kt$3</ID>
+    <ID>MagicNumber:PopoverRecipes.kt$6</ID>
+    <ID>MagicNumber:PreviewCodeSection.kt$3</ID>
+    <ID>MagicNumber:ProgressRecipes.kt$0.6f</ID>
+    <ID>MagicNumber:ProgressRecipes.kt$13f</ID>
+    <ID>MagicNumber:ProgressRecipes.kt$500</ID>
+    <ID>MagicNumber:ProgressRecipes.kt$50f</ID>
+    <ID>MagicNumber:ProgressRecipes.kt$56f</ID>
+    <ID>MagicNumber:ProgressRecipes.kt$66f</ID>
+    <ID>MagicNumber:QuestionnaireDoc.kt$50</ID>
+    <ID>MagicNumber:ScrollAreaDoc.kt$12</ID>
+    <ID>MagicNumber:ScrollAreaDoc.kt$20</ID>
+    <ID>MagicNumber:ScrollAreaDoc.kt$40</ID>
+    <ID>MagicNumber:ScrollAreaRecipes.kt$50</ID>
+    <ID>MagicNumber:ScrollFadeDoc.kt$20</ID>
+    <ID>MagicNumber:ScrollFadeRecipes.kt$10</ID>
+    <ID>MagicNumber:ScrollFadeRecipes.kt$12</ID>
+    <ID>MagicNumber:ScrollFadeRecipes.kt$24</ID>
+    <ID>MagicNumber:ScrollFadeRecipes.kt$3</ID>
+    <ID>MagicNumber:ScrollFadeRecipes.kt$4</ID>
+    <ID>MagicNumber:ScrollFadeRecipes.kt$8</ID>
+    <ID>MagicNumber:SelectExtensionRecipes.kt$40</ID>
+    <ID>MagicNumber:SelectPrimaryRecipes.kt$10</ID>
+    <ID>MagicNumber:SelectPrimaryRecipes.kt$3</ID>
+    <ID>MagicNumber:SelectPrimaryRecipes.kt$4</ID>
+    <ID>MagicNumber:SelectPrimaryRecipes.kt$5</ID>
+    <ID>MagicNumber:SelectPrimaryRecipes.kt$6</ID>
+    <ID>MagicNumber:SelectPrimaryRecipes.kt$7</ID>
+    <ID>MagicNumber:SelectPrimaryRecipes.kt$8</ID>
+    <ID>MagicNumber:SelectPrimaryRecipes.kt$9</ID>
+    <ID>MagicNumber:SeparatorRecipes.kt$3</ID>
+    <ID>MagicNumber:SharedLogicAndroidHostTest.kt$SharedLogicAndroidHostTest$3</ID>
+    <ID>MagicNumber:SheetDoc.kt$12</ID>
+    <ID>MagicNumber:SheetRecipes.kt$10</ID>
+    <ID>MagicNumber:SheetRecipes.kt$3</ID>
+    <ID>MagicNumber:SheetRecipes.kt$4</ID>
+    <ID>MagicNumber:SheetRecipes.kt$5</ID>
+    <ID>MagicNumber:SheetRecipes.kt$6</ID>
+    <ID>MagicNumber:ShimmerRecipes.kt$0xFF378ADD</ID>
+    <ID>MagicNumber:ShimmerRecipes.kt$3f</ID>
+    <ID>MagicNumber:SidebarOfficialRecipes.kt$180f</ID>
+    <ID>MagicNumber:SidebarOfficialRecipes.kt$4</ID>
+    <ID>MagicNumber:SkeletonRecipes.kt$.5f</ID>
+    <ID>MagicNumber:SkeletonRecipes.kt$.75f</ID>
+    <ID>MagicNumber:SkeletonRecipes.kt$16f</ID>
+    <ID>MagicNumber:SkeletonRecipes.kt$3</ID>
+    <ID>MagicNumber:SkeletonRecipes.kt$3f</ID>
+    <ID>MagicNumber:SkeletonRecipes.kt$5</ID>
+    <ID>MagicNumber:SkeletonRecipes.kt$9f</ID>
+    <ID>MagicNumber:SliderRecipes.kt$0.3f</ID>
+    <ID>MagicNumber:SliderRecipes.kt$0.7f</ID>
+    <ID>MagicNumber:SliderRecipes.kt$10</ID>
+    <ID>MagicNumber:SliderRecipes.kt$10f</ID>
+    <ID>MagicNumber:SliderRecipes.kt$20f</ID>
+    <ID>MagicNumber:SliderRecipes.kt$25f</ID>
+    <ID>MagicNumber:SliderRecipes.kt$33f</ID>
+    <ID>MagicNumber:SliderRecipes.kt$50f</ID>
+    <ID>MagicNumber:SliderRecipes.kt$70f</ID>
+    <ID>MagicNumber:SliderRecipes.kt$75f</ID>
+    <ID>MagicNumber:SpinnerRecipes.kt$10f</ID>
+    <ID>MagicNumber:SpinnerRecipes.kt$12f</ID>
+    <ID>MagicNumber:SpinnerRecipes.kt$19f</ID>
+    <ID>MagicNumber:SpinnerRecipes.kt$24f</ID>
+    <ID>MagicNumber:SpinnerRecipes.kt$4</ID>
+    <ID>MagicNumber:SpinnerRecipes.kt$5f</ID>
+    <ID>MagicNumber:SpinnerRecipes.kt$6f</ID>
+    <ID>MagicNumber:SpinnerRecipes.kt$8</ID>
+    <ID>MagicNumber:SurfaceParityExamples.kt$16f</ID>
+    <ID>MagicNumber:SurfaceParityExamples.kt$180</ID>
+    <ID>MagicNumber:SurfaceParityExamples.kt$24</ID>
+    <ID>MagicNumber:SurfaceParityExamples.kt$3</ID>
+    <ID>MagicNumber:SurfaceParityExamples.kt$4</ID>
+    <ID>MagicNumber:SurfaceParityExamples.kt$6200</ID>
+    <ID>MagicNumber:SurfaceParityExamples.kt$9f</ID>
+    <ID>MagicNumber:TableDoc.kt$3</ID>
+    <ID>MagicNumber:TableRecipes.kt$11</ID>
+    <ID>MagicNumber:TableRecipes.kt$3</ID>
+    <ID>MagicNumber:TableRecipes.kt$4</ID>
+    <ID>MagicNumber:TableRecipes.kt$5</ID>
+    <ID>MagicNumber:TableRecipes.kt$8</ID>
+    <ID>MagicNumber:ToastRecipes.kt$2000</ID>
+    <ID>MagicNumber:ToggleOfficialRecipes.kt$12f</ID>
+    <ID>MagicNumber:ToggleOfficialRecipes.kt$17f</ID>
+    <ID>MagicNumber:ToggleOfficialRecipes.kt$18.1f</ID>
+    <ID>MagicNumber:ToggleOfficialRecipes.kt$19f</ID>
+    <ID>MagicNumber:ToggleOfficialRecipes.kt$21f</ID>
+    <ID>MagicNumber:ToggleOfficialRecipes.kt$24f</ID>
+    <ID>MagicNumber:ToggleOfficialRecipes.kt$3.9f</ID>
+    <ID>MagicNumber:ToggleOfficialRecipes.kt$3f</ID>
+    <ID>MagicNumber:ToggleOfficialRecipes.kt$5.9f</ID>
+    <ID>MagicNumber:ToggleOfficialRecipes.kt$5f</ID>
+    <ID>MagicNumber:ToggleOfficialRecipes.kt$7f</ID>
+    <ID>MagicNumber:TooltipRecipes.kt$4</ID>
+    <ID>MagicNumber:TooltipRecipes.kt$6</ID>
+    <ID>MagicNumber:TraceRecipes.kt$1000</ID>
+    <ID>MagicNumber:TraceRecipes.kt$1200</ID>
+    <ID>MagicNumber:TraceRecipes.kt$20</ID>
+    <ID>MagicNumber:TraceRecipes.kt$200</ID>
+    <ID>MagicNumber:TraceRecipes.kt$3</ID>
+    <ID>MagicNumber:TraceRecipes.kt$4</ID>
+    <ID>MagicNumber:TraceRecipes.kt$40</ID>
+    <ID>MagicNumber:TraceRecipes.kt$400</ID>
+    <ID>MagicNumber:TraceRecipes.kt$5</ID>
+    <ID>MagicNumber:TraceRecipes.kt$60</ID>
+    <ID>MagicNumber:TraceRecipes.kt$700</ID>
+    <ID>MagicNumber:TraceRecipes.kt$8</ID>
+    <ID>MagicNumber:TraceRecipes.kt$900</ID>
+    <ID>MatchingDeclarationName:ApiReference.kt$ApiProperty</ID>
+    <ID>MatchingDeclarationName:MessageScrollerRecipes.kt$ScrollerRecipeMessage</ID>
+    <ID>MatchingDeclarationName:Platform.android.kt$AndroidPlatform : Platform</ID>
+    <ID>MatchingDeclarationName:Platform.ios.kt$IOSPlatform : Platform</ID>
+    <ID>MatchingDeclarationName:Platform.js.kt$JsPlatform : Platform</ID>
+    <ID>MatchingDeclarationName:Platform.jvm.kt$JVMPlatform : Platform</ID>
+    <ID>MatchingDeclarationName:Platform.wasmJs.kt$WasmPlatform : Platform</ID>
+    <ID>MatchingDeclarationName:TextPreviewTest.kt$TextColorTags</ID>
+    <ID>MatchingDeclarationName:ToggleGroupConnectedFixture.kt$ToggleGroupConnectedFixtureConfig</ID>
+    <ID>MayBeConst:CodeBlockDoc.kt$private val rtlCode = "pnpm add ai @ai-sdk/react zod\npnpm dev"</ID>
+    <ID>MayBeConst:CodeBlockDoc.kt$private val wrapOutput = "Error: The model \"anthropic/claude-sonnet-4.5\" returned an error: Request too large. The prompt is " + "212,431 tokens and the context window is 200,000 tokens. Remove some messages or summarize the " + "conversation and try again."</ID>
+    <ID>MayBeConst:MessageScrollerMissingRecipes.kt$// region demo ----------------------------------------------------------------- private val demoPrompt = "I'm building a chat for our app and the scroll behavior is driving me nuts. " + "Every time the AI streams a reply, the whole thread jumps around."</ID>
+    <ID>NestedBlockDepth:CreateChartColorTest.kt$CreateChartColorTest$@Test fun analyticsAndDividendMiniChartsAlsoUseTheirSelectedChartRoles()</ID>
+    <ID>ReturnCount:AppRouter.kt$AppRouterImpl$override fun back(): Boolean</ID>
+    <ID>ReturnCount:DatePickerDoc.kt$private fun formatRange(range: CalendarDateRange): String</ID>
+    <ID>ReturnCount:DocTableOfContents.kt$DocAnchors$fun offsetOf(id: String): Int?</ID>
+    <ID>ReturnCount:WebLinks.kt$WebLinks$fun canonicalize(uri: String): String</ID>
+    <ID>TooManyFunctions:BubbleDoc.kt$com.toutiaoyan.compose.ui.catalog.docs.BubbleDoc.kt</ID>
+    <ID>TooManyFunctions:ButtonGroupDoc.kt$com.toutiaoyan.compose.ui.catalog.docs.ButtonGroupDoc.kt</ID>
+    <ID>TooManyFunctions:CodeBlockDoc.kt$com.toutiaoyan.compose.ui.catalog.docs.CodeBlockDoc.kt</ID>
+    <ID>TooManyFunctions:CreatePreview01ExtraCards.kt$com.toutiaoyan.compose.ui.catalog.create.CreatePreview01ExtraCards.kt</ID>
+    <ID>TooManyFunctions:CreatePreview02Cards.kt$com.toutiaoyan.compose.ui.catalog.create.CreatePreview02Cards.kt</ID>
+    <ID>TooManyFunctions:CreatePreviewCards.kt$com.toutiaoyan.compose.ui.catalog.create.CreatePreviewCards.kt</ID>
+    <ID>TooManyFunctions:DatePickerDoc.kt$com.toutiaoyan.compose.ui.catalog.docs.DatePickerDoc.kt</ID>
+    <ID>TooManyFunctions:FieldDoc.kt$com.toutiaoyan.compose.ui.catalog.docs.FieldDoc.kt</ID>
+    <ID>TooManyFunctions:InputDoc.kt$com.toutiaoyan.compose.ui.catalog.docs.InputDoc.kt</ID>
+    <ID>TooManyFunctions:QuestionnaireDoc.kt$com.toutiaoyan.compose.ui.catalog.docs.QuestionnaireDoc.kt</ID>
+    <ID>TooManyFunctions:RadioGroupDoc.kt$com.toutiaoyan.compose.ui.catalog.docs.RadioGroupDoc.kt</ID>
+    <ID>TooManyFunctions:ScrollFadeRecipes.kt$com.toutiaoyan.compose.ui.catalog.docs.ScrollFadeRecipes.kt</ID>
+    <ID>TooManyFunctions:SelectExtensionRecipes.kt$com.toutiaoyan.compose.ui.catalog.docs.SelectExtensionRecipes.kt</ID>
+    <ID>TooManyFunctions:ShimmerRecipes.kt$com.toutiaoyan.compose.ui.catalog.docs.ShimmerRecipes.kt</ID>
+    <ID>TooManyFunctions:SidebarOfficialRecipes.kt$com.toutiaoyan.compose.ui.catalog.docs.SidebarOfficialRecipes.kt</ID>
+    <ID>TooManyFunctions:SliderRecipes.kt$com.toutiaoyan.compose.ui.catalog.docs.SliderRecipes.kt</ID>
+    <ID>TooManyFunctions:SurfaceParityExamples.kt$com.toutiaoyan.compose.ui.catalog.docs.SurfaceParityExamples.kt</ID>
+    <ID>TooManyFunctions:ToggleOfficialRecipes.kt$com.toutiaoyan.compose.ui.catalog.docs.ToggleOfficialRecipes.kt</ID>
+    <ID>TooManyFunctions:TraceRecipes.kt$com.toutiaoyan.compose.ui.catalog.docs.TraceRecipes.kt</ID>
+    <ID>TopLevelPropertyNaming:AlertDialogDoc.kt$private const val accessoryDescription = "Do you want to allow the USB accessory to connect to this device?"</ID>
+    <ID>TopLevelPropertyNaming:AlertDialogDoc.kt$private const val accessoryTitle = "Allow accessory to connect?"</ID>
+    <ID>TopLevelPropertyNaming:AlertDialogDoc.kt$private const val confirmationDescription = ( "This action cannot be undone. This will permanently delete " + "your account from our servers." )</ID>
+    <ID>TopLevelPropertyNaming:AlertDialogDoc.kt$private const val confirmationTitle = "Are you absolutely sure?"</ID>
+    <ID>TopLevelPropertyNaming:AlertDialogDoc.kt$private const val deleteDescription = ( "This will permanently delete this chat conversation. View " + "Settings delete any memories saved during this chat." )</ID>
+    <ID>TopLevelPropertyNaming:CodeBlockDoc.kt$private const val headerCommand = "pnpm add ai @ai-sdk/react zod"</ID>
+    <ID>TopLevelPropertyNaming:CodeBlockDoc.kt$private const val notesSample = "A language that is not in the list renders as plain text."</ID>
+    <ID>TopLevelPropertyNaming:CommandOfficialRecipes.kt$private const val commandItemHelperCode = """ @Composable private fun CommandExampleItem( label: String, icon: ImageVector, shortcut: String? = null, disabled: Boolean = false, ) { CommandItem(label, onSelect = {}, disabled = disabled) { Row( Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp), ) { Image(icon, null, Modifier.size(16.dp)) Text(Modifier.weight(1f)) { label } if (shortcut != null) CommandShortcut(shortcut) } } } """</ID>
+    <ID>TopLevelPropertyNaming:DialogDoc.kt$private const val loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor " + "incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud " + "exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure " + "dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. " + "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " + "mollit anim id est laborum."</ID>
+    <ID>TopLevelPropertyNaming:DocInstallation.kt$internal const val CatalogLibraryModule = "com.toutiaoyan.compose:ui"</ID>
+    <ID>TopLevelPropertyNaming:DocInstallation.kt$internal const val CatalogLibraryVersion = "0.3.37"</ID>
+    <ID>TopLevelPropertyNaming:FieldDoc.kt$private const val fieldDescriptionCopy = "All transactions are secure and encrypted"</ID>
+    <ID>TopLevelPropertyNaming:FieldDoc.kt$private const val requiredFieldMessage = "Please fill out this field."</ID>
+    <ID>TopLevelPropertyNaming:MessageScrollerMissingRecipes.kt$private const val demoReply = "That's the classic streaming scroll problem. Wrap your message list in " + "`MessageScroller` and turn on `autoScroll` — the viewport pins to the bottom as " + "tokens arrive, so users always see the latest text land in place.\n\n" + "The important part: it only auto-scrolls while the reader is already at the bottom. " + "The moment they scroll up to read something earlier, auto-scroll backs off and " + "their position is preserved."</ID>
+    <ID>TopLevelPropertyNaming:PopoverRecipes.kt$// region shared private const val popoverDescription = "Set the dimensions for the layer."</ID>
+    <ID>TopLevelPropertyNaming:SheetRecipes.kt$// region shared private const val SheetProfileDescription = "Make changes to your profile here. Click save when you're done."</ID>
+    <ID>TopLevelPropertyNaming:SheetRecipes.kt$// region side private const val SheetLongParagraph = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et " + "dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut " + "aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse " + "cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in " + "culpa qui officia deserunt mollit anim id est laborum."</ID>
+    <ID>TopLevelPropertyNaming:ShimmerRecipes.kt$// region shared private const val ShimmerMessage = "Generating response…"</ID>
+    <ID>TopLevelPropertyNaming:SliderRecipeCode.kt$internal const val sliderUsageImportCode = "import com.toutiaoyan.compose.ui.components.slider.Slider"</ID>
+    <ID>TopLevelPropertyNaming:ToastRecipes.kt$// region shared private const val ToastEventDescription = "Sunday, December 3 at 9:00 AM"</ID>
+    <ID>TopLevelPropertyNaming:ToggleRecipeCode.kt$internal const val toggleUsageImportCode = "import com.toutiaoyan.compose.ui.components.toggle.Toggle"</ID>
+    <ID>TopLevelPropertyNaming:ToggleRecipeCode.kt$internal const val toggleUsageRecipeCode = """Toggle("Toggle")"""</ID>
+    <ID>TopLevelPropertyNaming:TraceRecipes.kt$private const val demoAnswer = "The last commit bumped a version in package.json without updating pnpm-lock.yaml, " + "so the frozen install fails. Run pnpm install locally and commit the lockfile."</ID>
+    <ID>TopLevelPropertyNaming:TraceRecipes.kt$private const val demoQuestion = "Why does pnpm install fail in CI?"</ID>
+    <ID>TopLevelPropertyNaming:TraceRecipes.kt$private const val lockfileError = "ERR_PNPM_OUTDATED_LOCKFILE Cannot install with \"frozen-lockfile\" because " + "pnpm-lock.yaml is not up to date with package.json"</ID>
+    <ID>TopLevelPropertyNaming:TraceRecipes.kt$private const val reasoningAnswer = "Image optimization is the bottleneck. Key its cache on the lockfile and the " + "image directory instead of the commit hash."</ID>
+    <ID>TopLevelPropertyNaming:TraceRecipes.kt$private const val reasoningText = "The build log shows install and compile finish in under a minute. " + "Image optimization takes almost four, and it reruns on every deploy " + "because the cache key includes the commit hash."</ID>
+    <ID>TopLevelPropertyNaming:TraceRecipes.kt$private const val thoughtText = "CI installs with a frozen lockfile, so the install stops when package.json and " + "pnpm-lock.yaml disagree. I should check what the last commit changed, then " + "reproduce the install."</ID>
+    <ID>UnusedParameter:DatePickerDoc.kt$label: String</ID>
+    <ID>UnusedPrivateMember:DatePickerDoc.kt$@Composable private fun DatePickerRecipe( trigger: @Composable () -&gt; Unit, content: @Composable () -&gt; Unit, )</ID>
+    <ID>UnusedPrivateMember:DatePickerDoc.kt$private fun datePickerExampleCode( label: String, body: String, ): String</ID>
+    <ID>UnusedPrivateMember:SkeletonDoc.kt$@Preview(showBackground = true, name = "Skeleton Shimmer") @Composable private fun SkeletonShimmerPreview()</ID>
+    <ID>UnusedPrivateMember:SkeletonDoc.kt$@Preview(showBackground = true, name = "Skeleton") @Composable private fun SkeletonPreview()</ID>
+    <ID>UnusedPrivateMember:SkeletonPreviewTest.kt$@Preview(showBackground = true, name = "Skeleton / dark", widthDp = 360, heightDp = 140) @Composable private fun SkeletonDarkPreview()</ID>
+    <ID>UnusedPrivateMember:SkeletonPreviewTest.kt$@Preview(showBackground = true, name = "Skeleton Shimmer", widthDp = 360, heightDp = 140) @Composable private fun SkeletonShimmerPreview()</ID>
+    <ID>UnusedPrivateMember:SkeletonPreviewTest.kt$@Preview(showBackground = true, name = "Skeleton", widthDp = 360, heightDp = 140) @Composable private fun SkeletonPreview()</ID>
+    <ID>UnusedPrivateMember:TextDoc.kt$@Preview( showBackground = true, backgroundColor = PREVIEW_BG, widthDp = 360, heightDp = 120, name = "Smoke / BasicText", ) @Composable private fun TextSmokePreview()</ID>
+    <ID>UnusedPrivateMember:TextDoc.kt$@Preview( showBackground = true, backgroundColor = PREVIEW_BG, widthDp = 360, heightDp = 200, name = "Text / Style.text*", ) @Composable private fun TextTextStylePreview()</ID>
+    <ID>UnusedPrivateMember:TextDoc.kt$@Preview( showBackground = true, backgroundColor = PREVIEW_BG, widthDp = 360, heightDp = 320, name = "Text / Style { fontSize }", ) @Composable private fun TextFontSizeStylePreview()</ID>
+    <ID>UnusedPrivateMember:TextDoc.kt$@Preview( showBackground = true, backgroundColor = PREVIEW_BG, widthDp = 360, heightDp = 420, name = "Text / variants", ) @Composable private fun TextVariantsPreview()</ID>
+    <ID>UnusedPrivateMember:TextPreviewTest.kt$@Preview(showBackground = true, name = "Text color inheritance / dark", widthDp = 360) @Composable private fun TextColorInheritanceDarkPreview()</ID>
+    <ID>UnusedPrivateMember:TextPreviewTest.kt$@Preview(showBackground = true, name = "Text color inheritance", widthDp = 360) @Composable private fun TextColorInheritancePreview()</ID>
+    <ID>UnusedPrivateMember:TextPreviewTest.kt$@Preview(showBackground = true, name = "Text styles / dark") @Composable private fun TextStylesDarkPreview()</ID>
+    <ID>UnusedPrivateMember:TextPreviewTest.kt$@Preview(showBackground = true, name = "Text styles") @Composable private fun TextStylesPreview()</ID>
+    <ID>UnusedPrivateProperty:DatePickerDoc.kt$val locale = LocalCalendarLocale.current</ID>
+  </CurrentIssues>
+</SmellBaseline>

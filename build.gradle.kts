@@ -1,5 +1,5 @@
-import org.jlleitschuh.gradle.ktlint.KtlintExtension
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
+import org.jlleitschuh.gradle.ktlint.KtlintExtension
 
 plugins {
     // this is necessary to avoid the plugins to be loaded multiple times
@@ -40,10 +40,12 @@ subprojects {
         config.setFrom(rootProject.file("detekt.yml"))
         buildUponDefaultConfig = true
         allRules = false
-    }
-
-    dependencies {
-        add("detektPlugins", rootProject.libs.detekt.formatting)
+        baseline = file("detekt-baseline.xml")
+        // Scan checked-in source sets even when their targets are disabled on this host.
+        source.setFrom(fileTree("src") {
+            include("**/*.kt")
+            exclude("**/generated/**", "**/build/**")
+        })
     }
 
     tasks.withType<AbstractTestTask>().configureEach {

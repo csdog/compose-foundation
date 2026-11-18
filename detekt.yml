@@ -19,6 +19,14 @@ naming:
     excludes: ['**/test/**', '**/*Test.kt', '**/*Preview*']
     ignoreAnnotated: ['Composable']
 
-formatting:
-  Filename:
-    active: false # main.kt is the conventional Kotlin/JVM & Kotlin/JS entry-point name
+# Formatting belongs to ktlint. Disable default style rules that statically
+# overlap with ktlint; keep maintainability/naming rules ktlint does not own.
+style:
+  MaxLineLength:
+    active: false
+  ModifierOrder:
+    active: false
+  NewLineAtEndOfFile:
+    active: false
+  WildcardImport:
+    active: false
