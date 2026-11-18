@@ -120,11 +120,11 @@
 | 组件源码包 | 人工审查 | Detekt 清理 | 证据与待办 |
 | --- | --- | --- | --- |
 | `accordion` | 待审 | 待审 |  |
-| `alert` | 待审 | 待审 |  |
+| `alert` | 已验收 | 已验收 | 旧主题操作按钮随插槽生命周期挂载，`fb4b0d85`。 |
 | `alertdialog` | 待审 | 待审 |  |
 | `aspectratio` | 已验收 | 已验收 | 尺寸级联、比例输入和目录示例已复核。 |
 | `attachment` | 待审 | 待审 |  |
-| `avatar` | 待审 | 待审 |  |
+| `avatar` | 已验收 | 已验收 | 图片卸载只通知当前观察者，`98edb377`。 |
 | `badge` | 待审 | 待审 |  |
 | `breadcrumb` | 待审 | 待审 |  |
 | `bubble` | 待审 | 待审 |  |
@@ -163,7 +163,7 @@
 | `overlay` | 已验收 | 已验收 | 前两轮及第一批记录。 |
 | `pagination` | 待审 | 待审 |  |
 | `popover` | 待审 | 待审 |  |
-| `progress` | 待审 | 待审 |  |
+| `progress` | 已验收 | 已验收 | 独立轨道在无界容器中安全测量，`326ce39b`。 |
 | `questionnaire` | 待审 | 局部清理 | 已处理快捷键上限。 |
 | `radiobutton` | 待审 | 待审 |  |
 | `resizable` | 待审 | 待审 |  |
@@ -207,3 +207,10 @@
 - `Kbd.kt:68` 与 `KbdStyles.kt:15` 的键帽尺寸、Tooltip 色彩、组合字体和非交互语义已核对。尺寸来自 Nova 的键帽规格。已有 JVM 用例验证组内文字及键帽的字体、内联图标和父按钮的点击。相关源码与测试无 Detekt 存量 ID。[既有 Web 验收](web-parity/kbd-r2)
 - `Spinner.kt` 与 `SpinnerStyles.kt` 的默认样式和固有尺寸现在共用同一 16 dp 来源。`036a3657` 保留 SVG 比例数值，分离尺寸样本、像素轮廓及覆盖率断言。规范尺寸枚举文件能独立检索，保留类型名和枚举值。核对了动画绘制、调用方样式覆盖、固有尺寸约束和单一加载语义。6 个存量 ID 已移除。[既有 Web 验收](web-parity/spinner-r2/README.md)
 - 本批 33 项核心及 38 项目录 JVM 测试通过，两模块 Detekt、ktlint 通过。7 个存量 ID 移除，零新增。最终 Spinner 默认值归并后在独立副本复跑核心 JVM 与 lint，通过。[JVM、Detekt 与 Chromium 证据](../.agent-runs/code-review-95c932b6/component-review-label-kbd-spinner.json)
+
+### Progress、Alert 和 Avatar 验收
+
+- `Progress.kt:269,295`。横向滚动中的独立确定型轨道把无界约束当作宽度，修复前计算出 1,073,741,824 px 并抛出 `IllegalArgumentException`。修复后使用有限宽度或约束最小值，确定型和不确定型的无界测试通过。有界宽度动画、RTL 方向与无障碍数值仍由已有用例覆盖。四条存量 ID 已移除。公开参数及与样式定义共置的 `ProgressDefaults` 保留。
+- `Alert.kt:148,320`。旧主题根组件重组时会清空操作插槽，改变宽度后按钮从语义树消失。修复后，Lyra 的按钮在尺寸更新后可见，移除插槽时随即消失。Nova 测量规则独立，Alert 两个变体共用相同的背景、边框和圆角构造。两条存量 ID 已移除。公开便捷重载、共置的变体类型及 Nova CSS 留位尺寸保留。
+- `AvatarImage.kt:74,134,155,188`。在更换观察者后移除图片，旧观察者原来收到 `Success, Idle`。修复后旧观察者仅收到 `Success`，当前观察者收到 `Idle`，并显示回退。异步和矢量路径复用卸载逻辑。分组尺寸优先级、负间距、镜像和徽标叠放已有 JVM 覆盖。一条存量 ID 已移除。三个公开图片重载、共置尺寸定义和官方 `-space-x-2` 规格保留。
+- 两模块 Detekt 和 ktlint 通过。核心干净源码扫描覆盖 554 个 Kotlin 文件，已提交 baseline 从 4,528 条减至 4,521 条，零新增。100 项 JVM 用例中 96 项通过。四项 Alert 快照在相同环境的修复前源码上也失败，前后实际 PNG 的 SHA-256 逐一相同，保留仓库基准。Chromium 在 JS/Wasm 均确认 Progress 的 `56%` 及可访问范围、Alert 操作点击和 Avatar 首字母回退。[回归、像素比对与浏览器证据](../.agent-runs/code-review-95c932b6/component-review-progress-alert-avatar.json)
