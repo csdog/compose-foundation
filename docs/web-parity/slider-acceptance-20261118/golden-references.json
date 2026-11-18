@@ -1,0 +1,438 @@
+[
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/slider_focused_dark.png",
+    "referenceSha256": "c9d8d2283c59e7d4f477dc6e5e52ace01b7f19069a9a738c965c575f082ec87c",
+    "before": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/.agent-runs/slider/goal-20261118/baseline-native/images/slider_focused_dark_actual.png",
+    "beforeSha256": "331484afe39e4307b70bf44ca85e5ca3a04d58bfde407752983eb3e11d3136b5",
+    "candidate": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/.agent-runs/slider/goal-20261118/fixed-repeat-native/images/slider_focused_dark_actual.png",
+    "candidateSha256": "9db814682cb138aecdbd3078b111a583a49d12b67dbcf3d51bc5ee456d5bfa2e",
+    "originalContent": {
+      "size": [
+        208,
+        768
+      ],
+      "background": [
+        10,
+        10,
+        10
+      ],
+      "bbox": [
+        24,
+        376,
+        184,
+        392
+      ],
+      "paintedBands": [
+        [
+          376,
+          392
+        ]
+      ],
+      "paintedPixels": 666
+    },
+    "baselineContent": {
+      "size": [
+        208,
+        48
+      ],
+      "background": [
+        10,
+        10,
+        10
+      ],
+      "bbox": null,
+      "paintedBands": [],
+      "paintedPixels": 0
+    },
+    "candidateContent": {
+      "size": [
+        208,
+        64
+      ],
+      "background": [
+        10,
+        10,
+        10
+      ],
+      "bbox": [
+        24,
+        24,
+        184,
+        40
+      ],
+      "paintedBands": [
+        [
+          24,
+          40
+        ]
+      ],
+      "paintedPixels": 666
+    },
+    "referenceVsBaseline": {
+      "sameDimensions": false,
+      "beforeSize": [
+        208,
+        768
+      ],
+      "afterSize": [
+        208,
+        48
+      ]
+    },
+    "referenceVsCandidate": {
+      "sameDimensions": false,
+      "beforeSize": [
+        208,
+        768
+      ],
+      "afterSize": [
+        208,
+        64
+      ]
+    },
+    "baselineVsCandidate": {
+      "sameDimensions": false,
+      "beforeSize": [
+        208,
+        48
+      ],
+      "afterSize": [
+        208,
+        64
+      ]
+    }
+  },
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/slider_focused_light.png",
+    "referenceSha256": "344307675568e82705b726b91ca7607b410ea27f65e97de9c9af47c3fd44aa61",
+    "before": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/.agent-runs/slider/goal-20261118/baseline-native/images/slider_focused_light_actual.png",
+    "beforeSha256": "dd76e8f77ca81d7de67ef37694616b8a92922383ed1b39a33bef6cb8e427de11",
+    "candidate": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/.agent-runs/slider/goal-20261118/fixed-repeat-native/images/slider_focused_light_actual.png",
+    "candidateSha256": "d0e1583b66a5f3a2fef1932dd4eb20a7a15eea1651581e2ca30ebe87281c1c32",
+    "originalContent": {
+      "size": [
+        208,
+        768
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "bbox": [
+        24,
+        376,
+        184,
+        392
+      ],
+      "paintedBands": [
+        [
+          376,
+          392
+        ]
+      ],
+      "paintedPixels": 660
+    },
+    "baselineContent": {
+      "size": [
+        208,
+        48
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "bbox": null,
+      "paintedBands": [],
+      "paintedPixels": 0
+    },
+    "candidateContent": {
+      "size": [
+        208,
+        64
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "bbox": [
+        24,
+        24,
+        184,
+        40
+      ],
+      "paintedBands": [
+        [
+          24,
+          40
+        ]
+      ],
+      "paintedPixels": 660
+    },
+    "referenceVsBaseline": {
+      "sameDimensions": false,
+      "beforeSize": [
+        208,
+        768
+      ],
+      "afterSize": [
+        208,
+        48
+      ]
+    },
+    "referenceVsCandidate": {
+      "sameDimensions": false,
+      "beforeSize": [
+        208,
+        768
+      ],
+      "afterSize": [
+        208,
+        64
+      ]
+    },
+    "baselineVsCandidate": {
+      "sameDimensions": false,
+      "beforeSize": [
+        208,
+        48
+      ],
+      "afterSize": [
+        208,
+        64
+      ]
+    }
+  },
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/slider_states_dark.png",
+    "referenceSha256": "d984a33d6f868946e257ffc7b6ff23a58e439bf948b9563818e48a579432c5e4",
+    "before": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/.agent-runs/slider/goal-20261118/baseline-native/images/slider_states_dark_actual.png",
+    "beforeSha256": "08c94279732e05d6319486124b6687ae88c823e3cb9160f135987d2fad3761ce",
+    "candidate": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/.agent-runs/slider/goal-20261118/fixed-repeat-native/images/slider_states_dark_actual.png",
+    "candidateSha256": "a96759f9966bead43c07e911621187319cc89323fde34087fcd850ea16930777",
+    "originalContent": {
+      "size": [
+        208,
+        768
+      ],
+      "background": [
+        10,
+        10,
+        10
+      ],
+      "bbox": [
+        24,
+        376,
+        184,
+        392
+      ],
+      "paintedBands": [
+        [
+          376,
+          392
+        ]
+      ],
+      "paintedPixels": 666
+    },
+    "baselineContent": {
+      "size": [
+        208,
+        96
+      ],
+      "background": [
+        10,
+        10,
+        10
+      ],
+      "bbox": null,
+      "paintedBands": [],
+      "paintedPixels": 0
+    },
+    "candidateContent": {
+      "size": [
+        208,
+        160
+      ],
+      "background": [
+        10,
+        10,
+        10
+      ],
+      "bbox": [
+        24,
+        24,
+        184,
+        136
+      ],
+      "paintedBands": [
+        [
+          24,
+          40
+        ],
+        [
+          56,
+          72
+        ],
+        [
+          88,
+          104
+        ],
+        [
+          120,
+          136
+        ]
+      ],
+      "paintedPixels": 2662
+    },
+    "referenceVsBaseline": {
+      "sameDimensions": false,
+      "beforeSize": [
+        208,
+        768
+      ],
+      "afterSize": [
+        208,
+        96
+      ]
+    },
+    "referenceVsCandidate": {
+      "sameDimensions": false,
+      "beforeSize": [
+        208,
+        768
+      ],
+      "afterSize": [
+        208,
+        160
+      ]
+    },
+    "baselineVsCandidate": {
+      "sameDimensions": false,
+      "beforeSize": [
+        208,
+        96
+      ],
+      "afterSize": [
+        208,
+        160
+      ]
+    }
+  },
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/slider_states_light.png",
+    "referenceSha256": "98bd38dbff3368b28f1967838bd315022d180e60cac5fbeca9d275831403c96a",
+    "before": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/.agent-runs/slider/goal-20261118/baseline-native/images/slider_states_light_actual.png",
+    "beforeSha256": "5c8f7253d78b7767856b4ee170faf2e2a391d876d17c48c9d12cae649cb146d3",
+    "candidate": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/.agent-runs/slider/goal-20261118/fixed-repeat-native/images/slider_states_light_actual.png",
+    "candidateSha256": "b369a5346f9731524218dba8ab0911e1900f336001ecdf5711e171be7ddfe21b",
+    "originalContent": {
+      "size": [
+        208,
+        768
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "bbox": [
+        24,
+        376,
+        184,
+        392
+      ],
+      "paintedBands": [
+        [
+          376,
+          392
+        ]
+      ],
+      "paintedPixels": 660
+    },
+    "baselineContent": {
+      "size": [
+        208,
+        96
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "bbox": null,
+      "paintedBands": [],
+      "paintedPixels": 0
+    },
+    "candidateContent": {
+      "size": [
+        208,
+        160
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "bbox": [
+        24,
+        24,
+        184,
+        136
+      ],
+      "paintedBands": [
+        [
+          24,
+          40
+        ],
+        [
+          56,
+          72
+        ],
+        [
+          88,
+          104
+        ],
+        [
+          120,
+          136
+        ]
+      ],
+      "paintedPixels": 2640
+    },
+    "referenceVsBaseline": {
+      "sameDimensions": false,
+      "beforeSize": [
+        208,
+        768
+      ],
+      "afterSize": [
+        208,
+        96
+      ]
+    },
+    "referenceVsCandidate": {
+      "sameDimensions": false,
+      "beforeSize": [
+        208,
+        768
+      ],
+      "afterSize": [
+        208,
+        160
+      ]
+    },
+    "baselineVsCandidate": {
+      "sameDimensions": false,
+      "beforeSize": [
+        208,
+        96
+      ],
+      "afterSize": [
+        208,
+        160
+      ]
+    }
+  }
+]

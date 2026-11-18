@@ -1,0 +1,143 @@
+{
+  "component": "Slider",
+  "revision": "968d8cb9dc42ae5d52e8fd356cf84596ec832a26",
+  "livePage": "https://ui.shadcn.com/docs/components/base/slider",
+  "baseUi": {
+    "version": "1.6.0",
+    "revision": "b34551d644f2e58ebf8fc1050d949f6654ceca6c"
+  },
+  "retrievedAt": "2026-11-18T07:02:30.450713+00:00",
+  "files": [
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/content/docs/components/base/slider.mdx",
+      "path": ".agent-runs/slider/goal-20261118/official/apps/v4/content/docs/components/base/slider.mdx",
+      "sha256": "89c1821040576ca8b6156076f7a911c8e7844be8611894babb2fe35f7d627eea",
+      "bytes": 2003,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/registry/bases/base/ui/slider.tsx",
+      "path": ".agent-runs/slider/goal-20261118/official/apps/v4/registry/bases/base/ui/slider.tsx",
+      "sha256": "0255828e9c4477580d1428ae633f322434d2d652939272720d6980736465d712",
+      "bytes": 1577,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/registry/styles/style-nova.css",
+      "path": ".agent-runs/slider/goal-20261118/official/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e",
+      "bytes": 78661,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/registry/styles/style-rhea.css",
+      "path": ".agent-runs/slider/goal-20261118/official/apps/v4/registry/styles/style-rhea.css",
+      "sha256": "bac4eff75a0e21d9dd90ce40634937f54730471d8f7fa50ca67b317892cf908f",
+      "bytes": 78788,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/slider-demo.tsx",
+      "path": ".agent-runs/slider/goal-20261118/official/apps/v4/examples/base/slider-demo.tsx",
+      "sha256": "f5b3e618f4757e12241c2b8780c586c8fcf742cbff1c271460030800c800a79b",
+      "bytes": 221,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/slider-range.tsx",
+      "path": ".agent-runs/slider/goal-20261118/official/apps/v4/examples/base/slider-range.tsx",
+      "sha256": "6bb414d91f45efb4dd15891802a6e80c4220e82aab6aea9a07e44b4899d6d7c6",
+      "bytes": 226,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/slider-multiple.tsx",
+      "path": ".agent-runs/slider/goal-20261118/official/apps/v4/examples/base/slider-multiple.tsx",
+      "sha256": "36856a7f73be1ea7bf82b0d72327fd6752d078a297589691a7d0d662b5bea9a5",
+      "bytes": 234,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/slider-vertical.tsx",
+      "path": ".agent-runs/slider/goal-20261118/official/apps/v4/examples/base/slider-vertical.tsx",
+      "sha256": "f3e79d7683bf6a7a4ec444855aba3fa0d538a88b7adb93c95bc146d2c6efc7e0",
+      "bytes": 487,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/slider-controlled.tsx",
+      "path": ".agent-runs/slider/goal-20261118/official/apps/v4/examples/base/slider-controlled.tsx",
+      "sha256": "5147f33d8728822adb66224a25125c66147c2d58bf357b56fc13b59edca4b70d",
+      "bytes": 775,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/slider-disabled.tsx",
+      "path": ".agent-runs/slider/goal-20261118/official/apps/v4/examples/base/slider-disabled.tsx",
+      "sha256": "743d4a0c0ffe901485ae53ec266b6fe9a6f3a11100b387fee5843197622ab187",
+      "bytes": 240,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/slider-rtl.tsx",
+      "path": ".agent-runs/slider/goal-20261118/official/apps/v4/examples/base/slider-rtl.tsx",
+      "sha256": "305f08ad2670f51e6cb6ea1c68f42085583d2e75f13b0ae1903786fa3ce3db68",
+      "bytes": 603,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/components/component-preview-tabs.tsx",
+      "path": ".agent-runs/slider/goal-20261118/official/apps/v4/components/component-preview-tabs.tsx",
+      "sha256": "0e533e724e74e6b13641649324aa169e0597a486eec28e86b7f915defb08c383",
+      "bytes": 8860
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/package.json",
+      "path": ".agent-runs/slider/goal-20261118/official/apps/v4/package.json",
+      "sha256": "ec967c97c0229cacd4088b566faa2f574d9c210b136877d634360f617c4b79be",
+      "bytes": 5898
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/slider/root/SliderRoot.tsx",
+      "path": ".agent-runs/slider/goal-20261118/base-ui/packages/react/src/slider/root/SliderRoot.tsx",
+      "sha256": "4b7e4f7bb6a8e996f61e6182fe0dfdac1379338b2bc416d29559ed933490fd9f",
+      "bytes": 19776
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/slider/thumb/SliderThumb.tsx",
+      "path": ".agent-runs/slider/goal-20261118/base-ui/packages/react/src/slider/thumb/SliderThumb.tsx",
+      "sha256": "daeabeb0e7c20ec5d18d21c01fd610c793c3da4890be615f0b5245086528038f",
+      "bytes": 18725
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/slider/control/SliderControl.tsx",
+      "path": ".agent-runs/slider/goal-20261118/base-ui/packages/react/src/slider/control/SliderControl.tsx",
+      "sha256": "1f39b56baff57d5a8e7de215313dbfe5725aac04a29576a19fb1993a2807e492",
+      "bytes": 17247
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/slider/utils/resolveThumbCollision.ts",
+      "path": ".agent-runs/slider/goal-20261118/base-ui/packages/react/src/slider/utils/resolveThumbCollision.ts",
+      "sha256": "0538aff66a967f7cd39c9625d054c66770ff55093e383e746ffdbd8f2f02f8c2",
+      "bytes": 5498
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/slider/utils/roundValueToStep.ts",
+      "path": ".agent-runs/slider/goal-20261118/base-ui/packages/react/src/slider/utils/roundValueToStep.ts",
+      "sha256": "8948a34ffbb38cc64de99599ac1a9df80737120b3169abebed73897d3a3ab18f",
+      "bytes": 854
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/slider/utils/getPushedThumbValues.ts",
+      "path": ".agent-runs/slider/goal-20261118/base-ui/packages/react/src/slider/utils/getPushedThumbValues.ts",
+      "sha256": "72fb5a4267cc9e8bc8551e11f7c3a1d03bc3f17bef39af1b4afceaa5e48a77c9",
+      "bytes": 2102
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/slider/utils/getSliderValue.ts",
+      "path": ".agent-runs/slider/goal-20261118/base-ui/packages/react/src/slider/utils/getSliderValue.ts",
+      "sha256": "d8b6ce2b0d5e4b6fce0b5ddb8f4985433c426d93f2e8bf93cf39f0650d8b5bb6",
+      "bytes": 616
+    }
+  ]
+}
