@@ -2,7 +2,7 @@
 
 [审查计划与验收标准](code-review-plan.md)
 
-审查基线为 `95c932b6`。两轮审查已结束，组件修复已分批提交。目录导航和 Detekt 构建配置各有一项延后事项。审查开始前已有的代码改动和暂存内容均已保留。
+审查基线为 `95c932b6`。两轮审查已结束，组件修复已分批提交。Detekt 构建配置、目录 JS 启动修复和导航监听器修复均已提交。其余导航改动及已有暂存内容保留。
 
 ## 第一轮
 
@@ -30,7 +30,8 @@
 | `NovaToastViewport.kt:116` | 可见项先按消息排序，再逐项扫描视口条目查找相同 ID。 | 已复用有序列表 | `d1616329`。32 个 Toast 测试通过，覆盖可见上限、离场顺序、计时和焦点恢复。 |
 | `Slider.kt:81`、`:104` | 控制器和根节点无障碍动作分别定义滑块间最小距离。键盘大步进使用了几个语义不同的数字。 | 已共享间距规则并命名步长 | `50f33ddb`。23 个 Slider 测试通过，保留 Web 绝对大步进及其他平台的步幅倍数。 |
 | `TouchCanvasFocus.kt:15`、`Sheet.kt:252`、`Toggle.kt:147` | 两处都在指针释放的 Main 阶段向点击处理器暂存触摸信息，且各自负责取消清理。 | 已共享触摸释放生命周期 | `cd15c448`。37 个 Sheet、15 个 Toggle 测试通过。Sheet 保留原生触摸识别，Toggle 仅在捕获到恢复动作时恢复焦点。Slider 拖动与 Popover 非模态交互保留独立路径。 |
-| `app/webApp/src/webMain/kotlin/com/toutiaoyan/compose/ui/main.kt:106`、`:122` | 路由绑定直接写入和清空 `window.onpopstate`，覆盖宿主已有处理器。 | 暂缓，文件有用户的导航改动 | Chromium 在 JS/Wasm 中均复现。可正常执行锚点导航、后退和前进，但浏览器派发了 `popstate`，预先注册的宿主处理器调用为 0。整合导航改动后改用成对注册与移除。[导航复现记录](../.agent-runs/code-review-95c932b6/catalog-history.json) |
+| `app/webApp/src/webMain/kotlin/com/toutiaoyan/compose/ui/main.kt` 的 `bindAppRouterToBrowser` | 路由绑定直接写入和清空 `window.onpopstate`，覆盖宿主已有处理器。 | `704a785b` 改为成对注册与移除，保留路由回调顺序。 | 以仅含正则修复的父提交为对照。JS/Wasm Chromium 均复现宿主原回调丢失，最终提交保留原回调并在前进后退时调用。对照与最终版的滚动恢复位置一致。[修改前](../.agent-runs/cursor-review-goal-20261118/delivery/browser-parent-79145449.json) · [修改后](../.agent-runs/cursor-review-goal-20261118/delivery/browser-final-704a785b.json) |
+| `app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/InlineDocCode.kt:216` | 字符类的右方括号在 JS Unicode 正则中需要转义，旧版目录启动时报错。 | `79145449` 提交已有的单行转义修复。 | 原始 JS 产物报 `SyntaxError`。父提交及最终版的 JS 目录均能挂载并执行历史回归。[启动复现](../.agent-runs/cursor-review-goal-20261118/clean-candidate.json) · [父提交浏览器结果](../.agent-runs/cursor-review-goal-20261118/delivery/browser-parent-79145449.json) |
 | `build.gradle.kts` 的 Detekt 配置 | 核心模块原先以 `NO-SOURCE` 跳过，读到 0 个输入文件。 | 已配置 Gradle 扫描 KMP 源码，并为存量问题生成模块 baseline | 检查和 baseline 生成使用同一份源码范围。详见下方 Gradle Detekt 记录。 |
 
 ## 基线检查
@@ -62,7 +63,12 @@
 
 - 核心模块扫描 553 个 Kotlin 文件，问题 ID 从 4,583 降至 4,547，全仓 baseline 从 5,408 降至 5,372。新增 ID 为零。未采用会搬移复杂度告警或改变浮点边界判断的候选改写。[Detekt 前后对照](../.agent-runs/code-review-95c932b6/detekt-cleanup/baseline-delta.json)
 - 核心 `detekt` 与 `ktlintCheck` 通过。相关 JVM 全部通过，共 394 个组件用例和 182 个目录用例。产品交互与视觉值保持原语义，本次验证使用现有 JVM 和快照用例。Checkbox 中间帧和 Switch 两项动画反向仍是已记录的全量 JVM 基线问题。[Gradle 结果](../.agent-runs/code-review-95c932b6/detekt-cleanup/gradle.json) · [JVM 统计](../.agent-runs/code-review-95c932b6/detekt-cleanup/jvm.json)
-- `app/webApp` 的历史监听器修复仍与本地导航改动重叠。DropdownMenu 也有重叠修改，待整合后复审。保留上述本地改动和已有暂存内容。
+- DropdownMenu 仍待整合后复审。已有暂存内容保持原样。
+
+## 目录交付复核
+
+- 最终提交 `704a785b` 的 1,614 个输入与验证副本一致。JS/Wasm 双构建、两个目录模块的 ktlint 和 Detekt，以及 27 个目录 JVM 测试通过。两模块 Detekt 报告均为零。[输入核对](../.agent-runs/cursor-review-goal-20261118/delivery/committed-inputs.json) · [验证记录](../.agent-runs/cursor-review-goal-20261118/delivery/verification.json)
+- 本地 `app/webApp/build.gradle.kts` 的字体生成任务改为先注册再配置。ktlint 通过，重新生成的 Kotlin 文件逐字节一致。该格式修正随原本的字体配置改动留在工作区。[局部补丁](../.agent-runs/cursor-review-goal-20261118/delivery/local-web-build-format.patch)
 
 ## Chromium 实测
 
