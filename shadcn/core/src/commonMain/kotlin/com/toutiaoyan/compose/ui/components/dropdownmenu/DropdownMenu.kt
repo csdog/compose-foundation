@@ -55,6 +55,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -123,16 +124,20 @@ internal class DropdownMenuController(
      * into the menu for keyboard opens; a pointer open leaves every row unhighlighted
      * until the first ArrowDown/ArrowUp.
      */
-    val initialFocus: () -> DropdownMenuInitialFocus,
-    val consumeInitialFocus: () -> Unit,
-    val setInitialFocus: (DropdownMenuInitialFocus) -> Unit,
+    private val initialFocus: MutableState<DropdownMenuInitialFocus>,
 ) {
     fun toggle() = onOpenChange(!open)
 
     fun dismiss() = onOpenChange(false)
 
+    fun consumeInitialFocus(): DropdownMenuInitialFocus {
+        val intent = initialFocus.value
+        initialFocus.value = DropdownMenuInitialFocus.None
+        return intent
+    }
+
     fun onOpenChangeWithFocus(focus: DropdownMenuInitialFocus) {
-        setInitialFocus(focus)
+        initialFocus.value = focus
         onOpenChange(true)
     }
 }
@@ -248,12 +253,7 @@ fun DropdownMenu(
             modal,
             anchorBounds =
             readAnchor,
-            initialFocus =
-                { initialFocus.value },
-            consumeInitialFocus =
-                { initialFocus.value = DropdownMenuInitialFocus.None },
-            setInitialFocus =
-                { initialFocus.value = it },
+            initialFocus = initialFocus,
         )
     CompositionLocalProvider(LocalDropdownMenu provides controller) {
         Box(modifier = modifier.onGloballyPositioned { anchor.value = it.boundsInWindow() }) {
@@ -442,8 +442,7 @@ fun DropdownMenuScope.DropdownMenuContent(
                 LocalContextMenuNavigation provides navigation,
             ) {
                 LaunchedEffect(Unit) {
-                    val intent = controller.initialFocus()
-                    controller.consumeInitialFocus()
+                    val intent = controller.consumeInitialFocus()
                     androidx.compose.runtime.withFrameNanos { }
                     when (intent) {
                         DropdownMenuInitialFocus.First -> navigation.items.firstOrNull()?.requestFocus()
