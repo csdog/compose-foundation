@@ -1,0 +1,216 @@
+[
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/toast_states_dark.png",
+    "referenceSha256": "27a08453514d0c72c5e906e4b8619e197f16cba8af1539a22b5a4261d6bf3572",
+    "before": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/.agent-runs/toast/goal-20261118/baseline-native/images/toast_states_dark_actual.png",
+    "beforeSha256": "4e04fa5985b6afbd3bd28bbe795757e5e0ab5769f68bc177c737848332937102",
+    "candidate": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/.agent-runs/toast/goal-20261118/fixed-native/images/toast_states_dark_actual.png",
+    "candidateSha256": "4e04fa5985b6afbd3bd28bbe795757e5e0ab5769f68bc177c737848332937102",
+    "originalContent": {
+      "size": [
+        288,
+        106
+      ],
+      "background": [
+        10,
+        10,
+        10
+      ],
+      "bbox": [
+        24,
+        24,
+        264,
+        82
+      ],
+      "paintedBands": [
+        [
+          24,
+          82
+        ]
+      ],
+      "paintedPixels": 2124
+    },
+    "baselineContent": {
+      "size": [
+        432,
+        118
+      ],
+      "background": [
+        10,
+        10,
+        10
+      ],
+      "bbox": [
+        21,
+        21,
+        411,
+        97
+      ],
+      "paintedBands": [
+        [
+          21,
+          97
+        ]
+      ],
+      "paintedPixels": 29157
+    },
+    "candidateContent": {
+      "size": [
+        432,
+        118
+      ],
+      "background": [
+        10,
+        10,
+        10
+      ],
+      "bbox": [
+        21,
+        21,
+        411,
+        97
+      ],
+      "paintedBands": [
+        [
+          21,
+          97
+        ]
+      ],
+      "paintedPixels": 29157
+    },
+    "referenceVsBaseline": {
+      "sameDimensions": false,
+      "beforeSize": [
+        288,
+        106
+      ],
+      "afterSize": [
+        432,
+        118
+      ]
+    },
+    "referenceVsCandidate": {
+      "sameDimensions": false,
+      "beforeSize": [
+        288,
+        106
+      ],
+      "afterSize": [
+        432,
+        118
+      ]
+    },
+    "baselineVsCandidate": {
+      "sameDimensions": true,
+      "bbox": null,
+      "changedPixels": 0
+    }
+  },
+  {
+    "reference": "shadcn/core/src/jvmTest/snapshots/toast_states_light.png",
+    "referenceSha256": "771364c077955643d775dad4fc7a0968d13933dd35ddb6d197812eb77fe6e900",
+    "before": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/.agent-runs/toast/goal-20261118/baseline-native/images/toast_states_light_actual.png",
+    "beforeSha256": "295a116fdf19363f3ee616378eb7ec39d60d74a87f14b5ea6c90374e9f0bc041",
+    "candidate": "/Users/cscs/IdeaProjects/angryecho/compose-foundation/.agent-runs/toast/goal-20261118/fixed-native/images/toast_states_light_actual.png",
+    "candidateSha256": "295a116fdf19363f3ee616378eb7ec39d60d74a87f14b5ea6c90374e9f0bc041",
+    "originalContent": {
+      "size": [
+        288,
+        106
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "bbox": [
+        24,
+        24,
+        264,
+        82
+      ],
+      "paintedBands": [
+        [
+          24,
+          82
+        ]
+      ],
+      "paintedPixels": 2139
+    },
+    "baselineContent": {
+      "size": [
+        432,
+        118
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "bbox": [
+        14,
+        14,
+        418,
+        104
+      ],
+      "paintedBands": [
+        [
+          14,
+          104
+        ]
+      ],
+      "paintedPixels": 12184
+    },
+    "candidateContent": {
+      "size": [
+        432,
+        118
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "bbox": [
+        14,
+        14,
+        418,
+        104
+      ],
+      "paintedBands": [
+        [
+          14,
+          104
+        ]
+      ],
+      "paintedPixels": 12184
+    },
+    "referenceVsBaseline": {
+      "sameDimensions": false,
+      "beforeSize": [
+        288,
+        106
+      ],
+      "afterSize": [
+        432,
+        118
+      ]
+    },
+    "referenceVsCandidate": {
+      "sameDimensions": false,
+      "beforeSize": [
+        288,
+        106
+      ],
+      "afterSize": [
+        432,
+        118
+      ]
+    },
+    "baselineVsCandidate": {
+      "sameDimensions": true,
+      "bbox": null,
+      "changedPixels": 0
+    }
+  }
+]

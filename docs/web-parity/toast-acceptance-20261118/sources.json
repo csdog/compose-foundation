@@ -1,0 +1,107 @@
+{
+  "component": "Toast",
+  "revision": "968d8cb9dc42ae5d52e8fd356cf84596ec832a26",
+  "livePage": "https://ui.shadcn.com/docs/components/base/toast",
+  "baseUi": {
+    "version": "1.6.0",
+    "revision": "b34551d644f2e58ebf8fc1050d949f6654ceca6c"
+  },
+  "retrievedAt": "2026-11-18T07:36:44.677246+00:00",
+  "files": [
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/content/docs/components/base/toast.mdx",
+      "path": ".agent-runs/toast/goal-20261118/official/apps/v4/content/docs/components/base/toast.mdx",
+      "sha256": "282db7dad6c7a9abf562aa998f89cf9088e136868fbea9d41fd06ef9615f2ecc",
+      "bytes": 2647,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/registry/bases/base/ui/toast.tsx",
+      "path": ".agent-runs/toast/goal-20261118/official/apps/v4/registry/bases/base/ui/toast.tsx",
+      "sha256": "7109c9718288d39c49fe62e5a55a19a63a56ab60e950619df64d30d63564c0b9",
+      "bytes": 8489,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/toast-demo.tsx",
+      "path": ".agent-runs/toast/goal-20261118/official/apps/v4/examples/base/toast-demo.tsx",
+      "sha256": "a59ce6cb148570f2352395943b0801b3c674b528166841ef30ba14c3abda548b",
+      "bytes": 509,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/toast-types.tsx",
+      "path": ".agent-runs/toast/goal-20261118/official/apps/v4/examples/base/toast-types.tsx",
+      "sha256": "3701d095cce2403c244eed822d55a38168be4f7d349d9e87643226e0f1eaf6d1",
+      "bytes": 1352,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/toast-promise.tsx",
+      "path": ".agent-runs/toast/goal-20261118/official/apps/v4/examples/base/toast-promise.tsx",
+      "sha256": "89eb816749682e650a247d6a14a43b55e3bc1f1151c9ca116c8d9fff9624b0ff",
+      "bytes": 585,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/registry/styles/style-nova.css",
+      "path": ".agent-runs/toast/goal-20261118/official/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e",
+      "bytes": 78661
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/components/component-preview-tabs.tsx",
+      "path": ".agent-runs/toast/goal-20261118/official/apps/v4/components/component-preview-tabs.tsx",
+      "sha256": "0e533e724e74e6b13641649324aa169e0597a486eec28e86b7f915defb08c383",
+      "bytes": 8860
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/package.json",
+      "path": ".agent-runs/toast/goal-20261118/official/apps/v4/package.json",
+      "sha256": "ec967c97c0229cacd4088b566faa2f574d9c210b136877d634360f617c4b79be",
+      "bytes": 5898
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/toast/root/ToastRoot.tsx",
+      "path": ".agent-runs/toast/goal-20261118/base-ui/packages/react/src/toast/root/ToastRoot.tsx",
+      "sha256": "66c9427bda0b5a67cead3a3fe67ea769ce19f333801a7566869b05c6560f0026",
+      "bytes": 20492
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/toast/provider/ToastProvider.tsx",
+      "path": ".agent-runs/toast/goal-20261118/base-ui/packages/react/src/toast/provider/ToastProvider.tsx",
+      "sha256": "8b0a9c2b1a099625738fee99e0b1662be0cf0a60a35aae2e97ef9b9ad09c8a37",
+      "bytes": 2885
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/toast/viewport/ToastViewport.tsx",
+      "path": ".agent-runs/toast/goal-20261118/base-ui/packages/react/src/toast/viewport/ToastViewport.tsx",
+      "sha256": "af36a1d5fb52a29cbda1d507371ac80252624c545c2678ded3949111b0d4d8a2",
+      "bytes": 10144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/toast/action/ToastAction.tsx",
+      "path": ".agent-runs/toast/goal-20261118/base-ui/packages/react/src/toast/action/ToastAction.tsx",
+      "sha256": "5b3809b852a28730bb36a988e482507eadbecacb499f7fe8d3c94b26dd7a44dd",
+      "bytes": 1782
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/toast/close/ToastClose.tsx",
+      "path": ".agent-runs/toast/goal-20261118/base-ui/packages/react/src/toast/close/ToastClose.tsx",
+      "sha256": "310eb0c813b17f194039eb9871368e04ef7f2289936d02ec01ed4a1fe04a6afc",
+      "bytes": 1992
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/toast/store.ts",
+      "path": ".agent-runs/toast/goal-20261118/base-ui/packages/react/src/toast/store.ts",
+      "sha256": "8605ed9ef2ba3cf39f34f430f55200e63d014b811716fba9538a41768d5af0ab",
+      "bytes": 15519
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/toast/createToastManager.ts",
+      "path": ".agent-runs/toast/goal-20261118/base-ui/packages/react/src/toast/createToastManager.ts",
+      "sha256": "f0ad168380e8e58d6de14195b240ead02f35456784d68a38ba036541e8c6405e",
+      "bytes": 2588
+    }
+  ]
+}
