@@ -5,6 +5,17 @@ import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.min
 
+private const val ALIGNED_WINDOW_MARGIN_DP = 10f
+private const val ALIGNED_TRIGGER_INSET_DP = 20f
+private const val MINIMUM_ALIGNED_CONTENT_HEIGHT_DP = 100f
+private const val FLOATING_COLLISION_PADDING_DP = 5f
+private const val FLOATING_PREFERRED_SIDE_BIAS_DP = 1f
+
+internal fun selectAlignedViewportHeight(
+    windowHeight: Float,
+    density: Float,
+): Float = (windowHeight - 2f * (ALIGNED_WINDOW_MARGIN_DP * density)).coerceAtLeast(0f)
+
 internal enum class SelectPopupAnchor {
     Top,
     Bottom,
@@ -30,8 +41,9 @@ internal fun selectPopupGeometry(
     sideOffset: Float,
     scale: Float = 1f,
 ): SelectPopupGeometry {
-    val margin = 10f * scale
-    val viewportHeight = (windowHeight - 2f * margin).coerceAtLeast(0f)
+    val margin = ALIGNED_WINDOW_MARGIN_DP * scale
+    val viewportHeight = selectAlignedViewportHeight(windowHeight, scale)
+    val triggerInset = ALIGNED_TRIGGER_INSET_DP * scale
     if (alignItem && !touch && selectedCenter != null) {
         val idealHeight = windowHeight - margin - trigger.center.y + selectedCenter
         var height = min(viewportHeight, idealHeight)
@@ -40,11 +52,11 @@ internal fun selectPopupGeometry(
         val topPositioned = scrollTop >= maxScrollTop - scale
         if (topPositioned) height = min(viewportHeight, contentHeight) - (scrollTop - maxScrollTop)
         val fallback =
-            trigger.top < 20f * scale || trigger.bottom > viewportHeight - 20f * scale ||
-                ceil(height / scale) * scale + scale < min(contentHeight, 100f * scale)
+            trigger.top < triggerInset || trigger.bottom > viewportHeight - triggerInset ||
+                ceil(height / scale) * scale + scale < min(contentHeight, MINIMUM_ALIGNED_CONTENT_HEIGHT_DP * scale)
         if (!fallback) {
             val topOffset = max(0f, viewportHeight - idealHeight)
-            val topAnchored = topPositioned && (contentHeight >= viewportHeight - 20f * scale || topOffset == 0f)
+            val topAnchored = topPositioned && (contentHeight >= viewportHeight - 2f * margin || topOffset == 0f)
             val top =
                 if (topPositioned) {
                     if (topAnchored) margin else topOffset + margin
@@ -62,12 +74,14 @@ internal fun selectPopupGeometry(
         }
     }
     // Floating UI's default 5px collision padding, with a 1px preferred-side bias.
-    val below = (windowHeight - 5f * scale - trigger.bottom - sideOffset).coerceAtLeast(0f)
-    val above = (trigger.top - 6f * scale - sideOffset).coerceAtLeast(0f)
+    val padding = FLOATING_COLLISION_PADDING_DP * scale
+    val below = (windowHeight - padding - trigger.bottom - sideOffset).coerceAtLeast(0f)
+    val preferredSidePadding = (FLOATING_COLLISION_PADDING_DP + FLOATING_PREFERRED_SIDE_BIAS_DP) * scale
+    val above = (trigger.top - preferredSidePadding - sideOffset).coerceAtLeast(0f)
     val bottom = contentHeight <= below || below >= above
     val height = min(contentHeight, if (bottom) below else above)
     val top = if (bottom) trigger.bottom + sideOffset else trigger.top - sideOffset - height
-    return SelectPopupGeometry(top.coerceAtLeast(5f * scale), height, 0f, false)
+    return SelectPopupGeometry(top.coerceAtLeast(padding), height, 0f, false)
 }
 
 internal data class SelectTextEdges(val left: Float, val right: Float)
@@ -88,6 +102,6 @@ internal fun selectPopupLeft(
         } else {
             if (rtl) trigger.right - popupWidth else trigger.left
         }
-    val padding = 5f * scale
+    val padding = FLOATING_COLLISION_PADDING_DP * scale
     return left.coerceAtMost(windowWidth - padding - popupWidth).coerceAtLeast(padding)
 }

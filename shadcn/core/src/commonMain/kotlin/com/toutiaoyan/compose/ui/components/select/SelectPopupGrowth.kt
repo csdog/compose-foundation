@@ -14,7 +14,7 @@ internal fun selectPopupGrowth(
     maxHeight: Float = Float.POSITIVE_INFINITY,
     scale: Float = 1f,
 ): SelectPopupGrowth? {
-    val availableHeight = min((windowHeight - 20f * scale).coerceAtLeast(0f), maxHeight)
+    val availableHeight = min(selectAlignedViewportHeight(windowHeight, scale), maxHeight)
     if (!geometry.itemAligned || geometry.growthAnchor == SelectPopupAnchor.Fixed ||
         geometry.height >= availableHeight || maxScroll <= 0f
     ) {

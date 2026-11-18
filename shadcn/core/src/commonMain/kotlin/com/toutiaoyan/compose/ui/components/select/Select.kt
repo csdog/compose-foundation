@@ -195,9 +195,12 @@ private data class SelectPanelChrome(val top: Float, val bottom: Float) {
     val height get() = top + bottom
 }
 
+private const val SELECT_TYPE_AHEAD_TIMEOUT_MILLIS = 750L
+private val SelectMinPanelWidth = 144.dp
+
 private class SelectKeyboard {
     val trigger = FocusRequester()
-    var width by mutableStateOf(144.dp)
+    var width by mutableStateOf(SelectMinPanelWidth)
     var height by mutableStateOf(32.dp)
     var panelTop by mutableStateOf(0f)
     var anchorBounds by mutableStateOf(Rect.Zero)
@@ -240,7 +243,7 @@ private class SelectKeyboard {
     ): Boolean {
         if (event.isCtrlPressed || event.isMetaPressed || event.isAltPressed) return false
         val char = event.utf16CodePoint.toChar()
-        if (lastType.elapsedNow().inWholeMilliseconds > 750) search = ""
+        if (lastType.elapsedNow().inWholeMilliseconds > SELECT_TYPE_AHEAD_TIMEOUT_MILLIS) search = ""
         if (char.isISOControl() || (char.isWhitespace() && search.isEmpty())) return false
         val newSession = search.isEmpty()
         lastType = kotlin.time.TimeSource.Monotonic.markNow()
@@ -323,7 +326,7 @@ private class SelectKeyboard {
                 Key.Enter, Key.Spacebar -> {
                     if (key == Key.Spacebar &&
                         search.isNotEmpty() &&
-                        lastType.elapsedNow().inWholeMilliseconds <= 750
+                        lastType.elapsedNow().inWholeMilliseconds <= SELECT_TYPE_AHEAD_TIMEOUT_MILLIS
                     ) {
                         return false
                     }
@@ -764,7 +767,6 @@ fun SelectScope.SelectContent(
         }
     val touchOpen = keyboard.touchOpen
     val scrollOverlay = if (nova && touchOpen) 0f else with(density) { 24.dp.toPx() }
-    val windowMargin = with(density) { 10.dp.toPx() }
     val revealScope = rememberCoroutineScope()
     SideEffect {
         keyboard.reveal = revealItem@{ value ->
@@ -796,6 +798,7 @@ fun SelectScope.SelectContent(
             )
     var alignmentFallback by remember(nova, itemAligned) { mutableStateOf(false) }
     val windowHeight = LocalWindowInfo.current.containerSize.height.toFloat()
+    val viewportHeight = selectAlignedViewportHeight(windowHeight, density.density)
     var contentHeight by remember { mutableStateOf(0) }
     var panelChrome by remember { mutableStateOf<SelectPanelChrome?>(null) }
     var placedGeometry by remember { mutableStateOf<SelectPopupGeometry?>(null) }
@@ -836,7 +839,7 @@ fun SelectScope.SelectContent(
     }
     val availablePanelHeight =
         minOf(
-            (windowHeight - windowMargin * 2f).coerceAtLeast(0f),
+            viewportHeight,
             contentHeight + (panelChrome?.height ?: 0f),
             with(density) { panelSizing.maxHeight.takeIf { it.isSpecified }?.toPx() ?: Float.POSITIVE_INFINITY },
         )
@@ -861,14 +864,14 @@ fun SelectScope.SelectContent(
             )
         }
     var lastOpenGeometry by remember { mutableStateOf<SelectPopupGeometry?>(null) }
-    var lastOpenWidth by remember { mutableStateOf(144.dp) }
+    var lastOpenWidth by remember { mutableStateOf(SelectMinPanelWidth) }
     SideEffect {
         if (popupOpen) {
             lastOpenGeometry = computedGeometry
-            lastOpenWidth = keyboard.width.coerceAtLeast(144.dp)
+            lastOpenWidth = keyboard.width.coerceAtLeast(SelectMinPanelWidth)
         }
     }
-    val panelWidth = if (popupOpen) keyboard.width.coerceAtLeast(144.dp) else lastOpenWidth
+    val panelWidth = if (popupOpen) keyboard.width.coerceAtLeast(SelectMinPanelWidth) else lastOpenWidth
     val geometry = if (popupOpen) computedGeometry else lastOpenGeometry
     LaunchedEffect(initialGeometry, initialScrollApplied, availablePanelHeight, popupOpen) {
         if (!popupOpen) return@LaunchedEffect
@@ -894,7 +897,7 @@ fun SelectScope.SelectContent(
             // Caller styles can change without changing the measured viewport.
             val currentMaximum =
                 minOf(
-                    (windowHeight - windowMargin * 2f).coerceAtLeast(0f),
+                    viewportHeight,
                     contentHeight + (panelChrome?.height ?: 0f),
                     with(density) {
                         panelSizing.maxHeight.takeIf { it.isSpecified }?.toPx() ?: Float.POSITIVE_INFINITY
@@ -1050,7 +1053,7 @@ fun SelectScope.SelectContent(
                     target?.requester?.requestFocus()
                 }
                 val maxPanelHeight =
-                    with(density) { (windowHeight - windowMargin * 2f).coerceAtLeast(0f).toDp() }
+                    with(density) { viewportHeight.toDp() }
                 val panelModifier =
                     modifier
                         .then(
@@ -1110,7 +1113,7 @@ fun SelectScope.SelectContent(
                             variant.rememberPanelStyle() then (
                                 if (nova) {
                                     Style {
-                                        minWidth(144.dp)
+                                        minWidth(SelectMinPanelWidth)
                                         width(panelWidth)
                                         geometry?.let { height(with(density) { it.height.toDp() }) }
                                     }
