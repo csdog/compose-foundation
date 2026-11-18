@@ -1,7 +1,7 @@
 # Web 对齐验收状态
 
-更新日期：2026-11-18。当前保存状态为 **60 / 67 项已勾选，7 项未完成**。
-本次更新 Toast 验收记录。Chart 保持未勾选并跳过。
+更新日期：2026-11-18。当前保存状态为 **61 / 67 项已勾选，6 项未完成**。
+本次更新 Toggle 验收记录。Chart 保持未勾选并跳过。
 文档整理本身不构成验收；勾选只在组件证据与当前源码校验通过后更新。
 
 ## 状态口径
@@ -84,7 +84,7 @@
 - [x] Text (`text`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#text)。
 - [x] Textarea (`textarea`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#textarea)。
 - [x] Toast (`toast`)：2026-11-18 验收通过。补齐挂载、Action 和 API 说明，修复 Nova 层叠、划走、计时与焦点。108 项 JVM、2 张截图、9 项 lint、9 份独立 Kotlin 片段、三端构建和真实浏览器通过。[验收与范围](web-parity/toast-acceptance-20261118/README.md) · [独立审查](web-parity/toast-acceptance-20261118/independent-review.md) · [交接](../.agent-runs/toast/progress.md)。
-- [ ] Toggle (`toggle`)：尚未关闭完整验收；后续从已保存范围继续。[范围与证据](archive/2026-11-09/component-status-details.md#toggle) · [交接](../.agent-runs/toggle/progress.md)。
+- [x] Toggle (`toggle`)：2026-11-18 验收通过。对齐六个官方预览、选择状态、手机触摸焦点及辅助语义。85 项 JVM、8 张截图、9 项 lint、15 份独立 Kotlin 片段、三端构建和真实浏览器通过。[验收与范围](web-parity/toggle-acceptance-20261118/README.md) · [独立审查](web-parity/toggle-acceptance-20261118/independent-review.md) · [交接](../.agent-runs/toggle/progress.md)。
 - [x] Toggle Group (`toggle-group`)：2026-11-11 验收通过。补齐 Changelog、Custom 卡片样式与 View Code、Single 键盘操作和 Connected Outline 的验收证据。74 项聚焦测试、5 项 lint、JVM/JS/Wasm 构建、544 项浏览器断言、机械审计和独立审查通过。I7/I16 验收范围见审计。[验收凭证](../.agent-runs/toggle-group/acceptance.json) · [审计](../.agent-runs/toggle-group/verify/acceptance-provenance/audit/report.md) · [历史范围](archive/2026-11-09/component-status-details.md#toggle-group) · [交接](../.agent-runs/toggle-group/progress.md)。
 - [x] Tooltip (`tooltip`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#tooltip) · [交接](../.agent-runs/tooltip/progress.md)。
 

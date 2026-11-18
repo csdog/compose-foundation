@@ -1,0 +1,99 @@
+{
+  "component": "Toggle",
+  "revision": "968d8cb9dc42ae5d52e8fd356cf84596ec832a26",
+  "livePage": "https://ui.shadcn.com/docs/components/base/toggle",
+  "baseUi": {
+    "version": "1.6.0",
+    "revision": "b34551d644f2e58ebf8fc1050d949f6654ceca6c"
+  },
+  "retrievedAt": "2026-11-18T08:48:30.696011+00:00",
+  "files": [
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/content/docs/components/base/toggle.mdx",
+      "path": ".agent-runs/toggle/goal-20261118/official/apps/v4/content/docs/components/base/toggle.mdx",
+      "sha256": "a5268565d3c8fa8479a45fec832dbd5870db58a592a3a729ee469d6f26bb10a3",
+      "bytes": 1757,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/registry/bases/base/ui/toggle.tsx",
+      "path": ".agent-runs/toggle/goal-20261118/official/apps/v4/registry/bases/base/ui/toggle.tsx",
+      "sha256": "b53df3a8d6ad7ae3853a5e72f8bbf11e39daababfc8b0e369347b355eb9af120",
+      "bytes": 1135,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/toggle-demo.tsx",
+      "path": ".agent-runs/toggle/goal-20261118/official/apps/v4/examples/base/toggle-demo.tsx",
+      "sha256": "dcca7a53c5f4e1a27b45c75f6457905f5413181673a9122361f000452cce1d6e",
+      "bytes": 324,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/toggle-outline.tsx",
+      "path": ".agent-runs/toggle/goal-20261118/official/apps/v4/examples/base/toggle-outline.tsx",
+      "sha256": "23ca8e678582dca0e8f7b459e94b2283ef5fe96ac88e81fb395be48d5115b77d",
+      "bytes": 448,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/toggle-text.tsx",
+      "path": ".agent-runs/toggle/goal-20261118/official/apps/v4/examples/base/toggle-text.tsx",
+      "sha256": "b5cefa8ebebb30cc700fa151037868723b6a1766522fd3684ae99a00901403bd",
+      "bytes": 234,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/toggle-sizes.tsx",
+      "path": ".agent-runs/toggle/goal-20261118/official/apps/v4/examples/base/toggle-sizes.tsx",
+      "sha256": "e0bcb25205ce381b6965b1230c744b14c50a2b74aa28be35489d2cc64de5b028",
+      "bytes": 477,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/toggle-disabled.tsx",
+      "path": ".agent-runs/toggle/goal-20261118/official/apps/v4/examples/base/toggle-disabled.tsx",
+      "sha256": "94ebf5312bb486ef1f4a1764b016e4f4b533239a9aff87b56f0ec2728a4d0545",
+      "bytes": 372,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/toggle-rtl.tsx",
+      "path": ".agent-runs/toggle/goal-20261118/official/apps/v4/examples/base/toggle-rtl.tsx",
+      "sha256": "e329e6d9afee2ab10551337430218aadc99d3181cdc1d5a3adb7018483fe6625",
+      "bytes": 814,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/registry/styles/style-nova.css",
+      "path": ".agent-runs/toggle/goal-20261118/official/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e",
+      "bytes": 78661,
+      "matchesPriorArchive": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/components/component-preview-tabs.tsx",
+      "path": ".agent-runs/toggle/goal-20261118/official/apps/v4/components/component-preview-tabs.tsx",
+      "sha256": "0e533e724e74e6b13641649324aa169e0597a486eec28e86b7f915defb08c383",
+      "bytes": 8860
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/package.json",
+      "path": ".agent-runs/toggle/goal-20261118/official/apps/v4/package.json",
+      "sha256": "ec967c97c0229cacd4088b566faa2f574d9c210b136877d634360f617c4b79be",
+      "bytes": 5898
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/toggle/Toggle.tsx",
+      "path": ".agent-runs/toggle/goal-20261118/base-ui/packages/react/src/toggle/Toggle.tsx",
+      "sha256": "5a98f932e466e180314a3cd5c928bb2de2354e531fb8bce6ea4cd42c37c7ed14",
+      "bytes": 6102
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/internals/use-button/useButton.ts",
+      "path": ".agent-runs/toggle/goal-20261118/base-ui/packages/react/src/internals/use-button/useButton.ts",
+      "sha256": "aeabad885184384369ad7cb87f8163b8e739b1480f9c0a5686991bea3d3d4d6e",
+      "bytes": 9857
+    }
+  ]
+}
