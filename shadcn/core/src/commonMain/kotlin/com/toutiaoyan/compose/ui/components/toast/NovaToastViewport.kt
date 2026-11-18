@@ -73,7 +73,9 @@ import kotlin.math.roundToInt
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 
-private const val ToastMotionMillis = 500
+private const val TOAST_MOTION_MILLIS = 500
+
+// CSS toast enter/exit easing — keep cubic-bezier tuple for visual parity with Sonner/shadcn.
 private val ToastEasing = CubicBezierEasing(0.22f, 1f, 0.36f, 1f)
 
 private class NovaToastEntry(var message: ToastMessage) {
@@ -145,7 +147,7 @@ internal fun NovaToastViewport(
     val paused = rememberUpdatedState(expanded || touchHeld || nextFocusId != null || entries.any { it.dragging })
     val expansion by animateFloatAsState(
         if (expanded) 1f else 0f,
-        tween(ToastMotionMillis, easing = ToastEasing),
+        tween(TOAST_MOTION_MILLIS, easing = ToastEasing),
         label = "Toast stack expansion",
     )
     val top =
@@ -197,7 +199,7 @@ internal fun NovaToastViewport(
             LaunchedEffect(message != null) {
                 entry.offset.animateTo(
                     if (message != null) 0f else 1f,
-                    tween(ToastMotionMillis, easing = ToastEasing),
+                    tween(TOAST_MOTION_MILLIS, easing = ToastEasing),
                 )
                 if (message == null) stored.remove(entry)
             }
@@ -217,7 +219,7 @@ internal fun NovaToastViewport(
                 val depth = if (entry.message.id in activeById) index else entry.lastDepth
                 animateFloatAsState(
                     depth.toFloat(),
-                    tween(ToastMotionMillis, easing = ToastEasing),
+                    tween(TOAST_MOTION_MILLIS, easing = ToastEasing),
                     label = "Toast stack depth",
                 )
             }
@@ -230,7 +232,7 @@ internal fun NovaToastViewport(
             key(state, entry.message.id) {
                 animateFloatAsState(
                     distance,
-                    tween(ToastMotionMillis, easing = ToastEasing),
+                    tween(TOAST_MOTION_MILLIS, easing = ToastEasing),
                     label = "Toast stack position",
                 )
             }
@@ -243,7 +245,7 @@ internal fun NovaToastViewport(
                     if (entry.dragging || entry.swipe != null) {
                         tween(0)
                     } else {
-                        tween(ToastMotionMillis, easing = ToastEasing)
+                        tween(TOAST_MOTION_MILLIS, easing = ToastEasing)
                     },
                     label = "Toast swipe movement",
                 )

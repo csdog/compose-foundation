@@ -131,7 +131,6 @@
     <ID>CyclomaticComplexMethod:Select.kt$@Composable private fun SelectContentScope.SelectScrollButton( modifier: Modifier, up: Boolean, )</ID>
     <ID>CyclomaticComplexMethod:Select.kt$SelectKeyboard$fun move( key: Key, controller: SelectController, includeDisabled: Boolean = false, ): Boolean</ID>
     <ID>CyclomaticComplexMethod:Select.kt$SelectKeyboard$fun typeAhead( event: KeyEvent, closedController: SelectController? = null, ): Boolean</ID>
-    <ID>CyclomaticComplexMethod:SelectPopupGeometry.kt$internal fun selectPopupGeometry( trigger: Rect, windowHeight: Float, contentHeight: Float, selectedCenter: Float?, alignItem: Boolean, touch: Boolean, sideOffset: Float, scale: Float = 1f, ): SelectPopupGeometry</ID>
     <ID>CyclomaticComplexMethod:Sheet.kt$@Composable fun SheetScope.SheetContent( modifier: Modifier = Modifier, side: SheetSide = SheetSide.Right, style: Style = Style, dismissOnClickOutside: Boolean = true, showCloseButton: Boolean = SheetDefaults.ShowCloseButton, closeAriaLabel: String = "Close", onPointerDownOutside: (() -&gt; Boolean)? = null, onInteractOutside: (() -&gt; Boolean)? = null, enter: EnterTransition? = null, exit: ExitTransition? = null, scrimEnter: EnterTransition = SheetTransitions.ScrimEnter, scrimExit: ExitTransition = SheetTransitions.ScrimExit, closeIcon: @Composable () -&gt; Unit = { Icon(X, tint = currentTheme.colors.foreground, variant = IconVariant.Small) }, content: @Composable ColumnScope.() -&gt; Unit, )</ID>
     <ID>CyclomaticComplexMethod:SheetColumn.kt$@Composable internal fun SheetColumn( modifier: Modifier = Modifier, gap: Dp = 16.dp, content: @Composable ColumnScope.() -&gt; Unit, )</ID>
     <ID>CyclomaticComplexMethod:Sidebar.kt$@Composable fun Sidebar( modifier: Modifier = Modifier, width: Dp = SidebarDefaults.Width, iconWidth: Dp = 48.dp, side: SidebarSide = SidebarSide.Start, variant: SidebarVariant = SidebarVariant.Sidebar, ariaLabel: String? = null, style: Style = Style, content: @Composable ColumnScope.() -&gt; Unit, )</ID>
@@ -2854,10 +2853,8 @@
     <ID>MagicNumber:Menu.kt$3f</ID>
     <ID>MagicNumber:Menu.kt$5f</ID>
     <ID>MagicNumber:Menu.kt$7f</ID>
-    <ID>MagicNumber:MenuPopup.kt$0.05f</ID>
     <ID>MagicNumber:MenuPopup.kt$0.1f</ID>
     <ID>MagicNumber:MenuPopup.kt$0.25f</ID>
-    <ID>MagicNumber:MenuPopup.kt$0.95f</ID>
     <ID>MagicNumber:Menubar.kt$3</ID>
     <ID>MagicNumber:Menubar.kt$4</ID>
     <ID>MagicNumber:MessageScroller.kt$0.23f</ID>
@@ -3405,9 +3402,7 @@
     <ID>MagicNumber:ScrollFade.kt$.42f</ID>
     <ID>MagicNumber:ScrollFade.kt$.58f</ID>
     <ID>MagicNumber:ScrollThumb.kt$0.05f</ID>
-    <ID>MagicNumber:Select.kt$40</ID>
     <ID>MagicNumber:Select.kt$90f</ID>
-    <ID>MagicNumber:SelectScrollTarget.kt$24f</ID>
     <ID>MagicNumber:Sheet.kt$.42f</ID>
     <ID>MagicNumber:Sheet.kt$.58f</ID>
     <ID>MagicNumber:Sheet.kt$.75f</ID>
@@ -4350,7 +4345,6 @@
     <ID>MagicNumber:ThumbsUp.kt$8.2f</ID>
     <ID>MagicNumber:ThumbsUp.kt$9.46f</ID>
     <ID>MagicNumber:ThumbsUp.kt$9.81f</ID>
-    <ID>MagicNumber:Toast.kt$200</ID>
     <ID>MagicNumber:ToastStatusIcons.kt$0.01f</ID>
     <ID>MagicNumber:ToastStatusIcons.kt$0.586f</ID>
     <ID>MagicNumber:ToastStatusIcons.kt$0xFF000000</ID>
@@ -4466,7 +4460,6 @@
     <ID>NestedBlockDepth:ButtonIconPlacementTest.kt$ButtonIconPlacementTest$@Test fun allTextSizesUseLogicalIconInsetsAndRetainHeight()</ID>
     <ID>NestedBlockDepth:Combobox.kt$ComboboxEditing$fun key( event: KeyEvent, ctrl: ComboboxController, ): Boolean</ID>
     <ID>NestedBlockDepth:MessageScrollerState.kt$MessageScrollerState$internal suspend fun reconcileLayout()</ID>
-    <ID>NestedBlockDepth:SelectPopupGeometry.kt$internal fun selectPopupGeometry( trigger: Rect, windowHeight: Float, contentHeight: Float, selectedCenter: Float?, alignItem: Boolean, touch: Boolean, sideOffset: Float, scale: Float = 1f, ): SelectPopupGeometry</ID>
     <ID>NestedBlockDepth:SpinnerGeometryTest.kt$SpinnerGeometryTest$@Test fun paintSilhouetteMatchesOfficialSvgAtPublicSizesAndCustomStyle()</ID>
     <ID>NestedBlockDepth:ThemeRoleRenderingTest.kt$ThemeRoleRenderingTest$@Test fun controlsPaintTranslucentInputRoleAcrossBasesAndLiveThemeChanges()</ID>
     <ID>NestedBlockDepth:ToggleGroupItemPresetsTest.kt$ToggleGroupItemPresetsTest$@Test fun connectedItemOutlineKeepsPresetSeams()</ID>
@@ -4565,7 +4558,6 @@
     <ID>TopLevelPropertyNaming:NavigationMenuSharedViewport.kt$internal const val NavigationMenuViewportTag = "navigation-menu-viewport"</ID>
     <ID>TopLevelPropertyNaming:NavigationMenuSharedViewport.kt$private const val ViewportDuration = 350</ID>
     <ID>TopLevelPropertyNaming:NavigationMenuSharedViewport.kt$private const val ViewportExitDuration = 150</ID>
-    <ID>TopLevelPropertyNaming:NovaToastViewport.kt$private const val ToastMotionMillis = 500</ID>
     <ID>TopLevelPropertyNaming:PopoverPopup.kt$private const val PopoverMotionDuration = 100</ID>
     <ID>TopLevelPropertyNaming:ProgressLayout.kt$internal const val ProgressValueLayoutId = "progress-value"</ID>
     <ID>TopLevelPropertyNaming:Questionnaire.kt$private const val InputAnswerKey = "\u0000input"</ID>

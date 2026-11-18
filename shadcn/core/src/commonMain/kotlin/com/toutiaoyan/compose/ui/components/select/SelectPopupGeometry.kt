@@ -30,6 +30,45 @@ internal data class SelectPopupGeometry(
     val growthAnchor: SelectPopupAnchor = SelectPopupAnchor.Fixed,
 )
 
+/** Aligned Base UI path; returns null when the layout must fall back to floating placement. */
+private fun selectAlignedPopupGeometry(
+    trigger: Rect,
+    windowHeight: Float,
+    contentHeight: Float,
+    selectedCenter: Float,
+    scale: Float,
+): SelectPopupGeometry? {
+    val margin = ALIGNED_WINDOW_MARGIN_DP * scale
+    val viewportHeight = selectAlignedViewportHeight(windowHeight, scale)
+    val triggerInset = ALIGNED_TRIGGER_INSET_DP * scale
+    val idealHeight = windowHeight - margin - trigger.center.y + selectedCenter
+    var height = min(viewportHeight, idealHeight)
+    val scrollTop = idealHeight - height
+    val maxScrollTop = (contentHeight - height).coerceAtLeast(0f)
+    val topPositioned = scrollTop >= maxScrollTop - scale
+    if (topPositioned) height = min(viewportHeight, contentHeight) - (scrollTop - maxScrollTop)
+    val fallback =
+        trigger.top < triggerInset || trigger.bottom > viewportHeight - triggerInset ||
+            ceil(height / scale) * scale + scale < min(contentHeight, MINIMUM_ALIGNED_CONTENT_HEIGHT_DP * scale)
+    if (fallback) return null
+    val topOffset = max(0f, viewportHeight - idealHeight)
+    val topAnchored = topPositioned && (contentHeight >= viewportHeight - 2f * margin || topOffset == 0f)
+    val top =
+        if (topPositioned) {
+            if (topAnchored) margin else topOffset + margin
+        } else {
+            windowHeight - margin - height
+        }
+    val scroll = if (topPositioned) (contentHeight - height).coerceAtLeast(0f) else scrollTop
+    val anchor =
+        when {
+            !topPositioned -> SelectPopupAnchor.Bottom
+            topAnchored -> SelectPopupAnchor.Top
+            else -> SelectPopupAnchor.Fixed
+        }
+    return SelectPopupGeometry(top, height.coerceAtLeast(0f), scroll, true, anchor)
+}
+
 /** Base UI 1.6 SelectPopup's aligned viewport calculation, in window pixels. */
 internal fun selectPopupGeometry(
     trigger: Rect,
@@ -41,37 +80,14 @@ internal fun selectPopupGeometry(
     sideOffset: Float,
     scale: Float = 1f,
 ): SelectPopupGeometry {
-    val margin = ALIGNED_WINDOW_MARGIN_DP * scale
-    val viewportHeight = selectAlignedViewportHeight(windowHeight, scale)
-    val triggerInset = ALIGNED_TRIGGER_INSET_DP * scale
     if (alignItem && !touch && selectedCenter != null) {
-        val idealHeight = windowHeight - margin - trigger.center.y + selectedCenter
-        var height = min(viewportHeight, idealHeight)
-        val scrollTop = idealHeight - height
-        val maxScrollTop = (contentHeight - height).coerceAtLeast(0f)
-        val topPositioned = scrollTop >= maxScrollTop - scale
-        if (topPositioned) height = min(viewportHeight, contentHeight) - (scrollTop - maxScrollTop)
-        val fallback =
-            trigger.top < triggerInset || trigger.bottom > viewportHeight - triggerInset ||
-                ceil(height / scale) * scale + scale < min(contentHeight, MINIMUM_ALIGNED_CONTENT_HEIGHT_DP * scale)
-        if (!fallback) {
-            val topOffset = max(0f, viewportHeight - idealHeight)
-            val topAnchored = topPositioned && (contentHeight >= viewportHeight - 2f * margin || topOffset == 0f)
-            val top =
-                if (topPositioned) {
-                    if (topAnchored) margin else topOffset + margin
-                } else {
-                    windowHeight - margin - height
-                }
-            val scroll = if (topPositioned) (contentHeight - height).coerceAtLeast(0f) else scrollTop
-            val anchor =
-                when {
-                    !topPositioned -> SelectPopupAnchor.Bottom
-                    topAnchored -> SelectPopupAnchor.Top
-                    else -> SelectPopupAnchor.Fixed
-                }
-            return SelectPopupGeometry(top, height.coerceAtLeast(0f), scroll, true, anchor)
-        }
+        selectAlignedPopupGeometry(
+            trigger = trigger,
+            windowHeight = windowHeight,
+            contentHeight = contentHeight,
+            selectedCenter = selectedCenter,
+            scale = scale,
+        )?.let { return it }
     }
     // Floating UI's default 5px collision padding, with a 1px preferred-side bias.
     val padding = FLOATING_COLLISION_PADDING_DP * scale

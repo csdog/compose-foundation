@@ -60,6 +60,9 @@ import kotlin.jvm.JvmName
 
 private const val DEFAULT_TOAST_DURATION_MILLIS = 5_000L
 
+/** Delay between hiding an expired toast and dispatching dismissal. */
+private const val TOAST_EXIT_SETTLE_MILLIS = 200L
+
 enum class ToastVariant { Default, Success, Error, Warning, Info, Loading }
 
 enum class ToastPriority { Low, High }
@@ -433,7 +436,7 @@ fun Toast(
         if (toast.durationMillis <= 0) return@LaunchedEffect
         delay(toast.durationMillis)
         visible = false
-        delay(200)
+        delay(TOAST_EXIT_SETTLE_MILLIS)
         latestDismiss.value()
     }
 

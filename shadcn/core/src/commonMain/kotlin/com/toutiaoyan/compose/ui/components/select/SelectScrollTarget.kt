@@ -2,7 +2,10 @@ package com.toutiaoyan.compose.ui.components.select
 
 internal data class SelectScrollItemBounds(val top: Float, val height: Float)
 
-/** Base UI 1.6 SelectScrollArrow: reveal the next item beyond the 24px overlay. */
+/** Base UI 1.6 reserves 24 CSS pixels for the arrow overlay, represented here as dp. */
+internal const val SELECT_SCROLL_ARROW_OVERLAY_DP = 24f
+
+/** Base UI 1.6 SelectScrollArrow: reveal the next item beyond the arrow overlay. */
 internal fun selectScrollTarget(
     items: List<SelectScrollItemBounds>,
     up: Boolean,
@@ -12,7 +15,7 @@ internal fun selectScrollTarget(
     scale: Float = 1f,
 ): Float {
     if (items.isEmpty()) return scroll
-    val overlay = 24f * scale
+    val overlay = SELECT_SCROLL_ARROW_OVERLAY_DP * scale
     if (up) {
         val first = items.indexOfFirst { it.top >= scroll + overlay - scale }.coerceAtLeast(0)
         val target = (first - 1).coerceAtLeast(0)

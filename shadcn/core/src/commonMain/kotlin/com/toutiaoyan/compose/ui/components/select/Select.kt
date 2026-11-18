@@ -196,6 +196,9 @@ private data class SelectPanelChrome(val top: Float, val bottom: Float) {
 }
 
 private const val SELECT_TYPE_AHEAD_TIMEOUT_MILLIS = 750L
+
+/** Nova scroll-arrow hold repeats at this interval (Base UI SelectScrollArrow tick). */
+private const val SELECT_AUTOSCROLL_TICK_MILLIS = 40L
 private val SelectMinPanelWidth = 144.dp
 
 private class SelectKeyboard {
@@ -766,7 +769,8 @@ fun SelectScope.SelectContent(
             }
         }
     val touchOpen = keyboard.touchOpen
-    val scrollOverlay = if (nova && touchOpen) 0f else with(density) { 24.dp.toPx() }
+    val scrollOverlay =
+        if (nova && touchOpen) 0f else with(density) { SELECT_SCROLL_ARROW_OVERLAY_DP.dp.toPx() }
     val revealScope = rememberCoroutineScope()
     SideEffect {
         keyboard.reveal = revealItem@{ value ->
@@ -1217,7 +1221,7 @@ private fun SelectContentScope.SelectScrollButton(
         if (popupOpen && nova && autoScroll && scrollState != null) {
             keyboard.hasActive = false
             while (true) {
-                delay(40)
+                delay(SELECT_AUTOSCROLL_TICK_MILLIS)
                 if (!(if (up) scrollState.canScrollBackward else scrollState.canScrollForward)) break
                 keyboard.hasActive = false
                 val items =

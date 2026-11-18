@@ -212,7 +212,7 @@ class ChoiceNovaParityTest : ScreenshotTest() {
         field().assertIsNotEnabled()
     }
 
-    @Test fun selectArrowNavigationSkipsDisabledAndCommitRestoresTrigger() {
+    @Test fun selectArrowsFocusDisabledWithoutActivationAndCommitRestoresTrigger() {
         var picked: String? = null
         composeRule.setContent {
             Theme(preset = StylePreset.Nova, minTouchTarget = null) {
@@ -232,6 +232,9 @@ class ChoiceNovaParityTest : ScreenshotTest() {
         }
         composeRule.onNodeWithTag("trigger").requestFocus().performKeyInput { pressKey(Key.DirectionDown) }
         composeRule.onNodeWithText("Apple").assertIsFocused().performKeyInput { pressKey(Key.DirectionDown) }
+        composeRule.onNodeWithText("Banana").assertIsFocused().performKeyInput { pressKey(Key.Enter) }
+        composeRule.runOnIdle { assertEquals(null, picked) }
+        composeRule.onNodeWithText("Banana").assertIsFocused().performKeyInput { pressKey(Key.DirectionDown) }
         composeRule.onNodeWithText("Cherry").assertIsFocused().performKeyInput { pressKey(Key.Enter) }
         composeRule.runOnIdle { assertEquals("Cherry", picked) }
         composeRule.onNodeWithTag("trigger").assertIsFocused()

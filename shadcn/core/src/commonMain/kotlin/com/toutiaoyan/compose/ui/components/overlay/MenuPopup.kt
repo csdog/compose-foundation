@@ -28,8 +28,16 @@ import androidx.compose.ui.unit.dp
 internal val MenuDefaultEnter = fadeIn(tween(0))
 internal val MenuDefaultExit = fadeOut(tween(0))
 private const val MENU_MOTION_MILLIS = 100
+
+/** CSS `zoom-in-95` / menu content hidden scale (visual parity with shadcn). */
+private const val MENU_HIDDEN_SCALE = 0.95f
+private const val MENU_SCALE_RANGE = 0.05f
 private val MenuSlideDistance = 8.dp
+
+// CSS `ease` cubic-bezier(0.25, 0.1, 0.25, 1) — keep tuple for motion parity.
 private val MenuCssEase = CubicBezierEasing(0.25f, 0.1f, 0.25f, 1f)
+
+private fun menuContentScale(visible: Float): Float = MENU_HIDDEN_SCALE + MENU_SCALE_RANGE * visible
 
 @Composable
 internal fun MenuPopup(
@@ -123,7 +131,7 @@ internal fun MenuPopup(
                 transition.animateFloat(
                     transitionSpec = { tween(MENU_MOTION_MILLIS, easing = MenuCssEase) },
                     label = "Menu scale",
-                ) { state -> if (state == EnterExitState.Visible) 1f else 0.95f }
+                ) { state -> if (state == EnterExitState.Visible) 1f else MENU_HIDDEN_SCALE }
             } else {
                 null
             }
@@ -147,7 +155,7 @@ internal fun MenuPopup(
                     }
                 scaleX =
                     if (ownEntry && animateDefaults) {
-                        0.95f + 0.05f * visible
+                        menuContentScale(visible)
                     } else if (ownActiveDirection) {
                         scale?.value ?: 1f
                     } else {
@@ -256,7 +264,7 @@ private fun NovaMenuPopup(
                         1f - progress.value
                     }
                 alpha = visible
-                scaleX = if (animateDefaults) 0.95f + 0.05f * visible else 1f
+                scaleX = if (animateDefaults) menuContentScale(visible) else 1f
                 scaleY = scaleX
                 val amount = if (open && animateDefaults) (1f - progress.value) * slidePx else 0f
                 translationX =
