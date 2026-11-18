@@ -34,10 +34,8 @@ private val sheetApiSections =
         ComponentApiSection(
             "Sheet",
             (
-                "Controlled (`open` + `onOpenChange`) or uncontrolled (`defaultOpen`). " +
-                    "Matches Base UI Dialog: the page behind is inert while modal and Escape " +
-                    "closes. See the [Base UI Dialog API]" +
-                    "(https://base-ui.com/react/components/dialog#api-reference)."
+                "Use `open` with `onOpenChange` for controlled state, or `defaultOpen` for uncontrolled state. " +
+                    "A modal Sheet blocks background interaction and closes on Escape."
             ),
             listOf(
                 ApiProperty("open", "Boolean?", "null"),
@@ -86,15 +84,19 @@ val sheetDoc =
         ),
         usageCode =
             """
+            import androidx.compose.runtime.Composable
             import com.toutiaoyan.compose.ui.components.sheet.Sheet
             import com.toutiaoyan.compose.ui.components.sheet.SheetContent
+            import com.toutiaoyan.compose.ui.components.sheet.SheetHeader
             import com.toutiaoyan.compose.ui.components.sheet.SheetTrigger
 
-            var open by remember { mutableStateOf(false) }
-            Sheet(open = open, onOpenChange = { open = it }) {
-                SheetTrigger("Open")
-                SheetContent {
-                    SheetHeader("Edit profile", description = "Make changes to your profile here.")
+            @Composable
+            fun SheetUsage() {
+                Sheet {
+                    SheetTrigger("Open")
+                    SheetContent {
+                        SheetHeader("Are you absolutely sure?", description = "This action cannot be undone.")
+                    }
                 }
             }
             """.trimIndent(),
@@ -893,6 +895,10 @@ val sheetDoc =
             ),
     )
         .let { native ->
+            val extensions =
+                native.examples
+                    .filterNot { it.title == "Edit profile" }
+                    .map { it.copy(title = "Kotlin extension: " + it.title) }
             native.copy(
                 examplesHeading = null,
                 compositionCode =
@@ -905,11 +911,39 @@ val sheetDoc =
                         │   └── SheetDescription
                         └── SheetFooter
                     """.trimIndent(),
-                apiSections = sheetApiSections,
-                examples =
-                    sheetOfficialExamples +
-                        native.examples
-                            .filterNot { it.title == "Edit profile" }
-                            .map { it.copy(title = "Kotlin extension: " + it.title) },
+                beforeExampleSections =
+                    mapOf(
+                        extensions.first().title to
+                            listOf(
+                                ComponentGuideSection(
+                                    "API Reference",
+                                    listOf(
+                                        ComponentGuideBlock.Paragraph(
+                                            "See the [Base UI Dialog]" +
+                                                "(https://base-ui.com/react/components/dialog#api-reference) " +
+                                                "documentation.",
+                                        ),
+                                    ),
+                                ),
+                            ),
+                    ),
+                afterExamples =
+                    listOf(
+                        ComponentGuideSection(
+                            "Kotlin extension: API",
+                            sheetApiSections.flatMap { section ->
+                                listOf(
+                                    ComponentGuideBlock.Paragraph(
+                                        "**" + section.title + "** " + section.descriptionMarkdown,
+                                    ),
+                                    ComponentGuideBlock.Table(
+                                        headers = listOf("Property", "Type", "Default"),
+                                        rows = section.properties.map { listOf(it.name, it.type, it.defaultValue) },
+                                    ),
+                                )
+                            },
+                        ),
+                    ),
+                examples = sheetOfficialExamples + extensions,
             )
         }

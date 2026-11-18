@@ -1,7 +1,6 @@
 package com.toutiaoyan.compose.ui.components.popover
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.input.pointer.PointerEvent
 import androidx.compose.ui.window.PopupProperties
 
 @Composable
@@ -18,5 +17,3 @@ internal actual fun popoverPopupProperties(
         dismissOnBackPress = modal && focusPanel,
         dismissOnClickOutside = open && dismissOnClickOutside,
     )
-
-internal actual fun popoverTouchHostFocus(event: PointerEvent): (() -> Unit)? = null

@@ -64,6 +64,7 @@ import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
 import com.toutiaoyan.compose.tailwind.core.twSpacing
 import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
+import com.toutiaoyan.compose.ui.components.overlay.captureTouchCanvasFocus
 import com.toutiaoyan.compose.ui.components.overlay.PopupPlacement
 import com.toutiaoyan.compose.ui.components.overlay.PopupTransitions
 import com.toutiaoyan.compose.ui.components.button.Button
@@ -277,7 +278,7 @@ fun PopoverScope.PopoverTrigger(
                                 controller.focus.triggerPresses++
                                 val touch = event.changes.any { it.type == PointerType.Touch }
                                 controller.focus.openedByTouch = touch
-                                controller.focus.restoreTouchHost = if (touch) popoverTouchHostFocus(event) else null
+                                controller.focus.restoreTouchHost = if (touch) captureTouchCanvasFocus(event) else null
                                 controller.focus.returnFocus = returnFocus
                             }
                         }

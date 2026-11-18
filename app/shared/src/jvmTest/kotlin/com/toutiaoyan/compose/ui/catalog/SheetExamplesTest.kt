@@ -212,6 +212,8 @@ class SheetExamplesTest(private val viewport: Int, private val dark: Boolean) {
                 "## No Close Button",
                 "## RTL",
                 "## API Reference",
+                "## Kotlin extension: Side (Kotlin)",
+                "## Kotlin extension: API",
             ).map { markdown.indexOf(it) }
         assertTrue(order.all { it >= 0 }, "missing a section heading: $order")
         assertEquals(order.sorted(), order)
@@ -223,5 +225,11 @@ class SheetExamplesTest(private val viewport: Int, private val dark: Boolean) {
         assertContains(markdown, "`SheetClose` renders an icon button")
         assertContains(markdown, "Footer stacks the actions")
         assertContains(markdown, "trigger slot overload")
+        assertContains(markdown, "https://base-ui.com/react/components/dialog#api-reference")
+        assertContains(sheetDoc.usageCode, "import com.toutiaoyan.compose.ui.components.sheet.SheetHeader")
+        assertContains(sheetDoc.usageCode, "fun SheetUsage()")
+        assertContains(sheetDoc.usageCode, "Sheet {")
+        assertContains(sheetDoc.usageCode, "Are you absolutely sure?")
+        assertContains(sheetDoc.usageCode, "This action cannot be undone.")
     }
 }

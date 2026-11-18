@@ -2,13 +2,10 @@ package com.toutiaoyan.compose.ui.components.popover
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.input.pointer.PointerEvent
 import androidx.compose.ui.window.PopupProperties
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.rememberUpdatedState
-import kotlinx.browser.document
 import kotlinx.browser.window
-import org.w3c.dom.HTMLCanvasElement
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.KeyboardEvent
 
@@ -52,10 +49,3 @@ internal actual fun popoverPopupProperties(
         dismissOnClickOutside = open && dismissOnClickOutside,
         consumePointerInputOutside = open && modal,
     )
-
-internal actual fun popoverTouchHostFocus(event: PointerEvent): (() -> Unit)? {
-    val canvas = (event.nativeEvent as? Event)?.target as? HTMLCanvasElement ?: return null
-    return {
-        if (document.activeElement === document.body && canvas.isConnected) canvas.focus()
-    }
-}

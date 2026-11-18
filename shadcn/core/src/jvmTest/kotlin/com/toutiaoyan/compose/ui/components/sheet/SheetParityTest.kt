@@ -24,6 +24,7 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.unit.*
 import com.toutiaoyan.compose.ui.ScreenshotTest
 import com.toutiaoyan.compose.ui.components.button.Button
+import com.toutiaoyan.compose.ui.components.input.Input
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.*
 
@@ -139,6 +140,28 @@ class SheetParityTest : ScreenshotTest() {
         trigger.assertIsFocused()
     }
 
+    @Test fun touchOpenLeavesTheInputUnfocusedUntilKeyboardNavigation() {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Sheet {
+                SheetTrigger("Open", modifier = Modifier.testTag("trigger"))
+                SheetContent(Modifier.testTag("panel")) {
+                    Input(value = "Profile", onValueChange = {}, modifier = Modifier.testTag("name"))
+                }
+            }
+        }
+        val trigger = composeRule.onNodeWithTag("trigger")
+        val name = composeRule.onNodeWithTag("name")
+        trigger.performTouchInput { click() }
+        name.assertIsDisplayed().assertIsNotFocused()
+        panel().performKeyInput { pressKey(Key.Tab) }
+        name.assertIsFocused()
+
+        name.performKeyInput { pressKey(Key.Escape) }
+        panel().assertDoesNotExist()
+        trigger.requestFocus().performKeyInput { pressKey(Key.Enter) }
+        name.assertIsFocused()
+    }
+
     @Test fun controlledOwnerCanRefuseDismissal() {
         var requested: Boolean? = null
         setThemedContent {
@@ -149,6 +172,37 @@ class SheetParityTest : ScreenshotTest() {
         composeRule.onNodeWithContentDescription("Close").performClick()
         composeRule.runOnIdle { assertEquals(false, requested) }
         panel().assertExists()
+    }
+
+    @Test fun refusedEscapePreservesTabCycleAfterControlledTouchOpen() {
+        var open by mutableStateOf(false)
+        var acceptClose = false
+        var closeRequests = 0
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Sheet(open = open, onOpenChange = { next ->
+                if (!next) closeRequests++
+                if (next || acceptClose) open = next
+            }) {
+                SheetTrigger("Open", modifier = Modifier.testTag("trigger"))
+                SheetContent(Modifier.testTag("panel")) {
+                    Input(value = "Profile", onValueChange = {}, modifier = Modifier.testTag("name"))
+                }
+            }
+        }
+        val trigger = composeRule.onNodeWithTag("trigger")
+        val name = composeRule.onNodeWithTag("name")
+        val close = composeRule.onNodeWithContentDescription("Close")
+        trigger.performTouchInput { click() }
+        name.assertIsDisplayed().assertIsNotFocused()
+
+        panel().performKeyInput { pressKey(Key.Escape) }
+        composeRule.runOnIdle { assertEquals(1, closeRequests) }
+        panel().assertIsDisplayed().performKeyInput { pressKey(Key.Tab) }
+        name.assertIsFocused().performKeyInput { withKeyDown(Key.ShiftLeft) { pressKey(Key.Tab) } }
+
+        composeRule.runOnIdle { acceptClose = true }
+        close.assertIsFocused().performKeyInput { pressKey(Key.Enter) }
+        panel().assertDoesNotExist()
     }
 
     @Test fun exitMovesFortyPixelsOverTwoHundredMilliseconds() {

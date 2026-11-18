@@ -14,6 +14,9 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -39,6 +42,7 @@ import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,6 +51,9 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.PointerType
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.role
@@ -67,7 +74,8 @@ import com.toutiaoyan.compose.ui.components.icon.IconVariant
 import com.toutiaoyan.compose.ui.icons.X
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.theme.LocalContentColor
-import com.toutiaoyan.compose.ui.components.overlay.Content
+import com.toutiaoyan.compose.ui.components.overlay.ContentWithInitialFocus
+import com.toutiaoyan.compose.ui.components.overlay.captureTouchCanvasFocus
 import com.toutiaoyan.compose.ui.components.overlay.Overlay
 import com.toutiaoyan.compose.ui.components.overlay.TeleportPrimitive
 import com.toutiaoyan.compose.ui.components.overlay.TeleportPrimitiveScope
@@ -143,9 +151,40 @@ internal class SheetController(
     val open: Boolean,
     val onOpenChange: (Boolean) -> Unit,
     val modal: Boolean,
+    val triggerInteraction: SheetTriggerInteraction,
+    val touchActivation: SheetTouchActivation?,
 ) {
     fun toggle() = onOpenChange(!open)
 }
+
+internal class SheetTriggerInteraction {
+    var touchRelease: SheetTouchActivation? = null
+}
+
+internal class SheetTouchActivation(val restoreCanvasFocus: (() -> Unit)?)
+
+private fun Modifier.trackSheetTriggerTouch(interaction: SheetTriggerInteraction): Modifier =
+    pointerInput(interaction) {
+        awaitEachGesture {
+            val press = awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
+            val activation =
+                if (press.type == PointerType.Touch) {
+                    SheetTouchActivation(captureTouchCanvasFocus(currentEvent))
+                } else {
+                    null
+                }
+            val release = waitForUpOrCancellation(pass = PointerEventPass.Initial)
+            if (release != null && activation != null) {
+                // Click handlers run at Main. Scope the modality to this event's dispatch.
+                interaction.touchRelease = activation
+                try {
+                    awaitPointerEvent(PointerEventPass.Final)
+                } finally {
+                    interaction.touchRelease = null
+                }
+            }
+        }
+    }
 
 private val LocalSheet = staticCompositionLocalOf<SheetController?> { null }
 
@@ -223,13 +262,20 @@ fun Sheet(
     content: @Composable SheetScope.() -> Unit,
 ) {
     var internalOpen by remember { mutableStateOf(defaultOpen) }
+    var touchActivation by remember { mutableStateOf<SheetTouchActivation?>(null) }
+    val triggerInteraction = remember { SheetTriggerInteraction() }
     val controlled = open != null
     val isOpen = open ?: internalOpen
     val setOpen: (Boolean) -> Unit = { next ->
+        if (next) touchActivation = triggerInteraction.touchRelease
         if (!controlled) internalOpen = next
         onOpenChange?.invoke(next)
     }
-    val controller = SheetController(open = isOpen, onOpenChange = setOpen, modal = modal)
+    if (!isOpen && touchActivation != null) {
+        // Controlled owners can refuse a close request while the panel still has focus.
+        SideEffect { touchActivation = null }
+    }
+    val controller = SheetController(isOpen, setOpen, modal, triggerInteraction, touchActivation)
     OverlayFocusOwner(open = isOpen, modal = modal) {
         CompositionLocalProvider(LocalSheet provides controller) {
             Box(modifier = modifier) {
@@ -260,6 +306,7 @@ fun SheetScope.SheetTrigger(
         modifier =
             modifier
                 .overlayTriggerFocus()
+                .trackSheetTriggerTouch(controller.triggerInteraction)
                 .semantics {
                     role = Role.Button
                     stateDescription = if (controller.open) "Expanded" else "Collapsed"
@@ -288,10 +335,11 @@ fun SheetScope.SheetTrigger(
     size: ButtonSize = ButtonSize.Md,
     style: Style = Style,
 ) {
+    val controller = sheetController()
     Button(
         text,
         modifier =
-            modifier.overlayTriggerFocus().semantics {
+            modifier.overlayTriggerFocus().trackSheetTriggerTouch(controller.triggerInteraction).semantics {
                 stateDescription = if (open) "Expanded" else "Collapsed"
             },
         onClick = toggle,
@@ -359,7 +407,13 @@ fun SheetScope.SheetContent(
             checkNotNull(LocalSheetTeleportScope.current) {
                 "SheetContent panel must be used within SheetPortal { }"
             }
-        modal.Content(contentAlignment = alignment, enter = resolvedEnter, exit = resolvedExit) {
+        modal.ContentWithInitialFocus(
+            contentAlignment = alignment,
+            enter = resolvedEnter,
+            exit = resolvedExit,
+            focusPanelOnOpen = controller.touchActivation != null,
+            restoreCanvasFocus = controller.touchActivation?.restoreCanvasFocus,
+        ) {
             // Defaults live in Style so an explicit caller width (e.g. Sidebar) wins.
             val panelSize =
                 Style {

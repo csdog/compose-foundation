@@ -296,6 +296,18 @@ fun TeleportPrimitiveScope.Content(
     exit: ExitTransition = ExitTransition.None,
     content: @Composable () -> Unit,
 ) {
+    ContentWithInitialFocus(contentAlignment, enter, exit, focusPanelOnOpen = false, content = content)
+}
+
+@Composable
+internal fun TeleportPrimitiveScope.ContentWithInitialFocus(
+    contentAlignment: Alignment,
+    enter: EnterTransition,
+    exit: ExitTransition,
+    focusPanelOnOpen: Boolean,
+    restoreCanvasFocus: (() -> Unit)? = null,
+    content: @Composable () -> Unit,
+) {
     val initialFocus = remember { FocusRequester() }
     val managed = LocalOverlayFocus.current != null
     val focusManager = LocalFocusManager.current
@@ -323,8 +335,9 @@ fun TeleportPrimitiveScope.Content(
             LaunchedEffect(initialFocus) {
                 if (managed) {
                     withFrameNanos { }
+                    restoreCanvasFocus?.invoke()
                     initialFocus.requestFocus()
-                    initializing = !focusManager.moveFocus(FocusDirection.Next)
+                    initializing = focusPanelOnOpen || !focusManager.moveFocus(FocusDirection.Next)
                 }
             }
             Box(
@@ -339,6 +352,9 @@ fun TeleportPrimitiveScope.Content(
                         if (managed) {
                             Modifier.focusProperties { canFocus = initializing }
                                 .focusRequester(initialFocus)
+                                .onFocusChanged {
+                                    if (focusPanelOnOpen && it.hasFocus && !it.isFocused) initializing = false
+                                }
                                 .focusTarget()
                         } else {
                             Modifier
