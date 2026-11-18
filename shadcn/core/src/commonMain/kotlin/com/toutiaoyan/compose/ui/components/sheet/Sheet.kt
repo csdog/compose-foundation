@@ -97,26 +97,45 @@ internal fun SheetSide.physicalSide(direction: LayoutDirection): SheetSide =
         else -> this
     }
 
+/** Tailwind `w-3/4`. */
+private const val SHEET_PANEL_WIDTH_FRACTION = .75f
+
+/** Tailwind `sm` breakpoint (640px). */
+private val SheetSmBreakpoint = 640.dp
+
+/** Tailwind `sm:max-w-sm` (24rem). */
+private val SheetSmMaxWidth = 384.dp
+
+private const val SHEET_SLIDE_MILLIS = 200
+private const val SHEET_SCRIM_MILLIS = 150
+
+/** Legacy Base UI edge slide: 2.5rem ≈ 40px. */
+private const val SHEET_SLIDE_OFFSET_PX = 40
+
 /** Tailwind w-3/4, with sm:max-w-sm applying from the 640px breakpoint. */
 internal fun sheetPanelWidth(viewportWidth: Dp): Dp =
-    if (viewportWidth < 640.dp) viewportWidth * .75f else minOf(viewportWidth * .75f, 384.dp)
+    if (viewportWidth < SheetSmBreakpoint) {
+        viewportWidth * SHEET_PANEL_WIDTH_FRACTION
+    } else {
+        minOf(viewportWidth * SHEET_PANEL_WIDTH_FRACTION, SheetSmMaxWidth)
+    }
 
 private val SheetSlideEasing = CubicBezierEasing(.42f, 0f, .58f, 1f)
 
-private fun sheetSlideTween() = tween<IntOffset>(200, easing = SheetSlideEasing)
+private fun sheetSlideTween() = tween<IntOffset>(SHEET_SLIDE_MILLIS, easing = SheetSlideEasing)
 
 /** The Base UI popup fades over 200ms while moving 2.5rem from its resting edge. */
 object SheetTransitions {
-    fun enter(side: SheetSide): EnterTransition = enter(side, 40, LayoutDirection.Ltr)
+    fun enter(side: SheetSide): EnterTransition = enter(side, SHEET_SLIDE_OFFSET_PX, LayoutDirection.Ltr)
 
-    fun exit(side: SheetSide): ExitTransition = exit(side, 40, LayoutDirection.Ltr)
+    fun exit(side: SheetSide): ExitTransition = exit(side, SHEET_SLIDE_OFFSET_PX, LayoutDirection.Ltr)
 
     internal fun enter(
         side: SheetSide,
         distance: Int,
         direction: LayoutDirection,
     ): EnterTransition =
-        fadeIn(tween(200, easing = SheetSlideEasing)) +
+        fadeIn(tween(SHEET_SLIDE_MILLIS, easing = SheetSlideEasing)) +
             when (side.physicalSide(direction)) {
                 SheetSide.Top -> slideInVertically(sheetSlideTween()) { -distance }
                 SheetSide.Bottom -> slideInVertically(sheetSlideTween()) { distance }
@@ -129,7 +148,7 @@ object SheetTransitions {
         distance: Int,
         direction: LayoutDirection,
     ): ExitTransition =
-        fadeOut(tween(200, easing = SheetSlideEasing)) +
+        fadeOut(tween(SHEET_SLIDE_MILLIS, easing = SheetSlideEasing)) +
             when (side.physicalSide(direction)) {
                 SheetSide.Top -> slideOutVertically(sheetSlideTween()) { -distance }
                 SheetSide.Bottom -> slideOutVertically(sheetSlideTween()) { distance }
@@ -137,8 +156,8 @@ object SheetTransitions {
                 else -> slideOutHorizontally(sheetSlideTween()) { distance }
             }
 
-    val ScrimEnter: EnterTransition = fadeIn(tween(150))
-    val ScrimExit: ExitTransition = fadeOut(tween(150))
+    val ScrimEnter: EnterTransition = fadeIn(tween(SHEET_SCRIM_MILLIS))
+    val ScrimExit: ExitTransition = fadeOut(tween(SHEET_SCRIM_MILLIS))
 }
 
 @Immutable

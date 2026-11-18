@@ -3405,11 +3405,6 @@
     <ID>MagicNumber:Select.kt$90f</ID>
     <ID>MagicNumber:Sheet.kt$.42f</ID>
     <ID>MagicNumber:Sheet.kt$.58f</ID>
-    <ID>MagicNumber:Sheet.kt$.75f</ID>
-    <ID>MagicNumber:Sheet.kt$200</ID>
-    <ID>MagicNumber:Sheet.kt$SheetTransitions$150</ID>
-    <ID>MagicNumber:Sheet.kt$SheetTransitions$200</ID>
-    <ID>MagicNumber:Sheet.kt$SheetTransitions$40</ID>
     <ID>MagicNumber:Shimmer.kt$0.25f</ID>
     <ID>MagicNumber:Shimmer.kt$0.5f</ID>
     <ID>MagicNumber:Shimmer.kt$0.75f</ID>
@@ -3428,7 +3423,6 @@
     <ID>MagicNumber:ShimmerColors.kt$ShimmerColorCache$64f</ID>
     <ID>MagicNumber:Sidebar.kt$0.7f</ID>
     <ID>MagicNumber:Sidebar.kt$200</ID>
-    <ID>MagicNumber:Slider.kt$0.5f</ID>
     <ID>MagicNumber:SlightlySmiling.kt$0xFF664500</ID>
     <ID>MagicNumber:SlightlySmiling.kt$10.46f</ID>
     <ID>MagicNumber:SlightlySmiling.kt$10.51f</ID>

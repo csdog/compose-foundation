@@ -78,6 +78,9 @@ private const val CONTINUOUS_KEYBOARD_INTERVALS = 100f
 private const val COARSE_KEYBOARD_STEP_MULTIPLIER = 10f
 private const val WEB_LARGE_KEYBOARD_STEP = 10f
 
+/** Whole-control dim matching CSS `disabled:opacity-50` (see SliderStyles). */
+private const val DISABLED_OPACITY = 0.5f
+
 private fun sliderMinimumGap(
     minStepsBetweenThumbs: Int,
     step: Float,
@@ -564,7 +567,7 @@ private fun SliderImpl(
                 Modifier
                     .matchParentSize()
                     .then(rangeSemantics)
-                    .alpha(if (enabled) 1f else 0.5f),
+                    .alpha(if (enabled) 1f else DISABLED_OPACITY),
             contentAlignment = if (vertical) Alignment.BottomCenter else Alignment.CenterStart,
         ) {
             val usableWidth =
