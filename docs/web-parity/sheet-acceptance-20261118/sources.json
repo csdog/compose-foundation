@@ -1,0 +1,136 @@
+{
+  "component": "Sheet",
+  "revision": "968d8cb9dc42ae5d52e8fd356cf84596ec832a26",
+  "retrievedAt": "2026-11-18T04:28:12.270756+00:00",
+  "livePage": "https://ui.shadcn.com/docs/components/base/sheet",
+  "files": [
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/content/docs/components/base/sheet.mdx",
+      "path": ".agent-runs/sheet/goal-20261118/official/apps/v4/content/docs/components/base/sheet.mdx",
+      "sha256": "039bf46b0e5bc7a2b7a28831670c41775502b1cf6b40cae60148791892aa62e1",
+      "bytes": 2395
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/registry/bases/base/ui/sheet.tsx",
+      "path": ".agent-runs/sheet/goal-20261118/official/apps/v4/registry/bases/base/ui/sheet.tsx",
+      "sha256": "5816119da5f3468b0b91d2c65bcf6befe1d769b7867e236b9f18db83908581cb",
+      "bytes": 3922
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/sheet-demo.tsx",
+      "path": ".agent-runs/sheet/goal-20261118/official/apps/v4/examples/base/sheet-demo.tsx",
+      "sha256": "f1909656ba0d543433f92e8c05e7a794a5fcac01ac31145bebdb4d09faa5ab6b",
+      "bytes": 1393
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/sheet-side.tsx",
+      "path": ".agent-runs/sheet/goal-20261118/official/apps/v4/examples/base/sheet-side.tsx",
+      "sha256": "6cf5c159aa8e8427a46027de4ce10c5c93333feb616c1b60b8ce43c321761e5c",
+      "bytes": 2147
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/sheet-no-close-button.tsx",
+      "path": ".agent-runs/sheet/goal-20261118/official/apps/v4/examples/base/sheet-no-close-button.tsx",
+      "sha256": "ca9bad93ef78fae6bea625ba806a928a77ef8367fc70ee628eaa3e586c1b7003",
+      "bytes": 719
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/examples/base/sheet-rtl.tsx",
+      "path": ".agent-runs/sheet/goal-20261118/official/apps/v4/examples/base/sheet-rtl.tsx",
+      "sha256": "4be67efdca43f6c8805db6f3100652601cdde913358c54d89ac6001b587522e8",
+      "bytes": 2747
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/registry/styles/style-nova.css",
+      "path": ".agent-runs/sheet/goal-20261118/official/apps/v4/registry/styles/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e",
+      "bytes": 78661
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/registry/styles/style-rhea.css",
+      "path": ".agent-runs/sheet/goal-20261118/official/apps/v4/registry/styles/style-rhea.css",
+      "sha256": "bac4eff75a0e21d9dd90ce40634937f54730471d8f7fa50ca67b317892cf908f",
+      "bytes": 78788
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/package.json",
+      "path": ".agent-runs/sheet/goal-20261118/official/apps/v4/package.json",
+      "sha256": "ec967c97c0229cacd4088b566faa2f574d9c210b136877d634360f617c4b79be",
+      "bytes": 5898
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/components/component-preview-tabs.tsx",
+      "path": ".agent-runs/sheet/goal-20261118/official/apps/v4/components/component-preview-tabs.tsx",
+      "sha256": "0e533e724e74e6b13641649324aa169e0597a486eec28e86b7f915defb08c383",
+      "bytes": 8860
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/dialog/backdrop/DialogBackdrop.tsx",
+      "path": ".agent-runs/sheet/goal-20261118/official/base-ui/backdrop/DialogBackdrop.tsx",
+      "sha256": "a5f36c8989b9b35fd3e65fcb2e1b4e410bf2120917d36eddf4e9e202dcb9f706",
+      "bytes": 2406
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/dialog/close/DialogClose.tsx",
+      "path": ".agent-runs/sheet/goal-20261118/official/base-ui/close/DialogClose.tsx",
+      "sha256": "fd58226f50d7f1636fa625e3045f7c1b1d1777d49505b8bf390a1281bf296705",
+      "bytes": 1851
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/dialog/description/DialogDescription.tsx",
+      "path": ".agent-runs/sheet/goal-20261118/official/base-ui/description/DialogDescription.tsx",
+      "sha256": "faec9250f5fa562b71cd49234155667bb2527191a0bf96e735f4fc11d59bc9fc",
+      "bytes": 1295
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/dialog/popup/DialogPopup.tsx",
+      "path": ".agent-runs/sheet/goal-20261118/official/base-ui/popup/DialogPopup.tsx",
+      "sha256": "a38b483c5c17fbf13465d5cae3a293fdebd2126df4094dbfaee1661e066ee91e",
+      "bytes": 6523
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/dialog/portal/DialogPortal.tsx",
+      "path": ".agent-runs/sheet/goal-20261118/official/base-ui/portal/DialogPortal.tsx",
+      "sha256": "2bfd86a51def8d7ff3cdfd4bb7a75fe53cd493d66ccfe04307761e5dd2029499",
+      "bytes": 1986
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/dialog/root/DialogRoot.tsx",
+      "path": ".agent-runs/sheet/goal-20261118/official/base-ui/root/DialogRoot.tsx",
+      "sha256": "0d9af2dc73e15904d07a0db31a587c1bceaf427c571477c81205309270086c45",
+      "bytes": 4533
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/dialog/title/DialogTitle.tsx",
+      "path": ".agent-runs/sheet/goal-20261118/official/base-ui/title/DialogTitle.tsx",
+      "sha256": "4a722b551da610e58563d8a49a98039cbd69f5c1a44f8def22baab51b150b13b",
+      "bytes": 1213
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/dialog/trigger/DialogTrigger.tsx",
+      "path": ".agent-runs/sheet/goal-20261118/official/base-ui/trigger/DialogTrigger.tsx",
+      "sha256": "7b2a22583985fbee42755b65b6735b6bdb94df04b20c4aa39c13a771cea3d2d3",
+      "bytes": 4342
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/utils/popups/index.ts",
+      "path": ".agent-runs/sheet/goal-20261118/official/base-ui/utils/popups/index.ts",
+      "sha256": "91c3cd250ff739aa4380577f46128997ba234fa2d85827c4beebb101beb6bd9c",
+      "bytes": 125
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/utils/popups/popupStoreUtils.ts",
+      "path": ".agent-runs/sheet/goal-20261118/official/base-ui/utils/popups/popupStoreUtils.ts",
+      "sha256": "305443659d0ea39ed1f2299ed7d5921ee6e6880eb3921c005dda7a13a63f1795",
+      "bytes": 18088
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mui/base-ui/b34551d644f2e58ebf8fc1050d949f6654ceca6c/packages/react/src/floating-ui-react/components/FloatingFocusManager.tsx",
+      "path": ".agent-runs/sheet/goal-20261118/official/base-ui/floating-ui-react/components/FloatingFocusManager.tsx",
+      "sha256": "5b8427d1497284b453bc8e0feca17489d6398b3e4e0cff10737ea9202a06d864",
+      "bytes": 35839
+    }
+  ],
+  "baseUiVersion": "1.6.0",
+  "baseUiRevision": "b34551d644f2e58ebf8fc1050d949f6654ceca6c"
+}
