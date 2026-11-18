@@ -8,6 +8,8 @@ import androidx.compose.foundation.style.contentPadding
 import androidx.compose.foundation.style.hovered
 import com.toutiaoyan.compose.ui.styles.focusVisible
 import androidx.compose.ui.graphics.shadow.Shadow
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.runtime.Composable
@@ -16,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
 import com.toutiaoyan.compose.ui.tokens.Colors
+import com.toutiaoyan.compose.ui.utils.RememberThemeScope
 import com.toutiaoyan.compose.ui.utils.rememberTheme
 import com.toutiaoyan.compose.ui.styles.border
 import com.toutiaoyan.compose.ui.styles.focusRing
@@ -95,74 +98,120 @@ fun BadgeVariant.rememberStyle(): Style {
                 }
             }
         }
-        val foreground = receiver.contentColor(colors)
-        // Real badge.tsx always reserves `border border-transparent` (1px) so
-        // switching to Outline doesn't change layout size; focus-visible ring is
-        // for the asChild / link use case (see Badge's optional onClick).
-        when (receiver) {
-            BadgeVariant.Default ->
-                Style {
-                    background(colors.primary)
-                    contentColor(foreground)
-                    border(Color.Transparent)
-                    contentPadding(horizontal = spacing.sm, vertical = spacing.xs2)
-                    fontSize(12.sp)
-                    fontWeight(FontWeight.SemiBold)
-                    focusRing(RoundedCornerShape(radius.full))
-                }
+        legacyBadgeStyle(receiver)
+    }
+}
 
-            BadgeVariant.Secondary ->
-                Style {
-                    background(colors.secondary)
-                    contentColor(foreground)
-                    border(Color.Transparent)
-                    contentPadding(horizontal = spacing.sm, vertical = spacing.xs2)
-                    fontSize(12.sp)
-                    fontWeight(FontWeight.SemiBold)
-                    focusRing(RoundedCornerShape(radius.full))
-                }
+private fun RememberThemeScope.legacyBadgeStyle(variant: BadgeVariant): Style =
+    Style {
+        when (variant) {
+            BadgeVariant.Default -> background(colors.primary)
+            BadgeVariant.Secondary -> background(colors.secondary)
+            BadgeVariant.Destructive -> background(colors.destructive)
+            BadgeVariant.Ghost -> background(colors.muted)
+            BadgeVariant.Outline -> Unit
+            BadgeVariant.Link -> hovered { textDecoration(TextDecoration.Underline) }
+        }
+        contentColor(variant.contentColor(colors))
+        // Reserve the outline variant's border width in all variants.
+        border(if (variant == BadgeVariant.Outline) colors.border else Color.Transparent)
+        contentPadding(horizontal = spacing.sm, vertical = spacing.xs2)
+        fontSize(12.sp)
+        if (variant != BadgeVariant.Ghost) fontWeight(FontWeight.SemiBold)
+        focusRing(RoundedCornerShape(radius.full))
+    }
 
-            BadgeVariant.Destructive ->
-                Style {
-                    background(colors.destructive)
-                    contentColor(foreground)
-                    border(Color.Transparent)
-                    contentPadding(horizontal = spacing.sm, vertical = spacing.xs2)
-                    fontSize(12.sp)
-                    fontWeight(FontWeight.SemiBold)
-                    focusRing(RoundedCornerShape(radius.full))
-                }
+internal fun badgeForeground(
+    colors: Colors,
+    variant: BadgeVariant,
+    nova: Boolean,
+    hovered: Boolean,
+    clickable: Boolean,
+): Color =
+    when {
+        nova && variant == BadgeVariant.Destructive -> colors.destructive
+        nova &&
+            variant == BadgeVariant.Ghost ->
+            if (hovered) {
+                colors.mutedForeground
+            } else {
+                colors.foreground
+            }
+        nova && variant == BadgeVariant.Outline && clickable && hovered -> colors.mutedForeground
+        else -> variant.contentColor(colors)
+    }
 
-            BadgeVariant.Outline ->
-                Style {
-                    contentColor(foreground)
-                    border(colors.border)
-                    contentPadding(horizontal = spacing.sm, vertical = spacing.xs2)
-                    fontSize(12.sp)
-                    fontWeight(FontWeight.SemiBold)
-                    focusRing(RoundedCornerShape(radius.full))
+@Composable
+internal fun rememberBadgeClickStyle(
+    variant: BadgeVariant,
+    nova: Boolean,
+    clickable: Boolean,
+): Style =
+    rememberTheme(variant, nova, clickable) {
+        if (!nova || !clickable) {
+            Style
+        } else {
+            Style {
+                hovered {
+                    when (variant) {
+                        BadgeVariant.Default -> background(colors.primary.copy(alpha = 0.8f))
+                        BadgeVariant.Secondary -> background(colors.secondary.copy(alpha = 0.8f))
+                        BadgeVariant.Destructive -> background(colors.destructive.copy(alpha = 0.2f))
+                        BadgeVariant.Outline -> {
+                            background(colors.muted)
+                            contentColor(colors.mutedForeground)
+                        }
+                        else -> Unit
+                    }
                 }
+            }
+        }
+    }
 
-            BadgeVariant.Ghost ->
-                Style {
-                    background(colors.muted)
-                    contentColor(foreground)
-                    border(Color.Transparent)
-                    contentPadding(horizontal = spacing.sm, vertical = spacing.xs2)
-                    fontSize(12.sp)
-                    focusRing(RoundedCornerShape(radius.full))
-                }
-
-            BadgeVariant.Link ->
-                Style {
-                    contentColor(foreground)
-                    border(Color.Transparent)
-                    contentPadding(horizontal = spacing.sm, vertical = spacing.xs2)
-                    fontSize(12.sp)
-                    fontWeight(FontWeight.SemiBold)
-                    hovered { textDecoration(TextDecoration.Underline) }
-                    focusRing(RoundedCornerShape(radius.full))
-                }
+@Composable
+internal fun rememberBadgeIconStyle(
+    iconPlacement: BadgeIconPlacement?,
+    nova: Boolean,
+): Style {
+    val direction = LocalLayoutDirection.current
+    return rememberTheme(iconPlacement, nova, direction) {
+        if (!nova || iconPlacement == null) {
+            Style
+        } else {
+            Style {
+                val start = if (iconPlacement != BadgeIconPlacement.End) 6.dp else 8.dp
+                val end = if (iconPlacement != BadgeIconPlacement.Start) 6.dp else 8.dp
+                // Style's scalar start/end are placed physically; map the logical edges here.
+                contentPadding(
+                    start = if (direction == LayoutDirection.Ltr) start else end,
+                    top = 0.dp,
+                    end = if (direction == LayoutDirection.Ltr) end else start,
+                    bottom = 0.dp,
+                )
+            }
         }
     }
 }
+
+@Composable
+internal fun rememberInvalidBadgeStyle(invalid: Boolean): Style =
+    rememberTheme(invalid) {
+        if (!invalid) {
+            Style
+        } else {
+            Style {
+                border(colors.destructive)
+                if (theme.ring.enabled) {
+                    focusVisible {
+                        dropShadow(
+                            Shadow(
+                                radius = 0.dp,
+                                spread = theme.ring.width + theme.ring.offset,
+                                color = colors.destructive.copy(alpha = if (isDark) 0.4f else 0.2f),
+                            ),
+                        )
+                    }
+                }
+            }
+        }
+    }

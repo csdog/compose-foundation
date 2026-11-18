@@ -48,11 +48,11 @@ class BadgeExtendedApiTest {
                 Theme(preset = StylePreset.Nova, minTouchTarget = null) {
                     Box(Modifier.padding(24.dp)) {
                         Badge(Modifier.testTag("badge"), iconPlacement = placement) {
-                            if (placement == BadgeIconPlacement.Start || placement == BadgeIconPlacement.Both) {
+                            if (placement.hasIconAt(BadgeIconPlacement.Start)) {
                                 Icon(Check, modifier = Modifier.testTag("start"))
                             }
                             Text(Modifier.testTag("label")) { "Label" }
-                            if (placement == BadgeIconPlacement.End || placement == BadgeIconPlacement.Both) {
+                            if (placement.hasIconAt(BadgeIconPlacement.End)) {
                                 Icon(Check, modifier = Modifier.testTag("end"))
                             }
                         }
@@ -66,24 +66,29 @@ class BadgeExtendedApiTest {
                     direction = dir
                     placement = edge
                 }
-                rule.onNodeWithTag("badge").assertHeightIsEqualTo(20.dp)
-                val badge = rule.onNodeWithTag("badge").getUnclippedBoundsInRoot()
-                val first =
-                    rule.onNodeWithTag(
-                        if (edge == BadgeIconPlacement.Start || edge == BadgeIconPlacement.Both) "start" else "label",
-                    ).getUnclippedBoundsInRoot()
-                val last =
-                    rule.onNodeWithTag(
-                        if (edge == BadgeIconPlacement.End || edge == BadgeIconPlacement.Both) "end" else "label",
-                    ).getUnclippedBoundsInRoot()
-                val expectedStart = if (edge == BadgeIconPlacement.Start || edge == BadgeIconPlacement.Both) 7f else 9f
-                val expectedEnd = if (edge == BadgeIconPlacement.End || edge == BadgeIconPlacement.Both) 7f else 9f
-                val startGap = if (dir == LayoutDirection.Ltr) first.left - badge.left else badge.right - first.right
-                val endGap = if (dir == LayoutDirection.Ltr) badge.right - last.right else last.left - badge.left
-                assertEquals(expectedStart, startGap.value, .1f, "$dir/$edge start padding includes border")
-                assertEquals(expectedEnd, endGap.value, .1f, "$dir/$edge end padding includes border")
+                assertLogicalIconInsets(dir, edge)
             }
         }
+    }
+
+    private fun BadgeIconPlacement?.hasIconAt(edge: BadgeIconPlacement): Boolean =
+        this == edge || this == BadgeIconPlacement.Both
+
+    private fun assertLogicalIconInsets(
+        direction: LayoutDirection,
+        placement: BadgeIconPlacement?,
+    ) {
+        rule.onNodeWithTag("badge").assertHeightIsEqualTo(20.dp)
+        val badge = rule.onNodeWithTag("badge").getUnclippedBoundsInRoot()
+        val startIcon = placement.hasIconAt(BadgeIconPlacement.Start)
+        val endIcon = placement.hasIconAt(BadgeIconPlacement.End)
+        val first = rule.onNodeWithTag(if (startIcon) "start" else "label").getUnclippedBoundsInRoot()
+        val last = rule.onNodeWithTag(if (endIcon) "end" else "label").getUnclippedBoundsInRoot()
+        val startGap = if (direction == LayoutDirection.Ltr) first.left - badge.left else badge.right - first.right
+        val endGap = if (direction == LayoutDirection.Ltr) badge.right - last.right else last.left - badge.left
+        val expectedStart = if (startIcon) 7f else 9f
+        assertEquals(expectedStart, startGap.value, .1f, "$direction/$placement start padding includes border")
+        assertEquals(if (endIcon) 7f else 9f, endGap.value, .1f, "$direction/$placement end padding includes border")
     }
 
     @Test fun hrefUsesTheUriHandlerAndAnExplicitCallbackOverridesIt() {
