@@ -23,6 +23,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.clearAndSetSemantics
 
+private const val DRAWER_HANDLE_FADE_MILLIS = 200
+
 /**
  * Visual swipe affordance matching shadcn base-nova `DrawerSwipeHandle`.
  *
@@ -40,12 +42,12 @@ fun DrawerSwipeHandle(
     val alpha =
         animateFloatAsState(
             if (drawer.nestedOpenCount > 0 && (nestHost?.nestedSwipeProgress ?: 0f) == 0f) 0f else 1f,
-            tween(200),
+            tween(DRAWER_HANDLE_FADE_MILLIS),
             label = "Drawer covered handle",
         )
     val handleModifier = modifier.graphicsLayer { this.alpha = alpha.value }
     if (currentTheme.activePreset == StylePreset.Nova) {
-        val direction = LocalDrawerState.current.swipeDirection
+        val direction = drawer.swipeDirection
         val vertical = direction.isVertical()
         Box(
             handleModifier.then(

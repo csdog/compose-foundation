@@ -9,6 +9,9 @@ import androidx.compose.runtime.Composable
 import com.toutiaoyan.compose.ui.components.overlay.OverlayWithOpacity
 import com.toutiaoyan.compose.ui.components.overlay.OverlayTransitions
 
+private const val DRAWER_NON_NOVA_SCRIM_ALPHA = 0.5f
+private const val DRAWER_SNAP_SCRIM_OPACITY_FLOOR = 0.5f
+
 /** Scrim — web `DrawerOverlay`. Must be composed under [DrawerPortal]. */
 @Composable
 fun DrawerOverlay(
@@ -30,7 +33,7 @@ fun DrawerOverlay(
                     alpha = 0.1f,
                 )
             } else {
-                currentTheme.colors.foreground.copy(alpha = 0.5f)
+                currentTheme.colors.foreground.copy(alpha = DRAWER_NON_NOVA_SCRIM_ALPHA)
             },
     )
 }
@@ -39,7 +42,8 @@ fun DrawerOverlay(
 internal fun drawerOverlayOpacity(
     swipeProgress: Float,
     hasSnapPoints: Boolean,
-): Float = (1f - swipeProgress.coerceIn(0f, 1f)).coerceAtLeast(if (hasSnapPoints) 0.5f else 0f)
+): Float =
+    (1f - swipeProgress.coerceIn(0f, 1f)).coerceAtLeast(if (hasSnapPoints) DRAWER_SNAP_SCRIM_OPACITY_FLOOR else 0f)
 
 internal fun drawerSwipeProgress(
     offset: Float,

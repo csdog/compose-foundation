@@ -77,6 +77,8 @@ fun DrawerClose(
     )
 }
 
+private const val DRAWER_DISABLED_CLOSE_ALPHA = 0.5f
+
 /**
  * Icon-only X control. Prefer labeled [DrawerClose] (children / text) for base-nova
  * footer Cancel patterns; this matches older Sheet-like chrome.
@@ -101,7 +103,7 @@ fun DrawerCloseIcon(
     Box(
         modifier =
             modifier
-                .then(if (resolvedEnabled) Modifier else Modifier.alpha(0.5f))
+                .then(if (resolvedEnabled) Modifier else Modifier.alpha(DRAWER_DISABLED_CLOSE_ALPHA))
                 .semantics {
                     role = Role.Button
                     contentDescription = ariaLabel

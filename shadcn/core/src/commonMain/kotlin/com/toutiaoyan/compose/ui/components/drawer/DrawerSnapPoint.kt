@@ -65,26 +65,34 @@ internal fun nearestDrawerSnapIndex(
     fromIndex: Int,
     velocityClosing: Float,
 ): Int {
-    if (closingOffsets.isEmpty()) return 0
-    if (closingOffsets.size == 1) return 0
-    if (snapToSequentialPoints) {
-        val from = fromIndex.coerceIn(0, closingOffsets.lastIndex)
-        val ordered = closingOffsets.indices.sortedBy { closingOffsets[it] }
-        val position = ordered.indexOf(from)
-        val delta =
-            when {
-                velocityClosing > 0f || (velocityClosing == 0f && offsetPx > closingOffsets[from]) -> 1
-                velocityClosing < 0f || offsetPx < closingOffsets[from] -> -1
-                else -> 0
-            }
-        val next = ordered[(position + delta).coerceIn(ordered.indices)]
-        // Still choose by proximity between from and next when mid-drag settle has no velocity.
-        if (velocityClosing == 0f) {
-            val a = fromIndex.coerceIn(0, closingOffsets.lastIndex)
-            val b = next
-            return listOf(a, b).minBy { kotlin.math.abs(closingOffsets[it] - offsetPx) }
-        }
-        return next
+    if (closingOffsets.size <= 1) return 0
+    return if (snapToSequentialPoints) {
+        nearestSequentialSnapIndex(offsetPx, closingOffsets, fromIndex, velocityClosing)
+    } else {
+        closingOffsets.indices.minBy { kotlin.math.abs(closingOffsets[it] - offsetPx) }
     }
-    return closingOffsets.indices.minBy { kotlin.math.abs(closingOffsets[it] - offsetPx) }
+}
+
+private fun nearestSequentialSnapIndex(
+    offsetPx: Float,
+    closingOffsets: List<Float>,
+    fromIndex: Int,
+    velocityClosing: Float,
+): Int {
+    val from = fromIndex.coerceIn(0, closingOffsets.lastIndex)
+    val ordered = closingOffsets.indices.sortedBy { closingOffsets[it] }
+    val position = ordered.indexOf(from)
+    val delta =
+        when {
+            velocityClosing > 0f || (velocityClosing == 0f && offsetPx > closingOffsets[from]) -> 1
+            velocityClosing < 0f || offsetPx < closingOffsets[from] -> -1
+            else -> 0
+        }
+    val next = ordered[(position + delta).coerceIn(ordered.indices)]
+    // Still choose by proximity between from and next when mid-drag settle has no velocity.
+    return if (velocityClosing == 0f) {
+        listOf(from, next).minBy { kotlin.math.abs(closingOffsets[it] - offsetPx) }
+    } else {
+        next
+    }
 }

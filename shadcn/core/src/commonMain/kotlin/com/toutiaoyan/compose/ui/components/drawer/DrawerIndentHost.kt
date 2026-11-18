@@ -68,7 +68,7 @@ fun DrawerIndentHost(
                 // The anchored draggable already owns drag and spring frames.
                 progress.snapTo(amount)
             } else {
-                progress.animateTo(if (active) 1f else 0f, tween(DrawerMotionMillis, easing = DrawerMotionEasing))
+                progress.animateTo(if (active) 1f else 0f, tween(DRAWER_MOTION_MILLIS, easing = DrawerMotionEasing))
             }
         }
     }

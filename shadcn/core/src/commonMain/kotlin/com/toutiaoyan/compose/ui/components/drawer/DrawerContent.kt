@@ -99,29 +99,29 @@ private val DrawerSwipeDirection.novaWindowInset: Dp
     get() = if (this == DrawerSwipeDirection.Right) NovaRightWindowInset else DrawerDefaults.WindowInset
 
 internal val DrawerMotionEasing = CubicBezierEasing(0.22f, 1f, 0.36f, 1f)
-internal const val DrawerMotionMillis = 450
+internal const val DRAWER_MOTION_MILLIS = 450
+private const val DRAWER_COVERED_CONTENT_FADE_MILLIS = 300
+private const val DRAWER_COVERED_PANEL_SCRIM_ALPHA = 0.05f
 
-private fun drawerEnter(direction: DrawerSwipeDirection): EnterTransition =
-    when (direction) {
-        DrawerSwipeDirection.Down -> slideInVertically(tween(DrawerMotionMillis, easing = DrawerMotionEasing)) { it }
-        DrawerSwipeDirection.Up -> slideInVertically(tween(DrawerMotionMillis, easing = DrawerMotionEasing)) { -it }
-        DrawerSwipeDirection.Left -> slideInHorizontally(tween(DrawerMotionMillis, easing = DrawerMotionEasing)) { -it }
-        DrawerSwipeDirection.Right -> slideInHorizontally(tween(DrawerMotionMillis, easing = DrawerMotionEasing)) { it }
+private fun drawerEnter(direction: DrawerSwipeDirection): EnterTransition {
+    val slide = tween<IntOffset>(DRAWER_MOTION_MILLIS, easing = DrawerMotionEasing)
+    return when (direction) {
+        DrawerSwipeDirection.Down -> slideInVertically(slide) { it }
+        DrawerSwipeDirection.Up -> slideInVertically(slide) { -it }
+        DrawerSwipeDirection.Left -> slideInHorizontally(slide) { -it }
+        DrawerSwipeDirection.Right -> slideInHorizontally(slide) { it }
     }
+}
 
-private fun drawerExit(direction: DrawerSwipeDirection): ExitTransition =
-    when (direction) {
-        DrawerSwipeDirection.Down -> slideOutVertically(tween(DrawerMotionMillis, easing = DrawerMotionEasing)) { it }
-        DrawerSwipeDirection.Up -> slideOutVertically(tween(DrawerMotionMillis, easing = DrawerMotionEasing)) { -it }
-        DrawerSwipeDirection.Left ->
-            slideOutHorizontally(
-                tween(DrawerMotionMillis, easing = DrawerMotionEasing),
-            ) { -it }
-        DrawerSwipeDirection.Right ->
-            slideOutHorizontally(
-                tween(DrawerMotionMillis, easing = DrawerMotionEasing),
-            ) { it }
+private fun drawerExit(direction: DrawerSwipeDirection): ExitTransition {
+    val slide = tween<IntOffset>(DRAWER_MOTION_MILLIS, easing = DrawerMotionEasing)
+    return when (direction) {
+        DrawerSwipeDirection.Down -> slideOutVertically(slide) { it }
+        DrawerSwipeDirection.Up -> slideOutVertically(slide) { -it }
+        DrawerSwipeDirection.Left -> slideOutHorizontally(slide) { -it }
+        DrawerSwipeDirection.Right -> slideOutHorizontally(slide) { it }
     }
+}
 
 /**
  * Styled drawer content — shadcn base-nova / Base UI `DrawerContent` wrapper:
@@ -235,7 +235,7 @@ internal fun DrawerContentImpl(
             val stackDepth =
                 animateFloatAsState(
                     targetValue = drawer.nestedOpenCount.toFloat(),
-                    animationSpec = tween(DrawerMotionMillis, easing = DrawerMotionEasing),
+                    animationSpec = tween(DRAWER_MOTION_MILLIS, easing = DrawerMotionEasing),
                     label = "Drawer stack depth",
                 )
             val peekPx = with(LocalDensity.current) { DrawerDefaults.NestedPeek.toPx() }
@@ -287,7 +287,7 @@ internal fun DrawerContentImpl(
                         nestHost?.naturalHeightPx
                             ?: 0f
                     },
-                    tween(DrawerMotionMillis, easing = DrawerMotionEasing),
+                    tween(DRAWER_MOTION_MILLIS, easing = DrawerMotionEasing),
                     label = "Drawer frontmost height",
                 )
             val heightModifier =
@@ -435,34 +435,12 @@ private fun DrawerDismissPanel(
     }
 
     val sizeModifier =
-        when (swipeDirection) {
-            DrawerSwipeDirection.Up, DrawerSwipeDirection.Down ->
-                (
-                    if (currentTheme.activePreset == StylePreset.Nova) {
-                        Modifier.width((maxWidth - DrawerDefaults.WindowInset * 2).coerceAtLeast(0.dp))
-                    } else {
-                        Modifier.fillMaxWidth()
-                    }
-                )
-                    .heightIn(max = (maxHeight - DrawerDefaults.VerticalMaxHeightInset).coerceAtLeast(0.dp))
-            DrawerSwipeDirection.Left, DrawerSwipeDirection.Right ->
-                if (currentTheme.activePreset == StylePreset.Nova) {
-                    Modifier.height(
-                        (maxHeight - swipeDirection.novaWindowInset * 2).coerceAtLeast(0.dp),
-                    ).width(
-                        if (maxWidth >= 640.dp) {
-                            DrawerDefaults.SideMaxWidth
-                        } else {
-                            maxWidth * DrawerDefaults.SideWidthFraction
-                        },
-                    )
-                } else {
-                    Modifier.fillMaxHeight().fillMaxWidth(
-                        DrawerDefaults.SideWidthFraction,
-                    ).widthIn(max = DrawerDefaults.SideMaxWidth)
-                }
-        }
-
+        drawerPanelSize(
+            swipeDirection,
+            maxHeight,
+            maxWidth,
+            currentTheme.activePreset == StylePreset.Nova,
+        )
     val panelShape =
         drawerPhysicalPanelShape(swipeDirection, twRadius.xl, LocalLayoutDirection.current)
     val panelModifier =
@@ -506,6 +484,40 @@ private fun DrawerDismissPanel(
         content = content,
     )
 }
+
+private fun drawerPanelSize(
+    swipeDirection: DrawerSwipeDirection,
+    maxHeight: Dp,
+    maxWidth: Dp,
+    nova: Boolean,
+): Modifier =
+    when (swipeDirection) {
+        DrawerSwipeDirection.Up, DrawerSwipeDirection.Down ->
+            (
+                if (nova) {
+                    Modifier.width((maxWidth - DrawerDefaults.WindowInset * 2).coerceAtLeast(0.dp))
+                } else {
+                    Modifier.fillMaxWidth()
+                }
+            )
+                .heightIn(max = (maxHeight - DrawerDefaults.VerticalMaxHeightInset).coerceAtLeast(0.dp))
+        DrawerSwipeDirection.Left, DrawerSwipeDirection.Right ->
+            if (nova) {
+                Modifier.height(
+                    (maxHeight - swipeDirection.novaWindowInset * 2).coerceAtLeast(0.dp),
+                ).width(
+                    if (maxWidth >= 640.dp) {
+                        DrawerDefaults.SideMaxWidth
+                    } else {
+                        maxWidth * DrawerDefaults.SideWidthFraction
+                    },
+                )
+            } else {
+                Modifier.fillMaxHeight().fillMaxWidth(
+                    DrawerDefaults.SideWidthFraction,
+                ).widthIn(max = DrawerDefaults.SideMaxWidth)
+            }
+    }
 
 @Composable
 private fun DrawerSnapPanel(
@@ -703,8 +715,8 @@ private fun DrawerPanelChrome(
     val nestedSwipe = { nestHost?.nestedSwipeProgress ?: 0f }
     val brightness =
         animateFloatAsState(
-            if (nestedCount > 0) 0.05f else 0f,
-            tween(DrawerMotionMillis, easing = DrawerMotionEasing),
+            if (nestedCount > 0) DRAWER_COVERED_PANEL_SCRIM_ALPHA else 0f,
+            tween(DRAWER_MOTION_MILLIS, easing = DrawerMotionEasing),
             label = "Drawer stack brightness",
         )
     val chrome =
@@ -715,7 +727,7 @@ private fun DrawerPanelChrome(
     val contentAlpha =
         animateFloatAsState(
             if (nestedCount > 0 && nestedSwipe() == 0f) 0f else 1f,
-            tween(300, easing = DrawerMotionEasing),
+            tween(DRAWER_COVERED_CONTENT_FADE_MILLIS, easing = DrawerMotionEasing),
             label = "Drawer covered content",
         )
     when (swipeDirection) {

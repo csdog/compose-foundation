@@ -2,7 +2,6 @@ package com.toutiaoyan.compose.ui.components.drawer
 
 import com.toutiaoyan.compose.ui.components.overlay.OverlayFocusOwner
 import com.toutiaoyan.compose.ui.components.overlay.overlayTriggerFocus
-import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -23,7 +22,6 @@ import com.toutiaoyan.compose.ui.components.button.Button
 import com.toutiaoyan.compose.ui.components.button.ButtonSize
 import com.toutiaoyan.compose.ui.components.button.ButtonVariant
 import com.toutiaoyan.compose.ui.components.overlay.TeleportPrimitiveScope
-import com.toutiaoyan.compose.ui.components.sheet.SheetSide
 import com.toutiaoyan.compose.ui.gesture.SwipeGesture
 
 /** @see SwipeGesture.shouldDismiss */
@@ -38,33 +36,12 @@ internal fun shouldDismissDrawer(
         thresholdFraction = thresholdFraction,
     )
 
-internal fun DrawerSwipeDirection.toSheetSide(): SheetSide =
-    when (this) {
-        DrawerSwipeDirection.Up -> SheetSide.Top
-        DrawerSwipeDirection.Down -> SheetSide.Bottom
-        DrawerSwipeDirection.Left -> SheetSide.Start
-        DrawerSwipeDirection.Right -> SheetSide.End
-    }
-
 internal fun DrawerSwipeDirection.contentAlignment(): Alignment =
     when (this) {
         DrawerSwipeDirection.Up -> Alignment.TopCenter
         DrawerSwipeDirection.Down -> Alignment.BottomCenter
         DrawerSwipeDirection.Left -> AbsoluteAlignment.CenterLeft
         DrawerSwipeDirection.Right -> AbsoluteAlignment.CenterRight
-    }
-
-internal fun DrawerSwipeDirection.dragOrientation(): Orientation =
-    when (this) {
-        DrawerSwipeDirection.Up, DrawerSwipeDirection.Down -> Orientation.Vertical
-        DrawerSwipeDirection.Left, DrawerSwipeDirection.Right -> Orientation.Horizontal
-    }
-
-/** Positive result = dragging toward the closing edge. */
-internal fun DrawerSwipeDirection.closingSign(): Float =
-    when (this) {
-        DrawerSwipeDirection.Up, DrawerSwipeDirection.Left -> -1f
-        DrawerSwipeDirection.Down, DrawerSwipeDirection.Right -> 1f
     }
 
 internal fun DrawerSwipeDirection.isVertical(): Boolean =
@@ -154,10 +131,9 @@ internal class DrawerState(
     val dismissOnClickOutside: Boolean,
     /**
      * When false, swipe-to-dismiss is disabled (Compose convenience; Base maps
-     * Vaul `dismissible={false}` mainly to [disablePointerDismissal]).
+     * Vaul `dismissible={false}` mainly to `disablePointerDismissal`).
      */
     val dismissible: Boolean,
-    val disablePointerDismissal: Boolean,
     val modal: Boolean,
     val snapPoints: List<DrawerSnapPoint>?,
     val snapPoint: DrawerSnapPoint?,
@@ -296,24 +272,8 @@ fun Drawer(
         }
     }
 
-    val indentHost = LocalDrawerIndentState.current
-    val indentKey = remember { Any() }
-    val indentGesture = remember { DrawerIndentGesture() }
-    DisposableEffect(indentHost, isOpen, indentBackground) {
-        if (isOpen && indentBackground) indentHost?.register(indentKey) { indentGesture.progress() }
-        onDispose { indentHost?.unregister(indentKey) }
-    }
-
-    val parentNest = LocalDrawerNestHost.current
-    val selfNest = remember(parentNest, swipeDirection) { DrawerNestHost(parentNest, swipeDirection) }
-    DisposableEffect(isOpen, parentNest) {
-        if (isOpen) {
-            parentNest?.onChildOpenChange(true)
-            onDispose { parentNest?.onChildOpenChange(false) }
-        } else {
-            onDispose { }
-        }
-    }
+    val indentGesture = rememberDrawerIndentGesture(isOpen, indentBackground)
+    val selfNest = rememberDrawerNestHost(isOpen, swipeDirection)
 
     val pointerDismiss =
         dismissOnClickOutside && !disablePointerDismissal
@@ -325,14 +285,13 @@ fun Drawer(
             showSwipeHandle = showSwipeHandle,
             dismissOnClickOutside = pointerDismiss,
             dismissible = dismissible,
-            disablePointerDismissal = disablePointerDismissal,
             modal = modal,
             snapPoints = snapPoints,
             snapPoint = activeSnap,
             onSnapPointChange = setSnap,
             snapToSequentialPoints = snapToSequentialPoints,
             nestedOpenCount = selfNest.openChildCount,
-            indentGesture = if (indentBackground) indentGesture else null,
+            indentGesture = indentGesture,
         )
     OverlayFocusOwner(isOpen, modal) {
         CompositionLocalProvider(
@@ -344,6 +303,39 @@ fun Drawer(
             }
         }
     }
+}
+
+@Composable
+private fun rememberDrawerIndentGesture(
+    isOpen: Boolean,
+    indentBackground: Boolean,
+): DrawerIndentGesture? {
+    val indentHost = LocalDrawerIndentState.current
+    val indentKey = remember { Any() }
+    val indentGesture = remember { DrawerIndentGesture() }
+    DisposableEffect(indentHost, isOpen, indentBackground) {
+        if (isOpen && indentBackground) indentHost?.register(indentKey) { indentGesture.progress() }
+        onDispose { indentHost?.unregister(indentKey) }
+    }
+    return if (indentBackground) indentGesture else null
+}
+
+@Composable
+private fun rememberDrawerNestHost(
+    isOpen: Boolean,
+    swipeDirection: DrawerSwipeDirection,
+): DrawerNestHost {
+    val parentNest = LocalDrawerNestHost.current
+    val selfNest = remember(parentNest, swipeDirection) { DrawerNestHost(parentNest, swipeDirection) }
+    DisposableEffect(isOpen, parentNest) {
+        if (isOpen) {
+            parentNest?.onChildOpenChange(true)
+            onDispose { parentNest?.onChildOpenChange(false) }
+        } else {
+            onDispose { }
+        }
+    }
+    return selfNest
 }
 
 /**
