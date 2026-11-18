@@ -87,10 +87,10 @@
 
 ## 当前目录导航复核
 
-- `app/webApp/src/webMain/kotlin/com/toutiaoyan/compose/ui/BrowserDocHistory.kt:109` 在普通 HTTP 主机上调用仅在安全上下文可用的 `crypto.randomUUID()`，导致目录初始化失败。现根据运行时能力选择 UUID 或四个随机 32 位值，历史条目仍使用不透明字符串。该文件和依赖它的滚动改动都在当前工作区中，兼容修复随原改动保留，待整合时一并提交。
+- `app/webApp/src/webMain/kotlin/com/toutiaoyan/compose/ui/BrowserDocHistory.kt:109` 在普通 HTTP 主机上调用仅在安全上下文可用的 `crypto.randomUUID()`，导致目录初始化失败。现根据运行时能力选择 UUID 或四个随机 32 位值，历史条目仍使用不透明字符串。兼容修复与历史条目及滚动的直接依赖已经提交为 `c3760ac6`。
 - Chromium 使用同一套路由与断言对照。原产物的 JS 和 Wasm 在 `http://catalog.test` 都报 `TypeError`。修复后两个产物在普通 HTTP 和 localhost 共四组都成功挂载。每组均确认片段条目 ID 与原条目不同，后退和前进分别恢复对应的 ID。另在 localhost 复核了锚点滚动与宿主 `popstate` 处理器。对应 JS/Wasm 构建、Web 和共享目录的 `ktlintCheck` 均通过。[修复前](../.agent-runs/code-review-95c932b6/catalog-http-before.json) · [修复后](../.agent-runs/code-review-95c932b6/catalog-http-after.json) · [滚动和监听器](../.agent-runs/code-review-95c932b6/catalog-current-history.json)
 - `BrowserDocHistory.kt` 合并历史条目的空值与所有权检查，仅在直接调用内嵌 JS 的函数上标注 Detekt 的 `UnusedParameter` 误报。8 个参数均在 JS 表达式中使用。`main.kt` 单独判断页面位置变化。`BrowserDocumentScrollHost.kt` 分离 Canvas 选择与原生事件监听。`DocumentScrollBridge.kt` 明确半个 Compose 像素的容差，原顺序决定是否保留恢复位置。
-- 原工作区的 Web 目录模块 11 条、共享目录模块 2 条告警均已消除；两模块的 Detekt 与 ktlint 通过，baseline 未改动。24 项导航和滚动 JVM 测试、最终 JS/Wasm 构建和上述 Chromium 回归通过。构建与工作区的 1,648 个输入逐文件一致。清理涉及未提交的目录导航文件，随该批改动留在工作区。[原告警](../.agent-runs/code-review-95c932b6/catalog-local-detekt.json) · [复测结果](../.agent-runs/code-review-95c932b6/catalog-cleanup-verification.json)
+- 原工作区的 Web 目录模块 11 条、共享目录模块 2 条告警均已消除；两模块的 Detekt 与 ktlint 通过，baseline 未改动。24 项导航和滚动 JVM 测试、最终 JS/Wasm 构建和上述 Chromium 回归通过。构建与工作区的 1,648 个输入逐文件一致。目录导航清理已归入 `c3760ac6`。Empty 链接的原生 Space 适配随已有 Empty 改动保留。[原告警](../.agent-runs/code-review-95c932b6/catalog-local-detekt.json) · [复测结果](../.agent-runs/code-review-95c932b6/catalog-cleanup-verification.json)
 
 ## 菜单清理与最终验证
 
@@ -98,10 +98,17 @@
 - `DropdownMenuLiveStyleTest.kt`、`DropdownMenuArabicLayoutTest.kt` 和 `ContextMenuPanelTest.kt` 分开测试布置、测量和断言，保留原断言及诊断输出。剩余 12 条告警中，10 条通过代码清理消除。另两条公开参数告警仅配对更新原 baseline ID，对应现有默认过渡引用变化。相同源码范围内零新增原始问题 ID。
 - 确认 6 个旧 baseline ID 在当前改动中已解决，核心 baseline 从 4,545 降到 4,539，全仓从 5,370 降到 5,364。仓库级 `ktlintCheck` 和 `detekt` 通过。强制重跑确认七个含源码的任务均实际执行，共 969 个 Kotlin 文件，核心模块覆盖 9 个源集和 573 个文件。根目录下两个源代码为空的聚合项目按预期跳过。[ID 对照与 JVM 结果](../.agent-runs/code-review-95c932b6/menu-final-detekt-and-jvm.json) · [扫描覆盖](../.agent-runs/code-review-95c932b6/final-detekt-coverage.json)
 - 与当前工作区逐文件一致的 1,648 个输入通过 444 项核心 JVM 回归、1,513 项目录共享模块全量 JVM 测试，以及 JS/Wasm 双构建。Chromium 在两种运行时均验证了 DropdownMenu 关闭后键盘重开、Menubar 悬停切换和 Shift+Tab 返回子菜单触发器、Escape 按层关闭，以及普通 HTTP 下目录启动和历史恢复。[DropdownMenu](../.agent-runs/code-review-95c932b6/final-dropdown-keyboard.json) · [Menubar](../.agent-runs/code-review-95c932b6/final-menubar-nested.json) · [目录 HTTP](../.agent-runs/code-review-95c932b6/final-catalog-http.json)
-- 两轮各组件的审查发现及可独立提交的修复见上表。清理和验证均已落到当前工作区。菜单收尾与 baseline 更新依赖尚未提交的组件改动，普通 HTTP 修复依赖尚未提交的 `BrowserDocHistory.kt` 及目录导航改动。对应组件整合时一起提交。历史全量核心 JVM 的 Checkbox 中间帧和 Switch 动画反向基线失败仍由前文记录。
+- 验证以当时的工作区为准。下方交付验收记录随后拆出的独立提交，以及与既有组件变更一起保留的结构清理。
 
 ## Chromium 实测
 
 - Select 在最终的 JS/Wasm 构建中验证 DPR 2 下的弹层高度、外部点击和滚轮锁定。Toast 在两种运行时验证桌面和触屏交互，覆盖队列、计时与焦点。
 - Slider 验证键盘、触屏和滑块值语义。Sheet 验证鼠标与触屏打开时的初始焦点及 Tab 后编辑。Toggle 验证键盘、触屏取消、RTL 和 `aria-pressed`。目录测试验证锚点与前进后退，并复现上表的宿主监听器问题。
 - 22 个浏览器配置的断言全部通过，其中 2 个用于复现已登记的目录缺陷。服务响应与最终分发产物哈希一致，Wasm 用例实际加载了应用 Wasm。[浏览器结果](../.agent-runs/code-review-95c932b6/browser-summary.json) · [产物响应核对](../.agent-runs/code-review-95c932b6/browser-provenance.json)
+
+## 交付验收
+
+- `c3760ac6` 将 HTTP 修复、浏览器历史、滚动和直接依赖作为 14 个文件的独立目录提交。普通 HTTP 的失败与恢复证据见当前目录导航复核。拆分后再次验证 JS/Wasm、普通 HTTP 启动、历史条目 ID、锚点滚动位置和宿主 `popstate` 回调。24 项目录 JVM 测试通过。首次合并构建的 JVM 编译耗尽堆空间，单 worker 重试通过。[普通 HTTP](../.agent-runs/code-review-95c932b6/committed-catalog-http.json) · [滚动与监听](../.agent-runs/code-review-95c932b6/committed-catalog-history.json)
+- `ac979ed1` 独立提交 DropdownMenu 焦点意图的状态归属，移除 1 个已提交 baseline ID。44 项菜单 JVM 用例包含 8 项快照，全部通过。连同先前组件提交，已提交 baseline 为 5,369 个 ID。整合工作区仍为 5,364 个 ID，差额来自随原组件改动保留的结构清理。两个提交使用独立索引，原文件字节和原暂存差异均已核对。[提交与 JVM 结果](../.agent-runs/code-review-95c932b6/scoped-commits.json)
+- 两轮规定范围均已审查。已确认的 Toast 悬挂提示、JS 启动、宿主监听覆盖、普通 HTTP 启动与目录滚动问题都有组件提交和前后证据。干净源码的 1,615 个相关输入与提交逐文件一致，仓库级 Detekt 和 ktlint 均通过。保留的工作区原始版本仍与通过 1,957 项 JVM 用例及双 Web 构建的 1,648 个输入一致。[干净提交的 Detekt 覆盖](../.agent-runs/code-review-95c932b6/committed-detekt-coverage.json)
+- 用户已有的菜单视觉、Empty 排版和 Space 捕获改动及其结构清理保留在工作区，随各自组件变更整合。正式 CI 仍只拦 baseline 外的告警，ktlint 负责格式。历史全量核心 JVM 的 Checkbox 中间帧和两项 Switch 反向动画失败记录在基线检查。本轮记录的 Gradle Windows 包装脚本 CRLF 空白来自已有的包装器更新，审查提交的差异检查通过。
