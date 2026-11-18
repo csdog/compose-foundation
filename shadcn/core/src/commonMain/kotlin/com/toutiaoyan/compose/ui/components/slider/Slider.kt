@@ -74,6 +74,15 @@ object SliderDefaults {
 
 enum class SliderOrientation { Horizontal, Vertical }
 
+private const val CONTINUOUS_KEYBOARD_INTERVALS = 100f
+private const val COARSE_KEYBOARD_STEP_MULTIPLIER = 10f
+private const val WEB_LARGE_KEYBOARD_STEP = 10f
+
+private fun sliderMinimumGap(
+    minStepsBetweenThumbs: Int,
+    step: Float,
+): Float = if (minStepsBetweenThumbs <= 0) 0f else minStepsBetweenThumbs * (if (step > 0f) step else 1f)
+
 private fun snapSliderValue(
     raw: Float,
     range: ClosedFloatingPointRange<Float>,
@@ -93,13 +102,13 @@ internal fun sliderKeyboardTarget(
     coarse: Boolean,
     webBehavior: Boolean,
 ): Float {
-    val unit = if (step > 0f) step else (range.endInclusive - range.start) / 100f
-    val absoluteCoarse = coarse && webBehavior && step > 0f && step <= 10f
+    val unit = if (step > 0f) step else (range.endInclusive - range.start) / CONTINUOUS_KEYBOARD_INTERVALS
+    val absoluteCoarse = coarse && webBehavior && step > 0f && step <= WEB_LARGE_KEYBOARD_STEP
     if (absoluteCoarse) {
         // Base UI aligns the starting value to the fine grid, then applies its 10-unit large step.
-        return snapSliderValue(value, range, step) + direction * 10f
+        return snapSliderValue(value, range, step) + direction * WEB_LARGE_KEYBOARD_STEP
     }
-    val delta = if (coarse) unit * 10 else unit
+    val delta = if (coarse) unit * COARSE_KEYBOARD_STEP_MULTIPLIER else unit
     return snapSliderValue(value + direction * delta, range, step)
 }
 
@@ -143,12 +152,7 @@ internal class SliderController(
         onValuesCommit?.invoke(values)
     }
 
-    private val minimumGap =
-        if (state.minStepsBetweenThumbs <= 0) {
-            0f
-        } else {
-            state.minStepsBetweenThumbs * (if (state.step > 0f) state.step else 1f)
-        }
+    private val minimumGap = sliderMinimumGap(state.minStepsBetweenThumbs, state.step)
 
     fun updateThumb(
         index: Int,
@@ -521,12 +525,7 @@ private fun SliderImpl(
                                 listOf(snapped)
                             } else {
                                 val index = values.indices.minBy { abs(values[it] - snapped) }
-                                val gap =
-                                    if (minStepsBetweenThumbs <= 0) {
-                                        0f
-                                    } else {
-                                        minStepsBetweenThumbs * (if (step > 0f) step else 1f)
-                                    }
+                                val gap = sliderMinimumGap(minStepsBetweenThumbs, step)
                                 val minBound =
                                     if (index == 0) valueRange.start else values[index - 1] + gap
                                 val maxBound =
