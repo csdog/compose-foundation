@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
@@ -37,6 +38,24 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class AlertNovaTest : ScreenshotTest() {
+    @Test fun legacyActionSurvivesAlertWidthChange() {
+        var width by mutableStateOf(200.dp)
+        var showAction by mutableStateOf(true)
+        val content: @Composable AlertScope.() -> Unit = {
+            AlertTitle("Notice")
+            if (showAction) AlertAction { Button("Action", onClick = {}) }
+        }
+        setThemedContent(stylePreset = StylePreset.Lyra) {
+            Alert(Modifier.width(width).testTag("alert"), content = content)
+        }
+        composeRule.onNodeWithText("Action").assertIsDisplayed()
+        composeRule.runOnIdle { width = 240.dp }
+        composeRule.onNodeWithTag("alert").assertWidthIsEqualTo(240.dp)
+        composeRule.onNodeWithText("Action").assertIsDisplayed()
+        composeRule.runOnIdle { showAction = false }
+        composeRule.onNodeWithText("Action").assertDoesNotExist()
+    }
+
     @Test fun actionMatchesOfficialBorderRelativeInsetsAndFixedReserve() {
         var wide by mutableStateOf(false)
         setThemedContent(stylePreset = StylePreset.Nova) {

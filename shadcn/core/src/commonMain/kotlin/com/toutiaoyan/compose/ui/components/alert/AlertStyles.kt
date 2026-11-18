@@ -33,28 +33,14 @@ fun AlertVariant.rememberStyle(): Style {
             if (nova && receiver == AlertVariant.Default) {
                 colors.cardForeground
             } else {
-                receiver.contentColor(
-                    colors,
-                )
+                receiver.contentColor(colors)
             }
-        when (receiver) {
-            AlertVariant.Default ->
-                Style {
-                    if (nova) width(1f)
-                    background(if (nova) colors.card else colors.background)
-                    contentColor(foreground)
-                    border(colors.border)
-                    shape(RoundedCornerShape(if (nova) baseRadius.value else radius.lg))
-                }
-
-            AlertVariant.Destructive ->
-                Style {
-                    if (nova) width(1f)
-                    background(if (nova) colors.card else colors.background)
-                    contentColor(foreground)
-                    border(colors.border)
-                    shape(RoundedCornerShape(if (nova) baseRadius.value else radius.lg))
-                }
+        Style {
+            if (nova) width(1f)
+            background(if (nova) colors.card else colors.background)
+            contentColor(foreground)
+            border(colors.border)
+            shape(RoundedCornerShape(if (nova) baseRadius.value else radius.lg))
         }
     }
 }
