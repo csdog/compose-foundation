@@ -114,11 +114,46 @@ class ToastManagerParityTest {
             assertTrue(state.toasts.isEmpty())
         }
 
+    @Test fun errorFormatterFailureRemovesOnlyItsPendingFeedback() =
+        runTest {
+            val state = ToastState()
+            val other = state.show("Other")
+            val formatterFailure = IllegalArgumentException("Cannot format error")
+            val thrown =
+                assertFailsWith<IllegalArgumentException> {
+                    state.promise<String>("Loading", success = { it }, error = { throw formatterFailure }) {
+                        error("Request failed")
+                    }
+                }
+            assertSame(formatterFailure, thrown)
+            assertEquals(listOf(other), state.toasts.map { it.id })
+        }
+
+    @Test fun errorFormatterFailureKeepsFeedbackItAlreadyUpdated() =
+        runTest {
+            val state = ToastState()
+            val formatterFailure = IllegalArgumentException("Cannot format error")
+            assertFailsWith<IllegalArgumentException> {
+                state.promise<String>(
+                    "Loading",
+                    success = { it },
+                    error = {
+                        state.update(state.toasts.single().id) {
+                            it.copy(title = "Handled", variant = ToastVariant.Error)
+                        }
+                        throw formatterFailure
+                    },
+                ) { error("Request failed") }
+            }
+            assertEquals("Handled", state.toasts.single().title)
+        }
+
     @Test fun closingLoadingFeedbackDoesNotRecreateItAfterCompletion() =
         runTest {
             val state = ToastState()
             val gate = CompletableDeferred<String>()
-            val result = async { state.promise("Loading", success = { it }, error = { "Failed" }) { gate.await() } }
+            val result =
+                async { state.promise("Loading", success = { it }, error = { "Failed" }) { gate.await() } }
             runCurrent()
             state.close(state.toasts.single().id)
             gate.complete("Done")

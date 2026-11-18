@@ -58,6 +58,8 @@ import com.toutiaoyan.compose.ui.components.text.TextColors
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
 
+private const val DEFAULT_TOAST_DURATION_MILLIS = 5_000L
+
 enum class ToastVariant { Default, Success, Error, Warning, Info, Loading }
 
 enum class ToastPriority { Low, High }
@@ -80,7 +82,7 @@ data class ToastMessage(
     val title: String,
     val description: String? = null,
     val variant: ToastVariant = ToastVariant.Default,
-    val durationMillis: Long = 5000L,
+    val durationMillis: Long = DEFAULT_TOAST_DURATION_MILLIS,
     val actionLabel: String? = null,
     val onAction: (() -> Unit)? = null,
     val cancelLabel: String? = null,
@@ -105,7 +107,7 @@ class ToastState {
     private val _toasts = mutableStateListOf<ToastMessage>()
     val toasts: List<ToastMessage> get() = _toasts
     private var nextId = 0L
-    var durationMillis: Long = 5000L
+    var durationMillis: Long = DEFAULT_TOAST_DURATION_MILLIS
 
     fun show(
         title: String = "",
@@ -255,16 +257,14 @@ class ToastState {
         block: suspend () -> T,
     ): Result<T> {
         val id = this.loading(loading)
+        val pending = _toasts.firstOrNull { it.id == id }
         return try {
             val result = block()
             update(id) {
                 it.copy(
-                    title =
-                        success(result),
-                    variant =
-                        ToastVariant.Success,
-                    durationMillis =
-                    durationMillis,
+                    title = success(result),
+                    variant = ToastVariant.Success,
+                    durationMillis = durationMillis,
                 )
             }
             Result.success(result)
@@ -274,15 +274,15 @@ class ToastState {
         } catch (failure: Exception) {
             update(id) {
                 it.copy(
-                    title =
-                        error(failure),
-                    variant =
-                        ToastVariant.Error,
-                    durationMillis =
-                    durationMillis,
+                    title = error(failure),
+                    variant = ToastVariant.Error,
+                    durationMillis = durationMillis,
                 )
             }
             Result.failure(failure)
+        } finally {
+            // A formatter that throws can leave the original loading toast untimed.
+            _toasts.removeAll { it === pending }
         }
     }
 
@@ -318,7 +318,7 @@ fun Toaster(
     cardStyle: Style = Style,
     position: ToastPosition = ToastPosition.BottomEnd,
     closeButton: Boolean = true,
-    durationMillis: Long = 5000L,
+    durationMillis: Long = DEFAULT_TOAST_DURATION_MILLIS,
     duration: Long? = null,
     visibleToasts: Int = 3,
     richColors: Boolean = false,

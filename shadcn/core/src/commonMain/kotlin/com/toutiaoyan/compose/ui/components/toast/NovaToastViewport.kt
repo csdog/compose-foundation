@@ -113,9 +113,9 @@ internal fun NovaToastViewport(
     val active = state.toasts.toList().asReversed()
     val activeById = active.associateBy(ToastMessage::id)
     val storedById = stored.associateBy { it.message.id }
-    val entries =
-        active.map { storedById[it.id] ?: NovaToastEntry(it) } +
-            stored.filterNot { it.message.id in activeById }
+    val activeEntries = active.map { storedById[it.id] ?: NovaToastEntry(it) }
+    val leavingEntries = stored.filterNot { it.message.id in activeById }
+    val entries = activeEntries + leavingEntries
     val limit = visibleToasts.coerceAtLeast(0)
     SideEffect {
         entries.forEachIndexed { index, entry ->
@@ -151,7 +151,7 @@ internal fun NovaToastViewport(
     val top =
         position == ToastPosition.TopStart || position == ToastPosition.TopCenter ||
             position == ToastPosition.TopEnd
-    val visible = active.take(limit)
+    val visible = activeEntries.take(limit)
     if (visible.isEmpty() && swipeTouch != null) {
         SideEffect { swipeTouch = null }
     }
@@ -208,9 +208,7 @@ internal fun NovaToastViewport(
     }
 
     // Keep leaving cards painted long enough to finish their motion, with no interactive descendants.
-    val shown =
-        visible.map { checkNotNull(entries.find { entry -> entry.message.id == it.id }) } +
-            entries.filter { it.message.id !in activeById && it.wasVisible }
+    val shown = visible + leavingEntries.filter { it.wasVisible }
     val gapPx = with(LocalDensity.current) { gap.toPx() }
     var expandedDistance = 0f
     val depths =
