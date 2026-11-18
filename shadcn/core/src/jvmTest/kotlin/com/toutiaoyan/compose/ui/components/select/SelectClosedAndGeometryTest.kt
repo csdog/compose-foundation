@@ -2,6 +2,8 @@
 
 package com.toutiaoyan.compose.ui.components.select
 
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -17,17 +19,19 @@ import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.*
 
 class SelectClosedAndGeometryTest : ScreenshotTest() {
-    @Test fun neverOpenedTriggerTypesSelectsAndKeepsPopupClosed() {
+    @Test fun closedSelectSupportsIntrinsicWidthAndTypeAhead() {
         var value by mutableStateOf("Alpha")
         var openChanges = 0
         setThemedContent(stylePreset = StylePreset.Nova) {
-            Select(value, { value = it }, onOpenChange = { openChanges++ }) {
-                SelectTrigger(Modifier.testTag("trigger"))
-                SelectContent {
-                    SelectItem("Alpha")
-                    SelectItem("Banana", disabled = true)
-                    SelectItem("Blueberry")
-                    SelectItem("Blackberry")
+            Row(Modifier.width(IntrinsicSize.Max)) {
+                Select(value, { value = it }, onOpenChange = { openChanges++ }) {
+                    SelectTrigger(Modifier.width(140.dp).testTag("trigger"))
+                    SelectContent {
+                        SelectItem("Alpha")
+                        SelectItem("Banana", disabled = true)
+                        SelectItem("Blueberry")
+                        SelectItem("Blackberry")
+                    }
                 }
             }
         }
@@ -111,6 +115,20 @@ class SelectClosedAndGeometryTest : ScreenshotTest() {
         composeRule.runOnIdle { assertEquals("Alpha", value) }
     }
 
+    @Test fun novaPopupMatchesATriggerWiderThan280Dp() {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Select("Alpha", {}, open = true) {
+                SelectTrigger(Modifier.width(320.dp).testTag("trigger"))
+                SelectContent(modifier = Modifier.testTag("panel")) {
+                    SelectItem("Alpha")
+                    SelectItem("Beta")
+                }
+            }
+        }
+        composeRule.onNodeWithTag("trigger").assertWidthIsEqualTo(320.dp)
+        composeRule.onNodeWithTag("panel").assertWidthIsEqualTo(320.dp)
+    }
+
     @Test fun novaGroupsOwnPaddingAndSeparatorOwnsVerticalMargins() {
         setThemedContent(stylePreset = StylePreset.Nova) {
             Select<String>(null, {}, defaultOpen = true) {
@@ -128,7 +146,7 @@ class SelectClosedAndGeometryTest : ScreenshotTest() {
         val group = bounds("first group")
         val row = bounds("first row")
         val secondGroup = bounds("second group")
-        assertEquals(panel.width - 2f, group.width, .1f)
+        assertEquals(panel.width, group.width, .1f)
         assertEquals(4f, row.left - group.left, .1f)
         assertEquals(4f, row.top - group.top, .1f)
         assertEquals(9f, secondGroup.top - group.bottom, .1f)

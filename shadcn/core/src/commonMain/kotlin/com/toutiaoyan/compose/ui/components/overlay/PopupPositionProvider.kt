@@ -1,6 +1,8 @@
 package com.toutiaoyan.compose.ui.components.overlay
 
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
@@ -8,6 +10,13 @@ import androidx.compose.ui.window.PopupPositionProvider
 
 /** Preferred side of the anchor an anchored popup should open on. */
 enum class PopupPlacement { Top, Bottom, Start, End }
+
+internal data class PopupPositionResult(
+    val offset: IntOffset,
+    val bounds: IntRect,
+    val physicalSide: PopupPlacement,
+    val transformOrigin: TransformOrigin,
+)
 
 /** Cross-axis alignment relative to the anchor. Matches Radix `align`. */
 enum class PopupAlign { Start, Center, End }
@@ -33,9 +42,17 @@ class PopupPositionProvider(
         windowSize: IntSize,
         layoutDirection: LayoutDirection,
         popupContentSize: IntSize,
-    ): IntOffset {
+    ): IntOffset = calculatePositionResult(anchorBounds, windowSize, layoutDirection, popupContentSize).offset
+
+    internal fun calculatePositionResult(
+        anchorBounds: IntRect,
+        windowSize: IntSize,
+        layoutDirection: LayoutDirection,
+        popupContentSize: IntSize,
+    ): PopupPositionResult {
         var x: Int
         var y: Int
+        var resolvedSide = placement
 
         fun crossAxis(
             anchorStart: Int,
@@ -64,10 +81,16 @@ class PopupPositionProvider(
                 val overflowsTop = y < 0
                 if (placement == PopupPlacement.Bottom && overflowsBottom) {
                     val flipped = anchorBounds.top - popupContentSize.height - offsetPx
-                    if (flipped >= 0) y = flipped
+                    if (flipped >= 0) {
+                        y = flipped
+                        resolvedSide = PopupPlacement.Top
+                    }
                 } else if (placement == PopupPlacement.Top && overflowsTop) {
                     val flipped = anchorBounds.bottom + offsetPx
-                    if (flipped + popupContentSize.height <= windowSize.height) y = flipped
+                    if (flipped + popupContentSize.height <= windowSize.height) {
+                        y = flipped
+                        resolvedSide = PopupPlacement.Bottom
+                    }
                 }
             }
 
@@ -83,10 +106,16 @@ class PopupPositionProvider(
                 val overflowsStart = x < 0
                 if (placement == PopupPlacement.End && overflowsEnd) {
                     val flipped = anchorBounds.left - popupContentSize.width - offsetPx
-                    if (flipped >= 0) x = flipped
+                    if (flipped >= 0) {
+                        x = flipped
+                        resolvedSide = PopupPlacement.Start
+                    }
                 } else if (placement == PopupPlacement.Start && overflowsStart) {
                     val flipped = anchorBounds.right + offsetPx
-                    if (flipped + popupContentSize.width <= windowSize.width) x = flipped
+                    if (flipped + popupContentSize.width <= windowSize.width) {
+                        x = flipped
+                        resolvedSide = PopupPlacement.End
+                    }
                 }
             }
         }
@@ -95,7 +124,23 @@ class PopupPositionProvider(
         // real shadcn's Radix positioning does the same "collision padding" clamp.
         x = x.coerceIn(0, (windowSize.width - popupContentSize.width).coerceAtLeast(0))
         y = y.coerceIn(0, (windowSize.height - popupContentSize.height).coerceAtLeast(0))
-        return IntOffset(x, y)
+        val origin =
+            when (resolvedSide) {
+                PopupPlacement.Top -> Offset(anchorBounds.center.x.toFloat() - x, anchorBounds.top.toFloat() - y)
+                PopupPlacement.Bottom -> Offset(anchorBounds.center.x.toFloat() - x, anchorBounds.bottom.toFloat() - y)
+                PopupPlacement.Start -> Offset(anchorBounds.left.toFloat() - x, anchorBounds.center.y.toFloat() - y)
+                PopupPlacement.End -> Offset(anchorBounds.right.toFloat() - x, anchorBounds.center.y.toFloat() - y)
+            }
+        return PopupPositionResult(
+            offset = IntOffset(x, y),
+            bounds = IntRect(IntOffset(x, y), popupContentSize),
+            physicalSide = resolvedSide,
+            transformOrigin =
+                TransformOrigin(
+                    if (popupContentSize.width == 0) 0.5f else origin.x / popupContentSize.width,
+                    if (popupContentSize.height == 0) 0.5f else origin.y / popupContentSize.height,
+                ),
+        )
     }
 }
 

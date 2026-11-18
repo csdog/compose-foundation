@@ -6,6 +6,11 @@ import com.toutiaoyan.compose.ui.utils.keyboardInputMode
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.background
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.foundation.focusable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
@@ -18,6 +23,21 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.SubcomposeLayout
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.layout.boundsInRoot
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.LayoutCoordinates
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.input.InputMode
+import androidx.compose.ui.platform.LocalInputModeManager
+import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.PointerEventType
+import androidx.compose.ui.input.pointer.PointerType
+import androidx.compose.ui.input.pointer.pointerInput
+import kotlin.math.roundToInt
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
@@ -30,6 +50,8 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.semantics.error
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.isSpecified
 import androidx.compose.ui.unit.sp
 import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
 import com.toutiaoyan.compose.ui.tokens.StylePreset
@@ -44,6 +66,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
@@ -53,6 +76,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.StyleScope
 import androidx.compose.foundation.style.rememberUpdatedStyleState
 import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
@@ -87,9 +111,12 @@ import com.toutiaoyan.compose.ui.components.button.ButtonAnimation
 import com.toutiaoyan.compose.ui.components.field.LocalFieldSetDisabled
 import com.toutiaoyan.compose.ui.components.icon.Icon
 import com.toutiaoyan.compose.ui.components.icon.IconVariant
-import com.toutiaoyan.compose.ui.components.overlay.AnchoredPopup
+import com.toutiaoyan.compose.ui.components.overlay.MenuDefaultEnter
+import com.toutiaoyan.compose.ui.components.overlay.MenuDefaultExit
+import com.toutiaoyan.compose.ui.components.overlay.PopupHorizontalPosition
+import com.toutiaoyan.compose.ui.components.overlay.MenuPopup
+import com.toutiaoyan.compose.ui.components.overlay.PopupPlacement
 import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
-import com.toutiaoyan.compose.ui.components.overlay.PopupTransitions
 import com.toutiaoyan.compose.ui.components.separator.Separator
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextColors
@@ -102,7 +129,11 @@ import com.toutiaoyan.compose.ui.styles.rememberMenuLabelStyle
 import com.toutiaoyan.compose.ui.styles.rememberPressMotionStyle
 import com.toutiaoyan.compose.ui.theme.LocalContentColor
 import com.toutiaoyan.compose.ui.theme.currentTheme
+import androidx.compose.runtime.snapshotFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
+import androidx.compose.ui.semantics.hideFromAccessibility
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
 
@@ -125,7 +156,10 @@ class SelectController internal constructor(
     private val selectedEquals: (Any?) -> Boolean,
     private val format: (Any?) -> String,
 ) {
+    internal val popupOpen: Boolean get() = open && !disabled
+
     fun select(value: Any?) {
+        if (disabled) return
         onSelect(value)
         if (open) setOpen(false)
     }
@@ -146,21 +180,55 @@ private data class SelectSearchItem(
 
 private val LocalSelectRegistrationOnly = staticCompositionLocalOf { false }
 
+private class SelectGrowthObservation {
+    var scroll: Int? = null
+    var viewport: Int? = null
+    var pendingViewport: Int? = null
+}
+
+private class SelectPanelSizing {
+    var height: Dp = Dp.Unspecified
+    var maxHeight: Dp = Dp.Unspecified
+}
+
+private data class SelectPanelChrome(val top: Float, val bottom: Float) {
+    val height get() = top + bottom
+}
+
 private class SelectKeyboard {
     val trigger = FocusRequester()
     var width by mutableStateOf(144.dp)
     var height by mutableStateOf(32.dp)
     var panelTop by mutableStateOf(0f)
+    var anchorBounds by mutableStateOf(Rect.Zero)
+    var touchOpen by mutableStateOf(false)
+    var contentCoordinates: LayoutCoordinates? = null
+    var panelCoordinates: LayoutCoordinates? = null
+    var previousMousePosition: Offset? = null
+    var valueBounds by mutableStateOf<Rect?>(null)
+    val itemTextEdges = mutableStateMapOf<Any?, SelectTextEdges>()
+    val naturalCenters = mutableStateMapOf<Any?, Float>()
+    val naturalHeights = mutableMapOf<Any?, Float>()
+    var scrollUpHovered by mutableStateOf(false)
+    var scrollDownHovered by mutableStateOf(false)
+    val scrollHovered get() = scrollUpHovered || scrollDownHovered
     val centers = mutableStateMapOf<Any?, Float>()
     val items = mutableStateListOf<SelectFocusItem>()
     var active: Any? = null
+    var hasActive = false
+    var reveal: ((Any?) -> Unit)? = null
     val pick = mutableMapOf<Any?, () -> Unit>()
+    val closedPick = mutableMapOf<Any?, () -> Unit>()
     var fromEnd = false
     private var suppressActivationUp = false
     val labels = mutableMapOf<Any?, String>()
     var closedItems: List<SelectSearchItem> = emptyList()
+    var popupMounted = false
+    var tabForward by mutableStateOf(false)
     private var search = ""
     private var lastType = kotlin.time.TimeSource.Monotonic.markNow()
+
+    private fun positionOf(value: Any?) = naturalCenters[value] ?: centers[value] ?: Float.MAX_VALUE
 
     fun resetSearch() {
         search = ""
@@ -172,31 +240,42 @@ private class SelectKeyboard {
     ): Boolean {
         if (event.isCtrlPressed || event.isMetaPressed || event.isAltPressed) return false
         val char = event.utf16CodePoint.toChar()
-        if (char.isISOControl() || (char.isWhitespace() && search.isEmpty())) return false
         if (lastType.elapsedNow().inWholeMilliseconds > 750) search = ""
+        if (char.isISOControl() || (char.isWhitespace() && search.isEmpty())) return false
         val newSession = search.isEmpty()
         lastType = kotlin.time.TimeSource.Monotonic.markNow()
         search += char
         val prefix = if (search.all { it.equals(char, ignoreCase = true) }) char.toString() else search
         val options =
-            if (closedController != null) {
+            if (closedController != null && !popupMounted) {
                 closedItems.filter { it.enabled }
             } else {
-                items.filter { it.enabled }.sortedBy { centers[it.value] ?: Float.MAX_VALUE }.map { item ->
-                    SelectSearchItem(item.value, labels[item.value].orEmpty(), true) { item.requester.requestFocus() }
+                items.filter { it.enabled }.sortedBy { positionOf(it.value) }.map { item ->
+                    SelectSearchItem(item.value, labels[item.value].orEmpty(), true) {
+                        if (closedController != null) {
+                            closedPick[item.value]?.invoke()
+                        } else if (item.requester.requestFocus()) {
+                            active = item.value
+                            hasActive = true
+                            reveal?.invoke(item.value)
+                        }
+                    }
                 }
             }
         val index =
             if (newSession && closedController != null) {
                 options.indexOfFirst { closedController.isSelected(it.value) }
             } else {
-                options.indexOfFirst { it.value == active }
+                if (hasActive) options.indexOfFirst { it.value == active } else -1
             }
         val start = if (prefix.length == 1) index + 1 else index.coerceAtLeast(0)
         val candidates = options.drop(start) + options.take(start)
         val match = candidates.firstOrNull { it.label.startsWith(prefix, ignoreCase = true) }
         if (match != null) {
-            if (closedController != null) active = match.value
+            if (closedController != null) {
+                active = match.value
+                hasActive = true
+            }
             match.activate()
         } else if (!char.isWhitespace()) {
             search = ""
@@ -212,13 +291,29 @@ private class SelectKeyboard {
         return false
     }
 
+    fun handleOpenKey(
+        event: KeyEvent,
+        controller: SelectController,
+        nova: Boolean,
+    ): Boolean {
+        if (consumeRelease(event)) return true
+        if (event.type != KeyEventType.KeyDown) return false
+        if (nova && event.key == Key.Tab) {
+            controller.setOpen(false)
+            tabForward = !event.isShiftPressed
+            return true
+        }
+        return move(event.key, controller, includeDisabled = nova) || typeAhead(event)
+    }
+
     fun move(
         key: Key,
         controller: SelectController,
+        includeDisabled: Boolean = false,
     ): Boolean {
-        val options = items.filter { it.enabled }.sortedBy { centers[it.value] ?: Float.MAX_VALUE }
+        val options = items.filter { includeDisabled || it.enabled }.sortedBy { positionOf(it.value) }
         if (options.isEmpty()) return false
-        val index = options.indexOfFirst { it.value == active }
+        val index = if (hasActive) options.indexOfFirst { it.value == active } else -1
         val target =
             when (key) {
                 Key.DirectionDown -> (index + 1).coerceAtMost(options.lastIndex)
@@ -233,7 +328,7 @@ private class SelectKeyboard {
                         return false
                     }
                     suppressActivationUp = true
-                    options.getOrNull(index)?.let { pick[it.value]?.invoke() }
+                    options.getOrNull(index)?.takeIf { it.enabled }?.let { pick[it.value]?.invoke() }
                     return index >= 0
                 }
                 Key.Escape -> {
@@ -242,7 +337,11 @@ private class SelectKeyboard {
                 }
                 else -> return false
             }
-        options[target].requester.requestFocus()
+        if (options[target].requester.requestFocus()) {
+            active = options[target].value
+            hasActive = true
+            reveal?.invoke(options[target].value)
+        }
         return true
     }
 }
@@ -303,18 +402,32 @@ fun <T> Select(
 ) {
     var internalOpen by remember { mutableStateOf(defaultOpen) }
     val isOpen = open ?: internalOpen
+    val resolvedDisabled = disabled || LocalFieldSetDisabled.current
+    val popupOpen = isOpen && !resolvedDisabled
+    val keyboard = remember { SelectKeyboard() }
     val setOpen: (Boolean) -> Unit = { next ->
+        keyboard.tabForward = false
         if (open == null) internalOpen = next
         onOpenChange?.invoke(next)
     }
-    val keyboard = remember { SelectKeyboard() }
-    var wasOpen by remember { mutableStateOf(isOpen) }
-    LaunchedEffect(isOpen) {
-        if (!isOpen && wasOpen) keyboard.trigger.requestFocus()
-        keyboard.resetSearch()
-        wasOpen = isOpen
+    if (isOpen && keyboard.tabForward) {
+        // A controlled caller can leave the popup open after the Tab request.
+        SideEffect { keyboard.tabForward = false }
     }
-    val resolvedDisabled = disabled || LocalFieldSetDisabled.current
+    val focusManager = LocalFocusManager.current
+    var wasOpen by remember { mutableStateOf(popupOpen) }
+    LaunchedEffect(popupOpen) {
+        if (!popupOpen && wasOpen) {
+            val forward = keyboard.tabForward
+            keyboard.tabForward = false
+            if (!resolvedDisabled) {
+                keyboard.trigger.requestFocus()
+                if (forward) focusManager.moveFocus(FocusDirection.Next)
+            }
+        }
+        keyboard.resetSearch()
+        wasOpen = popupOpen
+    }
     val controller =
         remember(
             value,
@@ -361,12 +474,14 @@ fun SelectScope.SelectTrigger(
     variant: SelectVariant = SelectVariant.Default,
     size: SelectSize = SelectSize.Default,
     style: Style = Style,
-    animation: ButtonAnimation = ButtonAnimation.Scale,
+    animation: ButtonAnimation =
+        if (currentTheme.activePreset == StylePreset.Nova) ButtonAnimation.None else ButtonAnimation.Scale,
     accessibilityLabel: String = "",
     invalid: Boolean = false,
     content: @Composable RowScope.() -> Unit = { SelectValue() },
 ) {
     val ctrl = selectController()
+    val canOpen = !ctrl.disabled && !ctrl.popupOpen
     val interactionSource = remember { MutableInteractionSource() }
     val styleState =
         rememberUpdatedStyleState(interactionSource) {
@@ -405,32 +520,47 @@ fun SelectScope.SelectTrigger(
                 .onGloballyPositioned {
                     keyboard.width = with(density) { it.size.width.toDp() }
                     keyboard.height = with(density) { it.size.height.toDp() }
+                    keyboard.anchorBounds = it.boundsInWindow()
+                }
+                .pointerInput(keyboard, canOpen) {
+                    awaitPointerEventScope {
+                        while (true) {
+                            val event = awaitPointerEvent(PointerEventPass.Initial)
+                            if (canOpen && event.type == PointerEventType.Press) {
+                                keyboard.touchOpen = event.changes.any { it.type == PointerType.Touch }
+                            }
+                            if (event.type == PointerEventType.Press || event.type == PointerEventType.Release) {
+                                event.changes.firstOrNull { it.type == PointerType.Mouse }?.let { change ->
+                                    keyboard.previousMousePosition = keyboard.anchorBounds.topLeft + change.position
+                                }
+                            }
+                        }
+                    }
                 }
                 .widthIn(min = if (nova) 0.dp else 140.dp)
                 .focusRequester(keyboard.trigger)
                 .keyboardInputMode()
                 .onPreviewKeyEvent { event ->
                     if (keyboard.consumeRelease(event)) return@onPreviewKeyEvent true
-                    if (event.type == KeyEventType.KeyDown &&
-                        !ctrl.disabled &&
-                        event.key in
-                        listOf(
-                            Key.DirectionDown,
-                            Key.DirectionUp,
-                        )
-                    ) {
+                    if (ctrl.disabled) return@onPreviewKeyEvent false
+                    // A non-focusable popup leaves platform keyboard delivery on its trigger.
+                    if (ctrl.popupOpen && !ctrl.modal) {
+                        return@onPreviewKeyEvent keyboard.handleOpenKey(event, ctrl, nova)
+                    }
+                    if (event.type != KeyEventType.KeyDown || ctrl.popupOpen) return@onPreviewKeyEvent false
+                    keyboard.touchOpen = false
+                    if (event.key == Key.DirectionDown || event.key == Key.DirectionUp) {
                         keyboard.fromEnd = event.key == Key.DirectionUp
                         ctrl.setOpen(true)
                         true
                     } else {
-                        event.type == KeyEventType.KeyDown && !ctrl.disabled && !ctrl.open &&
-                            keyboard.typeAhead(event, ctrl)
+                        keyboard.typeAhead(event, ctrl)
                     }
                 }
                 .semantics(mergeDescendants = true) {
                     role = Role.DropdownList
                     contentDescription = description
-                    stateDescription = if (ctrl.open) "Expanded" else "Collapsed"
+                    stateDescription = if (ctrl.popupOpen) "Expanded" else "Collapsed"
                     if (ctrl.disabled) disabled()
                     if (resolvedInvalid) error("Invalid selection")
                 }
@@ -454,6 +584,23 @@ fun SelectScope.SelectTrigger(
     }
 }
 
+private data class SelectTextItem(val value: Any?)
+
+private val LocalSelectTextItem = staticCompositionLocalOf<SelectTextItem?> { null }
+
+@Composable
+private fun Modifier.selectItemTextCoordinates(): Modifier {
+    val item = LocalSelectTextItem.current ?: return this
+    val keyboard = checkNotNull(LocalSelectKeyboard.current)
+    if (currentTheme.activePreset != StylePreset.Nova) return this
+    return onGloballyPositioned { text ->
+        keyboard.panelCoordinates?.takeIf { it.isAttached }?.let { panel ->
+            val left = panel.localPositionOf(text, Offset.Zero).x
+            keyboard.itemTextEdges[item.value] = SelectTextEdges(left, left + text.size.width)
+        }
+    }
+}
+
 /** Chevron inside [SelectTrigger]. Official does not export SelectIcon. */
 @Composable
 internal fun SelectIcon(modifier: Modifier = Modifier) {
@@ -473,8 +620,14 @@ fun SelectScope.SelectValue(
     val ctrl = selectController()
     val placeholderText = placeholder ?: ctrl.placeholder
     val theme = currentTheme
+    val keyboard = checkNotNull(LocalSelectKeyboard.current)
+    val nova = theme.activePreset == StylePreset.Nova
+    DisposableEffect(keyboard, nova) { onDispose { keyboard.valueBounds = null } }
     Text(
-        modifier = modifier,
+        modifier =
+            modifier.then(
+                if (nova) Modifier.onGloballyPositioned { keyboard.valueBounds = it.boundsInWindow() } else Modifier,
+            ),
         variant = TextVariant.BodySmall,
         maxLines = if (theme.activePreset == StylePreset.Nova) 1 else Int.MAX_VALUE,
         overflow = if (theme.activePreset == StylePreset.Nova) TextOverflow.Ellipsis else TextOverflow.Clip,
@@ -503,9 +656,8 @@ enum class SelectContentPosition {
     Popper,
 
     /**
-     * Base default `alignItemWithTrigger = true`: no enter/exit fade
-     * (`data-[align-trigger=true]:animate-none`). Exact “selected row overlaps
-     * trigger” geometry is still approximate.
+     * Aligns the selected option with the trigger. Uses normal popup placement for
+     * touch opening or when alignment cannot fit. Default motion is disabled while aligned.
      */
     AlignItemWithTrigger,
 
@@ -542,22 +694,39 @@ fun SelectScope.SelectContent(
      */
     alignItemWithTrigger: Boolean? = null,
     align: PopupAlign = SelectContentDefaults.Align,
-    enter: EnterTransition = PopupTransitions.Enter,
-    exit: ExitTransition = PopupTransitions.Exit,
+    enter: EnterTransition = MenuDefaultEnter,
+    exit: ExitTransition = MenuDefaultExit,
     dismissOnClickOutside: Boolean = true,
     content: @Composable SelectContentScope.() -> Unit,
 ) {
     val ctrl = selectController()
+    val popupOpen = ctrl.popupOpen
     val scrollState = rememberScrollState()
+    val triggerInputMode = LocalInputModeManager.current
     val keyboard = checkNotNull(LocalSelectKeyboard.current)
     val nova = currentTheme.activePreset == StylePreset.Nova
+    val density = LocalDensity.current
     DisposableEffect(keyboard) {
-        onDispose { keyboard.closedItems = emptyList() }
+        onDispose {
+            keyboard.closedItems = emptyList()
+            keyboard.reveal = null
+            keyboard.contentCoordinates = null
+            keyboard.panelCoordinates = null
+            keyboard.previousMousePosition = null
+        }
     }
-    if (!ctrl.open) {
+    var popupRetained by remember { mutableStateOf(false) }
+    if (!popupOpen && !popupRetained) {
+        SideEffect {
+            keyboard.contentCoordinates = null
+            keyboard.panelCoordinates = null
+            keyboard.previousMousePosition = null
+            keyboard.reveal = null
+        }
         // Register sanctioned Select parts without measuring, placing, focusing, or
         // exposing an offscreen copy. Measurable order follows keyed declaration order.
-        SubcomposeLayout {
+        // The registry occupies no space, including when a parent queries intrinsic size.
+        SubcomposeLayout(Modifier.size(0.dp)) {
             val registrations =
                 subcompose(Unit) {
                     CompositionLocalProvider(LocalSelectRegistrationOnly provides true) {
@@ -570,6 +739,54 @@ fun SelectScope.SelectContent(
         return
     }
 
+    val panelSizing = remember { SelectPanelSizing() }
+    val growthObservation = remember { SelectGrowthObservation() }
+    val callerStyle =
+        remember(style) {
+            Style {
+                panelSizing.height = Dp.Unspecified
+                panelSizing.maxHeight = Dp.Unspecified
+                val target = this
+                val receiver =
+                    object : StyleScope by target {
+                        override fun height(value: Dp) {
+                            panelSizing.height = value
+                            target.height(value)
+                        }
+
+                        override fun maxHeight(value: Dp) {
+                            panelSizing.maxHeight = value
+                            target.maxHeight(value)
+                        }
+                    }
+                with(style) { receiver.applyStyle() }
+            }
+        }
+    val touchOpen = keyboard.touchOpen
+    val scrollOverlay = if (nova && touchOpen) 0f else with(density) { 24.dp.toPx() }
+    val windowMargin = with(density) { 10.dp.toPx() }
+    val revealScope = rememberCoroutineScope()
+    SideEffect {
+        keyboard.reveal = revealItem@{ value ->
+            val center = keyboard.naturalCenters[value] ?: return@revealItem
+            val height = keyboard.naturalHeights[value] ?: return@revealItem
+            revealScope.launch {
+                val current = scrollState.value.toFloat()
+                val viewport = scrollState.viewportSize.toFloat()
+                val top = center - height / 2f
+                val bottom = center + height / 2f
+                val insetTop = if (scrollState.canScrollBackward) scrollOverlay else 0f
+                val insetBottom = if (scrollState.canScrollForward) scrollOverlay else 0f
+                val target =
+                    when {
+                        top < current + insetTop -> top - scrollOverlay
+                        bottom > current + viewport - insetBottom -> bottom - viewport + scrollOverlay
+                        else -> current
+                    }
+                scrollState.scrollTo(target.coerceIn(0f, scrollState.maxValue.toFloat()).roundToInt())
+            }
+        }
+    }
     @Suppress("DEPRECATION")
     val itemAligned =
         alignItemWithTrigger
@@ -577,92 +794,358 @@ fun SelectScope.SelectContent(
                 position == SelectContentPosition.AlignItemWithTrigger ||
                     position == SelectContentPosition.ItemAligned
             )
-    // Base keeps sideOffset=4 even when alignItemWithTrigger is true.
-    val resolvedEnter = if (itemAligned) EnterTransition.None else enter
-    val resolvedExit = if (itemAligned) ExitTransition.None else exit
-    val density = LocalDensity.current
-    var alignedCenter by remember(ctrl.open, ctrl.displayText) { mutableStateOf<Float?>(null) }
+    var alignmentFallback by remember(nova, itemAligned) { mutableStateOf(false) }
+    val windowHeight = LocalWindowInfo.current.containerSize.height.toFloat()
+    var contentHeight by remember { mutableStateOf(0) }
+    var panelChrome by remember { mutableStateOf<SelectPanelChrome?>(null) }
+    var placedGeometry by remember { mutableStateOf<SelectPopupGeometry?>(null) }
+    var initialScrollApplied by remember { mutableStateOf(false) }
+    var addedHeight by remember { mutableStateOf(0f) }
+    val selectedItem = keyboard.items.firstOrNull { ctrl.isSelected(it.value) }
     val target =
-        keyboard.items.firstOrNull {
-            it.enabled && ctrl.isSelected(it.value)
-        } ?: keyboard.items.firstOrNull { it.enabled }
-    val measuredCenter = target?.let { keyboard.centers[it.value]?.minus(keyboard.panelTop) }
-    LaunchedEffect(ctrl.open, measuredCenter) {
-        if (ctrl.open && alignedCenter == null && measuredCenter != null) alignedCenter = measuredCenter
+        selectedItem
+            ?: keyboard.items.minByOrNull { keyboard.naturalCenters[it.value] ?: Float.MAX_VALUE }
+    val selectedCenter = target?.let { keyboard.naturalCenters[it.value] }
+    val anchorBounds = keyboard.anchorBounds
+    val valueBounds = keyboard.valueBounds
+    val textRefExpected = selectedItem != null || ctrl.displayText == null
+    val textEdges = if (textRefExpected) target?.let { keyboard.itemTextEdges[it.value] } else null
+    val geometrySelectedCenter =
+        if (valueBounds != null && textEdges != null && selectedCenter != null) {
+            selectedCenter + (panelChrome?.top ?: 0f) - (valueBounds.center.y - anchorBounds.center.y)
+        } else {
+            anchorBounds.height / 2f
+        }
+    val initialGeometry =
+        if (nova && contentHeight > 0 && panelChrome != null && keyboard.anchorBounds.height > 0f) {
+            selectPopupGeometry(
+                trigger = keyboard.anchorBounds,
+                windowHeight = windowHeight,
+                contentHeight = contentHeight + checkNotNull(panelChrome).height,
+                selectedCenter = geometrySelectedCenter,
+                alignItem = itemAligned && !alignmentFallback,
+                touch = touchOpen,
+                sideOffset = with(density) { sideOffset.toPx() },
+                scale = density.density,
+            )
+        } else {
+            null
+        }
+    SideEffect {
+        if (popupOpen && nova && itemAligned && initialGeometry?.itemAligned == false) alignmentFallback = true
     }
+    val availablePanelHeight =
+        minOf(
+            (windowHeight - windowMargin * 2f).coerceAtLeast(0f),
+            contentHeight + (panelChrome?.height ?: 0f),
+            with(density) { panelSizing.maxHeight.takeIf { it.isSpecified }?.toPx() ?: Float.POSITIVE_INFINITY },
+        )
+    val computedGeometry =
+        initialGeometry?.let { initial ->
+            val growth =
+                if (initial.growthAnchor == SelectPopupAnchor.Fixed) {
+                    0f
+                } else {
+                    addedHeight.coerceIn(0f, (availablePanelHeight - initial.height).coerceAtLeast(0f))
+                }
+            initial.copy(
+                // Layout rounds height to whole pixels. Derive the bottom-anchored top
+                // from that same height so half-pixel text centers cannot move the margin.
+                top =
+                    if (initial.growthAnchor == SelectPopupAnchor.Bottom) {
+                        initial.top + initial.height - (initial.height + growth).roundToInt()
+                    } else {
+                        initial.top
+                    },
+                height = initial.height + growth,
+            )
+        }
+    var lastOpenGeometry by remember { mutableStateOf<SelectPopupGeometry?>(null) }
+    var lastOpenWidth by remember { mutableStateOf(144.dp) }
+    SideEffect {
+        if (popupOpen) {
+            lastOpenGeometry = computedGeometry
+            lastOpenWidth = keyboard.width.coerceAtLeast(144.dp)
+        }
+    }
+    val panelWidth = if (popupOpen) keyboard.width.coerceAtLeast(144.dp) else lastOpenWidth
+    val geometry = if (popupOpen) computedGeometry else lastOpenGeometry
+    LaunchedEffect(initialGeometry, initialScrollApplied, availablePanelHeight, popupOpen) {
+        if (!popupOpen) return@LaunchedEffect
+        val initial = initialGeometry ?: return@LaunchedEffect
+        if (!initialScrollApplied || initial.growthAnchor == SelectPopupAnchor.Fixed) return@LaunchedEffect
+        snapshotFlow { Triple(scrollState.value, scrollState.maxValue, scrollState.viewportSize) }.collect {
+                (scroll, maxScroll, viewport) ->
+            val previousScroll = growthObservation.scroll
+            val previousViewport = growthObservation.viewport
+            growthObservation.scroll = scroll
+            growthObservation.viewport = viewport
+            // Bounds changes are not scroll gestures, including our own pending resize.
+            if (previousViewport != null && previousViewport != viewport) {
+                growthObservation.pendingViewport = null
+                return@collect
+            }
+            if (viewport == growthObservation.pendingViewport || panelSizing.height.isSpecified) return@collect
+            if (scroll == previousScroll ||
+                (previousScroll == null && scroll == initial.initialScroll.roundToInt())
+            ) {
+                return@collect
+            }
+            // Caller styles can change without changing the measured viewport.
+            val currentMaximum =
+                minOf(
+                    (windowHeight - windowMargin * 2f).coerceAtLeast(0f),
+                    contentHeight + (panelChrome?.height ?: 0f),
+                    with(density) {
+                        panelSizing.maxHeight.takeIf { it.isSpecified }?.toPx() ?: Float.POSITIVE_INFINITY
+                    },
+                )
+            val growth =
+                addedHeight.coerceIn(0f, (currentMaximum - initial.height).coerceAtLeast(0f))
+            val current =
+                initial.copy(
+                    top = if (initial.growthAnchor == SelectPopupAnchor.Bottom) initial.top - growth else initial.top,
+                    height = initial.height + growth,
+                )
+            val measuredHeight = keyboard.panelCoordinates?.size?.height ?: return@collect
+            // An explicit caller height can constrain the panel below our available height.
+            if (measuredHeight + density.density < current.height) return@collect
+            val next =
+                selectPopupGrowth(
+                    geometry = current,
+                    windowHeight = windowHeight,
+                    scroll = scroll.toFloat(),
+                    maxScroll = maxScroll.toFloat(),
+                    maxHeight = currentMaximum,
+                    scale = density.density,
+                ) ?: return@collect
+            growthObservation.pendingViewport = viewport
+            addedHeight = next.geometry.height - initial.height
+            // Compensate in the same frame without cancelling the user's scroll mutation.
+            scrollState.dispatchRawDelta(next.scroll - scrollState.value)
+            growthObservation.scroll = scrollState.value
+        }
+    }
+    val aligned = geometry?.itemAligned ?: itemAligned
+    if (nova && popupOpen && !ctrl.modal && geometry?.itemAligned == true) {
+        SelectAlignedScrollLock {
+            keyboard.panelCoordinates?.takeIf { it.isAttached }?.boundsInWindow()
+        }
+    }
+    val placement =
+        if (geometry?.itemAligned == false && geometry.top < keyboard.anchorBounds.top) {
+            PopupPlacement.Top
+        } else {
+            PopupPlacement.Bottom
+        }
     val resolvedOffset =
-        if (nova && itemAligned && alignedCenter != null) {
+        geometry?.let {
             with(density) {
-                -(keyboard.height / 2) - alignedCenter!!.toDp()
+                if (placement == PopupPlacement.Top) {
+                    (keyboard.anchorBounds.top - it.top - it.height).toDp()
+                } else {
+                    (it.top - keyboard.anchorBounds.bottom).toDp()
+                }
+            }
+        } ?: sideOffset
+    val contentReady =
+        !nova ||
+            (
+                initialScrollApplied && geometry != null && (target == null || selectedCenter != null) &&
+                    (!geometry.itemAligned || !textRefExpected || target == null || textEdges != null)
+            )
+    LaunchedEffect(geometry, placedGeometry, scrollState.maxValue, popupOpen) {
+        if (!popupOpen) return@LaunchedEffect
+        if (geometry != null && placedGeometry == geometry && !initialScrollApplied && scrollState.viewportSize > 0) {
+            val fromEnd = keyboard.fromEnd && keyboard.items.none { ctrl.isSelected(it.value) }
+            val selected = keyboard.items.firstOrNull { ctrl.isSelected(it.value) }
+            val targetScroll =
+                when {
+                    fromEnd -> scrollState.maxValue
+                    geometry.itemAligned -> geometry.initialScroll.roundToInt()
+                    selected != null -> {
+                        val center = keyboard.naturalCenters[selected.value] ?: 0f
+                        val itemHeight = keyboard.naturalHeights[selected.value] ?: 0f
+                        (center + itemHeight / 2f - scrollState.viewportSize + scrollOverlay).roundToInt()
+                    }
+                    else -> 0
+                }
+            val initialScroll = targetScroll.coerceIn(0, scrollState.maxValue)
+            val measuredHeight = keyboard.panelCoordinates?.size?.height
+            if (geometry.itemAligned && measuredHeight != null && measuredHeight + density.density < geometry.height) {
+                val center = target?.let { keyboard.naturalCenters[it.value] }
+                val itemHeight = target?.let { keyboard.naturalHeights[it.value] }
+                if (center != null && itemHeight != null) {
+                    val visibleTop = initialScroll + if (initialScroll > 0) scrollOverlay else 0f
+                    val visibleBottom =
+                        initialScroll + scrollState.viewportSize -
+                            if (initialScroll < scrollState.maxValue) scrollOverlay else 0f
+                    if (center - itemHeight / 2f < visibleTop || center + itemHeight / 2f > visibleBottom) {
+                        alignmentFallback = true
+                        return@LaunchedEffect
+                    }
+                }
+            }
+            scrollState.scrollTo(initialScroll)
+            initialScrollApplied = true
+        }
+    }
+    val horizontalPosition: PopupHorizontalPosition? =
+        if (nova && geometry?.itemAligned == true) {
+            remember(valueBounds, textEdges, anchorBounds, density) {
+                { width, window, direction ->
+                    selectPopupLeft(
+                        trigger = anchorBounds,
+                        popupWidth = width.toFloat(),
+                        windowWidth = window.toFloat(),
+                        value = valueBounds,
+                        text = textEdges,
+                        rtl = direction == LayoutDirection.Rtl,
+                        scale = density.density,
+                    ).roundToInt()
+                }
             }
         } else {
-            sideOffset
+            null
         }
     SelectPortal {
-        AnchoredPopup(
-            open = ctrl.open && !ctrl.disabled,
-            onDismissRequest = { ctrl.setOpen(false) },
+        MenuPopup(
+            open = popupOpen,
+            onDismissRequest = { if (popupOpen) ctrl.setOpen(false) },
+            placement = placement,
             offset = resolvedOffset,
             align = align,
             alignOffset = alignOffset,
             dismissOnClickOutside = dismissOnClickOutside,
-            focusable = ctrl.modal,
-            enter = resolvedEnter,
-            exit = resolvedExit,
+            focusable = ctrl.modal && popupOpen,
+            enter = enter,
+            exit = exit,
+            owningNova = nova,
+            ready = contentReady,
+            animateDefaults = !aligned,
+            freezePositionOnExit = true,
+            horizontalPosition = horizontalPosition,
         ) {
+            DisposableEffect(Unit) {
+                popupRetained = true
+                keyboard.popupMounted = true
+                onDispose {
+                    keyboard.popupMounted = false
+                    popupRetained = false
+                }
+            }
             val panelStyleState = remember { MutableStyleState(MutableInteractionSource()) }
             CompositionLocalProvider(LocalSelectScroll provides scrollState) {
                 val scope = SelectContentScope()
-                LaunchedEffect(keyboard.items.size) {
+                LaunchedEffect(keyboard.items.size, popupOpen, initialScrollApplied) {
+                    if (!popupOpen || (nova && !initialScrollApplied)) return@LaunchedEffect
                     val available = keyboard.items.filter { it.enabled }
+                    val selected = (if (nova) keyboard.items else available).firstOrNull { ctrl.isSelected(it.value) }
                     val target =
-                        available.firstOrNull { ctrl.isSelected(it.value) }
-                            ?: if (keyboard.fromEnd) available.lastOrNull() else available.firstOrNull()
+                        selected ?: when {
+                            keyboard.fromEnd -> available.lastOrNull()
+                            nova && aligned -> keyboard.items.firstOrNull()
+                            else -> available.firstOrNull()
+                        }
                     target?.requester?.requestFocus()
                 }
-                Column(
-                    modifier =
-                        modifier
-                            .onGloballyPositioned { keyboard.panelTop = it.boundsInRoot().top }
-                            .widthIn(min = if (nova) 144.dp else 128.dp, max = 280.dp)
-                            .onPreviewKeyEvent {
-                                    event ->
-                                keyboard.consumeRelease(event) ||
-                                    (
-                                        event.type == KeyEventType.KeyDown &&
-                                            (keyboard.move(event.key, ctrl) || keyboard.typeAhead(event))
-                                    )
-                            }
-                            .styleable(
-                                panelStyleState,
-                                variant.rememberPanelStyle() then (
-                                    if (nova) {
-                                        Style {
-                                            width(keyboard.width.coerceAtLeast(144.dp))
+                val maxPanelHeight =
+                    with(density) { (windowHeight - windowMargin * 2f).coerceAtLeast(0f).toDp() }
+                val panelModifier =
+                    modifier
+                        .then(
+                            if (nova && !contentReady) {
+                                Modifier.graphicsLayer { alpha = 0f }.clearAndSetSemantics { }
+                            } else {
+                                Modifier
+                            },
+                        )
+                        .onGloballyPositioned {
+                            keyboard.panelTop = it.boundsInRoot().top
+                            keyboard.panelCoordinates = it
+                            if (!initialScrollApplied) placedGeometry = geometry
+                        }
+                        .then(
+                            if (nova) {
+                                Modifier.pointerInput(keyboard) {
+                                    awaitPointerEventScope {
+                                        while (true) {
+                                            val event = awaitPointerEvent(PointerEventPass.Final)
+                                            val coordinates = keyboard.panelCoordinates
+                                            if (coordinates?.isAttached == true) {
+                                                val mouse = event.changes.firstOrNull { it.type == PointerType.Mouse }
+                                                if (mouse != null) {
+                                                    keyboard.previousMousePosition =
+                                                        coordinates.localToWindow(mouse.position)
+                                                }
+                                            }
                                         }
-                                    } else {
-                                        Style
                                     }
-                                ) then style,
-                            ),
-                ) {
-                    // Official Content always composes ScrollUp + Viewport + ScrollDown.
-                    scope.SelectScrollUpButton()
-                    SelectViewport(
-                        modifier =
-                            (
-                                if (nova) {
-                                    Modifier.heightIn(
-                                        max = 288.dp,
-                                    )
-                                } else {
-                                    Modifier
                                 }
-                            ).verticalScroll(scrollState),
-                    ) {
-                        scope.content()
+                            } else {
+                                Modifier
+                            },
+                        )
+                        .then(if (nova) Modifier else Modifier.widthIn(min = 128.dp, max = 280.dp))
+                        .then(
+                            if (nova) {
+                                Modifier.heightIn(
+                                    max = maxPanelHeight,
+                                )
+                            } else {
+                                Modifier
+                            },
+                        )
+                        .keyboardInputMode()
+                        .onPreviewKeyEvent {
+                                event ->
+                            if (!popupOpen) return@onPreviewKeyEvent false
+                            if (event.type == KeyEventType.KeyDown) {
+                                triggerInputMode.requestInputMode(InputMode.Keyboard)
+                            }
+                            keyboard.handleOpenKey(event, ctrl, nova)
+                        }
+                        .cssStyleable(
+                            panelStyleState,
+                            variant.rememberPanelStyle() then (
+                                if (nova) {
+                                    Style {
+                                        minWidth(144.dp)
+                                        width(panelWidth)
+                                        geometry?.let { height(with(density) { it.height.toDp() }) }
+                                    }
+                                } else {
+                                    Style
+                                }
+                            ) then callerStyle,
+                        )
+                if (nova) {
+                    Box(panelModifier) {
+                        SelectViewport(
+                            Modifier.onGloballyPositioned { viewport ->
+                                keyboard.panelCoordinates?.takeIf { it.isAttached }?.let { panel ->
+                                    val top = panel.localPositionOf(viewport, Offset.Zero).y.coerceAtLeast(0f)
+                                    val bottom = (panel.size.height - top - viewport.size.height).coerceAtLeast(0f)
+                                    panelChrome = SelectPanelChrome(top, bottom)
+                                }
+                            }.fillMaxHeight().verticalScroll(scrollState, enabled = popupOpen),
+                        ) {
+                            Column(
+                                Modifier.onSizeChanged { contentHeight = it.height }
+                                    .onGloballyPositioned { keyboard.contentCoordinates = it },
+                            ) { scope.content() }
+                        }
+                        if (!touchOpen) {
+                            Box(Modifier.align(Alignment.TopCenter)) { scope.SelectScrollUpButton() }
+                            Box(Modifier.align(Alignment.BottomCenter)) { scope.SelectScrollDownButton() }
+                        }
                     }
-                    scope.SelectScrollDownButton()
+                } else {
+                    Column(panelModifier) {
+                        scope.SelectScrollUpButton()
+                        SelectViewport(Modifier.verticalScroll(scrollState, enabled = popupOpen)) { scope.content() }
+                        scope.SelectScrollDownButton()
+                    }
                 }
             }
         }
@@ -686,54 +1169,114 @@ internal fun SelectViewport(
 
 /**
  * Chevron above a long [SelectContent] list. Matches shadcn's
- * `SelectScrollUpButton`. Always composed by [SelectContent].
+ * `SelectScrollUpButton`. [SelectContent] provides an automatic arrow for non-touch Nova openings.
  */
 @Composable
 fun SelectContentScope.SelectScrollUpButton(modifier: Modifier = Modifier) {
-    val scrollState = LocalSelectScroll.current
-    if (currentTheme.activePreset == StylePreset.Nova && scrollState?.canScrollBackward != true) return
-    val scope = rememberCoroutineScope()
-    Box(
-        modifier =
-            modifier
-                .fillMaxWidth()
-                .clickable(role = Role.Button) {
-                    scope.launch { scrollState?.scrollBy(-48f) }
-                },
-        contentAlignment = Alignment.Center,
-    ) {
-        Icon(
-            if (currentTheme.activePreset == StylePreset.Nova) NovaChevronRight else ChevronRight,
-            tint = currentTheme.colors.mutedForeground,
-            modifier = Modifier.rotate(-90f),
-            variant = if (currentTheme.activePreset == StylePreset.Nova) IconVariant.Default else IconVariant.Small,
-        )
-    }
+    SelectScrollButton(modifier, up = true)
 }
 
-/**
- * Chevron below a long [SelectContent] list. Matches shadcn's
- * `SelectScrollDownButton`. Always composed by [SelectContent].
- */
+/** Chevron below a long panel. [SelectContent] provides the automatic arrow for non-touch Nova openings. */
 @Composable
 fun SelectContentScope.SelectScrollDownButton(modifier: Modifier = Modifier) {
+    SelectScrollButton(modifier, up = false)
+}
+
+private class SelectScrollPointer {
+    var coordinates: LayoutCoordinates? = null
+}
+
+@Composable
+private fun SelectContentScope.SelectScrollButton(
+    modifier: Modifier,
+    up: Boolean,
+) {
+    val popupOpen = selectController().popupOpen
+    val nova = currentTheme.activePreset == StylePreset.Nova
+    val density = LocalDensity.current
+    val clickDistance = with(density) { 48.dp.toPx() }
     val scrollState = LocalSelectScroll.current
-    if (currentTheme.activePreset == StylePreset.Nova && scrollState?.canScrollForward != true) return
+    if (nova && (if (up) scrollState?.canScrollBackward else scrollState?.canScrollForward) != true) return
+    val keyboard = checkNotNull(LocalSelectKeyboard.current)
     val scope = rememberCoroutineScope()
+    var autoScroll by remember(popupOpen) { mutableStateOf(false) }
+    val pointer = remember { SelectScrollPointer() }
+    SideEffect {
+        if (up) keyboard.scrollUpHovered = autoScroll else keyboard.scrollDownHovered = autoScroll
+    }
+    DisposableEffect(keyboard, up) {
+        onDispose {
+            if (up) keyboard.scrollUpHovered = false else keyboard.scrollDownHovered = false
+            pointer.coordinates = null
+        }
+    }
+    LaunchedEffect(nova, autoScroll, scrollState, keyboard, up, density, popupOpen) {
+        if (popupOpen && nova && autoScroll && scrollState != null) {
+            keyboard.hasActive = false
+            while (true) {
+                delay(40)
+                if (!(if (up) scrollState.canScrollBackward else scrollState.canScrollForward)) break
+                keyboard.hasActive = false
+                val items =
+                    keyboard.naturalCenters.entries.sortedBy { it.value }.mapNotNull { (value, center) ->
+                        keyboard.naturalHeights[value]?.let { height ->
+                            SelectScrollItemBounds(center - height / 2f, height)
+                        }
+                    }
+                scrollState.scrollTo(
+                    selectScrollTarget(
+                        items = items,
+                        up = up,
+                        scroll = scrollState.value.toFloat(),
+                        viewport = scrollState.viewportSize.toFloat(),
+                        maxScroll = scrollState.maxValue.toFloat(),
+                        scale = density.density,
+                    ).roundToInt(),
+                )
+            }
+        }
+    }
     Box(
         modifier =
-            modifier
-                .fillMaxWidth()
-                .clickable(role = Role.Button) {
-                    scope.launch { scrollState?.scrollBy(48f) }
-                },
+            modifier.fillMaxWidth()
+                .then(
+                    if (nova) {
+                        Modifier.background(currentTheme.colors.popover).focusProperties { canFocus = false }
+                            .onGloballyPositioned { pointer.coordinates = it }
+                            .clearAndSetSemantics { hideFromAccessibility() }
+                            .pointerInput(keyboard, up, popupOpen) {
+                                if (!popupOpen) return@pointerInput
+                                awaitPointerEventScope {
+                                    while (true) {
+                                        val event = awaitPointerEvent()
+                                        if (event.type == PointerEventType.Exit) autoScroll = false
+                                        val moving = event.type == PointerEventType.Move
+                                        if (moving || event.type == PointerEventType.Enter) {
+                                            val coordinates = pointer.coordinates
+                                            val change = event.changes.firstOrNull { it.type == PointerType.Mouse }
+                                            if (coordinates?.isAttached == true && change != null) {
+                                                val position = coordinates.localToWindow(change.position)
+                                                if (position != keyboard.previousMousePosition) autoScroll = true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                    } else {
+                        Modifier
+                    },
+                )
+                .clickable(enabled = popupOpen, role = Role.Button) {
+                    if (popupOpen) scope.launch { scrollState?.scrollBy(if (up) -clickDistance else clickDistance) }
+                }
+                .then(if (nova) Modifier.padding(vertical = 4.dp) else Modifier),
         contentAlignment = Alignment.Center,
     ) {
         Icon(
-            if (currentTheme.activePreset == StylePreset.Nova) NovaChevronRight else ChevronRight,
+            if (nova) NovaChevronRight else ChevronRight,
             tint = currentTheme.colors.mutedForeground,
-            modifier = Modifier.rotate(90f),
-            variant = if (currentTheme.activePreset == StylePreset.Nova) IconVariant.Default else IconVariant.Small,
+            modifier = Modifier.rotate(if (up) -90f else 90f),
+            variant = if (nova) IconVariant.Default else IconVariant.Small,
         )
     }
 }
@@ -755,30 +1298,39 @@ fun <T> SelectContentScope.SelectItem(
 ) {
     val ctrl = selectController()
     val resolvedEnabled = enabled && !disabled
+    val popupOpen = ctrl.popupOpen
+    val canActivate = popupOpen && resolvedEnabled
     val isSelected = ctrl.isSelected(value)
     val keyboard = checkNotNull(LocalSelectKeyboard.current)
     val labelText = textValue ?: ctrl.labelOf(value)
+    val activate = {
+        if (resolvedEnabled && !ctrl.disabled && onSelect?.invoke() != true) ctrl.select(value)
+    }
     if (LocalSelectRegistrationOnly.current) {
-        val registration =
-            SelectSearchItem(value, labelText, resolvedEnabled) {
-                if (onSelect?.invoke() != true) ctrl.select(value)
-            }
+        val registration = SelectSearchItem(value, labelText, resolvedEnabled, activate)
         Layout(content = {}, modifier = Modifier.layoutId(registration)) { _, _ -> layout(0, 0) {} }
         return
     }
+    val nova = currentTheme.activePreset == StylePreset.Nova
     val requester = remember { FocusRequester() }
+    var itemCoordinates by remember { mutableStateOf<LayoutCoordinates?>(null) }
     DisposableEffect(keyboard, value) {
         keyboard.items.add(SelectFocusItem(value, requester, resolvedEnabled))
         onDispose {
             keyboard.items.removeAll { it.requester === requester }
             keyboard.pick.remove(value)
+            keyboard.closedPick.remove(value)
             keyboard.centers.remove(value)
+            keyboard.naturalCenters.remove(value)
+            keyboard.naturalHeights.remove(value)
+            keyboard.itemTextEdges.remove(value)
             keyboard.labels.remove(value)
         }
     }
     SideEffect {
         keyboard.labels[value] = labelText
-        keyboard.pick[value] = { if (onSelect?.invoke() != true) ctrl.select(value) }
+        keyboard.closedPick[value] = activate
+        keyboard.pick[value] = { if (popupOpen) activate() }
         val index = keyboard.items.indexOfFirst { it.requester === requester }
         if (index >= 0 &&
             keyboard.items[index].enabled != resolvedEnabled
@@ -798,10 +1350,10 @@ fun <T> SelectContentScope.SelectItem(
         }
     val isFocused by interactionSource.collectIsFocusedAsState()
     val isHovered by interactionSource.collectIsHoveredAsState()
+    val suppressFocus = currentTheme.activePreset == StylePreset.Nova && keyboard.scrollHovered
+    val scrollStyle = remember { Style { background(Color.Transparent) } }
     val itemContentColor =
-        if (!resolvedEnabled) {
-            currentTheme.colors.popoverForeground
-        } else if (isHovered || (currentTheme.activePreset == StylePreset.Nova && isFocused)) {
+        if (!suppressFocus && (if (nova) isFocused else resolvedEnabled && isHovered)) {
             currentTheme.colors.accentForeground
         } else {
             currentTheme.colors.popoverForeground
@@ -812,24 +1364,65 @@ fun <T> SelectContentScope.SelectItem(
             modifier
                 .fillMaxWidth()
                 .focusRequester(requester)
-                .onGloballyPositioned { keyboard.centers[value] = it.boundsInRoot().center.y }
-                .onFocusChanged { if (it.isFocused) keyboard.active = value }
+                .focusProperties { canFocus = popupOpen }
+                .then(
+                    if (nova && canActivate) {
+                        Modifier.pointerInput(requester) {
+                            awaitPointerEventScope {
+                                while (true) {
+                                    val event = awaitPointerEvent()
+                                    val mouse = event.changes.firstOrNull { it.type == PointerType.Mouse }
+                                    val position = mouse?.let { itemCoordinates?.localToWindow(it.position) }
+                                    if (event.type == PointerEventType.Move &&
+                                        position != null && position != keyboard.previousMousePosition &&
+                                        !keyboard.scrollHovered
+                                    ) {
+                                        requester.requestFocus()
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        Modifier
+                    },
+                )
+                .onGloballyPositioned {
+                    itemCoordinates = it
+                    if (!nova) keyboard.centers[value] = it.boundsInRoot().center.y
+                    keyboard.contentCoordinates?.takeIf { coordinates -> coordinates.isAttached }?.let { content ->
+                        keyboard.naturalCenters[value] = content.localPositionOf(it, Offset(0f, it.size.height / 2f)).y
+                        keyboard.naturalHeights[value] = it.size.height.toFloat()
+                    }
+                }
+                .onFocusChanged {
+                    if (popupOpen && it.isFocused) {
+                        keyboard.active = value
+                        keyboard.hasActive = true
+                    }
+                }
                 .semantics {
                     role = Role.Button
                     this.selected = isSelected
-                    if (!resolvedEnabled) disabled()
+                    if (!canActivate) disabled()
                 }
                 .clickable(
                     interactionSource = interactionSource,
                     indication = null,
-                    enabled = resolvedEnabled,
+                    enabled = canActivate,
                     role = Role.Button,
                     // Radix `onSelect` preventDefault: true skips selecting (and closing).
                     onClick = {
-                        if (onSelect?.invoke() != true) ctrl.select(value)
+                        if (popupOpen) activate()
                     },
                 )
-                .styleable(styleState, rememberSelectItemStyle()),
+                .then(
+                    if (nova && !resolvedEnabled) {
+                        Modifier.focusable(enabled = popupOpen, interactionSource = interactionSource)
+                    } else {
+                        Modifier
+                    },
+                )
+                .styleable(styleState, rememberSelectItemStyle() then if (suppressFocus) scrollStyle else Style),
         horizontalArrangement =
             Arrangement.spacedBy(
                 if (currentTheme.activePreset == StylePreset.Nova) 6.dp else twSpacing.sm,
@@ -839,6 +1432,7 @@ fun <T> SelectContentScope.SelectItem(
         CompositionLocalProvider(
             LocalContentColor provides itemContentColor,
             LocalSelectItemSelected provides isSelected,
+            LocalSelectTextItem provides remember(value) { SelectTextItem(value) },
             LocalDefaultTextStyle provides
                 if (currentTheme.activePreset == StylePreset.Nova) {
                     currentTheme.typography.bodyMedium.copy(
@@ -879,7 +1473,7 @@ internal fun RowScope.SelectItemText(
     // CSS's single-line 20px box is independent of the fallback font's
     // natural ascent/descent. The clickable row owns the merged label semantics.
     Box(
-        modifier = modifier.weight(1f).height(with(LocalDensity.current) { 20.sp.toDp() }),
+        modifier = modifier.selectItemTextCoordinates().weight(1f).height(with(LocalDensity.current) { 20.sp.toDp() }),
         contentAlignment = Alignment.CenterStart,
     ) {
         Text(
@@ -906,7 +1500,7 @@ internal fun RowScope.SelectItemText(
     content: @Composable RowScope.() -> Unit,
 ) {
     Row(
-        modifier = modifier.weight(1f),
+        modifier = modifier.selectItemTextCoordinates().weight(1f),
         verticalAlignment = Alignment.CenterVertically,
         content = content,
     )

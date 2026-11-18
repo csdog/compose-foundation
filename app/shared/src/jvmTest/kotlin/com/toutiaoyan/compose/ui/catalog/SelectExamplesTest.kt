@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.dp
@@ -150,4 +152,78 @@ class SelectExamplesTest {
             rule.onNodeWithText(lastVegetable).assertIsDisplayed()
         }
     }
+
+    @Test fun alignItemFieldStretchesTriggerToSourceGroupWidth() {
+        show("Align Item With Trigger")
+        rule.onNodeWithText("Banana").assertWidthIsEqualTo(320.dp)
+        rule.onNodeWithText("Align Item").performClick()
+        rule.onNodeWithContentDescription("Align Item").assertIsOff()
+    }
+
+    @Test fun invalidFieldHasSourceWidthNameAndClearOption() {
+        show("Invalid")
+        rule.onNodeWithContentDescription("Fruit").assertWidthIsEqualTo(192.dp).performClick()
+        rule.onNodeWithText("Apple").performClick()
+        rule.onNodeWithContentDescription("Fruit").performClick()
+        rule.onAllNodesWithText("Apple").onLast().assertIsFocused().performKeyInput {
+            pressKey(Key.MoveHome)
+            pressKey(Key.Enter)
+        }
+        rule.onNodeWithContentDescription("Fruit").assert(hasText("Select a fruit"))
+    }
+
+    @Test fun copyCodeAndApiSectionsFollowTheCompiledPageOrder() {
+        val markdown = componentPageMarkdown(selectDoc)
+        val rtl = markdown.indexOf("## RTL")
+        val api = markdown.indexOf("## API Reference")
+        val extension = markdown.indexOf("## Kotlin extension: Uncontrolled")
+        val kotlinApi = markdown.indexOf("## Kotlin extension: API")
+        assertTrue(rtl < api && api < extension && extension < kotlinApi)
+        assertEquals(41, selectDoc.examples.size)
+        selectDoc.examples.forEach { example ->
+            assertContains(example.code, "@Composable", message = example.title)
+            assertContains(example.code, "import androidx.compose.runtime.*", message = example.title)
+            assertFalse(example.code.contains("catalogArabicFontFamily"), example.title)
+            assertFalse(example.code.contains("catalogHebrewFontFamily"), example.title)
+            assertFalse(example.code.contains("controller.setOpen(false)"), example.title)
+        }
+        assertContains(selectDoc.usageImportsCode.orEmpty(), "import androidx.compose.runtime.*")
+        assertContains(selectDoc.usageCode, "@Composable")
+        assertContains(
+            selectDoc.examples.single { it.title == "Kotlin extension: Scroll buttons" }.code,
+            "Option ${'$'}it",
+        )
+    }
+
+    @Test fun defaultOpenExampleMountsOnlyWhenLaunchedAndOpensImmediately() {
+        show("Kotlin extension: Default open")
+        rule.onNodeWithText("Light").assertDoesNotExist()
+        rule.onNodeWithText("Show default-open select").performClick()
+        rule.onNodeWithText("Light").assertIsDisplayed().performClick()
+        rule.onNodeWithText("Light").assertIsDisplayed()
+    }
+
+    private fun assertScrollControls(
+        title: String,
+        initial: Int,
+        up: Boolean = false,
+    ) {
+        show("Kotlin extension: $title")
+        rule.onNodeWithText("Option $initial").performClick()
+        val controls = SemanticsMatcher.keyIsDefined(SemanticsProperties.HideFromAccessibility)
+        rule.onAllNodes(controls).assertCountEquals(if (initial == 0) 1 else 2)
+        val observed = if (initial == 0) 3 else 19
+        val before = rule.onNodeWithText("Option $observed").fetchSemanticsNode().boundsInWindow.top
+        val control = if (up) rule.onAllNodes(controls).onFirst() else rule.onAllNodes(controls).onLast()
+        control.performTouchInput { click() }
+        val after = rule.onNodeWithText("Option $observed").fetchSemanticsNode().boundsInWindow.top
+        assertTrue(if (up) after > before else after < before, "the scroll control must move the overflowing list")
+        rule.onNodeWithText("Option 39").performScrollTo().assertIsDisplayed()
+    }
+
+    @Test fun scrollButtonsExampleActuallyOverflowsAndScrolls() = assertScrollControls("Scroll buttons", 20)
+
+    @Test fun scrollUpExampleStartsWithAnUpControl() = assertScrollControls("Scroll up button", 20, up = true)
+
+    @Test fun scrollDownExampleStartsWithADownControl() = assertScrollControls("Scroll down button", 0)
 }

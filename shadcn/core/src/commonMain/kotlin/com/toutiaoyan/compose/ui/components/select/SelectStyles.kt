@@ -12,6 +12,9 @@ import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.graphics.shadow.Shadow
+import com.toutiaoyan.compose.tailwind.style.ringShadow
 import com.toutiaoyan.compose.tailwind.style.shadowMd
 import com.toutiaoyan.compose.tailwind.style.shadowXs
 import com.toutiaoyan.compose.ui.utils.rememberTheme
@@ -87,10 +90,29 @@ fun SelectVariant.rememberPanelStyle(): Style =
     rememberTheme(this) {
         Style {
             background(colors.popover)
-            border(if (theme.activePreset == StylePreset.Nova) colors.foreground.copy(alpha = 0.1f) else colors.border)
             shape(RoundedCornerShape(if (theme.activePreset == StylePreset.Nova) radius.lg else radius.md))
             contentPadding(if (theme.activePreset == StylePreset.Nova) 0.dp else spacing.xs2)
-            shadowMd()
+            if (theme.activePreset == StylePreset.Nova) {
+                // CSS ring and shadow-md are outer shadows and consume no layout space.
+                dropShadow(
+                    ringShadow(colors.foreground.copy(alpha = 0.1f)),
+                    Shadow(
+                        radius = 6.dp,
+                        spread = (-1).dp,
+                        offset = DpOffset(0.dp, 4.dp),
+                        color = Color.Black.copy(alpha = 0.1f),
+                    ),
+                    Shadow(
+                        radius = 4.dp,
+                        spread = (-2).dp,
+                        offset = DpOffset(0.dp, 2.dp),
+                        color = Color.Black.copy(alpha = 0.1f),
+                    ),
+                )
+            } else {
+                border(colors.border)
+                shadowMd()
+            }
         }
     }
 
@@ -118,9 +140,11 @@ fun rememberSelectItemStyle(): Style =
                     contentColor(colors.accentForeground)
                 }
             }
-            hovered {
-                background(colors.accent)
-                contentColor(colors.accentForeground)
+            if (theme.activePreset != StylePreset.Nova) {
+                hovered {
+                    background(colors.accent)
+                    contentColor(colors.accentForeground)
+                }
             }
             disabledDim()
         }
