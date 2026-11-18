@@ -98,7 +98,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 
 /** Tailwind `transition-all` default duration used by the Nova Tabs chrome. */
-private const val TabsIndicatorTransitionMillis = 150
+private const val TABS_INDICATOR_TRANSITION_MILLIS = 150
 
 @Immutable
 private data class TabsController(
@@ -137,6 +137,19 @@ private class TabsListState {
         tabBounds.remove(value)
         focusRequesters.remove(value)
     }
+
+    fun enabledInVisualOrder(
+        orientation: TabsOrientation,
+        direction: LayoutDirection,
+    ): List<String> =
+        tabOrder.filter { tabEnabled[it] != false }.sortedBy {
+            val bounds = tabBounds[it]
+            when {
+                orientation == TabsOrientation.Vertical -> bounds?.top ?: Float.MAX_VALUE
+                direction == LayoutDirection.Rtl -> -(bounds?.left ?: -Float.MAX_VALUE)
+                else -> bounds?.left ?: Float.MAX_VALUE
+            }
+        }
 
     fun updateTabBounds(
         value: String,
@@ -390,10 +403,11 @@ fun TabsScope.TabsList(
 internal fun BoxScope.TabsIndicator(
     modifier: Modifier = Modifier,
     style: Style = Style,
-    animationSpec: AnimationSpec<Float> = tween(TabsIndicatorTransitionMillis),
+    animationSpec: AnimationSpec<Float> = tween(TABS_INDICATOR_TRANSITION_MILLIS),
 ) {
-    val tabs = LocalTabs.current ?: return
-    val listState = LocalTabsListState.current ?: return
+    val tabs = LocalTabs.current
+    val listState = LocalTabsListState.current
+    if (tabs == null || listState == null) return
     val variant = LocalTabsListVariant.current
     val bounds = listState.tabBounds[tabs.selected]
     val density = LocalDensity.current
@@ -620,12 +634,15 @@ fun TabsScope.TabsContent(
         if (!selected && panelHasFocus) focusManager.clearFocus(force = true)
     }
     val styled = modifier.styleable(styleState, style)
+    val panelFocus =
+        Modifier.onFocusChanged { panelHasFocus = it.hasFocus }
+            .focusProperties { onEnter = { if (!selected) cancelFocusChange() } }
+            .focusGroup()
     if (keepMounted ?: forceMount) {
         Layout(
             modifier =
                 (if (selected) styled else Modifier.then(HiddenTabPanel).clearAndSetSemantics {})
-                    .onFocusChanged { panelHasFocus = it.hasFocus }
-                    .focusProperties { onEnter = { if (!selected) cancelFocusChange() } }.focusGroup(),
+                    .then(panelFocus),
             content = { Box(if (selected) Modifier else styled) { content() } },
         ) { children, constraints ->
             if (selected) {
@@ -642,7 +659,7 @@ fun TabsScope.TabsContent(
             visible = selected,
             enter = enter,
             exit = exit,
-            modifier = styled,
+            modifier = styled.then(panelFocus),
         ) {
             content()
         }
@@ -682,94 +699,51 @@ private fun handleTabsKey(
     direction: LayoutDirection,
 ): Boolean {
     if (event.type != KeyEventType.KeyDown) return false
-    val enabled =
-        listState.tabOrder.filter { listState.tabEnabled[it] != false }.sortedBy {
-            val bounds = listState.tabBounds[it]
-            when {
-                tabs.orientation == TabsOrientation.Vertical -> bounds?.top ?: Float.MAX_VALUE
-                direction == LayoutDirection.Rtl -> -(bounds?.left ?: -Float.MAX_VALUE)
-                else -> bounds?.left ?: Float.MAX_VALUE
-            }
+    val enabled = listState.enabledInVisualOrder(tabs.orientation, direction)
+    val index = enabled.indexOf(current)
+    return when {
+        index == -1 -> false
+        event.key.isTabActivation() -> {
+            tabs.onSelectedChange(current)
+            true
         }
-    if (enabled.isEmpty()) return false
-    val idx = enabled.indexOf(current)
-    if (idx < 0) return false
-    val vertical = tabs.orientation == TabsOrientation.Vertical
-    val last = enabled.lastIndex
-    val next =
-        when (event.key) {
-            Key.DirectionRight ->
-                if (vertical) {
-                    return false
-                } else {
-                    stepTab(
-                        enabled,
-                        idx,
-                        if (direction == LayoutDirection.Rtl) {
-                            -1
-                        } else {
-                            1
-                        },
-                        last,
-                        tabs.loop,
-                    )
-                        ?: return false
-                }
-            Key.DirectionLeft ->
-                if (vertical) {
-                    return false
-                } else {
-                    stepTab(
-                        enabled,
-                        idx,
-                        if (direction == LayoutDirection.Rtl) {
-                            1
-                        } else {
-                            -1
-                        },
-                        last,
-                        tabs.loop,
-                    )
-                        ?: return false
-                }
-            Key.DirectionDown ->
-                if (!vertical) {
-                    return false
-                } else {
-                    stepTab(enabled, idx, +1, last, tabs.loop) ?: return false
-                }
-            Key.DirectionUp ->
-                if (!vertical) {
-                    return false
-                } else {
-                    stepTab(enabled, idx, -1, last, tabs.loop) ?: return false
-                }
-            Key.MoveHome -> enabled.first()
-            Key.MoveEnd -> enabled[last]
-            Key.Enter, Key.NumPadEnter, Key.Spacebar -> {
-                tabs.onSelectedChange(current)
-                return true
+        else -> {
+            val next = nextVisualTab(enabled, index, event.key, tabs, direction)
+            if (next != null) {
+                listState.focusedTab = next
+                if (tabs.activationMode == TabsActivationMode.Automatic) tabs.onSelectedChange(next)
             }
-            else -> return false
+            next != null
         }
-    listState.focusedTab = next
-    if (tabs.activationMode == TabsActivationMode.Automatic) {
-        tabs.onSelectedChange(next)
     }
-    return true
+}
+
+private fun Key.isTabActivation(): Boolean = this == Key.Enter || this == Key.NumPadEnter || this == Key.Spacebar
+
+private fun nextVisualTab(
+    enabled: List<String>,
+    index: Int,
+    key: Key,
+    tabs: TabsController,
+    direction: LayoutDirection,
+): String? {
+    val (forward, backward) =
+        when {
+            tabs.orientation == TabsOrientation.Vertical -> Key.DirectionDown to Key.DirectionUp
+            direction == LayoutDirection.Rtl -> Key.DirectionLeft to Key.DirectionRight
+            else -> Key.DirectionRight to Key.DirectionLeft
+        }
+    return when (key) {
+        forward -> stepTab(enabled, index + 1, tabs.loop)
+        backward -> stepTab(enabled, index - 1, tabs.loop)
+        Key.MoveHome -> enabled.first()
+        Key.MoveEnd -> enabled.last()
+        else -> null
+    }
 }
 
 private fun stepTab(
     enabled: List<String>,
-    idx: Int,
-    delta: Int,
-    last: Int,
+    index: Int,
     loop: Boolean,
-): String? {
-    val next = idx + delta
-    return when {
-        next in 0..last -> enabled[next]
-        loop && enabled.isNotEmpty() -> enabled[(next + enabled.size) % enabled.size]
-        else -> null
-    }
-}
+): String? = enabled.getOrNull(index) ?: if (loop) enabled[index.mod(enabled.size)] else null

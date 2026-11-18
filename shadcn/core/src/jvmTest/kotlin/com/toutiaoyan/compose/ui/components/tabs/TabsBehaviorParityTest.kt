@@ -2,6 +2,8 @@
 
 package com.toutiaoyan.compose.ui.components.tabs
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.focus.FocusRequester
@@ -115,6 +117,28 @@ class TabsBehaviorParityTest : ScreenshotTest() {
         tab("b").assertIsFocused().assertIsNotSelected()
         tab("a").assertIsSelected()
         assertEquals("b", requested)
+    }
+
+    @Test fun exitingAnimatedPanelReleasesFocusBeforeItsAnimationEnds() {
+        var selected by mutableStateOf("a")
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Tabs(value = selected) {
+                TabsList {
+                    TabsTrigger("a", "Alpha")
+                    TabsTrigger("b", "Beta", Modifier.testTag("b"))
+                }
+                TabsContent("a", exit = fadeOut(tween(1000))) {
+                    Button("Old action", modifier = Modifier.testTag("old action"), onClick = {})
+                }
+                TabsContent("b") { Text { "New panel" } }
+            }
+        }
+        tab("old action").requestFocus().assertIsFocused()
+        composeRule.mainClock.autoAdvance = false
+        composeRule.runOnIdle { selected = "b" }
+        composeRule.mainClock.advanceTimeBy(64)
+        tab("b").assertIsSelected()
+        tab("old action").assertIsNotFocused()
     }
 
     @Test fun switchingPanelsRemovesOldContentWithoutAnImplicitFade() {
