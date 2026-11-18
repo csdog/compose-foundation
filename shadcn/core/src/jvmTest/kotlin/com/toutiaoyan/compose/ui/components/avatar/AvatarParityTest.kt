@@ -23,6 +23,32 @@ import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.*
 
 class AvatarParityTest : ScreenshotTest() {
+    @Test fun disposingImageReportsIdleToTheCurrentObserver() {
+        val initial = mutableListOf<AvatarImageLoadState>()
+        val current = mutableListOf<AvatarImageLoadState>()
+        val painter = ColorPainter(Color.Red)
+        var showImage by mutableStateOf(true)
+        var useCurrentObserver by mutableStateOf(false)
+        setThemedContent {
+            Avatar {
+                if (showImage) {
+                    val observer = if (useCurrentObserver) current else initial
+                    AvatarImage(painter, onLoadingStatusChange = { observer.add(it) })
+                }
+                AvatarFallback("AB")
+            }
+        }
+        composeRule.onNodeWithText("AB").assertDoesNotExist()
+        composeRule.runOnIdle { useCurrentObserver = true }
+        composeRule.waitForIdle()
+        composeRule.runOnIdle { showImage = false }
+        composeRule.onNodeWithText("AB").assertIsDisplayed()
+        composeRule.runOnIdle {
+            assertEquals(listOf(AvatarImageLoadState.Success), initial)
+            assertEquals(listOf(AvatarImageLoadState.Idle), current)
+        }
+    }
+
     @Test fun borderBlendsOverImageAndFallbackAndUpdatesWithTheme() {
         var dark by mutableStateOf(false)
         val photo = Color(.2f, .6f, .8f)

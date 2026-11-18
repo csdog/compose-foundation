@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.shape.CircleShape
@@ -70,11 +71,7 @@ fun BoxScope.AvatarImage(
             onLoadingStatusChange,
         )
     }
-    DisposableEffect(loadHolder) {
-        onDispose {
-            setAvatarLoadState(loadHolder, AvatarImageLoadState.Idle, onLoadingStatusChange)
-        }
-    }
+    ResetAvatarLoadStateOnDispose(loadHolder, onLoadingStatusChange)
 
     AsyncImage(
         model = model,
@@ -134,11 +131,7 @@ fun BoxScope.AvatarImage(
     LaunchedEffect(imageVector) {
         setAvatarLoadState(loadHolder, AvatarImageLoadState.Success, onLoadingStatusChange)
     }
-    DisposableEffect(loadHolder) {
-        onDispose {
-            setAvatarLoadState(loadHolder, AvatarImageLoadState.Idle, onLoadingStatusChange)
-        }
-    }
+    ResetAvatarLoadStateOnDispose(loadHolder, onLoadingStatusChange)
 
     val theme = currentTheme
     val resolvedTint =
@@ -156,6 +149,19 @@ fun BoxScope.AvatarImage(
         alpha = alpha,
         colorFilter = ColorFilter.tint(resolvedTint),
     )
+}
+
+@Composable
+private fun ResetAvatarLoadStateOnDispose(
+    holder: AvatarImageLoadStateHolder?,
+    onLoadingStatusChange: ((AvatarImageLoadState) -> Unit)?,
+) {
+    val currentObserver = rememberUpdatedState(onLoadingStatusChange)
+    DisposableEffect(holder) {
+        onDispose {
+            setAvatarLoadState(holder, AvatarImageLoadState.Idle, currentObserver.value)
+        }
+    }
 }
 
 private fun setAvatarLoadState(
@@ -178,9 +184,10 @@ fun BoxScope.AvatarImage(
     onLoadingStatusChange: ((AvatarImageLoadState) -> Unit)? = null,
 ) {
     val holder = LocalAvatarImageLoadState.current
+    val currentObserver = rememberUpdatedState(onLoadingStatusChange)
     DisposableEffect(holder, painter) {
-        setAvatarLoadState(holder, AvatarImageLoadState.Success, onLoadingStatusChange)
-        onDispose { setAvatarLoadState(holder, AvatarImageLoadState.Idle, onLoadingStatusChange) }
+        setAvatarLoadState(holder, AvatarImageLoadState.Success, currentObserver.value)
+        onDispose { setAvatarLoadState(holder, AvatarImageLoadState.Idle, currentObserver.value) }
     }
     Image(
         painter = painter,

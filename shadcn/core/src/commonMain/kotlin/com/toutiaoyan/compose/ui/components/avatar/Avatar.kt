@@ -297,6 +297,8 @@ fun AvatarFallback(
     )
 }
 
+private const val AVATAR_BADGE_Z_INDEX = 10f
+
 /** Bottom-end status indicator (mirrored in RTL). Small avatars hide icon content. */
 @Composable
 fun BoxScope.AvatarBadge(
@@ -309,7 +311,7 @@ fun BoxScope.AvatarBadge(
     // StyleModifier in Compose 1.12.2 leaves zIndex as TODO; use the working parent modifier.
     Box(
         modifier =
-            Modifier.align(Alignment.BottomEnd).then(modifier).zIndex(10f).cssStyleable(
+            Modifier.align(Alignment.BottomEnd).then(modifier).zIndex(AVATAR_BADGE_Z_INDEX).cssStyleable(
                 styleState,
                 size.rememberBadgeStyle() then style,
             ),
