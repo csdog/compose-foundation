@@ -34,7 +34,11 @@ class CalendarLocale(
     )
 
     init {
-        require(months.size == 12 && shortMonths.size == 12 && weekdays.size == 7)
+        require(
+            months.size == MONTHS_IN_YEAR &&
+                shortMonths.size == MONTHS_IN_YEAR &&
+                weekdays.size == DAYS_IN_WEEK,
+        )
     }
 
     companion object {

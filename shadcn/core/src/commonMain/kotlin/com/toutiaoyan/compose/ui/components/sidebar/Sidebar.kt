@@ -319,6 +319,8 @@ object SidebarDefaults {
     const val CookieMaxAgeSeconds = 60 * 60 * 24 * 7
 }
 
+private const val SIDEBAR_WIDTH_ANIM_MILLIS = 200
+
 /** The collapsible side rail itself -- must be a direct child of [SidebarProvider]. */
 @Composable
 fun Sidebar(
@@ -345,7 +347,7 @@ fun Sidebar(
         }
     val animatedWidth by animateDpAsState(
         if (expanded) width else collapsedWidth,
-        animationSpec = tween(200, easing = LinearEasing),
+        animationSpec = tween(SIDEBAR_WIDTH_ANIM_MILLIS, easing = LinearEasing),
         label = "sidebar-width",
     )
     val sidebarBorderColor = currentTheme.colors.sidebarBorder

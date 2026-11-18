@@ -658,32 +658,16 @@
     <ID>MagicNumber:BubbleColors.kt$360f</ID>
     <ID>MagicNumber:BubbleColors.kt$540f</ID>
     <ID>MagicNumber:ButtonStyles.kt$0.05f</ID>
-    <ID>MagicNumber:Calendar.kt$0.5f</ID>
-    <ID>MagicNumber:Calendar.kt$10</ID>
     <ID>MagicNumber:Calendar.kt$100</ID>
-    <ID>MagicNumber:Calendar.kt$11</ID>
     <ID>MagicNumber:Calendar.kt$12</ID>
     <ID>MagicNumber:Calendar.kt$180f</ID>
-    <ID>MagicNumber:Calendar.kt$28</ID>
-    <ID>MagicNumber:Calendar.kt$29</ID>
     <ID>MagicNumber:Calendar.kt$3</ID>
-    <ID>MagicNumber:Calendar.kt$30</ID>
-    <ID>MagicNumber:Calendar.kt$31</ID>
     <ID>MagicNumber:Calendar.kt$3176</ID>
     <ID>MagicNumber:Calendar.kt$4</ID>
     <ID>MagicNumber:Calendar.kt$400</ID>
-    <ID>MagicNumber:Calendar.kt$42</ID>
     <ID>MagicNumber:Calendar.kt$5</ID>
     <ID>MagicNumber:Calendar.kt$6</ID>
-    <ID>MagicNumber:Calendar.kt$7</ID>
-    <ID>MagicNumber:Calendar.kt$8</ID>
-    <ID>MagicNumber:Calendar.kt$9</ID>
     <ID>MagicNumber:Calendar.kt$90f</ID>
-    <ID>MagicNumber:Calendar.kt$CalendarState$400</ID>
-    <ID>MagicNumber:Calendar.kt$CalendarState$6</ID>
-    <ID>MagicNumber:Calendar.kt$CalendarState$7</ID>
-    <ID>MagicNumber:CalendarLocale.kt$CalendarLocale$12</ID>
-    <ID>MagicNumber:CalendarLocale.kt$CalendarLocale$7</ID>
     <ID>MagicNumber:CalendarSystem.kt$100</ID>
     <ID>MagicNumber:CalendarSystem.kt$1111</ID>
     <ID>MagicNumber:CalendarSystem.kt$1181</ID>
@@ -3390,10 +3374,6 @@
     <ID>MagicNumber:Pushpin.kt$9.06f</ID>
     <ID>MagicNumber:Pushpin.kt$9.38f</ID>
     <ID>MagicNumber:Pushpin.kt$9.74f</ID>
-    <ID>MagicNumber:Questionnaire.kt$0.5f</ID>
-    <ID>MagicNumber:Questionnaire.kt$300</ID>
-    <ID>MagicNumber:Questionnaire.kt$QuestionnaireController$26</ID>
-    <ID>MagicNumber:Questionnaire.kt$QuestionnaireController$9</ID>
     <ID>MagicNumber:Resizable.kt$0.000001f</ID>
     <ID>MagicNumber:Resizable.kt$0.05f</ID>
     <ID>MagicNumber:Resizable.kt$100</ID>
@@ -3422,7 +3402,6 @@
     <ID>MagicNumber:ShimmerColors.kt$ShimmerColorCache$64</ID>
     <ID>MagicNumber:ShimmerColors.kt$ShimmerColorCache$64f</ID>
     <ID>MagicNumber:Sidebar.kt$0.7f</ID>
-    <ID>MagicNumber:Sidebar.kt$200</ID>
     <ID>MagicNumber:SlightlySmiling.kt$0xFF664500</ID>
     <ID>MagicNumber:SlightlySmiling.kt$10.46f</ID>
     <ID>MagicNumber:SlightlySmiling.kt$10.51f</ID>
@@ -4554,7 +4533,6 @@
     <ID>TopLevelPropertyNaming:NavigationMenuSharedViewport.kt$private const val ViewportExitDuration = 150</ID>
     <ID>TopLevelPropertyNaming:PopoverPopup.kt$private const val PopoverMotionDuration = 100</ID>
     <ID>TopLevelPropertyNaming:ProgressLayout.kt$internal const val ProgressValueLayoutId = "progress-value"</ID>
-    <ID>TopLevelPropertyNaming:Questionnaire.kt$private const val InputAnswerKey = "\u0000input"</ID>
     <ID>TopLevelPropertyNaming:RippleIndication.kt$private const val FadeInMs = 75</ID>
     <ID>TopLevelPropertyNaming:RippleIndication.kt$private const val FadeOutMs = 150</ID>
     <ID>TopLevelPropertyNaming:RippleIndication.kt$private const val RadiusInMs = 225</ID>

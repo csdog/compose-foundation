@@ -562,8 +562,8 @@ internal class QuestionnaireController(
         val i = ordered.indexOf(value)
         if (i < 0) return null
         return when (shortcuts) {
-            QuestionnaireShortcuts.Letters -> if (i < 26) ('A' + i).toString() else null
-            QuestionnaireShortcuts.Numbers -> if (i < 9) (i + 1).toString() else null
+            QuestionnaireShortcuts.Letters -> if (i < LetterKeys.size) ('A' + i).toString() else null
+            QuestionnaireShortcuts.Numbers -> if (i < NumberKeys.size) (i + 1).toString() else null
             QuestionnaireShortcuts.None -> null
         }
     }
@@ -579,7 +579,7 @@ internal class QuestionnaireController(
                 QuestionnaireShortcuts.None -> return false
             }
         if (index == ordered.size && inputPresentByName[name] == true) {
-            pendingAnswerFocus = InputAnswerKey
+            pendingAnswerFocus = INPUT_ANSWER_KEY
             return true
         }
         val value = ordered.getOrNull(index) ?: return false
@@ -616,13 +616,13 @@ internal class QuestionnaireController(
                 addAll(
                     choiceOrder[name].orEmpty().filter { choiceEnabled["$name/$it"] != false },
                 )
-                if (inputPresentByName[name] == true) add(InputAnswerKey)
+                if (inputPresentByName[name] == true) add(INPUT_ANSWER_KEY)
             }
         if (keys.isEmpty()) return false
         val focused = focusedChoiceValue
         val current =
             when {
-                inputFocused -> InputAnswerKey
+                inputFocused -> INPUT_ANSWER_KEY
                 focused != null && focused in keys -> focused
                 else -> null
             }
@@ -639,7 +639,7 @@ internal class QuestionnaireController(
             }
         val next = keys[nextIdx]
         pendingAnswerFocus = next
-        if (next != InputAnswerKey && multipleByName[name] != true && !isSelected(name, next)) {
+        if (next != INPUT_ANSWER_KEY && multipleByName[name] != true && !isSelected(name, next)) {
             interactWithChoice(name, next)
         }
         return true
@@ -754,9 +754,9 @@ internal class QuestionnaireController(
         pendingItemFocus = null
         pendingAnswerFocus =
             if (inputSelected[name] == true && inputPresentByName[name] == true) {
-                InputAnswerKey
+                INPUT_ANSWER_KEY
             } else {
-                choiceOrder[name]?.firstOrNull { choiceEnabled["$name/$it"] != false } ?: InputAnswerKey
+                choiceOrder[name]?.firstOrNull { choiceEnabled["$name/$it"] != false } ?: INPUT_ANSWER_KEY
             }
     }
 
@@ -865,7 +865,12 @@ private val LocalQuestionnaireChoiceSelected = staticCompositionLocalOf { false 
 
 private val LocalQuestionnaireChoiceMultiple = staticCompositionLocalOf { false }
 
-private const val InputAnswerKey = "\u0000input"
+private const val INPUT_ANSWER_KEY = "\u0000input"
+
+private const val QUESTIONNAIRE_ITEM_ENTER_MILLIS = 300
+
+/** Whole-control dim matching CSS `disabled:opacity-50`. */
+private const val DISABLED_OPACITY = 0.5f
 
 private val LetterKeys =
     listOf(
@@ -1103,7 +1108,8 @@ fun QuestionnaireScope.QuestionnaireItem(
             val visibility = remember(name) { MutableTransitionState(false).apply { targetState = true } }
             val enter =
                 if (platformAllowsMotion()) {
-                    fadeIn(tween(300)) + slideInVertically(tween(300)) { slidePx }
+                    fadeIn(tween(QUESTIONNAIRE_ITEM_ENTER_MILLIS)) +
+                        slideInVertically(tween(QUESTIONNAIRE_ITEM_ENTER_MILLIS)) { slidePx }
                 } else {
                     EnterTransition.None
                 }
@@ -1298,7 +1304,7 @@ fun QuestionnaireScope.QuestionnaireChoice(
             modifier =
                 modifier
                     .heightIn(min = 44.dp)
-                    .then(if (resolvedEnabled) Modifier else Modifier.alpha(0.5f))
+                    .then(if (resolvedEnabled) Modifier else Modifier.alpha(DISABLED_OPACITY))
                     .focusRequester(focusRequester)
                     .onFocusChanged {
                         if (it.isFocused) {
@@ -1539,9 +1545,9 @@ fun QuestionnaireScope.QuestionnaireInput(
     }
     if (ctrl.activeName != name || ctrl.disabledByName[name] == true) return
     LaunchedEffect(ctrl.pendingAnswerFocus) {
-        if (ctrl.activeName == name && ctrl.pendingAnswerFocus == InputAnswerKey) {
+        if (ctrl.activeName == name && ctrl.pendingAnswerFocus == INPUT_ANSWER_KEY) {
             runCatching { focusRequester.requestFocus() }
-            if (ctrl.pendingAnswerFocus == InputAnswerKey) ctrl.pendingAnswerFocus = null
+            if (ctrl.pendingAnswerFocus == INPUT_ANSWER_KEY) ctrl.pendingAnswerFocus = null
         }
     }
     Input(

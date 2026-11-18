@@ -90,6 +90,21 @@ import kotlin.jvm.JvmName
 import com.toutiaoyan.compose.tailwind.core.twSpacing
 import com.toutiaoyan.compose.tailwind.core.twRadius
 
+/** Civil week length used by grid, focus, week-number, and locale weekday tables. */
+internal const val DAYS_IN_WEEK = 7
+
+/** Cap when skipping disabled dates during keyboard day-focus moves. */
+private const val DISABLED_DATE_FOCUS_HOP_LIMIT = 400
+
+/** react-day-picker `fixedWeeks` always fills a 6-row month grid. */
+private const val FIXED_WEEKS_PER_MONTH = 6
+
+/** Months in a civil year (locale month-label tables). */
+internal const val MONTHS_IN_YEAR = 12
+
+/** Whole-control dim matching CSS `disabled:opacity-50`. */
+private const val DISABLED_OPACITY = 0.5f
+
 /** A civil calendar date (Gregorian by default; see CalendarLocale.calendarSystem) -- the library has no `kotlinx-datetime` dependency,
  so this stays a minimal value type. */
 data class CalendarDate(val year: Int, val month: Int, val day: Int) : Comparable<CalendarDate> {
@@ -215,7 +230,7 @@ class CalendarState(
         var candidate = start.plusDays(days, system)
         val step = if (days >= 0) 1 else -1
         var hops = 0
-        while (isDisabled(candidate) && hops < 400) {
+        while (isDisabled(candidate) && hops < DISABLED_DATE_FOCUS_HOP_LIMIT) {
             candidate = candidate.plusDays(step, system)
             hops++
         }
@@ -224,10 +239,10 @@ class CalendarState(
 
     fun moveFocusToWeekEdge(end: Boolean) {
         val start = focusedDate ?: today ?: CalendarDate(year, month, 1)
-        val index = (system.dayOfWeek(start) - weekStartsOn + 7) % 7
+        val index = weekDayIndex(system.dayOfWeek(start), weekStartsOn)
         val target =
             if (end) {
-                start.plusDays(6 - index, system)
+                start.plusDays(DAYS_IN_WEEK - 1 - index, system)
             } else {
                 start.plusDays(-index, system)
             }
@@ -276,20 +291,7 @@ fun calendarState(): CalendarState =
 
 class CalendarScope internal constructor()
 
-private fun isLeapYear(year: Int) = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)
-
-private fun daysInMonth(
-    year: Int,
-    month: Int,
-): Int =
-    when (month) {
-        1, 3, 5, 7, 8, 10, 12 -> 31
-        4, 6, 9, 11 -> 30
-        2 -> if (isLeapYear(year)) 29 else 28
-        else -> error("month must be 1..12, was $month")
-    }
-
-// Sakamoto's algorithm: 0 = Sunday .. 6 = Saturday.
+// Sakamoto's algorithm: 0 = Sunday .. 6 = Saturday. Offsets stay literal (source table).
 private val SAKAMOTO_OFFSETS = intArrayOf(0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4)
 
 private fun sakamotoDayOfWeek(
@@ -298,8 +300,14 @@ private fun sakamotoDayOfWeek(
     day: Int,
 ): Int {
     val y = if (month < 3) year - 1 else year
-    return (y + y / 4 - y / 100 + y / 400 + SAKAMOTO_OFFSETS[month - 1] + day) % 7
+    return (y + y / 4 - y / 100 + y / 400 + SAKAMOTO_OFFSETS[month - 1] + day) % DAYS_IN_WEEK
 }
+
+/** Index of [dayOfWeek] within a week that starts on [weekStartsOn] (both 0=Sun..6=Sat). */
+private fun weekDayIndex(
+    dayOfWeek: Int,
+    weekStartsOn: Int,
+): Int = (dayOfWeek - weekStartsOn + DAYS_IN_WEEK) % DAYS_IN_WEEK
 
 /** 0 = Sunday .. 6 = Saturday, matching JS `Date#getDay()` / react-day-picker. */
 fun CalendarDate.dayOfWeek(): Int = sakamotoDayOfWeek(year, month, day)
@@ -307,12 +315,12 @@ fun CalendarDate.dayOfWeek(): Int = sakamotoDayOfWeek(year, month, day)
 private fun previousMonth(
     year: Int,
     month: Int,
-): Pair<Int, Int> = if (month == 1) year - 1 to 12 else year to month - 1
+): Pair<Int, Int> = if (month == 1) year - 1 to MONTHS_IN_YEAR else year to month - 1
 
 private fun nextMonth(
     year: Int,
     month: Int,
-): Pair<Int, Int> = if (month == 12) year + 1 to 1 else year to month + 1
+): Pair<Int, Int> = if (month == MONTHS_IN_YEAR) year + 1 to 1 else year to month + 1
 
 private fun addMonths(
     year: Int,
@@ -688,7 +696,7 @@ private fun CalendarImpl(
                 focusRevision++
             },
             numberOfMonths = numberOfMonths.coerceAtLeast(1),
-            weekStartsOn = weekStartsOn.coerceIn(0, 6),
+            weekStartsOn = weekStartsOn.coerceIn(0, DAYS_IN_WEEK - 1),
             showOutsideDays = showOutsideDays,
             fixedWeeks = fixedWeeks,
             hideNavigation = hideNavigation,
@@ -759,8 +767,8 @@ private fun handleCalendarKey(
     when (event.key) {
         Key.DirectionLeft -> state.moveFocusByDays(if (rtl) 1 else -1)
         Key.DirectionRight -> state.moveFocusByDays(if (rtl) -1 else 1)
-        Key.DirectionUp -> state.moveFocusByDays(-7)
-        Key.DirectionDown -> state.moveFocusByDays(7)
+        Key.DirectionUp -> state.moveFocusByDays(-DAYS_IN_WEEK)
+        Key.DirectionDown -> state.moveFocusByDays(DAYS_IN_WEEK)
         Key.MoveHome -> state.moveFocusToWeekEdge(end = false)
         Key.MoveEnd -> state.moveFocusToWeekEdge(end = true)
         Key.PageUp -> state.moveFocusByMonths(-1)
@@ -784,7 +792,13 @@ private val CELL_SIZE: Dp
             }
 
 private val CALENDAR_WIDTH: Dp
-    @Composable get() = CELL_SIZE * if (LocalCalendarWeekNumbers.current) 8 else 7
+    @Composable get() =
+        CELL_SIZE *
+            if (LocalCalendarWeekNumbers.current) {
+                DAYS_IN_WEEK + 1
+            } else {
+                DAYS_IN_WEEK
+            }
 
 /** One cell in a month grid (`date` + whether it falls in the displayed month). */
 data class CalendarCell(val date: CalendarDate, val inCurrentMonth: Boolean)
@@ -796,7 +810,7 @@ internal fun buildMonthGrid(
     fixedWeeks: Boolean = false,
     system: CalendarSystem = CalendarSystem.Gregorian,
 ): List<List<CalendarCell>> {
-    val firstWeekday = (system.dayOfWeek(CalendarDate(year, month, 1)) - weekStartsOn + 7) % 7
+    val firstWeekday = weekDayIndex(system.dayOfWeek(CalendarDate(year, month, 1)), weekStartsOn)
     val daysThisMonth = system.daysInMonth(year, month)
     val (prevYear, prevMonth) = previousMonth(year, month)
     val daysPrevMonth = system.precedingMonthLength(prevYear, prevMonth)
@@ -810,17 +824,17 @@ internal fun buildMonthGrid(
         cells += CalendarCell(CalendarDate(year, month, day), inCurrentMonth = true)
     }
     var nextDay = 1
-    while (cells.size % 7 != 0) {
+    while (cells.size % DAYS_IN_WEEK != 0) {
         cells += CalendarCell(CalendarDate(nextYear, nextMonth, nextDay), inCurrentMonth = false)
         nextDay++
     }
     if (fixedWeeks) {
-        while (cells.size < 42) {
+        while (cells.size < FIXED_WEEKS_PER_MONTH * DAYS_IN_WEEK) {
             cells += CalendarCell(CalendarDate(nextYear, nextMonth, nextDay), inCurrentMonth = false)
             nextDay++
         }
     }
-    return cells.chunked(7)
+    return cells.chunked(DAYS_IN_WEEK)
 }
 
 /** Default caption + weekday row + month grid. Multi-month uses [CalendarMonths]. */
@@ -1014,9 +1028,13 @@ internal fun calendarWeekNumber(
     system: CalendarSystem = CalendarSystem.Gregorian,
 ): Int {
     val supportedDate = system.clamp(date)
-    val end = supportedDate.plusDays(6 - (system.dayOfWeek(supportedDate) - weekStartsOn + 7) % 7, system)
+    val end =
+        supportedDate.plusDays(
+            DAYS_IN_WEEK - 1 - weekDayIndex(system.dayOfWeek(supportedDate), weekStartsOn),
+            system,
+        )
     val dayOfYear = (1 until end.month).sumOf { system.daysInMonth(end.year, it) } + end.day
-    return (dayOfYear - 1) / 7 + 1
+    return (dayOfYear - 1) / DAYS_IN_WEEK + 1
 }
 
 /** Previous-month chevron. Matches react-day-picker / shadcn calendar nav. */
@@ -1204,7 +1222,7 @@ private fun CalendarNavButton(
                     role = Role.Button,
                     onClick = onClick,
                 )
-                .then(if (enabled) Modifier else Modifier.alpha(0.5f))
+                .then(if (enabled) Modifier else Modifier.alpha(DISABLED_OPACITY))
                 .styleable(styleState, touchTargetStyle then pressStyle),
         contentAlignment = Alignment.Center,
     ) {
@@ -1312,7 +1330,7 @@ fun CalendarDayButton(
                     )
                 }
                 if (isDisabled) {
-                    alpha(0.5f)
+                    alpha(DISABLED_OPACITY)
                 }
             }
         }
