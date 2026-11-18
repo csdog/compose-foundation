@@ -226,15 +226,19 @@ class ToastState {
             onCancel = onCancel,
         )
 
-    /** Updates one existing message without replacing its identity or creating a dismissed toast again. */
+    /**
+     * Updates an existing message while preserving its ID.
+     * Returns false if the message is missing or [transform] dismisses or updates it.
+     */
     fun update(
         id: Long,
         transform: (ToastMessage) -> ToastMessage,
     ): Boolean {
-        val index = _toasts.indexOfFirst { it.id == id }
+        val previous = _toasts.firstOrNull { it.id == id } ?: return false
+        val updated = transform(previous).copy(id = id, revision = previous.revision + 1)
+        val index = _toasts.indexOfFirst { it === previous }
         if (index < 0) return false
-        val previous = _toasts[index]
-        _toasts[index] = transform(previous).copy(id = previous.id, revision = previous.revision + 1)
+        _toasts[index] = updated
         return true
     }
 

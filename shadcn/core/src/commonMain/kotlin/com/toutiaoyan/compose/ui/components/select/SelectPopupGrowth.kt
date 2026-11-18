@@ -24,7 +24,8 @@ internal fun selectPopupGrowth(
     val diff = if (topAnchored) maxScroll - scroll else scroll
     if (diff <= 0f) return null
     val nextHeight = min(geometry.height + diff, availableHeight)
-    val height = if (diff <= scale) nextHeight else ceil(nextHeight / scale) * scale
+    val height =
+        if (diff <= scale) nextHeight else (ceil(nextHeight / scale) * scale).coerceAtMost(availableHeight)
     val growth = height - geometry.height
     val nextMax = (maxScroll - growth).coerceAtLeast(0f)
     return SelectPopupGrowth(

@@ -24,6 +24,50 @@ class ToastManagerParityTest {
         assertTrue(state.toasts.isEmpty())
     }
 
+    @Test fun updateFindsItsMessageAfterTheQueueShifts() {
+        val state = ToastState()
+        val first = state.show("First")
+        val second = state.show("Second")
+        val third = state.show("Third")
+
+        assertTrue(
+            state.update(second) {
+                state.dismiss(first)
+                it.copy(title = "Updated")
+            },
+        )
+        assertEquals(listOf(second, third), state.toasts.map { it.id })
+        assertEquals(listOf("Updated", "Third"), state.toasts.map { it.title })
+    }
+
+    @Test fun updateDiscardsTheResultIfTheTransformDismissesItsMessage() {
+        val state = ToastState()
+        val id = state.show("Before")
+        val other = state.show("Other")
+
+        assertFalse(
+            state.update(id) {
+                state.dismiss(id)
+                it.copy(title = "Resurrected")
+            },
+        )
+        assertEquals(other, state.toasts.single().id)
+    }
+
+    @Test fun updatePreservesANewerRevisionWrittenByTheTransform() {
+        val state = ToastState()
+        val id = state.show("Before")
+
+        assertFalse(
+            state.update(id) {
+                state.update(id) { message -> message.copy(title = "Newer") }
+                it.copy(title = "Stale")
+            },
+        )
+        assertEquals("Newer", state.toasts.single().title)
+        assertEquals(1, state.toasts.single().revision)
+    }
+
     @Test fun promiseUpdatesOnePersistentLoadingMessageToSuccess() =
         runTest {
             val state = ToastState()
