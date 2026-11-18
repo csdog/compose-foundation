@@ -153,8 +153,8 @@
 | `inputgroup` | 待审 | 待审 |  |
 | `inputotp` | 待审 | 待审 |  |
 | `item` | 待审 | 待审 |  |
-| `kbd` | 待审 | 待审 |  |
-| `label` | 待审 | 待审 |  |
+| `kbd` | 已验收 | 已验收 | 核对键帽、组合、Tooltip 与触发器的语义。 |
+| `label` | 已验收 | 已验收 | `2efa8fbd` 修复零值与相对行高。 |
 | `marker` | 待审 | 待审 |  |
 | `menubar` | 局部审查 | 局部清理 | 已有悬停、焦点与 Canvas 适配证据。 |
 | `message` | 待审 | 待审 |  |
@@ -174,7 +174,7 @@
 | `sidebar` | 待审 | 局部清理 | 已处理动画时长。 |
 | `skeleton` | 已验收 | 已验收 | 替换样式、脉冲和目录布局已复核。 |
 | `slider` | 已验收 | 已验收 | 第二轮及第二批记录。 |
-| `spinner` | 待审 | 待审 |  |
+| `spinner` | 已验收 | 已验收 | `036a3657` 统一尺寸来源并拆清几何测试。 |
 | `stepper` | 待审 | 待审 |  |
 | `switch` | 待审 | 待审 |  |
 | `table` | 待审 | 待审 |  |
@@ -200,3 +200,10 @@
 - `Separator.kt:42` 的水平/垂直尺寸、装饰态与可覆盖语义已核对。核心 14 项、目录 38 项 JVM 通过。保留 `SeparatorStyles.kt` 中与样式共置的公开方向枚举及其一条文件命名规则记录。分隔线原生 ARIA role 的平台差异沿用现有记录。[既有 Web 验收](web-parity/separator-r3/README.md)
 - `Skeleton.kt:32` 的调用方替换样式和 `SkeletonStyles.kt:37` 的主题圆角、背景与脉冲已核对。核心 12 项、目录 48 项 JVM 通过，相关源码和测试无存量 ID。脉冲逐帧重组的回归测试通过。[既有 Web 验收](web-parity/skeleton-r2/README.md)
 - 本批 192 项 JVM 测试通过，目录模块 Detekt、ktlint 通过。初轮核心格式检查报出三处长行。修正后核心 Detekt、ktlint 与最终 56 项 Drawer JVM 回归通过。本批现有浏览器证据覆盖视觉和交互，本次 Drawer 结构清理沿用相同的阶段、阈值和数值。
+
+### Label、Kbd 和 Spinner 验收
+
+- `Label.kt` 的 Nova 行盒将公开 `FieldLabel` 的相对行高交给只接受 `sp` 的转换，且零行高会使行数计算得到 `NaN`。两条新 JVM 用例先分别复现 `Only Sp can convert to Px` 和 `Cannot round NaN value`，再经 `2efa8fbd` 通过。自定义行盒仅处理正值 `sp`，其余交由原段落测量。沿用 Nova 禁用透明度，移除 1 个存量 ID。保留 `LabelImpl` 一条参数数目记录，参数直接对应普通 Label 与提供 Field 排版覆盖的调用者。两种 Web 构建在 Chromium 通过可见标签激活复选框、Space 切换以及点击四个付款字段标签后编辑的验证。
+- `Kbd.kt:68` 与 `KbdStyles.kt:15` 的键帽尺寸、Tooltip 色彩、组合字体和非交互语义已核对。尺寸来自 Nova 的键帽规格。已有 JVM 用例验证组内文字及键帽的字体、内联图标和父按钮的点击。相关源码与测试无 Detekt 存量 ID。[既有 Web 验收](web-parity/kbd-r2)
+- `Spinner.kt` 与 `SpinnerStyles.kt` 的默认样式和固有尺寸现在共用同一 16 dp 来源。`036a3657` 保留 SVG 比例数值，分离尺寸样本、像素轮廓及覆盖率断言。规范尺寸枚举文件能独立检索，保留类型名和枚举值。核对了动画绘制、调用方样式覆盖、固有尺寸约束和单一加载语义。6 个存量 ID 已移除。[既有 Web 验收](web-parity/spinner-r2/README.md)
+- 本批 33 项核心及 38 项目录 JVM 测试通过，两模块 Detekt、ktlint 通过。7 个存量 ID 移除，零新增。最终 Spinner 默认值归并后在独立副本复跑核心 JVM 与 lint，通过。[JVM、Detekt 与 Chromium 证据](../.agent-runs/code-review-95c932b6/component-review-label-kbd-spinner.json)
