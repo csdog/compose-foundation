@@ -2,26 +2,19 @@
 
 package com.toutiaoyan.compose.ui.components.breadcrumb
 
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
-import androidx.compose.foundation.style.hovered
-import androidx.compose.foundation.style.animate
-import androidx.compose.foundation.style.focused
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -33,7 +26,6 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.semantics.clearAndSetSemantics
-import com.toutiaoyan.compose.ui.utils.rememberTheme
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.disabled
@@ -44,12 +36,14 @@ import com.toutiaoyan.compose.ui.components.icon.Icon
 import com.toutiaoyan.compose.ui.icons.NovaEllipsis
 import com.toutiaoyan.compose.ui.styles.rememberMinTouchTargetStyle
 import com.toutiaoyan.compose.ui.styles.cssStyleable
-import com.toutiaoyan.compose.ui.styles.focusRingShadow
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextVariant
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
+
+private const val BREADCRUMB_DISABLED_ALPHA = 0.5f
+private const val BREADCRUMB_RTL_CHEVRON_DEGREES = 180f
 
 /**
  * A row of navigation links showing the current page's location in a hierarchy.
@@ -76,15 +70,10 @@ fun Breadcrumb(
     content: @Composable RowScope.() -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    FlowRow(
-        modifier =
-            modifier
-                .semantics { contentDescription = ariaLabel }
-                .styleable(styleState, style),
-        horizontalArrangement = Arrangement.spacedBy(6.dp),
-        verticalArrangement = Arrangement.spacedBy(6.dp),
-        itemVerticalAlignment = Alignment.CenterVertically,
-    ) { content() }
+    BreadcrumbFlow(
+        modifier = modifier.semantics { contentDescription = ariaLabel }.styleable(styleState, style),
+        content = content,
+    )
 }
 
 /** Ordered, wrapping run of crumbs. Each BreadcrumbItem stays atomic. */
@@ -95,12 +84,7 @@ fun RowScope.BreadcrumbList(
     content: @Composable RowScope.() -> Unit,
 ) {
     val state = remember { MutableStyleState(MutableInteractionSource()) }
-    FlowRow(
-        modifier = modifier.styleable(state, style),
-        horizontalArrangement = Arrangement.spacedBy(6.dp),
-        verticalArrangement = Arrangement.spacedBy(6.dp),
-        itemVerticalAlignment = Alignment.CenterVertically,
-    ) { content() }
+    BreadcrumbFlow(modifier.styleable(state, style), content)
 }
 
 /** One inline-flex list item; icon and text content wrap as a single crumb. */
@@ -155,29 +139,14 @@ fun BreadcrumbLink(
     disabled: Boolean = false,
 ) {
     val resolvedEnabled = !disabled
-    val theme = currentTheme
-    val focusRing = theme.focusRingShadow()
     val interactionSource = remember { MutableInteractionSource() }
     val styleState = remember { MutableStyleState(interactionSource) }
-    val linkStyle =
-        rememberTheme(resolvedEnabled, focusRing) {
-            Style {
-                shape(RoundedCornerShape(2.dp))
-                contentColor(colors.mutedForeground)
-                focused { dropShadow(focusRing) }
-                animate(
-                    toSpec = tween(150, easing = FastOutSlowInEasing),
-                    fromSpec = tween(150, easing = FastOutSlowInEasing),
-                ) {
-                    if (resolvedEnabled) hovered { contentColor(colors.foreground) }
-                }
-            }
-        }
+    val linkStyle = rememberBreadcrumbLinkStyle(resolvedEnabled)
     val touchTargetStyle = rememberMinTouchTargetStyle()
     Box(
         modifier =
             modifier
-                .then(if (resolvedEnabled) Modifier else Modifier.alpha(0.5f))
+                .then(if (resolvedEnabled) Modifier else Modifier.alpha(BREADCRUMB_DISABLED_ALPHA))
                 .semantics {
                     role = Role.Button
                     contentDescription = text
@@ -261,12 +230,10 @@ fun BreadcrumbSeparator(
     modifier: Modifier = Modifier,
     style: Style = Style,
     content: @Composable () -> Unit = {
+        val rotation = if (LocalLayoutDirection.current == LayoutDirection.Rtl) BREADCRUMB_RTL_CHEVRON_DEGREES else 0f
         Icon(
             NovaChevronRight,
-            modifier =
-                Modifier.size(
-                    14.dp,
-                ).rotate(if (LocalLayoutDirection.current == LayoutDirection.Rtl) 180f else 0f),
+            modifier = Modifier.size(14.dp).rotate(rotation),
             tint = currentTheme.colors.mutedForeground,
         )
     },
