@@ -29,6 +29,7 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -696,26 +697,35 @@ fun DropdownMenuScope.DropdownMenuCheckboxItem(
         ) {
             if (!LocalContextMenuNova.current || leadingIndicator) DropdownMenuItemIndicator()
             leadingContent?.invoke()
-            Text(
-                modifier = if (LocalContextMenuNova.current) Modifier.weight(1f) else Modifier,
-                variant = if (LocalContextMenuNova.current) TextVariant.BodyMedium else TextVariant.BodySmall,
-                style =
-                    if (LocalContextMenuNova.current) {
-                        Style {
-                            fontSize(14.sp)
-                            lineHeight(20.sp)
-                        }
-                    } else {
-                        Style
-                    },
-                textStyle =
-                    contextMenuTypography(
-                        if (!enabled) TextColors.Muted else TextStyle(color = currentTheme.colors.popoverForeground),
-                    ),
-            ) { label }
+            DropdownMenuSelectionLabel(label, enabled)
             if (LocalContextMenuNova.current && !leadingIndicator) DropdownMenuItemIndicator()
         }
     }
+}
+
+@Composable
+private fun RowScope.DropdownMenuSelectionLabel(
+    label: String,
+    enabled: Boolean,
+) {
+    val nova = LocalContextMenuNova.current
+    Text(
+        modifier = if (nova) Modifier.weight(1f) else Modifier,
+        variant = if (nova) TextVariant.BodyMedium else TextVariant.BodySmall,
+        style =
+            if (nova) {
+                Style {
+                    fontSize(14.sp)
+                    lineHeight(20.sp)
+                }
+            } else {
+                Style
+            },
+        textStyle =
+            contextMenuTypography(
+                if (!enabled) TextColors.Muted else TextStyle(color = currentTheme.colors.popoverForeground),
+            ),
+    ) { label }
 }
 
 /** Check-mark slot for a [DropdownMenuCheckboxItem]. Inlined by official; not exported. */
@@ -876,23 +886,7 @@ fun DropdownMenuRadioGroupScope.DropdownMenuRadioItem(
             }
         }
         leadingContent?.invoke()
-        Text(
-            modifier = if (LocalContextMenuNova.current) Modifier.weight(1f) else Modifier,
-            variant = if (LocalContextMenuNova.current) TextVariant.BodyMedium else TextVariant.BodySmall,
-            style =
-                if (LocalContextMenuNova.current) {
-                    Style {
-                        fontSize(14.sp)
-                        lineHeight(20.sp)
-                    }
-                } else {
-                    Style
-                },
-            textStyle =
-                contextMenuTypography(
-                    if (!enabled) TextColors.Muted else TextStyle(color = currentTheme.colors.popoverForeground),
-                ),
-        ) { label }
+        DropdownMenuSelectionLabel(label, enabled)
         if (LocalContextMenuNova.current && !leadingIndicator) {
             Box(Modifier.size(16.dp), contentAlignment = Alignment.Center) {
                 if (selected) {
@@ -998,6 +992,8 @@ private class DropdownMenuSubController(
     fun toggle() = onOpenChange(!open)
 }
 
+private const val SUBMENU_HOVER_CLOSE_DELAY_MILLIS = 100L
+
 private val LocalDropdownMenuSub = staticCompositionLocalOf<DropdownMenuSubController?> { null }
 
 @Composable
@@ -1083,7 +1079,7 @@ fun DropdownMenuScope.DropdownMenuSub(
             hoverArmed = true
             setOpen(true)
         } else if (hoverArmed && !hasOpenChildren && !focusContent) {
-            delay(100)
+            delay(SUBMENU_HOVER_CLOSE_DELAY_MILLIS)
             setOpen(false)
             hoverArmed = false
         }
