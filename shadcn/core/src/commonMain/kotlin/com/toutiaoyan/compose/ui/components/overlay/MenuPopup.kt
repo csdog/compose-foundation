@@ -27,6 +27,8 @@ import androidx.compose.ui.unit.dp
 // Distinct defaults let an explicitly supplied shared transition retain priority.
 internal val MenuDefaultEnter = fadeIn(tween(0))
 internal val MenuDefaultExit = fadeOut(tween(0))
+private const val MENU_MOTION_MILLIS = 100
+private val MenuSlideDistance = 8.dp
 private val MenuCssEase = CubicBezierEasing(0.25f, 0.1f, 0.25f, 1f)
 
 @Composable
@@ -83,7 +85,7 @@ internal fun MenuPopup(
         if (open && ready && defaultEnter) {
             entryPresented = true
             if (animateDefaults) {
-                entryProgress.animateTo(1f, tween(100, easing = MenuCssEase))
+                entryProgress.animateTo(1f, tween(MENU_MOTION_MILLIS, easing = MenuCssEase))
             } else {
                 entryProgress.snapTo(1f)
             }
@@ -91,7 +93,7 @@ internal fun MenuPopup(
     }
     val geometry = remember { mutableStateOf<PopupPositionResult?>(null) }
     val positioned: (PopupPositionResult) -> Unit = remember { { geometry.value = it } }
-    val slidePx = with(LocalDensity.current) { 8.dp.toPx() }
+    val slidePx = with(LocalDensity.current) { MenuSlideDistance.toPx() }
     PositionedAnchoredPopup(
         open, onDismissRequest, placement, offset, align, alignOffset,
         dismissOnClickOutside, focusable,
@@ -110,7 +112,7 @@ internal fun MenuPopup(
         val opacity =
             if (ownDirection && !entering) {
                 transition.animateFloat(
-                    transitionSpec = { tween(100, easing = MenuCssEase) },
+                    transitionSpec = { tween(MENU_MOTION_MILLIS, easing = MenuCssEase) },
                     label = "Menu opacity",
                 ) { state -> if (state == EnterExitState.Visible) 1f else 0f }
             } else {
@@ -119,7 +121,7 @@ internal fun MenuPopup(
         val scale =
             if (ownDirection && !entering) {
                 transition.animateFloat(
-                    transitionSpec = { tween(100, easing = MenuCssEase) },
+                    transitionSpec = { tween(MENU_MOTION_MILLIS, easing = MenuCssEase) },
                     label = "Menu scale",
                 ) { state -> if (state == EnterExitState.Visible) 1f else 0.95f }
             } else {
@@ -214,7 +216,7 @@ private fun NovaMenuPopup(
         if (open) controller.presented = true
         if (open || controller.retained) {
             if (animateDefaults) {
-                progress.animateTo(1f, tween(100, easing = MenuCssEase))
+                progress.animateTo(1f, tween(MENU_MOTION_MILLIS, easing = MenuCssEase))
             } else {
                 progress.snapTo(1f)
             }
@@ -228,7 +230,7 @@ private fun NovaMenuPopup(
 
     val geometry = remember { mutableStateOf<PopupPositionResult?>(null) }
     val positioned: (PopupPositionResult) -> Unit = remember { { geometry.value = it } }
-    val slidePx = with(LocalDensity.current) { 8.dp.toPx() }
+    val slidePx = with(LocalDensity.current) { MenuSlideDistance.toPx() }
     RawAnchoredPopup(
         onDismissRequest = { if (open) onDismissRequest() },
         placement = placement,
