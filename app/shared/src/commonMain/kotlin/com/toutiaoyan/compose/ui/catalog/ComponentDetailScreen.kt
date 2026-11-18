@@ -288,6 +288,7 @@ internal fun ComponentDetailContent(
                                 modifier = Modifier.fillMaxWidth(),
                                 title = "build.gradle.kts",
                             )
+                            if (doc.installationBlocks.isNotEmpty()) GuideBlocks(doc.installationBlocks)
                         }
                         Section("Usage", Modifier.docAnchor(anchors, "usage"), spacing = 17.5.dp, anchorId = "usage") {
                             doc.usageImportsCode?.let {

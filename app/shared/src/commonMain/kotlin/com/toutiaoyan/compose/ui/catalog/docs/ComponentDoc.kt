@@ -53,6 +53,7 @@ data class ComponentDoc(
     val afterExampleSections: Map<String, List<ComponentGuideBlock>> = emptyMap(),
     /** Headingless guidance immediately before the Composition snippet. */
     val beforeCompositionMarkdown: String? = null,
+    val installationBlocks: List<ComponentGuideBlock> = emptyList(),
 )
 
 /** Prose between the component's recipes, with the same content used by Copy Page. */

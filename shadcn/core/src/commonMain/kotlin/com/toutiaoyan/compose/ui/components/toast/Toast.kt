@@ -9,7 +9,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,7 +21,6 @@ import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.styleable
-import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
@@ -48,7 +46,8 @@ import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.sp
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.theme.currentTheme
-import com.toutiaoyan.compose.ui.components.button.Button
+import com.toutiaoyan.compose.ui.tokens.StylePreset
+import com.toutiaoyan.compose.ui.components.button.ButtonSurface
 import com.toutiaoyan.compose.ui.components.button.ButtonSize
 import com.toutiaoyan.compose.ui.components.button.ButtonVariant
 import com.toutiaoyan.compose.ui.components.icon.Icon
@@ -303,7 +302,10 @@ fun rememberToastState(): ToastState = remember { ToastState() }
 @Composable
 fun toastState(): ToastState = rememberToastState()
 
-/** Renders [state]'s current toast queue as a bottom-aligned stack. Place once, near the root of your app. */
+private val DefaultToastEnter = fadeIn() + slideInVertically(initialOffsetY = { it / 2 })
+private val DefaultToastExit = fadeOut() + slideOutVertically(targetOffsetY = { it / 2 })
+
+/** Renders [state]'s current toast queue. Place once, near the root of your app. */
 @Composable
 fun Toaster(
     state: ToastState,
@@ -320,8 +322,8 @@ fun Toaster(
     gap: Dp = 12.dp,
     invert: Boolean = false,
     theme: ToastTheme = ToastTheme.System,
-    enter: EnterTransition = fadeIn() + slideInVertically(initialOffsetY = { it / 2 }),
-    exit: ExitTransition = fadeOut() + slideOutVertically(targetOffsetY = { it / 2 }),
+    enter: EnterTransition = DefaultToastEnter,
+    exit: ExitTransition = DefaultToastExit,
     containerAriaLabel: String = "Notifications",
     closeAriaLabel: String = "Close toast",
 ) {
@@ -333,9 +335,26 @@ fun Toaster(
             ToastTheme.Light -> invert xor isDark
             ToastTheme.Dark -> invert xor !isDark
         }
+    val viewportModifier = modifier.then(if (offset > 0.dp) Modifier.padding(offset) else Modifier)
+    if (currentTheme.activePreset == StylePreset.Nova && enter === DefaultToastEnter && exit === DefaultToastExit) {
+        NovaToastViewport(
+            state = state,
+            modifier = viewportModifier,
+            style = style,
+            position = position,
+            gap = gap,
+            visibleToasts = visibleToasts,
+            containerAriaLabel = containerAriaLabel,
+            cardStyle = cardStyle,
+            closeButton = closeButton,
+            richColors = richColors,
+            invert = resolvedInvert,
+            closeAriaLabel = closeAriaLabel,
+        )
+        return
+    }
     ToastViewport(
-        modifier =
-            modifier.then(if (offset > 0.dp) Modifier.padding(offset) else Modifier),
+        modifier = viewportModifier,
         style = style,
         position = position,
         gap = gap,
@@ -360,7 +379,7 @@ fun Toaster(
     }
 }
 
-/** Vertical viewport for toast cards; collapsed stacking and swipe interactions are pending. */
+/** Slot-based vertical viewport for custom toast layouts. */
 @Composable
 fun ToastViewport(
     modifier: Modifier = Modifier,
@@ -419,77 +438,124 @@ fun Toast(
         enter = enter,
         exit = exit,
     ) {
-        val theme = Theme.LocalTheme.current
-        val accentColor =
-            when (toast.variant) {
-                ToastVariant.Success -> TwColors.green600
-                ToastVariant.Error -> theme.colors.destructive
-                ToastVariant.Warning -> TwColors.amber600
-                ToastVariant.Info -> theme.colors.ring
-                ToastVariant.Default, ToastVariant.Loading -> theme.colors.foreground
+        ToastCard(
+            toast = toast,
+            onDismiss = {
+                visible = false
+                onDismiss()
+            },
+            style = style,
+            closeButton = closeButton,
+            richColors = richColors,
+            invert = invert,
+            closeAriaLabel = closeAriaLabel,
+        )
+    }
+}
+
+@Composable
+internal fun ToastCard(
+    toast: ToastMessage,
+    onDismiss: () -> Unit,
+    style: Style,
+    closeButton: Boolean,
+    richColors: Boolean,
+    invert: Boolean,
+    closeAriaLabel: String,
+    modifier: Modifier = Modifier,
+    nova: Boolean = false,
+    showContent: Boolean = true,
+    interactive: Boolean = true,
+    isActive: () -> Boolean = { true },
+    interactionSource: MutableInteractionSource? = null,
+    onAction: () -> Unit = { toast.onAction?.invoke() },
+) {
+    val theme = Theme.LocalTheme.current
+    val accentColor =
+        when (toast.variant) {
+            ToastVariant.Success -> TwColors.green600
+            ToastVariant.Error -> theme.colors.destructive
+            ToastVariant.Warning -> TwColors.amber600
+            ToastVariant.Info -> theme.colors.ring
+            ToastVariant.Default, ToastVariant.Loading -> theme.colors.foreground
+        }
+    val richStyle =
+        if (richColors) {
+            Style { background(accentColor.copy(alpha = 0.12f)) }
+        } else {
+            Style
+        }
+    val invertStyle =
+        if (invert) {
+            Style {
+                background(theme.colors.foreground)
+                contentColor(theme.colors.background)
             }
-        val richStyle =
-            if (richColors) {
-                Style { background(accentColor.copy(alpha = 0.12f)) }
-            } else {
-                Style
-            }
-        val invertStyle =
-            if (invert) {
-                Style {
-                    background(theme.colors.foreground)
-                    contentColor(theme.colors.background)
-                }
-            } else {
-                Style
-            }
-        val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-        Row(
-            modifier =
-                Modifier
-                    .semantics {
-                        liveRegion =
-                            if (toast.priority == ToastPriority.High) {
-                                LiveRegionMode.Assertive
-                            } else {
-                                LiveRegionMode.Polite
-                            }
-                    }
-                    .cssStyleable(
-                        styleState,
-                        rememberToastCardStyle() then richStyle then invertStyle then style,
-                    ),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
+        } else {
+            Style
+        }
+    val interactions = interactionSource ?: remember { MutableInteractionSource() }
+    val styleState = remember(interactions) { MutableStyleState(interactions) }
+    val baseStyle = if (nova) rememberNovaToastCardStyle() else rememberToastCardStyle()
+    Row(
+        modifier =
+            modifier
+                .then(
+                    if (showContent && interactive) {
+                        Modifier.semantics {
+                            liveRegion =
+                                if (toast.priority == ToastPriority.High) {
+                                    LiveRegionMode.Assertive
+                                } else {
+                                    LiveRegionMode.Polite
+                                }
+                        }
+                    } else {
+                        Modifier
+                    },
+                ).cssStyleable(styleState, baseStyle, richStyle, invertStyle, style),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        if (showContent) {
             ToastStatusIcon(toast.variant)
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 if (toast.title.isNotEmpty()) ToastTitle(toast.title)
-                if (toast.description != null) {
-                    ToastDescription(toast.description)
-                }
+                toast.description?.let { ToastDescription(it) }
             }
-            val actionLabel = toast.actionLabel
-            val onAction = toast.onAction
-            if (actionLabel != null) {
-                ToastAction(actionLabel, onClick = { onAction?.invoke() })
+            toast.actionLabel?.let { label ->
+                ToastActionControl(
+                    onClick = { if (isActive()) onAction() },
+                    modifier = Modifier,
+                    altText = null,
+                    interactive = interactive,
+                    reserveMinTouchTarget = !nova,
+                ) { Text { label } }
             }
             val cancelLabel = toast.cancelLabel
             val onCancel = toast.onCancel
             if (cancelLabel != null && onCancel != null) {
-                ToastAction(cancelLabel, onClick = {
-                    onCancel()
-                    visible = false
-                    onDismiss()
-                })
+                ToastActionControl(
+                    onClick = {
+                        if (isActive()) {
+                            onCancel()
+                            onDismiss()
+                        }
+                    },
+                    modifier = Modifier,
+                    altText = null,
+                    interactive = interactive,
+                    reserveMinTouchTarget = !nova,
+                ) { Text { cancelLabel } }
             }
             if (closeButton) {
-                ToastClose(
-                    onClick = {
-                        visible = false
-                        onDismiss()
-                    },
+                ToastCloseControl(
+                    onClick = { if (isActive()) onDismiss() },
+                    modifier = Modifier,
                     ariaLabel = closeAriaLabel,
+                    interactive = interactive,
+                    reserveMinTouchTarget = !nova,
+                    icon = { ToastCloseIcon() },
                 )
             }
         }
@@ -548,16 +614,33 @@ fun ToastClose(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     ariaLabel: String = "Close toast",
-    icon: @Composable () -> Unit = {
-        Icon(ToastXIcon, modifier = Modifier.size(16.dp), tint = currentTheme.colors.mutedForeground)
-    },
+    icon: @Composable () -> Unit = { ToastCloseIcon() },
 ) {
-    Button(
+    ToastCloseControl(onClick, modifier, ariaLabel, interactive = true, icon = icon)
+}
+
+@Composable
+private fun ToastCloseIcon() {
+    Icon(ToastXIcon, modifier = Modifier.size(16.dp), tint = currentTheme.colors.mutedForeground)
+}
+
+@Composable
+private fun ToastCloseControl(
+    onClick: () -> Unit,
+    modifier: Modifier,
+    ariaLabel: String,
+    interactive: Boolean,
+    reserveMinTouchTarget: Boolean = true,
+    icon: @Composable () -> Unit,
+) {
+    ButtonSurface(
         onClick = onClick,
         modifier = modifier,
         variant = ButtonVariant.Ghost,
         size = ButtonSize.IconSm,
         label = ariaLabel,
+        interactive = interactive,
+        reserveMinTouchTarget = reserveMinTouchTarget,
         content = icon,
     )
 }
@@ -570,12 +653,26 @@ fun ToastAction(
     altText: String? = null,
     content: @Composable () -> Unit,
 ) {
-    Button(
+    ToastActionControl(onClick, modifier, altText, interactive = true, content = content)
+}
+
+@Composable
+private fun ToastActionControl(
+    onClick: () -> Unit,
+    modifier: Modifier,
+    altText: String?,
+    interactive: Boolean,
+    reserveMinTouchTarget: Boolean = true,
+    content: @Composable () -> Unit,
+) {
+    ButtonSurface(
         onClick = onClick,
         modifier = modifier,
         variant = ButtonVariant.Outline,
         size = ButtonSize.Sm,
         label = altText ?: "",
+        interactive = interactive,
+        reserveMinTouchTarget = reserveMinTouchTarget,
         content = content,
     )
 }

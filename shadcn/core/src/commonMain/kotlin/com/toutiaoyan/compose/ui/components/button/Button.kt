@@ -111,6 +111,31 @@ fun Button(
     invalid: Boolean = false,
     content: @Composable () -> Unit,
 ) {
+    ButtonSurface(
+        onClick, modifier, enabled, disabled, variant, size, indication, label, style, iconPlacement, invalid,
+        interactive = true,
+        content = content,
+    )
+}
+
+@OptIn(ExperimentalFoundationStyleApi::class)
+@Composable
+internal fun ButtonSurface(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    disabled: Boolean = false,
+    variant: ButtonVariant = ButtonVariant.Default,
+    size: ButtonSize = ButtonSize.Md,
+    indication: Indication? = null,
+    label: String? = null,
+    style: Style = Style,
+    iconPlacement: ButtonIconPlacement? = null,
+    invalid: Boolean = false,
+    interactive: Boolean,
+    reserveMinTouchTarget: Boolean = true,
+    content: @Composable () -> Unit,
+) {
     val resolvedEnabled = enabled && !disabled && !LocalFieldSetDisabled.current
     val interactionSource = remember { MutableInteractionSource() }
     val styleState =
@@ -147,7 +172,7 @@ fun Button(
         } else {
             TextStyle.Default
         }
-    val minTouchTarget = theme.minTouchTarget
+    val minTouchTarget = theme.minTouchTarget.takeIf { reserveMinTouchTarget }
     // Link underline: Style `hovered { textDecoration }` is not reliable inside
     // SelectionContainer; drive Text via [LocalTextDecoration] instead (real shadcn:
     // `underline-offset-4 hover:underline`).
@@ -209,11 +234,9 @@ fun Button(
             indicationShape,
         )
 
-    // Outer: hit testing + theme minTouchTarget (default 48.dp), indication = null.
-    // Inner: painted chrome + press indication (same interactionSource).
-    Layout(
-        modifier =
-            modifier
+    val inputModifier =
+        if (interactive) {
+            Modifier
                 .raiseFocusedSiblingZIndex()
                 .keyboardInputMode()
                 .semantics(mergeDescendants = true) {
@@ -232,14 +255,20 @@ fun Button(
                     enabled = resolvedEnabled,
                     role = Role.Button,
                     onClick = onClick,
-                )
-                .then(
+                ).then(
                     if (resolvedEnabled) {
                         Modifier.pointerHoverIcon(if (isNova) PointerIcon.Default else PointerIcon.Hand)
                     } else {
                         Modifier
                     },
-                ),
+                )
+        } else {
+            Modifier
+        }
+
+    // The outer layout reserves the touch target; the inner chrome paints the indication.
+    Layout(
+        modifier = modifier.then(inputModifier),
         content = {
             CompositionLocalProvider(
                 LocalContentColor provides

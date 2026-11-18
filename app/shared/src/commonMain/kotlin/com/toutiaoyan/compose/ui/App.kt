@@ -34,11 +34,10 @@ import kotlinx.coroutines.flow.emptyFlow
 // - isDark (light/light-with-manual-override) applies everywhere -- top bar, sidebar,
 //   and content pane all share the same isDarkMode below, since dark/light is a real
 //   accessibility preference, not a "preview" setting.
-// - Style/Base Color/Accent apply to the detail content pane ONLY. This outer
-//   Theme deliberately uses fixed constants (not the live stylePreset/baseColor/
-//   accent state), so the top bar keeps a stable brand identity regardless of what a
-//   reader is previewing; CatalogNavHost nests a second Theme (same isDarkMode,
-//   but the live picker values) around the sidebar + content pane.
+// - Style/Base Color/Accent apply to the catalog preview scopes. This outer Theme
+//   uses fixed constants so the top bar keeps a stable brand identity.
+//   CatalogNavDisplay themes the sidebar and content pane. CatalogToastHost themes
+//   the window-level Toaster only while the Toast detail page is active.
 @Composable
 @Preview
 fun App(
@@ -91,7 +90,11 @@ fun App(
         fontFamily = catalogFontFamily(),
     ) {
         OverlayHost {
-            CatalogToastHost {
+            CatalogToastHost(
+                toastPreset = stylePreset.takeIf { appRouter.current == RouteKey.ComponentDetail("toast") },
+                toastBaseColor = baseColor,
+                toastAccent = accent,
+            ) {
                 DrawerIndentHost {
                     CatalogNavDisplay(
                         backStack = backStack,

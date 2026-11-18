@@ -10,10 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toAwtImage
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
+import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.unit.*
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.catalog.docs.toastDoc
 import com.toutiaoyan.compose.ui.components.toast.*
 import com.toutiaoyan.compose.ui.theme.Theme
@@ -73,15 +76,18 @@ class ToastExamplesTest(private val viewport: Int, private val dark: Boolean) {
                     }
                 }
             CompositionLocalProvider(LocalWindowInfo provides window) {
-                Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
+                Theme(preset = StylePreset.Vega, isDark = dark, minTouchTarget = 48.dp) {
                     CatalogToastHost(
                         Modifier.width(minOf(viewport, 640).dp).height(640.dp)
                             .background(currentTheme.colors.background).testTag("toast-scene"),
+                        toastPreset = StylePreset.Nova,
                     ) {
                         val manager = checkNotNull(LocalCatalogToastState.current)
                         SideEffect { state = manager }
-                        Box(Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
-                            toastDoc.examples.single { it.title == title }.preview()
+                        Theme(preset = StylePreset.Nova, isDark = dark, minTouchTarget = null) {
+                            Box(Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
+                                toastDoc.examples.single { it.title == title }.preview()
+                            }
                         }
                     }
                 }
@@ -148,7 +154,7 @@ class ToastExamplesTest(private val viewport: Int, private val dark: Boolean) {
     @Test fun promiseChangesOneLoadingNotificationToSuccess() {
         show("Promise")
         rule.onNodeWithText("Create Event").performClick()
-        advance(32)
+        advance(550)
         assertEquals(ToastVariant.Loading, state.toasts.single().variant)
         val id = state.toasts.single().id
         rule.onNodeWithText("Creating event…").assertIsDisplayed()
@@ -170,15 +176,23 @@ class ToastExamplesTest(private val viewport: Int, private val dark: Boolean) {
         rule.onNodeWithText("Event created").assertDoesNotExist()
     }
 
-    @Test fun windowHostUsesSixteenPixelInsetsAndResponsiveWidth() {
+    @Test fun windowHostUsesNovaInsetsAndCompactControlsUnderVegaChrome() {
         show("Default")
         rule.onNodeWithText("Show Toast").performClick()
-        advance()
+        advance(550)
         toast().assertWidthIsEqualTo((if (viewport == 390) 358 else 384).dp)
         val scene = rule.onNodeWithTag("toast-scene").fetchSemanticsNode().boundsInRoot
         val actual = toast().fetchSemanticsNode().boundsInRoot
+        val title = rule.onNodeWithText("Event created").fetchSemanticsNode().boundsInRoot
         assertEquals(scene.right - 16, actual.right, .1f)
         assertEquals(scene.bottom - 16, actual.bottom, .1f)
+        assertEquals(actual.left + 17, title.left, .1f)
+        rule.onNodeWithContentDescription("Close toast").assertWidthIsEqualTo(28.dp)
+        val description = mutableListOf<TextLayoutResult>()
+        rule
+            .onNodeWithText("Sunday, December 3 at 9:00 AM")
+            .performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(description) }
+        assertEquals(1, description.single().lineCount)
         capture("viewport", scene = true)
     }
 
@@ -207,5 +221,31 @@ class ToastExamplesTest(private val viewport: Int, private val dark: Boolean) {
         assertEquals(1, actions)
         assertEquals(1, state.toasts.size)
         capture("updated")
+    }
+}
+
+class ToastGuideTest {
+    @Test fun copyPageContainsGuidesInSourceOrderBeforeTheKotlinExtensions() {
+        val markdown = componentPageMarkdown(toastDoc)
+        val orderedHeadings =
+            listOf(
+                "## Default",
+                "## Installation",
+                "## Usage",
+                "## Types",
+                "## Action",
+                "## Promise",
+                "## API Reference",
+                "## Kotlin extension: Duration",
+                "## Kotlin extension: Position",
+                "## Kotlin extension: Close button",
+            )
+        val positions = orderedHeadings.map { markdown.indexOf(it) }
+        assertTrue(positions.all { it >= 0 }, "Missing headings: ${orderedHeadings.filterNot { it in markdown }}")
+        assertEquals(positions.sorted(), positions)
+        assertTrue(markdown.substringAfter("## Installation").substringBefore("## Usage").contains("fun ToastRoot("))
+        assertTrue(markdown.substringAfter("## Usage").substringBefore("## Types").contains("fun showEventToast("))
+        assertTrue(markdown.substringAfter("## Action").substringBefore("## Promise").contains("state.close(id)"))
+        assertTrue(markdown.substringAfter("## API Reference").contains("https://base-ui.com/react/components/toast"))
     }
 }
