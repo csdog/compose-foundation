@@ -101,6 +101,10 @@ import com.toutiaoyan.compose.ui.styles.rememberPressMotionStyle
 import com.toutiaoyan.compose.ui.theme.currentTheme
 
 // CSS line-height reserves20px even when the selected RTL font has taller metrics.
+private const val ACCORDION_NOVA_MOTION_MILLIS = 200
+private val accordionNovaMotionEasing = CubicBezierEasing(0f, 0f, 0.58f, 1f)
+private const val ACCORDION_DISABLED_ALPHA = 0.5f
+
 private val novaAccordionLineHeight =
     LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None, LineHeightStyle.Mode.Tight)
 
@@ -152,6 +156,13 @@ private class AccordionNavState {
     val positions = mutableMapOf<String, Offset>()
 
     fun requester(value: String): FocusRequester = focusRequesters.getOrPut(value) { FocusRequester() }
+
+    fun focusTrigger(value: String): Boolean =
+        triggerEnabled[value] == true && focusRequesters[value]?.requestFocus() == true
+
+    fun enabledTriggerOrder(): List<String> =
+        // Both keyboard orientations share the vertically stacked layout.
+        itemOrder.filter { itemEnabled[it] != false && triggerEnabled[it] == true }.sortedBy { positions[it]?.y ?: 0f }
 
     fun unregister(value: String) {
         itemOrder.remove(value)
@@ -604,7 +615,7 @@ fun AccordionItemScope.AccordionTrigger(
                     if (event.type == KeyEventType.KeyDown) inputMode.requestInputMode(InputMode.Keyboard)
                     if (nav == null) false else handleAccordionKey(nav, value, event, loop, orientation, direction)
                 }
-                .then(if (resolvedDisabled) Modifier.alpha(0.5f) else Modifier)
+                .then(if (resolvedDisabled) Modifier.alpha(ACCORDION_DISABLED_ALPHA) else Modifier)
                 .styleable(
                     styleState,
                     touchTargetStyle then pressStyle then rememberAccordionTriggerStyle() then style,
@@ -692,7 +703,7 @@ fun AccordionItemScope.AccordionContent(
     enter: EnterTransition =
         if (currentTheme.activePreset == StylePreset.Nova) {
             expandVertically(
-                tween(200, easing = CubicBezierEasing(0f, 0f, 0.58f, 1f)),
+                tween(ACCORDION_NOVA_MOTION_MILLIS, easing = accordionNovaMotionEasing),
             )
         } else {
             fadeIn() + expandVertically()
@@ -700,7 +711,7 @@ fun AccordionItemScope.AccordionContent(
     exit: ExitTransition =
         if (currentTheme.activePreset == StylePreset.Nova) {
             shrinkVertically(
-                tween(200, easing = CubicBezierEasing(0f, 0f, 0.58f, 1f)),
+                tween(ACCORDION_NOVA_MOTION_MILLIS, easing = accordionNovaMotionEasing),
             )
         } else {
             fadeOut() + shrinkVertically()
@@ -712,7 +723,7 @@ fun AccordionItemScope.AccordionContent(
     val nav = LocalAccordionNav.current
     var contentHasFocus by remember { mutableStateOf(false) }
     LaunchedEffect(open) {
-        if (!open && contentHasFocus) nav?.requester(value)?.requestFocus()
+        if (!open && contentHasFocus) nav?.focusTrigger(value)
     }
     val body: @Composable () -> Unit = {
         val contentStyleState = remember { MutableStyleState(MutableInteractionSource()) }
@@ -756,7 +767,7 @@ fun AccordionItemScope.AccordionContent(
     enter: EnterTransition =
         if (currentTheme.activePreset == StylePreset.Nova) {
             expandVertically(
-                tween(200, easing = CubicBezierEasing(0f, 0f, 0.58f, 1f)),
+                tween(ACCORDION_NOVA_MOTION_MILLIS, easing = accordionNovaMotionEasing),
             )
         } else {
             fadeIn() + expandVertically()
@@ -764,7 +775,7 @@ fun AccordionItemScope.AccordionContent(
     exit: ExitTransition =
         if (currentTheme.activePreset == StylePreset.Nova) {
             shrinkVertically(
-                tween(200, easing = CubicBezierEasing(0f, 0f, 0.58f, 1f)),
+                tween(ACCORDION_NOVA_MOTION_MILLIS, easing = accordionNovaMotionEasing),
             )
         } else {
             fadeOut() + shrinkVertically()
@@ -815,50 +826,22 @@ private fun handleAccordionKey(
     direction: LayoutDirection,
 ): Boolean {
     if (event.type != KeyEventType.KeyDown) return false
-    val enabled =
-        // Both keyboard orientations share the vertically stacked shadcn layout.
-        // Current y positions preserve keyed order even when RTL items have different widths.
-        nav.itemOrder.filter { nav.itemEnabled[it] != false && nav.triggerEnabled[it] != false }.sortedBy {
-            nav.positions[it]?.y ?: 0f
-        }
-    if (enabled.isEmpty()) return false
-    val idx = enabled.indexOf(current)
-    if (idx < 0) return false
-    val last = enabled.lastIndex
-    val forward =
-        if (orientation == AccordionOrientation.Vertical) {
-            Key.DirectionDown
-        } else if (direction == LayoutDirection.Rtl) {
-            Key.DirectionLeft
-        } else {
-            Key.DirectionRight
-        }
-    val backward =
-        if (orientation == AccordionOrientation.Vertical) {
-            Key.DirectionUp
-        } else if (direction == LayoutDirection.Rtl) {
-            Key.DirectionRight
-        } else {
-            Key.DirectionLeft
+    val enabled = nav.enabledTriggerOrder()
+    val index = enabled.indexOf(current)
+    if (index < 0) return false
+    val (forward, backward) =
+        when {
+            orientation == AccordionOrientation.Vertical -> Key.DirectionDown to Key.DirectionUp
+            direction == LayoutDirection.Rtl -> Key.DirectionLeft to Key.DirectionRight
+            else -> Key.DirectionRight to Key.DirectionLeft
         }
     val next =
         when (event.key) {
-            forward ->
-                when {
-                    idx < last -> enabled[idx + 1]
-                    loop -> enabled[0]
-                    else -> return false
-                }
-            backward ->
-                when {
-                    idx > 0 -> enabled[idx - 1]
-                    loop -> enabled[last]
-                    else -> return false
-                }
+            forward -> enabled.getOrNull(index + 1) ?: enabled.first().takeIf { loop }
+            backward -> enabled.getOrNull(index - 1) ?: enabled.last().takeIf { loop }
             Key.MoveHome -> enabled.first()
-            Key.MoveEnd -> enabled[last]
-            else -> return false
+            Key.MoveEnd -> enabled.last()
+            else -> null
         }
-    nav.requester(next).requestFocus()
-    return true
+    return next?.let(nav::focusTrigger) == true
 }
