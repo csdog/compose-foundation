@@ -149,9 +149,9 @@
 | `field` | 待审 | 待审 |  |
 | `hovercard` | 待审 | 待审 |  |
 | `icon` | 已验收 | 已验收 | 共享尺寸样式并核对显式染色，`2334e48a`。 |
-| `input` | 待审 | 待审 |  |
+| `input` | 已验收 | 已验收 | 保留字数上限时未被编辑的文本，`f19db43a`。 |
 | `inputgroup` | 待审 | 待审 |  |
-| `inputotp` | 待审 | 待审 |  |
+| `inputotp` | 已验收 | 已验收 | 仅在值变化时回调，移除槽位时清理命中坐标，`1a1a0fa2`。 |
 | `item` | 待审 | 待审 |  |
 | `kbd` | 已验收 | 已验收 | 核对键帽、组合、Tooltip 与触发器的语义。 |
 | `label` | 已验收 | 已验收 | `2efa8fbd` 修复零值与相对行高。 |
@@ -180,7 +180,7 @@
 | `table` | 待审 | 待审 |  |
 | `tabs` | 已验收 | 已验收 | 退出动画开始后旧面板释放焦点，`0a0763d9`。 |
 | `text` | 待审 | 待审 |  |
-| `textarea` | 待审 | 待审 |  |
+| `textarea` | 已验收 | 已验收 | 加上限时替换多行内容的回归覆盖，`ae14d1d2`。 |
 | `toast` | 已验收 | 已验收 | 前两轮及第一批记录。 |
 | `toggle` | 已验收 | 已验收 | 第二轮及第二批记录。 |
 | `togglegroup` | 待审 | 待审 |  |
@@ -248,3 +248,11 @@
 - `Attachment.kt:691` 与 `AttachmentGroupScroll.kt:75`。未溢出的附件组原先暴露 `RequestFocus`，形成多余的 Tab 停靠点。修复后有溢出才加入键盘顺序，布局从溢出恢复为可容纳时移除停靠点。单独处理滚轮、拖动惯性、嵌套滚动与方向键，保留滚动吸附边界、RTL 和独立删除操作。净移除八条存量 ID。保留公开重载、布局分支及上传托盘的完整样式验证。
 - `Trace.kt:291`。旧链接在 Enter 按下时打开，并额外手动发出焦点交互。修复后沿用共享点击组件，按键释放才打开一次，保留悬停、可访问名称和 URI 回调。说明展开时长、箭头角度和待处理透明度，移除四条存量 ID。公开的归组插槽和由调用方控制的展开参数保留。
 - 最终 127 项 JVM 检查及两模块 Detekt、ktlint 通过。显式像素比对共 133 项，六项 Attachment 快照在修复前同样失败，实际 PNG 前后逐一相同。干净源码扫描 559 个 Kotlin 文件，已提交 baseline 从 4,499 条减至 4,487 条，零新增。Chromium 在 JS 和 Wasm 上验证溢出前后的真实 Tab 顺序、Trace 的 Enter 释放与 Marker 居中。最终两种常规目录构建通过。[JVM、像素比对与浏览器证据](../.agent-runs/code-review-95c932b6/component-review-marker-attachment-trace.json)
+
+### Input、Textarea 和 InputOTP 验收
+
+- `Input.kt:243` 原先截断整个更新后的值，达到上限时在中间插入字符会误删尾部。`InputEdit.kt:10` 缩减插入范围并重映射光标和输入法组合区，同时避免拆开 UTF-16 代理对。提交 `f19db43a`。
+- `Textarea.kt:67` 沿用 Input 的编辑逻辑，新增选区跨行回归，保留已有的最小高度。提交 `ae14d1d2`。
+- `InputOTP.kt:293` 只在接受的值实际变化时回调。槽位在 `InputOTP.kt:392` 随组合退出释放命中坐标。在原槽位的位置输入时，更新当前存在的最近槽位。提交 `1a1a0fa2`。
+- 保留公开签名、主题颜色及动效定义。输入框的可用态、焦点、分组适配和正文装饰共用一个受控编辑入口。OTP 槽位样式维持原有组环与层叠顺序。保留 Nova 的禁用背景标准透明度和 CSS ease-out 控制点。
+- 核心的同配置 Detekt 扫描从 4,487 减至 4,479 个存量 ID，零新增。核心和目录 Detekt、ktlint 与 100 项最终 JVM 验证通过。Textarea 四张快照在原实现上同样失败，实际 PNG 的 SHA-256 逐一相同。两种常规 Web 构建通过，Chromium 在 JS/Wasm 上实测选区替换、OTP 回调和动态槽位的指针命中。[验证证据](code-review-evidence/input-textarea-inputotp.json)

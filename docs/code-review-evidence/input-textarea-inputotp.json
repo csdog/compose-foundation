@@ -1,0 +1,309 @@
+{
+  "reviewBaseline": "95c932b6",
+  "reproductionSource": "1da5c6ed",
+  "fixCommits": {
+    "input": "f19db43a",
+    "textarea": "ae14d1d2",
+    "inputotp": "1a1a0fa2"
+  },
+  "jvmReproduction": {
+    "insertionAtTheLimitKeepsUntouchedSuffix[jvm]": {
+      "before": "org.junit.ComparisonFailure: expected:<a[bcd]> but was:<a[Xbc]>",
+      "after": "passed"
+    },
+    "replacementAtTheLimitKeepsTheFollowingLine[jvm]": {
+      "before": "org.junit.ComparisonFailure: expected:<aXY[\ncd]> but was:<aXY[Z\nc]>",
+      "after": "passed"
+    },
+    "reportsValueChangesWithoutReportingCursorMovesOrRejectedInput[jvm]": {
+      "before": "java.lang.AssertionError: expected:<[]> but was:<[12, 12]>",
+      "after": "passed"
+    },
+    "tapWhereASlotWasRemovedTargetsAMountedSlot[jvm]": {
+      "before": "org.junit.ComparisonFailure: expected:<[52]> but was:<[15]>",
+      "after": "passed"
+    }
+  },
+  "jvmFinal": {
+    "shadcn/core": {
+      "FormNovaParityTest[jvm]": {
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "failingCases": {},
+        "caseNames": [
+          "darkMatrix[jvm]",
+          "novaFieldSpacingUsesTwentyEightAndTwo[jvm]",
+          "inputBackgroundFollowsLiveThemeChanges[jvm]",
+          "controlsKeepTheirDimensionsAndTextareaPlaceholderStartsAtTheTop[jvm]",
+          "focusLight[jvm]",
+          "textareaFocusLight[jvm]",
+          "responsiveFieldsSwitchAtTheContainerMdBreakpoint[jvm]",
+          "textEditingHonorsMaxLengthAndInvalidSemantics[jvm]",
+          "textareaFocusDark[jvm]",
+          "textareaGrowsWithMultilineContent[jvm]",
+          "nestedFieldSetCannotReenableItsDisabledParent[jvm]",
+          "labelsAndSupportingCopyUseNovaTypography[jvm]",
+          "lightMatrix[jvm]",
+          "focusDark[jvm]"
+        ]
+      },
+      "InputLengthTest[jvm]": {
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "failingCases": {},
+        "caseNames": [
+          "insertionAtTheLimitKeepsUntouchedSuffix[jvm]",
+          "limitDoesNotSplitASupplementaryCharacter[jvm]"
+        ]
+      },
+      "InputNovaMotionTest[jvm]": {
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "failingCases": {},
+        "caseNames": [
+          "borderColorTransitionsInBothDirectionsWhileTheRingUpdatesImmediately[jvm]",
+          "focusedInputRepaintsItsShapeAndThemeWithoutReplacingItsValue[jvm]"
+        ]
+      },
+      "InputScreenshotTest[jvm]": {
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "failingCases": {},
+        "caseNames": [
+          "focused_light[jvm]",
+          "focused_with_ring_disabled_light[jvm]",
+          "states_light[jvm]",
+          "focused_dark[jvm]",
+          "states_dark[jvm]"
+        ]
+      },
+      "InputOTPNovaMotionTest[jvm]": {
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "failingCases": {},
+        "caseNames": [
+          "focusedSlotUsesTheCurrentRadiusAndThemeAndRetainsItsDigit[jvm]",
+          "caretBlinksInTheEmptySlot[jvm]",
+          "focusAndBlurAnimateBothBorderAndRing[jvm]"
+        ]
+      },
+      "InputOTPParityTest[jvm]": {
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "failingCases": {},
+        "caseNames": [
+          "invalidGroupDoesNotPaintRingsAcrossItsInternalSeams[jvm]",
+          "tapWhereASlotWasRemovedTargetsAMountedSlot[jvm]",
+          "clipboardPasteFiltersAndTruncatesThenBackspaceDeletesSelection[jvm]",
+          "largeFormSlotsKeepTheirGeometryAndOriginalOverloadRemainsCallable[jvm]",
+          "reportsValueChangesWithoutReportingCursorMovesOrRejectedInput[jvm]"
+        ]
+      },
+      "InputOTPScreenshotTest[jvm]": {
+        "tests": 7,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "failingCases": {},
+        "caseNames": [
+          "focused_light[jvm]",
+          "verify_email_light[jvm]",
+          "focused_with_ring_disabled_light[jvm]",
+          "verify_email_dark[jvm]",
+          "states_light[jvm]",
+          "focused_dark[jvm]",
+          "states_dark[jvm]"
+        ]
+      },
+      "TextareaLengthTest[jvm]": {
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "failingCases": {},
+        "caseNames": [
+          "replacementAtTheLimitKeepsTheFollowingLine[jvm]"
+        ]
+      }
+    },
+    "app/shared": {
+      "InputExamplesTest[jvm]": {
+        "tests": 18,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "failingCases": {},
+        "caseNames": [
+          "rtlRecipeShowsArabicCopy[jvm]",
+          "requiredLabelShowsTheDestructiveAsterisk[jvm]",
+          "fileActionUsesTheUpdatedPickerAndAcceptsAnOutstandingResult[jvm]",
+          "inputsFillTheConfiguredWidth[jvm]",
+          "autofocusPreviewCanEditTheFocusedInput[jvm]",
+          "inlineRecipeLetsTheInputFillTheRow[jvm]",
+          "rtlLabelFocusesThePasswordInput[jvm]",
+          "formStartsWithTheSelectedCountry[jvm]",
+          "exportedFileCodeHasACallerSuppliedPickerAndCancelContract[jvm]",
+          "fileSelectionShowsTheFilenameAndCancellationKeepsIt[jvm]",
+          "gridLabelsFocusTheirOwnInputsWithoutAddingTabStops[jvm]",
+          "pictureLabelOpensTheInjectedPickerWithAnAccessibleButtonName[jvm]",
+          "disabledRecipeDisablesFieldAndInput[jvm]",
+          "clickingTheLabelFocusesTheNamedInput[jvm]",
+          "officialRecipeOrderMatchesCurrentPage[jvm]",
+          "officialCopyIsPresentInTheExportedCode[jvm]",
+          "unsupportedFilePickerIsDisabledAndExplained[jvm]",
+          "formLabelsFocusTheirOwnControls[jvm]"
+        ]
+      },
+      "InputOTPExamplesTest[jvm]": {
+        "tests": 36,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "failingCases": {},
+        "caseNames": [
+          "officialPageOrderAndCopyMatchCurrentOfficialPage[width=390, dark=false][jvm]",
+          "formShowsAllSixDigitsWhenTheCardNarrows[width=390, dark=false][jvm]",
+          "everyOfficialPreviewRendersAtBothWidths[width=390, dark=false][jvm]",
+          "controlledPreviewReflectsTypedDigits[width=390, dark=false][jvm]",
+          "officialFormUsesLargeSlotTypography[width=390, dark=false][jvm]",
+          "digitsPatternFiltersTypedLetters[width=390, dark=false][jvm]",
+          "patternLabelNamesAndFocusesTheEditableSemanticsNode[width=390, dark=false][jvm]",
+          "splitRecipesKeepEqualSlotWidthsAtNarrowSizes[width=390, dark=false][jvm]",
+          "invalidAndDisabledSlotsExposeTheirSemantics[width=390, dark=false][jvm]",
+          "officialPageOrderAndCopyMatchCurrentOfficialPage[width=390, dark=true][jvm]",
+          "formShowsAllSixDigitsWhenTheCardNarrows[width=390, dark=true][jvm]",
+          "everyOfficialPreviewRendersAtBothWidths[width=390, dark=true][jvm]",
+          "controlledPreviewReflectsTypedDigits[width=390, dark=true][jvm]",
+          "officialFormUsesLargeSlotTypography[width=390, dark=true][jvm]",
+          "digitsPatternFiltersTypedLetters[width=390, dark=true][jvm]",
+          "patternLabelNamesAndFocusesTheEditableSemanticsNode[width=390, dark=true][jvm]",
+          "splitRecipesKeepEqualSlotWidthsAtNarrowSizes[width=390, dark=true][jvm]",
+          "invalidAndDisabledSlotsExposeTheirSemantics[width=390, dark=true][jvm]",
+          "officialPageOrderAndCopyMatchCurrentOfficialPage[width=1,440, dark=false][jvm]",
+          "formShowsAllSixDigitsWhenTheCardNarrows[width=1,440, dark=false][jvm]",
+          "everyOfficialPreviewRendersAtBothWidths[width=1,440, dark=false][jvm]",
+          "controlledPreviewReflectsTypedDigits[width=1,440, dark=false][jvm]",
+          "officialFormUsesLargeSlotTypography[width=1,440, dark=false][jvm]",
+          "digitsPatternFiltersTypedLetters[width=1,440, dark=false][jvm]",
+          "patternLabelNamesAndFocusesTheEditableSemanticsNode[width=1,440, dark=false][jvm]",
+          "splitRecipesKeepEqualSlotWidthsAtNarrowSizes[width=1,440, dark=false][jvm]",
+          "invalidAndDisabledSlotsExposeTheirSemantics[width=1,440, dark=false][jvm]",
+          "officialPageOrderAndCopyMatchCurrentOfficialPage[width=1,440, dark=true][jvm]",
+          "formShowsAllSixDigitsWhenTheCardNarrows[width=1,440, dark=true][jvm]",
+          "everyOfficialPreviewRendersAtBothWidths[width=1,440, dark=true][jvm]",
+          "controlledPreviewReflectsTypedDigits[width=1,440, dark=true][jvm]",
+          "officialFormUsesLargeSlotTypography[width=1,440, dark=true][jvm]",
+          "digitsPatternFiltersTypedLetters[width=1,440, dark=true][jvm]",
+          "patternLabelNamesAndFocusesTheEditableSemanticsNode[width=1,440, dark=true][jvm]",
+          "splitRecipesKeepEqualSlotWidthsAtNarrowSizes[width=1,440, dark=true][jvm]",
+          "invalidAndDisabledSlotsExposeTheirSemantics[width=1,440, dark=true][jvm]"
+        ]
+      },
+      "TextareaExamplesTest[jvm]": {
+        "tests": 7,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "failingCases": {},
+        "caseNames": [
+          "disabledRecipeDisablesTheTextarea[jvm]",
+          "buttonRecipePairsTextareaWithSubmit[jvm]",
+          "copyPageMarkdownKeepsOfficialOrderAndExtensions[jvm]",
+          "officialRecipeOrderAndDescriptionMatchCurrentPage[jvm]",
+          "invalidRecipeShowsTheErrorDescription[jvm]",
+          "fieldRecipeRendersLabelDescriptionAndTextarea[jvm]",
+          "rtlRecipeStartsWithArabicCopy[jvm]"
+        ]
+      }
+    }
+  },
+  "snapshots": {
+    "roborazzi.test.verify": true,
+    "existingFailures": {
+      "focused_light[jvm]": "java.lang.AssertionError: Roborazzi: shadcn/core/src/jvmTest/snapshots/textarea_focused_light.png is changed.\nSee the compare image at shadcn/core/build/outputs/roborazzi/textarea_focused_light_compare.png",
+      "states_light[jvm]": "java.lang.AssertionError: Roborazzi: shadcn/core/src/jvmTest/snapshots/textarea_states_light.png is changed.\nSee the compare image at shadcn/core/build/outputs/roborazzi/textarea_states_light_compare.png",
+      "focused_dark[jvm]": "java.lang.AssertionError: Roborazzi: shadcn/core/src/jvmTest/snapshots/textarea_focused_dark.png is changed.\nSee the compare image at shadcn/core/build/outputs/roborazzi/textarea_focused_dark_compare.png",
+      "states_dark[jvm]": "java.lang.AssertionError: Roborazzi: shadcn/core/src/jvmTest/snapshots/textarea_states_dark.png is changed.\nSee the compare image at shadcn/core/build/outputs/roborazzi/textarea_states_dark_compare.png"
+    },
+    "actualPngSha256BeforeAndAfter": {
+      "textarea_focused_dark_actual.png": "7f71c031b69049ff345eb418b2a47851d6fb1aef7eceede68ddb954808056146",
+      "textarea_focused_light_actual.png": "4a61139cf86509fc5409205922c6d668c351b342c18b3036175a20bcc79b02ae",
+      "textarea_states_dark_actual.png": "6d57d6fa95c47212d129f1ae725b1a7a3a34e05c31dadcf585c0654f08d9562a",
+      "textarea_states_light_actual.png": "a867247b8c9cd58761766ba59d74129dff1c00d37ebed5231688ef576b967c31"
+    }
+  },
+  "staticChecks": {
+    "shadcn/core": {
+      "ktlintCheck": "passed",
+      "detekt": "passed"
+    },
+    "app/shared": {
+      "ktlintCheck": "passed",
+      "detekt": "passed"
+    }
+  },
+  "detektBefore": {
+    "files": 559,
+    "before": 4487,
+    "after": 4487,
+    "removed": [],
+    "added": []
+  },
+  "detektAfter": {
+    "files": 562,
+    "before": 4487,
+    "after": 4479,
+    "removed": [
+      "ComplexCondition:Input.kt$singleLine && !( nova && insideGroup && ( InputGroupAddonAlign.BlockStart in addons || InputGroupAddonAlign.BlockEnd in addons ) )",
+      "LongParameterList:InputOTP.kt$InputOTPController$( val value: String, val maxLength: Int, val isFocused: Boolean, val masked: Boolean, val invalid: Boolean, val activeIndex: Int, val slots: MutableMap<Int, Rect>, )",
+      "MagicNumber:InputOTP.kt$0.5f",
+      "MagicNumber:InputOTP.kt$1000",
+      "MagicNumber:InputOTP.kt$10f",
+      "MagicNumber:InputOTP.kt$200",
+      "MagicNumber:InputOTP.kt$500",
+      "MagicNumber:InputOTP.kt$700"
+    ],
+    "added": []
+  },
+  "web": {
+    "desktopViewportCssPixels": [
+      900,
+      670
+    ],
+    "theme": "Nova",
+    "fixtureDistributions": "passed",
+    "catalogDistributions": "passed",
+    "runs": [
+      {
+        "runtime": "js",
+        "input": "aXYd",
+        "textarea": "aXYd",
+        "otp": "512",
+        "otpCalls": 1,
+        "dynamicOtp": "52",
+        "pageErrors": []
+      },
+      {
+        "runtime": "wasmJs",
+        "input": "aXYd",
+        "textarea": "aXYd",
+        "otp": "512",
+        "otpCalls": 1,
+        "dynamicOtp": "52",
+        "pageErrors": []
+      }
+    ]
+  }
+}
