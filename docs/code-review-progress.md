@@ -127,7 +127,7 @@
 | `avatar` | 已验收 | 已验收 | 图片卸载只通知当前观察者，`98edb377`。 |
 | `badge` | 已验收 | 已验收 | 共用旧主题变体几何，分离交互与图标样式，`22737976`。 |
 | `breadcrumb` | 已验收 | 已验收 | 复用换行布局及悬停样式，`dcfa5f72`。 |
-| `bubble` | 待审 | 待审 |  |
+| `bubble` | 已验收 | 已验收 | 显式对齐优先于消息的继承方向，`bfefce66`。 |
 | `button` | 待审 | 待审 |  |
 | `buttongroup` | 已验收 | 已验收 | 按实际落位更新连边及边框重叠，`63b97dd0`。 |
 | `calendar` | 待审 | 局部清理 | 已处理日历周索引和算法私有代码。 |
@@ -157,7 +157,7 @@
 | `label` | 已验收 | 已验收 | `2efa8fbd` 修复零值与相对行高。 |
 | `marker` | 已验收 | 已验收 | 统一 Nova、Rhea 的布局选择，`6da4551e`。 |
 | `menubar` | 局部审查 | 局部清理 | 已有悬停、焦点与 Canvas 适配证据。 |
-| `message` | 待审 | 待审 |  |
+| `message` | 已验收 | 已验收 | 头部与页脚共用元数据布局，`489bd03c`。 |
 | `messagescroller` | 待审 | 待审 |  |
 | `navigationmenu` | 待审 | 待审 |  |
 | `overlay` | 已验收 | 已验收 | 前两轮及第一批记录。 |
@@ -268,3 +268,9 @@
 - `InputGroupLayout.kt:15` 负责附加内容、控件和行边缘测量。Nova 原先只看控件高度，64 dp 高的内联附加内容会从 32 dp 的容器上下各溢出 16 dp。修复用整行最大高度判断能否采用紧凑布局，内联和块级插槽仍按逻辑方向放置。提交 `96aebd10`。
 - `InputGroup.kt:173` 继续由组容器管理边框、输入焦点、错误态和 FieldSet 禁用传递。核对通过附加内容转交焦点、动作按钮焦点和卸载后的注册清理。保留公开重载，沿用 Nova 附加内容的内边距与按钮规格，以及其他主题的间距 token。组容器和附加内容各自的 Style 与状态同步留在相应入口。
 - Detekt 同范围扫描从 4,479 减至 4,475 条，零新增。36 项核心和 80 项目录 JVM 测试通过，包含 12 项显式快照比对。Detekt 和 ktlint 通过。JS 和 Wasm 上实测 32 px 紧凑容器与 66 px 加高容器，64 px 附加内容完全落在边框内，点上沿会聚焦输入框。[验证证据](code-review-evidence/inputgroup.json)
+
+### Bubble 与 Message 验收
+
+- `Bubble.kt:175`。父消息的末端对齐原先会覆盖调用方显式传入的 Start，JVM 测得偏到 318 px，预期 24 px。省略参数时继承父消息，显式参数以自身为准。将静态与悬停颜色计算移出样式声明，并为宽度比例、反应布局和动效命名。提交 `bfefce66`。
+- `MessageMetadata.kt:29`。头部与页脚共用排版和主题样式，注册页脚和 Ghost 气泡的生命周期仍由各自插槽拥有。公开函数的 JVM 入口留在 `Message.kt`，保留对应的函数数量告警。相对 OKLCH 的转换矩阵、混合权重和组件源样式数值有明确依据。
+- Detekt 同配置扫描从 4,475 减至 4,468 条，零新增。Detekt、ktlint、101 项核心和 22 项目录 JVM 测试通过，包含 Bubble 和 Message 的 21 张现有快照。关联的 MessageScroller 五张快照在原实现同样失败，实际 PNG 的 SHA-256 逐一相同。Chromium 在 JS/Wasm 上核对 LTR 和 RTL 的显式与继承对齐，以及头部、正文和页脚的顺序。[验证证据](code-review-evidence/bubble-message.json)
