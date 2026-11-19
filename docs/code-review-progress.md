@@ -147,7 +147,7 @@
 | `emojitext` | 已验收 | 已验收 | 保留扩展 Emoji 序列及环境文字颜色，`e8353560`。 |
 | `empty` | 局部审查 | 局部清理 | 已有排版搜索和边框的 JVM 与 Web 证据。 |
 | `field` | 待审 | 待审 |  |
-| `hovercard` | 待审 | 待审 |  |
+| `hovercard` | 局部审查 | 待审 | 内置动效接入共用阴影图层，相关 JVM 回归通过。 |
 | `icon` | 已验收 | 已验收 | 共享尺寸样式并核对显式染色，`2334e48a`。 |
 | `input` | 已验收 | 已验收 | 保留字数上限时未被编辑的文本，`f19db43a`。 |
 | `inputgroup` | 待审 | 待审 |  |
@@ -162,7 +162,7 @@
 | `navigationmenu` | 待审 | 待审 |  |
 | `overlay` | 已验收 | 已验收 | 前两轮及第一批记录。 |
 | `pagination` | 待审 | 待审 |  |
-| `popover` | 待审 | 待审 |  |
+| `popover` | 局部审查 | 待审 | 修复内容与阴影先后出现，Chromium 已取证。 |
 | `progress` | 已验收 | 已验收 | 独立轨道在无界容器中安全测量，`326ce39b`。 |
 | `questionnaire` | 待审 | 局部清理 | 已处理快捷键上限。 |
 | `radiobutton` | 待审 | 待审 |  |
@@ -184,7 +184,7 @@
 | `toast` | 已验收 | 已验收 | 前两轮及第一批记录。 |
 | `toggle` | 已验收 | 已验收 | 第二轮及第二批记录。 |
 | `togglegroup` | 待审 | 待审 |  |
-| `tooltip` | 待审 | 待审 |  |
+| `tooltip` | 局部审查 | 待审 | 共用锚定淡入已复测，六项原有快照差异已比对。 |
 | `trace` | 已验收 | 已验收 | 按键释放时打开一次链接，`a8521ad7`。 |
 
 ### Drawer 外边距回归
@@ -256,3 +256,9 @@
 - `InputOTP.kt:293` 只在接受的值实际变化时回调。槽位在 `InputOTP.kt:392` 随组合退出释放命中坐标。在原槽位的位置输入时，更新当前存在的最近槽位。提交 `1a1a0fa2`。
 - 保留公开签名、主题颜色及动效定义。输入框的可用态、焦点、分组适配和正文装饰共用一个受控编辑入口。OTP 槽位样式维持原有组环与层叠顺序。保留 Nova 的禁用背景标准透明度和 CSS ease-out 控制点。
 - 核心的同配置 Detekt 扫描从 4,487 减至 4,479 个存量 ID，零新增。核心和目录 Detekt、ktlint 与 100 项最终 JVM 验证通过。Textarea 四张快照在原实现上同样失败，实际 PNG 的 SHA-256 逐一相同。两种常规 Web 构建通过，Chromium 在 JS/Wasm 上实测选区替换、OTP 回调和动态槽位的指针命中。[验证证据](code-review-evidence/input-textarea-inputotp.json)
+
+### 弹层首帧阴影
+
+- `PopupLayer.kt:19`。弹层淡入期间，半透明图层按面板大小裁切，内容先出现，外侧阴影等到完全不透明才显示。提交 `9d7c6834` 给组透明度留出绘制空间，并把缩放中心映射回面板坐标。Popup 仍用面板原本的尺寸计算位置。
+- Popover、HoverCard 和共享菜单内置动效使用同一图层。普通锚定弹层沿用原淡入淡出时长，调用方提供的自定义过渡继续走原入口。
+- 修改前 Nova、Vega 的 Popover 和共享菜单三个 JVM 用例均复现阴影缺失，修改后全部通过。核心 117 项中通过 111 项。Tooltip 其余六张快照在原实现上同样失败，实际 PNG 的 SHA-256 逐一相同。目录 JVM 68 项及 Detekt、ktlint、JS/Wasm 构建通过，存量规则 ID 维持 4,479 条。Chromium 的 JS/Wasm 都在 Popover 和 Dropdown Menu 的首个可见帧测得阴影，动效结束后的面板区域像素一致。[逐帧证据](code-review-evidence/popup-shadow-first-frame.json)
