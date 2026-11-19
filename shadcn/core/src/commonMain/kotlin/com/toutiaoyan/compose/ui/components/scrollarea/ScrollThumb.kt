@@ -34,17 +34,10 @@ import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.ui.unit.dp
 
-/** The thumb's length as a fraction of the track, clamped so it never shrinks to invisible on very long content. */
-internal fun scrollThumbFraction(
-    viewportSize: Int,
-    trackExtent: Int,
-): Float = (viewportSize.toFloat() / trackExtent).coerceIn(0.05f, 1f)
+private const val LEGACY_MINIMUM_THUMB_TRACK_FRACTION = 0.05f
+private val NovaMinimumThumbSize = 16.dp
 
-/** The thumb's leading-edge position as a fraction of the track, for `Modifier.offset`. */
-internal fun scrollThumbOffsetFraction(
-    value: Int,
-    trackExtent: Int,
-): Float = value.toFloat() / trackExtent
+internal fun scrollbarTrackThickness(nova: Boolean) = if (nova) 10.dp else 6.dp
 
 /**
  * Converts a raw pointer-drag delta (px) on the thumb into a content-space scroll delta
@@ -148,7 +141,7 @@ internal fun ScrollThumb(
             onDragDelta(consumed)
             consumed
         }
-    val thickness = if (nova) 10.dp else 6.dp
+    val thickness = scrollbarTrackThickness(nova)
     val density = LocalDensity.current
     val trackFillModifier = if (vertical) Modifier.fillMaxHeight() else Modifier.fillMaxWidth()
     val trackSize = if (vertical) Modifier.width(thickness) else Modifier.height(thickness)
@@ -179,7 +172,12 @@ internal fun ScrollThumb(
         ) {
             val trackLength = if (vertical) maxHeight else maxWidth
             val trackPx = with(density) { trackLength.toPx() }
-            val minimum = if (nova) with(density) { 16.dp.toPx() } else trackPx * 0.05f
+            val minimum =
+                if (nova) {
+                    with(density) { NovaMinimumThumbSize.toPx() }
+                } else {
+                    trackPx * LEGACY_MINIMUM_THUMB_TRACK_FRACTION
+                }
             val thumbLengthPx = scrollThumbLengthPx(viewportSize, maxValue, trackPx, minimum)
             val travelPx = (trackPx - thumbLengthPx).coerceAtLeast(0f)
             val logicalOffset = scrollThumbOffsetPx(value, maxValue, travelPx)

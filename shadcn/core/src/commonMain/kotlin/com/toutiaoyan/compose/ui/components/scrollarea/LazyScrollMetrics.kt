@@ -1,64 +1,43 @@
 package com.toutiaoyan.compose.ui.components.scrollarea
 
-import androidx.compose.foundation.lazy.LazyListItemInfo
 import androidx.compose.foundation.lazy.LazyListLayoutInfo
 
-/**
- * Estimated scroll metrics for a lazy list, in the same `(value, maxValue, viewportSize)`
- * shape [ScrollThumb] expects from `ScrollState`.
- *
- * Lazy lists do not expose a true content height, so size is estimated from the average
- * size of currently visible items times [LazyListLayoutInfo.totalItemsCount].
- */
+/** Estimated list geometry in the logical coordinates used to draw the scrollbar. */
 internal data class LazyScrollMetrics(
     val value: Int,
     val maxValue: Int,
     val viewportSize: Int,
 )
 
-/**
- * Derives [LazyScrollMetrics] from a lazy list's layout snapshot.
- * Returns `null` when there is nothing to scroll (empty list, no visible items, or
- * content fits entirely in the viewport).
- */
 internal fun lazyListScrollMetrics(
-    visibleItems: List<LazyListItemInfo>,
-    totalItemsCount: Int,
-    viewportStartOffset: Int,
-    viewportEndOffset: Int,
+    layout: LazyListLayoutInfo,
+    firstVisibleIndex: Int,
+    firstVisibleOffset: Int,
+    canScrollBackward: Boolean,
+    canScrollForward: Boolean,
 ): LazyScrollMetrics? {
-    if (visibleItems.isEmpty() || totalItemsCount <= 0) return null
+    val viewportSize = layout.viewportEndOffset - layout.viewportStartOffset
+    val visible = layout.visibleItemsInfo
+    val scrollable = canScrollBackward || canScrollForward
+    val hasLayout = visible.isNotEmpty() && viewportSize > 0 && layout.totalItemsCount > 0
+    if (!scrollable || !hasLayout) return null
 
-    val viewportSize = viewportEndOffset - viewportStartOffset
-    if (viewportSize <= 0) return null
-
-    val averageItemSize =
-        visibleItems
-            .map { it.size }
-            .average()
-            .toFloat()
-            .coerceAtLeast(1f)
-    val estimatedContentSize = averageItemSize * totalItemsCount
-    val maxValue = (estimatedContentSize - viewportSize).toInt().coerceAtLeast(0)
-    if (maxValue <= 0) return null
-
-    val firstVisible = visibleItems.first()
+    // Offscreen item sizes are unknown. Keep intermediate arithmetic wide for large lists.
+    val averageItemSize = visible.sumOf { it.size.toLong() }.toDouble() / visible.size
+    val itemStride = (averageItemSize + layout.mainAxisItemSpacing).coerceAtLeast(0.0)
+    val estimatedContentSize =
+        itemStride * (layout.totalItemsCount - 1) + averageItemSize +
+            layout.beforeContentPadding + layout.afterContentPadding
+    val maxValue = (estimatedContentSize - viewportSize).toInt().coerceAtLeast(1)
     val value =
-        (firstVisible.index * averageItemSize - firstVisible.offset)
-            .toInt()
-            .coerceIn(0, maxValue)
-
+        when {
+            !canScrollBackward -> 0
+            !canScrollForward -> maxValue
+            else -> (firstVisibleIndex * itemStride + firstVisibleOffset).toInt().coerceIn(0, maxValue)
+        }
     return LazyScrollMetrics(
-        value = value,
+        value = if (layout.reverseLayout) maxValue - value else value,
         maxValue = maxValue,
         viewportSize = viewportSize,
     )
 }
-
-internal fun lazyListScrollMetrics(layoutInfo: LazyListLayoutInfo): LazyScrollMetrics? =
-    lazyListScrollMetrics(
-        visibleItems = layoutInfo.visibleItemsInfo,
-        totalItemsCount = layoutInfo.totalItemsCount,
-        viewportStartOffset = layoutInfo.viewportStartOffset,
-        viewportEndOffset = layoutInfo.viewportEndOffset,
-    )

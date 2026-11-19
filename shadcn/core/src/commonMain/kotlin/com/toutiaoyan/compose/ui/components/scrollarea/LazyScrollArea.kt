@@ -73,15 +73,16 @@ private fun LazyScrollAreaContent(
     type: ScrollType,
     content: @Composable BoxScope.() -> Unit,
 ) {
-    // Observe scroll position so the thumb recomposes while the list moves.
-    @Suppress("UNUSED_VARIABLE")
-    val firstVisibleItemIndex = state.firstVisibleItemIndex
-
-    @Suppress("UNUSED_VARIABLE")
-    val firstVisibleItemScrollOffset = state.firstVisibleItemScrollOffset
-
     val vertical = orientation != ScrollAreaOrientation.Horizontal
-    val metrics = lazyListScrollMetrics(state.layoutInfo)
+    val layoutInfo = state.layoutInfo
+    val metrics =
+        lazyListScrollMetrics(
+            layoutInfo,
+            state.firstVisibleItemIndex,
+            state.firstVisibleItemScrollOffset,
+            state.canScrollBackward,
+            state.canScrollForward,
+        )
 
     val hoverInteraction = remember { MutableInteractionSource() }
     val isHovered by hoverInteraction.collectIsHoveredAsState()
@@ -89,7 +90,7 @@ private fun LazyScrollAreaContent(
     val thumbInteraction = remember { MutableInteractionSource() }
     val thumbDragging by thumbInteraction.collectIsDraggedAsState()
 
-    val overflowing = metrics != null && metrics.maxValue > 0
+    val overflowing = metrics != null
     val scrolling = state.isScrollInProgress || thumbDragging
     val visible =
         rememberScrollbarVisible(
@@ -115,7 +116,7 @@ private fun LazyScrollAreaContent(
                 value = value,
                 maxValue = maxValue,
                 viewportSize = viewportSize,
-                onDragDelta = { delta -> state.dispatchRawDelta(delta) },
+                onDragDelta = { delta -> state.dispatchRawDelta(if (layoutInfo.reverseLayout) -delta else delta) },
                 vertical = vertical,
                 visible = visible,
                 forceShowWhenEmpty = forceShowWhenEmpty,

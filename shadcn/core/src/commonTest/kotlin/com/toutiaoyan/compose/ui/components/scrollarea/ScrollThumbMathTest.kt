@@ -4,35 +4,35 @@ import kotlin.test.assertEquals
 
 class ScrollThumbMathTest {
     @Test
-    fun thumb_fraction_matches_viewport_share_of_the_track() {
+    fun thumb_length_matches_viewport_share_of_the_track() {
         // 100px viewport, 300px total content (100 visible + 200 scrollable) -> thumb covers 1/3 of the track.
-        val fraction = scrollThumbFraction(viewportSize = 100, trackExtent = 300)
-        assertEquals(1f / 3f, fraction)
+        val length = scrollThumbLengthPx(viewportSize = 100, maxValue = 200, trackPx = 300f, minimumPx = 15f)
+        assertEquals(100f, length)
     }
 
     @Test
-    fun thumb_fraction_is_clamped_so_it_never_disappears_on_very_long_content() {
-        val fraction = scrollThumbFraction(viewportSize = 1, trackExtent = 100_000)
-        assertEquals(0.05f, fraction)
+    fun thumb_length_is_clamped_so_it_never_disappears_on_very_long_content() {
+        val length = scrollThumbLengthPx(viewportSize = 1, maxValue = 99_999, trackPx = 100f, minimumPx = 5f)
+        assertEquals(5f, length)
     }
 
     @Test
-    fun thumb_fraction_is_full_when_content_exactly_fills_the_viewport() {
-        val fraction = scrollThumbFraction(viewportSize = 200, trackExtent = 200)
-        assertEquals(1f, fraction)
+    fun thumb_length_is_full_when_content_exactly_fills_the_viewport() {
+        val length = scrollThumbLengthPx(viewportSize = 200, maxValue = 0, trackPx = 200f, minimumPx = 10f)
+        assertEquals(200f, length)
     }
 
     @Test
-    fun offset_fraction_is_zero_at_the_top_of_the_scroll_range() {
-        val fraction = scrollThumbOffsetFraction(value = 0, trackExtent = 300)
-        assertEquals(0f, fraction)
+    fun thumb_offset_is_zero_at_the_top_of_the_scroll_range() {
+        val offset = scrollThumbOffsetPx(value = 0, maxValue = 300, travelPx = 30f)
+        assertEquals(0f, offset)
     }
 
     @Test
-    fun offset_fraction_advances_proportionally_with_scroll_value() {
-        // Scrolled 100px into a 300px track -> thumb should sit 1/3 of the way down.
-        val fraction = scrollThumbOffsetFraction(value = 100, trackExtent = 300)
-        assertEquals(1f / 3f, fraction)
+    fun thumb_offset_advances_proportionally_with_scroll_value() {
+        // Scrolled 100px into a 300px track -> thumb should sit 1/3 of the available thumb travel.
+        val offset = scrollThumbOffsetPx(value = 100, maxValue = 300, travelPx = 30f)
+        assertEquals(10f, offset)
     }
 
     @Test

@@ -49,6 +49,8 @@ class ScrollAreaState(
     val horizontal: ScrollState,
 )
 
+private val ScrollAreaKeyboardArrowStep = 40.dp
+
 private val LocalScrollArea = staticCompositionLocalOf<ScrollAreaState?> { null }
 
 /** Scroll positions of the nearest [ScrollArea]. Matches Radix scroll-area context. */
@@ -148,7 +150,7 @@ private fun ScrollAreaContent(
             hovering = isHovered,
         )
     val forceShowWhenEmpty = type is ScrollType.Always
-    val corner = if (currentTheme.activePreset == StylePreset.Nova) 10.dp else 6.dp
+    val corner = scrollbarTrackThickness(currentTheme.activePreset == StylePreset.Nova)
     val dualAxis = scrollsVertically && scrollsHorizontally && verticalOverflowing && horizontalOverflowing
 
     CompositionLocalProvider(LocalScrollArea provides areaState) {
@@ -211,7 +213,7 @@ internal fun ScrollAreaViewport(
     var focused by remember { mutableStateOf(false) }
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val inputMode = LocalInputModeManager.current
-    val step = with(LocalDensity.current) { 40.dp.toPx() }
+    val step = with(LocalDensity.current) { ScrollAreaKeyboardArrowStep.toPx() }
     val horizontalSign = if (LocalLayoutDirection.current == LayoutDirection.Rtl) -1f else 1f
     val overflowing = (verticalState?.maxValue ?: 0) > 0 || (horizontalState?.maxValue ?: 0) > 0
     Box(

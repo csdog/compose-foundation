@@ -1,6 +1,7 @@
 package com.toutiaoyan.compose.ui.components.scrollarea
 
 import androidx.compose.foundation.lazy.LazyListItemInfo
+import androidx.compose.foundation.lazy.LazyListLayoutInfo
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
@@ -9,11 +10,12 @@ class LazyScrollMetricsTest {
     @Test
     fun metrics_null_when_list_is_empty() {
         assertNull(
-            lazyListScrollMetrics(
+            metrics(
                 visibleItems = emptyList(),
                 totalItemsCount = 0,
                 viewportStartOffset = 0,
                 viewportEndOffset = 200,
+                scrollable = false,
             ),
         )
     }
@@ -27,11 +29,12 @@ class LazyScrollMetricsTest {
                 fakeItem(index = 1, offset = 50, size = 50),
             )
         assertNull(
-            lazyListScrollMetrics(
+            metrics(
                 visibleItems = items,
                 totalItemsCount = 2,
                 viewportStartOffset = 0,
                 viewportEndOffset = 200,
+                scrollable = false,
             ),
         )
     }
@@ -47,7 +50,7 @@ class LazyScrollMetricsTest {
                 fakeItem(index = 4, offset = 80, size = 40),
             )
         val metrics =
-            lazyListScrollMetrics(
+            metrics(
                 visibleItems = items,
                 totalItemsCount = 10,
                 viewportStartOffset = 0,
@@ -67,7 +70,7 @@ class LazyScrollMetricsTest {
                 fakeItem(index = 1, offset = 30, size = 50),
             )
         val metrics =
-            lazyListScrollMetrics(
+            metrics(
                 visibleItems = items,
                 totalItemsCount = 20,
                 viewportStartOffset = 0,
@@ -77,6 +80,27 @@ class LazyScrollMetricsTest {
         // 20 items × 50 = 1000; viewport 100 -> maxValue 900
         assertEquals(900, metrics.maxValue)
     }
+
+    private fun metrics(
+        visibleItems: List<LazyListItemInfo>,
+        totalItemsCount: Int,
+        viewportStartOffset: Int,
+        viewportEndOffset: Int,
+        scrollable: Boolean = true,
+    ): LazyScrollMetrics? =
+        lazyListScrollMetrics(
+            layout =
+                object : LazyListLayoutInfo {
+                    override val visibleItemsInfo = visibleItems
+                    override val viewportStartOffset = viewportStartOffset
+                    override val viewportEndOffset = viewportEndOffset
+                    override val totalItemsCount = totalItemsCount
+                },
+            firstVisibleIndex = visibleItems.firstOrNull()?.index ?: 0,
+            firstVisibleOffset = -(visibleItems.firstOrNull()?.offset ?: 0),
+            canScrollBackward = scrollable,
+            canScrollForward = scrollable,
+        )
 
     private fun fakeItem(
         index: Int,

@@ -205,6 +205,45 @@ class ScrollAreaInteractionTest : ScreenshotTest() {
         assertEquals(0, state.vertical.value)
     }
 
+    @Test
+    fun lazyArrangementSpacingCanMakeOtherwiseShortItemsScrollable() {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            val lazy = rememberLazyListState()
+            LazyScrollArea(lazy, Modifier.size(200.dp), type = ScrollType.Auto) {
+                LazyColumn(
+                    state = lazy,
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(vertical = 20.dp),
+                    verticalArrangement = Arrangement.spacedBy(40.dp),
+                ) {
+                    items(4) { Text(Modifier.height(24.dp)) { "Item $it" } }
+                }
+            }
+        }
+        advance()
+        node("vertical-thumb").assertIsDisplayed()
+    }
+
+    @Test
+    fun reverseLazyThumbStartsAtBottomAndDragsTowardEarlierScreenRows() {
+        lateinit var state: LazyListState
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            val lazy = rememberLazyListState()
+            SideEffect { state = lazy }
+            LazyScrollArea(lazy, Modifier.size(200.dp), type = ScrollType.Auto) {
+                LazyColumn(state = lazy, modifier = Modifier.fillMaxSize(), reverseLayout = true) {
+                    items(100) { Text(Modifier.height(24.dp)) { "Item $it" } }
+                }
+            }
+        }
+        advance()
+        val track = node("vertical-track").getUnclippedBoundsInRoot()
+        val thumb = node("vertical-thumb").getUnclippedBoundsInRoot()
+        assertTrue(thumb.bottom in (track.bottom - 2.dp)..track.bottom)
+        drag("vertical-thumb", Offset(0f, -40f))
+        assertTrue(state.firstVisibleItemIndex > 0)
+    }
+
     @Test(timeout = 15000)
     fun sharedThumbStillDragsActualLazyList() {
         lateinit var lazy: LazyListState

@@ -3291,7 +3291,6 @@
     <ID>MagicNumber:ScrollFade.kt$.12f</ID>
     <ID>MagicNumber:ScrollFade.kt$.42f</ID>
     <ID>MagicNumber:ScrollFade.kt$.58f</ID>
-    <ID>MagicNumber:ScrollThumb.kt$0.05f</ID>
     <ID>MagicNumber:Select.kt$90f</ID>
     <ID>MagicNumber:Sheet.kt$.42f</ID>
     <ID>MagicNumber:Sheet.kt$.58f</ID>
@@ -4348,7 +4347,6 @@
     <ID>ReturnCount:ContextMenuKeyboard.kt$ContextMenuNavigation$fun key(event: KeyEvent): Boolean</ID>
     <ID>ReturnCount:ContextMenuKeyboard.kt$ContextMenuNavigation$private fun typeAhead(event: KeyEvent): Boolean</ID>
     <ID>ReturnCount:HoverCardPointerTransit.kt$internal fun hoverCardTransitRegion( point: Offset, departure: Offset?, trigger: IntRect, popup: PopupPositionResult, buffer: Float, ): HoverCardTransitRegion?</ID>
-    <ID>ReturnCount:LazyScrollMetrics.kt$internal fun lazyListScrollMetrics( visibleItems: List&lt;LazyListItemInfo&gt;, totalItemsCount: Int, viewportStartOffset: Int, viewportEndOffset: Int, ): LazyScrollMetrics?</ID>
     <ID>ReturnCount:MessageScrollerState.kt$MessageScrollerState$internal suspend fun reconcileLayout()</ID>
     <ID>ReturnCount:MessageScrollerState.kt$MessageScrollerState$suspend fun scrollToMessage( messageId: String, align: MessageScrollerScrollAlign = MessageScrollerScrollAlign.Start, behavior: MessageScrollerScrollBehavior = MessageScrollerScrollBehavior.Auto, scrollMargin: Dp? = null, ): Boolean</ID>
     <ID>ReturnCount:Pagination.kt$private fun paginationTokens( page: Int, pageCount: Int, siblingCount: Int = 1, ): List&lt;PaginationToken&gt;</ID>
