@@ -1,0 +1,403 @@
+{
+  "reproductionSource": "af0eee42",
+  "fixCommits": {
+    "hovercard": "b926f5f6",
+    "popover": "f876d5ed",
+    "tooltip": "b1011b89"
+  },
+  "jvmReproduction": {
+    "removingHoveredContentClearsItsActivity[jvm]": "java.lang.AssertionError: expected:<[true, false]> but was:<[true]>",
+    "arrowPointsTowardTheAnchorAfterThePopupFlips[jvm]": "java.lang.AssertionError: The arrow must be above the flipped panel"
+  },
+  "jvmAfter": {
+    "core": {
+      "HoverCardFollowupTest[jvm]": {
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "testCases": {
+          "removingAnInitiallyOpenTriggerClosesTheOrphanedPanel[jvm]": null,
+          "movingTriggerInsideFixedRootRepositionsOpenPopup[jvm]": null,
+          "removingAControlledTriggerRequestsCloseUsingTheLatestCallback[jvm]": null,
+          "additionalRootContentDoesNotMoveThePopupAnchor[jvm]": null,
+          "focusingContentDoesNotDismissItAndLeavingContentClosesImmediately[jvm]": null,
+          "keyboardBlurClosesWithoutWaitingForHoverCloseDelay[jvm]": null
+        }
+      },
+      "HoverCardParityTest[jvm]": {
+        "tests": 20,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "testCases": {
+          "triggerTimingOverridesTheRootAndProvider[jvm]": null,
+          "physicalAndLogicalSidesResolveSeparatelyInRtl[jvm]": null,
+          "novaPanelHasNoLayoutBorderAndUsesTheOfficialTextLineBox[jvm]": null,
+          "reopeningDuringDefaultExitDoesNotRestartTheEnterSlide[jvm]": null,
+          "defaultOpenAndExternalOpenDoNotCloseOnIdleComposition[jvm]": null,
+          "selectableContentKeepsTheCallerStyleTextColor[jvm]": null,
+          "leavingStillRequestsCloseWhenTheOwnerDeclinesEscape[jvm]": null,
+          "reopeningWithExplicitEnterContinuesTheDefaultExitScale[jvm]": null,
+          "openNovaPanelRepaintsWhenThemeAndRadiusChange[jvm]": null,
+          "hoveringASeparateRootChildDoesNotActivateTheTrigger[jvm]": null,
+          "nova_dark[jvm]": null,
+          "nova_light[jvm]": null,
+          "keyboardFocusOpensAndEscapeClosesWithoutStealingFocus[jvm]": null,
+          "disabledRootIgnoresThePointer[jvm]": null,
+          "controlledRejectionDoesNotOpenOrRetryContinuously[jvm]": null,
+          "aPendingOpenUsesTheLatestCallback[jvm]": null,
+          "aTouchPressDoesNotOpenAPreview[jvm]": null,
+          "enteringTheCardCancelsTheCloseTimer[jvm]": null,
+          "escapeCancelsPendingOpenUntilThePointerEntersAgain[jvm]": null,
+          "baseDefaultsWaitSixHundredToOpenAndThreeHundredToClose[jvm]": null
+        }
+      },
+      "HoverCardPointerTransitTest[jvm]": {
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "testCases": {
+          "diagonalApproachRequiresTriggerDepartureAndAimsAtThePanel[jvm]": null,
+          "sharedGapHoldsWithoutDirectionalSpeed[jvm]": null,
+          "touchingOrClampedOverlappingBoundsHaveNoGap[jvm]": null,
+          "widerTriggerCanApproachTheFarCornerOfANarrowPanel[jvm]": null,
+          "sharedGapRespectsTheCurrentPhysicalSide[jvm]": null,
+          "aligningThePanelAwayFromTheTriggerKeepsTheNarrowerTrough[jvm]": null
+        }
+      },
+      "HoverCardPositioningTest[jvm]": {
+        "tests": 11,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "testCases": {
+          "horizontalPlacementIsRetainedWhenThereIsRoom[jvm]": null,
+          "fullWidthAnimationOriginUsesTheDrawablePopupBounds[jvm]": null,
+          "crossAxisRespectsFivePixelViewportInset[jvm]": null,
+          "horizontalBothSidesUnavailableFallsBackBelow[jvm]": null,
+          "bottomCollisionFlipsAbove[jvm]": null,
+          "animationOriginFollowsTheAnchorAfterHorizontalFallbackAndClamping[jvm]": null,
+          "horizontalAnimationOriginKeepsTheOffsetAndCrossAxisAlignment[jvm]": null,
+          "rtlStartEndAndCenterOffsetsFollowTheLogicalCrossAxis[jvm]": null,
+          "topCollisionFlipsBelow[jvm]": null,
+          "animationOriginTracksTheTriggerAcrossAVerticalFlip[jvm]": null,
+          "explicitTriggerAnchorRetainsPlatformInsetNormalization[jvm]": null
+        }
+      },
+      "HoverCardScreenshotTest[jvm]": {
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "testCases": {
+          "trigger_light[jvm]": null,
+          "trigger_dark[jvm]": null
+        }
+      },
+      "PopoverFocusTest[jvm]": {
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "testCases": {
+          "pointerOpenedTextTriggerRegainsFocusAfterEscape[jvm]": null,
+          "pointerOpenedButtonTriggerRegainsFocusAfterEscape[jvm]": null
+        }
+      },
+      "PopoverBehaviorTest[jvm]": {
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "testCases": {
+          "nestedNonModalEscapeClosesOnlyTheChildThenFallsBackToParent[jvm]": null,
+          "nonModalEscapeUsesLatestCallbackAndRespectsControlledRefusal[jvm]": null,
+          "modalInitialFocusPreservesExplicitAutoFocus[jvm]": null,
+          "touchOpeningFocusesPanelAndKeyboardReopeningFocusesChild[jvm]": null,
+          "modalPanelWithoutFocusableChildrenKeepsFallbackFocus[jvm]": null,
+          "nonModalTabReturnsToTriggerAndExitsAfterLastPanelTarget[jvm]": null,
+          "modalInitialFocusSkipsDisabledChildAndEntersFirstEnabledChild[jvm]": null,
+          "nonModalEscapeFromTriggerClosesUncontrolledPopover[jvm]": null
+        }
+      },
+      "PopoverMotionTest[jvm]": {
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "testCases": {
+          "openPanelUpdatesItsFillAndCornerAfterThemeChanges[jvm]": null,
+          "novaPanelAndOuterShadowFadeInTogether[jvm]": null,
+          "vegaPanelAndOuterShadowFadeInTogether[jvm]": null,
+          "explicitExitRetainsTheCallersLongerDuration[jvm]": null,
+          "novaDefaultExitIsPresentMidAnimationAndUnmountedAfterHundredMilliseconds[jvm]": null
+        }
+      },
+      "PopoverNovaLayoutTest[jvm]": {
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "testCases": {
+          "lightPanelSpacing[jvm]": null,
+          "stringBodyKeepsTheFullTwentyPixelLineBox[jvm]": null,
+          "callerCanOverridePanelWidth[jvm]": null,
+          "novaHeaderUsesTwentyPixelLinesAndTwoPixelGap[jvm]": null,
+          "darkPanelSpacing[jvm]": null
+        }
+      },
+      "PopoverNovaScreenshotTest[jvm]": {
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "testCases": {
+          "basicDark[jvm]": null,
+          "basicLight[jvm]": null
+        }
+      },
+      "PopoverScreenshotTest[jvm]": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "testCases": {
+          "dimensions_form_dark[jvm]": null,
+          "states_light[jvm]": null,
+          "dimensions_form_light[jvm]": null,
+          "states_dark[jvm]": null
+        }
+      },
+      "TooltipBehaviorParityTest[jvm]": {
+        "tests": 9,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "testCases": {
+          "keyboardFocusOpensWithoutTheHoverDelay[jvm]": null,
+          "escapeSuppressesTheCurrentHoverUntilItLeaves[jvm]": null,
+          "escapeClosesWithoutMovingFocusOrReopening[jvm]": null,
+          "removingHoveredContentClearsItsActivity[jvm]": null,
+          "controlledTooltipRequestsCloseOnlyAfterEscape[jvm]": null,
+          "mountingDoesNotReportAnOpenChange[jvm]": null,
+          "newlyHoveredSiblingClosesTheFocusedTooltipWithoutStealingFocus[jvm]": null,
+          "newlyOpenedSiblingClosesThePreviousHover[jvm]": null,
+          "firstHoverWaitsForTheConfiguredDelay[jvm]": null
+        }
+      },
+      "TooltipChromeParityTest[jvm]": {
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "testCases": {
+          "arrowDoesNotAddSpaceToThePopupLayout[jvm]": null,
+          "arrowPointsTowardTheAnchorAfterThePopupFlips[jvm]": null,
+          "novaChipUsesTwelveBySixPaddingAndNormalTwelveSixteenType[jvm]": null
+        }
+      },
+      "TooltipScreenshotTest[jvm]": {
+        "tests": 6,
+        "failures": 6,
+        "errors": 0,
+        "skipped": 0,
+        "testCases": {
+          "arrow_light[jvm]": "tooltip_arrow_light.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/tooltip_arrow_light_compare.png",
+          "arrow_dark[jvm]": "tooltip_arrow_dark.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/tooltip_arrow_dark_compare.png",
+          "trigger_light[jvm]": "tooltip_trigger_light.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/tooltip_trigger_light_compare.png",
+          "side_offset_4_dark[jvm]": "tooltip_side_offset_4_dark.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/tooltip_side_offset_4_dark_compare.png",
+          "trigger_dark[jvm]": "tooltip_trigger_dark.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/tooltip_trigger_dark_compare.png",
+          "side_offset_4_light[jvm]": "tooltip_side_offset_4_light.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/tooltip_side_offset_4_light_compare.png"
+        }
+      }
+    },
+    "catalog": {
+      "HoverCardExamplesTest[jvm]": {
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "testCases": {
+          "rtlCopyUsesTheOfficialWording[jvm]": null,
+          "fourPhysicalSideExamplesUseTheirOwnCopy[jvm]": null,
+          "officialRecipesAndApiSectionsAreComplete[jvm]": null,
+          "defaultShowsTheActualNextjsPreview[jvm]": null,
+          "rtlExamplesTranslateTheProductAndOfferBothLogicalSides[jvm]": null,
+          "controlledExamplePublishesItsOpenState[jvm]": null
+        }
+      },
+      "PopoverExamplesTest[jvm]": {
+        "tests": 24,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "testCases": {
+          "officialRecipesComeFirstAndExportStandaloneCode[viewport=1,440,dark=false][jvm]": null,
+          "alignUsesSmallTriggersAndThreeIndependent160PixelPanels[viewport=1,440,dark=false][jvm]": null,
+          "formHasTwoHorizontalFieldsWithClickableLabelsAndEditableValues[viewport=1,440,dark=false][jvm]": null,
+          "basicHasOnlyTheSourceHeaderAndStartAlignment[viewport=1,440,dark=false][jvm]": null,
+          "rtlChangesAllSixTriggersAndPopupTextAcrossThreeLanguages[viewport=1,440,dark=false][jvm]": null,
+          "defaultHasFourEditableGridInputsAndRestartsValuesAfterClose[viewport=1,440,dark=false][jvm]": null,
+          "officialRecipesComeFirstAndExportStandaloneCode[viewport=1,440,dark=true][jvm]": null,
+          "alignUsesSmallTriggersAndThreeIndependent160PixelPanels[viewport=1,440,dark=true][jvm]": null,
+          "formHasTwoHorizontalFieldsWithClickableLabelsAndEditableValues[viewport=1,440,dark=true][jvm]": null,
+          "basicHasOnlyTheSourceHeaderAndStartAlignment[viewport=1,440,dark=true][jvm]": null,
+          "rtlChangesAllSixTriggersAndPopupTextAcrossThreeLanguages[viewport=1,440,dark=true][jvm]": null,
+          "defaultHasFourEditableGridInputsAndRestartsValuesAfterClose[viewport=1,440,dark=true][jvm]": null,
+          "officialRecipesComeFirstAndExportStandaloneCode[viewport=390,dark=false][jvm]": null,
+          "alignUsesSmallTriggersAndThreeIndependent160PixelPanels[viewport=390,dark=false][jvm]": null,
+          "formHasTwoHorizontalFieldsWithClickableLabelsAndEditableValues[viewport=390,dark=false][jvm]": null,
+          "basicHasOnlyTheSourceHeaderAndStartAlignment[viewport=390,dark=false][jvm]": null,
+          "rtlChangesAllSixTriggersAndPopupTextAcrossThreeLanguages[viewport=390,dark=false][jvm]": null,
+          "defaultHasFourEditableGridInputsAndRestartsValuesAfterClose[viewport=390,dark=false][jvm]": null,
+          "officialRecipesComeFirstAndExportStandaloneCode[viewport=390,dark=true][jvm]": null,
+          "alignUsesSmallTriggersAndThreeIndependent160PixelPanels[viewport=390,dark=true][jvm]": null,
+          "formHasTwoHorizontalFieldsWithClickableLabelsAndEditableValues[viewport=390,dark=true][jvm]": null,
+          "basicHasOnlyTheSourceHeaderAndStartAlignment[viewport=390,dark=true][jvm]": null,
+          "rtlChangesAllSixTriggersAndPopupTextAcrossThreeLanguages[viewport=390,dark=true][jvm]": null,
+          "defaultHasFourEditableGridInputsAndRestartsValuesAfterClose[viewport=390,dark=true][jvm]": null
+        }
+      },
+      "TooltipExamplesTest[jvm]": {
+        "tests": 20,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "testCases": {
+          "shortcutUsesTheSaveIconAndPassiveKeycap[viewport=1,440,dark=false][jvm]": null,
+          "rtlHasPhysicalAndLogicalSidesAndRealLanguageSwitching[viewport=1,440,dark=false][jvm]": null,
+          "allFourPhysicalSidesUseTheSameSourceMessage[viewport=1,440,dark=false][jvm]": null,
+          "defaultFocusAndEscapeUseTheOfficialMessage[viewport=1,440,dark=false][jvm]": null,
+          "disabledButtonStillAllowsItsWrapperTooltip[viewport=1,440,dark=false][jvm]": null,
+          "shortcutUsesTheSaveIconAndPassiveKeycap[viewport=1,440,dark=true][jvm]": null,
+          "rtlHasPhysicalAndLogicalSidesAndRealLanguageSwitching[viewport=1,440,dark=true][jvm]": null,
+          "allFourPhysicalSidesUseTheSameSourceMessage[viewport=1,440,dark=true][jvm]": null,
+          "defaultFocusAndEscapeUseTheOfficialMessage[viewport=1,440,dark=true][jvm]": null,
+          "disabledButtonStillAllowsItsWrapperTooltip[viewport=1,440,dark=true][jvm]": null,
+          "shortcutUsesTheSaveIconAndPassiveKeycap[viewport=390,dark=false][jvm]": null,
+          "rtlHasPhysicalAndLogicalSidesAndRealLanguageSwitching[viewport=390,dark=false][jvm]": null,
+          "allFourPhysicalSidesUseTheSameSourceMessage[viewport=390,dark=false][jvm]": null,
+          "defaultFocusAndEscapeUseTheOfficialMessage[viewport=390,dark=false][jvm]": null,
+          "disabledButtonStillAllowsItsWrapperTooltip[viewport=390,dark=false][jvm]": null,
+          "shortcutUsesTheSaveIconAndPassiveKeycap[viewport=390,dark=true][jvm]": null,
+          "rtlHasPhysicalAndLogicalSidesAndRealLanguageSwitching[viewport=390,dark=true][jvm]": null,
+          "allFourPhysicalSidesUseTheSameSourceMessage[viewport=390,dark=true][jvm]": null,
+          "defaultFocusAndEscapeUseTheOfficialMessage[viewport=390,dark=true][jvm]": null,
+          "disabledButtonStillAllowsItsWrapperTooltip[viewport=390,dark=true][jvm]": null
+        }
+      }
+    }
+  },
+  "snapshotVerification": {
+    "roborazzi.test.verify": true,
+    "before": {
+      "com.toutiaoyan.compose.ui.components.tooltip.TooltipScreenshotTest.arrow_light[jvm]": "tooltip_arrow_light.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/tooltip_arrow_light_compare.png",
+      "com.toutiaoyan.compose.ui.components.tooltip.TooltipScreenshotTest.arrow_dark[jvm]": "tooltip_arrow_dark.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/tooltip_arrow_dark_compare.png",
+      "com.toutiaoyan.compose.ui.components.tooltip.TooltipScreenshotTest.trigger_light[jvm]": "tooltip_trigger_light.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/tooltip_trigger_light_compare.png",
+      "com.toutiaoyan.compose.ui.components.tooltip.TooltipScreenshotTest.side_offset_4_dark[jvm]": "tooltip_side_offset_4_dark.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/tooltip_side_offset_4_dark_compare.png",
+      "com.toutiaoyan.compose.ui.components.tooltip.TooltipScreenshotTest.trigger_dark[jvm]": "tooltip_trigger_dark.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/tooltip_trigger_dark_compare.png",
+      "com.toutiaoyan.compose.ui.components.tooltip.TooltipScreenshotTest.side_offset_4_light[jvm]": "tooltip_side_offset_4_light.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/tooltip_side_offset_4_light_compare.png"
+    },
+    "after": {
+      "com.toutiaoyan.compose.ui.components.tooltip.TooltipScreenshotTest.arrow_light[jvm]": "tooltip_arrow_light.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/tooltip_arrow_light_compare.png",
+      "com.toutiaoyan.compose.ui.components.tooltip.TooltipScreenshotTest.arrow_dark[jvm]": "tooltip_arrow_dark.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/tooltip_arrow_dark_compare.png",
+      "com.toutiaoyan.compose.ui.components.tooltip.TooltipScreenshotTest.trigger_light[jvm]": "tooltip_trigger_light.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/tooltip_trigger_light_compare.png",
+      "com.toutiaoyan.compose.ui.components.tooltip.TooltipScreenshotTest.side_offset_4_dark[jvm]": "tooltip_side_offset_4_dark.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/tooltip_side_offset_4_dark_compare.png",
+      "com.toutiaoyan.compose.ui.components.tooltip.TooltipScreenshotTest.trigger_dark[jvm]": "tooltip_trigger_dark.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/tooltip_trigger_dark_compare.png",
+      "com.toutiaoyan.compose.ui.components.tooltip.TooltipScreenshotTest.side_offset_4_light[jvm]": "tooltip_side_offset_4_light.png is changed.\nSee the compare image at /private/tmp/compose-cursor-goal-integration.I4xENn/shadcn/core/build/outputs/roborazzi/tooltip_side_offset_4_light_compare.png"
+    },
+    "pngSha256": {
+      "tooltip_arrow_dark_actual.png": {
+        "before": "f4cad980e8be35894313eebfcd6173e37f7bffcdffbe96b27271cda338a95d25",
+        "after": "f4cad980e8be35894313eebfcd6173e37f7bffcdffbe96b27271cda338a95d25"
+      },
+      "tooltip_arrow_light_actual.png": {
+        "before": "9a7c1f2de583f632477b55aff56c07b84fae1b6142cffa8f59b4ee6abf6436aa",
+        "after": "9a7c1f2de583f632477b55aff56c07b84fae1b6142cffa8f59b4ee6abf6436aa"
+      },
+      "tooltip_side_offset_4_dark_actual.png": {
+        "before": "f4cad980e8be35894313eebfcd6173e37f7bffcdffbe96b27271cda338a95d25",
+        "after": "f4cad980e8be35894313eebfcd6173e37f7bffcdffbe96b27271cda338a95d25"
+      },
+      "tooltip_side_offset_4_light_actual.png": {
+        "before": "9a7c1f2de583f632477b55aff56c07b84fae1b6142cffa8f59b4ee6abf6436aa",
+        "after": "9a7c1f2de583f632477b55aff56c07b84fae1b6142cffa8f59b4ee6abf6436aa"
+      },
+      "tooltip_trigger_dark_actual.png": {
+        "before": "2a1eb3de8c53787e95fe22d8a4d52c3ae4c2603b533ede345fa252ca1a5ea3d0",
+        "after": "2a1eb3de8c53787e95fe22d8a4d52c3ae4c2603b533ede345fa252ca1a5ea3d0"
+      },
+      "tooltip_trigger_light_actual.png": {
+        "before": "a6a13e901dfc236be88d86f2dd0fa51ce40a470f8ef2032b76fe1f2f29d696b1",
+        "after": "a6a13e901dfc236be88d86f2dd0fa51ce40a470f8ef2032b76fe1f2f29d696b1"
+      }
+    }
+  },
+  "detekt": {
+    "files": 566,
+    "before": 4463,
+    "after": 4451,
+    "removed": [
+      "ComplexCondition:Popover.kt$!modal && isOpen && event.type == KeyEventType.KeyDown && event.key == Key.Escape",
+      "ComplexCondition:Popover.kt$event.type == KeyEventType.KeyDown && event.key == Key.Tab && controller.open && controller.focus.focusAtTrigger",
+      "MagicNumber:HoverCard.kt$300",
+      "MagicNumber:HoverCard.kt$600",
+      "MagicNumber:HoverCardPopup.kt$0.05f",
+      "MagicNumber:HoverCardPopup.kt$0.95f",
+      "MagicNumber:HoverCardPopup.kt$100",
+      "MagicNumber:PopoverPopup.kt$.05f",
+      "MagicNumber:PopoverPopup.kt$.95f",
+      "MagicNumber:Tooltip.kt$45f",
+      "MagicNumber:Tooltip.kt$600",
+      "TopLevelPropertyNaming:PopoverPopup.kt$private const val PopoverMotionDuration = 100"
+    ],
+    "added": []
+  },
+  "ktlintCheck": "passed",
+  "browser": {
+    "viewportCssPixels": [
+      900,
+      580
+    ],
+    "theme": "Nova",
+    "builds": "passed",
+    "results": [
+      {
+        "runtime": "js",
+        "tooltipFlipped": true,
+        "arrow": [
+          10,
+          10,
+          10
+        ],
+        "opposite": [
+          255,
+          255,
+          255
+        ],
+        "tooltipUnmountClosed": true,
+        "popoverEscapeClosed": true,
+        "hoverCardEscapeClosed": true
+      },
+      {
+        "runtime": "wasmJs",
+        "tooltipFlipped": true,
+        "arrow": [
+          10,
+          10,
+          10
+        ],
+        "opposite": [
+          255,
+          255,
+          255
+        ],
+        "tooltipUnmountClosed": true,
+        "popoverEscapeClosed": true,
+        "hoverCardEscapeClosed": true
+      }
+    ]
+  }
+}
