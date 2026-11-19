@@ -3,7 +3,6 @@
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
     <ID>ComplexCondition:AnchoredPopup.kt$!visibleState.currentState &amp;&amp; !visibleState.targetState &amp;&amp; (!retainInterruptedEnter || visibleState.isIdle)</ID>
-    <ID>ComplexCondition:Button.kt$(!isNova &amp;&amp; !isRheaSmall) || iconPlacement == null || normal == null</ID>
     <ID>ComplexCondition:Calendar.kt$nova &amp;&amp; (middle || start || end) &amp;&amp; range?.rangeFrom != range?.rangeTo</ID>
     <ID>ComplexCondition:Carousel.kt$state.pageCount == 0 || ( delta &lt; 0 &amp;&amp; !state.canScrollBackward ) || ( delta &gt; 0 &amp;&amp; !state.canScrollForward )</ID>
     <ID>ComplexCondition:ChartPlot.kt$count &lt;= 0 || width &lt;= 0 || !x.isFinite() || x &lt; 0 || x &gt;= width</ID>
@@ -608,7 +607,6 @@
     <ID>MagicNumber:BubbleColors.kt$360</ID>
     <ID>MagicNumber:BubbleColors.kt$360f</ID>
     <ID>MagicNumber:BubbleColors.kt$540f</ID>
-    <ID>MagicNumber:ButtonStyles.kt$0.05f</ID>
     <ID>MagicNumber:Calendar.kt$100</ID>
     <ID>MagicNumber:Calendar.kt$12</ID>
     <ID>MagicNumber:Calendar.kt$180f</ID>

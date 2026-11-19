@@ -16,10 +16,6 @@ import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.StyleScope
 import androidx.compose.foundation.style.rememberUpdatedStyleState
 import androidx.compose.foundation.style.then
-import androidx.compose.foundation.style.contentPadding
-import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.unit.LayoutDirection
-import com.toutiaoyan.compose.ui.utils.rememberTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
@@ -37,19 +33,13 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.semantics.error
-import androidx.compose.ui.graphics.shadow.Shadow
-import com.toutiaoyan.compose.ui.styles.border
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
 import com.toutiaoyan.compose.ui.components.icon.LocalInlineIconSize
 import com.toutiaoyan.compose.ui.tokens.StylePreset
@@ -149,29 +139,7 @@ internal fun ButtonSurface(
     val isRheaOutline = isRhea && variant == ButtonVariant.Outline
     val isRheaSmall = isRhea && size == ButtonSize.Sm
     val isNovaSmall = isNova && (size == ButtonSize.Xs || size == ButtonSize.Sm)
-    val labelStyle =
-        if (isNova || isRheaOutline || isRheaSmall) {
-            theme.typography.labelLarge.copy(
-                fontFamily = theme.fontFamily,
-                fontSize =
-                    when (size) {
-                        ButtonSize.Xs -> 12.sp
-                        ButtonSize.Sm -> if (isRhea) 14.sp else 12.8.sp
-                        else -> 14.sp
-                    },
-                lineHeight = if (size == ButtonSize.Xs) 16.sp else 20.sp,
-                lineHeightStyle =
-                    LineHeightStyle(
-                        alignment = LineHeightStyle.Alignment.Center,
-                        trim = LineHeightStyle.Trim.None,
-                        mode = LineHeightStyle.Mode.Tight,
-                    ),
-                fontWeight = FontWeight.Medium,
-                letterSpacing = 0.sp,
-            )
-        } else {
-            TextStyle.Default
-        }
+    val labelStyle = buttonLabelStyle(theme, variant, size)
     val minTouchTarget = theme.minTouchTarget.takeIf { reserveMinTouchTarget }
     // Link underline: Style `hovered { textDecoration }` is not reliable inside
     // SelectionContainer; drive Text via [LocalTextDecoration] instead (real shadcn:
@@ -183,52 +151,8 @@ internal fun ButtonSurface(
         indication ?: LocalIndication.current.takeUnless { isRheaOutline && it === DefaultRippleIndication }
     val clipIndication = (resolvedIndication as? RippleIndication)?.bounded != false
     val indicationShape = remember { mutableStateOf<Shape>(RectangleShape) }
-    val direction = LocalLayoutDirection.current
-    val iconStyle =
-        rememberTheme(size, iconPlacement, direction) {
-            val normal =
-                when (size) {
-                    ButtonSize.Xs -> spacing.scale2
-                    ButtonSize.Sm -> if (isRhea) spacing.scale3 else spacing.scale2p5
-                    ButtonSize.Md, ButtonSize.Lg -> spacing.scale2p5
-                    else -> null
-                }
-            if ((!isNova && !isRheaSmall) || iconPlacement == null || normal == null) {
-                Style
-            } else {
-                val icon = if (isNovaSmall) spacing.scale1p5 else spacing.scale2
-                val start = if (iconPlacement != ButtonIconPlacement.End) icon else normal
-                val end = if (iconPlacement != ButtonIconPlacement.Start) icon else normal
-                Style {
-                    // Foundation scalar padding places physical edges; map logical edges once.
-                    contentPadding(
-                        start = if (direction == LayoutDirection.Ltr) start else end,
-                        top = 0.dp,
-                        end = if (direction == LayoutDirection.Ltr) end else start,
-                        bottom = 0.dp,
-                    )
-                }
-            }
-        }
-    val invalidStyle =
-        rememberTheme(invalid) {
-            if (!invalid) {
-                Style
-            } else {
-                Style {
-                    border(colors.destructive.copy(alpha = if (isDark) 0.5f else 1f))
-                    if (ring.enabled) {
-                        dropShadow(
-                            Shadow(
-                                radius = 0.dp,
-                                spread = ring.width + ring.offset,
-                                color = colors.destructive.copy(alpha = if (isDark) 0.4f else 0.2f),
-                            ),
-                        )
-                    }
-                }
-            }
-        }
+    val iconStyle = rememberButtonIconPadding(size, iconPlacement)
+    val invalidStyle = rememberButtonInvalidStyle(invalid)
     val chromeStyle =
         (variant.rememberStyle() then size.rememberStyle() then iconStyle then invalidStyle then style).captureShape(
             indicationShape,

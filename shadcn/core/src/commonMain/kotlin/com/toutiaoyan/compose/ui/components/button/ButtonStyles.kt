@@ -23,6 +23,8 @@ import com.toutiaoyan.compose.ui.styles.disabledDim
 import com.toutiaoyan.compose.ui.styles.focusVisible
 import com.toutiaoyan.compose.ui.styles.focusRing
 
+private const val NOVA_SECONDARY_HOVER_FOREGROUND_FRACTION = 0.05f
+
 // Matches shadcn/ui's real button.tsx (github.com/shadcn-ui/ui) as closely as our
 // Style API allows. base-nova reserves a transparent border on every variant;
 // destructive uses a tinted background with destructive-colored content. Every variant gets
@@ -159,7 +161,7 @@ fun ButtonVariant.rememberStyle(): Style {
                                     androidx.compose.ui.graphics.lerp(
                                         colors.secondary,
                                         colors.foreground,
-                                        0.05f,
+                                        NOVA_SECONDARY_HOVER_FOREGROUND_FRACTION,
                                     )
                                 } else {
                                     colors.secondary.copy(
