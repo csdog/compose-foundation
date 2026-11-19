@@ -17,6 +17,8 @@ import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.components.input.Input
 import com.toutiaoyan.compose.ui.components.input.InputVariant
 
+private val TextareaMinHeight = 64.dp
+
 /**
  * Multi-line text input. Matches shadcn/ui's real textarea.tsx, which shares the
  * exact same border/focus/disabled spec as Input -- this is a thin wrapper over
@@ -65,7 +67,7 @@ fun Textarea(
     Input(
         value = value,
         onValueChange = onValueChange,
-        modifier = modifier.defaultMinSize(minHeight = 64.dp),
+        modifier = modifier.defaultMinSize(minHeight = TextareaMinHeight),
         enabled = enabled,
         disabled = disabled,
         readOnly = readOnly,
