@@ -2,7 +2,9 @@
 
 package com.toutiaoyan.compose.ui.components.dialog
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.CompositionLocalProvider
@@ -30,6 +32,35 @@ import kotlin.test.assertTrue
 
 class DialogFooterTest {
     @get:Rule val rule = createComposeRule()
+
+    @Test
+    fun compactActionsFitUnderUnboundedHorizontalConstraints() {
+        val window =
+            object : WindowInfo {
+                override val isWindowFocused = true
+                override val containerSize = IntSize(390, 844)
+            }
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, minTouchTarget = null) {
+                CompositionLocalProvider(LocalWindowInfo provides window) {
+                    Dialog(open = true) {
+                        Column(Modifier.width(340.dp).horizontalScroll(rememberScrollState())) {
+                            DialogFooter {
+                                Button("Cancel", variant = ButtonVariant.Outline)
+                                Button("Save longer changes")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        val save = rule.onNodeWithText("Save longer changes").assertIsDisplayed().getUnclippedBoundsInRoot()
+        val cancel = rule.onNodeWithText("Cancel").assertIsDisplayed().getUnclippedBoundsInRoot()
+        val saveWidth = save.right - save.left
+        assertEquals(saveWidth, cancel.right - cancel.left)
+        assertTrue(saveWidth > 0.dp)
+        assertEquals(8f, (cancel.top - save.bottom).value, 0.5f)
+    }
 
     @Test fun phoneActionsStackInReverseAndDesktopActionsKeepLogicalOrder() {
         var viewport by mutableStateOf(IntSize(390, 844))

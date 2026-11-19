@@ -16,7 +16,6 @@ import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.constrainHeight
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import com.toutiaoyan.compose.ui.tokens.StylePreset
@@ -102,6 +101,15 @@ internal class DialogController(
 ) {
     fun toggle() = onOpenChange(!open)
 }
+
+private const val NOVA_DIALOG_TITLE_FONT_SIZE_SP = 16
+private const val NOVA_DIALOG_TITLE_LINE_HEIGHT_SP = 16
+private const val NOVA_DIALOG_CLOSE_OFFSET_DP = 8
+private const val NOVA_DIALOG_HEADER_GAP_DP = 8
+private const val NOVA_DIALOG_FOOTER_INSET_DP = 16
+private const val LEGACY_DIALOG_SCRIM_OPACITY = 0.5f
+private const val NOVA_DIALOG_FOOTER_MUTED_ALPHA = 0.5f
+private const val DIALOG_DISABLED_CLOSE_OPACITY = 0.5f
 
 private val LocalDialog = staticCompositionLocalOf<DialogController?> { null }
 
@@ -352,8 +360,8 @@ fun DialogScope.DialogContent(
                             ).then(
                                 if (currentTheme.activePreset == StylePreset.Nova) {
                                     Modifier.offset(
-                                        8.dp,
-                                        (-8).dp,
+                                        NOVA_DIALOG_CLOSE_OFFSET_DP.dp,
+                                        (-NOVA_DIALOG_CLOSE_OFFSET_DP).dp,
                                     )
                                 } else {
                                     Modifier
@@ -459,7 +467,7 @@ fun DialogOverlay(
                     alpha = 0.1f,
                 )
             } else {
-                currentTheme.colors.foreground.copy(alpha = 0.5f)
+                currentTheme.colors.foreground.copy(alpha = LEGACY_DIALOG_SCRIM_OPACITY)
             },
     )
 }
@@ -506,7 +514,7 @@ fun DialogClose(
     Box(
         modifier =
             modifier
-                .then(if (resolvedEnabled) Modifier else Modifier.alpha(0.5f))
+                .then(if (resolvedEnabled) Modifier else Modifier.alpha(DIALOG_DISABLED_CLOSE_OPACITY))
                 .semantics {
                     role = Role.Button
                     contentDescription = ariaLabel
@@ -539,7 +547,7 @@ fun DialogHeader(
         modifier = modifier.styleable(styleState, style),
         verticalArrangement =
             Arrangement.spacedBy(
-                if (currentTheme.activePreset == StylePreset.Nova) 8.dp else twSpacing.xs,
+                if (currentTheme.activePreset == StylePreset.Nova) NOVA_DIALOG_HEADER_GAP_DP.dp else twSpacing.xs,
             ),
     ) {
         content()
@@ -578,7 +586,7 @@ fun DialogTitle(
     Text(
         modifier = modifier.semantics { heading() },
         variant = TextVariant.TitleMedium,
-        textStyle = overlayTypography(16, 16, medium = true),
+        textStyle = overlayTypography(NOVA_DIALOG_TITLE_FONT_SIZE_SP, NOVA_DIALOG_TITLE_LINE_HEIGHT_SP, medium = true),
         style = style,
         text = text,
     )
@@ -628,7 +636,7 @@ fun DialogFooter(
     val bleed =
         if (nova) {
             Modifier.layout { measurable, constraints ->
-                val inset = 16.dp.roundToPx()
+                val inset = NOVA_DIALOG_FOOTER_INSET_DP.dp.roundToPx()
                 val child = measurable.measure(constraints.offset(horizontal = inset * 2))
                 layout((child.width - inset * 2).coerceAtLeast(0), (child.height - inset).coerceAtLeast(0)) {
                     child.placeRelative(-inset, 0)
@@ -640,9 +648,9 @@ fun DialogFooter(
     val chrome =
         if (nova) {
             Style {
-                background(colors.muted.copy(alpha = 0.5f))
+                background(colors.muted.copy(alpha = NOVA_DIALOG_FOOTER_MUTED_ALPHA))
                 shape(RoundedCornerShape(bottomStart = radius, bottomEnd = radius))
-                contentPadding(16.dp)
+                contentPadding(NOVA_DIALOG_FOOTER_INSET_DP.dp)
             }
         } else {
             Style
@@ -683,22 +691,7 @@ fun DialogFooter(
         if (stacked) {
             // Keep the public RowScope receiver while matching flex-col-reverse and
             // cross-axis stretch. The viewport, rather than panel width, selects sm.
-            Layout(content = actions) { measurables, constraints ->
-                val gap = actionSpacing.roundToPx()
-                val width = constraints.maxWidth
-                val children =
-                    measurables.map {
-                        it.measure(constraints.copy(minWidth = width, minHeight = 0))
-                    }
-                val height = children.sumOf { it.height } + gap * (children.size - 1).coerceAtLeast(0)
-                layout(width, constraints.constrainHeight(height)) {
-                    var y = 0
-                    children.asReversed().forEach { child ->
-                        child.placeRelative(0, y)
-                        y += child.height + gap
-                    }
-                }
-            }
+            Layout(content = actions, measurePolicy = compactDialogFooterMeasurePolicy(actionSpacing))
         } else {
             actions()
         }

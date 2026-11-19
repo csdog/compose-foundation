@@ -6,6 +6,7 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.constrainHeight
 import androidx.compose.ui.unit.constrainWidth
 import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.ui.components.dialog.compactDialogFooterMeasurePolicy
 
 private val AlertDialogHeaderGap = 6.dp
 private val AlertDialogMediaBottomMargin = 8.dp
@@ -55,6 +56,13 @@ internal fun alertDialogHeaderMeasurePolicy(centered: Boolean): MeasurePolicy =
     }
 
 internal fun alertDialogFooterMeasurePolicy(small: Boolean): MeasurePolicy =
+    if (small) {
+        compactAlertDialogGridMeasurePolicy()
+    } else {
+        compactDialogFooterMeasurePolicy(AlertDialogActionGap)
+    }
+
+private fun compactAlertDialogGridMeasurePolicy(): MeasurePolicy =
     MeasurePolicy { measurables, constraints ->
         val gap = AlertDialogActionGap.roundToPx()
         val width =
@@ -62,8 +70,7 @@ internal fun alertDialogFooterMeasurePolicy(small: Boolean): MeasurePolicy =
                 constraints.maxWidth
             } else {
                 val widestAction = measurables.maxOfOrNull { it.maxIntrinsicWidth(constraints.maxHeight) } ?: 0
-                val naturalWidth =
-                    if (small && measurables.isNotEmpty()) widestAction.toLong() * 2 + gap else widestAction.toLong()
+                val naturalWidth = if (measurables.isNotEmpty()) widestAction.toLong() * 2 + gap else 0
                 val preferredWidth = naturalWidth.coerceAtMost((Constraints.Infinity - 1).toLong()).toInt()
                 Constraints.fitPrioritizingWidth(
                     minWidth = constraints.minWidth,
@@ -72,7 +79,7 @@ internal fun alertDialogFooterMeasurePolicy(small: Boolean): MeasurePolicy =
                     maxHeight = constraints.maxHeight,
                 ).maxWidth
             }
-        val cellWidth = if (small) ((width - gap) / 2).coerceAtLeast(0) else width
+        val cellWidth = ((width - gap) / 2).coerceAtLeast(0)
         val actionConstraints =
             Constraints.fitPrioritizingWidth(
                 minWidth = cellWidth,
@@ -81,7 +88,7 @@ internal fun alertDialogFooterMeasurePolicy(small: Boolean): MeasurePolicy =
                 maxHeight = constraints.maxHeight,
             )
         val actions = measurables.map { it.measure(actionConstraints) }
-        val rows = if (small) actions.chunked(2) else actions.asReversed().map { listOf(it) }
+        val rows = actions.chunked(2)
         val rowHeights = rows.map { row -> row.maxOf { it.height } }
         val height = rowHeights.sum() + gap * (rows.size - 1).coerceAtLeast(0)
         layout(width, constraints.constrainHeight(height)) {
