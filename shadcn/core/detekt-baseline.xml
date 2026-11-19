@@ -4299,7 +4299,6 @@
     <ID>ReturnCount:Calendar.kt$private fun handleCalendarKey( state: CalendarState, event: KeyEvent, rtl: Boolean, ): Boolean</ID>
     <ID>ReturnCount:Combobox.kt$ComboboxEditing$fun key( event: KeyEvent, ctrl: ComboboxController, ): Boolean</ID>
     <ID>ReturnCount:Command.kt$CommandController$fun matches( value: String, keywords: List&lt;String&gt; = emptyList(), ): Boolean</ID>
-    <ID>ReturnCount:Command.kt$CommandController$fun selectHighlighted(): Boolean</ID>
     <ID>ReturnCount:ContextMenuKeyboard.kt$ContextMenuNavigation$fun key(event: KeyEvent): Boolean</ID>
     <ID>ReturnCount:ContextMenuKeyboard.kt$ContextMenuNavigation$private fun typeAhead(event: KeyEvent): Boolean</ID>
     <ID>ReturnCount:HoverCardPointerTransit.kt$internal fun hoverCardTransitRegion( point: Offset, departure: Offset?, trigger: IntRect, popup: PopupPositionResult, buffer: Float, ): HoverCardTransitRegion?</ID>

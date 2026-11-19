@@ -59,6 +59,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.positionInRoot
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.KeyEventType
@@ -113,6 +116,16 @@ internal class CommandController(
 
     // Keep mounted rows in composition order while filtering temporarily removes navigation entries.
     val itemOrder = mutableListOf<Any>()
+    val itemPositions = mutableMapOf<Any, Offset>()
+
+    fun orderedItems(): List<CommandNavItem> {
+        if (!items.all { it.id in itemPositions }) return items
+        return items.sortedBy { itemPositions.getValue(it.id).y }
+    }
+
+    private fun preferredItem(candidates: List<CommandNavItem>): CommandNavItem? =
+        highlightedId?.let { id -> candidates.firstOrNull { it.id == id } }
+            ?: candidates.firstOrNull { currentValue.isNotEmpty() && it.value == currentValue }
 
     fun matches(
         value: String,
@@ -124,9 +137,9 @@ internal class CommandController(
     }
 
     fun stepHighlight(delta: Int) {
-        val enabled = items.filter { it.enabled }
+        val enabled = orderedItems().filter { it.enabled }
         if (enabled.isEmpty()) return
-        val idx = enabled.indexOfFirst { it.id == highlightedId }
+        val idx = preferredItem(enabled)?.let(enabled::indexOf) ?: -1
         val nextIdx =
             when {
                 idx < 0 -> if (delta > 0) 0 else enabled.lastIndex
@@ -152,8 +165,7 @@ internal class CommandController(
     }
 
     fun selectHighlighted(): Boolean {
-        val item = items.firstOrNull { it.id == highlightedId } ?: return false
-        if (!item.enabled) return false
+        val item = preferredItem(orderedItems().filter { it.enabled }) ?: return false
         item.onSelect()
         return true
     }
@@ -174,14 +186,13 @@ private fun handleCommandKey(
             true
         }
         Key.MoveHome, Key.MoveEnd -> {
+            val candidates = ctrl.orderedItems()
             val item =
-                (
-                    if (event.key == Key.MoveHome) {
-                        ctrl.items
-                    } else {
-                        ctrl.items.asReversed()
-                    }
-                ).firstOrNull { it.enabled }
+                if (event.key == Key.MoveHome) {
+                    candidates.firstOrNull { it.enabled }
+                } else {
+                    candidates.lastOrNull { it.enabled }
+                }
             if (item != null) ctrl.highlight(item)
             item != null
         }
@@ -324,12 +335,9 @@ private fun CommandScaffold(
                     }
             )
         ) {
-            controller.highlightedId =
-                (
-                    controller.items.firstOrNull {
-                        it.enabled && it.value == controller.currentValue
-                    } ?: controller.items.firstOrNull { it.enabled }
-                )?.id
+            val items = controller.orderedItems().filter { it.enabled }
+            val preferred = items.firstOrNull { it.value == controller.currentValue }
+            controller.highlightedId = (preferred ?: items.firstOrNull())?.id
         }
     }
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
@@ -636,7 +644,10 @@ fun CommandItem(
     val itemId = remember { Any() }
     DisposableEffect(ctrl, itemId) {
         ctrl.itemOrder.add(itemId)
-        onDispose { ctrl.itemOrder.remove(itemId) }
+        onDispose {
+            ctrl.itemOrder.remove(itemId)
+            ctrl.itemPositions.remove(itemId)
+        }
     }
     val group = LocalCommandGroup.current
     DisposableEffect(group, itemId) { onDispose { group?.remove(itemId) } }
@@ -697,6 +708,7 @@ fun CommandItem(
     Box(
         modifier =
             modifier.bringIntoViewRequester(bringIntoView)
+                .onGloballyPositioned { ctrl.itemPositions[itemId] = it.positionInRoot() }
                 .onPointerEvent(PointerEventType.Enter) {
                     if (resolvedEnabled) ctrl.items.firstOrNull { it.id == itemId }?.let(ctrl::highlight)
                 }
