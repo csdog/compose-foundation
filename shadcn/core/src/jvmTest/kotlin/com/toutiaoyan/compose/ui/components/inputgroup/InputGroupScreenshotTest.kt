@@ -31,10 +31,38 @@ import com.toutiaoyan.compose.ui.components.message.Message
 import com.toutiaoyan.compose.ui.components.message.MessageAvatar
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.Test
 import com.toutiaoyan.compose.tailwind.core.twSpacing
 
 class InputGroupScreenshotTest : ScreenshotTest() {
+    @Test
+    fun novaInlineLayoutLight() = novaInlineLayout(darkTheme = false)
+
+    @Test
+    fun novaInlineLayoutDark() = novaInlineLayout(darkTheme = true)
+
+    private fun novaInlineLayout(darkTheme: Boolean) {
+        snapshot("input_group_nova_inline_layout", darkTheme, stylePreset = StylePreset.Nova) {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                InputGroup(modifier = Modifier.width(260.dp)) {
+                    InputGroupInput(value = "Search")
+                    InputGroupAddon(InputGroupAddonAlign.InlineEnd) {
+                        InputGroupButton("Go", onClick = {})
+                    }
+                }
+                InputGroup(modifier = Modifier.width(260.dp)) {
+                    InputGroupInput(value = "Tall inline addon")
+                    InputGroupAddon(InputGroupAddonAlign.InlineEnd) {
+                        InputGroupButton(onClick = {}, size = InputGroupButtonSize.IconSm) {
+                            Text { "+" }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * The trailing-addon row is a regression guard: `Input` hardcodes
      * `fillMaxWidth()`, which used to eat the whole group row and squeeze the trailing

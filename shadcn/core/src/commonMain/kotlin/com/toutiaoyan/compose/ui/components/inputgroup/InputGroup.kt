@@ -290,7 +290,8 @@ fun InputGroupAddon(
     }
     SideEffect { layoutState?.addons?.set(key, align) }
     val spacing = twSpacing
-    // py-1.5 ≈ 6dp; pl-3/pr-3 = spacing.md; keep xs gap to the control (long-value regression).
+    // Fit a 24 dp Nova inline button inside the 30 dp inner row.
+    val inlineVerticalPadding = if (nova) 3.dp else 6.dp
     val pad =
         remember(align, nova, spacing) {
             Style {
@@ -299,16 +300,16 @@ fun InputGroupAddon(
                         contentPadding(
                             start = if (nova) 8.dp else spacing.md,
                             end = if (nova) 0.dp else spacing.xs,
-                            top = 6.dp,
-                            bottom = 6.dp,
+                            top = inlineVerticalPadding,
+                            bottom = inlineVerticalPadding,
                         )
 
                     InputGroupAddonAlign.InlineEnd ->
                         contentPadding(
                             start = if (nova) 0.dp else spacing.xs,
                             end = if (nova) 8.dp else spacing.md,
-                            top = 6.dp,
-                            bottom = 6.dp,
+                            top = inlineVerticalPadding,
+                            bottom = inlineVerticalPadding,
                         )
 
                     InputGroupAddonAlign.BlockStart ->
