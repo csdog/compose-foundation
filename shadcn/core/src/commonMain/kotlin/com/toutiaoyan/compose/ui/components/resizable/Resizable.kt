@@ -59,6 +59,10 @@ import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 
+private const val MIN_PANEL_WEIGHT = 0.000001f
+private const val RESIZE_KEYBOARD_FRACTION_STEP = 0.05f
+private const val PERCENT_PER_FRACTION = 100
+
 /**
  * The entire drag-to-resize calculation, as a plain function with no Compose dependency:
  * given the current split and how far the handle just moved (in px), returns the new
@@ -151,7 +155,7 @@ fun ResizablePanelGroup(
             minFraction in 0f..1f &&
             maxFraction in minFraction..1f,
     ) {
-        "Panel limits must satisfy0 <= minFraction <= maxFraction <=1"
+        "Panel limits must satisfy 0 <= minFraction <= maxFraction <= 1"
     }
     val resolvedOrientation = direction ?: orientation
     val rtl = resolvedOrientation == Orientation.Horizontal && LocalLayoutDirection.current == LayoutDirection.Rtl
@@ -225,8 +229,8 @@ fun ResizablePanelGroup(
                         .onSizeChanged { contentExtentPx = it.width.toFloat() }.resizablePointerRouter(region),
             ) {
                 content(
-                    Modifier.fillMaxHeight().weight(current.coerceAtLeast(0.000001f)),
-                    Modifier.fillMaxHeight().weight((1f - current).coerceAtLeast(0.000001f)),
+                    Modifier.fillMaxHeight().weight(current.coerceAtLeast(MIN_PANEL_WEIGHT)),
+                    Modifier.fillMaxHeight().weight((1f - current).coerceAtLeast(MIN_PANEL_WEIGHT)),
                     onHandleDrag,
                 )
             }
@@ -237,8 +241,8 @@ fun ResizablePanelGroup(
                         .onSizeChanged { contentExtentPx = it.height.toFloat() }.resizablePointerRouter(region),
             ) {
                 content(
-                    Modifier.fillMaxWidth().weight(current.coerceAtLeast(0.000001f)),
-                    Modifier.fillMaxWidth().weight((1f - current).coerceAtLeast(0.000001f)),
+                    Modifier.fillMaxWidth().weight(current.coerceAtLeast(MIN_PANEL_WEIGHT)),
+                    Modifier.fillMaxWidth().weight((1f - current).coerceAtLeast(MIN_PANEL_WEIGHT)),
                     onHandleDrag,
                 )
             }
@@ -327,6 +331,8 @@ fun ResizableHandle(
         resolvedDrag(if (bounds.rtl) -delta else delta)
         return true
     }
+    val decreaseKey = if (horizontal) Key.DirectionLeft else Key.DirectionUp
+    val increaseKey = if (horizontal) Key.DirectionRight else Key.DirectionDown
     val interactions = remember { MutableInteractionSource() }
     val styleState = remember { MutableStyleState(interactions) }
     val gripStyleState = remember { MutableStyleState(MutableInteractionSource()) }
@@ -341,22 +347,10 @@ fun ResizableHandle(
                             false
                         } else {
                             when (event.key) {
-                                Key.DirectionLeft -> {
-                                    if (horizontal) setFraction(bounds.currentFraction() - 0.05f)
-                                    true
-                                }
-                                Key.DirectionRight -> {
-                                    if (horizontal) setFraction(bounds.currentFraction() + 0.05f)
-                                    true
-                                }
-                                Key.DirectionUp -> {
-                                    if (!horizontal) setFraction(bounds.currentFraction() - 0.05f)
-                                    true
-                                }
-                                Key.DirectionDown -> {
-                                    if (!horizontal) setFraction(bounds.currentFraction() + 0.05f)
-                                    true
-                                }
+                                decreaseKey ->
+                                    setFraction(bounds.currentFraction() - RESIZE_KEYBOARD_FRACTION_STEP)
+                                increaseKey ->
+                                    setFraction(bounds.currentFraction() + RESIZE_KEYBOARD_FRACTION_STEP)
                                 Key.MoveHome -> setFraction(bounds.min)
                                 Key.MoveEnd -> setFraction(bounds.max)
                                 Key.Enter, Key.NumPadEnter, Key.F6 -> true
@@ -374,7 +368,7 @@ fun ResizableHandle(
                         if (resolvedDisabled) disabled()
                         if (state != null && bounds != null) {
                             progressBarRangeInfo = ProgressBarRangeInfo(state.fraction, bounds.min..bounds.max, 0)
-                            stateDescription = "${(state.fraction * 100).roundToInt()}%"
+                            stateDescription = "${(state.fraction * PERCENT_PER_FRACTION).roundToInt()}%"
                             if (!resolvedDisabled) setProgress { setFraction(it) }
                         }
                     }

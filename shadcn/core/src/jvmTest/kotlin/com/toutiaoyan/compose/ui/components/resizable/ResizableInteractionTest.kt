@@ -10,6 +10,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.SemanticsActions
@@ -137,6 +141,34 @@ class ResizableInteractionTest : ScreenshotTest() {
         handle.performKeyInput { pressKey(Key.MoveEnd) }
         assertEquals(1f, fraction(), 0.001f)
         composeRule.onNodeWithTag("second").assertWidthIsEqualTo(0.dp)
+    }
+
+    @Test
+    fun crossAxisKeyBubblesToTheParentWhileResizeKeyStaysOnTheHandle() {
+        val parentKeys = mutableListOf<Key>()
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Box(
+                Modifier.onKeyEvent { event ->
+                    if (event.type == KeyEventType.KeyDown) parentKeys += event.key
+                    false
+                },
+            ) {
+                ResizablePanelGroup(Modifier.size(320.dp, 200.dp)) { first, second, _ ->
+                    ResizablePanel(first) {}
+                    ResizableHandle(modifier = Modifier.testTag("handle"))
+                    ResizablePanel(second) {}
+                }
+            }
+        }
+        val handle = composeRule.onNodeWithTag("handle")
+        handle.requestFocus().performKeyInput {
+            pressKey(Key.DirectionDown)
+            pressKey(Key.DirectionRight)
+        }
+        composeRule.runOnIdle {
+            assertEquals(listOf(Key.DirectionDown), parentKeys)
+        }
+        assertEquals(0.55f, fraction(), 0.001f)
     }
 
     @Test fun verticalKeysAndAccessibleAdjustmentUseTheSameLimits() {
