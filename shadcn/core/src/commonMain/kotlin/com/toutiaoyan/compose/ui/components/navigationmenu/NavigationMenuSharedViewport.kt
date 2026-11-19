@@ -94,9 +94,9 @@ internal class NavigationMenuPanel(
     val content: @Composable (active: Boolean) -> Unit,
 )
 
-internal const val NavigationMenuViewportTag = "navigation-menu-viewport"
-private const val ViewportDuration = 350
-private const val ViewportExitDuration = 150
+internal const val NAVIGATION_MENU_VIEWPORT_TAG = "navigation-menu-viewport"
+private const val VIEWPORT_ENTER_MILLIS = 350
+private const val VIEWPORT_EXIT_MILLIS = 150
 private val ViewportEasing = CubicBezierEasing(0.22f, 1f, 0.36f, 1f)
 
 @Composable
@@ -120,11 +120,11 @@ internal fun NavigationMenuSharedViewport(
     val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
     val transition = updateTransition(selected, label = "Navigation menu position")
     val start by transition.animateIntOffset(
-        transitionSpec = { tween(ViewportDuration, easing = ViewportEasing) },
+        transitionSpec = { tween(VIEWPORT_ENTER_MILLIS, easing = ViewportEasing) },
         label = "Navigation menu anchor start",
     ) { state.anchors[it]?.topLeft ?: IntOffset.Zero }
     val end by transition.animateIntOffset(
-        transitionSpec = { tween(ViewportDuration, easing = ViewportEasing) },
+        transitionSpec = { tween(VIEWPORT_ENTER_MILLIS, easing = ViewportEasing) },
         label = "Navigation menu anchor end",
     ) { state.anchors[it]?.bottomRight ?: IntOffset.Zero }
 
@@ -196,7 +196,7 @@ internal fun NavigationMenuSharedViewport(
             enter = EnterTransition.None,
             exit = ExitTransition.None,
         ) {
-            val motion = viewportMotion(origin).testTag(NavigationMenuViewportTag)
+            val motion = viewportMotion(origin).testTag(NAVIGATION_MENU_VIEWPORT_TAG)
             Box(motion.styleable(chrome, rememberNavMenuViewportStyle())) {
                 AnimatedContent(
                     targetState = selected,
@@ -206,12 +206,12 @@ internal fun NavigationMenuSharedViewport(
                         val from = state.anchors[initialState]?.center?.x ?: 0
                         val to = state.anchors[targetState]?.center?.x ?: 0
                         val direction = (to - from).compareTo(0)
-                        val fade = tween<Float>(ViewportDuration, easing = ViewportEasing)
-                        val slide = tween<IntOffset>(ViewportDuration, easing = ViewportEasing)
+                        val fade = tween<Float>(VIEWPORT_ENTER_MILLIS, easing = ViewportEasing)
+                        val slide = tween<IntOffset>(VIEWPORT_ENTER_MILLIS, easing = ViewportEasing)
                         val enter = slideInHorizontally(slide) { direction * it / 2 } + fadeIn(fade)
                         val exit = slideOutHorizontally(slide) { -direction * it / 2 } + fadeOut(fade)
                         (enter togetherWith exit).using(
-                            SizeTransform { _, _ -> tween(ViewportDuration, easing = ViewportEasing) },
+                            SizeTransform { _, _ -> tween(VIEWPORT_ENTER_MILLIS, easing = ViewportEasing) },
                         )
                     },
                 ) { item ->
@@ -230,9 +230,9 @@ private fun AnimatedVisibilityScope.viewportMotion(origin: State<TransformOrigin
         transition.animateFloat(
             transitionSpec = {
                 if (targetState == EnterExitState.Visible) {
-                    tween(ViewportDuration, easing = ViewportEasing)
+                    tween(VIEWPORT_ENTER_MILLIS, easing = ViewportEasing)
                 } else {
-                    tween(ViewportExitDuration)
+                    tween(VIEWPORT_EXIT_MILLIS)
                 }
             },
             label = "Navigation menu opacity and scale",

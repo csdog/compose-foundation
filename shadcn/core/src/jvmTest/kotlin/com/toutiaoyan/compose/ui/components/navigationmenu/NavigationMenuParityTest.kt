@@ -341,7 +341,7 @@ class NavigationMenuParityTest : ScreenshotTest() {
             }
         }
 
-        val popup = composeRule.onNodeWithTag(NavigationMenuViewportTag, useUnmergedTree = true)
+        val popup = composeRule.onNodeWithTag(NAVIGATION_MENU_VIEWPORT_TAG, useUnmergedTree = true)
 
         fun assertCenteredOn(tag: String) {
             val trigger = composeRule.onNodeWithTag(tag).fetchSemanticsNode().boundsInWindow
@@ -382,7 +382,7 @@ class NavigationMenuParityTest : ScreenshotTest() {
             }
         }
 
-        val viewport = composeRule.onNodeWithTag(NavigationMenuViewportTag)
+        val viewport = composeRule.onNodeWithTag(NAVIGATION_MENU_VIEWPORT_TAG)
 
         fun pixel(corner: Boolean = false): Int {
             val image = viewport.captureToImage().toPixelMap()

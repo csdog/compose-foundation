@@ -49,7 +49,7 @@ class NavigationMenuMotionTest : ScreenshotTest() {
             val backing = composeRule.onNodeWithTag("nav-backing")
             val origin = backing.fetchSemanticsNode().boundsInWindow.topLeft
             val panel =
-                composeRule.onNodeWithTag(NavigationMenuViewportTag)
+                composeRule.onNodeWithTag(NAVIGATION_MENU_VIEWPORT_TAG)
                     .fetchSemanticsNode().boundsInWindow.translate(-origin)
             val pixels = backing.captureToImage().toPixelMap()
             val x = panel.center.x.toInt()

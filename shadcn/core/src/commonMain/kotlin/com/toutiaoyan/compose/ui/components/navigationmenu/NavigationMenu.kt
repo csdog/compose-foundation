@@ -56,10 +56,12 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.IntRect
@@ -95,6 +97,12 @@ import com.toutiaoyan.compose.ui.styles.rememberMinTouchTargetStyle
 import com.toutiaoyan.compose.ui.styles.rememberPressMotionStyle
 import kotlinx.coroutines.delay
 import kotlin.time.TimeSource
+
+private const val STICKY_HOVER_PRESS_MILLIS = 500L
+private const val NAV_MENU_CHEVRON_MOTION_MILLIS = 300
+private const val NAV_MENU_CHEVRON_FLIP_DEGREES = 180f
+private const val NAV_MENU_CHEVRON_BASE_DEGREES = 90f
+private const val NAV_MENU_INDICATOR_ROTATION_DEGREES = 45f
 
 enum class NavigationMenuOrientation { Horizontal, Vertical }
 
@@ -171,8 +179,18 @@ private class NavigationMenuPanelFocus {
     val links = mutableListOf<FocusRequester>()
     val disabled = mutableSetOf<FocusRequester>()
     var focused: FocusRequester? = null
+    val positions = mutableMapOf<FocusRequester, Offset>()
 
-    fun enabledLinks(): List<FocusRequester> = links.filter { it !in disabled }
+    fun enabledLinks(rtl: Boolean): List<FocusRequester> {
+        val available = links.filter { it !in disabled }
+        if (!available.all { it in positions }) return available
+        return available.sortedWith(
+            compareBy(
+                { positions.getValue(it).y },
+                { if (rtl) -positions.getValue(it).x else positions.getValue(it).x },
+            ),
+        )
+    }
 }
 
 private val LocalNavigationMenuPanelLinks = staticCompositionLocalOf<NavigationMenuPanelFocus?> { null }
@@ -460,8 +478,9 @@ private fun Modifier.navigationMenuTopLevelFocus(
                     viewport.adjacentFocus(value, step)?.requestFocus()
                     true
                 } else {
-                    if (event.key == Key.Tab && controller.openValue != null &&
-                        (event.isShiftPressed || controller.openValue != value) &&
+                    val openValue = controller.openValue
+                    val leavesOpenItem = openValue != null && (event.isShiftPressed || openValue != value)
+                    if (event.key == Key.Tab && leavesOpenItem &&
                         viewport.adjacentFocus(value, if (event.isShiftPressed) -1 else 1) == null
                     ) {
                         controller.onOpenChange(null)
@@ -503,7 +522,7 @@ fun NavigationMenuItemScope.NavigationMenuTrigger(
     LaunchedEffect(isOpen) {
         stickyHoverPress = isOpen && triggerHovered
         if (stickyHoverPress) {
-            delay(500)
+            delay(STICKY_HOVER_PRESS_MILLIS)
             stickyHoverPress = false
         }
     }
@@ -545,14 +564,19 @@ fun NavigationMenuItemScope.NavigationMenuTrigger(
         },
     ) {
         if (currentTheme.activePreset == StylePreset.Nova) {
-            val rotation = animateFloatAsState(if (isOpen) 180f else 0f, tween(300), label = "navigation chevron")
+            val rotation =
+                animateFloatAsState(
+                    if (isOpen) NAV_MENU_CHEVRON_FLIP_DEGREES else 0f,
+                    tween(NAV_MENU_CHEVRON_MOTION_MILLIS),
+                    label = "navigation chevron",
+                )
             Row(verticalAlignment = Alignment.CenterVertically) {
                 content()
                 Icon(
                     NovaChevronRight,
                     modifier =
                         Modifier.padding(start = 4.dp).offset(y = 1.dp).size(12.dp)
-                            .graphicsLayer { rotationZ = 90f + rotation.value },
+                            .graphicsLayer { rotationZ = NAV_MENU_CHEVRON_BASE_DEGREES + rotation.value },
                 )
             }
         } else {
@@ -602,6 +626,7 @@ fun NavigationMenuItemScope.NavigationMenuContent(
     val isOpen = controller.openValue == value
     val panelFocus = remember { FocusRequester() }
     val panelLinks = remember { NavigationMenuPanelFocus() }
+    val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
     val rootFocusManager = LocalFocusManager.current
     LaunchedEffect(isOpen, rootFocusReturn) {
         val returning = rootFocusReturn
@@ -636,7 +661,7 @@ fun NavigationMenuItemScope.NavigationMenuContent(
         LaunchedEffect(active, keyboardOpened) {
             if (active && keyboardOpened) {
                 withFrameNanos { }
-                if (panelLinks.enabledLinks().firstOrNull()?.requestFocus() != true) panelFocus.requestFocus()
+                if (panelLinks.enabledLinks(rtl).firstOrNull()?.requestFocus() != true) panelFocus.requestFocus()
             }
         }
         LaunchedEffect(active, contentHovered) { latestHover?.onContentHoverChange(active && contentHovered) }
@@ -654,7 +679,7 @@ fun NavigationMenuItemScope.NavigationMenuContent(
                                 controller.onOpenChange(null)
                                 true
                             } else if (event.key == Key.Tab) {
-                                val links = panelLinks.enabledLinks()
+                                val links = panelLinks.enabledLinks(rtl)
                                 val boundary = if (event.isShiftPressed) links.firstOrNull() else links.lastOrNull()
                                 if (boundary == null || panelLinks.focused !== boundary) {
                                     false
@@ -818,6 +843,7 @@ fun NavigationMenuItemScope.NavigationMenuLink(
         onDispose {
             panelLinks?.links?.remove(linkFocus)
             panelLinks?.disabled?.remove(linkFocus)
+            panelLinks?.positions?.remove(linkFocus)
             if (panelLinks?.focused === linkFocus) panelLinks.focused = null
         }
     }
@@ -826,7 +852,9 @@ fun NavigationMenuItemScope.NavigationMenuLink(
     }
     val focusModifier =
         if (inPanel) {
-            modifier.focusRequester(linkFocus).onFocusChanged {
+            modifier.onGloballyPositioned {
+                panelLinks?.positions?.set(linkFocus, it.positionInRoot())
+            }.focusRequester(linkFocus).onFocusChanged {
                 if (it.isFocused) {
                     panelLinks?.focused = linkFocus
                 } else if (panelLinks?.focused === linkFocus) {
@@ -907,7 +935,7 @@ fun NavigationMenuItemScope.NavigationMenuIndicator(
                     .align(Alignment.BottomCenter)
                     .offset(y = 4.dp)
                     .size(8.dp)
-                    .rotate(45f)
+                    .rotate(NAV_MENU_INDICATOR_ROTATION_DEGREES)
                     .styleable(styleState, rememberNavMenuIndicatorStyle() then style),
         )
     }

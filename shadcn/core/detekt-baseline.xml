@@ -12,7 +12,6 @@
     <ID>ComplexCondition:MessageScrollerState.kt$MessageScrollerState$options.autoScroll &amp;&amp; !scrollable.end &amp;&amp; anchoredToken == null &amp;&amp; spacerHeight == 0</ID>
     <ID>ComplexCondition:MessageScrollerState.kt$MessageScrollerState$preserveOnPrepend &amp;&amp; previousReading != null &amp;&amp; (oldFirstIndex &gt; 0 || (!isFollowing &amp;&amp; anchoredToken == null))</ID>
     <ID>ComplexCondition:MessageScrollerState.kt$MessageScrollerState$viewportHeight &lt; oldViewportHeight &amp;&amp; wasAtEnd &amp;&amp; contentBottom == oldBottom &amp;&amp; anchoredToken == null &amp;&amp; spacerHeight == 0</ID>
-    <ID>ComplexCondition:NavigationMenu.kt$event.key == Key.Tab &amp;&amp; controller.openValue != null &amp;&amp; (event.isShiftPressed || controller.openValue != value) &amp;&amp; viewport.adjacentFocus(value, if (event.isShiftPressed) -1 else 1) == null</ID>
     <ID>ComplexCondition:Questionnaire.kt$enter &amp;&amp; (event.isCtrlPressed || event.isMetaPressed) &amp;&amp; !event.isAltPressed &amp;&amp; !event.isShiftPressed</ID>
     <ID>ComplexCondition:Resizable.kt$resolvedDisabled || state == null || bounds == null || !target.isFinite()</ID>
     <ID>ComplexCondition:Resizable.kt$resolvedDisabled || state == null || bounds == null || event.type != KeyEventType.KeyDown</ID>
@@ -2761,11 +2760,6 @@
     <ID>MagicNumber:MoreHorizontal.kt$5.99f</ID>
     <ID>MagicNumber:MoreHorizontal.kt$5f</ID>
     <ID>MagicNumber:MoreHorizontal.kt$6.8f</ID>
-    <ID>MagicNumber:NavigationMenu.kt$180f</ID>
-    <ID>MagicNumber:NavigationMenu.kt$300</ID>
-    <ID>MagicNumber:NavigationMenu.kt$45f</ID>
-    <ID>MagicNumber:NavigationMenu.kt$500</ID>
-    <ID>MagicNumber:NavigationMenu.kt$90f</ID>
     <ID>MagicNumber:NavigationMenuSharedViewport.kt$0.22f</ID>
     <ID>MagicNumber:NavigationMenuSharedViewport.kt$0.36f</ID>
     <ID>MagicNumber:NovaControls.kt$11f</ID>
@@ -4386,9 +4380,6 @@
     <ID>TooManyFunctions:Trace.kt$com.toutiaoyan.compose.ui.components.trace.Trace.kt</ID>
     <ID>TopLevelPropertyNaming:BounceIndication.kt$/** Downward travel while fully pressed, as a fraction of the node's height. */ private const val BounceHeightFraction = 0.08f</ID>
     <ID>TopLevelPropertyNaming:InputStyles.kt$internal const val NovaInputColorDurationMillis = 150</ID>
-    <ID>TopLevelPropertyNaming:NavigationMenuSharedViewport.kt$internal const val NavigationMenuViewportTag = "navigation-menu-viewport"</ID>
-    <ID>TopLevelPropertyNaming:NavigationMenuSharedViewport.kt$private const val ViewportDuration = 350</ID>
-    <ID>TopLevelPropertyNaming:NavigationMenuSharedViewport.kt$private const val ViewportExitDuration = 150</ID>
     <ID>TopLevelPropertyNaming:RippleIndication.kt$private const val FadeInMs = 75</ID>
     <ID>TopLevelPropertyNaming:RippleIndication.kt$private const val FadeOutMs = 150</ID>
     <ID>TopLevelPropertyNaming:RippleIndication.kt$private const val RadiusInMs = 225</ID>
