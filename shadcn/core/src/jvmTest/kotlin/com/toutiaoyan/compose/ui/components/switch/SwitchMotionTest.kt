@@ -89,12 +89,17 @@ class SwitchMotionTest : ScreenshotTest() {
             )
             composeRule.runOnIdle { checked = false }
             assertColor(entering, sample())
+            // The apply frame can render one last sample from the interrupted transition.
             composeRule.mainClock.advanceTimeByFrame()
-            sample()
+            val reversalStart = sample()
+            assertTrue(
+                distance(reversalStart, unchecked) > .03f && distance(reversalStart, primary) > .03f,
+                "The new target must start from an intermediate track color",
+            )
             composeRule.mainClock.advanceTimeBy(48)
             val returning = sample()
             assertTrue(
-                distance(returning, unchecked) < distance(entering, unchecked),
+                distance(returning, unchecked) < distance(reversalStart, unchecked),
                 "Reversal must return toward unchecked",
             )
             assertTrue(distance(returning, unchecked) > .01f, "Reversal must interpolate")

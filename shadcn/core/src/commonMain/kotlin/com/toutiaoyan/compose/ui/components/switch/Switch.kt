@@ -2,7 +2,6 @@ package com.toutiaoyan.compose.ui.components.switch
 import com.toutiaoyan.compose.ui.utils.keyboardInputMode
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.runtime.key
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.animateDpAsState
@@ -28,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -77,6 +77,8 @@ fun switchState(): SwitchState =
         "switchState() / SwitchThumb() must be used inside Switch { … }"
     }
 
+private const val NOVA_SWITCH_MOTION_MILLIS = 150
+
 /**
  * Usage:
  * ```
@@ -116,17 +118,18 @@ fun Switch(
         }
     val theme = currentTheme
     val nova = theme.activePreset == StylePreset.Nova
-    val uncheckedTrackColor =
-        theme.colors.input.copy(
-            alpha = theme.colors.input.alpha * if (theme.isDark) 0.8f else 1f,
-        )
+    val uncheckedTrackColor = novaSwitchUncheckedTrackColor(theme.colors.input, theme.isDark)
     val trackColor = if (isChecked) theme.colors.primary else uncheckedTrackColor
     // The wrapper transitions the root background; the thumb only transitions its transform.
     // A new palette starts at its own color instead of interpolating stale theme tokens.
     val animatedTrackColor =
         if (nova) {
             key(theme.colors) {
-                animateColorAsState(trackColor, tween(150, easing = FastOutSlowInEasing)).value
+                animateColorAsState(
+                    trackColor,
+                    tween(NOVA_SWITCH_MOTION_MILLIS, easing = FastOutSlowInEasing),
+                    label = "Switch track color",
+                ).value
             }
         } else {
             trackColor
@@ -175,7 +178,8 @@ fun Switch(
         } else {
             thumbInset
         },
-        animationSpec = if (nova) tween(150) else spring(),
+        animationSpec = if (nova) tween(NOVA_SWITCH_MOTION_MILLIS) else spring(),
+        label = "Switch thumb offset",
     )
     val thumbColor =
         if (nova && theme.isDark) {
@@ -265,13 +269,20 @@ fun Switch(
         } else {
             null
         }
+    val resolvedEnabled = enabled && !disabled && !LocalFieldSetDisabled.current
+    val labelActivation =
+        Modifier.focusProperties { canFocus = false }.clickable(
+            enabled = resolvedEnabled && update != null,
+        ) {
+            update?.invoke(!value)
+            labelTarget.requestFocus()
+        }
     Row(
         modifier = modifier,
         verticalAlignment =
             if (description != null) Alignment.Top else Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(twSpacing.sm),
     ) {
-        val resolvedEnabled = enabled && !disabled && !LocalFieldSetDisabled.current
         Switch(
             checked = value,
             modifier = Modifier.focusRequester(labelTarget),
@@ -288,26 +299,14 @@ fun Switch(
         if (description == null) {
             Label(
                 text,
-                modifier =
-                    Modifier.focusProperties { canFocus = false }.clickable(
-                        enabled = resolvedEnabled && update != null,
-                    ) {
-                        update?.invoke(!value)
-                        labelTarget.requestFocus()
-                    },
+                modifier = labelActivation,
                 disabled = !resolvedEnabled,
             )
         } else {
             Column(verticalArrangement = Arrangement.spacedBy(twSpacing.xs2)) {
                 FieldLabel(
                     text,
-                    modifier =
-                        Modifier.focusProperties { canFocus = false }.clickable(
-                            enabled = resolvedEnabled && update != null,
-                        ) {
-                            update?.invoke(!value)
-                            labelTarget.requestFocus()
-                        },
+                    modifier = labelActivation,
                     disabled = !resolvedEnabled,
                 )
                 Text(

@@ -42,6 +42,13 @@ sealed interface SwitchSize {
 /** Checked thumb inset matching real `translate-x-[calc(100%-2px)]`. */
 val SwitchSize.thumbInset: Dp get() = 2.dp
 
+private const val NOVA_UNCHECKED_TRACK_DARK_ALPHA_MULTIPLIER = 0.8f
+
+internal fun novaSwitchUncheckedTrackColor(
+    input: Color,
+    dark: Boolean,
+): Color = input.copy(alpha = input.alpha * if (dark) NOVA_UNCHECKED_TRACK_DARK_ALPHA_MULTIPLIER else 1f)
+
 // Matches shadcn/ui's real switch.tsx: border border-transparent (1.dp, constant),
 // data-[state=unchecked]:bg-input (not muted), data-[state=checked]:bg-primary,
 // focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50.
@@ -52,9 +59,7 @@ fun rememberSwitchTrackStyle(): Style =
         Style {
             background(
                 if (theme.activePreset == StylePreset.Nova) {
-                    colors.input.copy(
-                        alpha = colors.input.alpha * if (theme.isDark) 0.8f else 1f,
-                    )
+                    novaSwitchUncheckedTrackColor(colors.input, theme.isDark)
                 } else {
                     colors.border
                 },
