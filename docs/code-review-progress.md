@@ -161,13 +161,13 @@
 | `messagescroller` | 已验收 | 已验收 | Tab 移动焦点时继续跟随新消息，`29d9cb9d`。 |
 | `navigationmenu` | 待审 | 待审 |  |
 | `overlay` | 已验收 | 已验收 | 前两轮及第一批记录。 |
-| `pagination` | 待审 | 待审 |  |
+| `pagination` | 已验收 | 已验收 | 页码达到整数上限时保留邻页并禁止越界导航，`c35f1a6b`。 |
 | `popover` | 已验收 | 已验收 | 复核关闭与焦点恢复，共用 Nova 动效，`f876d5ed`。 |
 | `progress` | 已验收 | 已验收 | 独立轨道在无界容器中安全测量，`326ce39b`。 |
 | `questionnaire` | 待审 | 局部清理 | 已处理快捷键上限。 |
 | `radiobutton` | 待审 | 待审 |  |
-| `resizable` | 待审 | 待审 |  |
-| `scrollarea` | 待审 | 待审 |  |
+| `resizable` | 已验收 | 已验收 | 非调整轴方向键交回父级，`e6c1328c`。 |
+| `scrollarea` | 已验收 | 已验收 | 滚动条纳入列表间距、内边距和反向布局，`cf8036ee`。 |
 | `select` | 已验收 | 已验收 | 前两轮及第一批记录。 |
 | `separator` | 已验收 | 已验收 | 方向、装饰语义和样式覆盖已复核。 |
 | `sheet` | 已验收 | 已验收 | 第二轮及第二批记录。 |
@@ -295,3 +295,10 @@
 - `StepperDeclarations.kt` 读取布局中的声明顺序，独立子组合重排后各步骤能按新顺序更新。步骤数字节点保留原有边界，并传达已完成、当前、未到达和禁用状态。新增两条 JVM 回归在修改前失败，修改后通过。移除两个存量 ID，保留公开参数、便捷组合函数以及现有垂直连接线尺寸。
 - `ButtonPresentation.kt` 集中处理文字、图标边缘留白和无效状态样式，按钮根组件继续拥有触摸区、焦点和按压反馈。命名 Nova Secondary 悬停混色比例。移除两个存量 ID。公开重载、二进制兼容入口、主题变体和图标双方向参数矩阵保留。
 - 核心 JVM 63 项中 48 项通过。15 项既有 Button/Stepper 快照失败的实际 PNG 前后 SHA-256 逐一相同。目录 JVM 54 项通过。核心 Detekt 与 ktlint 通过，干净源码 baseline 由 4,451 降至 4,445 条，零新增。Chromium 在 JS 和 Wasm 中通过鼠标反转及 Enter 恢复 Item、Stepper 的可见顺序，集合行号本身由 JVM 语义断言验证。[回归与逐项 ID 证据](code-review-evidence/item-stepper-button.json)
+
+### Pagination、Resizable 和 ScrollArea 验收
+
+- `Pagination.kt:65` 与 `Pagination.kt:183`。无总页数时继续前进会使页码溢出，靠近 `Int.MAX_VALUE` 时自动窗口也会漏掉当前页和邻页。现在根据剩余页数限制加减计算。命名页窗阈值、箭头旋转角和两套主题的双箭头间距，移除 4 条存量 ID。保留公开重载、各主题的控件排版及响应式标签阈值。
+- `Resizable.kt:334`。水平手柄收到 Down 时先前会拦截父级事件。修复后父级收到 Down，Right 仍由手柄处理并将分割比例从 50% 调整到 55%。命名键盘步长、最小布局权重和百分比换算，移除 3 条存量 ID。保留公开回调形状、手柄触摸区域、Home/End 极值和既有面板组合规则。
+- `LazyScrollMetrics.kt:12` 与 `ScrollThumb.kt:60`。Lazy 列表滚动几何现在包含运行时项目间距、内容内边距和滚动能力。反向列表对称计算滑块位置和拖动方向，正常列表的布局保持原测量规则。双轴交角复用滚动条宽度，移除两个只由测试引用的旧比例函数，相关断言改测实际计算路径。移除 2 条存量 ID。保留 Nova 与旧主题的源尺寸和两种滚动区域的公开参数。
+- 5 条缺陷回归修复前失败、修复后通过。核心 JVM 97 项中 86 项通过。其余 11 项为既有快照问题，其中 LazyScrollArea 的两张参考图缺失，其余为像素差异。11 张实际图的前后 SHA-256 逐一相同。目录 JVM 64 项、核心 Detekt 与 ktlint 通过。已提交 baseline 由 4,445 降至 4,436 条，零新增。Chromium 使用 JS 和 Wasm 实测页码点击、分割键传播、间距滑块及反向列表轨道点击。[回归与逐项 ID 证据](code-review-evidence/pagination-resizable-scrollarea.json)
