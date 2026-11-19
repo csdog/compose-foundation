@@ -301,6 +301,8 @@ class QuestionnaireState(
 private val LocalQuestionnaireController =
     staticCompositionLocalOf<QuestionnaireController?> { null }
 
+internal data class QuestionnaireChoiceKey(val item: String, val value: String)
+
 internal class QuestionnaireController(
     private val initialValue: String?,
     var onValueChange: ((String) -> Unit)?,
@@ -316,7 +318,7 @@ internal class QuestionnaireController(
     val disabledByName = mutableStateMapOf<String, Boolean>()
     val choices = mutableStateMapOf<String, MutableList<String>>()
     val choiceOrder = mutableStateMapOf<String, MutableList<String>>()
-    val choiceEnabled = mutableStateMapOf<String, Boolean>()
+    private val choiceEnabled = mutableStateMapOf<QuestionnaireChoiceKey, Boolean>()
     val inputs = mutableStateMapOf<String, String>()
     private val inputSelected = mutableStateMapOf<String, Boolean>()
     val errors = mutableStateMapOf<String, String>()
@@ -331,12 +333,11 @@ internal class QuestionnaireController(
     var focusedChoiceValue by mutableStateOf<String?>(null)
     var pendingAnswerFocus by mutableStateOf<String?>(null)
     var pendingItemFocus by mutableStateOf<String?>(null)
-    val choiceInteractions = mutableMapOf<String, () -> Unit>()
+    val choiceInteractions = mutableMapOf<QuestionnaireChoiceKey, () -> Unit>()
     val hiddenContents = mutableStateMapOf<String, @Composable () -> Unit>()
     private val inputPresentByName = mutableStateMapOf<String, Boolean>()
-    private var itemsLocked = false
     private val itemsNames = mutableSetOf<String>()
-    private val itemsChoiceKeys = mutableSetOf<String>()
+    private val itemsChoiceKeys = mutableSetOf<QuestionnaireChoiceKey>()
 
     val activeName: String?
         get() = externalValue ?: uncontrolled ?: enabledNames().firstOrNull()
@@ -381,30 +382,26 @@ internal class QuestionnaireController(
     }
 
     fun applyItems(defs: List<QuestionnaireItemDefinition>) {
-        if (defs.isEmpty()) {
-            itemsLocked = false
-            itemsNames.clear()
-            itemsChoiceKeys.clear()
-            return
-        }
-        itemsLocked = true
-        itemsNames.clear()
-        itemsNames.addAll(defs.map { it.name })
-        itemsChoiceKeys.clear()
         val desiredNames = defs.map { it.name }
-        val extras = names.filter { it !in itemsNames }
-        if (names.toList() != desiredNames + extras) {
+        val removedNames = itemsNames - desiredNames.toSet()
+        val previousChoices = itemsChoiceKeys.toSet()
+        itemsNames.clear()
+        itemsNames.addAll(desiredNames)
+        itemsChoiceKeys.clear()
+
+        removedNames.filterNot { it in registeredMultiple }.forEach(::removeItem)
+        val orderedNames = desiredNames + names.filterNot { it in itemsNames }
+        if (names.toList() != orderedNames) {
             names.clear()
-            names.addAll(desiredNames)
-            names.addAll(extras)
+            names.addAll(orderedNames)
         }
         defs.forEach { def ->
             requiredByName[def.name] = def.required
             updateMultiple(def.name, def.multiple)
             disabledByName[def.name] = def.disabled
             def.choices.forEach { ch ->
-                itemsChoiceKeys.add("${def.name}/${ch.value}")
-                choiceEnabled["${def.name}/${ch.value}"] = !ch.disabled
+                itemsChoiceKeys.add(QuestionnaireChoiceKey(def.name, ch.value))
+                choiceEnabled[QuestionnaireChoiceKey(def.name, ch.value)] = !ch.disabled
             }
             if (def.choices.isNotEmpty()) {
                 val desired = def.choices.map { it.value }
@@ -416,6 +413,13 @@ internal class QuestionnaireController(
                     order.addAll(extraChoices)
                 }
             }
+        }
+        val removedChoices = previousChoices - itemsChoiceKeys
+        removedChoices.filterNot { it in choiceInteractions }.forEach { key ->
+            choiceOrder[key.item]?.remove(key.value)
+            choices[key.item]?.remove(key.value)
+            choiceEnabled.remove(key)
+            choiceDefaultApplied.remove(key)
         }
         if (uncontrolled == null && externalValue == null) {
             uncontrolled = enabledNames().firstOrNull()
@@ -476,13 +480,23 @@ internal class QuestionnaireController(
         name: String,
         value: String,
     ) {
-        choiceInteractions["$name/$value"]?.invoke() ?: selectChoice(name, value)
+        choiceInteractions[QuestionnaireChoiceKey(name, value)]?.invoke() ?: selectChoice(name, value)
     }
 
     fun unregister(name: String) {
-        if (itemsLocked && name in itemsNames) return
-        names.remove(name)
         registeredMultiple.remove(name)
+        if (name !in itemsNames) removeItem(name)
+    }
+
+    private fun removeItem(name: String) {
+        names.remove(name)
+        if (uncontrolled == name) {
+            uncontrolled = null
+            if (externalValue == null) {
+                pendingAnswerFocus = null
+                pendingItemFocus = null
+            }
+        }
         requiredByName.remove(name)
         multipleByName.remove(name)
         requiredMessageByName.remove(name)
@@ -506,18 +520,18 @@ internal class QuestionnaireController(
     ) {
         val order = choiceOrder.getOrPut(item) { mutableStateListOf() }
         if (value !in order) order.add(value)
-        choiceEnabled["$item/$value"] = enabled
+        choiceEnabled[QuestionnaireChoiceKey(item, value)] = enabled
         applyChoiceDefault(item, value, defaultChecked)
     }
 
-    private val choiceDefaultApplied = mutableStateMapOf<String, Boolean>()
+    private val choiceDefaultApplied = mutableStateMapOf<QuestionnaireChoiceKey, Boolean>()
 
     private fun applyChoiceDefault(
         item: String,
         value: String,
         defaultChecked: Boolean,
     ) {
-        val key = "$item/$value"
+        val key = QuestionnaireChoiceKey(item, value)
         if (choiceDefaultApplied[key] == true) return
         choiceDefaultApplied[key] = true
         if (!defaultChecked) return
@@ -545,10 +559,10 @@ internal class QuestionnaireController(
         item: String,
         value: String,
     ) {
-        choiceInteractions.remove("$item/$value")
-        if (itemsLocked && "$item/$value" in itemsChoiceKeys) return
+        choiceInteractions.remove(QuestionnaireChoiceKey(item, value))
+        if (QuestionnaireChoiceKey(item, value) in itemsChoiceKeys) return
         choiceOrder[item]?.remove(value)
-        choiceEnabled.remove("$item/$value")
+        choiceEnabled.remove(QuestionnaireChoiceKey(item, value))
     }
 
     fun shortcutFor(
@@ -556,9 +570,9 @@ internal class QuestionnaireController(
         value: String,
     ): String? {
         if (shortcuts == QuestionnaireShortcuts.None) return null
-        if (choiceEnabled["$item/$value"] == false) return null
+        if (choiceEnabled[QuestionnaireChoiceKey(item, value)] == false) return null
         val ordered =
-            choiceOrder[item].orEmpty().filter { choiceEnabled["$item/$it"] != false }
+            choiceOrder[item].orEmpty().filter { choiceEnabled[QuestionnaireChoiceKey(item, it)] != false }
         val i = ordered.indexOf(value)
         if (i < 0) return null
         return when (shortcuts) {
@@ -571,7 +585,7 @@ internal class QuestionnaireController(
     fun selectByShortcut(label: String): Boolean {
         if (disabled) return false
         val name = activeName ?: return false
-        val ordered = choiceOrder[name].orEmpty().filter { choiceEnabled["$name/$it"] != false }
+        val ordered = choiceOrder[name].orEmpty().filter { choiceEnabled[QuestionnaireChoiceKey(name, it)] != false }
         val index =
             when (shortcuts) {
                 QuestionnaireShortcuts.Letters -> label.uppercase().firstOrNull()?.minus('A') ?: -1
@@ -614,7 +628,7 @@ internal class QuestionnaireController(
         val keys =
             buildList {
                 addAll(
-                    choiceOrder[name].orEmpty().filter { choiceEnabled["$name/$it"] != false },
+                    choiceOrder[name].orEmpty().filter { choiceEnabled[QuestionnaireChoiceKey(name, it)] != false },
                 )
                 if (inputPresentByName[name] == true) add(INPUT_ANSWER_KEY)
             }
@@ -756,7 +770,9 @@ internal class QuestionnaireController(
             if (inputSelected[name] == true && inputPresentByName[name] == true) {
                 INPUT_ANSWER_KEY
             } else {
-                choiceOrder[name]?.firstOrNull { choiceEnabled["$name/$it"] != false } ?: INPUT_ANSWER_KEY
+                choiceOrder[name]?.firstOrNull {
+                    choiceEnabled[QuestionnaireChoiceKey(name, it)] != false
+                } ?: INPUT_ANSWER_KEY
             }
     }
 
@@ -868,6 +884,7 @@ private val LocalQuestionnaireChoiceMultiple = staticCompositionLocalOf { false 
 private const val INPUT_ANSWER_KEY = "\u0000input"
 
 private const val QUESTIONNAIRE_ITEM_ENTER_MILLIS = 300
+private val QuestionnaireItemEnterSlideDistance = 8.dp
 
 /** Whole-control dim matching CSS `disabled:opacity-50`. */
 private const val DISABLED_OPACITY = 0.5f
@@ -1104,7 +1121,7 @@ fun QuestionnaireScope.QuestionnaireItem(
         LocalQuestionnaireItemLabels provides labels,
     ) {
         if (shouldAnimate) {
-            val slidePx = with(LocalDensity.current) { 8.dp.roundToPx() }
+            val slidePx = with(LocalDensity.current) { QuestionnaireItemEnterSlideDistance.roundToPx() }
             val visibility = remember(name) { MutableTransitionState(false).apply { targetState = true } }
             val enter =
                 if (platformAllowsMotion()) {
@@ -1270,7 +1287,7 @@ fun QuestionnaireScope.QuestionnaireChoice(
             defaultChecked = checked == null && defaultChecked,
         )
         if (checked != null) ctrl.setChoice(name, value, checked)
-        ctrl.choiceInteractions["$name/$value"] = {
+        ctrl.choiceInteractions[QuestionnaireChoiceKey(name, value)] = {
             val next = if (multiple) !selected else true
             if (checked != null) {
                 onCheckedChange?.invoke(next)
