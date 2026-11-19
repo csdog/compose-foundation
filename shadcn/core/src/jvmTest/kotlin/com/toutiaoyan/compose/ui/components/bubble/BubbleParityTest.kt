@@ -117,7 +117,7 @@ class BubbleParityTest : ScreenshotTest() {
         }
     }
 
-    @Test fun actualMessageEndAlignmentIsInheritedWithoutRepeatingTheBubbleAlignProp() {
+    @Test fun messageAlignmentIsInheritedUnlessTheBubbleSpecifiesItsOwn() {
         setThemedContent(stylePreset = StylePreset.Nova) {
             Message(
                 align = MessageAlign.End,
@@ -126,6 +126,7 @@ class BubbleParityTest : ScreenshotTest() {
             ) {
                 Column(Modifier.fillMaxWidth().testTag("body")) {
                     Bubble("Short", Modifier.testTag("inherited"))
+                    Bubble("Explicit", Modifier.testTag("explicit"), align = MessageAlign.Start)
                 }
             }
         }
@@ -133,6 +134,8 @@ class BubbleParityTest : ScreenshotTest() {
         val bubble = composeRule.onNodeWithTag("inherited").fetchSemanticsNode().boundsInRoot
         assertEquals(parent.right, bubble.right, .1f)
         assertTrue(bubble.left > parent.left)
+        val explicit = composeRule.onNodeWithTag("explicit").fetchSemanticsNode().boundsInRoot
+        assertEquals(parent.left, explicit.left, .1f)
     }
 
     @Test fun hoverMixUsesOklchInterpolationForNeutralColors() {

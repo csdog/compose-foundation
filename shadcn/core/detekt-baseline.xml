@@ -38,7 +38,6 @@
     <ID>CyclomaticComplexMethod:Attachment.kt$@Composable fun Attachment( modifier: Modifier = Modifier, style: Style = Style, state: AttachmentState = AttachmentState.Done, size: AttachmentSize = AttachmentSize.Default, orientation: AttachmentOrientation = AttachmentOrientation.Horizontal, onClick: (() -&gt; Unit)? = null, actions: (@Composable AttachmentScope.() -&gt; Unit)? = null, content: @Composable AttachmentScope.() -&gt; Unit, )</ID>
     <ID>CyclomaticComplexMethod:AttachmentLayout.kt$@Composable internal fun AttachmentLayout( size: AttachmentSize, orientation: AttachmentOrientation, modifier: Modifier = Modifier, content: @Composable () -&gt; Unit, )</ID>
     <ID>CyclomaticComplexMethod:BadgeStyles.kt$@Composable fun BadgeVariant.rememberStyle(): Style</ID>
-    <ID>CyclomaticComplexMethod:Bubble.kt$@Composable private fun BubbleVariant.rememberStyle(interactive: Boolean): Style</ID>
     <ID>CyclomaticComplexMethod:Button.kt$@OptIn(ExperimentalFoundationStyleApi::class) @Composable internal fun ButtonSurface( onClick: () -&gt; Unit, modifier: Modifier = Modifier, enabled: Boolean = true, disabled: Boolean = false, variant: ButtonVariant = ButtonVariant.Default, size: ButtonSize = ButtonSize.Md, indication: Indication? = null, label: String? = null, style: Style = Style, iconPlacement: ButtonIconPlacement? = null, invalid: Boolean = false, interactive: Boolean, reserveMinTouchTarget: Boolean = true, content: @Composable () -&gt; Unit, )</ID>
     <ID>CyclomaticComplexMethod:ButtonStyles.kt$@Composable fun ButtonSize.rememberStyle(): Style</ID>
     <ID>CyclomaticComplexMethod:ButtonStyles.kt$@Composable fun ButtonVariant.rememberStyle(): Style</ID>
@@ -149,7 +148,6 @@
     <ID>LongMethod:Attachment.kt$@Composable fun Attachment( modifier: Modifier = Modifier, style: Style = Style, state: AttachmentState = AttachmentState.Done, size: AttachmentSize = AttachmentSize.Default, orientation: AttachmentOrientation = AttachmentOrientation.Horizontal, onClick: (() -&gt; Unit)? = null, actions: (@Composable AttachmentScope.() -&gt; Unit)? = null, content: @Composable AttachmentScope.() -&gt; Unit, )</ID>
     <ID>LongMethod:AttachmentLayout.kt$@Composable internal fun AttachmentLayout( size: AttachmentSize, orientation: AttachmentOrientation, modifier: Modifier = Modifier, content: @Composable () -&gt; Unit, )</ID>
     <ID>LongMethod:AttachmentScreenshotTest.kt$AttachmentScreenshotTest$private fun composerUploadTray(darkTheme: Boolean)</ID>
-    <ID>LongMethod:Bubble.kt$@Composable private fun BubbleVariant.rememberStyle(interactive: Boolean): Style</ID>
     <ID>LongMethod:Button.kt$@OptIn(ExperimentalFoundationStyleApi::class) @Composable internal fun ButtonSurface( onClick: () -&gt; Unit, modifier: Modifier = Modifier, enabled: Boolean = true, disabled: Boolean = false, variant: ButtonVariant = ButtonVariant.Default, size: ButtonSize = ButtonSize.Md, indication: Indication? = null, label: String? = null, style: Style = Style, iconPlacement: ButtonIconPlacement? = null, invalid: Boolean = false, interactive: Boolean, reserveMinTouchTarget: Boolean = true, content: @Composable () -&gt; Unit, )</ID>
     <ID>LongMethod:ButtonStyles.kt$@Composable fun ButtonSize.rememberStyle(): Style</ID>
     <ID>LongMethod:ButtonStyles.kt$@Composable fun ButtonVariant.rememberStyle(): Style</ID>
@@ -584,11 +582,6 @@
     <ID>MagicNumber:Astonished.kt$36f</ID>
     <ID>MagicNumber:Astonished.kt$8.06f</ID>
     <ID>MagicNumber:Avatar.kt$AvatarGroupDefaults$8</ID>
-    <ID>MagicNumber:Bubble.kt$0.75f</ID>
-    <ID>MagicNumber:Bubble.kt$0.8f</ID>
-    <ID>MagicNumber:Bubble.kt$12</ID>
-    <ID>MagicNumber:Bubble.kt$150</ID>
-    <ID>MagicNumber:Bubble.kt$50</ID>
     <ID>MagicNumber:BubbleColors.kt$0.00001</ID>
     <ID>MagicNumber:BubbleColors.kt$0.00001f</ID>
     <ID>MagicNumber:BubbleColors.kt$0.0040720468</ID>

@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.*
 import androidx.compose.runtime.*
@@ -74,6 +75,13 @@ fun BubbleVariant.contentColor(colors: Colors): Color =
         BubbleVariant.Tinted -> colors.foreground
     }
 
+private const val BUBBLE_MAX_WIDTH_FRACTION = 0.8f
+private const val BUBBLE_PRIMARY_HOVER_ALPHA = 0.8f
+private const val BUBBLE_HOVER_DURATION_MILLIS = 150
+private const val REACTION_HEIGHT_OFFSET_FRACTION = 0.75f
+private val ReactionHorizontalInset = 12.dp
+private val BubbleHoverAnimation = tween<Float>(BUBBLE_HOVER_DURATION_MILLIS, easing = FastOutSlowInEasing)
+
 private val LocalBubbleVariant = compositionLocalOf<BubbleVariant> { BubbleVariant.Default }
 
 @Composable
@@ -98,41 +106,11 @@ private fun BubbleVariant.rememberStyle(interactive: Boolean): Style =
                     },
             )
             contentColor(variant.contentColor(colors))
-            background(
-                when (variant) {
-                    BubbleVariant.Default -> colors.primary
-                    BubbleVariant.Secondary -> colors.secondary
-                    BubbleVariant.Muted -> colors.muted
-                    BubbleVariant.Outline -> colors.background
-                    BubbleVariant.Ghost -> Color.Transparent
-                    BubbleVariant.Destructive -> colors.destructive.copy(alpha = if (isDark) 0.2f else 0.1f)
-                    BubbleVariant.Tinted -> bubbleTintedColor(colors.primary, isDark)
-                },
-            )
+            background(variant.backgroundColor(colors, isDark))
             if (interactive) {
-                animate(
-                    toSpec = tween(150, easing = FastOutSlowInEasing),
-                    fromSpec = tween(150, easing = FastOutSlowInEasing),
-                ) {
+                animate(toSpec = BubbleHoverAnimation, fromSpec = BubbleHoverAnimation) {
                     hovered {
-                        background(
-                            when (variant) {
-                                BubbleVariant.Default -> colors.primary.copy(alpha = 0.8f)
-                                BubbleVariant.Secondary -> bubbleHoverMix(colors.secondary, colors.foreground)
-                                BubbleVariant.Muted -> bubbleHoverMix(colors.muted, colors.foreground)
-                                BubbleVariant.Outline ->
-                                    if (isDark) {
-                                        colors.input.copy(
-                                            alpha = colors.input.alpha * 0.3f,
-                                        )
-                                    } else {
-                                        colors.muted
-                                    }
-                                BubbleVariant.Ghost -> colors.muted.copy(alpha = if (isDark) 0.5f else 1f)
-                                BubbleVariant.Destructive -> colors.destructive.copy(alpha = if (isDark) 0.3f else 0.2f)
-                                BubbleVariant.Tinted -> bubbleTintedColor(colors.primary, isDark, hovered = true)
-                            },
-                        )
+                        background(variant.hoverBackgroundColor(colors, isDark))
                     }
                 }
                 focusVisible {
@@ -141,6 +119,34 @@ private fun BubbleVariant.rememberStyle(interactive: Boolean): Style =
                 }
             }
         }
+    }
+
+private fun BubbleVariant.backgroundColor(
+    colors: Colors,
+    dark: Boolean,
+): Color =
+    when (this) {
+        BubbleVariant.Default -> colors.primary
+        BubbleVariant.Secondary -> colors.secondary
+        BubbleVariant.Muted -> colors.muted
+        BubbleVariant.Outline -> colors.background
+        BubbleVariant.Ghost -> Color.Transparent
+        BubbleVariant.Destructive -> colors.destructive.copy(alpha = if (dark) 0.2f else 0.1f)
+        BubbleVariant.Tinted -> bubbleTintedColor(colors.primary, dark)
+    }
+
+private fun BubbleVariant.hoverBackgroundColor(
+    colors: Colors,
+    dark: Boolean,
+): Color =
+    when (this) {
+        BubbleVariant.Default -> colors.primary.copy(alpha = BUBBLE_PRIMARY_HOVER_ALPHA)
+        BubbleVariant.Secondary -> bubbleHoverMix(colors.secondary, colors.foreground)
+        BubbleVariant.Muted -> bubbleHoverMix(colors.muted, colors.foreground)
+        BubbleVariant.Outline -> if (dark) colors.input.copy(alpha = colors.input.alpha * 0.3f) else colors.muted
+        BubbleVariant.Ghost -> colors.muted.copy(alpha = if (dark) 0.5f else 1f)
+        BubbleVariant.Destructive -> colors.destructive.copy(alpha = if (dark) 0.3f else 0.2f)
+        BubbleVariant.Tinted -> bubbleTintedColor(colors.primary, dark, hovered = true)
     }
 
 /**
@@ -170,13 +176,13 @@ private fun BubbleVariant.rememberStyle(interactive: Boolean): Style =
 fun ColumnScope.Bubble(
     modifier: Modifier = Modifier,
     style: Style = Style,
-    align: MessageAlign = MessageAlign.Start,
+    align: MessageAlign = LocalMessageAlign.current,
     variant: BubbleVariant = BubbleVariant.Default,
     content: @Composable BoxScope.() -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     if (variant == BubbleVariant.Ghost) TrackMessagePart(ghost = true)
-    val end = align == MessageAlign.End || LocalMessageAlign.current == MessageAlign.End
+    val end = align == MessageAlign.End
     CompositionLocalProvider(LocalBubbleVariant provides variant) {
         Box(
             modifier =
@@ -186,7 +192,7 @@ fun ColumnScope.Bubble(
                             if (!constraints.hasBoundedWidth || variant == BubbleVariant.Ghost) {
                                 constraints.maxWidth
                             } else {
-                                (constraints.maxWidth * 0.8f).toInt()
+                                (constraints.maxWidth * BUBBLE_MAX_WIDTH_FRACTION).toInt()
                             }
                         val child = measurable.measure(constraints.copy(minWidth = 0, maxWidth = maximum))
                         layout(child.width, child.height) { child.placeRelative(0, 0) }
@@ -204,7 +210,7 @@ fun ColumnScope.Bubble(
     modifier: Modifier = Modifier,
     variant: BubbleVariant = BubbleVariant.Default,
     style: Style = Style,
-    align: MessageAlign = MessageAlign.Start,
+    align: MessageAlign = LocalMessageAlign.current,
 ) {
     Bubble(modifier = modifier, style = style, align = align, variant = variant) {
         BubbleContent(text, variant = variant)
@@ -308,7 +314,7 @@ fun BoxScope.BubbleReactions(
     val reactionsStyle =
         rememberTheme {
             Style {
-                shape(RoundedCornerShape(50))
+                shape(CircleShape)
                 background(colors.muted)
                 contentColor(colors.foreground)
                 contentPadding(horizontal = 6.dp, vertical = 2.dp)
@@ -329,8 +335,11 @@ fun BoxScope.BubbleReactions(
                     .wrapContentSize(align = resolvedAlignment, unbounded = true)
                     .layout { measurable, constraints ->
                         val child = measurable.measure(constraints)
-                        val y = (child.height * 0.75f).roundToInt() * if (side == BubbleReactionsSide.Top) -1 else 1
-                        val x = (if (align == MessageAlign.Start) 12.dp else (-12).dp).roundToPx()
+                        val heightOffset = (child.height * REACTION_HEIGHT_OFFSET_FRACTION).roundToInt()
+                        val y = if (side == BubbleReactionsSide.Top) -heightOffset else heightOffset
+                        val horizontalInset =
+                            if (align == MessageAlign.Start) ReactionHorizontalInset else -ReactionHorizontalInset
+                        val x = horizontalInset.roundToPx()
                         layout(child.width, child.height) { child.placeRelative(x, y) }
                     }.cssStyleable(styleState, reactionsStyle then style),
             verticalAlignment = Alignment.CenterVertically,
