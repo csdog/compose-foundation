@@ -6,7 +6,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.graphics.toPixelMap
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.*
@@ -31,7 +34,12 @@ class MenuPopupReadinessTest {
                         open, {}, PopupPlacement.Bottom, 4.dp, PopupAlign.Start, 0.dp,
                         true, false, MenuDefaultEnter, exit, true, ready,
                     ) {
-                        Box(Modifier.size(200.dp, 60.dp).background(Color.Black).testTag("panel"))
+                        Box(
+                            Modifier.size(200.dp, 60.dp)
+                                .dropShadow(RectangleShape, Shadow(radius = 0.dp, spread = 12.dp, color = Color.Red))
+                                .background(Color.Black)
+                                .testTag("panel"),
+                        )
                     }
                 }
             }
@@ -87,6 +95,20 @@ class MenuPopupReadinessTest {
         val bounds = rule.onNodeWithTag("panel").fetchSemanticsNode().boundsInWindow
         val pixels = rule.onNodeWithTag("backing").captureToImage().toPixelMap()
         assertEquals(0f, pixels[bounds.center.x.toInt(), bounds.center.y.toInt()].red, .01f)
+    }
+
+    @Test fun defaultEntryPaintsTheOuterShadowInTheSameFrameAsThePanel() {
+        show()
+        rule.runOnIdle { ready = true }
+        rule.mainClock.advanceTimeByFrame()
+        rule.mainClock.advanceTimeBy(48)
+        val bounds = rule.onNodeWithTag("panel").fetchSemanticsNode().boundsInWindow
+        val pixels = rule.onNodeWithTag("backing").captureToImage().toPixelMap()
+        val y = bounds.center.y.toInt()
+        val panel = pixels[bounds.center.x.toInt(), y]
+        val shadow = pixels[bounds.right.toInt() + 3, y]
+        assertTrue(panel.red in 0.02f..0.98f, "Expected a partially visible menu, observed $panel")
+        assertTrue(shadow.green < 0.98f, "The menu appeared without its outer shadow, observed $shadow")
     }
 
     @Test fun closingBeforeReadyDoesNotWaitForAnInvisibleExit() {

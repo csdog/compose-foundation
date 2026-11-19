@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
@@ -27,6 +26,8 @@ import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
 import com.toutiaoyan.compose.ui.components.overlay.PopupPlacement
 import com.toutiaoyan.compose.ui.components.overlay.PopupPositionResult
 import com.toutiaoyan.compose.ui.components.overlay.PopupTransitions
+import com.toutiaoyan.compose.ui.components.overlay.popupFadeModifier
+import com.toutiaoyan.compose.ui.components.overlay.popupGraphicsLayer
 import com.toutiaoyan.compose.ui.components.overlay.PopupPositionProvider as AnchoredPositionProvider
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
@@ -48,8 +49,8 @@ internal fun PopoverPopup(
     content: @Composable () -> Unit,
 ) {
     val nova = currentTheme.activePreset == StylePreset.Nova
-    val defaultEnter = nova && enter === PopupTransitions.Enter
-    val defaultExit = nova && exit === PopupTransitions.Exit
+    val defaultEnter = enter === PopupTransitions.Enter
+    val defaultExit = exit === PopupTransitions.Exit
     if (open) PopoverWindowEscape(onWindowEscape)
     val visible = remember { MutableTransitionState(false) }
     visible.targetState = open
@@ -97,7 +98,7 @@ internal fun PopoverPopup(
             exit = if (defaultExit) ExitTransition.None else exit,
         ) {
             val motion =
-                if (defaultEnter || defaultExit) {
+                if (nova && (defaultEnter || defaultExit)) {
                     val progress =
                         transition.animateFloat(
                             transitionSpec = { tween(PopoverMotionDuration) },
@@ -119,7 +120,7 @@ internal fun PopoverPopup(
                             null
                         }
                     val slideDistance = with(LocalDensity.current) { 8.dp.toPx() }
-                    Modifier.graphicsLayer {
+                    Modifier.popupGraphicsLayer {
                         val position = geometry.value
                         val fraction = progress.value
                         alpha = if (defaultEnter && position == null) 0f else fraction
@@ -141,7 +142,7 @@ internal fun PopoverPopup(
                             }
                     }
                 } else {
-                    Modifier
+                    popupFadeModifier(defaultEnter, defaultExit)
                 }
             Box(motion, propagateMinConstraints = true) { content() }
         }

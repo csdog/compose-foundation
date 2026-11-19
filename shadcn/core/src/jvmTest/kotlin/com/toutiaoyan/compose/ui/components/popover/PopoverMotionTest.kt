@@ -1,12 +1,21 @@
+@file:OptIn(androidx.compose.foundation.style.ExperimentalFoundationStyleApi::class)
+
 package com.toutiaoyan.compose.ui.components.popover
 
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.style.Style
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.toPixelMap
 import androidx.compose.ui.platform.testTag
@@ -23,6 +32,7 @@ import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
+import kotlin.test.assertTrue
 
 class PopoverMotionTest : ScreenshotTest() {
     @Test fun novaDefaultExitIsPresentMidAnimationAndUnmountedAfterHundredMilliseconds() {
@@ -55,6 +65,50 @@ class PopoverMotionTest : ScreenshotTest() {
         composeRule.onNodeWithText("Body").assertExists()
         composeRule.mainClock.advanceTimeBy(208)
         composeRule.onNodeWithText("Body").assertDoesNotExist()
+    }
+
+    @Test fun novaPanelAndOuterShadowFadeInTogether() {
+        assertShadowDuringEntry(StylePreset.Nova)
+    }
+
+    @Test fun vegaPanelAndOuterShadowFadeInTogether() {
+        assertShadowDuringEntry(StylePreset.Vega)
+    }
+
+    private fun assertShadowDuringEntry(preset: StylePreset) {
+        var open by mutableStateOf(false)
+        setThemedContent(stylePreset = preset) {
+            Box(Modifier.size(400.dp, 240.dp).background(Color.White).testTag("backing")) {
+                Popover(open = open, modifier = Modifier.offset(x = 120.dp, y = 40.dp)) {
+                    PopoverTrigger("Open")
+                    PopoverContent(
+                        modifier = Modifier.testTag("panel"),
+                        style =
+                            Style {
+                                width(100.dp)
+                                background(Color.Black)
+                                dropShadow(Shadow(radius = 0.dp, spread = 12.dp, color = Color.Red))
+                            },
+                    ) {
+                        Box(Modifier.size(48.dp))
+                    }
+                }
+            }
+        }
+        composeRule.mainClock.autoAdvance = false
+        composeRule.runOnIdle { open = true }
+        composeRule.mainClock.advanceTimeByFrame()
+        composeRule.mainClock.advanceTimeBy(48)
+        val backing = composeRule.onNodeWithTag("backing")
+        val backingOrigin = backing.fetchSemanticsNode().boundsInWindow.topLeft
+        val bounds = composeRule.onNodeWithTag("panel").fetchSemanticsNode().boundsInWindow.translate(-backingOrigin)
+        val pixels = backing.captureToImage().toPixelMap()
+        val y = bounds.center.y.toInt()
+        val panel = pixels[bounds.center.x.toInt(), y]
+        val shadow = pixels[bounds.right.toInt() + 3, y]
+        assertTrue(panel.red in 0.02f..0.98f, "Expected a partially visible popup, observed $panel")
+        assertEquals(panel.red, panel.green, 0.01f, "The fading shadow must not tint the panel interior")
+        assertTrue(shadow.green < 0.98f, "The panel appeared without its outer shadow, observed $shadow")
     }
 
     @Test fun openPanelUpdatesItsFillAndCornerAfterThemeChanges() {

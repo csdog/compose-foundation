@@ -19,7 +19,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -137,7 +136,7 @@ internal fun MenuPopup(
             }
         val visibility = transition
         Box(
-            Modifier.graphicsLayer {
+            Modifier.popupGraphicsLayer {
                 val position = geometry.value
                 if (position != null) transformOrigin = position.transformOrigin
                 val ownActiveDirection =
@@ -252,7 +251,7 @@ private fun NovaMenuPopup(
         horizontalPosition = horizontalPosition,
     ) {
         Box(
-            Modifier.graphicsLayer {
+            Modifier.popupGraphicsLayer {
                 val position = geometry.value
                 if (position != null) transformOrigin = position.transformOrigin
                 val visible =

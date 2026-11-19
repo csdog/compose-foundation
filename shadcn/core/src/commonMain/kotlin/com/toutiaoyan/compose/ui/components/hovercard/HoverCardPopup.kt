@@ -12,7 +12,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.window.Popup
@@ -23,7 +22,8 @@ import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
 import com.toutiaoyan.compose.ui.components.overlay.PopupPlacement
 import com.toutiaoyan.compose.ui.components.overlay.PopupPositionResult
-import com.toutiaoyan.compose.ui.components.overlay.PopupTransitions
+import com.toutiaoyan.compose.ui.components.overlay.popupFadeModifier
+import com.toutiaoyan.compose.ui.components.overlay.popupGraphicsLayer
 import com.toutiaoyan.compose.ui.components.overlay.PopupPositionProvider as DefaultPopupPositionProvider
 
 // Identity markers let explicit custom transitions, including None, retain priority.
@@ -130,18 +130,8 @@ internal fun HoverCardPopup(
     ) {
         AnimatedVisibility(
             visibleState = visible,
-            enter =
-                when {
-                    !defaultEnter -> enter
-                    nova -> EnterTransition.None
-                    else -> PopupTransitions.Enter
-                },
-            exit =
-                when {
-                    !defaultExit -> exit
-                    nova -> ExitTransition.None
-                    else -> PopupTransitions.Exit
-                },
+            enter = if (defaultEnter) EnterTransition.None else enter,
+            exit = if (defaultExit) ExitTransition.None else exit,
         ) {
             if (animatePosition) {
                 val visibility = transition
@@ -169,7 +159,7 @@ internal fun HoverCardPopup(
                     }
                 val slidePx = with(LocalDensity.current) { 8.dp.toPx() }
                 Box(
-                    Modifier.graphicsLayer {
+                    Modifier.popupGraphicsLayer {
                         val positioned = geometry.value
                         val fraction = progress.value
                         alpha = if (defaultEnter && positioned == null) 0f else fraction
@@ -191,6 +181,8 @@ internal fun HoverCardPopup(
                             }
                     },
                 ) { content() }
+            } else if (defaultEnter || defaultExit) {
+                Box(popupFadeModifier(defaultEnter, defaultExit), propagateMinConstraints = true) { content() }
             } else {
                 content()
             }

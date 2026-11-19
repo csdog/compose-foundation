@@ -8,6 +8,7 @@ import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalDensity
@@ -130,12 +131,18 @@ internal fun PositionedAnchoredPopup(
         freezePosition = freezePosition,
         horizontalPosition = horizontalPosition,
     ) {
+        val defaultEnter = enter === PopupTransitions.Enter
+        val defaultExit = exit === PopupTransitions.Exit
         AnimatedVisibility(
             visibleState = visibleState,
-            enter = enter,
-            exit = exit,
+            enter = if (defaultEnter) EnterTransition.None else enter,
+            exit = if (defaultExit) ExitTransition.None else exit,
         ) {
-            content()
+            if (defaultEnter || defaultExit) {
+                Box(popupFadeModifier(defaultEnter, defaultExit), propagateMinConstraints = true) { content() }
+            } else {
+                content()
+            }
         }
     }
 }
