@@ -137,8 +137,9 @@ class SidebarExamplesTest {
         rule.onNodeWithContentDescription("Toggle Sidebar").performClick()
         rule.mainClock.advanceTimeBy(260)
         rule.waitForIdle()
-        // Offcanvas keeps its composed children (state retention) even while clipped away.
-        rule.onNodeWithText("Application").assertExists()
+        // Offcanvas retains composed state and hides the closed rail from accessibility.
+        rule.onNodeWithText("Application").assertDoesNotExist()
+        rule.onNodeWithText("Application", useUnmergedTree = true).assertExists()
         rule.onNodeWithContentDescription("Toggle Sidebar").performClick()
         rule.mainClock.advanceTimeBy(260)
         rule.waitForIdle()

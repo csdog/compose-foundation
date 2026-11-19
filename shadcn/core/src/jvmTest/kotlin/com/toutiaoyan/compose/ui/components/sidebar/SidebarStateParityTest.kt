@@ -74,7 +74,8 @@ class SidebarStateParityTest : ScreenshotTest() {
         }
         composeRule.onNodeWithTag("field").performTextReplacement("Ada")
         composeRule.onNodeWithText("Toggle").performClick()
-        composeRule.onNodeWithTag("field").assertExists().assertIsNotDisplayed()
+        composeRule.onNodeWithTag("field").assertDoesNotExist()
+        composeRule.onNodeWithTag("field", useUnmergedTree = true).assertExists().assertIsNotDisplayed()
         composeRule.onNodeWithText("Toggle").performClick()
         composeRule.onNodeWithTag("field").assertTextContains("Ada")
     }

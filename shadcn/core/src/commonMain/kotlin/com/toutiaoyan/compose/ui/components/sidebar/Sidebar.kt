@@ -34,6 +34,7 @@ import androidx.compose.foundation.style.MutableStyleState
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.styleable
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.State
@@ -48,11 +49,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.foundation.style.then
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.constrainWidth
 import androidx.compose.ui.semantics.paneTitle
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.hideFromAccessibility
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
@@ -61,6 +65,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.onFocusEvent
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.ParentDataModifier
@@ -197,7 +202,7 @@ fun SidebarProvider(
     var internalOpen by remember { mutableStateOf(defaultOpen) }
     var internalOpenMobile by remember { mutableStateOf(defaultOpenMobile) }
     val viewportWidth = with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
-    val isMobile = mobile ?: (viewportWidth < 768.dp)
+    val isMobile = mobile ?: (viewportWidth < SidebarMobileBreakpoint)
     val isOpen = open ?: internalOpen
     val isOpenMobile = openMobile ?: internalOpenMobile
     val controlled = rememberUpdatedState(open != null)
@@ -320,6 +325,8 @@ object SidebarDefaults {
 }
 
 private const val SIDEBAR_WIDTH_ANIM_MILLIS = 200
+private const val SIDEBAR_SKELETON_TEXT_WIDTH_FRACTION = 0.7f
+private val SidebarMobileBreakpoint = 768.dp
 
 /** The collapsible side rail itself -- must be a direct child of [SidebarProvider]. */
 @Composable
@@ -404,6 +411,7 @@ fun Sidebar(
             SidebarPanelBody(
                 width = if (state.collapsible == SidebarCollapsible.Offcanvas) width else null,
                 slideFromStart = side == SidebarSide.Start && state.collapsible == SidebarCollapsible.Offcanvas,
+                exposed = expanded || state.collapsible != SidebarCollapsible.Offcanvas,
             ) {
                 Column(
                     modifier =
@@ -428,6 +436,7 @@ fun Sidebar(
             SidebarPanelBody(
                 width = if (state.collapsible == SidebarCollapsible.Offcanvas) (width - twSpacing.sm * 2) else null,
                 slideFromStart = side == SidebarSide.Start && state.collapsible == SidebarCollapsible.Offcanvas,
+                exposed = expanded || state.collapsible != SidebarCollapsible.Offcanvas,
             ) {
                 Column(
                     modifier =
@@ -452,16 +461,31 @@ fun Sidebar(
 private fun SidebarPanelBody(
     width: Dp?,
     slideFromStart: Boolean,
+    exposed: Boolean,
     content: @Composable () -> Unit,
 ) {
-    Layout(content = content) { measurables, constraints ->
+    val focus = if (width == null) Modifier else sidebarOffcanvasFocus(exposed)
+    val accessibility = if (exposed) Modifier else Modifier.clearAndSetSemantics { hideFromAccessibility() }
+    Layout(modifier = accessibility.then(focus), content = content) { measurables, constraints ->
         val contentWidth = width?.roundToPx()?.coerceAtLeast(0) ?: constraints.maxWidth
         val child = measurables.single().measure(constraints.copy(minWidth = contentWidth, maxWidth = contentWidth))
         val visibleWidth = constraints.constrainWidth(contentWidth)
         layout(visibleWidth, child.height) {
-            child.placeRelative(if (slideFromStart) visibleWidth - child.width else 0, 0)
+            if (visibleWidth > 0 || exposed) {
+                child.placeRelative(if (slideFromStart) visibleWidth - child.width else 0, 0)
+            }
         }
     }
+}
+
+@Composable
+private fun sidebarOffcanvasFocus(exposed: Boolean): Modifier {
+    var hasFocus by remember { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
+    LaunchedEffect(exposed) {
+        if (!exposed && hasFocus) focusManager.clearFocus(force = true)
+    }
+    return Modifier.onFocusChanged { hasFocus = it.hasFocus }.focusGroup()
 }
 
 /** The main content area beside the sidebar, matching real shadcn's `SidebarInset`. */
@@ -1348,7 +1372,7 @@ fun SidebarMenuSkeleton(
         Skeleton(
             modifier =
                 Modifier
-                    .fillMaxWidth(0.7f)
+                    .fillMaxWidth(SIDEBAR_SKELETON_TEXT_WIDTH_FRACTION)
                     .height(16.dp),
         )
     }
