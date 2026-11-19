@@ -27,12 +27,14 @@ import com.toutiaoyan.compose.ui.components.overlay.PopupPlacement
 import com.toutiaoyan.compose.ui.components.overlay.PopupPositionResult
 import com.toutiaoyan.compose.ui.components.overlay.PopupTransitions
 import com.toutiaoyan.compose.ui.components.overlay.popupFadeModifier
+import com.toutiaoyan.compose.ui.components.overlay.NOVA_POPUP_MOTION_MILLIS
+import com.toutiaoyan.compose.ui.components.overlay.applyNovaPopupMotion
 import com.toutiaoyan.compose.ui.components.overlay.popupGraphicsLayer
 import com.toutiaoyan.compose.ui.components.overlay.PopupPositionProvider as AnchoredPositionProvider
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 
-private const val PopoverMotionDuration = 100
+private val NovaPopoverCollisionPadding = 5.dp
 
 @Composable
 internal fun PopoverPopup(
@@ -59,7 +61,7 @@ internal fun PopoverPopup(
     val geometry = remember { mutableStateOf<PopupPositionResult?>(null) }
     val offsetPx = with(LocalDensity.current) { offset.roundToPx() }
     val alignOffsetPx = with(LocalDensity.current) { alignOffset.roundToPx() }
-    val collisionPadding = with(LocalDensity.current) { if (nova) 5.dp.roundToPx() else 0 }
+    val collisionPadding = with(LocalDensity.current) { if (nova) NovaPopoverCollisionPadding.roundToPx() else 0 }
     val positionProvider =
         remember(placement, offsetPx, align, alignOffsetPx, collisionPadding) {
             val anchor = AnchoredPositionProvider(placement, offsetPx, align, alignOffsetPx)
@@ -101,7 +103,7 @@ internal fun PopoverPopup(
                 if (nova && (defaultEnter || defaultExit)) {
                     val progress =
                         transition.animateFloat(
-                            transitionSpec = { tween(PopoverMotionDuration) },
+                            transitionSpec = { tween(NOVA_POPUP_MOTION_MILLIS) },
                             label = "Popover opacity and scale",
                         ) { state ->
                             when (state) {
@@ -113,33 +115,14 @@ internal fun PopoverPopup(
                     val slide =
                         if (defaultEnter) {
                             transition.animateFloat(
-                                transitionSpec = { tween(PopoverMotionDuration) },
+                                transitionSpec = { tween(NOVA_POPUP_MOTION_MILLIS) },
                                 label = "Popover entry displacement",
                             ) { state -> if (state == EnterExitState.PreEnter) 1f else 0f }
                         } else {
                             null
                         }
-                    val slideDistance = with(LocalDensity.current) { 8.dp.toPx() }
                     Modifier.popupGraphicsLayer {
-                        val position = geometry.value
-                        val fraction = progress.value
-                        alpha = if (defaultEnter && position == null) 0f else fraction
-                        scaleX = .95f + .05f * fraction
-                        scaleY = scaleX
-                        if (position != null) transformOrigin = position.transformOrigin
-                        val displacement = (slide?.value ?: 0f) * slideDistance
-                        translationX =
-                            when (position?.physicalSide) {
-                                PopupPlacement.Start -> displacement
-                                PopupPlacement.End -> -displacement
-                                else -> 0f
-                            }
-                        translationY =
-                            when (position?.physicalSide) {
-                                PopupPlacement.Top -> displacement
-                                PopupPlacement.Bottom -> -displacement
-                                else -> 0f
-                            }
+                        applyNovaPopupMotion(geometry.value, progress.value, slide?.value ?: 0f, defaultEnter)
                     }
                 } else {
                     popupFadeModifier(defaultEnter, defaultExit)

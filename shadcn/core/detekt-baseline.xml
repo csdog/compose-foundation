@@ -14,8 +14,6 @@
     <ID>ComplexCondition:MessageScrollerState.kt$MessageScrollerState$preserveOnPrepend &amp;&amp; previousReading != null &amp;&amp; (oldFirstIndex &gt; 0 || (!isFollowing &amp;&amp; anchoredToken == null))</ID>
     <ID>ComplexCondition:MessageScrollerState.kt$MessageScrollerState$viewportHeight &lt; oldViewportHeight &amp;&amp; wasAtEnd &amp;&amp; contentBottom == oldBottom &amp;&amp; anchoredToken == null &amp;&amp; spacerHeight == 0</ID>
     <ID>ComplexCondition:NavigationMenu.kt$event.key == Key.Tab &amp;&amp; controller.openValue != null &amp;&amp; (event.isShiftPressed || controller.openValue != value) &amp;&amp; viewport.adjacentFocus(value, if (event.isShiftPressed) -1 else 1) == null</ID>
-    <ID>ComplexCondition:Popover.kt$!modal &amp;&amp; isOpen &amp;&amp; event.type == KeyEventType.KeyDown &amp;&amp; event.key == Key.Escape</ID>
-    <ID>ComplexCondition:Popover.kt$event.type == KeyEventType.KeyDown &amp;&amp; event.key == Key.Tab &amp;&amp; controller.open &amp;&amp; controller.focus.focusAtTrigger</ID>
     <ID>ComplexCondition:Questionnaire.kt$enter &amp;&amp; (event.isCtrlPressed || event.isMetaPressed) &amp;&amp; !event.isAltPressed &amp;&amp; !event.isShiftPressed</ID>
     <ID>ComplexCondition:Resizable.kt$resolvedDisabled || state == null || bounds == null || !target.isFinite()</ID>
     <ID>ComplexCondition:Resizable.kt$resolvedDisabled || state == null || bounds == null || event.type != KeyEventType.KeyDown</ID>
@@ -3123,8 +3121,6 @@
     <ID>MagicNumber:Pagination.kt$6</ID>
     <ID>MagicNumber:Pagination.kt$7</ID>
     <ID>MagicNumber:Pagination.kt$8</ID>
-    <ID>MagicNumber:PopoverPopup.kt$.05f</ID>
-    <ID>MagicNumber:PopoverPopup.kt$.95f</ID>
     <ID>MagicNumber:PopupPositionProvider.kt$PopupPositionProvider$0.5f</ID>
     <ID>MagicNumber:PrayHands.kt$0.01f</ID>
     <ID>MagicNumber:PrayHands.kt$0.12f</ID>
@@ -4444,7 +4440,6 @@
     <ID>TopLevelPropertyNaming:NavigationMenuSharedViewport.kt$internal const val NavigationMenuViewportTag = "navigation-menu-viewport"</ID>
     <ID>TopLevelPropertyNaming:NavigationMenuSharedViewport.kt$private const val ViewportDuration = 350</ID>
     <ID>TopLevelPropertyNaming:NavigationMenuSharedViewport.kt$private const val ViewportExitDuration = 150</ID>
-    <ID>TopLevelPropertyNaming:PopoverPopup.kt$private const val PopoverMotionDuration = 100</ID>
     <ID>TopLevelPropertyNaming:RippleIndication.kt$private const val FadeInMs = 75</ID>
     <ID>TopLevelPropertyNaming:RippleIndication.kt$private const val FadeOutMs = 150</ID>
     <ID>TopLevelPropertyNaming:RippleIndication.kt$private const val RadiusInMs = 225</ID>

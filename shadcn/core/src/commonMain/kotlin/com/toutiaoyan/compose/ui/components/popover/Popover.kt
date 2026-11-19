@@ -221,7 +221,8 @@ fun Popover(
             modifier =
                 modifier.onKeyEvent { event ->
                     // Escape can reach the owner when a nested layer leaves it focused.
-                    if (!modal && isOpen && event.type == KeyEventType.KeyDown && event.key == Key.Escape) {
+                    val escapePressed = event.type == KeyEventType.KeyDown && event.key == Key.Escape
+                    if (!modal && isOpen && escapePressed) {
                         controller.dismissWithEscape()
                         true
                     } else {
@@ -289,9 +290,8 @@ fun PopoverScope.PopoverTrigger(
                         controller.focus.openedByTouch = false
                         controller.focus.restoreTouchHost = null
                     }
-                    if (event.type == KeyEventType.KeyDown && event.key == Key.Tab &&
-                        controller.open && controller.focus.focusAtTrigger
-                    ) {
+                    val tabPressed = event.type == KeyEventType.KeyDown && event.key == Key.Tab
+                    if (tabPressed && controller.open && controller.focus.focusAtTrigger) {
                         if (event.isShiftPressed) {
                             controller.dismissAfterTab(FocusDirection.Previous)
                         } else {
