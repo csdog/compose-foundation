@@ -182,6 +182,15 @@ class MessageScrollerParityTest : ScreenshotTest() {
         assertEquals(460, state.scrollState.value)
     }
 
+    @Test fun keyboardFocusTraversalDoesNotReleaseFollowing() {
+        show(auto = true, opening = MessageScrollerPosition.End)
+        composeRule.onNodeWithTag("viewport").requestFocus().performKeyInput { pressKey(Key.Tab) }
+        assertTrue(state.isFollowing)
+        composeRule.runOnIdle { ids.add("more") }
+        composeRule.waitForIdle()
+        assertEquals(state.scrollState.maxValue, state.scrollState.value)
+    }
+
     @Test fun readerScrollReleasesAndExplicitEndResumesFollowing() {
         show(auto = true, opening = MessageScrollerPosition.End)
         composeRule.onNodeWithTag("viewport").performTouchInput { swipeDown() }

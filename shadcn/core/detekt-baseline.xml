@@ -84,7 +84,6 @@
     <ID>CyclomaticComplexMethod:MenuPopup.kt$@Composable internal fun MenuPopup( open: Boolean, onDismissRequest: () -&gt; Unit, placement: PopupPlacement, offset: Dp, align: PopupAlign, alignOffset: Dp, dismissOnClickOutside: Boolean, focusable: Boolean, enter: EnterTransition, exit: ExitTransition, owningNova: Boolean, ready: Boolean = true, animateDefaults: Boolean = true, freezePositionOnExit: Boolean = false, horizontalPosition: PopupHorizontalPosition? = null, content: @Composable () -&gt; Unit, )</ID>
     <ID>CyclomaticComplexMethod:MenuPopup.kt$@Composable private fun NovaMenuPopup( open: Boolean, onDismissRequest: () -&gt; Unit, placement: PopupPlacement, offset: Dp, align: PopupAlign, alignOffset: Dp, dismissOnClickOutside: Boolean, focusable: Boolean, ready: Boolean, animateDefaults: Boolean, freezePositionOnExit: Boolean, horizontalPosition: PopupHorizontalPosition?, content: @Composable () -&gt; Unit, )</ID>
     <ID>CyclomaticComplexMethod:Menubar.kt$@Composable fun MenubarMenuScope.MenubarTrigger( modifier: Modifier = Modifier, enabled: Boolean = true, disabled: Boolean = false, style: Style = Style, content: @Composable () -&gt; Unit, )</ID>
-    <ID>CyclomaticComplexMethod:MessageScroller.kt$@Composable private fun ScrollerViewport( modifier: Modifier, state: MessageScrollerState, content: @Composable ColumnScope.() -&gt; Unit, )</ID>
     <ID>CyclomaticComplexMethod:MessageScrollerState.kt$MessageScrollerState$internal suspend fun reconcileLayout()</ID>
     <ID>CyclomaticComplexMethod:NavigationMenu.kt$@Composable fun NavigationMenuItemScope.NavigationMenuContent( modifier: Modifier = Modifier, style: Style = Style, side: PopupPlacement? = null, // Base UI NavigationMenuPositioner default `sideOffset = 8`, `alignOffset = 0`. sideOffset: Dp = 8.dp, alignOffset: Dp = 0.dp, dismissOnClickOutside: Boolean = true, enter: EnterTransition = PopupTransitions.Enter, exit: ExitTransition = PopupTransitions.Exit, content: @Composable () -&gt; Unit, )</ID>
     <ID>CyclomaticComplexMethod:NavigationMenu.kt$@Composable fun NavigationMenuItemScope.NavigationMenuTrigger( modifier: Modifier = Modifier, enabled: Boolean = true, disabled: Boolean = false, style: Style = Style, content: @Composable () -&gt; Unit, )</ID>
@@ -194,7 +193,6 @@
     <ID>LongMethod:MenuPopup.kt$@Composable private fun NovaMenuPopup( open: Boolean, onDismissRequest: () -&gt; Unit, placement: PopupPlacement, offset: Dp, align: PopupAlign, alignOffset: Dp, dismissOnClickOutside: Boolean, focusable: Boolean, ready: Boolean, animateDefaults: Boolean, freezePositionOnExit: Boolean, horizontalPosition: PopupHorizontalPosition?, content: @Composable () -&gt; Unit, )</ID>
     <ID>LongMethod:Menubar.kt$@Composable fun MenubarMenuScope.MenubarTrigger( modifier: Modifier = Modifier, enabled: Boolean = true, disabled: Boolean = false, style: Style = Style, content: @Composable () -&gt; Unit, )</ID>
     <ID>LongMethod:MessageScroller.kt$@Composable fun MessageScrollerButton( visible: Boolean, onClick: () -&gt; Unit, modifier: Modifier = Modifier, style: Style = Style, direction: MessageScrollerDirection = MessageScrollerDirection.End, // See [DefaultMessageScrollerIcon]. Receives the resolved rotation so an override can // apply it too (e.g. this repo's own demo app passes a real Lucide // ArrowDown here -- see MessageScrollerDoc.kt). icon: @Composable (rotationDegrees: Float) -&gt; Unit = DefaultMessageScrollerIcon, )</ID>
-    <ID>LongMethod:MessageScroller.kt$@Composable private fun ScrollerViewport( modifier: Modifier, state: MessageScrollerState, content: @Composable ColumnScope.() -&gt; Unit, )</ID>
     <ID>LongMethod:MessageScrollerScreenshotTest.kt$MessageScrollerScreenshotTest$private fun chatPanel(darkTheme: Boolean)</ID>
     <ID>LongMethod:MessageScrollerState.kt$MessageScrollerState$internal suspend fun reconcileLayout()</ID>
     <ID>LongMethod:NavigationMenu.kt$@Composable fun NavigationMenuItemScope.NavigationMenuContent( modifier: Modifier = Modifier, style: Style = Style, side: PopupPlacement? = null, // Base UI NavigationMenuPositioner default `sideOffset = 8`, `alignOffset = 0`. sideOffset: Dp = 8.dp, alignOffset: Dp = 0.dp, dismissOnClickOutside: Boolean = true, enter: EnterTransition = PopupTransitions.Enter, exit: ExitTransition = PopupTransitions.Exit, content: @Composable () -&gt; Unit, )</ID>
@@ -2783,9 +2781,6 @@
     <ID>MagicNumber:MessageScroller.kt$0.32f</ID>
     <ID>MagicNumber:MessageScroller.kt$0.7f</ID>
     <ID>MagicNumber:MessageScroller.kt$0.84f</ID>
-    <ID>MagicNumber:MessageScroller.kt$180f</ID>
-    <ID>MagicNumber:MessageScroller.kt$200</ID>
-    <ID>MagicNumber:MessageScroller.kt$400</ID>
     <ID>MagicNumber:MessageScrollerArrow.kt$12f</ID>
     <ID>MagicNumber:MessageScrollerArrow.kt$19f</ID>
     <ID>MagicNumber:MessageScrollerArrow.kt$24f</ID>

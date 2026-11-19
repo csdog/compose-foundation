@@ -79,6 +79,7 @@ import com.toutiaoyan.compose.ui.styles.rememberMinTouchTargetStyle
 import com.toutiaoyan.compose.ui.styles.rememberPressMotionStyle
 import com.toutiaoyan.compose.ui.styles.scrollFade
 import com.toutiaoyan.compose.ui.theme.currentTheme
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import com.toutiaoyan.compose.tailwind.core.twSpacing
 
@@ -91,6 +92,12 @@ internal const val DEFAULT_AUTO_SCROLL_THRESHOLD_PX = 64
 
 /** Which edge of the scroller a [MessageScrollerButton] jumps to, matching real shadcn's `direction` prop. */
 enum class MessageScrollerDirection { Start, End }
+
+private const val SCROLL_BUTTON_ENTER_MILLIS = 200
+private const val SCROLL_BUTTON_EXIT_MILLIS = 400
+private const val SCROLL_BUTTON_START_ICON_ROTATION_DEGREES = 180f
+private val ScrollButtonEnterEasing = CubicBezierEasing(0.23f, 1f, 0.32f, 1f)
+private val ScrollButtonExitEasing = CubicBezierEasing(0.7f, 0f, 0.84f, 0f)
 
 // A self-generated ImageVector that rotates 180deg for [MessageScrollerDirection.Start]
 // -- not a third-party icon-set dependency (this library still takes none -- see README),
@@ -118,40 +125,6 @@ private fun defaultMessageScrollerButton(
             icon = icon,
         )
     }
-
-/**
- * Whether the scroll position is within [thresholdPx] of the bottom of the content, as a
- * plain function with no Compose dependency -- drives [MessageScrollerButton]'s
- * visibility (shown only once scrolled meaningfully away from the bottom).
- */
-internal fun isMessageScrollerNearBottom(
-    value: Int,
-    maxValue: Int,
-    thresholdPx: Int,
-): Boolean = (maxValue - value) <= thresholdPx
-
-/**
- * Whether new content arriving should pull the scroll position along with it, given the
- * reader is currently [following] the live edge. Real shadcn's `message-scroller.tsx`
- * auto-scrolls to follow new messages *only* while the reader hasn't released the view --
- * if they've scrolled up into history, new messages must not yank them back down, even if
- * [scrollValue] happens to already be near [previousMaxValue] again.
- */
-internal fun shouldAutoScrollToBottom(
-    following: Boolean,
-    previousMaxValue: Int,
-    newMaxValue: Int,
-): Boolean {
-    if (!following) return false
-    return newMaxValue > previousMaxValue
-}
-
-/** Legacy distance predicate. Provider intent/anchor/follow behavior is implemented by MessageScrollerState. */
-internal fun shouldReleaseFollowing(
-    value: Int,
-    maxValue: Int,
-    thresholdPx: Int,
-): Boolean = !isMessageScrollerNearBottom(value, maxValue, thresholdPx)
 
 /**
  * Transcript frame. Inside a Provider, compose Viewport/Content/Item and an explicit
@@ -224,6 +197,36 @@ fun MessageScroller(
     }
 }
 
+private val MessageScrollerArrowStep = 40.dp
+private val MessageScrollerNavigationKeys =
+    setOf(Key.DirectionUp, Key.DirectionDown, Key.PageUp, Key.PageDown, Key.MoveHome, Key.MoveEnd)
+
+private fun Modifier.navigateMessageScroller(
+    state: MessageScrollerState,
+    scope: CoroutineScope,
+    arrowStepPx: Int,
+): Modifier =
+    onKeyEvent { event ->
+        val key = event.key
+        if (event.type != KeyEventType.KeyDown || key !in MessageScrollerNavigationKeys) return@onKeyEvent false
+
+        state.releaseFollowing()
+        scope.launch {
+            when (key) {
+                Key.MoveHome -> state.scrollToStart()
+                Key.MoveEnd -> state.scrollToEnd()
+                else -> {
+                    val page = key == Key.PageUp || key == Key.PageDown
+                    val previous = key == Key.DirectionUp || key == Key.PageUp
+                    val step = if (page) state.scrollState.viewportSize else arrowStepPx
+                    val delta = if (previous) -step else step
+                    state.scrollState.scrollTo((state.scrollState.value + delta).coerceAtLeast(0))
+                }
+            }
+        }
+        true
+    }
+
 private val LocalLegacyMessageScroller = staticCompositionLocalOf { false }
 
 @Composable
@@ -239,7 +242,7 @@ private fun ScrollerViewport(
         onDispose { state.viewportDetached(owner) }
     }
     val scope = rememberCoroutineScope()
-    val density = LocalDensity.current
+    val arrowStepPx = with(LocalDensity.current) { MessageScrollerArrowStep.roundToPx() }
     val connection =
         remember(state) {
             object : NestedScrollConnection {
@@ -268,49 +271,7 @@ private fun ScrollerViewport(
                         }
                     }
                 }
-                .onPreviewKeyEvent { event ->
-                    if (event.type == KeyEventType.KeyDown) state.releaseFollowing()
-                    false
-                }
-                .onKeyEvent { event ->
-                    if (event.type != KeyEventType.KeyDown) {
-                        false
-                    } else {
-                        when (event.key) {
-                            Key.DirectionUp, Key.DirectionDown, Key.PageUp, Key.PageDown, Key.MoveHome, Key.MoveEnd -> {
-                                scope.launch {
-                                    when (event.key) {
-                                        Key.MoveHome -> state.scrollToStart()
-                                        Key.MoveEnd -> state.scrollToEnd()
-                                        else -> {
-                                            val step =
-                                                if (event.key == Key.PageUp ||
-                                                    event.key == Key.PageDown
-                                                ) {
-                                                    state.scrollState.viewportSize
-                                                } else {
-                                                    with(density) { 40.dp.roundToPx() }
-                                                }
-                                            val delta =
-                                                if (event.key == Key.DirectionUp ||
-                                                    event.key == Key.PageUp
-                                                ) {
-                                                    -step
-                                                } else {
-                                                    step
-                                                }
-                                            state.scrollState.scrollTo(
-                                                (state.scrollState.value + delta).coerceAtLeast(0),
-                                            )
-                                        }
-                                    }
-                                }
-                                true
-                            }
-                            else -> false
-                        }
-                    }
-                }
+                .navigateMessageScroller(state, scope, arrowStepPx)
                 .scrollFade(state.scrollState)
                 .verticalScroll(state.scrollState)
                 .graphicsLayer { alpha = if (state.pendingScroll) 0f else 1f }
@@ -496,21 +457,23 @@ fun MessageScrollerButton(
     // ArrowDown here -- see MessageScrollerDoc.kt).
     icon: @Composable (rotationDegrees: Float) -> Unit = DefaultMessageScrollerIcon,
 ) {
-    val showEasing = remember { CubicBezierEasing(0.23f, 1f, 0.32f, 1f) }
-    val hideEasing = remember { CubicBezierEasing(0.7f, 0f, 0.84f, 0f) }
     // End slides up from below (offscreen below the viewport); Start slides down from above.
     val offscreenSign = if (direction == MessageScrollerDirection.End) 1 else -1
 
     AnimatedVisibility(
         visible = visible,
         enter =
-            slideInVertically(tween(200, easing = showEasing)) { fullHeight -> offscreenSign * fullHeight } +
-                scaleIn(tween(200, easing = showEasing), initialScale = 0.95f) +
-                fadeIn(tween(200, easing = showEasing)),
+            slideInVertically(
+                tween(SCROLL_BUTTON_ENTER_MILLIS, easing = ScrollButtonEnterEasing),
+            ) { fullHeight -> offscreenSign * fullHeight } +
+                scaleIn(tween(SCROLL_BUTTON_ENTER_MILLIS, easing = ScrollButtonEnterEasing), initialScale = 0.95f) +
+                fadeIn(tween(SCROLL_BUTTON_ENTER_MILLIS, easing = ScrollButtonEnterEasing)),
         exit =
-            slideOutVertically(tween(400, easing = hideEasing)) { fullHeight -> offscreenSign * fullHeight } +
-                scaleOut(tween(400, easing = hideEasing), targetScale = 0.95f) +
-                fadeOut(tween(400, easing = hideEasing)),
+            slideOutVertically(
+                tween(SCROLL_BUTTON_EXIT_MILLIS, easing = ScrollButtonExitEasing),
+            ) { fullHeight -> offscreenSign * fullHeight } +
+                scaleOut(tween(SCROLL_BUTTON_EXIT_MILLIS, easing = ScrollButtonExitEasing), targetScale = 0.95f) +
+                fadeOut(tween(SCROLL_BUTTON_EXIT_MILLIS, easing = ScrollButtonExitEasing)),
         modifier = modifier,
     ) {
         val interactionSource = remember { MutableInteractionSource() }
@@ -565,7 +528,8 @@ fun MessageScrollerButton(
                         .styleable(styleState, buttonStyle then style),
                 contentAlignment = Alignment.Center,
             ) {
-                val rotation = if (direction == MessageScrollerDirection.Start) 180f else 0f
+                val rotation =
+                    if (direction == MessageScrollerDirection.Start) SCROLL_BUTTON_START_ICON_ROTATION_DEGREES else 0f
                 icon(rotation)
             }
         }
