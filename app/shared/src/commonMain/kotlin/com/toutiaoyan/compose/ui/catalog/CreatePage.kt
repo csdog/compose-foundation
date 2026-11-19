@@ -14,12 +14,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.movableContentOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.movableContentOf
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.catalog.create.CreateCustomizer
 import com.toutiaoyan.compose.ui.catalog.create.CreatePreviewCanvas
@@ -74,11 +75,37 @@ fun CreatePage(
         onBaseColorChange(next)
     }
 
+    val customizerContent by rememberUpdatedState<@Composable (Modifier, Boolean, Dp) -> Unit>(
+        { placement, docked, railWidth ->
+            CreateCustomizer(
+                stylePreset = stylePreset,
+                onStylePresetChange = onStylePresetChange,
+                baseColor = baseColor,
+                onBaseColorChange = changeBaseColor,
+                accent = accent,
+                onAccentChange = onAccentChange,
+                chartColor = chartColor,
+                onChartColorChange = { chartColor = it },
+                onOpenCommandPalette = { commandOpen = true },
+                getCodeRequest = getCodeRequest,
+                docked = docked,
+                railWidth = railWidth,
+                modifier = placement,
+            )
+        },
+    )
+    val customizer =
+        remember {
+            movableContentOf<Modifier, Boolean, Dp> { placement, docked, railWidth ->
+                customizerContent(placement, docked, railWidth)
+            }
+        }
+
     Box(modifier = modifier.fillMaxSize()) {
         BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
             // page.tsx: [--gap:--spacing(4)] md:[--gap:--spacing(6)], p-(--gap), pt-[calc(var(--gap)*0.25)]
             val gap = if (maxWidth < 768.dp) twSpacing.md else twSpacing.lg
-            val docked = maxWidth < 900.dp
+            val docked = maxWidth < 768.dp
             // 2xl:[--customizer-width:--spacing(56)] → 224dp
             val railWidth = if (maxWidth >= 1536.dp) 224.dp else 192.dp
             val designerModifier =
@@ -92,20 +119,7 @@ fun CreatePage(
                     verticalArrangement = Arrangement.spacedBy(gap),
                 ) {
                     preview(Modifier.weight(1f).fillMaxWidth())
-                    CreateCustomizer(
-                        stylePreset = stylePreset,
-                        onStylePresetChange = onStylePresetChange,
-                        baseColor = baseColor,
-                        onBaseColorChange = changeBaseColor,
-                        accent = accent,
-                        onAccentChange = onAccentChange,
-                        chartColor = chartColor,
-                        onChartColorChange = { chartColor = it },
-                        onOpenCommandPalette = { commandOpen = true },
-                        getCodeRequest = getCodeRequest,
-                        docked = true,
-                        modifier = Modifier.fillMaxWidth(),
-                    )
+                    customizer(Modifier.fillMaxWidth(), true, railWidth)
                 }
             } else {
                 Row(
@@ -113,21 +127,7 @@ fun CreatePage(
                     horizontalArrangement = Arrangement.spacedBy(gap),
                 ) {
                     // Left rail = Customizer (official flex-row-reverse visual).
-                    CreateCustomizer(
-                        stylePreset = stylePreset,
-                        onStylePresetChange = onStylePresetChange,
-                        baseColor = baseColor,
-                        onBaseColorChange = changeBaseColor,
-                        accent = accent,
-                        onAccentChange = onAccentChange,
-                        chartColor = chartColor,
-                        onChartColorChange = { chartColor = it },
-                        onOpenCommandPalette = { commandOpen = true },
-                        getCodeRequest = getCodeRequest,
-                        docked = false,
-                        railWidth = railWidth,
-                        modifier = Modifier.fillMaxHeight(),
-                    )
+                    customizer(Modifier.fillMaxHeight(), false, railWidth)
                     preview(Modifier.weight(1f).fillMaxHeight())
                 }
             }
