@@ -4,16 +4,50 @@ package com.toutiaoyan.compose.ui.components.buttongroup
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.style.Style
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.test.getUnclippedBoundsInRoot
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.ScreenshotTest
 import com.toutiaoyan.compose.ui.components.button.Button
 import com.toutiaoyan.compose.ui.components.button.ButtonVariant
 import com.toutiaoyan.compose.tailwind.core.twRadius
+import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class ButtonGroupScreenshotTest : ScreenshotTest() {
+    @Test fun keyedReorderMovesTheOutlineOverlapToTheNewTrailingItem() {
+        var reversed by mutableStateOf(false)
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            ButtonGroup(Modifier.testTag("group")) {
+                val ids = if (reversed) listOf("second", "first") else listOf("first", "second")
+                ids.forEach { id ->
+                    key(id) {
+                        ButtonGroupItem(
+                            "Label",
+                            onClick = {},
+                            modifier = Modifier.testTag(id),
+                            variant = ButtonVariant.Outline,
+                        )
+                    }
+                }
+            }
+        }
+
+        fun bounds(tag: String) = composeRule.onNodeWithTag(tag).getUnclippedBoundsInRoot()
+        assertEquals(bounds("group").left, bounds("first").left)
+        assertEquals(bounds("first").right - 1.dp, bounds("second").left)
+        composeRule.runOnIdle { reversed = true }
+        assertEquals(bounds("group").left, bounds("second").left)
+        assertEquals(bounds("second").right - 1.dp, bounds("first").left)
+    }
+
     private fun states(darkTheme: Boolean) {
         snapshot("button_group_states", darkTheme = darkTheme) {
             ButtonGroup {

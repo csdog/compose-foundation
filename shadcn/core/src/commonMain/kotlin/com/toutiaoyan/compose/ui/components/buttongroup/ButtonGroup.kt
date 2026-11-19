@@ -28,6 +28,9 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.layout.ParentDataModifier
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.constrainHeight
@@ -233,7 +236,9 @@ fun ButtonGroupScope.ButtonGroupItem(
         checkNotNull(LocalButtonGroup.current) {
             "ButtonGroupItem must be used inside ButtonGroup { … }"
         }
-    val (index, count) = controller.registry.register()
+    val key = controller.registry.registerKey()
+    val index = controller.registry.visualIndex(key, controller.orientation, LocalLayoutDirection.current)
+    val count = controller.registry.keys.size
     val nova = currentTheme.activePreset == StylePreset.Nova
     val rounded = if (nova) twRadius.lg else twRadius.md
     val spaced = controller.spacing > 0.dp
@@ -264,7 +269,10 @@ fun ButtonGroupScope.ButtonGroupItem(
         variant = variant,
         size = size,
         style = Style { shape(itemShape) } then style,
-        modifier = modifier.then(overlapModifier),
+        modifier =
+            modifier.onGloballyPositioned {
+                controller.registry.updatePosition(key, it.positionInRoot())
+            }.then(overlapModifier),
         content = content,
     )
 }

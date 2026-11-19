@@ -4,16 +4,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+
+private const val FOCUSED_GROUP_ITEM_Z_INDEX = 10f
 
 /** shadcn `[&>*]:focus-visible:z-10` / `focus-visible:z-10` — raise a focused sibling's ring. */
 internal val LocalRaiseFocusZIndex = staticCompositionLocalOf { false }
@@ -23,7 +28,7 @@ internal fun Modifier.raiseFocusedSiblingZIndex(): Modifier {
     if (!LocalRaiseFocusZIndex.current) return this
     var focused by remember { mutableStateOf(false) }
     return onFocusEvent { focused = it.hasFocus }
-        .then(if (focused) Modifier.zIndex(10f) else Modifier)
+        .then(if (focused) Modifier.zIndex(FOCUSED_GROUP_ITEM_Z_INDEX) else Modifier)
 }
 
 data class GroupCorners(
@@ -35,17 +40,54 @@ data class GroupCorners(
 
 internal class GroupChildRegistry {
     val keys = mutableStateListOf<Any>()
+    private val positions = mutableStateMapOf<Any, Offset>()
+
+    fun updatePosition(
+        key: Any,
+        position: Offset,
+    ) {
+        if (key in keys) positions[key] = position
+    }
+
+    fun remove(key: Any) {
+        keys.remove(key)
+        positions.remove(key)
+    }
+
+    fun visualIndex(
+        key: Any,
+        orientation: ButtonGroupOrientation,
+        direction: LayoutDirection,
+    ): Int {
+        if (!keys.all { it in positions }) return keys.indexOf(key).coerceAtLeast(0)
+        // Compare placed positions, since keyed children can move without recomposing or registering again.
+        val ordered =
+            keys.sortedBy {
+                val position = positions.getValue(it)
+                when {
+                    orientation == ButtonGroupOrientation.Vertical -> position.y
+                    direction == LayoutDirection.Rtl -> -position.x
+                    else -> position.x
+                }
+            }
+        return ordered.indexOf(key).coerceAtLeast(0)
+    }
+}
+
+@Composable
+internal fun GroupChildRegistry.registerKey(): Any {
+    val key = remember { Any() }
+    DisposableEffect(this, key) {
+        keys.add(key)
+        onDispose { remove(key) }
+    }
+    return key
 }
 
 @Composable
 internal fun GroupChildRegistry.register(): Pair<Int, Int> {
-    val key = remember { Any() }
-    DisposableEffect(key) {
-        keys.add(key)
-        onDispose { keys.remove(key) }
-    }
-    val index = keys.indexOf(key)
-    return (if (index < 0) 0 else index) to keys.size.coerceAtLeast(1)
+    val key = registerKey()
+    return keys.indexOf(key).coerceAtLeast(0) to keys.size.coerceAtLeast(1)
 }
 
 internal fun groupItemCorners(
@@ -54,23 +96,13 @@ internal fun groupItemCorners(
     orientation: ButtonGroupOrientation,
     rounded: Dp,
 ): GroupCorners {
-    val none = 0.dp
-    return when {
-        count <= 1 -> GroupCorners(rounded, rounded, rounded, rounded)
-        orientation == ButtonGroupOrientation.Horizontal ->
-            when (index) {
-                0 -> GroupCorners(topStart = rounded, topEnd = none, bottomEnd = none, bottomStart = rounded)
-                count - 1 ->
-                    GroupCorners(topStart = none, topEnd = rounded, bottomEnd = rounded, bottomStart = none)
-                else -> GroupCorners(none, none, none, none)
-            }
-        else ->
-            when (index) {
-                0 -> GroupCorners(topStart = rounded, topEnd = rounded, bottomEnd = none, bottomStart = none)
-                count - 1 ->
-                    GroupCorners(topStart = none, topEnd = none, bottomEnd = rounded, bottomStart = rounded)
-                else -> GroupCorners(none, none, none, none)
-            }
+    if (count <= 1) return GroupCorners(rounded, rounded, rounded, rounded)
+    val start = if (index == 0) rounded else 0.dp
+    val end = if (index == count - 1) rounded else 0.dp
+    return if (orientation == ButtonGroupOrientation.Horizontal) {
+        GroupCorners(start, end, end, start)
+    } else {
+        GroupCorners(start, start, end, end)
     }
 }
 
