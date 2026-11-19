@@ -164,14 +164,14 @@
 | `pagination` | 已验收 | 已验收 | 页码达到整数上限时保留邻页并禁止越界导航，`c35f1a6b`。 |
 | `popover` | 已验收 | 已验收 | 复核关闭与焦点恢复，共用 Nova 动效，`f876d5ed`。 |
 | `progress` | 已验收 | 已验收 | 独立轨道在无界容器中安全测量，`326ce39b`。 |
-| `questionnaire` | 待审 | 局部清理 | 已处理快捷键上限。 |
+| `questionnaire` | 已验收 | 已验收 | 题目与选项键独立，删除题目或选项同步清理状态，`9060a60f`。 |
 | `radiobutton` | 待审 | 待审 |  |
 | `resizable` | 已验收 | 已验收 | 非调整轴方向键交回父级，`e6c1328c`。 |
 | `scrollarea` | 已验收 | 已验收 | 滚动条纳入列表间距、内边距和反向布局，`cf8036ee`。 |
 | `select` | 已验收 | 已验收 | 前两轮及第一批记录。 |
 | `separator` | 已验收 | 已验收 | 方向、装饰语义和样式覆盖已复核。 |
 | `sheet` | 已验收 | 已验收 | 第二轮及第二批记录。 |
-| `sidebar` | 待审 | 局部清理 | 已处理动画时长。 |
+| `sidebar` | 已验收 | 已验收 | 收起后跳过侧栏控件并退出原焦点，保留已组合内容，`b71b1dd3`。 |
 | `skeleton` | 已验收 | 已验收 | 替换样式、脉冲和目录布局已复核。 |
 | `slider` | 已验收 | 已验收 | 第二轮及第二批记录。 |
 | `spinner` | 已验收 | 已验收 | `036a3657` 统一尺寸来源并拆清几何测试。 |
@@ -327,3 +327,9 @@
 - `NavigationMenu.kt` 在面板子项重新落位后按行和方向排序焦点，跟踪位置随子项卸载清理。左右布局和 Tab 越界关闭条件保留。提交 `c06f94bc`。
 - 原有公开签名、主题 chrome 和调用方自定义过渡保留。Nova 标题字高、页脚出血和动作间距仍按原组件规格。Navigation Menu 保留既有进出时长和缓动控制点。Detekt 从 4,406 减至 4,393 个 ID，零新增，核心 Detekt 与 ktlint 通过。
 - JVM 六个新用例均已证明修复前失败、修复后通过。核心 72 项中 49 项通过，其余 23 张快照在修复前同样失败，实测 PNG 的 SHA-256 逐一相同。目录 JVM 28 项通过。Chromium 在 JS 和 Wasm 上验证两种 Combobox 输入重新启用时都能直接键入查询。禁用的编辑输入忽略点击，Chips 外层仍可独立打开菜单。还验证了等宽反序的 Dialog 页脚及 Navigation Menu 重排后的 Tab 顺序。[逐项证据](code-review-evidence/combobox-dialog-navigationmenu.json)
+
+### Questionnaire 和 Sidebar 验收
+
+- `Questionnaire.kt:384` 使用题目名和选项名组成快捷键索引，两个名字里的斜杠不会导致键冲突。移除定义时清理不再存在的题目、选项和答案，保留仍注册的题目。修复后会按当前顺序进入首道剩余可用题目，并保留该题原有答案。提交 `9060a60f`。
+- `Sidebar.kt:482` 管理桌面 offcanvas 栏焦点。侧栏收起时从无障碍树隐藏，动画结束后停止放置零宽度区域中的命令。关闭时清理栏内焦点，重新打开仍保留已组合状态。保留 768 dp 响应式断点、200 ms 动画与主题尺寸。骨架文字宽度继续使用有意固定的 70% 比例，移除 1 个 baseline ID。提交 `b71b1dd3`。
+- 5 个问题均在同一 JVM 配置中证明修复前失败、修复后通过。核心 129 项及目录 45 项全部通过，包含 Questionnaire 和 Sidebar 的快照。Detekt 与 ktlint 通过，零新增告警。Chromium 在 JS 和 Wasm 上验证字母快捷键、删除当前题后切换、收起侧栏后的正反向 Tab。[逐项证据](code-review-evidence/questionnaire-sidebar.json)

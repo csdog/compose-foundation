@@ -1,0 +1,98 @@
+{
+  "baselineCommit": "94fcaa9c",
+  "commits": {
+    "questionnaire": "9060a60f",
+    "sidebar": "b71b1dd3"
+  },
+  "jvm": {
+    "core": {
+      "QuestionnaireCollectionTest[jvm]": 3,
+      "QuestionnaireControllerParityTest[jvm]": 10,
+      "QuestionnaireNovaBehaviorTest[jvm]": 10,
+      "QuestionnaireNovaScreenshotTest[jvm]": 4,
+      "QuestionnaireReviewTest[jvm]": 7,
+      "QuestionnaireScreenshotTest[jvm]": 30,
+      "SidebarBorderParityTest[jvm]": 4,
+      "SidebarContentLayoutParityTest[jvm]": 8,
+      "SidebarMenuActionVisibilityTest[jvm]": 1,
+      "SidebarMobileParityTest[jvm]": 12,
+      "SidebarOffcanvasFocusTest[jvm]": 2,
+      "SidebarProviderLayoutTest[jvm]": 6,
+      "SidebarResponsiveStateTest[jvm]": 9,
+      "SidebarScreenshotTest[jvm]": 17,
+      "SidebarStateParityTest[jvm]": 6
+    },
+    "catalog": {
+      "QuestionnaireExamplesTest[jvm]": 16,
+      "QuestionnaireFeedbackTest[jvm]": 13,
+      "QuestionnairePageTest[jvm]": 9,
+      "SidebarExamplesTest[jvm]": 7
+    },
+    "beforeAfterRegressions": {
+      "shortcutKeysKeepTheQuestionAndChoiceNamesSeparate[jvm]": "java.lang.AssertionError: Expected value to be true.",
+      "removedDefinitionChoiceIsNoLongerSelectedOrReachableByShortcut[jvm]": "java.lang.AssertionError: expected:<[]> but was:<[obsolete]>",
+      "removedDefinitionDropsItsAnswerAndUncontrolledActiveStep[jvm]": "org.junit.ComparisonFailure: expected:<[la]st> but was:<[fir]st>",
+      "sidebarChildIsSkippedAfterClosingTheOffcanvasRail[jvm]": "java.lang.AssertionError: Failed to assert the following: (Focused = 'true')",
+      "closingTheSidebarClearsFocusFromItsUnplacedCommands[jvm]": "java.lang.AssertionError: Expected value to be false."
+    }
+  },
+  "browser": {
+    "engine": "Chromium",
+    "developmentBuilds": {
+      "js": "cd7da79b0ea403c5279595d0d84b62972e84d4249f6ac8b3b1858f0916bb14dc",
+      "wasmJs": "38c084da77260539c4d856b2f47039c3ccbe1bbadc99a43bc87e4be565cc7320"
+    },
+    "checks": [
+      {
+        "runtime": "js",
+        "mode": "questionnaire",
+        "outcome": {
+          "activeAfterRemove": "one",
+          "remainingCount": 1,
+          "letterSelected": "three"
+        },
+        "trustedEvents": 16
+      },
+      {
+        "runtime": "js",
+        "mode": "sidebar",
+        "outcome": {
+          "expandedNext": "rail",
+          "collapsedNext": "page",
+          "collapsedPrevious": "before"
+        },
+        "trustedEvents": 18
+      },
+      {
+        "runtime": "wasmJs",
+        "mode": "questionnaire",
+        "outcome": {
+          "activeAfterRemove": "one",
+          "remainingCount": 1,
+          "letterSelected": "three"
+        },
+        "trustedEvents": 16
+      },
+      {
+        "runtime": "wasmJs",
+        "mode": "sidebar",
+        "outcome": {
+          "expandedNext": "rail",
+          "collapsedNext": "page",
+          "collapsedPrevious": "before"
+        },
+        "trustedEvents": 18
+      }
+    ]
+  },
+  "static": {
+    "detekt": "passed",
+    "ktlintCheck": "core and catalog passed",
+    "beforeIds": 4393,
+    "afterIds": 4392,
+    "removedIds": [
+      "MagicNumber:Sidebar.kt$0.7f"
+    ],
+    "newIds": []
+  }
+}
