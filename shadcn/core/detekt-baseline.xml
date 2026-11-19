@@ -503,7 +503,6 @@
     <ID>LongParameterList:Slider.kt$SliderController$( val state: SliderState, val interactionSources: List&lt;MutableInteractionSource&gt;, val rangeSpan: Float, val thumbSize: Dp = THUMB_SIZE, val rtl: Boolean = false, val focusRequesters: List&lt;FocusRequester&gt; = emptyList(), val currentValues: () -&gt; List&lt;Float&gt;, val onValuesCommit: ((List&lt;Float&gt;) -&gt; Unit)? = null, val thumbDescription: ((Int) -&gt; String)? = null, )</ID>
     <ID>LongParameterList:Slider.kt$SliderState$( val value: Float, val values: List&lt;Float&gt;, val valueRange: ClosedFloatingPointRange&lt;Float&gt;, val step: Float, val fraction: Float, val fractions: List&lt;Float&gt;, val usableWidth: Dp, val enabled: Boolean, val orientation: SliderOrientation, val inverted: Boolean, val minStepsBetweenThumbs: Int, val onValueChange: (Float) -&gt; Unit, val onValuesChange: (List&lt;Float&gt;) -&gt; Unit, )</ID>
     <ID>LongParameterList:Stepper.kt$( currentStep: Int, modifier: Modifier = Modifier, style: Style = Style, orientation: StepperOrientation = StepperOrientation.Horizontal, showLabels: Boolean = true, circleStyle: Style = Style, connectorStyle: Style = Style, content: @Composable StepperScope.() -&gt; Unit, )</ID>
-    <ID>LongParameterList:Stepper.kt$( steps: List&lt;StepperStep&gt;, currentStep: Int, showLabels: Boolean, modifier: Modifier, style: Style, circleStyle: Style, connectorStyle: Style, )</ID>
     <ID>LongParameterList:SwipeGesture.kt$( initialValue: T, density: Density, positionalThresholdFraction: Float = SwipeGesture.DefaultThresholdFraction, velocityThreshold: Dp = SwipeGesture.FlingVelocityThreshold, snapAnimationSpec: AnimationSpec&lt;Float&gt; = SwipeGesture.SettleSpring, decayAnimationSpec: DecayAnimationSpec&lt;Float&gt; = SwipeGesture.Decay, )</ID>
     <ID>LongParameterList:Switch.kt$( checked: Boolean? = null, onCheckedChange: ((Boolean) -&gt; Unit)? = null, modifier: Modifier = Modifier, enabled: Boolean = true, disabled: Boolean = false, size: SwitchSize = SwitchSize.Default, invalid: Boolean = false, required: Boolean = false, animation: ButtonAnimation = ButtonAnimation.Scale, label: String = "", defaultChecked: Boolean = false, style: Style = Style, content: @Composable BoxScope.() -&gt; Unit = { SwitchThumb() }, )</ID>
     <ID>LongParameterList:Switch.kt$( text: String, checked: Boolean? = null, onCheckedChange: ((Boolean) -&gt; Unit)? = null, modifier: Modifier = Modifier, description: String? = null, enabled: Boolean = true, disabled: Boolean = false, size: SwitchSize = SwitchSize.Default, invalid: Boolean = false, required: Boolean = false, animation: ButtonAnimation = ButtonAnimation.Scale, label: String = text, defaultChecked: Boolean = false, style: Style = Style, )</ID>
@@ -3363,7 +3362,6 @@
     <ID>MagicNumber:SlightlySmiling.kt$25.54f</ID>
     <ID>MagicNumber:SlightlySmiling.kt$25f</ID>
     <ID>MagicNumber:SlightlySmiling.kt$28f</ID>
-    <ID>MagicNumber:Stepper.kt$0.5f</ID>
     <ID>MagicNumber:StylePreset.kt$StylePreset.Mira$0.9f</ID>
     <ID>MagicNumber:StylePreset.kt$StylePreset.Sera$1.15f</ID>
     <ID>MagicNumber:Switch.kt$150</ID>

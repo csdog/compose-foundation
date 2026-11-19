@@ -20,18 +20,14 @@ import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.semantics.disabled
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.components.text.Text
@@ -42,42 +38,11 @@ import androidx.compose.ui.text.TextStyle
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
 
-private data class StepperStep(
+internal data class StepperStep(
     val title: String,
-    val description: String? = null,
-    val disabled: Boolean = false,
+    val description: String?,
+    val disabled: Boolean,
 )
-
-private class StepperEntry(val step: State<StepperStep>)
-
-private class StepperRegistry {
-    var entries by mutableStateOf<List<StepperEntry>>(emptyList())
-        private set
-
-    fun register(entry: StepperEntry) {
-        if (entry !in entries) entries = entries + entry
-    }
-
-    fun remove(entry: StepperEntry) {
-        entries = entries - entry
-    }
-
-    fun reorder(declarations: List<StepperEntry>) {
-        entries = declarations
-    }
-}
-
-private class StepperCollector(val registry: StepperRegistry) {
-    private val buffer = mutableListOf<StepperEntry>()
-
-    fun add(entry: StepperEntry) {
-        buffer.add(entry)
-    }
-
-    fun snapshot(): List<StepperEntry> = buffer.toList()
-}
-
-private val LocalStepperCollector = staticCompositionLocalOf<StepperCollector?> { null }
 
 class StepperScope internal constructor()
 
@@ -132,22 +97,22 @@ fun Stepper(
     connectorStyle: Style = Style,
     content: @Composable StepperScope.() -> Unit,
 ) {
-    val registry = remember { StepperRegistry() }
-    val steps = registry.entries.map { it.step.value }
-    // A fresh collector invalidates declaration readers, including otherwise skipped helpers.
-    val collector = StepperCollector(registry)
-    CompositionLocalProvider(
-        LocalStepperCollector provides collector,
-        LocalStepperState provides StepperState(currentStep, orientation),
-    ) {
-        StepperScope().content()
-        val declarations = collector.snapshot()
-        SideEffect { registry.reorder(declarations) }
-        when (orientation) {
-            StepperOrientation.Horizontal ->
-                HorizontalStepper(steps, currentStep, showLabels, modifier, style, circleStyle, connectorStyle)
-            StepperOrientation.Vertical ->
-                VerticalStepper(steps, currentStep, showLabels, modifier, style, circleStyle, connectorStyle)
+    val rootStyleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val rootModifier =
+        if (orientation == StepperOrientation.Horizontal) {
+            modifier.fillMaxWidth()
+        } else {
+            modifier
+        }
+    CompositionLocalProvider(LocalStepperState provides StepperState(currentStep, orientation)) {
+        Column(modifier = rootModifier.styleable(rootStyleState, style)) {
+            val steps = collectStepperSteps { StepperScope().content() }
+            when (orientation) {
+                StepperOrientation.Horizontal ->
+                    HorizontalStepper(steps, currentStep, showLabels, circleStyle, connectorStyle)
+                StepperOrientation.Vertical ->
+                    VerticalStepper(steps, currentStep, showLabels, circleStyle, connectorStyle)
+            }
         }
     }
 }
@@ -159,22 +124,13 @@ fun StepperScope.StepperItem(
     description: String? = null,
     disabled: Boolean = false,
 ) {
-    val collector =
-        checkNotNull(LocalStepperCollector.current) {
-            "StepperItem must be used inside Stepper { … }"
-        }
-    val step = rememberUpdatedState(StepperStep(title = title, description = description, disabled = disabled))
-    val entry = remember { StepperEntry(step) }
-    collector.add(entry)
-    // Publish registration only after commit; independent child composition and disposal
-    // then invalidate the parent's rendered list without changing snapshot state in composition.
-    SideEffect { collector.registry.register(entry) }
-    DisposableEffect(collector.registry, entry) {
-        onDispose { collector.registry.remove(entry) }
-    }
+    DeclareStepperStep(StepperStep(title, description, disabled))
 }
 
+private const val STEPPER_DISABLED_ALPHA = 0.5f
 private val StepCircleSize = 32.dp
+private val LabeledVerticalConnectorHeight = 40.dp
+private val CompactVerticalConnectorHeight = 16.dp
 
 /** Numbered circle of a step. Matches community shadcn `StepperIndicator`. */
 @Composable
@@ -260,6 +216,7 @@ private fun StepCircle(
     index: Int,
     currentStep: Int,
     circleStyle: Style,
+    isDisabled: Boolean = false,
 ) {
     val theme = currentTheme
     val reached = index <= currentStep
@@ -297,6 +254,16 @@ private fun StepCircle(
             contentAlignment = Alignment.Center,
         ) {
             Text(
+                modifier =
+                    Modifier.semantics {
+                        stateDescription =
+                            when {
+                                active -> "Current"
+                                reached -> "Completed"
+                                else -> "Upcoming"
+                            }
+                        if (isDisabled) disabled()
+                    },
                 variant = TextVariant.LabelLarge,
                 textStyle =
                     if (reached) {
@@ -314,45 +281,37 @@ private fun HorizontalStepper(
     steps: List<StepperStep>,
     currentStep: Int,
     showLabels: Boolean,
-    modifier: Modifier,
-    style: Style,
     circleStyle: Style,
     connectorStyle: Style,
 ) {
-    val rootStyleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Column(modifier = modifier.fillMaxWidth().styleable(rootStyleState, style)) {
-        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            steps.forEachIndexed { index, step ->
-                Box(modifier = Modifier.then(if (step.disabled) Modifier.alpha(0.5f) else Modifier)) {
-                    StepperIndicator(index, currentStep, circleStyle)
-                }
-                if (index != steps.lastIndex) {
-                    StepperSeparator(
-                        active = index < currentStep,
-                        horizontal = true,
-                        modifier = Modifier.weight(1f),
-                        style = connectorStyle,
-                    )
-                }
+    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        steps.forEachIndexed { index, step ->
+            Box(modifier = Modifier.then(if (step.disabled) Modifier.alpha(STEPPER_DISABLED_ALPHA) else Modifier)) {
+                StepCircle(index, currentStep, circleStyle, isDisabled = step.disabled)
+            }
+            if (index != steps.lastIndex) {
+                StepperSeparator(
+                    active = index < currentStep,
+                    horizontal = true,
+                    modifier = Modifier.weight(1f),
+                    style = connectorStyle,
+                )
             }
         }
-        if (showLabels) {
-            Row(modifier = Modifier.fillMaxWidth().padding(top = twSpacing.sm)) {
-                steps.forEachIndexed { index, step ->
-                    val upcoming = index > currentStep
-                    Column(
-                        modifier =
-                            Modifier
-                                .weight(1f)
-                                .then(if (step.disabled) Modifier.alpha(0.5f) else Modifier),
-                        horizontalAlignment = Alignment.Start,
-                    ) {
-                        StepperTitle(text = step.title, upcoming = upcoming)
-                        step.description?.let { StepperDescription(text = it) }
-                    }
-                    if (index != steps.lastIndex) {
-                        Box(modifier = Modifier.width(twSpacing.md))
-                    }
+    }
+    if (showLabels) {
+        Row(modifier = Modifier.fillMaxWidth().padding(top = twSpacing.sm)) {
+            steps.forEachIndexed { index, step ->
+                StepperLabel(
+                    step = step,
+                    upcoming = index > currentStep,
+                    modifier =
+                        Modifier.weight(1f).then(
+                            if (step.disabled) Modifier.alpha(STEPPER_DISABLED_ALPHA) else Modifier,
+                        ),
+                )
+                if (index != steps.lastIndex) {
+                    Box(modifier = Modifier.width(twSpacing.md))
                 }
             }
         }
@@ -364,37 +323,44 @@ private fun VerticalStepper(
     steps: List<StepperStep>,
     currentStep: Int,
     showLabels: Boolean,
-    modifier: Modifier,
-    style: Style,
     circleStyle: Style,
     connectorStyle: Style,
 ) {
-    val rootStyleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Column(modifier = modifier.styleable(rootStyleState, style)) {
-        steps.forEachIndexed { index, step ->
-            Row(modifier = Modifier.then(if (step.disabled) Modifier.alpha(0.5f) else Modifier)) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    StepperIndicator(index, currentStep, circleStyle)
-                    if (index != steps.lastIndex) {
-                        StepperSeparator(
-                            active = index < currentStep,
-                            horizontal = false,
-                            modifier = Modifier.height(if (showLabels) 40.dp else 16.dp),
-                            style = connectorStyle,
-                        )
-                    }
-                }
-                if (showLabels) {
-                    val upcoming = index > currentStep
-                    Column(
-                        modifier = Modifier.padding(start = twSpacing.sm, top = twSpacing.xs2),
-                        horizontalAlignment = Alignment.Start,
-                    ) {
-                        StepperTitle(text = step.title, upcoming = upcoming)
-                        step.description?.let { StepperDescription(text = it) }
-                    }
+    steps.forEachIndexed { index, step ->
+        Row(modifier = Modifier.then(if (step.disabled) Modifier.alpha(STEPPER_DISABLED_ALPHA) else Modifier)) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                StepCircle(index, currentStep, circleStyle, isDisabled = step.disabled)
+                if (index != steps.lastIndex) {
+                    StepperSeparator(
+                        active = index < currentStep,
+                        horizontal = false,
+                        modifier =
+                            Modifier.height(
+                                if (showLabels) LabeledVerticalConnectorHeight else CompactVerticalConnectorHeight,
+                            ),
+                        style = connectorStyle,
+                    )
                 }
             }
+            if (showLabels) {
+                StepperLabel(
+                    step = step,
+                    upcoming = index > currentStep,
+                    modifier = Modifier.padding(start = twSpacing.sm, top = twSpacing.xs2),
+                )
+            }
         }
+    }
+}
+
+@Composable
+private fun StepperLabel(
+    step: StepperStep,
+    upcoming: Boolean,
+    modifier: Modifier,
+) {
+    Column(modifier) {
+        StepperTitle(text = step.title, upcoming = upcoming)
+        step.description?.let { StepperDescription(text = it) }
     }
 }

@@ -5,9 +5,14 @@ package com.toutiaoyan.compose.ui.components.stepper
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.getUnclippedBoundsInRoot
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.unit.dp
@@ -24,6 +29,44 @@ class StepperBehaviorTest : ScreenshotTest() {
     @Composable
     private fun StepperScope.OptionalStep(visible: MutableState<Boolean>) {
         if (visible.value) StepperItem("Optional step")
+    }
+
+    @Composable
+    private fun StepperScope.ReorderableSteps(order: MutableState<List<String>>) {
+        order.value.forEach { title -> key(title) { StepperItem(title) } }
+    }
+
+    @Test
+    fun independentlyReorderedKeyedDeclarationsFollowTheirCurrentOrder() {
+        val order = mutableStateOf(listOf("First", "Second"))
+        setThemedContent {
+            Stepper(currentStep = 0, modifier = Modifier.width(320.dp)) { ReorderableSteps(order) }
+        }
+
+        fun firstComesBeforeSecond(): Boolean =
+            composeRule.onNodeWithText("First").getUnclippedBoundsInRoot().left <
+                composeRule.onNodeWithText("Second").getUnclippedBoundsInRoot().left
+        assertTrue(firstComesBeforeSecond())
+        composeRule.runOnIdle { order.value = order.value.reversed() }
+        assertTrue(!firstComesBeforeSecond(), "The visible steps must follow their reordered declarations")
+    }
+
+    @Test
+    fun indicatorExposesProgressAndDisabledState() {
+        setThemedContent {
+            Stepper(currentStep = 1, modifier = Modifier.width(320.dp), showLabels = false) {
+                StepperItem("First")
+                StepperItem("Current")
+                StepperItem("Unavailable", disabled = true)
+            }
+        }
+        composeRule.onNodeWithText("1")
+            .assert(SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, "Completed"))
+        composeRule.onNodeWithText("2")
+            .assert(SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, "Current"))
+        composeRule.onNodeWithText("3")
+            .assert(SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, "Upcoming"))
+            .assertIsNotEnabled()
     }
 
     @Test
