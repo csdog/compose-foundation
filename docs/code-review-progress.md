@@ -123,7 +123,7 @@
 | `alert` | 已验收 | 已验收 | 旧主题操作按钮随插槽生命周期挂载，`fb4b0d85`。 |
 | `alertdialog` | 已验收 | 已验收 | 修复 Nova 紧凑页脚的无界测量，`7c6d03b8`。 |
 | `aspectratio` | 已验收 | 已验收 | 尺寸级联、比例输入和目录示例已复核。 |
-| `attachment` | 待审 | 待审 |  |
+| `attachment` | 已验收 | 已验收 | 未溢出的附件组跳过 Tab 停靠，`7ed5c664`。 |
 | `avatar` | 已验收 | 已验收 | 图片卸载只通知当前观察者，`98edb377`。 |
 | `badge` | 已验收 | 已验收 | 共用旧主题变体几何，分离交互与图标样式，`22737976`。 |
 | `breadcrumb` | 已验收 | 已验收 | 复用换行布局及悬停样式，`dcfa5f72`。 |
@@ -155,7 +155,7 @@
 | `item` | 待审 | 待审 |  |
 | `kbd` | 已验收 | 已验收 | 核对键帽、组合、Tooltip 与触发器的语义。 |
 | `label` | 已验收 | 已验收 | `2efa8fbd` 修复零值与相对行高。 |
-| `marker` | 待审 | 待审 |  |
+| `marker` | 已验收 | 已验收 | 统一 Nova、Rhea 的布局选择，`6da4551e`。 |
 | `menubar` | 局部审查 | 局部清理 | 已有悬停、焦点与 Canvas 适配证据。 |
 | `message` | 待审 | 待审 |  |
 | `messagescroller` | 待审 | 待审 |  |
@@ -185,7 +185,7 @@
 | `toggle` | 已验收 | 已验收 | 第二轮及第二批记录。 |
 | `togglegroup` | 待审 | 待审 |  |
 | `tooltip` | 待审 | 待审 |  |
-| `trace` | 待审 | 待审 |  |
+| `trace` | 已验收 | 已验收 | 按键释放时打开一次链接，`a8521ad7`。 |
 
 ### Drawer 外边距回归
 
@@ -241,3 +241,10 @@
 - `Chip.kt:96`。原复选角色只提供 `selected`，JVM 无 `ToggleableState`。修复后公布勾选状态，现有选中语义与回调保持。三种变体共用焦点圈、排版和内边距，保留各自背景和反馈。保留公开参数数量与样式文件中共置的变体类型两条记录。
 - `EmojiText.kt:25,53,83`。原实现会把肤色、ZWJ 及文本呈现选择序列的一部分替换成独立图，且插图路径的文字使用前景默认色。JVM 修复前混合样例产生 5 个占位符，修复后只有受支持的完整序列产生 1 个，原文本逐字保留。改用现有富文本入口，周围正文继承颜色，图标占位跟随实际字号。相关源码和测试无存量 ID。
 - 最终 63 项 JVM 检查及两模块 Detekt 和 ktlint 通过。含显式像素校验的 67 项中，四项 Chip 快照在修复前也失败，实际 PNG 前后逐一相同。干净源码扫描覆盖 558 个文件，baseline 共 4,499 条，零新增。Chromium 的 JS、Wasm 隔离验证页均读到 Chip 的 `aria-checked` 由 false 切换为 true，并核对 Emoji 原始文本、环境红色和显式图标绿色。[回归、像素比对与浏览器证据](../.agent-runs/code-review-95c932b6/component-review-icon-chip-emojitext.json)
+
+### Marker、Attachment 和 Trace 验收
+
+- `MarkerStyles.kt:12` 与 `Marker.kt:58`。将 Nova、Rhea 共用的布局选择收敛到同一处，边线两个端点共用按主题计算的落位高度。既有 JVM 核对标题水平居中、RTL、间距、装饰图标语义和主题实时切换。相关源码与测试无存量 ID。
+- `Attachment.kt:691` 与 `AttachmentGroupScroll.kt:75`。未溢出的附件组原先暴露 `RequestFocus`，形成多余的 Tab 停靠点。修复后有溢出才加入键盘顺序，布局从溢出恢复为可容纳时移除停靠点。单独处理滚轮、拖动惯性、嵌套滚动与方向键，保留滚动吸附边界、RTL 和独立删除操作。净移除八条存量 ID。保留公开重载、布局分支及上传托盘的完整样式验证。
+- `Trace.kt:291`。旧链接在 Enter 按下时打开，并额外手动发出焦点交互。修复后沿用共享点击组件，按键释放才打开一次，保留悬停、可访问名称和 URI 回调。说明展开时长、箭头角度和待处理透明度，移除四条存量 ID。公开的归组插槽和由调用方控制的展开参数保留。
+- 最终 127 项 JVM 检查及两模块 Detekt、ktlint 通过。显式像素比对共 133 项，六项 Attachment 快照在修复前同样失败，实际 PNG 前后逐一相同。干净源码扫描 559 个 Kotlin 文件，已提交 baseline 从 4,499 条减至 4,487 条，零新增。Chromium 在 JS 和 Wasm 上验证溢出前后的真实 Tab 顺序、Trace 的 Enter 释放与 Marker 居中。最终两种常规目录构建通过。[JVM、像素比对与浏览器证据](../.agent-runs/code-review-95c932b6/component-review-marker-attachment-trace.json)
