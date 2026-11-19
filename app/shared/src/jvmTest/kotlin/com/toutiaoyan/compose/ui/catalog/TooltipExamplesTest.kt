@@ -103,6 +103,7 @@ class TooltipExamplesTest(private val viewport: Int, private val dark: Boolean) 
     }
 
     private fun focus(label: String) {
+        rule.runOnIdle { inputMode.requestInputMode(InputMode.Keyboard) }
         rule.onNodeWithText(label).requestFocus()
         rule.waitForIdle()
     }

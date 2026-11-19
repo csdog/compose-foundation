@@ -33,11 +33,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.platform.LocalInputModeManager
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.sp
@@ -212,7 +214,8 @@ fun Tooltip(
     val resolvedDelay =
         (delayDuration ?: delayMillis ?: provider?.delayMillis ?: TOOLTIP_DEFAULT_HOVER_DELAY_MILLIS).coerceAtLeast(0)
     val resolvedSkip = (skipDelayDuration ?: skipDelayMillis ?: provider?.skipDelayMillis ?: 0).coerceAtLeast(0)
-    val hasInteraction = isHovered || triggerFocused || contentHovered
+    val keyboardFocused = triggerFocused && LocalInputModeManager.current.inputMode == InputMode.Keyboard
+    val hasInteraction = isHovered || keyboardFocused || contentHovered
     val isActive = !disabled && !triggerDisabled && hasInteraction && !dismissed
 
     fun requestOpen(value: Boolean) {
@@ -229,14 +232,14 @@ fun Tooltip(
     LaunchedEffect(hasInteraction) {
         if (!hasInteraction) dismissed = false
     }
-    LaunchedEffect(isActive, triggerFocused, resolvedDelay, resolvedSkip, provider) {
+    LaunchedEffect(isActive, keyboardFocused, resolvedDelay, resolvedSkip, provider) {
         val previousInteraction = wasInteracting
         wasInteracting = isActive
         if (isActive) {
             val recentClose =
                 (provider?.lastCloseMark ?: lastCloseMark)
                     ?.elapsedNow()?.inWholeMilliseconds?.let { it < resolvedSkip } == true
-            val instant = triggerFocused || provider?.activeTooltip != null || (resolvedSkip > 0 && recentClose)
+            val instant = keyboardFocused || provider?.activeTooltip != null || (resolvedSkip > 0 && recentClose)
             if (!instant) delay(resolvedDelay.toLong())
             requestOpen(true)
         } else if (previousInteraction && !dismissed) {

@@ -5,6 +5,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.Modifier
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -21,6 +22,33 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class TooltipBehaviorParityTest : ScreenshotTest() {
+    @Test fun touchModeClearsTheTooltipWhileTheTriggerRetainsFocus() {
+        var mode by mutableStateOf(InputMode.Keyboard)
+        val manager =
+            object : InputModeManager {
+                override val inputMode: InputMode get() = mode
+
+                override fun requestInputMode(inputMode: InputMode): Boolean {
+                    mode = inputMode
+                    return true
+                }
+            }
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            CompositionLocalProvider(LocalInputModeManager provides manager) {
+                Tooltip {
+                    TooltipTrigger("Hover")
+                    TooltipContent("Details")
+                }
+            }
+        }
+        composeRule.onNodeWithText("Hover").requestFocus()
+        composeRule.onNodeWithText("Details").assertIsDisplayed()
+        composeRule.runOnIdle { mode = InputMode.Touch }
+        composeRule.onNodeWithText("Details").assertDoesNotExist()
+        composeRule.runOnIdle { mode = InputMode.Keyboard }
+        composeRule.onNodeWithText("Details").assertIsDisplayed()
+    }
+
     @Test fun removingHoveredContentClearsItsActivity() {
         val source = MutableInteractionSource()
         val hover = HoverInteraction.Enter()
