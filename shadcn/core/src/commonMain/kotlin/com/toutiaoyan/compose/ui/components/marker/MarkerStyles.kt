@@ -9,12 +9,14 @@ import com.toutiaoyan.compose.ui.utils.rememberTheme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.ui.unit.dp
 
+internal val StylePreset.usesNovaMarkerLayout: Boolean
+    get() = this == StylePreset.Nova || this == StylePreset.Rhea
+
 @Composable
 fun MarkerVariant.rememberStyle(): Style {
     val receiver = this
     return rememberTheme(receiver) {
-        val preset = theme.activePreset
-        val isNovaOrRhea = preset == StylePreset.Nova || preset == StylePreset.Rhea
+        val isNovaOrRhea = theme.activePreset.usesNovaMarkerLayout
         Style {
             if (isNovaOrRhea) {
                 width(1f)

@@ -27,7 +27,6 @@ import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.components.icon.LocalInlineIconSize
 import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
 import com.toutiaoyan.compose.ui.theme.LocalContentColor
-import com.toutiaoyan.compose.ui.tokens.StylePreset
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.sp
@@ -55,18 +54,19 @@ fun Marker(
     style: Style = Style,
     content: @Composable RowScope.() -> Unit,
 ) {
-    val preset = currentTheme.activePreset
-    val isNovaOrRhea = preset == StylePreset.Nova || preset == StylePreset.Rhea
-    val borderColor = currentTheme.colors.border
-    val contentColor = if (isNovaOrRhea) currentTheme.colors.mutedForeground else LocalContentColor.current
+    val theme = currentTheme
+    val isNovaOrRhea = theme.activePreset.usesNovaMarkerLayout
+    val borderColor = theme.colors.border
+    val contentColor = if (isNovaOrRhea) theme.colors.mutedForeground else LocalContentColor.current
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val bottomBorderModifier =
         if (variant == MarkerVariant.Border) {
             Modifier.drawBehind {
+                val y = size.height - if (isNovaOrRhea) 0.5.dp.toPx() else 0f
                 drawLine(
                     color = borderColor,
-                    start = Offset(0f, size.height - if (isNovaOrRhea) 0.5.dp.toPx() else 0f),
-                    end = Offset(size.width, size.height - if (isNovaOrRhea) 0.5.dp.toPx() else 0f),
+                    start = Offset(0f, y),
+                    end = Offset(size.width, y),
                     strokeWidth = 1.dp.toPx(),
                 )
             }
@@ -92,7 +92,7 @@ fun Marker(
             LocalDefaultTextStyle provides
                 if (isNovaOrRhea) {
                     TextStyle(
-                        fontFamily = currentTheme.fontFamily,
+                        fontFamily = theme.fontFamily,
                         fontSize = 14.sp,
                         lineHeight = 20.sp,
                         lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Center, LineHeightStyle.Trim.None),
@@ -158,8 +158,7 @@ fun MarkerIcon(
     content: @Composable () -> Unit,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    val preset = currentTheme.activePreset
-    val isNovaOrRhea = preset == StylePreset.Nova || preset == StylePreset.Rhea
+    val isNovaOrRhea = currentTheme.activePreset.usesNovaMarkerLayout
     val iconStyle =
         remember(isNovaOrRhea) {
             if (isNovaOrRhea) {
