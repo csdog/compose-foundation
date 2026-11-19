@@ -1,0 +1,124 @@
+{
+  "baselineCommit": "964f9fa4",
+  "commits": {
+    "contextmenu": "8dbe72e8",
+    "menubar": "44d311a8",
+    "empty": "15db52cd"
+  },
+  "jvm": {
+    "focusedCorePassed": 63,
+    "catalogPassed": 67,
+    "integratedCorePassed": 76,
+    "integratedCatalogPassed": 55,
+    "baselineReproductionsPassingAfter": {
+      "dashedOutlineFollowsDynamicCallerShapeAndRestores[jvm]": "java.lang.AssertionError: Border follows the resolved shape away from the old top edge expected:<0> but was:<12>",
+      "legacyDefaultDashedBorderFollowsCallerShape[jvm]": "java.lang.AssertionError: Border follows the resolved shape away from the old top edge expected:<0> but was:<12>",
+      "keyedReorderChangesTheDirectionKeySequence[jvm]": "java.lang.AssertionError: Failed to assert the following: (Focused = 'true')",
+      "keyedReorderMovesAcrossTheCurrentTriggerPositions[jvm]": "java.lang.AssertionError: Failed to assert the following: (Focused = 'true')"
+    },
+    "unchangedSnapshotActualSha256": {
+      "empty_spacing_dark_actual.png": "f169096a6e08b37b932bbdd7855a4b1fc8cbe22426bcd3c6bb161ff19d6ce7da",
+      "empty_outline_dark_actual.png": "669ae1b7f812399777b5f231f500bca4d9720defb2689651524687d4a9544e20",
+      "empty_title_sm_light_actual.png": "326130477899575553d2f7f07565652c0be4a1305fc94989cfc01bdc202208cd",
+      "empty_content_spacing_dark_actual.png": "745c6a22bbd767cae7280b7b53848151ca8d633cb24380b2e82979dba6d426c3",
+      "empty_spacing_light_actual.png": "c306ef961391b0adb8a6e7eb28213289181193bfaf96b08130a67a0a9493f692",
+      "empty_rounded_xl_dark_actual.png": "e06323f7d6aa0dc9f4e97e78a8a7512217906713734da3c8f5fe3b54a7b7bafd",
+      "empty_content_spacing_light_actual.png": "1ab6a925bbaf57ef3a53e1058bbe170752be6ef4def5c29a598b15109b865096",
+      "empty_rounded_xl_light_actual.png": "b192a5190f931c2ab630dc359d109733437b82bbb294da047d157872f4a063c0",
+      "empty_states_light_actual.png": "c306ef961391b0adb8a6e7eb28213289181193bfaf96b08130a67a0a9493f692",
+      "empty_md_padding_dark_actual.png": "d56edd8ea092f0441f111ad2cf40738d7f9b2aa6ffe35ea3747e39fcc8240573",
+      "empty_md_padding_light_actual.png": "e3a665f217f66cd124872b9e0dd8b3efa19f9800d0d263b4abd3c8ace9fd4831",
+      "empty_title_sm_dark_actual.png": "aa1fe09fb2b0368bdebcae687e4105e7ffac738d39762351966e8a82ce7055c5",
+      "empty_media_default_light_actual.png": "213d3a5e8d0b91f9588c261a2e3d9b744d768beb84285088ba8ead4b79840e2b",
+      "empty_media_default_dark_actual.png": "e148ffcef9447a2c9623792b318af20f5570d29d73f120d6f5981be4d6416778",
+      "empty_outline_light_actual.png": "2e4887cb2a85e2a73aa3aeeb6028b8fae54e56977af21ccacc5bfd94cda6cea1",
+      "empty_states_dark_actual.png": "f169096a6e08b37b932bbdd7855a4b1fc8cbe22426bcd3c6bb161ff19d6ce7da"
+    }
+  },
+  "browser": {
+    "engine": "Chromium",
+    "developmentBuilds": {
+      "js": "9317882baef9129d5e1de5e0f431d59fbe2e159581908caac451028c45eb947c",
+      "wasmJs": "f9723276ddfdac7a45645b3cb32bb1ca5fa4c006c51cd3337e2b28262326d81b"
+    },
+    "checks": [
+      {
+        "runtime": "js",
+        "mode": "context",
+        "result": {
+          "selected": "Gamma"
+        },
+        "trustedEvents": 8
+      },
+      {
+        "runtime": "js",
+        "mode": "menubar",
+        "result": {
+          "focused": "Gamma"
+        },
+        "trustedEvents": 9
+      },
+      {
+        "runtime": "js",
+        "mode": "empty",
+        "result": {
+          "rect": {
+            "x": 32,
+            "y": 64,
+            "width": 160,
+            "height": 160,
+            "top": 64,
+            "right": 192,
+            "bottom": 224,
+            "left": 32
+          },
+          "rectangleTopEdgeInkPixels": 13,
+          "circleOldEdgeInkPixels": 0
+        },
+        "trustedEvents": 3
+      },
+      {
+        "runtime": "wasmJs",
+        "mode": "context",
+        "result": {
+          "selected": "Gamma"
+        },
+        "trustedEvents": 8
+      },
+      {
+        "runtime": "wasmJs",
+        "mode": "menubar",
+        "result": {
+          "focused": "Gamma"
+        },
+        "trustedEvents": 9
+      },
+      {
+        "runtime": "wasmJs",
+        "mode": "empty",
+        "result": {
+          "rect": {
+            "x": 32,
+            "y": 64,
+            "width": 160,
+            "height": 160,
+            "top": 64,
+            "right": 192,
+            "bottom": 224,
+            "left": 32
+          },
+          "rectangleTopEdgeInkPixels": 13,
+          "circleOldEdgeInkPixels": 0
+        },
+        "trustedEvents": 3
+      }
+    ]
+  },
+  "static": {
+    "detekt": "passed",
+    "ktlintCheck": "passed",
+    "beforeIds": 4387,
+    "afterIds": 4379,
+    "newIds": []
+  }
+}

@@ -140,12 +140,12 @@
 | `collapsible` | 已验收 | 已验收 | 关闭内容时回到仍挂载的触发器，`b9182baf`。 |
 | `combobox` | 已验收 | 已验收 | 重新启用时恢复焦点，禁用输入忽略点击，调用当前打开回调，`c203cb24`。 |
 | `command` | 已验收 | 已验收 | 方向键跟随当前行顺序，受控高亮可直接 Enter 选择，`6af08645`。 |
-| `contextmenu` | 局部审查 | 局部清理 | 已有共享菜单和子菜单测试证据。 |
+| `contextmenu` | 已验收 | 已验收 | 菜单项重排后按实际位置导航，保留共享子菜单与类型搜索，`8dbe72e8`。 |
 | `dialog` | 已验收 | 已验收 | 无界宽度下安全测量紧凑页脚，和 AlertDialog 共享单列布局，`769ccdd6`。 |
 | `drawer` | 已验收 | 已验收 | `c52276e4` 修复留白，`f97109ce` 清理状态与布局。 |
 | `dropdownmenu` | 已验收 | 已验收 | 菜单复审、独立提交及 Chromium 记录。 |
 | `emojitext` | 已验收 | 已验收 | 保留扩展 Emoji 序列及环境文字颜色，`e8353560`。 |
-| `empty` | 局部审查 | 局部清理 | 已有排版搜索和边框的 JVM 与 Web 证据。 |
+| `empty` | 已验收 | 已验收 | 绘制虚线时使用最终形状，保留主题和旧版实线边框，`15db52cd`。 |
 | `field` | 已验收 | 已验收 | 移除无使用者的父布局历史引用，保留间距、权重和对齐，`e6699733`。 |
 | `hovercard` | 已验收 | 已验收 | 原生指针、焦点和关闭时序复核，复用 Nova 动效，`b926f5f6`。 |
 | `icon` | 已验收 | 已验收 | 共享尺寸样式并核对显式染色，`2334e48a`。 |
@@ -156,7 +156,7 @@
 | `kbd` | 已验收 | 已验收 | 核对键帽、组合、Tooltip 与触发器的语义。 |
 | `label` | 已验收 | 已验收 | `2efa8fbd` 修复零值与相对行高。 |
 | `marker` | 已验收 | 已验收 | 统一 Nova、Rhea 的布局选择，`6da4551e`。 |
-| `menubar` | 局部审查 | 局部清理 | 已有悬停、焦点与 Canvas 适配证据。 |
+| `menubar` | 已验收 | 已验收 | 菜单触发器跟随实际摆放顺序，保留 RTL 与原有快捷键，`44d311a8`。 |
 | `message` | 已验收 | 已验收 | 头部与页脚共用元数据布局，`489bd03c`。 |
 | `messagescroller` | 已验收 | 已验收 | Tab 移动焦点时继续跟随新消息，`29d9cb9d`。 |
 | `navigationmenu` | 已验收 | 已验收 | 按当前落位计算面板焦点顺序，`c06f94bc`。共享面板阴影见 `6d509ddb`。 |
@@ -348,3 +348,11 @@
 - `FieldSetLayout.kt` 移除无读者的旧父数据链，保留直接子项的布局合并、权重及 RTL 对齐。提交 `e6699733`。
 - `Text.kt` 用数据类保留内容颜色修饰符的等价比较，现有 holder 继续按引用身份比较。纯文本与注解文本的显式画刷均通过像素断言。提交 `522002f1`。
 - 核心聚焦验证 14 项、目录 29 项、Detekt 和 ktlint 均通过。5 个既有快照差异的实际 PNG 与基线逐张一致。Detekt baseline 从 4,389 减至 4,387，零新增。Chromium 在 JS 和 Wasm 下验证了 Command 的 Enter、方向键以及 Field 权重布局和 Text 画刷像素。[逐项证据](code-review-evidence/command-field-text.json)
+
+### ContextMenu、Menubar 和 Empty 验收
+
+- `ContextMenuKeyboard.kt` 按屏幕上的行顺序走方向键、Home、End 和类型搜索。候选项卸载时移除焦点坐标。保留 500 ms 重置阈值、显式字体与行高，删除 6 个 Detekt ID。提交 `8dbe72e8`。
+- `Menubar.kt` 按触发器实际横坐标排队，保留 RTL 按键方向、禁用项和打开菜单时的焦点策略。提交 `44d311a8`。
+- `Empty.kt` 和 `EmptyBorder.kt` 将已有工作区的形状修复与对应测试纳入独立提交，虚线随调用方的实时形状变化。保留公开的虚线修饰符和工作区中的 Web 段落换行改动，删除 2 个旧 Detekt ID。提交 `15db52cd`。
+- 4 条回归在原实现失败、修复后通过。核心聚焦测试 63 项、目录 67 项通过。16 个既有 Empty 快照差异的实际 PNG 与基线逐张一致。叠加相关工作区改动后，核心 76 项、目录 55 项通过。Detekt 与 ktlint 通过，baseline 从 4,387 减至 4,379，零新增。
+- Chromium 在 JS 和 Wasm 下都验证了两类菜单的动态重排与焦点，以及 Empty 切为圆形后不再绘制旧矩形的顶边。[逐项证据](code-review-evidence/contextmenu-menubar-empty.json)
