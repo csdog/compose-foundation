@@ -356,3 +356,10 @@
 - `Empty.kt` 和 `EmptyBorder.kt` 将已有工作区的形状修复与对应测试纳入独立提交，虚线随调用方的实时形状变化。保留公开的虚线修饰符和工作区中的 Web 段落换行改动，删除 2 个旧 Detekt ID。提交 `15db52cd`。
 - 4 条回归在原实现失败、修复后通过。核心聚焦测试 63 项、目录 67 项通过。16 个既有 Empty 快照差异的实际 PNG 与基线逐张一致。叠加相关工作区改动后，核心 76 项、目录 55 项通过。Detekt 与 ktlint 通过，baseline 从 4,387 减至 4,379，零新增。
 - Chromium 在 JS 和 Wasm 下都验证了两类菜单的动态重排与焦点，以及 Empty 切为圆形后不再绘制旧矩形的顶边。[逐项证据](code-review-evidence/contextmenu-menubar-empty.json)
+
+## 全组件最终验收
+
+- 以 `95c932b6` 为审查基线，两轮原定范围和扩展的 67 个组件包均已验收。逐项记录保留了缺陷复现、修复提交和验证结果，以及主题规格值、公开参数、平台差异和状态生命周期保留的原因。
+- 在提交 `c6706f33` 的隔离归档运行仓库级 `ktlintCheck detekt --continue`，两项均通过。Detekt 覆盖 7 个有源码的模块及 974 个 Kotlin 输入文件，baseline 外告警为零。从首次纳入 CI 的 5,408 个存量 ID 降到 5,204 个，净减少 204 个。Toggle 示例生成检查和与审查基线之间的提交差异检查均通过。
+- Popover 和共享弹层重跑 82 项核心 JVM 测试全部通过，覆盖首帧阴影、焦点、Hover Card 交互和快照。此前真实 Chromium 的 JS/Wasm 逐帧像素证据仍对应已提交的阴影实现。 [首轮修复](code-review-evidence/popup-shadow-first-frame.json) · [补检](code-review-evidence/popup-shadow-followup.json)
+- 各批记录列出原本就存在的快照差异及等价对照。此次收尾验证使用定向 JVM 回归和仓库级静态检查。已有的菜单平台实现、Empty 段落、Field 布局、Gradle 包装器等工作区改动及原暂存删除按原范围保留。已确认的审查缺陷无待提交项。 [最终覆盖与测试统计](code-review-evidence/all-components-final.json)
