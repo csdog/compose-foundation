@@ -1,0 +1,169 @@
+{
+  "baselineCommit": "4e581984",
+  "commits": {
+    "command": "6af08645",
+    "field": "e6699733",
+    "text": "522002f1"
+  },
+  "jvm": {
+    "focusedCorePassed": 14,
+    "catalogPassed": 29,
+    "baselineReproductionsPassingAfter": {
+      "keyedReorderMovesHighlightsInVisualOrder[jvm]": "java.lang.AssertionError: expected:<[Gamma]> but was:<[Alpha]>",
+      "controlledLegacyHighlightCanBeSelectedBeforeAnyArrowPress[jvm]": "java.lang.AssertionError: expected:<[Beta]> but was:<[]>"
+    },
+    "unchangedSnapshotActualSha256": {
+      "command_dialog_close_button_dark_actual.png": "8aee7b830c7ff631c0c9e1a234f89fd0c6ff1f570ef4397828d760dd01f6dbbb",
+      "command_dialog_close_button_light_actual.png": "6aeb7b565dc93a1a65813cc4f89f44a1faf2e26fe6810d38e278cc6aebb13778",
+      "command_states_light_actual.png": "089b24b82d6950184c02da5e446ec29eebbff3e65eaa570f6e9a0e8aaf022c7c",
+      "command_states_dark_actual.png": "763eef2d4fa90b36cac333c794e53cff931203990bf2368f5c47613888aa3164",
+      "text_color_inheritance_dark_actual.png": "fe626c9f4ad91ac13434f6ad03c83c5694f8fa9652a16c1d5356a6fe773e5704"
+    }
+  },
+  "browser": {
+    "engine": "Chromium",
+    "developmentBuilds": {
+      "js": "3bd91b8a0a66621e480fad33ed35ad1671cf381ed2ca466a511454bda53b94bb",
+      "wasmJs": "56439ce2709e89aa893877141bbb535b99c63e9df098e8efc8434d5b25d7ec1f"
+    },
+    "checks": [
+      {
+        "runtime": "js",
+        "mode": "controlled",
+        "result": {
+          "selected": "Beta"
+        },
+        "trustedEvents": 7
+      },
+      {
+        "runtime": "js",
+        "mode": "reordered",
+        "result": {
+          "selected": "Gamma"
+        },
+        "trustedEvents": 9
+      },
+      {
+        "runtime": "js",
+        "mode": "rendering",
+        "result": {
+          "plain": {
+            "x": 24,
+            "y": 24,
+            "width": 70,
+            "height": 16,
+            "top": 24,
+            "right": 94,
+            "bottom": 40,
+            "left": 24
+          },
+          "annotated": {
+            "x": 24,
+            "y": 40,
+            "width": 105,
+            "height": 16,
+            "top": 40,
+            "right": 129,
+            "bottom": 56,
+            "left": 24
+          },
+          "fixed": {
+            "x": 24,
+            "y": 56,
+            "width": 230,
+            "height": 20,
+            "top": 56,
+            "right": 254,
+            "bottom": 76,
+            "left": 24
+          },
+          "weighted": {
+            "x": 24,
+            "y": 92,
+            "width": 230,
+            "height": 84,
+            "top": 92,
+            "right": 254,
+            "bottom": 176,
+            "left": 24
+          },
+          "plainMagentaPixels": 171,
+          "annotatedMagentaPixels": 241
+        },
+        "trustedEvents": 0
+      },
+      {
+        "runtime": "wasmJs",
+        "mode": "controlled",
+        "result": {
+          "selected": "Beta"
+        },
+        "trustedEvents": 7
+      },
+      {
+        "runtime": "wasmJs",
+        "mode": "reordered",
+        "result": {
+          "selected": "Gamma"
+        },
+        "trustedEvents": 9
+      },
+      {
+        "runtime": "wasmJs",
+        "mode": "rendering",
+        "result": {
+          "plain": {
+            "x": 24,
+            "y": 24,
+            "width": 70,
+            "height": 16,
+            "top": 24,
+            "right": 94,
+            "bottom": 40,
+            "left": 24
+          },
+          "annotated": {
+            "x": 24,
+            "y": 40,
+            "width": 105,
+            "height": 16,
+            "top": 40,
+            "right": 129,
+            "bottom": 56,
+            "left": 24
+          },
+          "fixed": {
+            "x": 24,
+            "y": 56,
+            "width": 230,
+            "height": 20,
+            "top": 56,
+            "right": 254,
+            "bottom": 76,
+            "left": 24
+          },
+          "weighted": {
+            "x": 24,
+            "y": 92,
+            "width": 230,
+            "height": 84,
+            "top": 92,
+            "right": 254,
+            "bottom": 176,
+            "left": 24
+          },
+          "plainMagentaPixels": 171,
+          "annotatedMagentaPixels": 241
+        },
+        "trustedEvents": 0
+      }
+    ]
+  },
+  "static": {
+    "detekt": "passed",
+    "ktlintCheck": "passed",
+    "beforeIds": 4389,
+    "afterIds": 4387,
+    "newIds": []
+  }
+}
