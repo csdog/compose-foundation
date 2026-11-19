@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
@@ -33,11 +34,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalInputModeManager
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.styles.cssStyleable
 import androidx.compose.ui.text.TextStyle
@@ -57,11 +60,23 @@ import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextColors
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
+import kotlin.math.roundToInt
 
 private const val DEFAULT_TOAST_DURATION_MILLIS = 5_000L
 
 /** Delay between hiding an expired toast and dispatching dismissal. */
 private const val TOAST_EXIT_SETTLE_MILLIS = 200L
+
+private enum class ToastExit { Immediate, AfterTransition }
+
+private class ToastPresentation(
+    val style: Style,
+    val closeButton: Boolean,
+    val richColors: Boolean,
+    val invert: Boolean,
+    val closeAriaLabel: String,
+    val limited: Boolean,
+)
 
 enum class ToastVariant { Default, Success, Error, Warning, Info, Loading }
 
@@ -369,17 +384,21 @@ fun Toaster(
     ) {
         state.toasts.forEachIndexed { index, toast ->
             key(state, toast.id) {
-                Toast(
+                ToastWithTransition(
                     toast = toast,
                     onDismiss = { state.dismiss(toast.id) },
-                    style = cardStyle,
                     enter = enter,
                     exit = exit,
-                    closeButton = closeButton,
-                    richColors = richColors,
-                    invert = resolvedInvert,
-                    closeAriaLabel = closeAriaLabel,
-                    limited = index < state.toasts.size - visibleToasts.coerceAtLeast(0),
+                    presentation =
+                        ToastPresentation(
+                            cardStyle,
+                            closeButton,
+                            richColors,
+                            resolvedInvert,
+                            closeAriaLabel,
+                            limited = index < state.toasts.size - visibleToasts.coerceAtLeast(0),
+                        ),
+                    swipePosition = position,
                 )
             }
         }
@@ -428,17 +447,55 @@ fun Toast(
     invert: Boolean = false,
     closeAriaLabel: String = "Close toast",
     limited: Boolean = false,
+) = ToastWithTransition(
+    toast,
+    onDismiss,
+    enter,
+    exit,
+    ToastPresentation(style, closeButton, richColors, invert, closeAriaLabel, limited),
+)
+
+@Composable
+@Suppress("LongParameterList")
+private fun ToastWithTransition(
+    toast: ToastMessage,
+    onDismiss: () -> Unit,
+    enter: EnterTransition,
+    exit: ExitTransition,
+    presentation: ToastPresentation,
+    swipePosition: ToastPosition? = null,
 ) {
-    var visible by remember { mutableStateOf(true) }
+    val limited = presentation.limited
+    var dismissal by remember(toast.id, toast.revision, toast.durationMillis) { mutableStateOf<ToastExit?>(null) }
+    val visible = dismissal == null
+    val gesture = remember(toast.id, toast.revision, swipePosition) { ToastSwipeState() }
+    var touchHeld by remember(gesture) { mutableStateOf(false) }
+    val paused = rememberUpdatedState(touchHeld || gesture.dragging)
     val latestDismiss = rememberUpdatedState(onDismiss)
-    LaunchedEffect(toast.id, toast.revision, toast.durationMillis) {
-        visible = true
-        if (toast.durationMillis <= 0) return@LaunchedEffect
-        delay(toast.durationMillis)
-        visible = false
+    if (visible) {
+        ToastTimeout(toast, paused) { dismissal = ToastExit.AfterTransition }
+    }
+    LaunchedEffect(dismissal) {
+        if (dismissal != ToastExit.AfterTransition) return@LaunchedEffect
         delay(TOAST_EXIT_SETTLE_MILLIS)
         latestDismiss.value()
     }
+    val swipeModifier =
+        if (swipePosition == null) {
+            Modifier
+        } else {
+            Modifier.offset { IntOffset(gesture.drag.x.roundToInt(), gesture.drag.y.roundToInt()) }
+        }
+    val inputModifier =
+        if (swipePosition != null && visible && !limited) {
+            val top =
+                swipePosition == ToastPosition.TopStart || swipePosition == ToastPosition.TopCenter ||
+                    swipePosition == ToastPosition.TopEnd
+            Modifier.holdToastOnTouch(gesture, LocalInputModeManager.current) { touchHeld = it }
+                .toastSwipe(gesture, top) { _, _ -> dismissal = ToastExit.AfterTransition }
+        } else {
+            Modifier
+        }
 
     AnimatedVisibility(
         visible = visible && !limited,
@@ -448,14 +505,17 @@ fun Toast(
         ToastCard(
             toast = toast,
             onDismiss = {
-                visible = false
+                dismissal = ToastExit.Immediate
                 onDismiss()
             },
-            style = style,
-            closeButton = closeButton,
-            richColors = richColors,
-            invert = invert,
-            closeAriaLabel = closeAriaLabel,
+            style = presentation.style,
+            closeButton = presentation.closeButton,
+            richColors = presentation.richColors,
+            invert = presentation.invert,
+            closeAriaLabel = presentation.closeAriaLabel,
+            modifier = swipeModifier.then(inputModifier),
+            interactive = visible && !limited,
+            isActive = { dismissal == null && !limited },
         )
     }
 }

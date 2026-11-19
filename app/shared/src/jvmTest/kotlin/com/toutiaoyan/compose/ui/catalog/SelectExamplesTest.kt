@@ -176,7 +176,7 @@ class SelectExamplesTest {
         val markdown = componentPageMarkdown(selectDoc)
         val rtl = markdown.indexOf("## RTL")
         val api = markdown.indexOf("## API Reference")
-        val extension = markdown.indexOf("## Kotlin extension: Uncontrolled")
+        val extension = markdown.indexOf("## Uncontrolled")
         val kotlinApi = markdown.indexOf("## Kotlin extension: API")
         assertTrue(rtl < api && api < extension && extension < kotlinApi)
         assertEquals(41, selectDoc.examples.size)

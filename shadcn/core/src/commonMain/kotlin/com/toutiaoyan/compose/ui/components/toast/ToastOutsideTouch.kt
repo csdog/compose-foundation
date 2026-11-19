@@ -14,5 +14,7 @@ internal fun interface ToastOutsideTouch {
 
 internal expect fun captureToastOutsideTouch(touch: PointerEvent): ToastOutsideTouch?
 
+internal expect fun preventToastTouchScroll(touch: PointerEvent): (() -> Unit)?
+
 @Composable
 internal expect fun Modifier.toastViewportShortcut(enabled: Boolean): Modifier

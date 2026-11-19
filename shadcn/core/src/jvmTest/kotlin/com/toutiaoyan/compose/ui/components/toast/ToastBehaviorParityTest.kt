@@ -2,6 +2,7 @@
 
 package com.toutiaoyan.compose.ui.components.toast
 
+import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.*
@@ -247,5 +248,24 @@ class ToastBehaviorParityTest : ScreenshotTest() {
         }
         composeRule.onNodeWithText("Second").assertIsDisplayed()
         composeRule.onNodeWithText("Newest").assertDoesNotExist()
+    }
+
+    @Test fun customTransitionToastReturnsOnShortDragAndDismissesOnLongSwipe() {
+        val state = ToastState().apply { show("Swipe me", duration = 0) }
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Box(Modifier.size(480.dp, 300.dp), contentAlignment = Alignment.BottomCenter) {
+                Toaster(state, enter = fadeIn())
+            }
+        }
+        val card = composeRule.onNodeWithText("Swipe me")
+        card.performTouchInput {
+            down(center)
+            moveBy(Offset(25f, 0f))
+            up()
+        }
+        card.assertIsDisplayed()
+        card.performTouchInput { swipe(center, center + Offset(70f, 0f), durationMillis = 240) }
+        composeRule.mainClock.advanceTimeBy(550)
+        composeRule.runOnIdle { assertTrue(state.toasts.isEmpty()) }
     }
 }

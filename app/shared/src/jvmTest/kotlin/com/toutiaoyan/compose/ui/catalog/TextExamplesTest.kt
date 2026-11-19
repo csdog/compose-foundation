@@ -69,8 +69,8 @@ class TextExamplesTest {
         assertFalse(markdown.contains("TextStyles"))
         assertTrue(markdown.contains("## Variants"))
         assertTrue(
-            markdown.contains("### Kotlin extension: Style font-size") ||
-                markdown.contains("## Kotlin extension: Style font-size"),
+            markdown.contains("### Style font-size") ||
+                markdown.contains("## Style font-size"),
         )
         val guide = textDoc.beforeExamples.single { it.title == "Kotlin extension" }
         assertIs<ComponentGuideBlock.Paragraph>(guide.blocks.single())

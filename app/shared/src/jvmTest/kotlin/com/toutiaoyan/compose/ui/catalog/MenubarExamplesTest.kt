@@ -127,7 +127,7 @@ class MenubarExamplesTest {
             ).map { markdown.indexOf(it) }
         assertTrue(order.all { it >= 0 }, "missing a section heading: $order")
         assertEquals(order.sorted(), order)
-        assertContains(markdown, "Kotlin extension: Controlled")
+        assertContains(markdown, "## Controlled")
         assertContains(markdown, "base-ui.com/react/components/menubar#api-reference")
         assertFalse(markdown.contains("EmojiText"))
     }

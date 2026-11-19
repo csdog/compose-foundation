@@ -48,6 +48,7 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.pointer.PointerEvent
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.PointerType
 import androidx.compose.ui.input.pointer.pointerInput
@@ -83,15 +84,29 @@ private class NovaToastEntry(var message: ToastMessage) {
     val focusRequester = FocusRequester()
     val interactions = MutableInteractionSource()
     var measuredHeight by mutableIntStateOf(0)
-    var drag by mutableStateOf(Offset.Zero)
-    var dragging by mutableStateOf(false)
+    val gesture = ToastSwipeState()
     var swipe: SwipeAxis? = null
     var lastDepth = 0
     var wasVisible = false
     var lastDistance = 0f
 }
 
-private enum class SwipeAxis {
+internal class ToastSwipeState {
+    var drag by mutableStateOf(Offset.Zero)
+    var dragging by mutableStateOf(false)
+
+    fun dismissedAxis(
+        axis: SwipeAxis?,
+        threshold: Float,
+    ): SwipeAxis? = axis.takeIf { maxOf(drag.x, abs(drag.y)) > threshold }
+
+    fun finish(committed: Boolean) {
+        if (!committed) drag = Offset.Zero
+        dragging = false
+    }
+}
+
+internal enum class SwipeAxis {
     Right,
     Down,
 }
@@ -144,7 +159,10 @@ internal fun NovaToastViewport(
     var viewportBounds by remember(state) { mutableStateOf<Rect?>(null) }
     val hasKeyboardFocus = hasFocus && inputModeManager.inputMode == InputMode.Keyboard
     val expanded = hovered || hasKeyboardFocus || swipeTouch != null
-    val paused = rememberUpdatedState(expanded || touchHeld || nextFocusId != null || entries.any { it.dragging })
+    val paused =
+        rememberUpdatedState(
+            expanded || touchHeld || nextFocusId != null || entries.any { it.gesture.dragging },
+        )
     val expansion by animateFloatAsState(
         if (expanded) 1f else 0f,
         tween(TOAST_MOTION_MILLIS, easing = ToastEasing),
@@ -241,8 +259,8 @@ internal fun NovaToastViewport(
         shown.map { entry ->
             key(state, entry.message.id) {
                 animateOffsetAsState(
-                    entry.drag,
-                    if (entry.dragging || entry.swipe != null) {
+                    entry.gesture.drag,
+                    if (entry.gesture.dragging || entry.swipe != null) {
                         tween(0)
                     } else {
                         tween(TOAST_MOTION_MILLIS, easing = ToastEasing)
@@ -278,7 +296,7 @@ internal fun NovaToastViewport(
                                         }
                                         .focusRequester(entry.focusRequester)
                                         .focusable(interactionSource = entry.interactions)
-                                        .toastSwipe(entry, top) { axis, outsideTouch ->
+                                        .toastSwipe(entry.gesture, top) { axis, outsideTouch ->
                                             entry.swipe = axis
                                             if (outsideTouch != null && state.toasts.size > 1) {
                                                 swipeTouch = outsideTouch
@@ -431,7 +449,7 @@ private data class StackPlacement(
 )
 
 @Composable
-private fun ToastTimeout(
+internal fun ToastTimeout(
     message: ToastMessage,
     paused: State<Boolean>,
     onTimeout: () -> Unit,
@@ -453,12 +471,12 @@ private fun ToastTimeout(
     }
 }
 
-private fun Modifier.holdToastOnTouch(
-    state: ToastState,
+internal fun Modifier.holdToastOnTouch(
+    key: Any,
     inputModeManager: InputModeManager,
     onHold: (Boolean) -> Unit,
 ): Modifier =
-    pointerInput(state, inputModeManager) {
+    pointerInput(key, inputModeManager) {
         awaitEachGesture {
             val down = awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
             if (down.type == PointerType.Touch) {
@@ -477,50 +495,40 @@ private fun Modifier.holdToastOnTouch(
         }
     }
 
-private fun Modifier.toastSwipe(
-    entry: NovaToastEntry,
+internal fun Modifier.toastSwipe(
+    gesture: ToastSwipeState,
     top: Boolean,
     onSwipe: (SwipeAxis, ToastOutsideTouch?) -> Unit,
 ): Modifier =
-    pointerInput(entry, top) {
+    pointerInput(gesture, top) {
         val slop = 10.dp.toPx()
         val threshold = 40.dp.toPx()
         val verticalSign = if (top) -1 else 1
         awaitEachGesture {
             val down = awaitFirstDown()
-            val outsideTouch = if (down.type == PointerType.Touch) captureToastOutsideTouch(currentEvent) else null
+            val outsideTouch = swipeOutsideTouch(down.type, currentEvent)
+            val releaseScroll = preventToastTouchScroll(currentEvent)
             var displacement = Offset.Zero
             var axis: SwipeAxis? = null
+            var committed = false
             try {
                 while (true) {
                     val change = awaitPointerEvent().changes.firstOrNull { it.id == down.id } ?: break
                     if (change.isConsumed) break
                     if (!change.pressed) {
-                        val dismissed =
-                            when (axis) {
-                                SwipeAxis.Right -> displacement.x > threshold
-                                SwipeAxis.Down -> displacement.y * verticalSign > threshold
-                                null -> false
-                            }
-                        if (dismissed && axis != null) {
+                        val dismissed = gesture.dismissedAxis(axis, threshold)
+                        if (dismissed != null) {
                             change.consume()
-                            onSwipe(axis, outsideTouch)
+                            committed = true
+                            onSwipe(dismissed, outsideTouch)
                         }
                         break
                     }
                     displacement += change.positionChange()
-                    if (axis == null) {
-                        axis =
-                            when {
-                                displacement.x > slop && displacement.x >= abs(displacement.y) -> SwipeAxis.Right
-                                displacement.y * verticalSign > slop && abs(displacement.y) > abs(displacement.x) ->
-                                    SwipeAxis.Down
-                                else -> null
-                            }
-                    }
+                    axis = axis ?: displacement.swipeAxis(slop, verticalSign)
                     if (axis != null) {
-                        entry.dragging = true
-                        entry.drag =
+                        gesture.dragging = true
+                        gesture.drag =
                             when (axis) {
                                 SwipeAxis.Right -> Offset(displacement.x.coerceAtLeast(0f), 0f)
                                 SwipeAxis.Down ->
@@ -530,8 +538,23 @@ private fun Modifier.toastSwipe(
                     }
                 }
             } finally {
-                if (entry.swipe == null) entry.drag = Offset.Zero
-                entry.dragging = false
+                releaseScroll?.invoke()
+                gesture.finish(committed)
             }
         }
+    }
+
+private fun swipeOutsideTouch(
+    pointerType: PointerType,
+    event: PointerEvent,
+): ToastOutsideTouch? = if (pointerType == PointerType.Touch) captureToastOutsideTouch(event) else null
+
+private fun Offset.swipeAxis(
+    slop: Float,
+    verticalSign: Int,
+): SwipeAxis? =
+    when {
+        x > slop && x >= abs(y) -> SwipeAxis.Right
+        y * verticalSign > slop && abs(y) > abs(x) -> SwipeAxis.Down
+        else -> null
     }

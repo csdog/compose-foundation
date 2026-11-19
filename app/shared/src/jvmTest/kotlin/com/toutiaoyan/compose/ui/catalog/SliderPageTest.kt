@@ -10,6 +10,7 @@ import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.dp
+import com.toutiaoyan.compose.ui.catalog.docs.componentPageMarkdown
 import com.toutiaoyan.compose.ui.catalog.docs.sliderDoc
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
@@ -39,6 +40,13 @@ class SliderPageTest {
     private fun currentValue(label: String): Float =
         sliderNode(label).fetchSemanticsNode()
             .config[SemanticsProperties.ProgressBarRangeInfo].current
+
+    @Test fun extensionExamplesUseShortHeadingsAndFragments() {
+        val section = docSections(sliderDoc).single { it.title == "Min steps between thumbs" }
+        assertEquals("min-steps-between-thumbs", section.fragment)
+        assertEquals("kotlin-extension-min-steps-between-thumbs", section.legacyFragment)
+        assertTrue(componentPageMarkdown(sliderDoc).contains("\n## Min steps between thumbs\n"))
+    }
 
     @Test fun pageListsOfficialRecipesInOrder() {
         assertEquals(

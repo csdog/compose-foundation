@@ -204,7 +204,7 @@ class MessageScrollerExamplesTest {
             ).map { markdown.indexOf("\n" + it + "\n") }
         assertTrue(order.all { it >= 0 }, "missing a section heading: $order")
         assertEquals(order.sorted(), order)
-        assertContains(markdown, "## Kotlin extension: Provider controls (Kotlin)")
+        assertContains(markdown, "## Provider controls (Kotlin)")
         assertContains(markdown, "Never move the reader against their intent.")
         assertContains(markdown, "it has no lazy-layout adapter")
         assertContains(markdown, "the controller lifecycle and is required for scroll commands")

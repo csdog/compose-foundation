@@ -40,7 +40,7 @@ internal fun componentPageMarkdown(doc: ComponentDoc): String =
         }
 
         fun example(example: ComponentExample) {
-            if (example.showHeading) appendLine("${"#".repeat(example.headingLevel)} ${example.title}\n")
+            if (example.showHeading) appendLine("${"#".repeat(example.headingLevel)} ${example.headingTitle}\n")
             example.descriptionMarkdown?.let { appendLine("$it\n") }
             appendLine("```kotlin\n${example.code}\n```\n")
             doc.afterExampleSections[example.title]?.let(::blocks)

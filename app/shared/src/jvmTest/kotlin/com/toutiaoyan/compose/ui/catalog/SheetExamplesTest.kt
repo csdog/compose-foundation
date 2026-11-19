@@ -212,14 +212,13 @@ class SheetExamplesTest(private val viewport: Int, private val dark: Boolean) {
                 "## No Close Button",
                 "## RTL",
                 "## API Reference",
-                "## Kotlin extension: Side (Kotlin)",
+                "## Side (Kotlin)",
                 "## Kotlin extension: API",
             ).map { markdown.indexOf(it) }
         assertTrue(order.all { it >= 0 }, "missing a section heading: $order")
         assertEquals(order.sorted(), order)
         assertContains(markdown, "Use the `side` prop on `SheetContent`")
         assertContains(markdown, "showCloseButton = false")
-        assertContains(markdown, "Kotlin extension: Side")
         assertFalse(markdown.contains("## Examples"))
         assertContains(markdown, "Default variant unless overridden")
         assertContains(markdown, "`SheetClose` renders an icon button")

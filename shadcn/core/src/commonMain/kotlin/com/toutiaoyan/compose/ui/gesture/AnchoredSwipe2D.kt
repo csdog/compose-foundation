@@ -3,7 +3,7 @@ package com.toutiaoyan.compose.ui.gesture
 import androidx.compose.foundation.gestures.AnchoredDraggableState
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.anchoredDraggable
-import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -134,7 +134,7 @@ fun anchoredSwipe2DNestedScrollConnection(
  * Dual-axis swipe-to-dismiss: optional horizontal and/or vertical
  * [SwipeDismissAxis] (WeChat-style right **and** down).
  *
- * @param closingOffset maps each axis's closing progress (px) to layout offset.
+ * @param closingOffset maps each axis's closing progress (px) to a physical screen offset.
  */
 @Composable
 fun Modifier.anchoredSwipe2D(
@@ -156,7 +156,7 @@ fun Modifier.anchoredSwipe2D(
                 horizontal?.state?.updateSwipeDismissAnchors(size.width.toFloat())
                 vertical?.state?.updateSwipeDismissAnchors(size.height.toFloat())
             }
-            .offset {
+            .absoluteOffset {
                 val h =
                     horizontal
                         ?.state

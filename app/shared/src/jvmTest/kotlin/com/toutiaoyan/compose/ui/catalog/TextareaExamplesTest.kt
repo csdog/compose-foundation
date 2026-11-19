@@ -81,6 +81,6 @@ class TextareaExamplesTest {
             }
         assertEquals(positions.sorted(), positions)
         assertFalse(markdown.contains("## Examples"))
-        assertTrue(markdown.contains("## Kotlin extension: Rows"))
+        assertTrue(markdown.contains("## Rows"))
     }
 }

@@ -12,7 +12,9 @@ import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.input.pointer.PointerEvent
 import androidx.compose.ui.platform.LocalInputModeManager
 import kotlinx.browser.document
+import org.w3c.dom.AddEventListenerOptions
 import org.w3c.dom.HTMLCanvasElement
+import org.w3c.dom.TouchEvent
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.KeyboardEvent
 import org.w3c.dom.pointerevents.PointerEvent as DomPointerEvent
@@ -36,6 +38,19 @@ internal actual fun captureToastOutsideTouch(touch: PointerEvent): ToastOutsideT
         document.addEventListener("pointerdown", listener, true)
         return@ToastOutsideTouch { document.removeEventListener("pointerdown", listener, true) }
     }
+}
+
+internal actual fun preventToastTouchScroll(touch: PointerEvent): (() -> Unit)? {
+    val press = (touch.nativeEvent as? DomPointerEvent)?.takeIf { it.pointerType == "touch" }
+    val canvas = press?.target as? HTMLCanvasElement ?: return null
+    // WebKit may start viewport overscroll before Compose reaches the toast's swipe slop.
+    val listener: (Event) -> Unit = { event ->
+        if (event is TouchEvent && event.touches.length == 1 && event.cancelable) {
+            event.preventDefault()
+        }
+    }
+    canvas.addEventListener("touchmove", listener, AddEventListenerOptions(capture = true, passive = false))
+    return { canvas.removeEventListener("touchmove", listener, true) }
 }
 
 @Composable

@@ -1,16 +1,21 @@
 package com.toutiaoyan.compose.ui.components.resizable
 
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.layout.LayoutCoordinates
+import androidx.compose.ui.node.CompositionLocalConsumerModifierNode
 import androidx.compose.ui.node.ModifierNodeElement
 import androidx.compose.ui.node.PointerInputModifierNode
+import androidx.compose.ui.node.currentValueOf
 import androidx.compose.ui.node.requireDensity
 import androidx.compose.ui.node.requireLayoutCoordinates
 import androidx.compose.ui.platform.InspectorInfo
+import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import kotlin.math.abs
 
 /** Shared by a group and its separator; registrations do not become render state. */
 internal class ResizablePointerRegion {
@@ -40,8 +45,10 @@ private data class ResizableDragElement(val region: ResizablePointerRegion) : Mo
 
 private class ResizableDragNode(private var region: ResizablePointerRegion) :
     Modifier.Node(),
+    CompositionLocalConsumerModifierNode,
     PointerInputModifierNode {
     private var pointer: PointerId? = null
+    private var touchOrigin: Offset? = null
     private val cancelCallback: () -> Unit = { onCancelPointerInput() }
 
     fun updateRegion(value: ResizablePointerRegion) {
@@ -61,6 +68,9 @@ private class ResizableDragNode(private var region: ResizablePointerRegion) :
         pass: PointerEventPass,
         bounds: IntSize,
     ) {
+        if (pass == PointerEventPass.Final && touchOrigin != null) {
+            if (pointerEvent.changes.any { it.id == pointer && it.isConsumed }) onCancelPointerInput()
+        }
         if (pass != PointerEventPass.Initial) return
         if (!region.enabled) {
             onCancelPointerInput()
@@ -68,36 +78,21 @@ private class ResizableDragNode(private var region: ResizablePointerRegion) :
         }
         val active = pointer
         if (active == null) {
-            if (pointerEvent.type != PointerEventType.Press) return
-            val pressed =
-                pointerEvent.changes.firstOrNull {
-                    it.changedToDown() && (it.type != PointerType.Mouse || pointerEvent.buttons.isPrimaryPressed)
-                } ?: return
-            val handle = region.handle?.takeIf { it.isAttached } ?: return
-            val rectangle = requireLayoutCoordinates().localBoundingBoxOf(handle, clipBounds = false)
-            val minimum = with(requireDensity()) { (if (pressed.type == PointerType.Touch) 20.dp else 10.dp).toPx() }
-            val extra = ((minimum - if (region.horizontal) rectangle.width else rectangle.height) / 2).coerceAtLeast(0f)
-            val target =
-                if (region.horizontal) {
-                    Rect(
-                        rectangle.left - extra,
-                        rectangle.top,
-                        rectangle.right +
-                            extra,
-                        rectangle.bottom,
-                    )
-                } else {
-                    Rect(rectangle.left, rectangle.top - extra, rectangle.right, rectangle.bottom + extra)
-                }
-            if (!target.contains(pressed.position)) return
-            pointer = pressed.id
-            region.onStart()
-            pressed.consume()
+            if (pointerEvent.type == PointerEventType.Press) beginDrag(pointerEvent)
         } else {
             val change = pointerEvent.changes.firstOrNull { it.id == active } ?: return
+            if (change.isConsumed) {
+                onCancelPointerInput()
+                return
+            }
+            val origin = touchOrigin
             if (!change.pressed) {
-                pointer = null
-                change.consume()
+                onCancelPointerInput()
+                if (origin == null) change.consume()
+                return
+            }
+            if (origin != null) {
+                claimTouchDrag(change, origin)
                 return
             }
             val delta = change.positionChange()
@@ -109,8 +104,53 @@ private class ResizableDragNode(private var region: ResizablePointerRegion) :
         }
     }
 
+    private fun beginDrag(event: PointerEvent) {
+        val pressed =
+            event.changes.firstOrNull {
+                it.changedToDown() && (it.type != PointerType.Mouse || event.buttons.isPrimaryPressed)
+            } ?: return
+        val handle = region.handle?.takeIf { it.isAttached } ?: return
+        val rectangle = requireLayoutCoordinates().localBoundingBoxOf(handle, clipBounds = false)
+        val minimum = with(requireDensity()) { (if (pressed.type == PointerType.Touch) 20.dp else 10.dp).toPx() }
+        val extra = ((minimum - if (region.horizontal) rectangle.width else rectangle.height) / 2).coerceAtLeast(0f)
+        val target =
+            if (region.horizontal) {
+                Rect(rectangle.left - extra, rectangle.top, rectangle.right + extra, rectangle.bottom)
+            } else {
+                Rect(rectangle.left, rectangle.top - extra, rectangle.right, rectangle.bottom + extra)
+            }
+        if (pressed.position in target) {
+            pointer = pressed.id
+            if (pressed.type == PointerType.Touch) {
+                touchOrigin = pressed.position
+            } else {
+                region.onStart()
+                pressed.consume()
+            }
+        }
+    }
+
+    private fun claimTouchDrag(
+        change: PointerInputChange,
+        origin: Offset,
+    ) {
+        val movement = change.position - origin
+        val along = if (region.horizontal) movement.x else movement.y
+        val across = if (region.horizontal) movement.y else movement.x
+        val slop = currentValueOf(LocalViewConfiguration).touchSlop
+        if (abs(across) > slop && abs(across) > abs(along)) {
+            onCancelPointerInput()
+        } else if (abs(along) > slop) {
+            touchOrigin = null
+            region.onStart()
+            region.onDelta(along)
+            change.consume()
+        }
+    }
+
     override fun onCancelPointerInput() {
         pointer = null
+        touchOrigin = null
     }
 
     override fun onDetach() {

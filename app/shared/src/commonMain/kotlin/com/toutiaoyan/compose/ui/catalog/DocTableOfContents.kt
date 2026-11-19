@@ -34,6 +34,7 @@ internal data class DocSection(
         docFragment(
             title,
         ),
+    val legacyFragment: String? = null,
 )
 
 /** Layout coordinates are read for scrolling, never written back into composition state. */

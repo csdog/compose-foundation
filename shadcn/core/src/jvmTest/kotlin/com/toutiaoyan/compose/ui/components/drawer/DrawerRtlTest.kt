@@ -5,9 +5,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.test.getUnclippedBoundsInRoot
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
@@ -51,4 +54,27 @@ class DrawerRtlTest : ScreenshotTest() {
     @Test fun rightHandleStaysOnTheLeftInRtl() = assertHandleOnInteriorEdge(DrawerSwipeDirection.Right)
 
     @Test fun leftHandleStaysOnTheRightInRtl() = assertHandleOnInteriorEdge(DrawerSwipeDirection.Left)
+
+    @Test fun leftDrawerFollowsThePhysicalDragInRtl() {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                Drawer(defaultOpen = true, swipeDirection = DrawerSwipeDirection.Left) {
+                    DrawerContent(Modifier.testTag("panel")) {
+                        Box(Modifier.fillMaxWidth().height(80.dp).testTag("body"))
+                    }
+                }
+            }
+        }
+        val body = composeRule.onNodeWithTag("body")
+        val start = body.getUnclippedBoundsInRoot().left
+        val panel = composeRule.onNodeWithTag("panel")
+        panel.performTouchInput {
+            down(center)
+            moveBy(Offset(-24f, 0f))
+            moveBy(Offset(-24f, 0f))
+        }
+        val held = body.getUnclippedBoundsInRoot().left
+        panel.performTouchInput { up() }
+        assertTrue(held < start - 10.dp, "The left drawer must move toward the physical left edge")
+    }
 }

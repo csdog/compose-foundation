@@ -105,6 +105,18 @@ class ResizableInteractionTest : ScreenshotTest() {
     }
 
     @Test(timeout = 15000)
+    fun crossAxisTouchDoesNotResizeEvenWithAnAlongAxisComponent() {
+        fixture()
+        composeRule.onNodeWithTag("handle").performTouchInput {
+            down(center)
+            moveBy(Offset(24f, -95f))
+            up()
+        }
+        composeRule.waitForIdle()
+        assertEquals(0.5f, fraction(), 0.001f)
+    }
+
+    @Test(timeout = 15000)
     fun rtlPhysicalRightDragShrinksTheLogicalFirstPanel() {
         fixture(rtl = true)
         mouseDrag(Offset(40f, 0f))

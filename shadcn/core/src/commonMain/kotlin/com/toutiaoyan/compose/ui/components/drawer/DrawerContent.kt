@@ -19,6 +19,7 @@ import androidx.compose.animation.core.animate
 import androidx.compose.foundation.gestures.DraggableAnchors
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.anchoredDraggable
+import androidx.compose.foundation.gestures.animateTo
 import androidx.compose.foundation.gestures.snapTo
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -50,14 +51,26 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.input.pointer.PointerEvent
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.PointerEventType
+import androidx.compose.ui.node.ModifierNodeElement
+import androidx.compose.ui.node.PointerInputModifierNode
+import androidx.compose.ui.platform.InspectorInfo
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.tailwind.core.twRadius
 import com.toutiaoyan.compose.ui.components.overlay.Content
@@ -68,6 +81,7 @@ import com.toutiaoyan.compose.ui.gesture.anchoredSwipe2D
 import com.toutiaoyan.compose.ui.gesture.decayAnchoredDraggableState
 import com.toutiaoyan.compose.ui.gesture.rememberDecayAnchoredDraggableState
 import kotlin.math.roundToInt
+import kotlinx.coroutines.launch
 
 /** base-nova sizing defaults. */
 object DrawerDefaults {
@@ -658,6 +672,26 @@ private fun DrawerSnapPanel(
             }
         }
     val reverseDirection = swipeDirection == DrawerSwipeDirection.Up
+    val sequential = drawer.snapToSequentialPoints
+    val nestedScrollConnection =
+        remember(snapState, reverseDirection, sequential, closingOffsets, dismissAnimationSpec) {
+            DrawerSnapNestedScrollConnection(snapState, reverseDirection, dismissAnimationSpec) { velocity ->
+                if (sequential) {
+                    val index =
+                        nearestDrawerSnapIndex(
+                            snapState.requireOffset(),
+                            closingOffsets,
+                            true,
+                            snapState.settledValue,
+                            velocity,
+                        )
+                    snapState.animateTo(index, dismissAnimationSpec)
+                } else {
+                    @Suppress("DEPRECATION")
+                    snapState.settle(velocity)
+                }
+            }
+        }
     val maxHeightDp = with(density) { maxHeightPx.toDp() }
 
     val panelModifier =
@@ -677,12 +711,14 @@ private fun DrawerSnapPanel(
             }
             .then(
                 if (drawer.dismissible) {
-                    Modifier.anchoredDraggable(
-                        state = snapState,
-                        orientation = Orientation.Vertical,
-                        reverseDirection = reverseDirection,
-                        flingBehavior = if (drawer.snapToSequentialPoints) sequentialFling else null,
-                    )
+                    Modifier.nestedScroll(nestedScrollConnection)
+                        .then(DrawerSnapDragObserver(nestedScrollConnection))
+                        .anchoredDraggable(
+                            state = snapState,
+                            orientation = Orientation.Vertical,
+                            reverseDirection = reverseDirection,
+                            flingBehavior = if (drawer.snapToSequentialPoints) sequentialFling else null,
+                        )
                 } else {
                     Modifier
                 },
@@ -701,6 +737,98 @@ private fun DrawerSnapPanel(
         panelModifier = panelModifier,
         content = content,
     )
+}
+
+private data class DrawerSnapDragObserver(
+    val connection: DrawerSnapNestedScrollConnection,
+) : ModifierNodeElement<DrawerSnapDragNode>() {
+    override fun create() = DrawerSnapDragNode(connection)
+
+    override fun update(node: DrawerSnapDragNode) {
+        node.connection = connection
+    }
+
+    override fun InspectorInfo.inspectableProperties() {
+        name = "drawerSnapDragObserver"
+    }
+}
+
+private class DrawerSnapDragNode(var connection: DrawerSnapNestedScrollConnection) :
+    Modifier.Node(),
+    PointerInputModifierNode {
+    override fun onPointerEvent(
+        pointerEvent: PointerEvent,
+        pass: PointerEventPass,
+        bounds: IntSize,
+    ) {
+        if (pass != PointerEventPass.Initial) return
+        connection.wheelInput = pointerEvent.type == PointerEventType.Scroll
+        if (pointerEvent.changes.any { it.previousPressed && !it.pressed && it.isConsumed }) {
+            onCancelPointerInput()
+        }
+    }
+
+    override fun onCancelPointerInput() {
+        val drag = connection
+        val target = drag.cancelDrag() ?: return
+        // A cancelled child drag may never dispatch a fling.
+        coroutineScope.launch { drag.restoreSnap(target) }
+    }
+}
+
+private class DrawerSnapNestedScrollConnection(
+    private val state: AnchoredDraggableState<Int>,
+    reverseDirection: Boolean,
+    private val animation: AnimationSpec<Float>,
+    private val settle: suspend (Float) -> Unit,
+) : NestedScrollConnection {
+    private val direction = if (reverseDirection) -1f else 1f
+    private var handedOff = false
+    var wheelInput = false
+
+    fun cancelDrag(): Int? {
+        val snap = state.settledValue.takeIf { handedOff }
+        handedOff = false
+        return snap
+    }
+
+    suspend fun restoreSnap(target: Int) = state.animateTo(target, animation)
+
+    override fun onPreScroll(
+        available: Offset,
+        source: NestedScrollSource,
+    ): Offset {
+        val returnDelta = state.anchors.positionOf(state.settledValue) - state.offset
+        if (!handedOff || !acceptsDrag(source) || !returnDelta.isFinite()) return Offset.Zero
+        // Return toward the starting snap before reversing the child's scroll direction.
+        val closingDelta = available.y * direction
+        val delta = closingDelta.coerceIn(minOf(0f, returnDelta), maxOf(0f, returnDelta))
+        return Offset(0f, dispatch(delta) * direction)
+    }
+
+    override fun onPostScroll(
+        consumed: Offset,
+        available: Offset,
+        source: NestedScrollSource,
+    ): Offset {
+        if (!acceptsDrag(source)) return Offset.Zero
+        val taken = dispatch(available.y * direction)
+        if (taken != 0f) handedOff = true
+        return Offset(0f, taken * direction)
+    }
+
+    override suspend fun onPreFling(available: Velocity): Velocity {
+        val shouldSettle = handedOff && state.offset != state.anchors.positionOf(state.settledValue)
+        handedOff = false
+        if (!shouldSettle) return Velocity.Zero
+        settle(available.y * direction)
+        return Velocity(0f, available.y)
+    }
+
+    private fun dispatch(delta: Float): Float =
+        if (delta == 0f || !state.offset.isFinite()) 0f else state.dispatchRawDelta(delta)
+
+    private fun acceptsDrag(source: NestedScrollSource): Boolean = !wheelInput && source == NestedScrollSource.UserInput
 }
 
 @Composable

@@ -146,7 +146,7 @@ class MessageExamplesTest {
         assertContains(markdown, "Render an empty `MessageAvatar` on the earlier messages")
         assertContains(markdown, "| `Start` | Align the message to the start of the conversation. |")
         assertContains(markdown, "Customize every part through its `modifier` and `style` parameters.")
-        assertContains(markdown, "Kotlin extension: Start aligned")
+        assertContains(markdown, "## Start aligned")
         assertContains(markdown, "`role = \"status\"`")
     }
 }

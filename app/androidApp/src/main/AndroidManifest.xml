@@ -17,7 +17,7 @@
         <activity
             android:exported="true"
             android:launchMode="singleTask"
-            android:name=".MainActivity">
+            android:name="com.toutiaoyan.compose.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

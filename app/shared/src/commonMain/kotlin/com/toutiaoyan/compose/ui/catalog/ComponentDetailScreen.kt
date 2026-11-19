@@ -107,6 +107,7 @@ internal fun ComponentDetailContent(
         } else {
             val section =
                 sections.firstOrNull { it.fragment == location.fragment || it.id == location.fragment }
+                    ?: sections.firstOrNull { it.legacyFragment == location.fragment }
                     ?: return@LaunchedEffect
             scrollState.followDocumentAnchor(anchors, section.id, animated = location.animate)
         }
@@ -240,19 +241,8 @@ internal fun ComponentDetailContent(
                             ) { doc.description }
                         }
                         Column(verticalArrangement = Arrangement.spacedBy(28.dp)) {
-                            // Official tab row: label sits 2px above its underline; the previous
-                            // 8dp gap pushed the underline and first preview 6px below official.
-                            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                                Text(variant = TextVariant.BodyLarge) {
-                                    if (doc.isKotlinExtension) "Kotlin extension" else "Base UI"
-                                }
-                                if (!doc.isKotlinExtension) {
-                                    Box(
-                                        Modifier.widthIn(
-                                            min = 56.dp,
-                                        ).height(2.dp).background(currentTheme.colors.foreground),
-                                    )
-                                }
+                            if (doc.isKotlinExtension) {
+                                Text(variant = TextVariant.BodyLarge) { "Kotlin extension" }
                             }
                             doc.examples.firstOrNull()?.let { example ->
                                 PreviewCodeSection(
@@ -341,7 +331,7 @@ internal fun ComponentDetailContent(
                                             }
                                             PreviewCodeSection(
                                                 code = example.code,
-                                                title = example.title.takeIf { example.showHeading },
+                                                title = example.headingTitle.takeIf { example.showHeading },
                                                 headingLevel = example.headingLevel,
                                                 modifier =
                                                     Modifier.fillMaxWidth().docAnchor(
@@ -582,11 +572,13 @@ internal fun docSections(doc: ComponentDoc): List<DocSection> =
                     )
                 }
                 if (example.showHeading) {
+                    val title = example.headingTitle
                     add(
                         DocSection(
                             "example-$index",
-                            example.title,
+                            title,
                             nested = doc.examplesHeading != null || example.headingLevel > 2,
+                            legacyFragment = example.title.takeIf { it != title }?.let(::docFragment),
                         ),
                     )
                 }

@@ -250,7 +250,7 @@ class DialogExamplesTest {
         assertTrue(sections.all { it >= 0 }, "missing a recipe heading: $sections")
         assertEquals(sections.sorted(), sections)
         assertContains(markdown, "To enable RTL support in shadcn/ui")
-        assertContains(markdown, "Kotlin extension: Size")
+        assertContains(markdown, "## Size")
         assertContains(markdown, "DialogTrigger")
         assertFalse(markdown.contains("EmojiText"))
     }

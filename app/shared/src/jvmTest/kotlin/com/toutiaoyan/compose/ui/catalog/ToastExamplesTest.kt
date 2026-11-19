@@ -236,9 +236,9 @@ class ToastGuideTest {
                 "## Action",
                 "## Promise",
                 "## API Reference",
-                "## Kotlin extension: Duration",
-                "## Kotlin extension: Position",
-                "## Kotlin extension: Close button",
+                "## Duration",
+                "## Position",
+                "## Close button",
             )
         val positions = orderedHeadings.map { markdown.indexOf(it) }
         assertTrue(positions.all { it >= 0 }, "Missing headings: ${orderedHeadings.filterNot { it in markdown }}")

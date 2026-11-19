@@ -6,5 +6,7 @@ import androidx.compose.ui.input.pointer.PointerEvent
 
 internal actual fun captureToastOutsideTouch(touch: PointerEvent): ToastOutsideTouch? = null
 
+internal actual fun preventToastTouchScroll(touch: PointerEvent): (() -> Unit)? = null
+
 @Composable
 internal actual fun Modifier.toastViewportShortcut(enabled: Boolean): Modifier = this

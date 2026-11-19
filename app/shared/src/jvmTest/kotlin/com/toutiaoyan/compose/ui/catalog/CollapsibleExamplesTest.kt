@@ -84,7 +84,7 @@ class CollapsibleExamplesTest {
         assertEquals(positions.sorted(), positions)
         assertTrue(markdown.contains("Use the following composition to build a `Collapsible`:"))
         assertFalse(markdown.contains("## Examples"))
-        assertTrue(markdown.contains("## Kotlin extension: Disabled"))
+        assertTrue(markdown.contains("## Disabled"))
     }
 
     @Test

@@ -205,7 +205,7 @@ class DrawerExamplesTest {
         assertTrue(order.all { it >= 0 }, "missing a section heading: $order")
         assertEquals(order.sorted(), order)
         assertContains(markdown, "DrawerContent")
-        assertContains(markdown, "Kotlin extension: Swipe direction")
+        assertContains(markdown, "## Swipe direction")
         assertContains(markdown, "DrawerSwipeDirection")
         assertFalse(markdown.contains("EmojiText"))
     }

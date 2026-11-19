@@ -129,7 +129,7 @@ class PaginationExamplesTest(private val viewport: Int, private val dark: Boolea
             listOf(
                 "## Composition", "Use the following composition", "```text",
                 "## Simple", "## Icons Only", "## Next.js", "## RTL",
-                "## Changelog", "### RTL Support", "## Kotlin extension: Controlled",
+                "## Changelog", "### RTL Support", "## Controlled",
             )
         val positions = sections.map { page.indexOf(it) }
         assertTrue(positions.all { it >= 0 }, "Missing source guidance in Copy Page: $positions")

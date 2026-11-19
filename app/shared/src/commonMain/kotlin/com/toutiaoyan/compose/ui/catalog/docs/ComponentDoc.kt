@@ -25,7 +25,10 @@ data class ComponentExample(
     val mobilePreviewPadding: Dp? = null,
     val mobilePreviewVerticalAlignment: Alignment.Vertical? = null,
     val preview: @Composable () -> Unit,
-)
+) {
+    internal val headingTitle: String
+        get() = title.removePrefix("Kotlin extension: ")
+}
 
 data class ComponentDoc(
     val id: String,
@@ -43,7 +46,7 @@ data class ComponentDoc(
     val beforeExampleSections: Map<String, List<ComponentGuideSection>> = emptyMap(),
     val afterExamples: List<ComponentGuideSection> = emptyList(),
     val afterApiSections: List<ComponentGuideSection> = emptyList(),
-    /** Project-only components show a "Kotlin extension" label instead of the Base UI tab. */
+    /** Project-only components show a "Kotlin extension" label above the preview. */
     val isKotlinExtension: Boolean = false,
     /** Headingless prose following the primary preview, before Installation. */
     val introMarkdown: String? = null,
