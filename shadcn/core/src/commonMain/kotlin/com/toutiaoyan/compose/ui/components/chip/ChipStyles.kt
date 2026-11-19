@@ -40,42 +40,27 @@ fun ChipVariant.contentColor(colors: Colors): Color =
 fun ChipVariant.rememberStyle(): Style {
     val receiver = this
     return rememberTheme(receiver) {
-        val foreground = receiver.contentColor(colors)
-        when (receiver) {
-            ChipVariant.Default ->
-                Style {
-                    background(colors.secondary)
-                    contentColor(foreground)
-                    border(colors.border)
-                    focusRing(RoundedCornerShape(radius.full))
-                    contentPadding(horizontal = spacing.md, vertical = spacing.xs)
-                    fontSize(13.sp)
-                    hovered { background(colors.secondary.copy(alpha = 0.9f)) }
-                    pressed { background(colors.secondary.copy(alpha = 0.9f)) }
-                    disabledDim()
+        Style {
+            when (receiver) {
+                ChipVariant.Default -> background(colors.secondary)
+                ChipVariant.Selected -> background(colors.primary)
+                ChipVariant.Outline -> Unit
+            }
+            contentColor(receiver.contentColor(colors))
+            border(if (receiver == ChipVariant.Selected) colors.primary else colors.border)
+            focusRing(RoundedCornerShape(radius.full))
+            contentPadding(horizontal = spacing.md, vertical = spacing.xs)
+            fontSize(13.sp)
+            when (receiver) {
+                ChipVariant.Default -> {
+                    val highlight = colors.secondary.copy(alpha = 0.9f)
+                    hovered { background(highlight) }
+                    pressed { background(highlight) }
                 }
-
-            ChipVariant.Selected ->
-                Style {
-                    background(colors.primary)
-                    contentColor(foreground)
-                    border(colors.primary)
-                    focusRing(RoundedCornerShape(radius.full))
-                    contentPadding(horizontal = spacing.md, vertical = spacing.xs)
-                    fontSize(13.sp)
-                    disabledDim()
-                }
-
-            ChipVariant.Outline ->
-                Style {
-                    border(colors.border)
-                    contentColor(foreground)
-                    focusRing(RoundedCornerShape(radius.full))
-                    contentPadding(horizontal = spacing.md, vertical = spacing.xs)
-                    fontSize(13.sp)
-                    hovered { background(colors.secondary) }
-                    disabledDim()
-                }
+                ChipVariant.Outline -> hovered { background(colors.secondary) }
+                ChipVariant.Selected -> Unit
+            }
+            disabledDim()
         }
     }
 }

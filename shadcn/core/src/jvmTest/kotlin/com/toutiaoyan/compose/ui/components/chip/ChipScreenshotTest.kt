@@ -4,13 +4,34 @@ package com.toutiaoyan.compose.ui.components.chip
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.test.assertIsOff
+import androidx.compose.ui.test.assertIsOn
+import androidx.compose.ui.test.assertIsSelected
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.performClick
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.ScreenshotTest
 import kotlin.test.Test
 
 class ChipScreenshotTest : ScreenshotTest() {
+    @Test fun selectableChipPublishesItsCheckedState() {
+        var selected by mutableStateOf(false)
+        setThemedContent {
+            Chip("Filter", onClick = { selected = !selected }, modifier = Modifier.testTag("chip"), selected = selected)
+        }
+
+        val chip = composeRule.onNodeWithTag("chip")
+        chip.assertIsOff().performClick()
+        chip.assertIsOn().assertIsSelected()
+        chip.performClick()
+        chip.assertIsOff()
+    }
+
     private fun states(darkTheme: Boolean) {
         snapshot("chip_states", darkTheme = darkTheme) {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {

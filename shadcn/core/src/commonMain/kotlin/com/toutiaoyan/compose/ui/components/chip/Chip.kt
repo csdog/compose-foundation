@@ -22,6 +22,8 @@ import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.toggleableState
+import androidx.compose.ui.state.ToggleableState
 import com.toutiaoyan.compose.ui.components.button.ButtonAnimation
 import com.toutiaoyan.compose.ui.styles.rememberMinTouchTargetStyle
 import com.toutiaoyan.compose.ui.styles.rememberPressMotionStyle
@@ -34,15 +36,8 @@ import com.toutiaoyan.compose.tailwind.core.twSpacing
 /**
  * Selectable chip / filter tag.
  *
- * Icon slot sizing (`leadingIcon`) reads `theme.icons.standardSize` directly at the
- * call site -- it does NOT go through a `CompositionLocal` (the previous
- * `LocalDataSlots` mechanism was provided here but never actually read by
- * anything reachable, and has been removed) or through the `Style` object itself
- * (`androidx.compose.foundation.style.Style`/`StyleScope` are sealed third-party
- * interfaces from Compose Foundation -- we cannot add an `iconSize` field/DSL function
- * to them). Reading the already-existing, already-preset-aware `theme.icons` token
- * directly is simpler, is genuinely parameter-free at call sites, and was already the
- * pattern every other themed value in this library uses.
+ * The leading icon receives the current theme's standard icon size.
+ * [selected] is the caller-owned checked state.
  *
  * Usage:
  * ```
@@ -98,6 +93,7 @@ fun Chip(
                     role = Role.Checkbox
                     contentDescription = label
                     this.selected = selected
+                    toggleableState = ToggleableState(selected)
                     if (!resolvedEnabled) {
                         disabled()
                     }
