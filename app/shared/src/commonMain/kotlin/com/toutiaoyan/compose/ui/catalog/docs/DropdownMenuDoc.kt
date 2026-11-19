@@ -59,12 +59,12 @@ val dropdownMenuDoc =
                         DropdownMenuLabel("My Account")
                         DropdownMenuItem("Profile", onClick = {})
                         DropdownMenuItem("Billing", onClick = {})
-                        DropdownMenuItem("Settings", onClick = {})
                     }
                     DropdownMenuSeparator()
-                    DropdownMenuItem("GitHub", onClick = {})
-                    DropdownMenuItem("Support", onClick = {})
-                    DropdownMenuItem("API", onClick = {}, disabled = true)
+                    DropdownMenuGroup {
+                        DropdownMenuItem("Team", onClick = {})
+                        DropdownMenuItem("Subscription", onClick = {})
+                    }
                 }
             }
             """.trimIndent(),
@@ -74,11 +74,14 @@ val dropdownMenuDoc =
             import androidx.compose.foundation.layout.*
             import androidx.compose.foundation.shape.CircleShape
             import androidx.compose.foundation.style.Style
+            import androidx.compose.foundation.style.then
             import androidx.compose.runtime.*
             import androidx.compose.ui.*
             import androidx.compose.ui.graphics.*
             import androidx.compose.ui.graphics.vector.ImageVector
             import androidx.compose.ui.platform.LocalLayoutDirection
+            import androidx.compose.ui.semantics.contentDescription
+            import androidx.compose.ui.semantics.semantics
             import androidx.compose.ui.text.TextStyle
             import androidx.compose.ui.text.style.LineHeightStyle
             import androidx.compose.ui.unit.*
@@ -89,6 +92,7 @@ val dropdownMenuDoc =
             import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
             import com.toutiaoyan.compose.ui.components.text.Text
             import com.toutiaoyan.compose.ui.theme.currentTheme
+            import com.toutiaoyan.compose.ui.styles.focusRing
             import org.jetbrains.compose.resources.painterResource
             // For Avatar, add the photo to your drawable resources and import your generated Res.
             """.trimIndent(),
@@ -101,12 +105,25 @@ val dropdownMenuDoc =
                 ├── DropdownMenuGroup
                 │   ├── DropdownMenuLabel
                 │   ├── DropdownMenuItem
-                │   ├── DropdownMenuCheckboxItem
-                │   └── DropdownMenuRadioGroup → DropdownMenuRadioItem
+                │   └── DropdownMenuItem
                 ├── DropdownMenuSeparator
+                ├── DropdownMenuGroup
+                │   ├── DropdownMenuLabel
+                │   ├── DropdownMenuCheckboxItem
+                │   └── DropdownMenuCheckboxItem
+                ├── DropdownMenuSeparator
+                ├── DropdownMenuGroup
+                │   ├── DropdownMenuLabel
+                │   └── DropdownMenuRadioGroup
+                │       ├── DropdownMenuRadioItem
+                │       └── DropdownMenuRadioItem
                 └── DropdownMenuSub
                     ├── DropdownMenuSubTrigger
                     └── DropdownMenuSubContent
+                        └── DropdownMenuGroup
+                            ├── DropdownMenuLabel
+                            ├── DropdownMenuItem
+                            └── DropdownMenuItem
             """.trimIndent(),
         examples =
             (

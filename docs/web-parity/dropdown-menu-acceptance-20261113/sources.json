@@ -1,0 +1,321 @@
+{
+  "component": "dropdown-menu",
+  "officialPage": "https://ui.shadcn.com/docs/components/base/dropdown-menu",
+  "repository": "shadcn-ui/ui",
+  "upstreamRevision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+  "pinnedAt": "2026-11-12T07:20:43.748679+00:00",
+  "sourcePin": {
+    "path": "../../../.agent-runs/dropdown-menu/scope-00/20261112/sources.json",
+    "sha256": "90b42b152c684da771d22fbda14376604adc8343636279e47aa8327f26c1e5b8"
+  },
+  "fileCount": 18,
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/dropdown-menu.mdx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/content/docs/components/base/dropdown-menu.mdx",
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "git_blob_sha1": "fd03457bb4fe87a08ab8d7dda1a3e2ced8a7b93f",
+      "sha256": "36e21a0f00fb6f808c5ce4af27353f9cbaac4f8d746ada2306f809114826d990",
+      "bytes": 4833,
+      "local_path": "../../../.agent-runs/dropdown-menu/scope-00/20261112/sources/dropdown-menu.mdx",
+      "status": "REUSED_ARCHIVE_MATCHING_CURRENT_GIT_BLOB",
+      "reused_from": "docs/web-parity/dropdown-menu-r1/source/dropdown-menu.mdx",
+      "http": null,
+      "prior_r4_sha256": "36e21a0f00fb6f808c5ce4af27353f9cbaac4f8d746ada2306f809114826d990",
+      "matches_prior_r4": true
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/dropdown-menu.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/registry/bases/base/ui/dropdown-menu.tsx",
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "git_blob_sha1": "4c4543e2954441c012d3a7dc1d850e99613f5651",
+      "sha256": "18c1829679694a9b9850afcabf1158a80ec3624fb5e03d0d4b13339b729e0503",
+      "bytes": 7461,
+      "local_path": "../../../.agent-runs/dropdown-menu/scope-00/20261112/sources/dropdown-menu.tsx",
+      "status": "REUSED_ARCHIVE_MATCHING_CURRENT_GIT_BLOB",
+      "reused_from": "docs/web-parity/dropdown-menu-r1/source/dropdown-menu.tsx",
+      "http": null,
+      "prior_r4_sha256": "18c1829679694a9b9850afcabf1158a80ec3624fb5e03d0d4b13339b729e0503",
+      "matches_prior_r4": true
+    },
+    {
+      "path": "apps/v4/registry/styles/style-nova.css",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/registry/styles/style-nova.css",
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "git_blob_sha1": "293204b2bf08ddfd86dbc49b75dc4749cd2135ed",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e",
+      "bytes": 78661,
+      "local_path": "../../../.agent-runs/dropdown-menu/scope-00/20261112/sources/style-nova.css",
+      "status": "REUSED_ARCHIVE_MATCHING_CURRENT_GIT_BLOB",
+      "reused_from": ".agent-runs/context-menu/verify-30/goal-20261112/upstream-sources/style-nova.css",
+      "http": null,
+      "prior_r4_sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e",
+      "matches_prior_r4": true
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-demo.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/dropdown-menu-demo.tsx",
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "git_blob_sha1": "730f771850160a739a54edec622f05e1c794c887",
+      "sha256": "1c06196af05a7e0a05b78d4fdec221b0f36ba24dfc570628b93303f8c0a4d4d1",
+      "bytes": 2503,
+      "local_path": "../../../.agent-runs/dropdown-menu/scope-00/20261112/sources/dropdown-menu-demo.tsx",
+      "status": "REUSED_ARCHIVE_MATCHING_CURRENT_GIT_BLOB",
+      "reused_from": "docs/web-parity/dropdown-menu-r1/source/dropdown-menu-demo.tsx",
+      "http": null,
+      "prior_r4_sha256": "1c06196af05a7e0a05b78d4fdec221b0f36ba24dfc570628b93303f8c0a4d4d1",
+      "matches_prior_r4": true
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-basic.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/dropdown-menu-basic.tsx",
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "git_blob_sha1": "5a86dafebc518117471af2646ca930d7799b41b1",
+      "sha256": "2f627d8d53e59c91b5814c6c70ae022581f8f0be1c3fff36c00898ba91be9c5b",
+      "bytes": 1011,
+      "local_path": "../../../.agent-runs/dropdown-menu/scope-00/20261112/sources/dropdown-menu-basic.tsx",
+      "status": "REUSED_ARCHIVE_MATCHING_CURRENT_GIT_BLOB",
+      "reused_from": "docs/web-parity/dropdown-menu-r1/source/dropdown-menu-basic.tsx",
+      "http": null,
+      "prior_r4_sha256": "2f627d8d53e59c91b5814c6c70ae022581f8f0be1c3fff36c00898ba91be9c5b",
+      "matches_prior_r4": true
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-submenu.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/dropdown-menu-submenu.tsx",
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "git_blob_sha1": "2f211d995c1f308945ea842c6c6c09f8391c00c2",
+      "sha256": "0b9d631d545863f8342232a4b87f85a9fd076bc1351f33529eb4e958b6515ddc",
+      "bytes": 1952,
+      "local_path": "../../../.agent-runs/dropdown-menu/scope-00/20261112/sources/dropdown-menu-submenu.tsx",
+      "status": "REUSED_ARCHIVE_MATCHING_CURRENT_GIT_BLOB",
+      "reused_from": "docs/web-parity/dropdown-menu-r1/source/dropdown-menu-submenu.tsx",
+      "http": null,
+      "prior_r4_sha256": "0b9d631d545863f8342232a4b87f85a9fd076bc1351f33529eb4e958b6515ddc",
+      "matches_prior_r4": true
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-shortcuts.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/dropdown-menu-shortcuts.tsx",
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "git_blob_sha1": "531273e33dceeccad78db192cbedd37f934f02b6",
+      "sha256": "a23a4174f4e9b616331ef5b1d807f79f0fef5054c0c62d2dafc43e80a08f79d1",
+      "bytes": 1273,
+      "local_path": "../../../.agent-runs/dropdown-menu/scope-00/20261112/sources/dropdown-menu-shortcuts.tsx",
+      "status": "REUSED_ARCHIVE_MATCHING_CURRENT_GIT_BLOB",
+      "reused_from": "docs/web-parity/dropdown-menu-r1/source/dropdown-menu-shortcuts.tsx",
+      "http": null,
+      "prior_r4_sha256": "a23a4174f4e9b616331ef5b1d807f79f0fef5054c0c62d2dafc43e80a08f79d1",
+      "matches_prior_r4": true
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-icons.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/dropdown-menu-icons.tsx",
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "git_blob_sha1": "95aa4c38213048f3407416e3a3273ddcb03a97a9",
+      "sha256": "90533e248e0f66c68572980f38a5b8d726510c942a9eac272ae145c5d2a60391",
+      "bytes": 1034,
+      "local_path": "../../../.agent-runs/dropdown-menu/scope-00/20261112/sources/dropdown-menu-icons.tsx",
+      "status": "REUSED_ARCHIVE_MATCHING_CURRENT_GIT_BLOB",
+      "reused_from": "docs/web-parity/dropdown-menu-r1/source/dropdown-menu-icons.tsx",
+      "http": null,
+      "prior_r4_sha256": "90533e248e0f66c68572980f38a5b8d726510c942a9eac272ae145c5d2a60391",
+      "matches_prior_r4": true
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-checkboxes.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/dropdown-menu-checkboxes.tsx",
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "git_blob_sha1": "905b0bba6c3e4a5eaa858c986644bad317515c9e",
+      "sha256": "a4b092f10b23689d1402350caeaf313574249580b8453ee70f125d82099cb46c",
+      "bytes": 1478,
+      "local_path": "../../../.agent-runs/dropdown-menu/scope-00/20261112/sources/dropdown-menu-checkboxes.tsx",
+      "status": "REUSED_ARCHIVE_MATCHING_CURRENT_GIT_BLOB",
+      "reused_from": "docs/web-parity/dropdown-menu-r1/source/dropdown-menu-checkboxes.tsx",
+      "http": null,
+      "prior_r4_sha256": "a4b092f10b23689d1402350caeaf313574249580b8453ee70f125d82099cb46c",
+      "matches_prior_r4": true
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-checkboxes-icons.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/dropdown-menu-checkboxes-icons.tsx",
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "git_blob_sha1": "6bbf1851354bb9317231a7e68f6f2db827abf55b",
+      "sha256": "b50b08098653f6639e3a6225633662e4d57c47add8d8c38140d0fccbc74510b5",
+      "bytes": 1855,
+      "local_path": "../../../.agent-runs/dropdown-menu/scope-00/20261112/sources/dropdown-menu-checkboxes-icons.tsx",
+      "status": "REUSED_ARCHIVE_MATCHING_CURRENT_GIT_BLOB",
+      "reused_from": "docs/web-parity/dropdown-menu-r1/source/dropdown-menu-checkboxes-icons.tsx",
+      "http": null,
+      "prior_r4_sha256": "b50b08098653f6639e3a6225633662e4d57c47add8d8c38140d0fccbc74510b5",
+      "matches_prior_r4": true
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-radio-group.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/dropdown-menu-radio-group.tsx",
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "git_blob_sha1": "24e866df3b96b08137ff8e2d8a5c93c2f6317205",
+      "sha256": "52c09d7cef24efebecfe9f033fc54c53ecd8eb0d5a454fcf8f39853fc5a758aa",
+      "bytes": 1127,
+      "local_path": "../../../.agent-runs/dropdown-menu/scope-00/20261112/sources/dropdown-menu-radio-group.tsx",
+      "status": "REUSED_ARCHIVE_MATCHING_CURRENT_GIT_BLOB",
+      "reused_from": "docs/web-parity/dropdown-menu-r1/source/dropdown-menu-radio-group.tsx",
+      "http": null,
+      "prior_r4_sha256": "52c09d7cef24efebecfe9f033fc54c53ecd8eb0d5a454fcf8f39853fc5a758aa",
+      "matches_prior_r4": true
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-radio-icons.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/dropdown-menu-radio-icons.tsx",
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "git_blob_sha1": "f40e0a8e6920515efb90a71afeb3b72a3bcb8431",
+      "sha256": "8cf9c241b7383c102cb7d0bbe9daf31a5a86480bd245e0e9746de9825fe4ea27",
+      "bytes": 1464,
+      "local_path": "../../../.agent-runs/dropdown-menu/scope-00/20261112/sources/dropdown-menu-radio-icons.tsx",
+      "status": "REUSED_ARCHIVE_MATCHING_CURRENT_GIT_BLOB",
+      "reused_from": "docs/web-parity/dropdown-menu-r1/source/dropdown-menu-radio-icons.tsx",
+      "http": null,
+      "prior_r4_sha256": "8cf9c241b7383c102cb7d0bbe9daf31a5a86480bd245e0e9746de9825fe4ea27",
+      "matches_prior_r4": true
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-destructive.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/dropdown-menu-destructive.tsx",
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "git_blob_sha1": "63cc6387974dbe7444386f0ffb01040a7beb024c",
+      "sha256": "2362640f2c4d53dd50ac983b77b6b3e99a5031ff7d5bb774eadcf0f6df743f69",
+      "bytes": 1064,
+      "local_path": "../../../.agent-runs/dropdown-menu/scope-00/20261112/sources/dropdown-menu-destructive.tsx",
+      "status": "REUSED_ARCHIVE_MATCHING_CURRENT_GIT_BLOB",
+      "reused_from": "docs/web-parity/dropdown-menu-r1/source/dropdown-menu-destructive.tsx",
+      "http": null,
+      "prior_r4_sha256": "2362640f2c4d53dd50ac983b77b6b3e99a5031ff7d5bb774eadcf0f6df743f69",
+      "matches_prior_r4": true
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-avatar.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/dropdown-menu-avatar.tsx",
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "git_blob_sha1": "20a268aef18b3478189209cc21560b840f4df1b1",
+      "sha256": "77d748e94061625e618028e25e05252db8499c82e1e5159e3d93fbbcdcee4916",
+      "bytes": 1420,
+      "local_path": "../../../.agent-runs/dropdown-menu/scope-00/20261112/sources/dropdown-menu-avatar.tsx",
+      "status": "REUSED_ARCHIVE_MATCHING_CURRENT_GIT_BLOB",
+      "reused_from": "docs/web-parity/dropdown-menu-r1/source/dropdown-menu-avatar.tsx",
+      "http": null,
+      "prior_r4_sha256": "77d748e94061625e618028e25e05252db8499c82e1e5159e3d93fbbcdcee4916",
+      "matches_prior_r4": true
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-complex.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/dropdown-menu-complex.tsx",
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "git_blob_sha1": "2cdb33da3ce578f7c6cd01b56072c64ecb7abdcb",
+      "sha256": "8acc550d9a2a70363879459640945da369123258eb76cbb105d07d9b5ee41ce0",
+      "bytes": 9722,
+      "local_path": "../../../.agent-runs/dropdown-menu/scope-00/20261112/sources/dropdown-menu-complex.tsx",
+      "status": "REUSED_ARCHIVE_MATCHING_CURRENT_GIT_BLOB",
+      "reused_from": "docs/web-parity/dropdown-menu-r1/source/dropdown-menu-complex.tsx",
+      "http": null,
+      "prior_r4_sha256": "8acc550d9a2a70363879459640945da369123258eb76cbb105d07d9b5ee41ce0",
+      "matches_prior_r4": true
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-rtl.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/dropdown-menu-rtl.tsx",
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "git_blob_sha1": "4417de18e462756d23fa8833ab5dc8631c374c01",
+      "sha256": "e007cdaedc052d900237da32d158613aef79370acb71e5fdf322bfa63059239e",
+      "bytes": 7959,
+      "local_path": "../../../.agent-runs/dropdown-menu/scope-00/20261112/sources/dropdown-menu-rtl.tsx",
+      "status": "REUSED_ARCHIVE_MATCHING_CURRENT_GIT_BLOB",
+      "reused_from": "docs/web-parity/dropdown-menu-r1/source/dropdown-menu-rtl.tsx",
+      "http": null,
+      "prior_r4_sha256": "e007cdaedc052d900237da32d158613aef79370acb71e5fdf322bfa63059239e",
+      "matches_prior_r4": true
+    },
+    {
+      "path": "apps/v4/registry/themes.ts",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/registry/themes.ts",
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "git_blob_sha1": "80fdfba3a7d0dc2cb8ebe6234a608778b2ed8c07",
+      "sha256": "60cb5ed25f7b39d9973e2280f476dd2119a4268317f45bd7ee3cac7883db8ea0",
+      "bytes": 44547,
+      "local_path": "../../../.agent-runs/dropdown-menu/scope-00/20261112/sources/themes.ts",
+      "status": "FETCHED_VIA_CURL_HTTP1_1_AFTER_PYTHON_TLS_FAILURE",
+      "reused_from": null,
+      "matching_archives_found_after_fetch": [
+        "docs/web-parity/accent-r1/themes.ts",
+        "docs/web-parity/theme-dark-r1-source/themes.ts"
+      ],
+      "http": {
+        "curl_exit": 0,
+        "git_blob_verified": true
+      },
+      "prior_r4_sha256": null,
+      "matches_prior_r4": null
+    },
+    {
+      "path": "apps/v4/registry/base-colors.ts",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/registry/base-colors.ts",
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "git_blob_sha1": "3523db36be1064102e96b4ef63fc04dc384223e9",
+      "sha256": "befafe605a5ff322e774db9b9abf7c3355f28d66d97e4f473ce169bd743d5336",
+      "bytes": 247,
+      "local_path": "../../../.agent-runs/dropdown-menu/scope-00/20261112/sources/base-colors.ts",
+      "status": "FETCHED_VIA_CURL_HTTP1_1_AFTER_PYTHON_TLS_FAILURE",
+      "reused_from": null,
+      "matching_archives_found_after_fetch": [],
+      "http": {
+        "curl_exit": 0,
+        "git_blob_verified": true
+      },
+      "prior_r4_sha256": null,
+      "matches_prior_r4": null
+    }
+  ],
+  "currentEvidence": {
+    "supervisor-current-30a-passing-handoff.json": {
+      "path": "../../../.agent-runs/dropdown-menu/implement-20/20261112-font-nova-repair/supervisor-current-30a-passing-handoff.json",
+      "sha256": "9f99cf73ec628248dd950ed979d464a557821afb35fb99505979a484b9035ccf"
+    },
+    "supervisor-current-30b-browser-handoff.json": {
+      "path": "../../../.agent-runs/dropdown-menu/implement-20/20261112-font-nova-repair/supervisor-current-30b-browser-handoff.json",
+      "sha256": "745ed44e21e1863f9fce4e7217d94ff75b0f9d5ecea32e0c699e23d847c21f8d"
+    },
+    "supervisor-current-30c-final-audit-input.json": {
+      "path": "../../../.agent-runs/dropdown-menu/implement-20/20261112-font-nova-repair/supervisor-current-30c-final-audit-input.json",
+      "sha256": "e99c4f0587d14f64242a80b9a53f6c9c26dc1653506fb896ac572a8967fb7144"
+    },
+    "initialIndependentAudit": {
+      "path": "../../../.agent-runs/dropdown-menu/implement-20/20261112-font-nova-repair/nova-reversal-current-30d/report.md",
+      "sha256": "d25be4da99f49fc7dec631cafe30802205275a50a0f630ea75c23d02083a8c74"
+    },
+    "prioritySupplementSeal": {
+      "path": "../../../.agent-runs/dropdown-menu/implement-20/20261112-font-nova-repair/nova-reversal-current-30c-priority-input-supplement/seal.json",
+      "sha256": "95356032db82c3f2ccc051d6ab072f672ba7c40cefbc3069cc515f7c0da89da9"
+    },
+    "avatarFirstEntrySeal": {
+      "path": "../../../.agent-runs/dropdown-menu/implement-20/20261112-font-nova-repair/nova-reversal-current-30c-avatar-first-entry/seal.json",
+      "sha256": "2d8ef483b3a247fcd157d6de6e49edaad48f701c7e07dc7fa150fb921c29020f"
+    },
+    "finalIndependentAudit": {
+      "path": "../../../.agent-runs/dropdown-menu/implement-20/20261112-font-nova-repair/nova-reversal-current-30d-priority-final/report.md",
+      "sha256": "02764f7b13a85bfe7b5ec1e7af31a8ab20d89cd724eec64e5a4405b047fe7dc2"
+    },
+    "finalIndependentReceipt": {
+      "path": "../../../.agent-runs/dropdown-menu/implement-20/20261112-font-nova-repair/nova-reversal-current-30d-priority-final/terminal-receipt.json",
+      "sha256": "940b6b6a74d43cb431c930e43937afce70235fa4158091aeff728bc3b5dc5f10"
+    },
+    "finalIndependentSeal": {
+      "path": "../../../.agent-runs/dropdown-menu/implement-20/20261112-font-nova-repair/nova-reversal-current-30d-priority-final/seal.json",
+      "sha256": "5b6beaac89aef3ba8238fb128e3410f27d80fc80118db5e51d5cc08a09476430"
+    },
+    "aggregate30Verify": {
+      "path": "../../../.agent-runs/dropdown-menu/implement-20/20261112-font-nova-repair/nova-reversal-current-40/30-verify-terminal-receipt.json",
+      "sha256": "8afed456e24c58ef225b75f0d7562962eeacb58bee8bf31fcd055c30352b1038"
+    }
+  },
+  "status": "ACCEPTED",
+  "verifiedAt": "2026-11-13T01:54:44.871114+08:00"
+}

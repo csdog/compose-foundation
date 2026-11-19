@@ -1,0 +1,191 @@
+{
+  "component": "Context Menu",
+  "status": "current acceptance",
+  "officialPage": "https://ui.shadcn.com/docs/components/base/context-menu",
+  "upstreamRevision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+  "pinnedAt": "2026-11-12",
+  "verifiedAt": "2026-11-12",
+  "dateMeaning": "Pinned source acquisition is recorded by goal-20261112/official-source-pin.json; verifiedAt is local byte rehash, not fresh live page navigation. Original calibrated official image/DOM reference archive is reused read-only.",
+  "sourcePin": {
+    "path": ".agent-runs/context-menu/verify-30/goal-20261112/official-source-pin.json",
+    "sha256": "8704c78b1e6ed67ade48462fc5620bfafa18cbbe7357021efa0540580169554a"
+  },
+  "files": [
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/content/docs/components/base/context-menu.mdx",
+      "path": ".agent-runs/context-menu/verify-30/goal-20261112/upstream-sources/context-menu.mdx",
+      "sha256": "15ad5959bcb215afe5de3fd7d667a3cb9a8869accf7493565f4060b06c820156",
+      "matches_r1": true,
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "pinnedAt": "2026-11-12",
+      "verifiedAt": "2026-11-12"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/registry/bases/base/ui/context-menu.tsx",
+      "path": ".agent-runs/context-menu/verify-30/goal-20261112/upstream-sources/context-menu.tsx",
+      "sha256": "e4359306eb2242681388aa1b3a541de49dce46c375db1593f8d3362f6bb023ca",
+      "matches_r1": true,
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "pinnedAt": "2026-11-12",
+      "verifiedAt": "2026-11-12"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/registry/styles/style-nova.css",
+      "path": ".agent-runs/context-menu/verify-30/goal-20261112/upstream-sources/style-nova.css",
+      "sha256": "fd9803ec398290c306b377a46a769cad0c7ff024bf6a626993c113cacc20f16e",
+      "matches_r1": true,
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "pinnedAt": "2026-11-12",
+      "verifiedAt": "2026-11-12"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/context-menu-basic.tsx",
+      "path": ".agent-runs/context-menu/verify-30/goal-20261112/upstream-examples/context-menu-basic.tsx",
+      "sha256": "de31f299a35bf6e4d52dc9678436867509202795dcaf11efcf514fcf69315209",
+      "matches_r1": true,
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "pinnedAt": "2026-11-12",
+      "verifiedAt": "2026-11-12"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/context-menu-checkboxes.tsx",
+      "path": ".agent-runs/context-menu/verify-30/goal-20261112/upstream-examples/context-menu-checkboxes.tsx",
+      "sha256": "04c68bf3f24097877d65ffb3e36da7f10d737016f1e9321522952f7eefb0400f",
+      "matches_r1": true,
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "pinnedAt": "2026-11-12",
+      "verifiedAt": "2026-11-12"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/context-menu-demo.tsx",
+      "path": ".agent-runs/context-menu/verify-30/goal-20261112/upstream-examples/context-menu-demo.tsx",
+      "sha256": "cd7a5a9c5e0757cbd8e8d4d98b6085c4f32656b1125c416b53d4650f1ab02419",
+      "matches_r1": true,
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "pinnedAt": "2026-11-12",
+      "verifiedAt": "2026-11-12"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/context-menu-destructive.tsx",
+      "path": ".agent-runs/context-menu/verify-30/goal-20261112/upstream-examples/context-menu-destructive.tsx",
+      "sha256": "d49426cb6dcf5b49946a6569ee84b573c28e6a756620ff1f303e5faa1650646c",
+      "matches_r1": true,
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "pinnedAt": "2026-11-12",
+      "verifiedAt": "2026-11-12"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/context-menu-groups.tsx",
+      "path": ".agent-runs/context-menu/verify-30/goal-20261112/upstream-examples/context-menu-groups.tsx",
+      "sha256": "93099773b4ec86edde7ea347969b23ed3c1bec8bd3832196ce52c30c336ab0c2",
+      "matches_r1": true,
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "pinnedAt": "2026-11-12",
+      "verifiedAt": "2026-11-12"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/context-menu-icons.tsx",
+      "path": ".agent-runs/context-menu/verify-30/goal-20261112/upstream-examples/context-menu-icons.tsx",
+      "sha256": "1603db6afc4416d78ca8204160b94062a4cfc41d37a7276465e482dcf9c09f3b",
+      "matches_r1": true,
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "pinnedAt": "2026-11-12",
+      "verifiedAt": "2026-11-12"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/context-menu-radio.tsx",
+      "path": ".agent-runs/context-menu/verify-30/goal-20261112/upstream-examples/context-menu-radio.tsx",
+      "sha256": "ade0086d93efbd84b910cce5da581b4e945e760e5bce0df3000b2c8cb72259c7",
+      "matches_r1": true,
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "pinnedAt": "2026-11-12",
+      "verifiedAt": "2026-11-12"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/context-menu-rtl.tsx",
+      "path": ".agent-runs/context-menu/verify-30/goal-20261112/upstream-examples/context-menu-rtl.tsx",
+      "sha256": "3b27b3f7761764af749b91b27f65015f5372edc1a28b4f0b92956d8f4a78be7b",
+      "matches_r1": true,
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "pinnedAt": "2026-11-12",
+      "verifiedAt": "2026-11-12"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/context-menu-shortcuts.tsx",
+      "path": ".agent-runs/context-menu/verify-30/goal-20261112/upstream-examples/context-menu-shortcuts.tsx",
+      "sha256": "b68dbcfac63eb2a15fd66ccd9c28cabd25c093deb3ca152ffb60e22b99d8fbcd",
+      "matches_r1": true,
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "pinnedAt": "2026-11-12",
+      "verifiedAt": "2026-11-12"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/context-menu-sides.tsx",
+      "path": ".agent-runs/context-menu/verify-30/goal-20261112/upstream-examples/context-menu-sides.tsx",
+      "sha256": "ea7dfbcc23a3e0ae64b85e4bdcefe29c1fdefb589a5ff8b446f3d9eb9fcf0f7c",
+      "matches_r1": true,
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "pinnedAt": "2026-11-12",
+      "verifiedAt": "2026-11-12"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/examples/base/context-menu-submenu.tsx",
+      "path": ".agent-runs/context-menu/verify-30/goal-20261112/upstream-examples/context-menu-submenu.tsx",
+      "sha256": "e8ffe489c2ab9cfb90e87f28dfaeeb676bddcf768cfad70fb51a219fb57fca74",
+      "matches_r1": true,
+      "revision": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "pinnedAt": "2026-11-12",
+      "verifiedAt": "2026-11-12"
+    }
+  ],
+  "fileCount": 14,
+  "currentSourceHashes": {
+    "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/ContextMenuDoc.kt": "6977ed1e33b3f5397715b638f53fc88002748772f799326e002b84b76f1067d6",
+    "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/ContextMenuExamplesTest.kt": "185010e7eb57995a5ce9eb5b761a56f72f9f6717cfdf107d4de8c83be630c39e",
+    "gradle/compose-web-ui/build.gradle.kts": "fda36716885b7ee47c2c987be7953dd57cc71bd7cc3f79f839a47fe5d2230f1c",
+    "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/contextmenu/ContextMenu.kt": "b001b20d507e70c3a1370f19256dbd82dae0d60f75546a1866c6fbfe200c57ce",
+    "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/contextmenu/ContextMenuKeyboard.kt": "7224e3de563484c82242fc2b55de85663aca459e65a975c5a6b70f064cf6ef0a",
+    "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/contextmenu/ContextMenuPosition.kt": "dfada419dffdef1cfc6bc8ad2ef6346ab936dfcce53ac09bb84c9c0582fb0398",
+    "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/contextmenu/MenuEscapeLayers.kt": "9d4e16290d9cb0a01139b0e65997c24777ae7e8969aab337c0f23ecacded2fb1",
+    "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/contextmenu/ContextMenuPanelTest.kt": "9dd45be39fa71108f72cfda3ea1554c2b5e088eeb472a3ef28ede0e97fad3d5b",
+    "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/contextmenu/ContextMenuPositionTest.kt": "2510c511bf94020b5867f831d8e13acc961336c257cc5b46a64e8ae6cd5209b1",
+    "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/contextmenu/ContextMenuScreenshotTest.kt": "0acd3e8f8a73c0a512fdf19f65d3474453a72bee46bb34afcbee878c9114c20b"
+  },
+  "stage30": {
+    "path": ".agent-runs/context-menu/verify-30/goal-20261112/30-verify-terminal-receipt.json",
+    "sha256": "37136d157e35c02f68670c390b2fce322d3e5b7f8fddd8e64e8e252484afd4aa"
+  },
+  "currentEvidence": {
+    "current-tree-30a-final": {
+      "path": ".agent-runs/context-menu/verify-30/goal-20261112/current-tree-30a-final/terminal-receipt.json",
+      "sha256": "0d8239d4b351c49e8e2b0558e5b1bda663c88469793617a0a524048f720c0718"
+    },
+    "current-tree-30b": {
+      "path": ".agent-runs/context-menu/verify-30/goal-20261112/current-tree-30b/terminal-receipt.json",
+      "sha256": "881aa5beba627256a190b4bdfab96855f30a5ca99514a2202c5160894708db03"
+    },
+    "current-tree-30c": {
+      "path": ".agent-runs/context-menu/verify-30/goal-20261112/current-tree-30c/terminal-receipt.json",
+      "sha256": "98fd995d1cf30b4cea9e4f17d4f2ea66ec4a7aa1c38e2da77ecda555db5f01fe"
+    },
+    "current-tree-30d": {
+      "path": ".agent-runs/context-menu/verify-30/goal-20261112/current-tree-30d/terminal-receipt.json",
+      "sha256": "d88105e761e4e81740417c1f4298cdbb88c173f71a85e37f075ce7a5a8952546"
+    }
+  },
+  "browserBinding": {
+    "manifest": ".agent-runs/context-menu/verify-30/goal-20261112/current-tree-30b/manifest.json",
+    "manifestSha256": "b4f34037ebbe5f016ce450a98f53aabceee94d00235a5075259cce89827a11c5",
+    "loadedBodies": ".agent-runs/context-menu/verify-30/goal-20261112/current-tree-30c/loaded-body-binding.json",
+    "loadedBodiesSha256": "cc9da78ee2bd7393cdf71cfe89e2655c7d3d95b359a67a924724403a30280492",
+    "sameSessionBodyRecords": 152,
+    "jsFiles": 48,
+    "wasmFiles": 44
+  },
+  "history": {
+    "path": "docs/web-parity/context-menu-r1/README.md",
+    "status": "historical only; not current acceptance"
+  },
+  "logAppendScope": ".agent-runs/context-menu/verify-30/goal-20261112/current-tree-40/30a-log-append-scope.json",
+  "constantsChanged": []
+}

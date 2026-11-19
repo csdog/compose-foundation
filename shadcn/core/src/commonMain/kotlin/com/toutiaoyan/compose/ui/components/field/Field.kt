@@ -111,20 +111,9 @@ fun FieldSet(
     legendVariant: FieldLegendVariant = FieldLegendVariant.Legend,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    if (currentTheme.activePreset == StylePreset.Nova && legendVariant == FieldLegendVariant.Label) {
-        // HTML legend sits outside the fieldset body's flex gap.
-        val state = remember { MutableStyleState(MutableInteractionSource()) }
-        CompositionLocalProvider(LocalFieldSetDisabled provides (disabled || LocalFieldSetDisabled.current)) {
-            Column(modifier.fillMaxWidth().styleable(state, style)) {
-                FieldLegend(legend, variant = legendVariant)
-                FieldSet(content = content)
-            }
-        }
-    } else {
-        FieldSet(modifier = modifier, style = style, disabled = disabled) {
-            FieldLegend(legend, variant = legendVariant)
-            content()
-        }
+    FieldSet(modifier = modifier, style = style, disabled = disabled) {
+        FieldLegend(legend, variant = legendVariant)
+        content()
     }
 }
 

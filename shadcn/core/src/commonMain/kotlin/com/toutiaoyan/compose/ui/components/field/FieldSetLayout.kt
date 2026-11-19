@@ -105,11 +105,8 @@ private class FieldSetContentScope : ColumnScope {
 private val fieldSetContentScope = FieldSetContentScope()
 
 /**
- * Vertical stack matching `.cn-field-set`:
- * - gap 16 (Nova `gap-4`), or 12 when a direct child is a `checkbox-group`
- *   (`has-[>[data-slot=checkbox-group]]:gap-3`);
- * - `FieldDescription` immediately after a `legend`-variant `FieldLegend` loses 6dp
- *   (`[[data-variant=legend]+&]:-mt-1.5`), while the legend keeps its 6dp bottom margin.
+ * Nova uses a 16dp body gap, or 12dp for a direct checkbox or radio group.
+ * The first legend sits outside the body gap, as it does in an HTML fieldset.
  */
 @Composable
 internal fun FieldSetLayout(
@@ -122,30 +119,22 @@ internal fun FieldSetLayout(
         val data = children.map { it.parentData as? FieldSetChildData }
         val denseGap = (spacing - 4.dp).coerceAtLeast(0.dp).roundToPx()
         val effectiveGap = if (data.any { it?.dense == true }) denseGap else gap
-        val legendToDescription = (effectiveGap - 6.dp.roundToPx()).coerceAtLeast(0)
+        val leadKind = data.firstOrNull()?.kind
+        val hasLeadLegend = leadKind == FieldSetChildKind.Legend || leadKind == FieldSetChildKind.LegendLabel
 
         fun gapBefore(index: Int): Int {
-            if (index == 0) return 0
-            val previous = data[index - 1]
-            val current = data[index]
-            val base = effectiveGap
-            val legendDescriptionGap =
-                if (previous?.kind == FieldSetChildKind.Legend &&
-                    current?.kind == FieldSetChildKind.Description
-                ) {
-                    legendToDescription
-                } else {
-                    base
+            val previous = data.getOrNull(index - 1)?.kind
+            val description = data[index]?.kind == FieldSetChildKind.Description
+            val base = if (index == 0 || (index == 1 && hasLeadLegend)) 0 else effectiveGap
+            // The legend-adjacent selector overrides the less specific penultimate-child rule.
+            val topMargin =
+                when {
+                    !description -> 0
+                    previous == FieldSetChildKind.Legend -> -6.dp.roundToPx()
+                    index == children.lastIndex - 1 -> -4.dp.roundToPx()
+                    else -> 0
                 }
-            // Nova's `:nth-last-child(2)` description rule applies a -mt-1
-            // when the direct FieldDescription is followed by one final child.
-            val trailingDescriptionMargin =
-                if (index == children.lastIndex && previous?.kind == FieldSetChildKind.Description) {
-                    4.dp.roundToPx()
-                } else {
-                    0
-                }
-            return (legendDescriptionGap - trailingDescriptionMargin).coerceAtLeast(0)
+            return base + topMargin
         }
 
         val totalGap = children.indices.sumOf { gapBefore(it) }
@@ -154,9 +143,10 @@ internal fun FieldSetLayout(
         var fixedHeight = 0
         children.forEachIndexed { index, child ->
             if (data[index]?.weight != null) return@forEachIndexed
+            val reservedGap = if (index == 0 && hasLeadLegend) 0 else totalGap
             val maxHeight =
                 if (constraints.hasBoundedHeight) {
-                    (constraints.maxHeight - fixedHeight - totalGap).coerceAtLeast(0)
+                    (constraints.maxHeight - fixedHeight - reservedGap).coerceAtLeast(0)
                 } else {
                     Constraints.Infinity
                 }

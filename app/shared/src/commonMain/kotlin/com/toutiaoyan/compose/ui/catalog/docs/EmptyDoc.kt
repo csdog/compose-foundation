@@ -91,13 +91,21 @@ val emptyDoc =
             """
             Empty {
                 EmptyHeader {
-                    EmptyMedia(variant = EmptyMediaVariant.Icon) { Icon(Lucide.FolderCode) }
+                    EmptyMedia(variant = EmptyMediaVariant.Icon) {
+                        Image(
+                            Lucide.FolderCode,
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp),
+                            colorFilter = ColorFilter.tint(currentTheme.colors.foreground),
+                        )
+                    }
                     EmptyTitle("No data")
                     EmptyDescription("No data found")
                 }
                 EmptyContent { Button("Add data", onClick = {}) }
             }
             """.trimIndent(),
+        beforeCompositionMarkdown = "Use the following composition to build an `Empty` state:",
         compositionCode =
             """
             Empty
@@ -113,7 +121,12 @@ val emptyDoc =
                     "Empty",
                     (
                         "The root owns centered layout and spacing. Nova defaults to " +
-                            "no visible border; Outline adds a dashed border."
+                            "no visible border. Outline adds a dashed border. Use `modifier` and `style` " +
+                            "for Compose layout and styling. Supply nested content through composable " +
+                            "slots. Kotlin extension: `variant` " +
+                            "(`EmptyVariant.Outline` maps the Outline recipe's border utilities), " +
+                            "`spacing`, `padding` and `radius` are local controls. The `title` / " +
+                            "optional `description` / `media` overload is a slot-composition shortcut."
                     ),
                     listOf(
                         ApiProperty("modifier / style", "Modifier / Style", "Default"),
@@ -127,7 +140,9 @@ val emptyDoc =
                     "EmptyHeader",
                     (
                         "Centers the media, title and description, with an 8dp gap and " +
-                            "a default maximum width of 384dp."
+                            "a default maximum width of 384dp. Kotlin extension: the `title` / " +
+                            "optional `description` / `media` overload builds those slots for you. " +
+                            "`mediaVariant` selects the nested media variant."
                     ),
                     listOf(
                         ApiProperty("modifier / style", "Modifier / Style", "Default"),
@@ -138,7 +153,9 @@ val emptyDoc =
                     "EmptyMedia",
                     (
                         "Use Default for arbitrary content or Icon for the 32dp muted " +
-                            "badge. Supply a 16dp vector in the icon slot."
+                            "badge. These map to official `default` (the default) and `icon`. " +
+                            "Supply a 16dp vector in the icon slot. Kotlin extension: `size` " +
+                            "customizes the Icon badge size."
                     ),
                     listOf(
                         ApiProperty("variant", "EmptyMediaVariant", "Default"),
@@ -151,7 +168,11 @@ val emptyDoc =
                     "EmptyTitle",
                     (
                         "The Nova default title uses 14/20 typography, medium weight " +
-                            "and tight tracking."
+                            "and tight tracking. Kotlin extension: `TextVariant` and explicit " +
+                            "`lineBreak` overloads customize the title. String / lambda text " +
+                            "parameters replace HTML children. `EmptyTitleDefaults.Balanced` " +
+                            "uses Compose `LineBreak.Heading`, an approximation of CSS " +
+                            "`text-balance` wrapping."
                     ),
                     listOf(
                         ApiProperty("text", "String / () -> String", "Required"),
@@ -164,7 +185,12 @@ val emptyDoc =
                     "EmptyDescription",
                     (
                         "Muted, centered description text. AnnotatedString preserves " +
-                            "inline links and their interaction styles."
+                            "inline links and their interaction styles. Kotlin extension: String / " +
+                            "AnnotatedString / lambda text overloads replace HTML children, and " +
+                            "explicit `lineBreak` overloads customize wrapping. " +
+                            "`EmptyDescriptionDefaults.Balanced` uses Compose `LineBreak.Heading`. " +
+                            "`Pretty` uses `LineBreak.Paragraph` for the Background recipe. These " +
+                            "approximate CSS `text-balance` / `text-pretty` wrapping."
                     ),
                     listOf(
                         ApiProperty("text", "String / AnnotatedString / () -> String", "Required"),
@@ -176,7 +202,9 @@ val emptyDoc =
                     "EmptyContent",
                     (
                         "The action area fills available width up to 384dp, with 10dp " +
-                            "vertical spacing. Compose a Row for horizontal actions."
+                            "vertical spacing. Compose a Row for horizontal actions such as buttons, " +
+                            "inputs or links. Kotlin extension: `spacing` customizes the action gap. " +
+                            "The String-body overload is a shortcut for a text-only content slot."
                     ),
                     listOf(
                         ApiProperty("spacing", "Dp", "10.dp"),
@@ -287,7 +315,11 @@ val emptyDoc =
                                 )
                             }
                             EmptyContent {
-                                Button(onClick = {}, variant = ButtonVariant.Outline) {
+                                Button(
+                                    onClick = {},
+                                    variant = ButtonVariant.Outline,
+                                    iconPlacement = ButtonIconPlacement.Start,
+                                ) {
                                     Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
                                         EmptyRecipeGlyph(Lucide.RefreshCcw)
                                         Text { "Refresh" }
@@ -326,7 +358,11 @@ val emptyDoc =
                                 )
                             }
                             EmptyContent {
-                                Button(onClick = {}, variant = ButtonVariant.Outline) {
+                                Button(
+                                    onClick = {},
+                                    variant = ButtonVariant.Outline,
+                                    iconPlacement = ButtonIconPlacement.Start,
+                                ) {
                                     Row(
                                         horizontalArrangement =
                                             Arrangement.spacedBy(6.dp),

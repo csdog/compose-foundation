@@ -1,4 +1,5 @@
 rootProject.name = "compose-foundation"
+includeBuild("gradle/compose-web-ui")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {

@@ -79,7 +79,7 @@ class CheckboxViewportTest(private val width: Int, private val dark: Boolean) {
             rule.onNodeWithText(
                 "Select the items you want to show on the desktop.",
             ).fetchSemanticsNode().boundsInRoot
-        assertEquals(26f, description.top - legend.top, 1f)
+        assertEquals(22f, description.top - legend.top, 1f)
         val nodes = rule.onAllNodes(checkboxes).fetchSemanticsNodes()
         assertTrue(nodes[1].boundsInRoot.top - nodes[0].boundsInRoot.top in 30f..33f)
     }

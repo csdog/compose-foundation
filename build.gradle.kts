@@ -70,3 +70,54 @@ tasks.register<Exec>("installGitHooks") {
     commandLine("sh", file("scripts/install-git-hooks.sh").absolutePath)
     isIgnoreExitValue = false
 }
+
+// Keep the patched UI and its compatible runtime train on Kotlin Web targets only.
+val webComposeGroups = setOf(
+    "org.jetbrains.compose.animation",
+    "org.jetbrains.compose.foundation",
+    "org.jetbrains.compose.runtime",
+    "org.jetbrains.compose.ui",
+)
+
+subprojects {
+    configurations.configureEach {
+        val configuration = this
+        // Compose's shared JS/Wasm asset configuration has no target attributes.
+        // It feeds only Web processResources/linkSync (Compose 1.12.2 configureWebApplication.kt).
+        if (name == "COMPOSE_SKIKO_JS_WASM_RUNTIME") {
+            attributes.attribute(
+                org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType.attribute,
+                org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType.js,
+            )
+            attributes.attribute(
+                org.gradle.api.attributes.Usage.USAGE_ATTRIBUTE,
+                objects.named(org.gradle.api.attributes.Usage::class.java, "skiko-runtime"),
+            )
+        }
+        resolutionStrategy.eachDependency {
+            val platform = configuration.attributes.getAttribute(
+                org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType.attribute,
+            )
+            val wasmTarget = configuration.attributes.getAttribute(
+                org.jetbrains.kotlin.gradle.targets.js.KotlinWasmTargetAttribute.wasmTargetAttribute,
+            )
+            val isWeb = platform == org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType.js ||
+                (platform == org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType.wasm && wasmTarget == org.jetbrains.kotlin.gradle.targets.js.KotlinWasmTargetAttribute.js)
+            if (isWeb) {
+                when {
+                    requested.group == "org.jetbrains.compose.ui" && requested.name in setOf("ui", "ui-js", "ui-wasm-js") ->
+                        useTarget("com.toutiaoyan.compose.internal:compose-web-ui-invalid:1.13.0-beta01-invalid.1")
+                    requested.group == "org.jetbrains.skiko" && requested.name == "skiko-js-wasm-runtime" ->
+                        useTarget("org.jetbrains.skiko:skiko:0.156.0")
+                    requested.group in webComposeGroups ||
+                        (requested.group == "org.jetbrains.compose.components" &&
+                            requested.name in setOf("components-resources", "components-resources-js", "components-resources-wasmJs")) ->
+                        useVersion("1.13.0-beta01")
+                    requested.group == "org.jetbrains.skiko" &&
+                        requested.name in setOf("skiko", "skiko-js", "skiko-wasm-js") ->
+                        useVersion("0.156.0")
+                }
+            }
+        }
+    }
+}

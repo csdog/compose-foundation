@@ -14,7 +14,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.foundation.style.hovered
 import androidx.compose.ui.input.pointer.PointerEventType
-import androidx.compose.ui.input.pointer.onPointerEvent
+import androidx.compose.ui.input.pointer.pointerInput
 import com.toutiaoyan.compose.ui.icons.NovaCommandKey
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.heightIn
@@ -709,8 +709,14 @@ fun CommandItem(
         modifier =
             modifier.bringIntoViewRequester(bringIntoView)
                 .onGloballyPositioned { ctrl.itemPositions[itemId] = it.positionInRoot() }
-                .onPointerEvent(PointerEventType.Enter) {
-                    if (resolvedEnabled) ctrl.items.firstOrNull { it.id == itemId }?.let(ctrl::highlight)
+                .pointerInput(ctrl, itemId, resolvedEnabled) {
+                    awaitPointerEventScope {
+                        while (true) {
+                            if (awaitPointerEvent().type == PointerEventType.Enter && resolvedEnabled) {
+                                ctrl.items.firstOrNull { it.id == itemId }?.let(ctrl::highlight)
+                            }
+                        }
+                    }
                 }
                 .semantics {
                     role = Role.Button

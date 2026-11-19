@@ -1,0 +1,12 @@
+2026-11-17T22:10:23+0800	frame-clip-offset	1	41	1	input/logs/20261117T220942-frame-clip-offset-85187.log
+2026-11-17T22:11:28+0800	editing-rtl	1	15	1	input/logs/20261117T221113-editing-rtl-87512.log
+2026-11-17T22:11:49+0800	frame-clock	1	49	1	input/logs/20261117T221100-frame-clock-86252.log
+2026-11-17T22:11:54+0800	editing-rtl-chrome	1	0	5	input/logs/20261117T221154-editing-rtl-chrome-90417.log
+2026-11-17T22:12:28+0800	acceptance-file	0	17	1	input/logs/20261117T221211-acceptance-file-90525.log
+2026-11-17T22:13:10+0800	editing-rtl-chrome-app	1	50	1	input/logs/20261117T221220-editing-rtl-chrome-app-90569.log
+2026-11-17T22:13:55+0800	acceptance-matrix	0	87	1	input/logs/20261117T221228-acceptance-matrix-90514.log
+2026-11-17T22:14:20+0800	acceptance-frame-clock	0	51	1	input/logs/20261117T221329-acceptance-frame-clock-90912.log
+2026-11-17T22:14:42+0800	label-editing-rtl	1	89	1	input/logs/20261117T221313-label-editing-rtl-90822.log
+2026-11-17T22:14:56+0800	editing-insert-rtl	0	32	1	input/logs/20261117T221424-editing-insert-rtl-91861.log
+2026-11-17T22:15:10+0800	baseline-label-editing	1	90	1	input/logs/20261117T221340-baseline-label-editing-91054.log
+2026-11-17T22:15:55+0800	acceptance-routing	0	22	1	input/logs/20261117T221533-acceptance-routing-92515.log

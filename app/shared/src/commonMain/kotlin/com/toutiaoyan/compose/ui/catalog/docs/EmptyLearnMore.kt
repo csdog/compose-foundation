@@ -62,6 +62,7 @@ internal fun EmptyLearnMore(
     val styleState = rememberUpdatedStyleState(interactions)
     Row(
         Modifier.testTag("empty-learn-more")
+            .then(emptyLinkSpaceModifier())
             .semantics(mergeDescendants = true) {
                 role = Role.Button
                 onClick {

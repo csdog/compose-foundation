@@ -58,6 +58,7 @@ import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.components.button.ButtonAnimation
 import com.toutiaoyan.compose.ui.components.field.LocalFieldSetDisabled
 import com.toutiaoyan.compose.ui.components.field.FieldLabel
+import com.toutiaoyan.compose.ui.components.field.fieldSetChild
 import com.toutiaoyan.compose.ui.components.label.Label
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextColors
@@ -330,8 +331,10 @@ fun RadioGroup(
     }
     val controller = RadioGroupController(current, setValue, disabled || LocalFieldSetDisabled.current, required)
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val nova = currentTheme.activePreset == StylePreset.Nova
     val grouped =
         modifier
+            .then(if (nova) Modifier.fieldSetChild(dense = true) else Modifier)
             .selectableGroup()
             .then(
                 if (contentDescription != null) {
@@ -355,7 +358,7 @@ fun RadioGroup(
                 modifier = grouped,
                 verticalArrangement =
                     Arrangement.spacedBy(
-                        if (currentTheme.activePreset == StylePreset.Nova) 8.dp else 0.dp,
+                        if (nova) 8.dp else 0.dp,
                     ),
             ) {
                 RadioGroupScope().content()

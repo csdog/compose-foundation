@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.runtime.CompositionLocalProvider
+import com.toutiaoyan.compose.ui.components.radiobutton.RadioGroup
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import org.junit.Rule
@@ -99,6 +100,91 @@ class FieldSetLayoutTest {
         listOf("a", "b", "end").forEach { tag ->
             assertEquals(bounds("ref-$tag").left - bounds("column").left, bounds(tag).left - bounds("set").left)
         }
+    }
+
+    @Test fun penultimateDescriptionReducesTheGapAboveIt() {
+        rule.setContent {
+            Theme(preset = StylePreset.Nova) {
+                FieldSet {
+                    Box(Modifier.size(10.dp).testTag("before"))
+                    FieldDescription("Description", modifier = Modifier.testTag("description"))
+                    Box(Modifier.size(10.dp).testTag("after"))
+                }
+            }
+        }
+        assertEquals(12f, bounds("description").top - bounds("before").bottom)
+        assertEquals(16f, bounds("after").top - bounds("description").bottom)
+    }
+
+    @Test fun onlyDirectRadioGroupMakesFieldSetDense() {
+        rule.setContent {
+            Theme(preset = StylePreset.Nova) {
+                Column {
+                    FieldSet {
+                        Box(Modifier.size(10.dp).testTag("direct-before"))
+                        RadioGroup(Modifier.testTag("direct")) {
+                            Box(Modifier.size(10.dp))
+                        }
+                    }
+                    FieldSet {
+                        Box(Modifier.size(10.dp).testTag("nested-before"))
+                        Box(Modifier.testTag("wrapper")) {
+                            RadioGroup {
+                                Box(Modifier.size(10.dp))
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        assertEquals(12f, bounds("direct").top - bounds("direct-before").bottom)
+        assertEquals(16f, bounds("wrapper").top - bounds("nested-before").bottom)
+    }
+
+    @Test fun leadingPenultimateDescriptionOffsetsTheBody() {
+        rule.setContent {
+            Theme(preset = StylePreset.Nova) {
+                FieldSet(Modifier.testTag("set")) {
+                    FieldDescription("Description")
+                    Box(Modifier.size(10.dp).testTag("control"))
+                }
+            }
+        }
+        assertEquals(33f, bounds("control").top - bounds("set").top)
+        rule.onNodeWithTag("set").assertHeightIsEqualTo(43.dp)
+    }
+
+    @Test fun leadingLabelLegendKeepsItsHeightInABoundedFieldSet() {
+        rule.setContent {
+            Theme(preset = StylePreset.Nova) {
+                FieldSet(Modifier.height(36.dp)) {
+                    FieldLegend(
+                        "Plan",
+                        modifier = Modifier.testTag("legend"),
+                        variant = FieldLegendVariant.Label,
+                    )
+                    Box(Modifier.size(10.dp))
+                    Box(Modifier.size(10.dp))
+                }
+            }
+        }
+        rule.onNodeWithTag("legend").assertHeightIsEqualTo(26.dp)
+    }
+
+    @Test fun labelLegendAndDirectRadioGroupUseOfficialOffsets() {
+        rule.setContent {
+            Theme(preset = StylePreset.Nova) {
+                FieldSet(legend = "Plan", legendVariant = FieldLegendVariant.Label) {
+                    FieldDescription("Description", modifier = Modifier.testTag("description"))
+                    RadioGroup(Modifier.testTag("radio")) {
+                        Box(Modifier.size(10.dp))
+                    }
+                }
+            }
+        }
+        val legend = rule.onNodeWithText("Plan").fetchSemanticsNode().boundsInRoot
+        assertEquals(22f, bounds("description").top - legend.top)
+        assertEquals(12f, bounds("radio").top - bounds("description").bottom)
     }
 
     private fun bounds(tag: String) = rule.onNodeWithTag(tag).fetchSemanticsNode().boundsInRoot

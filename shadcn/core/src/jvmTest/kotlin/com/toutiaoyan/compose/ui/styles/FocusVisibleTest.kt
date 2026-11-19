@@ -48,17 +48,30 @@ class FocusVisibleTest : ScreenshotTest() {
             }
         }
         val target = composeRule.onNodeWithTag("target")
+        val surface = composeRule.onNodeWithTag("surface")
+        // The 16 dp indicator is centered in the larger touch target. Sample 2 dp outside its left edge.
+        val ringOffset = with(composeRule.density) { 8.dp.roundToPx() + 2.dp.roundToPx() }
+
+        fun ringPixel(): Color {
+            val center = target.fetchSemanticsNode().boundsInRoot.center
+            val origin = surface.fetchSemanticsNode().boundsInRoot.topLeft
+            val pixels = surface.captureToImage().toPixelMap()
+            return pixels[(center.x - origin.x).toInt() - ringOffset, (center.y - origin.y).toInt()]
+        }
+
         target.requestFocus()
         composeRule.runOnIdle { inputMode.requestInputMode(InputMode.Touch) }
         target.assertIsFocused().assertIsOff()
-        assertEquals(Color.White, outsidePixel(target))
+        assertEquals(InputMode.Touch, inputMode.inputMode)
+        assertEquals(Color.White, ringPixel())
         target.performKeyInput { pressKey(Key.Spacebar) }
         target.assertIsFocused().assertIsOn()
         assertEquals(InputMode.Keyboard, inputMode.inputMode)
-        assertTrue(outsidePixel(target) != Color.White, "Consumed activation key must reveal the ring")
+        assertTrue(ringPixel() != Color.White, "Consumed activation key must reveal the ring")
         composeRule.runOnIdle { inputMode.requestInputMode(InputMode.Touch) }
         target.assertIsFocused().assertIsOn()
-        assertEquals(Color.White, outsidePixel(target))
+        assertEquals(InputMode.Touch, inputMode.inputMode)
+        assertEquals(Color.White, ringPixel())
     }
 
     private fun checkRing(

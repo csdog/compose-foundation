@@ -330,10 +330,12 @@ fun EmptyTitle(
 
 /** Matches Nova `cn-empty-description`: `text-sm/relaxed` + muted. */
 object EmptyDescriptionDefaults {
-    /** Compose approximation of inherited CSS `text-balance`, not CSS balancing equivalence. */
+    /** Native Heading, with component-scoped line-count-preserving balance on Web. */
     val Balanced: LineBreak = LineBreak.Heading
 
-    /** Compose readability preset approximating the Background recipe's CSS `text-pretty`. */
+    /** Native Paragraph, with conservative trailing-word avoidance on Web.
+     * Explicit equal Paragraph values share this convention. This is not general CSS pretty equivalence.
+     */
     val Pretty: LineBreak = LineBreak.Paragraph
 }
 
@@ -354,12 +356,14 @@ fun EmptyDescription(
     lineBreak: LineBreak,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Text(
-        variant = TextVariant.BodyMedium,
-        style = style,
-        modifier = modifier.styleable(styleState, style),
-        textStyle = emptyDescriptionTextStyle(lineBreak),
-    ) { text }
+    val textStyle = emptyDescriptionTextStyle(lineBreak)
+    EmptyDescriptionWrapping(AnnotatedString(text)) {
+        Text(
+            modifier = modifier.styleable(styleState, style),
+            style = style,
+            textStyle = textStyle,
+        ) { text }
+    }
 }
 
 /** Rich description text, including inline links, with the same Empty typography. */
@@ -380,11 +384,14 @@ fun EmptyDescription(
     lineBreak: LineBreak,
 ) {
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
-    Text(
-        modifier = modifier.styleable(styleState, style),
-        style = style,
-        textStyle = emptyDescriptionTextStyle(lineBreak),
-    ) { text }
+    val textStyle = emptyDescriptionTextStyle(lineBreak)
+    EmptyDescriptionWrapping(text) {
+        Text(
+            modifier = modifier.styleable(styleState, style),
+            style = style,
+            textStyle = textStyle,
+        ) { text }
+    }
 }
 
 @Composable

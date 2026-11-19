@@ -8,6 +8,9 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
@@ -30,12 +33,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.positionInRoot
-import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.LayoutCoordinates
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
 import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.focus.*
-import com.toutiaoyan.compose.ui.components.contextmenu.LocalContextMenuNavigation
 import com.toutiaoyan.compose.ui.components.contextmenu.LocalContextMenuNova
 import com.toutiaoyan.compose.ui.components.contextmenu.LocalContextMenuLeadingSelectionIndicator
 import com.toutiaoyan.compose.ui.components.dropdownmenu.dropdownMenuInset
@@ -43,6 +47,7 @@ import com.toutiaoyan.compose.ui.components.overlay.overlayTypography
 import com.toutiaoyan.compose.ui.styles.rememberMenuLabelStyle
 import androidx.compose.ui.input.key.*
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -54,6 +59,7 @@ import com.toutiaoyan.compose.ui.theme.LocalContentColor
 import com.toutiaoyan.compose.ui.components.text.LocalDefaultTextStyle
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenu
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuContent
+import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuInitialFocus
 import com.toutiaoyan.compose.ui.components.dropdownmenu.dropdownMenuState
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
@@ -84,16 +90,82 @@ import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextVariant
 import com.toutiaoyan.compose.ui.styles.rememberMinTouchTargetStyle
 import com.toutiaoyan.compose.ui.styles.rememberPressMotionStyle
+import com.toutiaoyan.compose.ui.utils.keyboardInputMode
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
+
+internal data class MenubarFocusReturn(
+    val trigger: String,
+    val direction: FocusDirection? = null,
+)
 
 internal class MenubarNavigation {
     val triggers = linkedMapOf<String, FocusRequester>()
     val disabled = mutableSetOf<String>()
     val triggerCoordinates = mutableMapOf<String, LayoutCoordinates>()
-    var restoreFocus by mutableStateOf<String?>(null)
+    private var hoveredTrigger: String? = null
+    var activeTrigger by mutableStateOf<String?>(null)
+    var restoreFocus by mutableStateOf<MenubarFocusReturn?>(null)
+    var backTabTrigger by mutableStateOf<String?>(null)
     var focusLastFor: String? = null
     var focusFirstFor: String? = null
+
+    fun tabStop(direction: LayoutDirection): String? =
+        activeTrigger?.takeIf { it in triggers && it !in disabled } ?: enabledTriggers(direction).firstOrNull()
+
+    fun consumeOpenFocus(value: String): DropdownMenuInitialFocus {
+        val focus =
+            when (value) {
+                focusFirstFor -> DropdownMenuInitialFocus.First
+                focusLastFor -> DropdownMenuInitialFocus.Last
+                else -> DropdownMenuInitialFocus.None
+            }
+        clearOpenFocus()
+        return focus
+    }
+
+    fun clearOpenFocus() {
+        focusFirstFor = null
+        focusLastFor = null
+    }
+
+    fun focusTrigger(value: String): Boolean {
+        activeTrigger = value
+        return triggers[value]?.requestFocus() == true
+    }
+
+    fun exitByTab(
+        value: String,
+        backward: Boolean,
+        onOpenChange: (String?) -> Unit,
+    ) {
+        restoreFocus = MenubarFocusReturn(value, if (backward) FocusDirection.Previous else FocusDirection.Next)
+        onOpenChange(null)
+    }
+
+    fun hoveredAt(point: Offset): String? =
+        triggerCoordinates.entries.firstOrNull { (value, coordinates) ->
+            value !in disabled && coordinates.isAttached && coordinates.boundsInWindow().contains(point)
+        }?.key
+
+    fun hover(
+        value: String?,
+        open: String?,
+        onOpenChange: (String?) -> Unit,
+    ) {
+        if (hoveredTrigger == value) return
+        hoveredTrigger = value
+        if (value == null || open == null) return
+        if (value != open && value !in disabled) {
+            clearOpenFocus()
+            restoreFocus = null
+            onOpenChange(value)
+        }
+    }
+
+    fun leave(value: String) {
+        if (hoveredTrigger == value) hoveredTrigger = null
+    }
 
     fun enabledTriggers(direction: LayoutDirection): List<String> {
         val enabled = triggers.keys.filter { it !in disabled }
@@ -114,10 +186,13 @@ internal class MenubarNavigation {
         val values = enabledTriggers(direction)
         if (values.isEmpty()) return
         val next = values[(values.indexOf(from) + delta).mod(values.size)]
-        triggers[next]?.requestFocus()
         if (open) {
+            if (next == from) backTabTrigger = null
             focusFirstFor = next
+            focusLastFor = null
             onOpenChange(next)
+        } else {
+            focusTrigger(next)
         }
     }
 }
@@ -156,9 +231,42 @@ class MenubarScope internal constructor()
 /** Slot receiver for [MenubarTrigger] / [MenubarContent]. */
 class MenubarMenuScope internal constructor(
     val value: String,
+    internal val dropdownRootOwner: Any?,
 )
 
 private val LocalMenubarMenu = staticCompositionLocalOf<MenubarMenuScope?> { null }
+
+@Composable
+internal fun isInMenubarMenu(dropdownRootOwner: Any?): Boolean =
+    dropdownRootOwner != null && LocalMenubarMenu.current?.dropdownRootOwner === dropdownRootOwner
+
+internal class MenubarPopupNavigation(
+    private val value: String,
+    private val controller: MenubarController,
+) {
+    val popupOwnsFocus: Boolean
+        get() = controller.navigation.backTabTrigger != value
+
+    fun initialFocus(): DropdownMenuInitialFocus = controller.navigation.consumeOpenFocus(value)
+
+    fun exitByTab() = controller.navigation.exitByTab(value, false, controller.onOpenChange)
+
+    fun restoreOnEscape() {
+        controller.navigation.restoreFocus = MenubarFocusReturn(value)
+    }
+
+    fun discardFocusReturn() {
+        controller.navigation.restoreFocus = null
+    }
+}
+
+@Composable
+internal fun menubarPopupNavigation(dropdownRootOwner: Any?): MenubarPopupNavigation? =
+    if (isInMenubarMenu(dropdownRootOwner)) {
+        MenubarPopupNavigation(menubarMenuState().value, menubarController())
+    } else {
+        null
+    }
 
 /** Reads the nearest [MenubarMenu] scope. */
 @Composable
@@ -218,6 +326,15 @@ fun Menubar(
         onValueChange?.invoke(next)
     }
     val navigation = remember { MenubarNavigation() }
+    SideEffect {
+        if (navigation.backTabTrigger != openValue) navigation.backTabTrigger = null
+        if (openValue != null) {
+            if (openValue in navigation.triggers && openValue !in navigation.disabled) {
+                navigation.activeTrigger = openValue
+            }
+            if (navigation.restoreFocus?.trigger != openValue) navigation.restoreFocus = null
+        }
+    }
     val controller =
         MenubarController(
             openValue =
@@ -231,10 +348,14 @@ fun Menubar(
         )
     val nova = currentTheme.activePreset == StylePreset.Nova
     val barStyleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val pointerSurface = remember { MenubarPointerSurface() }
+    if (openValue != null) {
+        pointerSurface.ObserveOpen { point -> navigation.hover(navigation.hoveredAt(point), openValue, setOpen) }
+    }
     CompositionLocalProvider(LocalMenubar provides controller) {
         Row(
             modifier =
-                modifier
+                pointerSurface.observeRoot(modifier)
                     .then(
                         if (ariaLabel != null) {
                             Modifier.semantics { contentDescription = ariaLabel }
@@ -261,12 +382,13 @@ fun MenubarScope.MenubarMenu(
     content: @Composable MenubarMenuScope.() -> Unit,
 ) {
     val controller = menubarController()
-    val scope = remember(value) { MenubarMenuScope(value) }
     DropdownMenu(
         open = controller.openValue == value,
         onOpenChange = { controller.onOpenChange(if (it) value else null) },
         modal = controller.modal,
     ) {
+        val rootOwner = com.toutiaoyan.compose.ui.components.dropdownmenu.dropdownMenuRootOwner()
+        val scope = remember(value, rootOwner) { MenubarMenuScope(value, rootOwner) }
         CompositionLocalProvider(LocalMenubarMenu provides scope) { scope.content() }
     }
 }
@@ -286,6 +408,7 @@ fun MenubarMenuScope.MenubarTrigger(
     val nova = currentTheme.activePreset == StylePreset.Nova
     val direction = LocalLayoutDirection.current
     val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
     val navigation = controller.navigation
     val latestController by rememberUpdatedState(controller)
     DisposableEffect(navigation, value) {
@@ -294,21 +417,29 @@ fun MenubarMenuScope.MenubarTrigger(
             navigation.triggers.remove(value)
             navigation.disabled.remove(value)
             navigation.triggerCoordinates.remove(value)
+            navigation.leave(value)
         }
     }
     SideEffect { if (resolvedEnabled) navigation.disabled.remove(value) else navigation.disabled.add(value) }
-    LaunchedEffect(isOpen, navigation.restoreFocus) {
-        if (!isOpen && navigation.restoreFocus == value) {
+    LaunchedEffect(controller.openValue, navigation.restoreFocus, resolvedEnabled) {
+        val pending = navigation.restoreFocus
+        if (controller.openValue == null && pending?.trigger == value) {
             withFrameNanos { }
-            focusRequester.requestFocus()
-            navigation.restoreFocus = null
+            if (latestController.openValue == null && navigation.restoreFocus == pending) {
+                navigation.restoreFocus = null
+                if (resolvedEnabled && navigation.focusTrigger(value)) {
+                    pending.direction?.let { focusManager.moveFocus(it) }
+                }
+            }
         }
     }
     val interactionSource = remember { MutableInteractionSource() }
     val isHovered by interactionSource.collectIsHoveredAsState()
     LaunchedEffect(isHovered, resolvedEnabled) {
-        if (resolvedEnabled && isHovered && latestController.openValue != null) {
-            latestController.onOpenChange(value)
+        if (resolvedEnabled && isHovered) {
+            navigation.hover(value, latestController.openValue, latestController.onOpenChange)
+        } else {
+            navigation.leave(value)
         }
     }
     val styleState = rememberUpdatedStyleState(interactionSource)
@@ -319,6 +450,9 @@ fun MenubarMenuScope.MenubarTrigger(
             modifier
                 .onGloballyPositioned { navigation.triggerCoordinates[value] = it }
                 .focusRequester(focusRequester)
+                .onFocusChanged { if (it.isFocused) navigation.activeTrigger = value }
+                .focusProperties { canFocus = resolvedEnabled && navigation.tabStop(direction) == value }
+                .keyboardInputMode()
                 .onPreviewKeyEvent { event ->
                     if (event.type != KeyEventType.KeyDown || !resolvedEnabled) {
                         false
@@ -344,23 +478,39 @@ fun MenubarMenuScope.MenubarTrigger(
                                         values.lastOrNull()
                                     }
                                 if (target != null) {
-                                    navigation.triggers[target]?.requestFocus()
                                     if (controller.openValue != null) {
                                         navigation.focusFirstFor = target
+                                        navigation.focusLastFor = null
+                                        if (target == value) navigation.backTabTrigger = null
                                         controller.onOpenChange(target)
+                                    } else {
+                                        navigation.focusTrigger(target)
                                     }
                                 }
                                 true
                             }
+                            Key.Tab -> {
+                                if (isOpen) navigation.exitByTab(value, event.isShiftPressed, controller.onOpenChange)
+                                isOpen
+                            }
+                            Key.Escape -> {
+                                if (isOpen) {
+                                    navigation.restoreFocus = null
+                                    controller.onOpenChange(null)
+                                }
+                                isOpen
+                            }
                             Key.Enter, Key.Spacebar -> {
                                 navigation.focusFirstFor = value
                                 navigation.focusLastFor = null
+                                navigation.backTabTrigger = null
                                 controller.onOpenChange(value)
                                 true
                             }
                             Key.DirectionDown, Key.DirectionUp -> {
                                 navigation.focusFirstFor = if (event.key == Key.DirectionDown) value else null
                                 navigation.focusLastFor = if (event.key == Key.DirectionUp) value else null
+                                navigation.backTabTrigger = null
                                 controller.onOpenChange(value)
                                 true
                             }
@@ -380,8 +530,9 @@ fun MenubarMenuScope.MenubarTrigger(
                     enabled = resolvedEnabled,
                     role = Role.Button,
                     onClick = {
-                        navigation.focusLastFor = null
-                        navigation.focusFirstFor = null
+                        if (controller.openValue == null) navigation.activeTrigger = value
+                        navigation.clearOpenFocus()
+                        navigation.restoreFocus = null
                         controller.onOpenChange(if (isOpen) null else value)
                     },
                 )
@@ -467,10 +618,15 @@ fun MenubarMenuScope.MenubarContent(
                     }
                 }
             }.onPreviewKeyEvent { event ->
-                if (event.type == KeyEventType.KeyDown && event.key == Key.Escape) {
-                    // Let the shared menu handler dismiss the deepest open layer first.
-                    controller.navigation.restoreFocus = value
-                    false
+                if (event.type == KeyEventType.KeyDown && event.key == Key.Tab) {
+                    val navigation = controller.navigation
+                    if (event.isShiftPressed && navigation.focusTrigger(value)) {
+                        navigation.restoreFocus = null
+                        navigation.backTabTrigger = value
+                    } else {
+                        navigation.exitByTab(value, event.isShiftPressed, controller.onOpenChange)
+                    }
+                    true
                 } else {
                     false
                 }
@@ -481,24 +637,7 @@ fun MenubarMenuScope.MenubarContent(
         align = align,
         alignOffset = alignOffset,
         dismissOnClickOutside = dismissOnClickOutside,
-        content = {
-            val navigation = LocalContextMenuNavigation.current
-            LaunchedEffect(Unit) {
-                val focusLast = controller.navigation.focusLastFor == value
-                val focusFirst = controller.navigation.focusFirstFor == value
-                if (focusLast || focusFirst) {
-                    withFrameNanos { }
-                    if (focusLast) {
-                        navigation?.items?.lastOrNull()?.requestFocus()
-                    } else {
-                        navigation?.items?.firstOrNull()?.requestFocus()
-                    }
-                    controller.navigation.focusLastFor = null
-                    controller.navigation.focusFirstFor = null
-                }
-            }
-            content()
-        },
+        content = content,
     )
 }
 
@@ -726,8 +865,10 @@ fun DropdownMenuSubScope.MenubarSubContent(
     dismissOnClickOutside: Boolean = true,
     content: @Composable DropdownMenuScope.() -> Unit,
 ) {
+    val nova = currentTheme.activePreset == StylePreset.Nova
     DropdownMenuSubContent(
-        modifier = modifier,
+        // Base Nova MenubarSubContent uses min-w-32 and fits longer item labels.
+        modifier = if (nova) modifier.widthIn(min = 128.dp).width(IntrinsicSize.Max) else modifier,
         sideOffset = sideOffset,
         alignOffset = alignOffset,
         dismissOnClickOutside = dismissOnClickOutside,

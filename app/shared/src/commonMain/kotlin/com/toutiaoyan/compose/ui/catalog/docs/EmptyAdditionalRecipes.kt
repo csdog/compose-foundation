@@ -105,8 +105,8 @@ internal val emptyAdditionalExamples =
                     }
                     EmptyContent {
                         Button(onClick = {}, size = ButtonSize.Sm) {
-                            Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
-                                EmptyAdditionalGlyph(Lucide.Plus)
+                            Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {
+                                EmptyAdditionalGlyph(Lucide.Plus, Modifier.size(14.dp))
                                 Text { "Invite Members" }
                             }
                         }
@@ -144,11 +144,11 @@ internal val emptyAdditionalExamples =
                         Button(onClick = {}, size = ButtonSize.Sm) {
                             Row(
                                 horizontalArrangement =
-                                    Arrangement.spacedBy(6.dp),
+                                    Arrangement.spacedBy(4.dp),
                                 verticalAlignment =
                                     Alignment.CenterVertically,
                             ) {
-                                EmptyAdditionalGlyph(Lucide.Plus)
+                                EmptyAdditionalGlyph(Lucide.Plus, Modifier.size(14.dp))
                                 Text { "Invite Members" }
                             }
                         }
@@ -229,6 +229,7 @@ internal val emptyAdditionalExamples =
                                     ),
                                 ) { append("Contact support") }
                             },
+                            modifier = emptyLinkSpaceModifier(),
                         )
                     }
                 }

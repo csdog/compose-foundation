@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import com.toutiaoyan.compose.ui.components.contextmenu.LocalContextMenuNova
 import androidx.compose.foundation.style.focused
 import com.toutiaoyan.compose.tailwind.style.ringShadow
+import com.toutiaoyan.compose.tailwind.style.shadowLg
 import com.toutiaoyan.compose.tailwind.style.shadowMd
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -34,9 +35,17 @@ fun rememberMenuPanelStyle(
     novaWidth: Dp? = null,
     novaMinWidth: Dp? = null,
     novaRing: Boolean = false,
+): Style = rememberMenuPanelStyle(novaWidth, novaMinWidth, novaRing, novaLargeShadow = false)
+
+@Composable
+internal fun rememberMenuPanelStyle(
+    novaWidth: Dp? = null,
+    novaMinWidth: Dp? = null,
+    novaRing: Boolean,
+    novaLargeShadow: Boolean,
 ): Style {
     val contextNova = LocalContextMenuNova.current
-    return rememberTheme(contextNova, novaWidth, novaMinWidth, novaRing) {
+    return rememberTheme(contextNova, novaWidth, novaMinWidth, novaRing, novaLargeShadow) {
         Style {
             if (contextNova) {
                 if (novaMinWidth != null) minWidth(novaMinWidth) else width(novaWidth ?: 192.dp)
@@ -51,7 +60,9 @@ fun rememberMenuPanelStyle(
                 contextNova -> border(colors.foreground.copy(alpha = 0.1f))
                 else -> border(colors.border)
             }
-            if (contextNova) shadowMd()
+            if (contextNova) {
+                if (novaLargeShadow) shadowLg() else shadowMd()
+            }
             contentPadding(if (contextNova) 4.dp else spacing.xs2)
         }
     }

@@ -6,12 +6,15 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.then
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.*
@@ -22,6 +25,7 @@ import com.toutiaoyan.compose.ui.components.dropdownmenu.*
 import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.theme.currentTheme
+import com.toutiaoyan.compose.ui.styles.focusRing
 import compose_foundation.app.shared.generated.resources.Res
 import compose_foundation.app.shared.generated.resources.avatar_shadcn
 import org.jetbrains.compose.resources.painterResource
@@ -361,13 +365,14 @@ internal val dropdownMenuAdditionalExamples =
                 """
                 var open by remember { mutableStateOf(false) }
                 DropdownMenu(open = open, onOpenChange = { open = it }) {
-                    DropdownMenuTrigger {
-                        Button(onClick = toggle, variant = ButtonVariant.Ghost, size = ButtonSize.Icon,
-                            label = "Open account menu", style = Style { shape(CircleShape) }) {
-                            Avatar {
-                                AvatarImage(painterResource(Res.drawable.avatar_shadcn), "shadcn")
-                                AvatarFallback("LR")
-                            }
+                    DropdownMenuTrigger(
+                        modifier = Modifier.semantics { contentDescription = "Open account menu" },
+                        style = ButtonVariant.Ghost.rememberStyle() then
+                            ButtonSize.Icon.rememberStyle() then Style { focusRing(CircleShape) },
+                    ) {
+                        Avatar {
+                            AvatarImage(painterResource(Res.drawable.avatar_shadcn), "shadcn")
+                            AvatarFallback("LR")
                         }
                     }
                     DropdownMenuContent(style = Style { width(128.dp) }, align = PopupAlign.End) {
@@ -417,18 +422,16 @@ internal val dropdownMenuAdditionalExamples =
             preview = {
                 var open by remember { mutableStateOf(false) }
                 DropdownMenu(open = open, onOpenChange = { open = it }) {
-                    DropdownMenuTrigger {
-                        Button(
-                            onClick = toggle,
-                            variant = ButtonVariant.Ghost,
-                            size = ButtonSize.Icon,
-                            label = "Open account menu",
-                            style = Style { shape(CircleShape) },
-                        ) {
-                            Avatar {
-                                AvatarImage(painterResource(Res.drawable.avatar_shadcn), "shadcn")
-                                AvatarFallback("LR")
-                            }
+                    DropdownMenuTrigger(
+                        modifier = Modifier.semantics { contentDescription = "Open account menu" },
+                        style =
+                            ButtonVariant.Ghost.rememberStyle() then
+                                ButtonSize.Icon.rememberStyle() then
+                                Style { focusRing(CircleShape) },
+                    ) {
+                        Avatar {
+                            AvatarImage(painterResource(Res.drawable.avatar_shadcn), "shadcn")
+                            AvatarFallback("LR")
                         }
                     }
                     DropdownMenuContent(style = Style { width(128.dp) }, align = PopupAlign.End) {

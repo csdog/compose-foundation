@@ -1,7 +1,7 @@
 # Web 对齐验收状态
 
-更新日期：2026-11-18。当前保存状态为 **61 / 67 项已勾选，6 项未完成**。
-本次更新 Toggle 验收记录。Chart 保持未勾选并跳过。
+更新日期：2026-11-18。当前保存状态为 **66 / 67 项已勾选，1 项未完成**。
+当前按清单连续推进，Checkbox、Context Menu、Dropdown Menu、Empty、Field、Hover Card、Input、Input Group、Input OTP、Item、Label、Marker、Menubar、Message、Navigation Menu、Popover、Progress、Questionnaire、Radio Group、Select、Sheet、Shimmer、Sidebar、Slider、Toast、Toggle 已通过。适用组件的验收均已完成。Chart 保持未勾选并跳过。[批次记录](../.agent-runs/batches/latest.json)。
 文档整理本身不构成验收；勾选只在组件证据与当前源码校验通过后更新。
 
 ## 状态口径
@@ -9,7 +9,7 @@
 - `[x]` 保留此前清单的关闭记录；共享源码后续变化仍需按输入哈希重新验证。
 - `[ ]` 表示完整验收仍未关闭，不能等同于未实现或完全没有测试。
 - 阶段完成、测试通过和交接结束均不自动等于组件验收完成。
-- 下方阻塞描述来自最近一次已停止的执行记录，不是本次重新复现的结果。
+- 下方注明“停止时阻塞”的描述来自历史执行记录。
 
 ## 工作入口
 
@@ -37,18 +37,18 @@
 - [x] Code Block (`code-block`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#code-block)。
 - [x] Trace (`trace`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#trace)。
 - [ ] Chart (`chart`)：停止时阻塞：无 Tooltip 折线图的选中值辅助语义缺失。[范围与证据](archive/2026-11-09/component-status-details.md#chart) · [交接](../.agent-runs/chart/progress.md)。
-- [ ] Checkbox (`checkbox`)：停止时阻塞：动画中间帧验证未解决。[范围与证据](archive/2026-11-09/component-status-details.md#checkbox) · [交接](../.agent-runs/checkbox/progress.md)。
+- [x] Checkbox (`checkbox`)：2026-11-12 验收通过：14 项聚焦 JVM、扩展 18 项与四张 0 像素差异基准按哈希复用；JS/Wasm 四象限、交互/RTL、动态状态及独立审查通过。默认配置缓存构建通过，JS48/Wasm44 与浏览器 HTTP/disk 逐字节一致；Canvas 表单/辅助技术边界按 I16 记录。[浏览器证据](../.agent-runs/checkbox/verify-30/until-pass-20261112/acceptance/browser/README.md) · [缓存构建与绑定](../.agent-runs/checkbox/verify-30/until-pass-20261112/cache-carry/results.json) · [独立审查](../.agent-runs/checkbox/verify-30/until-pass-20261112/acceptance/audit.md) · [交接](../.agent-runs/checkbox/progress.md)。
 - [x] Chip (`chip`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#chip) · [交接](../.agent-runs/chip/progress.md)。
 - [x] Collapsible (`collapsible`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#collapsible)。
 - [x] Combobox (`combobox`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#combobox) · [交接](../.agent-runs/combobox/progress.md)。
 - [x] Command (`command`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#command)。
-- [ ] Context Menu (`context-menu`)：停止时阻塞：键盘打开与焦点验证未完成。[范围与证据](archive/2026-11-09/component-status-details.md#context-menu) · [交接](../.agent-runs/context-menu/progress.md)。
+- [x] Context Menu (`context-menu`)：2026-11-12 验收通过：当前 30a-final/30b/30c/独立 30d 及 30-verify 正式终结；core20、catalog20、2 张 idle golden 零差异，四项 lint 为匹配输入的 UP-TO-DATE。JS/Wasm48/44、152 实际 response bodies 绑定；8 视图、112 矩阵、88 配方位置及键盘/触摸/RTL 通过，Desktop 仅 compile。无名原生焦点、实际菜单语义及未测 AT/任意深度边界按 I16 记录。[当前验收](web-parity/context-menu-acceptance-20261112/README.md) · [来源](web-parity/context-menu-acceptance-20261112/sources.json) · [40 核验](../.agent-runs/context-menu/verify-30/goal-20261112/current-tree-40/report.md) · [交接](../.agent-runs/context-menu/progress.md)。
 - [x] Date Picker (`date-picker`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#date-picker)。
 - [x] Dialog (`dialog`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#dialog)。
 - [x] Drawer (`drawer`)：已有关闭记录。[范围与证据](archive/2026-11-09/component-status-details.md#drawer)。
-- [ ] Dropdown Menu (`dropdown-menu`)：停止时阻塞：焦点和 Escape 交互待诊断。[范围与证据](archive/2026-11-09/component-status-details.md#dropdown-menu) · [交接](../.agent-runs/dropdown-menu/progress.md)。
-- [ ] Empty (`empty`)：停止时阻塞：语言弹层关闭后的辅助功能树恢复异常。[范围与证据](archive/2026-11-09/component-status-details.md#empty) · [交接](../.agent-runs/empty/progress.md)。
-- [ ] Field (`field`)：停止时阻塞：页面标题未随组件路由更新。[范围与证据](archive/2026-11-09/component-status-details.md#field) · [交接](../.agent-runs/field/progress.md)。
+- [x] Dropdown Menu (`dropdown-menu`)：2026-11-13 验收通过。核心 JVM 289 项、目录应用 JVM 258 项、黄金图校验 8 项、lint 5 项及 JS/Wasm 当前构建通过。104 个配方视图和优先键盘、指针、RTL 验证通过，已取得独立终审。[当前验收](web-parity/dropdown-menu-acceptance-20261113/README.md) · [来源](web-parity/dropdown-menu-acceptance-20261113/sources.json) · [终审](../.agent-runs/dropdown-menu/implement-20/20261112-font-nova-repair/nova-reversal-current-30d-priority-final/report.md) · [交接](../.agent-runs/dropdown-menu/progress.md)。
+- [x] Empty (`empty`)：2026-11-13 验收通过。67 项聚焦 JVM、两张 Nova 基准、5 项 lint 与当前 JS/Wasm 构建通过。已验证双视口刷新、前进后退、三语弹层焦点与碰撞、代码滚动及受控 Neutral 配方，独立终审通过。[验收](web-parity/empty-acceptance-20261113/README.md) · [来源](web-parity/empty-acceptance-20261113/sources.json) · [终审](web-parity/empty-acceptance-20261113/independent-review.md) · [交接](../.agent-runs/empty/progress.md)。
+- [x] Field (`field`)：2026-11-17 验收通过。必填焦点、独立双滑块语义和 Select 弹层宽度已修复。113 项聚焦 JVM、6 张基准图、所属 lint 及当前构建通过。JS/Wasm 通过 104 张浅深色配方截图和实际交互、路由复验，独立终审通过。[验收](web-parity/field-acceptance-20261117/README.md) · [来源](web-parity/field-acceptance-20261117/sources.json) · [终审](web-parity/field-acceptance-20261117/independent-review.md) · [交接](../.agent-runs/field/progress.md)。
 - [x] Hover Card (`hover-card`)：2026-11-17 验收通过。63 项聚焦 JVM、四张截图基准和所属 lint 通过。当前 JS/Wasm 验证指针过渡、键盘和 Escape、碰撞动画、三语 RTL、主题与目录导航，共绑定 422 条实际响应。独立终审通过。[验收](web-parity/hover-card-acceptance-20261117/README.md) · [来源](web-parity/hover-card-acceptance-20261117/sources.json) · [终审](web-parity/hover-card-acceptance-20261117/independent-review.md) · [交接](../.agent-runs/hover-card/progress.md)。
 - [x] Input (`input`)：2026-11-17 验收通过。Nova 150 ms 颜色过渡、即时焦点环及 File 控件已修复。39 项聚焦 JVM、截图校验与所属 lint 通过。当前 JS/Wasm 通过 120 个配方视图、原生文件操作、三语方向与路由复验，已取得独立终审。[验收](web-parity/input-acceptance-20261117/README.md) · [来源](web-parity/input-acceptance-20261117/sources.json) · [终审](web-parity/input-acceptance-20261117/independent-review.md) · [交接](../.agent-runs/input/progress.md)。
 - [x] Input Group (`input-group`)：2026-11-17 验收通过。More、Search In、Info 交互及 Nova 150 ms 颜色过渡已修复。101 项聚焦 JVM、截图校验和所属 lint 通过。当前 JS/Wasm 通过 112 个配方视图、真实剪贴板、弹层翻转、三语和路由复验，独立终审通过。[验收](web-parity/input-group-acceptance-20261117/README.md) · [来源](web-parity/input-group-acceptance-20261117/sources.json) · [终审](web-parity/input-group-acceptance-20261117/independent-review.md) · [交接](../.agent-runs/input-group/progress.md)。

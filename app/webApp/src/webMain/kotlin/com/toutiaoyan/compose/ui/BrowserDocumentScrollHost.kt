@@ -14,14 +14,45 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import org.w3c.dom.Element
+import org.w3c.dom.HTMLCanvasElement
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
+import org.w3c.dom.events.KeyboardEvent
 
 /** Browser chrome owns the scrollbar; Compose remains the owner of document position. */
 internal class BrowserDocumentScrollHost(
     private val history: BrowserDocHistory,
     private val positionToRestore: () -> Double?,
+    private val viewportRoot: Element,
 ) : DocumentScrollHost {
+    override fun captureNativeLinkSpace(): () -> Unit {
+        val canvas = nativeLinkSpaceCanvas() ?: return {}
+        // Target capture precedes Compose's handler and leaves native scrolling available.
+        val listener: (Event) -> Unit = { raw ->
+            val event = raw as KeyboardEvent
+            if (event.target == canvas && event.code == "Space") event.stopImmediatePropagation()
+        }
+        canvas.addEventListener("keydown", listener, true)
+        canvas.addEventListener("keyup", listener, true)
+        return {
+            canvas.removeEventListener("keydown", listener, true)
+            canvas.removeEventListener("keyup", listener, true)
+        }
+    }
+
+    private fun nativeLinkSpaceCanvas(): HTMLCanvasElement? {
+        val shadow =
+            viewportRoot.firstElementChild
+                ?.takeIf { viewportRoot.children.length == 1 && it.tagName == "COMPOSE-COMPONENT" }
+                ?.firstElementChild
+                ?.takeIf { it.tagName == "DIV" }
+                ?.shadowRoot ?: return null
+        val candidates = shadow.querySelectorAll("div > canvas")
+        return (candidates.item(0) as? HTMLCanvasElement)
+            ?.takeIf { candidates.length == 1 && it.parentElement?.parentNode == shadow }
+    }
+
     override suspend fun bind(
         state: ScrollState?,
         pixelsPerCssPixel: Float,

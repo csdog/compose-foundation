@@ -109,8 +109,9 @@ class FieldExamplesTest {
         val legendTop = rule.onNodeWithText("Payment Method").getBoundsInRoot().top
         val descriptionTop =
             rule.onNodeWithText("All transactions are secure and encrypted").getBoundsInRoot().top
-        // legend box is 24 + 6 bottom margin; description starts 40dp below the legend top.
-        assertEquals(40f, (descriptionTop - legendTop).value, 0.6f)
+        // The first legend sits outside the fieldset body gap. Its bottom margin and the
+        // description’s legend-adjacent negative margin cancel on the pinned official page.
+        assertEquals(24f, (descriptionTop - legendTop).value, 0.6f)
         // The official demo constrains the form to `max-w-md` (448px).
         val description = rule.onNodeWithText("All transactions are secure and encrypted")
         assertTrue(description.getBoundsInRoot().right.value > 0f)

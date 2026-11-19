@@ -23,7 +23,10 @@ class MenubarParityTest : ScreenshotTest() {
     private var activateKeyboard: () -> Unit = {}
 
     @Composable
-    private fun Sample(direction: LayoutDirection = LayoutDirection.Ltr) {
+    private fun Sample(
+        direction: LayoutDirection = LayoutDirection.Ltr,
+        deferClose: ((() -> Unit) -> Unit)? = null,
+    ) {
         var selected by remember { mutableStateOf<String?>(null) }
         open = selected
         val inputMode = LocalInputModeManager.current
@@ -31,7 +34,13 @@ class MenubarParityTest : ScreenshotTest() {
             inputMode.requestInputMode(InputMode.Keyboard)
         }
         CompositionLocalProvider(LocalLayoutDirection provides direction) {
-            Menubar(Modifier.width(288.dp).testTag("bar"), value = selected, onValueChange = { selected = it }) {
+            Menubar(
+                Modifier.width(288.dp).testTag("bar"),
+                value = selected,
+                onValueChange = {
+                    if (it == null && deferClose != null) deferClose { selected = null } else selected = it
+                },
+            ) {
                 MenubarMenu("file") {
                     MenubarTrigger("File", Modifier.testTag("file"))
                     MenubarContent(Modifier.testTag("file-panel")) {
@@ -40,7 +49,9 @@ class MenubarParityTest : ScreenshotTest() {
                         MenubarItem("Print", onClick = {})
                         MenubarSub {
                             MenubarSubTrigger("Share")
-                            MenubarSubContent { MenubarItem("Email link", onClick = {}) }
+                            MenubarSubContent(Modifier.testTag("share-panel")) {
+                                MenubarItem("Email link", onClick = {})
+                            }
                         }
                     }
                 }
@@ -80,6 +91,71 @@ class MenubarParityTest : ScreenshotTest() {
         composeRule.onNodeWithTag("edit").assertIsFocused()
         composeRule.onNodeWithTag("edit").performKeyInput { pressKey(Key.DirectionRight) }
         composeRule.onNodeWithTag("file").assertIsFocused()
+        assertNull(open)
+    }
+
+    @Test fun tabLeavesTheBarAndReturnsToTheLastFocusedTrigger() {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Column {
+                com.toutiaoyan.compose.ui.components.button.Button("Before")
+                Sample()
+                com.toutiaoyan.compose.ui.components.button.Button("After")
+            }
+        }
+        composeRule.runOnIdle { activateKeyboard() }
+        val before = composeRule.onNodeWithText("Before")
+        val after = composeRule.onNodeWithText("After")
+        val file = composeRule.onNodeWithTag("file")
+        val edit = composeRule.onNodeWithTag("edit")
+        before.requestFocus().performKeyInput { pressKey(Key.Tab) }
+        file.assertIsFocused().performKeyInput { pressKey(Key.Tab) }
+        after.assertIsFocused().performKeyInput { withKeyDown(Key.ShiftLeft) { pressKey(Key.Tab) } }
+        file.assertIsFocused().performKeyInput { pressKey(Key.DirectionRight) }
+        edit.assertIsFocused().performKeyInput { pressKey(Key.Tab) }
+        after.assertIsFocused().performKeyInput { withKeyDown(Key.ShiftLeft) { pressKey(Key.Tab) } }
+        edit.assertIsFocused()
+    }
+
+    @Test fun openMenuTabMovesOutAndShiftTabVisitsItsTriggerFirst() {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Column {
+                com.toutiaoyan.compose.ui.components.button.Button("Before")
+                Sample()
+                com.toutiaoyan.compose.ui.components.button.Button("After")
+            }
+        }
+        composeRule.runOnIdle { activateKeyboard() }
+        val file = composeRule.onNodeWithTag("file")
+        val firstItem = composeRule.onNodeWithText("New Tab")
+        file.requestFocus().performKeyInput { pressKey(Key.DirectionDown) }
+        firstItem.assertIsFocused().performKeyInput { pressKey(Key.Tab) }
+        composeRule.onNodeWithText("After").assertIsFocused()
+        assertNull(open)
+
+        file.requestFocus().performKeyInput { pressKey(Key.DirectionDown) }
+        firstItem.assertIsFocused().performKeyInput { withKeyDown(Key.ShiftLeft) { pressKey(Key.Tab) } }
+        file.assertIsFocused()
+        assertEquals("file", open)
+        file.performKeyInput { withKeyDown(Key.ShiftLeft) { pressKey(Key.Tab) } }
+        composeRule.onNodeWithText("Before").assertIsFocused()
+        assertNull(open)
+    }
+
+    @Test fun tabFocusMovesWhenTheControlledOwnerAcceptsCloseLater() {
+        var close: (() -> Unit)? = null
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Column {
+                Sample(deferClose = { close = it })
+                com.toutiaoyan.compose.ui.components.button.Button("After")
+            }
+        }
+        composeRule.runOnIdle { activateKeyboard() }
+        composeRule.onNodeWithTag("file").requestFocus().performKeyInput { pressKey(Key.DirectionDown) }
+        composeRule.onNodeWithText("New Tab").assertIsFocused().performKeyInput { pressKey(Key.Tab) }
+        composeRule.mainClock.advanceTimeBy(200)
+        assertEquals("file", open)
+        composeRule.runOnIdle { checkNotNull(close).invoke() }
+        composeRule.onNodeWithText("After").assertIsFocused()
         assertNull(open)
     }
 
@@ -141,6 +217,7 @@ class MenubarParityTest : ScreenshotTest() {
         composeRule.onNodeWithText("Share").requestFocus()
         composeRule.onNodeWithText("Share").performKeyInput { pressKey(Key.DirectionRight) }
         composeRule.onNodeWithText("Email link").assertIsDisplayed()
+        composeRule.onNodeWithTag("share-panel").assertWidthIsEqualTo(128.dp)
         assertEquals("file", open)
     }
 
@@ -157,6 +234,41 @@ class MenubarParityTest : ScreenshotTest() {
             .performKeyInput { pressKey(Key.Escape) }
         assertNull(open)
         composeRule.onNodeWithTag("file").assertIsFocused()
+    }
+
+    @Test fun tabFromSubmenuExitsAndShiftTabClosesOnlyTheSubmenu() {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Column {
+                Sample()
+                com.toutiaoyan.compose.ui.components.button.Button("After")
+            }
+        }
+        composeRule.runOnIdle { activateKeyboard() }
+        val share = composeRule.onNodeWithText("Share")
+        val email = composeRule.onNodeWithText("Email link")
+        composeRule.onNodeWithTag("file").performClick()
+        share.requestFocus().performKeyInput { pressKey(Key.DirectionRight) }
+        email.assertIsFocused().performKeyInput { withKeyDown(Key.ShiftLeft) { pressKey(Key.Tab) } }
+        email.assertDoesNotExist()
+        share.assertIsFocused()
+        assertEquals("file", open)
+
+        share.performKeyInput { pressKey(Key.DirectionRight) }
+        email.assertIsFocused().performKeyInput { pressKey(Key.Tab) }
+        email.assertDoesNotExist()
+        assertNull(open)
+        composeRule.onNodeWithText("After").assertIsFocused()
+    }
+
+    @Test fun switchingMenuAfterSubmenuEscapeKeepsFocusInTheNewMenu() {
+        show()
+        composeRule.onNodeWithTag("file").performClick()
+        composeRule.onNodeWithText("Share").requestFocus().performKeyInput { pressKey(Key.DirectionRight) }
+        composeRule.onNodeWithText("Email link").assertIsFocused().performKeyInput { pressKey(Key.Escape) }
+        composeRule.onNodeWithText("Share").assertIsFocused().performKeyInput { pressKey(Key.DirectionUp) }
+        composeRule.onNodeWithText("Print").assertIsFocused().performKeyInput { pressKey(Key.DirectionRight) }
+        assertEquals("edit", open)
+        composeRule.onNodeWithText("Undo").assertIsFocused()
     }
 
     @Test fun itemContentSlotForwardsRichLabels() {

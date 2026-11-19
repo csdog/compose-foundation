@@ -43,11 +43,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.foundation.style.MutableStyleState
+import androidx.compose.foundation.style.rememberUpdatedStyleState
 import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import com.toutiaoyan.compose.ui.components.dropdownmenu.LocalDropdownMenuContent
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -55,6 +57,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.input.pointer.PointerEventType
@@ -84,10 +89,15 @@ import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuSubContent
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuSubScope
 import com.toutiaoyan.compose.ui.components.dropdownmenu.DropdownMenuSubTrigger
 import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
+import com.toutiaoyan.compose.ui.components.overlay.PopupPlacement
 import com.toutiaoyan.compose.ui.components.overlay.PopupTransitions
 import com.toutiaoyan.compose.ui.components.overlay.popupFadeModifier
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.styles.rememberMenuPanelStyle
+import com.toutiaoyan.compose.ui.styles.cssStyleable
+import com.toutiaoyan.compose.ui.styles.focusRing
+import com.toutiaoyan.compose.ui.utils.keyboardInputMode
+import com.toutiaoyan.compose.ui.utils.rememberTheme
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
 
@@ -190,7 +200,11 @@ fun ContextMenu(
     }
 }
 
-/** Right-click target for the parent [ContextMenu]. Matches shadcn's `ContextMenuTrigger`. */
+/**
+ * Right-click target for the parent [ContextMenu]. Matches shadcn's `ContextMenuTrigger`.
+ * Keyboard focus rings the trigger bounds, including transparent slots, without resizing them.
+ * Only this focus target is highlighted, not a nested focusable child; pointer focus stays unstyled.
+ */
 @Composable
 fun ContextMenuScope.ContextMenuTrigger(
     modifier: Modifier = Modifier,
@@ -201,6 +215,9 @@ fun ContextMenuScope.ContextMenuTrigger(
     val onOpenChange = controller.onOpenChange
     val onPoint = controller.onPoint
     val latestController by rememberUpdatedState(controller)
+    val interactions = remember { MutableInteractionSource() }
+    val styleState = rememberUpdatedStyleState(interactions) { it.isEnabled = !disabled }
+    val triggerStyle = rememberTheme(disabled) { Style { if (!disabled) focusRing(RectangleShape) } }
     val requester = remember { FocusRequester() }
     val focusOwner = LocalOverlayFocus.current
     var origin by remember { mutableStateOf(IntOffset.Zero) }
@@ -215,8 +232,10 @@ fun ContextMenuScope.ContextMenuTrigger(
                 .semantics(mergeDescendants = true) {
                     stateDescription = if (controller.open) "Expanded" else "Collapsed"
                 }
+                .cssStyleable(styleState, triggerStyle)
                 .focusRequester(requester)
                 .onFocusChanged { if (it.isFocused) focusOwner?.returnTo = requester }
+                .keyboardInputMode()
                 .onPreviewKeyEvent {
                     if (!disabled &&
                         it.type == KeyEventType.KeyDown &&
@@ -235,7 +254,7 @@ fun ContextMenuScope.ContextMenuTrigger(
                         false
                     }
                 }
-                .focusable(enabled = !disabled)
+                .focusable(enabled = !disabled, interactionSource = interactions)
                 .then(
                     if (disabled) {
                         Modifier
@@ -371,6 +390,7 @@ fun ContextMenuScope.ContextMenuContent(
                 ) {
                     val motion = popupFadeModifier(defaultEnter, defaultExit)
                     CompositionLocalProvider(
+                        LocalDropdownMenuContent provides false,
                         LocalContextMenuNova provides nova,
                         LocalContextMenuNavigation provides navigation,
                         LocalMenuEscapeLayers provides escapeLayers,
@@ -661,6 +681,7 @@ fun DropdownMenuSubScope.ContextMenuSubTrigger(
 
 /** Alias for [DropdownMenuSubContent] matching shadcn's `ContextMenuSubContent`.
  * Base wraps [ContextMenuContent] (`alignOffset` **4**, `sideOffset` 0) — not Dropdown Sub defaults.
+ * Opens at logical inline-end (right in LTR, left in RTL), with normal collision flipping.
  */
 @Composable
 fun DropdownMenuSubScope.ContextMenuSubContent(
@@ -675,6 +696,9 @@ fun DropdownMenuSubScope.ContextMenuSubContent(
 ) {
     DropdownMenuSubContent(
         modifier = modifier,
+        // Shared popup Start/End are physical; only this Context Menu alias is logical.
+        placement =
+            if (LocalLayoutDirection.current == LayoutDirection.Rtl) PopupPlacement.Start else PopupPlacement.End,
         style = style,
         sideOffset = sideOffset,
         alignOffset = alignOffset,

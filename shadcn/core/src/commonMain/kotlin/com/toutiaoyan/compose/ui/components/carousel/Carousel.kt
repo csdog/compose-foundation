@@ -156,8 +156,10 @@ private fun CarouselChevron(previous: Boolean) {
 /**
  * A snap-scrolling, swipeable item carousel. Real shadcn/ui's `carousel.tsx` wraps
  * `embla-carousel-react`; Compose Multiplatform's own [HorizontalPager]/[VerticalPager]
- * already provide the same snap-per-item scrolling behavior natively, so this wraps
- * those directly rather than reimplementing snap physics.
+ * already provide the same snap-per-item scrolling behavior natively. Mouse primary-button
+ * drags start after the main-axis touch slop, leaving slide clicks intact below that
+ * threshold. Release/cancellation snaps to the nearest page without mouse inertia.
+ * Touch and wheel scrolling retain the pager's native behavior.
  *
  * [modifier] must constrain the main-axis size (`width` for [Orientation.Horizontal],
  * `height` for [Orientation.Vertical]) -- this composable fills whatever it's given
@@ -192,6 +194,7 @@ fun Carousel(
     val styledModifier =
         modifier
             .fillMaxSize()
+            .carouselMouseDrag(state, orientation, userScrollEnabled)
             .then(if (inRoot) Modifier else Modifier.carouselKeys(state, scope))
             .semantics {
                 if (!inRoot) role = Role.Carousel

@@ -10,6 +10,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.platform.LocalFontFamilyResolver
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.platform.Font
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.ComposeViewport
 import com.toutiaoyan.compose.ui.catalog.DocLocation
@@ -40,6 +43,11 @@ fun main() {
     applyBrowserColorScheme(initialDarkModeOverride)
     val connectedFixture = ToggleGroupConnectedFixtureConfig.fromPath(window.location.pathname)
     ComposeViewport("compose-root") {
+        val fontResolver = LocalFontFamilyResolver.current
+        // Register the bundled single-glyph fallback before descendants can shape text.
+        remember(fontResolver) {
+            fontResolver.resolve(FontFamily(Font("catalog-shortcut-symbols-2318-v1", catalogShortcutFontBytes())))
+        }
         if (connectedFixture != null) {
             ToggleGroupConnectedFixture(
                 config = connectedFixture,
@@ -67,6 +75,7 @@ fun main() {
                 BrowserDocumentScrollHost(
                     history = docNavigation.history,
                     positionToRestore = { docNavigation.entryRestorePosition },
+                    viewportRoot = checkNotNull(document.getElementById("compose-root")),
                 )
             }
         val searchRequests = remember { browserSearchRequests() }

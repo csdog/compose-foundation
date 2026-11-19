@@ -122,7 +122,7 @@ how components are checked against real shadcn/ui source.
 - 基准图片：`app/androidApp/src/screenshotTestDefaultDebug/reference/`
 - 差异报告：`app/androidApp/build/reports/tests/testDebugScreenshotTestDefaultTestSuite/index.html`
 
-当前使用 AGP `9.5.0-rc02`、Gradle `9.6.0` 和截图引擎 `0.0.1-alpha16`，
+当前使用 AGP `9.4.0`、Gradle `9.8.2` 和截图引擎 `0.0.1-alpha16`，
 测试套件仍为实验功能。上述任务名按当前 AGP 实际生成的名称填写，顺序与官方文档示例不同。
 覆盖浅色、深色、平板宽度和大字体；交互行为继续由 JVM 测试验证。
 

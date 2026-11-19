@@ -10,6 +10,9 @@ import androidx.compose.ui.unit.Dp
 
 /** The Web host mirrors a document scroll state into the browser's native scrollbar. */
 interface DocumentScrollHost {
+    /** Keep native Space scrolling while one link owns Compose focus. The caller releases the capture. */
+    fun captureNativeLinkSpace(): () -> Unit = {}
+
     /** The caller owns cancellation; null means a route with independent inner scrollers. */
     suspend fun bind(
         state: ScrollState?,

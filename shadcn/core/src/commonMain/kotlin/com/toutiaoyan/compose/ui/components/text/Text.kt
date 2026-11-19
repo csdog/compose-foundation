@@ -51,6 +51,9 @@ internal val LocalDefaultTextStyle = staticCompositionLocalOf { TextStyle.Defaul
 // Preserve ancestor Style color when a component opts into selection for its content.
 internal val LocalInheritSelectableTextColor = staticCompositionLocalOf { false }
 
+// Empty opts in here so paragraph measurement sees the final Style shell and BasicText typography.
+internal val LocalTextParagraphModifier = staticCompositionLocalOf<(@Composable (TextStyle) -> Modifier)?> { null }
+
 /**
  * Usage:
  * ```
@@ -143,6 +146,21 @@ fun Text(
     )
 }
 
+@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
+@Composable
+private fun textParagraphModifier(
+    isPlainText: Boolean,
+    style: TextStyle,
+): Modifier {
+    val paragraphModifier = LocalTextParagraphModifier.current ?: return Modifier
+    // Inherited String typography is resolved by the engine after composition.
+    return if (isPlainText && androidx.compose.foundation.ComposeFoundationFlags.isInheritedTextStyleEnabled) {
+        Modifier
+    } else {
+        paragraphModifier(style)
+    }
+}
+
 @Composable
 private fun TextImpl(
     plainText: String?,
@@ -216,6 +234,7 @@ private fun TextImpl(
             // so it retains its precedence without deleting an ancestor brush.
             .then(if (specifiedColor != null) Modifier.styleable(style = colorStyle) else Modifier)
             .then(AncestorContentColorElement(inheritedContentColor, resolvedColor))
+            .then(textParagraphModifier(plainText != null, resolvedStyle))
     // Prefer BasicText(String): only TextStringSimpleNode applies Style-inherited typography
     // (fontSize / lineHeight / fontWeight). AnnotatedString always uses TextAnnotatedStringNode.
     if (plainText != null) {
