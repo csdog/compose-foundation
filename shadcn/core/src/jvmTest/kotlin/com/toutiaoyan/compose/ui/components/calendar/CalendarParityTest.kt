@@ -17,6 +17,7 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.ScreenshotTest
+import com.toutiaoyan.compose.ui.components.button.Button
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import com.toutiaoyan.compose.ui.theme.Theme
@@ -92,6 +93,57 @@ class CalendarParityTest : ScreenshotTest() {
         composeRule.onNodeWithText("November 2026").assertIsDisplayed()
         composeRule.runOnIdle { assertNull(selected) }
         composeRule.onNodeWithContentDescription("2026-11-1").requestFocus().assertIsFocused()
+    }
+
+    @Test
+    fun autofocusCanUseAnEnabledDateInTheSecondVisibleMonth() {
+        var selected by mutableStateOf<CalendarDate?>(null)
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            CompositionLocalProvider(LocalCalendarAutoFocus provides true) {
+                Calendar(
+                    year = 2026,
+                    month = 1,
+                    onMonthChange = { _, _ -> },
+                    selected = selected,
+                    onSelectedChange = { selected = it },
+                    disabled = { it.month == 1 },
+                    numberOfMonths = 2,
+                    showOutsideDays = false,
+                )
+            }
+        }
+        composeRule.onNodeWithContentDescription("2026-2-1").assertIsFocused().performKeyInput {
+            pressKey(Key.DirectionRight)
+        }
+        composeRule.onNodeWithContentDescription("2026-2-2").assertIsFocused().performKeyInput {
+            pressKey(Key.Enter)
+        }
+        composeRule.runOnIdle { assertEquals(CalendarDate(2026, 2, 2), selected) }
+    }
+
+    @Test
+    fun adjacentMonthDuplicateDoesNotCreateASecondCalendarTabStop() {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Column {
+                Button("Before calendar")
+                Calendar(
+                    year = 2025,
+                    month = 1,
+                    onMonthChange = { _, _ -> },
+                    selected = CalendarDate(2025, 2, 1),
+                    onSelectedChange = {},
+                    numberOfMonths = 2,
+                    hideNavigation = true,
+                )
+                Button("After calendar")
+            }
+        }
+        val copies = composeRule.onAllNodesWithContentDescription("2025-2-1")
+        copies.assertCountEquals(2)
+        composeRule.onNodeWithText("Before calendar").requestFocus().performKeyInput { pressKey(Key.Tab) }
+        copies[0].assertIsNotFocused()
+        copies[1].assertIsFocused().performKeyInput { pressKey(Key.Tab) }
+        composeRule.onNodeWithText("After calendar").assertIsFocused()
     }
 
     @Test fun cursorSkipsDisabledDatesAndMaintainsRealFocusAcrossMonths() {

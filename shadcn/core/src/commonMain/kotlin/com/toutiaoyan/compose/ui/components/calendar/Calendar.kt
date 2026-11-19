@@ -105,6 +105,10 @@ internal const val MONTHS_IN_YEAR = 12
 /** Whole-control dim matching CSS `disabled:opacity-50`. */
 private const val DISABLED_OPACITY = 0.5f
 
+private const val CAPTION_YEAR_LOOKBACK = 100
+private const val CALENDAR_CHEVRON_DOWN_DEGREES = 90f
+private const val CALENDAR_CHEVRON_REVERSED_DEGREES = 180f
+
 /** A civil calendar date (Gregorian by default; see CalendarLocale.calendarSystem) -- the library has no `kotlinx-datetime` dependency,
  so this stays a minimal value type. */
 data class CalendarDate(val year: Int, val month: Int, val day: Int) : Comparable<CalendarDate> {
@@ -269,6 +273,18 @@ class CalendarState(
     }
 }
 
+private fun calendarFocusCandidates(
+    visibleMonths: List<Pair<Int, Int>>,
+    preferredDates: List<CalendarDate>,
+    system: CalendarSystem,
+): Sequence<CalendarDate> =
+    sequence {
+        yieldAll(preferredDates.asSequence().filter { (it.year to it.month) in visibleMonths })
+        for ((year, month) in visibleMonths) {
+            for (day in 1..system.daysInMonth(year, month)) yield(CalendarDate(year, month, day))
+        }
+    }.distinct()
+
 private class CalendarFocusRegistry {
     val items = mutableMapOf<CalendarDate, MutableList<Pair<Boolean, FocusRequester>>>()
 
@@ -300,7 +316,8 @@ private fun sakamotoDayOfWeek(
     day: Int,
 ): Int {
     val y = if (month < 3) year - 1 else year
-    return (y + y / 4 - y / 100 + y / 400 + SAKAMOTO_OFFSETS[month - 1] + day) % DAYS_IN_WEEK
+    val elapsedLeapDays = y / GREGORIAN_LEAP_INTERVAL_YEARS - y / GREGORIAN_CENTURY_YEARS + y / GREGORIAN_CYCLE_YEARS
+    return (y + elapsedLeapDays + SAKAMOTO_OFFSETS[month - 1] + day) % DAYS_IN_WEEK
 }
 
 /** Index of [dayOfWeek] within a week that starts on [weekStartsOn] (both 0=Sun..6=Sat). */
@@ -646,8 +663,10 @@ private fun CalendarImpl(
     require(cellSize == null || (cellSize.value.isFinite() && cellSize > 0.dp))
     val system = LocalCalendarLocale.current.calendarSystem
     require(system.supports(CalendarDate(year, month, 1)))
-    val lastMonth = addMonths(year, month, numberOfMonths.coerceAtLeast(1) - 1)
-    require(system.supports(CalendarDate(lastMonth.first, lastMonth.second, 1)))
+    val monthCount = numberOfMonths.coerceAtLeast(1)
+    val (lastYear, lastMonth) = addMonths(year, month, monthCount - 1)
+    require(system.supports(CalendarDate(lastYear, lastMonth, 1)))
+    val visibleMonths = List(monthCount) { addMonths(year, month, it) }
     val referenceYear = remember(today?.year) { today?.year ?: year }
     // Real shadcn's calendar (react-day-picker) tracks a roving keyboard-focus cursor
     // separately from the selected date -- the ring you see on a freshly-opened
@@ -664,16 +683,16 @@ private fun CalendarImpl(
     val focusRegistry = remember { CalendarFocusRegistry() }
     var focusRevision by remember { mutableIntStateOf(0) }
     val rootStyleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val isDateDisabled: (CalendarDate) -> Boolean = { date ->
+        (fromDate != null && date < fromDate) || (toDate != null && date > toDate) || disabled(date)
+    }
     val focusCandidates =
-        listOfNotNull(focusedDate, selected, rangeFrom, selectedDates.minOrNull(), today) +
-            (1..system.daysInMonth(year, month)).map { CalendarDate(year, month, it) }
-    val resolvedFocus =
-        focusCandidates.firstOrNull { date ->
-            (0 until numberOfMonths.coerceAtLeast(1)).any { offset ->
-                val visible = addMonths(year, month, offset)
-                date.year == visible.first && date.month == visible.second
-            } && !disabled(date) && (fromDate == null || date >= fromDate) && (toDate == null || date <= toDate)
-        }
+        calendarFocusCandidates(
+            visibleMonths,
+            listOfNotNull(focusedDate, selected, rangeFrom, selectedDates.minOrNull(), today),
+            system,
+        ).filterNot(isDateDisabled)
+    val resolvedFocus = focusCandidates.firstOrNull()
     val state =
         CalendarState(
             year = year,
@@ -684,18 +703,14 @@ private fun CalendarImpl(
             selectedDates = selectedDates,
             today = today,
             focusedDate = resolvedFocus,
-            disabled = { date ->
-                (fromDate != null && date < fromDate) ||
-                    (toDate != null && date > toDate) ||
-                    disabled(date)
-            },
+            disabled = isDateDisabled,
             onMonthChange = onMonthChange,
             onSelectedChange = onDayClick,
             onFocusedDateChange = {
                 focusedDate = it
                 focusRevision++
             },
-            numberOfMonths = numberOfMonths.coerceAtLeast(1),
+            numberOfMonths = monthCount,
             weekStartsOn = weekStartsOn.coerceIn(0, DAYS_IN_WEEK - 1),
             showOutsideDays = showOutsideDays,
             fixedWeeks = fixedWeeks,
@@ -704,31 +719,30 @@ private fun CalendarImpl(
             pagedNavigation = pagedNavigation,
             reverseMonths = reverseMonths,
             captionLayout = captionLayout,
-            fromYear = system.clamp(CalendarDate(fromDate?.year ?: (referenceYear - 100), 1, 1)).year,
-            toYear = system.clamp(CalendarDate(toDate?.year ?: referenceYear, 12, 1)).year,
+            fromYear = system.clamp(CalendarDate(fromDate?.year ?: (referenceYear - CAPTION_YEAR_LOOKBACK), 1, 1)).year,
+            toYear = system.clamp(CalendarDate(toDate?.year ?: referenceYear, MONTHS_IN_YEAR, 1)).year,
         )
 
     LaunchedEffect(focusedDate, focusRevision) { if (focusRevision > 0) focusRegistry.focus(resolvedFocus) }
     state.locale = LocalCalendarLocale.current
-    state.minMonth = fromDate?.copy(day = 1)
-        ?: if (captionLayout != CalendarCaptionLayout.Label) CalendarDate(referenceYear - 100, 1, 1) else null
+    state.minMonth =
+        fromDate?.copy(day = 1) ?: if (captionLayout != CalendarCaptionLayout.Label) {
+            CalendarDate(referenceYear - CAPTION_YEAR_LOOKBACK, 1, 1)
+        } else {
+            null
+        }
     state.maxMonth = toDate?.copy(day = 1)
-        ?: if (captionLayout != CalendarCaptionLayout.Label) CalendarDate(referenceYear, 12, 1) else null
+        ?: if (captionLayout != CalendarCaptionLayout.Label) CalendarDate(referenceYear, MONTHS_IN_YEAR, 1) else null
     if (system == CalendarSystem.Persian) {
         state.minMonth = maxOf(state.minMonth ?: CalendarDate(1, 1, 1), CalendarDate(1, 1, 1))
-        state.maxMonth = minOf(state.maxMonth ?: CalendarDate(3176, 12, 1), CalendarDate(3176, 12, 1))
+        val lastPersianMonth = CalendarDate(PERSIAN_LAST_SUPPORTED_YEAR, MONTHS_IN_YEAR, 1)
+        state.maxMonth = minOf(state.maxMonth ?: lastPersianMonth, lastPersianMonth)
     }
     val autoFocus = LocalCalendarAutoFocus.current
     LaunchedEffect(autoFocus) {
         if (autoFocus) {
             withFrameNanos { }
-            val target =
-                (
-                    listOfNotNull(focusedDate, today) +
-                        (1..system.daysInMonth(year, month)).map {
-                            CalendarDate(year, month, it)
-                        }
-                ).firstOrNull { focusRegistry.items.containsKey(it) && !state.isDisabled(it) }
+            val target = focusCandidates.firstOrNull { it in focusRegistry.items }
             if (target != null && target != focusedDate) {
                 focusedDate = target
                 focusRevision++
@@ -1161,7 +1175,7 @@ private fun CalendarCaptionSelect(
                 Icon(
                     if (currentTheme.activePreset == StylePreset.Nova) NovaChevronRight else ChevronRight,
                     tint = currentTheme.colors.mutedForeground,
-                    modifier = Modifier.rotate(90f),
+                    modifier = Modifier.rotate(CALENDAR_CHEVRON_DOWN_DEGREES),
                     variant =
                         if (currentTheme.activePreset == StylePreset.Nova) {
                             IconVariant.Default
@@ -1233,7 +1247,7 @@ private fun CalendarNavButton(
             Icon(
                 if (currentTheme.activePreset == StylePreset.Nova) NovaChevronRight else ChevronRight,
                 tint = currentTheme.colors.foreground,
-                modifier = if (pointingLeft != rtl) Modifier.rotate(180f) else Modifier,
+                modifier = if (pointingLeft != rtl) Modifier.rotate(CALENDAR_CHEVRON_REVERSED_DEGREES) else Modifier,
                 variant = if (currentTheme.activePreset == StylePreset.Nova) IconVariant.Default else IconVariant.Small,
             )
         }
@@ -1346,7 +1360,7 @@ fun CalendarDayButton(
                         !outsideHidden &&
                         (
                             range?.focusedDate == null ||
-                                isFocused
+                                (isFocused && cell.inCurrentMonth)
                         )
                 }
                 .semantics {
