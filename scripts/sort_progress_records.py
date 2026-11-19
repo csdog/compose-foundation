@@ -17,7 +17,7 @@ RECORDS = '## 进度记录（按创建时间倒序）'
 def main():
     text = PROGRESS.read_text()
     if RECORDS not in text and '## 旧 Badge 基准排查' not in text:
-        print('No inline legacy progress records; current checklist left unchanged. See docs/archive/.')
+        print('No inline legacy progress records; current checklist left unchanged. See ../archive/compose-foundation/2026-11-19/docs/archive/.')
         return
     if RECORDS in text:
         overview, timeline = text.split(RECORDS, 1)

@@ -1,7 +1,0 @@
-{
-  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/inputgroup/InputGroup.kt": "0d69ee40f769773ac43dd6a0eb699efeceef28c876b2b5050f2a761058b573d4",
-  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/InputGroupDoc.kt": "3717963a0e646644df5cd7644a03c9ac37a81888f49cd8cb70958187b9371d22",
-  "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/InputGroupExamplesTest.kt": "654cf23528fbfe84f2d75fc66ddc3bab2cdc8d398202c819a579aa909d5bfe45",
-  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/inputgroup/InputGroupAddonStyleTest.kt": "5ed9a4ce9d8b5b66661039e3468a2f012b7c6f4baccd3fd06bd8a567fd510781",
-  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/inputgroup/InputGroupScreenshotTest.kt": "2c5df6e9b91394ef52f79426feec0aea8afd2841fc098525065933a964ccd7bd"
-}

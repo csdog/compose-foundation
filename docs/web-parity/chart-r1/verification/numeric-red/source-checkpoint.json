@@ -1,6 +1,0 @@
-{
-  "priorCheckpoint": "../final57/input-hashes.json",
-  "chartShaAtPriorCheckpoint": "d5a8db0d9cd8b1347f0d8d1fccf51bc102e0f773899a120da01ae3f26da2f165",
-  "currentShaAtInspection": "f753df471e4de5678aecd1395cced1f03b26c9e3671feeacbd4088c6154707e7",
-  "status": "parent source already advanced; final57 manifest retained as prior checkpoint"
-}

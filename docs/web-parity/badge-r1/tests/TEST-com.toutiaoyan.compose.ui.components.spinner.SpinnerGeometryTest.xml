@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="SpinnerGeometryTest[jvm]" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-04T00:56:42.312Z" hostname="Apples-MacBook-Pro.local" time="0.122">
-  <properties/>
-  <testcase name="paintSilhouetteMatchesOfficialSvgAtPublicSizesAndCustomStyle[jvm]" classname="com.toutiaoyan.compose.ui.components.spinner.SpinnerGeometryTest" time="0.122"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

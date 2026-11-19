@@ -15,7 +15,7 @@ systems, zero Material dependency. Targets Android, iOS (arm64 + simulator), Des
 **Alignment target (since 2026-08-21): Base UI** — primary source of truth is
 `apps/v4/registry/bases/base/ui/*.tsx` (docs: `ui.shadcn.com/docs/components/base/*`),
 with default style combo **base-nova**. Legacy `new-york-v4` (Radix/Vaul) is historical
-diff only; see `vendor/README.md` and `docs/shadcn-parity.md`.
+diff only; see `vendor/README.md` and `../archive/compose-foundation/2026-11-19/docs/shadcn-parity.md`.
 
 Group ID: `com.toutiaoyan.compose`   Artifacts: `ui`, `tailwind`   Published to: Maven Central (
 dry-run wired, not yet released)
@@ -30,7 +30,7 @@ dry-run wired, not yet released)
   *underneath*/*alongside* compose-foundation's component-level Style API variants — same
   relationship as Tailwind CSS + shadcn/ui on the web.
     - Prefer named `TwColors` shades when byte-identical to the source oklch; otherwise
-      `Oklch(l, c, h).toColor()` for new tokens — see `docs/shadcn-parity.md` §1 / §5.
+      `Oklch(l, c, h).toColor()` for new tokens — see `../archive/compose-foundation/2026-11-19/docs/shadcn-parity.md` §1 / §5.
     - Only reach for a vendored utility where compose-foundation's own `Style`/`StyleScope`
       DSL has **no equivalent property at all** — don't duplicate something the Style
       block already handles. Confirmed example: `StyleScope` has no shadow/elevation, so
@@ -59,7 +59,7 @@ dry-run wired, not yet released)
 | API surface management            | `kotlin-multiplatform-library-publishing` (apiCheck / apiDump — not yet wired, see Notes) |
 | Platform-specific implementations | `kotlin-multiplatform-expect-actual`                                                      |
 | Catalog app navigation            | `kotlin-multiplatform-navigation`                                                         |
-| Unit / integration tests          | `kotlin-multiplatform-unit-testing` (JVM / screenshot tests are wired; see `docs/visual-testing.md`)                            |
+| Unit / integration tests          | `kotlin-multiplatform-unit-testing` (JVM / screenshot tests are wired; see `../archive/compose-foundation/2026-11-19/docs/visual-testing.md`)                            |
 | Token usage analysis / optimization | `token-optimization-analysis`                                                            |
 | Code quality (detekt, ktlint)     | `kotlin-multiplatform-code-quality`                                                       |
 | CI automation                     | `kotlin-multiplatform-ci-github-actions`                                                  |
@@ -73,7 +73,7 @@ reduce agent cost, use `token-optimization-analysis` first. Its audit covers act
 Codex/DSH usage, repo-visible fixed context, duplicate reads, tool-output volume, and cheap
 subagent routing. Do not optimize from cache-hit percentage alone.
 
-For shadcn parity work, use the acceptance criteria in `docs/shadcn-web-plan.md`
+For shadcn parity work, use the acceptance criteria in `../archive/compose-foundation/2026-11-19/docs/shadcn-web-plan.md`
 and the component checklist in `docs/shadcn-web-progress.md`. Keep evidence and
 handoff notes in the component's run directory. Use `scripts/agent_run.sh` for
 verbose commands and `scripts/agent_tree_usage.py` to measure descendant usage.
@@ -88,6 +88,12 @@ verbose commands and `scripts/agent_tree_usage.py` to measure descendant usage.
 | `:app:shared`                                         | Catalog/docs app shared code -- navigation, sidebar, per-component doc pages (not published)                                                                                          |
 | `:app:androidApp` / `:app:desktopApp` / `:app:webApp` | Catalog app platform entry points (not published)                                                                                                                                     |
 | `:app:iosApp`                                         | Xcode project for the catalog app on iOS (not published)                                                                                                                              |
+
+## Local simulator checks on macOS
+
+The workspace's Android AVDs, iPhone 17 simulator, and CLI boot commands are documented in `angryecho-kmp/AGENTS.md` in the workspace root. For library gesture checks, use the Compose Foundation catalog APK or its Web examples. Record the app, OS, and interaction tested in the relevant progress document. Keep simulator and physical-device results distinct. The November 19 Create and gesture checks are in `../archive/compose-foundation/2026-11-19/docs/archive/2026-11-19/create-interaction-progress.md`.
+
+After `:app:androidApp:assembleDebug`, install the catalog APK from `app/androidApp/build/outputs/apk/debug/androidApp-debug.apk` using `adb -s <serial> install -r -t`. Open a catalog route using `adb -s <serial> shell am start -W -a android.intent.action.VIEW -d shadcncompose://app/resizable -n com.toutiaoyan.compose.ui/com.toutiaoyan.compose.ui.MainActivity`.
 
 ## Published artifacts
 
@@ -108,7 +114,7 @@ verbose commands and `scripts/agent_tree_usage.py` to measure descendant usage.
 
 0. **Every `Dp` token in this library uses the same numeral as real shadcn's CSS `px`
    value** (`ring-[3px]` -> `3.dp`, `size-4`/16px -> `16.dp`, etc.) -- a deliberate,
-   project-wide convention (see every "Ndp = real Npx ✅" row in `docs/shadcn-parity.md`),
+   project-wide convention (see every "Ndp = real Npx ✅" row in `../archive/compose-foundation/2026-11-19/docs/shadcn-parity.md`),
    **not** a physically-accurate unit conversion. CSS `px` (~1/96in) and Android `dp`
    (~1/160in) are different physical units; a literal conversion would multiply every
    value by ~1.667. This project doesn't do that, on purpose: it preserves *relative
@@ -153,7 +159,7 @@ verbose commands and `scripts/agent_tree_usage.py` to measure descendant usage.
    That claim was checked directly (a screenshot test of `dropShadow(radius = 0.dp,
    spread = 3.dp)`) and was false: perfectly crisp, only ordinary single-pixel edge
    anti-aliasing, zero effect on measured layout size -- exactly matching real CSS
-   `box-shadow`. Removed entirely (2026-07-09); see `docs/shadcn-parity.md` §6 for the
+   `box-shadow`. Removed entirely (2026-07-09); see `../archive/compose-foundation/2026-11-19/docs/shadcn-parity.md` §6 for the
    full writeup.
    `dropShadow` always follows the **final resolved** `shape()` -- including a later
    `style`-parameter override from `ButtonGroup`/`ToggleGroup` (their own
@@ -202,7 +208,7 @@ verbose commands and `scripts/agent_tree_usage.py` to measure descendant usage.
    it; document them that way rather than as "official," and note `Gray`/`Slate` (both
    real, currently missing here) would be needed for actual spec parity.
 9. Color conversion already has one documented, verified methodology
-   (`docs/shadcn-parity.md` §5): oklch -> linear sRGB -> gamma-encoded hex, **no
+   (`../archive/compose-foundation/2026-11-19/docs/shadcn-parity.md` §5): oklch -> linear sRGB -> gamma-encoded hex, **no
    perceptual gamut mapping applied**. Don't introduce a second "wide-gamut
    approximation" path for the same tokens -- one checked-against-real-source conversion
    method per color, not two competing ones.
@@ -460,7 +466,7 @@ real site and easy to miss entirely.
   see item 8 above for a case where this was skipped and a fabricated-sounding but
   actually-real set of custom base colors got documented as "official" when it isn't.
 - Roborazzi screenshot tests are wired (`shadcn/core/src/jvmTest/`, Robolectric-less
-  JVM/Desktop capture, see `docs/visual-testing.md`) and compile/pass cleanly (verified
+  JVM/Desktop capture, see `../archive/compose-foundation/2026-11-19/docs/visual-testing.md`) and compile/pass cleanly (verified
   2026-07-08 via `./gradlew :shadcn:core:verifyRoborazziJvm`). Plain `:shadcn:core:jvmTest` does
   *not* pixel-compare against the committed goldens (`captureRoboImage` is a no-op writer
   without the record/verify system properties the wrapper tasks set) -- after any
@@ -468,7 +474,7 @@ real site and easy to miss entirely.
   affected goldens, then `./gradlew :shadcn:core:verifyRoborazziJvm` to confirm a clean diff
   before committing. `jvmTest` alone does not enable pixel comparison. The current
   `.github/workflows/ci.yml` still invokes plain `jvmTest`; explicit screenshot
-  verification in CI remains a task in `docs/archive/2026-11-09/shadcn-align-progress.md`.
+  verification in CI remains a task in `../archive/compose-foundation/2026-11-19/docs/archive/2026-11-09/shadcn-align-progress.md`.
 
 ## Commands installed
 

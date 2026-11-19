@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="AccordionExamplesTest[jvm]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-07T13:09:34.759Z" hostname="Apples-MacBook-Pro.local" time="0.755">
-  <properties/>
-  <testcase name="basicRendersActualQuestionsAndSwitchesAnswer[jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionExamplesTest" time="0.671"/>
-  <testcase name="officialSectionOrderAndCopyMatchThePageSource[jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionExamplesTest" time="0.024"/>
-  <testcase name="multipleKeepsBothRealAnswersOpen[jvm]" classname="com.toutiaoyan.compose.ui.catalog.AccordionExamplesTest" time="0.058"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

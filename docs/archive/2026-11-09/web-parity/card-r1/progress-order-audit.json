@@ -1,9 +1,0 @@
-{
-  "previousRecords": 125,
-  "currentRecords": 126,
-  "changedHistoricalBodies": [],
-  "dateOrderDescending": true,
-  "sameDateOrder": "persisted original append order, descending",
-  "exactOldClockTimes": "not known; not invented",
-  "idempotent": true
-}

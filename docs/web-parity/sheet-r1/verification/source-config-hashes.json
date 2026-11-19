@@ -1,8 +1,0 @@
-{
-  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/sheet/Sheet.kt": "415539cfd9d266f5a4bf2830c56fd47a63811b6b5bcf3ccdae957571ef0d1e5f",
-  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/sheet/SheetStyles.kt": "f206e219ba9b7a9ab4d6e37053b1550efb0173322c793d08188911889be871be",
-  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/sheet/SheetParityTest.kt": "54c3c171fcc25bc6ca890d8b376d9bff31fe007983b6da0f0e4189446103fe66",
-  "gradle.properties": "29285a608a0d7a7dcbfa29255f0c71422e52b599906c8b9cccc4643572942d3b",
-  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/DocInstallation.kt": "699c3fb6face78d8f96fcac1f72bb05d89aaca3cf83b4fdbdb21dd43f0ed621f",
-  "gradle/libs.versions.toml": "acd62a8ddc0d2a87e0546971f57228af5f28448c16bb9db97f06dd71c3979c8a"
-}

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="SpinnerIntrinsicSizeTest[jvm]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-04T00:54:49.455Z" hostname="Apples-MacBook-Pro.local" time="0.638">
-  <properties/>
-  <testcase name="intrinsicHintStillHonorsStyleAndCallerModifierSizes[jvm]" classname="com.toutiaoyan.compose.ui.components.spinner.SpinnerIntrinsicSizeTest" time="0.605"/>
-  <testcase name="intrinsicRowIncludesEachPresetSize[jvm]" classname="com.toutiaoyan.compose.ui.components.spinner.SpinnerIntrinsicSizeTest" time="0.031"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

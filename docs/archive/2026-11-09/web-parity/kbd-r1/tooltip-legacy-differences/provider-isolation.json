@@ -1,7 +1,0 @@
-{
-  "method": "Remove only TooltipBubble content provider; retain inert local declaration so new Kbd compiles. Compare same six actual images; restore provider from byte-identical backup.",
-  "identicalImages": 6,
-  "totalImages": 6,
-  "result": "All six differences persist byte-for-byte without the new provider. Old Tooltip goldens were not refreshed.",
-  "providerRestored": true
-}

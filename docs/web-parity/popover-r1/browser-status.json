@@ -1,7 +1,0 @@
-{
-  "verified": false,
-  "oldTaskSpace": 18,
-  "status": "missing-taskspace-recreation-question-already-pending",
-  "substituteSpaceCreated": false,
-  "note": "Source web read and native tests do not provide browser visual acceptance."
-}

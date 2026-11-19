@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="AlertDialogMediaTest[jvm]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-07T12:56:30.945Z" hostname="Apples-MacBook-Pro.local" time="0.11">
-  <properties/>
-  <testcase name="mediaTracksDirectionBreakpointAndRemoval[jvm]" classname="com.toutiaoyan.compose.ui.components.alertdialog.AlertDialogMediaTest" time="0.038"/>
-  <testcase name="mediaHeaderStillMeasuresInUnboundedWidth[jvm]" classname="com.toutiaoyan.compose.ui.components.alertdialog.AlertDialogMediaTest" time="0.033"/>
-  <testcase name="smallMediaStaysCenteredOnDesktop[jvm]" classname="com.toutiaoyan.compose.ui.components.alertdialog.AlertDialogMediaTest" time="0.039"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

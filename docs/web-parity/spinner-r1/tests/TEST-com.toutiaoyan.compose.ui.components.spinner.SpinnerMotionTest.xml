@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="SpinnerMotionTest[jvm]" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-04T07:22:16.902Z" hostname="Apples-MacBook-Pro.local" time="0.026">
-  <properties/>
-  <testcase name="spinDrawsNewFramesWithoutRecomposingItsCaller[jvm]" classname="com.toutiaoyan.compose.ui.components.spinner.SpinnerMotionTest" time="0.026"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

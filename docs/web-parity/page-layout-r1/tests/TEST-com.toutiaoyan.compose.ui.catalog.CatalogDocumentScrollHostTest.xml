@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="CatalogDocumentScrollHostTest[jvm]" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-03T23:54:43.311Z" hostname="Apples-MacBook-Pro.local" time="4.099">
-  <properties/>
-  <testcase name="routeOwnsOneBindingAndRestoresItsCachedDocumentPosition[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CatalogDocumentScrollHostTest" time="4.096"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

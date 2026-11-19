@@ -1,7 +1,0 @@
-{
-  "scope": "Only two new Provider Nova light/dark images; raw images reviewed with corrected16dp stroked arrow. Independent verify recorded separately.",
-  "files": {
-    "shadcn/core/src/jvmTest/snapshots/message_scroller_provider_nova_light.png": "731c680bafacc063b02d96e06e68834afd28b17f7d8d3d2d772180438401f1b4",
-    "shadcn/core/src/jvmTest/snapshots/message_scroller_provider_nova_dark.png": "dbaef1d4d600cba48df809967b707893b7d3eaff85e9e9563b5c1d0d4bd97b55"
-  }
-}

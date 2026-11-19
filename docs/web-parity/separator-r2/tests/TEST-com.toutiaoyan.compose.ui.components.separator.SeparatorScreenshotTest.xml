@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="SeparatorScreenshotTest[jvm]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-04T08:01:35.693Z" hostname="Apples-MacBook-Pro.local" time="0.036">
-  <properties/>
-  <testcase name="states_light[jvm]" classname="com.toutiaoyan.compose.ui.components.separator.SeparatorScreenshotTest" time="0.018"/>
-  <testcase name="states_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.separator.SeparatorScreenshotTest" time="0.017"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

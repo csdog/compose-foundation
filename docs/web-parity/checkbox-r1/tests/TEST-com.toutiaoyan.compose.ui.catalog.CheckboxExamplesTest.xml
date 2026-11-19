@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="CheckboxExamplesTest[jvm]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-04T06:47:07.725Z" hostname="Apples-MacBook-Pro.local" time="0.689">
-  <properties/>
-  <testcase name="defaultIncludesFourIndependentControlsAndDisabledNotifications[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CheckboxExamplesTest" time="0.497"/>
-  <testcase name="officialRecipesReplaceMisleadingDefaultStateDuplicates[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CheckboxExamplesTest" time="0.018"/>
-  <testcase name="tableSelectsAllAndIndividualRowsWithoutIndeterminateHeader[jvm]" classname="com.toutiaoyan.compose.ui.catalog.CheckboxExamplesTest" time="0.172"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

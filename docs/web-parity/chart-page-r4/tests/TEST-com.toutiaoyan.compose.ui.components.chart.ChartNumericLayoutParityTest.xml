@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ChartNumericLayoutParityTest[jvm]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-05T03:42:15.481Z" hostname="Apples-MacBook-Pro.local" time="0.064">
-  <properties/>
-  <testcase name="fixedWidthBrowserValueKeepsItsLastDigit[jvm]" classname="com.toutiaoyan.compose.ui.components.chart.ChartNumericLayoutParityTest" time="0.021"/>
-  <testcase name="nestedLineLabelDoesNotWrapTheSixDigitValue[jvm]" classname="com.toutiaoyan.compose.ui.components.chart.ChartNumericLayoutParityTest" time="0.021"/>
-  <testcase name="arabicNameDoesNotTruncateTheNumericPayload[jvm]" classname="com.toutiaoyan.compose.ui.components.chart.ChartNumericLayoutParityTest" time="0.022"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

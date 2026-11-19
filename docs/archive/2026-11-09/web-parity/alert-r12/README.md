@@ -1,1 +1,0 @@
-../../../../web-parity/alert-r12/README.md

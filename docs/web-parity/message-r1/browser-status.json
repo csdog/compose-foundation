@@ -1,7 +1,0 @@
-{
-  "goalTaskSpace": 18,
-  "found": false,
-  "observation": "Fresh read-only check: default sandbox could not start Ego Lite, normal desktop permission retry returned taskSpace18 not found; only user-owned spaces0,1,3.",
-  "action": "No new space, claim, adoption or Page navigation. Existing request to recreate goal space still pending.",
-  "matrixPerformed": false
-}

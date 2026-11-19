@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="SelectValueOverflowScreenshotTest[jvm]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-30T17:57:24.586Z" hostname="Apples-MacBook-Pro.local" time="0.709">
-  <properties/>
-  <testcase name="dark[jvm]" classname="com.toutiaoyan.compose.ui.components.select.SelectValueOverflowScreenshotTest" time="0.685"/>
-  <testcase name="light[jvm]" classname="com.toutiaoyan.compose.ui.components.select.SelectValueOverflowScreenshotTest" time="0.022"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

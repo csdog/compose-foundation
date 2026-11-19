@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MessageScrollerExamplesTest[jvm]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-30T14:44:02.823Z" hostname="Apples-MacBook-Pro.local" time="0.725">
-  <properties/>
-  <testcase name="usageExplainsCanonicalCompositionAndExposesRealStateApi[jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerExamplesTest" time="0.28"/>
-  <testcase name="releasedReaderStaysPutAndExplicitButtonResumesFollowing[jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerExamplesTest" time="0.382"/>
-  <testcase name="jumpAndLoadingEarlierKeepTheSameReadingPosition[jvm]" classname="com.toutiaoyan.compose.ui.catalog.MessageScrollerExamplesTest" time="0.062"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

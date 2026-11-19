@@ -1,5 +1,0 @@
-{
-  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/KbdDoc.kt": "e4260717c21ffdd6fad8d8f441eb2ac9f1f6a69c6435703eaf2c9367b0c42314",
-  "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/KbdExamplesTest.kt": "d2f8c116cf336a8fd02b1f144e50ffb74b3d308823cf3bb56cd0a20815ceb30e",
-  "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/KbdViewportTest.kt": "c36d31f1b7d8f942137e5fb0c52e5aebdbb9148e1205df1199ad434726b9c224"
-}

@@ -41,7 +41,7 @@ internal data class ChartDomain(val minimum: Double, val maximum: Double)
 /**
  * Recharts v3.3 adaptive five-tick numeric domain, including zero like the default Y axis.
  * Ported from getFormatStep/calculateStep; Double arithmetic replaces decimal.js-light.
- * Source, version and license: docs/web-parity/chart-r1/recharts-scale-sources.json.
+ * Source, version and license: ../archive/compose-foundation/2026-11-19/docs/web-parity/chart-r1/recharts-scale-sources.json.
  */
 internal fun chartNiceDomain(values: List<Float>): ChartDomain {
     val finite = values.filter(Float::isFinite).map(Float::toDouble)

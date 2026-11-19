@@ -1,8 +1,0 @@
-{
-  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/tabs/Tabs.kt": "b99a827b411f43fef3354b021c5b2c38d1e8688b4ab0d7cf905b7df637f9b6c3",
-  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/tabs/TabsStyles.kt": "c1085c7522b5bd5a393d78b5cce1115dd5b7f293a63d1d5bd50c8cb552e93c1a",
-  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/ScreenshotTest.kt": "6d89044ba65d780ab307321d5fb05b884d8d4a1e227b93cc80085862670fb633",
-  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/tabs/TabsScreenshotTest.kt": "07a24fd643e7c5ba79400a08943c1c60a9860eade937abc3a2a70cae01fb2939",
-  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/tabs/TabsNovaParityTest.kt": "47c2961ccdf3c27c14b4ed798934b849f091e56985a9534e86f9c5d5a9d836ce",
-  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/tabs/TabsBehaviorParityTest.kt": "67485b19f72a98ca0d888c80b859c4b950ed4619fc52489974860cb7ff46086a"
-}

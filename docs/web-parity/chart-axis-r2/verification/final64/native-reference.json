@@ -1,8 +1,0 @@
-{
-  "count": 44,
-  "reference": "../../../chart-r1/verification/final60/native",
-  "allByteIdentical": true,
-  "comparison": "native-comparison.json",
-  "hashes": "native-hashes.json",
-  "parentVisuallyReviewed44": true
-}

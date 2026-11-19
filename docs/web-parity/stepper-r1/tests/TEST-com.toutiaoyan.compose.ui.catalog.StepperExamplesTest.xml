@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="StepperExamplesTest[jvm]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-05T04:48:15.053Z" hostname="Apples-MacBook-Pro.local" time="0.704">
-  <properties/>
-  <testcase name="pageIsLabeledAsKotlinExtension[jvm]" classname="com.toutiaoyan.compose.ui.catalog.StepperExamplesTest" time="0.381"/>
-  <testcase name="defaultPreviewRendersStepsAndAdvances[jvm]" classname="com.toutiaoyan.compose.ui.catalog.StepperExamplesTest" time="0.302"/>
-  <testcase name="apiReferenceDocumentsStepperAndStepperItem[jvm]" classname="com.toutiaoyan.compose.ui.catalog.StepperExamplesTest" time="0.018"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

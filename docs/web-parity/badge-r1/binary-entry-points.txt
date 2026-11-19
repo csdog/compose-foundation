@@ -1,7 +1,0 @@
-Compiled from "Badge.kt"
-public final class com.toutiaoyan.compose.ui.components.badge.BadgeKt {
-  public static final void Badge(androidx.compose.ui.Modifier, com.toutiaoyan.compose.ui.components.badge.BadgeVariant, kotlin.jvm.functions.Function0<kotlin.Unit>, androidx.compose.foundation.style.Style, java.lang.String, boolean, com.toutiaoyan.compose.ui.components.badge.BadgeIconPlacement, kotlin.jvm.functions.Function2<? super androidx.compose.runtime.Composer, ? super java.lang.Integer, kotlin.Unit>, androidx.compose.runtime.Composer, int, int);
-  public static final void Badge(java.lang.String, androidx.compose.ui.Modifier, com.toutiaoyan.compose.ui.components.badge.BadgeVariant, kotlin.jvm.functions.Function0<kotlin.Unit>, androidx.compose.foundation.style.Style, java.lang.String, boolean, com.toutiaoyan.compose.ui.components.badge.BadgeIconPlacement, androidx.compose.runtime.Composer, int, int);
-  public static final void Badge(androidx.compose.ui.Modifier, com.toutiaoyan.compose.ui.components.badge.BadgeVariant, kotlin.jvm.functions.Function0, androidx.compose.foundation.style.Style, kotlin.jvm.functions.Function2, androidx.compose.runtime.Composer, int, int);
-  public static final void Badge(java.lang.String, androidx.compose.ui.Modifier, com.toutiaoyan.compose.ui.components.badge.BadgeVariant, kotlin.jvm.functions.Function0, androidx.compose.foundation.style.Style, androidx.compose.runtime.Composer, int, int);
-}

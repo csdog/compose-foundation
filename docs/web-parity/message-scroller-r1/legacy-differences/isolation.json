@@ -1,8 +1,0 @@
-{
-  "method": "Restore only stateless MessageScrollerButton function from HEAD, keep new provider/root/state. Verify one oldbutton_start_dark golden; restore current file byte-for-byte after verification.",
-  "actualSha256": "1f00838f4a501b035cb99fe3010bd7e4b6da3d7e2c520f4695e90b2b2612db2e",
-  "identicalToCurrent": true,
-  "conclusion": "Dark start-button border discrepancy persists unchanged with old code; current button implementation did not introduce it.",
-  "intentionalOtherChanges": "Four content/viewport legacy images use public ContentSpacing32\u219224dp, now matching Nova gap-6 rather than Rhea gap-8. SourceCSS and all five changed compare images inspected; only5 affected legacy images eligible for scoped refresh.",
-  "sourceRestored": true
-}

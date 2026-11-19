@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="AlertNovaActionScreenshotTest[jvm]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-05T03:04:42.868Z" hostname="Apples-MacBook-Pro.local" time="0.547">
-  <properties/>
-  <testcase name="actionsLight[jvm]" classname="com.toutiaoyan.compose.ui.components.alert.AlertNovaActionScreenshotTest" time="0.507"/>
-  <testcase name="actionsDark[jvm]" classname="com.toutiaoyan.compose.ui.components.alert.AlertNovaActionScreenshotTest" time="0.037"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

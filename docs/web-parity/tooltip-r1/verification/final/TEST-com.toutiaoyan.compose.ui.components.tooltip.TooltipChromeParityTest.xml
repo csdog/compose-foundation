@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="TooltipChromeParityTest[jvm]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-30T23:10:46.249Z" hostname="Apples-MacBook-Pro.local" time="0.065">
-  <properties/>
-  <testcase name="arrowDoesNotAddSpaceToThePopupLayout[jvm]" classname="com.toutiaoyan.compose.ui.components.tooltip.TooltipChromeParityTest" time="0.031"/>
-  <testcase name="novaChipUsesTwelveBySixPaddingAndNormalTwelveSixteenType[jvm]" classname="com.toutiaoyan.compose.ui.components.tooltip.TooltipChromeParityTest" time="0.033"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

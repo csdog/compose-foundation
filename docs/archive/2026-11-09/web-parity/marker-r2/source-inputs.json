@@ -1,8 +1,0 @@
-{
-  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MarkerDoc.kt": "bb4acfda75fc3087fc63ba7cedcd4f8913bc0fc6e2d0117ea231d193a9ffe5c5",
-  "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/MarkerExamplesTest.kt": "1b36e05e96459c4b13d05a3d5b7d64c6dce1450e92c88d199f0dc55b3f658897",
-  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MarkerActionCode.kt": "0b633f33a7151435ea0d60c937d2505ace89dc852556efbef907ee1b4f977eaf",
-  "app/shared/src/commonMain/kotlin/com/toutiaoyan/compose/ui/catalog/docs/MarkerActionRecipes.kt": "c0b54b648f85df7889de85d0813f3a266b4946b5bf78dd17d8c47b75baad0e45",
-  "app/shared/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/catalog/MarkerInteractionTest.kt": "2afd186a50a8c121a6fc5318b1eb8278d878f6804ff3b714d345d70cc6b9ec22",
-  "scripts/generate_marker_action_code.py": "cb3dab46e59b0240a924a3e8426a46ad46400fc8c6aad5b048b44793fe6f5cb8"
-}

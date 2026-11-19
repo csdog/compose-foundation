@@ -1,8 +1,0 @@
-{
-  "checkedAt": "2026-10-30T22:40:00+08:00",
-  "goalTaskSpace": 18,
-  "found": false,
-  "observation": "Default sandbox Ego failed to start; normal desktop-permission read-only retry returned task space not found:18.",
-  "action": "No replacement, claims, adoption, navigation or user-tab access. Existing request to recreate goal space remains pending.",
-  "matrixPerformed": false
-}

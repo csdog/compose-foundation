@@ -205,7 +205,7 @@ internal val scrollAreaHorizontalRecipeCode =
 
     @Composable
     internal fun ScrollAreaHorizontalRecipe() {
-        // Copy the three scroll_area_art_*.jpg drawables from docs/web-parity/scroll-area-r1/artwork-sources.json.
+        // Copy the three scroll_area_art_*.jpg drawables from ../archive/compose-foundation/2026-11-19/docs/web-parity/scroll-area-r1/artwork-sources.json.
 
         val colors = currentTheme.colors
         val radius = com.toutiaoyan.compose.tailwind.core.twRadius.md

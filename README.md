@@ -12,7 +12,7 @@ theming and sealed variant systems, built on the experimental **Compose Styles A
 dependency, no icon-library dependency — every component is drawn from this library's own tokens.
 
 70+ components across primitives, forms, overlays, data display, and AI Elements (chat UI) — see the
-[**component catalog**](docs/components.md) for the component/source index, and
+[**component catalog**](../archive/compose-foundation/2026-11-19/docs/components.md) for the component/source index, and
 [Registry parity](#registry-parity) for how closely each tracks real shadcn/ui.
 
 ## Installation
@@ -63,12 +63,12 @@ Every component in real shadcn/ui's `base/*` registry is implemented here, with 
 deliberate, documented exceptions — `native-select`, `direction`, `data-table`, and `toast`
 (deprecated upstream in favor of `sonner`, implemented here as `ShadcnToast`). Full reasoning in
 [`.claude/AGENTS.md`](.claude/AGENTS.md#registry-parity-status); token/component-level verification
-against real source in [`docs/shadcn-parity.md`](docs/shadcn-parity.md).
-Historical alignment work is in the [archive](docs/archive/2026-11-09/shadcn-align-progress.md).
+against real source in [`../archive/compose-foundation/2026-11-19/docs/shadcn-parity.md`](../archive/compose-foundation/2026-11-19/docs/shadcn-parity.md).
+Historical alignment work is in the [archive](../archive/compose-foundation/2026-11-19/docs/archive/2026-11-09/shadcn-align-progress.md).
 
-Documentation: [index](docs/README.md).
+Documentation: [index](../archive/compose-foundation/2026-11-19/docs/README.md).
 
-Web visual alignment: [implementation plan](docs/shadcn-web-plan.md) ·
+Web visual alignment: [implementation plan](../archive/compose-foundation/2026-11-19/docs/shadcn-web-plan.md) ·
 [current progress and component checklist](docs/shadcn-web-progress.md).
 
 ## Project structure
@@ -101,8 +101,8 @@ the [Compose Hot Reload](https://kotlinlang.org/docs/multiplatform/compose-hot-r
 plugin (`org.jetbrains.compose.hot-reload`). Cursor MCP is wired in `.cursor/mcp.json`
 (`:app:desktopApp:hotMcpServer`).
 
-See [`docs/visual-testing.md`](docs/visual-testing.md) for the screenshot-testing workflow
-(`recordRoborazziJvm`/`verifyRoborazziJvm`) and [`docs/shadcn-parity.md`](docs/shadcn-parity.md) for
+See [`../archive/compose-foundation/2026-11-19/docs/visual-testing.md`](../archive/compose-foundation/2026-11-19/docs/visual-testing.md) for the screenshot-testing workflow
+(`recordRoborazziJvm`/`verifyRoborazziJvm`) and [`../archive/compose-foundation/2026-11-19/docs/shadcn-parity.md`](../archive/compose-foundation/2026-11-19/docs/shadcn-parity.md) for
 how components are checked against real shadcn/ui source.
 
 ### Android Preview 截图测试
@@ -126,7 +126,7 @@ how components are checked against real shadcn/ui source.
 测试套件仍为实验功能。上述任务名按当前 AGP 实际生成的名称填写，顺序与官方文档示例不同。
 覆盖浅色、深色、平板宽度和大字体；交互行为继续由 JVM 测试验证。
 
-详见 [项目截图测试说明](docs/visual-testing.md) 和
+详见 [项目截图测试说明](../archive/compose-foundation/2026-11-19/docs/visual-testing.md) 和
 [Android 官方：使用测试套件进行截图测试](https://developer.android.com/studio/preview/compose-screenshot-testing-with-testsuites?hl=zh-cn)。
 
 ## License

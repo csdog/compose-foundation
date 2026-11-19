@@ -1,6 +1,0 @@
-{
-  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/table/Table.kt": "d84e0845dd2ec4b59c550b5911b76f4e665b85a390e3d13d5d6f79151b7cc8fa",
-  "shadcn/core/src/commonMain/kotlin/com/toutiaoyan/compose/ui/components/table/TableStyles.kt": "736d259ac92551bd75b3fe94b1202bcb39e51e207782a4b535e3a866d69b6200",
-  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/components/table/TableScreenshotTest.kt": "23d1b10ee84ce854e43240048d7d126e51944fc53a3964c9d3d01c7f0eae1dfc",
-  "shadcn/core/src/jvmTest/kotlin/com/toutiaoyan/compose/ui/ScreenshotTest.kt": "6d89044ba65d780ab307321d5fb05b884d8d4a1e227b93cc80085862670fb633"
-}

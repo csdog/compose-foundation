@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ShimmerScreenshotTest[jvm]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-30T05:42:17.119Z" hostname="Apples-MacBook-Pro.local" time="0.141">
-  <properties/>
-  <testcase name="states_light[jvm]" classname="com.toutiaoyan.compose.ui.components.ShimmerScreenshotTest" time="0.093"/>
-  <testcase name="states_dark[jvm]" classname="com.toutiaoyan.compose.ui.components.ShimmerScreenshotTest" time="0.048"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

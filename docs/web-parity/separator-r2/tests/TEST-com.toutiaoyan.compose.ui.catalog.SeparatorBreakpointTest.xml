@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="SeparatorBreakpointTest[jvm]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-04T08:07:06.220Z" hostname="Apples-MacBook-Pro.local" time="0.46">
-  <properties/>
-  <testcase name="menuUsesTheCssViewportIncludingScrollbarWidth[767][jvm]" classname="com.toutiaoyan.compose.ui.catalog.SeparatorBreakpointTest" time="0.427"/>
-  <testcase name="menuUsesTheCssViewportIncludingScrollbarWidth[768][jvm]" classname="com.toutiaoyan.compose.ui.catalog.SeparatorBreakpointTest" time="0.031"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
