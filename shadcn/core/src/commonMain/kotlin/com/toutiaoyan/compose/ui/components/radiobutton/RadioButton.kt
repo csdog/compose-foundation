@@ -432,14 +432,14 @@ fun RadioGroupScope.RadioGroupItem(
                         Key.MoveEnd -> available.last()
                         else -> return@onPreviewKeyEvent false
                     }
-                radio.onValueChange(next)
+                if (next != value || next != radio.value) radio.onValueChange(next)
                 true
             }
     RadioButton(
         selected = radio.value == value,
         onClick = { radio.onValueChange(value) },
         modifier = modifier.then(keys),
-        enabled = enabled && !disabled && !radio.disabled,
+        enabled = resolvedEnabled,
         invalid = invalid,
         required = radio.required,
         animation = animation,
