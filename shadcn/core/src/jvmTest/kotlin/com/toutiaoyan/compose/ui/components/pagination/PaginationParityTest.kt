@@ -21,6 +21,24 @@ import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.*
 
 class PaginationParityTest : ScreenshotTest() {
+    @Test
+    fun knownPageWindowStaysValidNearTheLargestPageNumber() {
+        setThemedContent {
+            Pagination(page = Int.MAX_VALUE - 1, pageCount = Int.MAX_VALUE, onPageChange = {}, siblingCount = 2)
+        }
+        composeRule.onNodeWithText((Int.MAX_VALUE - 1).toString()).assertIsSelected()
+        composeRule.onNodeWithText((Int.MAX_VALUE - 2).toString()).assertExists()
+    }
+
+    @Test
+    fun unknownPageCountCannotAdvancePastTheLargestPageNumber() {
+        val requested = mutableListOf<Int>()
+        val state = PaginationState(page = Int.MAX_VALUE, pageCount = null, onPageChange = { requested.add(it) })
+        assertFalse(state.canGoNext)
+        state.goNext()
+        assertTrue(requested.isEmpty())
+    }
+
     @Test fun novaPageLinksAre32SquareWithTwoPixelGap() {
         setThemedContent(stylePreset = StylePreset.Nova) {
             Pagination {

@@ -56,6 +56,11 @@ class PaginationScope internal constructor()
 
 class PaginationContentScope internal constructor()
 
+private const val MAX_UNCOLLAPSED_PAGE_COUNT = 7
+private const val REVERSED_CHEVRON_ROTATION_DEGREES = 180f
+private const val NOVA_DOUBLE_CHEVRON_OVERLAP_DP = -6
+private const val LEGACY_DOUBLE_CHEVRON_OVERLAP_DP = -8
+
 @Immutable
 class PaginationState(
     val page: Int,
@@ -65,7 +70,7 @@ class PaginationState(
     val showEdges: Boolean = false,
 ) {
     val canGoPrevious: Boolean get() = page > 1
-    val canGoNext: Boolean get() = pageCount == null || page < pageCount
+    val canGoNext: Boolean get() = page < (pageCount ?: Int.MAX_VALUE)
     val canGoFirst: Boolean get() = page > 1
     val canGoLast: Boolean get() = pageCount != null && page < pageCount
 
@@ -181,16 +186,16 @@ private fun paginationTokens(
     siblingCount: Int = 1,
 ): List<PaginationToken> {
     if (pageCount <= 0) return emptyList()
-    if (pageCount <= 7) return (1..pageCount).map { PaginationToken.Page(it) }
+    if (pageCount <= MAX_UNCOLLAPSED_PAGE_COUNT) return (1..pageCount).map { PaginationToken.Page(it) }
     val current = page.coerceIn(1, pageCount)
     val siblings = siblingCount.coerceAtLeast(0)
+    val firstInWindow = current - minOf(siblings, current - 1)
+    val lastInWindow = current + minOf(siblings, pageCount - current)
     val pages = mutableListOf(1, pageCount)
-    for (i in (current - siblings)..(current + siblings)) {
-        if (i in 1..pageCount) pages.add(i)
-    }
-    if (current <= siblings + 1) pages.add((siblings + 2).coerceAtMost(pageCount))
-    if (current >= pageCount - siblings) pages.add((pageCount - siblings - 1).coerceAtLeast(1))
-    val unique = pages.filter { it in 1..pageCount }.toSet().sorted()
+    pages.addAll(firstInWindow..lastInWindow)
+    if (firstInWindow == 1) pages.add(minOf(siblings, pageCount - 2) + 2)
+    if (lastInWindow == pageCount) pages.add((pageCount - siblings - 1).coerceAtLeast(1))
+    val unique = pages.distinct().sorted()
     val tokens = mutableListOf<PaginationToken>()
     var previous: Int? = null
     for (n in unique) {
@@ -553,11 +558,14 @@ private fun PaginationControl(
             style = (if (responsive || showLabel) rememberPaginationControlStyle(pointingLeft) else Style) then style,
         ) {
             val glyph: @Composable () -> Unit = {
-                Icon(NovaChevronRight, Modifier.size(16.dp).rotate(if (physicalLeft) 180f else 0f))
+                Icon(
+                    NovaChevronRight,
+                    Modifier.size(16.dp).rotate(if (physicalLeft) REVERSED_CHEVRON_ROTATION_DEGREES else 0f),
+                )
             }
             val chevron: @Composable () -> Unit = {
                 if (doubleChevron) {
-                    Row(horizontalArrangement = Arrangement.spacedBy((-6).dp)) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(NOVA_DOUBLE_CHEVRON_OVERLAP_DP.dp)) {
                         glyph()
                         glyph()
                     }
@@ -586,11 +594,11 @@ private fun PaginationControl(
                     Icon(
                         ChevronRight,
                         tint = iconTint,
-                        modifier = if (pointingLeft) Modifier.rotate(180f) else Modifier,
+                        modifier = if (pointingLeft) Modifier.rotate(REVERSED_CHEVRON_ROTATION_DEGREES) else Modifier,
                     )
                 }
             if (doubleChevron) {
-                Row(horizontalArrangement = Arrangement.spacedBy((-8).dp)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(LEGACY_DOUBLE_CHEVRON_OVERLAP_DP.dp)) {
                     icon()
                     icon()
                 }
