@@ -263,6 +263,9 @@
 - Popover、HoverCard 和共享菜单内置动效使用同一图层。普通锚定弹层沿用原淡入淡出时长，调用方提供的自定义过渡继续走原入口。
 - 修改前 Nova、Vega 的 Popover 和共享菜单三个 JVM 用例均复现阴影缺失，修改后全部通过。核心 117 项中通过 111 项。Tooltip 其余六张快照在原实现上同样失败，实际 PNG 的 SHA-256 逐一相同。目录 JVM 68 项及 Detekt、ktlint、JS/Wasm 构建通过，存量规则 ID 维持 4,479 条。Chromium 的 JS/Wasm 都在 Popover 和 Dropdown Menu 的首个可见帧测得阴影，动效结束后的面板区域像素一致。[逐帧证据](code-review-evidence/popup-shadow-first-frame.json)
 
+- 补检发现 Context Menu 的平台 Popup、宿主 Portal 和 Nova Navigation Menu 的共享面板仍有同样的裁切。提交 `92b2cc5f` 让 `ContextMenu.kt:391` 的两个挂载路径共用带阴影留白的淡入层。提交 `6d509ddb` 让 `NavigationMenuSharedViewport.kt:228` 在同一图层推进缩放与透明度，沿用原时长、曲线和锚点。
+- 三个 JVM 逐帧用例均能在修复前复现，修改后全部通过。相关 JVM 共 66 项通过，含 Navigation Menu 和 Popover 快照。核心 Detekt 和 ktlint 通过，删除一个失效的 Detekt baseline ID。Chromium 在 JS 和 Wasm 中确认 Context Menu、Navigation Menu 和 Popover 的阴影随面板出现。[复测证据](code-review-evidence/popup-shadow-followup.json)
+
 ### InputGroup 验收
 
 - `InputGroupLayout.kt:15` 负责附加内容、控件和行边缘测量。Nova 原先只看控件高度，64 dp 高的内联附加内容会从 32 dp 的容器上下各溢出 16 dp。修复用整行最大高度判断能否采用紧凑布局，内联和块级插槽仍按逻辑方向放置。提交 `96aebd10`。
