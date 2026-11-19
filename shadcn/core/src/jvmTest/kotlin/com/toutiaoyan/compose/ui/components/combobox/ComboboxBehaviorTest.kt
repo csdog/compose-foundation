@@ -50,6 +50,84 @@ class ComboboxBehaviorTest : ScreenshotTest() {
         composeRule.onNodeWithText("Beta").assertDoesNotExist()
     }
 
+    @Test
+    fun anAlreadyOpenEditableInputReceivesFocusWhenEnabled() {
+        var inputDisabled by mutableStateOf(true)
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Combobox<String>(
+                value = null,
+                options = listOf("Alpha"),
+                onValueChange = {},
+                open = true,
+            ) {
+                ComboboxInput(editable = true, disabled = inputDisabled, showTrigger = false)
+            }
+        }
+        composeRule.runOnIdle { inputDisabled = false }
+        composeRule.onNode(hasSetTextAction()).assertIsFocused()
+    }
+
+    @Test
+    fun anAlreadyOpenChipsInputReceivesFocusWhenEnabled() {
+        var inputDisabled by mutableStateOf(true)
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Combobox(
+                values = emptyList<String>(),
+                options = listOf("Alpha"),
+                onValuesChange = {},
+                open = true,
+            ) {
+                ComboboxChips {
+                    ComboboxChipsInput(Modifier.testTag("chips-query"), disabled = inputDisabled)
+                }
+            }
+        }
+        composeRule.runOnIdle { inputDisabled = false }
+        composeRule.onNodeWithTag("chips-query").assertIsFocused()
+    }
+
+    @Test
+    fun disabledEditableInputDoesNotOpenOnPointerPress() {
+        val requested = mutableListOf<Boolean>()
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Combobox<String>(
+                value = null,
+                options = listOf("Alpha"),
+                onValueChange = {},
+                open = false,
+                onOpenChange = { requested += it },
+            ) {
+                ComboboxInput(Modifier.testTag("disabled-input"), editable = true, disabled = true, showTrigger = false)
+            }
+        }
+        composeRule.onNodeWithTag("disabled-input").performMouseInput { click(center) }
+        composeRule.runOnIdle { assertTrue(requested.isEmpty()) }
+    }
+
+    @Test
+    fun editableInputPressUsesReplacedOpenCallback() {
+        var useFirstCallback by mutableStateOf(true)
+        val requests = mutableListOf<String>()
+        val first: (Boolean) -> Unit = { if (it) requests += "first" }
+        val second: (Boolean) -> Unit = { if (it) requests += "second" }
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Combobox<String>(
+                value = null,
+                options = listOf("Alpha"),
+                onValueChange = {},
+                open = false,
+                onOpenChange = if (useFirstCallback) first else second,
+            ) {
+                ComboboxInput(Modifier.testTag("editable-input"), editable = true, showTrigger = false)
+            }
+        }
+        val input = composeRule.onNodeWithTag("editable-input")
+        input.performMouseInput { moveTo(center) }
+        composeRule.runOnIdle { useFirstCallback = false }
+        input.performMouseInput { click(center) }
+        composeRule.runOnIdle { assertEquals(listOf("second"), requests) }
+    }
+
     @Test fun customIconSearchInheritsRootDisabled() {
         setThemedContent(stylePreset = StylePreset.Nova) {
             Combobox<String>(null, listOf("Alpha"), {}, disabled = true) {

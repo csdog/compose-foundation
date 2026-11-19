@@ -47,6 +47,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
@@ -189,6 +190,8 @@ private class ComboboxEditing {
         return false
     }
 }
+
+private const val COMBOBOX_CHEVRON_ROTATION_DEGREES = 90f
 
 private val LocalComboboxEditing = staticCompositionLocalOf<ComboboxEditing?> { null }
 private val LocalCombobox = staticCompositionLocalOf<ComboboxController?> { null }
@@ -556,7 +559,7 @@ internal fun ComboboxIcon(modifier: Modifier = Modifier) {
     Icon(
         if (currentTheme.activePreset == StylePreset.Nova) NovaChevronRight else ChevronRight,
         tint = currentTheme.colors.mutedForeground,
-        modifier = modifier.rotate(90f),
+        modifier = modifier.rotate(COMBOBOX_CHEVRON_ROTATION_DEGREES),
         variant = if (currentTheme.activePreset == StylePreset.Nova) IconVariant.Default else IconVariant.Small,
     )
 }
@@ -769,7 +772,7 @@ fun ComboboxInput(
         onDispose { editing.inputs.remove(token) }
     }
     val density = LocalDensity.current
-    LaunchedEffect(ctrl.open) { if (ctrl.open && !ctrl.disabled && !disabled) editing.inputFocus.requestFocus() }
+    focusOpenComboboxInput(editing.inputFocus, ctrl.open && !ctrl.disabled && !disabled)
     InputGroup(
         modifier =
             modifier.width(
@@ -789,14 +792,7 @@ fun ComboboxInput(
             },
             modifier =
                 Modifier.focusRequester(editing.inputFocus).onPreviewKeyEvent { editing.key(it, ctrl) }
-                    .pointerInput(Unit) {
-                        awaitPointerEventScope {
-                            while (true) {
-                                val event = awaitPointerEvent()
-                                if (event.type == PointerEventType.Press && !ctrl.disabled) ctrl.setOpen(true)
-                            }
-                        }
-                    }
+                    .openComboboxInputOnPress(enabled = !ctrl.disabled && !disabled) { ctrl.setOpen(true) }
                     .semantics { stateDescription = if (ctrl.open) "Expanded" else "Collapsed" },
             placeholder = placeholder ?: ctrl.placeholder,
         )
@@ -1150,6 +1146,32 @@ fun ComboboxChip(
     }
 }
 
+@Composable
+private fun focusOpenComboboxInput(
+    requester: FocusRequester,
+    shouldFocus: Boolean,
+) {
+    LaunchedEffect(requester, shouldFocus) {
+        if (shouldFocus) requester.requestFocus()
+    }
+}
+
+@Composable
+private fun Modifier.openComboboxInputOnPress(
+    enabled: Boolean,
+    onPress: () -> Unit,
+): Modifier {
+    if (!enabled) return this
+    val currentOnPress = rememberUpdatedState(onPress)
+    return pointerInput(Unit) {
+        awaitPointerEventScope {
+            while (true) {
+                if (awaitPointerEvent().type == PointerEventType.Press) currentOnPress.value()
+            }
+        }
+    }
+}
+
 /** Inline query field inside [ComboboxChips]. Official `ComboboxChipsInput`. */
 @Composable
 fun RowScope.ComboboxChipsInput(
@@ -1164,9 +1186,7 @@ fun RowScope.ComboboxChipsInput(
         editing.inputs[token] = Unit
         onDispose { editing.inputs.remove(token) }
     }
-    LaunchedEffect(ctrl.open) {
-        if (ctrl.open && !ctrl.disabled && !disabled) editing.inputFocus.requestFocus()
-    }
+    focusOpenComboboxInput(editing.inputFocus, ctrl.open && !ctrl.disabled && !disabled)
     Input(
         value = ctrl.query,
         onValueChange = {
@@ -1181,14 +1201,6 @@ fun RowScope.ComboboxChipsInput(
             modifier.weight(1f)
                 .focusRequester(editing.inputFocus)
                 .onPreviewKeyEvent { editing.key(it, ctrl) }
-                .pointerInput(ctrl.disabled, disabled) {
-                    awaitPointerEventScope {
-                        while (true) {
-                            val event = awaitPointerEvent()
-                            // Base UI's chips input opens the popup on click, not only while typing.
-                            if (event.type == PointerEventType.Press && !ctrl.disabled && !disabled) ctrl.setOpen(true)
-                        }
-                    }
-                },
+                .openComboboxInputOnPress(enabled = !ctrl.disabled && !disabled) { ctrl.setOpen(true) },
     )
 }
