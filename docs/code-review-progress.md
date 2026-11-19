@@ -135,7 +135,7 @@
 | `carousel` | 待审 | 待审 |  |
 | `chart` | 待审 | 待审 |  |
 | `checkbox` | 待审 | 待审 |  |
-| `chip` | 待审 | 待审 |  |
+| `chip` | 已验收 | 已验收 | 为复选角色补充勾选状态，`37daeefb`。 |
 | `codeblock` | 待审 | 待审 |  |
 | `collapsible` | 已验收 | 已验收 | 关闭内容时回到仍挂载的触发器，`b9182baf`。 |
 | `combobox` | 待审 | 待审 |  |
@@ -144,11 +144,11 @@
 | `dialog` | 待审 | 待审 |  |
 | `drawer` | 已验收 | 已验收 | `c52276e4` 修复留白，`f97109ce` 清理状态与布局。 |
 | `dropdownmenu` | 已验收 | 已验收 | 菜单复审、独立提交及 Chromium 记录。 |
-| `emojitext` | 待审 | 待审 |  |
+| `emojitext` | 已验收 | 已验收 | 保留扩展 Emoji 序列及环境文字颜色，`e8353560`。 |
 | `empty` | 局部审查 | 局部清理 | 已有排版搜索和边框的 JVM 与 Web 证据。 |
 | `field` | 待审 | 待审 |  |
 | `hovercard` | 待审 | 待审 |  |
-| `icon` | 待审 | 待审 |  |
+| `icon` | 已验收 | 已验收 | 共享尺寸样式并核对显式染色，`2334e48a`。 |
 | `input` | 待审 | 待审 |  |
 | `inputgroup` | 待审 | 待审 |  |
 | `inputotp` | 待审 | 待审 |  |
@@ -234,3 +234,10 @@
 - `GroupCorners.kt:57` 与 `ButtonGroupScreenshotTest.kt:25`。带稳定 key 的 Nova Outline 按钮换位后，旧注册顺序仍让新首项向外偏 1 dp。JVM 修复前测得组起点 24 dp、新首项 23 dp。修复后按实际落位计算逻辑顺序，新首项贴齐组起点，两个按钮仍重叠 1 dp。未落位时沿用注册顺序，按 RTL、横向或纵向解析边缘。共用注册器的 ToggleGroup 继续按原顺序读取。具名焦点叠放层级，移除一条存量 ID。公开插槽、间距和边角参数保留。
 - `CardLayout.kt:138`。把 Nova 页头测量与 `CardAction` 的父数据放在布局文件内。标题和描述仍占据起始列，操作放在逻辑尾侧。间距只解析一次，保留旧主题布局、无界测量、跟随调用方间距的内边距与页脚贴边规则。移除一条存量 ID，保留公开重载及其组装入口。
 - 119 项最终 JVM 行为回归通过，包含共用注册器的 ToggleGroup 用例。含显式像素比对的 136 项中 123 项通过，13 项修复前也失败，前后实际 PNG 的 SHA-256 逐一相同。两模块 Detekt、ktlint 和常规 JS/Wasm 目录构建通过。Detekt 干净源码扫描 557 个文件，baseline 从 4,501 条减至 4,499 条，零新增。Chromium 在两种运行时验证换位前后组边缘、相邻按钮重叠和 Card 页头内容顺序。[回归、像素比对与浏览器证据](../.agent-runs/code-review-95c932b6/component-review-buttongroup-card.json)
+
+### Icon、Chip 和 EmojiText 验收
+
+- `Icon.kt:47` 与 `IconStyles.kt:34`。统一默认和小号变体的尺寸声明。默认尺寸仍优先读取内联控件的主题尺寸，小号仍用主题小号规格，调用方 Style 仍最后合并。明确染色仍优先于环境颜色，Chip、Badge 和 Button 消费方回归及浏览器像素覆盖。保留一条公开参数数量记录。
+- `Chip.kt:96`。原复选角色只提供 `selected`，JVM 无 `ToggleableState`。修复后公布勾选状态，现有选中语义与回调保持。三种变体共用焦点圈、排版和内边距，保留各自背景和反馈。保留公开参数数量与样式文件中共置的变体类型两条记录。
+- `EmojiText.kt:25,53,83`。原实现会把肤色、ZWJ 及文本呈现选择序列的一部分替换成独立图，且插图路径的文字使用前景默认色。JVM 修复前混合样例产生 5 个占位符，修复后只有受支持的完整序列产生 1 个，原文本逐字保留。改用现有富文本入口，周围正文继承颜色，图标占位跟随实际字号。相关源码和测试无存量 ID。
+- 最终 63 项 JVM 检查及两模块 Detekt 和 ktlint 通过。含显式像素校验的 67 项中，四项 Chip 快照在修复前也失败，实际 PNG 前后逐一相同。干净源码扫描覆盖 558 个文件，baseline 共 4,499 条，零新增。Chromium 的 JS、Wasm 隔离验证页均读到 Chip 的 `aria-checked` 由 false 切换为 true，并核对 Emoji 原始文本、环境红色和显式图标绿色。[回归、像素比对与浏览器证据](../.agent-runs/code-review-95c932b6/component-review-icon-chip-emojitext.json)
