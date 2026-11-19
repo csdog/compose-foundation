@@ -1,0 +1,537 @@
+{
+  "sourceBefore": "91fdaab1",
+  "commits": {
+    "codeblock": "dc5810d0",
+    "togglegroup": "5d397be5",
+    "switch": "380fafaa"
+  },
+  "jvmCore": {
+    "CodeBlockParityTest[jvm]": {
+      "tests": 19,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0
+    },
+    "SwitchMotionTest[jvm]": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "SwitchScreenshotTest[jvm]": {
+      "tests": 6,
+      "failures": 3,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ToggleGroupBoundaryTest[jvm]": {
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ToggleGroupCancellationTest[jvm]": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ToggleGroupDefaultModeTest[jvm]": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ToggleGroupItemPresetsTest[jvm]": {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ToggleGroupKeyboardTest[jvm]": {
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ToggleGroupScreenshotTest[jvm]": {
+      "tests": 2,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ToggleGroupShapeParityTest[jvm]": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "jvmCatalog": {
+    "CodeBlockExamplesTest[jvm]": {
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "DocCodeBlockTest[jvm]": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "SwitchExamplesTest[jvm]": {
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ToggleGroupConnectedFixtureTest[jvm]": {
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ToggleGroupExamplesTest[jvm]": {
+      "tests": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "switchReversalAssertionControl": {
+    "originalFailure": {
+      "darkTrackInterpolatesAndReverses[jvm]": "java.lang.AssertionError: Reversal must return toward unchecked",
+      "lightTrackInterpolatesAndReverses[jvm]": "java.lang.AssertionError: Reversal must return toward unchecked"
+    },
+    "originalImplementationWithCorrectedFrameAnchor": {
+      "SwitchMotionTest[jvm]": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "originalImplementationSampledFrames": [
+      "switch-probe entering=0.19999999, immediate=0.19999999",
+      "switch-probe frame=1, distance=0.49411762",
+      "switch-probe frame=2, distance=0.4823529",
+      "switch-probe frame=3, distance=0.4235294",
+      "switch-probe frame=4, distance=0.29411763",
+      "switch-probe frame=5, distance=0.17647058",
+      "switch-probe frame=6, distance=0.10588235",
+      "switch-probe frame=7, distance=0.04705882",
+      "switch-probe frame=8, distance=0.02352941",
+      "switch-probe frame=9, distance=0.0",
+      "switch-probe frame=10, distance=0.0",
+      "switch-probe frame=11, distance=0.0",
+      "switch-probe entering=0.4352941, immediate=0.4352941",
+      "switch-probe frame=1, distance=1.1176469",
+      "switch-probe frame=2, distance=1.0823529",
+      "switch-probe frame=3, distance=0.9529411",
+      "switch-probe frame=4, distance=0.6588235",
+      "switch-probe frame=5, distance=0.38823527",
+      "switch-probe frame=6, distance=0.2117647",
+      "switch-probe frame=7, distance=0.10588235",
+      "switch-probe frame=8, distance=0.04705882",
+      "switch-probe frame=9, distance=0.011764705",
+      "switch-probe frame=10, distance=0.0",
+      "switch-probe frame=11, distance=0.0"
+    ]
+  },
+  "jvmRegressions": {
+    "pageKeysScrollByTheMeasuredViewport[jvm]": {
+      "before": "java.lang.AssertionError: Expected <80.0> with absolute tolerance <0.5>, actual <192.0>.",
+      "after": "passed"
+    },
+    "eachSuccessfulCopyRenewsTheConfirmation[jvm]": {
+      "before": "java.lang.AssertionError: Failed: assertExists.\nReason: Expected exactly '1' node but could not find any node that satisfies: (ContentDescription = 'Copied' (ignoreCase: false))\n",
+      "after": "passed"
+    },
+    "arrowsFollowTheVisibleOrderAfterKeyedItemsMove[jvm]": {
+      "before": "java.lang.AssertionError: Failed to assert the following: (Focused = 'true')\nSemantics of the node:\nNode #9 at (l=139.0, t=0.0, r=198.0, b=32.0)px\nContentDataType = 'PlatformContentDataType(type=4)'\nContentDescription = '[Alpha]'\nFocused = 'false'\nRole = 'Button'\nText = '[Alpha]'\nToggleableState = 'Off'\nActions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, OnFillData, RequestFocus, SetTextSubstitution, ShowTextSubstitution]\nMergeDescendants = 'true'\nHas 2 siblings\nSelector used: (Text + InputText + EditableText contains 'Alpha' (ignoreCase: false))\n",
+      "after": "passed"
+    },
+    "unscrollableCodeLetsTheParentHandleVerticalArrows[jvm]": {
+      "before": "java.lang.AssertionError: expected:<[Key: \u2193, Key: \u2193]> but was:<[]>",
+      "after": "passed"
+    }
+  },
+  "unchangedSnapshotDifferences": {
+    "cases": [
+      {
+        "suite": "CodeBlockParityTest[jvm]",
+        "case": "contentFocusRingDark[jvm]",
+        "missingReference": false
+      },
+      {
+        "suite": "SwitchScreenshotTest[jvm]",
+        "case": "sizes_dark[jvm]",
+        "missingReference": false
+      },
+      {
+        "suite": "SwitchScreenshotTest[jvm]",
+        "case": "focused_dark[jvm]",
+        "missingReference": false
+      },
+      {
+        "suite": "SwitchScreenshotTest[jvm]",
+        "case": "states_dark[jvm]",
+        "missingReference": false
+      },
+      {
+        "suite": "ToggleGroupScreenshotTest[jvm]",
+        "case": "states_light[jvm]",
+        "missingReference": false
+      },
+      {
+        "suite": "ToggleGroupScreenshotTest[jvm]",
+        "case": "states_dark[jvm]",
+        "missingReference": false
+      }
+    ],
+    "actualPngSha256BeforeAndAfter": {
+      "code_block_focus_dark_actual.png": "0245ad28d5b5583d2373421da0c49477a8fca6098179f332b7a0ea5359baa7d8",
+      "switch_sizes_dark_actual.png": "2817084ef23a058988e15cd94063b8c5d6bd0049f572cf9ecda7340cbd33a0a5",
+      "switch_focused_dark_actual.png": "c8f64daec081fa8e68e945b0ef2a07356c72cc334ea615ba4ecb7ded6a47eb33",
+      "switch_states_dark_actual.png": "02fe96f6f940da7b9226862f20c90024aaa81d1bdb1786e9e7cc565600a95346",
+      "toggle_group_states_light_actual.png": "84f910ae3e9add465c8a732181938320e70278592e830318f5beff854f4ec5da",
+      "toggle_group_states_dark_actual.png": "fcc57ac254535c48ebe42b34d0396ef971807396958bfa41ec7f1c9f4f407e7e"
+    }
+  },
+  "detekt": {
+    "files": 568,
+    "before": 4412,
+    "after": 4407,
+    "removed": [
+      "MagicNumber:CodeBlockContent.kt$0.12f",
+      "MagicNumber:CodeBlockContent.kt$8",
+      "MagicNumber:CodeBlockCopyButton.kt$2000",
+      "MagicNumber:Switch.kt$150",
+      "MagicNumber:ToggleGroup.kt$ConnectedItemBorder$.5f"
+    ],
+    "added": []
+  },
+  "ktlintCheck": "passed",
+  "browser": [
+    {
+      "runtime": "js",
+      "selectedAfterReorder": "Alpha",
+      "copyRenewed": true,
+      "pageDistance": 80,
+      "parentDownEvents": 2,
+      "tabStepsToUnscrollableCode": 3,
+      "pixels": {
+        "x": 40,
+        "y": 452
+      },
+      "frames": 52,
+      "switchCenterRgb": [
+        [
+          229,
+          229,
+          229
+        ],
+        [
+          227,
+          227,
+          227
+        ],
+        [
+          220,
+          220,
+          220
+        ],
+        [
+          207,
+          207,
+          207
+        ],
+        [
+          155,
+          155,
+          155
+        ],
+        [
+          124,
+          124,
+          124
+        ],
+        [
+          96,
+          96,
+          96
+        ],
+        [
+          61,
+          61,
+          61
+        ],
+        [
+          51,
+          51,
+          51
+        ],
+        [
+          42,
+          42,
+          42
+        ],
+        [
+          48,
+          48,
+          48
+        ],
+        [
+          55,
+          55,
+          55
+        ],
+        [
+          72,
+          72,
+          72
+        ],
+        [
+          122,
+          122,
+          122
+        ],
+        [
+          147,
+          147,
+          147
+        ],
+        [
+          167,
+          167,
+          167
+        ],
+        [
+          184,
+          184,
+          184
+        ],
+        [
+          205,
+          205,
+          205
+        ],
+        [
+          213,
+          213,
+          213
+        ],
+        [
+          219,
+          219,
+          219
+        ],
+        [
+          222,
+          222,
+          222
+        ],
+        [
+          228,
+          228,
+          228
+        ],
+        [
+          229,
+          229,
+          229
+        ]
+      ],
+      "switchRgbDistanceFromUnchecked": [
+        0,
+        6,
+        27,
+        66,
+        222,
+        315,
+        399,
+        504,
+        534,
+        561,
+        543,
+        522,
+        471,
+        321,
+        246,
+        186,
+        135,
+        72,
+        48,
+        30,
+        21,
+        3,
+        0
+      ],
+      "clipboardBackend": "fixture in-memory clipboard",
+      "servedBundleSha256": {
+        "webApp.js": "946bc6c4d199c70c93b8a37ef73b01e360635005a418110efead7596c92e9845"
+      }
+    },
+    {
+      "runtime": "wasmJs",
+      "selectedAfterReorder": "Alpha",
+      "copyRenewed": true,
+      "pageDistance": 80,
+      "parentDownEvents": 2,
+      "tabStepsToUnscrollableCode": 3,
+      "pixels": {
+        "x": 40,
+        "y": 452
+      },
+      "frames": 51,
+      "switchCenterRgb": [
+        [
+          229,
+          229,
+          229
+        ],
+        [
+          228,
+          228,
+          228
+        ],
+        [
+          221,
+          221,
+          221
+        ],
+        [
+          191,
+          191,
+          191
+        ],
+        [
+          158,
+          158,
+          158
+        ],
+        [
+          126,
+          126,
+          126
+        ],
+        [
+          100,
+          100,
+          100
+        ],
+        [
+          62,
+          62,
+          62
+        ],
+        [
+          51,
+          51,
+          51
+        ],
+        [
+          42,
+          42,
+          42
+        ],
+        [
+          43,
+          43,
+          43
+        ],
+        [
+          56,
+          56,
+          56
+        ],
+        [
+          70,
+          70,
+          70
+        ],
+        [
+          91,
+          91,
+          91
+        ],
+        [
+          119,
+          119,
+          119
+        ],
+        [
+          167,
+          167,
+          167
+        ],
+        [
+          181,
+          181,
+          181
+        ],
+        [
+          195,
+          195,
+          195
+        ],
+        [
+          213,
+          213,
+          213
+        ],
+        [
+          218,
+          218,
+          218
+        ],
+        [
+          222,
+          222,
+          222
+        ],
+        [
+          227,
+          227,
+          227
+        ],
+        [
+          229,
+          229,
+          229
+        ]
+      ],
+      "switchRgbDistanceFromUnchecked": [
+        0,
+        3,
+        24,
+        114,
+        213,
+        309,
+        387,
+        501,
+        534,
+        561,
+        558,
+        519,
+        477,
+        414,
+        330,
+        186,
+        144,
+        102,
+        48,
+        33,
+        21,
+        6,
+        0
+      ],
+      "clipboardBackend": "fixture in-memory clipboard",
+      "servedBundleSha256": {
+        "webApp.js": "57a9edf1912a9730c3133e5b6457068db12e801a6a0ee76e21a4a1bbf0fceb7f",
+        "317ea8e263bbf48763dd.wasm": "e47cc0ae38c9ff43d56bf30ec22290ac5ab9581a1a8db54a1798c5ff7ff51b5d"
+      }
+    }
+  ]
+}
