@@ -72,3 +72,9 @@ Create 按用户流程登记，组件交互按输入方式和平台登记。状�
 - 最终组件构建的 JS/Wasm Chrome 检查覆盖 Slider、Carousel、Tooltip、Hover Card、DropdownMenu、NavigationMenu、Sheet、ScrollArea 和 InputGroup。视口、脚本、截图尺寸和构建散列保存在本会话产物的 `component-interactions`、`create-actions` 和 `create-interaction-evidence.json`。
 - 真机验收仍待执行。收尾检查未发现连接的 Android，已配对 iPhone 16 Pro 仍显示 `unavailable`。
 - 最终工作树的核心全量 JVM 共 1,814 项全部通过，含 Slider 拖动中途禁用和两项 Nova InputGroup 快照用例。两张浅深快照已单独通过 Roborazzi 像素比对。
+
+## 2026-11-19 布局与视觉复查
+
+- Create 的目录外层取消 1536 dp 宽度上限。配置栏和它的对话框共用一个布局位置，恢复桌面 24 dp、窄屏 16 dp 的设计区间距。
+- Create 的设置选择器和菜单共用圆角面板与 1 dp 外描边。目录 Sidebar 菜单项保留完整行高，解决字形下缘可能被内边距挤掉的问题。
+- 已在 `localhost:8080` 的 Chromium 中检查 1920×900 视口下首页侧栏、Create 画布、Style 浮层与配置栏滚动，以及 390×844 视口下的底部配置区。Create、Finance Preview 与 Sidebar 定向 JVM 测试、Sidebar 截图比对、两个模块的 ktlintCheck 和 Detekt、JS 与 Wasm 开发构建通过。

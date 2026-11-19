@@ -144,7 +144,8 @@ fun rememberSidebarMenuButtonStyle(
             height(height)
             shape(shape)
             focusRing(shape)
-            contentPadding(pad)
+            // The row centers its content. Preserve the full line box within the fixed height.
+            contentPadding(horizontal = pad, vertical = 0.dp)
             disabledDim()
             if (active) background(colors.sidebarAccent)
             if (variant == SidebarMenuButtonVariant.Outline) {

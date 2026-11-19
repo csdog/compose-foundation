@@ -98,16 +98,19 @@ fun CreatePage(
         }
     val customizerContent by rememberUpdatedState<@Composable (Modifier, Boolean, Dp) -> Unit>(
         { placement, docked, railWidth ->
-            CreateCustomizer(
-                configuration = configuration,
-                onConfigurationChange = updateConfiguration,
-                dialog = dialog,
-                onDialogChange = { dialog = it },
-                onToggleTheme = onToggleTheme,
-                docked = docked,
-                railWidth = railWidth,
-                modifier = placement,
-            )
+            // Keep the rail and its dialog anchors in one slot of the designer layout.
+            Box {
+                CreateCustomizer(
+                    configuration = configuration,
+                    onConfigurationChange = updateConfiguration,
+                    dialog = dialog,
+                    onDialogChange = { dialog = it },
+                    onToggleTheme = onToggleTheme,
+                    docked = docked,
+                    railWidth = railWidth,
+                    modifier = placement,
+                )
+            }
         },
     )
     val customizer =
@@ -120,7 +123,7 @@ fun CreatePage(
     Box(modifier = modifier.fillMaxSize()) {
         BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
             // page.tsx: [--gap:--spacing(4)] md:[--gap:--spacing(6)], p-(--gap), pt-[calc(var(--gap)*0.25)]
-            val gap = if (maxWidth < 768.dp) twSpacing.md else twSpacing.lg
+            val gap = if (maxWidth < 768.dp) twSpacing.scale4 else twSpacing.scale6
             val docked = maxWidth < 768.dp
             // 2xl:[--customizer-width:--spacing(56)] → 224dp
             val railWidth = if (maxWidth >= 1536.dp) 224.dp else 192.dp

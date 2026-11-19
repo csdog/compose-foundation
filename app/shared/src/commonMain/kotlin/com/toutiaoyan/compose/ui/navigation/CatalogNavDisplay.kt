@@ -37,8 +37,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.ui.Alignment
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -207,11 +205,10 @@ fun CatalogNavDisplay(
             // Preview tokens apply below the top bar; light/dark and the bundled
             // documentation font are shared with the outer chrome theme.
             CatalogContentTheme(stylePreset, baseColor, accent, isDarkMode) {
-                Box(modifier = Modifier.weight(1f).fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+                Box(modifier = Modifier.weight(1f).fillMaxSize()) {
                     Row(
                         modifier =
                             Modifier
-                                .then(if (isOnCreateRoute) Modifier.widthIn(max = 1536.dp) else Modifier)
                                 .fillMaxSize()
                                 .padding(horizontal = if (isOnCreateRoute) 0.dp else 8.dp),
                     ) {

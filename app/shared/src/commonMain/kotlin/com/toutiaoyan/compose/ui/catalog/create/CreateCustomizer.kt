@@ -39,7 +39,9 @@ import com.composables.icons.lucide.Lock
 import com.composables.icons.lucide.LockOpen
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.Menu
+import com.toutiaoyan.compose.tailwind.core.TwColors
 import com.toutiaoyan.compose.tailwind.core.twSpacing
+import com.toutiaoyan.compose.tailwind.style.ringShadow
 import com.toutiaoyan.compose.ui.catalog.docs.CopyLabel
 import com.toutiaoyan.compose.ui.catalog.docs.DocIcon
 import com.toutiaoyan.compose.ui.components.button.Button
@@ -62,8 +64,6 @@ import com.toutiaoyan.compose.ui.components.icon.Icon
 import com.toutiaoyan.compose.ui.components.icon.IconVariant
 import com.toutiaoyan.compose.ui.components.input.Input
 import com.toutiaoyan.compose.ui.components.overlay.AnchoredPopup
-import com.toutiaoyan.compose.ui.components.select.SelectVariant
-import com.toutiaoyan.compose.ui.components.select.rememberPanelStyle
 import com.toutiaoyan.compose.ui.components.select.rememberSelectItemStyle
 import com.toutiaoyan.compose.ui.components.text.Text
 import com.toutiaoyan.compose.ui.components.text.TextColors
@@ -238,23 +238,7 @@ internal fun CreateCustomizer(
                                 DocIcon(Lucide.Menu)
                             }
                             AnchoredPopup(open = menuOpen, onDismissRequest = { menuOpen = false }) {
-                                val panelStyleState = remember { MutableStyleState(MutableInteractionSource()) }
-                                Column(
-                                    modifier =
-                                        Modifier
-                                            .widthIn(min = 200.dp, max = 260.dp)
-                                            .background(
-                                                currentTheme.colors.popover.copy(alpha = 0.92f),
-                                                RoundedCornerShape(12.dp),
-                                            )
-                                            .border(
-                                                1.dp,
-                                                currentTheme.colors.border.copy(alpha = 0.5f),
-                                                RoundedCornerShape(12.dp),
-                                            )
-                                            .styleable(panelStyleState, SelectVariant.Default.rememberPanelStyle())
-                                            .padding(6.dp),
-                                ) {
+                                CreateSettingsPanel(Modifier.widthIn(min = 200.dp, max = 260.dp)) {
                                     MainMenuItem("Navigate...", "⌘P") {
                                         menuOpen = false
                                         onDialogChange(CreateDialog.Commands)
@@ -672,23 +656,7 @@ internal fun <T> PresetSelectorRow(
         }
 
         AnchoredPopup(open = open && !locked, onDismissRequest = { open = false }) {
-            val panelStyleState = remember { MutableStyleState(MutableInteractionSource()) }
-            Column(
-                modifier =
-                    Modifier
-                        .widthIn(min = 140.dp, max = 280.dp)
-                        .background(
-                            currentTheme.colors.popover.copy(alpha = 0.92f),
-                            RoundedCornerShape(12.dp),
-                        )
-                        .border(
-                            1.dp,
-                            currentTheme.colors.border.copy(alpha = 0.5f),
-                            RoundedCornerShape(12.dp),
-                        )
-                        .styleable(panelStyleState, SelectVariant.Default.rememberPanelStyle())
-                        .verticalScroll(rememberScrollState()),
-            ) {
+            CreateSettingsPanel(Modifier.widthIn(min = 140.dp, max = 280.dp)) {
                 options.forEach { option ->
                     val isSelected = optionLabel(option) == value
                     val itemInteractionSource = remember { MutableInteractionSource() }
@@ -722,6 +690,31 @@ internal fun <T> PresetSelectorRow(
             }
         }
     }
+}
+
+@Composable
+private fun CreateSettingsPanel(
+    modifier: Modifier,
+    content: @Composable () -> Unit,
+) {
+    val panelState = remember { MutableStyleState(MutableInteractionSource()) }
+    val panelStyle =
+        remember {
+            Style {
+                shape(RoundedCornerShape(12.dp))
+                background(TwColors.neutral800.copy(alpha = 0.9f))
+                dropShadow(ringShadow(TwColors.neutral700.copy(alpha = 0.5f)))
+            }
+        }
+    Column(
+        modifier =
+            Modifier
+                .padding(1.dp)
+                .then(modifier)
+                .styleable(panelState, panelStyle)
+                .verticalScroll(rememberScrollState())
+                .padding(6.dp),
+    ) { content() }
 }
 
 @Composable
