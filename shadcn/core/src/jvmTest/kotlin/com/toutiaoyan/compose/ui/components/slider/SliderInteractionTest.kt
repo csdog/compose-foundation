@@ -68,6 +68,41 @@ class SliderInteractionTest {
     }
 
     @Test
+    fun disablingAnActiveTouchDragStopsChangesAndSkipsCommit() {
+        var enabled by mutableStateOf(true)
+        var value by mutableStateOf(25f)
+        rule.setContent {
+            Theme(preset = StylePreset.Nova, minTouchTarget = null) {
+                Slider(
+                    value = value,
+                    onValueChange = { value = it },
+                    onValueCommit = { commits.add(listOf(it)) },
+                    valueRange = 0f..100f,
+                    step = 5f,
+                    enabled = enabled,
+                    modifier = Modifier.width(200.dp).testTag("slider"),
+                )
+            }
+        }
+        slider.performTouchInput {
+            down(at(0.25f))
+            moveTo(position = at(0.5f))
+        }
+        rule.runOnIdle {
+            assertEquals(50f, value)
+            enabled = false
+        }
+        slider.performTouchInput {
+            moveTo(position = at(0.8f))
+            up()
+        }
+        rule.runOnIdle {
+            assertEquals(50f, value)
+            assertEquals(emptyList(), commits)
+        }
+    }
+
+    @Test
     fun nativeDiscreteCoarseMovementRetainsTenFineSteps() {
         showSlider(listOf(25f, 75f), step = 5f)
         slider.performTouchInput { click(at(0.25f)) }
