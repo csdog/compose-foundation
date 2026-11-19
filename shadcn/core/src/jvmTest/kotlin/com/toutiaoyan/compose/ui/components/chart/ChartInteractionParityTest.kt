@@ -1,6 +1,11 @@
 package com.toutiaoyan.compose.ui.components.chart
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -112,6 +117,19 @@ class ChartInteractionParityTest : ScreenshotTest() {
             ) {}
         }
         composeRule.onNodeWithTag("container").assertWidthIsEqualTo(500.dp).assertHeightIsEqualTo(240.dp)
+    }
+
+    @Test
+    fun aVeryTallFiniteAspectRatioIsMeasurableInAVerticalScroller() {
+        setThemedContent {
+            Column(Modifier.width(200.dp).height(100.dp).verticalScroll(rememberScrollState())) {
+                ChartContainer(Modifier.testTag("tall-chart"), aspectRatio = 0.0001f) {
+                    Box(Modifier.size(8.dp).testTag("plot"))
+                }
+            }
+        }
+        composeRule.onNodeWithTag("tall-chart").assertWidthIsEqualTo(200.dp)
+        composeRule.onNodeWithTag("plot").assertIsDisplayed()
     }
 
     @Test fun hitTestingHandlesBoundariesAndReversedDataOrder() {

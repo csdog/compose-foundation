@@ -30,6 +30,12 @@ import kotlin.math.floor
 import kotlin.math.log10
 import kotlin.math.pow
 
+internal const val CHART_NUMERIC_GRID_DIVISIONS = 4
+private const val CHART_NUMERIC_TICK_COUNT = CHART_NUMERIC_GRID_DIVISIONS + 1
+private const val SINGLE_DIGIT_STEP_FRACTION = 0.1
+private const val ADAPTIVE_STEP_FRACTION = 0.05
+private const val TICK_ROUNDING_TOLERANCE = 1e-12
+
 internal data class ChartDomain(val minimum: Double, val maximum: Double)
 
 /**
@@ -41,24 +47,25 @@ internal fun chartNiceDomain(values: List<Float>): ChartDomain {
     val finite = values.filter(Float::isFinite).map(Float::toDouble)
     val low = (finite.minOrNull() ?: 0.0).coerceAtMost(0.0)
     val high = (finite.maxOrNull() ?: 0.0).coerceAtLeast(0.0)
-    if (low == high) return ChartDomain(0.0, 4.0)
-    val rough = (high - low) / 4
+    if (low == high) return ChartDomain(0.0, CHART_NUMERIC_GRID_DIVISIONS.toDouble())
+    val rough = (high - low) / CHART_NUMERIC_GRID_DIVISIONS
     val digits = floor(log10(rough)).toInt() + 1
     val magnitude = 10.0.pow(digits)
-    val ratioScale = if (digits == 1) .1 else .05
-    val base = ceil(rough / magnitude / ratioScale - 1e-12)
+    val ratioScale = if (digits == 1) SINGLE_DIGIT_STEP_FRACTION else ADAPTIVE_STEP_FRACTION
+    val base = ceil(rough / magnitude / ratioScale - TICK_ROUNDING_TOLERANCE)
     var correction = 0
     while (true) {
         val step = (base + correction) * ratioScale * magnitude
-        var below = ceil(-low / step - 1e-12).toInt()
-        var above = ceil(high / step - 1e-12).toInt()
+        var below = ceil(-low / step - TICK_ROUNDING_TOLERANCE).toInt()
+        var above = ceil(high / step - TICK_ROUNDING_TOLERANCE).toInt()
         val count = below + above + 1
-        if (count > 5) {
+        if (count > CHART_NUMERIC_TICK_COUNT) {
             correction++
             continue
         }
-        if (count < 5) {
-            if (high > 0) above += 5 - count else below += 5 - count
+        if (count < CHART_NUMERIC_TICK_COUNT) {
+            val missingTicks = CHART_NUMERIC_TICK_COUNT - count
+            if (high > 0) above += missingTicks else below += missingTicks
         }
         return ChartDomain(-below * step, above * step)
     }

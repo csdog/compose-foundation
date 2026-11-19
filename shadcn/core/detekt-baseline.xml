@@ -740,17 +740,7 @@
     <ID>MagicNumber:Chart.kt$3</ID>
     <ID>MagicNumber:Chart.kt$9f</ID>
     <ID>MagicNumber:ChartAxis.kt$.5f</ID>
-    <ID>MagicNumber:ChartPlot.kt$.1f</ID>
     <ID>MagicNumber:ChartPlot.kt$.5f</ID>
-    <ID>MagicNumber:ChartPlot.kt$.8f</ID>
-    <ID>MagicNumber:ChartPlot.kt$10</ID>
-    <ID>MagicNumber:ChartPlot.kt$4</ID>
-    <ID>MagicNumber:ChartScale.kt$.05</ID>
-    <ID>MagicNumber:ChartScale.kt$.1</ID>
-    <ID>MagicNumber:ChartScale.kt$1e-12</ID>
-    <ID>MagicNumber:ChartScale.kt$4</ID>
-    <ID>MagicNumber:ChartScale.kt$4.0</ID>
-    <ID>MagicNumber:ChartScale.kt$5</ID>
     <ID>MagicNumber:Check.kt$10f</ID>
     <ID>MagicNumber:Check.kt$13f</ID>
     <ID>MagicNumber:Check.kt$15f</ID>
@@ -4306,7 +4296,6 @@
     <ID>MatchingDeclarationName:BadgeStyles.kt$BadgeVariant</ID>
     <ID>MatchingDeclarationName:Button.kt$ButtonIconPlacement</ID>
     <ID>MatchingDeclarationName:ChartAxis.kt$ChartAxisTick</ID>
-    <ID>MatchingDeclarationName:ChartScale.kt$ChartDomain</ID>
     <ID>MatchingDeclarationName:ChartStyles.kt$ChartIndicator</ID>
     <ID>MatchingDeclarationName:ChipStyles.kt$ChipVariant</ID>
     <ID>MatchingDeclarationName:CopyToClipboard.kt$CopyToClipboardState</ID>

@@ -26,6 +26,10 @@ import kotlin.math.abs
 import kotlin.math.min
 import kotlin.math.roundToInt
 
+private const val BAR_BAND_FILL_FRACTION = 0.8f
+private const val BAR_BAND_START_FRACTION = 0.1f
+private const val TOOLTIP_ANCHOR_GAP_PX = 10
+
 /** Hit testing uses the actual plot width; logical data order stays independent of RTL layout. */
 internal fun chartIndexAt(
     x: Float,
@@ -176,13 +180,17 @@ internal fun CartesianChart(
                         }
                     } else {
                         val gap = 4.dp.toPx()
-                        val barWidth = ((band * .8f - gap * (keys.size - 1)) / keys.size).coerceAtLeast(0f)
+                        val barWidth =
+                            ((band * BAR_BAND_FILL_FRACTION - gap * (keys.size - 1)) / keys.size)
+                                .coerceAtLeast(0f)
                         data.forEachIndexed { index, point ->
                             keys.forEachIndexed { seriesIndex, key ->
                                 val value = point.values[key]?.takeIf(Float::isFinite) ?: 0f
                                 val top = min(y(value), y(0f))
                                 val height = abs(y(value) - y(0f))
-                                val left = physical(index) * band + band * .1f + seriesIndex * (barWidth + gap)
+                                val left =
+                                    physical(index) * band + band * BAR_BAND_START_FRACTION +
+                                        seriesIndex * (barWidth + gap)
                                 drawRoundRect(
                                     colors.getValue(key),
                                     Offset(left, top),
@@ -221,8 +229,13 @@ internal fun CartesianChart(
                                     ) * (width - leftPx - rightPx) / data.size,
                                 height / 2f,
                             )
-                    val right = target.x.roundToInt() + 10
-                    val left = if (right + tip.width <= width) right else target.x.roundToInt() - tip.width - 10
+                    val right = target.x.roundToInt() + TOOLTIP_ANCHOR_GAP_PX
+                    val left =
+                        if (right + tip.width <= width) {
+                            right
+                        } else {
+                            target.x.roundToInt() - tip.width - TOOLTIP_ANCHOR_GAP_PX
+                        }
                     tip.place(
                         left.coerceIn(0, (width - tip.width).coerceAtLeast(0)),
                         (target.y - tip.height / 2).roundToInt().coerceIn(0, (height - tip.height).coerceAtLeast(0)),
@@ -241,8 +254,8 @@ internal fun CartesianChart(
 }
 
 private fun DrawScope.drawChartGrid(color: Color) {
-    for (i in 0..4) {
-        val y = size.height * i / 4
+    for (i in 0..CHART_NUMERIC_GRID_DIVISIONS) {
+        val y = size.height * i / CHART_NUMERIC_GRID_DIVISIONS
         drawLine(color.copy(alpha = color.alpha * .5f), Offset(0f, y), Offset(size.width, y), 1.dp.toPx())
     }
 }

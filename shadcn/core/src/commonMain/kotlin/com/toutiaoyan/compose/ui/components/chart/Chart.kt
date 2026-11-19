@@ -35,6 +35,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.sp
 import com.toutiaoyan.compose.ui.theme.Theme
 import com.toutiaoyan.compose.ui.theme.LocalContentColor
@@ -145,8 +146,15 @@ fun ChartContainer(
                     (width / aspectRatio).toInt()
                 }
             val height = naturalHeight.coerceIn(constraints.minHeight, constraints.maxHeight)
-            val child = measurable.measure(androidx.compose.ui.unit.Constraints.fixed(width, height))
-            layout(width, height) { child.place(0, 0) }
+            val fitted =
+                Constraints.fitPrioritizingWidth(
+                    minWidth = width,
+                    maxWidth = width,
+                    minHeight = height,
+                    maxHeight = height,
+                )
+            val child = measurable.measure(Constraints.fixed(fitted.minWidth, fitted.minHeight))
+            layout(child.width, child.height) { child.place(0, 0) }
         }
     ChartStyle(config = config) {
         Box(
