@@ -5,6 +5,9 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.Modifier
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.input.InputModeManager
 import androidx.compose.ui.input.key.Key
@@ -18,6 +21,30 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class TooltipBehaviorParityTest : ScreenshotTest() {
+    @Test fun removingHoveredContentClearsItsActivity() {
+        val source = MutableInteractionSource()
+        val hover = HoverInteraction.Enter()
+        var showContent by mutableStateOf(true)
+        val changes = mutableListOf<Boolean>()
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            TooltipProvider {
+                Tooltip(interactionSource = source, onOpenChange = { changes.add(it) }) {
+                    TooltipTrigger("Hover")
+                    if (showContent) TooltipContent("Details")
+                }
+            }
+        }
+        composeRule.runOnIdle { source.tryEmit(hover) }
+        composeRule.onNodeWithText("Details").performMouseInput { enter(center) }
+        composeRule.runOnIdle { source.tryEmit(HoverInteraction.Exit(hover)) }
+        composeRule.onNodeWithText("Details").assertIsDisplayed()
+        composeRule.runOnIdle {
+            assertEquals(listOf(true), changes)
+            showContent = false
+        }
+        composeRule.runOnIdle { assertEquals(listOf(true, false), changes) }
+    }
+
     @Test fun mountingDoesNotReportAnOpenChange() {
         val changes = mutableListOf<Boolean>()
         setThemedContent(stylePreset = StylePreset.Nova) {

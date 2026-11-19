@@ -1,9 +1,14 @@
 package com.toutiaoyan.compose.ui.components.tooltip
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toPixelMap
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.*
@@ -15,6 +20,7 @@ import com.toutiaoyan.compose.ui.ScreenshotTest
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class TooltipChromeParityTest : ScreenshotTest() {
     @Test fun novaChipUsesTwelveBySixPaddingAndNormalTwelveSixteenType() {
@@ -40,6 +46,34 @@ class TooltipChromeParityTest : ScreenshotTest() {
         assertEquals(6f, glyph.top - chip.top, .1f)
         assertEquals(6f, chip.bottom - glyph.bottom, .1f)
         composeRule.onNodeWithTag("chip").assertHeightIsEqualTo(28.dp)
+    }
+
+    @Test fun arrowPointsTowardTheAnchorAfterThePopupFlips() {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            Box(
+                Modifier.size(400.dp).background(Color.White).testTag("backing"),
+                contentAlignment = Alignment.TopCenter,
+            ) {
+                Tooltip(open = true) {
+                    TooltipTrigger(Modifier.testTag("anchor")) { Box(Modifier.size(30.dp)) }
+                    TooltipContent(
+                        modifier = Modifier.testTag("chip"),
+                        enter = EnterTransition.None,
+                        exit = ExitTransition.None,
+                    ) { Box(Modifier.size(68.dp)) }
+                }
+            }
+        }
+        val anchor = composeRule.onNodeWithTag("anchor").fetchSemanticsNode().boundsInWindow
+        val chip = composeRule.onNodeWithTag("chip").fetchSemanticsNode().boundsInWindow
+        assertTrue(chip.top > anchor.bottom, "The requested top tooltip must flip below the anchor")
+        val backing = composeRule.onNodeWithTag("backing")
+        val origin = backing.fetchSemanticsNode().boundsInWindow.topLeft
+        val panel = chip.translate(-origin)
+        val pixels = backing.captureToImage().toPixelMap()
+        val x = panel.center.x.toInt()
+        assertTrue(pixels[x, panel.top.toInt() - 2].red < .5f, "The arrow must be above the flipped panel")
+        assertEquals(1f, pixels[x, panel.bottom.toInt() + 2].red, .01f)
     }
 
     @Test fun arrowDoesNotAddSpaceToThePopupLayout() {

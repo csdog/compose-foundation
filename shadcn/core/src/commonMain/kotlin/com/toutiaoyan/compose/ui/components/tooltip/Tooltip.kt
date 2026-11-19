@@ -49,7 +49,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlin.time.TimeSource
-import com.toutiaoyan.compose.ui.components.overlay.AnchoredPopup
+import com.toutiaoyan.compose.ui.components.overlay.PopupPositionResult
+import com.toutiaoyan.compose.ui.components.overlay.PositionedAnchoredPopup
 import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
 import com.toutiaoyan.compose.ui.components.overlay.PopupPlacement
 import com.toutiaoyan.compose.ui.components.overlay.PopupTransitions
@@ -75,7 +76,8 @@ internal val LocalInsideTooltipContent = staticCompositionLocalOf { false }
 
 private val LocalTooltip = staticCompositionLocalOf<TooltipController?> { null }
 
-private val LocalTooltipDelayMillis = staticCompositionLocalOf { 600 }
+private const val TOOLTIP_DEFAULT_HOVER_DELAY_MILLIS = 600
+private const val TOOLTIP_ARROW_ROTATION_DEGREES = 45f
 
 internal class TooltipProviderController(
     val delayMillis: Int,
@@ -129,7 +131,6 @@ fun TooltipProvider(
             TooltipProviderController(resolvedDelay, resolvedSkip, disableHoverableContent)
         }
     CompositionLocalProvider(
-        LocalTooltipDelayMillis provides resolvedDelay,
         LocalTooltipProvider provides provider,
     ) {
         content()
@@ -208,7 +209,8 @@ fun Tooltip(
     val resolvedOpen = open ?: internalOpen
     val latestOpen by rememberUpdatedState(resolvedOpen)
     val latestOnOpenChange by rememberUpdatedState(onOpenChange)
-    val resolvedDelay = (delayDuration ?: delayMillis ?: LocalTooltipDelayMillis.current).coerceAtLeast(0)
+    val resolvedDelay =
+        (delayDuration ?: delayMillis ?: provider?.delayMillis ?: TOOLTIP_DEFAULT_HOVER_DELAY_MILLIS).coerceAtLeast(0)
     val resolvedSkip = (skipDelayDuration ?: skipDelayMillis ?: provider?.skipDelayMillis ?: 0).coerceAtLeast(0)
     val hasInteraction = isHovered || triggerFocused || contentHovered
     val isActive = !disabled && !triggerDisabled && hasInteraction && !dismissed
@@ -384,66 +386,68 @@ fun TooltipScope.TooltipContent(
         }
     val contentHoverSource = remember { MutableInteractionSource() }
     val contentHovered by contentHoverSource.collectIsHoveredAsState()
+    val onContentHoverChange by rememberUpdatedState(controller.onContentHoverChange)
     LaunchedEffect(hoverableContent, contentHovered) {
-        controller.onContentHoverChange(hoverableContent && contentHovered)
+        onContentHoverChange(hoverableContent && contentHovered)
     }
-    val resolvedPlacement = side ?: placement
-    TooltipPortal {
-        AnchoredPopup(
-            open = controller.open,
-            onDismissRequest = controller.onDismissRequest,
-            placement = resolvedPlacement,
-            offset = sideOffset,
-            align = align,
-            alignOffset = alignOffset,
-            dismissOnClickOutside = false,
-            focusable = false,
-            enter = enter,
-            exit = exit,
-        ) {
-            val chipModifier =
-                modifier
-                    .widthIn(max = 320.dp)
-                    .then(if (hoverableContent) Modifier.hoverable(contentHoverSource) else Modifier)
-                    .styleable(
-                        styleState,
-                        rememberTooltipContentStyle() then style,
-                    )
-            TooltipBubble(
-                placement = resolvedPlacement,
-                showArrow = showArrow,
-                chipModifier = chipModifier,
-                content = {
-                    CompositionLocalProvider(
-                        LocalInsideTooltipContent provides true,
-                        LocalDefaultTextStyle provides tooltipTextStyle(),
-                    ) { content() }
-                },
-            )
-        }
+    DisposableEffect(Unit) {
+        onDispose { onContentHoverChange(false) }
+    }
+    var physicalSide by remember { mutableStateOf<PopupPlacement?>(null) }
+    val updateSide: (PopupPositionResult) -> Unit = remember { { physicalSide = it.physicalSide } }
+    PositionedAnchoredPopup(
+        open = controller.open,
+        onDismissRequest = controller.onDismissRequest,
+        placement = side ?: placement,
+        offset = sideOffset,
+        align = align,
+        alignOffset = alignOffset,
+        dismissOnClickOutside = false,
+        focusable = false,
+        enter = enter,
+        exit = exit,
+        onPositioned = if (showArrow) updateSide else null,
+    ) {
+        val chipModifier =
+            modifier
+                .widthIn(max = 320.dp)
+                .then(if (hoverableContent) Modifier.hoverable(contentHoverSource) else Modifier)
+                .styleable(
+                    styleState,
+                    rememberTooltipContentStyle() then style,
+                )
+        TooltipBubble(
+            physicalSide = physicalSide.takeIf { showArrow },
+            chipModifier = chipModifier,
+            content = {
+                CompositionLocalProvider(
+                    LocalInsideTooltipContent provides true,
+                    LocalDefaultTextStyle provides tooltipTextStyle(),
+                ) { content() }
+            },
+        )
     }
 }
 
 @Composable
 private fun TooltipBubble(
-    placement: PopupPlacement,
-    showArrow: Boolean,
+    physicalSide: PopupPlacement?,
     chipModifier: Modifier,
     content: @Composable () -> Unit,
 ) {
     val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
     Box {
         // Arrow overlays the chip; it must not alter popup size or the side offset.
-        if (showArrow) {
+        if (physicalSide != null) {
             val alignment =
-                when (placement) {
+                when (physicalSide) {
                     PopupPlacement.Top -> Alignment.BottomCenter
                     PopupPlacement.Bottom -> Alignment.TopCenter
                     PopupPlacement.Start -> if (rtl) Alignment.CenterStart else Alignment.CenterEnd
                     PopupPlacement.End -> if (rtl) Alignment.CenterEnd else Alignment.CenterStart
                 }
             val arrowOffset =
-                when (placement) {
+                when (physicalSide) {
                     PopupPlacement.Top -> Modifier.offset(y = 3.dp)
                     PopupPlacement.Bottom -> Modifier.offset(y = (-3).dp)
                     PopupPlacement.Start -> Modifier.offset(x = if (rtl) (-4).dp else 4.dp)
@@ -465,16 +469,10 @@ internal fun TooltipArrow(modifier: Modifier = Modifier) {
         modifier =
             modifier
                 .size(TooltipDefaults.ArrowSize)
-                .graphicsLayer { rotationZ = 45f }
+                .graphicsLayer { rotationZ = TOOLTIP_ARROW_ROTATION_DEGREES }
                 .clip(RoundedCornerShape(TooltipDefaults.ArrowRadius))
                 .background(currentTheme.colors.foreground),
     )
-}
-
-/** Teleport host for [TooltipContent]. Base UI does not export TooltipPortal. */
-@Composable
-internal fun TooltipPortal(content: @Composable () -> Unit) {
-    content()
 }
 
 @Composable
