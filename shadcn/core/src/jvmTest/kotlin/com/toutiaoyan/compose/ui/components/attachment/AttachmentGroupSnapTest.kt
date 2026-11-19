@@ -29,6 +29,23 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class AttachmentGroupSnapTest : ScreenshotTest() {
+    @Test fun groupOnlyAddsAKeyboardStopWhileContentOverflows() {
+        var overflowing by mutableStateOf(false)
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            AttachmentGroup(Modifier.size(240.dp, 48.dp).testTag("group")) {
+                Box(Modifier.size(160.dp, 40.dp))
+                if (overflowing) Box(Modifier.size(160.dp, 40.dp))
+            }
+        }
+
+        val group = composeRule.onNodeWithTag("group")
+        group.assert(SemanticsMatcher.keyNotDefined(SemanticsActions.RequestFocus))
+        composeRule.runOnIdle { overflowing = true }
+        group.requestFocus().assertIsFocused()
+        composeRule.runOnIdle { overflowing = false }
+        group.assert(SemanticsMatcher.keyNotDefined(SemanticsActions.RequestFocus))
+    }
+
     private fun drag(
         logicalDistance: Float,
         direction: LayoutDirection,

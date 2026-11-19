@@ -3,7 +3,6 @@
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
     <ID>ComplexCondition:AnchoredPopup.kt$!visibleState.currentState &amp;&amp; !visibleState.targetState &amp;&amp; (!retainInterruptedEnter || visibleState.isIdle)</ID>
-    <ID>ComplexCondition:Attachment.kt$event.type == KeyEventType.KeyDown &amp;&amp; arrow &amp;&amp; !event.isAltPressed &amp;&amp; !event.isCtrlPressed &amp;&amp; !event.isMetaPressed &amp;&amp; !event.isShiftPressed &amp;&amp; scrollState.maxValue &gt; 0</ID>
     <ID>ComplexCondition:Button.kt$(!isNova &amp;&amp; !isRheaSmall) || iconPlacement == null || normal == null</ID>
     <ID>ComplexCondition:Calendar.kt$nova &amp;&amp; (middle || start || end) &amp;&amp; range?.rangeFrom != range?.rangeTo</ID>
     <ID>ComplexCondition:Carousel.kt$state.pageCount == 0 || ( delta &lt; 0 &amp;&amp; !state.canScrollBackward ) || ( delta &gt; 0 &amp;&amp; !state.canScrollForward )</ID>
@@ -39,7 +38,6 @@
     <ID>ComplexCondition:ToggleGroup.kt$!spaced &amp;&amp; (nova || controller.variant == null) &amp;&amp; resolvedVariant == ToggleVariant.Outline &amp;&amp; index &gt; 0</ID>
     <ID>CyclomaticComplexMethod:Accordion.kt$@Composable fun AccordionItemScope.AccordionTrigger( modifier: Modifier = Modifier, style: Style = Style, disabled: Boolean = false, icon: (@Composable (isOpen: Boolean) -&gt; Unit)? = null, content: @Composable () -&gt; Unit, )</ID>
     <ID>CyclomaticComplexMethod:Attachment.kt$@Composable fun Attachment( modifier: Modifier = Modifier, style: Style = Style, state: AttachmentState = AttachmentState.Done, size: AttachmentSize = AttachmentSize.Default, orientation: AttachmentOrientation = AttachmentOrientation.Horizontal, onClick: (() -&gt; Unit)? = null, actions: (@Composable AttachmentScope.() -&gt; Unit)? = null, content: @Composable AttachmentScope.() -&gt; Unit, )</ID>
-    <ID>CyclomaticComplexMethod:Attachment.kt$@Composable fun AttachmentGroup( modifier: Modifier = Modifier, style: Style = Style, content: @Composable RowScope.() -&gt; Unit, )</ID>
     <ID>CyclomaticComplexMethod:AttachmentLayout.kt$@Composable internal fun AttachmentLayout( size: AttachmentSize, orientation: AttachmentOrientation, modifier: Modifier = Modifier, content: @Composable () -&gt; Unit, )</ID>
     <ID>CyclomaticComplexMethod:BadgeStyles.kt$@Composable fun BadgeVariant.rememberStyle(): Style</ID>
     <ID>CyclomaticComplexMethod:Bubble.kt$@Composable private fun BubbleVariant.rememberStyle(interactive: Boolean): Style</ID>
@@ -151,7 +149,6 @@
     <ID>LongMethod:Accordion.kt$@Composable fun Accordion( type: AccordionType = AccordionType.Single, value: Set&lt;String&gt;? = null, onValueChange: ((Set&lt;String&gt;) -&gt; Unit)? = null, modifier: Modifier = Modifier, defaultValue: Set&lt;String&gt; = emptySet(), collapsible: Boolean = true, orientation: AccordionOrientation = AccordionOrientation.Vertical, loop: Boolean = true, disabled: Boolean = false, multiple: Boolean? = null, style: Style = Style, /** * Default chevron for every [AccordionTrigger]. Matches Base UI: ChevronDown when * collapsed, ChevronUp when expanded (two glyphs, not a rotating ChevronRight). * Override to swap icon sets (catalog may pass Lucide). Receives [isOpen]. */ icon: @Composable (isOpen: Boolean) -&gt; Unit = { AccordionItemIndicator() }, content: @Composable AccordionScope.() -&gt; Unit, )</ID>
     <ID>LongMethod:Accordion.kt$@Composable fun AccordionItemScope.AccordionTrigger( modifier: Modifier = Modifier, style: Style = Style, disabled: Boolean = false, icon: (@Composable (isOpen: Boolean) -&gt; Unit)? = null, content: @Composable () -&gt; Unit, )</ID>
     <ID>LongMethod:Attachment.kt$@Composable fun Attachment( modifier: Modifier = Modifier, style: Style = Style, state: AttachmentState = AttachmentState.Done, size: AttachmentSize = AttachmentSize.Default, orientation: AttachmentOrientation = AttachmentOrientation.Horizontal, onClick: (() -&gt; Unit)? = null, actions: (@Composable AttachmentScope.() -&gt; Unit)? = null, content: @Composable AttachmentScope.() -&gt; Unit, )</ID>
-    <ID>LongMethod:Attachment.kt$@Composable fun AttachmentGroup( modifier: Modifier = Modifier, style: Style = Style, content: @Composable RowScope.() -&gt; Unit, )</ID>
     <ID>LongMethod:AttachmentLayout.kt$@Composable internal fun AttachmentLayout( size: AttachmentSize, orientation: AttachmentOrientation, modifier: Modifier = Modifier, content: @Composable () -&gt; Unit, )</ID>
     <ID>LongMethod:AttachmentScreenshotTest.kt$AttachmentScreenshotTest$private fun composerUploadTray(darkTheme: Boolean)</ID>
     <ID>LongMethod:Bubble.kt$@Composable private fun BubbleVariant.rememberStyle(interactive: Boolean): Style</ID>
@@ -590,10 +587,6 @@
     <ID>MagicNumber:Astonished.kt$27.94f</ID>
     <ID>MagicNumber:Astonished.kt$36f</ID>
     <ID>MagicNumber:Astonished.kt$8.06f</ID>
-    <ID>MagicNumber:Attachment.kt$.12f</ID>
-    <ID>MagicNumber:Attachment.kt$.6f</ID>
-    <ID>MagicNumber:Attachment.kt$10f</ID>
-    <ID>MagicNumber:Attachment.kt$150</ID>
     <ID>MagicNumber:Avatar.kt$AvatarGroupDefaults$8</ID>
     <ID>MagicNumber:Bubble.kt$0.75f</ID>
     <ID>MagicNumber:Bubble.kt$0.8f</ID>
@@ -4396,7 +4389,6 @@
     <ID>NestedBlockDepth:ToggleGroupItemPresetsTest.kt$ToggleGroupItemPresetsTest$@Test fun connectedItemOutlineKeepsPresetSeams()</ID>
     <ID>NestedBlockDepth:ToggleScreenshotTest.kt$ToggleScreenshotTest$@Test fun icon_placement_uses_logical_asymmetric_padding()</ID>
     <ID>ReturnCount:Accordion.kt$private fun handleAccordionKey( nav: AccordionNavState, current: String, event: KeyEvent, loop: Boolean, orientation: AccordionOrientation, direction: LayoutDirection, ): Boolean</ID>
-    <ID>ReturnCount:AttachmentGroupSnap.kt$AttachmentGroupSnapInfo$private fun ranges(): List&lt;ClosedFloatingPointRange&lt;Float&gt;&gt;</ID>
     <ID>ReturnCount:Calendar.kt$CalendarDate$override fun compareTo(other: CalendarDate): Int</ID>
     <ID>ReturnCount:Calendar.kt$CalendarState$fun isRangeMiddle(date: CalendarDate): Boolean</ID>
     <ID>ReturnCount:Calendar.kt$private fun CalendarDate.plusDays( days: Int, system: CalendarSystem = CalendarSystem.Gregorian, ): CalendarDate</ID>

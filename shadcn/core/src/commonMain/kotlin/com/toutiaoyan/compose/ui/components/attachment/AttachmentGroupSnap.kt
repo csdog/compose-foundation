@@ -45,10 +45,9 @@ internal class AttachmentGroupSnapInfo(
     }
 
     private fun ranges(): List<ClosedFloatingPointRange<Float>> {
-        val owner = node?.takeIf { it.isAttached } ?: return emptyList()
-        val row = owner.requireLayoutCoordinates()
         val maximum = scroll.maxValue.toFloat()
-        if (maximum <= 0f) return emptyList()
+        val owner = node?.takeIf { it.isAttached && maximum > 0f } ?: return emptyList()
+        val row = owner.requireLayoutCoordinates()
         val viewport = row.size.width - maximum
         val children = mutableListOf<AttachmentGroupItemNode>()
         owner.traverseDescendants(AttachmentSnapKey) { child ->

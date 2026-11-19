@@ -10,9 +10,6 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.focusable
-import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
-import androidx.compose.foundation.gestures.FlingBehavior
-import androidx.compose.foundation.gestures.ScrollScope
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -39,7 +36,6 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusEvent
@@ -48,24 +44,7 @@ import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.unit.LayoutDirection
-import androidx.compose.ui.input.key.Key
-import androidx.compose.ui.input.key.KeyEventType
-import androidx.compose.ui.input.key.key
-import androidx.compose.ui.input.key.type
-import androidx.compose.ui.input.key.isAltPressed
-import androidx.compose.ui.input.key.isCtrlPressed
-import androidx.compose.ui.input.key.isMetaPressed
-import androidx.compose.ui.input.key.isShiftPressed
-import androidx.compose.ui.input.key.onKeyEvent
-import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
-import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.input.pointer.PointerEventPass
-import androidx.compose.ui.input.pointer.PointerEventType
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.zIndex
 import androidx.compose.ui.semantics.Role
@@ -99,7 +78,6 @@ import com.toutiaoyan.compose.ui.theme.currentTheme
 import com.toutiaoyan.compose.ui.tokens.StylePreset
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
-import kotlinx.coroutines.launch
 
 /** Part of shadcn's "AI Elements" family: an [Attachment]'s lifecycle. */
 enum class AttachmentState { Idle, Uploading, Processing, Error, Done }
@@ -111,6 +89,12 @@ enum class AttachmentOrientation { Horizontal, Vertical }
 enum class AttachmentMediaVariant { Icon, Image }
 
 private val LocalAttachmentState = compositionLocalOf { AttachmentState.Done }
+
+private const val ATTACHMENT_BORDER_TRANSITION_MILLIS = 150
+private const val UPLOADING_MEDIA_ALPHA = 0.6f
+private const val ATTACHMENT_TRIGGER_Z_INDEX = 10f
+private const val ATTACHMENT_GROUP_FADE_OPACITY = 0.12f
+private val AttachmentGroupKeyboardStep = 40.dp
 
 @Composable
 private fun AttachmentState.rememberStyle(
@@ -165,7 +149,12 @@ private fun AttachmentState.animatedBorderColor(): androidx.compose.ui.graphics.
     // Lifecycle changes replace the Style, so its interaction animation DSL
     // cannot interpolate this token. A new theme starts at its own color.
     return if (currentTheme.activePreset == StylePreset.Nova) {
-        key(colors) { animateColorAsState(target, tween(150, easing = FastOutSlowInEasing)).value }
+        key(colors) {
+            animateColorAsState(
+                target,
+                tween(ATTACHMENT_BORDER_TRANSITION_MILLIS, easing = FastOutSlowInEasing),
+            ).value
+        }
     } else {
         target
     }
@@ -423,7 +412,7 @@ private fun AttachmentMediaImpl(
             state != AttachmentState.Idle &&
             state != AttachmentState.Done
         ) {
-            .6f
+            UPLOADING_MEDIA_ALPHA
         } else {
             1f
         }
@@ -641,7 +630,7 @@ fun BoxScope.AttachmentTrigger(
         modifier =
             modifier
                 .matchParentSize()
-                .zIndex(10f)
+                .zIndex(ATTACHMENT_TRIGGER_Z_INDEX)
                 .semantics(mergeDescendants = true) {
                     role = Role.Button
                     if (!label.isNullOrEmpty()) {
@@ -678,67 +667,28 @@ fun AttachmentGroup(
     val scrollState = rememberScrollState()
     val direction = LocalLayoutDirection.current
     val paddingPx = with(LocalDensity.current) { 4.dp.toPx() }
-    val keyboardStepPx = with(LocalDensity.current) { 40.dp.toPx() }
+    val keyboardStepPx = with(LocalDensity.current) { AttachmentGroupKeyboardStep.toPx() }
     val snap =
         remember(scrollState, direction, paddingPx, keyboardStepPx) {
             AttachmentGroupSnapInfo(scrollState, direction, paddingPx, keyboardStepPx)
         }
-    val snapping = rememberSnapFlingBehavior(snap)
-    val fling =
-        remember(snap, snapping) {
-            object : FlingBehavior {
-                override suspend fun ScrollScope.performFling(initialVelocity: Float): Float =
-                    with(snapping) {
-                        // Wheel events supply their motion already. Reset velocity for
-                        // the final snap, including its spring, not just its approach.
-                        performFling(if (snap.wheelInput) 0f else initialVelocity)
-                    }
-            }
-        }
-    val scope = rememberCoroutineScope()
-    val containment =
-        remember(scrollState) {
-            object : NestedScrollConnection {
-                override fun onPostScroll(
-                    consumed: Offset,
-                    available: Offset,
-                    source: NestedScrollSource,
-                ): Offset = if (scrollState.maxValue > 0) Offset(available.x, 0f) else Offset.Zero
-
-                override suspend fun onPostFling(
-                    consumed: Velocity,
-                    available: Velocity,
-                ): Velocity = if (scrollState.maxValue > 0) Velocity(available.x, 0f) else Velocity.Zero
-            }
-        }
+    val fling = rememberAttachmentGroupFling(snap)
+    val containment = rememberAttachmentScrollContainment(scrollState)
+    val keyboardScroll = Modifier.attachmentGroupKeyboardScroll(scrollState, snap, direction)
     Row(
         modifier =
             modifier.styleable(styleState, style)
-                .scrollFade(scrollState, ScrollFadeOrientation.Horizontal, 40.dp, .12f, 96.dp)
-                .pointerInput(snap) {
-                    awaitPointerEventScope {
-                        while (true) {
-                            when (awaitPointerEvent(PointerEventPass.Initial).type) {
-                                PointerEventType.Scroll -> snap.wheelInput = true
-                                PointerEventType.Press -> snap.wheelInput = false
-                            }
-                        }
-                    }
-                }
+                .scrollFade(
+                    scrollState,
+                    ScrollFadeOrientation.Horizontal,
+                    40.dp,
+                    ATTACHMENT_GROUP_FADE_OPACITY,
+                    96.dp,
+                )
+                .trackAttachmentWheelInput(snap)
                 .nestedScroll(containment)
-                .onKeyEvent { event ->
-                    val arrow = event.key == Key.DirectionRight || event.key == Key.DirectionLeft
-                    if (event.type == KeyEventType.KeyDown && arrow && !event.isAltPressed && !event.isCtrlPressed &&
-                        !event.isMetaPressed && !event.isShiftPressed && scrollState.maxValue > 0
-                    ) {
-                        val forward = (event.key == Key.DirectionRight) == (direction == LayoutDirection.Ltr)
-                        scope.launch { scrollState.animateScrollTo(snap.keyboardTarget(forward)) }
-                        true
-                    } else {
-                        false
-                    }
-                }
-                .focusable()
+                .then(keyboardScroll)
+                .focusable(enabled = scrollState.maxValue > 0)
                 .layout { measurable, constraints ->
                     snap.updateViewport(constraints.maxWidth)
                     val child = measurable.measure(constraints)
