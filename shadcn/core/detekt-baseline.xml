@@ -2277,7 +2277,6 @@
     <ID>MagicNumber:InputOTP.kt$.58f</ID>
     <ID>MagicNumber:InputStyles.kt$0.5f</ID>
     <ID>MagicNumber:InputStyles.kt$0.8f</ID>
-    <ID>MagicNumber:Item.kt$0.5f</ID>
     <ID>MagicNumber:Joy.kt$0.47f</ID>
     <ID>MagicNumber:Joy.kt$0xFF5DADEC</ID>
     <ID>MagicNumber:Joy.kt$0xFF664500</ID>
@@ -4434,7 +4433,6 @@
     <ID>TooManyFunctions:Trace.kt$com.toutiaoyan.compose.ui.components.trace.Trace.kt</ID>
     <ID>TopLevelPropertyNaming:BounceIndication.kt$/** Downward travel while fully pressed, as a fraction of the node's height. */ private const val BounceHeightFraction = 0.08f</ID>
     <ID>TopLevelPropertyNaming:InputStyles.kt$internal const val NovaInputColorDurationMillis = 150</ID>
-    <ID>TopLevelPropertyNaming:ItemStyles.kt$internal const val NovaItemColorDurationMillis = 100</ID>
     <ID>TopLevelPropertyNaming:NavigationMenuSharedViewport.kt$internal const val NavigationMenuViewportTag = "navigation-menu-viewport"</ID>
     <ID>TopLevelPropertyNaming:NavigationMenuSharedViewport.kt$private const val ViewportDuration = 350</ID>
     <ID>TopLevelPropertyNaming:NavigationMenuSharedViewport.kt$private const val ViewportExitDuration = 150</ID>

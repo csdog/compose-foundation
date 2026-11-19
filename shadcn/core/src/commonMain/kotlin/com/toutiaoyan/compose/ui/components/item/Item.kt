@@ -32,6 +32,8 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.positionInRoot
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.CollectionInfo
 import androidx.compose.ui.semantics.CollectionItemInfo
@@ -73,6 +75,8 @@ import com.toutiaoyan.compose.tailwind.core.twRadius
 import com.toutiaoyan.compose.tailwind.core.twSpacing
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.jvm.JvmName
+
+private const val DISABLED_ITEM_ALPHA = 0.5f
 
 /**
  * A single row in a list of interactive/informational rows (notification, contact,
@@ -116,15 +120,9 @@ fun Item(
     val context = remember(size) { ItemContext(size) }
     val group = LocalItemGroupContext.current
     val token = remember { Any() }
-    SideEffect {
-        group?.items?.set(token, size)
-        if (group != null && token !in group.order) group.order.add(token)
-    }
-    DisposableEffect(group) {
-        onDispose {
-            group?.items?.remove(token)
-            group?.order?.remove(token)
-        }
+    SideEffect { group?.register(token, size) }
+    DisposableEffect(group, token) {
+        onDispose { group?.remove(token) }
     }
     val hovered = interactionSource.collectIsHoveredAsState().value
     val linkStyle =
@@ -133,10 +131,10 @@ fun Item(
             val target =
                 when {
                     hovered && resolvedEnabled -> muted
-                    variant == ItemVariant.Muted -> muted.copy(alpha = 0.5f)
+                    variant == ItemVariant.Muted -> muted.copy(alpha = NOVA_MUTED_ITEM_BACKGROUND_ALPHA)
                     else -> muted.copy(alpha = 0f)
                 }
-            val animatedBackground = animateColorAsState(target, tween(NovaItemColorDurationMillis))
+            val animatedBackground = animateColorAsState(target, tween(NOVA_ITEM_COLOR_DURATION_MILLIS))
             rememberTheme(animatedBackground) { Style { background(animatedBackground.value) } }
         } else {
             Style
@@ -157,14 +155,14 @@ fun Item(
         }
     val rootModifier =
         modifier
-            .then(if (resolvedEnabled) Modifier else Modifier.alpha(0.5f))
+            .then(if (resolvedEnabled) Modifier else Modifier.alpha(DISABLED_ITEM_ALPHA))
             .then(clickableModifier)
             .then(
                 if (nova && group != null) {
-                    Modifier.semantics {
-                        val index = group.order.indexOf(token)
-                        if (index >= 0) collectionItemInfo = CollectionItemInfo(index, 1, 0, 1)
-                    }
+                    Modifier.onGloballyPositioned { group.place(token, it.positionInRoot().y) }
+                        .semantics {
+                            group.rowIndex(token)?.let { collectionItemInfo = CollectionItemInfo(it, 1, 0, 1) }
+                        }
                 } else {
                     Modifier
                 },
@@ -257,7 +255,7 @@ fun ItemGroup(
         }
     CompositionLocalProvider(LocalItemGroupContext provides context) {
         Column(
-            modifier.fillMaxWidth().semantics { collectionInfo = CollectionInfo(context.order.size, 1) }
+            modifier.fillMaxWidth().semantics { collectionInfo = CollectionInfo(context.items.size, 1) }
                 .styleable(styleState, style),
             verticalArrangement = Arrangement.spacedBy(gap),
             content = content,

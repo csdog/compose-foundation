@@ -190,6 +190,24 @@ class ItemParityTest : ScreenshotTest() {
         )
     }
 
+    @Test fun keyedReorderingUpdatesAccessibleRowIndices() {
+        var labels by mutableStateOf(listOf("first", "second"))
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            ItemGroup {
+                labels.forEach { label ->
+                    key(label) { Item(label, Modifier.testTag(label)) }
+                }
+            }
+        }
+
+        fun row(tag: String) = composeRule.onNodeWithTag(tag).fetchSemanticsNode()
+        assertEquals(0, row("first").config[SemanticsProperties.CollectionItemInfo].rowIndex)
+        composeRule.runOnIdle { labels = labels.reversed() }
+        assertTrue(row("second").boundsInRoot.top < row("first").boundsInRoot.top)
+        assertEquals(0, row("second").config[SemanticsProperties.CollectionItemInfo].rowIndex)
+        assertEquals(1, row("first").config[SemanticsProperties.CollectionItemInfo].rowIndex)
+    }
+
     @Test fun aNonGrowingSecondContentKeepsItsIntrinsicWidth() {
         setThemedContent(stylePreset = StylePreset.Nova) {
             Item(Modifier.width(320.dp)) {

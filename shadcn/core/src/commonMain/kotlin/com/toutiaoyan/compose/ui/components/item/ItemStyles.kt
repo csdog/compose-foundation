@@ -25,8 +25,9 @@ enum class ItemVariant { Default, Outline, Muted }
 
 enum class ItemSize { Default, Sm, Xs }
 
-internal const val NovaItemColorDurationMillis = 100
-private val NovaItemBorderTransition = tween<Float>(NovaItemColorDurationMillis)
+internal const val NOVA_ITEM_COLOR_DURATION_MILLIS = 100
+internal const val NOVA_MUTED_ITEM_BACKGROUND_ALPHA = 0.5f
+private val NovaItemBorderTransition = tween<Float>(NOVA_ITEM_COLOR_DURATION_MILLIS)
 
 @Composable
 fun ItemVariant.rememberStyle(size: ItemSize = ItemSize.Default): Style {
@@ -75,7 +76,9 @@ fun ItemVariant.rememberStyle(size: ItemSize = ItemSize.Default): Style {
             } else if (variant == ItemVariant.Outline) {
                 border(colors.border)
             }
-            if (variant == ItemVariant.Muted) background(if (nova) colors.muted.copy(alpha = 0.5f) else colors.muted)
+            if (variant == ItemVariant.Muted) {
+                background(if (nova) colors.muted.copy(alpha = NOVA_MUTED_ITEM_BACKGROUND_ALPHA) else colors.muted)
+            }
             contentPadding(horizontal = padH, vertical = padV)
         }
     }
