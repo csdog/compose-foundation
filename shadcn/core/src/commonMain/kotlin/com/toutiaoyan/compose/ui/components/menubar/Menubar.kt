@@ -29,6 +29,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.positionInRoot
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.LayoutCoordinates
 import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.focus.*
@@ -87,17 +90,28 @@ import kotlin.jvm.JvmName
 internal class MenubarNavigation {
     val triggers = linkedMapOf<String, FocusRequester>()
     val disabled = mutableSetOf<String>()
+    val triggerCoordinates = mutableMapOf<String, LayoutCoordinates>()
     var restoreFocus by mutableStateOf<String?>(null)
     var focusLastFor: String? = null
     var focusFirstFor: String? = null
 
+    fun enabledTriggers(direction: LayoutDirection): List<String> {
+        val enabled = triggers.keys.filter { it !in disabled }
+        if (!enabled.all { triggerCoordinates[it]?.isAttached == true }) return enabled
+        return enabled.sortedBy { value ->
+            val x = triggerCoordinates.getValue(value).positionInRoot().x
+            if (direction == LayoutDirection.Rtl) -x else x
+        }
+    }
+
     fun move(
         from: String,
         delta: Int,
+        direction: LayoutDirection,
         open: Boolean,
         onOpenChange: (String?) -> Unit,
     ) {
-        val values = triggers.keys.filter { it !in disabled }
+        val values = enabledTriggers(direction)
         if (values.isEmpty()) return
         val next = values[(values.indexOf(from) + delta).mod(values.size)]
         triggers[next]?.requestFocus()
@@ -279,6 +293,7 @@ fun MenubarMenuScope.MenubarTrigger(
         onDispose {
             navigation.triggers.remove(value)
             navigation.disabled.remove(value)
+            navigation.triggerCoordinates.remove(value)
         }
     }
     SideEffect { if (resolvedEnabled) navigation.disabled.remove(value) else navigation.disabled.add(value) }
@@ -302,6 +317,7 @@ fun MenubarMenuScope.MenubarTrigger(
     Box(
         modifier =
             modifier
+                .onGloballyPositioned { navigation.triggerCoordinates[value] = it }
                 .focusRequester(focusRequester)
                 .onPreviewKeyEvent { event ->
                     if (event.type != KeyEventType.KeyDown || !resolvedEnabled) {
@@ -313,13 +329,14 @@ fun MenubarMenuScope.MenubarTrigger(
                                 navigation.move(
                                     value,
                                     if (direction == LayoutDirection.Rtl) -physical else physical,
+                                    direction,
                                     controller.openValue != null,
                                     controller.onOpenChange,
                                 )
                                 true
                             }
                             Key.MoveHome, Key.MoveEnd -> {
-                                val values = navigation.triggers.keys.filter { it !in navigation.disabled }
+                                val values = navigation.enabledTriggers(direction)
                                 val target =
                                     if (event.key == Key.MoveHome) {
                                         values.firstOrNull()
@@ -440,6 +457,7 @@ fun MenubarMenuScope.MenubarContent(
                             controller.navigation.move(
                                 value,
                                 if (direction == LayoutDirection.Rtl) -physical else physical,
+                                direction,
                                 true,
                                 controller.onOpenChange,
                             )
