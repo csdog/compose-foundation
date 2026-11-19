@@ -250,7 +250,7 @@ private class InheritedContentColor {
     var node: AncestorContentColorNode? = null
 }
 
-private class AncestorContentColorElement(
+private data class AncestorContentColorElement(
     private val color: InheritedContentColor,
     private val fallbackColor: Color,
 ) : ModifierNodeElement<AncestorContentColorNode>() {
@@ -263,13 +263,6 @@ private class AncestorContentColorElement(
     override fun InspectorInfo.inspectableProperties() {
         name = "ancestorContentColor"
     }
-
-    override fun equals(other: Any?): Boolean =
-        other is AncestorContentColorElement &&
-            other.color === color &&
-            other.fallbackColor == fallbackColor
-
-    override fun hashCode(): Int = 31 * color.hashCode() + fallbackColor.hashCode()
 }
 
 private class AncestorContentColorNode(
@@ -336,7 +329,7 @@ private class AncestorContentColorNode(
 
     private fun colorBeforeBrush(): Color {
         var result = Color.Unspecified
-        traverseAncestors(StyleOuterNodeKey) { node ->
+        traverseAncestors(STYLE_OUTER_NODE_KEY) { node ->
             val resolved = (node as? StyleOuterNode)?.resolveAnimatedStyleFor(TextDrawFlag)
             if (!result.isSpecified && resolved?.contentColor?.isSpecified == true) result = resolved.contentColor
             resolved?.contentBrush == null
@@ -346,7 +339,7 @@ private class AncestorContentColorNode(
 
     fun inheritedBrush(): Brush? {
         var brush: Brush? = null
-        traverseAncestors(StyleOuterNodeKey) { node ->
+        traverseAncestors(STYLE_OUTER_NODE_KEY) { node ->
             val ownBrush = (node as? StyleOuterNode)?.resolveAnimatedStyleFor(TextDrawFlag)?.contentBrush
             if (ownBrush != null) {
                 brush = ownBrush
@@ -360,7 +353,7 @@ private class AncestorContentColorNode(
 
     fun inheritedColor(): Color {
         var inherited = Color.Unspecified
-        traverseAncestors(StyleOuterNodeKey) { node ->
+        traverseAncestors(STYLE_OUTER_NODE_KEY) { node ->
             val ownColor =
                 (node as? StyleOuterNode)
                     ?.resolveAnimatedStyleFor(TextDrawFlag)?.contentColor ?: Color.Unspecified
@@ -375,4 +368,4 @@ private class AncestorContentColorNode(
     }
 }
 
-private const val StyleOuterNodeKey = "StyleOuterNode"
+private const val STYLE_OUTER_NODE_KEY = "StyleOuterNode"

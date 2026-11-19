@@ -4382,7 +4382,6 @@
     <ID>TopLevelPropertyNaming:RippleIndication.kt$private const val StateLayerAlpha = 0.08f</ID>
     <ID>TopLevelPropertyNaming:Shimmer.kt$/** Default tilt in degrees — real shadcn `--shimmer-angle` initial value. */ const val DefaultShimmerAngleDegrees: Float = 20f</ID>
     <ID>TopLevelPropertyNaming:TeleportPrimitive.kt$/** Default duration for modal enter/exit, aligned with web shadcn `animate-in` / `animate-out`. */ internal const val OverlayAnimMs = 250</ID>
-    <ID>TopLevelPropertyNaming:Text.kt$private const val StyleOuterNodeKey = "StyleOuterNode"</ID>
     <ID>UnusedParameter:InputGroupScreenshotTest.kt$InputGroupScreenshotTest$darkTheme: Boolean</ID>
     <ID>UnusedParameter:PopupPositionProvider.kt$PopupPositionProvider$layoutDirection: LayoutDirection</ID>
     <ID>UnusedPrivateMember:Shimmer.kt$@Preview(showBackground = true, name = "Shimmer Style") @Composable private fun ShimmerStylePreview()</ID>
