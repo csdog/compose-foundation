@@ -14,7 +14,9 @@ import androidx.compose.ui.node.invalidateMeasurement
 import androidx.compose.ui.platform.InspectorInfo
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.constrainHeight
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 
 /** Declaration tracking only: no snapshot writes from Style resolution or measurement. */
 internal class CardInsetOverrides {
@@ -126,3 +128,45 @@ internal class CardLayoutNode(private var value: CardLayoutElement) : Modifier.N
         }
     }
 }
+
+internal val NovaCardHeaderGap = 4.dp
+
+internal object CardActionData : ParentDataModifier {
+    override fun Density.modifyParentData(parentData: Any?): Any = this@CardActionData
+}
+
+internal val NovaCardHeaderMeasurePolicy =
+    MeasurePolicy { children, constraints ->
+        val gap = NovaCardHeaderGap.roundToPx()
+        val loose = constraints.copy(minWidth = 0, minHeight = 0)
+        val (actionNodes, leadingNodes) = children.partition { it.parentData == CardActionData }
+        val actions = actionNodes.map { it.measure(loose) }
+        val actionWidth = actions.maxOfOrNull { it.width } ?: 0
+        val trailingWidth = actionWidth + if (actions.isEmpty()) 0 else gap
+        val leadingWidth =
+            if (constraints.hasBoundedWidth) {
+                (constraints.maxWidth - trailingWidth).coerceAtLeast(0)
+            } else {
+                Constraints.Infinity
+            }
+        val leading = leadingNodes.map { it.measure(loose.copy(maxWidth = leadingWidth)) }
+        val height =
+            maxOf(
+                leading.sumOf { it.height } + gap * (leading.size - 1).coerceAtLeast(0),
+                actions.maxOfOrNull { it.height } ?: 0,
+            )
+        val width =
+            if (constraints.hasBoundedWidth) {
+                constraints.maxWidth
+            } else {
+                (leading.maxOfOrNull { it.width } ?: 0) + trailingWidth
+            }
+        layout(width, height) {
+            var y = 0
+            leading.forEach {
+                it.placeRelative(0, y)
+                y += it.height + gap
+            }
+            actions.forEach { it.placeRelative(width - it.width, 0) }
+        }
+    }

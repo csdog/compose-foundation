@@ -27,8 +27,6 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.layout.ParentDataModifier
-import androidx.compose.ui.unit.Density
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.TextStyle
@@ -63,10 +61,6 @@ private data class CardMetrics(
     val footerLine: androidx.compose.ui.layout.HorizontalAlignmentLine,
     val imageLine: androidx.compose.ui.layout.HorizontalAlignmentLine,
 )
-
-private object CardActionData : ParentDataModifier {
-    override fun Density.modifyParentData(parentData: Any?): Any = this@CardActionData
-}
 
 private val LocalCardMetrics = staticCompositionLocalOf<CardMetrics?> { null }
 
@@ -192,67 +186,17 @@ fun CardHeader(
         modifier = modifier.fillMaxWidth().styleable(styleState, inset, style),
         verticalArrangement =
             Arrangement.spacedBy(
-                if (currentTheme.activePreset == StylePreset.Nova) 4.dp else twSpacing.xs,
+                if (currentTheme.activePreset == StylePreset.Nova) NovaCardHeaderGap else twSpacing.xs,
             ),
     ) {
         if (currentTheme.activePreset != StylePreset.Nova) {
             content()
         } else {
-            Layout(content = { content() }, modifier = Modifier.fillMaxWidth()) { children, constraints ->
-                val gap = 4.dp.roundToPx()
-                val actions =
-                    children.filter {
-                        it.parentData == CardActionData
-                    }.map { it.measure(constraints.copy(minWidth = 0, minHeight = 0)) }
-                val actionWidth = actions.maxOfOrNull { it.width } ?: 0
-                val leadingWidth =
-                    if (constraints.hasBoundedWidth) {
-                        (
-                            constraints.maxWidth - actionWidth -
-                                if (actions.isEmpty()) {
-                                    0
-                                } else {
-                                    4.dp.roundToPx()
-                                }
-                        ).coerceAtLeast(
-                            0,
-                        )
-                    } else {
-                        androidx.compose.ui.unit.Constraints.Infinity
-                    }
-                val leading =
-                    children.filter {
-                        it.parentData != CardActionData
-                    }.map { it.measure(constraints.copy(minWidth = 0, minHeight = 0, maxWidth = leadingWidth)) }
-                val height =
-                    maxOf(
-                        leading.sumOf { it.height } + gap * (leading.size - 1).coerceAtLeast(0),
-                        actions.maxOfOrNull { it.height } ?: 0,
-                    )
-                val width =
-                    if (constraints.hasBoundedWidth) {
-                        constraints.maxWidth
-                    } else {
-                        (
-                            leading.maxOfOrNull { it.width }
-                                ?: 0
-                        ) +
-                            actionWidth +
-                            if (actions.isEmpty()) {
-                                0
-                            } else {
-                                4.dp.roundToPx()
-                            }
-                    }
-                layout(width, height) {
-                    var y = 0
-                    leading.forEach {
-                        it.placeRelative(0, y)
-                        y += it.height + gap
-                    }
-                    actions.forEach { it.placeRelative(width - it.width, 0) }
-                }
-            }
+            Layout(
+                content = { content() },
+                modifier = Modifier.fillMaxWidth(),
+                measurePolicy = NovaCardHeaderMeasurePolicy,
+            )
         }
     }
 }
