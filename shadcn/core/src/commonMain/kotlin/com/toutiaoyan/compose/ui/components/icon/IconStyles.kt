@@ -31,16 +31,11 @@ fun IconVariant.rememberStyle(): Style {
     val receiver = this
     val inlineSize = LocalInlineIconSize.current
     return rememberTheme(receiver, inlineSize) {
-        when (receiver) {
-            IconVariant.Default ->
-                Style {
-                    size(inlineSize ?: icons.standardSize)
-                }
-
-            IconVariant.Small ->
-                Style {
-                    size(icons.smallSize)
-                }
-        }
+        val iconSize =
+            when (receiver) {
+                IconVariant.Default -> inlineSize ?: icons.standardSize
+                IconVariant.Small -> icons.smallSize
+            }
+        Style { size(iconSize) }
     }
 }

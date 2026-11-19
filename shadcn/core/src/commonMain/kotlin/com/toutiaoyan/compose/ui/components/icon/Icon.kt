@@ -48,11 +48,12 @@ fun Icon(
     contentDescription: String? = null,
 ) {
     val theme = currentTheme
+    val ambientTint = LocalContentColor.current
     val styleState = remember { MutableStyleState(MutableInteractionSource()) }
     val resolvedTint =
         when {
             tint != Color.Unspecified -> tint
-            LocalContentColor.current != Color.Unspecified -> LocalContentColor.current
+            ambientTint != Color.Unspecified -> ambientTint
             else -> theme.colors.foreground
         }
     Image(
