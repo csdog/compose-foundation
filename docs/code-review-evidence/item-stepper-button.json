@@ -1,0 +1,254 @@
+{
+  "sourceBefore": "ef7774e3",
+  "commits": {
+    "item": "cbb80b5c",
+    "stepper": "84e58225",
+    "button": "638b0f14"
+  },
+  "jvmCore": {
+    "ButtonCallerSizeTest[jvm]": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ButtonIconPlacementTest[jvm]": {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ButtonInvalidStateTest[jvm]": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ButtonLabelNoWrapTest[jvm]": {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ButtonNovaParityTest[jvm]": {
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ButtonRheaParityTest[jvm]": {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ButtonScreenshotTest[jvm]": {
+      "tests": 12,
+      "failures": 12,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ItemNovaMotionTest[jvm]": {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ItemParityTest[jvm]": {
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ItemScreenshotTest[jvm]": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "StepperBehaviorTest[jvm]": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "StepperScreenshotTest[jvm]": {
+      "tests": 6,
+      "failures": 3,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "jvmCatalog": {
+    "ButtonExamplesTest[jvm]": {
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ButtonFollowupRecipesTest[jvm]": {
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ItemExamplesTest[jvm]": {
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ItemPageLayoutTest[jvm]": {
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "StepperExamplesTest[jvm]": {
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "jvmRegressions": {
+    "indicatorExposesProgressAndDisabledState[jvm]": {
+      "before": "java.lang.AssertionError: Failed to assert the following: (StateDescription = 'Completed')\nSemantics of the node:\nNode #308 at (l=37.0, t=35.0, r=44.0, b=51.0)px\nText = '[1]'\nActions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]\nHas 2 siblings\nSelector used: (Text + InputText + EditableText contains '1' (ignoreCase: false))\n",
+      "after": "passed"
+    },
+    "independentlyReorderedKeyedDeclarationsFollowTheirCurrentOrder[jvm]": {
+      "before": "java.lang.AssertionError: The visible steps must follow their reordered declarations",
+      "after": "passed"
+    },
+    "keyedReorderingUpdatesAccessibleRowIndices[jvm]": {
+      "before": "java.lang.AssertionError: expected:<0> but was:<1>",
+      "after": "passed"
+    }
+  },
+  "unchangedSnapshotDifferences": {
+    "cases": [
+      "focused_light[jvm]",
+      "icon_sizes_light[jvm]",
+      "variants_disabled_light[jvm]",
+      "variants_disabled_dark[jvm]",
+      "variants_light[jvm]",
+      "icon_sizes_dark[jvm]",
+      "variants_dark[jvm]",
+      "unpressed_baseline_light[jvm]",
+      "icon_variants_dark[jvm]",
+      "focused_dark[jvm]",
+      "pressed_light[jvm]",
+      "icon_variants_light[jvm]",
+      "vertical_dark[jvm]",
+      "mid_progress_dark[jvm]",
+      "compact_dark[jvm]"
+    ],
+    "actualPngSha256BeforeAndAfter": {
+      "button_focused_light_actual.png": "944579f8e4e38db5697bc60e525e26cf60837663169126ce08a31301fa9f858e",
+      "button_icon_sizes_light_actual.png": "28891fdd499a81e19d9eefd015fc8da973c2e2e51bc3884a952287939f867f75",
+      "button_variants_disabled_light_actual.png": "dda0c0e82f33bea1ac772ade8f0a3c31d9dba9d0a1c16454166a06ee84949433",
+      "button_variants_disabled_dark_actual.png": "19a1f1845ddb347a3e2228b5c8db72ef280c9bf8bc8ee12c701c51a87eaef957",
+      "button_variants_light_actual.png": "58697b6c7d44857aa3ec0ffa34097b35619926325a7e18858acaa5acc625daa5",
+      "button_icon_sizes_dark_actual.png": "19439ce8cb32a7066f01b6d44d408193b63fff28c15449cf0e6a24bd942b1dde",
+      "button_variants_dark_actual.png": "eef5f7e69c242ec4d702e28b35025452c6597771e9bd4d618d8fb154cdfeb845",
+      "button_unpressed_baseline_light_actual.png": "c8446732d83d54d2a4c4a47f1ab044f9d558540e294cb45a20509c572cad0445",
+      "button_icon_variants_dark_actual.png": "cd5f3e527a959557101548236f14aa5969e22569b44125c045710ce3a15590ce",
+      "button_focused_dark_actual.png": "a62e906810b5b369c6de42ad369e7bb24a9633b111e246334d5945733b97871b",
+      "button_pressed_light_actual.png": "83cf3da87cb35b8407a0d757e720fcaf581796a0c97a75ca8a1b3af8f06fc467",
+      "button_icon_variants_light_actual.png": "8e9663e18f281411e611f94a74c51c050222959c6397b07a2fe1033709e6d2d2",
+      "stepper_vertical_dark_actual.png": "b6c6c573c182a8339c4e8e5f41cdd59d733dac226d38358f94eee011f476a629",
+      "stepper_mid_progress_dark_actual.png": "8c4d41aea7fc0eca9afa1ce761ee266f8dbc94e1e4cf8369abfe9b88faac1a1b",
+      "stepper_compact_dark_actual.png": "77244d6a5bfbfedf8897acda1e8bcd306fe73bc5d0ddafd7ef31d76215a962c1"
+    }
+  },
+  "detekt": {
+    "files": 568,
+    "before": 4451,
+    "after": 4445,
+    "removed": [
+      "ComplexCondition:Button.kt$(!isNova && !isRheaSmall) || iconPlacement == null || normal == null",
+      "LongParameterList:Stepper.kt$( steps: List<StepperStep>, currentStep: Int, showLabels: Boolean, modifier: Modifier, style: Style, circleStyle: Style, connectorStyle: Style, )",
+      "MagicNumber:ButtonStyles.kt$0.05f",
+      "MagicNumber:Item.kt$0.5f",
+      "MagicNumber:Stepper.kt$0.5f",
+      "TopLevelPropertyNaming:ItemStyles.kt$internal const val NovaItemColorDurationMillis = 100"
+    ],
+    "added": []
+  },
+  "ktlintCheck": "passed",
+  "browser": [
+    {
+      "runtime": "js",
+      "initial": {
+        "steps": [
+          32,
+          293
+        ],
+        "items": [
+          174,
+          290
+        ]
+      },
+      "reversed": {
+        "steps": [
+          293,
+          32
+        ],
+        "items": [
+          290,
+          174
+        ]
+      },
+      "restored": {
+        "steps": [
+          32,
+          293
+        ],
+        "items": [
+          174,
+          290
+        ]
+      },
+      "servedBundleSha256": {
+        "webApp.js": "992571a3b1dde2bb0d2146f606c7961d623e0f75c0a58663acdd3b143c669e86"
+      }
+    },
+    {
+      "runtime": "wasmJs",
+      "initial": {
+        "steps": [
+          32,
+          293
+        ],
+        "items": [
+          174,
+          290
+        ]
+      },
+      "reversed": {
+        "steps": [
+          293,
+          32
+        ],
+        "items": [
+          290,
+          174
+        ]
+      },
+      "restored": {
+        "steps": [
+          32,
+          293
+        ],
+        "items": [
+          174,
+          290
+        ]
+      },
+      "servedBundleSha256": {
+        "webApp.js": "dc6000681762b5e2226187dfd4c3bbbe327ecbfe24f86ee5df740efe9e7cfa05",
+        "7afca91d56ff36fede32.wasm": "b7698de73e6d26d343ae7624745690c0fef80512fa06cfbb069e087249247027"
+      }
+    }
+  ]
+}
