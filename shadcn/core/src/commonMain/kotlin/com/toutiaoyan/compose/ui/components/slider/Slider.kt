@@ -38,7 +38,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.pointer.AwaitPointerEventScope
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.PointerType
+import androidx.compose.ui.input.pointer.isOutOfBounds
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.semantics.Role
@@ -631,6 +635,67 @@ private fun SliderImpl(
     }
 }
 
+internal enum class SliderGestureAxis {
+    Pending,
+    Slider,
+    CrossAxis,
+}
+
+internal fun sliderGestureAxis(
+    displacement: Offset,
+    vertical: Boolean,
+    touchSlop: Float,
+): SliderGestureAxis {
+    val main = abs(if (vertical) displacement.y else displacement.x)
+    val cross = abs(if (vertical) displacement.x else displacement.y)
+    return when {
+        main > touchSlop && main > cross -> SliderGestureAxis.Slider
+        cross > touchSlop && cross >= main -> SliderGestureAxis.CrossAxis
+        else -> SliderGestureAxis.Pending
+    }
+}
+
+// Stay unconsumed while direction is undecided so an ancestor can take over scrolling.
+@Suppress("LoopWithTooManyJumpStatements", "ReturnCount")
+private suspend fun AwaitPointerEventScope.awaitSliderTouchStart(
+    down: PointerInputChange,
+    vertical: Boolean,
+): PointerInputChange? {
+    while (true) {
+        val event = awaitPointerEvent()
+        val change = event.changes.firstOrNull { it.id == down.id } ?: break
+        if (change.isConsumed || change.isOutOfBounds(size, extendedTouchPadding)) break
+        if (!change.pressed) return change
+        when (sliderGestureAxis(change.position - down.position, vertical, viewConfiguration.touchSlop)) {
+            SliderGestureAxis.Slider -> return change
+            SliderGestureAxis.CrossAxis -> break
+            SliderGestureAxis.Pending -> Unit
+        }
+        val final = awaitPointerEvent(PointerEventPass.Final)
+        if (final.changes.firstOrNull { it.id == down.id }?.isConsumed != false) break
+    }
+    return null
+}
+
+private fun SliderController.pointerValueAt(
+    position: Offset,
+    size: IntSize,
+    thumbSizePx: Float,
+    vertical: Boolean,
+    reverse: Boolean,
+): Float {
+    val visual =
+        sliderVisualFractionAlongTrack(
+            position = position,
+            widthPx = size.width.toFloat(),
+            heightPx = size.height.toFloat(),
+            thumbSizePx = thumbSizePx,
+            vertical = vertical,
+        )
+    val fraction = if (reverse) 1f - visual else visual
+    return state.valueRange.start + fraction.coerceIn(0f, 1f) * rangeSpan
+}
+
 @Composable
 private fun Modifier.sliderPointerInput(controller: SliderController): Modifier {
     val latest = rememberUpdatedState(controller)
@@ -645,68 +710,79 @@ private fun Modifier.sliderPointerInput(controller: SliderController): Modifier 
         val thumbSizePx = controller.thumbSize.toPx()
         awaitEachGesture {
             val down = awaitFirstDown()
-            val slider = latest.value
-            if (!slider.state.enabled) return@awaitEachGesture
-            val restoreCanvasFocus = if (down.type == PointerType.Touch) captureTouchCanvasFocus(currentEvent) else null
-            down.consume()
-            val vertical = slider.state.orientation == SliderOrientation.Vertical
-            val reverse = slider.state.inverted xor (!vertical && slider.rtl)
-
-            fun valueAt(position: Offset): Float {
-                val visual =
-                    sliderVisualFractionAlongTrack(
-                        position = position,
-                        widthPx = size.width.toFloat(),
-                        heightPx = size.height.toFloat(),
-                        thumbSizePx = thumbSizePx,
-                        vertical = vertical,
-                    )
-                val valueFraction = if (reverse) 1f - visual else visual
-                return slider.state.valueRange.start +
-                    valueFraction.coerceIn(0f, 1f) * slider.rangeSpan
-            }
-            var controlledValues = slider.currentValues()
-            val (index, grabOffset) =
-                sliderPointerTarget(
-                    position = down.position,
-                    size = size,
-                    thumbSizePx = thumbSizePx,
-                    vertical = vertical,
-                    range = slider.state.valueRange,
-                    values = controlledValues,
-                    reverse = reverse,
-                )
-            val offset = if (vertical) Offset(0f, grabOffset ?: 0f) else Offset(-(grabOffset ?: 0f), 0f)
-            restoreCanvasFocus?.invoke()
-            slider.focusRequesters.getOrNull(index)?.requestFocus()
-            val press = PressInteraction.Press(down.position)
-            val source = slider.interactionSourceFor(index)
-            source.tryEmit(press)
-            var gestureValues =
-                if (grabOffset == null) {
-                    slider.dragThumb(index, valueAt(down.position), controlledValues)
-                } else {
-                    controlledValues
-                }
-            var completed = false
-            try {
-                completed =
-                    drag(down.id) { change ->
-                        change.consume()
-                        val current = slider.currentValues()
-                        // Several pointer moves can arrive before the controlled values recompose.
-                        if (current != controlledValues) {
-                            controlledValues = current
-                            gestureValues = current
-                        }
-                        gestureValues = slider.dragThumb(index, valueAt(change.position + offset), gestureValues)
-                    }
-                if (completed) restoreCanvasFocus?.invoke()
-                slider.commit()
-            } finally {
-                source.tryEmit(if (completed) PressInteraction.Release(press) else PressInteraction.Cancel(press))
-            }
+            handleSliderGesture(latest.value, down, thumbSizePx)
         }
+    }
+}
+
+private suspend fun AwaitPointerEventScope.handleSliderGesture(
+    slider: SliderController,
+    down: PointerInputChange,
+    thumbSizePx: Float,
+) {
+    if (!slider.state.enabled) return
+    val vertical = slider.state.orientation == SliderOrientation.Vertical
+    val touch = down.type == PointerType.Touch
+    val restoreCanvasFocus = if (touch) captureTouchCanvasFocus(currentEvent) else null
+    val start = (if (touch) awaitSliderTouchStart(down, vertical) else down) ?: return
+    start.consume()
+    val reverse = slider.state.inverted xor (!vertical && slider.rtl)
+    val (index, grabOffset) =
+        sliderPointerTarget(
+            position = down.position,
+            size = size,
+            thumbSizePx = thumbSizePx,
+            vertical = vertical,
+            range = slider.state.valueRange,
+            values = slider.currentValues(),
+            reverse = reverse,
+        )
+    val offset = if (vertical) Offset(0f, grabOffset ?: 0f) else Offset(-(grabOffset ?: 0f), 0f)
+    val valueAt: (Offset) -> Float = { position ->
+        slider.pointerValueAt(position + offset, size, thumbSizePx, vertical, reverse)
+    }
+    restoreCanvasFocus?.invoke()
+    slider.focusRequesters.getOrNull(index)?.requestFocus()
+    val source = slider.interactionSourceFor(index)
+    val press = PressInteraction.Press(down.position)
+    source.tryEmit(press)
+    var completed = false
+    try {
+        val updateAtStart = grabOffset == null || start.position != down.position
+        completed = trackSliderDrag(start, slider, index, updateAtStart, valueAt)
+        if (completed) {
+            restoreCanvasFocus?.invoke()
+            slider.commit()
+        }
+    } finally {
+        source.tryEmit(if (completed) PressInteraction.Release(press) else PressInteraction.Cancel(press))
+    }
+}
+
+private suspend fun AwaitPointerEventScope.trackSliderDrag(
+    start: PointerInputChange,
+    slider: SliderController,
+    index: Int,
+    updateAtStart: Boolean,
+    valueAt: (Offset) -> Float,
+): Boolean {
+    var controlledValues = slider.currentValues()
+    var gestureValues =
+        if (updateAtStart) {
+            slider.dragThumb(index, valueAt(start.position), controlledValues)
+        } else {
+            controlledValues
+        }
+    if (!start.pressed) return true
+    return drag(start.id) { change ->
+        change.consume()
+        val current = slider.currentValues()
+        // Controlled values may recompose between pointer moves.
+        if (current != controlledValues) {
+            controlledValues = current
+            gestureValues = current
+        }
+        gestureValues = slider.dragThumb(index, valueAt(change.position), gestureValues)
     }
 }
 
