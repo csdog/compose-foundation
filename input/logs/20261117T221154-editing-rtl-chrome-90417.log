@@ -1,5 +1,0 @@
-Traceback (most recent call last):
-  File "/Users/cscs/IdeaProjects/angryecho/compose-foundation/.agent-runs/input/goal-20261117/run-route.py", line 89, in <module>
-    assert bindings and not failures, failures
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError: []
