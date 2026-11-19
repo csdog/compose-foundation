@@ -48,9 +48,7 @@ import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.layout.ParentDataModifier
-import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import com.toutiaoyan.compose.ui.components.button.Button
@@ -66,9 +64,14 @@ import com.toutiaoyan.compose.ui.components.text.TextVariant
 import com.toutiaoyan.compose.ui.styles.focusRingShadow
 import com.toutiaoyan.compose.ui.theme.LocalContentColor
 import com.toutiaoyan.compose.ui.theme.currentTheme
-import kotlin.math.max
 import com.toutiaoyan.compose.tailwind.core.twRadius
 import com.toutiaoyan.compose.tailwind.core.twSpacing
+
+// base-nova input-group fill and disabled opacity.
+private const val NOVA_DISABLED_DARK_FILL_ALPHA = 0.8f
+private const val NOVA_DISABLED_LIGHT_FILL_ALPHA = 0.5f
+private const val NOVA_DARK_FILL_ALPHA = 0.3f
+private const val NOVA_DISABLED_GROUP_ALPHA = 0.5f
 
 /**
  * Set by [InputGroup] so an inner [com.toutiaoyan.compose.ui.components.input.Input]
@@ -189,8 +192,8 @@ fun InputGroup(
 
     val tint =
         when {
-            groupDisabled -> if (theme.isDark) 0.8f else 0.5f
-            theme.isDark -> 0.3f
+            groupDisabled -> if (theme.isDark) NOVA_DISABLED_DARK_FILL_ALPHA else NOVA_DISABLED_LIGHT_FILL_ALPHA
+            theme.isDark -> NOVA_DARK_FILL_ALPHA
             else -> 0f
         }
     val border by if (nova) {
@@ -210,10 +213,10 @@ fun InputGroup(
             width(1f)
             // base-nova `.cn-input-group`: `h-8 rounded-lg`
             // (`h-auto` when block addons present — minHeight lets Layout grow)
-            minHeight(32.dp)
+            minHeight(InputGroupMinHeight)
             background(background)
             borderColor(border)
-            borderWidth(1.dp)
+            borderWidth(InputGroupBorderWidth)
             shape(RoundedCornerShape(shapes.lg))
             if (hasControlFocus) dropShadow(theme.focusRingShadow())
             if (nova && groupInvalid) {
@@ -235,7 +238,7 @@ fun InputGroup(
                     if (label != null) this.contentDescription = label
                 }
                 .onFocusEvent { hasFocusWithin = it.hasFocus }
-                .alpha(if (nova && groupDisabled) 0.5f else 1f)
+                .alpha(if (nova && groupDisabled) NOVA_DISABLED_GROUP_ALPHA else 1f)
                 .cssStyleable(styleState, containerStyle then style),
         content = {
             CompositionLocalProvider(
@@ -253,123 +256,9 @@ fun InputGroup(
             }
         },
     ) { measurables, constraints ->
-        val maxW = constraints.maxWidth
-
-        fun Measurable.addonAlign(): InputGroupAddonAlign? = (parentData as? InputGroupAddonParentData)?.align
-
-        val blockStarts = measurables.filter { it.addonAlign() == InputGroupAddonAlign.BlockStart }
-        val blockEnds = measurables.filter { it.addonAlign() == InputGroupAddonAlign.BlockEnd }
-        val inlineStarts = measurables.filter { it.addonAlign() == InputGroupAddonAlign.InlineStart }
-        val inlineEnds = measurables.filter { it.addonAlign() == InputGroupAddonAlign.InlineEnd }
-        val controls = measurables.filter { it.addonAlign() == null }
-
-        val widthConstraint =
-            if (maxW == Constraints.Infinity) {
-                Constraints()
-            } else {
-                Constraints(minWidth = maxW, maxWidth = maxW)
-            }
-
-        val blockStartPlaceables = blockStarts.map { it.measure(widthConstraint) }
-        val blockEndPlaceables = blockEnds.map { it.measure(widthConstraint) }
-
-        val inlineStartPlaceables = inlineStarts.map { it.measure(Constraints()) }
-        val inlineEndPlaceables = inlineEnds.map { it.measure(Constraints()) }
-        val addonInlineW =
-            inlineStartPlaceables.sumOf { it.width } + inlineEndPlaceables.sumOf { it.width }
-
-        val controlMaxW =
-            if (maxW == Constraints.Infinity) {
-                Constraints.Infinity
-            } else {
-                (maxW - addonInlineW).coerceAtLeast(0)
-            }
-        val controlPlaceables =
-            controls.map { measurable ->
-                measurable.measure(
-                    Constraints(
-                        minWidth =
-                            if (controls.size == 1 && controlMaxW != Constraints.Infinity) {
-                                controlMaxW
-                            } else {
-                                0
-                            },
-                        maxWidth = controlMaxW,
-                    ),
-                )
-            }
-
-        val measuredMidH =
-            max(
-                max(
-                    inlineStartPlaceables.maxOfOrNull { it.height } ?: 0,
-                    inlineEndPlaceables.maxOfOrNull { it.height } ?: 0,
-                ),
-                controlPlaceables.maxOfOrNull { it.height } ?: 0,
-            )
-        val midH =
-            if (nova && blockStarts.isEmpty() && blockEnds.isEmpty() && controlPlaceables.isNotEmpty() &&
-                controlPlaceables.all {
-                    it.height <= 32.dp.roundToPx()
-                }
-            ) {
-                30.dp.roundToPx()
-            } else {
-                measuredMidH
-            }
-        val totalH =
-            blockStartPlaceables.sumOf { it.height } + midH + blockEndPlaceables.sumOf { it.height }
-        val layoutW =
-            when {
-                maxW != Constraints.Infinity -> maxW
-                else ->
-                    max(
-                        max(
-                            blockStartPlaceables.maxOfOrNull { it.width } ?: 0,
-                            blockEndPlaceables.maxOfOrNull { it.width } ?: 0,
-                        ),
-                        addonInlineW + controlPlaceables.sumOf { it.width },
-                    )
-            }.coerceIn(
-                constraints.minWidth,
-                if (constraints.maxWidth == Constraints.Infinity) Int.MAX_VALUE else constraints.maxWidth,
-            )
-
-        layout(layoutW, totalH.coerceAtLeast(constraints.minHeight)) {
-            var y = 0
-            blockStartPlaceables.forEach { placeable ->
-                placeable.placeRelative(0, y)
-                y += placeable.height
-            }
-
-            val midY = y
-            var x = 0
-            inlineStartPlaceables.forEach { placeable ->
-                placeable.placeRelative(x, midY + (midH - placeable.height) / 2)
-                x += placeable.width
-            }
-            controlPlaceables.forEach { placeable ->
-                placeable.placeRelative(x, midY + (midH - placeable.height) / 2)
-                x += placeable.width
-            }
-            var endX = layoutW
-            inlineEndPlaceables.asReversed().forEach { placeable ->
-                endX -= placeable.width
-                placeable.placeRelative(endX, midY + (midH - placeable.height) / 2)
-            }
-
-            y = midY + midH
-            blockEndPlaceables.forEach { placeable ->
-                placeable.placeRelative(0, y)
-                y += placeable.height
-            }
-        }
+        measureInputGroup(measurables, constraints, nova)
     }
 }
-
-private data class InputGroupAddonParentData(
-    val align: InputGroupAddonAlign,
-)
 
 private class InputGroupAddonParentDataModifier(
     private val align: InputGroupAddonAlign,

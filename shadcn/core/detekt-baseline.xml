@@ -10,7 +10,6 @@
     <ID>ComplexCondition:Command.kt$nova &amp;&amp; ( controller.controlled || controller.items.none { it.id == controller.highlightedId &amp;&amp; it.enabled } )</ID>
     <ID>ComplexCondition:ContextMenu.kt$!disabled &amp;&amp; it.type == KeyEventType.KeyDown &amp;&amp; ( it.key == Key.Menu || ( it.key == Key.F10 &amp;&amp; it.isShiftPressed ) )</ID>
     <ID>ComplexCondition:Empty.kt$(nova &amp;&amp; variant == EmptyVariant.Outline) || (!nova &amp;&amp; variant == EmptyVariant.Default)</ID>
-    <ID>ComplexCondition:InputGroup.kt$nova &amp;&amp; blockStarts.isEmpty() &amp;&amp; blockEnds.isEmpty() &amp;&amp; controlPlaceables.isNotEmpty() &amp;&amp; controlPlaceables.all { it.height &lt;= 32.dp.roundToPx() }</ID>
     <ID>ComplexCondition:MessageScrollerState.kt$MessageScrollerState$options.autoScroll &amp;&amp; !scrollable.end &amp;&amp; anchoredToken == null &amp;&amp; spacerHeight == 0</ID>
     <ID>ComplexCondition:MessageScrollerState.kt$MessageScrollerState$preserveOnPrepend &amp;&amp; previousReading != null &amp;&amp; (oldFirstIndex &gt; 0 || (!isFollowing &amp;&amp; anchoredToken == null))</ID>
     <ID>ComplexCondition:MessageScrollerState.kt$MessageScrollerState$viewportHeight &lt; oldViewportHeight &amp;&amp; wasAtEnd &amp;&amp; contentBottom == oldBottom &amp;&amp; anchoredToken == null &amp;&amp; spacerHeight == 0</ID>
@@ -2291,9 +2290,6 @@
     <ID>MagicNumber:Hundred.kt$9.48f</ID>
     <ID>MagicNumber:Hundred.kt$9.4f</ID>
     <ID>MagicNumber:Hundred.kt$9.84f</ID>
-    <ID>MagicNumber:InputGroup.kt$0.3f</ID>
-    <ID>MagicNumber:InputGroup.kt$0.5f</ID>
-    <ID>MagicNumber:InputGroup.kt$0.8f</ID>
     <ID>MagicNumber:InputOTP.kt$.58f</ID>
     <ID>MagicNumber:InputStyles.kt$0.5f</ID>
     <ID>MagicNumber:InputStyles.kt$0.8f</ID>

@@ -85,6 +85,20 @@ class InputGroupAddonStyleTest : ScreenshotTest() {
         composeRule.onNodeWithTag("addon").assertHeightIsEqualTo(48.dp)
     }
 
+    @Test fun tallInlineAddonStaysInsideTheNovaGroup() {
+        setThemedContent(stylePreset = StylePreset.Nova) {
+            InputGroup(Modifier.width(240.dp).testTag("group")) {
+                Input(value = "")
+                InputGroupAddon(InputGroupAddonAlign.InlineEnd, Modifier.testTag("addon")) {
+                    Box(Modifier.size(width = 24.dp, height = 52.dp))
+                }
+            }
+        }
+        val group = composeRule.onNodeWithTag("group").getUnclippedBoundsInRoot()
+        val addon = composeRule.onNodeWithTag("addon", useUnmergedTree = true).getUnclippedBoundsInRoot()
+        assertTrue(group.top <= addon.top && addon.bottom <= group.bottom, "$addon overflowed $group")
+    }
+
     @Test fun clickingAddonPaddingFocusesTheRealEditableControl() {
         setThemedContent(stylePreset = StylePreset.Nova) {
             InputGroup(Modifier.width(200.dp)) {
