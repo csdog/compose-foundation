@@ -138,10 +138,10 @@
 | `chip` | 已验收 | 已验收 | 为复选角色补充勾选状态，`37daeefb`。 |
 | `codeblock` | 已验收 | 已验收 | 复制成功重新计时，分页使用视口尺寸，无滚动时方向键交给父级，`dc5810d0`。 |
 | `collapsible` | 已验收 | 已验收 | 关闭内容时回到仍挂载的触发器，`b9182baf`。 |
-| `combobox` | 待审 | 待审 |  |
+| `combobox` | 已验收 | 已验收 | 重新启用时恢复焦点，禁用输入忽略点击，调用当前打开回调，`c203cb24`。 |
 | `command` | 待审 | 待审 |  |
 | `contextmenu` | 局部审查 | 局部清理 | 已有共享菜单和子菜单测试证据。 |
-| `dialog` | 待审 | 待审 |  |
+| `dialog` | 已验收 | 已验收 | 无界宽度下安全测量紧凑页脚，和 AlertDialog 共享单列布局，`769ccdd6`。 |
 | `drawer` | 已验收 | 已验收 | `c52276e4` 修复留白，`f97109ce` 清理状态与布局。 |
 | `dropdownmenu` | 已验收 | 已验收 | 菜单复审、独立提交及 Chromium 记录。 |
 | `emojitext` | 已验收 | 已验收 | 保留扩展 Emoji 序列及环境文字颜色，`e8353560`。 |
@@ -159,7 +159,7 @@
 | `menubar` | 局部审查 | 局部清理 | 已有悬停、焦点与 Canvas 适配证据。 |
 | `message` | 已验收 | 已验收 | 头部与页脚共用元数据布局，`489bd03c`。 |
 | `messagescroller` | 已验收 | 已验收 | Tab 移动焦点时继续跟随新消息，`29d9cb9d`。 |
-| `navigationmenu` | 待审 | 待审 |  |
+| `navigationmenu` | 已验收 | 已验收 | 按当前落位计算面板焦点顺序，`c06f94bc`。共享面板阴影见 `6d509ddb`。 |
 | `overlay` | 已验收 | 已验收 | 前两轮及第一批记录。 |
 | `pagination` | 已验收 | 已验收 | 页码达到整数上限时保留邻页并禁止越界导航，`c35f1a6b`。 |
 | `popover` | 已验收 | 已验收 | 复核关闭与焦点恢复，共用 Nova 动效，`f876d5ed`。 |
@@ -319,3 +319,11 @@
 - `ToggleGroup.kt:120`。保持键身份的重排原来只改变视觉顺序，方向键仍使用旧注册顺序。修复后水平 LTR、RTL 与垂直方向从当前布局位置取得顺序，卸载时清除位置。分组边框比例命名，移除 1 个存量 ID。保留公开重载、默认单选、防止重复键及现有间距。
 - `Switch.kt:80`。轨道和滑块复用既有 150 ms 时长，静止和动画路径复用 Nova 未选中配色，两个标签布局共享激活逻辑。移除 1 个存量 ID。保留两套主题、触摸区、公开受控参数和默认值。逐帧采样显示状态提交帧仍可使用旧动画的最后一个样本。以这一帧为锚点的明暗反向断言在原始实现与整理后均通过。
 - 核心 JVM 61 项中 55 项通过，既有 6 项快照失败的实际 PNG 前后逐一相同。目录 JVM 67 项全部通过。核心 Detekt 与 ktlint 通过，已提交 baseline 从 4,412 降至 4,407 条，零新增。Chromium 在 JS 和 Wasm 上实测重排导航、复制成功后确认续期、代码分页、无滚动时的方向键传播，以及 Switch 轨道色反向。剪贴板验证使用隔离夹具内的内存实现。[回归与逐项 ID 证据](code-review-evidence/codeblock-togglegroup-switch.json)
+
+### Combobox、Dialog 和 Navigation Menu 验收
+
+- `Combobox.kt` 的可编辑输入和 Chips 输入在重新启用时按当前状态申请焦点。两者共用指针处理，禁用输入不再发出打开请求，已在运行的指针监听读取最新回调。提交 `c203cb24`。
+- `DialogFooterLayout.kt` 按最宽操作的固有宽度测量无界紧凑页脚，动作等宽且保留原来的反序与间距。AlertDialog 的同类单列页脚复用它，双列网格保持独立。提交 `769ccdd6`。
+- `NavigationMenu.kt` 在面板子项重新落位后按行和方向排序焦点，跟踪位置随子项卸载清理。左右布局和 Tab 越界关闭条件保留。提交 `c06f94bc`。
+- 原有公开签名、主题 chrome 和调用方自定义过渡保留。Nova 标题字高、页脚出血和动作间距仍按原组件规格。Navigation Menu 保留既有进出时长和缓动控制点。Detekt 从 4,406 减至 4,393 个 ID，零新增，核心 Detekt 与 ktlint 通过。
+- JVM 六个新用例均已证明修复前失败、修复后通过。核心 72 项中 49 项通过，其余 23 张快照在修复前同样失败，实测 PNG 的 SHA-256 逐一相同。目录 JVM 28 项通过。Chromium 在 JS 和 Wasm 上验证两种 Combobox 输入重新启用时都能直接键入查询。禁用的编辑输入忽略点击，Chips 外层仍可独立打开菜单。还验证了等宽反序的 Dialog 页脚及 Navigation Menu 重排后的 Tab 顺序。[逐项证据](code-review-evidence/combobox-dialog-navigationmenu.json)
