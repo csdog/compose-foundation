@@ -79,9 +79,11 @@ internal class HoverCardController(
 
 private val LocalHoverCard = staticCompositionLocalOf<HoverCardController?> { null }
 
-private val LocalHoverCardDelayMillis = staticCompositionLocalOf { 600 }
+private const val HOVER_CARD_OPEN_DELAY_MILLIS = 600
+private const val HOVER_CARD_CLOSE_DELAY_MILLIS = 300
+private val LocalHoverCardDelayMillis = staticCompositionLocalOf { HOVER_CARD_OPEN_DELAY_MILLIS }
 
-private val LocalHoverCardCloseDelayMillis = staticCompositionLocalOf { 300 }
+private val LocalHoverCardCloseDelayMillis = staticCompositionLocalOf { HOVER_CARD_CLOSE_DELAY_MILLIS }
 
 /**
  * Provides default timing for nested cards. Base UI 1.6.0 defaults to opening
@@ -90,8 +92,8 @@ private val LocalHoverCardCloseDelayMillis = staticCompositionLocalOf { 300 }
  */
 @Composable
 fun HoverCardProvider(
-    delayMillis: Int = 600,
-    closeDelayMillis: Int = 300,
+    delayMillis: Int = HOVER_CARD_OPEN_DELAY_MILLIS,
+    closeDelayMillis: Int = HOVER_CARD_CLOSE_DELAY_MILLIS,
     openDelay: Int? = null,
     closeDelay: Int? = null,
     content: @Composable () -> Unit,

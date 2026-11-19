@@ -23,6 +23,8 @@ import com.toutiaoyan.compose.ui.components.overlay.PopupAlign
 import com.toutiaoyan.compose.ui.components.overlay.PopupPlacement
 import com.toutiaoyan.compose.ui.components.overlay.PopupPositionResult
 import com.toutiaoyan.compose.ui.components.overlay.popupFadeModifier
+import com.toutiaoyan.compose.ui.components.overlay.NOVA_POPUP_MOTION_MILLIS
+import com.toutiaoyan.compose.ui.components.overlay.applyNovaPopupMotion
 import com.toutiaoyan.compose.ui.components.overlay.popupGraphicsLayer
 import com.toutiaoyan.compose.ui.components.overlay.PopupPositionProvider as DefaultPopupPositionProvider
 
@@ -138,7 +140,8 @@ internal fun HoverCardPopup(
                 val progress =
                     visibility.animateFloat(
                         transitionSpec = {
-                            tween(if (targetState == EnterExitState.Visible || defaultExit) 100 else 0)
+                            val animate = targetState == EnterExitState.Visible || defaultExit
+                            tween(if (animate) NOVA_POPUP_MOTION_MILLIS else 0)
                         },
                         label = "Hover Card progress",
                     ) { state ->
@@ -151,34 +154,15 @@ internal fun HoverCardPopup(
                 val slide =
                     if (defaultEnter) {
                         visibility.animateFloat(
-                            transitionSpec = { tween(100) },
+                            transitionSpec = { tween(NOVA_POPUP_MOTION_MILLIS) },
                             label = "Hover Card enter slide",
                         ) { state -> if (state == EnterExitState.PreEnter) 1f else 0f }
                     } else {
                         null
                     }
-                val slidePx = with(LocalDensity.current) { 8.dp.toPx() }
                 Box(
                     Modifier.popupGraphicsLayer {
-                        val positioned = geometry.value
-                        val fraction = progress.value
-                        alpha = if (defaultEnter && positioned == null) 0f else fraction
-                        scaleX = 0.95f + 0.05f * fraction
-                        scaleY = scaleX
-                        if (positioned != null) transformOrigin = positioned.transformOrigin
-                        val amount = (slide?.value ?: 0f) * slidePx
-                        translationX =
-                            when (positioned?.physicalSide) {
-                                PopupPlacement.Start -> amount
-                                PopupPlacement.End -> -amount
-                                else -> 0f
-                            }
-                        translationY =
-                            when (positioned?.physicalSide) {
-                                PopupPlacement.Top -> amount
-                                PopupPlacement.Bottom -> -amount
-                                else -> 0f
-                            }
+                        applyNovaPopupMotion(geometry.value, progress.value, slide?.value ?: 0f, defaultEnter)
                     },
                 ) { content() }
             } else if (defaultEnter || defaultExit) {
